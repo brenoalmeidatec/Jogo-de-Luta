@@ -558,7 +558,7 @@ type = HitDef
 trigger1 = Time = 10
 attr = C, NA
 damage = 80, 0
-animtype = Trip
+animtype = Back
 guardflag = L
 hitflag = MAF
 priority = 4, Hit
@@ -1287,7 +1287,7 @@ type = HitDef
 trigger1 = AnimElem = 2
 attr = C, SA
 damage = 70, 0
-animtype = Trip
+animtype = Back
 guardflag = L
 hitflag = MAF
 priority = 4, Hit

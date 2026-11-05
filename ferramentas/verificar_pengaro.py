@@ -101,6 +101,8 @@ def main():
         for n in re.findall(rf"^{chave} = (\d+)$", cns, re.M):
             if int(n) not in acoes and n != "100":
                 erros.append(f"{chave} {n} não existe no AIR")
+    for tipo in set(re.findall(r"^animtype = (\w+)", cns, re.M)) - {"Light", "Med", "Medium", "Hard", "Heavy", "Back", "Up", "DiagUp"}:
+        erros.append(f"animtype inválido: {tipo}")
     definidos = set(re.findall(r'^name = "(\w+)"', cmd, re.M))
     usados = set(re.findall(r'command\s*!?=\s*"(\w+)"', cmd + cns))
     for nome in sorted(usados - definidos):
