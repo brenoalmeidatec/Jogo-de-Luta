@@ -3,10 +3,10 @@ Transforma as imagens geradas (1024x1024) em pixel art no estilo do pixelfx:
 pouca resolução, poucas cores, cores chapadas e um contorno escuro de 1 pixel.
 
   python ferramentas/pixelizar.py sprites/kaio            (todas as poses do personagem)
-  python ferramentas/pixelizar.py sprites/kaio --altura 80 --cores 12
+  python ferramentas/pixelizar.py sprites/kaio --altura 128 --cores 16
 
 Saída em sprites/<personagem>/pixel/:
-  <pose>.png             sprite pixelado em tamanho real (ex.: 64 px de altura)
+  <pose>.png             sprite pixelado em tamanho real (ex.: 112 px de altura)
   <pose>_x4.png          o mesmo ampliado 4x só para você visualizar
   <personagem>.png/.json folha com todas as poses (mesmo formato de JSON dos efeitos do pixelfx/Aseprite)
 """
@@ -57,8 +57,8 @@ def pixelizar(img: Image.Image, altura: int, cores: int, contorno: bool) -> Imag
 def main():
     p = argparse.ArgumentParser(description="Converte sprites em pixel art")
     p.add_argument("pasta", help="pasta do personagem, ex.: sprites/kaio")
-    p.add_argument("--altura", type=int, default=64, help="altura do personagem em pixels (padrão 64)")
-    p.add_argument("--cores", type=int, default=16, help="número de cores da paleta (padrão 16)")
+    p.add_argument("--altura", type=int, default=112, help="altura do personagem em pixels (padrão 112, metade da tela de 224)")
+    p.add_argument("--cores", type=int, default=24, help="número de cores da paleta (padrão 24)")
     p.add_argument("--sem-contorno", action="store_true")
     args = p.parse_args()
 

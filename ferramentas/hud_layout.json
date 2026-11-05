@@ -1,0 +1,15 @@
+{
+  "_sobre": "Layout do HUD em pixels da tela base 304x224 (escala de arcade Neo Geo). No Godot, use essa resolução base com stretch inteiro.",
+  "tela": {"largura": 304, "altura": 224},
+  "chao_y": 200,
+  "personagens": {"altura_normal": 112, "altura_pequeno": 104, "altura_grande": 128,
+                  "inicio_p1_x": 100, "inicio_p2_x": 204, "largura_cenario": 608},
+  "vida": {"p1": {"x": 8, "y": 14, "w": 124, "h": 9}, "p2": {"x": 172, "y": 14, "w": 124, "h": 9},
+           "esvazia_para": "centro", "cor": "#f8d838", "cor_dano": "#d83818", "cor_fundo": "#281828"},
+  "tempo": {"x": 136, "y": 8, "w": 32, "h": 22, "inicial": 60},
+  "retrato": {"p1": {"x": 8, "y": 26, "w": 20, "h": 20}, "p2": {"x": 276, "y": 26, "w": 20, "h": 20}},
+  "nome": {"p1": {"x": 31, "y": 28}, "p2_direita": {"x": 273, "y": 28}},
+  "especial": {"p1": {"x": 22, "y": 210, "w": 80, "h": 6}, "p2": {"x": 202, "y": 210, "w": 80, "h": 6},
+               "estoque": {"p1": {"x": 8, "y": 206}, "p2": {"x": 286, "y": 206}}, "max_estoque": 3},
+  "efeitos_pixelfx_escala": 2
+}

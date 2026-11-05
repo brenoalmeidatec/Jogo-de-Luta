@@ -11,7 +11,7 @@ python ferramentas/gerar_sprites.py --personagem kaio --qualidade low
 ```
 
 1. Gera uma imagem de referência do personagem e uma imagem por pose (`sprites/kaio/`).
-2. Converte tudo em pixel art com `ferramentas/pixelizar.py`: 64 px de altura, 16 cores, cores chapadas
+2. Converte tudo em pixel art com `ferramentas/pixelizar.py`: 112 px de altura (escala KOF), 24 cores chapadas
    e contorno escuro de 1 px (`sprites/kaio/pixel/`), mais a folha `kaio.png` + `kaio.json`.
 
 Personagens, estilo e poses ficam em `ferramentas/personagens.json`.
@@ -21,3 +21,7 @@ Personagens, estilo e poses ficam em `ferramentas/personagens.json`.
 Faíscas de golpe, defesa, impacto e projéteis já exportados em `assets/efeitos/` (veja o LEIA-ME de lá).
 
 No Godot, importe os PNGs com **Filter = Nearest**.
+
+## Proporções e HUD
+
+Tela base 304x224, personagens de 104 a 128 px. Veja `docs/proporcoes.md` e `ferramentas/hud_layout.json`.

@@ -2,13 +2,16 @@
   "estilo": "pixel art sprite for a 2D side-view fighting game, retro 16-bit style like a small game character, flat colors with 2-3 shades per color, simple cel shading, one thin dark outline around the silhouette, readable chunky shapes, full body, side view facing right, centered, single character only, no text, no logo, no shadow on the ground, transparent background",
   "personagens": {
     "kaio": {
-      "descricao": "Kaio, a young Brazilian capoeira fighter, tall and lean, short black curly hair, green and yellow headband, white loose capoeira pants with a yellow cord belt, bare chest, barefoot"
+      "descricao": "Kaio, a young Brazilian capoeira fighter, tall and lean, short black curly hair, green and yellow headband, white loose capoeira pants with a yellow cord belt, bare chest, barefoot",
+      "altura": 112
     },
     "yara": {
-      "descricao": "Yara, an agile female fighter inspired by Amazon river legends, long dark braided hair with blue feathers, teal sleeveless martial arts top, dark wrapped pants, water-themed tattoos glowing light blue on her arms"
+      "descricao": "Yara, an agile female fighter inspired by Amazon river legends, long dark braided hair with blue feathers, teal sleeveless martial arts top, dark wrapped pants, water-themed tattoos glowing light blue on her arms",
+      "altura": 104
     },
     "brutus": {
-      "descricao": "Brutus, a huge bald street brawler, thick black beard, red tank top, torn jeans, heavy work boots, steel gauntlets on both fists"
+      "descricao": "Brutus, a huge bald street brawler, thick black beard, red tank top, torn jeans, heavy work boots, steel gauntlets on both fists",
+      "altura": 128
     }
   },
   "poses": {
@@ -21,5 +24,10 @@
     "defesa": "blocking with both forearms raised in front of the face",
     "apanhando": "recoiling backward after being hit, head snapped back",
     "especial": "performing a powerful special move with a glowing energy effect around the fists"
+  },
+  "tela": {
+    "largura": 304,
+    "altura": 224,
+    "chao_y": 200
   }
 }
