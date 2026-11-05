@@ -21,6 +21,8 @@ RAIZ = Path(__file__).resolve().parent.parent
 FOLHA = RAIZ / "sprites/pengaro/pixel/pengaro.png"
 INFO = RAIZ / "sprites/pengaro/pixel/pengaro.json"
 SAIDA = RAIZ / "chars/pengaro"
+EFEITOS = RAIZ / "assets/efeitos"
+FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9202: "shield-block"}
 
 # Tela de trabalho de cada sprite: pés em (EIXO_X, EIXO_Y).
 LARG, ALT = 360, 260
@@ -231,6 +233,24 @@ class Air:
         self.txt.append("\n".join(t) + "\n")
 
 
+def carregar_faiscas(sprites):
+    acoes = {}
+    for numero, nome in FAISCAS.items():
+        dados = json.loads((EFEITOS / f"{nome}.json").read_text(encoding="utf-8"))
+        pivo = tuple(dados["meta"]["pixelfx"]["pivot"])
+        quadros = []
+        with Image.open(EFEITOS / dados["meta"]["image"]) as imagem:
+            folha = imagem.convert("RGBA")
+            for indice, quadro in enumerate(dados["frames"]):
+                r = quadro["frame"]
+                sprite = folha.crop((r["x"], r["y"], r["x"] + r["w"], r["y"] + r["h"]))
+                chave = f"fx_{nome}_{indice}"
+                sprites.add(chave, sprite, numero, indice, pivo)
+                quadros.append((chave, max(1, round(quadro["duration"] * 60 / 1000))))
+        acoes[numero] = quadros
+    return acoes
+
+
 def montar_sprites():
     p, bola = carregar_poses()
     s = Sprites()
@@ -354,7 +374,7 @@ VITORIAS = [
 ]
 
 
-def montar_air(s):
+def montar_air(s, faiscas):
     a = Air(s)
     Q = a.acao
     Q(0, [(f"parado{i}", 6) for i in (0, 1, 2, 3, 4, 5)])
@@ -463,6 +483,8 @@ def montar_air(s):
 
     for chave, numero in ID_BALAO.items():
         Q(numero, [(f"balao_{chave}", -1)], [])
+    for numero, quadros in faiscas.items():
+        Q(numero, quadros, [])
     return a
 
 
@@ -485,6 +507,7 @@ def hitdef(numero, trigger, attr, dano, tipo="Light", guarda="MA", alvo="MAF", p
     t = [f"[State {numero}, Golpe]", "type = HitDef", f"trigger1 = {trigger}", f"attr = {attr}",
          f"damage = {dano}, 0", f"animtype = {tipo}", f"guardflag = {guarda}", f"hitflag = {alvo}",
          "priority = 4, Hit", f"pausetime = {pausa[0]}, {pausa[1]}", "sparkxy = -10, -70",
+         f"sparkno = S{9201 if pesado else 9200}", "guard.sparkno = S9202",
          f"hitsound = F{'5,2' if pesado else '5,0'}", "guardsound = F6,0", f"ground.type = {chao}",
          f"ground.slidetime = {escorrega}", f"ground.hittime = {hit}", f"ground.velocity = {vel}",
          f"air.velocity = {ar}"]
@@ -1032,8 +1055,9 @@ x = 1
 def main():
     SAIDA.mkdir(parents=True, exist_ok=True)
     s = montar_sprites()
+    faiscas = carregar_faiscas(s)
     escrever_sff(SAIDA / "pengaro.sff", s)
-    a = montar_air(s)
+    a = montar_air(s, faiscas)
     (SAIDA / "pengaro.air").write_text("\n".join(a.txt), encoding="utf-8")
     cns = montar_cns()
     cns = cns.replace("[Data]", "[Quotes]\n" + "".join(f'victory{i + 1} = "{v}"\n' for i, v in enumerate(VITORIAS)) + "\n[Data]", 1)
