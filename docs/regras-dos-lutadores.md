@@ -15,9 +15,9 @@
 5. [Como isso vira CMD e CNS no IKEMEN](#5-como-isso-vira-cmd-e-cns-no-ikemen)
 6. [Regra das ferramentas: como se cria um lutador](#6-regra-das-ferramentas-como-se-cria-um-lutador)
 7. [Regra da fluidez: quantos quadros cada animação tem](#7-regra-da-fluidez-quantos-quadros-cada-animação-tem)
-7. [Regra dos efeitos: o estilo pixelfx](#8-regra-dos-efeitos-o-estilo-pixelfx)
-8. [Checklist de aceite](#9-checklist-de-aceite)
-9. [Modelo de ficha do lutador](#10-modelo-de-ficha-do-lutador)
+8. [Regra dos efeitos: o estilo pixelfx](#8-regra-dos-efeitos-o-estilo-pixelfx)
+9. [Checklist de aceite](#9-checklist-de-aceite)
+10. [Modelo de ficha do lutador](#10-modelo-de-ficha-do-lutador)
 
 ---
 
