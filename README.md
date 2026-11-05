@@ -4,6 +4,10 @@ Jogo de luta 2D em pixel art feito para rodar no [IKEMEN GO](https://github.com/
 motor gratuito e de código aberto que roda personagens de MUGEN. O motor já cuida de menus, CPU, treino,
 modo times, tontura e quebra de guarda; aqui ficam os personagens.
 
+**Todo lutador segue as [Regras de todo lutador](docs/regras-dos-lutadores.md)**: comandos no estilo Mortal Kombat,
+correntes de 3 golpes + finalizador em cada botão, 8 especiais, 2 projéteis, 3 agarrões, Despertar com golpes novos,
+e criação com as ferramentas e os efeitos pixelfx listados lá.
+
 ## Jogar (Windows)
 
 Coloque `ferramentas/Jogo de Luta.bat` na Área de Trabalho (ou um atalho para ele) e dê dois cliques.
