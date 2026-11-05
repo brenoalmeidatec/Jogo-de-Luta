@@ -1,0 +1,25 @@
+{
+  "estilo": "2D fighting game sprite, hand-painted anime style with clean bold outlines, vibrant colors, full body, side view facing right, fighting stance, centered, single character only, no text, no logo, transparent background",
+  "personagens": {
+    "kaio": {
+      "descricao": "Kaio, a young Brazilian capoeira fighter, tall and lean, short black curly hair, green and yellow headband, white loose capoeira pants with a yellow cord belt, bare chest, barefoot"
+    },
+    "yara": {
+      "descricao": "Yara, an agile female fighter inspired by Amazon river legends, long dark braided hair with blue feathers, teal sleeveless martial arts top, dark wrapped pants, water-themed tattoos glowing light blue on her arms"
+    },
+    "brutus": {
+      "descricao": "Brutus, a huge bald street brawler, thick black beard, red tank top, torn jeans, heavy work boots, steel gauntlets on both fists"
+    }
+  },
+  "poses": {
+    "parado": "idle fighting stance, fists raised, weight balanced",
+    "andando": "mid-step walking forward in fighting stance",
+    "soco": "throwing a straight punch forward with the front arm fully extended",
+    "chute": "high kick forward with the front leg fully extended at head height",
+    "pulo": "jumping in the air with knees tucked",
+    "agachado": "crouching low guard, fists up",
+    "defesa": "blocking with both forearms raised in front of the face",
+    "apanhando": "recoiling backward after being hit, head snapped back",
+    "especial": "performing a powerful special move with a glowing energy effect around the fists"
+  }
+}
