@@ -2,9 +2,8 @@
 # para que editores no Windows não reescrevam o arquivo inteiro a cada mudança.
 * text=auto eol=lf
 
-# Scripts do Windows ficam como estão (CRLF), para rodar no cmd.
+# Scripts .bat do Windows ficam como estão (CRLF). O .cmd do MUGEN é texto normal.
 *.bat -text
-*.cmd -text
 
 # Arquivos binários
 *.png binary

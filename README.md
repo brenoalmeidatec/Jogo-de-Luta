@@ -40,6 +40,9 @@ Capoeirista e boleiro. Fica em `chars/pengaro/`.
 
 A lista de golpes também aparece no menu de pausa do jogo. O nome dos especiais trava na gagueira e só sai inteiro se o golpe acertar; no Despertar ele fala liso. A gagueira é só balão e nunca muda o tempo dos golpes.
 
+Os especiais têm janela curta (12 quadros, 18 no Golaço): faça o comando rápido, para que andar,
+agachar e bater em seguida não solte especial sem querer.
+
 ## Mudar o personagem
 
 Os arquivos de `chars/pengaro/` são gerados. Mude golpes, danos e falas em `ferramentas/gerar_pengaro.py`

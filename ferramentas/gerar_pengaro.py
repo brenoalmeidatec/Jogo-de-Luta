@@ -246,10 +246,6 @@ class Air:
                     aura.alpha_composite(sombra, (-5, 2))
                     aura.alpha_composite(original)
                     self.arte_despertada[nome] = self.s.add(f"despertado_{nome}", aura)
-                if resto and resto[0] and numero != 3100:
-                    x1, y1, x2, y2 = resto[0]
-                    recuo = min(8, (x2 - x1) // 4)
-                    resto[0] = (x1 + recuo, y1, x2 - recuo, y2)
                 variantes.append((self.arte_despertada[nome], ticks, *resto))
             self.acao(numero + 10000, variantes, caixa, loop)
 
@@ -1012,7 +1008,7 @@ var(21) = -1
 [State -2, Bônus de dano]
 type = AttackMulSet
 trigger1 = 1
-value = ifelse(var(20) > 0, 1.45, 1)
+value = ifelse(var(20) > 0, 1.3, 1)
 
 [State -2, Ginga de Juliet]
 type = ChangeAnim
@@ -1078,13 +1074,15 @@ def montar_cmd():
          "; x = soco fraco, y = soco forte, a = chute fraco, b = chute forte, c = provocação\n\n",
          "[Remap]\nx = x\ny = y\nz = z\na = a\nb = b\nc = c\ns = s\n\n",
          "[Defaults]\ncommand.time = 15\ncommand.buffer.time = 3\n\n"]
+    # Comandos curtos, sem meia-lua. A janela é apertada (12 quadros) para que andar, agachar e
+    # bater em seguida não solte especial sem querer; o Golaço tem três direções e ganha mais tempo.
     for b in "ab":
-        c.append(comando("golaco", f"~B, F, D, {b}", 24))
-        c.append(comando("bola_fraca" if b == "a" else "bola_forte", f"~D, F, {b}", 18))
-        c.append(comando("compasso", f"~D, B, {b}", 18))
+        c.append(comando("golaco", f"~B, F, D, {b}", 18))
+        c.append(comando("bola_fraca" if b == "a" else "bola_forte", f"~D, F, {b}", 12))
+        c.append(comando("compasso", f"~D, B, {b}", 12))
     for b in "xy":
-        c.append(comando("armada", f"~F, D, {b}", 18))
-        c.append(comando("caneta", f"~D, B, {b}", 18))
+        c.append(comando("armada", f"~F, D, {b}", 12))
+        c.append(comando("caneta", f"~D, B, {b}", 12))
     c.append(comando("FF", "F, F", 10))
     c.append(comando("BB", "B, B", 10))
     c.append(comando("recovery", "x+a", 1))
@@ -1211,13 +1209,13 @@ def main():
     faiscas = carregar_faiscas(s)
     a = montar_air(s, faiscas)
     escrever_sff(SAIDA / "pengaro.sff", s)
-    (SAIDA / "pengaro.air").write_text("\n".join(a.txt), encoding="utf-8")
+    (SAIDA / "pengaro.air").write_text("\n".join(a.txt), encoding="utf-8", newline="\n")
     cns = montar_cns()
     cns = cns.replace("[Data]", "[Quotes]\n" + "".join(f'victory{i + 1} = "{v}"\n' for i, v in enumerate(VITORIAS)) + "\n[Data]", 1)
-    (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8")
-    (SAIDA / "pengaro.cmd").write_text(montar_cmd(), encoding="utf-8")
-    (SAIDA / "pengaro.def").write_text(DEF, encoding="utf-8")
-    (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8")
+    (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8", newline="\n")
+    (SAIDA / "pengaro.cmd").write_text(montar_cmd(), encoding="utf-8", newline="\n")
+    (SAIDA / "pengaro.def").write_text(DEF, encoding="utf-8", newline="\n")
+    (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 
