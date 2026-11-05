@@ -16,52 +16,52 @@ command.buffer.time = 3
 
 [Command]
 name = "golaco"
-command = ~D, DF, F, D, DF, F, a
+command = ~B, F, D, a
 time = 24
 
 [Command]
 name = "bola_fraca"
-command = ~D, DF, F, a
+command = ~D, F, a
 time = 18
 
 [Command]
 name = "compasso"
-command = ~D, DB, B, a
+command = ~D, B, a
 time = 18
 
 [Command]
 name = "golaco"
-command = ~D, DF, F, D, DF, F, b
+command = ~B, F, D, b
 time = 24
 
 [Command]
 name = "bola_forte"
-command = ~D, DF, F, b
+command = ~D, F, b
 time = 18
 
 [Command]
 name = "compasso"
-command = ~D, DB, B, b
+command = ~D, B, b
 time = 18
 
 [Command]
 name = "armada"
-command = ~F, D, DF, x
+command = ~F, D, x
 time = 18
 
 [Command]
 name = "caneta"
-command = ~D, DB, B, x
+command = ~D, B, x
 time = 18
 
 [Command]
 name = "armada"
-command = ~F, D, DF, y
+command = ~F, D, y
 time = 18
 
 [Command]
 name = "caneta"
-command = ~D, DB, B, y
+command = ~D, B, y
 time = 18
 
 [Command]

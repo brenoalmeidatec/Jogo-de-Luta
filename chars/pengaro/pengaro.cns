@@ -181,6 +181,12 @@ anim = 200
 juggle = 1
 velset = 0,0
 
+[State 200, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10200
+
 [State 200, Corrente]
 type = VarAdd
 trigger1 = Time = 0
@@ -223,6 +229,12 @@ anim = 210
 juggle = 1
 velset = 0,0
 
+[State 210, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10210
+
 [State 210, Golpe]
 type = HitDef
 trigger1 = Time = 7
@@ -260,6 +272,12 @@ anim = 215
 juggle = 1
 velset = 0,0
 
+[State 215, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10215
+
 [State 215, Golpe]
 type = HitDef
 trigger1 = Time = 4
@@ -296,6 +314,12 @@ sprpriority = 2
 anim = 230
 juggle = 1
 velset = 0,0
+
+[State 230, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10230
 
 [State 230, Corrente]
 type = VarAdd
@@ -339,6 +363,12 @@ anim = 240
 juggle = 1
 velset = 0,0
 
+[State 240, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10240
+
 [State 240, Golpe]
 type = HitDef
 trigger1 = Time = 9
@@ -376,6 +406,12 @@ anim = 245
 juggle = 1
 velset = 0,0
 
+[State 245, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10245
+
 [State 245, Golpe]
 type = HitDef
 trigger1 = Time = 5
@@ -412,6 +448,12 @@ sprpriority = 2
 anim = 260
 juggle = 1
 velset = 0,0
+
+[State 260, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10260
 
 [State 260, Golpe]
 type = HitDef
@@ -451,6 +493,12 @@ sprpriority = 2
 anim = 400
 juggle = 1
 velset = 0,0
+
+[State 400, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10400
 
 [State 400, Corrente]
 type = VarAdd
@@ -494,6 +542,12 @@ anim = 410
 juggle = 1
 velset = 0,0
 
+[State 410, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10410
+
 [State 410, Golpe]
 type = HitDef
 trigger1 = Time = 6
@@ -530,6 +584,12 @@ sprpriority = 2
 anim = 430
 juggle = 1
 velset = 0,0
+
+[State 430, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10430
 
 [State 430, Corrente]
 type = VarAdd
@@ -573,6 +633,12 @@ anim = 440
 juggle = 1
 velset = 0,0
 
+[State 440, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10440
+
 [State 440, Golpe]
 type = HitDef
 trigger1 = Time = 10
@@ -611,6 +677,12 @@ sprpriority = 2
 anim = 600
 juggle = 1
 
+[State 600, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10600
+
 [State 600, Golpe]
 type = HitDef
 trigger1 = Time = 5
@@ -641,6 +713,12 @@ sprpriority = 2
 anim = 610
 juggle = 1
 
+[State 610, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10610
+
 [State 610, Golpe]
 type = HitDef
 trigger1 = Time = 6
@@ -670,6 +748,12 @@ ctrl = 0
 sprpriority = 2
 anim = 650
 juggle = 1
+
+[State 650, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10650
 
 [State 650, Golpe]
 type = HitDef
@@ -785,6 +869,12 @@ sprpriority = 2
 anim = 260
 juggle = 0
 velset = 0,0
+
+[State 720, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10260
 
 [State 720, Invencivel]
 type = NotHitBy
@@ -985,6 +1075,12 @@ anim = 1000
 juggle = 4
 velset = 0,0
 
+[State 1000, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 11000
+
 [State 1000, Fala]
 type = Explod
 trigger1 = Time = 0
@@ -1064,6 +1160,12 @@ sprpriority = 2
 anim = 1000
 juggle = 4
 velset = 0,0
+
+[State 1001, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 11000
 
 [State 1001, Fala]
 type = Explod
@@ -1145,6 +1247,12 @@ anim = 1100
 juggle = 4
 velset = 0,0
 
+[State 1100, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 11100
+
 [State 1100, Fala]
 type = Explod
 trigger1 = Time = 0
@@ -1206,6 +1314,12 @@ sprpriority = 2
 anim = 1200
 juggle = 4
 velset = 0,0
+
+[State 1200, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 11200
 
 [State 1200, Fala]
 type = Explod
@@ -1276,6 +1390,12 @@ sprpriority = 2
 anim = 1300
 juggle = 4
 velset = 0,0
+
+[State 1300, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 11300
 
 [State 1300, Fala]
 type = Explod
@@ -1500,6 +1620,11 @@ anim = 3100
 juggle = 0
 velset = 0,0
 
+[State 3100, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 13100
+
 [State 3100, Pausa]
 type = SuperPause
 trigger1 = Time = 0
@@ -1637,7 +1762,21 @@ var(21) = -1
 [State -2, Bônus de dano]
 type = AttackMulSet
 trigger1 = 1
-value = ifelse(var(20) > 0, 1.2, 1)
+value = ifelse(var(20) > 0, 1.45, 1)
+
+[State -2, Ginga de Juliet]
+type = ChangeAnim
+trigger1 = stateno = 0
+trigger1 = var(20) > 0
+trigger1 = anim != 9203
+value = 9203
+
+[State -2, Tira os oculos]
+type = ChangeAnim
+trigger1 = stateno = 0
+trigger1 = var(20) <= 0
+trigger1 = anim = 9203
+value = 0
 
 [State -2, Aura]
 type = PalFX
