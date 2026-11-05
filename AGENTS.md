@@ -2,6 +2,7 @@
 
 O jogo saiu da Godot e agora roda no IKEMEN GO, com personagens em formato MUGEN.
 
+- Comece por `docs/missoes-codex.md`: faça as missões na ordem. O Codex faz o jogo, e o Claude revisa e escreve as missões.
 - Trabalhe sempre na branch `mugen`. Dê `git pull` antes de começar e não use mais `codex/pengaro`.
 - Não recrie o projeto Godot.
 - O Pengaró é gerado: mude `ferramentas/gerar_pengaro.py`, rode esse script e depois
