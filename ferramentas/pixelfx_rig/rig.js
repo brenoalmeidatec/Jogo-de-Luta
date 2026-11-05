@@ -12,6 +12,7 @@
 import { hex } from "./color.js";
 import { DUMMY_PAL } from "./actor.js";
 
+export const ESCALA = 3; // 1 = tamanho do pixelfx (38 px); 3 = 114 px, a altura dos sprites do jogo
 const PAL = Object.fromEntries(Object.entries(DUMMY_PAL).map(([k, v]) => [k, hex(v) >>> 0]));
 const INK = PAL.k, SEAM = PAL.J, MARK = PAL.m;
 // plates and joints: lit to dark
@@ -38,6 +39,7 @@ const M = {
   pelvis: 19.7, spine1: 2.8, spine2: 4.6, shoulderUp: 2.5, shoulderOut: 5.9, neckUp: 4.0, headUp: 3.1,
   hipDown: 1.1, hipOut: 2.8, thigh: 8.6, shin: 8.3, upper: 7.6, fore: 7.4, turn: 36 * DEG,
 };
+for (const k of Object.keys(M)) if (k !== "turn") M[k] *= ESCALA;
 /** Standing easy, in screen terms: hands and feet are where they should end up, y negative is up. */
 export const STAND = { lean: 0, crouch: 0, yaw: 0, fx: -3, fy: -15, bx: 5, by: -15, ffx: -2, ffy: -4, fbx: 3, fby: -4 };
 
@@ -64,20 +66,22 @@ function boneFrame(a, b, pole) {
 }
 const weaponOf = (name) => WEAPONS[name];
 
+const CAMPOS = ["fx", "fy", "bx", "by", "ffx", "ffy", "fbx", "fby", "lean", "crouch", "fz", "bz", "fzz", "bzz"];
+const escalaPose = (q) => { const o = { ...q }; for (const c of CAMPOS) if (typeof o[c] === "number") o[c] *= ESCALA; return o; };
 function solve(pose) {
-  const q = { ...STAND, ...pose }, lean = q.lean, W = q.weapon && weaponOf(q.weapon), OW = q.offWeapon && weaponOf(q.offWeapon);
+  const q = escalaPose({ ...STAND, ...pose }), lean = q.lean, W = q.weapon && weaponOf(q.weapon), OW = q.offWeapon && weaponOf(q.offWeapon);
   const sa = q.sa ?? 0, wl = q.wl ?? 1, axisZ = Math.sqrt(Math.max(0, 1 - wl * wl)) * (q.wz ?? 1);
   const axis = [Math.cos(sa) * wl, -Math.sin(sa) * wl, axisZ], side = [-Math.sin(sa), -Math.cos(sa), 0];
-  const two = !!(q.two && W), nearZ = q.fz ?? (two ? 3 : 4.5);
+  const two = !!(q.two && W), nearZ = q.fz ?? (two ? 3 : 4.5) * ESCALA;
   // how the chest is turned follows the hands: a hand driving forward brings its shoulder round; one drawn back opens him up
-  const fwd = (q.fx - STAND.fx) / 24, farFwd = two ? 0 : (q.bx - STAND.bx) / 22;
+  const ST = escalaPose(STAND), fwd = (q.fx - ST.fx) / (24 * ESCALA), farFwd = two ? 0 : (q.bx - ST.bx) / (22 * ESCALA);
   let turn = M.turn + (fwd >= 0 ? -44 * DEG * Math.min(1, fwd) : 28 * DEG * Math.min(1, -fwd * 1.8));
   turn += (farFwd > 0 ? 34 * DEG * Math.min(1, farFwd) : 0) + (q.twist ?? 0) * 4 * DEG;
   if (q.turn !== undefined) turn = q.turn;
-  const hipTurn = M.turn + (turn - M.turn) * 0.45, tilt = Math.atan2(lean, 13);
+  const hipTurn = M.turn + (turn - M.turn) * 0.45, tilt = Math.atan2(lean, 13 * ESCALA);
   const Rp = mm(rotZ(-tilt * 0.25), rotY(-hipTurn)), Rc = mm(rotZ(-tilt), rotY(-turn));
   // feet first: the pelvis sinks if that's what it takes for both legs to reach them
-  const ankleN = [q.ffx, -q.ffy - 1.8, q.fzz ?? 2.4], ankleF = [q.fbx, -q.fby - 1.8, q.bzz ?? -2.4];
+  const ankleN = [q.ffx, -q.ffy - 1.8 * ESCALA, q.fzz ?? 2.4 * ESCALA], ankleF = [q.fbx, -q.fby - 1.8 * ESCALA, q.bzz ?? -2.4 * ESCALA];
   let pelvis = [lean * 0.2, M.pelvis - q.crouch, 0];
   const hipAt = (s) => add(pelvis, mv(Rp, [0, -M.hipDown, s * M.hipOut]));
   const maxLeg = (M.thigh + M.shin) * 0.995;
@@ -98,14 +102,14 @@ function solve(pose) {
   // the arms: shoulders reach a little towards a far hand
   const pick = (s, target) => {
     const base = add(chest, mv(Rc, [0, M.shoulderUp, s * M.shoulderOut])), to = sub(target, base), d = len(to);
-    return add(base, mul(unit(to), Math.min(1.8, Math.max(0, d - 11) * 0.35)));
+    return add(base, mul(unit(to), Math.min(1.8 * ESCALA, Math.max(0, d - 11 * ESCALA) * 0.35)));
   };
   const nearT = [q.fx, -q.fy, nearZ];
-  const farT = two ? [q.fx + axis[0] * W.two, -q.fy + axis[1] * W.two, nearZ + axis[2] * W.two] : [q.bx, -q.by, q.bz ?? (q.armsFront ? 5.5 : -4.5)];
+  const farT = two ? [q.fx + axis[0] * W.two, -q.fy + axis[1] * W.two, nearZ + axis[2] * W.two] : [q.bx, -q.by, q.bz ?? (q.armsFront ? 5.5 : -4.5) * ESCALA];
   const sN = pick(1, nearT), sF = pick(-1, farT);
   const pole = (s, T, shoulder, hold) => {
     // elbows hang down and back; overhead they go out and forward
-    const up = clamp01((T[1] - shoulder[1] + 2) / 10);
+    const up = clamp01((T[1] - shoulder[1] + 2 * ESCALA) / (10 * ESCALA));
     const base = [-0.55 + up * 1.1, -1 + up * 0.9, s * (0.45 + up * 0.5)];
     if (!hold) return base;
     // holding something, the forearm wants to meet the handle side on: try round the circle, keep the best
@@ -197,40 +201,41 @@ const PART = { pelvis: 1, waist: 2, chest: 3, neck: 4, head: 5, face: 6, upperN:
 const useFrame = (name) => { curFrameIndex = FRAME_IDS.indexOf(name); };
 
 function drawBody(S) {
+  const K = ESCALA;
   const { B, armN, armF, legN, legF, sN, sF, hipN, hipF, turn } = S, F_ = (name) => B[name];
   useFrame("pelvis");
-  ellipsoid(add(F_("pelvis").t, mv(F_("pelvis").R, [0, -0.2, 0])), F_("pelvis").R, [2.9, 2.6, 4.2], PART.pelvis, 0);
+  ellipsoid(add(F_("pelvis").t, mv(F_("pelvis").R, [0, -0.2 * K, 0])), F_("pelvis").R, [2.9 * K, 2.6 * K, 4.2 * K], PART.pelvis, 0);
   useFrame("waist");
-  sweep(F_("pelvis").t, F_("chest").t, 3, 3.3, PART.waist, 1);
+  sweep(F_("pelvis").t, F_("chest").t, 3 * K, 3.3 * K, PART.waist, 1);
   useFrame("chest");
-  ellipsoid(add(F_("chest").t, mv(F_("chest").R, [0.2, 0.9, 0])), F_("chest").R, [3.4, 4.2, 5.5], PART.chest, 0);
+  ellipsoid(add(F_("chest").t, mv(F_("chest").R, [0.2 * K, 0.9 * K, 0])), F_("chest").R, [3.4 * K, 4.4 * K, 6.0 * K], PART.chest, 0);
   useFrame("neck");
-  sweep(F_("neck").t, add(F_("neck").t, mv(F_("head").R, [0, 1.6, 0])), 1.25, 1.15, PART.neck, 1);
+  sweep(F_("neck").t, add(F_("neck").t, mv(F_("head").R, [0, 1.6 * K, 0])), 1.25 * K, 1.15 * K, PART.neck, 1);
   useFrame("head");
-  ellipsoid(F_("head").t, F_("head").R, [3, 3.3, 2.8], PART.head, 0);
-  ellipsoid(add(F_("head").t, mv(F_("head").R, [0.85, -0.45, 0])), F_("head").R, [2.4, 2.7, 2.35], PART.face, 0);
+  ellipsoid(F_("head").t, F_("head").R, [3.7 * K, 4.0 * K, 3.4 * K], PART.head, 0);
+  ellipsoid(add(F_("head").t, mv(F_("head").R, [1.0 * K, -0.5 * K, 0])), F_("head").R, [3.0 * K, 3.3 * K, 2.9 * K], PART.face, 0);
   const arm = (far, A, sh, up, el, fo, ha, nameU, nameF) => {
     curDim = far ? 1 : 0;
     useFrame(nameU);
-    sphere(sh, 2.5, up, 0);
-    sweep(sh, A.joint, 2.1, 1.6, up, 0);
-    sphere(A.joint, 1.45, el, 1);
+    sphere(sh, 2.6 * K, up, 0);
+    sweep(sh, A.joint, 2.1 * K, 1.6 * K, up, 0, 0.35 * K);
+    sphere(A.joint, 1.45 * K, el, 1);
     useFrame(nameF);
-    sweep(A.joint, A.end, 1.6, 1.2, fo, 0, 0.15);
-    sphere(A.end, 1.9, ha, 0);
+    sweep(A.joint, A.end, 1.55 * K, 1.1 * K, fo, 0, 0.3 * K);
+    sphere(A.end, 1.7 * K, ha, 0);
     curDim = 0;
   };
   arm(false, armN, sN, PART.upperN, PART.elbowN, PART.foreN, PART.handN, "upperN", "foreN");
   arm(true, armF, sF, PART.upperF, PART.elbowF, PART.foreF, PART.handF, "upperF", "foreF");
   const leg = (far, L, hip, th, kn, sh, fo, nameT, nameS, nameFt) => {
     useFrame(nameT);
-    sweep(hip, L.joint, 3.2, 2.2, th, 0);
-    sphere(L.joint, 1.9, kn, 1);
+    sweep(hip, L.joint, 3.3 * K, 2.3 * K, th, 0, 0.5 * K);
+    sphere(L.joint, 1.9 * K, kn, 1);
     useFrame(nameS);
-    sweep(L.joint, L.end, 2.15, 1.4, sh, 0, 0.4);
+    sweep(L.joint, L.end, 2.15 * K, 1.3 * K, sh, 0, 0.8 * K);
     useFrame(nameFt);
     const R = F_(nameFt).R, a = F_(nameFt).t;
-    sweep(add(a, mv(R, [-1.5, -0.6, 0])), add(a, mv(R, [4.6, -1.1, 0])), 1.7, 1.25, fo, 0);
+    sweep(add(a, mv(R, [-1.5 * K, -0.6 * K, 0])), add(a, mv(R, [4.6 * K, -1.1 * K, 0])), 1.7 * K, 1.25 * K, fo, 0);
   };
   leg(false, legN, hipN, PART.thighN, PART.kneeN, PART.shinN, PART.footN, "thighN", "shinN", "footN");
   leg(true, legF, hipF, PART.thighF, PART.kneeF, PART.shinF, PART.footF, "thighF", "shinF", "footF");
@@ -402,7 +407,13 @@ function finish(S, restFrames) {
   // the outline, and everything into a small list of pixels
   const list = touched.slice(), ring = new Map();
   for (const i of list) for (const d of [-1, 1, -BW, BW]) { const j = i + d; if (Part[j] === 0 && !ring.has(j)) ring.set(j, i); }
-  const n = list.length + ring.size, out = { n, xs: new Int16Array(n), ys: new Int16Array(n), color: new Uint32Array(n), src: new Int16Array(n), part: new Uint8Array(n), ink: new Uint8Array(n), x0: 0, y0: 0, x1: 0, y1: 0 };
+  const n = list.length + ring.size, out = { n, xs: new Int16Array(n), ys: new Int16Array(n), color: new Uint32Array(n), src: new Int16Array(n), part: new Uint8Array(n), tone: new Float32Array(n), lx: new Float32Array(n), ly: new Float32Array(n), lz: new Float32Array(n), ink: new Uint8Array(n), x0: 0, y0: 0, x1: 0, y1: 0 };
+  const lpOf = (i, k) => {
+    const f = Fr[i];
+    if (f < 0) return;
+    const A = B[FRAME_IDS[f]], P = [(i % BW) - OX, OY - ((i / BW) | 0), Zb[i]], lp = tv(A.R, sub(P, A.t));
+    out.lx[k] = lp[0]; out.ly[k] = lp[1]; out.lz[k] = lp[2];
+  };
   const srcFor = (i) => {
     const f = Fr[i];
     if (f < 0 || !restFrames) return -1;
@@ -413,12 +424,12 @@ function finish(S, restFrames) {
   let k = 0, x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
   const push = (i, c, s, isInk) => {
     const x = (i % BW) - OX, y = ((i / BW) | 0) - OY;
-    out.xs[k] = x; out.ys[k] = y; out.part[k] = Part[i]; out.color[k] = c; out.src[k] = s; out.ink[k] = isInk ? 1 : 0;
+    out.xs[k] = x; out.ys[k] = y; out.part[k] = Part[i]; out.tone[k] = Tone[i]; lpOf(i, k); out.color[k] = c; out.src[k] = s; out.ink[k] = isInk ? 1 : 0;
     if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
     k++;
   };
   for (const i of list) push(i, Col[i], srcFor(i), Col[i] === INK);
-  for (const [j, i] of ring) push(j, INK, srcFor(i), true);
+  for (const [j, i] of ring) { const k0 = k; push(j, INK, srcFor(i), true); out.part[k0] = Part[i]; lpOf(i, k0); }
   let zs = 0;
   for (const i of list) zs += Zb[i];
   Object.assign(out, { x0, y0, x1, y1, z: list.length ? zs / list.length : 0 });
