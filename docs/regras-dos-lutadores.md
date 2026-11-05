@@ -1,7 +1,7 @@
 # Regras de todo lutador
 
 > **Este arquivo é lei.** Claude, Codex ou quem mais mexer em personagem segue estas regras. Personagem novo
-> só entra na `mugen` quando passa no [checklist de aceite](#8-checklist-de-aceite). Personagem antigo que ainda
+> só entra na `mugen` quando passa no [checklist de aceite](#9-checklist-de-aceite). Personagem antigo que ainda
 > não cumpre tudo ganha missão em `docs/missoes-codex.md` até cumprir.
 >
 > Se uma ficha de personagem ou outro documento disser o contrário, vale este arquivo. Só o Breno muda estas regras.
@@ -14,9 +14,10 @@
 4. [Despertar: a transformação](#4-despertar-a-transformação)
 5. [Como isso vira CMD e CNS no IKEMEN](#5-como-isso-vira-cmd-e-cns-no-ikemen)
 6. [Regra das ferramentas: como se cria um lutador](#6-regra-das-ferramentas-como-se-cria-um-lutador)
-7. [Regra dos efeitos: o estilo pixelfx](#7-regra-dos-efeitos-o-estilo-pixelfx)
-8. [Checklist de aceite](#8-checklist-de-aceite)
-9. [Modelo de ficha do lutador](#9-modelo-de-ficha-do-lutador)
+7. [Regra da fluidez: quantos quadros cada animação tem](#7-regra-da-fluidez-quantos-quadros-cada-animação-tem)
+7. [Regra dos efeitos: o estilo pixelfx](#8-regra-dos-efeitos-o-estilo-pixelfx)
+8. [Checklist de aceite](#9-checklist-de-aceite)
+9. [Modelo de ficha do lutador](#10-modelo-de-ficha-do-lutador)
 
 ---
 
@@ -33,7 +34,7 @@ corrida, rolamento, parry e supers).
 | Poder | Barra cheia + dois botões = Despertar, com golpes novos | Despertar que só aumenta dano |
 
 O que a gente pega dos outros jogos é **mecânica**. Nada de personagem, arte, nome de golpe, som ou música de jogo
-existente. Cada lutador bate do seu jeito, e esse jeito vai na ficha dele (seção 9).
+existente. Cada lutador bate do seu jeito, e esse jeito vai na ficha dele (seção 10).
 
 ---
 
@@ -113,7 +114,7 @@ Regras de toda corrente:
 1. O golpe seguinte só sai se o anterior **encostou** (acertou ou foi defendido). No vazio a corrente para.
 2. O **finalizador só sai se os três golpes acertaram de verdade**. Se algum foi defendido, a corrente acaba no 3º.
 3. O finalizador **derruba** o oponente (o levantar rápido continua valendo) e tem efeito de impacto forte
-   (seção 7).
+   (seção 8).
 4. O 1º e o 2º golpe podem cancelar em especial. O 3º cancela em especial só se acertou. O finalizador não cancela,
    a não ser no Despertar e para super.
 5. Fraca é rápida e dá pouco dano; forte é lenta, alcança mais e empurra mais. O finalizador forte joga mais longe.
@@ -164,7 +165,7 @@ Os dois **não podem fazer a mesma coisa**. Escolha dois papéis diferentes:
 - lento ou parado (fica na tela como armadilha);
 - teleguiado ou que volta (bumerangue).
 
-Arte do projétil vem do pixelfx (seção 7). No máximo 1 projétil próprio na tela por vez, a não ser no super.
+Arte do projétil vem do pixelfx (seção 8). No máximo 1 projétil próprio na tela por vez, a não ser no super.
 
 ### F. Ir para trás do oponente (pelo menos 1)
 
@@ -386,7 +387,7 @@ etapa, e não use ferramenta "sem licença" no jogo: essas servem só de referê
 
 | Etapa | Ferramenta | Licença | O que fazer |
 |---|---|---|---|
-| 1. Ficha | este arquivo, seção 9 | | Escrever a ficha com o kit completo antes de desenhar |
+| 1. Ficha | este arquivo, seção 10 | | Escrever a ficha com o kit completo antes de desenhar |
 | 2. Poses-chave | `ferramentas/gerar_sprites.py` + `ferramentas/personagens.json` | nossa | Gerar as folhas de poses do personagem |
 | 3. Pixel art | `ferramentas/pixelizar.py` | nossa | Converter para 112 px de altura, paleta fechada (ver `docs/proporcoes.md`) |
 | 4. Recorte | `ferramentas/recortar_quadros.py` | nossa | Cortar quadros com a âncora nos pés |
@@ -406,14 +407,69 @@ com link e licença.
 
 ---
 
-## 7. Regra dos efeitos: o estilo pixelfx
+## 7. Regra da fluidez: quantos quadros cada animação tem
+
+O objetivo é que não dê para ver corte: o lutador tem que se mexer como uma filmagem ou uma cutscene. O jogo roda
+a **60 ticks por segundo**, então a régua é:
+
+- **Golpe rápido: 1 desenho novo por tick** (60 desenhos por segundo).
+- **Em lugar nenhum um desenho fica mais de 2 ticks** na tela (nunca abaixo de 30 desenhos por segundo), a não ser
+  no congelamento de contato (`pausetime`), que é proposital.
+
+Mais desenhos **não** deixam o golpe mais lento. O frame data (preparação, ativo, recuperação, seção 8.3) continua
+igual; os desenhos a mais só preenchem o movimento.
+
+### 7.1 Mínimo de desenhos por animação
+
+| Animação | Mínimo de desenhos | Observação |
+|---|---|---|
+| Parado / ginga | 32–48 | loop sem emenda: o último quadro encaixa no primeiro |
+| Andar, correr | 24–32 | loop sem emenda, pé não desliza no chão |
+| Pulo (subida, topo, queda) | 24–32 | |
+| Agachar, levantar do agachado, virar | 8–12 cada | transição, não troca seca |
+| Defesa (entrar, segurar, sair) | 12–16 | |
+| Soco ou chute fraco (normal e cada golpe de corrente) | 16–20 | |
+| Soco ou chute forte (normal e cada golpe de corrente) | 28–36 | |
+| Finalizador de corrente, golpe de kombo | 28–40 | |
+| Especial, projétil (o corpo) | 40–60 | o projétil em si tem animação própria em loop |
+| Ir para trás do oponente | 40–60 | sumir, viajar e chegar virando |
+| Agarrão (lutador e vítima) | 60–90 | as duas animações casadas quadro a quadro |
+| Super, ativação do Despertar | 90–150+ | aqui é cutscene de verdade |
+| Tomar golpe, cair, levantar | 20–30 cada | |
+| Entrada, vitória, derrota | 60–120 | |
+
+### 7.2 O que todo golpe precisa ter
+
+1. **Antecipação:** o corpo prepara antes (recua o braço, gira o quadril). É o que avisa o golpe.
+2. **Smear (borrão) no movimento rápido:** nos 1–3 quadros mais rápidos, o membro estica ou deixa rastro, em vez
+   de pular de uma pose para a outra.
+3. **Continuação e movimento secundário:** depois do contato o corpo segue o embalo, e braço, cabelo, roupa e
+   faixa chegam atrasados e balançam até parar.
+4. **Easing:** começa devagar, acelera e freia. Nada de movimento em velocidade constante.
+5. **Contato:** o quadro de contato é o mais forte da animação e é nele que entram a caixa de acerto, o efeito
+   do pixelfx e o congelamento.
+
+### 7.3 Como produzir isso sem desenhar um por um
+
+Esse volume não sai na mão. Todo lutador é feito com **esqueleto / recorte (cutout)**: corpo separado em partes
+(cabeça, tronco, braço, antebraço, mão, coxa, canela, pé, roupa), montado num esqueleto, com as poses-chave
+desenhadas e o resto gerado por interpolação. As ferramentas são as da seção 6: RotSprite para girar as partes sem
+serrilhar, ToonCrafter ou morphin para os quadros do meio, `pixelizar.py` para fechar o pixel art e LibreSprite
+para retocar. O gerador do lutador (`ferramentas/gerar_<nome>.py`) é quem monta o esqueleto, interpola e exporta.
+
+Estimativa: com o kit mínimo (forma base + Despertar) e esses números, cada lutador fica com **cerca de 3.000
+desenhos**. O SFF aguenta; o cuidado é manter a paleta e a âncora nos pés iguais em todos.
+
+---
+
+## 8. Regra dos efeitos: o estilo pixelfx
 
 Todo impacto, projétil e aura vem do [pixelfx](https://github.com/patch-gg/pixelfx) (MIT, Patch; partes de
 Sprite Fusion, Hugo Duprez e Hollow Crown). Os efeitos prontos ficam em `assets/efeitos/` (veja o `LEIA-ME.md` e o
 `LICENSE-pixelfx.txt` de lá). O gerador já sabe ler o PNG + JSON (`carregar_faiscas` em
 `ferramentas/gerar_pengaro.py`); todo gerador novo reaproveita essa função.
 
-### 7.1 Que efeito em cada golpe
+### 8.1 Que efeito em cada golpe
 
 | Situação | Efeito |
 |---|---|
@@ -433,7 +489,7 @@ Use `sparkno = -1` no `HitDef` e solte o efeito com `Explod` no quadro de contat
 não a faísca padrão do motor. Cada lutador pode recolorir o efeito com a `palette` do pixelfx para ficar com a cara
 dele (fumaça roxa do Pengaró desperto, brasa do Hazaki Diabo Loiro).
 
-### 7.2 Fazer efeito novo
+### 8.2 Fazer efeito novo
 
 Faltou efeito? Faça no pixelfx, não desenhe solto:
 
@@ -450,7 +506,7 @@ Claude e Codex podem instalar a skill do pixelfx (`skills/pixelfx` do repositór
 do jeito que o projeto ensina: desenhar, renderizar, olhar, corrigir. Todo efeito novo entra em `assets/efeitos/`
 com PNG + JSON e uma linha na tabela do `LEIA-ME.md`.
 
-### 7.3 Programar o golpe "no estilo pixelfx"
+### 8.3 Programar o golpe "no estilo pixelfx"
 
 O pixelfx ensina que o que vende o golpe é o corpo: **preparação, congelamento no contato, o alvo balançando e a
 recuperação**. Os efeitos com ator trazem esse tempo no JSON (`meta.pixelfx.act`: `windup`, `hits` com `t`,
@@ -469,7 +525,7 @@ Efeito nunca aumenta alcance sozinho: a caixa de acerto acompanha o membro visí
 
 ---
 
-## 8. Checklist de aceite
+## 9. Checklist de aceite
 
 Copie para o PR do lutador e marque tudo:
 
@@ -491,7 +547,9 @@ Forma despertada
 
 Produção
 [ ] arte passou pelo processo da seção 6; licenças anotadas
-[ ] todo impacto usa efeito do pixelfx (seção 7.1), com pausetime/EnvShake pelo piso da 7.3
+[ ] cada animação tem o mínimo de desenhos da seção 7.1, nenhum desenho passa de 2 ticks fora do congelamento
+[ ] todo golpe tem antecipação, smear, continuação e easing (seção 7.2)
+[ ] todo impacto usa efeito do pixelfx (seção 8.1), com pausetime/EnvShake pelo piso da 8.3
 [ ] caixas conferidas no editor; combos conferidos no ikemen-combo-finder
 [ ] gerador roda limpo e o verificador passa; nada editado à mão em chars/<nome>/
 [ ] movelist.dat e README batem com o .cmd
@@ -500,7 +558,7 @@ Produção
 
 ---
 
-## 9. Modelo de ficha do lutador
+## 10. Modelo de ficha do lutador
 
 Toda criação de personagem começa preenchendo isto (em `docs/fichas/<nome>.md`). O "jeito de bater" de cada um
 mora aqui.
