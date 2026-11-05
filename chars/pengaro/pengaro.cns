@@ -10,6 +10,7 @@ victory4 = "Eu chu-chupo... chu-chu-CHUTO melhor que tu, porra!"
 victory5 = "T-tu ficou pa-parado igual cone. Ma-mas cone pelo menos fica de pé."
 victory6 = "D-d-demorei pra falar, mas tu de-de-demorou mais pra levantar."
 victory7 = "Mi-minhas bolas... MINHA BOLA tá sempre no pé, pa-pa-parceiro."
+victory8 = "Olha só, falei inteiro! Agora chama tua irmã que eu vou ensinar ela a gingar, hein!"
 
 [Data]
 life = 1000
@@ -114,15 +115,101 @@ trigger1 = 1
 value = SCA
 time = 1
 
+[State 181, Sorteio]
+type = VarSet
+trigger1 = Time = 0
+var(35) = Random % 3
+
+[State 181, Fala]
+type = Explod
+trigger1 = Time = 20
+trigger1 = var(35) = 0
+anim = 9123
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State 181, Fala]
+type = Explod
+trigger1 = Time = 20
+trigger1 = var(35) = 1
+anim = 9124
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State 181, Fala]
+type = Explod
+trigger1 = Time = 20
+trigger1 = var(35) = 2
+anim = 9125
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
 [Statedef 191]
 type = S
 ctrl = 0
 anim = 190
 velset = 0,0
 
+[State 191, Sorteio]
+type = VarSet
+trigger1 = Time = 0
+var(34) = Random < 250
+
 [State 191, Fala]
 type = Explod
 trigger1 = Time = 4
+trigger1 = var(34) = 1
+anim = 9101
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State 191, Fala]
+type = Explod
+trigger1 = Time = 44
+trigger1 = var(34) = 1
+anim = 9102
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State 191, Fala]
+type = Explod
+trigger1 = Time = 4
+trigger1 = var(34) = 0
 anim = 9100
 ownpal = 1
 postype = p1
@@ -920,10 +1007,51 @@ sprpriority = 2
 anim = 195
 velset = 0,0
 
+[State 195, Sorteio]
+type = VarSet
+trigger1 = Time = 0
+var(36) = Random < 200
+
 [State 195, Fala]
 type = Explod
 trigger1 = Time = 2
-anim = 9101
+anim = 9105
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State 195, Limpa fala]
+type = RemoveExplod
+trigger1 = AnimTime = 0
+id = 700
+
+[State 195, Fala]
+type = Explod
+trigger1 = AnimTime = 0
+trigger1 = var(36) = 0
+anim = 9106
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State 195, Fala]
+type = Explod
+trigger1 = AnimTime = 0
+trigger1 = var(36) = 1
+anim = 9107
+id = 700
 ownpal = 1
 postype = p1
 pos = 0, -125
@@ -1084,7 +1212,24 @@ value = 11000
 [State 1000, Fala]
 type = Explod
 trigger1 = Time = 0
-anim = 9102
+trigger1 = var(20) = 0
+anim = 9108
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State 1000, Fala]
+type = Explod
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+anim = 9117
+id = 700
 ownpal = 1
 postype = p1
 pos = 0, -125
@@ -1104,7 +1249,7 @@ projremanim = 1006
 projhits = 1
 projmisstime = 0
 projpriority = 2
-offset = 70, -32
+offset = 70, -12
 velocity = 3.2, 0
 attr = S, SP
 damage = 70, 4
@@ -1129,7 +1274,7 @@ projid = 1001
 projanim = 1005
 projhitanim = 1006
 projremanim = 1006
-offset = 70, -32
+offset = 70, -12
 velocity = 4.4, 0
 attr = S, SP
 damage = 50, 4
@@ -1170,7 +1315,24 @@ value = 11000
 [State 1001, Fala]
 type = Explod
 trigger1 = Time = 0
-anim = 9102
+trigger1 = var(20) = 0
+anim = 9108
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State 1001, Fala]
+type = Explod
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+anim = 9117
+id = 700
 ownpal = 1
 postype = p1
 pos = 0, -125
@@ -1190,7 +1352,7 @@ projremanim = 1006
 projhits = 1
 projmisstime = 0
 projpriority = 2
-offset = 70, -32
+offset = 70, -12
 velocity = 5.4, 0
 attr = S, SP
 damage = 70, 4
@@ -1215,7 +1377,7 @@ projid = 1001
 projanim = 1005
 projhitanim = 1006
 projremanim = 1006
-offset = 70, -32
+offset = 70, -12
 velocity = 6.6000000000000005, 0
 attr = S, SP
 damage = 50, 4
@@ -1256,7 +1418,61 @@ value = 11100
 [State 1100, Fala]
 type = Explod
 trigger1 = Time = 0
-anim = 9103
+trigger1 = var(20) = 0
+anim = 9110
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State 1100, Fala]
+type = Explod
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+anim = 9118
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State 1100, Limpa fala]
+type = RemoveExplod
+trigger1 = MoveHit = 1
+trigger1 = var(20) = 0
+id = 700
+
+[State 1100, Fala]
+type = Explod
+trigger1 = MoveHit = 1
+trigger1 = var(20) = 0
+anim = 9111
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State 1100, Fala]
+type = Explod
+trigger1 = AnimTime = 0
+trigger1 = !MoveContact
+trigger1 = var(20) = 0
+anim = 9116
+id = 700
 ownpal = 1
 postype = p1
 pos = 0, -125
@@ -1324,7 +1540,62 @@ value = 11200
 [State 1200, Fala]
 type = Explod
 trigger1 = Time = 0
-anim = 9104
+trigger1 = var(20) = 0
+anim = 9112
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State 1200, Fala]
+type = Explod
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+anim = 9119
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State 1200, Limpa fala]
+type = RemoveExplod
+trigger1 = MoveHit = 1
+trigger1 = var(20) = 0
+id = 700
+
+[State 1200, Fala]
+type = Explod
+trigger1 = MoveHit = 1
+trigger1 = var(20) = 0
+anim = 9113
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State 1200, Fala]
+type = Explod
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+trigger1 = !MoveContact
+trigger1 = var(20) = 0
+anim = 9116
+id = 700
 ownpal = 1
 postype = p1
 pos = 0, -125
@@ -1400,7 +1671,61 @@ value = 11300
 [State 1300, Fala]
 type = Explod
 trigger1 = Time = 0
-anim = 9105
+trigger1 = var(20) = 0
+anim = 9114
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State 1300, Fala]
+type = Explod
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+anim = 9120
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State 1300, Limpa fala]
+type = RemoveExplod
+trigger1 = MoveHit = 1
+trigger1 = var(20) = 0
+id = 700
+
+[State 1300, Fala]
+type = Explod
+trigger1 = MoveHit = 1
+trigger1 = var(20) = 0
+anim = 9115
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State 1300, Fala]
+type = Explod
+trigger1 = AnimTime = 0
+trigger1 = !MoveContact
+trigger1 = var(20) = 0
+anim = 9116
+id = 700
 ownpal = 1
 postype = p1
 pos = 0, -125
@@ -1504,7 +1829,8 @@ time = 1
 [State 2000, Fala]
 type = Explod
 trigger1 = Time = 2
-anim = 9107
+anim = 9127
+id = 700
 ownpal = 1
 postype = p1
 pos = 0, -125
@@ -1565,7 +1891,8 @@ time = 1
 [State 3000, Fala]
 type = Explod
 trigger1 = Time = 2
-anim = 9106
+anim = 9126
+id = 700
 ownpal = 1
 postype = p1
 pos = 0, -125
@@ -1660,7 +1987,8 @@ time = 1
 [State 3100, Fala]
 type = Explod
 trigger1 = Time = 2
-anim = 9108
+anim = 9128
+id = 700
 ownpal = 1
 postype = p1
 pos = 0, -125
@@ -1793,7 +2121,107 @@ time = 2
 [State -2, Fala]
 type = Explod
 trigger1 = var(21) = 59
+anim = 9129
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State -2, Ressaca anda devagar]
+type = PosAdd
+trigger1 = stateno = 20
+trigger1 = var(21) > 0
+x = -vel x * .2
+
+[State -2, Fala]
+type = Explod
+trigger1 = ProjHitTime(1000) = 0
+trigger1 = var(20) = 0
 anim = 9109
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State -2, Fala]
+type = Explod
+trigger1 = roundstate = 2
+trigger1 = roundno > 1
+trigger1 = var(31) = 0
+anim = 9103
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State -2, Round falado]
+type = VarSet
+trigger1 = roundstate = 2
+var(31) = 1
+
+[State -2, Fala]
+type = Explod
+trigger1 = movetype = H
+trigger1 = roundstate = 2
+trigger1 = alive
+trigger1 = var(30) = 0
+anim = 9104
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State -2, Primeiro golpe falado]
+type = VarSet
+trigger1 = movetype = H
+trigger1 = roundstate = 2
+var(30) = 1
+
+[State -2, Fala]
+type = Explod
+trigger1 = !alive
+trigger1 = var(32) = 0
+anim = 9121
+id = 700
+ownpal = 1
+postype = p1
+pos = 0, -125
+bindtime = -1
+removetime = 70
+sprpriority = 6
+facing = Facing
+ignorehitpause = 1
+
+[State -2, Conta derrota]
+type = VarAdd
+trigger1 = !alive
+var(32) = 1
+
+[State -2, Fala]
+type = Explod
+trigger1 = var(32) = 75
+anim = 9122
+id = 700
 ownpal = 1
 postype = p1
 pos = 0, -125

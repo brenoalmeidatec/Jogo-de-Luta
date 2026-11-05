@@ -12,6 +12,7 @@ Para mudar golpe, dano ou fala, edite este arquivo e rode:
   python ferramentas/gerar_pengaro.py
 """
 import json
+import math
 import struct
 from pathlib import Path
 
@@ -365,6 +366,11 @@ def montar_sprites():
         A(f"bola{i}", b, eixo=(b.width // 2, b.height // 2))
         g2 = b.resize((b.width * 3, b.height * 3), Image.NEAREST)
         A(f"bolao{i}", g2, eixo=(g2.width // 2, g2.height // 2))
+    # bola quicando: o eixo sobe e desce, então a bola pula sem mudar a trajetória
+    for i in range(8):
+        b = bola.rotate(90 * (i % 4), resample=Image.NEAREST, expand=True)
+        altura = round(30 * abs(math.sin(math.pi * i / 8)))
+        A(f"quica{i}", b, eixo=(b.width // 2, b.height // 2 + altura))
     # embaixadinha (provocação, intro e vitória)
     for i, y in enumerate((-30, -52, -68, -52)):
         A(f"embaixada{i}", com_bola(p["parado"], bola, 40, y))
@@ -391,11 +397,31 @@ def montar_sprites():
 # As falas ficam aqui para o Breno editar. A gagueira é só texto, nunca muda o tempo do golpe.
 BALOES = {
     "intro": "B-b-bora jogar? Ca-capoeira ou\npe-pelada, que eu de-de-dou conta!",
-    "provoca": "D-d-dá licença.\nMeu time é Chimpanzé FC!",
-    "bola": "Bo-bo-bo-bola de So-sombra!",
-    "compasso": "Co-co-compasso, porra!",
-    "armada": "A-a-a-armada!",
-    "caneta": "Ca-ca-caneta!",
+    "intro_trava": "P-p-p-p-p...",
+    "locutor": "FIGHT, CARALHO, A GENTE\nNÃO TEM O DIA TODO!",
+    "round": "H-h-hoje tem resenha, ca-caralho.",
+    "primeiro": "I-ih, já co-co-começou na sacanagem?",
+    "provoca": "F-f-f-f-f-f...",
+    "provoca_fim": "...ah, vai se foder, porra.",
+    "provoca_cai": "Ai, ca-caralho! A bo-bola!",
+    "bola_trava": "Bo-bo-bo-bo...",
+    "bola_ok": "...BOLA DE SOMBRA!",
+    "compasso_trava": "Co-co-co-co...",
+    "compasso_ok": "...COMPASSO, PORRA!",
+    "armada_trava": "A-a-a-a...",
+    "armada_ok": "...ARMADA!",
+    "caneta_trava": "Ca-ca-ca-ca...",
+    "caneta_ok": "...CANETA, FILHO DA PUTA!",
+    "errou": "...deixa pra lá, porra.",
+    "bola_liso": "BOLA DE SOMBRA, CARALHO!",
+    "compasso_liso": "COMPASSO NA TUA CARA!",
+    "armada_liso": "ARMADA, VEM QUE TEM!",
+    "caneta_liso": "CANETA, PASSOU POR BAIXO!",
+    "derrota": "F-f-f-foi falta, porra!\nCa-cadê o VAR, ca-caralho?",
+    "locutor_ko": "K.O.! ...ou, no caso dele,\nK-k-k-k-K.O.!",
+    "vitoria0": "F-f-foi de letra,\nfilho da puta.",
+    "vitoria1": "V-v-vai lá contar pra tua mãe\nque tu a-a-apanhou do gago.",
+    "vitoria2": "Mi-minhas bolas... MINHA BOLA\ntá sempre no pé, pa-pa-parceiro.",
     "golaco": "O-o-o-olha o... GOLAÇOOOO, CARALHO!",
     "lata": "A-a-a-agora sim, porra!\nSegura que eu vou me-me-meter!",
     "pelada": "CHAMA A RAPAZIADA, CARALHO! TÁ LISO AGORA!",
@@ -412,6 +438,7 @@ VITORIAS = [
     "T-tu ficou pa-parado igual cone. Ma-mas cone pelo menos fica de pé.",
     "D-d-demorei pra falar, mas tu de-de-demorou mais pra levantar.",
     "Mi-minhas bolas... MINHA BOLA tá sempre no pé, pa-pa-parceiro.",
+    "Olha só, falei inteiro! Agora chama tua irmã que eu vou ensinar ela a gingar, hein!",
 ]
 
 
@@ -490,7 +517,7 @@ def montar_air(s, faiscas):
     Q(810, [("agarra", 14), ("joga", 16)])
     # especiais
     Q(1000, [("rasteira0", 8), ("especial", 5), ("rasteira1", 6), ("rasteira3", 22)], BAIXO)
-    Q(1005, [(f"bola{i}", 4) for i in range(4)], [(-12, -10, 12, 10)])
+    Q(1005, [(f"quica{i}", 4) for i in range(8)], [(-12, -40, 12, 10)])
     Q(1006, [("bola0", 3), ("bola2", 3)], [])
     giro = (-40, -80, 90, -20)
     Q(1100, [("rasteira0", 8)] + [(f"gira{i}", 4, giro) for i in (0, 1, 2, 3)] + [("rasteira3", 14)])
@@ -580,9 +607,23 @@ def fim(numero, destino=0):
 
 
 def fala(numero, chave, trigger="Time = 0"):
-    return (f"[State {numero}, Fala]\ntype = Explod\ntrigger1 = {trigger}\nanim = {ID_BALAO[chave]}\n"
-            "ownpal = 1\npostype = p1\npos = 0, -125\nbindtime = -1\nremovetime = 70\n"
+    gatilhos = "\n".join(f"trigger1 = {g.strip()}" for g in trigger.split(" & "))
+    return (f"[State {numero}, Fala]\ntype = Explod\n{gatilhos}\nanim = {ID_BALAO[chave]}\n"
+            "id = 700\nownpal = 1\npostype = p1\npos = 0, -125\nbindtime = -1\nremovetime = 70\n"
             "sprpriority = 6\nfacing = Facing\nignorehitpause = 1\n\n")
+
+
+def nome_travado(numero, golpe, fim_sem_acerto="AnimTime = 0"):
+    """O nome do golpe trava na gagueira e só sai inteiro se acertar. No Despertar ele fala liso.
+
+    É só balão: nada aqui muda o tempo do golpe.
+    """
+    return (fala(numero, f"{golpe}_trava", "Time = 0 & var(20) = 0")
+            + fala(numero, f"{golpe}_liso", "Time = 0 & var(20) > 0")
+            + f"[State {numero}, Limpa fala]\ntype = RemoveExplod\ntrigger1 = MoveHit = 1\ntrigger1 = var(20) = 0\n"
+              "id = 700\n\n"
+            + fala(numero, f"{golpe}_ok", "MoveHit = 1 & var(20) = 0")
+            + fala(numero, "errou", f"{fim_sem_acerto} & !MoveContact & var(20) = 0"))
 
 
 def normal(numero, attr, dano, trigger, *, fis="S", tipo_st="S", leve=False, **k):
@@ -706,7 +747,7 @@ ctrl = 1
 
 """
 
-CNS_INTRO = """[Statedef 170]
+CNS_INTRO_BASE = """[Statedef 170]
 type = S
 ctrl = 0
 anim = 170
@@ -767,6 +808,21 @@ trigger1 = AnimTime = 0
 value = 0
 
 """ % ID_BALAO["intro"]
+
+CNS_INTRO = CNS_INTRO_BASE.replace(
+    "[State 191, Fala]\ntype = Explod\ntrigger1 = Time = 4\n",
+    "[State 191, Sorteio]\ntype = VarSet\ntrigger1 = Time = 0\nvar(34) = Random < 250\n\n"
+    + fala(191, "intro_trava", "Time = 4 & var(34) = 1")
+    + fala(191, "locutor", "Time = 44 & var(34) = 1")
+    + "[State 191, Fala]\ntype = Explod\ntrigger1 = Time = 4\ntrigger1 = var(34) = 0\n",
+).replace(
+    "[Statedef 191]",
+    "[State 181, Sorteio]\ntype = VarSet\ntrigger1 = Time = 0\nvar(35) = Random % 3\n\n"
+    + fala(181, "vitoria0", "Time = 20 & var(35) = 0")
+    + fala(181, "vitoria1", "Time = 20 & var(35) = 1")
+    + fala(181, "vitoria2", "Time = 20 & var(35) = 2")
+    + "[Statedef 191]",
+)
 
 
 def projetil(numero, trigger, anim, hit_anim, vel, dano, attr, hits=1, intervalo=0, id_=1000, ofs="70, -32", queda=False):
@@ -829,7 +885,11 @@ def montar_cns():
 
     # provocação: tira 25 de barra (250 no motor) do oponente quando termina inteira
     c.append(estado(195, "S", "I", "S", anim=195))
+    c.append("[State 195, Sorteio]\ntype = VarSet\ntrigger1 = Time = 0\nvar(36) = Random < 200\n\n")
     c.append(fala(195, "provoca", "Time = 2"))
+    c.append("[State 195, Limpa fala]\ntype = RemoveExplod\ntrigger1 = AnimTime = 0\nid = 700\n\n")
+    c.append(fala(195, "provoca_fim", "AnimTime = 0 & var(36) = 0"))
+    c.append(fala(195, "provoca_cai", "AnimTime = 0 & var(36) = 1"))
     c.append("[State 195, Tira barra]\ntype = PowerAdd\ntrigger1 = AnimTime = 0\nvalue = -250\nredirectid = enemynear,id\n\n")
     c.append(fim(195))
 
@@ -861,10 +921,11 @@ def montar_cns():
     # Bola de Sombra: fraca lenta, forte rápida, no Despertar sai dobrada
     for n, vel in ((1000, 3.2), (1001, 5.4)):
         c.append(estado(n, "S", "A", "S", anim=1000, juggle=4))
-        c.append(fala(n, "bola"))
-        c.append(projetil(n, "AnimElem = 2", 1005, 1006, vel, 70, "S, SP"))
+        c.append(fala(n, "bola_trava", "Time = 0 & var(20) = 0"))
+        c.append(fala(n, "bola_liso", "Time = 0 & var(20) > 0"))
+        c.append(projetil(n, "AnimElem = 2", 1005, 1006, vel, 70, "S, SP", ofs="70, -12"))
         c.append(f"[State {n}, Dobrada]\ntype = Projectile\ntrigger1 = AnimElem = 3\ntrigger1 = var(20) > 0\n"
-                 f"projid = 1001\nprojanim = 1005\nprojhitanim = 1006\nprojremanim = 1006\noffset = 70, -32\n"
+                 f"projid = 1001\nprojanim = 1005\nprojhitanim = 1006\nprojremanim = 1006\noffset = 70, -12\n"
                  f"velocity = {vel + 1.2}, 0\nattr = S, SP\ndamage = 50, 4\nanimtype = Med\nguardflag = MA\n"
                  "hitflag = MAF\npausetime = 2, 10\nhitsound = F5,1\nguardsound = F6,0\nground.type = High\n"
                  "ground.slidetime = 12\nground.hittime = 18\nground.velocity = -4\nair.velocity = -2,-3.5\n\n")
@@ -872,7 +933,7 @@ def montar_cns():
 
     # Meia-lua de Compasso Sombria: avança girando e derruba
     c.append(estado(1100, "S", "A", "S", anim=1100, juggle=4))
-    c.append(fala(1100, "compasso"))
+    c.append(nome_travado(1100, "compasso"))
     c.append("[State 1100, Avança]\ntype = VelSet\ntrigger1 = AnimElem = 2\nx = 4\n\n")
     c.append("[State 1100, Para]\ntype = VelSet\ntrigger1 = AnimElem = 6\nx = 0\n\n")
     c.append(hitdef(1100, "AnimElem = 2", "S, SA", 110, tipo="Heavy", queda=True, vel="-5,-4", ar="-4,-4", pausa=(10, 10), pesado=True))
@@ -880,7 +941,7 @@ def montar_cns():
 
     # Armada do Quilombo: anti-aéreo, invencível nos 5 primeiros quadros
     c.append(estado(1200, "S", "A", "S", anim=1200, juggle=4))
-    c.append(fala(1200, "armada"))
+    c.append(nome_travado(1200, "armada", "Vel Y > 0 & Pos Y >= 0"))
     c.append("[State 1200, Invencivel]\ntype = NotHitBy\ntrigger1 = Time < 5\nvalue = SCA\ntime = 1\n\n")
     c.append("[State 1200, Sobe]\ntype = VelSet\ntrigger1 = Time = 4\nx = 2\ny = -7.5\n\n")
     c.append("[State 1200, Ar]\ntype = StateTypeSet\ntrigger1 = Time = 4\nstatetype = A\nphysics = A\n\n")
@@ -889,7 +950,7 @@ def montar_cns():
 
     # Caneta: desliza por baixo do projétil e troca de lado no acerto
     c.append(estado(1300, "C", "A", "S", anim=1300, juggle=4))
-    c.append(fala(1300, "caneta"))
+    c.append(nome_travado(1300, "caneta"))
     c.append("[State 1300, Por baixo]\ntype = NotHitBy\ntrigger1 = Time < 18\nvalue = , NP, SP, HP\ntime = 1\n\n")
     c.append("[State 1300, Desliza]\ntype = VelSet\ntrigger1 = AnimElem = 2\nx = 7\n\n")
     c.append("[State 1300, Para]\ntype = VelSet\ntrigger1 = AnimElem = 3\nx = 0\n\n")
@@ -992,6 +1053,16 @@ time = 2
 
 """)
     c.append(fala(-2, "ressaca", "var(21) = 59"))
+    c.append("[State -2, Ressaca anda devagar]\ntype = PosAdd\ntrigger1 = stateno = 20\ntrigger1 = var(21) > 0\n"
+             "x = -vel x * .2\n\n")
+    c.append(fala(-2, "bola_ok", "ProjHitTime(1000) = 0 & var(20) = 0"))
+    c.append(fala(-2, "round", "roundstate = 2 & roundno > 1 & var(31) = 0"))
+    c.append("[State -2, Round falado]\ntype = VarSet\ntrigger1 = roundstate = 2\nvar(31) = 1\n\n")
+    c.append(fala(-2, "primeiro", "movetype = H & roundstate = 2 & alive & var(30) = 0"))
+    c.append("[State -2, Primeiro golpe falado]\ntype = VarSet\ntrigger1 = movetype = H\ntrigger1 = roundstate = 2\nvar(30) = 1\n\n")
+    c.append(fala(-2, "derrota", "!alive & var(32) = 0"))
+    c.append("[State -2, Conta derrota]\ntype = VarAdd\ntrigger1 = !alive\nvar(32) = 1\n\n")
+    c.append(fala(-2, "locutor_ko", "var(32) = 75"))
     return "".join(c)
 
 
@@ -1119,9 +1190,29 @@ st = pengaro.cns
 stcommon = common1.cns
 sprite = pengaro.sff
 anim = pengaro.air
+movelist = movelist.dat
 
 [Palette Keymap]
 x = 1
+"""
+
+
+GOLPES = """<#f0f000>:Especiais:</>
+Bola de Sombra						_D_F^K
+Meia-lua de Compasso Sombria		_D_B^K
+Armada do Quilombo					_F_D^P
+Caneta								_D_B^P
+
+<#f0f000>:Supers:</>
+Golaço da Noite <#bebebe>(1000)</>	_B_F_D^K
+Pelada Sombria (no Despertar)		_B_F_D^K
+
+<#f0f000>:Sistema:</>
+Despertar: Lata Gelada <#bebebe>(1000)</>	^X_+^A_+^Y
+Rolamento							^X_+^A
+Golpe de afastar					^Y_+^B
+Agarrão								[_B/_F]_+^Y
+Provocação							^C
 """
 
 
@@ -1137,6 +1228,7 @@ def main():
     (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8")
     (SAIDA / "pengaro.cmd").write_text(montar_cmd(), encoding="utf-8")
     (SAIDA / "pengaro.def").write_text(DEF, encoding="utf-8")
+    (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8")
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 
