@@ -3,6 +3,9 @@
 Faça na ordem. Cada missão vira uma branch `codex/<assunto>` com PR para a `mugen`, com gerador e arquivos
 gerados no mesmo commit. Marque a missão como feita neste arquivo no mesmo PR.
 
+**Regra fixa:** toda missão que mexe em lutador segue [`regras-dos-lutadores.md`](regras-dos-lutadores.md). Quando
+uma missão e as regras discordarem, valem as regras.
+
 Esta lista saiu de uma revisão dos arquivos da `mugen` no commit `26445ab`. **Ninguém viu a batalha simulada:**
 abrir o `Ikemen_GO.exe` é bloqueado para o Claude neste PC. Então o que está marcado como suspeita precisa
 ser confirmado rodando o jogo, com Pengaró contra Hazaki no modo Watch.
@@ -98,3 +101,15 @@ caído.
 **H. Barra de vida verde no round 2.** No quadro do segundo round a barra do Pengaró está verde, enquanto a do Hazaki
 está amarela (`longe-e-cortado.png`). Se isso vier de efeito do motor (por exemplo vida recuperada ou "red life"),
 ok, e se não vier, confira o que o Pengaró faz com a vida entre os rounds.
+
+## 6. Adequar Pengaró e Hazaki às regras de todo lutador
+
+As [regras](regras-dos-lutadores.md) chegaram depois dos dois. Compare cada um com o checklist da seção 8 de lá e
+anote em `docs/fichas/pengaro.md` e `docs/fichas/hazaki.md` o que já existe e o que falta. Depois, em PRs separados:
+
+1. Correntes de 3 golpes + finalizador nos quatro botões (substitui a corrente de até 4 fracos atual).
+2. Despertar com barra cheia e x + y (hoje é x + a + y com 1 estoque).
+3. Segundo projétil, golpe de ir para trás do oponente e agarrão agachado + agarrão de comando.
+4. O que faltar de kombos, especiais e golpes exclusivos do Despertar.
+
+Pronto quando: os dois passam no checklist inteiro.
