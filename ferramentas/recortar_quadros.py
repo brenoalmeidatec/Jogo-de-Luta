@@ -45,8 +45,8 @@ def fatias(img, n):
             grupos.append((inicio, x))
             inicio = None
     grupos = [g for g in grupos if g[1] - g[0] > 20]  # tira sujeira solta
-    if len(grupos) != n:
-        raise SystemExit(f"achei {len(grupos)} quadros em vez de {n}; confira a folha")
+    if len(grupos) != n:  # figuras encostadas: corta em células iguais
+        return [img.crop((w * i // n, 0, w * (i + 1) // n, h)) for i in range(n)]
     return [img.crop((a, 0, b, h)) for a, b in grupos]
 
 
