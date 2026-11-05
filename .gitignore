@@ -1,7 +1,2 @@
 .env
 __pycache__/
-
-# Godot
-.godot/
-*.translation
-export_presets.cfg
