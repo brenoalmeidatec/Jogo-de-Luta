@@ -502,6 +502,11 @@ func _draw() -> void:
 	draw_circle(Vector2.ZERO, 48.0, Color(0, 0, 0, 0.35))
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
+	if character == "pengaro":
+		_draw_pengaro()
+		_draw_debug_boxes()
+		return
+
 	if _draw_sprite():
 		_draw_debug_boxes()
 		return
@@ -643,6 +648,97 @@ func _draw_body(body: Color, dark: Color, skin: Color) -> void:
 	draw_circle(_p(hand_f), 10.0, Color.WHITE)
 	if move_id == "fireball" and state == State.ATTACK and state_frame <= int(move["startup"]) + 4:
 		draw_circle(_p(target), 6.0 + 14.0 * ext, Color(color.lightened(0.5), 0.5))
+
+
+# Pengaró: o desenho acompanha as juntas, sem depender de uma folha de sprites.
+func _pengaro_shape(points: Array, fill: Color) -> void:
+	var polygon := PackedVector2Array()
+	for point: Vector2 in points:
+		polygon.append(_p(point))
+	draw_colored_polygon(polygon, fill)
+	polygon.append(polygon[0])
+	draw_polyline(polygon, Color("#281925"), 3.0, true)
+
+
+func _pengaro_segment(a: Vector2, b: Vector2, width: float, fill: Color) -> void:
+	_limb(a, b, width + 4.0, Color("#281925"))
+	_limb(a, b, width, fill)
+
+
+func _pengaro_leg(hip: Vector2, knee: Vector2, ankle: Vector2, front: bool) -> void:
+	var cloth := Color("#f2dfcf") if front else Color("#a99aaa")
+	var cuff := knee.lerp(ankle, 0.77)
+	_pengaro_segment(ankle, ankle + Vector2(12, 2), 10.0, Color("#a15b39"))
+	_pengaro_segment(hip, knee, 29.0, cloth)
+	_pengaro_segment(knee, cuff, 24.0, cloth)
+	draw_polyline(PackedVector2Array([_p(hip), _p(knee), _p(cuff)]), Color("#43684a"), 6.0, true)
+	if front:
+		_pengaro_segment(cuff, ankle, 13.0, Color("#36564b"))
+
+
+func _draw_pengaro() -> void:
+	var skin := Color("#aa603c") if flash == 0 else Color("#e99871")
+	var shade := skin.darkened(0.28)
+	var phase := anim_time * 0.15
+	var swing := sin(phase)
+	var crouch := crouch_amt
+	var reach := _extension()
+	var airborne := not is_grounded()
+	var stride := sin(anim_time * 0.27) if state == State.WALK else 0.0
+	var lean := swing * 5.0 + reach * 14.0
+	if state == State.HITSTUN or state == State.LAUNCHED:
+		lean = -19.0
+	var hip := Vector2(lean * 0.45, -83.0 + 34.0 * crouch + cos(phase * 2.0) * 2.0)
+	var chest := hip + Vector2(lean, -51.0 + 8.0 * crouch)
+	var head := chest + Vector2(8.0, -25.0)
+	var rear := Vector2(-27.0 + stride * 21.0, -6.0 - maxf(stride, 0.0) * 11.0)
+	var front := Vector2(25.0 - stride * 21.0, -6.0 - maxf(-stride, 0.0) * 11.0)
+	if airborne:
+		rear = Vector2(-19, -35)
+		front = Vector2(29, -48)
+	var rear_knee := hip.lerp(rear, 0.50) + Vector2(8, -6)
+	var front_knee := hip.lerp(front, 0.49) + Vector2(19, -7)
+	var hand := chest + Vector2(38, -7 + swing * 6.0)
+	var elbow := chest + Vector2(24, 23)
+	var back_hand := chest + Vector2(-26, 34 - swing * 9.0)
+	if state == State.BLOCKSTUN:
+		hand = head + Vector2(16, 5)
+		back_hand = head + Vector2(8, 15)
+	elif state == State.WIN:
+		hand = head + Vector2(21, -23)
+	elif state == State.ATTACK:
+		if move.get("limb", "") == "leg":
+			front = front.lerp(_limb_target(), reach)
+			front_knee = front_knee.lerp(hip.lerp(front, 0.52), reach)
+		else:
+			hand = hand.lerp(_limb_target(), reach)
+			elbow = elbow.lerp(chest.lerp(hand, 0.55), reach)
+
+	var down := is_grounded() and (state == State.KO or state == State.KNOCKDOWN)
+	if down:
+		draw_set_transform(Vector2(0, -13), -PI * 0.5 * _df)
+	_pengaro_leg(hip + Vector2(-7, 0), rear_knee, rear, false)
+	_pengaro_segment(chest + Vector2(-14, 1), chest + Vector2(-26, 20), 15.0, shade)
+	_pengaro_segment(chest + Vector2(-26, 20), back_hand, 12.0, shade)
+	_pengaro_leg(hip + Vector2(8, 1), front_knee, front, true)
+	_pengaro_shape([hip + Vector2(-14, 4), hip + Vector2(15, 4), chest + Vector2(21, 3),
+		chest + Vector2(13, -8), chest + Vector2(-14, -8), chest + Vector2(-22, 5)], skin)
+	draw_line(_p(chest + Vector2(-11, 16)), _p(chest + Vector2(11, 14)), shade, 3.0, true)
+	_pengaro_segment(hip + Vector2(-13, 2), hip + Vector2(14, 2), 5.0, Color("#d7ab42"))
+	_pengaro_shape([hip + Vector2(1, 2), hip + Vector2(16, 5), hip + Vector2(12, 28),
+		hip + Vector2(3, 20)], Color("#266263"))
+	_pengaro_shape([head + Vector2(-13, 10), head + Vector2(-15, -7), head + Vector2(-5, -15),
+		head + Vector2(12, -13), head + Vector2(17, 1), head + Vector2(13, 13),
+		head + Vector2(3, 17)], skin)
+	_pengaro_shape([head + Vector2(-15, 0), head + Vector2(-15, -9), head + Vector2(-5, -16),
+		head + Vector2(10, -15), head + Vector2(15, -9), head + Vector2(-5, -6),
+		head + Vector2(-10, 1)], Color("#231b23"))
+	draw_line(_p(head + Vector2(6, 0)), _p(head + Vector2(14, 0)), Color("#281925"), 2.5)
+	draw_line(_p(head + Vector2(7, 10)), _p(head + Vector2(13, 9)), shade, 2.0)
+	_pengaro_segment(chest + Vector2(13, 4), elbow, 17.0, skin)
+	_pengaro_segment(elbow, hand, 13.0, skin)
+	draw_circle(_p(hand), 6.0, skin.lightened(0.15))
+	draw_set_transform(Vector2.ZERO)
 
 
 # ---------------------------------------------------------------- sprites
