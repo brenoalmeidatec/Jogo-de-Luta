@@ -4,15 +4,15 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((Get-Content -Liter
 exit /b
 #PS#START
 # Jogo de Luta: baixa a versao mais nova do GitHub e abre o jogo.
-# Tudo fica em %LOCALAPPDATA%\JogoDeLuta. Usa a Godot que ja estiver no computador.
-# Para trocar a Godot usada, apague %LOCALAPPDATA%\JogoDeLuta\godot_caminho.txt.
+# Tudo fica em %USERPROFILE%\JogoDeLuta. Usa a Godot que ja estiver no computador.
+# Para trocar a Godot usada, apague %USERPROFILE%\JogoDeLuta\godot_caminho.txt.
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 $repo     = 'brenoalmeidatec/Jogo-de-Luta'
 $branch   = 'codex/pengaro'   # branch com o jogo. Troque quando o PR for aceito.
-$base     = Join-Path $env:LOCALAPPDATA 'JogoDeLuta'
+$base     = Join-Path $env:USERPROFILE 'JogoDeLuta'
 $game     = Join-Path $base 'jogo'
 $godotDir = Join-Path $base 'godot'
 New-Item -ItemType Directory -Force $base | Out-Null
