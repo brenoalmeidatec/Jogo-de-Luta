@@ -32,6 +32,10 @@ Tela base 304x224, personagens de 104 a 128 px. Veja `docs/proporcoes.md` e `fer
 2. Na Godot, clique em **Importar**, escolha o `project.godot` desta pasta e depois em **Importar e editar**.
 3. Aperte **F5** para jogar.
 
+Ou use o atalho `ferramentas/Jogo de Luta.bat` (Windows): coloque na área de trabalho e dê dois cliques.
+Ele baixa a versão mais nova do GitHub, baixa a Godot 4.3 na primeira vez e abre o jogo.
+Tudo fica em `%LOCALAPPDATA%\JogoDeLuta`.
+
 A tela base é 304x224 (resolução de arcade, proporção do KOF), ampliada 4x numa janela de 1216x896.
 Os personagens normais têm 112 px, metade da altura da tela, e o HUD segue `ferramentas/hud_layout.json`.
 
