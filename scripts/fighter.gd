@@ -679,8 +679,13 @@ func _pose_name() -> String:
 		State.HITSTUN, State.LAUNCHED, State.KO, State.KNOCKDOWN:
 			return "apanhando"
 		State.ATTACK:
-			if move_id == "fireball" or move_id == "cyclone":
+			if move_id == "fireball":
 				return "especial"
+			# "rasteira" é o "especial" sem a bola: serve para os golpes rentes ao chão.
+			if move_id == "cyclone" or move_id == "c_lk" or move_id == "c_hk":
+				return "rasteira"
+			if move_id == "c_lp":
+				return "agachado"  # ainda sem pose própria; a de soco é em pé e mostraria ele alto demais
 			if _extension() < 0.35:
 				return "agachado" if move.get("crouch", false) else ("pulo" if move.get("air", false) else "parado")
 			return "soco" if move.get("limb", "") == "arm" else "chute"
@@ -694,6 +699,8 @@ func _draw_sprite() -> bool:
 		return false
 	var frames: Dictionary = _sheet["frames"]
 	var pose := _pose_name()
+	if pose == "rasteira" and not frames.has(pose):
+		pose = "especial"
 	if not frames.has(pose):
 		pose = "parado"
 		if not frames.has(pose):
@@ -703,7 +710,8 @@ func _draw_sprite() -> bool:
 	var rot := 0.0
 	var off := Vector2.ZERO
 	if (state == State.KNOCKDOWN or state == State.KO) and is_grounded():
-		rot = -PI * 0.5 * _df  # deitado de costas
+		rot = -PI * 0.5  # deitado de costas (a escala negativa de _df já espelha depois de girar)
+		off = Vector2(50.0 * _df, -47.0) * WORLD_PER_PX  # apoia o corpo no chão, centrado em pos
 	elif state == State.HITSTUN:
 		off.x = sin(float(state_frame) * 2.0) * 2.0
 	var mod := Color(1.0, 0.55, 0.55) if flash > 0 else Color.WHITE

@@ -11,7 +11,7 @@ $ProgressPreference = 'SilentlyContinue'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 $repo     = 'brenoalmeidatec/Jogo-de-Luta'
-$branch   = 'claude/base-godot'   # branch com o jogo. Troque quando o PR for aceito.
+$branch   = 'codex/pengaro'   # branch com o jogo. Troque quando o PR for aceito.
 $base     = Join-Path $env:LOCALAPPDATA 'JogoDeLuta'
 $game     = Join-Path $base 'jogo'
 $godotDir = Join-Path $base 'godot'

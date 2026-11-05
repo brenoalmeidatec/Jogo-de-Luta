@@ -79,4 +79,4 @@ consistentes e deixa o caminho aberto para um modo online com rollback.
 
 Enquanto os sprites não existem, os lutadores são desenhados com formas simples. Quando houver
 `sprites/kaio/pixel/kaio.png` + `kaio.json` (gerados por `ferramentas/pixelizar.py`), o jogo usa o sprite
-automaticamente. O jogador 1 é o Kaio e o jogador 2 é o Brutus (`scripts/match.gd`).
+automaticamente. O jogador 1 é o Pengaró (com sprites) e o jogador 2 é o Brutus, ainda desenhado com formas simples (`scripts/match.gd`).
