@@ -410,33 +410,35 @@ com link e licença.
 ## 7. Regra da fluidez: quantos quadros cada animação tem
 
 O objetivo é que não dê para ver corte: o lutador tem que se mexer como uma filmagem ou uma cutscene. O jogo roda
-a **60 ticks por segundo**, então a régua é:
+a **60 ticks por segundo**. A regra tem dois níveis:
 
-- **Golpe rápido: 1 desenho novo por tick** (60 desenhos por segundo).
-- **Em lugar nenhum um desenho fica mais de 2 ticks** na tela (nunca abaixo de 30 desenhos por segundo), a não ser
-  no congelamento de contato (`pausetime`), que é proposital.
+- **Mínimo (obrigatório para todo lutador):** nenhum desenho fica mais de **2 ticks** na tela (nunca abaixo de
+  30 desenhos por segundo), a não ser no congelamento de contato (`pausetime`), que é proposital. Lutador que não
+  bate o mínimo não entra.
+- **Meta (1 desenho novo por tick, 60 por segundo):** só na ginga, nos golpes fortes, nos especiais e no Despertar
+  (ativação e super), onde mais aparece. O resto pode ficar no mínimo.
 
 Mais desenhos **não** deixam o golpe mais lento. O frame data (preparação, ativo, recuperação, seção 8.3) continua
 igual; os desenhos a mais só preenchem o movimento.
 
-### 7.1 Mínimo de desenhos por animação
+### 7.1 Desenhos por animação
 
-| Animação | Mínimo de desenhos | Observação |
-|---|---|---|
-| Parado / ginga | 32–48 | loop sem emenda: o último quadro encaixa no primeiro |
-| Andar, correr | 24–32 | loop sem emenda, pé não desliza no chão |
-| Pulo (subida, topo, queda) | 24–32 | |
-| Agachar, levantar do agachado, virar | 8–12 cada | transição, não troca seca |
-| Defesa (entrar, segurar, sair) | 12–16 | |
-| Soco ou chute fraco (normal e cada golpe de corrente) | 16–20 | |
-| Soco ou chute forte (normal e cada golpe de corrente) | 28–36 | |
-| Finalizador de corrente, golpe de kombo | 28–40 | |
-| Especial, projétil (o corpo) | 40–60 | o projétil em si tem animação própria em loop |
-| Ir para trás do oponente | 40–60 | sumir, viajar e chegar virando |
-| Agarrão (lutador e vítima) | 60–90 | as duas animações casadas quadro a quadro |
-| Super, ativação do Despertar | 90–150+ | aqui é cutscene de verdade |
-| Tomar golpe, cair, levantar | 20–30 cada | |
-| Entrada, vitória, derrota | 60–120 | |
+| Animação | Mínimo (obrigatório) | Meta | Observação |
+|---|---|---|---|
+| Parado / ginga | 16–24 | **32–48** | loop sem emenda: o último quadro encaixa no primeiro |
+| Andar, correr | 12–16 | | loop sem emenda, pé não desliza no chão |
+| Pulo (subida, topo, queda) | 12–16 | | |
+| Agachar, levantar do agachado, virar | 4–6 cada | | transição, não troca seca |
+| Defesa (entrar, segurar, sair) | 6–8 | | |
+| Soco ou chute fraco (normal e cada golpe de corrente) | 8–12 | | |
+| Soco ou chute forte (normal e cada golpe de corrente) | 14–20 | **28–36** | |
+| Finalizador de corrente, golpe de kombo | 14–20 | | |
+| Especial, projétil (o corpo) | 20–40 | **40–60** | o projétil em si tem animação própria em loop |
+| Ir para trás do oponente | 20–40 | **40–60** | é especial: sumir, viajar e chegar virando |
+| Agarrão (lutador e vítima) | 30–50 | | as duas animações casadas quadro a quadro |
+| Super, ativação do Despertar | 40–80 | **90–150+** | aqui é cutscene de verdade |
+| Tomar golpe, cair, levantar | 10–20 cada | | |
+| Entrada, vitória, derrota | 30–60 | | |
 
 ### 7.2 O que todo golpe precisa ter
 
@@ -451,14 +453,14 @@ igual; os desenhos a mais só preenchem o movimento.
 
 ### 7.3 Como produzir isso sem desenhar um por um
 
-Esse volume não sai na mão. Todo lutador é feito com **esqueleto / recorte (cutout)**: corpo separado em partes
+Mesmo o mínimo é muito desenho para fazer na mão. Todo lutador é feito com **esqueleto / recorte (cutout)**: corpo separado em partes
 (cabeça, tronco, braço, antebraço, mão, coxa, canela, pé, roupa), montado num esqueleto, com as poses-chave
 desenhadas e o resto gerado por interpolação. As ferramentas são as da seção 6: RotSprite para girar as partes sem
 serrilhar, ToonCrafter ou morphin para os quadros do meio, `pixelizar.py` para fechar o pixel art e LibreSprite
 para retocar. O gerador do lutador (`ferramentas/gerar_<nome>.py`) é quem monta o esqueleto, interpola e exporta.
 
-Estimativa: com o kit mínimo (forma base + Despertar) e esses números, cada lutador fica com **cerca de 3.000
-desenhos**. O SFF aguenta; o cuidado é manter a paleta e a âncora nos pés iguais em todos.
+Estimativa: com o kit mínimo (forma base + Despertar), cada lutador fica com **cerca de 1.500 desenhos** no
+mínimo, e chega perto de 3.000 se tudo que tem meta for feito na meta. O SFF aguenta; o cuidado é manter a paleta e a âncora nos pés iguais em todos.
 
 ---
 
@@ -548,6 +550,7 @@ Forma despertada
 Produção
 [ ] arte passou pelo processo da seção 6; licenças anotadas
 [ ] cada animação tem o mínimo de desenhos da seção 7.1, nenhum desenho passa de 2 ticks fora do congelamento
+[ ] (desejável) ginga, golpes fortes, especiais e Despertar na meta de 1 desenho por tick
 [ ] todo golpe tem antecipação, smear, continuação e easing (seção 7.2)
 [ ] todo impacto usa efeito do pixelfx (seção 8.1), com pausetime/EnvShake pelo piso da 8.3
 [ ] caixas conferidas no editor; combos conferidos no ikemen-combo-finder
