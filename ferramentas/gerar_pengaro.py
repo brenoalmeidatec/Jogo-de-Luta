@@ -17,8 +17,6 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-import rig_pengaro
-
 RAIZ = Path(__file__).resolve().parent.parent
 FOLHA = RAIZ / "sprites/pengaro/pixel/pengaro.png"
 INFO = RAIZ / "sprites/pengaro/pixel/pengaro.json"
@@ -329,14 +327,12 @@ def montar_sprites():
     for i in range(8):
         A(f"rola{i}", gira(p["agachado"], 45 * i, 0, -42))
     # golpes
-    # esqueleto: parado, andando e soco com o mesmo traço em todos os quadros
-    rig = rig_pengaro.Rig()
-    for nome, quadros in (("rig_parado", rig_pengaro.parado(rig)), ("rig_anda", rig_pengaro.andando(rig)),
-                          ("rig_soco", rig_pengaro.soco(rig))):
-        for i, q in enumerate(quadros):
+    # quadros desenhados de novo, um por um (veja ferramentas/recortar_quadros.py)
+    for nome in ("parado", "anda", "soco"):
+        for i, arquivo in enumerate(sorted((RAIZ / "sprites/pengaro/quadros" / nome).glob("*.png"))):
             tela = Image.new("RGBA", (LARG, ALT))
-            tela.paste(q, (EIXO_X - 104, EIXO_Y - 119))
-            A(f"{nome}{i}", tela)
+            tela.alpha_composite(Image.open(arquivo).convert("RGBA"), (EIXO_X - 104, EIXO_Y - 119))
+            A(f"q_{nome}{i}", tela)
     A("soco0", mistura(p["parado"], p["soco"], 0.5))
     A("soco1", p["soco"])
     A("soco2", move(p["soco"], 6))
@@ -421,15 +417,15 @@ VITORIAS = [
 def montar_air(s, faiscas):
     a = Air(s)
     Q = a.acao
-    Q(0, [(f"rig_parado{i}", 5) for i in range(12)])
+    Q(0, [(f"q_parado{i}", 6) for i in range(8)])
     Q(9203, [(f"juliet{i}", 6) for i in range(4)])
     Q(5, [("parado0", 3), ("anda0", 3)])
     Q(6, [("agacha0", 3), ("parado0", 3)], BAIXO)
     Q(10, [("agacha0", 3)], BAIXO)
     Q(11, [("agacha1", 12), ("agacha2", 12)], BAIXO)
     Q(12, [("agacha0", 3)], BAIXO)
-    Q(20, [(f"rig_anda{i}", 4) for i in range(12)])
-    Q(21, [(f"rig_anda{i}", 4) for i in range(11, -1, -1)])
+    Q(20, [(f"q_anda{i}", 5) for i in range(8)])
+    Q(21, [(f"q_anda{i}", 5) for i in range(7, -1, -1)])
     Q(40, [("prepulo", 4)])
     for n in (41, 42, 43):
         Q(n, [(f"mortal{i}", 2) for i in range(12)] + [("pulo_topo", -1)], NO_AR)
@@ -456,9 +452,9 @@ def montar_air(s, faiscas):
 
     # normais: caixa de golpe em (x1, y1, x2, y2), x para frente, y negativo para cima
     def soco(n, lig, ativo, rec, caixa):
-        fim = [rec // 4 + (1 if i < rec % 4 else 0) for i in range(4)]
-        Q(n, [("rig_soco1", lig // 2), ("rig_soco2", lig - lig // 2), ("rig_soco4", 1, caixa), ("rig_soco5", ativo - 1, caixa)]
-          + [(f"rig_soco{6 + i}", t) for i, t in enumerate(fim)])
+        um = max(1, lig // 3)
+        Q(n, [("q_soco1", um), ("q_soco2", um), ("q_soco3", lig - 2 * um), ("q_soco4", 1, caixa),
+              ("q_soco5", ativo - 1, caixa), ("q_soco6", rec // 2), ("q_soco7", rec - rec // 2)])
 
     def chute(n, lig, ativo, rec, caixa):
         Q(n, [("chute0", lig), ("chute1", 1, caixa), ("chute2", ativo - 1, caixa), ("chute3", rec)])
