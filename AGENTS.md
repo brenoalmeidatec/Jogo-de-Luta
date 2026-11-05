@@ -16,3 +16,6 @@ O jogo saiu da Godot e agora roda no IKEMEN GO, com personagens em formato MUGEN
   Street Fighter. Só mecânica: nada de personagens, arte, nomes de golpes, sons ou músicas de jogos existentes.
 - Resenha pesada pode. Não pode piada de escravidão nem o estereótipo da mulher loira.
 - Lata e camisa sem marca real.
+- Precisa que o Claude faça algo (revisar PR, rodar o jogo, gerar arte, integrar lote de animação)? Abra uma issue
+  com o rótulo `claude` ou escreva `[para-claude]` na descrição do PR. O Claude vigia o repositório, faz por PR
+  para a `mugen` e responde no pedido. Detalhes em `docs/pedidos-para-claude.md`.
