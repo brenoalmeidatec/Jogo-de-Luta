@@ -22,6 +22,7 @@ FOLHA = RAIZ / "sprites/pengaro/pixel/pengaro.png"
 INFO = RAIZ / "sprites/pengaro/pixel/pengaro.json"
 SAIDA = RAIZ / "chars/pengaro"
 EFEITOS = RAIZ / "assets/efeitos"
+ATAQUES_DESPERTADOS = {200, 210, 215, 230, 240, 245, 260, 400, 410, 430, 440, 600, 610, 650, 1000, 1100, 1200, 1300}
 FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9202: "shield-block"}
 
 # Tela de trabalho de cada sprite: pés em (EIXO_X, EIXO_Y).
@@ -210,6 +211,7 @@ class Air:
         self.s = sprites
         self.txt = ["; Gerado por ferramentas/gerar_pengaro.py. Edite lá, não aqui.\n"]
         self.acoes = set()
+        self.arte_despertada = {}
 
     def acao(self, numero, quadros, caixa=CORPO, loop=None):
         """quadros: lista de (nome_sprite, ticks) ou (nome_sprite, ticks, caixa_de_golpe) ou com flip 'H'."""
@@ -231,6 +233,25 @@ class Air:
             g, ind = self.s.codigos[nome]
             t.append(f"{g},{ind}, 0,0, {ticks}" + (f", {flip}" if flip else ""))
         self.txt.append("\n".join(t) + "\n")
+        if numero in ATAQUES_DESPERTADOS or numero == 3100:
+            variantes = []
+            for nome, ticks, *resto in quadros:
+                if nome not in self.arte_despertada:
+                    grupo, indice = self.s.codigos[nome]
+                    original = next(img for g, i, img, _, _ in self.s.lista if (g, i) == (grupo, indice))
+                    aura = Image.new("RGBA", original.size)
+                    sombra = Image.new("RGBA", original.size, (92, 39, 138))
+                    sombra.putalpha(original.getchannel("A"))
+                    aura.alpha_composite(sombra, (-5, 2))
+                    aura.alpha_composite(original)
+                    self.arte_despertada[nome] = self.s.add(f"despertado_{nome}", aura)
+                if resto and resto[0] and numero != 3100:
+                    x1, y1, x2, y2 = resto[0]
+                    recuo = min(8, (x2 - x1) // 4)
+                    resto[0] = (x1 + recuo, y1, x2 - recuo, y2)
+                variantes.append((self.arte_despertada[nome], ticks, *resto))
+            self.acao(numero + 10000, variantes, caixa, loop)
+
 
 
 def carregar_faiscas(sprites):
@@ -278,6 +299,9 @@ def montar_sprites():
     A("agacha2", estica(p["agachado"], 1.015))
     # pulo
     A("prepulo", estica(mistura(p["parado"], p["agachado"], 0.6), 0.97))
+    # Mortal visual: a rotação não altera a trajetória nem as caixas do salto.
+    for i in range(12):
+        A(f"mortal{i}", gira(p["pulo"], i * 30))
     A("pulo_sobe", estica(p["pulo"], 1.05))
     A("pulo_topo", p["pulo"])
     A("pulo_desce", gira(p["pulo"], 6))
@@ -340,6 +364,16 @@ def montar_sprites():
     # despertar: bebe a lata
     A("lata0", com_lata(p["defesa"]))
     A("lata1", gira(com_lata(p["defesa"]), -10, 0, 0))
+    for i, angulo in enumerate((-6, 2, 7, 1)):
+        tela = p["parado"].copy()
+        d = ImageDraw.Draw(tela)
+        x, y = EIXO_X, EIXO_Y
+        # Armação esportiva e lente roxa na altura dos olhos.
+        d.line((x - 6, y - 98, x + 17, y - 99), fill="#d2d8df", width=2)
+        d.polygon([(x + 3, y - 99), (x + 19, y - 100),
+                   (x + 16, y - 94), (x + 7, y - 93)], fill="#35224e")
+        d.line((x + 7, y - 98, x + 16, y - 99), fill="#b378d1")
+        A(f"juliet{i}", gira(tela, angulo, 0, 0))
     A("lata2", estica(p["parado"], 1.03))
     # balões
     for chave, texto in BALOES.items():
@@ -350,7 +384,7 @@ def montar_sprites():
 # As falas ficam aqui para o Breno editar. A gagueira é só texto, nunca muda o tempo do golpe.
 BALOES = {
     "intro": "B-b-bora jogar? Ca-capoeira ou\npe-pelada, que eu de-de-dou conta!",
-    "provoca": "F-f-f-f-f-f...",
+    "provoca": "D-d-dá licença.\nMeu time é Chimpanzé FC!",
     "bola": "Bo-bo-bo-bola de So-sombra!",
     "compasso": "Co-co-compasso, porra!",
     "armada": "A-a-a-armada!",
@@ -378,6 +412,7 @@ def montar_air(s, faiscas):
     a = Air(s)
     Q = a.acao
     Q(0, [(f"parado{i}", 6) for i in (0, 1, 2, 3, 4, 5)])
+    Q(9203, [(f"juliet{i}", 6) for i in range(4)])
     Q(5, [("parado0", 3), ("anda0", 3)])
     Q(6, [("agacha0", 3), ("parado0", 3)], BAIXO)
     Q(10, [("agacha0", 3)], BAIXO)
@@ -387,7 +422,7 @@ def montar_air(s, faiscas):
     Q(21, [(f"anda{i}", 6) for i in (3, 2, 1, 0)])
     Q(40, [("prepulo", 4)])
     for n in (41, 42, 43):
-        Q(n, [("pulo_sobe", 8), ("pulo_topo", -1)], NO_AR)
+        Q(n, [(f"mortal{i}", 2) for i in range(12)] + [("pulo_topo", -1)], NO_AR)
     for n in (44, 45, 46):
         Q(n, [("pulo_topo", 8), ("pulo_desce", -1)], NO_AR)
     Q(47, [("pouso", 3), ("parado0", 2)])
@@ -499,7 +534,12 @@ def estado(numero, tipo="S", mov="A", fis="S", anim=None, juggle=None, velset="0
         t.append(f"juggle = {juggle}")
     if velset:
         t.append(f"velset = {velset}")
-    return "\n".join(t) + extra + "\n\n"
+    resultado = "\n".join(t) + extra + "\n\n"
+    if anim in ATAQUES_DESPERTADOS or anim == 3100:
+        gatilho = "" if anim == 3100 else "trigger1 = var(20) > 0\n"
+        resultado += (f"[State {numero}, Arte despertada]\ntype = ChangeAnim\n"
+                      f"trigger1 = Time = 0\n{gatilho}value = {anim + 10000}\n\n")
+    return resultado
 
 
 def hitdef(numero, trigger, attr, dano, tipo="Light", guarda="MA", alvo="MAF", pausa=(8, 8), hit=12, escorrega=5,
@@ -903,7 +943,21 @@ var(21) = -1
 [State -2, Bônus de dano]
 type = AttackMulSet
 trigger1 = 1
-value = ifelse(var(20) > 0, 1.2, 1)
+value = ifelse(var(20) > 0, 1.45, 1)
+
+[State -2, Ginga de Juliet]
+type = ChangeAnim
+trigger1 = stateno = 0
+trigger1 = var(20) > 0
+trigger1 = anim != 9203
+value = 9203
+
+[State -2, Tira os oculos]
+type = ChangeAnim
+trigger1 = stateno = 0
+trigger1 = var(20) <= 0
+trigger1 = anim = 9203
+value = 0
 
 [State -2, Aura]
 type = PalFX
@@ -946,12 +1000,12 @@ def montar_cmd():
          "[Remap]\nx = x\ny = y\nz = z\na = a\nb = b\nc = c\ns = s\n\n",
          "[Defaults]\ncommand.time = 15\ncommand.buffer.time = 3\n\n"]
     for b in "ab":
-        c.append(comando("golaco", f"~D, DF, F, D, DF, F, {b}", 24))
-        c.append(comando("bola_fraca" if b == "a" else "bola_forte", f"~D, DF, F, {b}", 18))
-        c.append(comando("compasso", f"~D, DB, B, {b}", 18))
+        c.append(comando("golaco", f"~B, F, D, {b}", 24))
+        c.append(comando("bola_fraca" if b == "a" else "bola_forte", f"~D, F, {b}", 18))
+        c.append(comando("compasso", f"~D, B, {b}", 18))
     for b in "xy":
-        c.append(comando("armada", f"~F, D, DF, {b}", 18))
-        c.append(comando("caneta", f"~D, DB, B, {b}", 18))
+        c.append(comando("armada", f"~F, D, {b}", 18))
+        c.append(comando("caneta", f"~D, B, {b}", 18))
     c.append(comando("FF", "F, F", 10))
     c.append(comando("BB", "B, B", 10))
     c.append(comando("recovery", "x+a", 1))
@@ -1056,8 +1110,8 @@ def main():
     SAIDA.mkdir(parents=True, exist_ok=True)
     s = montar_sprites()
     faiscas = carregar_faiscas(s)
-    escrever_sff(SAIDA / "pengaro.sff", s)
     a = montar_air(s, faiscas)
+    escrever_sff(SAIDA / "pengaro.sff", s)
     (SAIDA / "pengaro.air").write_text("\n".join(a.txt), encoding="utf-8")
     cns = montar_cns()
     cns = cns.replace("[Data]", "[Quotes]\n" + "".join(f'victory{i + 1} = "{v}"\n' for i, v in enumerate(VITORIAS)) + "\n[Data]", 1)
