@@ -63,3 +63,9 @@ tudo em pixel art de 112 px de altura. Veja `docs/proporcoes.md` para as propor�
 ## Efeitos
 
 Os efeitos do pixelfx continuam em `assets/efeitos/` (veja o LEIA-ME de lá), integrados aos impactos e à defesa do Pengaró.
+
+## Animação
+
+Nenhum golpe pula direto de uma pose para outra. Os quadros ficam em `sprites/pengaro/quadros/`;
+os de chute e agachar saem de `ferramentas/quadros_intermediarios.py` (precisa de `pip install numpy opencv-python-headless`).
+Recursos livres que dá para aproveitar estão em `docs/recursos-github.md`.
