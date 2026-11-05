@@ -44,6 +44,8 @@ func reset() -> void:
 
 
 func fighter_name(f) -> String:
+	if f.display_name != "":
+		return String(f.display_name).to_upper()
 	if f.character != "":
 		return String(f.character).to_upper()
 	return "JOGADOR %d" % (f.player_index + 1)

@@ -75,6 +75,7 @@ var moves: Dictionary = {
 
 var player_index := 0
 var character := ""  # nome da pasta em sprites/ (ex.: "kaio"). Sem sprite, usa o boneco desenhado.
+var display_name := ""  # nome mostrado no HUD, com acentos (ex.: "Pengaró"). Vazio usa character.
 var color := Color.WHITE
 var opponent  # o outro lutador
 var debug_boxes := false
