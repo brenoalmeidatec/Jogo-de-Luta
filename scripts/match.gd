@@ -59,7 +59,7 @@ func _ready() -> void:
 	add_child(world)
 	p1 = FighterScript.new()
 	p1.player_index = 0
-	p1.character = "kaio"
+	p1.character = "pengaro"
 	p1.color = Color(0.85, 0.22, 0.2)
 	p2 = FighterScript.new()
 	p2.player_index = 1
