@@ -343,7 +343,9 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
         A(f"rola{i}", gira(p["agachado"], 45 * i, 0, -42))
     # golpes
     # quadros desenhados de novo, um por um (veja ferramentas/recortar_quadros.py)
-    for nome in ("parado", "anda", "soco"):
+    # quadros do meio entre os desenhos (ferramentas/entremeio.py): ginga e andar a 2 ticks por desenho
+    fluidas = () if hazaki else ("ginga_fluida", "anda_fluida")
+    for nome in ("parado", "anda", "soco") + fluidas:
         if hazaki:
             origens = {"parado": p["parado"], "anda": p["andando"], "soco": p["soco"]}
             for i in range(8):
@@ -474,15 +476,22 @@ VITORIAS = [
 def montar_air(s, faiscas, hazaki=False, arte_despertada=None):
     a = Air(s, arte_despertada)
     Q = a.acao
-    Q(0, [(f"q_parado{i}", 6) for i in range(8)])
+    if hazaki:
+        Q(0, [(f"q_parado{i}", 6) for i in range(8)])
+    else:
+        Q(0, [(f"q_ginga_fluida{i}", 2) for i in range(32)])
     Q(9203, [(f"juliet{i}", 6) for i in range(4)])
     Q(5, [("parado0", 3), ("anda0", 3)])
     Q(6, [("agacha0", 3), ("parado0", 3)], BAIXO)
     Q(10, [("agacha0", 3)], BAIXO)
     Q(11, [("agacha1", 12), ("agacha2", 12)], BAIXO)
     Q(12, [("agacha0", 3)], BAIXO)
-    Q(20, [(f"q_anda{i}", 5) for i in range(8)])
-    Q(21, [(f"q_anda{i}", 5) for i in range(7, -1, -1)])
+    if hazaki:
+        Q(20, [(f"q_anda{i}", 5) for i in range(8)])
+        Q(21, [(f"q_anda{i}", 5) for i in range(7, -1, -1)])
+    else:
+        Q(20, [(f"q_anda_fluida{i}", 2) for i in range(32)])
+        Q(21, [(f"q_anda_fluida{i}", 2) for i in range(31, -1, -1)])
     Q(40, [("prepulo", 4)])
     for n in (41, 42, 43):
         Q(n, [("pulo_sobe", 8), ("pulo_topo", -1)] if hazaki else
