@@ -104,7 +104,7 @@ ok, e se não vier, confira o que o Pengaró faz com a vida entre os rounds.
 
 ## 6. Adequar Pengaró e Hazaki às regras de todo lutador
 
-As [regras](regras-dos-lutadores.md) chegaram depois dos dois. Compare cada um com o checklist da seção 8 de lá e
+As [regras](regras-dos-lutadores.md) chegaram depois dos dois. Compare cada um com o checklist da seção 9 de lá e
 anote em `docs/fichas/pengaro.md` e `docs/fichas/hazaki.md` o que já existe e o que falta. Depois, em PRs separados:
 
 1. Correntes de 3 golpes + finalizador nos quatro botões (substitui a corrente de até 4 fracos atual).
