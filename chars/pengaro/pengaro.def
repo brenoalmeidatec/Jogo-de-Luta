@@ -1,0 +1,20 @@
+; Gerado por ferramentas/gerar_pengaro.py. Edite lá, não aqui.
+[Info]
+name = "Pengaro"
+displayname = "Pengaró"
+versiondate = 11,05,2026
+mugenversion = 1.1
+author = "Breno"
+pal.defaults = 1
+localcoord = 320,240
+
+[Files]
+cmd = pengaro.cmd
+cns = pengaro.cns
+st = pengaro.cns
+stcommon = common1.cns
+sprite = pengaro.sff
+anim = pengaro.air
+
+[Palette Keymap]
+x = 1

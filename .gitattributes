@@ -1,0 +1,15 @@
+# Mantém todos os arquivos de texto com quebra de linha LF no repositório,
+# para que editores no Windows não reescrevam o arquivo inteiro a cada mudança.
+* text=auto eol=lf
+
+# Scripts do Windows ficam como estão (CRLF), para rodar no cmd.
+*.bat -text
+*.cmd -text
+
+# Arquivos binários
+*.png binary
+*.jpg binary
+*.wav binary
+*.ogg binary
+*.ttf binary
+*.sff binary
