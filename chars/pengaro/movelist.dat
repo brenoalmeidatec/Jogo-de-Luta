@@ -3,10 +3,13 @@ Bola de Sombra						_D_F^K
 Meia-lua de Compasso Sombria		_D_B^K
 Armada do Quilombo					_F_D^P
 Caneta								_D_B^P
+Mão de Chimpá / Mão Pesada          _D_F^P
+Sola de Várzea / Pisão de Bar       _B_D^K
 
 <#f0f000>:Supers:</>
 Golaço da Noite <#bebebe>(1000)</>	_B_F_D^K
 Pelada Sombria (no Despertar)		_B_F_D^K
+Bando da Várzea / Apagão da Várzea  _B_F_D^P
 
 <#f0f000>:Sistema:</>
 Despertar: Lata Gelada <#bebebe>(1000)</>	^X_+^A_+^Y
@@ -14,3 +17,4 @@ Rolamento							^X_+^A
 Golpe de afastar					^Y_+^B
 Agarrão								[_B/_F]_+^Y
 Provocação							^C
+Parry                              _F^C

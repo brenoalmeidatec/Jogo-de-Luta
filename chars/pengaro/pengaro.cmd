@@ -25,7 +25,7 @@ command = ~D, F, a
 time = 18
 
 [Command]
-name = "compasso"
+name = "compasso_a"
 command = ~D, B, a
 time = 18
 
@@ -40,29 +40,85 @@ command = ~D, F, b
 time = 18
 
 [Command]
-name = "compasso"
+name = "compasso_b"
 command = ~D, B, b
 time = 18
 
 [Command]
-name = "armada"
+name = "armada_x"
 command = ~F, D, x
 time = 18
 
 [Command]
-name = "caneta"
+name = "caneta_x"
 command = ~D, B, x
 time = 18
 
 [Command]
-name = "armada"
+name = "armada_y"
 command = ~F, D, y
 time = 18
 
 [Command]
-name = "caneta"
+name = "caneta_y"
 command = ~D, B, y
 time = 18
+
+[Command]
+name = "golpe_216"
+command = /F, y
+time = 18
+
+[Command]
+name = "golpe_246"
+command = /F, b
+time = 18
+
+[Command]
+name = "golpe_201"
+command = /B, x
+time = 18
+
+[Command]
+name = "golpe_231"
+command = /B, a
+time = 18
+
+[Command]
+name = "golpe_1400"
+command = ~D, F, x
+time = 18
+
+[Command]
+name = "golpe_1401"
+command = ~D, F, y
+time = 18
+
+[Command]
+name = "golpe_1500"
+command = ~B, D, a
+time = 18
+
+[Command]
+name = "golpe_1501"
+command = ~B, D, b
+time = 18
+
+[Command]
+name = "golpe_3200"
+command = ~B, F, D, x
+time = 24
+
+[Command]
+name = "golpe_3200"
+command = ~B, F, D, y
+time = 24
+
+[Command]
+name = "parry"
+command = /F, c
+time = 1
+buffer.time = 1
 
 [Command]
 name = "FF"
@@ -155,7 +211,44 @@ time = 1
 [State -1, Pode cancelar]
 type = VarSet
 trigger1 = 1
-var(1) = ctrl || ((stateno = 200 || stateno = 215 || stateno = 230 || stateno = 245 || stateno = 400 || stateno = 410 || stateno = 430 || stateno = 260) && movecontact && movecontact <= 8)
+var(1) = ctrl || ((stateno = 200 || stateno = 210 || stateno = 215 || stateno = 216 || stateno = 230 || stateno = 245 || stateno = 400 || stateno = 410 || stateno = 430 || stateno = 260) && movecontact && movecontact <= 8)
+
+[State -1, Bando da Várzea]
+type = ChangeState
+value = 3200
+triggerall = command = "golpe_3200"
+triggerall = statetype != A
+triggerall = power >= 2000
+trigger1 = var(1)
+trigger2 = (stateno = [1000,1501]) && movehit && movehit <= 8
+
+[State -1, Mão de Chimpá]
+type = ChangeState
+value = 1400
+triggerall = command = "golpe_1400"
+triggerall = statetype != A
+trigger1 = var(1)
+
+[State -1, Mão de Chimpá]
+type = ChangeState
+value = 1401
+triggerall = command = "golpe_1401"
+triggerall = statetype != A
+trigger1 = var(1)
+
+[State -1, Sola de Várzea]
+type = ChangeState
+value = 1500
+triggerall = command = "golpe_1500"
+triggerall = statetype != A
+trigger1 = var(1)
+
+[State -1, Sola de Várzea]
+type = ChangeState
+value = 1501
+triggerall = command = "golpe_1501"
+triggerall = statetype != A
+trigger1 = var(1)
 
 [State -1, Pelada Sombria]
 type = ChangeState
@@ -165,7 +258,7 @@ triggerall = power >= 1000
 triggerall = ((var(20) > 0) || (life <= 200 && power >= 2000))
 triggerall = statetype != A
 trigger1 = var(1)
-trigger2 = (var(20) > 0) && (stateno = 1000 || stateno = 1001 || stateno = 1100 || stateno = 1200 || stateno = 1300) && movecontact
+trigger2 = (stateno = [1000,1501]) && movehit && movehit <= 8
 
 [State -1, Golaco da Noite]
 type = ChangeState
@@ -174,7 +267,7 @@ triggerall = command = "golaco"
 triggerall = power >= 1000
 triggerall = statetype != A
 trigger1 = var(1)
-trigger2 = (var(20) > 0) && (stateno = 1000 || stateno = 1001 || stateno = 1100 || stateno = 1200 || stateno = 1300) && movecontact
+trigger2 = (stateno = [1000,1501]) && movehit && movehit <= 8
 
 [State -1, Despertar]
 type = ChangeState
@@ -185,24 +278,45 @@ triggerall = var(20) = 0
 triggerall = statetype = S
 trigger1 = ctrl
 
-[State -1, Armada]
+[State -1, armada]
 type = ChangeState
 value = 1200
-triggerall = command = "armada"
+triggerall = command = "armada_x"
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Caneta]
+[State -1, armada]
+type = ChangeState
+value = 1201
+triggerall = command = "armada_y"
+triggerall = statetype != A
+trigger1 = var(1)
+
+[State -1, caneta]
 type = ChangeState
 value = 1300
-triggerall = command = "caneta"
+triggerall = command = "caneta_x"
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Compasso]
+[State -1, caneta]
+type = ChangeState
+value = 1301
+triggerall = command = "caneta_y"
+triggerall = statetype != A
+trigger1 = var(1)
+
+[State -1, compasso]
 type = ChangeState
 value = 1100
-triggerall = command = "compasso"
+triggerall = command = "compasso_a"
+triggerall = statetype != A
+trigger1 = var(1)
+
+[State -1, compasso]
+type = ChangeState
+value = 1101
+triggerall = command = "compasso_b"
 triggerall = statetype != A
 trigger1 = var(1)
 
@@ -221,6 +335,13 @@ triggerall = command = "bola_fraca"
 triggerall = numprojid(1000) = 0
 triggerall = statetype != A
 trigger1 = var(1)
+
+[State -1, Parry]
+type = ChangeState
+value = 760
+triggerall = command = "parry"
+triggerall = statetype = S
+trigger1 = ctrl
 
 [State -1, Rolamento de defesa]
 type = VarSet
@@ -322,6 +443,35 @@ triggerall = p2movetype != H
 triggerall = (command = "holdfwd" || command = "holdback")
 trigger1 = 1
 
+[State -1, Tranco de Ombro]
+type = ChangeState
+value = 216
+triggerall = command = "golpe_216"
+triggerall = statetype = S
+trigger1 = ctrl
+trigger2 = (stateno = 200 || stateno = 230) && movehit && movehit <= 8
+
+[State -1, Passo de Letra]
+type = ChangeState
+value = 246
+triggerall = command = "golpe_246"
+triggerall = statetype = S
+trigger1 = ctrl
+
+[State -1, Mão de Ginga]
+type = ChangeState
+value = 201
+triggerall = command = "golpe_201"
+triggerall = statetype = S
+trigger1 = ctrl
+
+[State -1, Puxada de Sola]
+type = ChangeState
+value = 231
+triggerall = command = "golpe_231"
+triggerall = statetype = S
+trigger1 = ctrl
+
 [State -1, Corre]
 type = ChangeState
 value = 100
@@ -348,6 +498,7 @@ type = ChangeState
 value = 400
 triggerall = command = "x"
 triggerall = command = "holddown"
+triggerall = statetype != A
 trigger1 = ctrl
 trigger2 = (stateno = 200 || stateno = 400 || stateno = 430 || stateno = 230) && movecontact && var(5) < 4
 
@@ -356,6 +507,7 @@ type = ChangeState
 value = 430
 triggerall = command = "a"
 triggerall = command = "holddown"
+triggerall = statetype != A
 trigger1 = ctrl
 trigger2 = stateno = 430 && movecontact && var(5) < 4
 
@@ -422,17 +574,33 @@ triggerall = command = "b"
 triggerall = statetype = S
 trigger1 = ctrl
 
-[State -1, Soco no ar]
+[State -1, Golpe no ar]
 type = ChangeState
 value = 600
-triggerall = (command = "x" || command = "y")
+triggerall = command = "x"
 triggerall = statetype = A
 trigger1 = ctrl
 
-[State -1, Chute no ar]
+[State -1, Golpe no ar]
 type = ChangeState
-value = 610
-triggerall = (command = "a" || command = "b")
+value = 601
+triggerall = command = "y"
 triggerall = statetype = A
 trigger1 = ctrl
+trigger2 = (stateno = 600 || stateno = 610) && movehit && movehit <= 8
+
+[State -1, Golpe no ar]
+type = ChangeState
+value = 610
+triggerall = command = "a"
+triggerall = statetype = A
+trigger1 = ctrl
+
+[State -1, Golpe no ar]
+type = ChangeState
+value = 611
+triggerall = command = "b"
+triggerall = statetype = A
+trigger1 = ctrl
+trigger2 = (stateno = 600 || stateno = 610) && movehit && movehit <= 8
 

@@ -7,7 +7,7 @@ modo times, tontura e quebra de guarda; aqui ficam os personagens.
 ## Jogar (Windows)
 
 Coloque `ferramentas/Jogo de Luta.bat` na Área de Trabalho (ou um atalho para ele) e dê dois cliques.
-A cada clique ele baixa a versão mais nova deste repositório, coloca o Pengaró no motor e abre o jogo.
+A cada clique ele baixa a versão mais nova deste repositório, instala os lutadores e abre o jogo.
 Na primeira vez ele também baixa o IKEMEN GO. Tudo fica em `%USERPROFILE%\JogoDeLuta`.
 
 Os botões do personagem são x (soco fraco), y (soco forte), a (chute fraco), b (chute forte) e
@@ -37,6 +37,29 @@ Capoeirista e boleiro. Fica em `chars/pengaro/`.
 | Golaço da Noite (1 estoque) | trás, frente, baixo + a ou b |
 | Pelada Sombria | o mesmo comando durante o Despertar, ou com 20% de vida e 2 estoques |
 | Despertar: Lata Gelada (1 estoque) | x + a + y |
+| Mão de Chimpá | baixo, frente + x ou y |
+| Sola de Várzea | trás, baixo + a ou b |
+| Bando da Várzea (2 estoques) | trás, frente, baixo + x ou y |
+
+## Hazaki
+
+Karateca de guarda firme, com golpes de alcance e antiaéreos. No Despertar, vira o Diabo Loiro.
+
+| Especial | Comando |
+|---|---|
+| Punho de Concreto | baixo, frente + x ou y |
+| Guarda de Aço | baixo, trás + x ou y |
+| Ascensão de Faixa | frente, baixo + x ou y |
+| Giro de Garagem | baixo, frente + a ou b |
+| Corte de Base | baixo, trás + a ou b |
+| Salto de Dojô | trás, baixo + a ou b |
+| Faixa no Asfalto (1 estoque) | trás, frente, baixo + a ou b |
+| Pose Final (2 estoques) | trás, frente, baixo + x ou y |
+| Despertar: Diabo Loiro (1 estoque) | x + a + y |
+
+Os dois podem aparar golpes físicos com frente + c. As quatro teclas de ataque têm golpes
+próprios em pé, agachados e no ar. Em pé, frente + y/b e trás + x/a dão golpes direcionais.
+À distância de agarrão, frente ou trás + y/b dá prioridade ao agarrão.
 
 A lista de golpes também aparece no menu de pausa do jogo. O nome dos especiais trava na gagueira e só sai inteiro se o golpe acertar; no Despertar ele fala liso. A gagueira é só balão e nunca muda o tempo dos golpes.
 
@@ -48,7 +71,9 @@ e rode:
 ```powershell
 pip install pillow
 python ferramentas/gerar_pengaro.py
+python ferramentas/gerar_hazaki.py
 python ferramentas/verificar_pengaro.py
+python ferramentas/verificar_pengaro.py --hazaki
 ```
 
 ## Gerar sprites novos (API de imagens da OpenAI)

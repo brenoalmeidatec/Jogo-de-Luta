@@ -58,15 +58,20 @@ if (-not (Test-Path $exe)) {
     }
 }
 
-# 3. Coloca o Pengaro no motor e na tela de selecao
-robocopy (Join-Path $game 'chars\pengaro') (Join-Path $motor 'chars\pengaro') /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
+# 3. Instala os lutadores disponiveis e os registra na selecao.
 $select = Join-Path $motor 'data\select.def'
 $texto = [IO.File]::ReadAllText($select)
-if ($texto -notmatch '(?m)^pengaro,') {
-    $texto = $texto -replace '(?m)^randomselect', "pengaro, stages/stage0.def`r`nrandomselect"
-    [IO.File]::WriteAllText($select, $texto)
+foreach ($lutador in @('pengaro', 'hazaki')) {
+    $origem = Join-Path $game "chars\$lutador"
+    if (-not (Test-Path (Join-Path $origem "$lutador.def"))) { continue }
+    robocopy $origem (Join-Path $motor "chars\$lutador") /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
+    if ($LASTEXITCODE -ge 8) { Fechar "Nao consegui instalar $lutador." }
+    if ($texto -notmatch "(?m)^\s*$lutador\s*(?:,|$)") {
+        $texto = $texto -replace '(?m)^randomselect', "$lutador, stages/stage0.def`r`nrandomselect"
+    }
 }
+[IO.File]::WriteAllText($select, $texto)
 
 # 4. Abre o jogo
 Write-Host 'Abrindo o jogo!' -ForegroundColor Green
-Start-Process $exe -WorkingDirectory $motor
+Start-Process $exe -WorkingDirectory $motor -WindowStyle Normal

@@ -1,0 +1,15 @@
+<#f0f000>:Especiais e supers:</>
+Punho de Concreto / Punho de Brasa		_D_F^P
+Guarda de Aço / Revide do Inferno		_D_B^P
+Ascensão de Faixa / Coroa de Cinzas		_F_D^P
+Giro de Garagem / Queima de Pneu		_D_F^K
+Corte de Base / Rasteira de Fornalha		_D_B^K
+Salto de Dojô / Queda do Capeta		_B_D^K
+Faixa no Asfalto (1000)		_B_F_D^K
+Pose Final / Academia do Inferno (2000)		_B_F_D^P
+
+<#f0f000>:Sistema:</>
+Diabo Loiro (1000)		^X_+^A_+^Y
+Parry		_F^C
+Agarrão		[_B/_F]_+^Y
+Provocação		^C

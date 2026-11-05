@@ -17,14 +17,18 @@ import struct
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
+from repertorio import golpes, quadros as quadros_golpe
 
 RAIZ = Path(__file__).resolve().parent.parent
 FOLHA = RAIZ / "sprites/pengaro/pixel/pengaro.png"
 INFO = RAIZ / "sprites/pengaro/pixel/pengaro.json"
 SAIDA = RAIZ / "chars/pengaro"
 EFEITOS = RAIZ / "assets/efeitos"
-ATAQUES_DESPERTADOS = {200, 210, 215, 230, 240, 245, 260, 400, 410, 430, 440, 600, 610, 650, 1000, 1100, 1200, 1300}
-FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9202: "shield-block"}
+ATAQUES_DESPERTADOS = {200, 210, 215, 230, 240, 245, 260, 400, 410, 430, 440, 600, 610, 650,
+                      760, 761, 1000, 1001, 1100, 1101, 1200, 1201, 1300, 1301}
+ATAQUES_DESPERTADOS.update(g.estado for h in (False, True) for g in golpes(h))
+FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9202: "shield-block", 9204: "parry",
+           9205: "ground-slam", 9206: "fireball"}
 
 # Tela de trabalho de cada sprite: pés em (EIXO_X, EIXO_Y).
 LARG, ALT = 360, 260
@@ -208,11 +212,11 @@ DEITADO = [(-60, 0, 60, -24)]
 
 
 class Air:
-    def __init__(self, sprites):
+    def __init__(self, sprites, arte_despertada=None):
         self.s = sprites
         self.txt = ["; Gerado por ferramentas/gerar_pengaro.py. Edite lá, não aqui.\n"]
         self.acoes = set()
-        self.arte_despertada = {}
+        self.arte_despertada = arte_despertada or {}
 
     def acao(self, numero, quadros, caixa=CORPO, loop=None):
         """quadros: lista de (nome_sprite, ticks) ou (nome_sprite, ticks, caixa_de_golpe) ou com flip 'H'."""
@@ -236,7 +240,7 @@ class Air:
         self.txt.append("\n".join(t) + "\n")
         if numero in ATAQUES_DESPERTADOS or numero == 3100:
             variantes = []
-            for nome, ticks, *resto in quadros:
+            for i, (nome, ticks, *resto) in enumerate(quadros):
                 if nome not in self.arte_despertada:
                     grupo, indice = self.s.codigos[nome]
                     original = next(img for g, i, img, _, _ in self.s.lista if (g, i) == (grupo, indice))
@@ -250,6 +254,8 @@ class Air:
                     x1, y1, x2, y2 = resto[0]
                     recuo = min(8, (x2 - x1) // 4)
                     resto[0] = (x1 + recuo, y1, x2 - recuo, y2)
+                if i == len(quadros) - 1 and ticks > 0 and 1000 <= numero < 1600:
+                    ticks += 6
                 variantes.append((self.arte_despertada[nome], ticks, *resto))
             self.acao(numero + 10000, variantes, caixa, loop)
 
@@ -273,15 +279,23 @@ def carregar_faiscas(sprites):
     return acoes
 
 
-def montar_sprites():
-    p, bola = carregar_poses()
+def montar_sprites(dados=None, retrato=None, hazaki=False):
+    p, bola = dados if dados is not None else carregar_poses()
     s = Sprites()
     A = s.add
 
     # retratos que o IKEMEN usa no menu e nas barras
     rosto = p["parado"].crop((EIXO_X - 24, EIXO_Y - 112, EIXO_X + 32, EIXO_Y - 56))
-    A("retrato_p", rosto.resize((25, 25), Image.NEAREST), 9000, 0, (0, 0))
     busto = p["parado"].crop((EIXO_X - 60, EIXO_Y - 118, EIXO_X + 60, EIXO_Y + 22))
+    if retrato and retrato.exists():
+        rosto = Image.open(retrato).convert("RGBA")
+        rosto = rosto.crop(rosto.getbbox())
+        busto = rosto.copy()
+        busto.thumbnail((120, 140), Image.Resampling.LANCZOS)
+        lado = min(rosto.size)
+        x = (rosto.width - lado) // 2
+        rosto = rosto.crop((x, 0, x + lado, lado))
+    A("retrato_p", rosto.resize((25, 25), Image.Resampling.LANCZOS), 9000, 0, (0, 0))
     A("retrato_g", busto, 9000, 1, (0, 0))
 
     # em pé: respiração
@@ -330,6 +344,19 @@ def montar_sprites():
     # golpes
     # quadros desenhados de novo, um por um (veja ferramentas/recortar_quadros.py)
     for nome in ("parado", "anda", "soco"):
+        if hazaki:
+            origens = {"parado": p["parado"], "anda": p["andando"], "soco": p["soco"]}
+            for i in range(8):
+                if nome == "soco":
+                    origem = p["defesa"] if i < 3 or i > 5 else p["soco"]
+                    quadro = move(gira(origem, (-3, -6, -2, 3, 0, 1, -4, 0)[i], 0, 0), (0, -2, -1, 0, 4, 2, 1, 0)[i])
+                elif nome == "anda":
+                    origem = p["andando"] if i % 4 < 2 else p["andando2"]
+                    quadro = move(origem, 0, (0, -2, -3, -1)[i % 4])
+                else:
+                    quadro = estica(origens[nome], 1 + .012 * math.sin(i * math.tau / 8))
+                A(f"q_{nome}{i}", quadro)
+            continue
         for i, arquivo in enumerate(sorted((RAIZ / "sprites/pengaro/quadros" / nome).glob("*.png"))):
             tela = Image.new("RGBA", (LARG, ALT))
             tela.alpha_composite(Image.open(arquivo).convert("RGBA"), (EIXO_X - 104, EIXO_Y - 119))
@@ -351,6 +378,9 @@ def montar_sprites():
     A("rasteira3", mistura(p["rasteira"], p["agachado"], 0.5))
     A("ar_soco", gira(p["soco"], 8))
     A("ar_chute", gira(p["chute"], 14))
+    A("ar_cotovelo", gira(p["soco"], 28, 0, -65))
+    A("pisa", move(gira(p["chute"], 43, 0, -45), 0, 6))
+    A("parry", move(gira(p["defesa"], 8 if hazaki else -8, 0, 0), 3))
     A("bicicleta", gira(p["chute"], -40))
     A("agarra", move(p["soco"], 4))
     A("joga", espelha(mistura(p["soco"], p["parado"], 0.3)))
@@ -374,8 +404,8 @@ def montar_sprites():
     for i, y in enumerate((-30, -52, -68, -52)):
         A(f"embaixada{i}", com_bola(p["parado"], bola, 40, y))
     # despertar: bebe a lata
-    A("lata0", com_lata(p["defesa"]))
-    A("lata1", gira(com_lata(p["defesa"]), -10, 0, 0))
+    A("lata0", p["defesa"] if hazaki else com_lata(p["defesa"]))
+    A("lata1", gira(p["defesa"] if hazaki else com_lata(p["defesa"]), -10, 0, 0))
     for i, angulo in enumerate((-6, 2, 7, 1)):
         tela = p["parado"].copy()
         d = ImageDraw.Draw(tela)
@@ -441,8 +471,8 @@ VITORIAS = [
 ]
 
 
-def montar_air(s, faiscas):
-    a = Air(s)
+def montar_air(s, faiscas, hazaki=False, arte_despertada=None):
+    a = Air(s, arte_despertada)
     Q = a.acao
     Q(0, [(f"q_parado{i}", 6) for i in range(8)])
     Q(9203, [(f"juliet{i}", 6) for i in range(4)])
@@ -455,7 +485,8 @@ def montar_air(s, faiscas):
     Q(21, [(f"q_anda{i}", 5) for i in range(7, -1, -1)])
     Q(40, [("prepulo", 4)])
     for n in (41, 42, 43):
-        Q(n, [(f"mortal{i}", 2) for i in range(12)] + [("pulo_topo", -1)], NO_AR)
+        Q(n, [("pulo_sobe", 8), ("pulo_topo", -1)] if hazaki else
+          [(f"mortal{i}", 2) for i in range(12)] + [("pulo_topo", -1)], NO_AR)
     for n in (44, 45, 46):
         Q(n, [("pulo_topo", 8), ("pulo_desce", -1)], NO_AR)
     Q(47, [("pouso", 3), ("parado0", 2)])
@@ -505,20 +536,29 @@ def montar_air(s, faiscas):
     Q(800, [("agarra", 3, (10, -90, 42, -50))])
     Q(810, [("agarra", 14), ("joga", 16)])
     # especiais
-    Q(1000, [("rasteira0", 8), ("especial", 5), ("rasteira1", 6), ("rasteira3", 22)], BAIXO)
+    if not hazaki:
+        Q(1000, [("rasteira0", 8), ("especial", 5), ("rasteira1", 6), ("rasteira3", 22)], BAIXO)
+        Q(1001, [("rasteira0", 8), ("especial", 5), ("rasteira1", 6), ("rasteira3", 26)], BAIXO)
     Q(1005, [(f"quica{i}", 4) for i in range(8)], [(-12, -40, 12, 10)])
     Q(1006, [("bola0", 3), ("bola2", 3)], [])
     giro = (-40, -80, 90, -20)
-    Q(1100, [("rasteira0", 8)] + [(f"gira{i}", 4, giro) for i in (0, 1, 2, 3)] + [("rasteira3", 14)])
-    Q(1200, [("baixo_cima0", 4), ("kick_alto", 6, (0, -130, 60, -30)), ("gira1", 8), ("pulo_topo", -1)], NO_AR)
-    Q(1300, [("rasteira0", 10), ("rasteira1", 8, (10, -20, 70, -4)), ("rasteira3", 20)], BAIXO)
+    if not hazaki:
+        for i in (0, 1):
+            Q(1100+i, [("rasteira0", 8)] + [(f"gira{j}", 4, giro) for j in range(4)] + [("rasteira3", 14+6*i)])
+            Q(1200+i, [("baixo_cima0", 4), ("kick_alto", 6, (0, -130, 60+8*i, -30)), ("gira1", 8), ("pulo_topo", -1)], NO_AR)
+            Q(1300+i, [("rasteira0", 10), ("rasteira1", 8, (10, -20, 70, -4)), ("rasteira3", 20+6*i)], BAIXO)
     # super e despertar
-    Q(2000, [("lata0", 14), ("lata1", 18), ("lata2", 8)])
-    Q(3000, [("embaixada0", 6), ("embaixada1", 6), ("embaixada2", 6), ("rasteira0", 6), ("especial", 6), ("rasteira1", 8), ("rasteira3", 20)], BAIXO)
+    Q(2000, [("lata0", 14), ("lata1", 18), ("juliet0" if hazaki else "lata2", 8)])
+    if not hazaki:
+        Q(3000, [("embaixada0", 6), ("embaixada1", 6), ("embaixada2", 6), ("rasteira0", 6), ("especial", 6), ("rasteira1", 8), ("rasteira3", 20)], BAIXO)
     Q(3005, [(f"bolao{i}", 3) for i in range(4)], [(-40, -30, 40, 30)])
     Q(3006, [("bolao0", 3), ("bolao2", 3)], [])
     caixa_p = (0, -110, 90, -10)
     Q(3100, [("chute0", 4)] + [(n, 4, caixa_p) for n in ("soco1", "chute1", "rasteira1", "soco2", "chute2", "gira1", "rasteira2", "kick_alto")] + [("chute3", 20)])
+    for g in golpes(hazaki):
+        Q(g.estado, quadros_golpe(g), NO_AR if g.tipo == "A" else CORPO)
+    Q(760, [("parry", 4, (-8, -105, 46, -12)), ("recua", 10), ("defesa", 10)])
+    Q(761, [("parry", 3)])
 
     # apanhando (nomes de ação fixos do motor)
     leve = [("apanha0", 3), ("apanha1", 8)]
@@ -616,7 +656,8 @@ def nome_travado(numero, golpe, fim_sem_acerto="AnimTime = 0"):
 
 
 def normal(numero, attr, dano, trigger, *, fis="S", tipo_st="S", leve=False, **k):
-    t = estado(numero, tipo_st, "A", fis, anim=numero, juggle=1, velset=None if tipo_st == "A" else "0,0")
+    t = estado(numero, tipo_st, "A", fis, anim=numero, juggle=5 if tipo_st == "A" else 2,
+               velset=None if tipo_st == "A" else "0,0")
     if leve:
         t += f"[State {numero}, Corrente]\ntype = VarAdd\ntrigger1 = Time = 0\nvar(5) = 1\n\n"
     t += hitdef(numero, trigger, attr, dano, **k)
@@ -833,7 +874,148 @@ def superpausa(numero, trigger):
             f"[State {numero}, Rastro]\ntype = AfterImage\ntrigger1 = {trigger}\ntime = 40\nlength = 8\n\n")
 
 
-def montar_cns():
+def cns_repertorio(hazaki):
+    c = []
+    for g in golpes(hazaki):
+        n = g.estado
+        tipo = g.tipo
+        fisica = "A" if tipo == "A" else "N"
+        classe = "HA" if g.custo else "SA" if n >= 1000 else "NA"
+        if hazaki and n in (1100, 1101):
+            c.append(estado(n, "S", "A", "N", anim=760))
+            atributos = "SCA, NA, SA" if n == 1101 else "S, NA, SA"
+            c.append(reversao(n, n + 2, atributos, "Time < 4"))
+            c.append(fim(n))
+            n += 2
+        c.append(estado(n, tipo, "A", fisica, anim=g.estado, juggle=5,
+                        velset=None if tipo == "A" else "0,0"))
+        if g.custo:
+            c.append(superpausa(n, "Time = 0"))
+            c.append(f"[State {n}, Estoque]\ntype = PowerAdd\ntrigger1 = Time = 0\nvalue = -{g.custo}\n\n")
+        if g.avanco:
+            c.append(f"[State {n}, Avanço]\ntype = VelSet\ntrigger1 = AnimElem = 2\n"
+                     f"x = {g.avanco} * ifelse(var(20) > 0, 1.22, 1)\n\n")
+            c.append(f"[State {n}, Freia]\ntype = VelSet\ntrigger1 = AnimElem = {len(g.poses)}\nx = 0\n\n")
+        if hazaki and n in (1500, 1501):
+            c.append(f"[State {n}, Salta]\ntype = VelSet\ntrigger1 = Time = 1\ny = -4.5\n\n"
+                     f"[State {n}, No ar]\ntype = StateTypeSet\ntrigger1 = Time = 1\nstatetype = A\n\n"
+                     f"[State {n}, Gravidade]\ntype = VelAdd\ntrigger1 = statetype = A\ny = .43\n\n"
+                     f"[State {n}, Chão]\ntype = PosSet\ntrigger1 = statetype = A && Pos Y >= 0 && Vel Y > 0\ny = 0\n\n"
+                     f"[State {n}, Aterrissa]\ntype = StateTypeSet\ntrigger1 = statetype = A && Pos Y >= 0 && Vel Y > 0\nstatetype = S\n\n"
+                     f"[State {n}, Firma os pés]\ntype = VelSet\ntrigger1 = statetype = S && Time > 1\ny = 0\n\n")
+        impactos = len(g.poses) - 2 if g.custo else 1
+        for i in range(impactos):
+            final = i == impactos - 1
+            condicao = f"AnimElem = {i+2}"
+            if i:
+                condicao += " && MoveHit"
+            c.append(hitdef(n, condicao, f"{tipo}, {classe}", g.dano // impactos,
+                            tipo="Heavy" if final else "Medium", guarda=g.guarda,
+                            pausa=(6, 8), hit=19 if final else 21,
+                            vel=g.lancamento if g.queda and final else "-3" if final else "-1", ar=g.lancamento,
+                            queda=g.queda and final, pesado=final and g.dano >= 75,
+                            chao="Low" if g.guarda == "L" else "High"))
+        if tipo != "A":
+            if 1500 <= n <= 1501 or (hazaki and n in (1300, 1301, 3200)):
+                efeito = 9206 if hazaki else 9205
+                c.append(f"[State {n}, Impacto visual]\ntype = Explod\ntrigger1 = AnimElem = 2\n"
+                         f"trigger1 = var(20) > 0\nanim = {efeito}\npostype = p1\npos = 30, -15\n"
+                         "removetime = -2\nsprpriority = 4\nownpal = 1\n\n")
+            if not hazaki and n == 1501:
+                c.append(f"[State {n}, Quique]\ntype = TargetState\n"
+                         "trigger1 = MoveHit = 1 && NumTarget > 0 && var(20) > 0 && !var(24)\nvalue = 763\n\n"
+                         f"[State {n}, Registra quique]\ntype = VarSet\n"
+                         "trigger1 = MoveHit = 1 && NumTarget > 0 && var(20) > 0\nvar(24) = 1\n\n")
+            c.append(fim(n))
+    c.append(estado(760, "S", "A", "N", anim=760))
+    c.append(reversao(760, 761, "SCA, NA, SA, HA", "Time < 4"))
+    c.append(fim(760))
+    c.append(estado(761, "S", "I", "N", anim=761))
+    c.append(fim(761))
+    c.append("""[Statedef 762]
+type = U
+movetype = H
+physics = N
+ctrl = 0
+
+[State 762, Solo]
+type = VelSet
+trigger1 = statetype != A
+x = 0
+y = 0
+
+[State 762, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(statetype = A, 5030, ifelse(statetype = C, 5020, 5000))
+
+[State 762, Gravidade]
+type = VelAdd
+trigger1 = statetype = A
+y = .44
+
+[State 762, Pouso]
+type = PosSet
+trigger1 = statetype = A && Pos Y >= 0 && Vel Y >= 0
+y = 0
+
+[State 762, Aterrissa]
+type = StateTypeSet
+trigger1 = statetype = A && Pos Y >= 0 && Vel Y >= 0
+statetype = S
+
+[State 762, Abertura no ar]
+type = SelfState
+trigger1 = Time >= 14 && statetype = A
+value = 50
+ctrl = 1
+
+[State 762, Abertura no chão]
+type = SelfState
+trigger1 = Time >= 14
+value = 0
+ctrl = 1
+
+""")
+    if not hazaki:
+        c.append("""[Statedef 763]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+velset = 2,-3
+
+[State 763, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 5050
+
+[State 763, Gravidade]
+type = VelAdd
+trigger1 = 1
+y = .44
+
+[State 763, Quica uma vez]
+type = VelSet
+trigger1 = Time < 22 && Pos Y >= 0 && Vel Y > 0
+y = -4.8
+
+[State 763, Fim]
+type = SelfState
+trigger1 = Time >= 22 && Pos Y >= 0 && Vel Y > 0
+value = 5100
+
+""")
+    return "".join(c)
+
+
+def reversao(numero, sucesso, atributos, gatilho):
+    return (f"[State {numero}, Desvia]\ntype = ReversalDef\ntrigger1 = {gatilho}\n"
+            f"reversal.attr = {atributos}\npausetime = 0,0\nsparkno = S9204\n"
+            f"p1stateno = {sucesso}\np2stateno = 762\n\n")
+
+
+def montar_cns(hazaki=False):
     c = [CNS_TOPO, CNS_INTRO, CNS_PULOS]
 
     # golpes em pé, de perto e de longe
@@ -909,7 +1091,7 @@ def montar_cns():
 
     # Bola de Sombra: fraca lenta, forte rápida, no Despertar sai dobrada
     for n, vel in ((1000, 3.2), (1001, 5.4)):
-        c.append(estado(n, "S", "A", "S", anim=1000, juggle=4))
+        c.append(estado(n, "S", "A", "S", anim=n, juggle=4))
         c.append(fala(n, "bola_trava", "Time = 0 & var(20) = 0"))
         c.append(fala(n, "bola_liso", "Time = 0 & var(20) > 0"))
         c.append(projetil(n, "AnimElem = 2", 1005, 1006, vel, 70, "S, SP", ofs="70, -12"))
@@ -979,6 +1161,19 @@ def montar_cns():
     c.append("[State 3100, Trava]\ntype = VelSet\ntrigger1 = Time = 36\nx = 0\n\n")
     c.append(fim(3100))
 
+    if hazaki:
+        inicio = next(i for i, trecho in enumerate(c) if trecho.startswith("[Statedef 1000]"))
+        fim_especiais = next(i for i, trecho in enumerate(c) if trecho.startswith("[Statedef 2000]"))
+        del c[inicio:fim_especiais]
+        inicio = next(i for i, trecho in enumerate(c) if trecho.startswith("[Statedef 3000]"))
+        del c[inicio:]
+    else:
+        for n, dano, novo in ((1100, 110, 132), (1200, 120, 144), (1300, 70, 92)):
+            inicio = next(i for i, trecho in enumerate(c) if trecho.startswith(f"[Statedef {n}]"))
+            fim_estado = next(i for i in range(inicio+1, len(c)) if c[i].startswith("[Statedef"))
+            variante = "".join(c[inicio:fim_estado]).replace(str(n), str(n+1))
+            c.append(variante.replace(f"damage = {dano},", f"damage = {novo},"))
+    c.append(cns_repertorio(hazaki))
     # roda sempre, mesmo sem controle
     c.append("""[Statedef -2]
 
@@ -986,6 +1181,11 @@ def montar_cns():
 type = VarSet
 trigger1 = ctrl
 var(5) = 0
+
+[State -2, Zera quique]
+type = VarSet
+trigger1 = NumEnemy > 0 && p2movetype != H
+var(24) = 0
 
 [State -2, Passo para trás invencível]
 type = NotHitBy
@@ -1052,7 +1252,11 @@ time = 2
     c.append(fala(-2, "derrota", "!alive & var(32) = 0"))
     c.append("[State -2, Conta derrota]\ntype = VarAdd\ntrigger1 = !alive\nvar(32) = 1\n\n")
     c.append(fala(-2, "locutor_ko", "var(32) = 75"))
-    return "".join(c)
+    resultado = "".join(c)
+    if hazaki:
+        resultado = resultado.replace(f"anim = {ID_BALAO['lata']}", f"anim = {ID_BALAO['golaco']}")
+        resultado = resultado.replace("add = 40, 0, 70", "add = 42, 16, 0").replace("sinadd = 30, 0, 40, 40", "sinadd = 24, 8, 0, 40")
+    return resultado
 
 
 # ------------------------------------------------------------------ CMD
@@ -1073,18 +1277,25 @@ def entrada(nome, valor, condicoes, gatilhos=("var(1)",)):
     return "\n".join(t) + "\n\n"
 
 
-def montar_cmd():
+def montar_cmd(hazaki=False):
     c = ["; Gerado por ferramentas/gerar_pengaro.py. Edite lá, não aqui.\n",
          "; x = soco fraco, y = soco forte, a = chute fraco, b = chute forte, c = provocação\n\n",
          "[Remap]\nx = x\ny = y\nz = z\na = a\nb = b\nc = c\ns = s\n\n",
          "[Defaults]\ncommand.time = 15\ncommand.buffer.time = 3\n\n"]
-    for b in "ab":
+    for b in ("" if hazaki else "ab"):
         c.append(comando("golaco", f"~B, F, D, {b}", 24))
         c.append(comando("bola_fraca" if b == "a" else "bola_forte", f"~D, F, {b}", 18))
-        c.append(comando("compasso", f"~D, B, {b}", 18))
-    for b in "xy":
-        c.append(comando("armada", f"~F, D, {b}", 18))
-        c.append(comando("caneta", f"~D, B, {b}", 18))
+        c.append(comando(f"compasso_{b}", f"~D, B, {b}", 18))
+    for b in ("" if hazaki else "xy"):
+        c.append(comando(f"armada_{b}", f"~F, D, {b}", 18))
+        c.append(comando(f"caneta_{b}", f"~D, B, {b}", 18))
+    lista_golpes = list(golpes(hazaki))
+    for g in lista_golpes:
+        if g.estado not in (601, 611):
+            c.append(comando(f"golpe_{g.estado}", g.comando, 24 if g.custo else 18))
+        if g.custo:
+            c.append(comando(f"golpe_{g.estado}", g.comando[:-1] + ("b" if g.estado == 3000 else "y"), 24))
+    c.append(comando("parry", "/F, c", 1, 1))
     c.append(comando("FF", "F, F", 10))
     c.append(comando("BB", "B, B", 10))
     c.append(comando("recovery", "x+a", 1))
@@ -1099,22 +1310,31 @@ def montar_cmd():
         c.append(comando(nome, d, 1))
 
     c.append("[Statedef -1]\n\n")
-    cancela = "stateno = 200 || stateno = 215 || stateno = 230 || stateno = 245 || stateno = 400 || stateno = 410 || stateno = 430 || stateno = 260"
+    cancela = "stateno = 200 || stateno = 210 || stateno = 215 || stateno = 216 || stateno = 230 || stateno = 245 || stateno = 400 || stateno = 410 || stateno = 430 || stateno = 260"
     c.append("[State -1, Pode cancelar]\ntype = VarSet\ntrigger1 = 1\n"
              f"var(1) = ctrl || (({cancela}) && movecontact && movecontact <= 8)\n\n")
 
     no_chao = ["statetype != A"]
-    especial_em_super = "(var(20) > 0) && (stateno = 1000 || stateno = 1001 || stateno = 1100 || stateno = 1200 || stateno = 1300) && movecontact"
+    especial_em_super = "(stateno = [1000,1501]) && movehit && movehit <= 8"
+    for g in sorted(lista_golpes, key=lambda g: -g.custo):
+        if g.estado >= 1000:
+            condicoes = [f'command = "golpe_{g.estado}"'] + no_chao
+            if g.custo:
+                condicoes.append(f"power >= {g.custo}")
+            c.append(entrada(g.nome, g.estado, condicoes, ("var(1)", especial_em_super) if g.custo else ("var(1)",)))
     forte = "(var(20) > 0) || (life <= 200 && power >= 2000)"
-    c.append(entrada("Pelada Sombria", 3100, ['command = "golaco"', "power >= 1000", f"({forte})"] + no_chao, ("var(1)", especial_em_super)))
-    c.append(entrada("Golaco da Noite", 3000, ['command = "golaco"', "power >= 1000"] + no_chao, ("var(1)", especial_em_super)))
+    if not hazaki:
+        c.append(entrada("Pelada Sombria", 3100, ['command = "golaco"', "power >= 1000", f"({forte})"] + no_chao, ("var(1)", especial_em_super)))
+        c.append(entrada("Golaco da Noite", 3000, ['command = "golaco"', "power >= 1000"] + no_chao, ("var(1)", especial_em_super)))
     c.append(entrada("Despertar", 2000, ['command = "despertar"', "power >= 1000", "var(20) = 0", "statetype = S"], ("ctrl",)))
-    c.append(entrada("Armada", 1200, ['command = "armada"'] + no_chao))
-    c.append(entrada("Caneta", 1300, ['command = "caneta"'] + no_chao))
-    c.append(entrada("Compasso", 1100, ['command = "compasso"'] + no_chao))
-    bola = ["numprojid(1000) = 0"] + no_chao
-    c.append(entrada("Bola forte", 1001, ['command = "bola_forte"'] + bola))
-    c.append(entrada("Bola fraca", 1000, ['command = "bola_fraca"'] + bola))
+    if not hazaki:
+        for nome, n, botoes in (("armada", 1200, "xy"), ("caneta", 1300, "xy"), ("compasso", 1100, "ab")):
+            for i, b in enumerate(botoes):
+                c.append(entrada(nome, n+i, [f'command = "{nome}_{b}"'] + no_chao))
+        bola = ["numprojid(1000) = 0"] + no_chao
+        c.append(entrada("Bola forte", 1001, ['command = "bola_forte"'] + bola))
+        c.append(entrada("Bola fraca", 1000, ['command = "bola_fraca"'] + bola))
+    c.append(entrada("Parry", 760, ['command = "parry"', "statetype = S"], ("ctrl",)))
     defendendo = "stateno = 150 || stateno = 152"
     # guard cancel: 1 estoque, depois do 3º quadro de defesa
     c.append("[State -1, Rolamento de defesa]\ntype = VarSet\ntriggerall = command = \"rolar\"\n"
@@ -1136,6 +1356,10 @@ def montar_cmd():
     pega_k = ['command = "b"'] + pega[1:]
     for lista in (pega, pega_k):
         c.append(entrada("Agarrao", 800, lista + ['(command = "holdfwd" || command = "holdback")'], ("1",)))
+    for g in lista_golpes:
+        if g.estado < 300:
+            gatilhos = ("ctrl", "(stateno = 200 || stateno = 230) && movehit && movehit <= 8") if g.estado == 216 else ("ctrl",)
+            c.append(entrada(g.nome, g.estado, [f'command = "golpe_{g.estado}"', "statetype = S"], gatilhos))
     # corrida e passo para trás
     c.append(entrada("Corre", 100, ['command = "FF"', "statetype = S"], ("ctrl",)))
     c.append(entrada("Recua", 105, ['command = "BB"', "statetype = S"], ("ctrl",)))
@@ -1144,8 +1368,8 @@ def montar_cmd():
     # corrente de fracos: até 4 em sequência, no contato
     corrente_soco = "(stateno = 200 || stateno = 400 || stateno = 430 || stateno = 230) && movecontact && var(5) < 4"
     corrente_chute = "stateno = 430 && movecontact && var(5) < 4"
-    c.append(entrada("Agachado soco fraco", 400, ['command = "x"', 'command = "holddown"'], ("ctrl", corrente_soco)))
-    c.append(entrada("Agachado chute fraco", 430, ['command = "a"', 'command = "holddown"'], ("ctrl", corrente_chute)))
+    c.append(entrada("Agachado soco fraco", 400, ['command = "x"', 'command = "holddown"', "statetype != A"], ("ctrl", corrente_soco)))
+    c.append(entrada("Agachado chute fraco", 430, ['command = "a"', 'command = "holddown"', "statetype != A"], ("ctrl", corrente_chute)))
     c.append(entrada("Agachado soco forte", 410, ['command = "y"', 'command = "holddown"', "statetype != A"], ("ctrl",)))
     c.append(entrada("Agachado chute forte", 440, ['command = "b"', 'command = "holddown"', "statetype != A"], ("ctrl",)))
     # em pé: de perto ou de longe
@@ -1157,8 +1381,9 @@ def montar_cmd():
     c.append(entrada("Chute forte perto", 245, ['command = "b"', "statetype = S", perto], ("ctrl",)))
     c.append(entrada("Chute forte longe", 240, ['command = "b"', "statetype = S"], ("ctrl",)))
     # no ar
-    c.append(entrada("Soco no ar", 600, ['(command = "x" || command = "y")', "statetype = A"], ("ctrl",)))
-    c.append(entrada("Chute no ar", 610, ['(command = "a" || command = "b")', "statetype = A"], ("ctrl",)))
+    for botao, n in zip("xyab", (600, 601, 610, 611)):
+        gatilhos = ("ctrl", "(stateno = 600 || stateno = 610) && movehit && movehit <= 8") if n in (601, 611) else ("ctrl",)
+        c.append(entrada("Golpe no ar", n, [f'command = "{botao}"', "statetype = A"], gatilhos))
     return "".join(c)
 
 
@@ -1191,10 +1416,13 @@ Bola de Sombra						_D_F^K
 Meia-lua de Compasso Sombria		_D_B^K
 Armada do Quilombo					_F_D^P
 Caneta								_D_B^P
+Mão de Chimpá / Mão Pesada          _D_F^P
+Sola de Várzea / Pisão de Bar       _B_D^K
 
 <#f0f000>:Supers:</>
 Golaço da Noite <#bebebe>(1000)</>	_B_F_D^K
 Pelada Sombria (no Despertar)		_B_F_D^K
+Bando da Várzea / Apagão da Várzea  _B_F_D^P
 
 <#f0f000>:Sistema:</>
 Despertar: Lata Gelada <#bebebe>(1000)</>	^X_+^A_+^Y
@@ -1202,22 +1430,23 @@ Rolamento							^X_+^A
 Golpe de afastar					^Y_+^B
 Agarrão								[_B/_F]_+^Y
 Provocação							^C
+Parry                              _F^C
 """
 
 
 def main():
     SAIDA.mkdir(parents=True, exist_ok=True)
-    s = montar_sprites()
+    s = montar_sprites(retrato=RAIZ / "sprites/pengaro-selecao-kof.png")
     faiscas = carregar_faiscas(s)
     a = montar_air(s, faiscas)
     escrever_sff(SAIDA / "pengaro.sff", s)
-    (SAIDA / "pengaro.air").write_text("\n".join(a.txt), encoding="utf-8")
+    (SAIDA / "pengaro.air").write_text("\n".join(a.txt), encoding="utf-8", newline="\n")
     cns = montar_cns()
     cns = cns.replace("[Data]", "[Quotes]\n" + "".join(f'victory{i + 1} = "{v}"\n' for i, v in enumerate(VITORIAS)) + "\n[Data]", 1)
-    (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8")
+    (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8", newline="\n")
     (SAIDA / "pengaro.cmd").write_text(montar_cmd(), encoding="utf-8")
-    (SAIDA / "pengaro.def").write_text(DEF, encoding="utf-8")
-    (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8")
+    (SAIDA / "pengaro.def").write_text(DEF, encoding="utf-8", newline="\n")
+    (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

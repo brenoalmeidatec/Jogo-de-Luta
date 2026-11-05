@@ -10,7 +10,8 @@ from pathlib import Path
 
 from PIL import Image
 
-PASTA = Path(__file__).resolve().parent.parent / "chars/pengaro"
+PERSONAGEM = "hazaki" if "--hazaki" in sys.argv else "pengaro"
+PASTA = Path(__file__).resolve().parent.parent / "chars" / PERSONAGEM
 # Ações que os estados comuns do motor procuram no personagem.
 ACOES_DO_MOTOR = [0, 5, 6, 10, 11, 12, 20, 21, 40, 41, 42, 43, 47, 100, 105, 120, 121, 122, 130, 131, 132,
                   140, 141, 142, 150, 151, 152, 5000, 5001, 5002, 5005, 5006, 5007, 5010, 5011, 5012, 5015,
@@ -21,7 +22,7 @@ erros = []
 
 
 def ler_sff():
-    d = (PASTA / "pengaro.sff").read_bytes()
+    d = (PASTA / f"{PERSONAGEM}.sff").read_bytes()
     assert d[:12] == b"ElecbyteSpr\x00" and list(d[12:16]) == [0, 1, 0, 2], "cabeçalho do SFF"
     ofs_s, n, ofs_p, n_p, ofs_l, len_l, ofs_t, _ = struct.unpack("<8I", d[36:68])
     assert ofs_l + len_l == len(d) == ofs_t, "tamanho do SFF"
@@ -62,7 +63,7 @@ def imagem(sprite, pal):
 def ler_air():
     acoes = {}
     atual = None
-    for linha in (PASTA / "pengaro.air").read_text(encoding="utf-8").splitlines():
+    for linha in (PASTA / f"{PERSONAGEM}.air").read_text(encoding="utf-8").splitlines():
         linha = linha.split(";")[0].strip()
         m = re.match(r"\[Begin Action (\d+)\]", linha)
         if m:
@@ -89,8 +90,8 @@ def main():
         if numero not in acoes:
             erros.append(f"falta a ação {numero}, exigida pelo motor")
 
-    cns = (PASTA / "pengaro.cns").read_text(encoding="utf-8")
-    cmd = (PASTA / "pengaro.cmd").read_text(encoding="utf-8")
+    cns = (PASTA / f"{PERSONAGEM}.cns").read_text(encoding="utf-8")
+    cmd = (PASTA / f"{PERSONAGEM}.cmd").read_text(encoding="utf-8")
     estados = {int(n) for n in re.findall(r"^\[Statedef (-?\d+)\]", cns, re.M)}
     comuns = {0, 10, 11, 12, 20, 50, 52, 100, 105, 5050, 5100}
     for texto in (cns, cmd):
@@ -111,7 +112,8 @@ def main():
         if nome not in definidos:
             erros.append(f'falta o comando "{nome}", exigido pelo motor')
 
-    if len(sys.argv) > 1:
+    previa = next((arg for arg in sys.argv[1:] if arg != "--hazaki"), None)
+    if previa:
         escolha = [k for k in sorted(sprites) if k[0] != 9000][:80:2]
         folha = Image.new("RGBA", (8 * 170, 5 * 170), (58, 46, 66, 255))
         for n, k in enumerate(escolha):
@@ -119,7 +121,7 @@ def main():
             im = imagem(s, pal)
             x, y = (n % 8) * 170 + 85, (n // 8) * 170 + 150
             folha.alpha_composite(im, (max(0, x - s[2]), max(0, y - s[3])))
-        folha.save(sys.argv[1])
+        folha.save(previa)
 
     print(f"{len(sprites)} sprites, {len(acoes)} ações, {len(estados)} estados, {len(definidos)} comandos")
     for e in erros:
