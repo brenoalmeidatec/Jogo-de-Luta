@@ -56,3 +56,45 @@ Cada problema achado vira uma missão nova neste arquivo.
   especiais, Despertar a 30%, gerador em LF, Codex por PR) e feche o resto. Quem decide o merge é o Breno.
 - O Hazaki agacha com 49 px e o Pengaró com 75 px, para 102 e 110 px em pé. Confira se o agachado do Hazaki não
   está baixo demais para os golpes acertarem.
+
+## 5. Achados da batalha simulada (Pengaró x Hazaki, CPU 5 contra CPU 5)
+
+O Breno abriu o jogo em modo Watch e o Claude gravou cerca de 40 quadros da tela, mais um quadro de um segundo round.
+Os prints estão em `docs/batalha-2026-11-05/`. O jogo abriu e não gerou nenhum log de erro novo. Os achados abaixo
+são do que apareceu na tela, e cada um precisa ser reproduzido antes de consertar.
+
+**A. Lutadores cortados na borda da tela.** `longe-e-cortado.png`: quando os dois se afastam, a câmera não afasta o
+bastante, e o Pengaró fica cortado à esquerda e o Hazaki à direita. `recortado-na-borda.png` mostra o mesmo no
+mortal. Confira `zoomout` e `boundleft/boundright` do cenário usado, e a largura (`ground.front/back`) dos dois.
+Isso é o contrário do "personagem pequeno" que o Breno relatou, que **não apareceu** nesses quadros: o tamanho
+na tela foi de 40% a 50% da altura da janela o tempo todo, com leve zoom. Pergunte ao Breno qual cenário e qual
+momento da luta ele viu pequeno, e use o mesmo.
+
+**B. Balões de fala sobrepostos e cortados.** `sequencia-baloes-e-ko.png`: "F-f-f-foi falta, porra!" e "CANETA,
+PASSOU POR BAIXO!" aparecem um em cima do outro. O "K.O.! ...ou, no caso dele" sai cortado na borda direita.
+Todo balão usa `id = 700`, mas um novo não apaga o antigo. Faça `RemoveExplod` do id 700 antes de criar um balão e
+mantenha o balão dentro da tela (limite pela posição do lutador e `Explod` com `postype = left`/`right` na borda).
+No Despertar a fala "liso" repete o nome do golpe em todo uso e fica na tela por tempo demais.
+
+**C. Aura cor-de-rosa e roxa fica no K.O.** No Despertar o Pengaró fica rosa e roxo, e isso continua depois do K.O.
+(`sequencia-baloes-e-ko.png`, linha 2). Zere o `PalFX` e o rastro quando o personagem não está vivo ou quando o round
+acaba, e confira se o rosa é o que a ficha pede (fumaça roxo-escura ou preta e olhos roxos, não o corpo todo).
+
+**D. O "ó" some do nome.** A barra de vida mostra "Pengar". A fonte da barra do IKEMEN não tem acento. Troque a fonte
+dos nomes por uma que tenha, ou grave o nome da barra já com o "ó" desenhado.
+
+**E. Retratos.** A barra usa o retrato novo (`sprites/pengaro-selecao-kof.png`), e o rosto não bate com o do sprite
+em jogo (cabelo, barba e traços). Confira se é o mesmo personagem.
+
+**F. Pose de mortal.** `mortal-de-cabeca.png`: o pulo para frente (ação 42) gira de cabeça para baixo, com a cabeça
+perto do chão. Parece forte demais para um pulo comum. Troque por quadros do pulo da missão 2 e deixe o mortal
+só no golpe que a ficha pede (bicicleta).
+
+**G. Fim de round demora.** Depois do K.O. o tempo ficou parado em 23 por cerca de 15 segundos até começar o
+round seguinte, com o Pengaró caído e uma fala de ressaca repetida nesse meio-tempo. Veja se a pose de vitória do
+Hazaki (ação 181 dele) e a de derrota do Pengaró estão curtas o bastante, e tire a fala da ressaca quando ele está
+caído.
+
+**H. Barra de vida verde no round 2.** No quadro do segundo round a barra do Pengaró está verde, enquanto a do Hazaki
+está amarela (`longe-e-cortado.png`). Se isso vier de efeito do motor (por exemplo vida recuperada ou "red life"),
+ok, e se não vier, confira o que o Pengaró faz com a vida entre os rounds.
