@@ -1211,13 +1211,13 @@ def main():
     faiscas = carregar_faiscas(s)
     a = montar_air(s, faiscas)
     escrever_sff(SAIDA / "pengaro.sff", s)
-    (SAIDA / "pengaro.air").write_text("\n".join(a.txt), encoding="utf-8")
+    (SAIDA / "pengaro.air").write_text("\n".join(a.txt), encoding="utf-8", newline="\n")
     cns = montar_cns()
     cns = cns.replace("[Data]", "[Quotes]\n" + "".join(f'victory{i + 1} = "{v}"\n' for i, v in enumerate(VITORIAS)) + "\n[Data]", 1)
-    (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8")
-    (SAIDA / "pengaro.cmd").write_text(montar_cmd(), encoding="utf-8")
-    (SAIDA / "pengaro.def").write_text(DEF, encoding="utf-8")
-    (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8")
+    (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8", newline="\n")
+    (SAIDA / "pengaro.cmd").write_text(montar_cmd(), encoding="utf-8", newline="\n")
+    (SAIDA / "pengaro.def").write_text(DEF, encoding="utf-8", newline="\n")
+    (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 
