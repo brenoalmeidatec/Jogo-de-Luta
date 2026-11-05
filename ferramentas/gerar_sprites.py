@@ -13,6 +13,10 @@ Opções úteis:
   --poses soco chute      gera só essas poses
   --qualidade low         mais barato para testar (low | medium | high)
   --refazer-base          gera de novo a imagem de referência do personagem
+  --altura 64             altura do personagem em pixel art (padrão 64)
+
+No final ele chama o pixelizar.py e cria a versão pixel art (estilo pixelfx)
+em sprites/<personagem>/pixel/, com a folha de sprites e o JSON.
 
 Personagens, estilo e poses ficam em ferramentas/personagens.json.
 """
@@ -47,6 +51,7 @@ def main():
                    help="poses a gerar (padrão: todas)")
     p.add_argument("--qualidade", default="medium", choices=["low", "medium", "high"])
     p.add_argument("--refazer-base", action="store_true")
+    p.add_argument("--altura", type=int, default=64)
     args = p.parse_args()
 
     if not os.environ.get("OPENAI_API_KEY"):
@@ -89,6 +94,10 @@ def main():
             )
         salvar(r, pasta / f"{nome}.png")
 
+    # 3) Converte para pixel art no estilo pixelfx
+    import subprocess
+    subprocess.run([sys.executable, str(Path(__file__).with_name("pixelizar.py")), str(pasta),
+                    "--altura", str(args.altura)], check=True)
     print("Pronto!")
 
 

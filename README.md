@@ -1,16 +1,23 @@
 # Jogo de Luta
 
-Jogo de luta 2D original.
+Jogo de luta 2D original em pixel art (Godot), no estilo do [pixelfx](https://patch-gg.github.io/pixelfx/).
 
-## Gerar sprites com a API da OpenAI
-
-O script `ferramentas/gerar_sprites.py` cria os sprites dos personagens (definidos em
-`ferramentas/personagens.json`) usando a API de imagens da OpenAI.
+## Gerar os personagens (API de imagens da OpenAI)
 
 ```powershell
-pip install openai
-$env:OPENAI_API_KEY = "sk-..."   # sua chave de platform.openai.com (não faça commit dela!)
+pip install openai pillow
+$env:OPENAI_API_KEY = "sk-..."   # chave de platform.openai.com (nunca faça commit dela!)
 python ferramentas/gerar_sprites.py --personagem kaio --qualidade low
 ```
 
-As imagens saem em `sprites/<personagem>/` com fundo transparente.
+1. Gera uma imagem de referência do personagem e uma imagem por pose (`sprites/kaio/`).
+2. Converte tudo em pixel art com `ferramentas/pixelizar.py`: 64 px de altura, 16 cores, cores chapadas
+   e contorno escuro de 1 px (`sprites/kaio/pixel/`), mais a folha `kaio.png` + `kaio.json`.
+
+Personagens, estilo e poses ficam em `ferramentas/personagens.json`.
+
+## Efeitos (pixelfx)
+
+Faíscas de golpe, defesa, impacto e projéteis já exportados em `assets/efeitos/` (veja o LEIA-ME de lá).
+
+No Godot, importe os PNGs com **Filter = Nearest**.
