@@ -38,6 +38,8 @@ Capoeirista e boleiro. Fica em `chars/pengaro/`.
 | Pelada Sombria | o mesmo comando durante o Despertar, ou com 20% de vida e 2 estoques |
 | Despertar: Lata Gelada (1 estoque) | x + a + y |
 
+A lista de golpes também aparece no menu de pausa do jogo. O nome dos especiais trava na gagueira e só sai inteiro se o golpe acertar; no Despertar ele fala liso. A gagueira é só balão e nunca muda o tempo dos golpes.
+
 ## Mudar o personagem
 
 Os arquivos de `chars/pengaro/` são gerados. Mude golpes, danos e falas em `ferramentas/gerar_pengaro.py`
