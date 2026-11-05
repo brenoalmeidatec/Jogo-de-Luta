@@ -5,7 +5,7 @@ Cada pixel do sprite vai para o osso mais próximo. As mãos e os pés seguem al
 inversa), então o pé fica plantado no chão enquanto o corpo se move. Todo quadro sai do mesmo
 desenho, por isso o traço não muda de um quadro para outro.
 
-Uso direto, para ver a amostra: python ferramentas/rig_pengaro.py saida.gif
+Uso direto, para ver a amostra: python ferramentas/rig_pengaro.py saida.gif [trajetoria.json]
 """
 import json
 import math
@@ -88,9 +88,8 @@ def maior_pedaco(img):
 
 def recortar():
     """Devolve {parte: imagem 4x} com o sprite repartido entre os ossos."""
-    folha = Image.open(FOLHA).convert("RGBA")
-    r = json.loads(INFO.read_text(encoding="utf-8"))["frames"]["parado"]["frame"]
-    base = folha.crop((r["x"], r["y"], r["x"] + r["w"], r["y"] + r["h"]))
+    # parte do quadro 00 do parado que está no jogo agora (224 x 128, pés em (104, 119))
+    base = Image.open(RAIZ / "sprites/pengaro/quadros/parado/00.png").convert("RGBA")
     px = base.load()
     w, h = base.size
     cortes = {nome: Image.new("RGBA", base.size) for nome in PARTES}
@@ -265,20 +264,44 @@ def ginga(rig, n=48):
     return quadros
 
 
-def amostra(destino):
+def ginga_pixelfx(rig, caminho):
+    """Ginga cujo movimento vem do esqueleto do pixelfx (ferramentas/pixelfx_rig/trajetoria.mjs).
+
+    Cada quadro do JSON tem a posição de mãos, pés, quadril e peito. Aqui só entram as diferenças
+    em relação à média do ciclo, aplicadas às partes recortadas do sprite do jogo: o desenho não muda.
+    """
+    q = json.loads(Path(caminho).read_text())
+    n = len(q)
+    media = lambda k: tuple(sum(f[k][i] for f in q) / n for i in (0, 1))
+    m = {k: media(k) for k in q[0]}
+    d = lambda f, k: (f[k][0] - m[k][0], f[k][1] - m[k][1])
+    quadros = []
+    for f in q:
+        qd = d(f, "pelvis")
+        tx, ty = f["chest"][0] - f["pelvis"][0], f["chest"][1] - f["pelvis"][1]
+        mx, my = m["chest"][0] - m["pelvis"][0], m["chest"][1] - m["pelvis"][1]
+        giro = math.degrees(math.atan2(tx, -ty) - math.atan2(mx, -my))
+        rel = lambda k: (d(f, k)[0] - qd[0], d(f, k)[1] - qd[1])
+        esc = lambda v, a: (v[0] * a, v[1] * a)  # o sprite já é grande: amplitude menor que a do esqueleto
+        quadros.append(rig.pose(quadril=esc(qd, 0.8), giro=giro * 0.8, maoF=esc(rel("handF"), 0.5), maoB=esc(rel("handN"), 0.4),
+                                peF=esc(d(f, "ankleN"), 0.55), peB=esc(d(f, "ankleF"), 0.55)))
+    return quadros
+
+
+def amostra(destino, caminho=None):
     rig = Rig()
     tela = (224, 128)
     fundo = (58, 46, 66, 255)
     quadros = []
-    for lista, repete, ms in ((ginga(rig), 3, 20),):
-        for _ in range(repete):
-            for q in lista:
-                im = Image.new("RGBA", tela, fundo)
-                im.alpha_composite(q)
-                quadros.append((im.resize((tela[0] * 3, tela[1] * 3), Image.NEAREST).convert("RGB"), ms))
+    lista = ginga_pixelfx(rig, caminho) if caminho else ginga(rig)
+    for _ in range(3):
+        for q in lista:
+            im = Image.new("RGBA", tela, fundo)
+            im.alpha_composite(q)
+            quadros.append((im.resize((tela[0] * 4, tela[1] * 4), Image.NEAREST).convert("RGB"), 20))
     quadros[0][0].save(destino, save_all=True, append_images=[q for q, _ in quadros[1:]],
                        duration=[m for _, m in quadros], loop=0)
 
 
 if __name__ == "__main__":
-    amostra(sys.argv[1] if len(sys.argv) > 1 else "pengaro_rig.gif")
+    amostra(sys.argv[1] if len(sys.argv) > 1 else "pengaro_rig.gif", sys.argv[2] if len(sys.argv) > 2 else None)
