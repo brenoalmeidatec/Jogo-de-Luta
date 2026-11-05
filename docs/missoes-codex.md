@@ -21,13 +21,7 @@ e outros golpes ainda usam as 9 poses antigas, com corpo e cabeça de tamanhos d
 Pronto quando: a luta inteira roda em cenário sem zoom, o atalho deixa só esses cenários na seleção e o tamanho da
 cabeça é o mesmo em todos os quadros (acrescente essa conferência ao `verificar_pengaro.py`, com tolerância de 10%).
 
-## 2. Tirar a imitação de chimpanzé da provocação do Pengaró
-
-`docs/repertorio-de-combate.md`, linha 61, diz que a provocação do Pengaró é uma "imitação breve de chimpanzé".
-O Pengaró é um personagem negro, e isso é piada de macaco. Tire do documento e não coloque no jogo. Use a provocação
-de `prompts/pengaro-codex.md`: embaixadinha, "F-f-f-f-f...", e no fim ele desiste e mostra o dedo do meio.
-
-## 3. Trocar a arte antiga pelas folhas prontas
+## 2. Trocar a arte antiga pelas folhas prontas
 
 O Breno aprovou o método das folhas desenhadas e cobrou o gingado: ele luta capoeira, então parado e andando não
 podem ser guarda de boxe.
@@ -44,7 +38,7 @@ em `ferramentas/gerar_folhas.py`. Elas ainda não foram recortadas nem conferida
 
 Pronto quando: nenhuma ação usa as 9 poses antigas e o Pengaró ginga sem parar quando está parado.
 
-## 4. Conferir na batalha simulada
+## 3. Conferir na batalha simulada
 
 Rode Pengaró contra Hazaki em CPU contra CPU, pelo menos 5 lutas, e registre em `docs/teste-batalha.md`:
 
@@ -56,7 +50,7 @@ Rode Pengaró contra Hazaki em CPU contra CPU, pelo menos 5 lutas, e registre em
 
 Cada problema achado vira uma missão nova neste arquivo.
 
-## 5. Revisar o que ficou aberto
+## 4. Revisar o que ficou aberto
 
 - Os PRs #5 e #7 foram feitos antes do commit `26445ab`. Refaça em cima da `mugen` o que ainda valer (janela curta dos
   especiais, Despertar a 30%, gerador em LF, Codex por PR) e feche o resto. Quem decide o merge é o Breno.
