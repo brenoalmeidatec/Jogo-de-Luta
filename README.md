@@ -30,11 +30,11 @@ Capoeirista e boleiro. Fica em `chars/pengaro/`.
 
 | Especial | Comando |
 |---|---|
-| Bola de Sombra | baixo, baixo-frente, frente + a (lenta) ou b (rápida) |
-| Meia-lua de Compasso Sombria | baixo, baixo-trás, trás + a ou b |
-| Armada do Quilombo | frente, baixo, baixo-frente + x ou y |
-| Caneta | baixo, baixo-trás, trás + x ou y |
-| Golaço da Noite (1 estoque) | baixo, baixo-frente, frente duas vezes + a ou b |
+| Bola de Sombra | baixo, frente + a (lenta) ou b (rápida) |
+| Meia-lua de Compasso Sombria | baixo, trás + a ou b |
+| Armada do Quilombo | frente, baixo + x ou y |
+| Caneta | baixo, trás + x ou y |
+| Golaço da Noite (1 estoque) | trás, frente, baixo + a ou b |
 | Pelada Sombria | o mesmo comando durante o Despertar, ou com 20% de vida e 2 estoques |
 | Despertar: Lata Gelada (1 estoque) | x + a + y |
 
@@ -62,4 +62,4 @@ tudo em pixel art de 112 px de altura. Veja `docs/proporcoes.md` para as propor�
 
 ## Efeitos
 
-Os efeitos do pixelfx continuam em `assets/efeitos/` (veja o LEIA-ME de lá), ainda sem uso no personagem.
+Os efeitos do pixelfx continuam em `assets/efeitos/` (veja o LEIA-ME de lá), integrados aos impactos e à defesa do Pengaró.
