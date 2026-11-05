@@ -328,8 +328,9 @@ def montar_sprites():
     for i in range(8):
         A(f"rola{i}", gira(p["agachado"], 45 * i, 0, -42))
     # golpes
-    # quadros desenhados de novo, um por um (veja ferramentas/recortar_quadros.py)
-    for nome in ("parado", "anda", "soco"):
+    # quadros desenhados de novo, um por um (veja ferramentas/recortar_quadros.py);
+    # chute e agacha saem de ferramentas/quadros_intermediarios.py
+    for nome in ("parado", "anda", "soco", "chute", "agacha"):
         for i, arquivo in enumerate(sorted((RAIZ / "sprites/pengaro/quadros" / nome).glob("*.png"))):
             tela = Image.new("RGBA", (LARG, ALT))
             tela.alpha_composite(Image.open(arquivo).convert("RGBA"), (EIXO_X - 104, EIXO_Y - 119))
@@ -447,10 +448,10 @@ def montar_air(s, faiscas):
     Q(0, [(f"q_parado{i}", 6) for i in range(8)])
     Q(9203, [(f"juliet{i}", 6) for i in range(4)])
     Q(5, [("parado0", 3), ("anda0", 3)])
-    Q(6, [("agacha0", 3), ("parado0", 3)], BAIXO)
-    Q(10, [("agacha0", 3)], BAIXO)
+    Q(6, [("q_agacha2", 2), ("q_agacha1", 2), ("q_agacha0", 2)], BAIXO)
+    Q(10, [("q_agacha0", 1), ("q_agacha1", 1), ("q_agacha2", 1)], BAIXO)
     Q(11, [("agacha1", 12), ("agacha2", 12)], BAIXO)
-    Q(12, [("agacha0", 3)], BAIXO)
+    Q(12, [("q_agacha2", 1), ("q_agacha1", 1), ("q_agacha0", 1)], BAIXO)
     Q(20, [(f"q_anda{i}", 5) for i in range(8)])
     Q(21, [(f"q_anda{i}", 5) for i in range(7, -1, -1)])
     Q(40, [("prepulo", 4)])
@@ -483,8 +484,18 @@ def montar_air(s, faiscas):
         Q(n, [("q_soco1", um), ("q_soco2", um), ("q_soco3", lig - 2 * um), ("q_soco4", 1, caixa),
               ("q_soco5", ativo - 1, caixa), ("q_soco6", rec // 2), ("q_soco7", rec - rec // 2)])
 
+    def reparte(total, partes):
+        """Divide os ticks entre os quadros, pelo menos 1 em cada."""
+        base = [max(1, total // partes)] * partes
+        base[-1] += total - sum(base)
+        return base
+
     def chute(n, lig, ativo, rec, caixa):
-        Q(n, [("chute0", lig), ("chute1", 1, caixa), ("chute2", ativo - 1, caixa), ("chute3", rec)])
+        """Prepara, dobra a perna, estica com rastro, fica no golpe e volta dobrando."""
+        q = [(f"q_chute{i}", t) for i, t in zip(range(4), reparte(lig, 4))]
+        q += [("q_chute4", 1, caixa), ("q_chute5", max(1, ativo - 1), caixa)]
+        q += [(f"q_chute{i}", t) for i, t in zip(range(6, 11), reparte(rec, 5))]
+        Q(n, q)
 
     soco(200, 4, 3, 7, (15, -92, 74, -64))
     soco(210, 7, 4, 16, (15, -92, 78, -64))
@@ -492,7 +503,7 @@ def montar_air(s, faiscas):
     chute(230, 5, 3, 9, (12, -56, 58, -42))
     chute(240, 9, 4, 18, (12, -80, 80, -58))
     chute(245, 5, 3, 16, (10, -76, 50, -50))
-    Q(260, [("chute0", 12), ("chute1", 1, (15, -96, 75, -60)), ("chute2", 3, (15, -96, 75, -60)), ("chute3", 20)])
+    chute(260, 12, 4, 20, (15, -96, 75, -60))
     Q(400, [("agacha1", 4), ("baixo_soco", 3, (15, -56, 54, -42)), ("agacha1", 7)], BAIXO)
     Q(410, [("baixo_cima0", 6), ("baixo_cima1", 5, (5, -122, 42, -60)), ("agacha0", 18)], BAIXO)
     Q(430, [("rasteira0", 5), ("rasteira1", 3, (12, -18, 62, -4)), ("rasteira3", 10)], BAIXO)
