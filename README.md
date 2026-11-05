@@ -1,8 +1,55 @@
 # Jogo de Luta
 
-Jogo de luta 2D original em pixel art (Godot), no estilo do [pixelfx](https://patch-gg.github.io/pixelfx/).
+Jogo de luta 2D em pixel art feito para rodar no [IKEMEN GO](https://github.com/ikemen-engine/Ikemen-GO),
+motor gratuito e de código aberto que roda personagens de MUGEN. O motor já cuida de menus, CPU, treino,
+modo times, tontura e quebra de guarda; aqui ficam os personagens.
 
-## Gerar os personagens (API de imagens da OpenAI)
+## Jogar (Windows)
+
+Coloque `ferramentas/Jogo de Luta.bat` na Área de Trabalho (ou um atalho para ele) e dê dois cliques.
+A cada clique ele baixa a versão mais nova deste repositório, coloca o Pengaró no motor e abre o jogo.
+Na primeira vez ele também baixa o IKEMEN GO. Tudo fica em `%USERPROFILE%\JogoDeLuta`.
+
+Os botões do personagem são x (soco fraco), y (soco forte), a (chute fraco), b (chute forte) e
+c (provocação). As teclas de cada botão ficam nas opções do IKEMEN.
+
+## Pengaró
+
+Capoeirista e boleiro. Fica em `chars/pengaro/`.
+
+| Mecânica | Comando |
+|---|---|
+| Corrida / passo para trás | frente, frente / trás, trás |
+| Pulinho, pulo, hiper pulinho, super pulo | toca cima, segura cima, baixo e toca cima, baixo e segura cima |
+| Rolamento | x + a (com trás rola para trás) |
+| Golpe de afastar | y + b, no chão ou no ar |
+| Agarrão | colado, frente ou trás + y ou b (y ou b escapa) |
+| Levantar rápido | x + a ao cair (não vale depois de rasteira, agarrão e super) |
+| Guard cancel (1 estoque) | na defesa: x + a rola, y + b afasta |
+| Corrente de fracos | até 4 golpes fracos seguidos no contato |
+
+| Especial | Comando |
+|---|---|
+| Bola de Sombra | baixo, baixo-frente, frente + a (lenta) ou b (rápida) |
+| Meia-lua de Compasso Sombria | baixo, baixo-trás, trás + a ou b |
+| Armada do Quilombo | frente, baixo, baixo-frente + x ou y |
+| Caneta | baixo, baixo-trás, trás + x ou y |
+| Golaço da Noite (1 estoque) | baixo, baixo-frente, frente duas vezes + a ou b |
+| Pelada Sombria | o mesmo comando durante o Despertar, ou com 20% de vida e 2 estoques |
+| Despertar: Lata Gelada (1 estoque) | x + a + y |
+
+## Mudar o personagem
+
+Os arquivos de `chars/pengaro/` são gerados. Mude golpes, danos e falas em `ferramentas/gerar_pengaro.py`
+e rode:
+
+```powershell
+pip install pillow
+python ferramentas/gerar_pengaro.py
+python ferramentas/verificar_pengaro.py
+```
+
+## Gerar sprites novos (API de imagens da OpenAI)
 
 ```powershell
 pip install openai pillow
@@ -10,73 +57,9 @@ $env:OPENAI_API_KEY = "sk-..."   # chave de platform.openai.com (nunca faça com
 python ferramentas/gerar_sprites.py --personagem kaio --qualidade low
 ```
 
-1. Gera uma imagem de referência do personagem e uma imagem por pose (`sprites/kaio/`).
-2. Converte tudo em pixel art com `ferramentas/pixelizar.py`: 112 px de altura (escala KOF), 24 cores chapadas
-   e contorno escuro de 1 px (`sprites/kaio/pixel/`), mais a folha `kaio.png` + `kaio.json`.
+Personagens, estilo e poses ficam em `ferramentas/personagens.json`. O `ferramentas/pixelizar.py` converte
+tudo em pixel art de 112 px de altura. Veja `docs/proporcoes.md` para as proporções.
 
-Personagens, estilo e poses ficam em `ferramentas/personagens.json`.
+## Efeitos
 
-## Efeitos (pixelfx)
-
-Faíscas de golpe, defesa, impacto e projéteis já exportados em `assets/efeitos/` (veja o LEIA-ME de lá).
-
-No Godot, importe os PNGs com **Filter = Nearest**.
-
-## Proporções e HUD
-
-Tela base 304x224, personagens de 104 a 128 px. Veja `docs/proporcoes.md` e `ferramentas/hud_layout.json`.
-
-## Jogar (Godot)
-
-1. Instale a [Godot 4.3](https://godotengine.org/download) ou mais nova (versão padrão, não precisa da .NET).
-2. Na Godot, clique em **Importar**, escolha o `project.godot` desta pasta e depois em **Importar e editar**.
-3. Aperte **F5** para jogar.
-
-Ou use o atalho `ferramentas/Jogo de Luta.bat` (Windows): coloque na área de trabalho e dê dois cliques.
-Ele baixa a versão mais nova do GitHub, usa a Godot 4.3+ que já estiver no computador (ou baixa uma) e abre o jogo.
-Tudo fica em `%USERPROFILE%\JogoDeLuta`.
-
-A tela base é 304x224 (resolução de arcade, proporção do KOF), ampliada 4x numa janela de 1216x896.
-Os personagens normais têm 112 px, metade da altura da tela, e o HUD segue `ferramentas/hud_layout.json`.
-
-### Controles
-
-| | Jogador 1 | Jogador 2 | Controle |
-|---|---|---|---|
-| Mover / pular / agachar | W A S D | Setas | Direcional ou analógico |
-| Soco fraco / forte | U / I | Numpad 4 / 5 | X / Y |
-| Chute fraco / forte | J / K | Numpad 1 / 2 | A / B |
-| Mostrar hitboxes | F1 | | |
-
-Segurar **trás** defende. Golpes baixos só são defendidos agachado (baixo-trás). Golpes no ar só em pé.
-
-### Golpes
-
-| Golpe | Comando |
-|---|---|
-| Socos e chutes em pé, agachado e no ar | botão (com baixo para agachado) |
-| Gancho anti-aéreo | baixo + soco forte |
-| Rasteira (derruba) | baixo + chute forte |
-| **Rajada** (projétil) | baixo, baixo-frente, frente + soco |
-| **Chute Ciclone** (avança e derruba) | baixo, baixo-trás, trás + chute |
-
-Golpes fracos, o soco forte e os golpes agachados podem ser **cancelados** num especial quando acertam,
-por exemplo: agachado chute fraco, agachado soco fraco, Rajada.
-
-### Como o código está organizado
-
-| Arquivo | O que faz |
-|---|---|
-| `scripts/match.gd` | a luta: rounds, tempo, câmera, colisão dos golpes, congelamento no impacto |
-| `scripts/fighter.gd` | o lutador: estados, física, dados de quadro de cada golpe, comandos de especial |
-| `scripts/hud.gd` | barras de vida e especial, tempo, retratos, combos, mensagens |
-| `scripts/effects.gd`, `scripts/fx_library.gd` | faíscas e efeitos do pixelfx |
-| `scripts/projectile.gd` | o projétil da Rajada |
-| `scripts/controls.gd` | teclas e controles |
-
-Toda a lógica roda em quadros fixos (60 por segundo), sem depender do tempo real. Isso mantém os combos
-consistentes e deixa o caminho aberto para um modo online com rollback.
-
-Enquanto os sprites não existem, os lutadores são desenhados com formas simples. Quando houver
-`sprites/kaio/pixel/kaio.png` + `kaio.json` (gerados por `ferramentas/pixelizar.py`), o jogo usa o sprite
-automaticamente. O jogador 1 é o Pengaró (com sprites) e o jogador 2 é o Brutus, ainda desenhado com formas simples (`scripts/match.gd`).
+Os efeitos do pixelfx continuam em `assets/efeitos/` (veja o LEIA-ME de lá), ainda sem uso no personagem.
