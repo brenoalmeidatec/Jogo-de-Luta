@@ -72,6 +72,32 @@ foreach ($lutador in @('pengaro', 'hazaki')) {
 }
 [IO.File]::WriteAllText($select, $texto)
 
-# 4. Abre o jogo
+# 4. Teclas do jogador 1: anda com W A S D, socos nas setas esquerda (fraco) e cima (forte),
+# chutes nas setas baixo (fraco) e direita (forte). z e w saem de d e w para nao colidir. O IKEMEN so cria o save\config.ini depois da
+# primeira abertura; se ainda nao existe, abre e fecha o jogo uma vez para ele nascer.
+$cfg = Join-Path $motor 'save\config.ini'
+function Ajustar-Teclas($arquivo) {
+    $t = [IO.File]::ReadAllText($arquivo)
+    $novo = @{ up='w'; down='s'; left='a'; right='d'; x='LEFT'; y='UP'; a='DOWN'; b='RIGHT'; z='v'; w='r' }
+    $m = [regex]::Match($t, '(?ims)^\[Keys_P1\][^\r\n]*\r?\n.*?(?=^\[|\z)')
+    if (-not $m.Success) { return }
+    $bloco = $m.Value
+    foreach ($k in $novo.Keys) {
+        $bloco = [regex]::Replace($bloco, "(?im)^$k\s*=.*$", "$k = $($novo[$k])")
+    }
+    $t = $t.Substring(0, $m.Index) + $bloco + $t.Substring($m.Index + $m.Length)
+    [IO.File]::WriteAllText($arquivo, $t)
+}
+if (-not (Test-Path $cfg)) {
+    Write-Host 'Primeira abertura: preparando as teclas...'
+    $p = Start-Process $exe -WorkingDirectory $motor -PassThru
+    for ($i = 0; $i -lt 30 -and -not (Test-Path $cfg); $i++) { Start-Sleep 1 }
+    Start-Sleep 2
+    if (-not $p.HasExited) { Stop-Process $p -Force }
+    Start-Sleep 1
+}
+if (Test-Path $cfg) { Ajustar-Teclas $cfg }
+
+# 5. Abre o jogo
 Write-Host 'Abrindo o jogo!' -ForegroundColor Green
 Start-Process $exe -WorkingDirectory $motor -WindowStyle Normal
