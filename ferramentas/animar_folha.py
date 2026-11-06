@@ -34,9 +34,9 @@ LARG, ALT = 360, 260  # mesma tela dos sprites do jogo, com folga para chute alt
 DESLOCA = (180 - PIVO[0], 220 - PIVO[1])  # do pivô antigo para os pés na tela do jogo
 MEIOS = 6  # quadros do meio entre dois desenhos
 ESCALA_2172 = 0.40  # a figura em pé dá 111 px numa folha de 2172 de largura; a escala segue a largura da folha
-# 8 desenhos + 8 x 3 = 32 quadros
-LOOPS = {"ginga_fluida": ("ginga", 3), "anda_fluida": ("anda", 3), "ginga_endiabrada": ("ginga_endiabrada", 3),
-         "e_anda_fluida": ("e_anda", 3)}
+# Ginga: 8 desenhos + 8 x 7 = 64 quadros, um ciclo em cerca de 2 segundos. Andar: 8 + 8 x 5 = 48 quadros.
+LOOPS = {"ginga_fluida": ("ginga", 7), "anda_fluida": ("anda", 5), "ginga_endiabrada": ("ginga_endiabrada", 7),
+         "e_anda_fluida": ("e_anda", 5)}
 # Com fumaça em volta, âncora nos pés ou na cabeça pula de quadro para quadro: usa o centro de cada célula.
 POR_CELULA = {"despertar_b", "ginga_endiabrada"}  # e todas as folhas e_<golpe>, as versões endiabradas
 

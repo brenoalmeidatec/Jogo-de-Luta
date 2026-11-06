@@ -41,7 +41,9 @@ EIXO_X, EIXO_Y = 180, 220
 LIMITE_AMOSTRA_PALETA = 4_000_000  # pixels usados para escolher as 255 cores
 
 # Balões, em unidades do lutador (a tela da luta em 16:9 é 320 x 180).
-BALAO_ACIMA_DOS_PES = 80  # ponta do balão, logo acima da cabeça
+BALAO_ACIMA_DOS_PES = 125  # ponta do balão, logo acima da cabeça
+RITMO = 1.5  # os golpes mostram o movimento inteiro; no tempo antigo pareciam acelerados
+PROJETEIS = {1005, 1006, 3005, 3006, 3010, 3011}
 BALAO_TOPO_MINIMO = 40    # abaixo do relógio e dos nomes da HUD
 BALAO_MARGEM = 4          # folga até a borda da tela
 
@@ -266,6 +268,8 @@ class Air:
         if numero in self.acoes:
             return
         self.acoes.add(numero)
+        if 200 <= numero < 4000 and numero != 2000 and numero not in PROJETEIS:
+            quadros = [(q[0], round(q[1] * RITMO) if q[1] > 0 else q[1], *q[2:]) for q in quadros]
         if not self.hazaki:
             quadros = self.fluido(numero, quadros)
             loop = self.mapas[numero][loop] - 1 if loop is not None else None
@@ -493,7 +497,10 @@ TROCA_POR_FOLHA = {
     "gira0": ("compasso", 2), "gira1": ("compasso", 3), "gira2": ("compasso", 4), "gira3": ("compasso", 5),
     "lata0": ("lata", 2), "lata1": ("lata", 4), "lata2": ("lata", 7),
     "soco0": ("soco", 3), "soco1": ("soco", 5), "soco2": ("soco", 5), "soco3": ("soco", 6),
-    "parado0": ("soco", 0),
+    "parado0": ("soco", 0), "anda0": ("anda_fluida", 0), "ar_chute": ("bicicleta", 3), "ar_cotovelo": ("ar_soco", 4),
+    "pisa": ("chute_baixo", 4), "defesa_baixa": ("agachado", 7),
+    **{f"corre{i}": ("anda_fluida", i * 12) for i in range(4)},
+    **{f"tonto{i}": ("apanha", 3 + i % 2) for i in range(4)},
     **{f"rola{i}": ("rolamento", i) for i in range(8)},
     # sem bola: na intro, na provocação e na vitória ele dá um gole
     **{f"embaixada{i}": ("lata", i + 1) for i in range(4)},
@@ -517,6 +524,10 @@ def abrir_quadro(arquivo):
     return tela
 
 
+def quadros_do_loop(pasta):
+    return len(list((QUADROS / pasta).glob("*.png")))
+
+
 def quadro_folha(folha, i):
     arquivo = QUADROS / folha / f"{i:02d}.png"
     return abrir_quadro(arquivo) if arquivo.exists() else None
@@ -532,7 +543,7 @@ def desenho_de(nome):
 
 def fim_da_folha(nome):
     """No último elemento de um golpe, a recuperação segue até o último desenho da folha em vez de ficar parada."""
-    desenho = desenho_de(nome)
+    desenho = desenho_de(nome) if nome.startswith(("f_", "q_soco")) else None
     return f"f_{desenho[0]}7" if desenho and desenho[0] in FOLHAS and desenho[1] < 7 else None
 
 
@@ -574,7 +585,8 @@ def preset_despertado(s):
 def caminho_fluido(s, atual, proximo):
     """Sprites para ir de um desenho até o seguinte, sem incluir o seguinte. Registra só os quadros do meio usados."""
     de, para = desenho_de(atual), desenho_de(proximo) if proximo else None
-    if not de or not para or de[0] != para[0] or de[1] == para[1]:
+    # Desenhos distantes são cortes de propósito: atravessar tudo no meio faz o corpo se debater.
+    if not de or not para or de[0] != para[0] or de[1] == para[1] or abs(para[1] - de[1]) > 3:
         return [atual]
     folha = de[0]
     passo = 1 if para[1] > de[1] else -1
@@ -669,7 +681,18 @@ def acoes_folhas(Q):
 
     sequencia(230, "chute_baixo", 5, 3, 9, (12, -56, 58, -42))
     sequencia(240, "chute_alto", 9, 4, 18, (12, -100, 80, -58))
-    sequencia(260, "chute_alto", 12, 4, 20, (15, -100, 75, -60))
+    # capoeira: cotovelada no soco forte, bênção no chute longo
+    sequencia(210, "martelo", 7, 4, 16, (15, -92, 78, -64))
+    sequencia(215, "martelo", 4, 3, 14, (12, -94, 66, -62))
+    sequencia(245, "chute_baixo", 5, 3, 16, (10, -76, 50, -50))
+    sequencia(260, "afastar", 12, 4, 20, (15, -100, 75, -60))
+    giro = (-40, -80, 90, -20)
+    for i in (0, 1):
+        Q(1100 + i, [(f("compasso", 1), 8)] + [(f("compasso", j), 4, giro) for j in (2, 3, 4, 5)]
+          + [(f("compasso", 7), 14 + 6 * i)])
+        Q(1200 + i, [(f("armada", 2), 4), (f("armada", 4), 6, (0, -130, 60 + 8 * i, -30)), (f("armada", 5), 8),
+                     (f("armada", 6), -1)], NO_AR)
+        Q(1300 + i, [(f("caneta", 2), 10), (f("caneta", 4), 8, (10, -20, 70, -4)), (f("caneta", 7), 20 + 6 * i)], BAIXO)
     sequencia(400, "baixo_soco", 4, 3, 7, (15, -56, 54, -42), quadro_ativo=4, area=BAIXO)
     sequencia(410, "cabecada", 6, 5, 18, (5, -122, 42, -60), area=BAIXO)
     sequencia(430, "rasteirinha", 5, 3, 10, (12, -18, 62, -4), area=BAIXO)
@@ -839,7 +862,7 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
     A("lata2", estica(p["parado"], 1.03))
     if not hazaki:
         # ginga da forma despertada: a mesma ginga, de óculos, com as chamas por trás
-        for i in range(32):
+        for i in range(quadros_do_loop("ginga_endiabrada")):
             A(f"ginga_endiabrada{i}", abrir_quadro(QUADROS / f"ginga_endiabrada/{i:02d}.png"))
     # balões
     for chave, texto in BALOES.items():
@@ -905,11 +928,11 @@ def montar_air(s, faiscas, hazaki=False, arte_despertada=None):
     if hazaki:
         Q(0, [(f"q_parado{i}", 6) for i in range(8)])
     else:
-        Q(0, [(f"q_ginga_fluida{i}", 2) for i in range(32)])
+        Q(0, [(f"q_ginga_fluida{i}", 2) for i in range(quadros_do_loop("ginga_fluida"))])
     if hazaki:
         Q(9203, [(f"juliet{i}", 6) for i in range(4)])
     else:
-        Q(9203, [(f"ginga_endiabrada{i}", 2) for i in range(32)])
+        Q(9203, [(f"ginga_endiabrada{i}", 2) for i in range(quadros_do_loop("ginga_endiabrada"))])
     Q(5, [("parado0", 3), ("anda0", 3)])
     Q(6, [("agacha0", 3), ("parado0", 3)], BAIXO)
     Q(10, [("agacha0", 3)], BAIXO)
@@ -919,8 +942,8 @@ def montar_air(s, faiscas, hazaki=False, arte_despertada=None):
         Q(20, [(f"q_anda{i}", 5) for i in range(8)])
         Q(21, [(f"q_anda{i}", 5) for i in range(7, -1, -1)])
     else:
-        Q(20, [(f"q_anda_fluida{i}", 2) for i in range(32)])
-        Q(21, [(f"q_anda_fluida{i}", 2) for i in range(31, -1, -1)])
+        Q(20, [(f"q_anda_fluida{i}", 2) for i in range(quadros_do_loop("anda_fluida"))])
+        Q(21, [(f"q_anda_fluida{i}", 2) for i in reversed(range(quadros_do_loop("anda_fluida")))])
     Q(40, [("prepulo", 4)])
     for n in (41, 42, 43):
         Q(n, [("pulo_sobe", 8), ("pulo_topo", -1)] if hazaki else
@@ -1134,8 +1157,8 @@ IntPersistIndex = 60
 FloatPersistIndex = 40
 
 [Size]
-xscale = 0.6
-yscale = 0.6
+xscale = 1
+yscale = 1
 ground.back = 16
 ground.front = 18
 air.back = 14
@@ -1733,6 +1756,8 @@ time = 2
     c.append("[State -2, Conta derrota]\ntype = VarAdd\ntrigger1 = !alive\nvar(32) = 1\n\n")
     c.append(fala(-2, "locutor_ko", "var(32) = 75"))
     resultado = "".join(c)
+    # o golpe ficou mais longo: o atordoamento acompanha, para as correntes continuarem encaixando
+    resultado = re.sub(r"(?m)^((?:ground|guard|air)\.hittime = )(\d+)", lambda m: f"{m[1]}{round(int(m[2]) * RITMO)}", resultado)
     if hazaki:
         resultado = resultado.replace(f"anim = {ID_BALAO['lata']}", f"anim = {ID_BALAO['golaco']}")
         resultado = resultado.replace("add = 12, 0, 28", "add = 42, 16, 0").replace("sinadd = 10, 0, 18, 40", "sinadd = 24, 8, 0, 40")
