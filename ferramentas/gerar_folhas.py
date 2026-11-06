@@ -21,7 +21,11 @@ from PIL import Image
 
 RAIZ = Path(__file__).resolve().parent.parent
 FOLHAS = RAIZ / "sprites/pengaro/quadros/folhas"
-REFERENCIA = FOLHAS / "soco.png"
+# Sprite-base do Pengaró com a garrafa de whisky (feito pelo Codex, veja docs/sprite-base-whisky.md).
+# Enquanto não existir, a referência é a folha do soco.
+REFERENCIA = FOLHAS / "base_whisky.png"
+if not REFERENCIA.exists():
+    REFERENCIA = FOLHAS / "soco.png"
 IMAGENS = Path.home() / ".codex/generated_images"
 
 CABECA = """Generate ONE image with your image generation tool. Do not write code and do not edit any file.
