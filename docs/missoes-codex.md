@@ -157,3 +157,9 @@ cotovelo ou some (quando a mão de trás não aparece). O definitivo é a garraf
    fortes, especiais, super e Despertar, nas metas da tabela 7.1.
 
 Pronto quando: todas as ações do Pengaró usam quadros desenhados com a garrafa e `verificar_pengaro.py` passa.
+
+## Missão: criar o lutador Barbeiro
+
+Ficha em `docs/fichas/barbeiro.md`, prompt completo em `docs/prompts/codex-barbeiro.md`, referência de arte em
+`sprites/barbeiro/referencia.png`. Faça as fases do prompt na ordem. Pronto quando passar no checklist da seção 9 das
+regras, com toda a arte em pixel art desenhada estilo SNES (nunca 3D pixelizado).
