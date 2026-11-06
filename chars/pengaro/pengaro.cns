@@ -4,12 +4,12 @@
 
 [Quotes]
 victory1 = "F-f-foi de letra, filho da puta."
-victory2 = "T-t-tá achando que é pe-pelada de domingo, é, ca-caralho?"
+victory2 = "T-t-tá achando que é bo-boteco de domingo, é, ca-caralho?"
 victory3 = "V-v-vai lá contar pra tua mãe que tu a-a-apanhou do gago."
-victory4 = "Eu chu-chupo... chu-chu-CHUTO melhor que tu, porra!"
+victory4 = "Eu be-bebo... be-be-BATO melhor que tu, porra!"
 victory5 = "T-tu ficou pa-parado igual cone. Ma-mas cone pelo menos fica de pé."
 victory6 = "D-d-demorei pra falar, mas tu de-de-demorou mais pra levantar."
-victory7 = "Mi-minhas bolas... MINHA BOLA tá sempre no pé, pa-pa-parceiro."
+victory7 = "Es-essa vai na tua conta, pa-pa-parceiro. A do bar também."
 victory8 = "Olha só, falei inteiro! Agora chama tua irmã que eu vou ensinar ela a gingar, hein!"
 
 [Data]
@@ -1249,7 +1249,7 @@ projremanim = 1006
 projhits = 1
 projmisstime = 0
 projpriority = 2
-offset = 70, -12
+offset = 62, -86
 velocity = 3.2, 0
 attr = S, SP
 damage = 70, 4
@@ -1274,7 +1274,7 @@ projid = 1001
 projanim = 1005
 projhitanim = 1006
 projremanim = 1006
-offset = 70, -12
+offset = 62, -86
 velocity = 4.4, 0
 attr = S, SP
 damage = 50, 4
@@ -1352,7 +1352,7 @@ projremanim = 1006
 projhits = 1
 projmisstime = 0
 projpriority = 2
-offset = 70, -12
+offset = 62, -86
 velocity = 5.4, 0
 attr = S, SP
 damage = 70, 4
@@ -1377,7 +1377,7 @@ projid = 1001
 projanim = 1005
 projhitanim = 1006
 projremanim = 1006
-offset = 70, -12
+offset = 62, -86
 velocity = 6.6000000000000005, 0
 attr = S, SP
 damage = 50, 4
@@ -1908,32 +1908,173 @@ sprpriority = 6
 facing = Facing
 ignorehitpause = 1
 
-[State 3000, Bola]
+[State 3000, Bebida 1]
 type = Projectile
-trigger1 = AnimElem = 5
+trigger1 = AnimElemTime(5) = 0
 projid = 3000
-projanim = 3005
-projhitanim = 3006
-projremanim = 3006
-projhits = 5
-projmisstime = 5
-projpriority = 2
-offset = 90, -46
-velocity = 7, 0
+projanim = 3010
+projhitanim = 9200
+projremanim = 9200
+postype = p2
+offset = -30, -210
+velocity = 0, 7
+projpriority = 3
+projremovetime = 80
+projheightbound = -400, 1
 attr = S, HP
-damage = 60, 4
+damage = 42, 6
 animtype = Med
-guardflag = MA
+guardflag = H
 hitflag = MAF
-pausetime = 2, 10
-sparkxy = 0, 0
-hitsound = F5,1
+pausetime = 4, 10
+sparkno = -1
+hitsound = F5,2
 guardsound = F6,0
 ground.type = High
-ground.slidetime = 12
-ground.hittime = 18
-ground.velocity = -4
-air.velocity = -2,-3.5
+ground.slidetime = 10
+ground.hittime = 16
+ground.velocity = -2
+air.velocity = -2,-3
+
+[State 3000, Bebida 2]
+type = Projectile
+trigger1 = AnimElemTime(5) = 6
+projid = 3000
+projanim = 3011
+projhitanim = 9200
+projremanim = 9200
+postype = p2
+offset = 24, -228
+velocity = 0, 8
+projpriority = 3
+projremovetime = 80
+projheightbound = -400, 1
+attr = S, HP
+damage = 42, 6
+animtype = Med
+guardflag = H
+hitflag = MAF
+pausetime = 4, 10
+sparkno = -1
+hitsound = F5,2
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 16
+ground.velocity = -2
+air.velocity = -2,-3
+
+[State 3000, Bebida 3]
+type = Projectile
+trigger1 = AnimElemTime(5) = 12
+projid = 3000
+projanim = 3010
+projhitanim = 9200
+projremanim = 9200
+postype = p2
+offset = -8, -246
+velocity = 0, 7
+projpriority = 3
+projremovetime = 80
+projheightbound = -400, 1
+attr = S, HP
+damage = 42, 6
+animtype = Med
+guardflag = H
+hitflag = MAF
+pausetime = 4, 10
+sparkno = -1
+hitsound = F5,2
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 16
+ground.velocity = -2
+air.velocity = -2,-3
+
+[State 3000, Bebida 4]
+type = Projectile
+trigger1 = AnimElemTime(5) = 18
+projid = 3000
+projanim = 3011
+projhitanim = 9200
+projremanim = 9200
+postype = p2
+offset = 36, -210
+velocity = 0, 8
+projpriority = 3
+projremovetime = 80
+projheightbound = -400, 1
+attr = S, HP
+damage = 42, 6
+animtype = Med
+guardflag = H
+hitflag = MAF
+pausetime = 4, 10
+sparkno = -1
+hitsound = F5,2
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 16
+ground.velocity = -2
+air.velocity = -2,-3
+
+[State 3000, Bebida 5]
+type = Projectile
+trigger1 = AnimElemTime(5) = 24
+projid = 3000
+projanim = 3010
+projhitanim = 9200
+projremanim = 9200
+postype = p2
+offset = -40, -228
+velocity = 0, 7
+projpriority = 3
+projremovetime = 80
+projheightbound = -400, 1
+attr = S, HP
+damage = 42, 6
+animtype = Med
+guardflag = H
+hitflag = MAF
+pausetime = 4, 10
+sparkno = -1
+hitsound = F5,2
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 16
+ground.velocity = -2
+air.velocity = -2,-3
+
+[State 3000, Bebida 6]
+type = Projectile
+trigger1 = AnimElemTime(5) = 30
+projid = 3000
+projanim = 3011
+projhitanim = 9200
+projremanim = 9200
+postype = p2
+offset = 6, -246
+velocity = 0, 8
+projpriority = 3
+projremovetime = 80
+projheightbound = -400, 1
+attr = S, HP
+damage = 60, 6
+animtype = Heavy
+guardflag = H
+hitflag = MAF
+pausetime = 4, 10
+sparkno = -1
+hitsound = F5,2
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 16
+ground.velocity = -2
+air.velocity = -2,-3
 fall = 1
 fall.recover = 0
 

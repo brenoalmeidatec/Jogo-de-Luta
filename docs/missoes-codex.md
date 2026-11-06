@@ -133,3 +133,27 @@ redesenhada ficar pronta, igual ao Diabo Loiro do Hazaki.
    no lugar da recoloração (`arte_endiabrada`).
 
 Pronto quando: o Despertar aparece redesenhado em todas as poses (a recoloração deixa de ser usada) e o verificador passa.
+
+
+## Pengaró cachaceiro: refazer as folhas com o whisky na mão
+
+Pedido do Breno (2026-11-06): o Pengaró luta segurando uma garrafa de whisky, a Bola de Sombra virou **Latada de
+Sombra** (arremessa lata de cerveja), o Golaço virou o super **Chuva de Bebidas** e a Pelada Sombria virou
+**Saideira Sombria**. Regra fixa do Breno: **toda arte sai em estilo sprite de SNES/arcade, nunca 3D pixelizado**
+(o Blender, se usado, é só referência de pose).
+
+O Claude já fez a parte de jogo e um quebra-galho visual: a garrafa e a lata são pixel art desenhada por código em
+`ferramentas/itens_pengaro.py`, e a garrafa é colada na mão de trás de cada quadro. Em alguns quadros ela cai no
+cotovelo ou some (quando a mão de trás não aparece). O definitivo é a garrafa **desenhada** em cada folha.
+
+1. No PC do Breno: `python ferramentas/gerar_folhas.py --todas` (o prompt já pede a garrafa em todo quadro e as
+   folhas novas de `bola` = Latada, `golaco` = Chuva de Bebidas, `provoca` e `vitoria`). O soco sai primeiro e vira
+   a referência das outras.
+2. Recorte cada folha com `ferramentas/recortar_quadros.py` (âncora de `FOLHAS_PENGARO`) nas pastas de
+   `sprites/pengaro/quadros/` e refaça a que vier com figura cortada, sem a garrafa ou com marca/texto na garrafa.
+3. Quando todas as folhas tiverem a garrafa desenhada, troque `SEM_WHISKY`/`com_whisky` em `gerar_pengaro.py` para
+   não colar a garrafa de novo (senão aparecem duas).
+4. Para chegar às ~1.500 desenhos da regra 7 (`regras-dos-lutadores.md`), gere folhas de 16 quadros para os golpes
+   fortes, especiais, super e Despertar, nas metas da tabela 7.1.
+
+Pronto quando: todas as ações do Pengaró usam quadros desenhados com a garrafa e `verificar_pengaro.py` passa.
