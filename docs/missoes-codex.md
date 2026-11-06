@@ -26,6 +26,10 @@ cabeça é o mesmo em todos os quadros (acrescente essa conferência ao `verific
 
 ## 2. Trocar a arte antiga pelas folhas prontas
 
+**Feito pelo Claude em 2026-11-06**, menos `golaco` (a folha tem 7 figuras; refazer). As folhas estão recortadas em
+`sprites/pengaro/quadros/<folha>/` e ligadas em `gerar_pengaro.py` (`FOLHAS`, `TROCA_POR_FOLHA`, `acoes_folhas`).
+Falta: conferir no jogo (pés, caixas de golpe) e usar `afastar`, `martelo`, `caneta` e `golaco` nos golpes deles.
+
 O Breno aprovou o método das folhas desenhadas e cobrou o gingado: ele luta capoeira, então parado e andando não
 podem ser guarda de boxe.
 

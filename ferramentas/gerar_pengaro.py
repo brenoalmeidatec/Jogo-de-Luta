@@ -131,6 +131,9 @@ class Sprites:
         self.proximo = 10
 
     def add(self, nome, img, grupo=None, indice=0, eixo=(EIXO_X, EIXO_Y)):
+        if getattr(self, "folhas", False) and nome in TROCA_POR_FOLHA:
+            folha, i = TROCA_POR_FOLHA[nome]
+            img = quadro_folha(folha, i) or img
         if grupo is None:
             grupo = self.proximo
             self.proximo += 1
@@ -221,7 +224,10 @@ class Air:
         self.arte_despertada = arte_despertada or {}
 
     def acao(self, numero, quadros, caixa=CORPO, loop=None):
-        """quadros: lista de (nome_sprite, ticks) ou (nome_sprite, ticks, caixa_de_golpe) ou com flip 'H'."""
+        """quadros: lista de (nome_sprite, ticks) ou (nome_sprite, ticks, caixa_de_golpe) ou com flip 'H'.
+        Se a ação já foi definida, a primeira definição vale (as das folhas desenhadas vêm antes)."""
+        if numero in self.acoes:
+            return
         self.acoes.add(numero)
         t = [f"[Begin Action {numero}]"]
         if caixa:
@@ -420,9 +426,118 @@ def olhos_roxos(tela, alfa):
         d.rectangle((x, y, x + 1, y + 1), fill="#e6b3ff")
 
 
+# ------------------------------------------------------------------ folhas desenhadas (estilo arcade)
+# Quadros recortados das folhas de 8 desenhos (sprites/pengaro/folhas -> ferramentas/recortar_quadros.py),
+# em sprites/pengaro/quadros/<folha>/00..07.png. Só o Pengaró usa; o Hazaki continua com as poses dele.
+FOLHAS = ("agachado", "pulo", "defesa", "apanha", "queda", "levanta", "rolamento", "chute_baixo", "chute_alto",
+          "baixo_soco", "cabecada", "rasteirinha", "rasteira", "ar_soco", "bicicleta", "agarrao", "lata",
+          "vitoria", "derrota", "provoca", "bola", "compasso", "armada", "caneta", "afastar", "martelo")
+
+# Sprites antigos (feitos girando/esticando as 9 poses) trocados por um desenho da folha: nome -> (folha, quadro).
+# Assim todo golpe que ainda usa esses nomes (especiais, super, Despertar) já aparece com a arte desenhada.
+TROCA_POR_FOLHA = {
+    "agacha0": ("agachado", 2), "agacha1": ("agachado", 4), "agacha2": ("agachado", 6),
+    "prepulo": ("pulo", 0), "pulo_sobe": ("pulo", 2), "pulo_topo": ("pulo", 3), "pulo_desce": ("pulo", 5),
+    "pouso": ("pulo", 7), "defesa": ("defesa", 3), "defesa_ai": ("defesa", 5), "recua": ("defesa", 6),
+    "parry": ("defesa", 2), "apanha0": ("apanha", 1), "apanha1": ("apanha", 3), "apanha2": ("apanha", 4),
+    "cai0": ("queda", 1), "cai1": ("queda", 2), "cai2": ("queda", 4), "deitado": ("queda", 7),
+    "levanta0": ("levanta", 2), "levanta1": ("levanta", 5), "levanta2": ("levanta", 6),
+    "chute0": ("chute_alto", 2), "chute1": ("chute_alto", 3), "chute2": ("chute_alto", 4), "chute3": ("chute_alto", 5),
+    "baixo_soco": ("baixo_soco", 4), "baixo_cima0": ("cabecada", 2), "baixo_cima1": ("cabecada", 4),
+    "rasteira0": ("rasteira", 2), "rasteira1": ("rasteira", 4), "rasteira2": ("rasteira", 4), "rasteira3": ("rasteira", 6),
+    "ar_soco": ("ar_soco", 4), "bicicleta": ("bicicleta", 4), "agarra": ("agarrao", 2), "joga": ("agarrao", 6),
+    "especial": ("bola", 4), "kick_alto": ("armada", 4),
+    "gira0": ("compasso", 2), "gira1": ("compasso", 3), "gira2": ("compasso", 4), "gira3": ("compasso", 5),
+    "lata0": ("lata", 2), "lata1": ("lata", 4), "lata2": ("lata", 7),
+    "soco0": ("soco", 3), "soco1": ("soco", 5), "soco2": ("soco", 5), "soco3": ("soco", 6),
+    **{f"rola{i}": ("rolamento", i) for i in range(8)},
+}
+
+
+def quadro_folha(folha, i):
+    arquivo = RAIZ / "sprites/pengaro/quadros" / folha / f"{i:02d}.png"
+    if not arquivo.exists():
+        return None
+    tela = Image.new("RGBA", (LARG, ALT))
+    tela.alpha_composite(Image.open(arquivo).convert("RGBA"), (EIXO_X - 104, EIXO_Y - 119))
+    return tela
+
+
+def sprites_folhas(s):
+    """Registra cada quadro das folhas como f_<folha><i>."""
+    for folha in FOLHAS:
+        for i in range(8):
+            img = quadro_folha(folha, i)
+            if img is not None:
+                s.add(f"f_{folha}{i}", img)
+
+
+def acoes_folhas(Q):
+    """Ações do Pengaró com a sequência inteira desenhada. Vêm antes das antigas, que então são ignoradas.
+    Quantidade de quadros e tempos seguem os golpes antigos onde o .cns depende de AnimElem."""
+    f = lambda folha, i: f"f_{folha}{i}"
+    Q(10, [(f("agachado", 1), 2), (f("agachado", 2), 2), (f("agachado", 3), 2)], BAIXO)
+    Q(11, [(f("agachado", i), 8) for i in (4, 5, 6, 7, 6, 5)], BAIXO)
+    Q(12, [(f("agachado", 2), 2), (f("agachado", 1), 2)], BAIXO)
+    Q(40, [(f("pulo", 0), 4)])
+    for n in (41, 42, 43):
+        Q(n, [(f("pulo", 1), 3), (f("pulo", 2), 5), (f("pulo", 3), 6), (f("pulo", 4), -1)], NO_AR)
+    for n in (44, 45, 46):
+        Q(n, [(f("pulo", 4), 6), (f("pulo", 5), 6), (f("pulo", 6), -1)], NO_AR)
+    Q(47, [(f("pulo", 7), 3), (f("pulo", 0), 2)])
+    Q(120, [(f("defesa", 1), 2), (f("defesa", 2), 2)])
+    Q(130, [(f("defesa", 3), 10), (f("defesa", 4), 10)])
+    Q(140, [(f("defesa", 2), 2), (f("defesa", 1), 2)])
+    Q(150, [(f("defesa", 5), 3), (f("defesa", 6), 3), (f("defesa", 7), -1)])
+    Q(170, [(f("derrota", i), 6) for i in range(7)] + [(f("derrota", 7), -1)])
+    Q(181, [(f("vitoria", i), 6) for i in range(7)] + [(f("vitoria", 7), -1)])
+    Q(195, [(f("provoca", i), 7) for i in range(8)])
+    leve = [(f("apanha", 1), 3), (f("apanha", 2), 4), (f("apanha", 3), 6)]
+    pesado = [(f("apanha", 1), 3), (f("apanha", 3), 5), (f("apanha", 4), 5), (f("apanha", 5), 4)]
+    for base in (5000, 5010):
+        for n, q in ((0, leve), (1, pesado), (2, pesado)):
+            Q(base + n, q)
+            Q(base + 5 + n, [(f("apanha", 6), 4), (f("apanha", 7), 4)])
+    Q(5050, [(f("queda", 1), 5), (f("queda", 2), 5), (f("queda", 3), -1)], NO_AR)
+    Q(5100, [(f("queda", 4), 3), (f("queda", 5), 3), (f("queda", 6), 3)], DEITADO)
+    Q(5101, [(f("queda", 5), 3), (f("queda", 6), 3)], DEITADO)
+    Q(5110, [(f("queda", 7), -1)], DEITADO)
+    Q(5160, [(f("queda", 6), 6), (f("queda", 7), -1)], DEITADO)
+    Q(5170, [(f("queda", 6), 6), (f("queda", 7), -1)], DEITADO)
+    Q(5120, [(f("levanta", i), 4) for i in range(1, 8)], BAIXO)
+    for n, t in ((700, 4), (5200, 3), (5210, 3)):
+        Q(n, [(f("rolamento", i), t) for i in range(8)], [])
+    Q(705, [(f("rolamento", i), 4) for i in range(7, -1, -1)], [])
+
+    def sequencia(n, folha, lig, ativo, rec, caixa, quadro_ativo=3, area=CORPO):
+        """Liga, golpe e volta com os 8 desenhos, no mesmo tempo total do golpe antigo."""
+        a = quadro_ativo
+        pre = list(range(1, a))
+        pos = list(range(a + 2, 8))
+        q = [(f(folha, i), max(1, lig // len(pre)) + (lig % len(pre) if j == 0 else 0)) for j, i in enumerate(pre)]
+        q += [(f(folha, a), 1, caixa), (f(folha, a + 1), max(1, ativo - 1), caixa)]
+        q += [(f(folha, i), max(1, rec // len(pos)) + (rec % len(pos) if j == 0 else 0)) for j, i in enumerate(pos)]
+        Q(n, q, area)
+
+    sequencia(230, "chute_baixo", 5, 3, 9, (12, -56, 58, -42))
+    sequencia(240, "chute_alto", 9, 4, 18, (12, -100, 80, -58))
+    sequencia(260, "chute_alto", 12, 4, 20, (15, -100, 75, -60))
+    sequencia(400, "baixo_soco", 4, 3, 7, (15, -56, 54, -42), quadro_ativo=4, area=BAIXO)
+    sequencia(410, "cabecada", 6, 5, 18, (5, -122, 42, -60), area=BAIXO)
+    sequencia(430, "rasteirinha", 5, 3, 10, (12, -18, 62, -4), area=BAIXO)
+    sequencia(440, "rasteira", 10, 4, 22, (12, -18, 78, -2), area=BAIXO)
+    Q(600, [(f("ar_soco", 2), 2), (f("ar_soco", 3), 3), (f("ar_soco", 4), 8, (8, -86, 50, -62)),
+            (f("ar_soco", 6), -1)], NO_AR)
+    Q(650, [(f("bicicleta", 2), 3), (f("bicicleta", 3), 4), (f("bicicleta", 4), 6, (6, -70, 70, -20)),
+            (f("bicicleta", 6), -1)], NO_AR)
+    Q(810, [(f("agarrao", i), 4) for i in range(2, 7)] + [(f("agarrao", 7), 10)])
+    Q(2000, [(f("lata", i), 5) for i in range(8)])
+
+
 def montar_sprites(dados=None, retrato=None, hazaki=False):
     p, bola = dados if dados is not None else carregar_poses()
     s = Sprites()
+    s.folhas = not hazaki
     A = s.add
 
     # retratos que o IKEMEN usa no menu e nas barras
@@ -569,6 +684,8 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
     # balões
     for chave, texto in BALOES.items():
         A(f"balao_{chave}", balao(texto))
+    if not hazaki:
+        sprites_folhas(s)
     return s
 
 
@@ -623,6 +740,8 @@ VITORIAS = [
 def montar_air(s, faiscas, hazaki=False, arte_despertada=None):
     a = Air(s, arte_despertada, hazaki)
     Q = a.acao
+    if not hazaki:
+        acoes_folhas(Q)
     if hazaki:
         Q(0, [(f"q_parado{i}", 6) for i in range(8)])
     else:
