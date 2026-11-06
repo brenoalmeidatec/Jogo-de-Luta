@@ -15,6 +15,7 @@ Cada efeito tem um `.png` transparente e um `.json` (estilo Aseprite) com os qua
 | uppercut | rastro do gancho |
 | fireball, energy-disc | projéteis dos especiais |
 | zap-hit, charge-up | especial elétrico / carregando o especial |
+| shadow-flames | chamas e fumaça roxas do Pengaró despertado |
 
 No Godot: importe o PNG com **Filter = Nearest** (para não borrar o pixel art) e crie um `AnimatedSprite2D`
 usando os retângulos de `frames` do JSON. Para gerar mais efeitos, rode `ferramentas/exportar_efeitos.sh`.
