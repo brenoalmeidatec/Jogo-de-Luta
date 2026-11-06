@@ -131,8 +131,6 @@ class Sprites:
         self.proximo = 10
 
     def add(self, nome, img, grupo=None, indice=0, eixo=(EIXO_X, EIXO_Y)):
-        if getattr(self, "usar_blender", False) and (novo := pose_blender(nome)) is not None:
-            img = novo
         if grupo is None:
             grupo = self.proximo
             self.proximo += 1
@@ -422,34 +420,9 @@ def olhos_roxos(tela, alfa):
         d.rectangle((x, y, x + 1, y + 1), fill="#e6b3ff")
 
 
-# Animações refeitas no Blender (ferramentas/blender/gerar.py pengaro): quadros do jogo -> pasta em sprites/pengaro/blender
-NOVOS_BLENDER = {"soco": "soco", "ginga_fluida": "ginga", "anda_fluida": "andar"}
-# Poses soltas (nome do sprite -> (animação, quadro)) tiradas das mesmas animações do Blender
-POSES_BLENDER = {
-    "agacha0": ("agachar", 3), "agacha1": ("agachar", 7), "agacha2": ("agachar", 7),
-    "prepulo": ("pulo", 2), "pulo_sobe": ("pulo", 5), "pulo_topo": ("pulo", 8), "pulo_desce": ("pulo", 11),
-    "pouso": ("pulo", 13), "chute0": ("chute", 3), "chute1": ("chute", 6), "chute2": ("chute", 7),
-    "chute3": ("chute", 9), "baixo_soco": ("agachar", 7),
-}
-
-
-def pose_blender(nome):
-    """Quadro do Blender para o sprite `nome`, no tamanho de trabalho do jogo, ou None se ainda não foi gerado."""
-    if nome not in POSES_BLENDER:
-        return None
-    anim, i = POSES_BLENDER[nome]
-    arquivo = RAIZ / "sprites/pengaro/blender" / anim / f"{i:02d}.png"
-    if not arquivo.exists():
-        return None
-    tela = Image.new("RGBA", (LARG, ALT))
-    tela.alpha_composite(Image.open(arquivo).convert("RGBA"), (EIXO_X - 104, EIXO_Y - 119))
-    return tela
-
-
 def montar_sprites(dados=None, retrato=None, hazaki=False):
     p, bola = dados if dados is not None else carregar_poses()
     s = Sprites()
-    s.usar_blender = not hazaki
     A = s.add
 
     # retratos que o IKEMEN usa no menu e nas barras
@@ -527,10 +500,7 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
                     quadro = estica(origens[nome], 1 + .012 * math.sin(i * math.tau / 8))
                 A(f"q_{nome}{i}", quadro)
             continue
-        origem = RAIZ / "sprites/pengaro/quadros" / nome
-        if nome in NOVOS_BLENDER and (RAIZ / "sprites/pengaro/blender" / NOVOS_BLENDER[nome]).exists():
-            origem = RAIZ / "sprites/pengaro/blender" / NOVOS_BLENDER[nome]  # animação refeita no Blender
-        for i, arquivo in enumerate(sorted(origem.glob("*.png"))):
+        for i, arquivo in enumerate(sorted((RAIZ / "sprites/pengaro/quadros" / nome).glob("*.png"))):
             tela = Image.new("RGBA", (LARG, ALT))
             tela.alpha_composite(Image.open(arquivo).convert("RGBA"), (EIXO_X - 104, EIXO_Y - 119))
             A(f"q_{nome}{i}", tela)

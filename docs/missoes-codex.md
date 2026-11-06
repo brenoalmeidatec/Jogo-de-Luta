@@ -129,21 +129,3 @@ redesenhada ficar pronta, igual ao Diabo Loiro do Hazaki.
    no lugar da recoloração (`arte_endiabrada`).
 
 Pronto quando: o Despertar aparece redesenhado em todas as poses (a recoloração deixa de ser usada) e o verificador passa.
-
-
-## Animações do Pengaró no Blender (feita em parte pelo Claude)
-
-O Breno achou as animações feias e pediu para refazer no Blender, em pixel art, e fazer o mesmo para os próximos
-lutadores. O pipeline está em `ferramentas/blender/` (veja o `LEIA-ME.md` de lá). Já refeitas: ginga (parado),
-andar, agachar, soco, chute, pulo e a ginga da forma endiabrada. Faltam: defesa, apanhando, queda, rasteira,
-especial/bola, agarrão e as ações aéreas.
-
-Como o Codex ajuda (o Claude não tem o jogo nem o Blender do PC do Breno):
-1. **Referência de pose.** Para cada golpe que falta, gere com a ferramenta de imagem uma folha de 6 a 8 quadros
-   do Pengaró (estilo e figurino da folha do soco, fundo magenta) e salve em `sprites/pengaro/quadros/referencias/<golpe>.png`.
-   O Claude lê os ângulos das juntas dela e escreve a animação 3D correspondente.
-2. **Conferir no jogo.** Rode o Pengaró no treino e anote em "Pedidos abertos" de `docs/pedidos-para-claude.md`
-   (com `[para-claude]`) o que ficou torto: pé flutuando, golpe curto demais, quadro com tamanho diferente.
-3. **No PC do Breno**, se o Blender estiver instalado, rode `python ferramentas/blender/gerar.py pengaro --blender <caminho>`
-   para conferir que o resultado é igual ao do PR.
-Pronto quando: todas as ações do `pengaro.air` usam quadros do Blender e `python ferramentas/verificar_pengaro.py` passa.
