@@ -14,6 +14,7 @@ Para mudar golpe, dano ou fala, edite este arquivo e rode:
 import json
 import math
 import random
+import re
 import struct
 from pathlib import Path
 
@@ -145,9 +146,14 @@ class Sprites:
     def add(self, nome, img, grupo=None, indice=0, eixo=(EIXO_X, EIXO_Y)):
         if getattr(self, "folhas", False) and nome in TROCA_POR_FOLHA:
             folha, i = TROCA_POR_FOLHA[nome]
-            img = quadro_folha(folha, i) or img
+            desenho = quadro_folha(folha, i)
+            if desenho is not None:
+                return self.guardar(nome, desenho, grupo, indice, eixo)  # a garrafa já vem desenhada
         if getattr(self, "folhas", False) and img.size == (LARG, ALT) and not nome.startswith(SEM_WHISKY):
             img = itens_pengaro.com_whisky(img)  # o Pengaró luta com a garrafa de whisky na mão de trás
+        return self.guardar(nome, img, grupo, indice, eixo)
+
+    def guardar(self, nome, img, grupo, indice, eixo):
         if grupo is None:
             grupo = self.proximo
             self.proximo += 1
@@ -235,7 +241,24 @@ class Air:
         self.hazaki = hazaki
         self.txt = ["; Gerado por ferramentas/gerar_pengaro.py. Edite lá, não aqui.\n"]
         self.acoes = set()
+        self.mapas = {}
         self.arte_despertada = arte_despertada or {}
+
+    def fluido(self, numero, quadros):
+        """Preenche cada elemento com os quadros do meio do Blender, sem mudar o tempo total nem a caixa de golpe.
+        Guarda em self.mapas onde cada elemento foi parar, porque o .cns usa AnimElem."""
+        novos, mapa = [], []
+        for i, q in enumerate(quadros):
+            mapa.append(len(novos) + 1)
+            ticks = q[1]
+            proximo = quadros[i + 1][0] if i + 1 < len(quadros) else fim_da_folha(q[0])
+            caminho = caminho_fluido(self.s, q[0], proximo) if ticks > 1 else [q[0]]
+            n = min(len(caminho), ticks) if ticks > 0 else 1
+            for j in range(n):
+                t = ticks if ticks <= 0 else ticks // n + (1 if j < ticks % n else 0)
+                novos.append((caminho[j * len(caminho) // n], t, *q[2:]))
+        self.mapas[numero] = mapa
+        return novos
 
     def acao(self, numero, quadros, caixa=CORPO, loop=None):
         """quadros: lista de (nome_sprite, ticks) ou (nome_sprite, ticks, caixa_de_golpe) ou com flip 'H'.
@@ -243,6 +266,9 @@ class Air:
         if numero in self.acoes:
             return
         self.acoes.add(numero)
+        if not self.hazaki:
+            quadros = self.fluido(numero, quadros)
+            loop = self.mapas[numero][loop] - 1 if loop is not None else None
         t = [f"[Begin Action {numero}]"]
         if caixa:
             t.append(f"Clsn2Default: {len(caixa)}")
@@ -263,7 +289,10 @@ class Air:
         if numero in ATAQUES_DESPERTADOS or numero == 3100:
             variantes = []
             for i, (nome, ticks, *resto) in enumerate(quadros):
-                if nome not in self.arte_despertada:
+                pose = pose_despertada(nome)  # o endiabrado não tem garrafa: usa a pose desenhada dele
+                if pose in self.arte_despertada:
+                    nome = pose
+                elif nome not in self.arte_despertada:
                     grupo, indice = self.s.codigos[nome]
                     original = next(img for g, i, img, _, _ in self.s.lista if (g, i) == (grupo, indice))
                     aura = None if self.hazaki else endiabrar(original, i)
@@ -445,7 +474,8 @@ def olhos_roxos(tela, alfa):
 # em sprites/pengaro/quadros/<folha>/00..07.png. Só o Pengaró usa; o Hazaki continua com as poses dele.
 FOLHAS = ("agachado", "pulo", "defesa", "apanha", "queda", "levanta", "rolamento", "chute_baixo", "chute_alto",
           "baixo_soco", "cabecada", "rasteirinha", "rasteira", "ar_soco", "bicicleta", "agarrao", "lata",
-          "vitoria", "derrota", "provoca", "bola", "compasso", "armada", "caneta", "afastar", "martelo")
+          "vitoria", "derrota", "provoca", "bola", "compasso", "armada", "caneta", "afastar", "martelo", "soco",
+          "golaco", "despertar_a", "despertar_b")
 
 # Sprites antigos (feitos girando/esticando as 9 poses) trocados por um desenho da folha: nome -> (folha, quadro).
 # Assim todo golpe que ainda usa esses nomes (especiais, super, Despertar) já aparece com a arte desenhada.
@@ -464,6 +494,7 @@ TROCA_POR_FOLHA = {
     "gira0": ("compasso", 2), "gira1": ("compasso", 3), "gira2": ("compasso", 4), "gira3": ("compasso", 5),
     "lata0": ("lata", 2), "lata1": ("lata", 4), "lata2": ("lata", 7),
     "soco0": ("soco", 3), "soco1": ("soco", 5), "soco2": ("soco", 5), "soco3": ("soco", 6),
+    "parado0": ("soco", 0),
     **{f"rola{i}": ("rolamento", i) for i in range(8)},
     # sem bola: na intro, na provocação e na vitória ele dá um gole
     **{f"embaixada{i}": ("lata", i + 1) for i in range(4)},
@@ -471,16 +502,92 @@ TROCA_POR_FOLHA = {
 
 
 # Sprites que não são o corpo do Pengaró (balões, faíscas, projétil) não ganham a garrafa.
-SEM_WHISKY = ("balao_", "fx_", "bola", "bolao", "quica", "retrato", "chuva")
+# Pose da folha endiabrada (0 guarda, 1 andando, 2 agachado, 3 soco, 4 chute alto, 5 gancho, 6 chute baixo, 7 no ar).
+POSE_POR_FOLHA = {"soco": 3, "martelo": 3, "bola": 3, "agarrao": 3, "chute_alto": 4, "afastar": 4, "compasso": 4,
+                  "cabecada": 5, "agachado": 2, "baixo_soco": 2, "rolamento": 2, "chute_baixo": 6, "rasteirinha": 6,
+                  "rasteira": 6, "caneta": 6, "pulo": 7, "ar_soco": 7, "bicicleta": 7, "armada": 7, "defesa": 0}
+
+# Os quadros desenhados já têm a garrafa.
+SEM_WHISKY = ("balao_", "fx_", "bola", "bolao", "quica", "retrato", "chuva", "f_", "m_", "q_soco", "q_ginga_fluida",
+              "q_anda_fluida", "ginga_endiabrada")
+QUADROS = RAIZ / "sprites/pengaro/quadros"
+
+
+def abrir_quadro(arquivo):
+    """Quadro do Blender já vem na tela do jogo; os antigos, de 224x128, são colados com os pés no eixo."""
+    img = Image.open(arquivo).convert("RGBA")
+    if img.size == (LARG, ALT):
+        return img
+    tela = Image.new("RGBA", (LARG, ALT))
+    tela.alpha_composite(img, (EIXO_X - 104, EIXO_Y - 119))
+    return tela
 
 
 def quadro_folha(folha, i):
-    arquivo = RAIZ / "sprites/pengaro/quadros" / folha / f"{i:02d}.png"
-    if not arquivo.exists():
-        return None
-    tela = Image.new("RGBA", (LARG, ALT))
-    tela.alpha_composite(Image.open(arquivo).convert("RGBA"), (EIXO_X - 104, EIXO_Y - 119))
-    return tela
+    arquivo = QUADROS / folha / f"{i:02d}.png"
+    return abrir_quadro(arquivo) if arquivo.exists() else None
+
+
+def desenho_de(nome):
+    """(folha, desenho) de um sprite que tem quadros do meio, ou None."""
+    if nome in TROCA_POR_FOLHA:
+        return TROCA_POR_FOLHA[nome]
+    m = re.fullmatch(r"(?:f_|q_)([a-z_]+?)(\d+)", nome)
+    return (m[1], int(m[2])) if m and (QUADROS / m[1] / "meio").exists() else None
+
+
+def fim_da_folha(nome):
+    """No último elemento de um golpe, a recuperação segue até o último desenho da folha em vez de ficar parada."""
+    desenho = desenho_de(nome)
+    return f"f_{desenho[0]}7" if desenho and desenho[0] in FOLHAS and desenho[1] < 7 else None
+
+
+def pose_despertada(nome):
+    """Qual das 8 poses endiabradas substitui este sprite, pela folha de onde ele veio."""
+    meio = re.fullmatch(r"m_([a-z_]+?)_\d+_\d+", nome)
+    desenho = desenho_de(nome)
+    folha = meio[1] if meio else desenho[0] if desenho else None
+    return f"pose{POSE_POR_FOLHA[folha]}" if folha in POSE_POR_FOLHA else None
+
+
+def caminho_fluido(s, atual, proximo):
+    """Sprites para ir de um desenho até o seguinte, sem incluir o seguinte. Registra só os quadros do meio usados."""
+    de, para = desenho_de(atual), desenho_de(proximo) if proximo else None
+    if not de or not para or de[0] != para[0] or de[1] == para[1]:
+        return [atual]
+    folha = de[0]
+    passo = 1 if para[1] > de[1] else -1
+    caminho = []
+    for i in range(de[1], para[1], passo):
+        caminho.append(atual if i == de[1] else f"f_{folha}{i}")
+        intervalo = min(i, i + passo)
+        arquivos = sorted((QUADROS / folha / "meio").glob(f"{intervalo:02d}_*.png"),
+                          key=lambda a: int(a.stem.split("_")[1]), reverse=passo < 0)
+        for arquivo in arquivos:
+            nome = f"m_{folha}_{arquivo.stem}"
+            if nome not in s.codigos:
+                s.add(nome, abrir_quadro(arquivo))
+            caminho.append(nome)
+    return caminho
+
+
+def remapear_animelem(cns, mapas):
+    """O .cns conta elementos da animação; os quadros do meio mudam essa contagem."""
+    linhas = cns.split("\n")
+    acao, cabecalho = None, False
+    for n, linha in enumerate(linhas):
+        estado = re.match(r"\[Statedef (-?\d+)\]", linha)
+        if estado:
+            acao, cabecalho = int(estado[1]), True
+        elif linha.startswith("[State "):
+            cabecalho = False
+        elif cabecalho and (troca := re.match(r"anim = (\d+)$", linha)):
+            acao = int(troca[1])
+        mapa = mapas.get(acao)
+        if mapa and "AnimElem" in linha:
+            novo = lambda m: m[1] + str(mapa[int(m[2]) - 1] if int(m[2]) <= len(mapa) else m[2]) + m[3]
+            linhas[n] = re.sub(r"(AnimElem\s*=\s*)(\d+)()", novo, re.sub(r"(AnimElemTime\()(\d+)(\))", novo, linha))
+    return "\n".join(linhas)
 
 
 def sprites_folhas(s):
@@ -551,11 +658,13 @@ def acoes_folhas(Q):
     Q(650, [(f("bicicleta", 2), 3), (f("bicicleta", 3), 4), (f("bicicleta", 4), 6, (6, -70, 70, -20)),
             (f("bicicleta", 6), -1)], NO_AR)
     Q(810, [(f("agarrao", i), 4) for i in range(2, 7)] + [(f("agarrao", 7), 10)])
-    Q(2000, [(f("lata", i), 5) for i in range(8)])
+    # Despertar: bebe, vê a garrafa vazia, joga no chão e é possuído pelas sombras (regra 7.1: cutscene)
+    Q(2000, [(f("despertar_a", i), 7) for i in range(7)] + [(f("despertar_a", 7), 6)]
+          + [(f("despertar_b", i), 7) for i in range(7)] + [(f("despertar_b", 7), 10)])
     Q(1005, [(f"bola{i}", 3) for i in range(4)], [(-6, -8, 6, 8)])  # lata de cerveja girando reto
     # Latada de Sombra: arremesso de braço (4 quadros, o 2º solta a lata, como antes)
     for n, fim_ in ((1000, 22), (1001, 26)):
-        Q(n, [("q_soco2", 8), ("q_soco5", 5), ("q_soco6", 6), ("q_soco7", fim_)])
+        Q(n, [(f("bola", 2), 8), (f("bola", 4), 5), (f("bola", 5), 6), (f("bola", 7), fim_)])
 
 
 def montar_sprites(dados=None, retrato=None, hazaki=False):
@@ -641,10 +750,8 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
                     quadro = estica(origens[nome], 1 + .012 * math.sin(i * math.tau / 8))
                 A(f"q_{nome}{i}", quadro)
             continue
-        for i, arquivo in enumerate(sorted((RAIZ / "sprites/pengaro/quadros" / nome).glob("*.png"))):
-            tela = Image.new("RGBA", (LARG, ALT))
-            tela.alpha_composite(Image.open(arquivo).convert("RGBA"), (EIXO_X - 104, EIXO_Y - 119))
-            A(f"q_{nome}{i}", tela)
+        for i, arquivo in enumerate(sorted((QUADROS / nome).glob("*.png"))):
+            A(f"q_{nome}{i}", abrir_quadro(arquivo))
     A("soco0", mistura(p["parado"], p["soco"], 0.5))
     A("soco1", p["soco"])
     A("soco2", move(p["soco"], 6))
@@ -712,9 +819,7 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
     if not hazaki:
         # ginga da forma despertada: a mesma ginga, de óculos, com as chamas por trás
         for i in range(32):
-            base = Image.new("RGBA", (LARG, ALT))
-            base.alpha_composite(Image.open(RAIZ / f"sprites/pengaro/quadros/ginga_fluida/{i:02d}.png").convert("RGBA"), (EIXO_X - 104, EIXO_Y - 119))
-            A(f"ginga_endiabrada{i}", endiabrar(base, i * 2))
+            A(f"ginga_endiabrada{i}", abrir_quadro(QUADROS / f"ginga_endiabrada/{i:02d}.png"))
     # balões
     for chave, texto in BALOES.items():
         A(f"balao_{chave}", balao(texto))
@@ -863,8 +968,8 @@ def montar_air(s, faiscas, hazaki=False, arte_despertada=None):
     Q(2000, [("lata0", 14), ("lata1", 18), ("juliet0" if hazaki else "lata2", 8)])
     if not hazaki:
         # Chuva de Bebidas: bebe, ergue os braços e chama a chuva (o 5º quadro solta as bebidas)
-        Q(3000, [("f_lata1", 6), ("f_lata2", 6), ("f_lata3", 6), ("f_lata4", 6), ("f_vitoria5", 6),
-                 ("f_vitoria6", 10), ("f_vitoria7", 24)])
+        Q(3000, [("f_golaco0", 6), ("f_golaco1", 6), ("f_golaco2", 6), ("f_golaco3", 6), ("f_golaco4", 6),
+                 ("f_golaco4", 10), ("f_golaco4", 24)])
         Q(3010, [(f"chuva_garrafa{i}", 3) for i in range(4)], [(-12, -22, 12, 22)])
         Q(3011, [(f"chuva_lata{i}", 3) for i in range(4)], [(-10, -15, 10, 15)])
     Q(3005, [(f"bolao{i}", 3) for i in range(4)], [(-40, -30, 40, 30)])
@@ -1789,9 +1894,10 @@ def arte_endiabrada(s):
     if len(arquivos) != 8:
         return {}
     arte = {}
+    for indice in range(8):
+        arte[f"pose{indice}"] = s.add(f"endiabrado_pose{indice}", abrir_quadro(arquivos[indice]))
     for indice, nomes in POSES_ENDIABRADO.items():
-        tela = Image.new("RGBA", (LARG, ALT))
-        tela.alpha_composite(Image.open(arquivos[indice]).convert("RGBA"), (EIXO_X - 104, EIXO_Y - 119))
+        tela = abrir_quadro(arquivos[indice])
         for j, nome in enumerate(nomes):
             arte[nome] = s.add(f"endiabrado_{nome}", move(tela, j % 3 - 1))
     return arte
@@ -1804,7 +1910,7 @@ def main():
     a = montar_air(s, faiscas, arte_despertada=arte_endiabrada(s))
     escrever_sff(SAIDA / "pengaro.sff", s)
     (SAIDA / "pengaro.air").write_text("\n".join(a.txt), encoding="utf-8", newline="\n")
-    cns = montar_cns()
+    cns = remapear_animelem(montar_cns(), a.mapas)
     cns = cns.replace("[Data]", "[Quotes]\n" + "".join(f'victory{i + 1} = "{v}"\n' for i, v in enumerate(VITORIAS)) + "\n[Data]", 1)
     (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8", newline="\n")
     (SAIDA / "pengaro.cmd").write_text(montar_cmd(), encoding="utf-8")

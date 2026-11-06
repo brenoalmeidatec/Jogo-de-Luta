@@ -1281,7 +1281,7 @@ ignorehitpause = 1
 
 [State 1000, Bola]
 type = Projectile
-trigger1 = AnimElem = 2
+trigger1 = AnimElem = 9
 projid = 1000
 projanim = 1005
 projhitanim = 1006
@@ -1308,7 +1308,7 @@ air.velocity = -2,-3.5
 
 [State 1000, Dobrada]
 type = Projectile
-trigger1 = AnimElem = 3
+trigger1 = AnimElem = 14
 trigger1 = var(20) > 0
 projid = 1001
 projanim = 1005
@@ -1392,7 +1392,7 @@ ignorehitpause = 1
 
 [State 1001, Bola]
 type = Projectile
-trigger1 = AnimElem = 2
+trigger1 = AnimElem = 9
 projid = 1000
 projanim = 1005
 projhitanim = 1006
@@ -1419,7 +1419,7 @@ air.velocity = -2,-3.5
 
 [State 1001, Dobrada]
 type = Projectile
-trigger1 = AnimElem = 3
+trigger1 = AnimElem = 14
 trigger1 = var(20) > 0
 projid = 1001
 projanim = 1005
@@ -1548,7 +1548,7 @@ x = 4
 
 [State 1100, Para]
 type = VelSet
-trigger1 = AnimElem = 6
+trigger1 = AnimElem = 15
 x = 0
 
 [State 1100, Golpe]
@@ -1825,12 +1825,12 @@ time = 1
 
 [State 1300, Desliza]
 type = VelSet
-trigger1 = AnimElem = 2
+trigger1 = AnimElem = 11
 x = 7
 
 [State 1300, Para]
 type = VelSet
-trigger1 = AnimElem = 3
+trigger1 = AnimElem = 19
 x = 0
 
 [State 1300, Passa]
@@ -1845,7 +1845,7 @@ x = 60
 
 [State 1300, Golpe]
 type = HitDef
-trigger1 = AnimElem = 2
+trigger1 = AnimElem = 11
 attr = C, SA
 damage = 70, 0
 animtype = Back
@@ -1975,7 +1975,7 @@ value = -1000
 
 [State 3000, Invencivel]
 type = NotHitBy
-trigger1 = AnimElemTime(5) < 0
+trigger1 = AnimElemTime(25) < 0
 value = SCA
 time = 1
 
@@ -1998,7 +1998,7 @@ ignorehitpause = 1
 
 [State 3000, Bebida 1]
 type = Projectile
-trigger1 = AnimElemTime(5) = 0
+trigger1 = AnimElemTime(25) = 0
 projid = 3000
 projanim = 3010
 projhitanim = 9200
@@ -2026,7 +2026,7 @@ air.velocity = -2,-3
 
 [State 3000, Bebida 2]
 type = Projectile
-trigger1 = AnimElemTime(5) = 6
+trigger1 = AnimElemTime(25) = 6
 projid = 3000
 projanim = 3011
 projhitanim = 9200
@@ -2054,7 +2054,7 @@ air.velocity = -2,-3
 
 [State 3000, Bebida 3]
 type = Projectile
-trigger1 = AnimElemTime(5) = 12
+trigger1 = AnimElemTime(25) = 12
 projid = 3000
 projanim = 3010
 projhitanim = 9200
@@ -2082,7 +2082,7 @@ air.velocity = -2,-3
 
 [State 3000, Bebida 4]
 type = Projectile
-trigger1 = AnimElemTime(5) = 18
+trigger1 = AnimElemTime(25) = 18
 projid = 3000
 projanim = 3011
 projhitanim = 9200
@@ -2110,7 +2110,7 @@ air.velocity = -2,-3
 
 [State 3000, Bebida 5]
 type = Projectile
-trigger1 = AnimElemTime(5) = 24
+trigger1 = AnimElemTime(25) = 24
 projid = 3000
 projanim = 3010
 projhitanim = 9200
@@ -2138,7 +2138,7 @@ air.velocity = -2,-3
 
 [State 3000, Bebida 6]
 type = Projectile
-trigger1 = AnimElemTime(5) = 30
+trigger1 = AnimElemTime(25) = 30
 projid = 3000
 projanim = 3011
 projhitanim = 9200
@@ -2397,7 +2397,7 @@ x = 4
 
 [State 1101, Para]
 type = VelSet
-trigger1 = AnimElem = 6
+trigger1 = AnimElem = 15
 x = 0
 
 [State 1101, Golpe]
@@ -2674,12 +2674,12 @@ time = 1
 
 [State 1301, Desliza]
 type = VelSet
-trigger1 = AnimElem = 2
+trigger1 = AnimElem = 11
 x = 7
 
 [State 1301, Para]
 type = VelSet
-trigger1 = AnimElem = 3
+trigger1 = AnimElem = 19
 x = 0
 
 [State 1301, Passa]
@@ -2694,7 +2694,7 @@ x = 60
 
 [State 1301, Golpe]
 type = HitDef
-trigger1 = AnimElem = 2
+trigger1 = AnimElem = 11
 attr = C, SA
 damage = 92, 0
 animtype = Back
@@ -2744,7 +2744,7 @@ x = 2 * ifelse(var(20) > 0, 1.22, 1)
 
 [State 216, Freia]
 type = VelSet
-trigger1 = AnimElem = 3
+trigger1 = AnimElem = 5
 x = 0
 
 [State 216, Golpe]
@@ -2893,7 +2893,7 @@ x = -1.5 * ifelse(var(20) > 0, 1.22, 1)
 
 [State 231, Freia]
 type = VelSet
-trigger1 = AnimElem = 3
+trigger1 = AnimElem = 5
 x = 0
 
 [State 231, Golpe]
