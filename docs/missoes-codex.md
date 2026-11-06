@@ -162,9 +162,8 @@ Pronto quando: todas as ações do Pengaró usam quadros desenhados com a garraf
 
 **Feito pelo Claude em 2026-11-06.** As folhas saem do ChatGPT, e `ferramentas/animar_folha.py` usa o Blender para criar
 os quadros do meio deformando o próprio sprite. O Despertar agora é cutscene: ele bebe, vê a garrafa vazia, joga no
-chão e é possuído pelas sombras. O endiabrado não tem garrafa. Falta:
-- golpes do Despertar: hoje usam 8 poses paradas, precisam de folhas endiabradas próprias;
-- andar, pular e tomar golpe no Despertar ainda mostram a arte com garrafa;
+chão e é possuído pelas sombras. O endiabrado não tem garrafa: as folhas `e_<golpe>` têm a versão desenhada de cada
+movimento, e o `[RemapPreset despertado]` troca os sprites em qualquer animação enquanto `var(20) > 0`. Falta:
 - 56 de 159 ações ainda têm desenho acima de 2 ticks (regra 7);
 - conferir tudo no jogo, principalmente pés e caixas de golpe.
 

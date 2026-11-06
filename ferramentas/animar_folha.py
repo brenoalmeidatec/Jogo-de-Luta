@@ -35,22 +35,31 @@ DESLOCA = (180 - PIVO[0], 220 - PIVO[1])  # do pivô antigo para os pés na tela
 MEIOS = 6  # quadros do meio entre dois desenhos
 ESCALA_2172 = 0.40  # a figura em pé dá 111 px numa folha de 2172 de largura; a escala segue a largura da folha
 # 8 desenhos + 8 x 3 = 32 quadros
-LOOPS = {"ginga_fluida": ("ginga", 3), "anda_fluida": ("anda", 3), "ginga_endiabrada": ("ginga_endiabrada", 3)}
+LOOPS = {"ginga_fluida": ("ginga", 3), "anda_fluida": ("anda", 3), "ginga_endiabrada": ("ginga_endiabrada", 3),
+         "e_anda_fluida": ("e_anda", 3)}
 # Com fumaça em volta, âncora nos pés ou na cabeça pula de quadro para quadro: usa o centro de cada célula.
-POR_CELULA = {"despertar_b", "ginga_endiabrada"}
+POR_CELULA = {"despertar_b", "ginga_endiabrada"}  # e todas as folhas e_<golpe>, as versões endiabradas
 
 
 def por_celula(img, fator):
-    """Corta em 8 células iguais, com o chão de todas na mesma linha."""
-    limpa = tira_fundo(img)
-    base = limpa.getchannel("A").getbbox()[3]
-    largura = limpa.width / 8
+    """Separa as 8 figuras pela célula onde cada pedaço está, sem cortar perna que passa da célula.
+    Cada figura fica com o centro da célula no eixo e a base no chão: quem faz o pulo subir é o jogo, não o desenho."""
+    limpa = np.array(tira_fundo(img))
+    largura = limpa.shape[1] / 8
+    n, rotulos, dados, centros = cv2.connectedComponentsWithStats((limpa[..., 3] > 0).astype(np.uint8), connectivity=8)
+    celula = np.full(n, -1)
+    for i in range(1, n):
+        if dados[i, cv2.CC_STAT_AREA] >= 40:
+            celula[i] = min(7, int(centros[i][0] // largura))
     saida = []
     for i in range(8):
-        q = limpa.crop((round(i * largura), 0, round((i + 1) * largura), base))
+        figura = Image.fromarray(np.where((celula[rotulos] == i)[..., None], limpa, 0).astype(np.uint8))
+        caixa = figura.getchannel("A").getbbox()
+        q = figura.crop(caixa)
         grande = q.resize((round(q.width * fator), round(q.height * fator)), Image.LANCZOS)
         tela = Image.new("RGBA", (LARG * AMPLIA, ALT * AMPLIA))
-        tela.paste(grande, ((PIVO[0] + DESLOCA[0]) * AMPLIA - grande.width // 2,
+        centro = round(((i + 0.5) * largura - caixa[0]) * fator)
+        tela.paste(grande, ((PIVO[0] + DESLOCA[0]) * AMPLIA - centro,
                             (PIVO[1] + DESLOCA[1]) * AMPLIA - grande.height), grande)
         saida.append(tela)
     return saida
@@ -60,7 +69,7 @@ def poses(folha, ancora):
     """Corta a folha e devolve as poses alinhadas no chão, 4x maiores que o quadro final."""
     img = Image.open(folha)
     fator = ESCALA_2172 * 2172 / img.width * AMPLIA
-    if Path(folha).stem in POR_CELULA:
+    if Path(folha).stem in POR_CELULA or Path(folha).stem.startswith("e_"):
         return por_celula(img, fator)
     saida = []
     for q in fatias(tira_fundo(img), 8):
@@ -141,7 +150,8 @@ def main():
     pedidas = sys.argv[1:]
     if pedidas == ["--todas"]:
         ignorar = {"endiabrado", "ginga", "anda"}
-        pedidas = ["soco", "despertar_a", "despertar_b", *LOOPS, *(n for n in FOLHAS_PENGARO if n not in ignorar)]
+        pedidas = ["soco", "despertar_a", "despertar_b", *LOOPS, *(n for n in FOLHAS_PENGARO if n not in ignorar),
+                   *(f.stem for f in FOLHAS.glob("e_*.png") if f.stem != "e_anda")]
     with ThreadPoolExecutor(4) as trabalho:
         list(trabalho.map(animar, pedidas))
 

@@ -78,6 +78,32 @@ def ler_air():
     return acoes
 
 
+def conferir_despertar(cns, acoes, sprites):
+    """No Despertar nenhum sprite de golpe ou movimento pode ficar sem o desenho endiabrado, que não tem garrafa."""
+    secao = re.search(r"\[RemapPreset despertado\]\n((?:\d+,\d+ = \d+,\d+\n)+)", cns)
+    if PERSONAGEM != "pengaro":
+        return
+    if not secao:
+        erros.append("falta o [RemapPreset despertado]")
+        return
+    pares = dict(((int(a), int(b)), (int(c), int(d)))
+                 for a, b, c, d in re.findall(r"(\d+),(\d+) = (\d+),(\d+)", secao[1]))
+    for destino in pares.values():
+        if destino not in sprites:
+            erros.append(f"o Despertar aponta para o sprite {destino}, que não existe")
+    destinos = set(pares.values())
+    # A transformação tem a garrafa de propósito, a ginga endiabrada já é a arte final, intro é antes do Despertar
+    # e projétil não é o lutador.
+    livres = {2000, 9203, 190, 191, 192, 1005, 1006, 3005, 3006, 3010, 3011}
+    for numero, quadros in acoes.items():
+        if numero in livres or numero >= 9000 and numero < 10000:
+            continue
+        for g, i, _ in quadros:
+            if g < 9000 and (g, i) not in pares and (g, i) not in destinos:
+                erros.append(f"ação {numero}: sprite {g},{i} não tem desenho endiabrado")
+                break
+
+
 def conferir_baloes(cns, acoes, sprites, pal):
     """Todo balão apaga o anterior, nasce preso à tela e cabe nela sem encostar na borda."""
     blocos = re.split(r"(?m)^(?=\[)", cns)
@@ -132,6 +158,7 @@ def main():
         if nome not in definidos:
             erros.append(f'falta o comando "{nome}", exigido pelo motor')
     conferir_baloes(cns, acoes, sprites, pal)
+    conferir_despertar(cns, acoes, sprites)
 
     previa = next((arg for arg in sys.argv[1:] if arg != "--hazaki"), None)
     if previa:

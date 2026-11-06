@@ -4,7 +4,7 @@
 from PIL import Image, ImageDraw
 
 from gerar_pengaro import (
-    ALT, BALAO_ACIMA_DOS_PES, BALOES, DEF, EIXO_X, EIXO_Y, LARG, RAIZ,
+    ALT, BALOES, DEF, EIXO_X, EIXO_Y, LARG, RAIZ,
     carregar_faiscas, escrever_sff, gira, montar_air, montar_cmd,
     montar_cns, montar_sprites, move,
 )
@@ -105,9 +105,6 @@ def main():
     cns = montar_cns(hazaki=True)
     # A transformação de Hazaki se encerra sem a penalidade de ressaca.
     cns = cns.replace("var(21) = 60", "var(21) = 0")
-    # Hazaki ainda não entrou na escala 0.6 do Pengaró; o balão acompanha a altura dele.
-    cns = cns.replace("xscale = 0.6\nyscale = 0.6", "xscale = 1\nyscale = 1")
-    cns = cns.replace(f"ScreenPos Y - {BALAO_ACIMA_DOS_PES}", "ScreenPos Y - 125")
     (pasta / "hazaki.cns").write_text(cns.rstrip() + "\n", encoding="utf-8", newline="\n")
     (pasta / "hazaki.cmd").write_text(montar_cmd(hazaki=True).rstrip() + "\n", encoding="utf-8")
     (pasta / "hazaki.air").write_text("\n".join(a.txt), encoding="utf-8", newline="\n")

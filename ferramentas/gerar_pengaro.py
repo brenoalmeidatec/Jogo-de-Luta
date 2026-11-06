@@ -18,6 +18,7 @@ import re
 import struct
 from pathlib import Path
 
+import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 from repertorio import golpes, quadros as quadros_golpe
 
@@ -37,6 +38,7 @@ FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9202: "shield-block", 9204: "par
 # Tela de trabalho de cada sprite: pés em (EIXO_X, EIXO_Y).
 LARG, ALT = 360, 260
 EIXO_X, EIXO_Y = 180, 220
+LIMITE_AMOSTRA_PALETA = 4_000_000  # pixels usados para escolher as 255 cores
 
 # Balões, em unidades do lutador (a tela da luta em 16:9 é 320 x 180).
 BALAO_ACIMA_DOS_PES = 80  # ponta do balão, logo acima da cabeça
@@ -181,16 +183,14 @@ def rle8(px):
 
 def paleta_global(imagens):
     """Uma paleta para todos os sprites. O índice 0 é o transparente."""
-    amostra = Image.new("RGB", (LARG, ALT * len(imagens)), (0, 0, 0))
-    mascara = Image.new("L", amostra.size, 0)
-    for i, im in enumerate(imagens):
-        amostra.paste(im.convert("RGB"), (0, ALT * i))
-        mascara.paste(im.split()[3].point(lambda a: 255 if a >= 128 else 0), (0, ALT * i))
-    cores = [p for p, m in zip(amostra.get_flattened_data(), mascara.get_flattened_data()) if m]
-    pedaco = Image.new("RGB", (len(cores), 1))
-    pedaco.putdata(cores)
-    q = pedaco.quantize(colors=255, method=Image.MEDIANCUT)
-    return q
+    cores = []
+    for im in imagens:
+        a = np.asarray(im.convert("RGBA"))
+        cores.append(a[a[..., 3] >= 128][:, :3])
+    cores = np.concatenate(cores)
+    passo = max(1, len(cores) // LIMITE_AMOSTRA_PALETA)  # com milhares de sprites, uma amostra já dá as mesmas cores
+    pedaco = Image.fromarray(np.ascontiguousarray(cores[::passo])[None, :, :], "RGB")
+    return pedaco.quantize(colors=255, method=Image.MEDIANCUT)
 
 
 def escrever_sff(destino, sprites):
@@ -289,9 +289,8 @@ class Air:
         if numero in ATAQUES_DESPERTADOS or numero == 3100:
             variantes = []
             for i, (nome, ticks, *resto) in enumerate(quadros):
-                pose = pose_despertada(nome)  # o endiabrado não tem garrafa: usa a pose desenhada dele
-                if pose in self.arte_despertada:
-                    nome = pose
+                if not self.hazaki:
+                    self.arte_despertada[nome] = nome  # quem troca pelo desenho endiabrado é o RemapSprite
                 elif nome not in self.arte_despertada:
                     grupo, indice = self.s.codigos[nome]
                     original = next(img for g, i, img, _, _ in self.s.lista if (g, i) == (grupo, indice))
@@ -502,14 +501,9 @@ TROCA_POR_FOLHA = {
 
 
 # Sprites que não são o corpo do Pengaró (balões, faíscas, projétil) não ganham a garrafa.
-# Pose da folha endiabrada (0 guarda, 1 andando, 2 agachado, 3 soco, 4 chute alto, 5 gancho, 6 chute baixo, 7 no ar).
-POSE_POR_FOLHA = {"soco": 3, "martelo": 3, "bola": 3, "agarrao": 3, "chute_alto": 4, "afastar": 4, "compasso": 4,
-                  "cabecada": 5, "agachado": 2, "baixo_soco": 2, "rolamento": 2, "chute_baixo": 6, "rasteirinha": 6,
-                  "rasteira": 6, "caneta": 6, "pulo": 7, "ar_soco": 7, "bicicleta": 7, "armada": 7, "defesa": 0}
-
 # Os quadros desenhados já têm a garrafa.
 SEM_WHISKY = ("balao_", "fx_", "bola", "bolao", "quica", "retrato", "chuva", "f_", "m_", "q_soco", "q_ginga_fluida",
-              "q_anda_fluida", "ginga_endiabrada")
+              "q_anda_fluida", "ginga_endiabrada", "e_", "endiabrado_")
 QUADROS = RAIZ / "sprites/pengaro/quadros"
 
 
@@ -542,12 +536,39 @@ def fim_da_folha(nome):
     return f"f_{desenho[0]}7" if desenho and desenho[0] in FOLHAS and desenho[1] < 7 else None
 
 
-def pose_despertada(nome):
-    """Qual das 8 poses endiabradas substitui este sprite, pela folha de onde ele veio."""
-    meio = re.fullmatch(r"m_([a-z_]+?)_\d+_\d+", nome)
+def arquivo_endiabrado(nome):
+    """Desenho endiabrado equivalente a um sprite do Pengaró, ou None se a folha não tem versão endiabrada."""
+    meio = re.fullmatch(r"m_([a-z_]+?)_(\d+_\d+)", nome)
+    if meio:
+        return QUADROS / f"e_{meio[1]}/meio/{meio[2]}.png"
+    fluido = re.fullmatch(r"q_(ginga|anda)_fluida(\d+)", nome)
+    if fluido:
+        pasta = "ginga_endiabrada" if fluido[1] == "ginga" else "e_anda_fluida"
+        return QUADROS / f"{pasta}/{int(fluido[2]):02d}.png"
     desenho = desenho_de(nome)
-    folha = meio[1] if meio else desenho[0] if desenho else None
-    return f"pose{POSE_POR_FOLHA[folha]}" if folha in POSE_POR_FOLHA else None
+    return QUADROS / f"e_{desenho[0]}/{desenho[1]:02d}.png" if desenho else None
+
+
+def preset_despertado(s):
+    """[RemapPreset despertado]: no Despertar, cada desenho do Pengaró vira o endiabrado, em qualquer animação.
+    Sprite antigo sem folha endiabrada (corrida, tontura) cai numa pose parada, para a garrafa nunca aparecer."""
+    pose = {nome: i for i, nomes in POSES_ENDIABRADO.items() for nome in nomes}
+    linhas = ["[RemapPreset despertado]"]
+    for nome, (grupo, indice) in list(s.codigos.items()):
+        if nome.startswith(("balao_", "fx_", "bola", "bolao", "quica", "retrato", "chuva", "ginga_endiabrada",
+                            "endiabrado_", "despertado_", "e_")) or grupo >= 9000:
+            continue
+        arquivo = arquivo_endiabrado(nome)
+        destino = f"e_{nome}"
+        if arquivo and arquivo.exists():
+            s.add(destino, abrir_quadro(arquivo))
+        elif nome.startswith(("m_despertar", "f_despertar", "f_lata", "m_lata")):
+            continue
+        else:
+            s.add(destino, abrir_quadro(QUADROS / f"endiabrado/{pose.get(nome, 0):02d}.png"))
+        g, i = s.codigos[destino]
+        linhas.append(f"{grupo},{indice} = {g},{i}")
+    return "\n".join(linhas) + "\n\n"
 
 
 def caminho_fluido(s, atual, proximo):
@@ -1666,6 +1687,27 @@ trigger1 = var(20) <= 0
 trigger1 = anim = 9203
 value = 0
 
+[State -2, Vira endiabrado]
+type = RemapSprite
+trigger1 = var(20) > 0 && var(37) = 0
+preset = "despertado"
+
+[State -2, Endiabrado ligado]
+type = VarSet
+trigger1 = var(20) > 0
+var(37) = 1
+
+[State -2, Volta ao normal]
+type = RemapSprite
+trigger1 = var(20) <= 0 && var(37) = 1
+trigger2 = roundstate < 2
+reset = 1
+
+[State -2, Endiabrado desligado]
+type = VarSet
+trigger1 = var(20) <= 0
+var(37) = 0
+
 [State -2, Aura]
 type = PalFX
 trigger1 = var(20) > 0 && alive
@@ -1908,10 +1950,11 @@ def main():
     s = montar_sprites(retrato=RAIZ / "sprites/pengaro-selecao-kof.png")
     faiscas = carregar_faiscas(s)
     a = montar_air(s, faiscas, arte_despertada=arte_endiabrada(s))
+    preset = preset_despertado(s)
     escrever_sff(SAIDA / "pengaro.sff", s)
     (SAIDA / "pengaro.air").write_text("\n".join(a.txt), encoding="utf-8", newline="\n")
     cns = remapear_animelem(montar_cns(), a.mapas)
-    cns = cns.replace("[Data]", "[Quotes]\n" + "".join(f'victory{i + 1} = "{v}"\n' for i, v in enumerate(VITORIAS)) + "\n[Data]", 1)
+    cns = cns.replace("[Data]", preset + "[Quotes]\n" + "".join(f'victory{i + 1} = "{v}"\n' for i, v in enumerate(VITORIAS)) + "\n[Data]", 1)
     (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8", newline="\n")
     (SAIDA / "pengaro.cmd").write_text(montar_cmd(), encoding="utf-8")
     (SAIDA / "pengaro.def").write_text(DEF, encoding="utf-8", newline="\n")
