@@ -4,7 +4,8 @@ Teste feito no IKEMEN GO v1.0.0 com as duas CPUs no nível 8. Corrigidos no PR #
 Pengaró (escala 0.6), barras pretas (palco `stage0-720`) e nome da HUD ("Pengaro", a fonte não tem "ó").
 
 ## Ainda abertos
-- Balões de fala passam da borda da tela, se sobrepõem e cobrem o relógio e o nome na HUD.
+- Balões de fala: corrigidos no gerador (ver missão 5B), falta conferir no jogo. Balões de P1 e P2 ainda podem se
+  cruzar quando os dois falam ao mesmo tempo e estão perto.
 - "COUNTER HIT" / "FIRST ATTACK" pequenos e colados na margem da tela.
 - Espelho sem paleta alternativa: P1 e P2 ficam com a mesma cor.
 - IA gasta muito tempo em pulos e agachamentos e solta a bola de longe sem consequência.

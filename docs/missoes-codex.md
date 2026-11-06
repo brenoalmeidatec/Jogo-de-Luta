@@ -82,6 +82,8 @@ PASSOU POR BAIXO!" aparecem um em cima do outro. O "K.O.! ...ou, no caso dele" s
 Todo balão usa `id = 700`, mas um novo não apaga o antigo. Faça `RemoveExplod` do id 700 antes de criar um balão e
 mantenha o balão dentro da tela (limite pela posição do lutador e `Explod` com `postype = left`/`right` na borda).
 No Despertar a fala "liso" repete o nome do golpe em todo uso e fica na tela por tempo demais.
+**Feito pelo Claude em 2026-11-06**, menos a fala "liso": `fala()` apaga o balão anterior e prende o novo à tela,
+inteiro e abaixo da HUD. Ele não acompanha o lutador depois de nascer. Falta conferir no jogo.
 
 **C. Aura cor-de-rosa e roxa fica no K.O.** No Despertar o Pengaró fica rosa e roxo, e isso continua depois do K.O.
 (`sequencia-baloes-e-ko.png`, linha 2). Zere o `PalFX` e o rastro quando o personagem não está vivo ou quando o round

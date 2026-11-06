@@ -110,49 +110,61 @@ type = VarSet
 trigger1 = Time = 0
 var(35) = Random % 3
 
+[State 181, Troca fala]
+type = RemoveExplod
+trigger1 = Time = 20
+trigger1 = var(35) = 0
+id = 700
+
 [State 181, Fala]
 type = Explod
 trigger1 = Time = 20
 trigger1 = var(35) = 0
-anim = 9105
+anim = 9123
 id = 700
 ownpal = 1
-postype = p1
-pos = 0, -125
-bindtime = -1
+postype = left
+pos = clamp(ScreenPos X, 64, ScreenWidth - 64), max(ScreenPos Y - 125, 71)
 removetime = 70
 sprpriority = 6
-facing = Facing
 ignorehitpause = 1
+
+[State 181, Troca fala]
+type = RemoveExplod
+trigger1 = Time = 20
+trigger1 = var(35) = 1
+id = 700
 
 [State 181, Fala]
 type = Explod
 trigger1 = Time = 20
 trigger1 = var(35) = 1
-anim = 9105
+anim = 9124
 id = 700
 ownpal = 1
-postype = p1
-pos = 0, -125
-bindtime = -1
+postype = left
+pos = clamp(ScreenPos X, 64, ScreenWidth - 64), max(ScreenPos Y - 125, 71)
 removetime = 70
 sprpriority = 6
-facing = Facing
 ignorehitpause = 1
+
+[State 181, Troca fala]
+type = RemoveExplod
+trigger1 = Time = 20
+trigger1 = var(35) = 2
+id = 700
 
 [State 181, Fala]
 type = Explod
 trigger1 = Time = 20
 trigger1 = var(35) = 2
-anim = 9105
+anim = 9125
 id = 700
 ownpal = 1
-postype = p1
-pos = 0, -125
-bindtime = -1
+postype = left
+pos = clamp(ScreenPos X, 64, ScreenWidth - 64), max(ScreenPos Y - 125, 71)
 removetime = 70
 sprpriority = 6
-facing = Facing
 ignorehitpause = 1
 
 [Statedef 191]
@@ -166,48 +178,62 @@ type = VarSet
 trigger1 = Time = 0
 var(34) = Random < 250
 
+[State 191, Troca fala]
+type = RemoveExplod
+trigger1 = Time = 4
+trigger1 = var(34) = 1
+id = 700
+
 [State 191, Fala]
 type = Explod
 trigger1 = Time = 4
 trigger1 = var(34) = 1
-anim = 9100
+anim = 9101
 id = 700
 ownpal = 1
-postype = p1
-pos = 0, -125
-bindtime = -1
+postype = left
+pos = clamp(ScreenPos X, 87, ScreenWidth - 87), max(ScreenPos Y - 125, 71)
 removetime = 70
 sprpriority = 6
-facing = Facing
 ignorehitpause = 1
+
+[State 191, Troca fala]
+type = RemoveExplod
+trigger1 = Time = 44
+trigger1 = var(34) = 1
+id = 700
 
 [State 191, Fala]
 type = Explod
 trigger1 = Time = 44
 trigger1 = var(34) = 1
-anim = 9105
+anim = 9102
 id = 700
 ownpal = 1
-postype = p1
-pos = 0, -125
-bindtime = -1
+postype = left
+pos = clamp(ScreenPos X, 64, ScreenWidth - 64), max(ScreenPos Y - 125, 71)
 removetime = 70
 sprpriority = 6
-facing = Facing
 ignorehitpause = 1
+
+[State 191, Troca fala]
+type = RemoveExplod
+trigger1 = Time = 4
+trigger1 = var(34) = 0
+id = 700
 
 [State 191, Fala]
 type = Explod
 trigger1 = Time = 4
 trigger1 = var(34) = 0
 anim = 9100
+id = 700
 ownpal = 1
-postype = p1
-pos = 0, -125
-bindtime = -1
+postype = left
+pos = clamp(ScreenPos X, 87, ScreenWidth - 87), max(ScreenPos Y - 125, 71)
 removetime = 70
 sprpriority = 6
-facing = Facing
+ignorehitpause = 1
 
 [State 191, Fim]
 type = AssertSpecial
@@ -1002,53 +1028,59 @@ type = VarSet
 trigger1 = Time = 0
 var(36) = Random < 200
 
+[State 195, Troca fala]
+type = RemoveExplod
+trigger1 = Time = 2
+id = 700
+
 [State 195, Fala]
 type = Explod
 trigger1 = Time = 2
 anim = 9105
 id = 700
 ownpal = 1
-postype = p1
-pos = 0, -125
-bindtime = -1
+postype = left
+pos = clamp(ScreenPos X, 64, ScreenWidth - 64), max(ScreenPos Y - 125, 71)
 removetime = 70
 sprpriority = 6
-facing = Facing
 ignorehitpause = 1
 
-[State 195, Limpa fala]
+[State 195, Troca fala]
 type = RemoveExplod
 trigger1 = AnimTime = 0
+trigger1 = var(36) = 0
 id = 700
 
 [State 195, Fala]
 type = Explod
 trigger1 = AnimTime = 0
 trigger1 = var(36) = 0
-anim = 9105
+anim = 9106
 id = 700
 ownpal = 1
-postype = p1
-pos = 0, -125
-bindtime = -1
+postype = left
+pos = clamp(ScreenPos X, 64, ScreenWidth - 64), max(ScreenPos Y - 125, 71)
 removetime = 70
 sprpriority = 6
-facing = Facing
 ignorehitpause = 1
+
+[State 195, Troca fala]
+type = RemoveExplod
+trigger1 = AnimTime = 0
+trigger1 = var(36) = 1
+id = 700
 
 [State 195, Fala]
 type = Explod
 trigger1 = AnimTime = 0
 trigger1 = var(36) = 1
-anim = 9105
+anim = 9107
 id = 700
 ownpal = 1
-postype = p1
-pos = 0, -125
-bindtime = -1
+postype = left
+pos = clamp(ScreenPos X, 64, ScreenWidth - 64), max(ScreenPos Y - 125, 71)
 removetime = 70
 sprpriority = 6
-facing = Facing
 ignorehitpause = 1
 
 [State 195, Tira barra]
@@ -1219,18 +1251,21 @@ trigger1 = 1
 value = SCA
 time = 1
 
+[State 2000, Troca fala]
+type = RemoveExplod
+trigger1 = Time = 2
+id = 700
+
 [State 2000, Fala]
 type = Explod
 trigger1 = Time = 2
 anim = 9126
 id = 700
 ownpal = 1
-postype = p1
-pos = 0, -125
-bindtime = -1
+postype = left
+pos = clamp(ScreenPos X, 99, ScreenWidth - 99), max(ScreenPos Y - 125, 86)
 removetime = 70
 sprpriority = 6
-facing = Facing
 ignorehitpause = 1
 
 [State 2000, Liga]
@@ -2701,7 +2736,7 @@ value = 0
 
 [State -2, Aura]
 type = PalFX
-trigger1 = var(20) > 0
+trigger1 = var(20) > 0 && alive
 time = 2
 add = 42, 16, 0
 sinadd = 24, 8, 0, 40
@@ -2711,18 +2746,21 @@ type = AfterImageTime
 trigger1 = var(20) > 0
 time = 2
 
+[State -2, Troca fala]
+type = RemoveExplod
+trigger1 = var(21) = 59
+id = 700
+
 [State -2, Fala]
 type = Explod
 trigger1 = var(21) = 59
-anim = 9105
+anim = 9129
 id = 700
 ownpal = 1
-postype = p1
-pos = 0, -125
-bindtime = -1
+postype = left
+pos = clamp(ScreenPos X, 64, ScreenWidth - 64), max(ScreenPos Y - 125, 71)
 removetime = 70
 sprpriority = 6
-facing = Facing
 ignorehitpause = 1
 
 [State -2, Ressaca anda devagar]
@@ -2731,6 +2769,12 @@ trigger1 = stateno = 20
 trigger1 = var(21) > 0
 x = -vel x * .2
 
+[State -2, Troca fala]
+type = RemoveExplod
+trigger1 = ProjHitTime(1000) = 0
+trigger1 = var(20) = 0
+id = 700
+
 [State -2, Fala]
 type = Explod
 trigger1 = ProjHitTime(1000) = 0
@@ -2738,28 +2782,31 @@ trigger1 = var(20) = 0
 anim = 9109
 id = 700
 ownpal = 1
-postype = p1
-pos = 0, -125
-bindtime = -1
+postype = left
+pos = clamp(ScreenPos X, 75, ScreenWidth - 75), max(ScreenPos Y - 125, 71)
 removetime = 70
 sprpriority = 6
-facing = Facing
 ignorehitpause = 1
+
+[State -2, Troca fala]
+type = RemoveExplod
+trigger1 = roundstate = 2
+trigger1 = roundno > 1
+trigger1 = var(31) = 0
+id = 700
 
 [State -2, Fala]
 type = Explod
 trigger1 = roundstate = 2
 trigger1 = roundno > 1
 trigger1 = var(31) = 0
-anim = 9105
+anim = 9103
 id = 700
 ownpal = 1
-postype = p1
-pos = 0, -125
-bindtime = -1
+postype = left
+pos = clamp(ScreenPos X, 64, ScreenWidth - 64), max(ScreenPos Y - 125, 71)
 removetime = 70
 sprpriority = 6
-facing = Facing
 ignorehitpause = 1
 
 [State -2, Round falado]
@@ -2767,21 +2814,27 @@ type = VarSet
 trigger1 = roundstate = 2
 var(31) = 1
 
+[State -2, Troca fala]
+type = RemoveExplod
+trigger1 = movetype = H
+trigger1 = roundstate = 2
+trigger1 = alive
+trigger1 = var(30) = 0
+id = 700
+
 [State -2, Fala]
 type = Explod
 trigger1 = movetype = H
 trigger1 = roundstate = 2
 trigger1 = alive
 trigger1 = var(30) = 0
-anim = 9105
+anim = 9104
 id = 700
 ownpal = 1
-postype = p1
-pos = 0, -125
-bindtime = -1
+postype = left
+pos = clamp(ScreenPos X, 64, ScreenWidth - 64), max(ScreenPos Y - 125, 71)
 removetime = 70
 sprpriority = 6
-facing = Facing
 ignorehitpause = 1
 
 [State -2, Primeiro golpe falado]
@@ -2790,19 +2843,23 @@ trigger1 = movetype = H
 trigger1 = roundstate = 2
 var(30) = 1
 
+[State -2, Troca fala]
+type = RemoveExplod
+trigger1 = !alive
+trigger1 = var(32) = 0
+id = 700
+
 [State -2, Fala]
 type = Explod
 trigger1 = !alive
 trigger1 = var(32) = 0
-anim = 9105
+anim = 9121
 id = 700
 ownpal = 1
-postype = p1
-pos = 0, -125
-bindtime = -1
+postype = left
+pos = clamp(ScreenPos X, 64, ScreenWidth - 64), max(ScreenPos Y - 125, 71)
 removetime = 70
 sprpriority = 6
-facing = Facing
 ignorehitpause = 1
 
 [State -2, Conta derrota]
@@ -2810,16 +2867,19 @@ type = VarAdd
 trigger1 = !alive
 var(32) = 1
 
+[State -2, Troca fala]
+type = RemoveExplod
+trigger1 = var(32) = 75
+id = 700
+
 [State -2, Fala]
 type = Explod
 trigger1 = var(32) = 75
-anim = 9105
+anim = 9122
 id = 700
 ownpal = 1
-postype = p1
-pos = 0, -125
-bindtime = -1
+postype = left
+pos = clamp(ScreenPos X, 64, ScreenWidth - 64), max(ScreenPos Y - 125, 71)
 removetime = 70
 sprpriority = 6
-facing = Facing
 ignorehitpause = 1
