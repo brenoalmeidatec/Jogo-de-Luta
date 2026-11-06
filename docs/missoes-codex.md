@@ -114,15 +114,19 @@ anote em `docs/fichas/pengaro.md` e `docs/fichas/hazaki.md` o que já existe e o
 
 Pronto quando: os dois passam no checklist inteiro.
 
-## 7. Gerar a folha do Pengaró endiabrado
+## 7. (Opcional) Folha desenhada do Pengaró endiabrado
 
-O Despertar do Pengaró hoje é só o corpo escurecido com as chamas do pixelfx. O Breno quer o personagem redesenhado,
-como o Diabo Loiro do Hazaki (folha de 8 poses).
+O Pengaró endiabrado já existe: o `gerar_pengaro.py` recolore todos os quadros do Despertar a partir da referência do
+Breno (`sprites/pengaro/quadros/endiabrado_referencia.png`): corpo quase preto com o relevo em roxo escuro, olhos
+violeta, algemas de corrente partida nos pulsos e no tornozelo e fumaça escura e sólida saindo do braço e da perna
+de trás. Isso é feito por código, sem imagem gerada.
 
-1. No PC onde o Codex está logado, rode `python ferramentas/gerar_folhas.py endiabrado` (a descrição das 8 poses já está
-   em `FOLHAS_PENGARO`). Confira que a folha tem 8 figuras separadas, a mesma cara e as mesmas cores, e fundo magenta.
+Se o Breno quiser o personagem **redesenhado** como o Diabo Loiro do Hazaki:
+
+1. No PC onde o Codex está logado, rode `python ferramentas/gerar_folhas.py endiabrado`, usando a referência acima
+   como imagem anexa (mesmo corpo escuro, olhos violeta, correntes partidas).
 2. Corte com `python ferramentas/recortar_quadros.py sprites/pengaro/quadros/folhas/endiabrado.png endiabrado --quadros 8 --ancora pes`.
-3. Rode `python ferramentas/gerar_pengaro.py` e `python ferramentas/verificar_pengaro.py`: o gerador passa a usar a folha
-   no lugar da aura (`arte_endiabrada`). Abra o treino e veja o Despertar nos golpes e na ginga despertada.
+3. Rode `python ferramentas/gerar_pengaro.py` e `python ferramentas/verificar_pengaro.py`: o gerador usa a folha
+   no lugar da recoloração (`arte_endiabrada`).
 
-Pronto quando: o Pengaró desperto aparece desenhado em todas as poses, sem mancha preta, e o verificador passa.
+Pronto quando: o Despertar aparece desenhado em todas as poses e o verificador passa.
