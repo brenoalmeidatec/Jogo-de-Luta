@@ -29,7 +29,7 @@ integrar lotes de animação, conferir regras. Mecânica, gerador e verificaçã
 
 | Data | Origem | Pedido | Aceite |
 |------|--------|--------|--------|
-| — | — | — | — |
+| 2026-11-06 | Breno | Refazer no Blender as animações que faltam (defesa, apanhando, queda, rasteira, especial, agarrão, ar) | Codex manda folhas de referência por golpe em `sprites/pengaro/quadros/referencias/` (veja `missoes-codex.md`) e o Claude anima no rig. |
 
 ## Respondidos
 
