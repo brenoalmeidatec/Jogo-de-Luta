@@ -13,10 +13,11 @@ Para mudar golpe, dano ou fala, edite este arquivo e rode:
 """
 import json
 import math
+import random
 import struct
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 from repertorio import golpes, quadros as quadros_golpe
 
 RAIZ = Path(__file__).resolve().parent.parent
@@ -282,62 +283,141 @@ def carregar_faiscas(sprites):
     return acoes
 
 
-_CHAMAS = []
+FUMACA = ("#150d1d", "#22162e", "#33224a")
+ELO = ("#e4e0ea", "#8f879c", "#1a1220")
 
 
-def chamas():
-    """Chamas e fumaça roxas do pixelfx (shadow-flames), ampliadas 3x, com o pivô nos pés do lutador."""
-    if not _CHAMAS:
-        dados = json.loads((EFEITOS / "shadow-flames.json").read_text(encoding="utf-8"))
-        pivo = dados["meta"]["pixelfx"]["pivot"]
-        with Image.open(EFEITOS / dados["meta"]["image"]) as imagem:
-            folha = imagem.convert("RGBA")
-        for quadro in dados["frames"]:
-            r = quadro["frame"]
-            q = folha.crop((r["x"], r["y"], r["x"] + r["w"], r["y"] + r["h"]))
-            q = q.resize((q.width * 3, q.height * 3), Image.NEAREST)
-            # a paleta do jogo é cheia ou vazia: a fumaça translúcida virava mancha preta, então só fica o que é firme,
-            # e as cores escuras sobem para o violeta
-            alfa = q.getchannel("A").point(lambda a: 255 if a >= 150 else 0)
-            q = Image.blend(q.convert("RGB"), Image.new("RGB", q.size, (150, 90, 210)), .35)
-            q.putalpha(alfa)
-            tela = Image.new("RGBA", (LARG, ALT))
-            tela.alpha_composite(q, (EIXO_X - pivo[0] * 3, EIXO_Y - pivo[1] * 3)) if EIXO_Y - pivo[1] * 3 >= 0 else \
-                tela.alpha_composite(q.crop((0, -(EIXO_Y - pivo[1] * 3), q.width, q.height)), (EIXO_X - pivo[0] * 3, 0))
-            _CHAMAS.append(tela)
-    return _CHAMAS
+def _achar_pulso(alfa, ponta, raio, comprimento):
+    """Do bico de uma mão ou pé até a junta: anda `comprimento` px na direção em que a massa do membro está.
+    Devolve (x, y, dx, dy), com (dx, dy) apontando da ponta para o corpo."""
+    px = alfa.load()
+    tx, ty = ponta
+    sx = sy = n = 0
+    for y in range(max(0, ty - raio), min(ALT, ty + raio + 1)):
+        for x in range(max(0, tx - raio), min(LARG, tx + raio + 1)):
+            if px[x, y] >= 128 and (x - tx) ** 2 + (y - ty) ** 2 <= raio * raio:
+                sx += x
+                sy += y
+                n += 1
+    if not n:
+        return None
+    dx, dy = sx / n - tx, sy / n - ty
+    norma = math.hypot(dx, dy) or 1
+    dx, dy = dx / norma, dy / norma
+    return (tx + dx * comprimento, ty + dy * comprimento, dx, dy)
+
+
+def pontas(alfa):
+    """Mãos e pé de trás de um lutador virado para a direita. Devolve {nome: (x, y, dx, dy)}, com a junta (pulso ou
+    tornozelo) e a direção do membro, ou {} se não achar."""
+    px = alfa.load()
+    caixa = alfa.getbbox()
+    if not caixa:
+        return {}
+    x0, y0, x1, y1 = caixa
+    alt = y1 - y0
+
+    def extremo(ya, yb, maior):
+        melhor = None
+        for y in range(y0 + int(alt * ya), y0 + int(alt * yb)):
+            for x in range(x0, x1):
+                if px[x, y] >= 128 and (melhor is None or (x > melhor[0] if maior else x < melhor[0])):
+                    melhor = (x, y)
+        return melhor
+
+    def mais_baixo_a_esquerda():
+        melhor = None
+        meio = (x0 + x1) // 2
+        for y in range(y1 - 1, y0 + int(alt * .6), -1):
+            for x in range(x0, meio):
+                if px[x, y] >= 128:
+                    return (x + 6, y)
+        return melhor
+    pontas_ = {"mao_f": (extremo(.18, .55, True), 12, 11), "mao_t": (extremo(.25, .75, False), 12, 11),
+               "pe_t": (mais_baixo_a_esquerda(), 16, 12)}
+    achadas = {}
+    for nome, (ponta, raio, comp) in pontas_.items():
+        if ponta:
+            r = _achar_pulso(alfa, ponta, raio, comp)
+            if r:
+                achadas[nome] = r
+    return achadas
+
+
+def fumaca_solida(tela, ponto, i, tamanho=1.0, sentido=-1):
+    """Rastro de fumaça escura e opaca (a paleta do jogo não tem meio-tom) que sai de um ponto e sobe para trás."""
+    d = ImageDraw.Draw(tela)
+    x, y = ponto
+    sorte = random.Random(int(i) // 2 * 7919 + int(x) % 17)
+    for k in range(11):
+        t = k / 10
+        onda = math.sin(i * .30 + k * .8)
+        cx = x + sentido * (3 + 8 * k) * tamanho + onda * 3 + sorte.uniform(-1.5, 1.5)
+        cy = y - 2.2 * k * tamanho - abs(onda) * 4 + sorte.uniform(-2, 2)
+        r = max(1.2, (7.5 - 6 * t) * tamanho * sorte.uniform(.75, 1.2))
+        cor = FUMACA[min(2, int(t * 3.2))]
+        d.ellipse((cx - r, cy - r, cx + r, cy + r), fill=cor)
+        if k % 3 == 1:
+            d.ellipse((cx - r * .5, cy - r * .9, cx + r * .2, cy - r * .2), fill=FUMACA[min(2, int(t * 3.2) + 1)])
+        if k % 4 == 3:
+            px_, py_ = cx + sorte.uniform(-6, 6), cy - sorte.uniform(6, 12)
+            d.rectangle((px_, py_, px_ + 1, py_ + 1), fill=FUMACA[2])
+
+
+def elos(tela, junta):
+    """Algema com corrente partida: três elos claros, com contorno escuro, em volta do pulso ou do tornozelo,
+    atravessados no membro (perpendiculares à direção dele)."""
+    x, y, dx, dy = junta
+    d = ImageDraw.Draw(tela)
+    px_, py_ = -dy, dx
+    for k in (-1, 0, 1):
+        ex, ey = x + px_ * k * 3.2, y + py_ * k * 3.2
+        d.ellipse((ex - 2.6, ey - 2.2, ex + 2.6, ey + 2.2), fill=ELO[2])
+        d.ellipse((ex - 1.6, ey - 1.2, ex + 1.6, ey + 1.2), outline=ELO[0], fill=ELO[1])
 
 
 def endiabrar(original, i):
-    """Forma despertada: corpo mais escuro e arroxeado, contorno roxo e as chamas do pixelfx por trás."""
+    """Forma despertada (referência em sprites/pengaro/quadros/endiabrado_referencia.png): o corpo vira uma sombra
+    quase preta com o relevo em roxo escuro, olhos violeta, algemas de corrente partida nos pulsos e no tornozelo
+    e fumaça escura e sólida saindo do braço e da perna de trás."""
     if original.size != (LARG, ALT):
         return None
-    tela = chamas()[i % len(chamas())].copy()
-    sombra = Image.new("RGBA", original.size, (92, 39, 138))
-    sombra.putalpha(original.getchannel("A"))
-    tela.alpha_composite(sombra, (-4, 2))
-    r, g, b, a = original.split()
-    corpo = Image.merge("RGB", (r.point(lambda v: int(v * .92)), g.point(lambda v: int(v * .78)), b.point(lambda v: min(255, int(v * 1.0) + 22))))
-    corpo.putalpha(a)
+    tela = Image.new("RGBA", original.size)
+    alfa = original.getchannel("A").point(lambda a: 255 if a >= 128 else 0)
+    ref = pontas(alfa)
+    if "mao_t" in ref:
+        fumaca_solida(tela, (ref["mao_t"][0], ref["mao_t"][1] - 2), i, 1.0)
+    if "pe_t" in ref:
+        fumaca_solida(tela, (ref["pe_t"][0], ref["pe_t"][1] - 2), i + 3, .8)
+    contorno = Image.new("RGBA", original.size, (14, 8, 20))
+    contorno.putalpha(alfa)
+    tela.alpha_composite(contorno, (-2, 1))
+    cinza = ImageOps.autocontrast(original.convert("RGB").convert("L"), cutoff=2).point(lambda v: int(255 * (v / 255) ** 1.5))
+    corpo = ImageOps.colorize(cinza, black="#08060b", mid="#17111f", white="#4a3c58").convert("RGBA")
+    corpo.putalpha(alfa)
     tela.alpha_composite(corpo)
+    olhos_roxos(tela, alfa)
+    for nome in ("mao_f", "mao_t", "pe_t"):
+        if nome in ref:
+            elos(tela, ref[nome])
     return tela
 
 
-def com_oculos(img):
-    """Óculos esportivo de lente roxa na altura dos olhos, achando a cabeça pelo ponto mais alto do corpo."""
-    caixa = img.getchannel("A").point(lambda a: 255 if a >= 128 else 0).getbbox()
+def olhos_roxos(tela, alfa):
+    """Olhos violeta brilhantes, achando a cabeça pelo ponto mais alto do corpo (só se for mesmo uma cabeça)."""
+    caixa = alfa.getbbox()
     if not caixa:
-        return img
+        return
     topo = caixa[1]
-    faixa = img.crop((0, topo, LARG, topo + 3)).getchannel("A").getbbox()
+    faixa = alfa.crop((0, topo, LARG, topo + 6)).getbbox()
+    if not faixa or faixa[2] - faixa[0] > 36:
+        return
     cx = (faixa[0] + faixa[2]) // 2
-    tela = img.copy()
     d = ImageDraw.Draw(tela)
     y = topo + 14
-    d.line((cx + 1, y, cx + 12, y), fill="#d2d8df", width=1)
-    d.polygon([(cx + 4, y), (cx + 12, y), (cx + 11, y + 3), (cx + 6, y + 3)], fill="#35224e")
-    d.point((cx + 8, y + 1), fill="#e0b0ff")
-    return tela
+    for x in (cx + 6, cx + 11):
+        d.rectangle((x - 1, y - 1, x + 2, y + 2), fill="#5a1aa8")
+        d.rectangle((x, y, x + 1, y + 1), fill="#e6b3ff")
 
 
 def montar_sprites(dados=None, retrato=None, hazaki=False):
@@ -485,7 +565,7 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
         for i in range(32):
             base = Image.new("RGBA", (LARG, ALT))
             base.alpha_composite(Image.open(RAIZ / f"sprites/pengaro/quadros/ginga_fluida/{i:02d}.png").convert("RGBA"), (EIXO_X - 104, EIXO_Y - 119))
-            A(f"ginga_endiabrada{i}", endiabrar(com_oculos(base), i * 2))
+            A(f"ginga_endiabrada{i}", endiabrar(base, i * 2))
     # balões
     for chave, texto in BALOES.items():
         A(f"balao_{chave}", balao(texto))
