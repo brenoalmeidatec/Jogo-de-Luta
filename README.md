@@ -15,7 +15,19 @@ A cada clique ele baixa a versão mais nova deste repositório, instala os lutad
 Na primeira vez ele também baixa o IKEMEN GO. Tudo fica em `%USERPROFILE%\JogoDeLuta`.
 
 Os botões do personagem são x (soco fraco), y (soco forte), a (chute fraco), b (chute forte) e
-c (provocação). As teclas de cada botão ficam nas opções do IKEMEN.
+c (provocação). O atalho deixa o jogador 1 assim (e refaz isso a cada clique):
+
+| Tecla | Ação |
+|---|---|
+| W / A / S / D | cima (pulo) / trás-esquerda / baixo (agachar) / direita |
+| Seta esquerda | x, soco fraco |
+| Seta cima | y, soco forte |
+| Seta baixo | a, chute fraco |
+| Seta direita | b, chute forte |
+| C | c, provocação |
+| Enter | start |
+
+Outras teclas e o jogador 2 continuam nas opções do IKEMEN.
 
 ## Pengaró
 
