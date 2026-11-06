@@ -296,6 +296,11 @@ def chamas():
             r = quadro["frame"]
             q = folha.crop((r["x"], r["y"], r["x"] + r["w"], r["y"] + r["h"]))
             q = q.resize((q.width * 3, q.height * 3), Image.NEAREST)
+            # a paleta do jogo é cheia ou vazia: a fumaça translúcida virava mancha preta, então só fica o que é firme,
+            # e as cores escuras sobem para o violeta
+            alfa = q.getchannel("A").point(lambda a: 255 if a >= 150 else 0)
+            q = Image.blend(q.convert("RGB"), Image.new("RGB", q.size, (150, 90, 210)), .35)
+            q.putalpha(alfa)
             tela = Image.new("RGBA", (LARG, ALT))
             tela.alpha_composite(q, (EIXO_X - pivo[0] * 3, EIXO_Y - pivo[1] * 3)) if EIXO_Y - pivo[1] * 3 >= 0 else \
                 tela.alpha_composite(q.crop((0, -(EIXO_Y - pivo[1] * 3), q.width, q.height)), (EIXO_X - pivo[0] * 3, 0))
@@ -312,7 +317,7 @@ def endiabrar(original, i):
     sombra.putalpha(original.getchannel("A"))
     tela.alpha_composite(sombra, (-4, 2))
     r, g, b, a = original.split()
-    corpo = Image.merge("RGB", (r.point(lambda v: int(v * .82)), g.point(lambda v: int(v * .66)), b.point(lambda v: min(255, int(v * .95) + 18))))
+    corpo = Image.merge("RGB", (r.point(lambda v: int(v * .92)), g.point(lambda v: int(v * .78)), b.point(lambda v: min(255, int(v * 1.0) + 22))))
     corpo.putalpha(a)
     tela.alpha_composite(corpo)
     return tela
@@ -1508,11 +1513,41 @@ Parry                              _F^C
 """
 
 
+# Poses da folha "endiabrado" (sprites/pengaro/quadros/endiabrado/00..07.png, recortadas com recortar_quadros.py) e
+# os desenhos do jogo que cada uma substitui na forma despertada, como no Diabo Loiro do Hazaki.
+POSES_ENDIABRADO = {
+    0: ("parado0", "soco3", "chute3", "recua", "defesa", "parry", "pouso"),
+    1: ("anda0",),
+    2: ("agacha0", "agacha1", "rasteira0", "rasteira1", "rasteira2", "rasteira3", "baixo_cima0", "baixo_soco"),
+    3: ("soco1", "soco2", "ar_soco", "q_soco4", "q_soco5"),
+    4: ("chute0", "chute1", "chute2", "ar_chute", "bicicleta"),
+    5: ("baixo_cima1", "kick_alto"),
+    6: ("especial",),
+    7: ("pulo_sobe", "pulo_topo", "pulo_desce"),
+}
+
+
+def arte_endiabrada(s):
+    """Se a folha da forma endiabrada já foi gerada, devolve {sprite do jogo: sprite despertado}; senão, vazio
+    (e o gerador cai no corpo escurecido com chamas do pixelfx)."""
+    pasta = RAIZ / "sprites/pengaro/quadros/endiabrado"
+    arquivos = sorted(pasta.glob("[0-9][0-9].png"))
+    if len(arquivos) != 8:
+        return {}
+    arte = {}
+    for indice, nomes in POSES_ENDIABRADO.items():
+        tela = Image.new("RGBA", (LARG, ALT))
+        tela.alpha_composite(Image.open(arquivos[indice]).convert("RGBA"), (EIXO_X - 104, EIXO_Y - 119))
+        for j, nome in enumerate(nomes):
+            arte[nome] = s.add(f"endiabrado_{nome}", move(tela, j % 3 - 1))
+    return arte
+
+
 def main():
     SAIDA.mkdir(parents=True, exist_ok=True)
     s = montar_sprites(retrato=RAIZ / "sprites/pengaro-selecao-kof.png")
     faiscas = carregar_faiscas(s)
-    a = montar_air(s, faiscas)
+    a = montar_air(s, faiscas, arte_despertada=arte_endiabrada(s))
     escrever_sff(SAIDA / "pengaro.sff", s)
     (SAIDA / "pengaro.air").write_text("\n".join(a.txt), encoding="utf-8", newline="\n")
     cns = montar_cns()
