@@ -287,11 +287,31 @@ FUMACA = ("#150d1d", "#22162e", "#33224a")
 ELO = ("#e4e0ea", "#8f879c", "#1a1220")
 
 
-def pontas(alfa):
-    """Pontas do corpo de um lutador virado para a direita: mão da frente, mão de trás e pé de trás.
-    Devolve {nome: (x, y)} em pixels do quadro, ou {} se não achar."""
+def _achar_pulso(alfa, ponta, raio, comprimento):
+    """Do bico de uma mão ou pé até a junta: anda `comprimento` px na direção em que a massa do membro está.
+    Devolve (x, y, dx, dy), com (dx, dy) apontando da ponta para o corpo."""
     px = alfa.load()
-    caixa = alfa.point(lambda a: 255 if a >= 128 else 0).getbbox()
+    tx, ty = ponta
+    sx = sy = n = 0
+    for y in range(max(0, ty - raio), min(ALT, ty + raio + 1)):
+        for x in range(max(0, tx - raio), min(LARG, tx + raio + 1)):
+            if px[x, y] >= 128 and (x - tx) ** 2 + (y - ty) ** 2 <= raio * raio:
+                sx += x
+                sy += y
+                n += 1
+    if not n:
+        return None
+    dx, dy = sx / n - tx, sy / n - ty
+    norma = math.hypot(dx, dy) or 1
+    dx, dy = dx / norma, dy / norma
+    return (tx + dx * comprimento, ty + dy * comprimento, dx, dy)
+
+
+def pontas(alfa):
+    """Mãos e pé de trás de um lutador virado para a direita. Devolve {nome: (x, y, dx, dy)}, com a junta (pulso ou
+    tornozelo) e a direção do membro, ou {} se não achar."""
+    px = alfa.load()
+    caixa = alfa.getbbox()
     if not caixa:
         return {}
     x0, y0, x1, y1 = caixa
@@ -304,8 +324,24 @@ def pontas(alfa):
                 if px[x, y] >= 128 and (melhor is None or (x > melhor[0] if maior else x < melhor[0])):
                     melhor = (x, y)
         return melhor
-    achadas = {"mao_f": extremo(.18, .55, True), "mao_t": extremo(.25, .75, False), "pe_t": extremo(.80, 1.0, False)}
-    return {k: v for k, v in achadas.items() if v}
+
+    def mais_baixo_a_esquerda():
+        melhor = None
+        meio = (x0 + x1) // 2
+        for y in range(y1 - 1, y0 + int(alt * .6), -1):
+            for x in range(x0, meio):
+                if px[x, y] >= 128:
+                    return (x + 6, y)
+        return melhor
+    pontas_ = {"mao_f": (extremo(.18, .55, True), 12, 11), "mao_t": (extremo(.25, .75, False), 12, 11),
+               "pe_t": (mais_baixo_a_esquerda(), 16, 12)}
+    achadas = {}
+    for nome, (ponta, raio, comp) in pontas_.items():
+        if ponta:
+            r = _achar_pulso(alfa, ponta, raio, comp)
+            if r:
+                achadas[nome] = r
+    return achadas
 
 
 def fumaca_solida(tela, ponto, i, tamanho=1.0, sentido=-1):
@@ -328,14 +364,16 @@ def fumaca_solida(tela, ponto, i, tamanho=1.0, sentido=-1):
             d.rectangle((px_, py_, px_ + 1, py_ + 1), fill=FUMACA[2])
 
 
-def elos(tela, ponto, vertical=False):
-    """Algema com corrente partida: três elos claros com contorno escuro em volta do pulso ou do tornozelo."""
+def elos(tela, junta):
+    """Algema com corrente partida: três elos claros, com contorno escuro, em volta do pulso ou do tornozelo,
+    atravessados no membro (perpendiculares à direção dele)."""
+    x, y, dx, dy = junta
     d = ImageDraw.Draw(tela)
-    x, y = ponto
-    for k in range(3):
-        ex, ey = (x, y + k * 3 - 3) if vertical else (x + k * 4 - 5, y + (k % 2))
-        d.ellipse((ex - 3, ey - 2, ex + 3, ey + 2), fill=ELO[2])
-        d.ellipse((ex - 2, ey - 1, ex + 2, ey + 1), outline=ELO[0], fill=ELO[1])
+    px_, py_ = -dy, dx
+    for k in (-1, 0, 1):
+        ex, ey = x + px_ * k * 3.2, y + py_ * k * 3.2
+        d.ellipse((ex - 2.6, ey - 2.2, ex + 2.6, ey + 2.2), fill=ELO[2])
+        d.ellipse((ex - 1.6, ey - 1.2, ex + 1.6, ey + 1.2), outline=ELO[0], fill=ELO[1])
 
 
 def endiabrar(original, i):
@@ -348,9 +386,9 @@ def endiabrar(original, i):
     alfa = original.getchannel("A").point(lambda a: 255 if a >= 128 else 0)
     ref = pontas(alfa)
     if "mao_t" in ref:
-        fumaca_solida(tela, (ref["mao_t"][0] + 6, ref["mao_t"][1] - 4), i, 1.0)
+        fumaca_solida(tela, (ref["mao_t"][0], ref["mao_t"][1] - 2), i, 1.0)
     if "pe_t" in ref:
-        fumaca_solida(tela, (ref["pe_t"][0] + 6, ref["pe_t"][1] - 6), i + 3, .8)
+        fumaca_solida(tela, (ref["pe_t"][0], ref["pe_t"][1] - 2), i + 3, .8)
     contorno = Image.new("RGBA", original.size, (14, 8, 20))
     contorno.putalpha(alfa)
     tela.alpha_composite(contorno, (-2, 1))
@@ -359,12 +397,9 @@ def endiabrar(original, i):
     corpo.putalpha(alfa)
     tela.alpha_composite(corpo)
     olhos_roxos(tela, alfa)
-    if "mao_f" in ref:
-        elos(tela, (ref["mao_f"][0] - 11, ref["mao_f"][1] + 2))
-    if "mao_t" in ref:
-        elos(tela, (ref["mao_t"][0] + 12, ref["mao_t"][1] - 3))
-    if "pe_t" in ref:
-        elos(tela, (ref["pe_t"][0] + 13, ref["pe_t"][1] - 10), vertical=True)
+    for nome in ("mao_f", "mao_t", "pe_t"):
+        if nome in ref:
+            elos(tela, ref[nome])
     return tela
 
 
