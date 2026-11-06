@@ -214,6 +214,13 @@ Ver a próxima seção.
 - A ativação tem animação de transformação, com invencibilidade, e empurra o oponente para longe.
 - O Despertar dura até a barra (que vai drenando) acabar, ou até o fim do round. Ao acabar, volta à forma base.
 
+### Todo lutador tem a forma transformada, com arte própria
+
+Não existe lutador sem Despertar. A forma despertada precisa de **arte redesenhada** (corpo, cores, olhos, efeitos
+próprios, como o Diabo Loiro do Hazaki e o Pengaró endiabrado), e não só a mesma imagem com outra cor. Recolorir por
+código serve no máximo como quebra-galho até a folha redesenhada ficar pronta, e o lutador só passa no checklist
+com a arte nova.
+
 ### O que muda: golpes **novos**, não só mais fortes
 
 Transformou, ganhou coisa que não tinha. Pode reaproveitar parte do personagem base, mas o mínimo novo é:
@@ -542,6 +549,7 @@ Forma base
 [ ] 3 agarrões: em pé (H-), agachado (L-) e lore/comando
 [ ] 2 supers (1 e 2 estoques)
 [ ] Despertar com barra cheia + 2 botões (ou comando da ficha)
+[ ] forma despertada com arte própria redesenhada (não só recolorida)
 
 Forma despertada
 [ ] 2 correntes novas, 6 normais novos, 4 especiais exclusivos, 1 projétil novo, 1 kombo novo, 1 super exclusivo
