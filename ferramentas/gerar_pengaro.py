@@ -212,8 +212,9 @@ DEITADO = [(-60, 0, 60, -24)]
 
 
 class Air:
-    def __init__(self, sprites, arte_despertada=None):
+    def __init__(self, sprites, arte_despertada=None, hazaki=False):
         self.s = sprites
+        self.hazaki = hazaki
         self.txt = ["; Gerado por ferramentas/gerar_pengaro.py. Edite lá, não aqui.\n"]
         self.acoes = set()
         self.arte_despertada = arte_despertada or {}
@@ -244,11 +245,13 @@ class Air:
                 if nome not in self.arte_despertada:
                     grupo, indice = self.s.codigos[nome]
                     original = next(img for g, i, img, _, _ in self.s.lista if (g, i) == (grupo, indice))
-                    aura = Image.new("RGBA", original.size)
-                    sombra = Image.new("RGBA", original.size, (92, 39, 138))
-                    sombra.putalpha(original.getchannel("A"))
-                    aura.alpha_composite(sombra, (-5, 2))
-                    aura.alpha_composite(original)
+                    aura = None if self.hazaki else endiabrar(original, i)
+                    if aura is None:
+                        aura = Image.new("RGBA", original.size)
+                        sombra = Image.new("RGBA", original.size, (92, 39, 138))
+                        sombra.putalpha(original.getchannel("A"))
+                        aura.alpha_composite(sombra, (-5, 2))
+                        aura.alpha_composite(original)
                     self.arte_despertada[nome] = self.s.add(f"despertado_{nome}", aura)
                 if resto and resto[0] and numero != 3100:
                     x1, y1, x2, y2 = resto[0]
@@ -277,6 +280,59 @@ def carregar_faiscas(sprites):
                 quadros.append((chave, max(1, round(quadro["duration"] * 60 / 1000))))
         acoes[numero] = quadros
     return acoes
+
+
+_CHAMAS = []
+
+
+def chamas():
+    """Chamas e fumaça roxas do pixelfx (shadow-flames), ampliadas 3x, com o pivô nos pés do lutador."""
+    if not _CHAMAS:
+        dados = json.loads((EFEITOS / "shadow-flames.json").read_text(encoding="utf-8"))
+        pivo = dados["meta"]["pixelfx"]["pivot"]
+        with Image.open(EFEITOS / dados["meta"]["image"]) as imagem:
+            folha = imagem.convert("RGBA")
+        for quadro in dados["frames"]:
+            r = quadro["frame"]
+            q = folha.crop((r["x"], r["y"], r["x"] + r["w"], r["y"] + r["h"]))
+            q = q.resize((q.width * 3, q.height * 3), Image.NEAREST)
+            tela = Image.new("RGBA", (LARG, ALT))
+            tela.alpha_composite(q, (EIXO_X - pivo[0] * 3, EIXO_Y - pivo[1] * 3)) if EIXO_Y - pivo[1] * 3 >= 0 else \
+                tela.alpha_composite(q.crop((0, -(EIXO_Y - pivo[1] * 3), q.width, q.height)), (EIXO_X - pivo[0] * 3, 0))
+            _CHAMAS.append(tela)
+    return _CHAMAS
+
+
+def endiabrar(original, i):
+    """Forma despertada: corpo mais escuro e arroxeado, contorno roxo e as chamas do pixelfx por trás."""
+    if original.size != (LARG, ALT):
+        return None
+    tela = chamas()[i % len(chamas())].copy()
+    sombra = Image.new("RGBA", original.size, (92, 39, 138))
+    sombra.putalpha(original.getchannel("A"))
+    tela.alpha_composite(sombra, (-4, 2))
+    r, g, b, a = original.split()
+    corpo = Image.merge("RGB", (r.point(lambda v: int(v * .82)), g.point(lambda v: int(v * .66)), b.point(lambda v: min(255, int(v * .95) + 18))))
+    corpo.putalpha(a)
+    tela.alpha_composite(corpo)
+    return tela
+
+
+def com_oculos(img):
+    """Óculos esportivo de lente roxa na altura dos olhos, achando a cabeça pelo ponto mais alto do corpo."""
+    caixa = img.getchannel("A").point(lambda a: 255 if a >= 128 else 0).getbbox()
+    if not caixa:
+        return img
+    topo = caixa[1]
+    faixa = img.crop((0, topo, LARG, topo + 3)).getchannel("A").getbbox()
+    cx = (faixa[0] + faixa[2]) // 2
+    tela = img.copy()
+    d = ImageDraw.Draw(tela)
+    y = topo + 14
+    d.line((cx + 1, y, cx + 12, y), fill="#d2d8df", width=1)
+    d.polygon([(cx + 4, y), (cx + 12, y), (cx + 11, y + 3), (cx + 6, y + 3)], fill="#35224e")
+    d.point((cx + 8, y + 1), fill="#e0b0ff")
+    return tela
 
 
 def montar_sprites(dados=None, retrato=None, hazaki=False):
@@ -419,6 +475,12 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
         d.line((x + 7, y - 98, x + 16, y - 99), fill="#b378d1")
         A(f"juliet{i}", gira(tela, angulo, 0, 0))
     A("lata2", estica(p["parado"], 1.03))
+    if not hazaki:
+        # ginga da forma despertada: a mesma ginga, de óculos, com as chamas por trás
+        for i in range(32):
+            base = Image.new("RGBA", (LARG, ALT))
+            base.alpha_composite(Image.open(RAIZ / f"sprites/pengaro/quadros/ginga_fluida/{i:02d}.png").convert("RGBA"), (EIXO_X - 104, EIXO_Y - 119))
+            A(f"ginga_endiabrada{i}", endiabrar(com_oculos(base), i * 2))
     # balões
     for chave, texto in BALOES.items():
         A(f"balao_{chave}", balao(texto))
@@ -474,13 +536,16 @@ VITORIAS = [
 
 
 def montar_air(s, faiscas, hazaki=False, arte_despertada=None):
-    a = Air(s, arte_despertada)
+    a = Air(s, arte_despertada, hazaki)
     Q = a.acao
     if hazaki:
         Q(0, [(f"q_parado{i}", 6) for i in range(8)])
     else:
         Q(0, [(f"q_ginga_fluida{i}", 2) for i in range(32)])
-    Q(9203, [(f"juliet{i}", 6) for i in range(4)])
+    if hazaki:
+        Q(9203, [(f"juliet{i}", 6) for i in range(4)])
+    else:
+        Q(9203, [(f"ginga_endiabrada{i}", 2) for i in range(32)])
     Q(5, [("parado0", 3), ("anda0", 3)])
     Q(6, [("agacha0", 3), ("parado0", 3)], BAIXO)
     Q(10, [("agacha0", 3)], BAIXO)
@@ -1239,10 +1304,10 @@ value = 0
 
 [State -2, Aura]
 type = PalFX
-trigger1 = var(20) > 0
+trigger1 = var(20) > 0 && alive
 time = 2
-add = 40, 0, 70
-sinadd = 30, 0, 40, 40
+add = 12, 0, 28
+sinadd = 10, 0, 18, 40
 
 [State -2, Rastro]
 type = AfterImageTime
