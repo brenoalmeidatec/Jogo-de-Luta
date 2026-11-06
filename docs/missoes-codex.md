@@ -113,3 +113,16 @@ anote em `docs/fichas/pengaro.md` e `docs/fichas/hazaki.md` o que já existe e o
 4. O que faltar de kombos, especiais e golpes exclusivos do Despertar.
 
 Pronto quando: os dois passam no checklist inteiro.
+
+## 7. Gerar a folha do Pengaró endiabrado
+
+O Despertar do Pengaró hoje é só o corpo escurecido com as chamas do pixelfx. O Breno quer o personagem redesenhado,
+como o Diabo Loiro do Hazaki (folha de 8 poses).
+
+1. No PC onde o Codex está logado, rode `python ferramentas/gerar_folhas.py endiabrado` (a descrição das 8 poses já está
+   em `FOLHAS_PENGARO`). Confira que a folha tem 8 figuras separadas, a mesma cara e as mesmas cores, e fundo magenta.
+2. Corte com `python ferramentas/recortar_quadros.py sprites/pengaro/quadros/folhas/endiabrado.png endiabrado --quadros 8 --ancora pes`.
+3. Rode `python ferramentas/gerar_pengaro.py` e `python ferramentas/verificar_pengaro.py`: o gerador passa a usar a folha
+   no lugar da aura (`arte_endiabrada`). Abra o treino e veja o Despertar nos golpes e na ginga despertada.
+
+Pronto quando: o Pengaró desperto aparece desenhado em todas as poses, sem mancha preta, e o verificador passa.
