@@ -993,8 +993,8 @@ IntPersistIndex = 60
 FloatPersistIndex = 40
 
 [Size]
-xscale = 1
-yscale = 1
+xscale = 0.6
+yscale = 0.6
 ground.back = 16
 ground.front = 18
 air.back = 14
@@ -1719,7 +1719,7 @@ def montar_cmd(hazaki=False):
 DEF = """; Gerado por ferramentas/gerar_pengaro.py. Edite lá, não aqui.
 [Info]
 name = "Pengaro"
-displayname = "Pengaró"
+displayname = "Pengaro"
 versiondate = 11,05,2026
 mugenversion = 1.1
 author = "Breno"
