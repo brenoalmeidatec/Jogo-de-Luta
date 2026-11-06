@@ -23,18 +23,32 @@ function Fechar($msg) {
     exit 1
 }
 
-# 1. Atualiza o jogo
+# 1. Atualiza o jogo. O repositorio tem centenas de MB de sprites que o jogo nao usa; so a pasta chars vale.
+# Baixa so os arquivos dela que mudaram desde a ultima vez (compara o hash de cada arquivo) e mostra o progresso.
+$manifesto = Join-Path $base 'manifesto.json'
+$manif = @{}
 try {
-    Write-Host 'Baixando a versao mais nova do jogo no GitHub...'
-    $zip = Join-Path $base 'jogo.zip'
-    $tmp = Join-Path $base 'tmp'
-    Invoke-WebRequest "https://github.com/$repo/archive/refs/heads/$branch.zip" -OutFile $zip -UseBasicParsing
-    if (Test-Path $tmp) { Remove-Item $tmp -Recurse -Force }
-    Expand-Archive $zip $tmp -Force
-    $src = (Get-ChildItem $tmp -Directory | Select-Object -First 1).FullName
-    robocopy $src $game /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
-    Remove-Item $tmp -Recurse -Force
-    Remove-Item $zip -Force
+    Write-Host 'Procurando a versao mais nova do jogo no GitHub...'
+    $ua = @{ 'User-Agent' = 'JogoDeLuta' }
+    $commit = (Invoke-RestMethod "https://api.github.com/repos/$repo/commits/$branch" -Headers $ua).sha
+    $arvore = Invoke-RestMethod "https://api.github.com/repos/$repo/git/trees/${commit}?recursive=1" -Headers $ua
+    if (Test-Path $manifesto) {
+        (Get-Content $manifesto -Raw | ConvertFrom-Json).PSObject.Properties | ForEach-Object { $manif[$_.Name] = $_.Value }
+    }
+    $arquivos = @($arvore.tree | Where-Object { $_.type -eq 'blob' -and $_.path -like 'chars/*' })
+    $wc = New-Object Net.WebClient
+    $wc.Headers.Add('User-Agent', 'JogoDeLuta')
+    $i = 0
+    foreach ($a in $arquivos) {
+        $i++
+        $dest = Join-Path $game ($a.path -replace '/', '\')
+        if ((Test-Path $dest) -and $manif[$a.path] -eq $a.sha) { continue }
+        New-Item -ItemType Directory -Force (Split-Path $dest) | Out-Null
+        Write-Host "Baixando $($a.path) ($i de $($arquivos.Count))..."
+        $url = "https://raw.githubusercontent.com/$repo/$commit/" + (($a.path -split '/' | ForEach-Object { [Uri]::EscapeDataString($_) }) -join '/')
+        $wc.DownloadFile($url, $dest)
+        $manif[$a.path] = $a.sha
+    }
     Write-Host 'Jogo atualizado!' -ForegroundColor Green
 } catch {
     Write-Host "Nao consegui atualizar: $($_.Exception.Message)" -ForegroundColor Yellow
@@ -42,6 +56,8 @@ try {
         Fechar 'Ainda nao tem nenhuma versao do jogo baixada. Confira a internet e tente de novo.'
     }
     Write-Host 'Abrindo a ultima versao que ja estava baixada.'
+} finally {
+    if ($manif.Count -gt 0) { $manif | ConvertTo-Json | Set-Content $manifesto -Encoding ASCII }
 }
 
 # 2. Baixa o IKEMEN GO na primeira vez
