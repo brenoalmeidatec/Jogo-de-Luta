@@ -160,6 +160,14 @@ cotovelo ou some (quando a mão de trás não aparece). O definitivo é a garraf
 
 Pronto quando: todas as ações do Pengaró usam quadros desenhados com a garrafa e `verificar_pengaro.py` passa.
 
+**Feito pelo Claude em 2026-11-06.** As folhas saem do ChatGPT, e `ferramentas/animar_folha.py` usa o Blender para criar
+os quadros do meio deformando o próprio sprite. O Despertar agora é cutscene: ele bebe, vê a garrafa vazia, joga no
+chão e é possuído pelas sombras. O endiabrado não tem garrafa. Falta:
+- golpes do Despertar: hoje usam 8 poses paradas, precisam de folhas endiabradas próprias;
+- andar, pular e tomar golpe no Despertar ainda mostram a arte com garrafa;
+- 56 de 159 ações ainda têm desenho acima de 2 ticks (regra 7);
+- conferir tudo no jogo, principalmente pés e caixas de golpe.
+
 ## Missão: criar o lutador Barbeiro
 
 Ficha em `docs/fichas/barbeiro.md`, prompt completo em `docs/prompts/codex-barbeiro.md`, referência de arte em
