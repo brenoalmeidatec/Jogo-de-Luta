@@ -67,7 +67,7 @@ foreach ($lutador in @('pengaro', 'hazaki')) {
     robocopy $origem (Join-Path $motor "chars\$lutador") /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
     if ($LASTEXITCODE -ge 8) { Fechar "Nao consegui instalar $lutador." }
     if ($texto -notmatch "(?m)^\s*$lutador\s*(?:,|$)") {
-        $texto = $texto -replace '(?m)^randomselect', "$lutador, stages/stage0.def`r`nrandomselect"
+        $texto = $texto -replace '(?m)^randomselect', "$lutador, stages/stage0-720.def`r`nrandomselect"
     }
 }
 [IO.File]::WriteAllText($select, $texto)
