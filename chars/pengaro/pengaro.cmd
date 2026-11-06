@@ -250,7 +250,7 @@ triggerall = command = "golpe_1501"
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Pelada Sombria]
+[State -1, Saideira Sombria]
 type = ChangeState
 value = 3100
 triggerall = command = "golaco"
@@ -260,7 +260,7 @@ triggerall = statetype != A
 trigger1 = var(1)
 trigger2 = (stateno = [1000,1501]) && movehit && movehit <= 8
 
-[State -1, Golaco da Noite]
+[State -1, Chuva de Bebidas]
 type = ChangeState
 value = 3000
 triggerall = command = "golaco"

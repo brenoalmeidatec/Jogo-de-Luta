@@ -20,6 +20,8 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 from repertorio import golpes, quadros as quadros_golpe
 
+import itens_pengaro
+
 RAIZ = Path(__file__).resolve().parent.parent
 FOLHA = RAIZ / "sprites/pengaro/pixel/pengaro.png"
 INFO = RAIZ / "sprites/pengaro/pixel/pengaro.json"
@@ -134,6 +136,8 @@ class Sprites:
         if getattr(self, "folhas", False) and nome in TROCA_POR_FOLHA:
             folha, i = TROCA_POR_FOLHA[nome]
             img = quadro_folha(folha, i) or img
+        if getattr(self, "folhas", False) and img.size == (LARG, ALT) and not nome.startswith(SEM_WHISKY):
+            img = itens_pengaro.com_whisky(img)  # o Pengaró luta com a garrafa de whisky na mão de trás
         if grupo is None:
             grupo = self.proximo
             self.proximo += 1
@@ -451,7 +455,13 @@ TROCA_POR_FOLHA = {
     "lata0": ("lata", 2), "lata1": ("lata", 4), "lata2": ("lata", 7),
     "soco0": ("soco", 3), "soco1": ("soco", 5), "soco2": ("soco", 5), "soco3": ("soco", 6),
     **{f"rola{i}": ("rolamento", i) for i in range(8)},
+    # sem bola: na intro, na provocação e na vitória ele dá um gole
+    **{f"embaixada{i}": ("lata", i + 1) for i in range(4)},
 }
+
+
+# Sprites que não são o corpo do Pengaró (balões, faíscas, projétil) não ganham a garrafa.
+SEM_WHISKY = ("balao_", "fx_", "bola", "bolao", "quica", "retrato", "chuva")
 
 
 def quadro_folha(folha, i):
@@ -532,10 +542,16 @@ def acoes_folhas(Q):
             (f("bicicleta", 6), -1)], NO_AR)
     Q(810, [(f("agarrao", i), 4) for i in range(2, 7)] + [(f("agarrao", 7), 10)])
     Q(2000, [(f("lata", i), 5) for i in range(8)])
+    Q(1005, [(f"bola{i}", 3) for i in range(4)], [(-6, -8, 6, 8)])  # lata de cerveja girando reto
+    # Latada de Sombra: arremesso de braço (4 quadros, o 2º solta a lata, como antes)
+    for n, fim_ in ((1000, 22), (1001, 26)):
+        Q(n, [("q_soco2", 8), ("q_soco5", 5), ("q_soco6", 6), ("q_soco7", fim_)])
 
 
 def montar_sprites(dados=None, retrato=None, hazaki=False):
     p, bola = dados if dados is not None else carregar_poses()
+    if not hazaki:
+        bola = itens_pengaro.lata()  # o projétil do Pengaró é uma lata de cerveja
     s = Sprites()
     s.folhas = not hazaki
     A = s.add
@@ -658,6 +674,14 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
         b = bola.rotate(90 * (i % 4), resample=Image.NEAREST, expand=True)
         altura = round(30 * abs(math.sin(math.pi * i / 8)))
         A(f"quica{i}", b, eixo=(b.width // 2, b.height // 2 + altura))
+    if not hazaki:
+        # chuva de bebidas: garrafa e lata caindo girando (giro de 90°, sem borrar)
+        g = itens_pengaro.garrafa()
+        g = g.resize((g.width * 2, g.height * 2), Image.NEAREST)  # escala inteira: lê melhor caindo do céu
+        for i, q in enumerate((g, g.transpose(Image.ROTATE_270), g.transpose(Image.ROTATE_180), g.transpose(Image.ROTATE_90))):
+            A(f"chuva_garrafa{i}", q, eixo=(q.width // 2, q.height // 2))
+        for i, q in enumerate(itens_pengaro.latas_girando(escala=2)):
+            A(f"chuva_lata{i}", q, eixo=(q.width // 2, q.height // 2))
     # embaixadinha (provocação, intro e vitória)
     for i, y in enumerate((-30, -52, -68, -52)):
         A(f"embaixada{i}", com_bola(p["parado"], bola, 40, y))
@@ -691,16 +715,16 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
 
 # As falas ficam aqui para o Breno editar. A gagueira é só texto, nunca muda o tempo do golpe.
 BALOES = {
-    "intro": "B-b-bora jogar? Ca-capoeira ou\npe-pelada, que eu de-de-dou conta!",
+    "intro": "S-s-saideira? Que sa-saideira,\na no-noite tá só co-começando!",
     "intro_trava": "P-p-p-p-p...",
     "locutor": "FIGHT, CARALHO, A GENTE\nNÃO TEM O DIA TODO!",
     "round": "H-h-hoje tem resenha, ca-caralho.",
     "primeiro": "I-ih, já co-co-começou na sacanagem?",
     "provoca": "F-f-f-f-f-f...",
     "provoca_fim": "...ah, vai se foder, porra.",
-    "provoca_cai": "Ai, ca-caralho! A bo-bola!",
-    "bola_trava": "Bo-bo-bo-bo...",
-    "bola_ok": "...BOLA DE SOMBRA!",
+    "provoca_cai": "Ai, ca-caralho! De-derramei o whisky!",
+    "bola_trava": "La-la-la-la...",
+    "bola_ok": "...LATADA DE SOMBRA!",
     "compasso_trava": "Co-co-co-co...",
     "compasso_ok": "...COMPASSO, PORRA!",
     "armada_trava": "A-a-a-a...",
@@ -708,7 +732,7 @@ BALOES = {
     "caneta_trava": "Ca-ca-ca-ca...",
     "caneta_ok": "...CANETA, FILHO DA PUTA!",
     "errou": "...deixa pra lá, porra.",
-    "bola_liso": "BOLA DE SOMBRA, CARALHO!",
+    "bola_liso": "LATADA DE SOMBRA, CARALHO!",
     "compasso_liso": "COMPASSO NA TUA CARA!",
     "armada_liso": "ARMADA, VEM QUE TEM!",
     "caneta_liso": "CANETA, PASSOU POR BAIXO!",
@@ -716,10 +740,10 @@ BALOES = {
     "locutor_ko": "K.O.! ...ou, no caso dele,\nK-k-k-k-K.O.!",
     "vitoria0": "F-f-foi de letra,\nfilho da puta.",
     "vitoria1": "V-v-vai lá contar pra tua mãe\nque tu a-a-apanhou do gago.",
-    "vitoria2": "Mi-minhas bolas... MINHA BOLA\ntá sempre no pé, pa-pa-parceiro.",
-    "golaco": "O-o-o-olha o... GOLAÇOOOO, CARALHO!",
+    "vitoria2": "Es-essa vai na tua conta,\npa-pa-parceiro. A do bar também.",
+    "golaco": "O-o-o-olha a... CHUVA DE BEBIDA, CARALHO!",
     "lata": "A-a-a-agora sim, porra!\nSegura que eu vou me-me-meter!",
-    "pelada": "CHAMA A RAPAZIADA, CARALHO! TÁ LISO AGORA!",
+    "pelada": "SAIDEIRA, CARALHO! A RODADA É POR MINHA CONTA!",
     "ressaca": "...e-e-e aí, cadê a-a-a porra da outra lata?",
     "escapou": "A-a-achou que ia me pe-pegar?",
 }
@@ -727,12 +751,12 @@ ID_BALAO = {chave: 9100 + i for i, chave in enumerate(BALOES)}
 
 VITORIAS = [
     "F-f-foi de letra, filho da puta.",
-    "T-t-tá achando que é pe-pelada de domingo, é, ca-caralho?",
+    "T-t-tá achando que é bo-boteco de domingo, é, ca-caralho?",
     "V-v-vai lá contar pra tua mãe que tu a-a-apanhou do gago.",
-    "Eu chu-chupo... chu-chu-CHUTO melhor que tu, porra!",
+    "Eu be-bebo... be-be-BATO melhor que tu, porra!",
     "T-tu ficou pa-parado igual cone. Ma-mas cone pelo menos fica de pé.",
     "D-d-demorei pra falar, mas tu de-de-demorou mais pra levantar.",
-    "Mi-minhas bolas... MINHA BOLA tá sempre no pé, pa-pa-parceiro.",
+    "Es-essa vai na tua conta, pa-pa-parceiro. A do bar também.",
     "Olha só, falei inteiro! Agora chama tua irmã que eu vou ensinar ela a gingar, hein!",
 ]
 
@@ -828,7 +852,11 @@ def montar_air(s, faiscas, hazaki=False, arte_despertada=None):
     # super e despertar
     Q(2000, [("lata0", 14), ("lata1", 18), ("juliet0" if hazaki else "lata2", 8)])
     if not hazaki:
-        Q(3000, [("embaixada0", 6), ("embaixada1", 6), ("embaixada2", 6), ("rasteira0", 6), ("especial", 6), ("rasteira1", 8), ("rasteira3", 20)], BAIXO)
+        # Chuva de Bebidas: bebe, ergue os braços e chama a chuva (o 5º quadro solta as bebidas)
+        Q(3000, [("f_lata1", 6), ("f_lata2", 6), ("f_lata3", 6), ("f_lata4", 6), ("f_vitoria5", 6),
+                 ("f_vitoria6", 10), ("f_vitoria7", 24)])
+        Q(3010, [(f"chuva_garrafa{i}", 3) for i in range(4)], [(-12, -22, 12, 22)])
+        Q(3011, [(f"chuva_lata{i}", 3) for i in range(4)], [(-10, -15, 10, 15)])
     Q(3005, [(f"bolao{i}", 3) for i in range(4)], [(-40, -30, 40, 30)])
     Q(3006, [("bolao0", 3), ("bolao2", 3)], [])
     caixa_p = (0, -110, 90, -10)
@@ -1146,6 +1174,26 @@ def projetil(numero, trigger, anim, hit_anim, vel, dano, attr, hits=1, intervalo
     return "\n".join(t) + "\n\n"
 
 
+def chuva_de_bebidas(numero):
+    """Super do Pengaró: seis garrafas e latas caem do céu em cima do oponente, uma a cada 6 ticks.
+    A última derruba. Defende-se em pé (vem de cima)."""
+    t = []
+    for i, dx in enumerate((-30, 24, -8, 36, -40, 6)):
+        ultima = i == 5
+        t += [f"[State {numero}, Bebida {i + 1}]", "type = Projectile", f"trigger1 = AnimElemTime(5) = {i * 6}",
+              "projid = 3000", f"projanim = {3010 + i % 2}", "projhitanim = 9200", "projremanim = 9200",
+              "postype = p2", f"offset = {dx}, {-210 - 18 * (i % 3)}", f"velocity = 0, {7 + i % 2}",
+              "projpriority = 3", "projremovetime = 80", "projheightbound = -400, 1", "attr = S, HP",
+              f"damage = {60 if ultima else 42}, 6", "animtype = Heavy" if ultima else "animtype = Med",
+              "guardflag = H", "hitflag = MAF", "pausetime = 4, 10", "sparkno = -1", "hitsound = F5,2",
+              "guardsound = F6,0", "ground.type = High", "ground.slidetime = 10", "ground.hittime = 16",
+              "ground.velocity = -2", "air.velocity = -2,-3"]
+        if ultima:
+            t += ["fall = 1", "fall.recover = 0"]
+        t.append("")
+    return "\n".join(t) + "\n"
+
+
 def superpausa(numero, trigger):
     return (f"[State {numero}, Pausa]\ntype = SuperPause\ntrigger1 = {trigger}\ntime = 30\nanim = 100\n"
             "pos = 10, -60\nsound = F20,0\nmovetime = 0\ndarken = 1\n\n"
@@ -1367,14 +1415,14 @@ def montar_cns(hazaki=False):
     c.append("[State 821, Queda]\ntype = VelAdd\ntrigger1 = 1\ny = .44\n\n")
     c.append("[State 821, Chao]\ntype = SelfState\ntrigger1 = Vel Y > 0\ntrigger1 = Pos Y >= 0\nvalue = 5100\n\n")
 
-    # Bola de Sombra: fraca lenta, forte rápida, no Despertar sai dobrada
+    # Latada de Sombra: arremessa uma lata de cerveja; fraca lenta, forte rápida, no Despertar sai dobrada
     for n, vel in ((1000, 3.2), (1001, 5.4)):
         c.append(estado(n, "S", "A", "S", anim=n, juggle=4))
         c.append(fala(n, "bola_trava", "Time = 0 & var(20) = 0"))
         c.append(fala(n, "bola_liso", "Time = 0 & var(20) > 0"))
-        c.append(projetil(n, "AnimElem = 2", 1005, 1006, vel, 70, "S, SP", ofs="70, -12"))
+        c.append(projetil(n, "AnimElem = 2", 1005, 1006, vel, 70, "S, SP", ofs="62, -86" if not hazaki else "70, -12"))
         c.append(f"[State {n}, Dobrada]\ntype = Projectile\ntrigger1 = AnimElem = 3\ntrigger1 = var(20) > 0\n"
-                 f"projid = 1001\nprojanim = 1005\nprojhitanim = 1006\nprojremanim = 1006\noffset = 70, -12\n"
+                 f"projid = 1001\nprojanim = 1005\nprojhitanim = 1006\nprojremanim = 1006\noffset = {'70, -12' if hazaki else '62, -86'}\n"
                  f"velocity = {vel + 1.2}, 0\nattr = S, SP\ndamage = 50, 4\nanimtype = Med\nguardflag = MA\n"
                  "hitflag = MAF\npausetime = 2, 10\nhitsound = F5,1\nguardsound = F6,0\nground.type = High\n"
                  "ground.slidetime = 12\nground.hittime = 18\nground.velocity = -4\nair.velocity = -2,-3.5\n\n")
@@ -1417,16 +1465,19 @@ def montar_cns(hazaki=False):
     c.append("[State 2000, Liga]\ntype = VarSet\ntrigger1 = AnimTime = 0\nvar(20) = 600\n\n")
     c.append(fim(2000))
 
-    # Golaço da Noite (1 estoque)
+    # Chuva de Bebidas (1 estoque): o super antes do Despertar
     c.append(estado(3000, "S", "A", "S", anim=3000, juggle=0))
     c.append(superpausa(3000, "Time = 0"))
     c.append("[State 3000, Gasta]\ntype = PowerAdd\ntrigger1 = Time = 0\nvalue = -1000\n\n")
     c.append("[State 3000, Invencivel]\ntype = NotHitBy\ntrigger1 = AnimElemTime(5) < 0\nvalue = SCA\ntime = 1\n\n")
     c.append(fala(3000, "golaco", "Time = 2"))
-    c.append(projetil(3000, "AnimElem = 5", 3005, 3006, 7, 60, "S, HP", hits=5, intervalo=5, id_=3000, ofs="90, -46", queda=True))
+    if hazaki:
+        c.append(projetil(3000, "AnimElem = 5", 3005, 3006, 7, 60, "S, HP", hits=5, intervalo=5, id_=3000, ofs="90, -46", queda=True))
+    else:
+        c.append(chuva_de_bebidas(3000))
     c.append(fim(3000))
 
-    # Pelada Sombria (Super Despertado): 8 acertos e acaba o Despertar
+    # Saideira Sombria (Super Despertado): 8 acertos e acaba o Despertar
     c.append(estado(3100, "S", "A", "S", anim=3100, juggle=0))
     c.append(superpausa(3100, "Time = 0"))
     c.append("[State 3100, Gasta]\ntype = PowerAdd\ntrigger1 = Time = 0\nvalue = ifelse(var(20) > 0, -1000, -2000)\n\n")
@@ -1602,8 +1653,8 @@ def montar_cmd(hazaki=False):
             c.append(entrada(g.nome, g.estado, condicoes, ("var(1)", especial_em_super) if g.custo else ("var(1)",)))
     forte = "(var(20) > 0) || (life <= 200 && power >= 2000)"
     if not hazaki:
-        c.append(entrada("Pelada Sombria", 3100, ['command = "golaco"', "power >= 1000", f"({forte})"] + no_chao, ("var(1)", especial_em_super)))
-        c.append(entrada("Golaco da Noite", 3000, ['command = "golaco"', "power >= 1000"] + no_chao, ("var(1)", especial_em_super)))
+        c.append(entrada("Saideira Sombria", 3100, ['command = "golaco"', "power >= 1000", f"({forte})"] + no_chao, ("var(1)", especial_em_super)))
+        c.append(entrada("Chuva de Bebidas", 3000, ['command = "golaco"', "power >= 1000"] + no_chao, ("var(1)", especial_em_super)))
     c.append(entrada("Despertar", 2000, ['command = "despertar"', "power >= 1000", "var(20) = 0", "statetype = S"], ("ctrl",)))
     if not hazaki:
         for nome, n, botoes in (("armada", 1200, "xy"), ("caneta", 1300, "xy"), ("compasso", 1100, "ab")):
@@ -1690,7 +1741,7 @@ x = 1
 
 
 GOLPES = """<#f0f000>:Especiais:</>
-Bola de Sombra						_D_F^K
+Latada de Sombra					_D_F^K
 Meia-lua de Compasso Sombria		_D_B^K
 Armada do Quilombo					_F_D^P
 Caneta								_D_B^P
@@ -1698,8 +1749,8 @@ Mão de Chimpá / Mão Pesada          _D_F^P
 Sola de Várzea / Pisão de Bar       _B_D^K
 
 <#f0f000>:Supers:</>
-Golaço da Noite <#bebebe>(1000)</>	_B_F_D^K
-Pelada Sombria (no Despertar)		_B_F_D^K
+Chuva de Bebidas <#bebebe>(1000)</>	_B_F_D^K
+Saideira Sombria (no Despertar)	_B_F_D^K
 Bando da Várzea / Apagão da Várzea  _B_F_D^P
 
 <#f0f000>:Sistema:</>

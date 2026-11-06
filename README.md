@@ -34,7 +34,7 @@ Outras teclas e o jogador 2 continuam nas opções do IKEMEN.
 
 ## Pengaró
 
-Capoeirista e boleiro. Fica em `chars/pengaro/`.
+Capoeirista cachaceiro: luta com uma garrafa de whisky na mão e arremessa lata de cerveja. Fica em `chars/pengaro/`.
 
 | Mecânica | Comando |
 |---|---|
@@ -49,12 +49,12 @@ Capoeirista e boleiro. Fica em `chars/pengaro/`.
 
 | Especial | Comando |
 |---|---|
-| Bola de Sombra | baixo, frente + a (lenta) ou b (rápida) |
+| Latada de Sombra (arremessa uma lata de cerveja) | baixo, frente + a (lenta) ou b (rápida) |
 | Meia-lua de Compasso Sombria | baixo, trás + a ou b |
 | Armada do Quilombo | frente, baixo + x ou y |
 | Caneta | baixo, trás + x ou y |
-| Golaço da Noite (1 estoque) | trás, frente, baixo + a ou b |
-| Pelada Sombria | o mesmo comando durante o Despertar, ou com 20% de vida e 2 estoques |
+| Chuva de Bebidas (1 estoque): garrafas e latas caem do céu no oponente | trás, frente, baixo + a ou b |
+| Saideira Sombria | o mesmo comando durante o Despertar, ou com 20% de vida e 2 estoques |
 | Despertar: Lata Gelada (1 estoque) | x + a + y |
 | Mão de Chimpá | baixo, frente + x ou y |
 | Sola de Várzea | trás, baixo + a ou b |
