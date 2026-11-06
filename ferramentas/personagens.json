@@ -17,6 +17,11 @@
     "brutus": {
       "descricao": "Brutus, a huge bald street brawler, thick black beard, red tank top, torn jeans, heavy work boots, steel gauntlets on both fists",
       "altura": 128
+    },
+    "barbeiro": {
+      "nome": "Barbeiro",
+      "descricao": "muscular barber fighter with a psycho grin and wide eyes, short curly black hair with fade and goatee, black short-sleeve shirt with silver trim and a striped barber pole badge, black apron with a comb and shaving brush, loose black pants, black shiny shoes, huge muscular left arm spinning a comb, mechanical right arm with dark steel shoulder plate and a giant pair of scissors instead of a hand",
+      "altura": 120
     }
   },
   "poses": {
