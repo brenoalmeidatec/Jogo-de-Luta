@@ -27,6 +27,9 @@ c (provocação). O atalho deixa o jogador 1 assim (e refaz isso a cada clique):
 | C | c, provocação |
 | Enter | start |
 
+**Nos menus** (título, modos, seleção de personagem e de cenário, opções, pausa): W/A/S/D movem o cursor e
+**Enter confirma**. As setas não confirmam nada nos menus, só batem na luta. Esc volta.
+
 Outras teclas e o jogador 2 continuam nas opções do IKEMEN.
 
 ## Pengaró

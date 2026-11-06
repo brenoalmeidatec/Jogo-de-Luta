@@ -98,6 +98,52 @@ if (-not (Test-Path $cfg)) {
 }
 if (Test-Path $cfg) { Ajustar-Teclas $cfg }
 
-# 5. Abre o jogo
+# 5. Menus: navega com W A S D e confirma so com Enter. Os botoes de ataque (as setas) nao confirmam
+# nada nos menus. O IKEMEN le as teclas de confirmacao do motif (system.def); a selecao de personagem
+# usa os botoes para escolher o personagem, entao tambem ajustamos essa funcao no main.lua.
+function Set-Chave($t, $secao, $chave, $valor) {
+    $m = [regex]::Match($t, '(?ims)^\[' + [regex]::Escape($secao) + '\][^\r\n]*\r?\n(.*?)(?=^\[|\z)')
+    if (-not $m.Success) { return $t }
+    $corpo = $m.Groups[1].Value
+    $ek = [regex]::Escape($chave)
+    if ($corpo -match "(?im)^\s*$ek\s*=") {
+        $corpo = [regex]::Replace($corpo, "(?im)^(\s*)$ek\s*=.*$", ('${1}' + "$chave = $valor"))
+    } else {
+        $corpo = "$chave = $valor`r`n" + $corpo
+    }
+    return $t.Substring(0, $m.Groups[1].Index) + $corpo + $t.Substring($m.Groups[1].Index + $m.Groups[1].Length)
+}
+function Ajustar-Menus {
+    $motif = 'data\ikemen1\system.def'
+    if (Test-Path $cfg) {
+        $mm = [regex]::Match([IO.File]::ReadAllText($cfg), '(?im)^Motif\s*=\s*(\S+)')
+        if ($mm.Success) { $motif = $mm.Groups[1].Value -replace '/', '\' }
+    }
+    $def = Join-Path $motor $motif
+    if (Test-Path $def) {
+        $t = [IO.File]::ReadAllText($def)
+        foreach ($sec in @('Title Info', 'Option Info', 'Pause Menu', 'Replay Info')) {
+            $t = Set-Chave $t $sec 'menu.done.key' 's'
+        }
+        foreach ($ch in @('done.key', 'p1.teammenu.done.key', 'p2.teammenu.done.key', 'p1.palmenu.done.key', 'p2.palmenu.done.key')) {
+            $t = Set-Chave $t 'Select Info' $ch 's'
+        }
+        $t = Set-Chave $t 'VS Screen' 'done.key' 's'
+        $t = Set-Chave $t 'Continue Screen' 'done.key' 's'
+        [IO.File]::WriteAllText($def, $t)
+    }
+    $lua = Join-Path $motor 'external\script\main.lua'
+    if (Test-Path $lua) {
+        $l = [IO.File]::ReadAllText($lua)
+        if ($l -notmatch 'jogo-de-luta: so o Enter') {
+            $novo = "function main.f_btnPalNo(p)`n`t-- jogo-de-luta: so o Enter seleciona; os botoes de ataque nao`n`tif commandGetState(p, '/s') then return 1 end`n`treturn 0`nend"
+            $l2 = [regex]::Replace($l, '(?s)function main\.f_btnPalNo\(p\).*?\r?\nend', { param($x) $novo }, 1)
+            if ($l2 -ne $l) { [IO.File]::WriteAllText($lua, $l2) }
+        }
+    }
+}
+try { Ajustar-Menus } catch { Write-Host "Nao consegui ajustar os menus: $($_.Exception.Message)" -ForegroundColor Yellow }
+
+# 6. Abre o jogo
 Write-Host 'Abrindo o jogo!' -ForegroundColor Green
 Start-Process $exe -WorkingDirectory $motor -WindowStyle Normal

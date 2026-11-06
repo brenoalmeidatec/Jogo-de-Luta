@@ -20,6 +20,11 @@ cardeais (sem diagonal). "Seta ←" quer dizer a seta esquerda do teclado (soco 
 
 Atalho de leitura: socos = setas esquerda (fraco) e cima (forte); chutes = setas baixo (fraco) e direita (forte).
 
+## Menus
+
+Em todos os menus (título, modos, seleção de personagem, cenário, opções, pausa): **W/A/S/D** movem o cursor e
+**Enter** confirma; **Esc** volta. As setas só valem na luta. O atalho ajusta isso a cada clique.
+
 ## Sistema (vale para os dois)
 
 | Ação | Comando |
