@@ -42,10 +42,14 @@ Capoeirista cachaceiro: luta com uma garrafa de whisky na mão e arremessa lata 
 | Pulinho, pulo, hiper pulinho, super pulo | toca cima, segura cima, baixo e toca cima, baixo e segura cima |
 | Rolamento | x + a (com trás rola para trás) |
 | Golpe de afastar | y + b, no chão ou no ar |
-| Agarrão | colado, frente ou trás + y ou b (y ou b escapa) |
+| Agarrão em pé | colado, frente ou trás + y ou b (y ou b escapa) |
+| Agarrão agachado | colado em quem está agachado, baixo + y: pega a perna e arremessa de rasteira (110) |
+| Martelo e Garrafada (agarrão de comando) | colado, trás, frente + y: compasso de capoeira (60) e garrafa de whisky na cabeça (90) |
 | Levantar rápido | x + a ao cair (não vale depois de rasteira, agarrão e super) |
 | Guard cancel (1 estoque) | na defesa: x + a rola, y + b afasta |
-| Corrente de fracos | até 4 golpes fracos seguidos no contato |
+| Correntes | cada botão (x, y, a, b) tem 3 golpes: aperte o mesmo botão de novo a cada contato. Acertando os 3, o 4º é o finalizador e derruba |
+| Kombos de assinatura | **Abertura** frente + y, x, b · **Alto e Baixo** x, baixo + a, y (o último é por cima) · **Empurrão** trás + x, y, frente + b · **Lançador** a, b, baixo + y (lança para o ar) |
+| Corrente de fracos | até 4 golpes fracos seguidos no contato (agachado e misturados) |
 
 | Especial | Comando |
 |---|---|
@@ -55,10 +59,24 @@ Capoeirista cachaceiro: luta com uma garrafa de whisky na mão e arremessa lata 
 | Caneta | baixo, trás + x ou y |
 | Chuva de Bebidas (1 estoque): garrafas e latas caem do céu no oponente | trás, frente, baixo + a ou b |
 | Saideira Sombria | o mesmo comando durante o Despertar, ou com 20% de vida e 2 estoques |
-| Despertar: Lata Gelada (1 estoque) | x + a + y |
+| Garrafada em Arco (2º projétil, passa por cima de golpe baixo) | frente, trás + x (curta) ou y (longa) |
+| Rolê por Trás (passa por dentro do oponente e chega virado; no canto fica na frente) | frente, trás + a (só passa) ou b (passa e chuta) |
 | Mão de Chimpá | baixo, frente + x ou y |
 | Sola de Várzea | trás, baixo + a ou b |
 | Bando da Várzea (2 estoques) | trás, frente, baixo + x ou y |
+| Despertar: Lata Gelada (barra cheia, gasta tudo) | x + y |
+
+**No Despertar** (forma endiabrada) o Pengaró ganha golpes que não existem na forma normal:
+
+| Exclusivo | Comando |
+|---|---|
+| Mão de Sombra (projétil novo, acelera e acerta duas vezes) | baixo, baixo + x |
+| Chute da Corrente (avanço longo, derruba) | baixo, baixo + y |
+| Sombra Atravessada (passa batendo e chega nas costas) | baixo, baixo + a |
+| Queda Escura (mergulho que racha o chão) | baixo, baixo + b |
+| Correntes novas de 4 golpes | y, y, y, y e b, b, b, b |
+| Kombo Possessão | b, a, x |
+| 6 normais novos | baixo + y, baixo + b, frente + y, frente + b, trás + x, trás + a |
 
 ## Hazaki
 

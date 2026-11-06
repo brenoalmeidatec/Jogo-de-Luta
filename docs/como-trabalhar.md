@@ -99,7 +99,14 @@ Armadilhas já pagas:
 - `remapear_animelem` ajusta o `AnimElem` do `.cns`, porque os quadros do meio mudam a contagem.
 - Regenerar os dois lutadores: `gerar_pengaro.py` e `gerar_hazaki.py`. Confira o diff do `.cns` do outro lutador.
 
-## Estado em 2026-11-06
+## Estado em 2026-11-06 (atualizado no fim do dia)
+
+O kit do Pengaró passou a ter, no código, tudo que o checklist da seção 9 pede: 4 correntes de 3 golpes + finalizador,
+4 kombos, 8 especiais (2º projétil em arco e Rolê por Trás), 3 agarrões, Despertar em `x + y` com barra cheia e os 20 golpes
+exclusivos (dados em `ferramentas/pengaro_extra.py`, ficha em `docs/fichas/pengaro.md`). A arte desses golpes novos ainda
+reaproveita folhas existentes, e **nada disso foi testado jogando**: só gerador, verificador e carregamento no IKEMEN.
+
+Estado anterior, do commit `68af3ec`:
 
 Ainda **não testado no jogo** por ninguém, desde o commit `68af3ec`: ritmo novo, escala 1, golpes de capoeira, Despertar sem
 garrafa e transformação. Primeiro passo em casa: abrir uma luta e conferir isso.

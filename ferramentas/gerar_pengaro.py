@@ -21,6 +21,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 from repertorio import golpes, quadros as quadros_golpe
+import pengaro_extra as extra
 
 import itens_pengaro
 
@@ -30,8 +31,24 @@ INFO = RAIZ / "sprites/pengaro/pixel/pengaro.json"
 SAIDA = RAIZ / "chars/pengaro"
 EFEITOS = RAIZ / "assets/efeitos"
 ATAQUES_DESPERTADOS = {200, 210, 215, 230, 240, 245, 260, 400, 410, 430, 440, 600, 610, 650,
-                      760, 761, 1000, 1001, 1100, 1101, 1200, 1201, 1300, 1301}
+                      760, 761, 830, 831, 1000, 1001, 1100, 1101, 1200, 1201, 1300, 1301}
 ATAQUES_DESPERTADOS.update(g.estado for h in (False, True) for g in golpes(h))
+
+# Agarrão de comando (← → + y): agarra, dá o martelo de capoeira e joga o whisky em cima do inimigo.
+# Quadros (folha, desenho, ticks antes do RITMO). O .cns usa os mesmos tempos, por isso ficam aqui juntos.
+AGARRAO_WHISKY = [("agarrao", 2, 3), ("agarrao", 3, 3),
+                  ("compasso", 1, 4), ("compasso", 2, 4), ("compasso", 3, 4), ("compasso", 4, 2), ("compasso", 5, 3),
+                  ("compasso", 6, 4), ("compasso", 7, 4),
+                  ("bola", 2, 5), ("bola", 4, 4), ("bola", 5, 4), ("bola", 6, 4), ("bola", 7, 4)]
+
+
+def tempos_agarrao_whisky():
+    """Ticks (já com o RITMO) em que a capoeira acerta e em que a garrafa sai da mão."""
+    t, inicio = 0, []
+    for _, _, n in AGARRAO_WHISKY:
+        inicio.append(t)
+        t += round(n * RITMO)
+    return inicio[5], inicio[10]  # 5 = compasso 4 (chute no contato); 10 = bola 4 (solta a garrafa)
 FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9202: "shield-block", 9204: "parry",
            9205: "ground-slam", 9206: "fireball"}
 
@@ -703,6 +720,14 @@ def acoes_folhas(Q):
     Q(650, [(f("bicicleta", 2), 3), (f("bicicleta", 3), 4), (f("bicicleta", 4), 6, (6, -70, 70, -20)),
             (f("bicicleta", 6), -1)], NO_AR)
     Q(810, [(f("agarrao", i), 4) for i in range(2, 7)] + [(f("agarrao", 7), 10)])
+    # correntes, kombos, golpes do Despertar e especiais novos (dados em pengaro_extra.py)
+    for m in extra.TODOS + extra.ESPECIAIS_A_MAO:
+        Q(m.estado, [(f(fl, d), n, m.caixa) if ativo else (f(fl, d), n) for fl, d, n, ativo in m.quadros],
+          BAIXO if m.area == "BAIXO" else CORPO)
+    # agarrão de comando: errou, fica aberto; acertou, capoeira e whisky
+    Q(830, [(f("agarrao", 2), 3, (10, -90, 42, -50)), (f("agarrao", 3), 4), (f("agarrao", 4), 4),
+            (f("agarrao", 5), 4)])
+    Q(831, [(f(folha, i), n) for folha, i, n in AGARRAO_WHISKY])
     # Despertar: bebe, vê a garrafa vazia, joga no chão e é possuído pelas sombras (regra 7.1: cutscene)
     Q(2000, [(f("despertar_a", i), 7) for i in range(7)] + [(f("despertar_a", 7), 6)]
           + [(f("despertar_b", i), 7) for i in range(7)] + [(f("despertar_b", 7), 10)])
@@ -997,6 +1022,9 @@ def montar_air(s, faiscas, hazaki=False, arte_despertada=None):
     Q(705, [(f"rola{i}", 4) for i in (7, 6, 5, 4, 3, 2, 1, 0)], [])
     Q(800, [("agarra", 3, (10, -90, 42, -50))])
     Q(810, [("agarra", 14), ("joga", 16)])
+    if not hazaki:
+        Q(830, [("agarra", 3, (10, -90, 42, -50)), ("agarra", 12)])
+        Q(831, [("agarra", 14), ("gira1", 14), ("joga", 16)])
     # especiais
     if not hazaki:
         Q(1000, [("rasteira0", 8), ("especial", 5), ("rasteira1", 6), ("rasteira3", 22)], BAIXO)
@@ -1142,7 +1170,8 @@ def normal(numero, attr, dano, trigger, *, fis="S", tipo_st="S", leve=False, **k
 
 CNS_TOPO = """; Gerado por ferramentas/gerar_pengaro.py. Edite lá, não aqui.
 ; var(1) condição de cancelar, var(5) fracos em sequência, var(6) lado do pulo,
-; var(7) super pulo, var(20) tempo de Despertar, var(21) ressaca
+; var(7) super pulo, var(10) acertos da corrente, var(11) trava da contagem,
+; var(20) tempo de Despertar, var(21) ressaca
 
 [Data]
 life = 1000
@@ -1498,6 +1527,204 @@ def reversao(numero, sucesso, atributos, gatilho):
             f"p1stateno = {sucesso}\np2stateno = 762\n\n")
 
 
+def cns_agarrao_whisky():
+    """Agarrão de comando do Pengaró. 830 agarra (errou = 12 ticks abertos), 831 é ele batendo, 832 e 833 são
+    o oponente preso. Capoeira tira 60, o whisky cai em cima e tira 90, e o oponente é jogado como no agarrão comum."""
+    contato, solta = tempos_agarrao_whisky()
+    lanca = solta + 13  # a garrafa leva 13 ticks caindo sobre a cabeça do oponente
+    t = [estado(830, "S", "A", "S", anim=830, juggle=0),
+         "[State 830, Agarra]\ntype = HitDef\ntrigger1 = Time = 0\nattr = S, NT\nhitflag = M-\n"
+         "priority = 1, Miss\nsparkno = -1\np1sprpriority = 1\np1facing = 1\np2facing = 1\n"
+         "p1stateno = 831\np2stateno = 832\nguard.dist = 0\nfall = 1\n\n",
+         fim(830),
+         estado(831, "S", "A", "N", anim=831, juggle=0),
+         "[State 831, Segura]\ntype = TargetBind\n"
+         f"trigger1 = Time < {lanca}\npos = 34, 0\n\n",
+         # escape: o oponente saiu do 832 antes da capoeira acertar
+         f"[State 831, Escapou]\ntype = ChangeState\ntrigger1 = Time > 1\ntrigger1 = Time < {contato}\n"
+         "trigger1 = enemynear,stateno != 832\nvalue = 0\nctrl = 1\n\n",
+         # capoeira: 60 de dano, tremida e faísca forte
+         f"[State 831, Capoeira dano]\ntype = TargetLifeAdd\ntrigger1 = Time = {contato}\ntrigger1 = NumTarget\nvalue = -60\n\n",
+         f"[State 831, Capoeira acerta]\ntype = TargetState\ntrigger1 = Time = {contato}\ntrigger1 = NumTarget\nvalue = 833\n\n",
+         f"[State 831, Capoeira treme]\ntype = EnvShake\ntrigger1 = Time = {contato}\ntime = 8\nfreq = 60\nampl = -4\n\n",
+         f"[State 831, Capoeira faisca]\ntype = Explod\ntrigger1 = Time = {contato}\nanim = 9201\npostype = p1\n"
+         "pos = 62, -80\nremovetime = -2\nsprpriority = 4\nownpal = 1\n\n",
+         f"[State 831, Capoeira som]\ntype = PlaySnd\ntrigger1 = Time = {contato}\nvalue = F5, 2\n\n",
+         # whisky: sai da mão no desenho da bola e cai girando em cima do oponente
+         f"[State 831, Garrafa]\ntype = Explod\ntrigger1 = Time = {solta}\nanim = 3010\npostype = p1\n"
+         "pos = 38, -150\nvel = 0, 4\naccel = 0, .55\nremovetime = 13\nsprpriority = 5\nownpal = 1\n\n",
+         f"[State 831, Whisky dano]\ntype = TargetLifeAdd\ntrigger1 = Time = {lanca}\ntrigger1 = NumTarget\nvalue = -90\n\n",
+         f"[State 831, Whisky estoura]\ntype = Explod\ntrigger1 = Time = {lanca}\nanim = 9201\npostype = p1\n"
+         "pos = 38, -60\nremovetime = -2\nsprpriority = 5\nownpal = 1\n\n",
+         f"[State 831, Whisky treme]\ntype = EnvShake\ntrigger1 = Time = {lanca}\ntime = 12\nfreq = 60\nampl = -5\n\n",
+         f"[State 831, Whisky som]\ntype = PlaySnd\ntrigger1 = Time = {lanca}\nvalue = F5, 2\n\n",
+         f"[State 831, Joga]\ntype = TargetState\ntrigger1 = Time = {lanca}\ntrigger1 = NumTarget\nvalue = 821\n\n",
+         fim(831),
+         # oponente preso: pode escapar com y ou b só nos primeiros 7 ticks
+         "[Statedef 832]\ntype = A\nmovetype = H\nphysics = N\nvelset = 0,0\n\n",
+         "[State 832, Pose]\ntype = ChangeAnim2\ntrigger1 = Time = 0\nvalue = 5030\n\n",
+         '[State 832, Escape]\ntype = SelfState\ntriggerall = Time <= 7\ntrigger1 = command = "y"\n'
+         'trigger2 = command = "b"\nvalue = 0\nctrl = 1\n\n',
+         "[State 832, Solto]\ntype = SelfState\ntrigger1 = !gethitvar(isbound)\nvalue = 5050\n\n",
+         # oponente apanhando da capoeira e do whisky: sem escape
+         "[Statedef 833]\ntype = A\nmovetype = H\nphysics = N\nvelset = 0,0\n\n",
+         "[State 833, Pose]\ntype = ChangeAnim2\ntrigger1 = Time = 0\nvalue = 5001\n\n",
+         "[State 833, Solto]\ntype = SelfState\ntrigger1 = !gethitvar(isbound)\nvalue = 5050\n\n"]
+    return "".join(t)
+
+
+def inicios_extra(m):
+    """Tick de início de cada desenho (já com o RITMO, igual ao AIR) e duração total do golpe."""
+    t, ini = 0, []
+    for _, _, n, _ in m.quadros:
+        ini.append(t)
+        t += round(n * RITMO) if n > 0 else n
+    return ini, t
+
+
+def _trechos_ativos(m):
+    """(primeiro desenho, desenho seguinte ao último) de cada trecho com caixa de golpe."""
+    saida, i, q = [], 0, m.quadros
+    while i < len(q):
+        if q[i][3]:
+            j = i
+            while j < len(q) and q[j][3]:
+                j += 1
+            saida.append((i, j))
+            i = j
+        else:
+            i += 1
+    return saida
+
+
+def cns_novo(m):
+    """Golpe simples de pengaro_extra: anda, bate no(s) desenho(s) ativo(s) e volta."""
+    ini, _ = inicios_extra(m)
+    trechos = _trechos_ativos(m)
+    assert len(trechos) == len(m.danos), f"golpe {m.estado}: {len(trechos)} trechos e {len(m.danos)} danos"
+    agachado = m.tipo_st == "C"
+    t = [estado(m.estado, m.tipo_st, "A", "C" if agachado else "N", anim=m.estado, juggle=3, velset="0,0")]
+    if m.avanco:
+        inicio = max(1, ini[trechos[0][0]] - 3)
+        t.append(f"[State {m.estado}, Avanço]\ntype = VelSet\ntrigger1 = Time = {inicio}\nx = {m.avanco}\n\n")
+        fim_av = ini[trechos[-1][1]] if trechos[-1][1] < len(ini) else ini[-1]
+        t.append(f"[State {m.estado}, Freia]\ntype = VelSet\ntrigger1 = Time = {fim_av}\nx = 0\n\n")
+    for i, ((a, _), dano) in enumerate(zip(trechos, m.danos)):
+        ultimo = i == len(trechos) - 1
+        final = m.final and ultimo
+        forte = dano >= 85 or final
+        medio = dano >= 45
+        gatilho = f"Time = {ini[a]}" + (" && MoveHit" if i else "")
+        queda_aqui = m.queda and ultimo
+        t.append(hitdef(m.estado, gatilho, m.attr, dano,
+                        tipo="Heavy" if forte else "Medium" if medio else "Light", guarda=m.guarda,
+                        pausa=(14, 14) if final else (11, 11) if forte else (10, 10) if medio else (6, 6),
+                        hit=21 if forte else 20 if medio else 14, escorrega=8 if forte else 7 if medio else 5,
+                        vel=m.vel or ("-7" if forte else "-5" if medio else "-4"),
+                        ar=m.ar or ("-3,-4" if queda_aqui else "-1.4,-3"),
+                        queda=queda_aqui, chao=m.chao, pesado=dano >= 75))
+        if final or forte and ultimo:
+            t.append(f"[State {m.estado}, Treme]\ntype = EnvShake\ntrigger1 = Time = {ini[a]}\n"
+                     f"time = {10 if final else 7}\nfreq = 60\nampl = -{5 if final else 3}\n\n")
+    t.append(fim(m.estado, 11 if agachado else 0))
+    return "".join(t)
+
+
+def cns_especiais_extra():
+    """Garrafada em Arco, Rolê por Trás, os especiais exclusivos do Despertar e o agarrão agachado."""
+    t = []
+    ai = {m.estado: m for m in extra.ESPECIAIS_A_MAO}
+
+    # Garrafada em Arco: o segundo projétil. Sobe, passa por cima de golpe baixo e cai no chão do outro lado
+    for n, vx, vy in ((1600, 3.6, -4.0), (1601, 5.0, -5.0)):
+        ini, _ = inicios_extra(ai[n])
+        t.append(estado(n, "S", "A", "S", anim=n, juggle=4))
+        t.append(f"[State {n}, Garrafa]\ntype = Projectile\ntrigger1 = Time = {ini[3]}\nprojid = 1002\n"
+                 "projanim = 3010\nprojhitanim = 1006\nprojremanim = 1006\nprojhits = 1\nprojpriority = 2\n"
+                 f"offset = 52, -96\nvelocity = {vx}, {vy}\naccel = 0, {0.22 if n == 1600 else 0.30}\n"
+                 "projheightbound = -400, 0\nattr = S, SP\ndamage = 75, 5\nanimtype = Med\nguardflag = MA\n"
+                 "hitflag = MAF\npausetime = 2, 10\nsparkxy = 0, 0\nhitsound = F5,1\nguardsound = F6,0\n"
+                 "ground.type = High\nground.slidetime = 12\nground.hittime = 18\nground.velocity = -4\n"
+                 "air.velocity = -2,-3.5\n\n")
+        t.append(fim(n))
+
+    # Rolê por Trás: passa por dentro do oponente (invencível) e chega nas costas dele, já virado.
+    # Sem espaço atrás (canto), chega colado na frente, também virado para ele.
+    for n in (1700, 1701, 3402):
+        ini, _ = inicios_extra(ai[n])
+        cruza = ini[3] if n != 3402 else ini[4]
+        t.append(estado(n, "S", "A", "N", anim=n, juggle=0))
+        t.append(f"[State {n}, Invencivel]\ntype = NotHitBy\ntrigger1 = Time < {cruza + 4}\n"
+                 "value = SCA, NA, SA, HA, NP, SP, HP\ntime = 1\n\n")
+        t.append(f"[State {n}, Atravessa]\ntype = PlayerPush\ntrigger1 = Time < {cruza + 6}\nvalue = 0\n\n")
+        cabe = "p2dist x + 36 < frontedgebodydist"
+        t.append(f"[State {n}, Atras]\ntype = PosAdd\ntrigger1 = Time = {cruza}\ntrigger1 = p2dist x > 0\n"
+                 f"trigger1 = {cabe}\nx = p2dist x + 36\n\n")
+        t.append(f"[State {n}, Vira]\ntype = Turn\ntrigger1 = Time = {cruza}\ntrigger1 = p2dist x > 0\n"
+                 f"trigger1 = {cabe}\n\n")
+        t.append(f"[State {n}, Canto]\ntype = PosAdd\ntrigger1 = Time = {cruza}\ntrigger1 = p2dist x > 0\n"
+                 f"trigger1 = !({cabe})\nx = max(p2dist x - 28, 0)\n\n")
+        if n == 1701:
+            a = _trechos_ativos(ai[n])[0][0]
+            t.append(hitdef(n, f"Time = {ini[a]}", "S, SA", 70, tipo="Medium", pausa=(10, 10), hit=20, escorrega=7,
+                            vel="-5", pesado=True))
+        if n == 3402:
+            a = _trechos_ativos(ai[n])[0][0]
+            t.append(hitdef(n, f"Time = {ini[a]}", "S, SA", 75, tipo="Medium", pausa=(8, 8), hit=22, escorrega=7,
+                            vel="-1", ar="-1,-3", pesado=True))
+        t.append(fim(n))
+
+    # Mão de Sombra (Despertar): projétil novo, lento no começo, acelera e acerta duas vezes
+    ini, _ = inicios_extra(ai[3400])
+    t.append(estado(3400, "S", "A", "S", anim=3400, juggle=4))
+    t.append(f"[State 3400, Mão]\ntype = Projectile\ntrigger1 = Time = {ini[3]}\nprojid = 1003\nprojanim = 3005\n"
+             "projhitanim = 3006\nprojremanim = 3006\nprojhits = 2\nprojmisstime = 8\nprojpriority = 3\n"
+             "offset = 60, -80\nvelocity = 1.8, 0\naccel = 0.07, 0\nattr = S, SP\ndamage = 50, 5\n"
+             "animtype = Med\nguardflag = MA\nhitflag = MAF\npausetime = 2, 10\nsparkxy = 0, 0\nhitsound = F5,1\n"
+             "guardsound = F6,0\nground.type = High\nground.slidetime = 14\nground.hittime = 20\n"
+             "ground.velocity = -3\nair.velocity = -2,-3.5\n\n")
+    t.append(fim(3400))
+
+    # Queda Escura (Despertar): salta para a frente e mergulha; bate de cima e racha o chão
+    ini, _ = inicios_extra(ai[3403])
+    a = _trechos_ativos(ai[3403])[0][0]
+    t.append(estado(3403, "S", "A", "S", anim=3403, juggle=4))
+    t.append("[State 3403, Sobe]\ntype = VelSet\ntrigger1 = Time = 4\nx = 3.4\ny = -8.6\n\n")
+    t.append("[State 3403, Ar]\ntype = StateTypeSet\ntrigger1 = Time = 4\nstatetype = A\nphysics = A\n\n")
+    t.append("[State 3403, Mergulho]\ntype = VelSet\ntrigger1 = Time >= 8 && Vel Y > 0\npersistent = 0\n"
+             "x = 4\ny = 9\n\n")
+    t.append(hitdef(3403, "Time >= 8 && Vel Y > 0", "A, SA", 105, tipo="Heavy", queda=True, vel="-4,-6",
+                    ar="-4,-6", pausa=(12, 12), hit=22, escorrega=8, pesado=True, extra="persistent = 0\n"))
+    t.append("[State 3403, Estouro]\ntype = Explod\ntrigger1 = Pos Y >= 0 && Vel Y > 0\nanim = 9205\n"
+             "postype = p1\npos = 40, -15\nremovetime = -2\nsprpriority = 4\nownpal = 1\n\n")
+    t.append("[State 3403, Treme]\ntype = EnvShake\ntrigger1 = Pos Y >= 0 && Vel Y > 0\ntime = 10\nfreq = 60\n"
+             "ampl = -4\n\n")
+    t.append("[State 3403, Pouso]\ntype = ChangeState\ntrigger1 = Vel Y > 0\ntrigger1 = Pos Y >= 0\nvalue = 52\n\n")
+
+    # Agarrão agachado: pega a perna de quem está agachado e arremessa de rasteira
+    ini, _ = inicios_extra(ai[841])
+    arremesso = ini[4]
+    t.append(estado(840, "S", "A", "S", anim=840, juggle=0))
+    t.append("[State 840, Agarra]\ntype = HitDef\ntrigger1 = Time = 0\nattr = S, NT\nhitflag = L-\n"
+             "priority = 1, Miss\nsparkno = -1\np1sprpriority = 1\np1facing = 1\np2facing = 1\n"
+             "p1stateno = 841\np2stateno = 820\nguard.dist = 0\nfall = 1\n\n")
+    t.append(fim(840))
+    t.append(estado(841, "S", "A", "N", anim=841, juggle=0))
+    t.append(f"[State 841, Segura]\ntype = TargetBind\ntrigger1 = Time < {arremesso}\npos = 34, 0\n\n")
+    t.append(f"[State 841, Escapou]\ntype = ChangeState\ntrigger1 = Time > 1\ntrigger1 = Time < {arremesso}\n"
+             "trigger1 = enemynear,stateno != 820\nvalue = 0\nctrl = 1\n\n")
+    t.append(f"[State 841, Dano]\ntype = TargetLifeAdd\ntrigger1 = Time = {arremesso}\ntrigger1 = NumTarget\nvalue = -110\n\n")
+    t.append(f"[State 841, Treme]\ntype = EnvShake\ntrigger1 = Time = {arremesso}\ntime = 10\nfreq = 60\nampl = -4\n\n")
+    t.append(f"[State 841, Som]\ntype = PlaySnd\ntrigger1 = Time = {arremesso}\nvalue = F5, 2\n\n")
+    t.append(f"[State 841, Joga]\ntype = TargetState\ntrigger1 = Time = {arremesso}\ntrigger1 = NumTarget\nvalue = 821\n\n")
+    t.append(fim(841))
+    return "".join(t)
+
+
+def cns_extra():
+    return "".join(cns_novo(m) for m in extra.TODOS) + cns_especiais_extra()
+
+
 def montar_cns(hazaki=False):
     c = [CNS_TOPO, cns_intro(), CNS_PULOS]
 
@@ -1571,6 +1798,10 @@ def montar_cns(hazaki=False):
     c.append("[State 821, Queda]\ntype = VelAdd\ntrigger1 = 1\ny = .44\n\n")
     c.append("[State 821, Chao]\ntype = SelfState\ntrigger1 = Vel Y > 0\ntrigger1 = Pos Y >= 0\nvalue = 5100\n\n")
 
+    if not hazaki:
+        c.append(cns_agarrao_whisky())
+        c.append(cns_extra())
+
     # Latada de Sombra: arremessa uma lata de cerveja; fraca lenta, forte rápida, no Despertar sai dobrada
     for n, vel in ((1000, 3.2), (1001, 5.4)):
         c.append(estado(n, "S", "A", "S", anim=n, juggle=4))
@@ -1615,8 +1846,13 @@ def montar_cns(hazaki=False):
     # Despertar: bebe a lata, 600 quadros turbinado
     c.append(estado(2000, "S", "I", "S", anim=2000))
     c.append(superpausa(2000, "Time = 0"))
-    c.append("[State 2000, Gasta]\ntype = PowerAdd\ntrigger1 = Time = 0\nvalue = -1000\n\n")
+    # Pengaró: o Despertar só sai com a barra cheia e gasta tudo (regra 4); o Hazaki segue com 1 estoque
+    c.append(f"[State 2000, Gasta]\ntype = PowerAdd\ntrigger1 = Time = 0\nvalue = -{1000 if hazaki else 3000}\n\n")
     c.append("[State 2000, Invencivel]\ntype = NotHitBy\ntrigger1 = 1\nvalue = SCA\ntime = 1\n\n")
+    if not hazaki:
+        # a transformação empurra o oponente para longe
+        c.append("[State 2000, Afasta]\ntype = PosAdd\ntrigger1 = Time >= 14\ntrigger1 = Time <= 60\n"
+                 "trigger1 = p2bodydist x < 90\nx = -1.8\nredirectid = enemynear,id\n\n")
     c.append(fala(2000, "lata", "Time = 2"))
     c.append("[State 2000, Liga]\ntype = VarSet\ntrigger1 = AnimTime = 0\nvar(20) = 600\n\n")
     c.append(fim(2000))
@@ -1666,6 +1902,31 @@ def montar_cns(hazaki=False):
 type = VarSet
 trigger1 = ctrl
 var(5) = 0
+
+; corrente de 3 golpes: var(10) conta os acertos de verdade (defendido não conta); var(11) trava a contagem
+; para o mesmo acerto não somar duas vezes durante a pausa do contato. O finalizador exige var(10) >= 3.
+[State -2, Zera corrente]
+type = VarSet
+trigger1 = ctrl
+var(10) = 0
+
+[State -2, Conta acerto da corrente]
+type = VarAdd
+trigger1 = MoveHit
+trigger1 = var(11) = 0
+trigger1 = (stateno = [200,349]) || (stateno = [3410,3423])
+var(10) = 1
+
+[State -2, Trava contagem]
+type = VarSet
+trigger1 = MoveHit
+trigger1 = var(11) = 0
+var(11) = 1
+
+[State -2, Libera contagem]
+type = VarSet
+trigger1 = !MoveHit
+var(11) = 0
 
 [State -2, Zera quique]
 type = VarSet
@@ -1785,6 +2046,61 @@ def entrada(nome, valor, condicoes, gatilhos=("var(1)",)):
     return "\n".join(t) + "\n\n"
 
 
+def entradas_extra():
+    """Entradas de correntes, kombos e golpes do Despertar. Vêm antes dos normais; as que dependem de estado
+    (continuação de corrente e de kombo) só valem enquanto o golpe anterior encostou."""
+    c = []
+    em_pe, sem_baixo = "statetype = S", 'command != "holddown"'
+    sem_frente = 'command != "holdfwd"'
+    desperto = "var(20) > 0"
+    cancela_fraco = "(stateno = 200 || stateno = 230) && movehit && movehit <= 8"
+
+    # --- Despertar: normais com função nova no lugar dos normais base
+    c.append(entrada("Desp: Mao de Chao Possuida", 3430, ['command = "y"', 'command = "holddown"', "statetype != A", desperto], ("ctrl",)))
+    c.append(entrada("Desp: Foice Escura", 3435, ['command = "b"', 'command = "holddown"', "statetype != A", desperto], ("ctrl",)))
+    c.append(entrada("Desp: Tranco Possuido", 3431, ['command = "y"', 'command = "holdfwd"', em_pe, desperto],
+                     ("ctrl", cancela_fraco)))
+    c.append(entrada("Desp: Passo de Sombra", 3432, ['command = "b"', 'command = "holdfwd"', em_pe, desperto], ("ctrl",)))
+    c.append(entrada("Desp: Palma Torta", 3433, ['command = "x"', 'command = "holdback"', em_pe, desperto], ("ctrl",)))
+    c.append(entrada("Desp: Puxada Sombria", 3434, ['command = "a"', 'command = "holdback"', em_pe, desperto], ("ctrl",)))
+    # --- Despertar: kombo novo (b, a, x) e as duas correntes novas (y e b, 4 golpes cada)
+    c.append(entrada("Desp: Kombo 3", 349, ['command = "x"', em_pe, desperto], ("stateno = 348 && movecontact",)))
+    c.append(entrada("Desp: Kombo 2", 348, ['command = "a"', sem_baixo, em_pe, desperto],
+                     ("stateno = 240 && movecontact || stateno = 245 && movecontact",)))
+    for botao, base, hits in (("y", 3410, "stateno = 3410"), ("b", 3420, "stateno = 3420")):
+        c.append(entrada(f"Desp: corrente {botao} final", base + 3, [f'command = "{botao}"', sem_baixo, em_pe, desperto],
+                         (f"stateno = {base + 2} && movehit && var(10) >= 3",)))
+        c.append(entrada(f"Desp: corrente {botao} 3", base + 2, [f'command = "{botao}"', sem_baixo, em_pe, desperto],
+                         (f"stateno = {base + 1} && movecontact",)))
+        c.append(entrada(f"Desp: corrente {botao} 2", base + 1, [f'command = "{botao}"', sem_baixo, em_pe, desperto],
+                         (f"stateno = {base} && movecontact",)))
+        c.append(entrada(f"Desp: corrente {botao} 1", base, [f'command = "{botao}"', sem_baixo, sem_frente,
+                                                              'command != "holdback"', em_pe, desperto], ("ctrl",)))
+
+    # --- kombos de assinatura (o 1º golpe é um normal que já existe)
+    c.append(entrada("Kombo 1: x", 340, ['command = "x"', sem_baixo, em_pe], ("stateno = 216 && movecontact",)))
+    c.append(entrada("Kombo 1: b", 341, ['command = "b"', sem_baixo, em_pe], ("stateno = 340 && movecontact",)))
+    c.append(entrada("Kombo 2: baixo a", 342, ['command = "a"', 'command = "holddown"', "statetype != A"],
+                     ("stateno = 200 && movecontact",)))
+    c.append(entrada("Kombo 2: y", 343, ['command = "y"', sem_baixo, "statetype != A"], ("stateno = 342 && movecontact",)))
+    c.append(entrada("Kombo 3: y", 344, ['command = "y"', sem_baixo, em_pe, 'command != "holdfwd"'],
+                     ("stateno = 201 && movecontact",)))
+    c.append(entrada("Kombo 3: frente b", 345, ['command = "b"', 'command = "holdfwd"', em_pe],
+                     ("stateno = 344 && movecontact",)))
+    c.append(entrada("Kombo 4: b", 346, ['command = "b"', sem_baixo, em_pe], ("stateno = 230 && movecontact",)))
+    c.append(entrada("Kombo 4: baixo y", 347, ['command = "y"', 'command = "holddown"', "statetype != A"],
+                     ("stateno = 346 && movecontact",)))
+
+    # --- correntes de 3 golpes + finalizador (o 1º golpe é o normal do botão)
+    for botao, base, primeiros in (("x", 300, "stateno = 200"), ("y", 310, "stateno = 210 || stateno = 215"),
+                                   ("a", 320, "stateno = 230"), ("b", 330, "stateno = 240 || stateno = 245")):
+        cond = [f'command = "{botao}"', sem_baixo, em_pe]
+        c.append(entrada(f"Corrente {botao}: final", base + 3, cond, (f"stateno = {base + 2} && movehit && var(10) >= 3",)))
+        c.append(entrada(f"Corrente {botao}: 3o", base + 2, cond, (f"stateno = {base + 1} && movecontact",)))
+        c.append(entrada(f"Corrente {botao}: 2o", base + 1, cond, (f"({primeiros}) && movecontact",)))
+    return "".join(c)
+
+
 def montar_cmd(hazaki=False):
     c = ["; Gerado por ferramentas/gerar_pengaro.py. Edite lá, não aqui.\n",
          "; x = soco fraco, y = soco forte, a = chute fraco, b = chute forte, c = provocação\n\n",
@@ -1797,6 +2113,14 @@ def montar_cmd(hazaki=False):
     for b in ("" if hazaki else "xy"):
         c.append(comando(f"armada_{b}", f"~F, D, {b}", 18))
         c.append(comando(f"caneta_{b}", f"~D, B, {b}", 18))
+    if not hazaki:
+        c.append(comando("agarrao_whisky", "~B, F, y", 18))  # ← → + y: o agarrão de comando (regra G)
+        for b in "xy":
+            c.append(comando(f"garrafa_{b}", f"~F, B, {b}", 18))  # → ← + x/y: Garrafada em Arco
+        for b in "ab":
+            c.append(comando(f"role_{b}", f"~F, B, {b}", 18))  # → ← + a/b: Rolê por Trás
+        for b in "xyab":
+            c.append(comando(f"sombra_{b}", f"~D, D, {b}", 18))  # ↓ ↓ + botão: exclusivos do Despertar
     lista_golpes = list(golpes(hazaki))
     for g in lista_golpes:
         if g.estado not in (601, 611):
@@ -1809,7 +2133,7 @@ def montar_cmd(hazaki=False):
     c.append(comando("recovery", "x+a", 1))
     c.append(comando("rolar", "x+a", 3))
     c.append(comando("afastar", "y+b", 3))
-    c.append(comando("despertar", "x+a+y", 3))
+    c.append(comando("despertar", "x+a+y" if hazaki else "x+y", 3))
     c.append(comando("superpulo", "$D, $U", 10, 6))
     for nome in "xyabc":
         c.append(comando(nome, nome, 1))
@@ -1819,8 +2143,16 @@ def montar_cmd(hazaki=False):
 
     c.append("[Statedef -1]\n\n")
     cancela = "stateno = 200 || stateno = 210 || stateno = 215 || stateno = 216 || stateno = 230 || stateno = 245 || stateno = 400 || stateno = 410 || stateno = 430 || stateno = 260"
+    if not hazaki:
+        # corrente: 1º e 2º golpes cancelam em especial; o 3º cancela se acertou; o finalizador não cancela
+        cancela += "".join(f" || stateno = {n}" for n in (301, 311, 321, 331, 340, 342, 344, 346, 3410, 3420, 3431,
+                                                          3433, 3434, 348))
+    so_se_acertou = ""
+    if not hazaki:
+        so_se_acertou = (" || ((stateno = 302 || stateno = 312 || stateno = 322 || stateno = 332 || stateno = 3411 "
+                         "|| stateno = 3421) && movehit && movehit <= 8)")
     c.append("[State -1, Pode cancelar]\ntype = VarSet\ntrigger1 = 1\n"
-             f"var(1) = ctrl || (({cancela}) && movecontact && movecontact <= 8)\n\n")
+             f"var(1) = ctrl || (({cancela}) && movecontact && movecontact <= 8){so_se_acertou}\n\n")
 
     no_chao = ["statetype != A"]
     especial_em_super = "(stateno = [1000,1501]) && movehit && movehit <= 8"
@@ -1834,7 +2166,8 @@ def montar_cmd(hazaki=False):
     if not hazaki:
         c.append(entrada("Saideira Sombria", 3100, ['command = "golaco"', "power >= 1000", f"({forte})"] + no_chao, ("var(1)", especial_em_super)))
         c.append(entrada("Chuva de Bebidas", 3000, ['command = "golaco"', "power >= 1000"] + no_chao, ("var(1)", especial_em_super)))
-    c.append(entrada("Despertar", 2000, ['command = "despertar"', "power >= 1000", "var(20) = 0", "statetype = S"], ("ctrl",)))
+    c.append(entrada("Despertar", 2000, ['command = "despertar"', "power >= 1000" if hazaki else "power >= powermax",
+                                          "var(20) = 0", "statetype = S"], ("ctrl",)))
     if not hazaki:
         for nome, n, botoes in (("armada", 1200, "xy"), ("caneta", 1300, "xy"), ("compasso", 1100, "ab")):
             for i, b in enumerate(botoes):
@@ -1842,6 +2175,17 @@ def montar_cmd(hazaki=False):
         bola = ["numprojid(1000) = 0"] + no_chao
         c.append(entrada("Bola forte", 1001, ['command = "bola_forte"'] + bola))
         c.append(entrada("Bola fraca", 1000, ['command = "bola_fraca"'] + bola))
+        # segundo projétil (em arco), ida para trás do oponente e os exclusivos do Despertar
+        garrafa = ["numprojid(1002) = 0"] + no_chao
+        c.append(entrada("Garrafada forte", 1601, ['command = "garrafa_y"'] + garrafa))
+        c.append(entrada("Garrafada fraca", 1600, ['command = "garrafa_x"'] + garrafa))
+        c.append(entrada("Role por tras e chute", 1701, ['command = "role_b"', "p2dist x > 0"] + no_chao))
+        c.append(entrada("Role por tras", 1700, ['command = "role_a"', "p2dist x > 0"] + no_chao))
+        desperto = ["var(20) > 0"] + no_chao
+        c.append(entrada("Mao de Sombra", 3400, ['command = "sombra_x"', "numprojid(1003) = 0"] + desperto))
+        c.append(entrada("Chute da Corrente", 3401, ['command = "sombra_y"'] + desperto))
+        c.append(entrada("Sombra Atravessada", 3402, ['command = "sombra_a"', "p2dist x > 0"] + desperto))
+        c.append(entrada("Queda Escura", 3403, ['command = "sombra_b"'] + desperto))
     c.append(entrada("Parry", 760, ['command = "parry"', "statetype = S"], ("ctrl",)))
     defendendo = "stateno = 150 || stateno = 152"
     # guard cancel: 1 estoque, depois do 3º quadro de defesa
@@ -1862,8 +2206,17 @@ def montar_cmd(hazaki=False):
     # agarrão: colado, em pé, oponente fora de stun
     pega = ['command = "y"', "statetype = S", "ctrl", "stateno != 100", "p2bodydist x < 8", "p2statetype != A", "p2movetype != H"]
     pega_k = ['command = "b"'] + pega[1:]
+    if not hazaki:
+        # agarrão de comando: de perto (12), antes do agarrão comum e dos normais
+        c.append(entrada("Agarrao whisky", 830, ['command = "agarrao_whisky"', "statetype = S", "stateno != 100",
+                                                "p2bodydist x < 12", "p2statetype != A", "p2movetype != H"], ("ctrl",)))
+        c.append(entrada("Agarrao agachado", 840, ['command = "y"', 'command = "holddown"', "statetype != A", "ctrl",
+                                                  "stateno != 100", "p2bodydist x < 8", "p2statetype = C",
+                                                  "p2movetype != H"], ("1",)))
     for lista in (pega, pega_k):
         c.append(entrada("Agarrao", 800, lista + ['(command = "holdfwd" || command = "holdback")'], ("1",)))
+    if not hazaki:
+        c.append(entradas_extra())  # depois dos agarrões (colado, o agarrão tem prioridade) e antes dos normais
     for g in lista_golpes:
         if g.estado < 300:
             gatilhos = ("ctrl", "(stateno = 200 || stateno = 230) && movehit && movehit <= 8") if g.estado == 216 else ("ctrl",)
@@ -1926,6 +2279,29 @@ Armada do Quilombo					_F_D^P
 Caneta								_D_B^P
 Mão de Chimpá / Mão Pesada          _D_F^P
 Sola de Várzea / Pisão de Bar       _B_D^K
+Garrafada em Arco <#bebebe>(projétil em arco)</>	_F_B^P
+Rolê por Trás / Rolê e Chute		_F_B^K
+
+<#f0f000>:Exclusivos do Despertar:</>
+Mão de Sombra <#bebebe>(projétil)</>	_D_D^X
+Chute da Corrente					_D_D^Y
+Sombra Atravessada					_D_D^A
+Queda Escura						_D_D^B
+Corrente Y: Revolta, Sola de Ferro, Cabeçada, Roda	^Y^Y^Y^Y
+Corrente B: Calcanhar, Afastar, Armada, Chute Partido	^B^B^B^B
+Kombo Possessão						^B,^A,^X
+
+<#f0f000>:Correntes (acertando os 3, o 4º derruba):</>
+Soco fraco							^X^X^X^X
+Soco forte							^Y^Y^Y^Y
+Chute fraco							^A^A^A^A
+Chute forte							^B^B^B^B
+
+<#f0f000>:Kombos:</>
+Abertura							_F+^Y, ^X, ^B
+Alto e Baixo						^X, _D+^A, ^Y
+Empurrão							_B+^X, ^Y, _F+^B
+Lançador							^A, ^B, _D+^Y
 
 <#f0f000>:Supers:</>
 Chuva de Bebidas <#bebebe>(1000)</>	_B_F_D^K
@@ -1933,10 +2309,12 @@ Saideira Sombria (no Despertar)	_B_F_D^K
 Bando da Várzea / Apagão da Várzea  _B_F_D^P
 
 <#f0f000>:Sistema:</>
-Despertar: Lata Gelada <#bebebe>(1000)</>	^X_+^A_+^Y
+Despertar: Lata Gelada <#bebebe>(barra cheia)</>	^X_+^Y
 Rolamento							^X_+^A
 Golpe de afastar					^Y_+^B
 Agarrão								[_B/_F]_+^Y
+Agarrão agachado <#bebebe>(oponente agachado)</>	_D_+^Y
+Martelo e Garrafada <#bebebe>(colado)</>		_B_F^Y
 Provocação							^C
 Parry                              _F^C
 """

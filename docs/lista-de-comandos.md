@@ -40,7 +40,7 @@ Em todos os menus (título, modos, seleção de personagem, cenário, opções, 
 | Parry | segura D + C |
 | Levantar rápido | seta ← + seta ↓ ao cair |
 | Provocação | C |
-| Despertar | seta ← + seta ↓ + seta ↑ (x + a + y), com 1 estoque |
+| Despertar | Pengaró: seta ← + seta ↑ (x + y), com a barra cheia, gasta tudo. Hazaki: seta ← + seta ↓ + seta ↑ (x + a + y), 1 estoque |
 
 ## Golpes normais
 
@@ -53,6 +53,13 @@ Em todos os menus (título, modos, seleção de personagem, cenário, opções, 
 
 Direcionais em pé: **D + seta ↑** (y), **D + seta →** (b), **A + seta ←** (x), **A + seta ↓** (a).
 Corrente de fracos: até 4 golpes fracos seguidos, um por contato (aperte de novo a cada acerto).
+
+**Correntes do Pengaró:** em pé, cada botão (x, y, a, b) tem 3 golpes. Aperte o mesmo botão de novo a cada contato;
+se os 3 acertarem (defendido não conta), um 4º aperto solta o finalizador, que derruba. No Despertar, y e b ganham
+correntes novas de 4 golpes.
+
+**Kombos do Pengaró:** Abertura (D + seta ↑, seta ←, seta →), Alto e Baixo (seta ←, S + seta ↓, seta ↑),
+Empurrão (A + seta ←, seta ↑, D + seta →), Lançador (seta ↓, seta →, S + seta ↑). Cada golpe só sai se o anterior encostou.
 
 ## Pengaró
 
@@ -68,7 +75,13 @@ Corrente de fracos: até 4 golpes fracos seguidos, um por contato (aperte de nov
 | Golaço da Noite (super, 1 estoque) | A, D, S + seta ↓ ou seta → | ← → ↓ a/b |
 | Pelada Sombria | o mesmo comando do Golaço, durante o Despertar (ou com 20% de vida e 2 estoques) | ← → ↓ a/b |
 | Bando da Várzea (super, 2 estoques) | A, D, S + seta ← ou seta ↑ | ← → ↓ x/y |
-| Despertar: Lata Gelada (1 estoque) | seta ← + seta ↓ + seta ↑ | x + a + y |
+| Garrafada em Arco (2º projétil, em arco) | D, A + seta ← (curta) ou seta ↑ (longa) | → ← x/y |
+| Rolê por Trás (a passa, b passa e chuta) | D, A + seta ↓ ou seta → | → ← a/b |
+| Despertar: Lata Gelada (barra cheia) | seta ← + seta ↑ | x + y |
+| Mão de Sombra (só no Despertar, projétil novo) | S, S + seta ← | ↓ ↓ x |
+| Chute da Corrente (só no Despertar) | S, S + seta ↑ | ↓ ↓ y |
+| Sombra Atravessada (só no Despertar) | S, S + seta ↓ | ↓ ↓ a |
+| Queda Escura (só no Despertar) | S, S + seta → | ↓ ↓ b |
 
 ## Hazaki
 
@@ -92,5 +105,9 @@ Pisão de Bar, Apagão da Várzea).
 
 Colado no oponente, D ou A + seta ↑ (y). Pengaró: Giro de Camisa e Queda de Ginga. Hazaki: Projeção de Faixa e
 Troca de Lado. Quem é agarrado escapa apertando seta ↑ ou seta → (y ou b) a tempo.
+
+Agarrão de comando do Pengaró, **Martelo e Garrafada**: colado, trás, frente + y. Ele agarra, dá um martelo de
+capoeira (60 de dano) e arremessa a garrafa de whisky em cima do oponente (90), que cai. Escapa nos primeiros
+7 ticks com y ou b. Se errar, fica aberto por uns 22 ticks.
 
 Esta lista segue os arquivos `.cmd` e `movelist.dat` de `chars/`. O jogador 2 usa as teclas padrão do IKEMEN.

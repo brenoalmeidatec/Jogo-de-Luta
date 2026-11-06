@@ -65,6 +65,51 @@ command = ~D, B, y
 time = 18
 
 [Command]
+name = "agarrao_whisky"
+command = ~B, F, y
+time = 18
+
+[Command]
+name = "garrafa_x"
+command = ~F, B, x
+time = 18
+
+[Command]
+name = "garrafa_y"
+command = ~F, B, y
+time = 18
+
+[Command]
+name = "role_a"
+command = ~F, B, a
+time = 18
+
+[Command]
+name = "role_b"
+command = ~F, B, b
+time = 18
+
+[Command]
+name = "sombra_x"
+command = ~D, D, x
+time = 18
+
+[Command]
+name = "sombra_y"
+command = ~D, D, y
+time = 18
+
+[Command]
+name = "sombra_a"
+command = ~D, D, a
+time = 18
+
+[Command]
+name = "sombra_b"
+command = ~D, D, b
+time = 18
+
+[Command]
 name = "golpe_216"
 command = /F, y
 time = 18
@@ -147,7 +192,7 @@ time = 3
 
 [Command]
 name = "despertar"
-command = x+a+y
+command = x+y
 time = 3
 
 [Command]
@@ -211,7 +256,7 @@ time = 1
 [State -1, Pode cancelar]
 type = VarSet
 trigger1 = 1
-var(1) = ctrl || ((stateno = 200 || stateno = 210 || stateno = 215 || stateno = 216 || stateno = 230 || stateno = 245 || stateno = 400 || stateno = 410 || stateno = 430 || stateno = 260) && movecontact && movecontact <= 8)
+var(1) = ctrl || ((stateno = 200 || stateno = 210 || stateno = 215 || stateno = 216 || stateno = 230 || stateno = 245 || stateno = 400 || stateno = 410 || stateno = 430 || stateno = 260 || stateno = 301 || stateno = 311 || stateno = 321 || stateno = 331 || stateno = 340 || stateno = 342 || stateno = 344 || stateno = 346 || stateno = 3410 || stateno = 3420 || stateno = 3431 || stateno = 3433 || stateno = 3434 || stateno = 348) && movecontact && movecontact <= 8) || ((stateno = 302 || stateno = 312 || stateno = 322 || stateno = 332 || stateno = 3411 || stateno = 3421) && movehit && movehit <= 8)
 
 [State -1, Bando da Várzea]
 type = ChangeState
@@ -273,7 +318,7 @@ trigger2 = (stateno = [1000,1501]) && movehit && movehit <= 8
 type = ChangeState
 value = 2000
 triggerall = command = "despertar"
-triggerall = power >= 1000
+triggerall = power >= powermax
 triggerall = var(20) = 0
 triggerall = statetype = S
 trigger1 = ctrl
@@ -333,6 +378,72 @@ type = ChangeState
 value = 1000
 triggerall = command = "bola_fraca"
 triggerall = numprojid(1000) = 0
+triggerall = statetype != A
+trigger1 = var(1)
+
+[State -1, Garrafada forte]
+type = ChangeState
+value = 1601
+triggerall = command = "garrafa_y"
+triggerall = numprojid(1002) = 0
+triggerall = statetype != A
+trigger1 = var(1)
+
+[State -1, Garrafada fraca]
+type = ChangeState
+value = 1600
+triggerall = command = "garrafa_x"
+triggerall = numprojid(1002) = 0
+triggerall = statetype != A
+trigger1 = var(1)
+
+[State -1, Role por tras e chute]
+type = ChangeState
+value = 1701
+triggerall = command = "role_b"
+triggerall = p2dist x > 0
+triggerall = statetype != A
+trigger1 = var(1)
+
+[State -1, Role por tras]
+type = ChangeState
+value = 1700
+triggerall = command = "role_a"
+triggerall = p2dist x > 0
+triggerall = statetype != A
+trigger1 = var(1)
+
+[State -1, Mao de Sombra]
+type = ChangeState
+value = 3400
+triggerall = command = "sombra_x"
+triggerall = numprojid(1003) = 0
+triggerall = var(20) > 0
+triggerall = statetype != A
+trigger1 = var(1)
+
+[State -1, Chute da Corrente]
+type = ChangeState
+value = 3401
+triggerall = command = "sombra_y"
+triggerall = var(20) > 0
+triggerall = statetype != A
+trigger1 = var(1)
+
+[State -1, Sombra Atravessada]
+type = ChangeState
+value = 3402
+triggerall = command = "sombra_a"
+triggerall = p2dist x > 0
+triggerall = var(20) > 0
+triggerall = statetype != A
+trigger1 = var(1)
+
+[State -1, Queda Escura]
+type = ChangeState
+value = 3403
+triggerall = command = "sombra_b"
+triggerall = var(20) > 0
 triggerall = statetype != A
 trigger1 = var(1)
 
@@ -417,6 +528,30 @@ triggerall = command = "afastar"
 triggerall = statetype = S
 trigger1 = var(1)
 
+[State -1, Agarrao whisky]
+type = ChangeState
+value = 830
+triggerall = command = "agarrao_whisky"
+triggerall = statetype = S
+triggerall = stateno != 100
+triggerall = p2bodydist x < 12
+triggerall = p2statetype != A
+triggerall = p2movetype != H
+trigger1 = ctrl
+
+[State -1, Agarrao agachado]
+type = ChangeState
+value = 840
+triggerall = command = "y"
+triggerall = command = "holddown"
+triggerall = statetype != A
+triggerall = ctrl
+triggerall = stateno != 100
+triggerall = p2bodydist x < 8
+triggerall = p2statetype = C
+triggerall = p2movetype != H
+trigger1 = 1
+
 [State -1, Agarrao]
 type = ChangeState
 value = 800
@@ -442,6 +577,315 @@ triggerall = p2statetype != A
 triggerall = p2movetype != H
 triggerall = (command = "holdfwd" || command = "holdback")
 trigger1 = 1
+
+[State -1, Desp: Mao de Chao Possuida]
+type = ChangeState
+value = 3430
+triggerall = command = "y"
+triggerall = command = "holddown"
+triggerall = statetype != A
+triggerall = var(20) > 0
+trigger1 = ctrl
+
+[State -1, Desp: Foice Escura]
+type = ChangeState
+value = 3435
+triggerall = command = "b"
+triggerall = command = "holddown"
+triggerall = statetype != A
+triggerall = var(20) > 0
+trigger1 = ctrl
+
+[State -1, Desp: Tranco Possuido]
+type = ChangeState
+value = 3431
+triggerall = command = "y"
+triggerall = command = "holdfwd"
+triggerall = statetype = S
+triggerall = var(20) > 0
+trigger1 = ctrl
+trigger2 = (stateno = 200 || stateno = 230) && movehit && movehit <= 8
+
+[State -1, Desp: Passo de Sombra]
+type = ChangeState
+value = 3432
+triggerall = command = "b"
+triggerall = command = "holdfwd"
+triggerall = statetype = S
+triggerall = var(20) > 0
+trigger1 = ctrl
+
+[State -1, Desp: Palma Torta]
+type = ChangeState
+value = 3433
+triggerall = command = "x"
+triggerall = command = "holdback"
+triggerall = statetype = S
+triggerall = var(20) > 0
+trigger1 = ctrl
+
+[State -1, Desp: Puxada Sombria]
+type = ChangeState
+value = 3434
+triggerall = command = "a"
+triggerall = command = "holdback"
+triggerall = statetype = S
+triggerall = var(20) > 0
+trigger1 = ctrl
+
+[State -1, Desp: Kombo 3]
+type = ChangeState
+value = 349
+triggerall = command = "x"
+triggerall = statetype = S
+triggerall = var(20) > 0
+trigger1 = stateno = 348 && movecontact
+
+[State -1, Desp: Kombo 2]
+type = ChangeState
+value = 348
+triggerall = command = "a"
+triggerall = command != "holddown"
+triggerall = statetype = S
+triggerall = var(20) > 0
+trigger1 = stateno = 240 && movecontact || stateno = 245 && movecontact
+
+[State -1, Desp: corrente y final]
+type = ChangeState
+value = 3413
+triggerall = command = "y"
+triggerall = command != "holddown"
+triggerall = statetype = S
+triggerall = var(20) > 0
+trigger1 = stateno = 3412 && movehit && var(10) >= 3
+
+[State -1, Desp: corrente y 3]
+type = ChangeState
+value = 3412
+triggerall = command = "y"
+triggerall = command != "holddown"
+triggerall = statetype = S
+triggerall = var(20) > 0
+trigger1 = stateno = 3411 && movecontact
+
+[State -1, Desp: corrente y 2]
+type = ChangeState
+value = 3411
+triggerall = command = "y"
+triggerall = command != "holddown"
+triggerall = statetype = S
+triggerall = var(20) > 0
+trigger1 = stateno = 3410 && movecontact
+
+[State -1, Desp: corrente y 1]
+type = ChangeState
+value = 3410
+triggerall = command = "y"
+triggerall = command != "holddown"
+triggerall = command != "holdfwd"
+triggerall = command != "holdback"
+triggerall = statetype = S
+triggerall = var(20) > 0
+trigger1 = ctrl
+
+[State -1, Desp: corrente b final]
+type = ChangeState
+value = 3423
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = statetype = S
+triggerall = var(20) > 0
+trigger1 = stateno = 3422 && movehit && var(10) >= 3
+
+[State -1, Desp: corrente b 3]
+type = ChangeState
+value = 3422
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = statetype = S
+triggerall = var(20) > 0
+trigger1 = stateno = 3421 && movecontact
+
+[State -1, Desp: corrente b 2]
+type = ChangeState
+value = 3421
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = statetype = S
+triggerall = var(20) > 0
+trigger1 = stateno = 3420 && movecontact
+
+[State -1, Desp: corrente b 1]
+type = ChangeState
+value = 3420
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = command != "holdfwd"
+triggerall = command != "holdback"
+triggerall = statetype = S
+triggerall = var(20) > 0
+trigger1 = ctrl
+
+[State -1, Kombo 1: x]
+type = ChangeState
+value = 340
+triggerall = command = "x"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 216 && movecontact
+
+[State -1, Kombo 1: b]
+type = ChangeState
+value = 341
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 340 && movecontact
+
+[State -1, Kombo 2: baixo a]
+type = ChangeState
+value = 342
+triggerall = command = "a"
+triggerall = command = "holddown"
+triggerall = statetype != A
+trigger1 = stateno = 200 && movecontact
+
+[State -1, Kombo 2: y]
+type = ChangeState
+value = 343
+triggerall = command = "y"
+triggerall = command != "holddown"
+triggerall = statetype != A
+trigger1 = stateno = 342 && movecontact
+
+[State -1, Kombo 3: y]
+type = ChangeState
+value = 344
+triggerall = command = "y"
+triggerall = command != "holddown"
+triggerall = statetype = S
+triggerall = command != "holdfwd"
+trigger1 = stateno = 201 && movecontact
+
+[State -1, Kombo 3: frente b]
+type = ChangeState
+value = 345
+triggerall = command = "b"
+triggerall = command = "holdfwd"
+triggerall = statetype = S
+trigger1 = stateno = 344 && movecontact
+
+[State -1, Kombo 4: b]
+type = ChangeState
+value = 346
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 230 && movecontact
+
+[State -1, Kombo 4: baixo y]
+type = ChangeState
+value = 347
+triggerall = command = "y"
+triggerall = command = "holddown"
+triggerall = statetype != A
+trigger1 = stateno = 346 && movecontact
+
+[State -1, Corrente x: final]
+type = ChangeState
+value = 303
+triggerall = command = "x"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 302 && movehit && var(10) >= 3
+
+[State -1, Corrente x: 3o]
+type = ChangeState
+value = 302
+triggerall = command = "x"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 301 && movecontact
+
+[State -1, Corrente x: 2o]
+type = ChangeState
+value = 301
+triggerall = command = "x"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = (stateno = 200) && movecontact
+
+[State -1, Corrente y: final]
+type = ChangeState
+value = 313
+triggerall = command = "y"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 312 && movehit && var(10) >= 3
+
+[State -1, Corrente y: 3o]
+type = ChangeState
+value = 312
+triggerall = command = "y"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 311 && movecontact
+
+[State -1, Corrente y: 2o]
+type = ChangeState
+value = 311
+triggerall = command = "y"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = (stateno = 210 || stateno = 215) && movecontact
+
+[State -1, Corrente a: final]
+type = ChangeState
+value = 323
+triggerall = command = "a"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 322 && movehit && var(10) >= 3
+
+[State -1, Corrente a: 3o]
+type = ChangeState
+value = 322
+triggerall = command = "a"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 321 && movecontact
+
+[State -1, Corrente a: 2o]
+type = ChangeState
+value = 321
+triggerall = command = "a"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = (stateno = 230) && movecontact
+
+[State -1, Corrente b: final]
+type = ChangeState
+value = 333
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 332 && movehit && var(10) >= 3
+
+[State -1, Corrente b: 3o]
+type = ChangeState
+value = 332
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 331 && movecontact
+
+[State -1, Corrente b: 2o]
+type = ChangeState
+value = 331
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = (stateno = 240 || stateno = 245) && movecontact
 
 [State -1, Tranco de Ombro]
 type = ChangeState
