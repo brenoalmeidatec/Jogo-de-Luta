@@ -18,6 +18,7 @@ ACOES_DO_MOTOR = [0, 5, 6, 10, 11, 12, 20, 21, 40, 41, 42, 43, 47, 100, 105, 120
                   5016, 5017, 5020, 5021, 5022, 5025, 5026, 5027, 5030, 5035, 5040, 5050, 5051, 5061, 5070,
                   5080, 5090, 5100, 5101, 5110, 5120, 5150, 5160, 5170, 5200, 5210, 5300]
 COMANDOS_DO_MOTOR = ["FF", "BB", "recovery", "holdfwd", "holdback", "holdup", "holddown"]
+LARGURA_TELA = 320  # em unidades do lutador
 erros = []
 
 
@@ -77,6 +78,25 @@ def ler_air():
     return acoes
 
 
+def conferir_baloes(cns, acoes, sprites, pal):
+    """Todo balão apaga o anterior, nasce preso à tela e cabe nela sem encostar na borda."""
+    blocos = re.split(r"(?m)^(?=\[)", cns)
+    for anterior, bloco in zip(blocos, blocos[1:]):
+        if "type = Explod" not in bloco or not re.search(r"^id = 700$", bloco, re.M):
+            continue
+        titulo = bloco.splitlines()[0]
+        gatilhos = re.findall(r"^trigger\d+ = .*$", bloco, re.M)
+        if "type = RemoveExplod" not in anterior or re.findall(r"^trigger\d+ = .*$", anterior, re.M) != gatilhos:
+            erros.append(f"{titulo}: balão sem RemoveExplod logo antes, com os mesmos gatilhos")
+        if "postype = left" not in bloco or "clamp(ScreenPos X" not in bloco or "facing" in bloco:
+            erros.append(f"{titulo}: balão fora do padrão de tela (postype = left, clamp, sem facing)")
+    for numero, quadros in acoes.items():
+        if 9100 <= numero < 9200:
+            caixa = imagem(sprites[quadros[0][:2]], pal).getbbox()
+            if caixa[2] - caixa[0] > LARGURA_TELA - 8:
+                erros.append(f"balão {numero} é mais largo que a tela")
+
+
 def main():
     sprites, pal = ler_sff()
     acoes = ler_air()
@@ -111,6 +131,7 @@ def main():
     for nome in COMANDOS_DO_MOTOR:
         if nome not in definidos:
             erros.append(f'falta o comando "{nome}", exigido pelo motor')
+    conferir_baloes(cns, acoes, sprites, pal)
 
     previa = next((arg for arg in sys.argv[1:] if arg != "--hazaki"), None)
     if previa:

@@ -4,7 +4,7 @@
 from PIL import Image, ImageDraw
 
 from gerar_pengaro import (
-    ALT, DEF, EIXO_X, EIXO_Y, ID_BALAO, LARG, RAIZ, balao,
+    ALT, BALAO_ACIMA_DOS_PES, BALOES, DEF, EIXO_X, EIXO_Y, LARG, RAIZ,
     carregar_faiscas, escrever_sff, gira, montar_air, montar_cmd,
     montar_cns, montar_sprites, move,
 )
@@ -69,6 +69,11 @@ def lista_de_golpes():
 
 def main():
     origem, diabo, cima, deitado = poses()
+    BALOES.update(golaco="DIABO LOIRO!", intro="Bora ver se aguenta o treino.",
+                  intro_trava="Bora ver se aguenta o treino.")
+    for chave in ("provoca", "vitoria0", "vitoria1", "vitoria2", "round", "primeiro", "derrota", "locutor_ko",
+                  "ressaca", "locutor", "provoca_fim", "provoca_cai"):
+        BALOES[chave] = "EU SOU GOSTOSO!"
     bola = Image.new("RGBA", (20, 20))
     ImageDraw.Draw(bola).ellipse((0, 0, 19, 19), fill="#de590e", outline="#ffdc6d", width=3)
     s = montar_sprites((origem, bola), RAIZ / "sprites/hazaki-selecao-kof.png", hazaki=True)
@@ -80,9 +85,6 @@ def main():
     substituir_sprite(s, "embaixada0", origem["defesa"])
     for i in range(1, 4):
         substituir_sprite(s, f"embaixada{i}", gira(cima, (-8, -4, -8)[i-1], 0, 0))
-    substituir_sprite(s, "balao_golaco", balao("DIABO LOIRO!"))
-    substituir_sprite(s, "balao_provoca", balao("EU SOU GOSTOSO!"))
-    substituir_sprite(s, "balao_intro", balao("Bora ver se aguenta o treino."))
     arte = {}
     grupos = {
         0: ("parado0", "soco3", "chute3", "recua", "defesa", "parry", "pouso"),
@@ -101,12 +103,11 @@ def main():
     pasta.mkdir(parents=True, exist_ok=True)
     escrever_sff(pasta / "hazaki.sff", s)
     cns = montar_cns(hazaki=True)
-    cns = cns.replace(f"anim = {ID_BALAO['intro_trava']}", f"anim = {ID_BALAO['intro']}")
-    for chave in ("vitoria0", "vitoria1", "vitoria2", "round", "primeiro", "derrota", "locutor_ko",
-                  "ressaca", "locutor", "provoca_fim", "provoca_cai"):
-        cns = cns.replace(f"anim = {ID_BALAO[chave]}\n", f"anim = {ID_BALAO['provoca']}\n")
     # A transformação de Hazaki se encerra sem a penalidade de ressaca.
     cns = cns.replace("var(21) = 60", "var(21) = 0")
+    # Hazaki ainda não entrou na escala 0.6 do Pengaró; o balão acompanha a altura dele.
+    cns = cns.replace("xscale = 0.6\nyscale = 0.6", "xscale = 1\nyscale = 1")
+    cns = cns.replace(f"ScreenPos Y - {BALAO_ACIMA_DOS_PES}", "ScreenPos Y - 125")
     (pasta / "hazaki.cns").write_text(cns.rstrip() + "\n", encoding="utf-8", newline="\n")
     (pasta / "hazaki.cmd").write_text(montar_cmd(hazaki=True).rstrip() + "\n", encoding="utf-8")
     (pasta / "hazaki.air").write_text("\n".join(a.txt), encoding="utf-8", newline="\n")

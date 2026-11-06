@@ -37,6 +37,11 @@ FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9202: "shield-block", 9204: "par
 LARG, ALT = 360, 260
 EIXO_X, EIXO_Y = 180, 220
 
+# Balões, em unidades do lutador (a tela da luta em 16:9 é 320 x 180).
+BALAO_ACIMA_DOS_PES = 80  # ponta do balão, logo acima da cabeça
+BALAO_TOPO_MINIMO = 40    # abaixo do relógio e dos nomes da HUD
+BALAO_MARGEM = 4          # folga até a borda da tela
+
 
 # ------------------------------------------------------------------ imagens
 
@@ -107,13 +112,18 @@ def fonte(tamanho):
     return ImageFont.load_default()
 
 
+def medida_balao(texto):
+    """Largura e altura da caixa do balão, sem a ponta."""
+    f = fonte(11)
+    linhas = texto.split("\n")
+    return max(f.getbbox(linha)[2] for linha in linhas) + 14, 15 * len(linhas) + 8
+
+
 def balao(texto):
     """Balão de fala em imagem própria, centrado acima do eixo."""
     f = fonte(11)
     linhas = texto.split("\n")
-    caixas = [f.getbbox(linha) for linha in linhas]
-    w = max(c[2] for c in caixas) + 14
-    h = 15 * len(linhas) + 8
+    w, h = medida_balao(texto)
     tela = Image.new("RGBA", (LARG, ALT))
     d = ImageDraw.Draw(tela)
     x0, y0 = EIXO_X - w // 2, EIXO_Y - h - 8
@@ -743,7 +753,7 @@ BALOES = {
     "vitoria2": "Es-essa vai na tua conta,\npa-pa-parceiro. A do bar também.",
     "golaco": "O-o-o-olha a... CHUVA DE BEBIDA, CARALHO!",
     "lata": "A-a-a-agora sim, porra!\nSegura que eu vou me-me-meter!",
-    "pelada": "SAIDEIRA, CARALHO! A RODADA É POR MINHA CONTA!",
+    "pelada": "SAIDEIRA, CARALHO!\nA RODADA É POR MINHA CONTA!",
     "ressaca": "...e-e-e aí, cadê a-a-a porra da outra lata?",
     "escapou": "A-a-achou que ia me pe-pegar?",
 }
@@ -942,10 +952,17 @@ def fim(numero, destino=0):
 
 
 def fala(numero, chave, trigger="Time = 0"):
+    """Troca o balão do lutador. Ele nasce acima da cabeça e fica parado na tela, sempre inteiro e abaixo da HUD."""
     gatilhos = "\n".join(f"trigger1 = {g.strip()}" for g in trigger.split(" & "))
-    return (f"[State {numero}, Fala]\ntype = Explod\n{gatilhos}\nanim = {ID_BALAO[chave]}\n"
-            "id = 700\nownpal = 1\npostype = p1\npos = 0, -125\nbindtime = -1\nremovetime = 70\n"
-            "sprpriority = 6\nfacing = Facing\nignorehitpause = 1\n\n")
+    w, h = medida_balao(BALOES[chave])
+    meia = w // 2 + BALAO_MARGEM
+    ponta_minima = BALAO_TOPO_MINIMO + h + 8
+    return (f"[State {numero}, Troca fala]\ntype = RemoveExplod\n{gatilhos}\nid = 700\n\n"
+            f"[State {numero}, Fala]\ntype = Explod\n{gatilhos}\nanim = {ID_BALAO[chave]}\n"
+            "id = 700\nownpal = 1\npostype = left\n"
+            f"pos = clamp(ScreenPos X, {meia}, ScreenWidth - {meia}), "
+            f"max(ScreenPos Y - {BALAO_ACIMA_DOS_PES}, {ponta_minima})\n"
+            "removetime = 70\nsprpriority = 6\nignorehitpause = 1\n\n")
 
 
 def nome_travado(numero, golpe, fim_sem_acerto="AnimTime = 0"):
@@ -955,8 +972,6 @@ def nome_travado(numero, golpe, fim_sem_acerto="AnimTime = 0"):
     """
     return (fala(numero, f"{golpe}_trava", "Time = 0 & var(20) = 0")
             + fala(numero, f"{golpe}_liso", "Time = 0 & var(20) > 0")
-            + f"[State {numero}, Limpa fala]\ntype = RemoveExplod\ntrigger1 = MoveHit = 1\ntrigger1 = var(20) = 0\n"
-              "id = 700\n\n"
             + fala(numero, f"{golpe}_ok", "MoveHit = 1 & var(20) = 0")
             + fala(numero, "errou", f"{fim_sem_acerto} & !MoveContact & var(20) = 0"))
 
@@ -1121,18 +1136,6 @@ ctrl = 0
 anim = 190
 velset = 0,0
 
-[State 191, Fala]
-type = Explod
-trigger1 = Time = 4
-anim = %d
-ownpal = 1
-postype = p1
-pos = 0, -125
-bindtime = -1
-removetime = 70
-sprpriority = 6
-facing = Facing
-
 [State 191, Fim]
 type = AssertSpecial
 trigger1 = AnimTime < 0
@@ -1143,22 +1146,24 @@ type = ChangeState
 trigger1 = AnimTime = 0
 value = 0
 
-""" % ID_BALAO["intro"]
+"""
 
-CNS_INTRO = CNS_INTRO_BASE.replace(
-    "[State 191, Fala]\ntype = Explod\ntrigger1 = Time = 4\n",
-    "[State 191, Sorteio]\ntype = VarSet\ntrigger1 = Time = 0\nvar(34) = Random < 250\n\n"
-    + fala(191, "intro_trava", "Time = 4 & var(34) = 1")
-    + fala(191, "locutor", "Time = 44 & var(34) = 1")
-    + "[State 191, Fala]\ntype = Explod\ntrigger1 = Time = 4\ntrigger1 = var(34) = 0\n",
-).replace(
-    "[Statedef 191]",
-    "[State 181, Sorteio]\ntype = VarSet\ntrigger1 = Time = 0\nvar(35) = Random % 3\n\n"
-    + fala(181, "vitoria0", "Time = 20 & var(35) = 0")
-    + fala(181, "vitoria1", "Time = 20 & var(35) = 1")
-    + fala(181, "vitoria2", "Time = 20 & var(35) = 2")
-    + "[Statedef 191]",
-)
+def cns_intro():
+    return CNS_INTRO_BASE.replace(
+        "[State 191, Fim]\n",
+        "[State 191, Sorteio]\ntype = VarSet\ntrigger1 = Time = 0\nvar(34) = Random < 250\n\n"
+        + fala(191, "intro_trava", "Time = 4 & var(34) = 1")
+        + fala(191, "locutor", "Time = 44 & var(34) = 1")
+        + fala(191, "intro", "Time = 4 & var(34) = 0")
+        + "[State 191, Fim]\n",
+    ).replace(
+        "[Statedef 191]",
+        "[State 181, Sorteio]\ntype = VarSet\ntrigger1 = Time = 0\nvar(35) = Random % 3\n\n"
+        + fala(181, "vitoria0", "Time = 20 & var(35) = 0")
+        + fala(181, "vitoria1", "Time = 20 & var(35) = 1")
+        + fala(181, "vitoria2", "Time = 20 & var(35) = 2")
+        + "[Statedef 191]",
+    )
 
 
 def projetil(numero, trigger, anim, hit_anim, vel, dano, attr, hits=1, intervalo=0, id_=1000, ofs="70, -32", queda=False):
@@ -1342,7 +1347,7 @@ def reversao(numero, sucesso, atributos, gatilho):
 
 
 def montar_cns(hazaki=False):
-    c = [CNS_TOPO, CNS_INTRO, CNS_PULOS]
+    c = [CNS_TOPO, cns_intro(), CNS_PULOS]
 
     # golpes em pé, de perto e de longe
     c.append(normal(200, "S, NA", 40, "Time = 4", leve=True, hit=14, vel="-4"))
@@ -1384,7 +1389,6 @@ def montar_cns(hazaki=False):
     c.append(estado(195, "S", "I", "S", anim=195))
     c.append("[State 195, Sorteio]\ntype = VarSet\ntrigger1 = Time = 0\nvar(36) = Random < 200\n\n")
     c.append(fala(195, "provoca", "Time = 2"))
-    c.append("[State 195, Limpa fala]\ntype = RemoveExplod\ntrigger1 = AnimTime = 0\nid = 700\n\n")
     c.append(fala(195, "provoca_fim", "AnimTime = 0 & var(36) = 0"))
     c.append(fala(195, "provoca_cai", "AnimTime = 0 & var(36) = 1"))
     c.append("[State 195, Tira barra]\ntype = PowerAdd\ntrigger1 = AnimTime = 0\nvalue = -250\nredirectid = enemynear,id\n\n")
@@ -1584,7 +1588,7 @@ time = 2
     resultado = "".join(c)
     if hazaki:
         resultado = resultado.replace(f"anim = {ID_BALAO['lata']}", f"anim = {ID_BALAO['golaco']}")
-        resultado = resultado.replace("add = 40, 0, 70", "add = 42, 16, 0").replace("sinadd = 30, 0, 40, 40", "sinadd = 24, 8, 0, 40")
+        resultado = resultado.replace("add = 12, 0, 28", "add = 42, 16, 0").replace("sinadd = 10, 0, 18, 40", "sinadd = 24, 8, 0, 40")
     return resultado
 
 
