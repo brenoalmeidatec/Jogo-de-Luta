@@ -41,6 +41,7 @@ EIXO_X, EIXO_Y = 180, 220
 LIMITE_AMOSTRA_PALETA = 4_000_000  # pixels usados para escolher as 255 cores
 
 # Balões, em unidades do lutador (a tela da luta em 16:9 é 320 x 180).
+BALOES_LIGADOS = False  # o Breno vai gravar as falas em áudio; os textos de BALOES ficam como roteiro
 BALAO_ACIMA_DOS_PES = 125  # ponta do balão, logo acima da cabeça
 RITMO = 1.5  # os golpes mostram o movimento inteiro; no tempo antigo pareciam acelerados
 PROJETEIS = {1005, 1006, 3005, 3006, 3010, 3011}
@@ -1102,7 +1103,9 @@ def fim(numero, destino=0):
 
 def fala(numero, chave, trigger="Time = 0"):
     """Troca o balão do lutador. Ele nasce acima da cabeça e fica parado na tela, sempre inteiro e abaixo da HUD."""
-    gatilhos = "\n".join(f"trigger1 = {g.strip()}" for g in trigger.split(" & "))
+    if not BALOES_LIGADOS:
+        return ""
+    gatilhos ="\n".join(f"trigger1 = {g.strip()}" for g in trigger.split(" & "))
     w, h = medida_balao(BALOES[chave])
     meia = w // 2 + BALAO_MARGEM
     ponta_minima = BALAO_TOPO_MINIMO + h + 8

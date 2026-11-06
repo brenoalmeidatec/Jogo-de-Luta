@@ -102,18 +102,18 @@ Armadilhas já pagas:
 ## Estado em 2026-11-06
 
 Ainda **não testado no jogo** por ninguém, desde o commit `68af3ec`: ritmo novo, escala 1, golpes de capoeira, Despertar sem
-garrafa, transformação e balões. Primeiro passo em casa: abrir uma luta e conferir isso.
+garrafa e transformação. Primeiro passo em casa: abrir uma luta e conferir isso.
 
 Conferir com atenção:
 
 - se o Despertar vira endiabrado de verdade: `RemapSprite` foi lido no código do motor, nunca visto rodando;
-- pés, caixas de golpe e correntes com `RITMO = 1.5`;
-- se os balões cabem com os lutadores em escala 1.
+- pés, caixas de golpe e correntes com `RITMO = 1.5`.
 
 Pendências:
 
 - 72 de 159 ações têm desenho acima de 2 ticks (regra 7);
 - pontinhos de fumaça soltos em quadros da possessão;
-- fala do balão da transformação ainda é a antiga;
+- falas: os balões estão desligados (`BALOES_LIGADOS` em `gerar_pengaro.py`). O Breno vai gravar os áudios e mandar; aí
+  eles entram no jogo. Os textos em `BALOES` ficam como roteiro;
 - `golaco` usa o início da folha, porque os quadros com chuva passam da tela;
 - Barbeiro: ficha pronta em `docs/fichas/barbeiro.md`, lutador ainda não feito.
