@@ -5,6 +5,18 @@ do Breno de 2026-11-06 (transcrito com WhisperX, que erra em trechos; o que est�
 As fotos de referência do Gutto ainda vão chegar e mandam na aparência. Arte no **mesmo estilo do Pengaró**: sprite 2D
 de SNES/arcade desenhado à mão, nunca 3D pixelizado.
 
+## Aparência aprovada (referência v2, 2026-11-06)
+
+Folha-referência em `sprites/gutto/quadros/folhas/referencia_idle.png` (guarda de Muay Thai quicando, 8 quadros). Feita no
+chat "Gutto" do ChatGPT a partir de duas fotos do Breno (corpo inteiro e rosto), no estilo do Pengaró. **Base de Muay Thai
+com a postura clássica** (em pé, mãos altas, quicando no pé da frente), como a do Joe no KOF: só a postura, nada do visual
+nem da arte de nenhum personagem existente (regra do projeto).
+
+- Pele marrom escura; cabelo curto e crespo; bigode grosso com barba rala; olhos grandes e redondos; corpo forte.
+- Camisa branca com **gola e mangas pretas** e um brasão preto simples (sem marca real); bermuda preta; ataduras brancas;
+  descalço.
+- Primeira versão saiu clara demais e com detalhes vermelho e azul; a v2 corrigiu a pele e a camisa.
+
 ## O que o Breno disse no áudio
 
 - É **lutador de Muay Thai**. Ataques padrão de Muay Thai, com **low kick**; "só chute" (chutes, joelhadas e cotovelos).
