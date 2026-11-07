@@ -23,18 +23,32 @@ function Fechar($msg) {
     exit 1
 }
 
-# 1. Atualiza o jogo
+# 1. Atualiza o jogo. O repositorio tem centenas de MB de sprites que o jogo nao usa; so a pasta chars vale.
+# Baixa so os arquivos dela que mudaram desde a ultima vez (compara o hash de cada arquivo) e mostra o progresso.
+$manifesto = Join-Path $base 'manifesto.json'
+$manif = @{}
 try {
-    Write-Host 'Baixando a versao mais nova do jogo no GitHub...'
-    $zip = Join-Path $base 'jogo.zip'
-    $tmp = Join-Path $base 'tmp'
-    Invoke-WebRequest "https://github.com/$repo/archive/refs/heads/$branch.zip" -OutFile $zip -UseBasicParsing
-    if (Test-Path $tmp) { Remove-Item $tmp -Recurse -Force }
-    Expand-Archive $zip $tmp -Force
-    $src = (Get-ChildItem $tmp -Directory | Select-Object -First 1).FullName
-    robocopy $src $game /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
-    Remove-Item $tmp -Recurse -Force
-    Remove-Item $zip -Force
+    Write-Host 'Procurando a versao mais nova do jogo no GitHub...'
+    $ua = @{ 'User-Agent' = 'JogoDeLuta' }
+    $commit = (Invoke-RestMethod "https://api.github.com/repos/$repo/commits/$branch" -Headers $ua).sha
+    $arvore = Invoke-RestMethod "https://api.github.com/repos/$repo/git/trees/${commit}?recursive=1" -Headers $ua
+    if (Test-Path $manifesto) {
+        (Get-Content $manifesto -Raw | ConvertFrom-Json).PSObject.Properties | ForEach-Object { $manif[$_.Name] = $_.Value }
+    }
+    $arquivos = @($arvore.tree | Where-Object { $_.type -eq 'blob' -and $_.path -like 'chars/*' })
+    $wc = New-Object Net.WebClient
+    $wc.Headers.Add('User-Agent', 'JogoDeLuta')
+    $i = 0
+    foreach ($a in $arquivos) {
+        $i++
+        $dest = Join-Path $game ($a.path -replace '/', '\')
+        if ((Test-Path $dest) -and $manif[$a.path] -eq $a.sha) { continue }
+        New-Item -ItemType Directory -Force (Split-Path $dest) | Out-Null
+        Write-Host "Baixando $($a.path) ($i de $($arquivos.Count))..."
+        $url = "https://raw.githubusercontent.com/$repo/$commit/" + (($a.path -split '/' | ForEach-Object { [Uri]::EscapeDataString($_) }) -join '/')
+        $wc.DownloadFile($url, $dest)
+        $manif[$a.path] = $a.sha
+    }
     Write-Host 'Jogo atualizado!' -ForegroundColor Green
 } catch {
     Write-Host "Nao consegui atualizar: $($_.Exception.Message)" -ForegroundColor Yellow
@@ -42,6 +56,8 @@ try {
         Fechar 'Ainda nao tem nenhuma versao do jogo baixada. Confira a internet e tente de novo.'
     }
     Write-Host 'Abrindo a ultima versao que ja estava baixada.'
+} finally {
+    if ($manif.Count -gt 0) { $manif | ConvertTo-Json | Set-Content $manifesto -Encoding ASCII }
 }
 
 # 2. Baixa o IKEMEN GO na primeira vez
@@ -58,15 +74,92 @@ if (-not (Test-Path $exe)) {
     }
 }
 
-# 3. Coloca o Pengaro no motor e na tela de selecao
-robocopy (Join-Path $game 'chars\pengaro') (Join-Path $motor 'chars\pengaro') /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
+# 3. Instala os lutadores disponiveis e os registra na selecao.
 $select = Join-Path $motor 'data\select.def'
 $texto = [IO.File]::ReadAllText($select)
-if ($texto -notmatch '(?m)^pengaro,') {
-    $texto = $texto -replace '(?m)^randomselect', "pengaro, stages/stage0.def`r`nrandomselect"
-    [IO.File]::WriteAllText($select, $texto)
+foreach ($lutador in @('pengaro', 'hazaki', 'gutto')) {
+    $origem = Join-Path $game "chars\$lutador"
+    if (-not (Test-Path (Join-Path $origem "$lutador.def"))) { continue }
+    robocopy $origem (Join-Path $motor "chars\$lutador") /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
+    if ($LASTEXITCODE -ge 8) { Fechar "Nao consegui instalar $lutador." }
+    if ($texto -notmatch "(?m)^\s*$lutador\s*(?:,|$)") {
+        $texto = $texto -replace '(?m)^randomselect', "$lutador, stages/stage0-720.def`r`nrandomselect"
+    }
 }
+[IO.File]::WriteAllText($select, $texto)
 
-# 4. Abre o jogo
+# 4. Teclas do jogador 1: anda com W A S D, socos nas setas esquerda (fraco) e cima (forte),
+# chutes nas setas baixo (fraco) e direita (forte). z e w saem de d e w para nao colidir. O IKEMEN so cria o save\config.ini depois da
+# primeira abertura; se ainda nao existe, abre e fecha o jogo uma vez para ele nascer.
+$cfg = Join-Path $motor 'save\config.ini'
+function Ajustar-Teclas($arquivo) {
+    $t = [IO.File]::ReadAllText($arquivo)
+    $novo = @{ up='w'; down='s'; left='a'; right='d'; x='LEFT'; y='UP'; a='DOWN'; b='RIGHT'; z='v'; w='r' }
+    $m = [regex]::Match($t, '(?ims)^\[Keys_P1\][^\r\n]*\r?\n.*?(?=^\[|\z)')
+    if (-not $m.Success) { return }
+    $bloco = $m.Value
+    foreach ($k in $novo.Keys) {
+        $bloco = [regex]::Replace($bloco, "(?im)^$k\s*=.*$", "$k = $($novo[$k])")
+    }
+    $t = $t.Substring(0, $m.Index) + $bloco + $t.Substring($m.Index + $m.Length)
+    [IO.File]::WriteAllText($arquivo, $t)
+}
+if (-not (Test-Path $cfg)) {
+    Write-Host 'Primeira abertura: preparando as teclas...'
+    $p = Start-Process $exe -WorkingDirectory $motor -PassThru
+    for ($i = 0; $i -lt 30 -and -not (Test-Path $cfg); $i++) { Start-Sleep 1 }
+    Start-Sleep 2
+    if (-not $p.HasExited) { Stop-Process $p -Force }
+    Start-Sleep 1
+}
+if (Test-Path $cfg) { Ajustar-Teclas $cfg }
+
+# 5. Menus: navega com W A S D e confirma so com Enter. Os botoes de ataque (as setas) nao confirmam
+# nada nos menus. O IKEMEN le as teclas de confirmacao do motif (system.def); a selecao de personagem
+# usa os botoes para escolher o personagem, entao tambem ajustamos essa funcao no main.lua.
+function Set-Chave($t, $secao, $chave, $valor) {
+    $m = [regex]::Match($t, '(?ims)^\[' + [regex]::Escape($secao) + '\][^\r\n]*\r?\n(.*?)(?=^\[|\z)')
+    if (-not $m.Success) { return $t }
+    $corpo = $m.Groups[1].Value
+    $ek = [regex]::Escape($chave)
+    if ($corpo -match "(?im)^\s*$ek\s*=") {
+        $corpo = [regex]::Replace($corpo, "(?im)^(\s*)$ek\s*=.*$", ('${1}' + "$chave = $valor"))
+    } else {
+        $corpo = "$chave = $valor`r`n" + $corpo
+    }
+    return $t.Substring(0, $m.Groups[1].Index) + $corpo + $t.Substring($m.Groups[1].Index + $m.Groups[1].Length)
+}
+function Ajustar-Menus {
+    $motif = 'data\ikemen1\system.def'
+    if (Test-Path $cfg) {
+        $mm = [regex]::Match([IO.File]::ReadAllText($cfg), '(?im)^Motif\s*=\s*(\S+)')
+        if ($mm.Success) { $motif = $mm.Groups[1].Value -replace '/', '\' }
+    }
+    $def = Join-Path $motor $motif
+    if (Test-Path $def) {
+        $t = [IO.File]::ReadAllText($def)
+        foreach ($sec in @('Title Info', 'Option Info', 'Pause Menu', 'Replay Info')) {
+            $t = Set-Chave $t $sec 'menu.done.key' 's'
+        }
+        foreach ($ch in @('done.key', 'p1.teammenu.done.key', 'p2.teammenu.done.key', 'p1.palmenu.done.key', 'p2.palmenu.done.key')) {
+            $t = Set-Chave $t 'Select Info' $ch 's'
+        }
+        $t = Set-Chave $t 'VS Screen' 'done.key' 's'
+        $t = Set-Chave $t 'Continue Screen' 'done.key' 's'
+        [IO.File]::WriteAllText($def, $t)
+    }
+    $lua = Join-Path $motor 'external\script\main.lua'
+    if (Test-Path $lua) {
+        $l = [IO.File]::ReadAllText($lua)
+        if ($l -notmatch 'jogo-de-luta: so o Enter') {
+            $novo = "function main.f_btnPalNo(p)`n`t-- jogo-de-luta: so o Enter seleciona; os botoes de ataque nao`n`tif commandGetState(p, '/s') then return 1 end`n`treturn 0`nend"
+            $l2 = [regex]::Replace($l, '(?s)function main\.f_btnPalNo\(p\).*?\r?\nend', { param($x) $novo }, 1)
+            if ($l2 -ne $l) { [IO.File]::WriteAllText($lua, $l2) }
+        }
+    }
+}
+try { Ajustar-Menus } catch { Write-Host "Nao consegui ajustar os menus: $($_.Exception.Message)" -ForegroundColor Yellow }
+
+# 6. Abre o jogo
 Write-Host 'Abrindo o jogo!' -ForegroundColor Green
-Start-Process $exe -WorkingDirectory $motor
+Start-Process $exe -WorkingDirectory $motor -WindowStyle Normal

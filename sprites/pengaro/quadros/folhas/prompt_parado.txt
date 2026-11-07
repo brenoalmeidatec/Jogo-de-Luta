@@ -1,0 +1,9 @@
+Generate ONE image with your image generation tool. Do not write code and do not edit any file.
+
+The attached sprite sheet shows the exact character and art style to keep: same man, same face, hair, skin, muscles, white capoeira pants with green and yellow side stripes, yellow cord belt, teal sash, the same dark green shin guard on the same leg, barefoot. Same detailed 90s arcade pixel art.
+
+Make a sprite sheet of an 8-frame looping idle animation for a 2D fighting game: a capoeira ginga bounce in the fighting stance of the first frame of the attached sheet, with both feet planted on the same spots in all frames.
+
+Layout: one single row of 8 frames, evenly spaced, wide image, side view, always facing right, same size and same scale as the attached sheet, feet on the same ground line. Flat solid magenta background (#FF00FF) everywhere, with no shadow, no ground, no text, no numbers, no borders and no effects.
+
+Motion: frames 1 to 4 the body sinks gently, knees bending, shoulders dropping, front hand drifting down and the rear hand rising a little. Frames 5 to 8 the body rises back to the pose of frame 1. Frame 8 must flow back into frame 1. Consecutive frames differ by a small amount, so the loop looks smooth. Feet do not move.

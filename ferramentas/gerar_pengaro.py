@@ -12,19 +12,58 @@ Para mudar golpe, dano ou fala, edite este arquivo e rode:
   python ferramentas/gerar_pengaro.py
 """
 import json
+import math
+import random
+import re
 import struct
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFont
+import numpy as np
+from PIL import Image, ImageDraw, ImageFont, ImageOps
+from repertorio import golpes, quadros as quadros_golpe
+import pengaro_extra as extra
+
+import itens_pengaro
 
 RAIZ = Path(__file__).resolve().parent.parent
 FOLHA = RAIZ / "sprites/pengaro/pixel/pengaro.png"
 INFO = RAIZ / "sprites/pengaro/pixel/pengaro.json"
 SAIDA = RAIZ / "chars/pengaro"
+EFEITOS = RAIZ / "assets/efeitos"
+ATAQUES_DESPERTADOS = {200, 210, 215, 230, 240, 245, 260, 400, 410, 430, 440, 600, 610, 650,
+                      760, 761, 830, 831, 1000, 1001, 1100, 1101, 1200, 1201, 1300, 1301}
+ATAQUES_DESPERTADOS.update(g.estado for h in (False, True) for g in golpes(h))
+
+# Agarrão de comando (← → + y): agarra, dá o martelo de capoeira e joga o whisky em cima do inimigo.
+# Quadros (folha, desenho, ticks antes do RITMO). O .cns usa os mesmos tempos, por isso ficam aqui juntos.
+AGARRAO_WHISKY = [("agarrao", 2, 3), ("agarrao", 3, 3),
+                  ("compasso", 1, 4), ("compasso", 2, 4), ("compasso", 3, 4), ("compasso", 4, 2), ("compasso", 5, 3),
+                  ("compasso", 6, 4), ("compasso", 7, 4),
+                  ("bola", 2, 5), ("bola", 4, 4), ("bola", 5, 4), ("bola", 6, 4), ("bola", 7, 4)]
+
+
+def tempos_agarrao_whisky():
+    """Ticks (já com o RITMO) em que a capoeira acerta e em que a garrafa sai da mão."""
+    t, inicio = 0, []
+    for _, _, n in AGARRAO_WHISKY:
+        inicio.append(t)
+        t += round(n * RITMO)
+    return inicio[5], inicio[10]  # 5 = compasso 4 (chute no contato); 10 = bola 4 (solta a garrafa)
+FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9202: "hit-flash", 9204: "parry",
+           9205: "ground-slam", 9206: "fireball"}
 
 # Tela de trabalho de cada sprite: pés em (EIXO_X, EIXO_Y).
 LARG, ALT = 360, 260
 EIXO_X, EIXO_Y = 180, 220
+LIMITE_AMOSTRA_PALETA = 4_000_000  # pixels usados para escolher as 255 cores
+
+# Balões, em unidades do lutador (a tela da luta em 16:9 é 320 x 180).
+BALOES_LIGADOS = False  # o Breno vai gravar as falas em áudio; os textos de BALOES ficam como roteiro
+BALAO_ACIMA_DOS_PES = 125  # ponta do balão, logo acima da cabeça
+RITMO = 1.5  # os golpes mostram o movimento inteiro; no tempo antigo pareciam acelerados
+PROJETEIS = {1005, 1006, 3005, 3006, 3010, 3011}
+BALAO_TOPO_MINIMO = 40    # abaixo do relógio e dos nomes da HUD
+BALAO_MARGEM = 4          # folga até a borda da tela
 
 
 # ------------------------------------------------------------------ imagens
@@ -96,13 +135,18 @@ def fonte(tamanho):
     return ImageFont.load_default()
 
 
+def medida_balao(texto):
+    """Largura e altura da caixa do balão, sem a ponta."""
+    f = fonte(11)
+    linhas = texto.split("\n")
+    return max(f.getbbox(linha)[2] for linha in linhas) + 14, 15 * len(linhas) + 8
+
+
 def balao(texto):
     """Balão de fala em imagem própria, centrado acima do eixo."""
     f = fonte(11)
     linhas = texto.split("\n")
-    caixas = [f.getbbox(linha) for linha in linhas]
-    w = max(c[2] for c in caixas) + 14
-    h = 15 * len(linhas) + 8
+    w, h = medida_balao(texto)
     tela = Image.new("RGBA", (LARG, ALT))
     d = ImageDraw.Draw(tela)
     x0, y0 = EIXO_X - w // 2, EIXO_Y - h - 8
@@ -122,6 +166,16 @@ class Sprites:
         self.proximo = 10
 
     def add(self, nome, img, grupo=None, indice=0, eixo=(EIXO_X, EIXO_Y)):
+        if getattr(self, "folhas", False) and nome in TROCA_POR_FOLHA:
+            folha, i = TROCA_POR_FOLHA[nome]
+            desenho = quadro_folha(folha, i)
+            if desenho is not None:
+                return self.guardar(nome, desenho, grupo, indice, eixo)  # a garrafa já vem desenhada
+        if getattr(self, "folhas", False) and img.size == (LARG, ALT) and not nome.startswith(SEM_WHISKY):
+            img = itens_pengaro.com_whisky(img)  # o Pengaró luta com a garrafa de whisky na mão de trás
+        return self.guardar(nome, img, grupo, indice, eixo)
+
+    def guardar(self, nome, img, grupo, indice, eixo):
         if grupo is None:
             grupo = self.proximo
             self.proximo += 1
@@ -149,16 +203,14 @@ def rle8(px):
 
 def paleta_global(imagens):
     """Uma paleta para todos os sprites. O índice 0 é o transparente."""
-    amostra = Image.new("RGB", (LARG, ALT * len(imagens)), (0, 0, 0))
-    mascara = Image.new("L", amostra.size, 0)
-    for i, im in enumerate(imagens):
-        amostra.paste(im.convert("RGB"), (0, ALT * i))
-        mascara.paste(im.split()[3].point(lambda a: 255 if a >= 128 else 0), (0, ALT * i))
-    cores = [p for p, m in zip(amostra.get_flattened_data(), mascara.get_flattened_data()) if m]
-    pedaco = Image.new("RGB", (len(cores), 1))
-    pedaco.putdata(cores)
-    q = pedaco.quantize(colors=255, method=Image.MEDIANCUT)
-    return q
+    cores = []
+    for im in imagens:
+        a = np.asarray(im.convert("RGBA"))
+        cores.append(a[a[..., 3] >= 128][:, :3])
+    cores = np.concatenate(cores)
+    passo = max(1, len(cores) // LIMITE_AMOSTRA_PALETA)  # com milhares de sprites, uma amostra já dá as mesmas cores
+    pedaco = Image.fromarray(np.ascontiguousarray(cores[::passo])[None, :, :], "RGB")
+    return pedaco.quantize(colors=255, method=Image.MEDIANCUT)
 
 
 def escrever_sff(destino, sprites):
@@ -204,14 +256,46 @@ DEITADO = [(-60, 0, 60, -24)]
 
 
 class Air:
-    def __init__(self, sprites):
+    def __init__(self, sprites, arte_despertada=None, hazaki=False):
         self.s = sprites
+        self.hazaki = hazaki
         self.txt = ["; Gerado por ferramentas/gerar_pengaro.py. Edite lá, não aqui.\n"]
         self.acoes = set()
+        self.mapas = {}
+        self.ativos = {}  # ação -> (elemento em que a caixa de golpe liga, a caixa)
+        self.arte_despertada = arte_despertada or {}
+
+    def fluido(self, numero, quadros):
+        """Preenche cada elemento com os quadros do meio do Blender, sem mudar o tempo total nem a caixa de golpe.
+        Guarda em self.mapas onde cada elemento foi parar, porque o .cns usa AnimElem."""
+        novos, mapa = [], []
+        for i, q in enumerate(quadros):
+            mapa.append(len(novos) + 1)
+            ticks = q[1]
+            proximo = quadros[i + 1][0] if i + 1 < len(quadros) else fim_da_folha(q[0])
+            caminho = caminho_fluido(self.s, q[0], proximo) if ticks > 1 else [q[0]]
+            n = min(len(caminho), ticks) if ticks > 0 else 1
+            for j in range(n):
+                t = ticks if ticks <= 0 else ticks // n + (1 if j < ticks % n else 0)
+                novos.append((caminho[j * len(caminho) // n], t, *q[2:]))
+        self.mapas[numero] = mapa
+        return novos
 
     def acao(self, numero, quadros, caixa=CORPO, loop=None):
-        """quadros: lista de (nome_sprite, ticks) ou (nome_sprite, ticks, caixa_de_golpe) ou com flip 'H'."""
+        """quadros: lista de (nome_sprite, ticks) ou (nome_sprite, ticks, caixa_de_golpe) ou com flip 'H'.
+        Se a ação já foi definida, a primeira definição vale (as das folhas desenhadas vêm antes)."""
+        if numero in self.acoes:
+            return
         self.acoes.add(numero)
+        if 200 <= numero < 4000 and numero != 2000 and numero not in PROJETEIS:
+            quadros = [(q[0], round(q[1] * RITMO) if q[1] > 0 else q[1], *q[2:]) for q in quadros]
+        if not self.hazaki:
+            quadros = self.fluido(numero, quadros)
+            loop = self.mapas[numero][loop] - 1 if loop is not None else None
+            ativo = next((k for k, q in enumerate(quadros) if len(q) > 2 and q[2]), None)
+            if ativo is not None:
+                caixa_golpe = quadros[ativo][2]
+                self.ativos[numero] = (ativo + 1, caixa_golpe[0] if isinstance(caixa_golpe[0], tuple) else caixa_golpe)
         t = [f"[Begin Action {numero}]"]
         if caixa:
             t.append(f"Clsn2Default: {len(caixa)}")
@@ -226,20 +310,668 @@ class Air:
             if golpe:
                 t.append("Clsn1: 1")
                 t.append(f" Clsn1[0] = {golpe[0]},{golpe[1]},{golpe[2]},{golpe[3]}")
+            elif numero in PROJETEIS and caixa:
+                # o projétil só acerta se a animação tiver caixa de ataque (Clsn1) em cada desenho
+                t.append(f"Clsn1: {len(caixa)}")
+                for j, cx in enumerate(caixa):
+                    t.append(f" Clsn1[{j}] = {cx[0]},{cx[1]},{cx[2]},{cx[3]}")
             g, ind = self.s.codigos[nome]
-            t.append(f"{g},{ind}, 0,0, {ticks}" + (f", {flip}" if flip else ""))
+            mistura = TRANS_FX.get(numero)
+            t.append(f"{g},{ind}, 0,0, {ticks}" + (f", {flip}, {mistura}" if mistura else f", {flip}" if flip else ""))
         self.txt.append("\n".join(t) + "\n")
+        if numero in ATAQUES_DESPERTADOS or numero == 3100:
+            variantes = []
+            for i, (nome, ticks, *resto) in enumerate(quadros):
+                if not self.hazaki:
+                    self.arte_despertada[nome] = nome  # quem troca pelo desenho endiabrado é o RemapSprite
+                elif nome not in self.arte_despertada:
+                    grupo, indice = self.s.codigos[nome]
+                    original = next(img for g, i, img, _, _ in self.s.lista if (g, i) == (grupo, indice))
+                    aura = None if self.hazaki else endiabrar(original, i)
+                    if aura is None:
+                        aura = Image.new("RGBA", original.size)
+                        sombra = Image.new("RGBA", original.size, (92, 39, 138))
+                        sombra.putalpha(original.getchannel("A"))
+                        aura.alpha_composite(sombra, (-5, 2))
+                        aura.alpha_composite(original)
+                    self.arte_despertada[nome] = self.s.add(f"despertado_{nome}", aura)
+                if resto and resto[0] and numero != 3100:
+                    x1, y1, x2, y2 = resto[0]
+                    recuo = min(8, (x2 - x1) // 4)
+                    resto[0] = (x1 + recuo, y1, x2 - recuo, y2)
+                if i == len(quadros) - 1 and ticks > 0 and 1000 <= numero < 1600:
+                    ticks += 6
+                variantes.append((self.arte_despertada[nome], ticks, *resto))
+            self.acao(numero + 10000, variantes, caixa, loop)
 
 
-def montar_sprites():
-    p, bola = carregar_poses()
+
+# ------------------------------------------------------------------ efeitos (pixelfx recolorido)
+# Os efeitos do pixelfx têm transparência suave, e o SFF só guarda pixel opaco ou vazio. Por isso eles vão com a
+# transparência embutida na cor e desenhados com mistura (A = soma, brilho; S = subtração, sombra), marcada no AIR.
+# Cada forma do Pengaró tem a sua cor, por mapa de gradiente (o brilho do efeito escolhe a cor da rampa):
+WHISKY = ((0, (30, 10, 0)), (.35, (140, 60, 8)), (.7, (235, 155, 35)), (1, (255, 240, 190)))       # Pengaró normal
+SOMBRA = ((0, (15, 0, 25)), (.35, (85, 15, 140)), (.75, (175, 85, 255)), (1, (240, 215, 255)))      # endiabrado
+SOMBRA_ESCURA = ((0, (0, 0, 0)), (.5, (70, 100, 45)), (1, (120, 160, 85)))  # cor tirada do fundo: escurece puxando o roxo
+RECOLORIDOS = {"hit-spark", "crit-hit", "ground-slam"}  # whisky no normal; a versão sombra entra no Despertar (RemapSprite)
+METADE = {"ground-slam", "charge-up"}  # efeitos grandes demais para o tamanho do lutador
+# Soma de dourado sobre o palco azul vira rosa. Faísca de acerto vai em pixel opaco, cortada pela transparência.
+OPACOS = {"hit-spark", "crit-hit"}
+# Efeitos próprios do Pengaró: ação -> (efeito, quadros usados, rampa, mistura)
+EFEITOS_ENDIABRADO = {
+    9210: ("charge-up", range(18, 70), SOMBRA, "A"),           # endiabrado: aura que pulsa em volta do corpo
+    9211: ("heavy-landing", range(4, 44), SOMBRA_ESCURA, "S"),  # endiabrado: sombra que gira nos pés
+    9212: ("uppercut", range(0, 27), SOMBRA, "A"),              # endiabrado: corte de sombra no membro que bate
+    9213: ("hit-flash", range(0, 16), WHISKY, None),            # normal: brilho de whisky no membro que bate
+    9214: ("heavy-landing", range(0, 30), WHISKY, None),        # normal: poeira dourada na rasteira
+    9215: ("heavy-landing", range(0, 30), SOMBRA, "A"),         # endiabrado: poeira violeta na rasteira
+}
+TRANS_FX = {}  # ação -> mistura
+
+
+def pintar(sprite, rampa):
+    a = np.asarray(sprite).astype(np.float32)
+    luz = a[..., :3].max(axis=2) / 255
+    pontos = [p for p, _ in rampa]
+    cor = np.stack([np.interp(luz, pontos, [c[k] for _, c in rampa]) for k in range(3)], axis=-1)
+    return Image.fromarray(np.dstack([cor, a[..., 3]]).astype(np.uint8), "RGBA")
+
+
+def efeito_aditivo(sprite):
+    a = np.asarray(sprite).astype(np.float32)
+    rgb = a[..., :3] * (a[..., 3:] / 255)
+    alfa = np.where(a[..., 3] > 8, 255, 0)
+    return Image.fromarray(np.dstack([rgb, alfa]).astype(np.uint8), "RGBA")
+
+
+def efeito_opaco(sprite):
+    a = np.array(sprite)
+    a[..., 3] = np.where(a[..., 3] >= 110, 255, 0)
+    return Image.fromarray(a, "RGBA")
+
+
+def ler_efeito(nome):
+    dados = json.loads((EFEITOS / f"{nome}.json").read_text(encoding="utf-8"))
+    pivo = tuple(dados["meta"]["pixelfx"]["pivot"])
+    metade = nome in METADE
+    quadros = []
+    with Image.open(EFEITOS / dados["meta"]["image"]) as imagem:
+        folha = imagem.convert("RGBA")
+        for quadro in dados["frames"]:
+            r = quadro["frame"]
+            sprite = folha.crop((r["x"], r["y"], r["x"] + r["w"], r["y"] + r["h"]))
+            if metade:
+                sprite = sprite.resize((sprite.width // 2, sprite.height // 2), Image.LANCZOS)
+            quadros.append((sprite, max(1, round(quadro["duration"] * 60 / 1000))))
+    return ((pivo[0] // 2, pivo[1] // 2) if metade else pivo), quadros
+
+
+# Pengaró: efeitos desenhados no ChatGPT como os lutadores (ferramentas/efeitos_folha.py), em vez do pixelfx.
+# ação -> (efeito do normal, efeito do endiabrado, ticks por quadro). O do endiabrado entra pelo RemapPreset.
+EFEITOS_PROPRIOS = Path(__file__).resolve().parent.parent / "sprites/pengaro/efeitos"
+FX_PENGARO = {
+    9200: ("whisky_acerto", "sombra_acerto", 1), 9201: ("whisky_forte", "sombra_forte", 1),
+    9202: ("defesa", "sombra_acerto", 1), 9204: ("defesa", "sombra_acerto", 1), 9205: ("whisky_forte", "sombra_forte", 1),
+    9210: (None, "sombra_aura", 2), 9211: (None, "sombra_chao", 2), 9212: (None, "sombra_rastro", 1),
+    9213: ("whisky_rastro", None, 1), 9214: ("poeira", None, 1), 9215: (None, "sombra_chao", 1),
+}
+CHAO = {"poeira", "sombra_aura", "sombra_chao"}
+FAISCA_POR_FORMA = False
+
+
+def quadros_proprios(nome):
+    pasta = EFEITOS_PROPRIOS / nome
+    quadros = [Image.open(f).convert("RGBA") for f in sorted(pasta.glob("*.png"))]
+    return [(q, (q.width // 2, q.height - 1 if nome in CHAO else q.height // 2)) for q in quadros]
+
+
+def carregar_proprios(sprites):
+    acoes = {}
+    for numero, (normal, endiabrado, ticks) in FX_PENGARO.items():
+        principal = normal or endiabrado
+        lista = []
+        for i, (q, pivo) in enumerate(quadros_proprios(principal)):
+            chave = f"fx_{principal}_{i}"
+            sprites.add(chave, q, numero, i, pivo)
+            lista.append((chave, ticks))
+        if normal and endiabrado:
+            par = quadros_proprios(endiabrado)
+            sombra = []
+            for i in range(len(lista)):
+                q, pivo = par[round(i * (len(par) - 1) / max(1, len(lista) - 1))]
+                sprites.add(f"dfx_{principal}_{i}", q, numero + 30, i, pivo)
+                sombra.append((f"dfx_{principal}_{i}", ticks))
+            acoes[numero + 30] = sombra  # faísca do endiabrado, escolhida no HitDef (faiscas)
+        acoes[numero] = lista
+    global FAISCA_POR_FORMA
+    FAISCA_POR_FORMA = True
+    return acoes
+
+
+def carregar_faiscas(sprites):
+    pengaro = getattr(sprites, "folhas", False)
+    if pengaro and all((EFEITOS_PROPRIOS / n).exists() for v in FX_PENGARO.values() for n in v[:2] if n):
+        return carregar_proprios(sprites)
+    acoes = {}
+    for numero, nome in FAISCAS.items():
+        pivo, quadros = ler_efeito(nome)
+        recolor = pengaro and nome in RECOLORIDOS
+        opaco = recolor and nome in OPACOS
+        mistura = (recolor or nome in METADE) and not opaco
+        acabar = efeito_opaco if opaco else efeito_aditivo if mistura else (lambda s: s)
+        lista = []
+        for indice, (sprite, ticks) in enumerate(quadros):
+            base = pintar(sprite, WHISKY) if recolor else sprite
+            chave = f"fx_{nome}_{indice}"
+            sprites.add(chave, acabar(base), numero, indice, pivo)
+            if recolor:
+                sprites.add(f"dfx_{nome}_{indice}", acabar(pintar(sprite, SOMBRA)), numero + 30, indice, pivo)
+            lista.append((chave, ticks))
+        if mistura:
+            TRANS_FX[numero] = "A"
+        acoes[numero] = lista
+    if pengaro:
+        for numero, (nome, faixa, rampa, modo) in EFEITOS_ENDIABRADO.items():
+            pivo, quadros = ler_efeito(nome)
+            lista = []
+            for i in faixa:
+                sprite, ticks = quadros[i]
+                chave = f"sfx_{numero}_{i}"
+                pintado = pintar(sprite, rampa)
+                sprites.add(chave, efeito_aditivo(pintado) if modo else efeito_opaco(pintado), numero + 40, i, pivo)
+                lista.append((chave, ticks))
+            if modo:
+                TRANS_FX[numero] = modo
+            acoes[numero] = lista
+    return acoes
+
+
+FUMACA = ("#150d1d", "#22162e", "#33224a")
+ELO = ("#e4e0ea", "#8f879c", "#1a1220")
+
+
+def _achar_pulso(alfa, ponta, raio, comprimento):
+    """Do bico de uma mão ou pé até a junta: anda `comprimento` px na direção em que a massa do membro está.
+    Devolve (x, y, dx, dy), com (dx, dy) apontando da ponta para o corpo."""
+    px = alfa.load()
+    tx, ty = ponta
+    sx = sy = n = 0
+    for y in range(max(0, ty - raio), min(ALT, ty + raio + 1)):
+        for x in range(max(0, tx - raio), min(LARG, tx + raio + 1)):
+            if px[x, y] >= 128 and (x - tx) ** 2 + (y - ty) ** 2 <= raio * raio:
+                sx += x
+                sy += y
+                n += 1
+    if not n:
+        return None
+    dx, dy = sx / n - tx, sy / n - ty
+    norma = math.hypot(dx, dy) or 1
+    dx, dy = dx / norma, dy / norma
+    return (tx + dx * comprimento, ty + dy * comprimento, dx, dy)
+
+
+def pontas(alfa):
+    """Mãos e pé de trás de um lutador virado para a direita. Devolve {nome: (x, y, dx, dy)}, com a junta (pulso ou
+    tornozelo) e a direção do membro, ou {} se não achar."""
+    px = alfa.load()
+    caixa = alfa.getbbox()
+    if not caixa:
+        return {}
+    x0, y0, x1, y1 = caixa
+    alt = y1 - y0
+
+    def extremo(ya, yb, maior):
+        melhor = None
+        for y in range(y0 + int(alt * ya), y0 + int(alt * yb)):
+            for x in range(x0, x1):
+                if px[x, y] >= 128 and (melhor is None or (x > melhor[0] if maior else x < melhor[0])):
+                    melhor = (x, y)
+        return melhor
+
+    def mais_baixo_a_esquerda():
+        melhor = None
+        meio = (x0 + x1) // 2
+        for y in range(y1 - 1, y0 + int(alt * .6), -1):
+            for x in range(x0, meio):
+                if px[x, y] >= 128:
+                    return (x + 6, y)
+        return melhor
+    pontas_ = {"mao_f": (extremo(.18, .55, True), 12, 11), "mao_t": (extremo(.25, .75, False), 12, 11),
+               "pe_t": (mais_baixo_a_esquerda(), 16, 12)}
+    achadas = {}
+    for nome, (ponta, raio, comp) in pontas_.items():
+        if ponta:
+            r = _achar_pulso(alfa, ponta, raio, comp)
+            if r:
+                achadas[nome] = r
+    return achadas
+
+
+def fumaca_solida(tela, ponto, i, tamanho=1.0, sentido=-1):
+    """Rastro de fumaça escura e opaca (a paleta do jogo não tem meio-tom) que sai de um ponto e sobe para trás."""
+    d = ImageDraw.Draw(tela)
+    x, y = ponto
+    sorte = random.Random(int(i) // 2 * 7919 + int(x) % 17)
+    for k in range(11):
+        t = k / 10
+        onda = math.sin(i * .30 + k * .8)
+        cx = x + sentido * (3 + 8 * k) * tamanho + onda * 3 + sorte.uniform(-1.5, 1.5)
+        cy = y - 2.2 * k * tamanho - abs(onda) * 4 + sorte.uniform(-2, 2)
+        r = max(1.2, (7.5 - 6 * t) * tamanho * sorte.uniform(.75, 1.2))
+        cor = FUMACA[min(2, int(t * 3.2))]
+        d.ellipse((cx - r, cy - r, cx + r, cy + r), fill=cor)
+        if k % 3 == 1:
+            d.ellipse((cx - r * .5, cy - r * .9, cx + r * .2, cy - r * .2), fill=FUMACA[min(2, int(t * 3.2) + 1)])
+        if k % 4 == 3:
+            px_, py_ = cx + sorte.uniform(-6, 6), cy - sorte.uniform(6, 12)
+            d.rectangle((px_, py_, px_ + 1, py_ + 1), fill=FUMACA[2])
+
+
+def elos(tela, junta):
+    """Algema com corrente partida: três elos claros, com contorno escuro, em volta do pulso ou do tornozelo,
+    atravessados no membro (perpendiculares à direção dele)."""
+    x, y, dx, dy = junta
+    d = ImageDraw.Draw(tela)
+    px_, py_ = -dy, dx
+    for k in (-1, 0, 1):
+        ex, ey = x + px_ * k * 3.2, y + py_ * k * 3.2
+        d.ellipse((ex - 2.6, ey - 2.2, ex + 2.6, ey + 2.2), fill=ELO[2])
+        d.ellipse((ex - 1.6, ey - 1.2, ex + 1.6, ey + 1.2), outline=ELO[0], fill=ELO[1])
+
+
+def endiabrar(original, i):
+    """Forma despertada (referência em sprites/pengaro/quadros/endiabrado_referencia.png): o corpo vira uma sombra
+    quase preta com o relevo em roxo escuro, olhos violeta, algemas de corrente partida nos pulsos e no tornozelo
+    e fumaça escura e sólida saindo do braço e da perna de trás."""
+    if original.size != (LARG, ALT):
+        return None
+    tela = Image.new("RGBA", original.size)
+    alfa = original.getchannel("A").point(lambda a: 255 if a >= 128 else 0)
+    ref = pontas(alfa)
+    if "mao_t" in ref:
+        fumaca_solida(tela, (ref["mao_t"][0], ref["mao_t"][1] - 2), i, 1.0)
+    if "pe_t" in ref:
+        fumaca_solida(tela, (ref["pe_t"][0], ref["pe_t"][1] - 2), i + 3, .8)
+    contorno = Image.new("RGBA", original.size, (14, 8, 20))
+    contorno.putalpha(alfa)
+    tela.alpha_composite(contorno, (-2, 1))
+    cinza = ImageOps.autocontrast(original.convert("RGB").convert("L"), cutoff=2).point(lambda v: int(255 * (v / 255) ** 1.5))
+    corpo = ImageOps.colorize(cinza, black="#08060b", mid="#17111f", white="#4a3c58").convert("RGBA")
+    corpo.putalpha(alfa)
+    tela.alpha_composite(corpo)
+    olhos_roxos(tela, alfa)
+    for nome in ("mao_f", "mao_t", "pe_t"):
+        if nome in ref:
+            elos(tela, ref[nome])
+    return tela
+
+
+def olhos_roxos(tela, alfa):
+    """Olhos violeta brilhantes, achando a cabeça pelo ponto mais alto do corpo (só se for mesmo uma cabeça)."""
+    caixa = alfa.getbbox()
+    if not caixa:
+        return
+    topo = caixa[1]
+    faixa = alfa.crop((0, topo, LARG, topo + 6)).getbbox()
+    if not faixa or faixa[2] - faixa[0] > 36:
+        return
+    cx = (faixa[0] + faixa[2]) // 2
+    d = ImageDraw.Draw(tela)
+    y = topo + 14
+    for x in (cx + 6, cx + 11):
+        d.rectangle((x - 1, y - 1, x + 2, y + 2), fill="#5a1aa8")
+        d.rectangle((x, y, x + 1, y + 1), fill="#e6b3ff")
+
+
+# ------------------------------------------------------------------ folhas desenhadas (estilo arcade)
+# Quadros recortados das folhas de 8 desenhos (sprites/pengaro/folhas -> ferramentas/recortar_quadros.py),
+# em sprites/pengaro/quadros/<folha>/00..07.png. Só o Pengaró usa; o Hazaki continua com as poses dele.
+FOLHAS = ("agachado", "pulo", "defesa", "apanha", "queda", "levanta", "rolamento", "chute_baixo", "chute_alto",
+          "baixo_soco", "cabecada", "rasteirinha", "rasteira", "ar_soco", "bicicleta", "agarrao", "lata",
+          "vitoria", "derrota", "provoca", "bola", "compasso", "armada", "caneta", "afastar", "martelo", "soco",
+          "golaco", "despertar_a", "despertar_b")
+
+# Sprites antigos (feitos girando/esticando as 9 poses) trocados por um desenho da folha: nome -> (folha, quadro).
+# Assim todo golpe que ainda usa esses nomes (especiais, super, Despertar) já aparece com a arte desenhada.
+TROCA_POR_FOLHA = {
+    "agacha0": ("agachado", 2), "agacha1": ("agachado", 4), "agacha2": ("agachado", 6),
+    "prepulo": ("pulo", 0), "pulo_sobe": ("pulo", 2), "pulo_topo": ("pulo", 3), "pulo_desce": ("pulo", 5),
+    "pouso": ("pulo", 7), "defesa": ("defesa", 3), "defesa_ai": ("defesa", 5), "recua": ("defesa", 6),
+    "parry": ("defesa", 2), "apanha0": ("apanha", 1), "apanha1": ("apanha", 3), "apanha2": ("apanha", 4),
+    "cai0": ("queda", 1), "cai1": ("queda", 2), "cai2": ("queda", 4), "deitado": ("queda", 7),
+    "levanta0": ("levanta", 2), "levanta1": ("levanta", 5), "levanta2": ("levanta", 6),
+    "chute0": ("chute_alto", 2), "chute1": ("chute_alto", 3), "chute2": ("chute_alto", 4), "chute3": ("chute_alto", 5),
+    "baixo_soco": ("baixo_soco", 4), "baixo_cima0": ("cabecada", 2), "baixo_cima1": ("cabecada", 4),
+    "rasteira0": ("rasteira", 2), "rasteira1": ("rasteira", 4), "rasteira2": ("rasteira", 4), "rasteira3": ("rasteira", 6),
+    "ar_soco": ("ar_soco", 4), "bicicleta": ("bicicleta", 4), "agarra": ("agarrao", 2), "joga": ("agarrao", 6),
+    "especial": ("bola", 4), "kick_alto": ("armada", 4),
+    "gira0": ("compasso", 2), "gira1": ("compasso", 3), "gira2": ("compasso", 4), "gira3": ("compasso", 5),
+    "lata0": ("lata", 2), "lata1": ("lata", 4), "lata2": ("lata", 7),
+    "soco0": ("soco", 3), "soco1": ("soco", 5), "soco2": ("soco", 5), "soco3": ("soco", 6),
+    "parado0": ("soco", 0), "anda0": ("anda_fluida", 0), "ar_chute": ("bicicleta", 3), "ar_cotovelo": ("ar_soco", 4),
+    "pisa": ("chute_baixo", 4), "defesa_baixa": ("agachado", 7),
+    **{f"corre{i}": ("anda_fluida", i * 12) for i in range(4)},
+    **{f"tonto{i}": ("apanha", 3 + i % 2) for i in range(4)},
+    **{f"rola{i}": ("rolamento", i) for i in range(8)},
+    # sem bola: na intro, na provocação e na vitória ele dá um gole
+    **{f"embaixada{i}": ("lata", i + 1) for i in range(4)},
+}
+
+
+# Sprites que não são o corpo do Pengaró (balões, faíscas, projétil) não ganham a garrafa.
+# Os quadros desenhados já têm a garrafa.
+SEM_WHISKY = ("balao_", "fx_", "bola", "bolao", "quica", "retrato", "chuva", "f_", "m_", "q_soco", "q_ginga_fluida",
+              "q_anda_fluida", "ginga_endiabrada", "e_", "endiabrado_")
+QUADROS = RAIZ / "sprites/pengaro/quadros"
+
+
+def limpar_borda(img):
+    """Tira a franja roxa que sobra do fundo magenta no contorno e os pontinhos soltos em volta da figura."""
+    import cv2
+    a = np.array(img)
+    r, g_, b = (a[..., i].astype(int) for i in range(3))
+    tinta = (r > g_ + 30) & (b > g_ + 30) & (np.abs(r - b) < 45)  # magenta misturado; o roxo do endiabrado tem r < b
+    for _ in range(2):
+        cheio = a[..., 3] >= 128
+        borda = cheio & ~cv2.erode(cheio.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool)
+        a[borda & tinta, 3] = 0
+    cheio = (a[..., 3] >= 128).astype(np.uint8)
+    n, rotulos, dados, _ = cv2.connectedComponentsWithStats(cheio, connectivity=8)
+    for i in range(1, n):
+        if dados[i, cv2.CC_STAT_AREA] < 6:
+            a[rotulos == i, 3] = 0
+    return Image.fromarray(a)
+
+
+def abrir_quadro(arquivo):
+    """Quadro do Blender já vem na tela do jogo; os antigos, de 224x128, são colados com os pés no eixo."""
+    img = Image.open(arquivo).convert("RGBA")
+    if img.size == (LARG, ALT):
+        return limpar_borda(img)
+    tela = Image.new("RGBA", (LARG, ALT))
+    tela.alpha_composite(img, (EIXO_X - 104, EIXO_Y - 119))
+    return limpar_borda(tela)
+
+
+def centro_tronco(img):
+    """Meio do tronco (do peito à barriga) de um quadro na tela do jogo."""
+    alfa = np.asarray(img)[..., 3] >= 128
+    ys = np.flatnonzero(alfa.any(axis=1))
+    if not len(ys):
+        return None
+    topo, base = ys[0], ys[-1]
+    meios = []
+    for y in range(topo + int((base - topo) * 0.3), topo + max(1, int((base - topo) * 0.6))):
+        linha = np.flatnonzero(alfa[y])
+        if len(linha):
+            quebras = np.flatnonzero(np.diff(linha) > 1)
+            inicios, fins = np.r_[linha[0], linha[quebras + 1]], np.r_[linha[quebras], linha[-1]]
+            k = int(np.argmax(fins - inicios))
+            meios.append((inicios[k] + fins[k]) / 2)
+    return float(np.median(meios)) if meios else None
+
+
+def alinhar_endiabrado(normal, endiabrado):
+    """Põe o tronco do endiabrado onde está o tronco do normal, para a troca do Despertar não pular de lugar."""
+    a, b = centro_tronco(normal), centro_tronco(endiabrado)
+    if a is None or b is None:
+        return endiabrado
+    dx = max(-24, min(24, round(a - b)))
+    tela = Image.new("RGBA", endiabrado.size)
+    tela.paste(endiabrado, (dx, 0), endiabrado)
+    return tela
+
+
+def quadros_do_loop(pasta):
+    return len(list((QUADROS / pasta).glob("*.png")))
+
+
+def quadro_folha(folha, i):
+    arquivo = QUADROS / folha / f"{i:02d}.png"
+    return abrir_quadro(arquivo) if arquivo.exists() else None
+
+
+def desenho_de(nome):
+    """(folha, desenho) de um sprite que tem quadros do meio, ou None."""
+    if nome in TROCA_POR_FOLHA:
+        return TROCA_POR_FOLHA[nome]
+    m = re.fullmatch(r"(?:f_|q_)([a-z_]+?)(\d+)", nome)
+    return (m[1], int(m[2])) if m and (QUADROS / m[1] / "meio").exists() else None
+
+
+def fim_da_folha(nome):
+    """No último elemento de um golpe, a recuperação segue até o último desenho da folha em vez de ficar parada."""
+    desenho = desenho_de(nome) if nome.startswith(("f_", "q_soco")) else None
+    return f"f_{desenho[0]}7" if desenho and desenho[0] in FOLHAS and desenho[1] < 7 else None
+
+
+def arquivo_endiabrado(nome):
+    """Desenho endiabrado equivalente a um sprite do Pengaró, ou None se a folha não tem versão endiabrada."""
+    meio = re.fullmatch(r"m_([a-z_]+?)_(\d+_\d+)", nome)
+    if meio:
+        return QUADROS / f"e_{meio[1]}/meio/{meio[2]}.png"
+    fluido = re.fullmatch(r"q_(ginga|anda)_fluida(\d+)", nome)
+    if fluido:
+        pasta = "ginga_endiabrada" if fluido[1] == "ginga" else "e_anda_fluida"
+        return QUADROS / f"{pasta}/{int(fluido[2]):02d}.png"
+    desenho = desenho_de(nome)
+    return QUADROS / f"e_{desenho[0]}/{desenho[1]:02d}.png" if desenho else None
+
+
+def preset_despertado(s):
+    """[RemapPreset despertado]: no Despertar, cada desenho do Pengaró vira o endiabrado, em qualquer animação.
+    Sprite antigo sem folha endiabrada (corrida, tontura) cai numa pose parada, para a garrafa nunca aparecer."""
+    pose = {nome: i for i, nomes in POSES_ENDIABRADO.items() for nome in nomes}
+    linhas = ["[RemapPreset despertado]"]
+    normais = {(gr, ind): img for gr, ind, img, _, _ in s.lista}
+    for nome, (grupo, indice) in list(s.codigos.items()):
+        if nome.startswith(("balao_", "fx_", "bola", "bolao", "quica", "retrato", "chuva", "ginga_endiabrada",
+                            "endiabrado_", "despertado_", "e_")) or grupo >= 9000:
+            continue
+        arquivo = arquivo_endiabrado(nome)
+        destino = f"e_{nome}"
+        normal = normais[(grupo, indice)]
+        if arquivo and arquivo.exists():
+            s.add(destino, alinhar_endiabrado(normal, abrir_quadro(arquivo)))
+        elif nome.startswith(("m_despertar", "f_despertar", "f_lata", "m_lata")):
+            continue
+        else:
+            s.add(destino, alinhar_endiabrado(normal, abrir_quadro(QUADROS / f"endiabrado/{pose.get(nome, 0):02d}.png")))
+        g, i = s.codigos[destino]
+        linhas.append(f"{grupo},{indice} = {g},{i}")
+    for nome, (grupo, indice) in s.codigos.items():  # faíscas: whisky no normal, sombra no Despertar
+        if nome.startswith("fx_") and f"d{nome}" in s.codigos:
+            g, i = s.codigos[f"d{nome}"]
+            linhas.append(f"{grupo},{indice} = {g},{i}")
+    return "\n".join(linhas) + "\n\n"
+
+
+def efeitos_cns(ativos):
+    """[Statedef -3] com os efeitos que acompanham o Pengaró: a aura do endiabrado e o efeito de cada golpe, que nasce
+    no elemento em que a caixa de golpe liga, na ponta da caixa (onde está o punho ou o pé)."""
+    t = ["[Statedef -3]\n"]
+    for anim, nome, pos, escala, prioridade in ((9210, "Aura de sombra", "0, 2", "1, 1", -1),
+                                                 (9211, "Sombra nos pés", "0, 2", "1, 1", -2)):
+        t.append(f"[State -3, {nome}]\ntype = Explod\ntrigger1 = var(20) > 0 && alive && NumExplod({anim}) = 0\n"
+                 f"anim = {anim}\nid = {anim}\npostype = p1\npos = {pos}\nbindtime = -1\nremovetime = -1\n"
+                 f"sprpriority = {prioridade}\nownpal = 1\nscale = {escala}\nignorehitpause = 1\nsupermovetime = -1\n\n")
+        t.append(f"[State -3, Tira {nome.lower()}]\ntype = RemoveExplod\ntrigger1 = var(20) <= 0 || !alive\n"
+                 f"trigger1 = NumExplod({anim})\nid = {anim}\n\n")
+    for anim, (elemento, caixa) in sorted(ativos.items()):
+        base = anim - 10000 if anim >= 10000 else anim
+        if not 200 <= base < 4000 or base == 2000:
+            continue
+        x1, y1, x2, y2 = caixa
+        chao = max(y1, y2) >= -25  # caixa rente ao chão: rasteira, poeira no chão; senão o rastro passa pela caixa
+        pos = f"{(x1 + x2) // 2}, 0" if chao else f"{(x1 + x2) // 2}, {(y1 + y2) // 2}"
+        # Alguns golpes do endiabrado usam a ação normal com os sprites trocados: a forma decide pelo var(20).
+        formas = [(True, "var(20) > 0")] if anim >= 10000 else [(False, "var(20) <= 0"), (True, "var(20) > 0")]
+        for endiabrado, forma in formas:
+            efeito = (9215 if endiabrado else 9214) if chao else (9212 if endiabrado else 9213)
+            t.append(f"[State -3, Efeito do golpe {anim}]\ntype = Explod\n"
+                     f"trigger1 = Anim = {anim} && AnimElem = {elemento} && {forma}\n"
+                     f"anim = {efeito}\npostype = p1\npos = {pos}\nbindtime = 3\nremovetime = -2\nsprpriority = 3\n"
+                     f"ownpal = 1\nignorehitpause = 1\n\n")
+    return "".join(t)
+
+
+def caminho_fluido(s, atual, proximo):
+    """Sprites para ir de um desenho até o seguinte, sem incluir o seguinte. Registra só os quadros do meio usados."""
+    de, para = desenho_de(atual), desenho_de(proximo) if proximo else None
+    # Desenhos distantes são cortes de propósito: atravessar tudo no meio faz o corpo se debater.
+    if not de or not para or de[0] != para[0] or de[1] == para[1] or abs(para[1] - de[1]) > 3:
+        return [atual]
+    folha = de[0]
+    passo = 1 if para[1] > de[1] else -1
+    caminho = []
+    for i in range(de[1], para[1], passo):
+        caminho.append(atual if i == de[1] else f"f_{folha}{i}")
+        intervalo = min(i, i + passo)
+        arquivos = sorted((QUADROS / folha / "meio").glob(f"{intervalo:02d}_*.png"),
+                          key=lambda a: int(a.stem.split("_")[1]), reverse=passo < 0)
+        for arquivo in arquivos:
+            nome = f"m_{folha}_{arquivo.stem}"
+            if nome not in s.codigos:
+                s.add(nome, abrir_quadro(arquivo))
+            caminho.append(nome)
+    return caminho
+
+
+def remapear_animelem(cns, mapas):
+    """O .cns conta elementos da animação; os quadros do meio mudam essa contagem."""
+    linhas = cns.split("\n")
+    acao, cabecalho = None, False
+    for n, linha in enumerate(linhas):
+        estado = re.match(r"\[Statedef (-?\d+)\]", linha)
+        if estado:
+            acao, cabecalho = int(estado[1]), True
+        elif linha.startswith("[State "):
+            cabecalho = False
+        elif cabecalho and (troca := re.match(r"anim = (\d+)$", linha)):
+            acao = int(troca[1])
+        mapa = mapas.get(acao)
+        if mapa and "AnimElem" in linha:
+            novo = lambda m: m[1] + str(mapa[int(m[2]) - 1] if int(m[2]) <= len(mapa) else m[2]) + m[3]
+            linhas[n] = re.sub(r"(AnimElem\s*=\s*)(\d+)()", novo, re.sub(r"(AnimElemTime\()(\d+)(\))", novo, linha))
+    return "\n".join(linhas)
+
+
+def sprites_folhas(s):
+    """Registra cada quadro das folhas como f_<folha><i>."""
+    for folha in FOLHAS:
+        for i in range(8):
+            img = quadro_folha(folha, i)
+            if img is not None:
+                s.add(f"f_{folha}{i}", img)
+
+
+def acoes_folhas(Q):
+    """Ações do Pengaró com a sequência inteira desenhada. Vêm antes das antigas, que então são ignoradas.
+    Quantidade de quadros e tempos seguem os golpes antigos onde o .cns depende de AnimElem."""
+    f = lambda folha, i: f"f_{folha}{i}"
+    Q(10, [(f("agachado", 1), 2), (f("agachado", 2), 2), (f("agachado", 3), 2)], BAIXO)
+    Q(11, [(f("agachado", i), 8) for i in (4, 5, 6, 7, 6, 5)], BAIXO)
+    Q(12, [(f("agachado", 2), 2), (f("agachado", 1), 2)], BAIXO)
+    Q(40, [(f("pulo", 0), 4)])
+    for n in (41, 42, 43):
+        Q(n, [(f("pulo", 1), 3), (f("pulo", 2), 5), (f("pulo", 3), 6), (f("pulo", 4), -1)], NO_AR)
+    for n in (44, 45, 46):
+        Q(n, [(f("pulo", 4), 6), (f("pulo", 5), 6), (f("pulo", 6), -1)], NO_AR)
+    Q(47, [(f("pulo", 7), 3), (f("pulo", 0), 2)])
+    Q(120, [(f("defesa", 1), 2), (f("defesa", 2), 2)])
+    Q(130, [(f("defesa", 3), 10), (f("defesa", 4), 10)])
+    Q(140, [(f("defesa", 2), 2), (f("defesa", 1), 2)])
+    Q(150, [(f("defesa", 5), 3), (f("defesa", 6), 3), (f("defesa", 7), -1)])
+    Q(170, [(f("derrota", i), 6) for i in range(7)] + [(f("derrota", 7), -1)])
+    Q(181, [(f("vitoria", i), 6) for i in range(7)] + [(f("vitoria", 7), -1)])
+    Q(195, [(f("provoca", i), 7) for i in range(8)])
+    leve = [(f("apanha", 1), 3), (f("apanha", 2), 4), (f("apanha", 3), 6)]
+    pesado = [(f("apanha", 1), 3), (f("apanha", 3), 5), (f("apanha", 4), 5), (f("apanha", 5), 4)]
+    for base in (5000, 5010):
+        for n, q in ((0, leve), (1, pesado), (2, pesado)):
+            Q(base + n, q)
+            Q(base + 5 + n, [(f("apanha", 6), 4), (f("apanha", 7), 4)])
+    Q(5050, [(f("queda", 1), 5), (f("queda", 2), 5), (f("queda", 3), -1)], NO_AR)
+    Q(5100, [(f("queda", 4), 3), (f("queda", 5), 3), (f("queda", 6), 3)], DEITADO)
+    Q(5101, [(f("queda", 5), 3), (f("queda", 6), 3)], DEITADO)
+    Q(5110, [(f("queda", 7), -1)], DEITADO)
+    Q(5160, [(f("queda", 6), 6), (f("queda", 7), -1)], DEITADO)
+    Q(5170, [(f("queda", 6), 6), (f("queda", 7), -1)], DEITADO)
+    Q(5120, [(f("levanta", i), 4) for i in range(1, 8)], BAIXO)
+    for n, t in ((700, 4), (5200, 3), (5210, 3)):
+        Q(n, [(f("rolamento", i), t) for i in range(8)], [])
+    Q(705, [(f("rolamento", i), 4) for i in range(7, -1, -1)], [])
+
+    def sequencia(n, folha, lig, ativo, rec, caixa, quadro_ativo=3, area=CORPO):
+        """Liga, golpe e volta com os 8 desenhos, no mesmo tempo total do golpe antigo."""
+        a = quadro_ativo
+        pre = list(range(1, a))
+        pos = list(range(a + 2, 8))
+        q = [(f(folha, i), max(1, lig // len(pre)) + (lig % len(pre) if j == 0 else 0)) for j, i in enumerate(pre)]
+        q += [(f(folha, a), 1, caixa), (f(folha, a + 1), max(1, ativo - 1), caixa)]
+        q += [(f(folha, i), max(1, rec // len(pos)) + (rec % len(pos) if j == 0 else 0)) for j, i in enumerate(pos)]
+        Q(n, q, area)
+
+    sequencia(230, "chute_baixo", 5, 3, 9, (12, -56, 58, -42))
+    sequencia(240, "chute_alto", 9, 4, 18, (12, -100, 80, -58))
+    # capoeira: cotovelada no soco forte, bênção no chute longo
+    sequencia(210, "martelo", 7, 4, 16, (15, -92, 78, -64))
+    sequencia(215, "martelo", 4, 3, 14, (12, -94, 66, -62))
+    sequencia(245, "chute_baixo", 5, 3, 16, (10, -76, 50, -50))
+    sequencia(260, "afastar", 12, 4, 20, (15, -100, 75, -60))
+    giro = (-40, -80, 90, -20)
+    for i in (0, 1):
+        Q(1100 + i, [(f("compasso", 1), 8)] + [(f("compasso", j), 4, giro) for j in (2, 3, 4, 5)]
+          + [(f("compasso", 7), 14 + 6 * i)])
+        Q(1200 + i, [(f("armada", 2), 4), (f("armada", 4), 6, (0, -130, 60 + 8 * i, -30)), (f("armada", 5), 8),
+                     (f("armada", 6), -1)], NO_AR)
+        Q(1300 + i, [(f("caneta", 2), 10), (f("caneta", 4), 8, (10, -20, 70, -4)), (f("caneta", 7), 20 + 6 * i)], BAIXO)
+    sequencia(400, "baixo_soco", 4, 3, 7, (15, -56, 54, -42), quadro_ativo=4, area=BAIXO)
+    sequencia(410, "cabecada", 6, 5, 18, (5, -122, 42, -60), area=BAIXO)
+    sequencia(430, "rasteirinha", 5, 3, 10, (12, -18, 62, -4), area=BAIXO)
+    sequencia(440, "rasteira", 10, 4, 22, (12, -18, 78, -2), area=BAIXO)
+    Q(600, [(f("ar_soco", 2), 2), (f("ar_soco", 3), 3), (f("ar_soco", 4), 8, (8, -86, 50, -62)),
+            (f("ar_soco", 6), -1)], NO_AR)
+    Q(650, [(f("bicicleta", 2), 3), (f("bicicleta", 3), 4), (f("bicicleta", 4), 6, (6, -70, 70, -20)),
+            (f("bicicleta", 6), -1)], NO_AR)
+    Q(810, [(f("agarrao", i), 4) for i in range(2, 7)] + [(f("agarrao", 7), 10)])
+    # correntes, kombos, golpes do Despertar e especiais novos (dados em pengaro_extra.py)
+    for m in extra.TODOS + extra.ESPECIAIS_A_MAO:
+        Q(m.estado, [(f(fl, d), n, m.caixa) if ativo else (f(fl, d), n) for fl, d, n, ativo in m.quadros],
+          BAIXO if m.area == "BAIXO" else CORPO)
+    # agarrão de comando: errou, fica aberto; acertou, capoeira e whisky
+    Q(830, [(f("agarrao", 2), 3, (10, -90, 42, -50)), (f("agarrao", 3), 4), (f("agarrao", 4), 4),
+            (f("agarrao", 5), 4)])
+    Q(831, [(f(folha, i), n) for folha, i, n in AGARRAO_WHISKY])
+    # Despertar: bebe, vê a garrafa vazia, joga no chão e é possuído pelas sombras (regra 7.1: cutscene)
+    Q(2000, [(f("despertar_a", i), 7) for i in range(7)] + [(f("despertar_a", 7), 6)]
+          + [(f("despertar_b", i), 7) for i in range(7)] + [(f("despertar_b", 7), 10)])
+    Q(1005, [(f"bola{i}", 3) for i in range(4)], [(-6, -8, 6, 8)])  # lata de cerveja girando reto
+    # Latada de Sombra: arremesso de braço (4 quadros, o 2º solta a lata, como antes)
+    for n, fim_ in ((1000, 22), (1001, 26)):
+        Q(n, [(f("bola", 2), 8), (f("bola", 4), 5), (f("bola", 5), 6), (f("bola", 7), fim_)])
+
+
+def montar_sprites(dados=None, retrato=None, hazaki=False):
+    p, bola = dados if dados is not None else carregar_poses()
+    if not hazaki:
+        bola = itens_pengaro.lata()  # o projétil do Pengaró é uma lata de cerveja
     s = Sprites()
+    s.folhas = not hazaki
     A = s.add
 
     # retratos que o IKEMEN usa no menu e nas barras
     rosto = p["parado"].crop((EIXO_X - 24, EIXO_Y - 112, EIXO_X + 32, EIXO_Y - 56))
-    A("retrato_p", rosto.resize((25, 25), Image.NEAREST), 9000, 0, (0, 0))
     busto = p["parado"].crop((EIXO_X - 60, EIXO_Y - 118, EIXO_X + 60, EIXO_Y + 22))
+    if retrato and retrato.exists():
+        rosto = Image.open(retrato).convert("RGBA")
+        rosto = rosto.crop(rosto.getbbox())
+        busto = rosto.copy()
+        busto.thumbnail((120, 140), Image.Resampling.LANCZOS)
+        lado = min(rosto.size)
+        x = (rosto.width - lado) // 2
+        rosto = rosto.crop((x, 0, x + lado, lado))
+    A("retrato_p", rosto.resize((25, 25), Image.Resampling.LANCZOS), 9000, 0, (0, 0))
     A("retrato_g", busto, 9000, 1, (0, 0))
 
     # em pé: respiração
@@ -258,6 +990,9 @@ def montar_sprites():
     A("agacha2", estica(p["agachado"], 1.015))
     # pulo
     A("prepulo", estica(mistura(p["parado"], p["agachado"], 0.6), 0.97))
+    # Mortal visual: a rotação não altera a trajetória nem as caixas do salto.
+    for i in range(12):
+        A(f"mortal{i}", gira(p["pulo"], i * 30))
     A("pulo_sobe", estica(p["pulo"], 1.05))
     A("pulo_topo", p["pulo"])
     A("pulo_desce", gira(p["pulo"], 6))
@@ -283,6 +1018,25 @@ def montar_sprites():
     for i in range(8):
         A(f"rola{i}", gira(p["agachado"], 45 * i, 0, -42))
     # golpes
+    # quadros desenhados de novo, um por um (veja ferramentas/recortar_quadros.py)
+    # quadros do meio entre os desenhos (ferramentas/entremeio.py): ginga e andar a 2 ticks por desenho
+    fluidas = () if hazaki else ("ginga_fluida", "anda_fluida")
+    for nome in ("parado", "anda", "soco") + fluidas:
+        if hazaki:
+            origens = {"parado": p["parado"], "anda": p["andando"], "soco": p["soco"]}
+            for i in range(8):
+                if nome == "soco":
+                    origem = p["defesa"] if i < 3 or i > 5 else p["soco"]
+                    quadro = move(gira(origem, (-3, -6, -2, 3, 0, 1, -4, 0)[i], 0, 0), (0, -2, -1, 0, 4, 2, 1, 0)[i])
+                elif nome == "anda":
+                    origem = p["andando"] if i % 4 < 2 else p["andando2"]
+                    quadro = move(origem, 0, (0, -2, -3, -1)[i % 4])
+                else:
+                    quadro = estica(origens[nome], 1 + .012 * math.sin(i * math.tau / 8))
+                A(f"q_{nome}{i}", quadro)
+            continue
+        for i, arquivo in enumerate(sorted((QUADROS / nome).glob("*.png"))):
+            A(f"q_{nome}{i}", abrir_quadro(arquivo))
     A("soco0", mistura(p["parado"], p["soco"], 0.5))
     A("soco1", p["soco"])
     A("soco2", move(p["soco"], 6))
@@ -300,6 +1054,9 @@ def montar_sprites():
     A("rasteira3", mistura(p["rasteira"], p["agachado"], 0.5))
     A("ar_soco", gira(p["soco"], 8))
     A("ar_chute", gira(p["chute"], 14))
+    A("ar_cotovelo", gira(p["soco"], 28, 0, -65))
+    A("pisa", move(gira(p["chute"], 43, 0, -45), 0, 6))
+    A("parry", move(gira(p["defesa"], 8 if hazaki else -8, 0, 0), 3))
     A("bicicleta", gira(p["chute"], -40))
     A("agarra", move(p["soco"], 4))
     A("joga", espelha(mistura(p["soco"], p["parado"], 0.3)))
@@ -314,30 +1071,79 @@ def montar_sprites():
         A(f"bola{i}", b, eixo=(b.width // 2, b.height // 2))
         g2 = b.resize((b.width * 3, b.height * 3), Image.NEAREST)
         A(f"bolao{i}", g2, eixo=(g2.width // 2, g2.height // 2))
+    # bola quicando: o eixo sobe e desce, então a bola pula sem mudar a trajetória
+    for i in range(8):
+        b = bola.rotate(90 * (i % 4), resample=Image.NEAREST, expand=True)
+        altura = round(30 * abs(math.sin(math.pi * i / 8)))
+        A(f"quica{i}", b, eixo=(b.width // 2, b.height // 2 + altura))
+    if not hazaki:
+        # chuva de bebidas: garrafa e lata caindo girando (giro de 90°, sem borrar)
+        g = itens_pengaro.garrafa()
+        g = g.resize((g.width * 2, g.height * 2), Image.NEAREST)  # escala inteira: lê melhor caindo do céu
+        for i, q in enumerate((g, g.transpose(Image.ROTATE_270), g.transpose(Image.ROTATE_180), g.transpose(Image.ROTATE_90))):
+            A(f"chuva_garrafa{i}", q, eixo=(q.width // 2, q.height // 2))
+        for i, q in enumerate(itens_pengaro.latas_girando(escala=2)):
+            A(f"chuva_lata{i}", q, eixo=(q.width // 2, q.height // 2))
     # embaixadinha (provocação, intro e vitória)
     for i, y in enumerate((-30, -52, -68, -52)):
         A(f"embaixada{i}", com_bola(p["parado"], bola, 40, y))
     # despertar: bebe a lata
-    A("lata0", com_lata(p["defesa"]))
-    A("lata1", gira(com_lata(p["defesa"]), -10, 0, 0))
+    A("lata0", p["defesa"] if hazaki else com_lata(p["defesa"]))
+    A("lata1", gira(p["defesa"] if hazaki else com_lata(p["defesa"]), -10, 0, 0))
+    for i, angulo in enumerate((-6, 2, 7, 1)):
+        tela = p["parado"].copy()
+        d = ImageDraw.Draw(tela)
+        x, y = EIXO_X, EIXO_Y
+        # Armação esportiva e lente roxa na altura dos olhos.
+        d.line((x - 6, y - 98, x + 17, y - 99), fill="#d2d8df", width=2)
+        d.polygon([(x + 3, y - 99), (x + 19, y - 100),
+                   (x + 16, y - 94), (x + 7, y - 93)], fill="#35224e")
+        d.line((x + 7, y - 98, x + 16, y - 99), fill="#b378d1")
+        A(f"juliet{i}", gira(tela, angulo, 0, 0))
     A("lata2", estica(p["parado"], 1.03))
+    if not hazaki:
+        # ginga da forma despertada: a mesma ginga, de óculos, com as chamas por trás
+        for i in range(quadros_do_loop("ginga_endiabrada")):
+            A(f"ginga_endiabrada{i}", abrir_quadro(QUADROS / f"ginga_endiabrada/{i:02d}.png"))
     # balões
     for chave, texto in BALOES.items():
         A(f"balao_{chave}", balao(texto))
+    if not hazaki:
+        sprites_folhas(s)
     return s
 
 
 # As falas ficam aqui para o Breno editar. A gagueira é só texto, nunca muda o tempo do golpe.
 BALOES = {
-    "intro": "B-b-bora jogar? Ca-capoeira ou\npe-pelada, que eu de-de-dou conta!",
+    "intro": "S-s-saideira? Que sa-saideira,\na no-noite tá só co-começando!",
+    "intro_trava": "P-p-p-p-p...",
+    "locutor": "FIGHT, CARALHO, A GENTE\nNÃO TEM O DIA TODO!",
+    "round": "H-h-hoje tem resenha, ca-caralho.",
+    "primeiro": "I-ih, já co-co-começou na sacanagem?",
     "provoca": "F-f-f-f-f-f...",
-    "bola": "Bo-bo-bo-bola de So-sombra!",
-    "compasso": "Co-co-compasso, porra!",
-    "armada": "A-a-a-armada!",
-    "caneta": "Ca-ca-caneta!",
-    "golaco": "O-o-o-olha o... GOLAÇOOOO, CARALHO!",
+    "provoca_fim": "...ah, vai se foder, porra.",
+    "provoca_cai": "Ai, ca-caralho! De-derramei o whisky!",
+    "bola_trava": "La-la-la-la...",
+    "bola_ok": "...LATADA DE SOMBRA!",
+    "compasso_trava": "Co-co-co-co...",
+    "compasso_ok": "...COMPASSO, PORRA!",
+    "armada_trava": "A-a-a-a...",
+    "armada_ok": "...ARMADA!",
+    "caneta_trava": "Ca-ca-ca-ca...",
+    "caneta_ok": "...CANETA, FILHO DA PUTA!",
+    "errou": "...deixa pra lá, porra.",
+    "bola_liso": "LATADA DE SOMBRA, CARALHO!",
+    "compasso_liso": "COMPASSO NA TUA CARA!",
+    "armada_liso": "ARMADA, VEM QUE TEM!",
+    "caneta_liso": "CANETA, PASSOU POR BAIXO!",
+    "derrota": "F-f-f-foi falta, porra!\nCa-cadê o VAR, ca-caralho?",
+    "locutor_ko": "K.O.! ...ou, no caso dele,\nK-k-k-k-K.O.!",
+    "vitoria0": "F-f-foi de letra,\nfilho da puta.",
+    "vitoria1": "V-v-vai lá contar pra tua mãe\nque tu a-a-apanhou do gago.",
+    "vitoria2": "Es-essa vai na tua conta,\npa-pa-parceiro. A do bar também.",
+    "golaco": "O-o-o-olha a... CHUVA DE BEBIDA, CARALHO!",
     "lata": "A-a-a-agora sim, porra!\nSegura que eu vou me-me-meter!",
-    "pelada": "CHAMA A RAPAZIADA, CARALHO! TÁ LISO AGORA!",
+    "pelada": "SAIDEIRA, CARALHO!\nA RODADA É POR MINHA CONTA!",
     "ressaca": "...e-e-e aí, cadê a-a-a porra da outra lata?",
     "escapou": "A-a-achou que ia me pe-pegar?",
 }
@@ -345,29 +1151,44 @@ ID_BALAO = {chave: 9100 + i for i, chave in enumerate(BALOES)}
 
 VITORIAS = [
     "F-f-foi de letra, filho da puta.",
-    "T-t-tá achando que é pe-pelada de domingo, é, ca-caralho?",
+    "T-t-tá achando que é bo-boteco de domingo, é, ca-caralho?",
     "V-v-vai lá contar pra tua mãe que tu a-a-apanhou do gago.",
-    "Eu chu-chupo... chu-chu-CHUTO melhor que tu, porra!",
+    "Eu be-bebo... be-be-BATO melhor que tu, porra!",
     "T-tu ficou pa-parado igual cone. Ma-mas cone pelo menos fica de pé.",
     "D-d-demorei pra falar, mas tu de-de-demorou mais pra levantar.",
-    "Mi-minhas bolas... MINHA BOLA tá sempre no pé, pa-pa-parceiro.",
+    "Es-essa vai na tua conta, pa-pa-parceiro. A do bar também.",
+    "Olha só, falei inteiro! Agora chama tua irmã que eu vou ensinar ela a gingar, hein!",
 ]
 
 
-def montar_air(s):
-    a = Air(s)
+def montar_air(s, faiscas, hazaki=False, arte_despertada=None):
+    a = Air(s, arte_despertada, hazaki)
     Q = a.acao
-    Q(0, [(f"parado{i}", 6) for i in (0, 1, 2, 3, 4, 5)])
+    if not hazaki:
+        acoes_folhas(Q)
+    if hazaki:
+        Q(0, [(f"q_parado{i}", 6) for i in range(8)])
+    else:
+        Q(0, [(f"q_ginga_fluida{i}", 2) for i in range(quadros_do_loop("ginga_fluida"))])
+    if hazaki:
+        Q(9203, [(f"juliet{i}", 6) for i in range(4)])
+    else:
+        Q(9203, [(f"ginga_endiabrada{i}", 2) for i in range(quadros_do_loop("ginga_endiabrada"))])
     Q(5, [("parado0", 3), ("anda0", 3)])
     Q(6, [("agacha0", 3), ("parado0", 3)], BAIXO)
     Q(10, [("agacha0", 3)], BAIXO)
     Q(11, [("agacha1", 12), ("agacha2", 12)], BAIXO)
     Q(12, [("agacha0", 3)], BAIXO)
-    Q(20, [(f"anda{i}", 6) for i in range(4)])
-    Q(21, [(f"anda{i}", 6) for i in (3, 2, 1, 0)])
+    if hazaki:
+        Q(20, [(f"q_anda{i}", 5) for i in range(8)])
+        Q(21, [(f"q_anda{i}", 5) for i in range(7, -1, -1)])
+    else:
+        Q(20, [(f"q_anda_fluida{i}", 2) for i in range(quadros_do_loop("anda_fluida"))])
+        Q(21, [(f"q_anda_fluida{i}", 2) for i in reversed(range(quadros_do_loop("anda_fluida")))])
     Q(40, [("prepulo", 4)])
     for n in (41, 42, 43):
-        Q(n, [("pulo_sobe", 8), ("pulo_topo", -1)], NO_AR)
+        Q(n, [("pulo_sobe", 8), ("pulo_topo", -1)] if hazaki else
+          [(f"mortal{i}", 2) for i in range(12)] + [("pulo_topo", -1)], NO_AR)
     for n in (44, 45, 46):
         Q(n, [("pulo_topo", 8), ("pulo_desce", -1)], NO_AR)
     Q(47, [("pouso", 3), ("parado0", 2)])
@@ -391,14 +1212,16 @@ def montar_air(s):
 
     # normais: caixa de golpe em (x1, y1, x2, y2), x para frente, y negativo para cima
     def soco(n, lig, ativo, rec, caixa):
-        Q(n, [("soco0", lig), ("soco1", 1, caixa), ("soco2", ativo - 1, caixa), ("soco3", rec)])
+        um = max(1, lig // 3)
+        Q(n, [("q_soco1", um), ("q_soco2", um), ("q_soco3", lig - 2 * um), ("q_soco4", 1, caixa),
+              ("q_soco5", ativo - 1, caixa), ("q_soco6", rec // 2), ("q_soco7", rec - rec // 2)])
 
     def chute(n, lig, ativo, rec, caixa):
         Q(n, [("chute0", lig), ("chute1", 1, caixa), ("chute2", ativo - 1, caixa), ("chute3", rec)])
 
-    soco(200, 4, 3, 7, (15, -92, 60, -76))
-    soco(210, 7, 4, 16, (15, -96, 70, -76))
-    soco(215, 4, 3, 14, (12, -98, 46, -70))
+    soco(200, 4, 3, 7, (15, -92, 74, -64))
+    soco(210, 7, 4, 16, (15, -92, 78, -64))
+    soco(215, 4, 3, 14, (12, -94, 66, -62))
     chute(230, 5, 3, 9, (12, -56, 58, -42))
     chute(240, 9, 4, 18, (12, -80, 80, -58))
     chute(245, 5, 3, 16, (10, -76, 50, -50))
@@ -414,21 +1237,37 @@ def montar_air(s):
     Q(705, [(f"rola{i}", 4) for i in (7, 6, 5, 4, 3, 2, 1, 0)], [])
     Q(800, [("agarra", 3, (10, -90, 42, -50))])
     Q(810, [("agarra", 14), ("joga", 16)])
+    if not hazaki:
+        Q(830, [("agarra", 3, (10, -90, 42, -50)), ("agarra", 12)])
+        Q(831, [("agarra", 14), ("gira1", 14), ("joga", 16)])
     # especiais
-    Q(1000, [("rasteira0", 8), ("especial", 5), ("rasteira1", 6), ("rasteira3", 22)], BAIXO)
-    Q(1005, [(f"bola{i}", 4) for i in range(4)], [(-12, -10, 12, 10)])
+    if not hazaki:
+        Q(1000, [("rasteira0", 8), ("especial", 5), ("rasteira1", 6), ("rasteira3", 22)], BAIXO)
+        Q(1001, [("rasteira0", 8), ("especial", 5), ("rasteira1", 6), ("rasteira3", 26)], BAIXO)
+    Q(1005, [(f"quica{i}", 4) for i in range(8)], [(-12, -40, 12, 10)])
     Q(1006, [("bola0", 3), ("bola2", 3)], [])
     giro = (-40, -80, 90, -20)
-    Q(1100, [("rasteira0", 8)] + [(f"gira{i}", 4, giro) for i in (0, 1, 2, 3)] + [("rasteira3", 14)])
-    Q(1200, [("baixo_cima0", 4), ("kick_alto", 6, (0, -130, 60, -30)), ("gira1", 8), ("pulo_topo", -1)], NO_AR)
-    Q(1300, [("rasteira0", 10), ("rasteira1", 8, (10, -20, 70, -4)), ("rasteira3", 20)], BAIXO)
+    if not hazaki:
+        for i in (0, 1):
+            Q(1100+i, [("rasteira0", 8)] + [(f"gira{j}", 4, giro) for j in range(4)] + [("rasteira3", 14+6*i)])
+            Q(1200+i, [("baixo_cima0", 4), ("kick_alto", 6, (0, -130, 60+8*i, -30)), ("gira1", 8), ("pulo_topo", -1)], NO_AR)
+            Q(1300+i, [("rasteira0", 10), ("rasteira1", 8, (10, -20, 70, -4)), ("rasteira3", 20+6*i)], BAIXO)
     # super e despertar
-    Q(2000, [("lata0", 14), ("lata1", 18), ("lata2", 8)])
-    Q(3000, [("embaixada0", 6), ("embaixada1", 6), ("embaixada2", 6), ("rasteira0", 6), ("especial", 6), ("rasteira1", 8), ("rasteira3", 20)], BAIXO)
+    Q(2000, [("lata0", 14), ("lata1", 18), ("juliet0" if hazaki else "lata2", 8)])
+    if not hazaki:
+        # Chuva de Bebidas: bebe, ergue os braços e chama a chuva (o 5º quadro solta as bebidas)
+        Q(3000, [("f_golaco0", 6), ("f_golaco1", 6), ("f_golaco2", 6), ("f_golaco3", 6), ("f_golaco4", 6),
+                 ("f_golaco4", 10), ("f_golaco4", 24)])
+        Q(3010, [(f"chuva_garrafa{i}", 3) for i in range(4)], [(-12, -22, 12, 22)])
+        Q(3011, [(f"chuva_lata{i}", 3) for i in range(4)], [(-10, -15, 10, 15)])
     Q(3005, [(f"bolao{i}", 3) for i in range(4)], [(-40, -30, 40, 30)])
     Q(3006, [("bolao0", 3), ("bolao2", 3)], [])
     caixa_p = (0, -110, 90, -10)
     Q(3100, [("chute0", 4)] + [(n, 4, caixa_p) for n in ("soco1", "chute1", "rasteira1", "soco2", "chute2", "gira1", "rasteira2", "kick_alto")] + [("chute3", 20)])
+    for g in golpes(hazaki):
+        Q(g.estado, quadros_golpe(g), NO_AR if g.tipo == "A" else CORPO)
+    Q(760, [("parry", 4, (-8, -105, 46, -12)), ("recua", 10), ("defesa", 10)])
+    Q(761, [("parry", 3)])
 
     # apanhando (nomes de ação fixos do motor)
     leve = [("apanha0", 3), ("apanha1", 8)]
@@ -463,6 +1302,8 @@ def montar_air(s):
 
     for chave, numero in ID_BALAO.items():
         Q(numero, [(f"balao_{chave}", -1)], [])
+    for numero, quadros in faiscas.items():
+        Q(numero, quadros, [])
     return a
 
 
@@ -477,7 +1318,26 @@ def estado(numero, tipo="S", mov="A", fis="S", anim=None, juggle=None, velset="0
         t.append(f"juggle = {juggle}")
     if velset:
         t.append(f"velset = {velset}")
-    return "\n".join(t) + extra + "\n\n"
+    resultado = "\n".join(t) + extra + "\n\n"
+    if anim in ATAQUES_DESPERTADOS or anim == 3100:
+        gatilho = "" if anim == 3100 else "trigger1 = var(20) > 0\n"
+        resultado += (f"[State {numero}, Arte despertada]\ntype = ChangeAnim\n"
+                      f"trigger1 = Time = 0\n{gatilho}value = {anim + 10000}\n\n")
+    return resultado
+
+
+def fx_forma(numero):
+    """Explod de efeito: no Despertar usa o par do endiabrado (numero + 30), quando os efeitos próprios existem."""
+    return f"ifelse(var(20) > 0, {numero + 30}, {numero})" if FAISCA_POR_FORMA else str(numero)
+
+
+def faiscas(numero):
+    """O motor desenha a faísca de acerto sem a troca de sprites do Despertar: com os efeitos próprios do Pengaró,
+    o golpe escolhe pelo var(20) entre a faísca do normal (92xx) e a do endiabrado (92xx + 30)."""
+    if not FAISCA_POR_FORMA:
+        return f"sparkno = S{numero}", "guard.sparkno = S9202"
+    return (f"sparkno = S(ifelse(var(20) > 0, {numero + 30}, {numero}))",
+            "guard.sparkno = S(ifelse(var(20) > 0, 9232, 9202))")
 
 
 def hitdef(numero, trigger, attr, dano, tipo="Light", guarda="MA", alvo="MAF", pausa=(8, 8), hit=12, escorrega=5,
@@ -485,6 +1345,7 @@ def hitdef(numero, trigger, attr, dano, tipo="Light", guarda="MA", alvo="MAF", p
     t = [f"[State {numero}, Golpe]", "type = HitDef", f"trigger1 = {trigger}", f"attr = {attr}",
          f"damage = {dano}, 0", f"animtype = {tipo}", f"guardflag = {guarda}", f"hitflag = {alvo}",
          "priority = 4, Hit", f"pausetime = {pausa[0]}, {pausa[1]}", "sparkxy = -10, -70",
+         *faiscas(9201 if pesado else 9200),
          f"hitsound = F{'5,2' if pesado else '5,0'}", "guardsound = F6,0", f"ground.type = {chao}",
          f"ground.slidetime = {escorrega}", f"ground.hittime = {hit}", f"ground.velocity = {vel}",
          f"air.velocity = {ar}"]
@@ -498,13 +1359,35 @@ def fim(numero, destino=0):
 
 
 def fala(numero, chave, trigger="Time = 0"):
-    return (f"[State {numero}, Fala]\ntype = Explod\ntrigger1 = {trigger}\nanim = {ID_BALAO[chave]}\n"
-            "ownpal = 1\npostype = p1\npos = 0, -125\nbindtime = -1\nremovetime = 70\n"
-            "sprpriority = 6\nfacing = Facing\nignorehitpause = 1\n\n")
+    """Troca o balão do lutador. Ele nasce acima da cabeça e fica parado na tela, sempre inteiro e abaixo da HUD."""
+    if not BALOES_LIGADOS:
+        return ""
+    gatilhos ="\n".join(f"trigger1 = {g.strip()}" for g in trigger.split(" & "))
+    w, h = medida_balao(BALOES[chave])
+    meia = w // 2 + BALAO_MARGEM
+    ponta_minima = BALAO_TOPO_MINIMO + h + 8
+    return (f"[State {numero}, Troca fala]\ntype = RemoveExplod\n{gatilhos}\nid = 700\n\n"
+            f"[State {numero}, Fala]\ntype = Explod\n{gatilhos}\nanim = {ID_BALAO[chave]}\n"
+            "id = 700\nownpal = 1\npostype = left\n"
+            f"pos = clamp(ScreenPos X, {meia}, ScreenWidth - {meia}), "
+            f"max(ScreenPos Y - {BALAO_ACIMA_DOS_PES}, {ponta_minima})\n"
+            "removetime = 70\nsprpriority = 6\nignorehitpause = 1\n\n")
+
+
+def nome_travado(numero, golpe, fim_sem_acerto="AnimTime = 0"):
+    """O nome do golpe trava na gagueira e só sai inteiro se acertar. No Despertar ele fala liso.
+
+    É só balão: nada aqui muda o tempo do golpe.
+    """
+    return (fala(numero, f"{golpe}_trava", "Time = 0 & var(20) = 0")
+            + fala(numero, f"{golpe}_liso", "Time = 0 & var(20) > 0")
+            + fala(numero, f"{golpe}_ok", "MoveHit = 1 & var(20) = 0")
+            + fala(numero, "errou", f"{fim_sem_acerto} & !MoveContact & var(20) = 0"))
 
 
 def normal(numero, attr, dano, trigger, *, fis="S", tipo_st="S", leve=False, **k):
-    t = estado(numero, tipo_st, "A", fis, anim=numero, juggle=1, velset=None if tipo_st == "A" else "0,0")
+    t = estado(numero, tipo_st, "A", fis, anim=numero, juggle=5 if tipo_st == "A" else 2,
+               velset=None if tipo_st == "A" else "0,0")
     if leve:
         t += f"[State {numero}, Corrente]\ntype = VarAdd\ntrigger1 = Time = 0\nvar(5) = 1\n\n"
     t += hitdef(numero, trigger, attr, dano, **k)
@@ -516,7 +1399,8 @@ def normal(numero, attr, dano, trigger, *, fis="S", tipo_st="S", leve=False, **k
 
 CNS_TOPO = """; Gerado por ferramentas/gerar_pengaro.py. Edite lá, não aqui.
 ; var(1) condição de cancelar, var(5) fracos em sequência, var(6) lado do pulo,
-; var(7) super pulo, var(20) tempo de Despertar, var(21) ressaca
+; var(7) super pulo, var(10) acertos da corrente, var(11) trava da contagem,
+; var(20) tempo de Despertar, var(21) ressaca
 
 [Data]
 life = 1000
@@ -624,7 +1508,7 @@ ctrl = 1
 
 """
 
-CNS_INTRO = """[Statedef 170]
+CNS_INTRO_BASE = """[Statedef 170]
 type = S
 ctrl = 0
 anim = 170
@@ -662,18 +1546,6 @@ ctrl = 0
 anim = 190
 velset = 0,0
 
-[State 191, Fala]
-type = Explod
-trigger1 = Time = 4
-anim = %d
-ownpal = 1
-postype = p1
-pos = 0, -125
-bindtime = -1
-removetime = 70
-sprpriority = 6
-facing = Facing
-
 [State 191, Fim]
 type = AssertSpecial
 trigger1 = AnimTime < 0
@@ -684,7 +1556,24 @@ type = ChangeState
 trigger1 = AnimTime = 0
 value = 0
 
-""" % ID_BALAO["intro"]
+"""
+
+def cns_intro():
+    return CNS_INTRO_BASE.replace(
+        "[State 191, Fim]\n",
+        "[State 191, Sorteio]\ntype = VarSet\ntrigger1 = Time = 0\nvar(34) = Random < 250\n\n"
+        + fala(191, "intro_trava", "Time = 4 & var(34) = 1")
+        + fala(191, "locutor", "Time = 44 & var(34) = 1")
+        + fala(191, "intro", "Time = 4 & var(34) = 0")
+        + "[State 191, Fim]\n",
+    ).replace(
+        "[Statedef 191]",
+        "[State 181, Sorteio]\ntype = VarSet\ntrigger1 = Time = 0\nvar(35) = Random % 3\n\n"
+        + fala(181, "vitoria0", "Time = 20 & var(35) = 0")
+        + fala(181, "vitoria1", "Time = 20 & var(35) = 1")
+        + fala(181, "vitoria2", "Time = 20 & var(35) = 2")
+        + "[Statedef 191]",
+    )
 
 
 def projetil(numero, trigger, anim, hit_anim, vel, dano, attr, hits=1, intervalo=0, id_=1000, ofs="70, -32", queda=False):
@@ -700,14 +1589,375 @@ def projetil(numero, trigger, anim, hit_anim, vel, dano, attr, hits=1, intervalo
     return "\n".join(t) + "\n\n"
 
 
+def chuva_de_bebidas(numero):
+    """Super do Pengaró: seis garrafas e latas caem do céu em cima do oponente, uma a cada 6 ticks.
+    A última derruba. Defende-se em pé (vem de cima)."""
+    t = []
+    for i, dx in enumerate((-30, 24, -8, 36, -40, 6)):
+        ultima = i == 5
+        t += [f"[State {numero}, Bebida {i + 1}]", "type = Projectile", f"trigger1 = AnimElemTime(5) = {i * 6}",
+              "projid = 3000", f"projanim = {3010 + i % 2}", "projhitanim = 9200", "projremanim = 9200",
+              "postype = p2", f"offset = {dx}, {-210 - 18 * (i % 3)}", f"velocity = 0, {7 + i % 2}",
+              "projpriority = 3", "projremovetime = 80", "projheightbound = -400, 1", "attr = S, HP",
+              f"damage = {60 if ultima else 42}, 6", "animtype = Heavy" if ultima else "animtype = Med",
+              "guardflag = H", "hitflag = MAF", "pausetime = 4, 10", "sparkno = -1", "hitsound = F5,2",
+              "guardsound = F6,0", "ground.type = High", "ground.slidetime = 10", "ground.hittime = 16",
+              "ground.velocity = -2", "air.velocity = -2,-3"]
+        if ultima:
+            t += ["fall = 1", "fall.recover = 0"]
+        t.append("")
+    return "\n".join(t) + "\n"
+
+
 def superpausa(numero, trigger):
     return (f"[State {numero}, Pausa]\ntype = SuperPause\ntrigger1 = {trigger}\ntime = 30\nanim = 100\n"
             "pos = 10, -60\nsound = F20,0\nmovetime = 0\ndarken = 1\n\n"
-            f"[State {numero}, Rastro]\ntype = AfterImage\ntrigger1 = {trigger}\ntime = 40\nlength = 8\n\n")
+            f"[State {numero}, Rastro]\ntype = AfterImage\ntrigger1 = {trigger}\ntime = 40\nlength = 8\n"
+            # sem trans o motor desenha as cópias escurecidas por cima: no Despertar virava uma mancha preta no corpo
+            "trans = add\npalmul = .45,.25,.65\npaladd = 20,0,40\ntimegap = 2\nframegap = 3\n\n")
 
 
-def montar_cns():
-    c = [CNS_TOPO, CNS_INTRO, CNS_PULOS]
+def cns_repertorio(hazaki):
+    c = []
+    for g in golpes(hazaki):
+        n = g.estado
+        tipo = g.tipo
+        fisica = "A" if tipo == "A" else "N"
+        classe = "HA" if g.custo else "SA" if n >= 1000 else "NA"
+        if hazaki and n in (1100, 1101):
+            c.append(estado(n, "S", "A", "N", anim=760))
+            atributos = "SCA, NA, SA" if n == 1101 else "S, NA, SA"
+            c.append(reversao(n, n + 2, atributos, "Time < 4"))
+            c.append(fim(n))
+            n += 2
+        c.append(estado(n, tipo, "A", fisica, anim=g.estado, juggle=5,
+                        velset=None if tipo == "A" else "0,0"))
+        if g.custo:
+            c.append(superpausa(n, "Time = 0"))
+            c.append(f"[State {n}, Estoque]\ntype = PowerAdd\ntrigger1 = Time = 0\nvalue = -{g.custo}\n\n")
+        if g.avanco:
+            c.append(f"[State {n}, Avanço]\ntype = VelSet\ntrigger1 = AnimElem = 2\n"
+                     f"x = {g.avanco} * ifelse(var(20) > 0, 1.22, 1)\n\n")
+            c.append(f"[State {n}, Freia]\ntype = VelSet\ntrigger1 = AnimElem = {len(g.poses)}\nx = 0\n\n")
+        if hazaki and n in (1500, 1501):
+            c.append(f"[State {n}, Salta]\ntype = VelSet\ntrigger1 = Time = 1\ny = -4.5\n\n"
+                     f"[State {n}, No ar]\ntype = StateTypeSet\ntrigger1 = Time = 1\nstatetype = A\n\n"
+                     f"[State {n}, Gravidade]\ntype = VelAdd\ntrigger1 = statetype = A\ny = .43\n\n"
+                     f"[State {n}, Chão]\ntype = PosSet\ntrigger1 = statetype = A && Pos Y >= 0 && Vel Y > 0\ny = 0\n\n"
+                     f"[State {n}, Aterrissa]\ntype = StateTypeSet\ntrigger1 = statetype = A && Pos Y >= 0 && Vel Y > 0\nstatetype = S\n\n"
+                     f"[State {n}, Firma os pés]\ntype = VelSet\ntrigger1 = statetype = S && Time > 1\ny = 0\n\n")
+        impactos = len(g.poses) - 2 if g.custo else 1
+        for i in range(impactos):
+            final = i == impactos - 1
+            condicao = f"AnimElem = {i+2}"
+            if i:
+                condicao += " && MoveHit"
+            c.append(hitdef(n, condicao, f"{tipo}, {classe}", g.dano // impactos,
+                            tipo="Heavy" if final else "Medium", guarda=g.guarda,
+                            pausa=(6, 8), hit=19 if final else 21,
+                            vel=g.lancamento if g.queda and final else "-3" if final else "-1", ar=g.lancamento,
+                            queda=g.queda and final, pesado=final and g.dano >= 75,
+                            chao="Low" if g.guarda == "L" else "High"))
+        if tipo != "A":
+            if 1500 <= n <= 1501 or (hazaki and n in (1300, 1301, 3200)):
+                efeito = 9206 if hazaki else fx_forma(9205)
+                c.append(f"[State {n}, Impacto visual]\ntype = Explod\ntrigger1 = AnimElem = 2\n"
+                         f"trigger1 = var(20) > 0\nanim = {efeito}\npostype = p1\npos = 30, -15\n"
+                         "removetime = -2\nsprpriority = 4\nownpal = 1\n\n")
+            if not hazaki and n == 1501:
+                c.append(f"[State {n}, Quique]\ntype = TargetState\n"
+                         "trigger1 = MoveHit = 1 && NumTarget > 0 && var(20) > 0 && !var(24)\nvalue = 763\n\n"
+                         f"[State {n}, Registra quique]\ntype = VarSet\n"
+                         "trigger1 = MoveHit = 1 && NumTarget > 0 && var(20) > 0\nvar(24) = 1\n\n")
+            c.append(fim(n))
+    c.append(estado(760, "S", "A", "N", anim=760))
+    c.append(reversao(760, 761, "SCA, NA, SA, HA", "Time < 4"))
+    c.append(fim(760))
+    c.append(estado(761, "S", "I", "N", anim=761))
+    c.append(fim(761))
+    c.append("""[Statedef 762]
+type = U
+movetype = H
+physics = N
+ctrl = 0
+
+[State 762, Solo]
+type = VelSet
+trigger1 = statetype != A
+x = 0
+y = 0
+
+[State 762, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(statetype = A, 5030, ifelse(statetype = C, 5020, 5000))
+
+[State 762, Gravidade]
+type = VelAdd
+trigger1 = statetype = A
+y = .44
+
+[State 762, Pouso]
+type = PosSet
+trigger1 = statetype = A && Pos Y >= 0 && Vel Y >= 0
+y = 0
+
+[State 762, Aterrissa]
+type = StateTypeSet
+trigger1 = statetype = A && Pos Y >= 0 && Vel Y >= 0
+statetype = S
+
+[State 762, Abertura no ar]
+type = SelfState
+trigger1 = Time >= 14 && statetype = A
+value = 50
+ctrl = 1
+
+[State 762, Abertura no chão]
+type = SelfState
+trigger1 = Time >= 14
+value = 0
+ctrl = 1
+
+""")
+    if not hazaki:
+        c.append("""[Statedef 763]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+velset = 2,-3
+
+[State 763, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 5050
+
+[State 763, Gravidade]
+type = VelAdd
+trigger1 = 1
+y = .44
+
+[State 763, Quica uma vez]
+type = VelSet
+trigger1 = Time < 22 && Pos Y >= 0 && Vel Y > 0
+y = -4.8
+
+[State 763, Fim]
+type = SelfState
+trigger1 = Time >= 22 && Pos Y >= 0 && Vel Y > 0
+value = 5100
+
+""")
+    return "".join(c)
+
+
+def reversao(numero, sucesso, atributos, gatilho):
+    return (f"[State {numero}, Desvia]\ntype = ReversalDef\ntrigger1 = {gatilho}\n"
+            f"reversal.attr = {atributos}\npausetime = 0,0\nsparkno = S9204\n"
+            f"p1stateno = {sucesso}\np2stateno = 762\n\n")
+
+
+def cns_agarrao_whisky():
+    """Agarrão de comando do Pengaró. 830 agarra (errou = 12 ticks abertos), 831 é ele batendo, 832 e 833 são
+    o oponente preso. Capoeira tira 60, o whisky cai em cima e tira 90, e o oponente é jogado como no agarrão comum."""
+    contato, solta = tempos_agarrao_whisky()
+    lanca = solta + 13  # a garrafa leva 13 ticks caindo sobre a cabeça do oponente
+    t = [estado(830, "S", "A", "S", anim=830, juggle=0),
+         "[State 830, Agarra]\ntype = HitDef\ntrigger1 = Time = 0\nattr = S, NT\nhitflag = M-\n"
+         "priority = 1, Miss\nsparkno = -1\np1sprpriority = 1\np1facing = 1\np2facing = 1\n"
+         "p1stateno = 831\np2stateno = 832\nguard.dist = 0\nfall = 1\n\n",
+         fim(830),
+         estado(831, "S", "A", "N", anim=831, juggle=0),
+         "[State 831, Segura]\ntype = TargetBind\n"
+         f"trigger1 = Time < {lanca}\npos = 34, 0\n\n",
+         # escape: o oponente saiu do 832 antes da capoeira acertar
+         f"[State 831, Escapou]\ntype = ChangeState\ntrigger1 = Time > 1\ntrigger1 = Time < {contato}\n"
+         "trigger1 = enemynear,stateno != 832\nvalue = 0\nctrl = 1\n\n",
+         # capoeira: 60 de dano, tremida e faísca forte
+         f"[State 831, Capoeira dano]\ntype = TargetLifeAdd\ntrigger1 = Time = {contato}\ntrigger1 = NumTarget\nvalue = -60\n\n",
+         f"[State 831, Capoeira acerta]\ntype = TargetState\ntrigger1 = Time = {contato}\ntrigger1 = NumTarget\nvalue = 833\n\n",
+         f"[State 831, Capoeira treme]\ntype = EnvShake\ntrigger1 = Time = {contato}\ntime = 8\nfreq = 60\nampl = -4\n\n",
+         f"[State 831, Capoeira faisca]\ntype = Explod\ntrigger1 = Time = {contato}\nanim = {fx_forma(9201)}\npostype = p1\n"
+         "pos = 62, -80\nremovetime = -2\nsprpriority = 4\nownpal = 1\n\n",
+         f"[State 831, Capoeira som]\ntype = PlaySnd\ntrigger1 = Time = {contato}\nvalue = F5, 2\n\n",
+         # whisky: sai da mão no desenho da bola e cai girando em cima do oponente
+         f"[State 831, Garrafa]\ntype = Explod\ntrigger1 = Time = {solta}\nanim = 3010\npostype = p1\n"
+         "pos = 38, -150\nvel = 0, 4\naccel = 0, .55\nremovetime = 13\nsprpriority = 5\nownpal = 1\n\n",
+         f"[State 831, Whisky dano]\ntype = TargetLifeAdd\ntrigger1 = Time = {lanca}\ntrigger1 = NumTarget\nvalue = -90\n\n",
+         f"[State 831, Whisky estoura]\ntype = Explod\ntrigger1 = Time = {lanca}\nanim = {fx_forma(9201)}\npostype = p1\n"
+         "pos = 38, -60\nremovetime = -2\nsprpriority = 5\nownpal = 1\n\n",
+         f"[State 831, Whisky treme]\ntype = EnvShake\ntrigger1 = Time = {lanca}\ntime = 12\nfreq = 60\nampl = -5\n\n",
+         f"[State 831, Whisky som]\ntype = PlaySnd\ntrigger1 = Time = {lanca}\nvalue = F5, 2\n\n",
+         f"[State 831, Joga]\ntype = TargetState\ntrigger1 = Time = {lanca}\ntrigger1 = NumTarget\nvalue = 821\n\n",
+         fim(831),
+         # oponente preso: pode escapar com y ou b só nos primeiros 7 ticks
+         "[Statedef 832]\ntype = A\nmovetype = H\nphysics = N\nvelset = 0,0\n\n",
+         "[State 832, Pose]\ntype = ChangeAnim2\ntrigger1 = Time = 0\nvalue = 5030\n\n",
+         '[State 832, Escape]\ntype = SelfState\ntriggerall = Time <= 7\ntrigger1 = command = "y"\n'
+         'trigger2 = command = "b"\nvalue = 0\nctrl = 1\n\n',
+         "[State 832, Solto]\ntype = SelfState\ntrigger1 = !gethitvar(isbound)\nvalue = 5050\n\n",
+         # oponente apanhando da capoeira e do whisky: sem escape
+         "[Statedef 833]\ntype = A\nmovetype = H\nphysics = N\nvelset = 0,0\n\n",
+         "[State 833, Pose]\ntype = ChangeAnim2\ntrigger1 = Time = 0\nvalue = 5001\n\n",
+         "[State 833, Solto]\ntype = SelfState\ntrigger1 = !gethitvar(isbound)\nvalue = 5050\n\n"]
+    return "".join(t)
+
+
+def inicios_extra(m):
+    """Tick de início de cada desenho (já com o RITMO, igual ao AIR) e duração total do golpe."""
+    t, ini = 0, []
+    for _, _, n, _ in m.quadros:
+        ini.append(t)
+        t += round(n * RITMO) if n > 0 else n
+    return ini, t
+
+
+def _trechos_ativos(m):
+    """(primeiro desenho, desenho seguinte ao último) de cada trecho com caixa de golpe."""
+    saida, i, q = [], 0, m.quadros
+    while i < len(q):
+        if q[i][3]:
+            j = i
+            while j < len(q) and q[j][3]:
+                j += 1
+            saida.append((i, j))
+            i = j
+        else:
+            i += 1
+    return saida
+
+
+def cns_novo(m):
+    """Golpe simples de pengaro_extra: anda, bate no(s) desenho(s) ativo(s) e volta."""
+    ini, _ = inicios_extra(m)
+    trechos = _trechos_ativos(m)
+    assert len(trechos) == len(m.danos), f"golpe {m.estado}: {len(trechos)} trechos e {len(m.danos)} danos"
+    agachado = m.tipo_st == "C"
+    t = [estado(m.estado, m.tipo_st, "A", "C" if agachado else "N", anim=m.estado, juggle=3, velset="0,0")]
+    if m.avanco:
+        inicio = max(1, ini[trechos[0][0]] - 3)
+        t.append(f"[State {m.estado}, Avanço]\ntype = VelSet\ntrigger1 = Time = {inicio}\nx = {m.avanco}\n\n")
+        fim_av = ini[trechos[-1][1]] if trechos[-1][1] < len(ini) else ini[-1]
+        t.append(f"[State {m.estado}, Freia]\ntype = VelSet\ntrigger1 = Time = {fim_av}\nx = 0\n\n")
+    for i, ((a, _), dano) in enumerate(zip(trechos, m.danos)):
+        ultimo = i == len(trechos) - 1
+        final = m.final and ultimo
+        forte = dano >= 85 or final
+        medio = dano >= 45
+        gatilho = f"Time = {ini[a]}" + (" && MoveHit" if i else "")
+        queda_aqui = m.queda and ultimo
+        t.append(hitdef(m.estado, gatilho, m.attr, dano,
+                        tipo="Heavy" if forte else "Medium" if medio else "Light", guarda=m.guarda,
+                        pausa=(14, 14) if final else (11, 11) if forte else (10, 10) if medio else (6, 6),
+                        hit=21 if forte else 20 if medio else 14, escorrega=8 if forte else 7 if medio else 5,
+                        vel=m.vel or ("-7" if forte else "-3.5" if medio else "-2.5"),
+                        ar=m.ar or ("-3,-4" if queda_aqui else "-1.4,-3"),
+                        queda=queda_aqui, chao=m.chao, pesado=dano >= 75))
+        if final or forte and ultimo:
+            t.append(f"[State {m.estado}, Treme]\ntype = EnvShake\ntrigger1 = Time = {ini[a]}\n"
+                     f"time = {10 if final else 7}\nfreq = 60\nampl = -{5 if final else 3}\n\n")
+    t.append(fim(m.estado, 11 if agachado else 0))
+    return "".join(t)
+
+
+def cns_especiais_extra():
+    """Garrafada em Arco, Rolê por Trás, os especiais exclusivos do Despertar e o agarrão agachado."""
+    t = []
+    ai = {m.estado: m for m in extra.ESPECIAIS_A_MAO}
+
+    # Garrafada em Arco: o segundo projétil. Sobe, passa por cima de golpe baixo e cai no chão do outro lado
+    for n, vx, vy in ((1600, 3.6, -2.6), (1601, 5.0, -3.0)):
+        ini, _ = inicios_extra(ai[n])
+        t.append(estado(n, "S", "A", "S", anim=n, juggle=4))
+        t.append(f"[State {n}, Garrafa]\ntype = Projectile\ntrigger1 = Time = {ini[3]}\nprojid = 1002\n"
+                 "projanim = 3010\nprojhitanim = 1006\nprojremanim = 1006\nprojhits = 1\nprojpriority = 2\n"
+                 f"offset = 52, -96\nvelocity = {vx}, {vy}\naccel = 0, {0.20 if n == 1600 else 0.26}\n"
+                 "projheightbound = -400, 0\nattr = S, SP\ndamage = 75, 5\nanimtype = Med\nguardflag = MA\n"
+                 "hitflag = MAF\npausetime = 2, 10\nsparkxy = 0, 0\nhitsound = F5,1\nguardsound = F6,0\n"
+                 "ground.type = High\nground.slidetime = 12\nground.hittime = 18\nground.velocity = -4\n"
+                 "air.velocity = -2,-3.5\n\n")
+        t.append(fim(n))
+
+    # Rolê por Trás: passa por dentro do oponente (invencível) e chega nas costas dele, já virado.
+    # Sem espaço atrás (canto), chega colado na frente, também virado para ele.
+    for n in (1700, 1701, 3402):
+        ini, _ = inicios_extra(ai[n])
+        cruza = ini[3] if n != 3402 else ini[4]
+        t.append(estado(n, "S", "A", "N", anim=n, juggle=0))
+        t.append(f"[State {n}, Invencivel]\ntype = NotHitBy\ntrigger1 = Time < {cruza + 4}\n"
+                 "value = SCA, NA, SA, HA, NP, SP, HP\ntime = 1\n\n")
+        t.append(f"[State {n}, Atravessa]\ntype = PlayerPush\ntrigger1 = Time < {cruza + 6}\nvalue = 0\n\n")
+        cabe = "p2dist x + 36 < frontedgebodydist"
+        t.append(f"[State {n}, Atras]\ntype = PosAdd\ntrigger1 = Time = {cruza}\ntrigger1 = p2dist x > 0\n"
+                 f"trigger1 = {cabe}\nx = p2dist x + 36\n\n")
+        t.append(f"[State {n}, Vira]\ntype = Turn\ntrigger1 = Time = {cruza}\ntrigger1 = p2dist x > 0\n"
+                 f"trigger1 = {cabe}\n\n")
+        t.append(f"[State {n}, Canto]\ntype = PosAdd\ntrigger1 = Time = {cruza}\ntrigger1 = p2dist x > 0\n"
+                 f"trigger1 = !({cabe})\nx = max(p2dist x - 28, 0)\n\n")
+        if n == 1701:
+            a = _trechos_ativos(ai[n])[0][0]
+            t.append(hitdef(n, f"Time = {ini[a]}", "S, SA", 70, tipo="Medium", pausa=(10, 10), hit=20, escorrega=7,
+                            vel="-5", pesado=True))
+        if n == 3402:
+            a = _trechos_ativos(ai[n])[0][0]
+            t.append(hitdef(n, f"Time = {ini[a]}", "S, SA", 75, tipo="Medium", pausa=(8, 8), hit=22, escorrega=7,
+                            vel="-1", ar="-1,-3", pesado=True))
+        t.append(fim(n))
+
+    # Mão de Sombra (Despertar): projétil novo, lento no começo, acelera e acerta duas vezes
+    ini, _ = inicios_extra(ai[3400])
+    t.append(estado(3400, "S", "A", "S", anim=3400, juggle=4))
+    t.append(f"[State 3400, Mão]\ntype = Projectile\ntrigger1 = Time = {ini[3]}\nprojid = 1003\nprojanim = 3005\n"
+             "projhitanim = 3006\nprojremanim = 3006\nprojhits = 2\nprojmisstime = 8\nprojpriority = 3\n"
+             "offset = 60, -80\nvelocity = 1.8, 0\naccel = 0.07, 0\nattr = S, SP\ndamage = 50, 5\n"
+             "animtype = Med\nguardflag = MA\nhitflag = MAF\npausetime = 2, 10\nsparkxy = 0, 0\nhitsound = F5,1\n"
+             "guardsound = F6,0\nground.type = High\nground.slidetime = 14\nground.hittime = 20\n"
+             "ground.velocity = -3\nair.velocity = -2,-3.5\n\n")
+    t.append(fim(3400))
+
+    # Queda Escura (Despertar): salta para a frente e mergulha; bate de cima e racha o chão
+    ini, _ = inicios_extra(ai[3403])
+    a = _trechos_ativos(ai[3403])[0][0]
+    t.append(estado(3403, "S", "A", "S", anim=3403, juggle=4))
+    t.append("[State 3403, Sobe]\ntype = VelSet\ntrigger1 = Time = 4\nx = 3.4\ny = -8.6\n\n")
+    t.append("[State 3403, Ar]\ntype = StateTypeSet\ntrigger1 = Time = 4\nstatetype = A\nphysics = A\n\n")
+    t.append("[State 3403, Mergulho]\ntype = VelSet\ntrigger1 = Time >= 8 && Vel Y > 0\npersistent = 0\n"
+             "x = 4\ny = 9\n\n")
+    t.append(hitdef(3403, "Time >= 8 && Vel Y > 0", "A, SA", 105, tipo="Heavy", queda=True, vel="-4,-6",
+                    ar="-4,-6", pausa=(12, 12), hit=22, escorrega=8, pesado=True, extra="persistent = 0\n"))
+    t.append(f"[State 3403, Estouro]\ntype = Explod\ntrigger1 = Pos Y >= 0 && Vel Y > 0\nanim = {fx_forma(9205)}\n"
+             "postype = p1\npos = 40, -15\nremovetime = -2\nsprpriority = 4\nownpal = 1\n\n")
+    t.append("[State 3403, Treme]\ntype = EnvShake\ntrigger1 = Pos Y >= 0 && Vel Y > 0\ntime = 10\nfreq = 60\n"
+             "ampl = -4\n\n")
+    t.append("[State 3403, Pouso]\ntype = ChangeState\ntrigger1 = Vel Y > 0\ntrigger1 = Pos Y >= 0\nvalue = 52\n\n")
+
+    # Agarrão agachado: pega a perna de quem está agachado e arremessa de rasteira
+    ini, _ = inicios_extra(ai[841])
+    arremesso = ini[4]
+    t.append(estado(840, "S", "A", "S", anim=840, juggle=0))
+    t.append("[State 840, Agarra]\ntype = HitDef\ntrigger1 = Time = 0\nattr = S, NT\nhitflag = L-\n"
+             "priority = 1, Miss\nsparkno = -1\np1sprpriority = 1\np1facing = 1\np2facing = 1\n"
+             "p1stateno = 841\np2stateno = 820\nguard.dist = 0\nfall = 1\n\n")
+    t.append(fim(840))
+    t.append(estado(841, "S", "A", "N", anim=841, juggle=0))
+    t.append(f"[State 841, Segura]\ntype = TargetBind\ntrigger1 = Time < {arremesso}\npos = 34, 0\n\n")
+    t.append(f"[State 841, Escapou]\ntype = ChangeState\ntrigger1 = Time > 1\ntrigger1 = Time < {arremesso}\n"
+             "trigger1 = enemynear,stateno != 820\nvalue = 0\nctrl = 1\n\n")
+    t.append(f"[State 841, Dano]\ntype = TargetLifeAdd\ntrigger1 = Time = {arremesso}\ntrigger1 = NumTarget\nvalue = -110\n\n")
+    t.append(f"[State 841, Treme]\ntype = EnvShake\ntrigger1 = Time = {arremesso}\ntime = 10\nfreq = 60\nampl = -4\n\n")
+    t.append(f"[State 841, Som]\ntype = PlaySnd\ntrigger1 = Time = {arremesso}\nvalue = F5, 2\n\n")
+    t.append(f"[State 841, Joga]\ntype = TargetState\ntrigger1 = Time = {arremesso}\ntrigger1 = NumTarget\nvalue = 821\n\n")
+    t.append(fim(841))
+    return "".join(t)
+
+
+def cns_extra():
+    return "".join(cns_novo(m) for m in extra.TODOS) + cns_especiais_extra()
+
+
+def montar_cns(hazaki=False):
+    c = [CNS_TOPO, cns_intro(), CNS_PULOS]
 
     # golpes em pé, de perto e de longe
     c.append(normal(200, "S, NA", 40, "Time = 4", leve=True, hit=14, vel="-4"))
@@ -722,7 +1972,7 @@ def montar_cns():
     c.append(normal(400, "C, NA", 35, "Time = 4", fis="C", tipo_st="C", leve=True, hit=13, vel="-4", chao="Low"))
     c.append(normal(410, "C, NA", 90, "Time = 6", fis="C", tipo_st="C", tipo="Up", hit=20, vel="-3", ar="-2,-7", pausa=(10, 10), pesado=True))
     c.append(normal(430, "C, NA", 35, "Time = 5", fis="C", tipo_st="C", leve=True, guarda="L", hit=14, vel="-4", chao="Low"))
-    c.append(normal(440, "C, NA", 80, "Time = 10", fis="C", tipo_st="C", guarda="L", tipo="Trip", queda=True, recupera=False, chao="Trip", vel="-3,-2", ar="-3,-2", pausa=(10, 10), pesado=True))
+    c.append(normal(440, "C, NA", 80, "Time = 10", fis="C", tipo_st="C", guarda="L", tipo="Back", queda=True, recupera=False, chao="Trip", vel="-3,-2", ar="-3,-2", pausa=(10, 10), pesado=True))
     # no ar: overhead
     c.append(normal(600, "A, NA", 60, "Time = 5", fis="A", tipo_st="A", guarda="HA", hit=16))
     c.append(normal(610, "A, NA", 75, "Time = 6", fis="A", tipo_st="A", guarda="HA", tipo="Medium", hit=18, pesado=True))
@@ -747,7 +1997,10 @@ def montar_cns():
 
     # provocação: tira 25 de barra (250 no motor) do oponente quando termina inteira
     c.append(estado(195, "S", "I", "S", anim=195))
+    c.append("[State 195, Sorteio]\ntype = VarSet\ntrigger1 = Time = 0\nvar(36) = Random < 200\n\n")
     c.append(fala(195, "provoca", "Time = 2"))
+    c.append(fala(195, "provoca_fim", "AnimTime = 0 & var(36) = 0"))
+    c.append(fala(195, "provoca_cai", "AnimTime = 0 & var(36) = 1"))
     c.append("[State 195, Tira barra]\ntype = PowerAdd\ntrigger1 = AnimTime = 0\nvalue = -250\nredirectid = enemynear,id\n\n")
     c.append(fim(195))
 
@@ -776,13 +2029,18 @@ def montar_cns():
     c.append("[State 821, Queda]\ntype = VelAdd\ntrigger1 = 1\ny = .44\n\n")
     c.append("[State 821, Chao]\ntype = SelfState\ntrigger1 = Vel Y > 0\ntrigger1 = Pos Y >= 0\nvalue = 5100\n\n")
 
-    # Bola de Sombra: fraca lenta, forte rápida, no Despertar sai dobrada
+    if not hazaki:
+        c.append(cns_agarrao_whisky())
+        c.append(cns_extra())
+
+    # Latada de Sombra: arremessa uma lata de cerveja; fraca lenta, forte rápida, no Despertar sai dobrada
     for n, vel in ((1000, 3.2), (1001, 5.4)):
-        c.append(estado(n, "S", "A", "S", anim=1000, juggle=4))
-        c.append(fala(n, "bola"))
-        c.append(projetil(n, "AnimElem = 2", 1005, 1006, vel, 70, "S, SP"))
+        c.append(estado(n, "S", "A", "S", anim=n, juggle=4))
+        c.append(fala(n, "bola_trava", "Time = 0 & var(20) = 0"))
+        c.append(fala(n, "bola_liso", "Time = 0 & var(20) > 0"))
+        c.append(projetil(n, "AnimElem = 2", 1005, 1006, vel, 70, "S, SP", ofs="62, -86" if not hazaki else "70, -12"))
         c.append(f"[State {n}, Dobrada]\ntype = Projectile\ntrigger1 = AnimElem = 3\ntrigger1 = var(20) > 0\n"
-                 f"projid = 1001\nprojanim = 1005\nprojhitanim = 1006\nprojremanim = 1006\noffset = 70, -32\n"
+                 f"projid = 1001\nprojanim = 1005\nprojhitanim = 1006\nprojremanim = 1006\noffset = {'70, -12' if hazaki else '62, -86'}\n"
                  f"velocity = {vel + 1.2}, 0\nattr = S, SP\ndamage = 50, 4\nanimtype = Med\nguardflag = MA\n"
                  "hitflag = MAF\npausetime = 2, 10\nhitsound = F5,1\nguardsound = F6,0\nground.type = High\n"
                  "ground.slidetime = 12\nground.hittime = 18\nground.velocity = -4\nair.velocity = -2,-3.5\n\n")
@@ -790,7 +2048,7 @@ def montar_cns():
 
     # Meia-lua de Compasso Sombria: avança girando e derruba
     c.append(estado(1100, "S", "A", "S", anim=1100, juggle=4))
-    c.append(fala(1100, "compasso"))
+    c.append(nome_travado(1100, "compasso"))
     c.append("[State 1100, Avança]\ntype = VelSet\ntrigger1 = AnimElem = 2\nx = 4\n\n")
     c.append("[State 1100, Para]\ntype = VelSet\ntrigger1 = AnimElem = 6\nx = 0\n\n")
     c.append(hitdef(1100, "AnimElem = 2", "S, SA", 110, tipo="Heavy", queda=True, vel="-5,-4", ar="-4,-4", pausa=(10, 10), pesado=True))
@@ -798,7 +2056,7 @@ def montar_cns():
 
     # Armada do Quilombo: anti-aéreo, invencível nos 5 primeiros quadros
     c.append(estado(1200, "S", "A", "S", anim=1200, juggle=4))
-    c.append(fala(1200, "armada"))
+    c.append(nome_travado(1200, "armada", "Vel Y > 0 & Pos Y >= 0"))
     c.append("[State 1200, Invencivel]\ntype = NotHitBy\ntrigger1 = Time < 5\nvalue = SCA\ntime = 1\n\n")
     c.append("[State 1200, Sobe]\ntype = VelSet\ntrigger1 = Time = 4\nx = 2\ny = -7.5\n\n")
     c.append("[State 1200, Ar]\ntype = StateTypeSet\ntrigger1 = Time = 4\nstatetype = A\nphysics = A\n\n")
@@ -807,34 +2065,42 @@ def montar_cns():
 
     # Caneta: desliza por baixo do projétil e troca de lado no acerto
     c.append(estado(1300, "C", "A", "S", anim=1300, juggle=4))
-    c.append(fala(1300, "caneta"))
+    c.append(nome_travado(1300, "caneta"))
     c.append("[State 1300, Por baixo]\ntype = NotHitBy\ntrigger1 = Time < 18\nvalue = , NP, SP, HP\ntime = 1\n\n")
     c.append("[State 1300, Desliza]\ntype = VelSet\ntrigger1 = AnimElem = 2\nx = 7\n\n")
     c.append("[State 1300, Para]\ntype = VelSet\ntrigger1 = AnimElem = 3\nx = 0\n\n")
     c.append("[State 1300, Passa]\ntype = PlayerPush\ntrigger1 = MoveHit\nvalue = 0\n\n")
     c.append("[State 1300, Troca]\ntype = PosAdd\ntrigger1 = MoveHit = 1\nx = 60\n\n")
-    c.append(hitdef(1300, "AnimElem = 2", "C, SA", 70, tipo="Trip", guarda="L", queda=True, chao="Trip", vel="-2,-2", ar="-2,-2", pausa=(8, 8)))
+    c.append(hitdef(1300, "AnimElem = 2", "C, SA", 70, tipo="Back", guarda="L", queda=True, chao="Trip", vel="-2,-2", ar="-2,-2", pausa=(8, 8)))
     c.append(fim(1300, 11))
 
     # Despertar: bebe a lata, 600 quadros turbinado
     c.append(estado(2000, "S", "I", "S", anim=2000))
     c.append(superpausa(2000, "Time = 0"))
-    c.append("[State 2000, Gasta]\ntype = PowerAdd\ntrigger1 = Time = 0\nvalue = -1000\n\n")
+    # Pengaró: o Despertar só sai com a barra cheia e gasta tudo (regra 4); o Hazaki segue com 1 estoque
+    c.append(f"[State 2000, Gasta]\ntype = PowerAdd\ntrigger1 = Time = 0\nvalue = -{1000 if hazaki else 3000}\n\n")
     c.append("[State 2000, Invencivel]\ntype = NotHitBy\ntrigger1 = 1\nvalue = SCA\ntime = 1\n\n")
+    if not hazaki:
+        # a transformação empurra o oponente para longe
+        c.append("[State 2000, Afasta]\ntype = PosAdd\ntrigger1 = Time >= 14\ntrigger1 = Time <= 60\n"
+                 "trigger1 = p2bodydist x < 90\nx = -1.8\nredirectid = enemynear,id\n\n")
     c.append(fala(2000, "lata", "Time = 2"))
     c.append("[State 2000, Liga]\ntype = VarSet\ntrigger1 = AnimTime = 0\nvar(20) = 600\n\n")
     c.append(fim(2000))
 
-    # Golaço da Noite (1 estoque)
+    # Chuva de Bebidas (1 estoque): o super antes do Despertar
     c.append(estado(3000, "S", "A", "S", anim=3000, juggle=0))
     c.append(superpausa(3000, "Time = 0"))
     c.append("[State 3000, Gasta]\ntype = PowerAdd\ntrigger1 = Time = 0\nvalue = -1000\n\n")
     c.append("[State 3000, Invencivel]\ntype = NotHitBy\ntrigger1 = AnimElemTime(5) < 0\nvalue = SCA\ntime = 1\n\n")
     c.append(fala(3000, "golaco", "Time = 2"))
-    c.append(projetil(3000, "AnimElem = 5", 3005, 3006, 7, 60, "S, HP", hits=5, intervalo=5, id_=3000, ofs="90, -46", queda=True))
+    if hazaki:
+        c.append(projetil(3000, "AnimElem = 5", 3005, 3006, 7, 60, "S, HP", hits=5, intervalo=5, id_=3000, ofs="90, -46", queda=True))
+    else:
+        c.append(chuva_de_bebidas(3000))
     c.append(fim(3000))
 
-    # Pelada Sombria (Super Despertado): 8 acertos e acaba o Despertar
+    # Saideira Sombria (Super Despertado): 8 acertos e acaba o Despertar
     c.append(estado(3100, "S", "A", "S", anim=3100, juggle=0))
     c.append(superpausa(3100, "Time = 0"))
     c.append("[State 3100, Gasta]\ntype = PowerAdd\ntrigger1 = Time = 0\nvalue = ifelse(var(20) > 0, -1000, -2000)\n\n")
@@ -847,6 +2113,19 @@ def montar_cns():
     c.append("[State 3100, Trava]\ntype = VelSet\ntrigger1 = Time = 36\nx = 0\n\n")
     c.append(fim(3100))
 
+    if hazaki:
+        inicio = next(i for i, trecho in enumerate(c) if trecho.startswith("[Statedef 1000]"))
+        fim_especiais = next(i for i, trecho in enumerate(c) if trecho.startswith("[Statedef 2000]"))
+        del c[inicio:fim_especiais]
+        inicio = next(i for i, trecho in enumerate(c) if trecho.startswith("[Statedef 3000]"))
+        del c[inicio:]
+    else:
+        for n, dano, novo in ((1100, 110, 132), (1200, 120, 144), (1300, 70, 92)):
+            inicio = next(i for i, trecho in enumerate(c) if trecho.startswith(f"[Statedef {n}]"))
+            fim_estado = next(i for i in range(inicio+1, len(c)) if c[i].startswith("[Statedef"))
+            variante = "".join(c[inicio:fim_estado]).replace(str(n), str(n+1))
+            c.append(variante.replace(f"damage = {dano},", f"damage = {novo},"))
+    c.append(cns_repertorio(hazaki))
     # roda sempre, mesmo sem controle
     c.append("""[Statedef -2]
 
@@ -854,6 +2133,36 @@ def montar_cns():
 type = VarSet
 trigger1 = ctrl
 var(5) = 0
+
+; corrente de 3 golpes: var(10) conta os acertos de verdade (defendido não conta); var(11) trava a contagem
+; para o mesmo acerto não somar duas vezes durante a pausa do contato. O finalizador exige var(10) >= 3.
+[State -2, Zera corrente]
+type = VarSet
+trigger1 = ctrl
+var(10) = 0
+
+[State -2, Conta acerto da corrente]
+type = VarAdd
+trigger1 = MoveHit
+trigger1 = var(11) = 0
+trigger1 = (stateno = [200,349]) || (stateno = [3410,3423])
+var(10) = 1
+
+[State -2, Trava contagem]
+type = VarSet
+trigger1 = MoveHit
+trigger1 = var(11) = 0
+var(11) = 1
+
+[State -2, Libera contagem]
+type = VarSet
+trigger1 = !MoveHit
+var(11) = 0
+
+[State -2, Zera quique]
+type = VarSet
+trigger1 = NumEnemy > 0 && p2movetype != H
+var(24) = 0
 
 [State -2, Passo para trás invencível]
 type = NotHitBy
@@ -880,14 +2189,49 @@ var(21) = -1
 [State -2, Bônus de dano]
 type = AttackMulSet
 trigger1 = 1
-value = ifelse(var(20) > 0, 1.2, 1)
+value = ifelse(var(20) > 0, 1.45, 1)
+
+[State -2, Ginga de Juliet]
+type = ChangeAnim
+trigger1 = stateno = 0
+trigger1 = var(20) > 0
+trigger1 = anim != 9203
+value = 9203
+
+[State -2, Tira os oculos]
+type = ChangeAnim
+trigger1 = stateno = 0
+trigger1 = var(20) <= 0
+trigger1 = anim = 9203
+value = 0
+
+[State -2, Vira endiabrado]
+type = RemapSprite
+trigger1 = var(20) > 0 && var(37) = 0
+preset = "despertado"
+
+[State -2, Endiabrado ligado]
+type = VarSet
+trigger1 = var(20) > 0
+var(37) = 1
+
+[State -2, Volta ao normal]
+type = RemapSprite
+trigger1 = var(20) <= 0 && var(37) = 1
+trigger2 = roundstate < 2
+reset = 1
+
+[State -2, Endiabrado desligado]
+type = VarSet
+trigger1 = var(20) <= 0
+var(37) = 0
 
 [State -2, Aura]
 type = PalFX
-trigger1 = var(20) > 0
+trigger1 = var(20) > 0 && alive
 time = 2
-add = 40, 0, 70
-sinadd = 30, 0, 40, 40
+add = 12, 0, 28
+sinadd = 10, 0, 18, 40
 
 [State -2, Rastro]
 type = AfterImageTime
@@ -896,7 +2240,26 @@ time = 2
 
 """)
     c.append(fala(-2, "ressaca", "var(21) = 59"))
-    return "".join(c)
+    c.append("[State -2, Ressaca anda devagar]\ntype = PosAdd\ntrigger1 = stateno = 20\ntrigger1 = var(21) > 0\n"
+             "x = -vel x * .2\n\n")
+    c.append(fala(-2, "bola_ok", "ProjHitTime(1000) = 0 & var(20) = 0"))
+    c.append(fala(-2, "round", "roundstate = 2 & roundno > 1 & var(31) = 0"))
+    c.append("[State -2, Round falado]\ntype = VarSet\ntrigger1 = roundstate = 2\nvar(31) = 1\n\n")
+    c.append(fala(-2, "primeiro", "movetype = H & roundstate = 2 & alive & var(30) = 0"))
+    c.append("[State -2, Primeiro golpe falado]\ntype = VarSet\ntrigger1 = movetype = H\ntrigger1 = roundstate = 2\nvar(30) = 1\n\n")
+    c.append(fala(-2, "derrota", "!alive & var(32) = 0"))
+    c.append("[State -2, Conta derrota]\ntype = VarAdd\ntrigger1 = !alive\nvar(32) = 1\n\n")
+    c.append(fala(-2, "locutor_ko", "var(32) = 75"))
+    resultado = "".join(c)
+    # o golpe ficou mais longo: o atordoamento acompanha, para as correntes continuarem encaixando
+    resultado = re.sub(r"(?m)^((?:ground|guard|air)\.hittime = )(\d+)", lambda m: f"{m[1]}{round(int(m[2]) * RITMO)}", resultado)
+    if hazaki:
+        # a contagem de acertos das correntes de 3 golpes é só do Pengaró
+        resultado = re.sub(r"; corrente de 3 golpes:.*?\[State -2, Libera contagem\]\ntype = VarSet\n"
+                           r"trigger1 = !MoveHit\nvar\(11\) = 0\n\n", "", resultado, flags=re.S)
+        resultado = resultado.replace(f"anim = {ID_BALAO['lata']}", f"anim = {ID_BALAO['golaco']}")
+        resultado = resultado.replace("add = 12, 0, 28", "add = 42, 16, 0").replace("sinadd = 10, 0, 18, 40", "sinadd = 24, 8, 0, 40")
+    return resultado
 
 
 # ------------------------------------------------------------------ CMD
@@ -917,48 +2280,148 @@ def entrada(nome, valor, condicoes, gatilhos=("var(1)",)):
     return "\n".join(t) + "\n\n"
 
 
-def montar_cmd():
+def entradas_extra():
+    """Entradas de correntes, kombos e golpes do Despertar. Vêm antes dos normais; as que dependem de estado
+    (continuação de corrente e de kombo) só valem enquanto o golpe anterior encostou."""
+    c = []
+    em_pe, sem_baixo = "statetype = S", 'command != "holddown"'
+    sem_frente = 'command != "holdfwd"'
+    desperto = "var(20) > 0"
+    cancela_fraco = "(stateno = 200 || stateno = 230) && movehit && movehit <= 8"
+
+    # --- Despertar: normais com função nova no lugar dos normais base
+    c.append(entrada("Desp: Mao de Chao Possuida", 3430, ['command = "y"', 'command = "holddown"', "statetype != A", desperto], ("ctrl",)))
+    c.append(entrada("Desp: Foice Escura", 3435, ['command = "b"', 'command = "holddown"', "statetype != A", desperto], ("ctrl",)))
+    c.append(entrada("Desp: Tranco Possuido", 3431, ['command = "y"', 'command = "holdfwd"', em_pe, desperto],
+                     ("ctrl", cancela_fraco)))
+    c.append(entrada("Desp: Passo de Sombra", 3432, ['command = "b"', 'command = "holdfwd"', em_pe, desperto], ("ctrl",)))
+    c.append(entrada("Desp: Palma Torta", 3433, ['command = "x"', 'command = "holdback"', em_pe, desperto], ("ctrl",)))
+    c.append(entrada("Desp: Puxada Sombria", 3434, ['command = "a"', 'command = "holdback"', em_pe, desperto], ("ctrl",)))
+    # --- Despertar: kombo novo (b, a, x) e as duas correntes novas (y e b, 4 golpes cada)
+    c.append(entrada("Desp: Kombo 3", 349, ['command = "x"', em_pe, desperto], ("stateno = 348 && movecontact",)))
+    c.append(entrada("Desp: Kombo 2", 348, ['command = "a"', sem_baixo, em_pe, desperto],
+                     ("stateno = 3420 && movecontact",)))
+    for botao, base, hits in (("y", 3410, "stateno = 3410"), ("b", 3420, "stateno = 3420")):
+        c.append(entrada(f"Desp: corrente {botao} final", base + 3, [f'command = "{botao}"', sem_baixo, em_pe, desperto],
+                         (f"stateno = {base + 2} && movehit && var(10) >= 3",)))
+        c.append(entrada(f"Desp: corrente {botao} 3", base + 2, [f'command = "{botao}"', sem_baixo, em_pe, desperto],
+                         (f"stateno = {base + 1} && movecontact",)))
+        c.append(entrada(f"Desp: corrente {botao} 2", base + 1, [f'command = "{botao}"', sem_baixo, em_pe, desperto],
+                         (f"stateno = {base} && movecontact",)))
+        c.append(entrada(f"Desp: corrente {botao} 1", base, [f'command = "{botao}"', sem_baixo, sem_frente,
+                                                              'command != "holdback"', em_pe, desperto], ("ctrl",)))
+
+    # --- kombos de assinatura (o 1º golpe é um normal que já existe)
+    c.append(entrada("Kombo 1: x", 340, ['command = "x"', sem_baixo, em_pe], ("stateno = 216 && movecontact",)))
+    c.append(entrada("Kombo 1: b", 341, ['command = "b"', sem_baixo, em_pe], ("stateno = 340 && movecontact",)))
+    c.append(entrada("Kombo 2: baixo a", 342, ['command = "a"', 'command = "holddown"', "statetype != A"],
+                     ("stateno = 200 && movecontact",)))
+    c.append(entrada("Kombo 2: y", 343, ['command = "y"', sem_baixo, "statetype != A"], ("stateno = 342 && movecontact",)))
+    c.append(entrada("Kombo 3: y", 344, ['command = "y"', sem_baixo, em_pe, 'command != "holdfwd"'],
+                     ("stateno = 201 && movecontact",)))
+    c.append(entrada("Kombo 3: frente b", 345, ['command = "b"', 'command = "holdfwd"', em_pe],
+                     ("stateno = 344 && movecontact",)))
+    c.append(entrada("Kombo 4: b", 346, ['command = "b"', sem_baixo, em_pe], ("stateno = 230 && movecontact",)))
+    c.append(entrada("Kombo 4: baixo y", 347, ['command = "y"', 'command = "holddown"', "statetype != A"],
+                     ("stateno = 346 && movecontact",)))
+
+    # --- correntes de 3 golpes + finalizador (o 1º golpe é o normal do botão)
+    for botao, base, primeiros in (("x", 300, "stateno = 200"), ("y", 310, "stateno = 210 || stateno = 215"),
+                                   ("a", 320, "stateno = 230"), ("b", 330, "stateno = 240 || stateno = 245")):
+        cond = [f'command = "{botao}"', sem_baixo, em_pe]
+        c.append(entrada(f"Corrente {botao}: final", base + 3, cond, (f"stateno = {base + 2} && movehit && var(10) >= 3",)))
+        c.append(entrada(f"Corrente {botao}: 3o", base + 2, cond, (f"stateno = {base + 1} && movecontact",)))
+        c.append(entrada(f"Corrente {botao}: 2o", base + 1, cond, (f"({primeiros}) && movecontact",)))
+    return "".join(c)
+
+
+def montar_cmd(hazaki=False):
     c = ["; Gerado por ferramentas/gerar_pengaro.py. Edite lá, não aqui.\n",
          "; x = soco fraco, y = soco forte, a = chute fraco, b = chute forte, c = provocação\n\n",
          "[Remap]\nx = x\ny = y\nz = z\na = a\nb = b\nc = c\ns = s\n\n",
          "[Defaults]\ncommand.time = 15\ncommand.buffer.time = 3\n\n"]
-    for b in "ab":
-        c.append(comando("golaco", f"~D, DF, F, D, DF, F, {b}", 24))
-        c.append(comando("bola_fraca" if b == "a" else "bola_forte", f"~D, DF, F, {b}", 18))
-        c.append(comando("compasso", f"~D, DB, B, {b}", 18))
-    for b in "xy":
-        c.append(comando("armada", f"~F, D, DF, {b}", 18))
-        c.append(comando("caneta", f"~D, DB, B, {b}", 18))
+    for b in ("" if hazaki else "ab"):
+        c.append(comando("golaco", f"~B, F, D, {b}", 24))
+        c.append(comando("bola_fraca" if b == "a" else "bola_forte", f"~D, F, {b}", 18))
+        c.append(comando(f"compasso_{b}", f"~D, B, {b}", 18))
+    for b in ("" if hazaki else "xy"):
+        c.append(comando(f"armada_{b}", f"~F, D, {b}", 18))
+        c.append(comando(f"caneta_{b}", f"~D, B, {b}", 18))
+    if not hazaki:
+        c.append(comando("agarrao_whisky", "~B, F, y", 18))  # ← → + y: o agarrão de comando (regra G)
+        for b in "xy":
+            c.append(comando(f"garrafa_{b}", f"~F, B, {b}", 18))  # → ← + x/y: Garrafada em Arco
+        for b in "ab":
+            c.append(comando(f"role_{b}", f"~F, B, {b}", 18))  # → ← + a/b: Rolê por Trás
+        for b in "xyab":
+            c.append(comando(f"sombra_{b}", f"~D, D, {b}", 18))  # ↓ ↓ + botão: exclusivos do Despertar
+    lista_golpes = list(golpes(hazaki))
+    for g in lista_golpes:
+        if g.estado not in (601, 611):
+            c.append(comando(f"golpe_{g.estado}", g.comando, 24 if g.custo else 18))
+        if g.custo:
+            c.append(comando(f"golpe_{g.estado}", g.comando[:-1] + ("b" if g.estado == 3000 else "y"), 24))
+    c.append(comando("parry", "/F, c", 1, 1))
     c.append(comando("FF", "F, F", 10))
     c.append(comando("BB", "B, B", 10))
     c.append(comando("recovery", "x+a", 1))
     c.append(comando("rolar", "x+a", 3))
     c.append(comando("afastar", "y+b", 3))
-    c.append(comando("despertar", "x+a+y", 3))
+    c.append(comando("despertar", "x+a+y" if hazaki else "x+y", 3))
     c.append(comando("superpulo", "$D, $U", 10, 6))
     for nome in "xyabc":
-        c.append(comando(nome, nome, 1))
+        # Pengaró: botão de ataque fica guardado 8 ticks; apertado durante a pausa do contato, a corrente sai
+        c.append(comando(nome, nome, 1, 8 if not hazaki and nome in "xyab" else None))
     c.append(comando("start", "s", 1))
     for nome, d in (("holdfwd", "/$F"), ("holdback", "/$B"), ("holdup", "/$U"), ("holddown", "/$D")):
         c.append(comando(nome, d, 1))
 
     c.append("[Statedef -1]\n\n")
-    cancela = "stateno = 200 || stateno = 215 || stateno = 230 || stateno = 245 || stateno = 400 || stateno = 410 || stateno = 430 || stateno = 260"
+    cancela = "stateno = 200 || stateno = 210 || stateno = 215 || stateno = 216 || stateno = 230 || stateno = 245 || stateno = 400 || stateno = 410 || stateno = 430 || stateno = 260"
+    if not hazaki:
+        # corrente: 1º e 2º golpes cancelam em especial; o 3º cancela se acertou; o finalizador não cancela
+        cancela += "".join(f" || stateno = {n}" for n in (301, 311, 321, 331, 340, 342, 344, 346, 3410, 3420, 3431,
+                                                          3433, 3434, 348))
+    so_se_acertou = ""
+    if not hazaki:
+        so_se_acertou = (" || ((stateno = 302 || stateno = 312 || stateno = 322 || stateno = 332 || stateno = 3411 "
+                         "|| stateno = 3421) && movehit && movehit <= 8)")
     c.append("[State -1, Pode cancelar]\ntype = VarSet\ntrigger1 = 1\n"
-             f"var(1) = ctrl || (({cancela}) && movecontact && movecontact <= 8)\n\n")
+             f"var(1) = ctrl || (({cancela}) && movecontact && movecontact <= 8){so_se_acertou}\n\n")
 
     no_chao = ["statetype != A"]
-    especial_em_super = "(var(20) > 0) && (stateno = 1000 || stateno = 1001 || stateno = 1100 || stateno = 1200 || stateno = 1300) && movecontact"
+    especial_em_super = "(stateno = [1000,1501]) && movehit && movehit <= 8"
+    for g in sorted(lista_golpes, key=lambda g: -g.custo):
+        if g.estado >= 1000:
+            condicoes = [f'command = "golpe_{g.estado}"'] + no_chao
+            if g.custo:
+                condicoes.append(f"power >= {g.custo}")
+            c.append(entrada(g.nome, g.estado, condicoes, ("var(1)", especial_em_super) if g.custo else ("var(1)",)))
     forte = "(var(20) > 0) || (life <= 200 && power >= 2000)"
-    c.append(entrada("Pelada Sombria", 3100, ['command = "golaco"', "power >= 1000", f"({forte})"] + no_chao, ("var(1)", especial_em_super)))
-    c.append(entrada("Golaco da Noite", 3000, ['command = "golaco"', "power >= 1000"] + no_chao, ("var(1)", especial_em_super)))
-    c.append(entrada("Despertar", 2000, ['command = "despertar"', "power >= 1000", "var(20) = 0", "statetype = S"], ("ctrl",)))
-    c.append(entrada("Armada", 1200, ['command = "armada"'] + no_chao))
-    c.append(entrada("Caneta", 1300, ['command = "caneta"'] + no_chao))
-    c.append(entrada("Compasso", 1100, ['command = "compasso"'] + no_chao))
-    bola = ["numprojid(1000) = 0"] + no_chao
-    c.append(entrada("Bola forte", 1001, ['command = "bola_forte"'] + bola))
-    c.append(entrada("Bola fraca", 1000, ['command = "bola_fraca"'] + bola))
+    if not hazaki:
+        c.append(entrada("Saideira Sombria", 3100, ['command = "golaco"', "power >= 1000", f"({forte})"] + no_chao, ("var(1)", especial_em_super)))
+        c.append(entrada("Chuva de Bebidas", 3000, ['command = "golaco"', "power >= 1000"] + no_chao, ("var(1)", especial_em_super)))
+    c.append(entrada("Despertar", 2000, ['command = "despertar"', "power >= 1000" if hazaki else "power >= powermax",
+                                          "var(20) = 0", "statetype = S"], ("ctrl",)))
+    if not hazaki:
+        for nome, n, botoes in (("armada", 1200, "xy"), ("caneta", 1300, "xy"), ("compasso", 1100, "ab")):
+            for i, b in enumerate(botoes):
+                c.append(entrada(nome, n+i, [f'command = "{nome}_{b}"'] + no_chao))
+        bola = ["numprojid(1000) = 0"] + no_chao
+        c.append(entrada("Bola forte", 1001, ['command = "bola_forte"'] + bola))
+        c.append(entrada("Bola fraca", 1000, ['command = "bola_fraca"'] + bola))
+        # segundo projétil (em arco), ida para trás do oponente e os exclusivos do Despertar
+        garrafa = ["numprojid(1002) = 0"] + no_chao
+        c.append(entrada("Garrafada forte", 1601, ['command = "garrafa_y"'] + garrafa))
+        c.append(entrada("Garrafada fraca", 1600, ['command = "garrafa_x"'] + garrafa))
+        c.append(entrada("Role por tras e chute", 1701, ['command = "role_b"', "p2dist x > 0"] + no_chao))
+        c.append(entrada("Role por tras", 1700, ['command = "role_a"', "p2dist x > 0"] + no_chao))
+        desperto = ["var(20) > 0"] + no_chao
+        c.append(entrada("Mao de Sombra", 3400, ['command = "sombra_x"', "numprojid(1003) = 0"] + desperto))
+        c.append(entrada("Chute da Corrente", 3401, ['command = "sombra_y"'] + desperto))
+        c.append(entrada("Sombra Atravessada", 3402, ['command = "sombra_a"', "p2dist x > 0"] + desperto))
+        c.append(entrada("Queda Escura", 3403, ['command = "sombra_b"'] + desperto))
+    c.append(entrada("Parry", 760, ['command = "parry"', "statetype = S"], ("ctrl",)))
     defendendo = "stateno = 150 || stateno = 152"
     # guard cancel: 1 estoque, depois do 3º quadro de defesa
     c.append("[State -1, Rolamento de defesa]\ntype = VarSet\ntriggerall = command = \"rolar\"\n"
@@ -978,8 +2441,21 @@ def montar_cmd():
     # agarrão: colado, em pé, oponente fora de stun
     pega = ['command = "y"', "statetype = S", "ctrl", "stateno != 100", "p2bodydist x < 8", "p2statetype != A", "p2movetype != H"]
     pega_k = ['command = "b"'] + pega[1:]
+    if not hazaki:
+        # agarrão de comando: de perto (12), antes do agarrão comum e dos normais
+        c.append(entrada("Agarrao whisky", 830, ['command = "agarrao_whisky"', "statetype = S", "stateno != 100",
+                                                "p2bodydist x < 12", "p2statetype != A", "p2movetype != H"], ("ctrl",)))
+        c.append(entrada("Agarrao agachado", 840, ['command = "y"', 'command = "holddown"', "statetype != A", "ctrl",
+                                                  "stateno != 100", "p2bodydist x < 8", "p2statetype = C",
+                                                  "p2movetype != H"], ("1",)))
     for lista in (pega, pega_k):
         c.append(entrada("Agarrao", 800, lista + ['(command = "holdfwd" || command = "holdback")'], ("1",)))
+    if not hazaki:
+        c.append(entradas_extra())  # depois dos agarrões (colado, o agarrão tem prioridade) e antes dos normais
+    for g in lista_golpes:
+        if g.estado < 300:
+            gatilhos = ("ctrl", "(stateno = 200 || stateno = 230) && movehit && movehit <= 8") if g.estado == 216 else ("ctrl",)
+            c.append(entrada(g.nome, g.estado, [f'command = "golpe_{g.estado}"', "statetype = S"], gatilhos))
     # corrida e passo para trás
     c.append(entrada("Corre", 100, ['command = "FF"', "statetype = S"], ("ctrl",)))
     c.append(entrada("Recua", 105, ['command = "BB"', "statetype = S"], ("ctrl",)))
@@ -988,8 +2464,8 @@ def montar_cmd():
     # corrente de fracos: até 4 em sequência, no contato
     corrente_soco = "(stateno = 200 || stateno = 400 || stateno = 430 || stateno = 230) && movecontact && var(5) < 4"
     corrente_chute = "stateno = 430 && movecontact && var(5) < 4"
-    c.append(entrada("Agachado soco fraco", 400, ['command = "x"', 'command = "holddown"'], ("ctrl", corrente_soco)))
-    c.append(entrada("Agachado chute fraco", 430, ['command = "a"', 'command = "holddown"'], ("ctrl", corrente_chute)))
+    c.append(entrada("Agachado soco fraco", 400, ['command = "x"', 'command = "holddown"', "statetype != A"], ("ctrl", corrente_soco)))
+    c.append(entrada("Agachado chute fraco", 430, ['command = "a"', 'command = "holddown"', "statetype != A"], ("ctrl", corrente_chute)))
     c.append(entrada("Agachado soco forte", 410, ['command = "y"', 'command = "holddown"', "statetype != A"], ("ctrl",)))
     c.append(entrada("Agachado chute forte", 440, ['command = "b"', 'command = "holddown"', "statetype != A"], ("ctrl",)))
     # em pé: de perto ou de longe
@@ -1001,15 +2477,16 @@ def montar_cmd():
     c.append(entrada("Chute forte perto", 245, ['command = "b"', "statetype = S", perto], ("ctrl",)))
     c.append(entrada("Chute forte longe", 240, ['command = "b"', "statetype = S"], ("ctrl",)))
     # no ar
-    c.append(entrada("Soco no ar", 600, ['(command = "x" || command = "y")', "statetype = A"], ("ctrl",)))
-    c.append(entrada("Chute no ar", 610, ['(command = "a" || command = "b")', "statetype = A"], ("ctrl",)))
+    for botao, n in zip("xyab", (600, 601, 610, 611)):
+        gatilhos = ("ctrl", "(stateno = 600 || stateno = 610) && movehit && movehit <= 8") if n in (601, 611) else ("ctrl",)
+        c.append(entrada("Golpe no ar", n, [f'command = "{botao}"', "statetype = A"], gatilhos))
     return "".join(c)
 
 
 DEF = """; Gerado por ferramentas/gerar_pengaro.py. Edite lá, não aqui.
 [Info]
 name = "Pengaro"
-displayname = "Pengaró"
+displayname = "Pengaro"
 versiondate = 11,05,2026
 mugenversion = 1.1
 author = "Breno"
@@ -1023,23 +2500,106 @@ st = pengaro.cns
 stcommon = common1.cns
 sprite = pengaro.sff
 anim = pengaro.air
+movelist = movelist.dat
 
 [Palette Keymap]
 x = 1
 """
 
 
+GOLPES = """<#f0f000>:Especiais:</>
+Latada de Sombra					_D_F^K
+Meia-lua de Compasso Sombria		_D_B^K
+Armada do Quilombo					_F_D^P
+Caneta								_D_B^P
+Mão de Chimpá / Mão Pesada          _D_F^P
+Sola de Várzea / Pisão de Bar       _B_D^K
+Garrafada em Arco <#bebebe>(projétil em arco)</>	_F_B^P
+Rolê por Trás / Rolê e Chute		_F_B^K
+
+<#f0f000>:Exclusivos do Despertar:</>
+Mão de Sombra <#bebebe>(projétil)</>	_D_D^X
+Chute da Corrente					_D_D^Y
+Sombra Atravessada					_D_D^A
+Queda Escura						_D_D^B
+Corrente Y: Revolta, Sola de Ferro, Cabeçada, Roda	^Y^Y^Y^Y
+Corrente B: Calcanhar, Afastar, Armada, Chute Partido	^B^B^B^B
+Kombo Possessão						^B,^A,^X
+
+<#f0f000>:Correntes (acertando os 3, o 4º derruba):</>
+Soco fraco							^X^X^X^X
+Soco forte							^Y^Y^Y^Y
+Chute fraco							^A^A^A^A
+Chute forte							^B^B^B^B
+
+<#f0f000>:Kombos:</>
+Abertura							_F+^Y, ^X, ^B
+Alto e Baixo						^X, _D+^A, ^Y
+Empurrão							_B+^X, ^Y, _F+^B
+Lançador							^A, ^B, _D+^Y
+
+<#f0f000>:Supers:</>
+Chuva de Bebidas <#bebebe>(1000)</>	_B_F_D^K
+Saideira Sombria (no Despertar)	_B_F_D^K
+Bando da Várzea / Apagão da Várzea  _B_F_D^P
+
+<#f0f000>:Sistema:</>
+Despertar: Lata Gelada <#bebebe>(barra cheia)</>	^X_+^Y
+Rolamento							^X_+^A
+Golpe de afastar					^Y_+^B
+Agarrão								[_B/_F]_+^Y
+Agarrão agachado <#bebebe>(oponente agachado)</>	_D_+^Y
+Martelo e Garrafada <#bebebe>(colado)</>		_B_F^Y
+Provocação							^C
+Parry                              _F^C
+"""
+
+
+# Poses da folha "endiabrado" (sprites/pengaro/quadros/endiabrado/00..07.png, recortadas com recortar_quadros.py) e
+# os desenhos do jogo que cada uma substitui na forma despertada, como no Diabo Loiro do Hazaki.
+POSES_ENDIABRADO = {
+    0: ("parado0", "soco3", "chute3", "recua", "defesa", "parry", "pouso"),
+    1: ("anda0",),
+    2: ("agacha0", "agacha1", "rasteira0", "rasteira1", "rasteira2", "rasteira3", "baixo_cima0", "baixo_soco"),
+    3: ("soco1", "soco2", "ar_soco", "q_soco4", "q_soco5"),
+    4: ("chute0", "chute1", "chute2", "ar_chute", "bicicleta"),
+    5: ("baixo_cima1", "kick_alto"),
+    6: ("especial",),
+    7: ("pulo_sobe", "pulo_topo", "pulo_desce"),
+}
+
+
+def arte_endiabrada(s):
+    """Se a folha da forma endiabrada já foi gerada, devolve {sprite do jogo: sprite despertado}; senão, vazio
+    (e o gerador cai no corpo escurecido com chamas do pixelfx)."""
+    pasta = RAIZ / "sprites/pengaro/quadros/endiabrado"
+    arquivos = sorted(pasta.glob("[0-9][0-9].png"))
+    if len(arquivos) != 8:
+        return {}
+    arte = {}
+    for indice in range(8):
+        arte[f"pose{indice}"] = s.add(f"endiabrado_pose{indice}", abrir_quadro(arquivos[indice]))
+    for indice, nomes in POSES_ENDIABRADO.items():
+        tela = abrir_quadro(arquivos[indice])
+        for j, nome in enumerate(nomes):
+            arte[nome] = s.add(f"endiabrado_{nome}", move(tela, j % 3 - 1))
+    return arte
+
+
 def main():
     SAIDA.mkdir(parents=True, exist_ok=True)
-    s = montar_sprites()
+    s = montar_sprites(retrato=RAIZ / "sprites/pengaro-selecao-kof.png")
+    faiscas = carregar_faiscas(s)
+    a = montar_air(s, faiscas, arte_despertada=arte_endiabrada(s))
+    preset = preset_despertado(s)
     escrever_sff(SAIDA / "pengaro.sff", s)
-    a = montar_air(s)
-    (SAIDA / "pengaro.air").write_text("\n".join(a.txt), encoding="utf-8")
-    cns = montar_cns()
-    cns = cns.replace("[Data]", "[Quotes]\n" + "".join(f'victory{i + 1} = "{v}"\n' for i, v in enumerate(VITORIAS)) + "\n[Data]", 1)
-    (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8")
+    (SAIDA / "pengaro.air").write_text("\n".join(a.txt), encoding="utf-8", newline="\n")
+    cns = remapear_animelem(montar_cns(), a.mapas).rstrip() + "\n\n" + efeitos_cns(a.ativos)
+    cns = cns.replace("[Data]", preset + "[Quotes]\n" + "".join(f'victory{i + 1} = "{v}"\n' for i, v in enumerate(VITORIAS)) + "\n[Data]", 1)
+    (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8", newline="\n")
     (SAIDA / "pengaro.cmd").write_text(montar_cmd(), encoding="utf-8")
-    (SAIDA / "pengaro.def").write_text(DEF, encoding="utf-8")
+    (SAIDA / "pengaro.def").write_text(DEF, encoding="utf-8", newline="\n")
+    (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 
