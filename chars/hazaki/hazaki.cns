@@ -1,6 +1,7 @@
 ; Gerado por ferramentas/gerar_pengaro.py. Edite lá, não aqui.
 ; var(1) condição de cancelar, var(5) fracos em sequência, var(6) lado do pulo,
-; var(7) super pulo, var(20) tempo de Despertar, var(21) ressaca
+; var(7) super pulo, var(10) acertos da corrente, var(11) trava da contagem,
+; var(20) tempo de Despertar, var(21) ressaca
 
 [Data]
 life = 1000

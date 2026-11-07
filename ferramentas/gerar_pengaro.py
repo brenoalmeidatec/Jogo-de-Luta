@@ -2028,6 +2028,9 @@ time = 2
     # o golpe ficou mais longo: o atordoamento acompanha, para as correntes continuarem encaixando
     resultado = re.sub(r"(?m)^((?:ground|guard|air)\.hittime = )(\d+)", lambda m: f"{m[1]}{round(int(m[2]) * RITMO)}", resultado)
     if hazaki:
+        # a contagem de acertos das correntes de 3 golpes é só do Pengaró
+        resultado = re.sub(r"; corrente de 3 golpes:.*?\[State -2, Libera contagem\]\ntype = VarSet\n"
+                           r"trigger1 = !MoveHit\nvar\(11\) = 0\n\n", "", resultado, flags=re.S)
         resultado = resultado.replace(f"anim = {ID_BALAO['lata']}", f"anim = {ID_BALAO['golaco']}")
         resultado = resultado.replace("add = 12, 0, 28", "add = 42, 16, 0").replace("sinadd = 10, 0, 18, 40", "sinadd = 24, 8, 0, 40")
     return resultado
