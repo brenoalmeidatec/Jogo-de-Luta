@@ -69,8 +69,13 @@ Formas transformadas: gere a folha `e_<golpe>` para cada movimento, nos mesmos 8
 Chats, na conta do Breno:
 
 - Pengaró: `chatgpt.com/c/6aedc940-1554-83e9-8fd3-f7f26e9b8c02`, referência "Socos" na biblioteca.
-- Pengaró endiabrado: `chatgpt.com/c/6aedf8e0-e03c-83e9-90ac-d2df1778cdca`, referência "Oito Movimentos". O título ainda é
-  "Generate 8 Frame Sprite"; renomeie.
+- Pengaró endiabrado: `chatgpt.com/c/6aedf8e0-e03c-83e9-90ac-d2df1778cdca`. Desde 2026-11-07 a referência é a folha
+  `e_soco.png` (corpo inteiro), anexada da memória da página em cada pedido; a "Oito Movimentos" antiga (fumaça no corpo)
+  não vale mais. O título ainda é "Generate 8 Frame Sprite"; renomeie.
+- Efeitos do Pengaró: `chatgpt.com/c/6aef1007-b9b0-83e8-9958-ca11fa475ce5`, fundo verde. Título "Generate Pixel Art Sprite
+  Sheet"; renomeie.
+- Anexar sem a janela de arquivo: um `File` feito do blob guardado em `__f` vai para o `input[type=file]` da página por
+  `DataTransfer`. Assim a referência entra mesmo quando a biblioteca ainda não mostra a imagem nova.
 
 Fluxo: cole `ferramentas/chatgpt_folhas.js` pela ferramenta de JavaScript do navegador e, para cada folha, rode
 `__a(busca)`, `__e(prompt)`, espere e rode `__sx(nome)`. No fim, `__pacote()` baixa tudo num `.tar` só, e

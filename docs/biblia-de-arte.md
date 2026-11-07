@@ -20,7 +20,7 @@ jogo ficam em [`regras-dos-lutadores.md`](regras-dos-lutadores.md); o jeito de p
 
 | | Normal | Endiabrado (Despertar) |
 |---|---|---|
-| Pele | morena, tom médio (matiz perto de 23°) | quase preta, relevo roxo escuro |
+| Pele | morena, tom médio (matiz perto de 23°) | quase preta, relevo roxo escuro; corpo inteiro, sem fumaça no corpo |
 | Olhos | normais | violeta brilhante |
 | Calça | branca, listras verde e amarela | carvão, barra rasgada, brasas violeta |
 | Faixa | teal, cordão amarelo | cordão amarelo brilhando |
@@ -33,14 +33,17 @@ novas: acima de 26° ele está desviando para o amarelo.
 
 ## Efeitos
 
-- Base: pixelfx (`assets/efeitos/`), recolorido por mapa de gradiente: o brilho do efeito escolhe a cor da rampa.
-- O SFF não guarda meia transparência. Efeito de brilho vai com a transparência embutida na cor e mistura de soma
-  (`A` no AIR); sombra vai com mistura de subtração (`S`). Sem isso a poeira vira bolha cinza.
-- Cada forma tem a sua cor. A troca no Despertar é pelo `[RemapPreset despertado]`: todo efeito do normal tem um par
-  do endiabrado com os mesmos quadros.
-- O efeito de golpe nasce no elemento em que a caixa de golpe liga, na ponta da caixa, onde está o punho ou o pé. Nada de
-  efeito solto no meio da tela.
-- Efeito grande demais para o lutador sai pela metade (`METADE`).
+- **Sem pixelfx no Pengaró** (o Breno não gostou). Efeito é desenhado como lutador: folha de 8 quadros no ChatGPT, estilo
+  pixel art de arcade, **fundo verde `#00FF00`** (o roxo da sombra some no magenta), salva como
+  `sprites/<lutador>/quadros/folhas/fx_<nome>.png`. `python ferramentas/efeitos_folha.py <lutador>` recorta, põe na escala
+  do jogo e cria 2 quadros do meio por intervalo (fluxo óptico): 8 desenhos viram 22, bem animados.
+- Pixel opaco, sem mistura de cor: soma de dourado sobre o palco azul vira rosa.
+- Cada forma tem a sua cor e o seu efeito (`FX_PENGARO` em `gerar_pengaro.py`). A faísca de acerto é do motor e não passa
+  pela troca do Despertar: o HitDef escolhe a do endiabrado pelo `var(20)` (ação + 30).
+- O efeito de golpe nasce no elemento em que a caixa de golpe liga, na caixa do golpe. Nada de efeito solto no meio da tela.
+- Nada de escudo em grade: parece rede de futebol.
+- Endiabrado com corpo inteiro, sem buraco nem membro solto; a sombra que se mexe é a aura (efeito à parte). Anexe a
+  referência em **toda** folha: sem isso, em 30 folhas seguidas ele virou marrom.
 
 ## Lutador novo
 

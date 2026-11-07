@@ -42,7 +42,7 @@ ESCALA_2172 = {"pengaro": 0.40, "gutto": 0.33}[LUTADOR]  # a figura em pé dá ~
 LOOPS = {"ginga_fluida": ("ginga", 7), "anda_fluida": ("anda", 5), "ginga_endiabrada": ("ginga_endiabrada", 7),
          "e_anda_fluida": ("e_anda", 5)}
 # Com fumaça em volta, âncora nos pés ou na cabeça pula de quadro para quadro: usa o centro de cada célula.
-POR_CELULA = {"despertar_b", "ginga_endiabrada"}  # e todas as folhas e_<golpe>, as versões endiabradas
+POR_CELULA = {"despertar_b", "ginga_endiabrada", "endiabrado"}  # e todas as folhas e_<golpe>, as versões endiabradas
 
 
 # Pengaró: toda folha (normal e endiabrada) alinhada pelo centro do tronco no eixo do lutador. Alinhar pelo pé de trás
