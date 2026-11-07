@@ -12,6 +12,7 @@ A âncora "pes" mantém o pé de trás parado; "cabeca" centra o corpo, para que
 import argparse
 from pathlib import Path
 
+import numpy as np
 from PIL import Image
 
 RAIZ = Path(__file__).resolve().parent.parent
@@ -21,14 +22,26 @@ PE_DE_TRAS = 56  # coluna do pé de trás parado, para o corpo não escorregar e
 
 
 def tira_fundo(img):
-    img = img.convert("RGBA")
-    px = img.load()
-    for y in range(img.height):
-        for x in range(img.width):
-            r, g, b, _ = px[x, y]
-            if r > 150 and b > 150 and g < 110 and abs(r - b) < 70:
-                px[x, y] = (0, 0, 0, 0)
-    return img
+    """Apaga o fundo magenta. O que é magenta e encosta na borda da folha é fundo; um pedaço magenta fechado entre os
+    membros só é fundo se a cor dele for a do fundo puro. O relevo roxo do endiabrado cai no mesmo intervalo de cor e,
+    apagado, deixava o corpo furado."""
+    import cv2
+    a = np.array(img.convert("RGBA"))
+    r, g, b = (a[..., i].astype(int) for i in range(3))
+    magenta = (r > 150) & (b > 150) & (g < 110) & (np.abs(r - b) < 70)
+    n, rotulos, dados, _ = cv2.connectedComponentsWithStats(magenta.astype(np.uint8), connectivity=8)
+    h, w = magenta.shape
+    apaga = np.zeros(n, bool)
+    for i in range(1, n):
+        x, y, ww, hh, _ = dados[i]
+        if x == 0 or y == 0 or x + ww >= w or y + hh >= h:
+            apaga[i] = True
+        else:
+            pedaco = rotulos == i
+            apaga[i] = (np.median(r[pedaco]) >= 235 and np.median(b[pedaco]) >= 235
+                        and np.median(g[pedaco]) <= 20)
+    a[apaga[rotulos] & magenta] = 0
+    return Image.fromarray(a)
 
 
 def fatias(img, n):

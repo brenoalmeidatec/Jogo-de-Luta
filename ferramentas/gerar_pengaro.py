@@ -665,16 +665,18 @@ SEM_WHISKY = ("balao_", "fx_", "bola", "bolao", "quica", "retrato", "chuva", "f_
 QUADROS = RAIZ / "sprites/pengaro/quadros"
 
 
-def limpar_borda(img):
-    """Tira a franja roxa que sobra do fundo magenta no contorno e os pontinhos soltos em volta da figura."""
+def limpar_borda(img, tinta=True):
+    """Tira a franja roxa que sobra do fundo magenta no contorno e os pontinhos soltos em volta da figura.
+    tinta=False (endiabrado): o roxo e o relevo magenta do endiabrado são o próprio corpo, então só os pontinhos saem."""
     import cv2
     a = np.array(img)
-    r, g_, b = (a[..., i].astype(int) for i in range(3))
-    tinta = (r > g_ + 30) & (b > g_ + 30) & (np.abs(r - b) < 45)  # magenta misturado; o roxo do endiabrado tem r < b
-    for _ in range(2):
-        cheio = a[..., 3] >= 128
-        borda = cheio & ~cv2.erode(cheio.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool)
-        a[borda & tinta, 3] = 0
+    if tinta:
+        r, g_, b = (a[..., i].astype(int) for i in range(3))
+        tinta = (r > g_ + 30) & (b > g_ + 30) & (np.abs(r - b) < 45)  # magenta misturado
+        for _ in range(2):
+            cheio = a[..., 3] >= 128
+            borda = cheio & ~cv2.erode(cheio.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool)
+            a[borda & tinta, 3] = 0
     cheio = (a[..., 3] >= 128).astype(np.uint8)
     n, rotulos, dados, _ = cv2.connectedComponentsWithStats(cheio, connectivity=8)
     for i in range(1, n):
@@ -683,14 +685,47 @@ def limpar_borda(img):
     return Image.fromarray(a)
 
 
+RELEVO_ENDIABRADO = (190, 39, 168)  # cor mediana do relevo que o recorte antigo apagava das folhas endiabradas
+
+
+def fechar_furos(img, limite=40):
+    """Os quadros do meio das folhas endiabradas vieram do Blender já furados (o recorte antigo apagou o relevo magenta
+    como se fosse fundo). Fecha só buraco pequeno, todo cercado de corpo, com a cor do relevo. Vão de verdade entre
+    braço e tronco é maior que isso e fica aberto."""
+    import cv2
+    a = np.array(img)
+    vazio = (a[..., 3] < 128).astype(np.uint8)
+    n, rotulos, dados, _ = cv2.connectedComponentsWithStats(vazio, connectivity=4)
+    h, w = vazio.shape
+    for i in range(1, n):
+        x, y, ww, hh, area = dados[i]
+        if area <= limite and x > 0 and y > 0 and x + ww < w and y + hh < h:
+            a[rotulos == i] = (*RELEVO_ENDIABRADO, 255)
+    return Image.fromarray(a)
+
+
+def forma_do_quadro(arquivo):
+    """'endiabrado' para as folhas endiabradas (e_*, endiabrado, ginga_endiabrada), 'despertar_b' para a parte
+    endiabrada da transformação e None para o resto."""
+    arquivo = Path(arquivo)
+    if RAIZ / "sprites/pengaro/quadros" not in arquivo.parents:  # só as folhas do Pengaró (o Gutto reusa esta função)
+        return None
+    pasta = arquivo.parent.parent.name if arquivo.parent.name == "meio" else arquivo.parent.name
+    if pasta.startswith("e_") or pasta in ("endiabrado", "ginga_endiabrada"):
+        return "endiabrado"
+    return "despertar_b" if pasta == "despertar_b" else None
+
+
 def abrir_quadro(arquivo):
     """Quadro do Blender já vem na tela do jogo; os antigos, de 224x128, são colados com os pés no eixo."""
     img = Image.open(arquivo).convert("RGBA")
-    if img.size == (LARG, ALT):
-        return limpar_borda(img)
-    tela = Image.new("RGBA", (LARG, ALT))
-    tela.alpha_composite(img, (EIXO_X - 104, EIXO_Y - 119))
-    return limpar_borda(tela)
+    forma = forma_do_quadro(arquivo)
+    if img.size != (LARG, ALT):
+        tela = Image.new("RGBA", (LARG, ALT))
+        tela.alpha_composite(img, (EIXO_X - 104, EIXO_Y - 119))
+        img = tela
+    img = limpar_borda(img, tinta=forma is None)
+    return fechar_furos(img) if forma == "endiabrado" else img
 
 
 def centro_tronco(img):
@@ -711,15 +746,84 @@ def centro_tronco(img):
     return float(np.median(meios)) if meios else None
 
 
-def alinhar_endiabrado(normal, endiabrado):
-    """Põe o tronco do endiabrado onde está o tronco do normal, para a troca do Despertar não pular de lugar."""
-    a, b = centro_tronco(normal), centro_tronco(endiabrado)
-    if a is None or b is None:
+def base_figura(img):
+    """Última linha com pixel opaco (onde o pé pisa), ou None."""
+    ys = np.flatnonzero((np.asarray(img)[..., 3] >= 128).any(axis=1))
+    return int(ys[-1]) if len(ys) else None
+
+
+def altura_corpo(img):
+    """Altura do maior pedaço da figura (fumaça e cacos soltos não contam)."""
+    import cv2
+    n, _, dados, _ = cv2.connectedComponentsWithStats((np.asarray(img)[..., 3] >= 128).astype(np.uint8), connectivity=8)
+    return int(dados[1 + int(np.argmax(dados[1:, cv2.CC_STAT_AREA])), cv2.CC_STAT_HEIGHT]) if n > 1 else 0
+
+
+# Pasta normal -> (pasta endiabrada, passo entre os desenhos-chave). As folhas comuns são <folha> -> e_<folha>, passo 1.
+LOOPS_ENDIABRADOS = {"ginga_fluida": ("ginga_endiabrada", 8), "anda_fluida": ("e_anda_fluida", 6)}
+_FATOR, _DX_CHAVE = {}, {}
+
+
+def pasta_endiabrada(pasta):
+    return LOOPS_ENDIABRADOS.get(pasta, (f"e_{pasta}", 1))
+
+
+def fator_endiabrado(pasta):
+    """Um fator de escala por folha: altura mediana do normal / do endiabrado nos 8 desenhos-chave, entre 0,75 e 1,3.
+    Um fator por quadro faria a respiração da ginga tremer. 'endiabrado' (as poses do fallback) mede a pose parada
+    contra a ginga."""
+    if pasta not in _FATOR:
+        if pasta == "endiabrado":
+            normais = [QUADROS / "ginga_fluida" / f"{8 * n:02d}.png" for n in range(8)]
+            endiabrados = [QUADROS / "endiabrado/00.png"]
+        else:
+            outra, passo = pasta_endiabrada(pasta)
+            normais = [QUADROS / pasta / f"{passo * n:02d}.png" for n in range(8)]
+            endiabrados = [QUADROS / outra / f"{passo * n:02d}.png" for n in range(8)]
+        hn = [altura_corpo(abrir_quadro(a)) for a in normais if a.exists()]
+        he = [altura_corpo(abrir_quadro(a)) for a in endiabrados if a.exists()]
+        _FATOR[pasta] = max(0.75, min(1.3, float(np.median(hn)) / float(np.median(he)))) if hn and he else 1.0
+    return _FATOR[pasta]
+
+
+def colar_endiabrado(normal, endiabrado, fator=1.0, dx=None):
+    """Põe o desenho endiabrado no tamanho e no lugar do normal, num só paste: escala da folha (ancorada no chão e no
+    tronco), pés na altura dos pés do normal quando o normal está no chão (até 12 px) e tronco no tronco do normal
+    (dx dado pelos desenhos-chave ou, sem ele, medido aqui; até 24 px). normal=None só escala."""
+    caixa = endiabrado.getchannel("A").getbbox()
+    if caixa is None:
         return endiabrado
-    dx = max(-24, min(24, round(a - b)))
+    figura = endiabrado.crop(caixa)
+    cx = centro_tronco(endiabrado)
+    cx = EIXO_X if cx is None else cx
+    chao = EIXO_Y - 1
+    x0, y0 = caixa[0], caixa[1]
+    if abs(fator - 1) > 0.005:
+        figura = figura.resize((max(1, round(figura.width * fator)), max(1, round(figura.height * fator))),
+                               Image.Resampling.NEAREST)
+        x0 = round(cx + (caixa[0] - cx) * fator)
+        y0 = round(chao + 1 - (chao + 1 - caixa[3]) * fator) - figura.height
+    dy = 0
+    if normal is not None:
+        bn, be = base_figura(normal), y0 + figura.height - 1
+        if bn is not None and abs(bn - chao) <= 3:
+            dy = max(-12, min(12, bn - be))
+        if dx is None:
+            a = centro_tronco(normal)
+            dx = 0 if a is None else max(-24, min(24, round(a - cx)))
     tela = Image.new("RGBA", endiabrado.size)
-    tela.paste(endiabrado, (dx, 0), endiabrado)
+    tela.paste(figura, (x0 + (dx or 0), y0 + dy), figura)
     return tela
+
+
+def dx_chave(pasta, n):
+    """dx do tronco medido só no desenho-chave n: os quadros do meio vêm entortados e enganam a medida."""
+    if (pasta, n) not in _DX_CHAVE:
+        outra, passo = pasta_endiabrada(pasta)
+        a = centro_tronco(abrir_quadro(QUADROS / pasta / f"{passo * n:02d}.png"))
+        b = centro_tronco(abrir_quadro(QUADROS / outra / f"{passo * n:02d}.png"))
+        _DX_CHAVE[(pasta, n)] = 0 if a is None or b is None else max(-24, min(24, round(a - b)))
+    return _DX_CHAVE[(pasta, n)]
 
 
 def quadros_do_loop(pasta):
@@ -745,17 +849,24 @@ def fim_da_folha(nome):
     return f"f_{desenho[0]}7" if desenho and desenho[0] in FOLHAS and desenho[1] < 7 else None
 
 
+def par_endiabrado(nome):
+    """(arquivo endiabrado, pasta normal, posição em desenhos-chave) de um sprite do Pengaró, ou None se a folha não
+    tem versão endiabrada. A posição é fracionária nos quadros do meio e nos loops (m_soco_03_2 fica em 3 + 2/7)."""
+    meio = re.fullmatch(r"m_([a-z_]+?)_(\d+)_(\d+)", nome)
+    if meio:
+        return QUADROS / f"e_{meio[1]}/meio/{meio[2]}_{meio[3]}.png", meio[1], int(meio[2]) + int(meio[3]) / 7
+    fluido = re.fullmatch(r"q_(ginga|anda)_fluida(\d+)", nome)
+    desenho = (f"{fluido[1]}_fluida", int(fluido[2])) if fluido else desenho_de(nome)
+    if not desenho:
+        return None
+    outra, passo = pasta_endiabrada(desenho[0])
+    return QUADROS / outra / f"{desenho[1]:02d}.png", desenho[0], desenho[1] / passo
+
+
 def arquivo_endiabrado(nome):
     """Desenho endiabrado equivalente a um sprite do Pengaró, ou None se a folha não tem versão endiabrada."""
-    meio = re.fullmatch(r"m_([a-z_]+?)_(\d+_\d+)", nome)
-    if meio:
-        return QUADROS / f"e_{meio[1]}/meio/{meio[2]}.png"
-    fluido = re.fullmatch(r"q_(ginga|anda)_fluida(\d+)", nome)
-    if fluido:
-        pasta = "ginga_endiabrada" if fluido[1] == "ginga" else "e_anda_fluida"
-        return QUADROS / f"{pasta}/{int(fluido[2]):02d}.png"
-    desenho = desenho_de(nome)
-    return QUADROS / f"e_{desenho[0]}/{desenho[1]:02d}.png" if desenho else None
+    par = par_endiabrado(nome)
+    return par[0] if par else None
 
 
 def preset_despertado(s):
@@ -768,15 +879,20 @@ def preset_despertado(s):
         if nome.startswith(("balao_", "fx_", "bola", "bolao", "quica", "retrato", "chuva", "ginga_endiabrada",
                             "endiabrado_", "despertado_", "e_")) or grupo >= 9000:
             continue
-        arquivo = arquivo_endiabrado(nome)
+        par = par_endiabrado(nome)
         destino = f"e_{nome}"
         normal = normais[(grupo, indice)]
-        if arquivo and arquivo.exists():
-            s.add(destino, alinhar_endiabrado(normal, abrir_quadro(arquivo)))
+        if par and par[0].exists():
+            arquivo, pasta, pos = par
+            n = int(pos)
+            seguinte = (n + 1) % 8 if pasta in LOOPS_ENDIABRADOS else min(7, n + 1)
+            dx = round(dx_chave(pasta, n) + (dx_chave(pasta, seguinte) - dx_chave(pasta, n)) * (pos - n))
+            s.add(destino, colar_endiabrado(normal, abrir_quadro(arquivo), fator_endiabrado(pasta), dx))
         elif nome.startswith(("m_despertar", "f_despertar", "f_lata", "m_lata")):
             continue
         else:
-            s.add(destino, alinhar_endiabrado(normal, abrir_quadro(QUADROS / f"endiabrado/{pose.get(nome, 0):02d}.png")))
+            s.add(destino, colar_endiabrado(normal, abrir_quadro(QUADROS / f"endiabrado/{pose.get(nome, 0):02d}.png"),
+                                            fator_endiabrado("endiabrado")))
         g, i = s.codigos[destino]
         linhas.append(f"{grupo},{indice} = {g},{i}")
     for nome, (grupo, indice) in s.codigos.items():  # faíscas: whisky no normal, sombra no Despertar
@@ -832,9 +948,35 @@ def caminho_fluido(s, atual, proximo):
         for arquivo in arquivos:
             nome = f"m_{folha}_{arquivo.stem}"
             if nome not in s.codigos:
-                s.add(nome, abrir_quadro(arquivo))
+                s.add(nome, pe_no_chao(abrir_quadro(arquivo), folha, intervalo, int(arquivo.stem.split("_")[1])))
             caminho.append(nome)
     return caminho
+
+
+# Trechos de folha desenhados no ar (folha, primeiro desenho, último desenho): ali o pé não precisa tocar o chão.
+DESENHOS_NO_AR = (("bicicleta", 0, 7), ("ar_soco", 0, 7), ("pulo", 1, 6), ("armada", 3, 5))
+_BASE_CHAVE = {}
+
+
+def pe_no_chao(img, folha, n, k):
+    """Quadro do meio entre os desenhos n e n+1: o Blender às vezes afunda ou levanta o pé alguns pixels. Se as duas
+    chaves estão no chão, a base vai para a reta entre as bases delas (até 10 px, só em y)."""
+    if any(f == folha and (a <= n <= b or a <= n + 1 <= b) for f, a, b in DESENHOS_NO_AR):
+        return img
+    for j in (n, n + 1):
+        if (folha, j) not in _BASE_CHAVE:
+            _BASE_CHAVE[(folha, j)] = base_figura(abrir_quadro(QUADROS / folha / f"{j:02d}.png"))
+    bases = [_BASE_CHAVE[(folha, n)], _BASE_CHAVE[(folha, n + 1)]]
+    base = base_figura(img)
+    if base is None or None in bases or any(abs(b - (EIXO_Y - 1)) > 3 for b in bases):
+        return img
+    alvo = round(bases[0] + (bases[1] - bases[0]) * k / 7)
+    dy = max(-10, min(10, alvo - base))
+    if abs(alvo - base) <= 3 or not dy:
+        return img
+    tela = Image.new("RGBA", img.size)
+    tela.paste(img, (0, dy), img)
+    return tela
 
 
 def remapear_animelem(cns, mapas):
@@ -1104,7 +1246,8 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
     if not hazaki:
         # ginga da forma despertada: a mesma ginga, de óculos, com as chamas por trás
         for i in range(quadros_do_loop("ginga_endiabrada")):
-            A(f"ginga_endiabrada{i}", abrir_quadro(QUADROS / f"ginga_endiabrada/{i:02d}.png"))
+            A(f"ginga_endiabrada{i}", colar_endiabrado(None, abrir_quadro(QUADROS / f"ginga_endiabrada/{i:02d}.png"),
+                                                     fator_endiabrado("ginga_fluida")))
     # balões
     for chave, texto in BALOES.items():
         A(f"balao_{chave}", balao(texto))
@@ -2578,9 +2721,10 @@ def arte_endiabrada(s):
         return {}
     arte = {}
     for indice in range(8):
-        arte[f"pose{indice}"] = s.add(f"endiabrado_pose{indice}", abrir_quadro(arquivos[indice]))
+        arte[f"pose{indice}"] = s.add(f"endiabrado_pose{indice}",
+                                      colar_endiabrado(None, abrir_quadro(arquivos[indice]), fator_endiabrado("endiabrado")))
     for indice, nomes in POSES_ENDIABRADO.items():
-        tela = abrir_quadro(arquivos[indice])
+        tela = colar_endiabrado(None, abrir_quadro(arquivos[indice]), fator_endiabrado("endiabrado"))
         for j, nome in enumerate(nomes):
             arte[nome] = s.add(f"endiabrado_{nome}", move(tela, j % 3 - 1))
     return arte
