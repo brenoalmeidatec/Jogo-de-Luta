@@ -35,7 +35,7 @@ Roteiro fixo para fechar qualquer golpe ou lutador antes de subir na `mugen`. Ca
 
 - [ ] O efeito nasce no quadro em que a caixa de golpe liga, na ponta do membro que bate.
 - [ ] Cada forma usa a sua cor; nada da cor do endiabrado aparece no normal.
-- [ ] Brilho com mistura de soma, sombra com subtração; nenhuma bolha sólida.
+- [ ] Faísca e efeitos opacos (sem mistura de soma ou subtração, decisão do dono): clarão creme no 1º tick, maior quadro no contato, some em 9 a 14 ticks; nada rosa sobre o palco azul.
 
 ## Entrega
 

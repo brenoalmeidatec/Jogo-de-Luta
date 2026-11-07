@@ -23,7 +23,7 @@ import gerar_pengaro as g  # noqa: E402
 NOVOS = ("f_", "m_", "q_soco", "q_ginga_fluida", "q_anda_fluida", "ginga_endiabrada", "e_", "endiabrado_",
          "balao_", "fx_", "bola", "bolao", "quica", "retrato", "chuva", "despertado_")
 NO_AR = set(range(40, 48)) | set(range(600, 700)) | set(range(5030, 5100)) | {105, 122, 132, 142, 152, 1200, 1201}
-LIVRES = {1005, 1006, 3005, 3006, 3010, 3011}  # projéteis e efeitos
+LIVRES = {1005, 1006, 3005, 3006, 3010, 3011, 3012}  # projéteis e efeitos
 # Trechos de folha desenhados no ar: (folha, primeiro desenho, último desenho). Os pés deles não tocam o chão por desenho.
 AEREOS = (("bicicleta", 0, 7), ("ar_soco", 0, 7), ("pulo", 1, 6), ("armada", 3, 5))
 

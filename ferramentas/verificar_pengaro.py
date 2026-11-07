@@ -173,7 +173,7 @@ def conferir_despertar(cns, acoes, sprites):
     destinos = set(pares.values())
     # A transformação tem a garrafa de propósito, a ginga endiabrada já é a arte final, intro é antes do Despertar
     # e projétil não é o lutador.
-    livres = {2000, 9203, 190, 191, 192, 1005, 1006, 3005, 3006, 3010, 3011}
+    livres = {2000, 9203, 190, 191, 192, 1005, 1006, 3005, 3006, 3010, 3011, 3012}
     for numero, quadros in acoes.items():
         if numero in livres or numero >= 9000 and numero < 10000:
             continue
