@@ -6,7 +6,7 @@ Cada quadro sai transparente, na altura do personagem e alinhado no chão.
   python ferramentas/recortar_quadros.py folha.png soco --quadros 8 --ancora pes
   python ferramentas/recortar_quadros.py folha.png anda --quadros 8 --ancora cabeca
 
-Saída: sprites/pengaro/quadros/<nome>/00.png, 01.png...
+Saída: sprites/<lutador>/quadros/<nome>/00.png, 01.png... (--lutador, padrão pengaro)
 A âncora "pes" mantém o pé de trás parado; "cabeca" centra o corpo, para quem troca os pés.
 """
 import argparse
@@ -64,6 +64,7 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("folha")
     p.add_argument("nome")
+    p.add_argument("--lutador", default="pengaro", help="pasta em sprites/ onde os quadros saem")
     p.add_argument("--quadros", type=int, default=8)
     p.add_argument("--ancora", choices=("pes", "cabeca"), default="pes")
     p.add_argument("--escala", type=float, default=0.40, help="fator de redução; use o mesmo em todas as folhas")
@@ -71,7 +72,7 @@ def main():
 
     quadros = fatias(tira_fundo(Image.open(a.folha)), a.quadros)
     escala = a.escala
-    saida = RAIZ / "sprites/pengaro/quadros" / a.nome
+    saida = RAIZ / "sprites" / a.lutador / "quadros" / a.nome
     saida.mkdir(parents=True, exist_ok=True)
 
     for i, q in enumerate(quadros):

@@ -4,7 +4,7 @@
   python ferramentas/animar_folha.py soco chute_alto      só essas
   python ferramentas/animar_folha.py --todas              todas, 4 de cada vez
 
-Saída em sprites/pengaro/quadros/<nome>/: 00..07.png são os desenhos e meio/03_2.png é o 2º quadro do meio entre os
+Saída em sprites/<lutador>/quadros/<nome>/ (LUTADOR=gutto para o Gutto): 00..07.png são os desenhos e meio/03_2.png é o 2º quadro do meio entre os
 desenhos 3 e 4. O gerador escolhe quantos usar pelos ticks de cada golpe (regra 7 de docs/regras-dos-lutadores.md).
 ginga_fluida e anda_fluida são loops prontos, numerados em sequência. Um quadro do meio é sempre um desenho entortado,
 nunca duas imagens misturadas.
@@ -22,18 +22,22 @@ import cv2
 import numpy as np
 from PIL import Image
 
+from folhas_gutto import FOLHAS_GUTTO
 from gerar_folhas import FOLHAS_PENGARO
 from recortar_quadros import PE_DE_TRAS, PIVO, RAIZ, fatias, ponto_ancora, tira_fundo
 
-FOLHAS = RAIZ / "sprites/pengaro/quadros/folhas"
-QUADROS = RAIZ / "sprites/pengaro/quadros"
+# Qual lutador: LUTADOR=gutto python ferramentas/animar_folha.py ... (padrão: pengaro)
+LUTADOR = os.environ.get("LUTADOR", "pengaro")
+FOLHAS_LUTADOR = FOLHAS_GUTTO if LUTADOR == "gutto" else FOLHAS_PENGARO
+FOLHAS = RAIZ / "sprites" / LUTADOR / "quadros/folhas"
+QUADROS = RAIZ / "sprites" / LUTADOR / "quadros"
 BLENDER = Path(os.environ.get("BLENDER", Path.home() / "blender/blender-4.5.15-windows-x64/blender.exe"))
 AMPLIA = 4  # o Blender trabalha 4x maior que o quadro final
 PASSO = 8  # um vértice a cada 2 pixels do quadro final
 LARG, ALT = 360, 260  # mesma tela dos sprites do jogo, com folga para chute alto e salto
 DESLOCA = (180 - PIVO[0], 220 - PIVO[1])  # do pivô antigo para os pés na tela do jogo
 MEIOS = 6  # quadros do meio entre dois desenhos
-ESCALA_2172 = 0.40  # a figura em pé dá 111 px numa folha de 2172 de largura; a escala segue a largura da folha
+ESCALA_2172 = {"pengaro": 0.40, "gutto": 0.33}[LUTADOR]  # a figura em pé dá ~111 px numa folha de 2172 de largura; a escala segue a largura da folha (o Gutto sai maior na folha, 340 px contra 278)
 # Ginga: 8 desenhos + 8 x 7 = 64 quadros, um ciclo em cerca de 2 segundos. Andar: 8 + 8 x 5 = 48 quadros.
 LOOPS = {"ginga_fluida": ("ginga", 7), "anda_fluida": ("anda", 5), "ginga_endiabrada": ("ginga_endiabrada", 7),
          "e_anda_fluida": ("e_anda", 5)}
@@ -69,7 +73,7 @@ def poses(folha, ancora):
     """Corta a folha e devolve as poses alinhadas no chão, 4x maiores que o quadro final."""
     img = Image.open(folha)
     fator = ESCALA_2172 * 2172 / img.width * AMPLIA
-    if Path(folha).stem in POR_CELULA or Path(folha).stem.startswith("e_"):
+    if Path(folha).stem in POR_CELULA or Path(folha).stem.startswith("e_") or LUTADOR == "gutto":  # o Gutto: sempre por célula (golpes que avançam encostam nas figuras vizinhas)
         return por_celula(img, fator)
     saida = []
     for q in fatias(tira_fundo(img), 8):
@@ -105,7 +109,7 @@ def fluxo(a, b):
 
 def animar(nome):
     folha, meios = LOOPS.get(nome, (nome, MEIOS))
-    ancora = FOLHAS_PENGARO.get(folha, ("pes",))[0]
+    ancora = FOLHAS_LUTADOR.get(folha, ("pes",))[0]
     chaves = poses(FOLHAS / f"{folha}.png", ancora)
     loop = nome in LOOPS
     pares = list(zip(chaves, chaves[1:] + chaves[:1])) if loop else list(zip(chaves, chaves[1:]))
@@ -150,7 +154,7 @@ def main():
     pedidas = sys.argv[1:]
     if pedidas == ["--todas"]:
         ignorar = {"endiabrado", "ginga", "anda"}
-        pedidas = ["soco", "despertar_a", "despertar_b", *LOOPS, *(n for n in FOLHAS_PENGARO if n not in ignorar),
+        pedidas = ["soco", "despertar_a", "despertar_b", *LOOPS, *(n for n in FOLHAS_LUTADOR if n not in ignorar),
                    *(f.stem for f in FOLHAS.glob("e_*.png") if f.stem != "e_anda")]
     with ThreadPoolExecutor(4) as trabalho:
         list(trabalho.map(animar, pedidas))
