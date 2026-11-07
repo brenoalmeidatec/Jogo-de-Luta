@@ -82,8 +82,17 @@ e 1 super exclusivo. **Arte redesenhada**, não só recolorida.
   `despertar_a` e `despertar_b`. `animar_folha.py` reduz `lata` e `derrota` (vieram 12% maiores) e tira os fiapos de magenta
   da fumaça das folhas do cavalo. O Despertar passou a usar o cavalo do Gutto (antes lia as poses do Pengaró).
 - Filmado: a transformação aparece. O robô passa 126 verificações. Ainda não jogado por uma pessoa.
-- **Falta:** as folhas `e_<golpe>` (hoje todo golpe do Endiabrado cai numa das 8 poses), efeitos próprios do Gutto (ainda
-  usa os violeta do Pengaró), retrato de seleção, projétil do Beijinho em arte própria e os áudios.
+- **Demônio cavalo (aprovado pelo Breno em 2026-11-07):** o Endiabrado deixou de ser "cabeça de cavalo" e virou um demônio:
+  rosto metade cavalo metade homem (focinho, orelhas, chifres curtos, crina, olhos vermelhos, bigode do Gutto), corpo humano
+  maior, curvado e peludo, pele quase preta com rachaduras vermelhas, garras, pernas de cavalo com cascos e rabo; só o calção
+  rasgado. Referência: `folhas/demonio_modelo.png` (também a `ginga_endiabrada`).
+- **Como o demônio luta:** fera, não Muay Thai. Postura baixa raspando o casco; socos viram patadas de garra; chutes viram
+  coices para trás e pisões; chifrada subindo como antiaéreo; empinar e descer os cascos; carrinho de Satanás; agarrão com
+  mordida; o projétil vira bufada de fogo pelas narinas. Pedidos em `FOLHAS_DEMONIO` de `ferramentas/folhas_gutto.py`.
+- As 28 folhas `e_<golpe>`, as 8 poses `endiabrado` e a `despertar_b` (vira o demônio) foram feitas no mesmo dia.
+- **Falta:** efeitos próprios do Gutto (ainda usa os violeta do Pengaró), retrato de seleção, projétil do Beijinho e a
+  bufada de fogo em arte própria, os áudios. A `despertar_a` termina com a cabeça de cavalo e a `despertar_b` começa com o
+  rosto humano: um desenho de salto na transformação.
 
 ## Retomar e ver (nota de 2026-11-06, noite)
 

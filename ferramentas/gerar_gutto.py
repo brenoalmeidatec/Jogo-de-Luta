@@ -230,6 +230,8 @@ def main():
     gp.escrever_sff(SAIDA / "gutto.sff", s)
     (SAIDA / "gutto.air").write_text("\n".join(a.txt), encoding="utf-8", newline="\n")
     cns = gp.remapear_animelem(gp.montar_cns(), a.mapas)
+    # a aura do demônio cavalo pulsa em vermelho de brasa, não no violeta do Pengaró
+    cns = cns.replace("add = 12, 0, 28", "add = 16, 0, 0").replace("sinadd = 10, 0, 18, 40", "sinadd = 14, 2, 0, 40")
     cns = cns.replace("[Data]", preset + "[Quotes]\n" + "".join(
         f'victory{i + 1} = "{v}"\n' for i, v in enumerate(gp.VITORIAS)) + "\n[Data]", 1)
     (SAIDA / "gutto.cns").write_text(cns, encoding="utf-8", newline="\n")

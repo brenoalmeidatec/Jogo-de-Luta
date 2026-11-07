@@ -57,7 +57,60 @@ FOLHAS_GUTTO = {
 }
 
 
+# ---------------------------------------------------------------- Endiabrado: o demônio cavalo (aprovado em 2026-11-07)
+# Referência: folhas/demonio_modelo.png (anexada em todo pedido). Ele não luta Muay Thai: é fera, garra, coice e casco.
+# Cada folha e_<golpe> tem os mesmos 8 tempos da normal (o golpe acerta no mesmo quadro), para a troca do Despertar.
+CABECA_DEMONIO = """Generate ONE image with your image generation tool. Do not write code and do not edit any file.
+
+The attached sprite sheet shows the exact character and art style to keep: the DEMON HORSE (Gutto transformed). Same half-horse half-man head (horse muzzle with flaring steaming nostrils, horse ears, a man's brow and thick mustache, glowing red eyes, two short curved black horns, long wild black mane), same huge hunched hairy human body with almost black skin and glowing red ember cracks, black claws, horse legs with black hooves, long black tail, torn black Muay Thai trunks with white waistband, snapped rope armbands. Same colors and same size as the attached sheet. He fights like a wild beast, never like a Muay Thai fighter.
+
+Style is a hand-drawn 16-bit SNES / 90s arcade sprite, clean dark outline, flat cel shading, never a 3D render.
+
+Layout: one single row of 8 frames in 8 equal-width cells, wide image, side view, always facing right, same scale as the attached sheet, hooves on the same ground line unless the move leaves the ground. Each figure stays inside its own cell and never touches the next one. Flat solid magenta background (#FF00FF) everywhere, with no shadow, no ground, no text, no numbers, no borders and no effects.
+
+Consecutive frames differ by a small amount, so the motion looks smooth when played in sequence.
+
+Animation: """
+
+FOLHAS_DEMONIO = {
+    "endiabrado": "an 8-pose sheet (eight different poses, in this order): 1 hunched beast stance, claws open low; 2 walking forward on the hooves, hunched; 3 low crouch on all fours ready to pounce; 4 claw swipe with the front arm fully extended; 5 back kick (horse buck) with the hind leg shooting backward; 6 rearing up on the hind legs with both claws raised high; 7 snorting a burst of fire and steam forward from the nostrils; 8 mid-air leap with the hooves tucked.",
+    "despertar_b": "the transformation, part two. Frames 1 and 2 the half-formed horse head throws back and neighs, frames 3 and 4 the body swells bigger, black hair bursts out on shoulders, chest and arms, horns grow, frames 5 and 6 the feet become hooves and he rears up and stamps both hooves with a puff of dust, frames 7 and 8 he drops into the hunched beast stance of the attached sheet, snorting steam.",
+    "anda": "walking forward, an 8-frame loop. Hunched forward, heavy hoof steps, the shoulders rolling, claws hanging low, mane and tail swaying. The legs complete a full two-step cycle and frame 8 flows back into frame 1.",
+    "soco": "two claw swipes. Frame 1 beast stance, frame 2 the front arm cocks back, frame 3 the front claw swipes forward at chest height, frame 4 it pulls back, frame 5 the back shoulder rolls forward, frame 6 a big overhead claw swipe from the back arm fully extended forward at chest height, frame 7 he recovers, frame 8 beast stance.",
+    "martelo": "a downward hammer blow with both fists joined. Frame 1 beast stance, frame 2 both arms rise, frame 3 the joined fists high over the head, frames 4 and 5 he smashes them down and forward at chest height, frames 6 and 7 he straightens, frame 8 beast stance.",
+    "chute_baixo": "a hoof stomp forward. Frame 1 beast stance, frame 2 the front hoof lifts, frame 3 the hoof raised at knee height, frames 4 and 5 it stamps down hard and forward low to the ground, frames 6 and 7 back, frame 8 beast stance.",
+    "chute_alto": "a horse buck: back kick with both hind legs. Frame 1 beast stance, frame 2 he leans forward onto his hands, frame 3 the hind legs gather, frames 4 and 5 both hooves shoot backward high at head height, body almost horizontal, frames 6 and 7 he drops back onto the hooves, frame 8 beast stance.",
+    "afastar": "a shoulder and horn ram that shoves the opponent away. Frame 1 beast stance, frames 2 and 3 he lowers the head and coils, frames 4 and 5 he lunges forward horns first with the shoulder at chest height, frames 6 and 7 he pulls back, frame 8 beast stance.",
+    "agachado": "going down into a low crouch. Frames 1 to 4 he sinks from the beast stance onto all fours, claws on the ground, head low and horns forward. Frames 5 to 8 he stays crouched, breathing with small movements, steam from the nostrils.",
+    "baixo_soco": "a low claw swipe from the crouch. Frame 1 on all fours, frames 2 and 3 the front arm cocks back, frames 4 and 5 the claw swipes forward along the ground at ankle height, frames 6 to 8 back to all fours.",
+    "cabecada": "a rising horn uppercut from the crouch, used as an anti-air. Frame 1 on all fours, frames 2 and 3 he pushes up with the legs, frames 4 and 5 he drives straight upward horns first with both claws up, fully stretched, frames 6 to 8 he lands back on all fours.",
+    "rasteirinha": "a quick low hoof jab from the crouch. Frame 1 on all fours, frames 2 and 3 the front hoof slides out, frames 4 and 5 the leg is stretched just above the floor, frames 6 to 8 it pulls back.",
+    "rasteira": "a low tail-and-leg sweep. Frame 1 on all fours, frames 2 and 3 he spins low, frames 4 and 5 the straight hind leg and the tail sweep wide along the floor, frames 6 to 8 back to all fours.",
+    "pulo": "a jump. Frame 1 hooves bent ready, frame 2 pushing off, frame 3 rising with legs tucking, frame 4 tucked at the top with claws up, frame 5 still tucked, frame 6 falling with legs opening, frame 7 reaching down with the hooves, frame 8 landing hunched.",
+    "ar_soco": "a downward claw slash in mid air. All frames in the air, legs tucked. Frames 1 to 3 the arm winds up, frames 4 and 5 the claw slashes down and forward, frames 6 to 8 he recovers the tucked pose.",
+    "bicicleta": "a mid-air double hoof kick. All frames in the air. Frame 1 tucked, frames 2 and 3 he leans back, frames 4 and 5 both hooves stomp forward at head height, fully stretched, frames 6 to 8 back to tucked.",
+    "defesa": "blocking. Frame 1 beast stance, frames 2 and 3 he hunches and crosses both hairy forearms in front of the face, frames 4 and 5 he holds the block, snarling, frames 6 and 7 the impact pushes him back a little, frame 8 still blocking.",
+    "apanha": "getting hit in the face. Frame 1 beast stance, frames 2 and 3 the horse head snaps back with the mouth open, frames 4 and 5 the torso bends backward, mane flying, frames 6 to 8 he recovers to the beast stance.",
+    "queda": "being knocked down. Frame 1 hit and bending back, frame 2 hooves leaving the ground, frames 3 and 4 flying backward horizontally, frames 5 and 6 falling onto his back, frame 7 bouncing on the floor, frame 8 lying flat on his back.",
+    "levanta": "getting up from the floor. Frame 1 flat on his back, frames 2 and 3 he rolls over onto all fours, frames 4 and 5 he pushes up on the hooves, frames 6 and 7 rising hunched and shaking the mane, frame 8 beast stance.",
+    "rolamento": "a low rolling dodge. Frame 1 beast stance, frames 2 to 7 he tucks and rolls forward in a full somersault close to the ground, frame 8 back on all fours.",
+    "agarrao": "a bite throw. Frame 1 beast stance, frame 2 both claws reach forward, frames 3 and 4 the claws grab an invisible opponent and the horse mouth bites forward, frames 5 and 6 he lifts and swings around, frames 7 and 8 he hurls forward with both arms. No second person is shown.",
+    "bola": "snorting a fireball. Frame 1 beast stance, frames 2 and 3 he rears the head back and inhales, chest swelling, frames 4 and 5 he thrusts the head forward and blasts a burst of red fire and steam from the nostrils at head height, frames 6 and 7 follow-through with smoke trailing, frame 8 beast stance.",
+    "compasso": "a spinning horse buck. Frame 1 beast stance, frames 2 and 3 he turns his back and looks over the shoulder, frames 4 and 5 one hind leg kicks straight backward at chest height with the hoof leading, frames 6 and 7 he spins back around, frame 8 beast stance.",
+    "armada": "rearing up and smashing down with both hooves. Frame 1 beast stance, frames 2 and 3 he rears up on the hind legs, front arms high, frames 4 and 5 at full height, frames 6 and 7 he slams both front claws and hooves down to the ground, frame 8 crouched.",
+    "caneta": "a sliding tackle like in football, demonic. Frame 1 beast stance, frames 2 and 3 he dives low, frames 4 and 5 sliding on one hip with the leading hoof stretched forward and sparks from the hoof, frames 6 and 7 getting up, frame 8 beast stance.",
+    "golaco": "a super move, a wild frenzy. Frame 1 beast stance, frame 2 he crouches and roars, frames 3 to 6 a frenzy in place: claw, buck, claw, stomp, frames 7 and 8 a final huge rearing double hoof stomp and a roar.",
+    "provoca": "a taunt. Frames 1 to 3 he scrapes a hoof on the ground twice like a bull, frames 4 to 6 he rears his head and neighs at the sky, frames 7 and 8 he snorts steam and grins with big horse teeth.",
+    "vitoria": "a victory. Frame 1 beast stance, frames 2 and 3 he rears up on the hind legs, frames 4 to 6 he neighs loudly with the claws raised, frames 7 and 8 he lands and pounds his chest.",
+    "derrota": "defeated. Frames 1 and 2 he drops to his knees, frames 3 to 8 sitting on the floor with the hooves out, head hanging, steam fading, panting.",
+}
+
+
 def pedido(nome):
+    if nome.startswith("e_"):
+        return CABECA_DEMONIO + FOLHAS_DEMONIO[nome[2:]]
+    if nome in ("endiabrado", "despertar_b"):
+        return CABECA_DEMONIO + FOLHAS_DEMONIO[nome]
     return CABECA + FOLHAS_GUTTO[nome][1]
 
 

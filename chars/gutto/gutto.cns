@@ -7078,8 +7078,8 @@ var(37) = 0
 type = PalFX
 trigger1 = var(20) > 0 && alive
 time = 2
-add = 12, 0, 28
-sinadd = 10, 0, 18, 40
+add = 16, 0, 0
+sinadd = 14, 2, 0, 40
 
 [State -2, Rastro]
 type = AfterImageTime

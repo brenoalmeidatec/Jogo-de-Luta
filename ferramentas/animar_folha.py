@@ -44,7 +44,7 @@ LOOPS = {"ginga_fluida": ("ginga", 7), "anda_fluida": ("anda", 5), "ginga_endiab
 # Com fumaça em volta, âncora nos pés ou na cabeça pula de quadro para quadro: usa o centro de cada célula.
 # Folhas em que o ChatGPT desenhou a figura maior que na referência: guarda medida contra a ginga (113 px).
 AJUSTE = {"lata": 0.89, "derrota": 0.89} if LUTADOR == "gutto" else {}
-LIMPA_MAGENTA = {"endiabrado", "despertar_a", "despertar_b"} if LUTADOR == "gutto" else set()
+LIMPA_MAGENTA = {"endiabrado", "despertar_a", "despertar_b", "ginga_endiabrada"} if LUTADOR == "gutto" else set()
 POR_CELULA = {"despertar_b", "ginga_endiabrada", "endiabrado"}  # e todas as folhas e_<golpe>, as versões endiabradas
 
 
@@ -199,7 +199,7 @@ def animar(nome):
         for n, q in enumerate(quadros):
             img = Image.open(pasta / q["saida"]).convert("RGBA").resize((LARG, ALT), Image.LANCZOS)
             img.putalpha(img.getchannel("A").point(lambda v: 255 if v >= 128 else 0))
-            if nome in LIMPA_MAGENTA:
+            if nome in LIMPA_MAGENTA or (LUTADOR == "gutto" and nome.startswith("e_")):
                 img = sem_magenta(img)
             img.save(destino / (f"{n:02d}.png" if loop else f"{q['nome']}.png"))
         if loop:
