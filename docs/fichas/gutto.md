@@ -76,6 +76,23 @@ e 1 super exclusivo. **Arte redesenhada**, não só recolorida.
 - **Falta:** as 5 folhas verdadeiras, as folhas `e_<golpe>` da cabeça de cavalo (uma por movimento), o retrato de seleção, o
   projétil do Beijinho em arte própria (hoje é um coração em código) e os áudios.
 
+## Retomar e ver (nota de 2026-11-06, noite)
+
+**Ver o Gutto:** `git pull` na branch `mugen`, depois dois cliques em `ferramentas/Jogo de Luta.bat` (ele baixa o Gutto junto) e
+escolha o Gutto na seleção. Os quadros e as folhas estão em `sprites/gutto/quadros/`; o personagem pronto em `chars/gutto/`.
+
+**Retomar a arte (o ChatGPT Plus libera imagens de novo às 07:49 de 2026-11-07):**
+
+1. Chat "Gutto" no ChatGPT (conta do Breno): `chatgpt.com/c/6aee6f73-fa5c-83e8-a30f-88f87f91425b`, referência
+   "Sequência de Guarda Muay Thai em Pixel Art" na biblioteca (a v3 do Gutto).
+2. Folhas que faltam, com os pedidos prontos em `ferramentas/folhas_gutto.py` (`python ferramentas/folhas_gutto.py <nome>`):
+   `derrota`, `lata`, `endiabrado`, `despertar_a`, `despertar_b`. Depois uma folha `e_<golpe>` por movimento, nos mesmos 8 tempos,
+   com a cabeça de cavalo (veja "Formas transformadas" em `docs/como-trabalhar.md`).
+3. Salvar em `sprites/gutto/quadros/folhas/<nome>.png` (`ferramentas/baixar_folhas.py gutto` extrai o pacote do navegador) e apagar a
+   cópia provisória correspondente (e `PROVISORIAS.txt` quando não sobrar nenhuma).
+4. Cortar: `LUTADOR=gutto BLENDER="C:/Program Files/Blender Foundation/Blender 5.2/blender.exe" python ferramentas/animar_folha.py <nomes>`.
+5. Gerar e testar: `python ferramentas/gerar_gutto.py` e `python ferramentas/testar_pengaro.py --lutador gutto`.
+
 ## Passos
 
 1. Chegar as fotos de referência; desenhar a **folha-referência** (ChatGPT, chat "Gutto", estilo do Pengaró).
