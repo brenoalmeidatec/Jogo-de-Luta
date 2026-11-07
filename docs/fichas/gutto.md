@@ -5,7 +5,7 @@ do Breno de 2026-11-06 (transcrito com WhisperX, que erra em trechos; o que est�
 As fotos de referência do Gutto ainda vão chegar e mandam na aparência. Arte no **mesmo estilo do Pengaró**: sprite 2D
 de SNES/arcade desenhado à mão, nunca 3D pixelizado.
 
-## Aparência aprovada (referência v2, 2026-11-06)
+## Aparência (referência v3, 2026-11-06)
 
 Folha-referência em `sprites/gutto/quadros/folhas/referencia_idle.png` (guarda de Muay Thai quicando, 8 quadros). Feita no
 chat "Gutto" do ChatGPT a partir de duas fotos do Breno (corpo inteiro e rosto), no estilo do Pengaró. **Base de Muay Thai
@@ -13,9 +13,11 @@ com a postura clássica** (em pé, mãos altas, quicando no pé da frente), como
 nem da arte de nenhum personagem existente (regra do projeto).
 
 - Pele marrom escura; cabelo curto e crespo; bigode grosso com barba rala; olhos grandes e redondos; corpo forte.
-- Camisa branca com **gola e mangas pretas** e um brasão preto simples (sem marca real); bermuda preta; ataduras brancas;
-  descalço.
-- Primeira versão saiu clara demais e com detalhes vermelho e azul; a v2 corrigiu a pele e a camisa.
+- **Roupa característica de Muay Thai** (pedido do próprio Gutto): sem camisa, calção de cetim preto com cós largo branco
+  e listra branca em cada lado (liso, sem logo), ataduras brancas, **braçadeiras de corda (prajioud)** nos dois bíceps,
+  descalço, sem faixa na cabeça.
+- Histórico: a v1 saiu clara demais e com detalhes vermelho e azul; a v2 (camisa branca de gola e mangas pretas, em
+  `referencia_idle_v2_camisa.png`) acertou pele e rosto; a v3 trocou a camisa pela roupa de Muay Thai.
 
 ## O que o Breno disse no áudio
 
