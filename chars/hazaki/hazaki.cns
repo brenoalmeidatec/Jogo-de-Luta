@@ -1071,6 +1071,11 @@ type = AfterImage
 trigger1 = Time = 0
 time = 40
 length = 8
+trans = add
+palmul = .45,.25,.65
+paladd = 20,0,40
+timegap = 2
+framegap = 3
 
 [State 2000, Gasta]
 type = PowerAdd
@@ -2185,6 +2190,11 @@ type = AfterImage
 trigger1 = Time = 0
 time = 40
 length = 8
+trans = add
+palmul = .45,.25,.65
+paladd = 20,0,40
+timegap = 2
+framegap = 3
 
 [State 3000, Estoque]
 type = PowerAdd
@@ -2303,6 +2313,11 @@ type = AfterImage
 trigger1 = Time = 0
 time = 40
 length = 8
+trans = add
+palmul = .45,.25,.65
+paladd = 20,0,40
+timegap = 2
+framegap = 3
 
 [State 3200, Estoque]
 type = PowerAdd

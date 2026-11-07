@@ -262,6 +262,7 @@ class Air:
         self.txt = ["; Gerado por ferramentas/gerar_pengaro.py. Edite lá, não aqui.\n"]
         self.acoes = set()
         self.mapas = {}
+        self.ativos = {}  # ação -> (elemento em que a caixa de golpe liga, a caixa)
         self.arte_despertada = arte_despertada or {}
 
     def fluido(self, numero, quadros):
@@ -291,6 +292,10 @@ class Air:
         if not self.hazaki:
             quadros = self.fluido(numero, quadros)
             loop = self.mapas[numero][loop] - 1 if loop is not None else None
+            ativo = next((k for k, q in enumerate(quadros) if len(q) > 2 and q[2]), None)
+            if ativo is not None:
+                caixa_golpe = quadros[ativo][2]
+                self.ativos[numero] = (ativo + 1, caixa_golpe[0] if isinstance(caixa_golpe[0], tuple) else caixa_golpe)
         t = [f"[Begin Action {numero}]"]
         if caixa:
             t.append(f"Clsn2Default: {len(caixa)}")
@@ -311,7 +316,8 @@ class Air:
                 for j, cx in enumerate(caixa):
                     t.append(f" Clsn1[{j}] = {cx[0]},{cx[1]},{cx[2]},{cx[3]}")
             g, ind = self.s.codigos[nome]
-            t.append(f"{g},{ind}, 0,0, {ticks}" + (f", {flip}" if flip else ""))
+            mistura = TRANS_FX.get(numero)
+            t.append(f"{g},{ind}, 0,0, {ticks}" + (f", {flip}, {mistura}" if mistura else f", {flip}" if flip else ""))
         self.txt.append("\n".join(t) + "\n")
         if numero in ATAQUES_DESPERTADOS or numero == 3100:
             variantes = []
@@ -340,21 +346,99 @@ class Air:
 
 
 
+# ------------------------------------------------------------------ efeitos (pixelfx recolorido)
+# Os efeitos do pixelfx têm transparência suave, e o SFF só guarda pixel opaco ou vazio. Por isso eles vão com a
+# transparência embutida na cor e desenhados com mistura (A = soma, brilho; S = subtração, sombra), marcada no AIR.
+# Cada forma do Pengaró tem a sua cor, por mapa de gradiente (o brilho do efeito escolhe a cor da rampa):
+WHISKY = ((0, (30, 10, 0)), (.35, (140, 60, 8)), (.7, (235, 155, 35)), (1, (255, 240, 190)))       # Pengaró normal
+SOMBRA = ((0, (15, 0, 25)), (.35, (85, 15, 140)), (.75, (175, 85, 255)), (1, (240, 215, 255)))      # endiabrado
+SOMBRA_ESCURA = ((0, (0, 0, 0)), (.5, (70, 100, 45)), (1, (120, 160, 85)))  # cor tirada do fundo: escurece puxando o roxo
+RECOLORIDOS = {"hit-spark", "crit-hit", "ground-slam"}  # whisky no normal; a versão sombra entra no Despertar (RemapSprite)
+METADE = {"ground-slam", "charge-up"}  # efeitos grandes demais para o tamanho do lutador
+# Soma de dourado sobre o palco azul vira rosa. Faísca de acerto vai em pixel opaco, cortada pela transparência.
+OPACOS = {"hit-spark", "crit-hit"}
+# Efeitos próprios do Pengaró: ação -> (efeito, quadros usados, rampa, mistura)
+EFEITOS_ENDIABRADO = {
+    9210: ("charge-up", range(18, 70), SOMBRA, "A"),           # endiabrado: aura que pulsa em volta do corpo
+    9211: ("heavy-landing", range(4, 44), SOMBRA_ESCURA, "S"),  # endiabrado: sombra que gira nos pés
+    9212: ("uppercut", range(0, 27), SOMBRA, "A"),              # endiabrado: corte de sombra no membro que bate
+    9213: ("hit-flash", range(0, 16), WHISKY, None),            # normal: brilho de whisky no membro que bate
+    9214: ("heavy-landing", range(0, 30), WHISKY, None),        # normal: poeira dourada na rasteira
+    9215: ("heavy-landing", range(0, 30), SOMBRA, "A"),         # endiabrado: poeira violeta na rasteira
+}
+TRANS_FX = {}  # ação -> mistura
+
+
+def pintar(sprite, rampa):
+    a = np.asarray(sprite).astype(np.float32)
+    luz = a[..., :3].max(axis=2) / 255
+    pontos = [p for p, _ in rampa]
+    cor = np.stack([np.interp(luz, pontos, [c[k] for _, c in rampa]) for k in range(3)], axis=-1)
+    return Image.fromarray(np.dstack([cor, a[..., 3]]).astype(np.uint8), "RGBA")
+
+
+def efeito_aditivo(sprite):
+    a = np.asarray(sprite).astype(np.float32)
+    rgb = a[..., :3] * (a[..., 3:] / 255)
+    alfa = np.where(a[..., 3] > 8, 255, 0)
+    return Image.fromarray(np.dstack([rgb, alfa]).astype(np.uint8), "RGBA")
+
+
+def efeito_opaco(sprite):
+    a = np.array(sprite)
+    a[..., 3] = np.where(a[..., 3] >= 110, 255, 0)
+    return Image.fromarray(a, "RGBA")
+
+
+def ler_efeito(nome):
+    dados = json.loads((EFEITOS / f"{nome}.json").read_text(encoding="utf-8"))
+    pivo = tuple(dados["meta"]["pixelfx"]["pivot"])
+    metade = nome in METADE
+    quadros = []
+    with Image.open(EFEITOS / dados["meta"]["image"]) as imagem:
+        folha = imagem.convert("RGBA")
+        for quadro in dados["frames"]:
+            r = quadro["frame"]
+            sprite = folha.crop((r["x"], r["y"], r["x"] + r["w"], r["y"] + r["h"]))
+            if metade:
+                sprite = sprite.resize((sprite.width // 2, sprite.height // 2), Image.LANCZOS)
+            quadros.append((sprite, max(1, round(quadro["duration"] * 60 / 1000))))
+    return ((pivo[0] // 2, pivo[1] // 2) if metade else pivo), quadros
+
+
 def carregar_faiscas(sprites):
+    pengaro = getattr(sprites, "folhas", False)
     acoes = {}
     for numero, nome in FAISCAS.items():
-        dados = json.loads((EFEITOS / f"{nome}.json").read_text(encoding="utf-8"))
-        pivo = tuple(dados["meta"]["pixelfx"]["pivot"])
-        quadros = []
-        with Image.open(EFEITOS / dados["meta"]["image"]) as imagem:
-            folha = imagem.convert("RGBA")
-            for indice, quadro in enumerate(dados["frames"]):
-                r = quadro["frame"]
-                sprite = folha.crop((r["x"], r["y"], r["x"] + r["w"], r["y"] + r["h"]))
-                chave = f"fx_{nome}_{indice}"
-                sprites.add(chave, sprite, numero, indice, pivo)
-                quadros.append((chave, max(1, round(quadro["duration"] * 60 / 1000))))
-        acoes[numero] = quadros
+        pivo, quadros = ler_efeito(nome)
+        recolor = pengaro and nome in RECOLORIDOS
+        opaco = recolor and nome in OPACOS
+        mistura = (recolor or nome in METADE) and not opaco
+        acabar = efeito_opaco if opaco else efeito_aditivo if mistura else (lambda s: s)
+        lista = []
+        for indice, (sprite, ticks) in enumerate(quadros):
+            base = pintar(sprite, WHISKY) if recolor else sprite
+            chave = f"fx_{nome}_{indice}"
+            sprites.add(chave, acabar(base), numero, indice, pivo)
+            if recolor:
+                sprites.add(f"dfx_{nome}_{indice}", acabar(pintar(sprite, SOMBRA)), numero + 30, indice, pivo)
+            lista.append((chave, ticks))
+        if mistura:
+            TRANS_FX[numero] = "A"
+        acoes[numero] = lista
+    if pengaro:
+        for numero, (nome, faixa, rampa, modo) in EFEITOS_ENDIABRADO.items():
+            pivo, quadros = ler_efeito(nome)
+            lista = []
+            for i in faixa:
+                sprite, ticks = quadros[i]
+                chave = f"sfx_{numero}_{i}"
+                pintado = pintar(sprite, rampa)
+                sprites.add(chave, efeito_aditivo(pintado) if modo else efeito_opaco(pintado), numero + 40, i, pivo)
+                lista.append((chave, ticks))
+            if modo:
+                TRANS_FX[numero] = modo
+            acoes[numero] = lista
     return acoes
 
 
@@ -537,13 +621,60 @@ SEM_WHISKY = ("balao_", "fx_", "bola", "bolao", "quica", "retrato", "chuva", "f_
 QUADROS = RAIZ / "sprites/pengaro/quadros"
 
 
+def limpar_borda(img):
+    """Tira a franja roxa que sobra do fundo magenta no contorno e os pontinhos soltos em volta da figura."""
+    import cv2
+    a = np.array(img)
+    r, g_, b = (a[..., i].astype(int) for i in range(3))
+    tinta = (r > g_ + 30) & (b > g_ + 30) & (np.abs(r - b) < 45)  # magenta misturado; o roxo do endiabrado tem r < b
+    for _ in range(2):
+        cheio = a[..., 3] >= 128
+        borda = cheio & ~cv2.erode(cheio.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool)
+        a[borda & tinta, 3] = 0
+    cheio = (a[..., 3] >= 128).astype(np.uint8)
+    n, rotulos, dados, _ = cv2.connectedComponentsWithStats(cheio, connectivity=8)
+    for i in range(1, n):
+        if dados[i, cv2.CC_STAT_AREA] < 6:
+            a[rotulos == i, 3] = 0
+    return Image.fromarray(a)
+
+
 def abrir_quadro(arquivo):
     """Quadro do Blender já vem na tela do jogo; os antigos, de 224x128, são colados com os pés no eixo."""
     img = Image.open(arquivo).convert("RGBA")
     if img.size == (LARG, ALT):
-        return img
+        return limpar_borda(img)
     tela = Image.new("RGBA", (LARG, ALT))
     tela.alpha_composite(img, (EIXO_X - 104, EIXO_Y - 119))
+    return limpar_borda(tela)
+
+
+def centro_tronco(img):
+    """Meio do tronco (do peito à barriga) de um quadro na tela do jogo."""
+    alfa = np.asarray(img)[..., 3] >= 128
+    ys = np.flatnonzero(alfa.any(axis=1))
+    if not len(ys):
+        return None
+    topo, base = ys[0], ys[-1]
+    meios = []
+    for y in range(topo + int((base - topo) * 0.3), topo + max(1, int((base - topo) * 0.6))):
+        linha = np.flatnonzero(alfa[y])
+        if len(linha):
+            quebras = np.flatnonzero(np.diff(linha) > 1)
+            inicios, fins = np.r_[linha[0], linha[quebras + 1]], np.r_[linha[quebras], linha[-1]]
+            k = int(np.argmax(fins - inicios))
+            meios.append((inicios[k] + fins[k]) / 2)
+    return float(np.median(meios)) if meios else None
+
+
+def alinhar_endiabrado(normal, endiabrado):
+    """Põe o tronco do endiabrado onde está o tronco do normal, para a troca do Despertar não pular de lugar."""
+    a, b = centro_tronco(normal), centro_tronco(endiabrado)
+    if a is None or b is None:
+        return endiabrado
+    dx = max(-24, min(24, round(a - b)))
+    tela = Image.new("RGBA", endiabrado.size)
+    tela.paste(endiabrado, (dx, 0), endiabrado)
     return tela
 
 
@@ -588,21 +719,55 @@ def preset_despertado(s):
     Sprite antigo sem folha endiabrada (corrida, tontura) cai numa pose parada, para a garrafa nunca aparecer."""
     pose = {nome: i for i, nomes in POSES_ENDIABRADO.items() for nome in nomes}
     linhas = ["[RemapPreset despertado]"]
+    normais = {(gr, ind): img for gr, ind, img, _, _ in s.lista}
     for nome, (grupo, indice) in list(s.codigos.items()):
         if nome.startswith(("balao_", "fx_", "bola", "bolao", "quica", "retrato", "chuva", "ginga_endiabrada",
                             "endiabrado_", "despertado_", "e_")) or grupo >= 9000:
             continue
         arquivo = arquivo_endiabrado(nome)
         destino = f"e_{nome}"
+        normal = normais[(grupo, indice)]
         if arquivo and arquivo.exists():
-            s.add(destino, abrir_quadro(arquivo))
+            s.add(destino, alinhar_endiabrado(normal, abrir_quadro(arquivo)))
         elif nome.startswith(("m_despertar", "f_despertar", "f_lata", "m_lata")):
             continue
         else:
-            s.add(destino, abrir_quadro(QUADROS / f"endiabrado/{pose.get(nome, 0):02d}.png"))
+            s.add(destino, alinhar_endiabrado(normal, abrir_quadro(QUADROS / f"endiabrado/{pose.get(nome, 0):02d}.png")))
         g, i = s.codigos[destino]
         linhas.append(f"{grupo},{indice} = {g},{i}")
+    for nome, (grupo, indice) in s.codigos.items():  # faíscas: whisky no normal, sombra no Despertar
+        if nome.startswith("fx_") and f"d{nome}" in s.codigos:
+            g, i = s.codigos[f"d{nome}"]
+            linhas.append(f"{grupo},{indice} = {g},{i}")
     return "\n".join(linhas) + "\n\n"
+
+
+def efeitos_cns(ativos):
+    """[Statedef -3] com os efeitos que acompanham o Pengaró: a aura do endiabrado e o efeito de cada golpe, que nasce
+    no elemento em que a caixa de golpe liga, na ponta da caixa (onde está o punho ou o pé)."""
+    t = ["[Statedef -3]\n"]
+    for anim, nome, pos, escala, prioridade in ((9210, "Aura de sombra", "0, -52", ".8, .8", -1),
+                                                 (9211, "Sombra nos pés", "0, 0", "1, .6", -2)):
+        t.append(f"[State -3, {nome}]\ntype = Explod\ntrigger1 = var(20) > 0 && alive && NumExplod({anim}) = 0\n"
+                 f"anim = {anim}\nid = {anim}\npostype = p1\npos = {pos}\nbindtime = -1\nremovetime = -1\n"
+                 f"sprpriority = {prioridade}\nownpal = 1\nscale = {escala}\nignorehitpause = 1\nsupermovetime = -1\n\n")
+        t.append(f"[State -3, Tira {nome.lower()}]\ntype = RemoveExplod\ntrigger1 = var(20) <= 0 || !alive\n"
+                 f"trigger1 = NumExplod({anim})\nid = {anim}\n\n")
+    for anim, (elemento, caixa) in sorted(ativos.items()):
+        base = anim - 10000 if anim >= 10000 else anim
+        if not 200 <= base < 4000 or base == 2000:
+            continue
+        x1, y1, x2, y2 = caixa
+        endiabrado = anim >= 10000
+        if max(y1, y2) >= -25:  # caixa rente ao chão: rasteira, poeira no chão
+            efeito, pos, escala = (9215 if endiabrado else 9214), f"{(x1 + x2) // 2}, 0", ".7, .7"
+        else:  # punho ou pé no ar: o efeito sai da ponta do golpe
+            efeito, pos = (9212 if endiabrado else 9213), f"{max(x1, x2) - 8}, {(y1 + y2) // 2}"
+            escala = ".7, .7" if endiabrado else ".8, .8"
+        t.append(f"[State -3, Efeito do golpe {anim}]\ntype = Explod\ntrigger1 = Anim = {anim} && AnimElem = {elemento}\n"
+                 f"anim = {efeito}\npostype = p1\npos = {pos}\nbindtime = 3\nremovetime = -2\nsprpriority = 3\n"
+                 f"ownpal = 1\nscale = {escala}\nignorehitpause = 1\n\n")
+    return "".join(t)
 
 
 def caminho_fluido(s, atual, proximo):
@@ -1388,7 +1553,9 @@ def chuva_de_bebidas(numero):
 def superpausa(numero, trigger):
     return (f"[State {numero}, Pausa]\ntype = SuperPause\ntrigger1 = {trigger}\ntime = 30\nanim = 100\n"
             "pos = 10, -60\nsound = F20,0\nmovetime = 0\ndarken = 1\n\n"
-            f"[State {numero}, Rastro]\ntype = AfterImage\ntrigger1 = {trigger}\ntime = 40\nlength = 8\n\n")
+            f"[State {numero}, Rastro]\ntype = AfterImage\ntrigger1 = {trigger}\ntime = 40\nlength = 8\n"
+            # sem trans o motor desenha as cópias escurecidas por cima: no Despertar virava uma mancha preta no corpo
+            "trans = add\npalmul = .45,.25,.65\npaladd = 20,0,40\ntimegap = 2\nframegap = 3\n\n")
 
 
 def cns_repertorio(hazaki):
@@ -2368,7 +2535,7 @@ def main():
     preset = preset_despertado(s)
     escrever_sff(SAIDA / "pengaro.sff", s)
     (SAIDA / "pengaro.air").write_text("\n".join(a.txt), encoding="utf-8", newline="\n")
-    cns = remapear_animelem(montar_cns(), a.mapas)
+    cns = remapear_animelem(montar_cns(), a.mapas).rstrip() + "\n\n" + efeitos_cns(a.ativos)
     cns = cns.replace("[Data]", preset + "[Quotes]\n" + "".join(f'victory{i + 1} = "{v}"\n' for i, v in enumerate(VITORIAS)) + "\n[Data]", 1)
     (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8", newline="\n")
     (SAIDA / "pengaro.cmd").write_text(montar_cmd(), encoding="utf-8")

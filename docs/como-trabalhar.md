@@ -2,7 +2,8 @@
 
 Este é o jeito de trabalhar definido pelo Breno em 2026-11-06, e vale para o resto do jogo. Se `AGENTS.md`,
 `docs/missoes-codex.md` ou `docs/pedidos-para-claude.md` disserem outra coisa, vale este arquivo. As regras dos lutadores
-continuam em [`regras-dos-lutadores.md`](regras-dos-lutadores.md).
+continuam em [`regras-dos-lutadores.md`](regras-dos-lutadores.md). Estilo e cores ficam na
+[`biblia-de-arte.md`](biblia-de-arte.md), e o que conferir antes de subir, em [`conferencia-de-golpe.md`](conferencia-de-golpe.md).
 
 ## Regras do Breno
 
@@ -98,6 +99,18 @@ Armadilhas já pagas:
 - Ciclos de ginga levam uns 2 segundos, com 64 quadros a 2 ticks.
 - `remapear_animelem` ajusta o `AnimElem` do `.cns`, porque os quadros do meio mudam a contagem.
 - Regenerar os dois lutadores: `gerar_pengaro.py` e `gerar_hazaki.py`. Confira o diff do `.cns` do outro lutador.
+
+## Estado em 2026-11-07
+
+- O IKEMEN roda neste PC: `ferramentas/filmar_luta.py PASTA --despertar 12` filma uma luta CPU x CPU, e
+  `ferramentas/auditar_pengaro.py PASTA` mede cada quadro.
+- Quadros alinhados pelo tronco, bordas limpas e endiabrado alinhado ao normal: desalinhados caíram de ~152 ações para
+  33 quadros, todos de altura no pulo.
+- Efeitos encaixados no elemento em que a caixa de golpe liga. Normal: faísca e brilho dourados de whisky, poeira
+  dourada na rasteira. Endiabrado: aura violeta pulsando, sombra girando nos pés, corte e poeira violeta nos golpes.
+  Rastro do especial em soma violeta (o Hazaki também ganhou esse rastro).
+- Visto na filmagem; ainda não jogado por uma pessoa. O roxo forte do endiabrado vem das folhas do ChatGPT, não do
+  gerador. Os buracos de fumaça nas pernas também são do desenho.
 
 ## Estado em 2026-11-06 (atualizado no fim do dia)
 

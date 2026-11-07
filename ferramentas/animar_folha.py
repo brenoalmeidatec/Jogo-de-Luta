@@ -45,6 +45,28 @@ LOOPS = {"ginga_fluida": ("ginga", 7), "anda_fluida": ("anda", 5), "ginga_endiab
 POR_CELULA = {"despertar_b", "ginga_endiabrada"}  # e todas as folhas e_<golpe>, as versões endiabradas
 
 
+# Pengaró: toda folha (normal e endiabrada) alinhada pelo centro do tronco no eixo do lutador. Alinhar pelo pé de trás
+# ou pelo centro da célula deixava a forma endiabrada 20 a 40 px fora do lugar e fazia o corpo pular entre folhas.
+PELO_TRONCO = LUTADOR == "pengaro"
+
+
+def tronco(q):
+    """Centro do tronco (faixa do peito à barriga) numa figura recortada: em cada linha, o meio do maior trecho cheio."""
+    a = np.asarray(q)[..., 3] > 0
+    h = a.shape[0]
+    meios = []
+    for y in range(int(h * 0.3), max(int(h * 0.3) + 1, int(h * 0.6))):
+        linha = np.flatnonzero(a[y])
+        if not len(linha):
+            continue
+        quebras = np.flatnonzero(np.diff(linha) > 1)
+        inicios = np.r_[linha[0], linha[quebras + 1]]
+        fins = np.r_[linha[quebras], linha[-1]]
+        k = int(np.argmax(fins - inicios))
+        meios.append((inicios[k] + fins[k]) / 2)
+    return float(np.median(meios)) if meios else q.width / 2
+
+
 def por_celula(img, fator):
     """Separa as 8 figuras pela célula onde cada pedaço está, sem cortar perna que passa da célula.
     Cada figura fica com o centro da célula no eixo e a base no chão: quem faz o pulo subir é o jogo, não o desenho."""
@@ -77,7 +99,10 @@ def por_celula(img, fator):
         q = figura.crop(caixa)
         grande = q.resize((round(q.width * fator), round(q.height * fator)), Image.LANCZOS)
         tela = Image.new("RGBA", (LARG * AMPLIA, ALT * AMPLIA))
-        centro = round(((i + 0.5) * largura - caixa[0]) * fator)
+        if PELO_TRONCO:
+            centro = round(tronco(q) * fator)
+        else:
+            centro = round(((i + 0.5) * largura - caixa[0]) * fator)
         tela.paste(grande, ((PIVO[0] + DESLOCA[0]) * AMPLIA - centro,
                             (PIVO[1] + DESLOCA[1]) * AMPLIA - grande.height), grande)
         saida.append(tela)
@@ -93,10 +118,10 @@ def poses(folha, ancora):
     saida = []
     for q in fatias(tira_fundo(img), 8):
         q = q.crop(q.getchannel("A").getbbox())
-        ponto = ponto_ancora(q, ancora)
+        ponto = tronco(q) if PELO_TRONCO else ponto_ancora(q, ancora)
         grande = q.resize((round(q.width * fator), round(q.height * fator)), Image.LANCZOS)
         tela = Image.new("RGBA", (LARG * AMPLIA, ALT * AMPLIA))
-        referencia = (PE_DE_TRAS if ancora == "pes" else PIVO[0]) + DESLOCA[0]
+        referencia = (PIVO[0] if PELO_TRONCO else PE_DE_TRAS if ancora == "pes" else PIVO[0]) + DESLOCA[0]
         y = (PIVO[1] + DESLOCA[1]) * AMPLIA - grande.height
         tela.paste(grande, (referencia * AMPLIA - round(ponto * fator), y), grande)
         saida.append(tela)
