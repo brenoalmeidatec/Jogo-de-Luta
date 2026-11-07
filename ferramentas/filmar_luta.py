@@ -4,7 +4,8 @@
   python ferramentas/filmar_luta.py PASTA_DE_SAIDA [--segundos 40] [--despertar 10]
 
 O jogo instalado não é tocado: o motor é copiado para uma pasta temporária com o Pengaró e o Hazaki de chars/.
---despertar N liga o Despertar do Pengaró aos N segundos de luta, para filmar a forma endiabrada.
+--despertar N ativa o Despertar do Pengaró uma vez só, aos N segundos de luta: enche a barra e entra no estado 2000,
+como o jogador faria, para filmar a cutscene, a forma endiabrada e a volta ao normal quando o tempo acaba.
 Grava quadro_NNNN.png e uma folha de contato.
 """
 import ctypes
@@ -62,8 +63,12 @@ def main():
         if despertar is not None:
             cmd = copia / "chars/pengaro/pengaro.cmd"
             txt = cmd.read_text(encoding="utf-8").replace("\r\n", "\n")
-            liga = (f"[State -1, Filme liga despertar]\ntype = VarSet\ntrigger1 = roundstate = 2\n"
-                    f"trigger1 = var(20) <= 0 && time > 0 && gametime % {int(despertar * 60)} = 0\nvar(20) = 600\n\n")
+            # var(50) não é usada pelo Pengaró: marca que a ativação do filme já aconteceu, para não religar.
+            quando = (f"triggerall = roundstate = 2 && var(50) = 0 && var(20) = 0\n"
+                      f"trigger1 = gametime >= {int(despertar * 60)} && statetype = S && ctrl\n")
+            liga = ("[State -1, Filme marca o Despertar feito]\ntype = VarSet\ntrigger1 = stateno = 2000\nvar(50) = 1\n\n"
+                    f"[State -1, Filme enche a barra]\ntype = PowerSet\n{quando}value = powermax\n\n"
+                    f"[State -1, Filme ativa o Despertar]\ntype = ChangeState\n{quando}value = 2000\n\n")
             cmd.write_text(txt.replace("[Statedef -1]\n\n", "[Statedef -1]\n\n" + liga, 1), encoding="utf-8", newline="\n")
         proc = subprocess.Popen([str(copia / "Ikemen_GO.exe"), "-p1", "pengaro", "-p1.ai", "8", "-p2", "hazaki",
                                  "-p2.ai", "8", "-s", "stages/stage0-720.def", "-rounds", "1"],

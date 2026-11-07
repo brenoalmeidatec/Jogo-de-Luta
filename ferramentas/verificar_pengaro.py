@@ -8,6 +8,7 @@ import struct
 import sys
 from pathlib import Path
 
+import numpy as np
 from PIL import Image
 
 PERSONAGEM = "hazaki" if "--hazaki" in sys.argv else "pengaro"
@@ -19,7 +20,9 @@ ACOES_DO_MOTOR = [0, 5, 6, 10, 11, 12, 20, 21, 40, 41, 42, 43, 47, 100, 105, 120
                   5080, 5090, 5100, 5101, 5110, 5120, 5150, 5160, 5170, 5200, 5210, 5300]
 COMANDOS_DO_MOTOR = ["FF", "BB", "recovery", "holdfwd", "holdback", "holdup", "holddown"]
 LARGURA_TELA = 320  # em unidades do lutador
+SOBRA_CLSN1 = 12  # px de caixa de golpe além do membro visível (regra 8.3)
 erros = []
+avisos = []  # regras novas entram como aviso até o conserto delas chegar; não mudam o código de saída
 
 
 def ler_sff():
@@ -76,6 +79,82 @@ def ler_air():
             p = [x.strip() for x in linha.split(",")]
             acoes[atual].append((int(p[0]), int(p[1]), int(p[4])))
     return acoes
+
+
+def ler_clsn1():
+    """{ação: [(grupo, índice, [caixas Clsn1 do elemento])]}: as caixas valem só para o elemento logo abaixo delas."""
+    acoes, atual, caixas, padrao = {}, None, [], []
+    for linha in (PASTA / f"{PERSONAGEM}.air").read_text(encoding="utf-8").splitlines():
+        linha = linha.split(";")[0].strip()
+        m = re.match(r"\[Begin Action (\d+)\]", linha)
+        if m:
+            atual, caixas, padrao = int(m.group(1)), [], []
+            acoes[atual] = []
+            continue
+        m = re.match(r"Clsn1(Default)?\[\d+\]\s*=\s*(.*)", linha)
+        if m:
+            (padrao if m.group(1) else caixas).append(tuple(int(x) for x in m.group(2).split(",")))
+        elif atual is not None and re.match(r"-?\d+,\s*-?\d+,", linha):
+            p = [x.strip() for x in linha.split(",")]
+            acoes[atual].append((int(p[0]), int(p[1]), caixas or padrao))
+            caixas = []
+    return acoes
+
+
+def conferir_clsn1(cns, sprites):
+    """A caixa de golpe acompanha o membro: o pixel opaco mais à frente na faixa vertical da caixa marca até onde ela vai.
+
+    Mede o desenho normal e, no Pengaró, também o endiabrado que o RemapPreset põe no lugar. Sai como aviso: o
+    conserto (caixa por subquadro) vem depois, e o Hazaki não muda."""
+    secao = re.search(r"\[RemapPreset despertado\]\n((?:\d+,\d+ = \d+,\d+\n)+)", cns)
+    pares = dict(((int(a), int(b)), (int(c), int(d)))
+                 for a, b, c, d in re.findall(r"(\d+),(\d+) = (\d+),(\d+)", secao[1])) if secao else {}
+    mascaras = {}
+
+    def frente(cod, y1, y2):
+        if cod not in mascaras:
+            w, h, ax, ay, px = sprites[cod]
+            ys, xs = np.nonzero(np.frombuffer(px, np.uint8).reshape(h, w) > 0)
+            mascaras[cod] = (xs - ax, ys - ay)
+        x, y = mascaras[cod]
+        faixa = (y >= min(y1, y2)) & (y <= max(y1, y2))
+        return int(x[faixa].max()) if faixa.any() else None
+
+    total = 0
+    for numero, quadros in sorted(ler_clsn1().items()):
+        piores = []
+        for k, (g, i, caixas) in enumerate(quadros, 1):
+            for cod, forma in (((g, i), "normal"), (pares.get((g, i)), "endiabrado")):
+                if not caixas or not cod or cod not in sprites:
+                    continue
+                sobras = []
+                for c in caixas:
+                    membro = frente(cod, c[1], c[3])
+                    sobras.append(max(c[0], c[2]) - (membro if membro is not None else min(c[0], c[2])))
+                sobra = max(sobras)
+                if sobra > SOBRA_CLSN1:
+                    piores.append((sobra, k, forma))
+        if piores:
+            total += len(piores)
+            sobra, k, forma = max(piores)
+            avisos.append(f"ação {numero}: Clsn1 passa do membro mais de {SOBRA_CLSN1} px em {len(piores)} elementos "
+                          f"(pior: elem {k} [{forma}], {sobra} px)")
+    if total:
+        avisos.append(f"Clsn1 além do membro: {total} elementos no total")
+
+
+def conferir_faiscas(cns):
+    """Golpe defensável sem sparkno e guard.sparkno cai na faísca padrão do motor (fightfx), fora do estilo."""
+    for bloco in re.split(r"(?m)^(?=\[)", cns):
+        tipo = re.search(r"^type = (HitDef|Projectile|ReversalDef)$", bloco, re.M)
+        if not tipo:
+            continue
+        titulo = bloco.splitlines()[0]
+        if not re.search(r"^sparkno = ", bloco, re.M):
+            avisos.append(f"{titulo} ({tipo[1]}): sem sparkno, usa a faísca do motor")
+        guarda = re.search(r"^guardflag = (\S+)", bloco, re.M)
+        if tipo[1] != "ReversalDef" and guarda and not re.search(r"^guard\.sparkno = ", bloco, re.M):
+            avisos.append(f"{titulo} ({tipo[1]}): defensável sem guard.sparkno, usa a faísca do motor")
 
 
 def conferir_despertar(cns, acoes, sprites):
@@ -159,6 +238,8 @@ def main():
             erros.append(f'falta o comando "{nome}", exigido pelo motor')
     conferir_baloes(cns, acoes, sprites, pal)
     conferir_despertar(cns, acoes, sprites)
+    conferir_clsn1(cns, sprites)
+    conferir_faiscas(cns)
 
     previa = next((arg for arg in sys.argv[1:] if arg != "--hazaki"), None)
     if previa:
@@ -172,6 +253,8 @@ def main():
         folha.save(previa)
 
     print(f"{len(sprites)} sprites, {len(acoes)} ações, {len(estados)} estados, {len(definidos)} comandos")
+    for a in avisos:
+        print("AVISO:", a)
     for e in erros:
         print("ERRO:", e)
     sys.exit(1 if erros else 0)
