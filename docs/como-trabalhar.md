@@ -104,7 +104,8 @@ Armadilhas já pagas:
 O kit do Pengaró passou a ter, no código, tudo que o checklist da seção 9 pede: 4 correntes de 3 golpes + finalizador,
 4 kombos, 8 especiais (2º projétil em arco e Rolê por Trás), 3 agarrões, Despertar em `x + y` com barra cheia e os 20 golpes
 exclusivos (dados em `ferramentas/pengaro_extra.py`, ficha em `docs/fichas/pengaro.md`). A arte desses golpes novos ainda
-reaproveita folhas existentes, e **nada disso foi testado jogando**: só gerador, verificador e carregamento no IKEMEN.
+reaproveita folhas existentes. Há um teste automático (`python ferramentas/testar_pengaro.py`, robô em `ferramentas/robo/`): 126
+verificações passam. Nenhuma pessoa jogou ainda; o que o robô não sente é ritmo, peso e se a transformação parece certa.
 
 Estado anterior, do commit `68af3ec`:
 

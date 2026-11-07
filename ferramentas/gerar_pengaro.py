@@ -305,6 +305,11 @@ class Air:
             if golpe:
                 t.append("Clsn1: 1")
                 t.append(f" Clsn1[0] = {golpe[0]},{golpe[1]},{golpe[2]},{golpe[3]}")
+            elif numero in PROJETEIS and caixa:
+                # o projétil só acerta se a animação tiver caixa de ataque (Clsn1) em cada desenho
+                t.append(f"Clsn1: {len(caixa)}")
+                for j, cx in enumerate(caixa):
+                    t.append(f" Clsn1[{j}] = {cx[0]},{cx[1]},{cx[2]},{cx[3]}")
             g, ind = self.s.codigos[nome]
             t.append(f"{g},{ind}, 0,0, {ticks}" + (f", {flip}" if flip else ""))
         self.txt.append("\n".join(t) + "\n")
@@ -1620,7 +1625,7 @@ def cns_novo(m):
                         tipo="Heavy" if forte else "Medium" if medio else "Light", guarda=m.guarda,
                         pausa=(14, 14) if final else (11, 11) if forte else (10, 10) if medio else (6, 6),
                         hit=21 if forte else 20 if medio else 14, escorrega=8 if forte else 7 if medio else 5,
-                        vel=m.vel or ("-7" if forte else "-5" if medio else "-4"),
+                        vel=m.vel or ("-7" if forte else "-3.5" if medio else "-2.5"),
                         ar=m.ar or ("-3,-4" if queda_aqui else "-1.4,-3"),
                         queda=queda_aqui, chao=m.chao, pesado=dano >= 75))
         if final or forte and ultimo:
@@ -1636,12 +1641,12 @@ def cns_especiais_extra():
     ai = {m.estado: m for m in extra.ESPECIAIS_A_MAO}
 
     # Garrafada em Arco: o segundo projétil. Sobe, passa por cima de golpe baixo e cai no chão do outro lado
-    for n, vx, vy in ((1600, 3.6, -4.0), (1601, 5.0, -5.0)):
+    for n, vx, vy in ((1600, 3.6, -2.6), (1601, 5.0, -3.0)):
         ini, _ = inicios_extra(ai[n])
         t.append(estado(n, "S", "A", "S", anim=n, juggle=4))
         t.append(f"[State {n}, Garrafa]\ntype = Projectile\ntrigger1 = Time = {ini[3]}\nprojid = 1002\n"
                  "projanim = 3010\nprojhitanim = 1006\nprojremanim = 1006\nprojhits = 1\nprojpriority = 2\n"
-                 f"offset = 52, -96\nvelocity = {vx}, {vy}\naccel = 0, {0.22 if n == 1600 else 0.30}\n"
+                 f"offset = 52, -96\nvelocity = {vx}, {vy}\naccel = 0, {0.20 if n == 1600 else 0.26}\n"
                  "projheightbound = -400, 0\nattr = S, SP\ndamage = 75, 5\nanimtype = Med\nguardflag = MA\n"
                  "hitflag = MAF\npausetime = 2, 10\nsparkxy = 0, 0\nhitsound = F5,1\nguardsound = F6,0\n"
                  "ground.type = High\nground.slidetime = 12\nground.hittime = 18\nground.velocity = -4\n"
@@ -2066,7 +2071,7 @@ def entradas_extra():
     # --- Despertar: kombo novo (b, a, x) e as duas correntes novas (y e b, 4 golpes cada)
     c.append(entrada("Desp: Kombo 3", 349, ['command = "x"', em_pe, desperto], ("stateno = 348 && movecontact",)))
     c.append(entrada("Desp: Kombo 2", 348, ['command = "a"', sem_baixo, em_pe, desperto],
-                     ("stateno = 240 && movecontact || stateno = 245 && movecontact",)))
+                     ("stateno = 3420 && movecontact",)))
     for botao, base, hits in (("y", 3410, "stateno = 3410"), ("b", 3420, "stateno = 3420")):
         c.append(entrada(f"Desp: corrente {botao} final", base + 3, [f'command = "{botao}"', sem_baixo, em_pe, desperto],
                          (f"stateno = {base + 2} && movehit && var(10) >= 3",)))
@@ -2136,7 +2141,8 @@ def montar_cmd(hazaki=False):
     c.append(comando("despertar", "x+a+y" if hazaki else "x+y", 3))
     c.append(comando("superpulo", "$D, $U", 10, 6))
     for nome in "xyabc":
-        c.append(comando(nome, nome, 1))
+        # Pengaró: botão de ataque fica guardado 8 ticks; apertado durante a pausa do contato, a corrente sai
+        c.append(comando(nome, nome, 1, 8 if not hazaki and nome in "xyab" else None))
     c.append(comando("start", "s", 1))
     for nome, d in (("holdfwd", "/$F"), ("holdback", "/$B"), ("holdup", "/$U"), ("holddown", "/$D")):
         c.append(comando(nome, d, 1))

@@ -81,8 +81,10 @@ O que ganha: dano x1,45, golpes novos, projétil que acelera. O que perde: ressa
 
 ## Pendências (honestas)
 
-- **Nada disto foi testado jogando por uma pessoa.** O gerador, o verificador e o carregamento no IKEMEN passam sem
-  erro, mas dano, alcance, tempos e o "ir para trás" no canto precisam de teste no treino, dos dois lados.
+- **Testado por robô, não por uma pessoa.** `python ferramentas/testar_pengaro.py` abre o motor numa cópia, aperta os
+  botões por script e confere correntes, kombos, agarrões, projéteis, Rolê por Trás (inclusive no canto), Despertar e
+  os exclusivos: 126 verificações, 0 falhas. Ainda falta um humano sentir o jogo: dano, ritmo, alcance e se a
+  transformação *parece* certa na tela.
 - **Arte nova:** os golpes novos reaproveitam folhas existentes com outra ordem e tempo. A regra 3B pede pose nova no 2º,
   3º e finalizador de cada corrente. Falta desenhar folhas próprias (e as `e_` do endiabrado) para eles.
 - 72 de 159 ações antigas ainda têm desenho parado por mais de 2 ticks (regra 7).

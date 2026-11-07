@@ -2673,6 +2673,16 @@ anim = 301
 juggle = 3
 velset = 0,0
 
+[State 301, Avanço]
+type = VelSet
+trigger1 = Time = 4
+x = 1.8
+
+[State 301, Freia]
+type = VelSet
+trigger1 = Time = 14
+x = 0
+
 [State 301, Golpe]
 type = HitDef
 trigger1 = Time = 7
@@ -2691,7 +2701,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 21
-ground.velocity = -4
+ground.velocity = -2.5
 air.velocity = -1.4,-3
 
 [State 301, Fim]
@@ -2709,6 +2719,16 @@ sprpriority = 2
 anim = 302
 juggle = 3
 velset = 0,0
+
+[State 302, Avanço]
+type = VelSet
+trigger1 = Time = 7
+x = 1.8
+
+[State 302, Freia]
+type = VelSet
+trigger1 = Time = 18
+x = 0
 
 [State 302, Golpe]
 type = HitDef
@@ -2728,7 +2748,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
-ground.velocity = -5
+ground.velocity = -3.5
 air.velocity = -1.4,-3
 
 [State 302, Fim]
@@ -2750,7 +2770,7 @@ velset = 0,0
 [State 303, Avanço]
 type = VelSet
 trigger1 = Time = 13
-x = 1.5
+x = 3.0
 
 [State 303, Freia]
 type = VelSet
@@ -2803,6 +2823,16 @@ anim = 311
 juggle = 3
 velset = 0,0
 
+[State 311, Avanço]
+type = VelSet
+trigger1 = Time = 11
+x = 1.8
+
+[State 311, Freia]
+type = VelSet
+trigger1 = Time = 24
+x = 0
+
 [State 311, Golpe]
 type = HitDef
 trigger1 = Time = 14
@@ -2821,7 +2851,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
-ground.velocity = -5
+ground.velocity = -3.5
 air.velocity = -1.4,-3
 
 [State 311, Fim]
@@ -2839,6 +2869,16 @@ sprpriority = 2
 anim = 312
 juggle = 3
 velset = 0,0
+
+[State 312, Avanço]
+type = VelSet
+trigger1 = Time = 9
+x = 1.8
+
+[State 312, Freia]
+type = VelSet
+trigger1 = Time = 22
+x = 0
 
 [State 312, Golpe]
 type = HitDef
@@ -2858,7 +2898,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
-ground.velocity = -5
+ground.velocity = -3.5
 air.velocity = -1.4,-3
 
 [State 312, Fim]
@@ -2876,6 +2916,16 @@ sprpriority = 2
 anim = 313
 juggle = 3
 velset = 0,0
+
+[State 313, Avanço]
+type = VelSet
+trigger1 = Time = 13
+x = 3.0
+
+[State 313, Freia]
+type = VelSet
+trigger1 = Time = 34
+x = 0
 
 [State 313, Golpe]
 type = HitDef
@@ -2923,6 +2973,16 @@ anim = 321
 juggle = 3
 velset = 0,0
 
+[State 321, Avanço]
+type = VelSet
+trigger1 = Time = 4
+x = 1.8
+
+[State 321, Freia]
+type = VelSet
+trigger1 = Time = 14
+x = 0
+
 [State 321, Golpe]
 type = HitDef
 trigger1 = Time = 7
@@ -2941,7 +3001,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 21
-ground.velocity = -4
+ground.velocity = -2.5
 air.velocity = -1.4,-3
 
 [State 321, Fim]
@@ -2959,6 +3019,16 @@ sprpriority = 2
 anim = 322
 juggle = 3
 velset = 0,0
+
+[State 322, Avanço]
+type = VelSet
+trigger1 = Time = 5
+x = 1.8
+
+[State 322, Freia]
+type = VelSet
+trigger1 = Time = 16
+x = 0
 
 [State 322, Golpe]
 type = HitDef
@@ -2978,7 +3048,7 @@ guardsound = F6,0
 ground.type = Low
 ground.slidetime = 5
 ground.hittime = 21
-ground.velocity = -4
+ground.velocity = -2.5
 air.velocity = -1.4,-3
 
 [State 322, Fim]
@@ -3043,6 +3113,16 @@ anim = 331
 juggle = 3
 velset = 0,0
 
+[State 331, Avanço]
+type = VelSet
+trigger1 = Time = 9
+x = 1.8
+
+[State 331, Freia]
+type = VelSet
+trigger1 = Time = 22
+x = 0
+
 [State 331, Golpe]
 type = HitDef
 trigger1 = Time = 12
@@ -3061,7 +3141,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
-ground.velocity = -5
+ground.velocity = -3.5
 air.velocity = -1.4,-3
 
 [State 331, Fim]
@@ -3079,6 +3159,16 @@ sprpriority = 2
 anim = 332
 juggle = 3
 velset = 0,0
+
+[State 332, Avanço]
+type = VelSet
+trigger1 = Time = 9
+x = 1.8
+
+[State 332, Freia]
+type = VelSet
+trigger1 = Time = 22
+x = 0
 
 [State 332, Golpe]
 type = HitDef
@@ -3191,7 +3281,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 21
-ground.velocity = -4
+ground.velocity = -2.5
 air.velocity = -1.4,-3
 
 [State 340, Fim]
@@ -3228,7 +3318,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
-ground.velocity = -5
+ground.velocity = -3.5
 air.velocity = -1.4,-3
 
 [State 341, Fim]
@@ -3265,7 +3355,7 @@ guardsound = F6,0
 ground.type = Low
 ground.slidetime = 5
 ground.hittime = 21
-ground.velocity = -4
+ground.velocity = -2.5
 air.velocity = -1.4,-3
 
 [State 342, Fim]
@@ -3341,7 +3431,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
-ground.velocity = -5
+ground.velocity = -3.5
 air.velocity = -1.4,-3
 
 [State 344, Fim]
@@ -3415,7 +3505,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
-ground.velocity = -5
+ground.velocity = -3.5
 air.velocity = -1.4,-3
 
 [State 346, Fim]
@@ -3498,7 +3588,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
-ground.velocity = -5
+ground.velocity = -3.5
 air.velocity = -1.4,-3
 
 [State 348, Fim]
@@ -3556,6 +3646,16 @@ anim = 3410
 juggle = 3
 velset = 0,0
 
+[State 3410, Avanço]
+type = VelSet
+trigger1 = Time = 7
+x = 1.8
+
+[State 3410, Freia]
+type = VelSet
+trigger1 = Time = 18
+x = 0
+
 [State 3410, Golpe]
 type = HitDef
 trigger1 = Time = 10
@@ -3574,7 +3674,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
-ground.velocity = -5
+ground.velocity = -3.5
 air.velocity = -1.4,-3
 
 [State 3410, Fim]
@@ -3592,6 +3692,16 @@ sprpriority = 2
 anim = 3411
 juggle = 3
 velset = 0,0
+
+[State 3411, Avanço]
+type = VelSet
+trigger1 = Time = 7
+x = 1.8
+
+[State 3411, Freia]
+type = VelSet
+trigger1 = Time = 18
+x = 0
 
 [State 3411, Golpe]
 type = HitDef
@@ -3611,7 +3721,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
-ground.velocity = -5
+ground.velocity = -3.5
 air.velocity = -1.4,-3
 
 [State 3411, Fim]
@@ -3629,6 +3739,16 @@ sprpriority = 2
 anim = 3412
 juggle = 3
 velset = 0,0
+
+[State 3412, Avanço]
+type = VelSet
+trigger1 = Time = 11
+x = 1.8
+
+[State 3412, Freia]
+type = VelSet
+trigger1 = Time = 22
+x = 0
 
 [State 3412, Golpe]
 type = HitDef
@@ -3648,7 +3768,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
-ground.velocity = -5
+ground.velocity = -3.5
 air.velocity = -1.4,-3
 
 [State 3412, Fim]
@@ -3723,6 +3843,16 @@ anim = 3420
 juggle = 3
 velset = 0,0
 
+[State 3420, Avanço]
+type = VelSet
+trigger1 = Time = 7
+x = 1.8
+
+[State 3420, Freia]
+type = VelSet
+trigger1 = Time = 18
+x = 0
+
 [State 3420, Golpe]
 type = HitDef
 trigger1 = Time = 10
@@ -3741,7 +3871,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
-ground.velocity = -5
+ground.velocity = -3.5
 air.velocity = -1.4,-3
 
 [State 3420, Fim]
@@ -3759,6 +3889,16 @@ sprpriority = 2
 anim = 3421
 juggle = 3
 velset = 0,0
+
+[State 3421, Avanço]
+type = VelSet
+trigger1 = Time = 7
+x = 1.8
+
+[State 3421, Freia]
+type = VelSet
+trigger1 = Time = 18
+x = 0
 
 [State 3421, Golpe]
 type = HitDef
@@ -3797,6 +3937,16 @@ anim = 3422
 juggle = 3
 velset = 0,0
 
+[State 3422, Avanço]
+type = VelSet
+trigger1 = Time = 9
+x = 1.8
+
+[State 3422, Freia]
+type = VelSet
+trigger1 = Time = 24
+x = 0
+
 [State 3422, Golpe]
 type = HitDef
 trigger1 = Time = 12
@@ -3815,7 +3965,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
-ground.velocity = -5
+ground.velocity = -3.5
 air.velocity = -1.4,-3
 
 [State 3422, Fim]
@@ -3964,7 +4114,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
-ground.velocity = -5
+ground.velocity = -3.5
 air.velocity = -1.4,-3
 
 [State 3431, Golpe]
@@ -3985,7 +4135,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
-ground.velocity = -5
+ground.velocity = -3.5
 air.velocity = -1.4,-3
 
 [State 3431, Fim]
@@ -4086,7 +4236,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
-ground.velocity = -5
+ground.velocity = -3.5
 air.velocity = -1.4,-3
 
 [State 3433, Fim]
@@ -4266,8 +4416,8 @@ projremanim = 1006
 projhits = 1
 projpriority = 2
 offset = 52, -96
-velocity = 3.6, -4.0
-accel = 0, 0.22
+velocity = 3.6, -2.6
+accel = 0, 0.2
 projheightbound = -400, 0
 attr = S, SP
 damage = 75, 5
@@ -4310,8 +4460,8 @@ projremanim = 1006
 projhits = 1
 projpriority = 2
 offset = 52, -96
-velocity = 5.0, -5.0
-accel = 0, 0.3
+velocity = 5.0, -3.0
+accel = 0, 0.26
 projheightbound = -400, 0
 attr = S, SP
 damage = 75, 5

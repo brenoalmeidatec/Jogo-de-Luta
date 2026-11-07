@@ -205,21 +205,25 @@ buffer.time = 6
 name = "x"
 command = x
 time = 1
+buffer.time = 8
 
 [Command]
 name = "y"
 command = y
 time = 1
+buffer.time = 8
 
 [Command]
 name = "a"
 command = a
 time = 1
+buffer.time = 8
 
 [Command]
 name = "b"
 command = b
 time = 1
+buffer.time = 8
 
 [Command]
 name = "c"
@@ -648,7 +652,7 @@ triggerall = command = "a"
 triggerall = command != "holddown"
 triggerall = statetype = S
 triggerall = var(20) > 0
-trigger1 = stateno = 240 && movecontact || stateno = 245 && movecontact
+trigger1 = stateno = 3420 && movecontact
 
 [State -1, Desp: corrente y final]
 type = ChangeState

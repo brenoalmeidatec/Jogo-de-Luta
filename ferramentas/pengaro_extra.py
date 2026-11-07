@@ -8,7 +8,7 @@ Quadros: "folha desenho/ticks desenho/ticks...", e um A no fim do tempo marca o 
 Os ticks são antes do RITMO; o gerador aplica o mesmo arredondamento no AIR e no CNS.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 
 @dataclass(frozen=True)
@@ -52,13 +52,13 @@ CORRENTES = (
     # soco fraco: rápida
     N(301, "Jab de Retorno", "soco 1/3 2/2 4/3A 5/2A 6/4 7/4", (10, -94, 58, -70), 35),
     N(302, "Cotovelo de Ginga", "martelo 1/4 2/3 4/3A 5/3A 6/5 7/5", (14, -94, 70, -64), 45),
-    N(303, "Cabeçada de Roda", "cabecada 1/4 2/4 3/3 4/3A 5/3A 6/8 7/8", (5, -124, 48, -60), 90,
-      queda=True, avanco=1.5, final=True, vel="-4,-5", ar="-3,-6"),
+    N(303, "Cabeçada de Roda", "cabecada 1/4 2/4 3/3 4/3A 5/3A 6/8 7/8", (5, -124, 66, -60), 90,
+      queda=True, avanco=3.0, final=True, vel="-4,-5", ar="-3,-6"),
     # soco forte: pesada
     N(311, "Martelada", "martelo 1/5 2/4 4/4A 5/3A 6/7 7/6", (14, -94, 76, -62), 60),
     N(312, "Sola de Baixo", "chute_baixo 1/4 2/4 3/4A 4/3A 5/6 6/6 7/6", (12, -62, 66, -40), 70),
-    N(313, "Armada Final", "armada 1/5 2/5 3/4A 4/4A 5/4A 6/8 7/8", (8, -122, 76, -40), 110,
-      queda=True, final=True, vel="-5,-4", ar="-4,-5"),
+    N(313, "Armada Final", "armada 1/5 2/5 3/4A 4/4A 5/4A 6/8 7/8", (8, -122, 90, -40), 110,
+      queda=True, final=True, avanco=3.0, vel="-5,-4", ar="-4,-5"),
     # chute fraco: mistura alto e baixo
     N(321, "Bicuda Dupla", "chute_baixo 1/3 2/2 3/3A 4/2A 5/4 6/4 7/4", (10, -62, 60, -42), 35),
     N(322, "Ponta Rasteira", "rasteirinha 1/3 2/3 3/3A 4/3A 5/4 6/5 7/5", (12, -20, 62, -4), 40,
@@ -152,5 +152,11 @@ ESPECIAIS_A_MAO = (
     N(840, "Agarrão agachado", "agarrao 2/3A 3/4 4/4 5/4", (10, -60, 44, -10), []),
     N(841, "Rasteira de Pegada", "agachado 2/3 3/3 rasteira 2/4 3/4 4/5 5/4 6/4 7/5", (0, 0, 0, 0), []),
 )
+
+# o 2º e o 3º golpe de cada corrente dão um passo à frente: o golpe anterior empurra o oponente e, sem isso,
+# o seguinte fica curto (visto no teste automático)
+_SEGUE = {301, 302, 311, 312, 321, 322, 331, 332, 3410, 3411, 3412, 3420, 3421, 3422}
+CORRENTES = tuple(replace(m, avanco=m.avanco or 1.8) if m.estado in _SEGUE else m for m in CORRENTES)
+DESPERTO_CORRENTES = tuple(replace(m, avanco=m.avanco or 1.8) if m.estado in _SEGUE else m for m in DESPERTO_CORRENTES)
 
 TODOS = CORRENTES + KOMBOS + DESPERTO_KOMBO + DESPERTO_CORRENTES + DESPERTO_NORMAIS + DESPERTO_ESPECIAL
