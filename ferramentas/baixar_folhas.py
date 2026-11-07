@@ -34,7 +34,11 @@ def main():
         for m in membros:
             if not m.isfile() or "/" in m.name or not m.name.endswith(".png"):
                 raise SystemExit(f"arquivo inesperado no pacote: {m.name}")
-            limpa_faixas(t.extractfile(m).read()).save(pasta / m.name)
+            dados = t.extractfile(m).read()
+            if m.name.startswith("fx_"):  # efeitos vêm em fundo verde, sem faixas para limpar
+                Image.open(BytesIO(dados)).convert("RGB").save(pasta / m.name)
+            else:
+                limpa_faixas(dados).save(pasta / m.name)
     print(f"{len(membros)} folhas em {pasta}")
 
 

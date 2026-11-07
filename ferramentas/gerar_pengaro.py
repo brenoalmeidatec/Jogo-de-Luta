@@ -406,8 +406,52 @@ def ler_efeito(nome):
     return ((pivo[0] // 2, pivo[1] // 2) if metade else pivo), quadros
 
 
+# Pengaró: efeitos desenhados no ChatGPT como os lutadores (ferramentas/efeitos_folha.py), em vez do pixelfx.
+# ação -> (efeito do normal, efeito do endiabrado, ticks por quadro). O do endiabrado entra pelo RemapPreset.
+EFEITOS_PROPRIOS = Path(__file__).resolve().parent.parent / "sprites/pengaro/efeitos"
+FX_PENGARO = {
+    9200: ("whisky_acerto", "sombra_acerto", 1), 9201: ("whisky_forte", "sombra_forte", 1),
+    9202: ("defesa", "sombra_acerto", 1), 9204: ("defesa", "sombra_acerto", 1), 9205: ("whisky_forte", "sombra_forte", 1),
+    9210: (None, "sombra_aura", 2), 9211: (None, "sombra_chao", 2), 9212: (None, "sombra_rastro", 1),
+    9213: ("whisky_rastro", None, 1), 9214: ("poeira", None, 1), 9215: (None, "sombra_chao", 1),
+}
+CHAO = {"poeira", "sombra_aura", "sombra_chao"}
+FAISCA_POR_FORMA = False
+
+
+def quadros_proprios(nome):
+    pasta = EFEITOS_PROPRIOS / nome
+    quadros = [Image.open(f).convert("RGBA") for f in sorted(pasta.glob("*.png"))]
+    return [(q, (q.width // 2, q.height - 1 if nome in CHAO else q.height // 2)) for q in quadros]
+
+
+def carregar_proprios(sprites):
+    acoes = {}
+    for numero, (normal, endiabrado, ticks) in FX_PENGARO.items():
+        principal = normal or endiabrado
+        lista = []
+        for i, (q, pivo) in enumerate(quadros_proprios(principal)):
+            chave = f"fx_{principal}_{i}"
+            sprites.add(chave, q, numero, i, pivo)
+            lista.append((chave, ticks))
+        if normal and endiabrado:
+            par = quadros_proprios(endiabrado)
+            sombra = []
+            for i in range(len(lista)):
+                q, pivo = par[round(i * (len(par) - 1) / max(1, len(lista) - 1))]
+                sprites.add(f"dfx_{principal}_{i}", q, numero + 30, i, pivo)
+                sombra.append((f"dfx_{principal}_{i}", ticks))
+            acoes[numero + 30] = sombra  # faísca do endiabrado, escolhida no HitDef (faiscas)
+        acoes[numero] = lista
+    global FAISCA_POR_FORMA
+    FAISCA_POR_FORMA = True
+    return acoes
+
+
 def carregar_faiscas(sprites):
     pengaro = getattr(sprites, "folhas", False)
+    if pengaro and all((EFEITOS_PROPRIOS / n).exists() for v in FX_PENGARO.values() for n in v[:2] if n):
+        return carregar_proprios(sprites)
     acoes = {}
     for numero, nome in FAISCAS.items():
         pivo, quadros = ler_efeito(nome)
@@ -746,8 +790,8 @@ def efeitos_cns(ativos):
     """[Statedef -3] com os efeitos que acompanham o Pengaró: a aura do endiabrado e o efeito de cada golpe, que nasce
     no elemento em que a caixa de golpe liga, na ponta da caixa (onde está o punho ou o pé)."""
     t = ["[Statedef -3]\n"]
-    for anim, nome, pos, escala, prioridade in ((9210, "Aura de sombra", "0, -52", ".8, .8", -1),
-                                                 (9211, "Sombra nos pés", "0, 0", "1, .6", -2)):
+    for anim, nome, pos, escala, prioridade in ((9210, "Aura de sombra", "0, 2", "1, 1", -1),
+                                                 (9211, "Sombra nos pés", "0, 2", "1, 1", -2)):
         t.append(f"[State -3, {nome}]\ntype = Explod\ntrigger1 = var(20) > 0 && alive && NumExplod({anim}) = 0\n"
                  f"anim = {anim}\nid = {anim}\npostype = p1\npos = {pos}\nbindtime = -1\nremovetime = -1\n"
                  f"sprpriority = {prioridade}\nownpal = 1\nscale = {escala}\nignorehitpause = 1\nsupermovetime = -1\n\n")
@@ -758,15 +802,16 @@ def efeitos_cns(ativos):
         if not 200 <= base < 4000 or base == 2000:
             continue
         x1, y1, x2, y2 = caixa
-        endiabrado = anim >= 10000
-        if max(y1, y2) >= -25:  # caixa rente ao chão: rasteira, poeira no chão
-            efeito, pos, escala = (9215 if endiabrado else 9214), f"{(x1 + x2) // 2}, 0", ".7, .7"
-        else:  # punho ou pé no ar: o efeito sai da ponta do golpe
-            efeito, pos = (9212 if endiabrado else 9213), f"{max(x1, x2) - 8}, {(y1 + y2) // 2}"
-            escala = ".7, .7" if endiabrado else ".8, .8"
-        t.append(f"[State -3, Efeito do golpe {anim}]\ntype = Explod\ntrigger1 = Anim = {anim} && AnimElem = {elemento}\n"
-                 f"anim = {efeito}\npostype = p1\npos = {pos}\nbindtime = 3\nremovetime = -2\nsprpriority = 3\n"
-                 f"ownpal = 1\nscale = {escala}\nignorehitpause = 1\n\n")
+        chao = max(y1, y2) >= -25  # caixa rente ao chão: rasteira, poeira no chão; senão o rastro passa pela caixa
+        pos = f"{(x1 + x2) // 2}, 0" if chao else f"{(x1 + x2) // 2}, {(y1 + y2) // 2}"
+        # Alguns golpes do endiabrado usam a ação normal com os sprites trocados: a forma decide pelo var(20).
+        formas = [(True, "var(20) > 0")] if anim >= 10000 else [(False, "var(20) <= 0"), (True, "var(20) > 0")]
+        for endiabrado, forma in formas:
+            efeito = (9215 if endiabrado else 9214) if chao else (9212 if endiabrado else 9213)
+            t.append(f"[State -3, Efeito do golpe {anim}]\ntype = Explod\n"
+                     f"trigger1 = Anim = {anim} && AnimElem = {elemento} && {forma}\n"
+                     f"anim = {efeito}\npostype = p1\npos = {pos}\nbindtime = 3\nremovetime = -2\nsprpriority = 3\n"
+                     f"ownpal = 1\nignorehitpause = 1\n\n")
     return "".join(t)
 
 
@@ -1281,12 +1326,26 @@ def estado(numero, tipo="S", mov="A", fis="S", anim=None, juggle=None, velset="0
     return resultado
 
 
+def fx_forma(numero):
+    """Explod de efeito: no Despertar usa o par do endiabrado (numero + 30), quando os efeitos próprios existem."""
+    return f"ifelse(var(20) > 0, {numero + 30}, {numero})" if FAISCA_POR_FORMA else str(numero)
+
+
+def faiscas(numero):
+    """O motor desenha a faísca de acerto sem a troca de sprites do Despertar: com os efeitos próprios do Pengaró,
+    o golpe escolhe pelo var(20) entre a faísca do normal (92xx) e a do endiabrado (92xx + 30)."""
+    if not FAISCA_POR_FORMA:
+        return f"sparkno = S{numero}", "guard.sparkno = S9202"
+    return (f"sparkno = S(ifelse(var(20) > 0, {numero + 30}, {numero}))",
+            "guard.sparkno = S(ifelse(var(20) > 0, 9232, 9202))")
+
+
 def hitdef(numero, trigger, attr, dano, tipo="Light", guarda="MA", alvo="MAF", pausa=(8, 8), hit=12, escorrega=5,
            vel="-4", ar="-1.4,-3", queda=False, recupera=True, chao="High", pesado=False, extra=""):
     t = [f"[State {numero}, Golpe]", "type = HitDef", f"trigger1 = {trigger}", f"attr = {attr}",
          f"damage = {dano}, 0", f"animtype = {tipo}", f"guardflag = {guarda}", f"hitflag = {alvo}",
          "priority = 4, Hit", f"pausetime = {pausa[0]}, {pausa[1]}", "sparkxy = -10, -70",
-         f"sparkno = S{9201 if pesado else 9200}", "guard.sparkno = S9202",
+         *faiscas(9201 if pesado else 9200),
          f"hitsound = F{'5,2' if pesado else '5,0'}", "guardsound = F6,0", f"ground.type = {chao}",
          f"ground.slidetime = {escorrega}", f"ground.hittime = {hit}", f"ground.velocity = {vel}",
          f"air.velocity = {ar}"]
@@ -1601,7 +1660,7 @@ def cns_repertorio(hazaki):
                             chao="Low" if g.guarda == "L" else "High"))
         if tipo != "A":
             if 1500 <= n <= 1501 or (hazaki and n in (1300, 1301, 3200)):
-                efeito = 9206 if hazaki else 9205
+                efeito = 9206 if hazaki else fx_forma(9205)
                 c.append(f"[State {n}, Impacto visual]\ntype = Explod\ntrigger1 = AnimElem = 2\n"
                          f"trigger1 = var(20) > 0\nanim = {efeito}\npostype = p1\npos = 30, -15\n"
                          "removetime = -2\nsprpriority = 4\nownpal = 1\n\n")
@@ -1719,14 +1778,14 @@ def cns_agarrao_whisky():
          f"[State 831, Capoeira dano]\ntype = TargetLifeAdd\ntrigger1 = Time = {contato}\ntrigger1 = NumTarget\nvalue = -60\n\n",
          f"[State 831, Capoeira acerta]\ntype = TargetState\ntrigger1 = Time = {contato}\ntrigger1 = NumTarget\nvalue = 833\n\n",
          f"[State 831, Capoeira treme]\ntype = EnvShake\ntrigger1 = Time = {contato}\ntime = 8\nfreq = 60\nampl = -4\n\n",
-         f"[State 831, Capoeira faisca]\ntype = Explod\ntrigger1 = Time = {contato}\nanim = 9201\npostype = p1\n"
+         f"[State 831, Capoeira faisca]\ntype = Explod\ntrigger1 = Time = {contato}\nanim = {fx_forma(9201)}\npostype = p1\n"
          "pos = 62, -80\nremovetime = -2\nsprpriority = 4\nownpal = 1\n\n",
          f"[State 831, Capoeira som]\ntype = PlaySnd\ntrigger1 = Time = {contato}\nvalue = F5, 2\n\n",
          # whisky: sai da mão no desenho da bola e cai girando em cima do oponente
          f"[State 831, Garrafa]\ntype = Explod\ntrigger1 = Time = {solta}\nanim = 3010\npostype = p1\n"
          "pos = 38, -150\nvel = 0, 4\naccel = 0, .55\nremovetime = 13\nsprpriority = 5\nownpal = 1\n\n",
          f"[State 831, Whisky dano]\ntype = TargetLifeAdd\ntrigger1 = Time = {lanca}\ntrigger1 = NumTarget\nvalue = -90\n\n",
-         f"[State 831, Whisky estoura]\ntype = Explod\ntrigger1 = Time = {lanca}\nanim = 9201\npostype = p1\n"
+         f"[State 831, Whisky estoura]\ntype = Explod\ntrigger1 = Time = {lanca}\nanim = {fx_forma(9201)}\npostype = p1\n"
          "pos = 38, -60\nremovetime = -2\nsprpriority = 5\nownpal = 1\n\n",
          f"[State 831, Whisky treme]\ntype = EnvShake\ntrigger1 = Time = {lanca}\ntime = 12\nfreq = 60\nampl = -5\n\n",
          f"[State 831, Whisky som]\ntype = PlaySnd\ntrigger1 = Time = {lanca}\nvalue = F5, 2\n\n",
@@ -1867,7 +1926,7 @@ def cns_especiais_extra():
              "x = 4\ny = 9\n\n")
     t.append(hitdef(3403, "Time >= 8 && Vel Y > 0", "A, SA", 105, tipo="Heavy", queda=True, vel="-4,-6",
                     ar="-4,-6", pausa=(12, 12), hit=22, escorrega=8, pesado=True, extra="persistent = 0\n"))
-    t.append("[State 3403, Estouro]\ntype = Explod\ntrigger1 = Pos Y >= 0 && Vel Y > 0\nanim = 9205\n"
+    t.append(f"[State 3403, Estouro]\ntype = Explod\ntrigger1 = Pos Y >= 0 && Vel Y > 0\nanim = {fx_forma(9205)}\n"
              "postype = p1\npos = 40, -15\nremovetime = -2\nsprpriority = 4\nownpal = 1\n\n")
     t.append("[State 3403, Treme]\ntype = EnvShake\ntrigger1 = Pos Y >= 0 && Vel Y > 0\ntime = 10\nfreq = 60\n"
              "ampl = -4\n\n")
