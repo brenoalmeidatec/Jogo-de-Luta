@@ -49,7 +49,7 @@ def tempos_agarrao_whisky():
         inicio.append(t)
         t += round(n * RITMO)
     return inicio[5], inicio[10]  # 5 = compasso 4 (chute no contato); 10 = bola 4 (solta a garrafa)
-FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9202: "shield-block", 9204: "parry",
+FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9202: "hit-flash", 9204: "parry",
            9205: "ground-slam", 9206: "fireball"}
 
 # Tela de trabalho de cada sprite: pés em (EIXO_X, EIXO_Y).
