@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Roda uma luta CPU contra CPU numa cópia do motor e filma a janela, para conferir as animações na tela de verdade.
 
-  python ferramentas/filmar_luta.py PASTA_DE_SAIDA [--segundos 40] [--despertar 10]
+  python ferramentas/filmar_luta.py PASTA_DE_SAIDA [--segundos 40] [--despertar 10] [--p1 gutto]
 
 O jogo instalado não é tocado: o motor é copiado para uma pasta temporária com o Pengaró e o Hazaki de chars/.
 --despertar N ativa o Despertar do Pengaró uma vez só, aos N segundos de luta: enche a barra e entra no estado 2000,
@@ -52,16 +52,17 @@ def main():
     saida = Path(args[0])
     segundos = float(args[args.index("--segundos") + 1]) if "--segundos" in args else 40
     despertar = float(args[args.index("--despertar") + 1]) if "--despertar" in args else None
+    p1 = args[args.index("--p1") + 1] if "--p1" in args else "pengaro"  # --p1 gutto filma o Gutto no lugar do Pengaró
     saida.mkdir(parents=True, exist_ok=True)
     motor = Path(os.environ["USERPROFILE"]) / "JogoDeLuta" / "ikemen"
     tmp = Path(tempfile.mkdtemp(prefix="filme_"))
     try:
         copia = tmp / "motor"
         shutil.copytree(motor, copia)
-        for nome in ("pengaro", "hazaki"):
+        for nome in (p1, "hazaki"):
             shutil.copytree(RAIZ / "chars" / nome, copia / "chars" / nome, dirs_exist_ok=True)
         if despertar is not None:
-            cmd = copia / "chars/pengaro/pengaro.cmd"
+            cmd = copia / f"chars/{p1}/{p1}.cmd"
             txt = cmd.read_text(encoding="utf-8").replace("\r\n", "\n")
             # var(50) não é usada pelo Pengaró: marca que a ativação do filme já aconteceu, para não religar.
             quando = (f"triggerall = roundstate = 2 && var(50) = 0 && var(20) = 0\n"
@@ -70,7 +71,7 @@ def main():
                     f"[State -1, Filme enche a barra]\ntype = PowerSet\n{quando}value = powermax\n\n"
                     f"[State -1, Filme ativa o Despertar]\ntype = ChangeState\n{quando}value = 2000\n\n")
             cmd.write_text(txt.replace("[Statedef -1]\n\n", "[Statedef -1]\n\n" + liga, 1), encoding="utf-8", newline="\n")
-        proc = subprocess.Popen([str(copia / "Ikemen_GO.exe"), "-p1", "pengaro", "-p1.ai", "8", "-p2", "hazaki",
+        proc = subprocess.Popen([str(copia / "Ikemen_GO.exe"), "-p1", p1, "-p1.ai", "8", "-p2", "hazaki",
                                  "-p2.ai", "8", "-s", "stages/stage0-720.def", "-rounds", "1"],
                                 cwd=copia, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         hwnd = None

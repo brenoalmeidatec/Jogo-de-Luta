@@ -76,6 +76,15 @@ e 1 super exclusivo. **Arte redesenhada**, não só recolorida.
 - **Falta:** as 5 folhas verdadeiras, as folhas `e_<golpe>` da cabeça de cavalo (uma por movimento), o retrato de seleção, o
   projétil do Beijinho em arte própria (hoje é um coração em código) e os áudios.
 
+## Estado (2026-11-07)
+
+- As 5 folhas provisórias viraram arte de verdade: `derrota`, `lata`, `endiabrado` (8 poses com cabeça de cavalo),
+  `despertar_a` e `despertar_b`. `animar_folha.py` reduz `lata` e `derrota` (vieram 12% maiores) e tira os fiapos de magenta
+  da fumaça das folhas do cavalo. O Despertar passou a usar o cavalo do Gutto (antes lia as poses do Pengaró).
+- Filmado: a transformação aparece. O robô passa 126 verificações. Ainda não jogado por uma pessoa.
+- **Falta:** as folhas `e_<golpe>` (hoje todo golpe do Endiabrado cai numa das 8 poses), efeitos próprios do Gutto (ainda
+  usa os violeta do Pengaró), retrato de seleção, projétil do Beijinho em arte própria e os áudios.
+
 ## Retomar e ver (nota de 2026-11-06, noite)
 
 **Ver o Gutto:** `git pull` na branch `mugen`, depois dois cliques em `ferramentas/Jogo de Luta.bat` (ele baixa o Gutto junto) e

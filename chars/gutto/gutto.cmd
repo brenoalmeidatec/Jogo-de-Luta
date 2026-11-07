@@ -373,7 +373,7 @@ trigger1 = var(1)
 type = ChangeState
 value = 1001
 triggerall = command = "bola_forte"
-triggerall = numprojid(1000) = 0
+triggerall = numprojid(1000) + numprojid(1001) + numprojid(1002) + numprojid(1003) = 0
 triggerall = statetype != A
 trigger1 = var(1)
 
@@ -381,7 +381,7 @@ trigger1 = var(1)
 type = ChangeState
 value = 1000
 triggerall = command = "bola_fraca"
-triggerall = numprojid(1000) = 0
+triggerall = numprojid(1000) + numprojid(1001) + numprojid(1002) + numprojid(1003) = 0
 triggerall = statetype != A
 trigger1 = var(1)
 
@@ -389,7 +389,8 @@ trigger1 = var(1)
 type = ChangeState
 value = 1601
 triggerall = command = "garrafa_y"
-triggerall = numprojid(1002) = 0
+triggerall = numprojid(1000) + numprojid(1001) + numprojid(1002) + numprojid(1003) = 0
+triggerall = var(20) = 0
 triggerall = statetype != A
 trigger1 = var(1)
 
@@ -397,7 +398,8 @@ trigger1 = var(1)
 type = ChangeState
 value = 1600
 triggerall = command = "garrafa_x"
-triggerall = numprojid(1002) = 0
+triggerall = numprojid(1000) + numprojid(1001) + numprojid(1002) + numprojid(1003) = 0
+triggerall = var(20) = 0
 triggerall = statetype != A
 trigger1 = var(1)
 
@@ -421,7 +423,7 @@ trigger1 = var(1)
 type = ChangeState
 value = 3400
 triggerall = command = "sombra_x"
-triggerall = numprojid(1003) = 0
+triggerall = numprojid(1000) + numprojid(1001) + numprojid(1002) + numprojid(1003) = 0
 triggerall = var(20) > 0
 triggerall = statetype != A
 trigger1 = var(1)

@@ -2854,7 +2854,7 @@ POSES_ENDIABRADO = {
 def arte_endiabrada(s):
     """Se a folha da forma endiabrada já foi gerada, devolve {sprite do jogo: sprite despertado}; senão, vazio
     (e o gerador cai no corpo escurecido com chamas do pixelfx)."""
-    pasta = RAIZ / "sprites/pengaro/quadros/endiabrado"
+    pasta = QUADROS / "endiabrado"  # o Gutto troca QUADROS e usa a forma de cavalo dele
     arquivos = sorted(pasta.glob("[0-9][0-9].png"))
     if len(arquivos) != 8:
         return {}
