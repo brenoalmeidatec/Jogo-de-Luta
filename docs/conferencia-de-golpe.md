@@ -14,6 +14,15 @@ Roteiro fixo para fechar qualquer golpe ou lutador antes de subir na `mugen`. Ca
       pedaço solto, magenta, endiabrado desalinhado. Olhe as folhas `acao_N.png` das ações citadas.
 - [ ] `python ferramentas/conferir_tempo.py . PASTA`: tempo de cada golpe só muda se foi de propósito.
 - [ ] `python ferramentas/conferir_despertar.py . PASTA`: cada quadro normal tem o par transformado.
+- [ ] **Vídeo curto e análise quadro a quadro (obrigatório em todo controle de qualidade).**
+      `python ferramentas/video_golpe.py PASTA <ações mexidas>` (ou `--suspeitas` para o lutador inteiro) grava, para
+      cada ação, um vídeo de 5 a 10 s a 60 fps montado tick a tick do SFF/AIR finais (`acao_N.mp4`), a tira com
+      **todos** os ticks numerados (`acao_N.png`, borda vermelha no tick acusado) e o `relatorio.md`. Assista ao vídeo
+      e olhe a tira inteira, tick a tick, de toda ação que você mexeu: o que a análise acusa (desenho parado mais de
+      2 ticks, pose que estala, pé que sobe ou afunda, corpo que desliza, figura que muda de tamanho, emenda de loop) e
+      o que o olho pega e a régua não pega (antecipação, smear, continuação, easing; regra 7.2). Não suba ação com
+      tick acusado sem dizer, na entrega, por que ele ficou. Para o movimento pela tela, faça também uma filmagem curta
+      no jogo: `python ferramentas/filmar_luta.py PASTA --segundos 10`.
 
 ## Jogo
 

@@ -58,7 +58,9 @@ em `ikemen\chars\<lutador>`. Erros ficam em `ikemen\save\logs`.
    meio, em `quadros/<nome>/meio/`.
 6. **Gerador:** ligue no `gerar_<lutador>.py`. O gerador usa até um desenho por tick, sem mudar caixas nem frame data.
 7. **Verificar:** `python ferramentas/verificar_pengaro.py` e `--hazaki`, depois `ferramentas/conferir_tempo.py` e
-   `ferramentas/conferir_despertar.py`.
+   `ferramentas/conferir_despertar.py`. **Sempre** feche o controle de qualidade com vídeo curto e análise quadro a
+   quadro: `python ferramentas/video_golpe.py PASTA <ações>` (5 a 10 s a 60 fps, tira com todos os ticks) e assista
+   tick a tick a toda ação mexida, como manda a [`conferencia-de-golpe.md`](conferencia-de-golpe.md).
 8. **Subir:** commit e `git push origin mugen`.
 
 Formas transformadas: gere a folha `e_<golpe>` para cada movimento, nos mesmos 8 tempos da normal. O
