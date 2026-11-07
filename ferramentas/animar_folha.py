@@ -55,9 +55,24 @@ def por_celula(img, fator):
     for i in range(1, n):
         if dados[i, cv2.CC_STAT_AREA] >= 40:
             celula[i] = min(7, int(centros[i][0] // largura))
+    por_coluna = None
+    if any(not (celula[rotulos] == i).any() for i in range(8)):
+        # duas figuras coladas viraram um pedaço só: corta cada borda no vão de menor ocupação perto da divisa da célula
+        ocupa = (limpa[..., 3] > 0).sum(axis=0)
+        cortes = [0]
+        for k in range(1, 8):
+            ini, fim = int(k * largura - largura * .3), int(k * largura + largura * .3)
+            cortes.append(ini + int(np.argmin(ocupa[ini:fim])))
+        cortes.append(limpa.shape[1])
+        por_coluna = cortes
     saida = []
     for i in range(8):
-        figura = Image.fromarray(np.where((celula[rotulos] == i)[..., None], limpa, 0).astype(np.uint8))
+        if por_coluna:
+            mascara = np.zeros(limpa.shape[:2], bool)
+            mascara[:, por_coluna[i]:por_coluna[i + 1]] = True
+        else:
+            mascara = celula[rotulos] == i
+        figura = Image.fromarray(np.where(mascara[..., None], limpa, 0).astype(np.uint8))
         caixa = figura.getchannel("A").getbbox()
         q = figura.crop(caixa)
         grande = q.resize((round(q.width * fator), round(q.height * fator)), Image.LANCZOS)

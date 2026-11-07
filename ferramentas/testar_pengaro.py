@@ -43,14 +43,20 @@ def injetar(arq, hazaki):
 
 
 def main():
-    motor = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(os.environ["USERPROFILE"]) / "JogoDeLuta" / "ikemen"
+    args = sys.argv[1:]
+    lutador = "pengaro"
+    if "--lutador" in args:
+        i = args.index("--lutador")
+        lutador = args[i + 1]
+        del args[i:i + 2]
+    motor = Path(args[0]) if args else Path(os.environ["USERPROFILE"]) / "JogoDeLuta" / "ikemen"
     if not (motor / "Ikemen_GO.exe").exists():
         sys.exit(f"Não achei o Ikemen_GO.exe em {motor}. Abra o jogo uma vez pelo atalho para instalar o motor.")
     tmp = Path(tempfile.mkdtemp(prefix="teste_pengaro_"))
     try:
         copia = tmp / "motor"
         shutil.copytree(motor, copia)
-        for nome in ("pengaro", "hazaki"):
+        for nome in (lutador, "hazaki"):
             shutil.copytree(RAIZ / "chars" / nome, copia / "chars" / nome, dirs_exist_ok=True)
             injetar(copia / "chars" / nome / f"{nome}.cmd", nome == "hazaki")
         saida = tmp / "resultado.txt"
@@ -59,7 +65,7 @@ def main():
                          (RAIZ / "ferramentas/robo/robo.lua").read_text(encoding="utf-8").replace("@SAIDA@", saida.as_posix()),
                          encoding="utf-8")
         print("Rodando o robô (a janela do jogo abre sozinha)...")
-        proc = subprocess.Popen([str(copia / "Ikemen_GO.exe"), "-p1", "pengaro", "-p2", "hazaki", "-s",
+        proc = subprocess.Popen([str(copia / "Ikemen_GO.exe"), "-p1", lutador, "-p2", "hazaki", "-s",
                                  "stages/stage0-720.def"], cwd=copia, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         limite = time.time() + 1200
         while time.time() < limite and proc.poll() is None:

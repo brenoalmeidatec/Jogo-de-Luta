@@ -1,0 +1,21 @@
+; Gerado por ferramentas/gerar_gutto.py. Edite lá, não aqui.
+[Info]
+name = "Gutto"
+displayname = "Gutto"
+versiondate = 11,06,2026
+mugenversion = 1.1
+author = "Breno"
+pal.defaults = 1
+localcoord = 320,240
+
+[Files]
+cmd = gutto.cmd
+cns = gutto.cns
+st = gutto.cns
+stcommon = common1.cns
+sprite = gutto.sff
+anim = gutto.air
+movelist = movelist.dat
+
+[Palette Keymap]
+x = 1

@@ -78,6 +78,27 @@ Capoeirista cachaceiro: luta com uma garrafa de whisky na mão e arremessa lata 
 | Kombo Possessão | b, a, x |
 | 6 normais novos | baixo + y, baixo + b, frente + y, frente + b, trás + x, trás + a |
 
+## Gutto
+
+Lutador de Muay Thai, de camiseta nenhuma, calção de cetim e braçadeiras de corda. Fica em `chars/gutto/`. Tem o mesmo kit
+completo do Pengaró (4 correntes de 3 golpes + finalizador, 4 kombos, 8 especiais, 3 agarrões, Despertar `x + y`, golpes
+exclusivos), com os mesmos comandos, só que de chute, joelhada e cotovelo.
+
+| Especial | Comando |
+|---|---|
+| Beijinho (projétil reto, um coração) | baixo, frente + a (lento) ou b (rápido) |
+| Beijinho em Arco (projétil em arco) | frente, trás + x (curto) ou y (longo) |
+| Teleporte de Ginga (a só passa, b passa e chuta) | frente, trás + a ou b: aparece atrás do oponente |
+| Chute Giratório (coice) | baixo, trás + a ou b |
+| Joelhada Voadora | frente, baixo + x ou y |
+| Carrinho | baixo, trás + x ou y |
+| Clinch e Joelhada (agarrão de comando) | colado, trás, frente + y |
+
+Hoje o Gutto está **sem a forma de cavalo**: o Despertar existe e funciona, mas usa uma versão escurecida das poses
+normais. A arte do Endiabrado (cabeça de cavalo) e 5 folhas provisórias (`ferramentas/provisorios_gutto.py`) esperam o
+limite de imagens do ChatGPT liberar. Ficha em `docs/fichas/gutto.md`; gerar com `python ferramentas/gerar_gutto.py`;
+testar com `python ferramentas/testar_pengaro.py --lutador gutto`.
+
 ## Hazaki
 
 Karateca de guarda firme, com golpes de alcance e antiaéreos. No Despertar, vira o Diabo Loiro.

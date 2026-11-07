@@ -193,6 +193,23 @@ gp.DEF = DEF
 gp.GOLPES = GOLPES
 
 
+def provisorio_endiabrado():
+    """PROVISÓRIO: as 8 poses da forma de cavalo ainda não foram desenhadas (o ChatGPT bloqueou imagens por hoje).
+    Enquanto isso, as poses normais saem escurecidas e avermelhadas. Apague a pasta quando a folha `endiabrado` chegar
+    e rode animar_folha com ela (pedido em folhas_gutto.py)."""
+    destino = QUADROS / "endiabrado"
+    destino.mkdir(parents=True)
+    poses = [("ginga", 0), ("anda", 2), ("agachado", 6), ("soco", 5), ("chute_alto", 4), ("cabecada", 4), ("bola", 4),
+             ("pulo", 3)]
+    for i, (pasta, n) in enumerate(poses):
+        img = Image.open(QUADROS / pasta / f"{n:02d}.png").convert("RGBA")
+        r, g, b, a = img.split()
+        img = Image.merge("RGBA", (r.point(lambda v: int(v * .78)), g.point(lambda v: int(v * .42)),
+                                   b.point(lambda v: int(v * .5)), a))
+        img.save(destino / f"{i:02d}.png")
+    print("PROVISÓRIO: poses do Endiabrado escurecidas; falta a arte do cavalo")
+
+
 def preparar_pastas():
     """Loops que o gerador lê e ainda não têm arte própria: a ginga do Endiabrado começa igual à normal."""
     destino = QUADROS / "ginga_endiabrada"
@@ -200,7 +217,7 @@ def preparar_pastas():
     if not destino.exists() and origem.exists():
         shutil.copytree(origem, destino)
     if not (QUADROS / "endiabrado").exists():
-        raise SystemExit("falta sprites/gutto/quadros/endiabrado (a folha de 8 poses da forma de cavalo)")
+        provisorio_endiabrado()
 
 
 def main():

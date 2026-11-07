@@ -1,6 +1,6 @@
 # Gutto (id técnico `gutto`)
 
-Ficha no modelo da seção 10 de [`docs/regras-dos-lutadores.md`](../regras-dos-lutadores.md). **Rascunho:** nasceu do áudio
+Ficha no modelo da seção 10 de [`docs/regras-dos-lutadores.md`](../regras-dos-lutadores.md). **Montado (forma normal) em 2026-11-06.** Nasceu do áudio
 do Breno de 2026-11-06 (transcrito com WhisperX, que erra em trechos; o que está marcado *(confirmar)* é interpretação).
 As fotos de referência do Gutto ainda vão chegar e mandam na aparência. Arte no **mesmo estilo do Pengaró**: sprite 2D
 de SNES/arcade desenhado à mão, nunca 3D pixelizado.
@@ -66,6 +66,15 @@ A preencher depois das fotos, mantendo no kit o que veio do áudio:
 Ativação: barra cheia + x + y. Cara de cavalo, bufando; corrida de galope; chute giratório vira coice; carrinho de
 Satanás. Regra 4: pelo menos 2 correntes novas, 6 normais novos, 4 especiais exclusivos (1 projétil novo), 1 kombo novo
 e 1 super exclusivo. **Arte redesenhada**, não só recolorida.
+
+## Estado (2026-11-06)
+
+- **Forma normal pronta:** 27 folhas desenhadas no estilo do Pengaró, cortadas por `animar_folha.py` (`LUTADOR=gutto`) e montadas
+  por `ferramentas/gerar_gutto.py`. O robô de teste (`testar_pengaro.py --lutador gutto`) passa 126 verificações.
+- **Provisório:** `derrota`, `lata`, `despertar_a` e `despertar_b` são cópias de outras folhas e as 8 poses do `endiabrado` são as
+  normais escurecidas (`ferramentas/provisorios_gutto.py`, `PROVISORIAS.txt`). O ChatGPT Plus bloqueou imagens por 10 horas.
+- **Falta:** as 5 folhas verdadeiras, as folhas `e_<golpe>` da cabeça de cavalo (uma por movimento), o retrato de seleção, o
+  projétil do Beijinho em arte própria (hoje é um coração em código) e os áudios.
 
 ## Passos
 
