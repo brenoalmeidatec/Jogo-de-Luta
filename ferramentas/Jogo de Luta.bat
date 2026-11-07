@@ -1,10 +1,11 @@
 @echo off
-title Jogo de Luta
+title Nazafight
 powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((Get-Content -LiteralPath '%~f0' -Raw) -split '#PS#START\r?\n',2)[1]"
 exit /b
 #PS#START
-# Jogo de Luta: baixa a versao mais nova do GitHub e abre o jogo no IKEMEN GO.
-# Tudo fica em %USERPROFILE%\JogoDeLuta. O IKEMEN GO so e baixado na primeira vez.
+# Nazafight: baixa a versao mais nova do GitHub e abre o jogo no IKEMEN GO.
+# Tudo fica em %USERPROFILE%\JogoDeLuta (pasta com o nome antigo, para nao baixar o IKEMEN de novo).
+# O IKEMEN GO so e baixado na primeira vez.
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -112,7 +113,12 @@ if (-not (Test-Path $cfg)) {
     if (-not $p.HasExited) { Stop-Process $p -Force }
     Start-Sleep 1
 }
-if (Test-Path $cfg) { Ajustar-Teclas $cfg }
+if (Test-Path $cfg) {
+    Ajustar-Teclas $cfg
+    # Nome do jogo na barra da janela
+    $t = [IO.File]::ReadAllText($cfg)
+    [IO.File]::WriteAllText($cfg, [regex]::Replace($t, '(?im)^WindowTitle\s*=.*$', 'WindowTitle       = Nazafight'))
+}
 
 # 5. Menus: navega com W A S D e confirma so com Enter. Os botoes de ataque (as setas) nao confirmam
 # nada nos menus. O IKEMEN le as teclas de confirmacao do motif (system.def); a selecao de personagem

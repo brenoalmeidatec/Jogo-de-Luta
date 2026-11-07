@@ -7,6 +7,7 @@ from PIL import Image, ImageDraw
 
 repo = Path(sys.argv[1])
 saida = Path(sys.argv[2])
+saida.mkdir(parents=True, exist_ok=True)
 sys.path.insert(0, str(repo / "ferramentas"))
 import verificar_pengaro as v
 
