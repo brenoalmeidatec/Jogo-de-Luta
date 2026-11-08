@@ -145,12 +145,12 @@ ESPECIAIS_A_MAO = (
     N(1701, "Rolê por Trás e Chute", "rolamento 1/3 2/3 3/3 4/3 5/3 chute_alto 2/3 3/3A 4/3A 5/5 6/8", (9, -104, 72, -58),
       [70]),
     # Despertar: Mão de Sombra (projétil novo), Sombra Atravessada (passa batendo), Queda Escura (mergulho)
-    N(3400, "Mão de Sombra", "golaco 1/5 2/6 3/5 4/6 5/20", (0, 0, 0, 0), []),
+    N(3400, "Mão de Sombra", "golaco 1/5 2/6 3/5 4/26", (0, 0, 0, 0), []),
     N(3402, "Sombra Atravessada", "rolamento 1/3 2/3 3/3A 4/3A 5/4 6/6 7/8", (-24, -80, 70, -10), [75]),
     N(3403, "Queda Escura", "bicicleta 1/4 2/4 3/4 4/4A 5/4A 6/-1", (6, -70, 70, -20), [105]),
     # Agarrão agachado (↓ + y, colado no oponente agachado)
     N(840, "Agarrão agachado", "agarrao 2/3A 3/4 4/4 5/4", (10, -60, 44, -10), []),
-    N(841, "Rasteira de Pegada", "agachado 2/3 3/3 rasteira 2/4 3/4 4/5 5/4 6/4 7/5", (0, 0, 0, 0), []),
+    N(841, "Rasteira de Pegada", "agachado 2/3 3/3 rasteira 2/4 3/4 4/5 5/4 6/4 7/5", (0, 0, 0, 0), [], area="BAIXO"),
 )
 
 # o 2º e o 3º golpe de cada corrente dão um passo à frente: o golpe anterior empurra o oponente e, sem isso,

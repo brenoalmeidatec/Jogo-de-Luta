@@ -272,8 +272,17 @@ class Air:
         for i, q in enumerate(quadros):
             mapa.append(len(novos) + 1)
             ticks = q[1]
-            proximo = quadros[i + 1][0] if i + 1 < len(quadros) else fim_da_folha(q[0])
+            ultimo = i + 1 >= len(quadros)
+            proximo = quadros[i + 1][0] if not ultimo else SEGUINTE.get(numero) or fim_da_folha(q[0])
             caminho = caminho_fluido(self.s, q[0], proximo) if ticks > 1 else [q[0]]
+            sem_caixa = not (len(q) > 2 and q[2])
+            if len(caminho) == 1 and ticks > 2 and sem_caixa:
+                # desenho parado por mais de 2 ticks (regra 7): vai-e-volta curto com os quadros do meio vizinhos
+                parado = vai_e_volta(self.s, q[0], ticks, repetido=proximo == q[0],
+                                     fim=ultimo and not SEGUINTE.get(numero))
+                if parado:
+                    novos.extend((nome, tk, *q[2:]) for nome, tk in parado)
+                    continue
             n = min(len(caminho), ticks) if ticks > 0 else 1
             for j in range(n):
                 t = ticks if ticks <= 0 else ticks // n + (1 if j < ticks % n else 0)
@@ -890,9 +899,56 @@ def desenho_de(nome):
     return (m[1], int(m[2])) if m and (QUADROS / m[1] / "meio").exists() else None
 
 
+# Último desenho que cada folha pode mostrar: no golaço, do 5º em diante a chuva está desenhada no corpo.
+ULTIMO_DESENHO = {"golaco": 4}
+# Para onde o último elemento de uma ação caminha (a ação que vem depois, ou o começo dela mesma se ela repete).
+# Sem isso o último elemento seguiria até o desenho 7 da folha, que não é para onde a ação vai.
+SEGUINTE = {10: "f_agachado4", 11: "f_agachado4", 40: "f_pulo1", 120: "f_defesa3", 130: "f_defesa3"}
+
+
+def registra_meio(s, folha, intervalo, k):
+    """Quadro do meio `k` entre os desenhos `intervalo` e `intervalo + 1`, já no sprite do jogo; None se não existe."""
+    arquivo = QUADROS / folha / "meio" / f"{intervalo:02d}_{k}.png"
+    if not arquivo.exists():
+        return None
+    nome = f"m_{folha}_{intervalo:02d}_{k}"
+    if nome not in s.codigos:
+        s.add(nome, pe_no_chao(abrir_quadro(arquivo), folha, intervalo, k))
+    return nome
+
+
+def vai_e_volta(s, sprite, ticks, repetido=False, fim=False):
+    """Desenho parado por mais de 2 ticks vira um vai-e-volta de 2 ticks com os quadros do meio ao lado dele.
+    `repetido`: o próximo elemento usa o mesmo desenho (usa os 3 primeiros quadros do meio dele, para a frente).
+    `fim`: é a cauda parada do desenho 7 (usa os 3 últimos do meio entre o 6 e o 7). Devolve [(sprite, ticks)] ou None."""
+    d = desenho_de(sprite)
+    if not d:
+        return None
+    folha, n = d
+    if repetido:
+        intervalo, ks = n, (1, 2, 3)
+    elif fim and n == 7 and folha in FOLHAS:
+        intervalo, ks = 6, (6, 5, 4)
+    else:
+        return None
+    meios = [registra_meio(s, folha, intervalo, k) for k in ks]
+    if None in meios:
+        return None
+    ciclo = [sprite, *meios, *meios[-2::-1]]
+    saida, resto, i = [], ticks, 0
+    while resto > 0:
+        t = min(2, resto)
+        saida.append((ciclo[i % len(ciclo)], t))
+        resto -= t
+        i += 1
+    return saida
+
+
 def fim_da_folha(nome):
     """No último elemento de um golpe, a recuperação segue até o último desenho da folha em vez de ficar parada."""
     desenho = desenho_de(nome) if nome.startswith(("f_", "q_soco")) else None
+    if desenho and desenho[0] in ULTIMO_DESENHO and desenho[1] >= ULTIMO_DESENHO[desenho[0]]:
+        return None
     return f"f_{desenho[0]}7" if desenho and desenho[0] in FOLHAS and desenho[1] < 7 else None
 
 
@@ -1003,6 +1059,8 @@ def caminho_fluido(s, atual, proximo):
     if not de or not para or de[0] != para[0] or de[1] == para[1] or abs(para[1] - de[1]) > 3:
         return [atual]
     folha = de[0]
+    if folha in ULTIMO_DESENHO and max(de[1], para[1]) > ULTIMO_DESENHO[folha]:
+        return [atual]
     passo = 1 if para[1] > de[1] else -1
     caminho = []
     for i in range(de[1], para[1], passo):
@@ -1011,10 +1069,7 @@ def caminho_fluido(s, atual, proximo):
         arquivos = sorted((QUADROS / folha / "meio").glob(f"{intervalo:02d}_*.png"),
                           key=lambda a: int(a.stem.split("_")[1]), reverse=passo < 0)
         for arquivo in arquivos:
-            nome = f"m_{folha}_{arquivo.stem}"
-            if nome not in s.codigos:
-                s.add(nome, pe_no_chao(abrir_quadro(arquivo), folha, intervalo, int(arquivo.stem.split("_")[1])))
-            caminho.append(nome)
+            caminho.append(registra_meio(s, folha, intervalo, int(arquivo.stem.split("_")[1])))
     return caminho
 
 
@@ -1120,8 +1175,8 @@ def acoes_folhas(Q):
     Q(5170, [(f("queda", 6), 6), (f("queda", 7), -1)], DEITADO)
     Q(5120, [(f("levanta", i), 4) for i in range(1, 8)], BAIXO)
     for n, t in ((700, 4), (5200, 3), (5210, 3)):
-        Q(n, [(f("rolamento", i), t) for i in range(8)], [])
-    Q(705, [(f("rolamento", i), 4) for i in range(7, -1, -1)], [])
+        Q(n, [(f("rolamento", i), t) for i in range(8)], BAIXO if n == 700 else [])
+    Q(705, [(f("rolamento", i), 4) for i in range(7, -1, -1)], BAIXO)
 
     def sequencia(n, folha, lig, ativo, rec, caixa, quadro_ativo=3, area=CORPO):
         """Liga, golpe e volta com os 8 desenhos, no mesmo tempo total do golpe antigo."""
