@@ -7052,6 +7052,16 @@ trigger1 = Time < 6
 value = SCA
 time = 1
 
+[State -2, Zera Despertar na intro]
+type = VarSet
+trigger1 = roundstate < 2
+var(20) = 0
+
+[State -2, Zera ressaca na intro]
+type = VarSet
+trigger1 = roundstate < 2
+var(21) = 0
+
 [State -2, Conta Despertar]
 type = VarAdd
 trigger1 = var(20) > 0
@@ -7066,6 +7076,19 @@ var(21) = 60
 type = VarAdd
 trigger1 = var(21) > 0
 var(21) = -1
+
+[State -2, Fumaça na saída do Despertar]
+type = Explod
+trigger1 = var(20) = 12
+anim = 9215
+postype = p1
+pos = 0, 0
+removetime = 20
+sprpriority = 4
+ownpal = 1
+scale = 1, 1
+ignorehitpause = 1
+supermovetime = -1
 
 [State -2, Bônus de dano]
 type = AttackMulSet
@@ -7088,17 +7111,17 @@ value = 0
 
 [State -2, Vira endiabrado]
 type = RemapSprite
-trigger1 = var(20) > 0 && var(37) = 0
+trigger1 = (var(20) > 0 || stateno = 3100) && var(37) = 0
 preset = "despertado"
 
 [State -2, Endiabrado ligado]
 type = VarSet
-trigger1 = var(20) > 0
+trigger1 = var(20) > 0 || stateno = 3100
 var(37) = 1
 
 [State -2, Volta ao normal]
 type = RemapSprite
-trigger1 = var(20) <= 0 && var(37) = 1
+trigger1 = var(20) <= 0 && stateno != 3100 && var(37) = 1
 trigger2 = roundstate < 2
 reset = 1
 
@@ -7148,7 +7171,7 @@ ignorehitpause = 1
 
 [State -2, Endiabrado desligado]
 type = VarSet
-trigger1 = var(20) <= 0
+trigger1 = var(20) <= 0 && stateno != 3100
 var(37) = 0
 
 [State -2, Aura]

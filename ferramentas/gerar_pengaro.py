@@ -2987,6 +2987,32 @@ def ajustar_clsn1(blocos, s, preset):
     return saida
 
 
+def despertar_do_pengaro(cns):
+    """Lógica do Despertar que só o Pengaró tem (o Hazaki usa o mesmo bloco `-2` e não pode mudar).
+    1. O super 3100 zera var(20) no primeiro tick (custo e dano), mas continua endiabrado do começo ao fim.
+    2. O motor só zera as variáveis no primeiro round (IntPersistIndex = 60): na introdução de cada round o Despertar
+       e a ressaca do round anterior são zerados.
+    3. A saída do Despertar (var(20) = 12) solta uma fumaça violeta (a 9215) em volta do corpo."""
+    trocas = (
+        ("trigger1 = var(20) > 0 && var(37) = 0", "trigger1 = (var(20) > 0 || stateno = 3100) && var(37) = 0"),
+        ("trigger1 = var(20) > 0\nvar(37) = 1", "trigger1 = var(20) > 0 || stateno = 3100\nvar(37) = 1"),
+        ("trigger1 = var(20) <= 0 && var(37) = 1", "trigger1 = var(20) <= 0 && stateno != 3100 && var(37) = 1"),
+        ("trigger1 = var(20) <= 0\nvar(37) = 0", "trigger1 = var(20) <= 0 && stateno != 3100\nvar(37) = 0"),
+        ("[State -2, Conta Despertar]\ntype = VarAdd",
+         "[State -2, Zera Despertar na intro]\ntype = VarSet\ntrigger1 = roundstate < 2\nvar(20) = 0\n\n"
+         "[State -2, Zera ressaca na intro]\ntype = VarSet\ntrigger1 = roundstate < 2\nvar(21) = 0\n\n"
+         "[State -2, Conta Despertar]\ntype = VarAdd"),
+        ("[State -2, Bônus de dano]",
+         "[State -2, Fumaça na saída do Despertar]\ntype = Explod\ntrigger1 = var(20) = 12\nanim = 9215\n"
+         "postype = p1\npos = 0, 0\nremovetime = 20\nsprpriority = 4\nownpal = 1\nscale = 1, 1\n"
+         "ignorehitpause = 1\nsupermovetime = -1\n\n[State -2, Bônus de dano]"),
+    )
+    for velho, novo in trocas:
+        assert cns.count(velho) == 1, velho
+        cns = cns.replace(velho, novo, 1)
+    return cns
+
+
 def main():
     SAIDA.mkdir(parents=True, exist_ok=True)
     s = montar_sprites(retrato=RAIZ / "sprites/pengaro-selecao-kof.png")
@@ -2995,7 +3021,7 @@ def main():
     preset = preset_despertado(s)
     escrever_sff(SAIDA / "pengaro.sff", s)
     (SAIDA / "pengaro.air").write_text("\n".join(ajustar_clsn1(a.txt, s, preset)), encoding="utf-8", newline="\n")
-    cns = ajustar_sparkxy(remapear_animelem(montar_cns(), a.mapas), a.ativos)
+    cns = despertar_do_pengaro(ajustar_sparkxy(remapear_animelem(montar_cns(), a.mapas), a.ativos))
     fracos = {int(n) for n in re.findall(r"\[State (\d+), Golpe\]\n(?:[^\n]+\n)*?hitsound = F5,0\n", cns)}
     volta = "reset = 1\n\n[State -2, Endiabrado desligado]"
     assert cns.count(volta) == 1

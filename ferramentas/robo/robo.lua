@@ -16,7 +16,7 @@ do
   end
   local function snap(n)
     return com(n, function()
-      return {st = stateNo(), t = time(), life = life(), pow = power(), ctrl = ctrl(), v10 = var(10), v20 = var(20),
+      return {st = stateNo(), t = time(), life = life(), pow = power(), ctrl = ctrl(), v10 = var(10), v20 = var(20), v37 = var(37),
               x = posX(), y = posY(), d = p2BodyDistX(), mc = moveContact(), mh = moveHit(), fa = facing(),
               borda = frontEdgeBodyDist(), proj = numProj(), stt = stateType()}
     end)
@@ -342,6 +342,31 @@ do
     press(1, {"x"}, 2); need(estadoEm(349), 20, "349")
     wait(70)
     note(function() return "dano " .. (c.vida0 - lifeP2()) end)
+  end)
+
+  S("super 1: Chuva de Bebidas (1 estoque)", function()
+    approach(80)
+    acao(function() com(1, function() setPower(1000); return 0 end); c.vida0 = lifeP2() end)
+    wait(3)
+    press(1, {"golaco"}, 3)
+    need(estadoEm(3000), 14, "entrou em 3000")
+    need(function() return st1() == 0 end, 300, "terminou", false)
+    wait(70)
+    note(function() return "dano " .. (c.vida0 - lifeP2()) .. "; barra " .. snap(1).pow end)
+    need(function() return c.vida0 - lifeP2() > 100 end, 1, "a chuva acertou (dano > 100)", false)
+    need(function() return snap(1).pow == 0 end, 1, "gastou o estoque", false)
+  end)
+
+  desperto("super: Saideira Sombria (3100) fica endiabrado do comeco ao fim", function()
+    approach(60)
+    acao(function() com(1, function() setPower(1000); return 0 end); c.vida0 = lifeP2() end)
+    wait(3)
+    press(1, {"golaco"}, 3)
+    need(estadoEm(3100), 14, "entrou em 3100")
+    need(function() local s = snap(1); return s.st == 3100 and s.t > 20 and s.v37 == 1 end, 80, "var(37) = 1 (arte endiabrada) no meio do 3100")
+    need(function() return st1() == 0 end, 300, "terminou", false)
+    note(function() local s = snap(1); return "dano " .. (c.vida0 - lifeP2()) .. "; var20=" .. s.v20 .. " var37=" .. s.v37 end)
+    need(function() return c.vida0 - lifeP2() > 150 end, 1, "o super acertou (dano > 150)", false)
   end)
 
   S("cancelar o 2o golpe da corrente em especial (garrafada)", function()
