@@ -5,7 +5,7 @@ do
   local function log(s) LOG:write(s, "\n"); LOG:flush() end
   local CMDS = {"x","y","a","b","c","holdfwd","holdback","holdup","holddown","agarrao_whisky","garrafa_x","garrafa_y",
     "role_a","role_b","sombra_x","sombra_y","sombra_a","sombra_b","despertar","FF","rolar","afastar","golaco",
-    "golpe_216","golpe_246","golpe_201","golpe_231","golpe_1400","golpe_1401","golpe_1500","golpe_1501","bola_fraca","bola_forte","parry","desperto","agacha","v10"}
+    "golpe_216","golpe_246","golpe_201","golpe_231","golpe_1400","golpe_1401","golpe_1500","golpe_1501","golpe_3200","bola_fraca","bola_forte","parry","desperto","agacha","v10"}
 
   local function com(n, fn)
     local old = id()
@@ -384,6 +384,18 @@ do
   golpeSimples("Passo de Letra (246)", {"golpe_246"}, 246, 40)
   golpeSimples("Mao de Chimpa fraca (1400)", {"golpe_1400"}, 1400, 40)
   golpeSimples("Sola de Varzea fraca (1500)", {"golpe_1500"}, 1500, 40)
+
+  S("super 2: Bando da Varzea (3200, 2 estoques)", function()
+    approach(60)
+    acao(function() com(1, function() setPower(2000); return 0 end); c.vida0 = lifeP2() end)
+    wait(3)
+    press(1, {"golpe_3200"}, 3)
+    need(estadoEm(3200), 14, "entrou em 3200")
+    need(function() return st1() == 0 end, 300, "terminou", false)
+    wait(40)
+    note(function() return "dano " .. (c.vida0 - lifeP2()) .. "; barra " .. snap(1).pow end)
+    need(function() return c.vida0 - lifeP2() > 150 end, 1, "o super acertou (dano > 150)", false)
+  end)
 
   S("cancelar o 2o golpe da corrente em especial (garrafada)", function()
     approach(28)

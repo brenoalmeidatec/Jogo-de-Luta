@@ -1410,12 +1410,12 @@
 1596,0 = 3128,0
 1597,0 = 3129,0
 1598,0 = 3130,0
-1704,0 = 3131,0
-1705,0 = 3132,0
-1706,0 = 3133,0
-1707,0 = 3134,0
-1708,0 = 3135,0
-1709,0 = 3136,0
+1599,0 = 3131,0
+1600,0 = 3132,0
+1601,0 = 3133,0
+1602,0 = 3134,0
+1603,0 = 3135,0
+1604,0 = 3136,0
 1710,0 = 3137,0
 1711,0 = 3138,0
 1712,0 = 3139,0
@@ -6797,17 +6797,17 @@ value = -2000
 
 [State 3200, Avanço]
 type = VelSet
-trigger1 = AnimElem = 9
+trigger1 = AnimElem = 15
 x = 4 * ifelse(var(20) > 0, 1.22, 1)
 
 [State 3200, Freia]
 type = VelSet
-trigger1 = AnimElem = 12
+trigger1 = AnimElem = 36
 x = 0
 
 [State 3200, Golpe]
 type = HitDef
-trigger1 = AnimElem = 9
+trigger1 = AnimElem = 15
 attr = S, HA
 damage = 115, 0
 animtype = Medium
@@ -6834,7 +6834,7 @@ envshake.ampl = -1
 
 [State 3200, Golpe]
 type = HitDef
-trigger1 = AnimElem = 10 && MoveHit
+trigger1 = AnimElem = 22 && MoveHit
 attr = S, HA
 damage = 115, 0
 animtype = Medium
@@ -6861,7 +6861,7 @@ envshake.ampl = -1
 
 [State 3200, Golpe]
 type = HitDef
-trigger1 = AnimElem = 11 && MoveHit
+trigger1 = AnimElem = 29 && MoveHit
 attr = S, HA
 damage = 115, 0
 animtype = Heavy
@@ -6893,7 +6893,7 @@ fall.envshake.ampl = -4
 
 [State 3200, Clarão]
 type = BGPalFX
-trigger1 = AnimElemTime(11) >= 0 && MoveHit = 1
+trigger1 = AnimElemTime(29) >= 0 && MoveHit = 1
 time = 4
 add = 128, 128, 128
 ignorehitpause = 1
@@ -8009,7 +8009,7 @@ ignorehitpause = 1
 
 [State -3, Efeito do golpe 3200]
 type = Explod
-trigger1 = Anim = 3200 && AnimElem = 9 && var(20) <= 0
+trigger1 = Anim = 3200 && AnimElem = 15 && var(20) <= 0
 anim = 9213
 postype = p1
 pos = 79, -68
@@ -8750,7 +8750,7 @@ ignorehitpause = 1
 
 [State -3, Efeito do golpe 13200]
 type = Explod
-trigger1 = Anim = 13200 && AnimElem = 9 && var(20) > 0
+trigger1 = Anim = 13200 && AnimElem = 15 && var(20) > 0
 anim = 9212
 postype = p1
 pos = 71, -68

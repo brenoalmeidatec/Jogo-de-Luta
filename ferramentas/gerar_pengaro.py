@@ -282,6 +282,14 @@ class Air:
                 if parado:
                     novos.extend((nome, tk, *q[2:]) for nome, tk in parado)
                     continue
+            if ticks > 0 and sem_caixa and len(caminho) > 1 and ticks > 2 * len(caminho):
+                # recuperação longa: dividida por igual, cada desenho passaria de 2 ticks. O excesso vira um vai-e-volta
+                # no começo e o caminho segue a 2 ticks por quadro, chegando ao próximo desenho no tempo certo.
+                inicio = vai_e_volta(self.s, q[0], ticks - 2 * (len(caminho) - 1))
+                if inicio:
+                    novos.extend((nome, tk, *q[2:]) for nome, tk in inicio)
+                    novos.extend((nome, 2, *q[2:]) for nome in caminho[1:])
+                    continue
             n = min(len(caminho), ticks) if ticks > 0 else 1
             for j in range(n):
                 t = ticks if ticks <= 0 else ticks // n + (1 if j < ticks % n else 0)
@@ -1142,7 +1150,7 @@ def acoes_folhas(Q):
     """Ações do Pengaró com a sequência inteira desenhada. Vêm antes das antigas, que então são ignoradas.
     Quantidade de quadros e tempos seguem os golpes antigos onde o .cns depende de AnimElem."""
     f = lambda folha, i: f"f_{folha}{i}"
-    Q(5, [("q_ginga_fluida0", 3), ("q_ginga_fluida2", 3)])
+    Q(5, [("q_ginga_fluida0", 2), ("q_ginga_fluida1", 2), ("q_ginga_fluida2", 2)])
     Q(6, [(f("agachado", 4), 3), (f("agachado", 5), 3)], BAIXO)
     Q(100, [(f"q_anda_fluida{i}", 1) for i in range(0, quadros_do_loop("anda_fluida"), 3)])
     Q(10, [(f("agachado", 1), 2), (f("agachado", 2), 2), (f("agachado", 3), 2)], BAIXO)
@@ -1219,7 +1227,8 @@ def acoes_folhas(Q):
     folha_do_golpe = {216: ("martelo", (1, 4, 6)), 201: ("soco", (1, 4, 6)), 231: ("chute_baixo", (1, 4, 6)),
                       246: ("chute_alto", (1, 4, 6)), 601: ("ar_soco", (1, 4, 6)), 611: ("bicicleta", (1, 4, 6)),
                       1400: ("martelo", (1, 4, 6)), 1401: ("martelo", (1, 4, 6)),
-                      1500: ("chute_baixo", (2, 4, 6)), 1501: ("chute_baixo", (2, 4, 6))}
+                      1500: ("chute_baixo", (2, 4, 6)), 1501: ("chute_baixo", (2, 4, 6)),
+                      3200: ("martelo", (1, 3, 4, 5, 6))}
     for g in golpes(False):
         if g.estado in folha_do_golpe:
             folha, desenhos = folha_do_golpe[g.estado]
@@ -1227,6 +1236,10 @@ def acoes_folhas(Q):
             quadros = [(f(folha, d), tempo, g.caixa) if 0 < k < len(desenhos) - 1 else (f(folha, d), tempo)
                        for k, (d, tempo) in enumerate(zip(desenhos, g.tempo))]
             Q(g.estado, quadros, NO_AR if g.tipo == "A" else CORPO)
+    # (a Saideira Sombria, 3100, fica como está: com desenhos de uma folha só a caixa acompanha o punho e o super de perto
+    # deixa de alcançar; mexer nisso muda o equilíbrio e precisa de teste de jogo)
+    # aparar (760): defesa 2 -> 3 -> 4 em vez de pular entre poses soltas
+    Q(760, [(f("defesa", 2), 4, (-8, -105, 46, -12)), (f("defesa", 3), 10), (f("defesa", 4), 10)])
     Q(610, [(f("bicicleta", 1), 6), (f("bicicleta", 4), 10, (6, -60, 62, -30)), (f("bicicleta", 6), -1)], NO_AR)
     # correntes, kombos, golpes do Despertar e especiais novos (dados em pengaro_extra.py)
     for m in extra.TODOS + extra.ESPECIAIS_A_MAO:
