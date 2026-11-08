@@ -21,7 +21,8 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parent.parent
 CMDS = ["x", "y", "a", "b", "c", "holdfwd", "holdback", "holdup", "holddown", "agarrao_whisky", "garrafa_x",
         "garrafa_y", "role_a", "role_b", "sombra_x", "sombra_y", "sombra_a", "sombra_b", "despertar", "FF", "rolar",
-        "afastar", "golaco", "golpe_216", "golpe_246", "golpe_201", "golpe_231", "bola_fraca", "bola_forte", "parry"]
+        "afastar", "golaco", "golpe_216", "golpe_246", "golpe_201", "golpe_231", "golpe_1400", "golpe_1401",
+        "golpe_1500", "golpe_1501", "bola_fraca", "bola_forte", "parry"]
 
 
 def injetar(arq, hazaki):

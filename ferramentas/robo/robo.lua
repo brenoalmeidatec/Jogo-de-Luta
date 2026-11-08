@@ -5,7 +5,7 @@ do
   local function log(s) LOG:write(s, "\n"); LOG:flush() end
   local CMDS = {"x","y","a","b","c","holdfwd","holdback","holdup","holddown","agarrao_whisky","garrafa_x","garrafa_y",
     "role_a","role_b","sombra_x","sombra_y","sombra_a","sombra_b","despertar","FF","rolar","afastar","golaco",
-    "golpe_216","golpe_246","golpe_201","golpe_231","bola_fraca","bola_forte","parry","desperto","agacha","v10"}
+    "golpe_216","golpe_246","golpe_201","golpe_231","golpe_1400","golpe_1401","golpe_1500","golpe_1501","bola_fraca","bola_forte","parry","desperto","agacha","v10"}
 
   local function com(n, fn)
     local old = id()
@@ -368,6 +368,22 @@ do
     note(function() local s = snap(1); return "dano " .. (c.vida0 - lifeP2()) .. "; var20=" .. s.v20 .. " var37=" .. s.v37 end)
     need(function() return c.vida0 - lifeP2() > 150 end, 1, "o super acertou (dano > 150)", false)
   end)
+
+  local function golpeSimples(nome, cmd, est, dist)
+    S(nome, function()
+      approach(dist)
+      acao(function() c.vida0 = lifeP2() end)
+      press(1, cmd, 3)
+      need(estadoEm(est), 14, "entrou em " .. est)
+      need(function() return st1() == 0 end, 200, "terminou", false)
+      wait(40)
+      note(function() return "dano " .. (c.vida0 - lifeP2()) .. "; P2 estado " .. snap(2).st end)
+      need(function() return c.vida0 - lifeP2() > 0 end, 1, "acertou", false)
+    end)
+  end
+  golpeSimples("Passo de Letra (246)", {"golpe_246"}, 246, 40)
+  golpeSimples("Mao de Chimpa fraca (1400)", {"golpe_1400"}, 1400, 40)
+  golpeSimples("Sola de Varzea fraca (1500)", {"golpe_1500"}, 1500, 40)
 
   S("cancelar o 2o golpe da corrente em especial (garrafada)", function()
     approach(28)

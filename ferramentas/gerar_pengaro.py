@@ -1213,6 +1213,21 @@ def acoes_folhas(Q):
     Q(650, [(f("bicicleta", 2), 3), (f("bicicleta", 3), 4), (f("bicicleta", 4), 6, (6, -70, 70, -20)),
             (f("bicicleta", 6), -1)], NO_AR)
     Q(810, [(f("agarrao", i), 4) for i in range(2, 7)] + [(f("agarrao", 7), 10)])
+    # golpes do repertório (repertorio.py, o Hazaki também usa): no Pengaró cada um fica com os desenhos de uma folha só
+    # (antes eram poses soltas de folhas diferentes, com corte seco entre elas). Mesmos tempos, mesma caixa, mesma
+    # quantidade de elementos: o CNS liga o golpe e o avanço por AnimElem.
+    folha_do_golpe = {216: ("martelo", (1, 4, 6)), 201: ("soco", (1, 4, 6)), 231: ("chute_baixo", (1, 4, 6)),
+                      246: ("chute_alto", (1, 4, 6)), 601: ("ar_soco", (1, 4, 6)), 611: ("bicicleta", (1, 4, 6)),
+                      1400: ("martelo", (1, 4, 6)), 1401: ("martelo", (1, 4, 6)),
+                      1500: ("chute_baixo", (2, 4, 6)), 1501: ("chute_baixo", (2, 4, 6))}
+    for g in golpes(False):
+        if g.estado in folha_do_golpe:
+            folha, desenhos = folha_do_golpe[g.estado]
+            assert len(g.poses) == len(desenhos), g.estado
+            quadros = [(f(folha, d), tempo, g.caixa) if 0 < k < len(desenhos) - 1 else (f(folha, d), tempo)
+                       for k, (d, tempo) in enumerate(zip(desenhos, g.tempo))]
+            Q(g.estado, quadros, NO_AR if g.tipo == "A" else CORPO)
+    Q(610, [(f("bicicleta", 1), 6), (f("bicicleta", 4), 10, (6, -60, 62, -30)), (f("bicicleta", 6), -1)], NO_AR)
     # correntes, kombos, golpes do Despertar e especiais novos (dados em pengaro_extra.py)
     for m in extra.TODOS + extra.ESPECIAIS_A_MAO:
         Q(m.estado, [(f(fl, d), n, m.caixa) if ativo else (f(fl, d), n) for fl, d, n, ativo in m.quadros],
