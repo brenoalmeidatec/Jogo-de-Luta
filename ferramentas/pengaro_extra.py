@@ -84,7 +84,7 @@ KOMBOS = (
     N(343, "Martelo por Cima", "martelo 1/5 2/4 4/4A 5/3A 6/6 7/6", (14, -100, 72, -70), 70, guarda="HA",
       queda=True, vel="-4,-4", ar="-3,-5"),
     # Empurrão: ← + x, y, → + b
-    N(344, "Cotovelada de Recuo", "martelo 1/4 2/3 4/3A 5/3A 6/5 7/5", (14, -94, 70, -64), 55),
+    N(344, "Cotovelada de Recuo", "martelo 1/4 2/3 4/3A 5/3A 6/5 7/5", (14, -94, 70, -64), 55, avanco=1.8),
     N(345, "Empurrão de Sola", "afastar 1/4 2/4 3/4A 4/3A 5/6 6/6 7/6", (12, -96, 80, -56), 65, vel="-9"),
     # Lançador: a, b, ↓ + y
     N(346, "Calcanhar de Entrada", "chute_alto 1/3 2/3 3/4A 4/3A 5/5 6/5 7/5", (9, -104, 70, -58), 55),

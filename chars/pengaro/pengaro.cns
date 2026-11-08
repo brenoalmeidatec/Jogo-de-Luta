@@ -3557,6 +3557,16 @@ anim = 344
 juggle = 3
 velset = 0,0
 
+[State 344, Avanço]
+type = VelSet
+trigger1 = Time = 7
+x = 1.8
+
+[State 344, Freia]
+type = VelSet
+trigger1 = Time = 18
+x = 0
+
 [State 344, Golpe]
 type = HitDef
 trigger1 = Time = 10

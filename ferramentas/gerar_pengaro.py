@@ -2924,6 +2924,69 @@ def arte_endiabrada(s):
     return arte
 
 
+SOBRA_CLSN1 = 4  # px de caixa de golpe além do membro visível (a regra 8.3 aceita até 12)
+LARGURA_MINIMA_CLSN1 = 12
+
+
+def ajustar_clsn1(blocos, s, preset):
+    """A caixa de golpe acompanha o membro. Os quadros do meio herdavam a caixa do desenho de contato, então a caixa
+    ficava esticada (alcance fantasma) depois que o braço ou a perna já tinha recuado. Aqui cada caixa é encurtada até
+    o pixel opaco mais à frente na faixa vertical dela (o maior entre o normal e o endiabrado, que o RemapSprite põe no
+    lugar) mais SOBRA_CLSN1. Nunca aumenta a caixa e nunca deixa menos de LARGURA_MINIMA_CLSN1."""
+    pares = {(int(a), int(b)): (int(c), int(d)) for a, b, c, d in re.findall(r"(\d+),(\d+) = (\d+),(\d+)", preset)}
+    imagens = {(g, i): (img, ex, ey) for g, i, img, ex, ey in s.lista}
+    mascaras = {}
+
+    def frente(cod, y1, y2):
+        if cod not in imagens:
+            return None
+        if cod not in mascaras:
+            img, ex, ey = imagens[cod]
+            ys, xs = np.nonzero(np.asarray(img.getchannel("A")) >= 128)
+            mascaras[cod] = (xs - ex, ys - ey)
+        x, y = mascaras[cod]
+        faixa = (y >= min(y1, y2)) & (y <= max(y1, y2))
+        return int(x[faixa].max()) if faixa.any() else None
+
+    saida = []
+    for bloco in blocos:
+        m = re.match(r"\[Begin Action (\d+)\]", bloco)
+        numero = int(m[1]) if m else -1
+        if not m or numero in PROJETEIS or not 200 <= numero % 10000 < 4000 and numero % 10000 >= 1000:
+            saida.append(bloco)
+            continue
+        linhas, pendente = bloco.split("\n"), None
+        for k, linha in enumerate(linhas):
+            caixa = re.match(r"\s*Clsn1\[0\] = (-?\d+),(-?\d+),(-?\d+),(-?\d+)$", linha)
+            if caixa and k and linhas[k - 1].startswith("Clsn1: 1"):
+                pendente = (k, tuple(int(v) for v in caixa.groups()))
+            elif pendente and re.match(r"-?\d+,\s*-?\d+,", linha):
+                g, i = (int(v) for v in linha.split(",")[:2])
+                x1, y1, x2, y2 = pendente[1]
+                # a ação 1xxxx é a do Despertar (o endiabrado); a normal que tem a sua 1xxxx fica só com o normal; as
+                # que não têm 1xxxx aparecem nas duas formas e usam a maior medida
+                tem_variante = numero in ATAQUES_DESPERTADOS
+                usa = []
+                if numero < 10000:
+                    usa.append((g, i))
+                if numero >= 10000 or not tem_variante:
+                    usa.append(pares.get((g, i)))
+                medidas = [frente(c, y1, y2) for c in usa if c]
+                medidas = [v for v in medidas if v is not None]
+                if medidas and max(x1, x2) > max(medidas) + SOBRA_CLSN1:
+                    ponta = max(max(medidas) + SOBRA_CLSN1, min(x1, x2) + LARGURA_MINIMA_CLSN1)
+                    if x2 >= x1:
+                        x2 = min(x2, ponta)
+                    else:
+                        x1 = min(x1, ponta)
+                    linhas[pendente[0]] = f" Clsn1[0] = {x1},{y1},{x2},{y2}"
+                pendente = None
+            elif re.match(r"-?\d+,\s*-?\d+,", linha):
+                pendente = None
+        saida.append("\n".join(linhas))
+    return saida
+
+
 def main():
     SAIDA.mkdir(parents=True, exist_ok=True)
     s = montar_sprites(retrato=RAIZ / "sprites/pengaro-selecao-kof.png")
@@ -2931,7 +2994,7 @@ def main():
     a = montar_air(s, faiscas, arte_despertada=arte_endiabrada(s))
     preset = preset_despertado(s)
     escrever_sff(SAIDA / "pengaro.sff", s)
-    (SAIDA / "pengaro.air").write_text("\n".join(a.txt), encoding="utf-8", newline="\n")
+    (SAIDA / "pengaro.air").write_text("\n".join(ajustar_clsn1(a.txt, s, preset)), encoding="utf-8", newline="\n")
     cns = ajustar_sparkxy(remapear_animelem(montar_cns(), a.mapas), a.ativos)
     fracos = {int(n) for n in re.findall(r"\[State (\d+), Golpe\]\n(?:[^\n]+\n)*?hitsound = F5,0\n", cns)}
     volta = "reset = 1\n\n[State -2, Endiabrado desligado]"

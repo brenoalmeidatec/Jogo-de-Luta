@@ -121,11 +121,16 @@ def conferir_clsn1(cns, sprites):
         return int(x[faixa].max()) if faixa.any() else None
 
     total = 0
-    for numero, quadros in sorted(ler_clsn1().items()):
+    todas = ler_clsn1()
+    for numero, quadros in sorted(todas.items()):
         piores = []
+        # a ação 1xxxx só aparece endiabrada; a normal que tem a sua 1xxxx só aparece normal; as outras, nas duas formas
+        tem_variante = numero < 10000 and numero + 10000 in todas
         for k, (g, i, caixas) in enumerate(quadros, 1):
             for cod, forma in (((g, i), "normal"), (pares.get((g, i)), "endiabrado")):
                 if not caixas or not cod or cod not in sprites:
+                    continue
+                if (forma == "normal" and numero >= 10000) or (forma == "endiabrado" and tem_variante):
                     continue
                 sobras = []
                 for c in caixas:
