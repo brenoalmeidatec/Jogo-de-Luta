@@ -61,6 +61,10 @@ LIMITE_AMOSTRA_PALETA = 4_000_000  # pixels usados para escolher as 255 cores
 BALOES_LIGADOS = False  # o Breno vai gravar as falas em áudio; os textos de BALOES ficam como roteiro
 BALAO_ACIMA_DOS_PES = 125  # ponta do balão, logo acima da cabeça
 RITMO = 1.5  # os golpes mostram o movimento inteiro; no tempo antigo pareciam acelerados
+# O preparo (os elementos antes daquele em que a caixa de golpe liga) não é esticado: com RITMO ele fazia o golpe forte
+# levar 10 a 26 ticks até encostar (a regra 8.3 pede 7 a 10) e dava a sensação de golpe mole. Só vale no Pengaró; a
+# recuperação e o resto seguem com RITMO, e é o preparo sem esticar que volta a casar com os `Time = N` do CNS.
+RITMO_PREPARO = 1.0
 PROJETEIS = {1005, 1006, 3005, 3006, 3010, 3011, 3012}
 BALAO_TOPO_MINIMO = 40    # abaixo do relógio e dos nomes da HUD
 BALAO_MARGEM = 4          # folga até a borda da tela
@@ -304,7 +308,9 @@ class Air:
             return
         self.acoes.add(numero)
         if 200 <= numero < 4000 and numero != 2000 and numero not in PROJETEIS:
-            quadros = [(q[0], round(q[1] * RITMO) if q[1] > 0 else q[1], *q[2:]) for q in quadros]
+            k0 = None if self.hazaki else next((k for k, q in enumerate(quadros) if len(q) > 2 and q[2]), None)
+            quadros = [(q[0], round(q[1] * (RITMO_PREPARO if k0 is not None and k < k0 else RITMO)) if q[1] > 0 else q[1],
+                        *q[2:]) for k, q in enumerate(quadros)]
         if not self.hazaki:
             quadros = self.fluido(numero, quadros)
             loop = self.mapas[numero][loop] - 1 if loop is not None else None
@@ -2163,9 +2169,11 @@ def cns_agarrao_whisky():
 def inicios_extra(m):
     """Tick de início de cada desenho (já com o RITMO, igual ao AIR) e duração total do golpe."""
     t, ini = 0, []
-    for _, _, n, _ in m.quadros:
+    ativos = _trechos_ativos(m)
+    k0 = ativos[0][0] if ativos else None  # o preparo vem antes do 1º trecho com caixa de golpe (RITMO_PREPARO)
+    for k, (_, _, n, _) in enumerate(m.quadros):
         ini.append(t)
-        t += round(n * RITMO) if n > 0 else n
+        t += round(n * (RITMO_PREPARO if k0 is not None and k < k0 else RITMO)) if n > 0 else n
     return ini, t
 
 

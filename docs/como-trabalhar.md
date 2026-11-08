@@ -102,6 +102,8 @@ Armadilhas já pagas:
   nessa unidade.
 - `RITMO = 1.5` em `gerar_pengaro.py` alonga os golpes dos dois lutadores, com o atordoamento junto. Mostrar 8 desenhos no
   tempo antigo parecia o jogo em 2x.
+  No Pengaró o **preparo** (os desenhos antes da caixa de golpe) não é esticado (`RITMO_PREPARO = 1.0`): só o resto do golpe
+  e o atordoamento usam o `RITMO`. Fraco 3-5 ticks até encostar, forte 7-10 (regra 8.3).
 - Desenhos a mais de 3 de distância ficam em corte seco. Atravessar tudo no meio fazia o corpo se debater.
 - Ciclos de ginga levam uns 2 segundos, com 64 quadros a 2 ticks.
 - `remapear_animelem` ajusta o `AnimElem` do `.cns`, porque os quadros do meio mudam a contagem.
