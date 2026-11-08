@@ -278,8 +278,7 @@ class Air:
             sem_caixa = not (len(q) > 2 and q[2])
             if len(caminho) == 1 and ticks > 2 and sem_caixa:
                 # desenho parado por mais de 2 ticks (regra 7): vai-e-volta curto com os quadros do meio vizinhos
-                parado = vai_e_volta(self.s, q[0], ticks, repetido=proximo == q[0],
-                                     fim=ultimo and not SEGUINTE.get(numero))
+                parado = vai_e_volta(self.s, q[0], ticks)
                 if parado:
                     novos.extend((nome, tk, *q[2:]) for nome, tk in parado)
                     continue
@@ -917,17 +916,17 @@ def registra_meio(s, folha, intervalo, k):
     return nome
 
 
-def vai_e_volta(s, sprite, ticks, repetido=False, fim=False):
-    """Desenho parado por mais de 2 ticks vira um vai-e-volta de 2 ticks com os quadros do meio ao lado dele.
-    `repetido`: o próximo elemento usa o mesmo desenho (usa os 3 primeiros quadros do meio dele, para a frente).
-    `fim`: é a cauda parada do desenho 7 (usa os 3 últimos do meio entre o 6 e o 7). Devolve [(sprite, ticks)] ou None."""
+def vai_e_volta(s, sprite, ticks):
+    """Desenho parado por mais de 2 ticks (regra 7) vira um vai-e-volta de 2 ticks com os quadros do meio ao lado dele.
+    Do desenho 0 ao 6, usa os 3 primeiros quadros do meio entre ele e o seguinte; o desenho 7 (a cauda parada do fim da
+    folha) usa os 3 últimos do meio entre o 6 e ele. Devolve [(sprite, ticks)] ou None se a folha não tem os quadros."""
     d = desenho_de(sprite)
     if not d:
         return None
     folha, n = d
-    if repetido:
+    if n < 7:
         intervalo, ks = n, (1, 2, 3)
-    elif fim and n == 7 and folha in FOLHAS:
+    elif folha in FOLHAS:
         intervalo, ks = 6, (6, 5, 4)
     else:
         return None
@@ -1143,6 +1142,9 @@ def acoes_folhas(Q):
     """Ações do Pengaró com a sequência inteira desenhada. Vêm antes das antigas, que então são ignoradas.
     Quantidade de quadros e tempos seguem os golpes antigos onde o .cns depende de AnimElem."""
     f = lambda folha, i: f"f_{folha}{i}"
+    Q(5, [("q_ginga_fluida0", 3), ("q_ginga_fluida2", 3)])
+    Q(6, [(f("agachado", 4), 3), (f("agachado", 5), 3)], BAIXO)
+    Q(100, [(f"q_anda_fluida{i}", 1) for i in range(0, quadros_do_loop("anda_fluida"), 3)])
     Q(10, [(f("agachado", 1), 2), (f("agachado", 2), 2), (f("agachado", 3), 2)], BAIXO)
     Q(11, [(f("agachado", i), 8) for i in (4, 5, 6, 7, 6, 5)], BAIXO)
     Q(12, [(f("agachado", 2), 2), (f("agachado", 1), 2)], BAIXO)
@@ -1151,7 +1153,7 @@ def acoes_folhas(Q):
         Q(n, [(f("pulo", 1), 3), (f("pulo", 2), 5), (f("pulo", 3), 6), (f("pulo", 4), -1)], NO_AR)
     for n in (44, 45, 46):
         Q(n, [(f("pulo", 4), 6), (f("pulo", 5), 6), (f("pulo", 6), -1)], NO_AR)
-    Q(47, [(f("pulo", 7), 3), (f("pulo", 0), 2)])
+    Q(47, [(f("pulo", 6), 2), (f("pulo", 7), 3)])
     Q(120, [(f("defesa", 1), 2), (f("defesa", 2), 2)])
     Q(130, [(f("defesa", 3), 10), (f("defesa", 4), 10)])
     Q(140, [(f("defesa", 2), 2), (f("defesa", 1), 2)])
