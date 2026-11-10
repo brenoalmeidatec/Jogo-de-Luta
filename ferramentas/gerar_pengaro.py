@@ -217,7 +217,37 @@ def paleta_global(imagens):
     return pedaco.quantize(colors=255, method=Image.MEDIANCUT)
 
 
-def escrever_sff(destino, sprites):
+# O ChangeAnim2 desenha a vítima do arremesso com o SFF DELA e os números de sprite das ações 5001 e 5030 do .air do
+# arremessador. Por isso todo lutador guarda no .sff a união desses desenhos de todos os lutadores, mesmo sem usá-los.
+# verificar_pengaro.py falha se algum .air de chars/ pedir, nessas ações, um sprite fora daqui.
+ACOES_VITIMA = (5001, 5030)
+SPRITES_VITIMA = frozenset({
+    (48, 0), (49, 0), (50, 0), (382, 0), (384, 0), (385, 0), (386, 0), (390, 0), (392, 0), (393, 0), (394, 0),
+    (871, 0), (873, 0), (875, 0), (877, 0), (878, 0), (880, 0), (881, 0), (890, 0), (897, 0), (899, 0), (901, 0),
+    (903, 0), (904, 0), (906, 0), (907, 0), (909, 0), (910, 0),
+})
+RE_ELEMENTO = re.compile(r"^\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*-?\d+\s*,\s*-?\d+\s*,\s*-?\d+", re.M)
+RE_REMAP = re.compile(r"^(\d+),\s*(\d+)\s*=\s*(\d+),\s*(\d+)", re.M)
+
+
+def trocas_do_remap(cns):
+    """Pares (origem, destino) do [RemapPreset despertado] do .cns."""
+    bloco = re.search(r"^\[RemapPreset despertado\]\n(.*?)(?=^\[)", cns, re.M | re.S)
+    if not bloco:
+        return []
+    return [((int(a), int(b)), (int(c), int(d))) for a, b, c, d in RE_REMAP.findall(bloco.group(1))]
+
+
+def sprites_mantidos(air, cns):
+    """Os (grupo, índice) que o jogo pode desenhar: todo elemento do .air, o grupo 9000 (retratos), SPRITES_VITIMA e o
+    destino do RemapPreset despertado de cada um desses. O resto do .sff não aparece em lugar nenhum."""
+    usados = {(int(g), int(i)) for g, i in RE_ELEMENTO.findall(air)} | set(SPRITES_VITIMA)
+    return usados | {destino for origem, destino in trocas_do_remap(cns) if origem in usados}
+
+
+def escrever_sff(destino, sprites, manter=None):
+    """Com `manter`, só grava os (grupo, índice) do conjunto (todo o resto é pulado, e o grupo 9000 sempre fica).
+    A paleta sai antes da poda e da lista inteira: podar antes mudaria o MEDIANCUT e todos os pixels."""
     imagens = [s[2] for s in sprites.lista]
     q = paleta_global(imagens)
     pal = q.getpalette()[: 255 * 3]
@@ -228,6 +258,8 @@ def escrever_sff(destino, sprites):
 
     itens = []
     for grupo, indice, img, ex, ey in sprites.lista:
+        if manter is not None and grupo != 9000 and (grupo, indice) not in manter:
+            continue
         caixa = img.getchannel("A").point(lambda a: 255 if a >= 128 else 0).getbbox() or (0, 0, 1, 1)
         rec = img.crop(caixa)
         ind = rec.convert("RGB").quantize(palette=q, dither=Image.NONE)
@@ -3076,7 +3108,6 @@ def main():
     faiscas = carregar_faiscas(s)
     a = montar_air(s, faiscas, arte_despertada=arte_endiabrada(s))
     preset = preset_despertado(s)
-    escrever_sff(SAIDA / "pengaro.sff", s)
     (SAIDA / "pengaro.air").write_text("\n".join(ajustar_clsn1(a.txt, s, preset)), encoding="utf-8", newline="\n")
     cns = despertar_do_pengaro(ajustar_sparkxy(remapear_animelem(montar_cns(), a.mapas), a.ativos))
     fracos = {int(n) for n in re.findall(r"\[State (\d+), Golpe\]\n(?:[^\n]+\n)*?hitsound = F5,0\n", cns)}
@@ -3086,6 +3117,8 @@ def main():
     cns = cns.rstrip() + "\n\n" + efeitos_cns(a.ativos, fracos)
     cns = cns.replace("[Data]", preset + "[Quotes]\n" + "".join(f'victory{i + 1} = "{v}"\n' for i, v in enumerate(VITORIAS)) + "\n[Data]", 1)
     (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8", newline="\n")
+    air = (SAIDA / "pengaro.air").read_text(encoding="utf-8")
+    escrever_sff(SAIDA / "pengaro.sff", s, manter=sprites_mantidos(air, cns))
     (SAIDA / "pengaro.cmd").write_text(montar_cmd(), encoding="utf-8")
     (SAIDA / "pengaro.def").write_text(DEF, encoding="utf-8", newline="\n")
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")

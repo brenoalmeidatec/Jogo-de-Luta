@@ -227,7 +227,6 @@ def main():
     faiscas = gp.carregar_faiscas(s)
     a = gp.montar_air(s, faiscas, arte_despertada=gp.arte_endiabrada(s))
     preset = gp.preset_despertado(s)
-    gp.escrever_sff(SAIDA / "gutto.sff", s)
     (SAIDA / "gutto.air").write_text("\n".join(a.txt), encoding="utf-8", newline="\n")
     cns = gp.remapear_animelem(gp.montar_cns(), a.mapas)
     # a aura do demônio cavalo pulsa em vermelho de brasa, não no violeta do Pengaró
@@ -235,6 +234,7 @@ def main():
     cns = cns.replace("[Data]", preset + "[Quotes]\n" + "".join(
         f'victory{i + 1} = "{v}"\n' for i, v in enumerate(gp.VITORIAS)) + "\n[Data]", 1)
     (SAIDA / "gutto.cns").write_text(cns, encoding="utf-8", newline="\n")
+    gp.escrever_sff(SAIDA / "gutto.sff", s, manter=gp.sprites_mantidos("\n".join(a.txt), cns))
     (SAIDA / "gutto.cmd").write_text(gp.montar_cmd(), encoding="utf-8")
     (SAIDA / "gutto.def").write_text(DEF, encoding="utf-8", newline="\n")
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")

@@ -5,7 +5,7 @@ from PIL import Image, ImageDraw
 
 from gerar_pengaro import (
     ALT, BALOES, DEF, EIXO_X, EIXO_Y, LARG, RAIZ,
-    carregar_faiscas, escrever_sff, gira, montar_air, montar_cmd,
+    carregar_faiscas, escrever_sff, gira, sprites_mantidos, montar_air, montar_cmd,
     montar_cns, montar_sprites, move,
 )
 from repertorio import golpes
@@ -101,13 +101,13 @@ def main():
     a = montar_air(s, carregar_faiscas(s), hazaki=True, arte_despertada=arte)
     pasta = RAIZ / "chars/hazaki"
     pasta.mkdir(parents=True, exist_ok=True)
-    escrever_sff(pasta / "hazaki.sff", s)
     cns = montar_cns(hazaki=True)
     # A transformação de Hazaki se encerra sem a penalidade de ressaca.
     cns = cns.replace("var(21) = 60", "var(21) = 0")
     (pasta / "hazaki.cns").write_text(cns.rstrip() + "\n", encoding="utf-8", newline="\n")
     (pasta / "hazaki.cmd").write_text(montar_cmd(hazaki=True).rstrip() + "\n", encoding="utf-8")
     (pasta / "hazaki.air").write_text("\n".join(a.txt), encoding="utf-8", newline="\n")
+    escrever_sff(pasta / "hazaki.sff", s, manter=sprites_mantidos("\n".join(a.txt), cns))
     (pasta / "hazaki.def").write_text(DEF.replace("Pengaró", "Hazaki").replace("Pengaro", "Hazaki")
                                     .replace("pengaro", "hazaki"), encoding="utf-8", newline="\n")
     (pasta / "movelist.dat").write_text(lista_de_golpes(), encoding="utf-8", newline="\n")

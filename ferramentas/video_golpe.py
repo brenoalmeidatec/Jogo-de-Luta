@@ -259,7 +259,8 @@ def main():
         trocas = re.findall(r"^(\d+),\s*(\d+)\s*=\s*(\d+),\s*(\d+)", bloco.group(1), re.M)
         originais, sprites = sprites, dict(sprites)
         for g, i, g2, i2 in trocas:
-            sprites[(int(g), int(i))] = originais[(int(g2), int(i2))]
+            if (int(g2), int(i2)) in originais:  # linha morta (origem nunca desenhada): o destino foi podado do .sff
+                sprites[(int(g), int(i))] = originais[(int(g2), int(i2))]
         print(f"{len(trocas)} desenhos trocados pelo RemapPreset despertado")
     desenhos = Desenhos(sprites, pal)
     acoes = ler_air(v.PASTA, v.PERSONAGEM)

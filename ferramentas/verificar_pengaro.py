@@ -182,8 +182,12 @@ def conferir_despertar(cns, acoes, sprites):
         return
     pares = dict(((int(a), int(b)), (int(c), int(d)))
                  for a, b, c, d in re.findall(r"(\d+),(\d+) = (\d+),(\d+)", secao[1]))
-    for destino in pares.values():
-        if destino not in sprites:
+    import gerar_pengaro as gp
+    usados = {(g, i) for q in acoes.values() for g, i, _ in q} | set(gp.SPRITES_VITIMA)
+    for origem, destino in pares.items():
+        # Linha cuja origem o lutador nunca desenha é morta: o motor só guarda o mapa (remapSprite no char.go do
+        # IKEMEN v1.0.0, sem procurar o sprite), e a poda do gerador tira o destino dela do .sff.
+        if origem in usados and destino not in sprites:
             erros.append(f"o Despertar aponta para o sprite {destino}, que não existe")
     destinos = set(pares.values())
     # A transformação tem a garrafa de propósito, a ginga endiabrada já é a arte final, intro é antes do Despertar
@@ -217,6 +221,29 @@ def conferir_baloes(cns, acoes, sprites, pal):
                 erros.append(f"balão {numero} é mais largo que a tela")
 
 
+def conferir_sprites_podados(sprites, cns):
+    """O gerador poda do .sff o que não aparece (gerar_pengaro.sprites_mantidos). Confere que ficou tudo que o jogo
+    pode pedir: destino do RemapPreset despertado e os desenhos de vítima de arremesso (SPRITES_VITIMA)."""
+    import gerar_pengaro as gp
+    air = (PASTA / f"{PERSONAGEM}.air").read_text(encoding="utf-8")
+    usados = {(int(g), int(i)) for g, i in gp.RE_ELEMENTO.findall(air)} | set(gp.SPRITES_VITIMA)
+    for origem, destino in gp.trocas_do_remap(cns):
+        if origem in usados and destino not in sprites:
+            erros.append(f"RemapPreset despertado troca {origem} por {destino}, que não existe no .sff")
+    faltam = sorted(gp.SPRITES_VITIMA - set(sprites))
+    if faltam:
+        avisos.append(f"{len(faltam)} desenhos de vítima de arremesso não existem no .sff (o arremessado some): "
+                      + " ".join(f"{g},{i}" for g, i in faltam[:8]))
+    # Toda ação de vítima de todo lutador precisa caber em SPRITES_VITIMA, senão a poda dos outros apaga o desenho.
+    for arq in sorted(PASTA.parent.glob("*/*.air")):
+        texto = arq.read_text(encoding="utf-8")
+        for n in gp.ACOES_VITIMA:
+            m = re.search(rf"^\[Begin Action {n}\]\n(.*?)(?=^\[Begin|\Z)", texto, re.M | re.S)
+            fora = {(int(g), int(i)) for g, i in gp.RE_ELEMENTO.findall(m.group(1))} - gp.SPRITES_VITIMA if m else set()
+            if fora:
+                erros.append(f"{arq.name} ação {n} usa {sorted(fora)}, fora de SPRITES_VITIMA (gerar_pengaro.py)")
+
+
 def main():
     sprites, pal = ler_sff()
     acoes = ler_air()
@@ -232,6 +259,7 @@ def main():
 
     cns = (PASTA / f"{PERSONAGEM}.cns").read_text(encoding="utf-8")
     cmd = (PASTA / f"{PERSONAGEM}.cmd").read_text(encoding="utf-8")
+    conferir_sprites_podados(sprites, cns)
     estados = {int(n) for n in re.findall(r"^\[Statedef (-?\d+)\]", cns, re.M)}
     comuns = {0, 10, 11, 12, 20, 50, 52, 100, 105, 5050, 5100}
     for texto in (cns, cmd):
