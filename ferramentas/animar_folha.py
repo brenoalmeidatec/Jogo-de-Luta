@@ -3,6 +3,9 @@
 
   python ferramentas/animar_folha.py soco chute_alto      só essas
   python ferramentas/animar_folha.py --todas              todas, 4 de cada vez
+  python ferramentas/animar_folha.py --arcade soco        arte arcade: lê os desenhos já quantizados de
+                                                          quadros_arcade/soco/00..07.png e grava só quadros_arcade/soco/meio/
+                                                          (depois: quantizar_folha.py soco --meio)
 
 Saída em sprites/<lutador>/quadros/<nome>/ (LUTADOR=gutto para o Gutto): 00..07.png são os desenhos e meio/03_2.png é o 2º quadro do meio entre os
 desenhos 3 e 4. O gerador escolhe quantos usar pelos ticks de cada golpe (regra 7 de docs/regras-dos-lutadores.md).
@@ -32,6 +35,7 @@ LUTADOR = os.environ.get("LUTADOR", "pengaro")
 FOLHAS_LUTADOR = {"gutto": FOLHAS_GUTTO, "raiclaven": FOLHAS_RAICLAVEN}.get(LUTADOR, FOLHAS_PENGARO)
 FOLHAS = RAIZ / "sprites" / LUTADOR / "quadros/folhas"
 QUADROS = RAIZ / "sprites" / LUTADOR / "quadros"
+QUADROS_ARCADE = RAIZ / "sprites" / LUTADOR / "quadros_arcade"  # arte arcade (quantizar_folha.py), fora do jogo por ora
 BLENDER = Path(os.environ.get("BLENDER", Path.home() / "blender/blender-4.5.15-windows-x64/blender.exe"))
 AMPLIA = 4  # o Blender trabalha 4x maior que o quadro final
 PASSO = 8  # um vértice a cada 2 pixels do quadro final
@@ -73,7 +77,7 @@ def tronco(q):
     return float(np.median(meios)) if meios else q.width / 2
 
 
-def por_celula(img, fator):
+def por_celula(img, fator, amplia=AMPLIA):
     """Separa as 8 figuras pela célula onde cada pedaço está, sem cortar perna que passa da célula.
     Cada figura fica com o centro da célula no eixo e a base no chão: quem faz o pulo subir é o jogo, não o desenho."""
     limpa = np.array(tira_fundo(img))
@@ -104,32 +108,33 @@ def por_celula(img, fator):
         caixa = figura.getchannel("A").getbbox()
         q = figura.crop(caixa)
         grande = q.resize((round(q.width * fator), round(q.height * fator)), Image.LANCZOS)
-        tela = Image.new("RGBA", (LARG * AMPLIA, ALT * AMPLIA))
+        tela = Image.new("RGBA", (LARG * amplia, ALT * amplia))
         if PELO_TRONCO:
             centro = round(tronco(q) * fator)
         else:
             centro = round(((i + 0.5) * largura - caixa[0]) * fator)
-        tela.paste(grande, ((PIVO[0] + DESLOCA[0]) * AMPLIA - centro,
-                            (PIVO[1] + DESLOCA[1]) * AMPLIA - grande.height), grande)
+        tela.paste(grande, ((PIVO[0] + DESLOCA[0]) * amplia - centro,
+                            (PIVO[1] + DESLOCA[1]) * amplia - grande.height), grande)
         saida.append(tela)
     return saida
 
 
-def poses(folha, ancora):
-    """Corta a folha e devolve as poses alinhadas no chão, 4x maiores que o quadro final."""
+def poses(folha, ancora, amplia=AMPLIA):
+    """Corta a folha e devolve as poses alinhadas no chão, `amplia` vezes maiores que o quadro final (4 para o Blender,
+    1 para a escala do jogo, que é o que quantizar_folha.py usa)."""
     img = Image.open(folha)
-    fator = ESCALA_2172 * 2172 / img.width * AMPLIA * AJUSTE.get(Path(folha).stem, 1)
+    fator = ESCALA_2172 * 2172 / img.width * amplia * AJUSTE.get(Path(folha).stem, 1)
     if Path(folha).stem in POR_CELULA or Path(folha).stem.startswith("e_") or LUTADOR in ("gutto", "raiclaven"):  # Gutto e Raiclaven: sempre por célula (golpes que avançam encostam nas figuras vizinhas)
-        return por_celula(img, fator)
+        return por_celula(img, fator, amplia)
     saida = []
     for q in fatias(tira_fundo(img), 8):
         q = q.crop(q.getchannel("A").getbbox())
         ponto = tronco(q) if PELO_TRONCO else ponto_ancora(q, ancora)
         grande = q.resize((round(q.width * fator), round(q.height * fator)), Image.LANCZOS)
-        tela = Image.new("RGBA", (LARG * AMPLIA, ALT * AMPLIA))
+        tela = Image.new("RGBA", (LARG * amplia, ALT * amplia))
         referencia = (PIVO[0] if PELO_TRONCO else PE_DE_TRAS if ancora == "pes" else PIVO[0]) + DESLOCA[0]
-        y = (PIVO[1] + DESLOCA[1]) * AMPLIA - grande.height
-        tela.paste(grande, (referencia * AMPLIA - round(ponto * fator), y), grande)
+        y = (PIVO[1] + DESLOCA[1]) * amplia - grande.height
+        tela.paste(grande, (referencia * amplia - round(ponto * fator), y), grande)
         saida.append(tela)
     return saida
 
@@ -165,11 +170,17 @@ def fluxo(a, b):
     return campo[np.minimum(np.arange(0, h + 1, PASSO), h - 1)][:, np.minimum(np.arange(0, w + 1, PASSO), w - 1)]
 
 
-def animar(nome):
+def animar(nome, arcade=False):
     folha, meios = LOOPS.get(nome, (nome, MEIOS))
     ancora = FOLHAS_LUTADOR.get(folha, ("pes",))[0]
-    chaves = poses(FOLHAS / f"{folha}.png", ancora)
     loop = nome in LOOPS
+    if arcade:
+        # desenhos já na escala do jogo e na paleta: amplia sem misturar cor, o Blender só entorta
+        assert not loop, "--arcade ainda não faz loops"
+        chaves = [Image.open(QUADROS_ARCADE / nome / f"{i:02d}.png").convert("RGBA")
+                  .resize((LARG * AMPLIA, ALT * AMPLIA), Image.NEAREST) for i in range(8)]
+    else:
+        chaves = poses(FOLHAS / f"{folha}.png", ancora)
     pares = list(zip(chaves, chaves[1:] + chaves[:1])) if loop else list(zip(chaves, chaves[1:]))
     with tempfile.TemporaryDirectory(prefix="animar_") as tmp:
         pasta = Path(tmp)
@@ -195,11 +206,14 @@ def animar(nome):
         subprocess.run([str(BLENDER), "-b", "--python-exit-code", "1", "--python",
                         str(RAIZ / "ferramentas/blender_sprites.py"), "--", str(pasta)],
                        check=True, stdout=subprocess.DEVNULL)
-        destino = QUADROS / nome
-        if destino.exists():
-            shutil.rmtree(destino)
+        destino = (QUADROS_ARCADE if arcade else QUADROS) / nome
+        apagar = destino / "meio" if arcade else destino  # no arcade os desenhos 00..07 ficam como estão
+        if apagar.exists():
+            shutil.rmtree(apagar)
         (destino / "meio").mkdir(parents=True)
         for n, q in enumerate(quadros):
+            if arcade and not q["nome"].startswith("meio/"):
+                continue
             img = Image.open(pasta / q["saida"]).convert("RGBA").resize((LARG, ALT), Image.LANCZOS)
             img.putalpha(img.getchannel("A").point(lambda v: 255 if v >= 128 else 0))
             if nome in LIMPA_MAGENTA or (LUTADOR == "gutto" and nome.startswith("e_")):
@@ -212,6 +226,12 @@ def animar(nome):
 
 def main():
     pedidas = sys.argv[1:]
+    arcade = "--arcade" in pedidas
+    if arcade:
+        pedidas = [p for p in pedidas if p != "--arcade"]
+        with ThreadPoolExecutor(4) as trabalho:
+            list(trabalho.map(lambda n: animar(n, True), pedidas))
+        return
     if pedidas == ["--todas"]:
         ignorar = {"endiabrado", "ginga", "anda"}
         pedidas = ["soco", "despertar_a", "despertar_b", *LOOPS, *(n for n in FOLHAS_LUTADOR if n not in ignorar),
