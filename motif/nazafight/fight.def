@@ -11,9 +11,10 @@ localcoord = 1280,720
 sff = fight.sff
 snd = fight.snd               ; data/fight.snd
 font1 = fonts/naza_num.def
-font2 = fonts/naza_num_alerta.def
+font2 = fonts/naza_relogio_alerta.def
 font3 = fonts/naza_tab.def
 font4 = fonts/naza_menu.def
+font5 = fonts/naza_relogio.def
 fightfx.sff = fightfx.sff     ; data/
 fightfx.air = fightfx.air
 common.snd = common.snd
@@ -24,7 +25,7 @@ scale = 4
 ; Vida: prancha de saveiro com alca de moringa; esvazia para o centro. folha > 50%, dende 26-50%, taua <= 25%.
 [Lifebar]
 mid.delay = 30
-p1.pos = 32,24
+p1.pos = 48,24
 p1.bg0.spr = 10,0
 p1.mid.spr = 14,0
 p1.mid.offset = 16,8
@@ -35,7 +36,7 @@ p1.front26.offset = 16,8
 p1.front51.spr = 11,0
 p1.front51.offset = 16,8
 p1.range.x = 495,16
-p2.pos = 736,24
+p2.pos = 720,24
 p2.bg0.spr = 10,1
 p2.mid.spr = 14,1
 p2.mid.offset = 16,8
@@ -55,7 +56,7 @@ p2.range.x = 16,495
 
 ; Poder: trilho de madeira + 3 caxixis de estoque (cru -> quente -> cozido). levelbars = enche de novo a cada estoque.
 [Powerbar]
-p1.pos = 32,664
+p1.pos = 44,664
 p1.bg0.spr = 20,0
 p1.bg0500.spr = 20,1
 p1.bg01000.spr = 20,2
@@ -69,7 +70,9 @@ p1.front3000.spr = 22,0
 p1.front3000.offset = 12,4
 p1.range.x = 12,371
 p1.levelbars = 1
-p2.pos = 864,664
+p1.counter.font = 1,0,0
+p1.counter.offset = 556,35
+p2.pos = 852,664
 p2.bg0.spr = 20,10
 p2.bg0500.spr = 20,11
 p2.bg01000.spr = 20,12
@@ -83,16 +86,18 @@ p2.front3000.spr = 22,1
 p2.front3000.offset = 12,4
 p2.range.x = 371,12
 p2.levelbars = 1
+p2.counter.font = 1,0,0
+p2.counter.offset = -172,35
 
 ; Retrato: fundo de reserva (pano + silhueta) atras, 9000,0 do lutador, anel de barro por cima.
 [Face]
-p1.pos = 32,84
+p1.pos = 48,96
 p1.bg.spr = 30,0
 p1.face.spr = 9000,0
 p1.face.offset = 6,6
 p1.ko.spr = 32,0
 p1.top.spr = 31,0
-p2.pos = 1136,84
+p2.pos = 1120,96
 p2.bg.spr = 30,1
 p2.face.spr = 9000,0
 p2.face.offset = 106,6
@@ -104,22 +109,23 @@ p2.top.spr = 31,1
 [Tag Face]
 
 [Name]
-p1.pos = 152,119
+p1.pos = 184,135
 p1.name.font = 3,0,1
-p2.pos = 1128,119
+p2.pos = 1096,135
 p2.name.font = 3,0,-1
 [Simul Name]
 [Turns Name]
 [Tag Name]
 
-; Relogio: caxixi brunido com faixa de azulejo; numeros em taua vivo abaixo de 10 s (fonte 2).
+; Relogio: caxixi brunido com a boca cheia de 2 digitos grandes (fonte 5); abaixo de 10 s, fonte 2 em taua
+; vivo, cujos glifos ja trazem o zero na frente (o motor escreve 8, a tela mostra 08).
 [Time]
 pos = 640,8
 bg.spr = 40,0
 counter.font = 2,0,0
-counter.offset = 0,91
-counter10.font = 1,0,0
-counter10.offset = 0,91
+counter.offset = 0,119
+counter10.font = 5,0,0
+counter10.offset = 0,119
 framespercount = 60
 
 [Combo]
@@ -166,7 +172,7 @@ draw.text = "EMPATE"
 ; Vitorias: bolinhas de barro; crua = falta ganhar, cozida = round ganho.
 [WinIcon]
 useiconupto = 4
-p1.pos = 152,128
+p1.pos = 184,140
 p1.iconoffset = 32,0
 p1.bg0.spr = 50,0
 p1.n.spr = 50,1
@@ -180,7 +186,7 @@ p1.teammate.spr = 50,1
 p1.perfect.spr = 50,1
 p1.clutch.spr = 50,1
 p1.counter.font = 3,0,1
-p2.pos = 1104,128
+p2.pos = 1072,140
 p2.iconoffset = -32,0
 p2.bg0.spr = 50,0
 p2.n.spr = 50,1
