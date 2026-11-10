@@ -131,3 +131,23 @@ mudou o jeito de jogar, e a fumaça da saída do Despertar.
 **Ambiente:** o `git fetch` desta máquina (Windows, `index-pack`) falha ou trava com os pacotes grandes desta branch; o
 código e os sprites vieram por `gh api` (zip e blobs) e os commits saíram pela API de dados do git (`/git/blobs`, `/trees`,
 `/commits`, `/refs`). Se acontecer, `git -c index-pack.threads=1 fetch` e paciência, ou o mesmo caminho pela API.
+
+## 2026-11-10 — Peso: .sff com link e poda, fumaça do Despertar, launcher rápido (Claude, plano de otimização)
+
+- **Peso 1 (link)** e **Peso 3 (poda)** no `escrever_sff`: sprite repetido vira link (len 0) e o que o jogo nunca
+  desenha sai do .sff (fica: `.air`, grupo 9000, `SPRITES_VITIMA` dos arremessos e destino alcançável do remap).
+  .sff antes -> link -> link+poda: pengaro 15,43 -> 13,98 -> 11,72 MB; gutto 16,34 -> 14,38 -> 12,27;
+  raiclaven 20,50 -> 9,20 -> 7,65; hazaki 0,92 -> 0,61 -> 0,55; total 53,2 -> 32,2 MB.
+  Raiclaven x Hazaki (`medir_carga`, sem captura): pico privado 1608 -> 1152 -> 1068 MB, residente 1164 -> ~920 -> ~860 MB,
+  carga ~6 s -> ~5,2 s. Pengaró x Hazaki: 1640 -> 1391 MB. Pixels: `ferramentas/conferir_sff.py` igual à linha de base.
+- **Atenção:** gerar de novo nesta máquina muda o Pengaró inteiro (paleta outra, por causa do 9000,1) e o Gutto em
+  `chars/` está atrás do gerador (3289 contra 3310 sprites, .air/.cns diferentes). Por isso Pengaró e Gutto foram
+  religados/podados do .sff commitado com `conferir_sff.py religar ... --podar chars/<lutador>`. Quem regenerar o Gutto
+  vai trazer essa diferença junto: decisão à parte.
+- **Peso 2:** fumaça da saída do Despertar com `NumExplod(9215) = 0` e `id = 9215`. O caso do hitpause não foi reproduzido.
+- **Peso 4:** launcher pergunta só o sha (abertura sem novidade 4-8 s -> ~0,3 s), baixa em `.part`, recupera manifesto
+  estragado, `VsScreenLoading = 1` e `WindowScaleMode = 0`. Falhas simuladas numa pasta temporária, não no PC de ninguém.
+- Robô igual antes e depois: Pengaró 146/0, Gutto e Raiclaven 143/1 (a falha `var(37)` no 3100 já existia).
+- **Não visto no jogo por pessoa:** fluidez, a tela de VS carregando e a janela com `WindowScaleMode = 0`. O motor foi visto
+  por foto do próprio framebuffer (Raiclaven x Hazaki com link, poses certas). Já existia: Hazaki arremessado pelos outros
+  some (o .sff dele não tem os 25 desenhos de vítima; `verificar --hazaki` agora avisa).
