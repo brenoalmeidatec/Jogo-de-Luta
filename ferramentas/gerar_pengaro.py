@@ -3047,7 +3047,8 @@ def despertar_do_pengaro(cns):
     1. O super 3100 zera var(20) no primeiro tick (custo e dano), mas continua endiabrado do começo ao fim.
     2. O motor só zera as variáveis no primeiro round (IntPersistIndex = 60): na introdução de cada round o Despertar
        e a ressaca do round anterior são zerados.
-    3. A saída do Despertar (var(20) = 12) solta uma fumaça violeta (a 9215) em volta do corpo."""
+    3. A saída do Despertar (var(20) = 12) solta uma fumaça violeta (a 9215) em volta do corpo.
+       Uma só: com ignorehitpause, um hitpause no tick 12 soltaria uma por tick, daí o NumExplod(9215) = 0."""
     trocas = (
         ("trigger1 = var(20) > 0 && var(37) = 0", "trigger1 = (var(20) > 0 || stateno = 3100) && var(37) = 0"),
         ("trigger1 = var(20) > 0\nvar(37) = 1", "trigger1 = var(20) > 0 || stateno = 3100\nvar(37) = 1"),
@@ -3058,7 +3059,8 @@ def despertar_do_pengaro(cns):
          "[State -2, Zera ressaca na intro]\ntype = VarSet\ntrigger1 = roundstate < 2\nvar(21) = 0\n\n"
          "[State -2, Conta Despertar]\ntype = VarAdd"),
         ("[State -2, Bônus de dano]",
-         "[State -2, Fumaça na saída do Despertar]\ntype = Explod\ntrigger1 = var(20) = 12\nanim = 9215\n"
+         "[State -2, Fumaça na saída do Despertar]\ntype = Explod\ntrigger1 = var(20) = 12 && NumExplod(9215) = 0\n"
+         "anim = 9215\nid = 9215\n"
          "postype = p1\npos = 0, 0\nremovetime = 20\nsprpriority = 4\nownpal = 1\nscale = 1, 1\n"
          "ignorehitpause = 1\nsupermovetime = -1\n\n[State -2, Bônus de dano]"),
     )

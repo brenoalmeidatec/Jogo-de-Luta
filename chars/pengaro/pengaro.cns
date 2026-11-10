@@ -7085,8 +7085,9 @@ var(21) = -1
 
 [State -2, Fumaça na saída do Despertar]
 type = Explod
-trigger1 = var(20) = 12
+trigger1 = var(20) = 12 && NumExplod(9215) = 0
 anim = 9215
+id = 9215
 postype = p1
 pos = 0, 0
 removetime = 20
