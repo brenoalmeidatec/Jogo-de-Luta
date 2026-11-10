@@ -1,8 +1,8 @@
-; Fonte naza_relogio do Nazafight, desenhada por codigo (ferramentas/gerar_layout.py)
+; Fonte naza_relogio do Nazafights, desenhada por codigo (ferramentas/gerar_layout.py)
 [FNT v2]
 fntversion = 2,00
 name = "naza_relogio"
-author = "Nazafight"
+author = "Nazafights"
 
 [Def]
 Type = bitmap

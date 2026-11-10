@@ -53,6 +53,9 @@ novas: acima de 26° ele está desviando para o amarelo.
 
 ## Estilo arcade anos 90
 
+**É a regra do jogo desde 2026-11-10** (definida pelo Alisson e confirmada pelo Breno): toda folha nova de qualquer
+lutador, efeito ou transformação sai neste estilo, e onde ele contrariar o que está acima nesta bíblia, vale ele.
+
 Alvo: pixel art de lutador de arcade dos anos 90, pelas **convenções do gênero** (paleta curta, contorno colorido,
 sombra em blocos, pose de contato exagerada). Nunca um personagem, sprite, pose-assinatura, nome ou golpe de jogo
 comercial, e nada de imagem de jogo comercial no repositório nem anexada no ChatGPT: a única referência é a folha do

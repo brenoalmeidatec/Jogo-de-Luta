@@ -1,4 +1,7 @@
-# Como o launcher instala o layout Nazafight
+# Como o launcher instala o layout Nazafights
+
+O jogo se chama **Nazafights**. A pasta `motif/nazafight/` (sem o "s") mantém o nome técnico de propósito: o `.bat`
+que cada um já tem no PC procura esse caminho, e trocá-lo deixaria o layout de fora até todo mundo pegar o `.bat` novo.
 
 `motif/nazafight/` é o screenpack inteiro (título, seleção, VS e HUD). Tudo nele é **gerado** por
 `python ferramentas/gerar_layout.py`, mas fica versionado porque o `.bat` não roda Python. Não edite à mão: mude o gerador
@@ -17,7 +20,7 @@ O `ferramentas/Jogo de Luta.bat` já instala o motif sozinho. O que ele faz, na 
    um motif sem `system.sff`. Arquivos que saíram do repositório saem do manifesto.
 2. **Cópia (logo depois dos lutadores).** `robocopy /MIR` de `jogo\motif\nazafight` para `ikemen\data\nazafight`, só
    essa pasta. O `/MIR` desfaz o que o `Ajustar-Menus` injetou da última vez; ele roda depois e injeta de novo.
-3. **Config (passo 4).** Na mesma leitura/escrita do `save\config.ini` que grava `WindowTitle = Nazafight`, se
+3. **Config (passo 4).** Na mesma leitura/escrita do `save\config.ini` que grava `WindowTitle = Nazafights`, se
    `data\nazafight\system.def` existe, grava `Motif = data/nazafight/system.def` (se o config não tem a linha `Motif`,
    ela entra logo abaixo de `[Config]`).
 4. **Menus (passo 5).** O `Ajustar-Menus` lê o `Motif` do config e injeta `menu.done.key = s` / `done.key = s` em

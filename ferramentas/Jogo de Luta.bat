@@ -1,9 +1,9 @@
 @echo off
-title Nazafight
+title Nazafights
 powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((Get-Content -LiteralPath '%~f0' -Raw) -split '#PS#START\r?\n',2)[1]"
 exit /b
 #PS#START
-# Nazafight: baixa a versao mais nova do GitHub e abre o jogo no IKEMEN GO.
+# Nazafights: baixa a versao mais nova do GitHub e abre o jogo no IKEMEN GO.
 # Tudo fica em %USERPROFILE%\JogoDeLuta (pasta com o nome antigo, para nao baixar o IKEMEN de novo).
 # O IKEMEN GO so e baixado na primeira vez.
 $ErrorActionPreference = 'Stop'
@@ -25,7 +25,7 @@ function Fechar($msg) {
 }
 
 # 1. Atualiza o jogo. O repositorio tem centenas de MB de sprites que o jogo nao usa; so as pastas chars (lutadores)
-# e motif (layout Nazafight: titulo, selecao, VS e HUD) valem.
+# e motif (layout Nazafights: titulo, selecao, VS e HUD) valem.
 # Pergunta primeiro so o sha do commit (40 bytes): se e o mesmo da ultima atualizacao completa e os arquivos estao
 # no lugar (pengaro.def, o system.def do motif e todo arquivo do manifesto), nao baixa nada.
 # Se mudou, pega so a lista dessas duas pastas e baixa os arquivos delas que mudaram (compara o hash de cada arquivo).
@@ -135,13 +135,13 @@ foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven')) {
 }
 [IO.File]::WriteAllText($select, $texto)
 
-# Layout Nazafight: espelha so a pasta dele em data\nazafight. O /MIR desfaz o que o Ajustar-Menus (passo 5)
+# Layout Nazafights: espelha so a pasta dele em data\nazafight. O /MIR desfaz o que o Ajustar-Menus (passo 5)
 # injetou da ultima vez, por isso ele roda depois deste passo e injeta de novo.
 $motifOrigem = Join-Path $game 'motif\nazafight'
 $motifDef = Join-Path $motor 'data\nazafight\system.def'
 if (Test-Path (Join-Path $motifOrigem 'system.def')) {
     robocopy $motifOrigem (Join-Path $motor 'data\nazafight') /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
-    if ($LASTEXITCODE -ge 8) { Fechar 'Nao consegui instalar o layout Nazafight.' }
+    if ($LASTEXITCODE -ge 8) { Fechar 'Nao consegui instalar o layout Nazafights.' }
 }
 
 # 4. Teclas do jogador 1: anda com W A S D, socos nas setas esquerda (fraco) e cima (forte),
@@ -170,11 +170,11 @@ if (-not (Test-Path $cfg)) {
 }
 if (Test-Path $cfg) {
     Ajustar-Teclas $cfg
-    # Nome do jogo na barra da janela e layout Nazafight (se ele foi instalado; senao fica o motif que ja estava).
+    # Nome do jogo na barra da janela e layout Nazafights (se ele foi instalado; senao fica o motif que ja estava).
     # Carrega a luta durante a tela de VS (esconde parte da espera) e estica a janela sem borrar o pixel art.
     # VSync, tela cheia, modo de video, Framerate e volumes ficam como o jogador deixou.
     $t = [IO.File]::ReadAllText($cfg)
-    $t = [regex]::Replace($t, '(?im)^WindowTitle\s*=[^\r\n]*', 'WindowTitle       = Nazafight')
+    $t = [regex]::Replace($t, '(?im)^WindowTitle\s*=[^\r\n]*', 'WindowTitle       = Nazafights')
     if (Test-Path $motifDef) {
         $linha = 'Motif             = data/nazafight/system.def'
         if ($t -match '(?im)^Motif\s*=') {

@@ -1,6 +1,6 @@
-# Nazafight
+# Nazafights
 
-**Nazafight** é um jogo de luta 2D em pixel art feito para rodar no [IKEMEN GO](https://github.com/ikemen-engine/Ikemen-GO),
+**Nazafights** é um jogo de luta 2D em pixel art feito para rodar no [IKEMEN GO](https://github.com/ikemen-engine/Ikemen-GO),
 motor gratuito e de código aberto que roda personagens de MUGEN. O motor já cuida de menus, CPU, treino,
 modo times, tontura e quebra de guarda; aqui ficam os personagens.
 
@@ -13,7 +13,7 @@ e criação com as ferramentas e os efeitos pixelfx listados lá.
 Coloque `ferramentas/Jogo de Luta.bat` na Área de Trabalho (ou um atalho para ele) e dê dois cliques.
 A cada clique ele baixa a versão mais nova deste repositório, instala os lutadores e abre o jogo.
 Na primeira vez ele também baixa o IKEMEN GO. Tudo fica em `%USERPROFILE%\JogoDeLuta` (a pasta e o arquivo `.bat`
-mantêm o nome antigo de propósito, para não quebrar o atalho nem baixar o motor de novo; a janela já abre como Nazafight).
+mantêm o nome antigo de propósito, para não quebrar o atalho nem baixar o motor de novo; a janela já abre como Nazafights).
 
 Os botões do personagem são x (soco fraco), y (soco forte), a (chute fraco), b (chute forte) e
 c (provocação). O atalho deixa o jogador 1 assim (e refaz isso a cada clique):

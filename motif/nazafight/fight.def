@@ -1,9 +1,9 @@
-; Nazafight - gerado por ferramentas/gerar_layout.py (nao edite a mao: rode o gerador).
+; Nazafights - gerado por ferramentas/gerar_layout.py (nao edite a mao: rode o gerador).
 ; Arte 100% desenhada por codigo em pixel art (grade logica ampliada 4x), paleta de Nazare (BA).
 
 [Info]
-name = Nazafight
-author = Nazafight
+name = Nazafights
+author = Nazafights
 ikemenversion = 1.0
 localcoord = 1280,720
 

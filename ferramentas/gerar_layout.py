@@ -1,4 +1,4 @@
-"""Gera o layout NAZAFIGHT (screenpack do IKEMEN GO v1.0.0) inteiro por codigo, mais as previas.
+"""Gera o layout NAZAFIGHTS (screenpack do IKEMEN GO v1.0.0) inteiro por codigo, mais as previas.
 
 Uso:  python ferramentas/gerar_layout.py            (gera tudo; sai com codigo 0 se passou nas checagens)
 
@@ -418,8 +418,8 @@ def fonte_relogio(nome, corpo, alto_luz, base_esc, zero_na_frente):
 
 
 def def_fonte(nome, larg_espaco, alto, espaco):
-    return (f"; Fonte {nome} do Nazafight, desenhada por codigo (ferramentas/gerar_layout.py)\n"
-            f"[FNT v2]\nfntversion = 2,00\nname = \"{nome}\"\nauthor = \"Nazafight\"\n\n"
+    return (f"; Fonte {nome} do Nazafights, desenhada por codigo (ferramentas/gerar_layout.py)\n"
+            f"[FNT v2]\nfntversion = 2,00\nname = \"{nome}\"\nauthor = \"Nazafights\"\n\n"
             f"[Def]\nType = bitmap\nBankType = palette\nSize = {larg_espaco},{alto}\n"
             f"Spacing = {espaco},0\nOffset = 0,0\nFile = {nome}.sff\n")
 
@@ -1295,13 +1295,13 @@ def letra_logo(ch, cw=4, chh=5):
     return img
 
 
-def logo(palavra="NAZAFIGHT", corpo="taua"):
+def logo(palavra="NAZAFIGHTS", corpo="taua"):
     """Logo de barro brunido: letras de tauá com espiral de tabatinga nas hastes, sentadas numa contra-forma de
     breu (2 px em volta e cheia nos vaos e entre as letras, para o ceu nao vazar e cada letra se ler sozinha),
-    anel de tabatinga + breu por fora e sombra breu deslocada (2, 2). Largura ~262 x 56 (logico)."""
+    anel de tabatinga + breu por fora e sombra breu deslocada (2, 2). Largura ~290 x 56 (logico)."""
     letras = [(c, letra_logo(c)) for c in palavra]
     M = 4                                   # 2 de contra-forma + 1 de tabatinga + 1 de breu
-    extra = LOGO_GAP if palavra == "NAZAFIGHT" else 0   # NAZA | FIGHT
+    extra = LOGO_GAP if palavra == "NAZAFIGHTS" else 0   # NAZA | FIGHT
     larg = sum(l.width for _c, l in letras) + LOGO_GAP * (len(letras) - 1) + extra + 2 * M
     alto = 40 + 2 * M
     corpo_img = nova(larg, alto)
@@ -1353,22 +1353,22 @@ def logo(palavra="NAZAFIGHT", corpo="taua"):
 
 
 def nuvem_farinha(q):
-    """Nuvem de farinha que levanta quando o logo cai (6 quadros). 264x40."""
-    img = nova(264, 40)
+    """Nuvem de farinha que levanta quando o logo cai (6 quadros). 292x40 (largura do logo NAZAFIGHTS)."""
+    img = nova(292, 40)
     if q == 0:
         return img
     rnd = random.Random(40)
-    bolhas = [(rnd.randrange(10, 254), rnd.randrange(20, 34), rnd.randrange(4, 10)) for _ in range(34)]
+    bolhas = [(rnd.randrange(10, 282), rnd.randrange(20, 34), rnd.randrange(4, 10)) for _ in range(34)]
     abre = [0, 0.35, 0.65, 0.9, 1.05, 1.15][q]
     nivel = [0, 14, 16, 12, 8, 4][q]
     d = ImageDraw.Draw(img)
     for (x, y, r) in bolhas:
-        cx = 132 + (x - 132) * abre
+        cx = 146 + (x - 146) * abre
         cy = 36 - (36 - y) * abre * 1.1
         rr = r * (0.6 + 0.5 * abre)
         d.ellipse([cx - rr, cy - rr * 0.7, cx + rr, cy + rr * 0.7], fill=cor("farinha"))
     m = opaco(img)
-    out = pontilhar(nova(264, 40), m, "farinha", nivel)
+    out = pontilhar(nova(292, 40), m, "farinha", nivel)
     out = pontilhar(out, m & ~deslocar(m, 0, 2), "tabatinga", min(16, nivel + 2))
     return out
 
@@ -1736,7 +1736,7 @@ def sprites_system():
     for q in range(8):
         s.append((110, q, canoa(q), 0, 0))
     for q in range(6):
-        s.append((121, q, nuvem_farinha(q), 132, 35))
+        s.append((121, q, nuvem_farinha(q), 146, 35))
     s.append((130, 0, painel_menu(), 0, 0))
     s.append((131, 0, tabua_ativa(), 44, 10))   # eixo: centro x; 10 = 42 px acima da linha de base / 4 (arred.)
     s.append((200, 0, fundo_selecao(), 0, 0))
@@ -1761,7 +1761,7 @@ def finalizar(sprites, nome):
 # ----------------------------------------------------------------------------------------------------------
 # .def (system e fight). Todas as posicoes saem de POS; o .def e a fonte de verdade das previas.
 # ----------------------------------------------------------------------------------------------------------
-CABECALHO = ("; Nazafight - gerado por ferramentas/gerar_layout.py (nao edite a mao: rode o gerador).\n"
+CABECALHO = ("; Nazafights - gerado por ferramentas/gerar_layout.py (nao edite a mao: rode o gerador).\n"
              "; Arte 100% desenhada por codigo em pixel art (grade logica ampliada 4x), paleta de Nazare (BA).\n")
 
 
@@ -1775,8 +1775,8 @@ def system_def():
              ("options", "OPÇÕES"), ("exit", "SAIR")]
     t = CABECALHO + f"""
 [Info]
-name = Nazafight
-author = Nazafight
+name = Nazafights
+author = Nazafights
 versiondate = 11,10,2026
 mugenversion = 1.0
 ikemenversion = 1.0
@@ -2067,8 +2067,8 @@ def fight_def():
     num_y = (P["numero_y"] - ty) * ESCALA + 12 * ESCALA - 1
     t = CABECALHO + """
 [Info]
-name = Nazafight
-author = Nazafight
+name = Nazafights
+author = Nazafights
 ikemenversion = 1.0
 localcoord = 1280,720
 

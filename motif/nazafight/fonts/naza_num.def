@@ -1,8 +1,8 @@
-; Fonte naza_num do Nazafight, desenhada por codigo (ferramentas/gerar_layout.py)
+; Fonte naza_num do Nazafights, desenhada por codigo (ferramentas/gerar_layout.py)
 [FNT v2]
 fntversion = 2,00
 name = "naza_num"
-author = "Nazafight"
+author = "Nazafights"
 
 [Def]
 Type = bitmap

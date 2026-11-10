@@ -289,3 +289,17 @@ filmagem (`ferramentas/filmar_luta.py`) ou com o Breno olhando.
   geradores (golpes como poses secas, Blender só em ginga/andar/pulo), depois pente fino de animação e anatomia em todos.
   Decisões que ficaram com o Breno: diagonal/meia-lua (a regra proíbe hoje), Hazaki rival ou boneco, transformações por
   paleta ou folha própria.
+
+## 2026-11-10 (noite) — Nome Nazafights e estilo arcade como regra (Claude, sessão do Breno)
+
+**Pedido do Breno:** o estilo arcade anos 90 que o Alisson montou passa a ser regra, e o jogo se chama **Nazafights**
+(com "s"), em tudo, para não confundir.
+
+- Regra escrita em `docs/como-trabalhar.md` (Regras do Breno) e no topo da seção arcade de `docs/biblia-de-arte.md`.
+- Nome trocado no README, na janela (`WindowTitle` gravado pelo `.bat`), no logo da tela de título (10 letras, ~290 de
+  320 lógicos; a nuvem de farinha alargou junto), nos `.def` do motif e nas fontes. Layout regerado, verificação ok.
+- **Não trocado de propósito:** a pasta `motif/nazafight`, `data/nazafight`, `%USERPROFILE%\JogoDeLuta` e o nome do
+  `.bat`. O `.bat` que cada um já tem procura esses caminhos; trocar deixaria o layout de fora até todos pegarem o novo.
+  As entradas antigas deste LOGBOOK ficam como foram escritas.
+- Ainda no estilo antigo: `folhas_gutto.py` e `folhas_raiclaven.py` (prompts `CABECA` "16-bit SNES") e as folhas do
+  Gutto e do Raiclaven no jogo. Folha nova sai pelo prompt base de `docs/arcade/<lutador>.md`.

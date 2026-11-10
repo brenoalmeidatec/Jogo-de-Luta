@@ -1,6 +1,6 @@
 """SFF v2 (v2.01) com sprites PNG de 32 bits (formato 12) e zero paletas, para o IKEMEN GO v1.0.0.
 
-E o formato de todos os SFF oficiais do v1.0.0 (system.sff, fight.sff, fontes). Usado pelo layout Nazafight
+E o formato de todos os SFF oficiais do v1.0.0 (system.sff, fight.sff, fontes). Usado pelo layout Nazafights
 (motif/nazafight). Para lutador continua valendo o escritor SFF v1 de cada gerar_<lutador>.py.
 
 Layout (conferido no image.go readV2 do v1.0.0 e aceito pelo motor):

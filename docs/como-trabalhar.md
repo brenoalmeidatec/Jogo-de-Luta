@@ -13,7 +13,13 @@ continuam em [`regras-dos-lutadores.md`](regras-dos-lutadores.md). Estilo e core
 - **Imagens no ChatGPT**, pelo navegador embutido do app do Claude, com a conta do Breno. Ele faz o login.
 - **Um chat por personagem**, com o nome do lutador no título, para não misturar.
 - **Tudo na pasta do jogo:** `sprites/<lutador>/quadros/folhas/`. Nada fica em Downloads.
-- **Arte em estilo sprite de SNES/arcade**, nunca 3D pixelizado. O boneco 3D do PR #17 foi rejeitado.
+- **O jogo se chama Nazafights** (com "s"). Só os caminhos técnicos antigos (`JogoDeLuta`, `motif/nazafight`,
+  `Jogo de Luta.bat`) ficam como estão, para não quebrar o launcher de quem já tem.
+- **Estilo arcade anos 90 é a regra** (definido pelo Alisson, confirmado pelo Breno em 2026-11-10): toda arte nova de
+  lutador, efeito e transformação segue a seção
+  [Estilo arcade anos 90 da bíblia](biblia-de-arte.md#estilo-arcade-anos-90), com as 12 regras, a paleta fixa e o
+  pipeline `quantizar_folha` → `animar_folha --arcade` → `conferir_arte`. A arte antiga sai conforme as folhas arcade
+  forem entrando. Nunca 3D pixelizado: o boneco 3D do PR #17 foi rejeitado.
 - **Blender só deforma os sprites desenhados** para criar os quadros do meio. Nunca modela o personagem.
 - **Proporção de KOF:** os lutadores em escala 1, cerca de 110 de 180 de altura de tela.
 - **Conteúdo:** resenha pesada pode. Não pode piada de escravidão nem o estereótipo da mulher loira. Lata e garrafa sem
