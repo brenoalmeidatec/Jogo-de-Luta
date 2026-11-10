@@ -1,9 +1,9 @@
 @echo off
-title Nazafights
+title Nazafight
 powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((Get-Content -LiteralPath '%~f0' -Raw) -split '#PS#START\r?\n',2)[1]"
 exit /b
 #PS#START
-# Nazafights: baixa a versao mais nova do GitHub e abre o jogo no IKEMEN GO.
+# Nazafight: baixa a versao mais nova do GitHub e abre o jogo no IKEMEN GO.
 # Tudo fica em %USERPROFILE%\JogoDeLuta (pasta com o nome antigo, para nao baixar o IKEMEN de novo).
 # O IKEMEN GO so e baixado na primeira vez.
 $ErrorActionPreference = 'Stop'
@@ -24,76 +24,33 @@ function Fechar($msg) {
     exit 1
 }
 
-# 1. Atualiza o jogo. O repositorio tem centenas de MB de sprites que o jogo nao usa; so as pastas chars (lutadores)
-# e motif (layout Nazafights: titulo, selecao, VS e HUD) valem.
-# Pergunta primeiro so o sha do commit (40 bytes): se e o mesmo da ultima atualizacao completa e os arquivos estao
-# no lugar (pengaro.def, o system.def do motif e todo arquivo do manifesto), nao baixa nada.
-# Se mudou, pega so a lista dessas duas pastas e baixa os arquivos delas que mudaram (compara o hash de cada arquivo).
-# Cada arquivo baixa para .part e so troca o antigo quando terminou: queda de rede nao deixa .sff pela metade.
+# 1. Atualiza o jogo. O repositorio tem centenas de MB de sprites que o jogo nao usa; so a pasta chars vale.
+# Baixa so os arquivos dela que mudaram desde a ultima vez (compara o hash de cada arquivo) e mostra o progresso.
 $manifesto = Join-Path $base 'manifesto.json'
 $manif = @{}
-if (Test-Path $manifesto) {
-    try {
-        (Get-Content $manifesto -Raw | ConvertFrom-Json).PSObject.Properties | ForEach-Object { $manif[$_.Name] = $_.Value }
-    } catch {
-        Write-Host 'O registro do que ja foi baixado estava estragado; vou conferir todos os arquivos.' -ForegroundColor Yellow
-        $manif = @{}
-    }
-}
-$mudou = $false
 try {
     Write-Host 'Procurando a versao mais nova do jogo no GitHub...'
     $ua = @{ 'User-Agent' = 'JogoDeLuta' }
-    $api = New-Object Net.WebClient
-    $api.Headers.Add('User-Agent', 'JogoDeLuta')
-    $api.Headers.Add('Accept', 'application/vnd.github.sha')
-    $commit = $api.DownloadString("https://api.github.com/repos/$repo/commits/$branch").Trim()
-    if ($commit -notmatch '^[0-9a-f]{40}$') { throw "resposta estranha do GitHub: $commit" }
-    # Atalho so vale se, alem do commit igual, existem os dois marcadores e todo arquivo do manifesto.
-    $marcadores = @('chars/pengaro/pengaro.def', 'motif/nazafight/system.def') + @($manif.Keys | Where-Object { $_ -ne '@commit' })
-    $faltando = @($marcadores | Where-Object { -not (Test-Path -LiteralPath (Join-Path $game ($_ -replace '/', '\'))) })
-    if ($manif['@commit'] -eq $commit -and $faltando.Count -eq 0) {
-        Write-Host 'O jogo ja esta na versao mais nova.' -ForegroundColor Green
-    } else {
-        $raiz = Invoke-RestMethod "https://api.github.com/repos/$repo/git/trees/$commit" -Headers $ua
-        # Cada pasta tem a sua subarvore (sha proprio); o caminho de cada arquivo leva o nome da pasta na frente.
-        $arquivos = @()
-        foreach ($nome in @('chars', 'motif')) {
-            $pasta = @($raiz.tree | Where-Object { $_.path -eq $nome -and $_.type -eq 'tree' })
-            if ($pasta.Count -ne 1) { throw "a pasta $nome nao apareceu no GitHub" }
-            $arvore = Invoke-RestMethod "https://api.github.com/repos/$repo/git/trees/$($pasta[0].sha)?recursive=1" -Headers $ua
-            if ($arvore.truncated) { throw "a lista de arquivos de $nome veio cortada" }
-            $arquivos += @($arvore.tree | Where-Object { $_.type -eq 'blob' } | ForEach-Object {
-                [pscustomobject]@{ caminho = "$nome/$($_.path)"; sha = $_.sha }
-            })
-        }
-        # Os .def por ultimo e o system.def do motif no fim de tudo: se a rede cair no meio, o marcador que liga o
-        # layout (e o .def de cada lutador) so existe quando os arquivos que ele cita ja chegaram.
-        $arquivos = @($arquivos | Sort-Object { $_.caminho -eq 'motif/nazafight/system.def' }, { $_.caminho -like '*.def' }, caminho)
-        $wc = New-Object Net.WebClient
-        $wc.Headers.Add('User-Agent', 'JogoDeLuta')
-        $i = 0
-        foreach ($a in $arquivos) {
-            $i++
-            $caminho = $a.caminho
-            $dest = Join-Path $game ($caminho -replace '/', '\')
-            if ((Test-Path $dest) -and $manif[$caminho] -eq $a.sha) { continue }
-            New-Item -ItemType Directory -Force (Split-Path $dest) | Out-Null
-            Write-Host "Baixando $caminho ($i de $($arquivos.Count))..."
-            $url = "https://raw.githubusercontent.com/$repo/$commit/" + (($caminho -split '/' | ForEach-Object { [Uri]::EscapeDataString($_) }) -join '/')
-            $parte = "$dest.part"
-            $wc.DownloadFile($url, $parte)
-            Move-Item -LiteralPath $parte -Destination $dest -Force
-            $manif[$caminho] = $a.sha
-            $mudou = $true
-        }
-        # Esquece arquivos que sairam do repositorio; senao o atalho acima nunca mais vale se um deles sumir do disco.
-        $noRepo = @{}; foreach ($a in $arquivos) { $noRepo[$a.caminho] = $true }
-        foreach ($k in @($manif.Keys)) { if ($k -ne '@commit' -and -not $noRepo.ContainsKey($k)) { $manif.Remove($k) } }
-        $manif['@commit'] = $commit
-        $mudou = $true
-        Write-Host 'Jogo atualizado!' -ForegroundColor Green
+    $commit = (Invoke-RestMethod "https://api.github.com/repos/$repo/commits/$branch" -Headers $ua).sha
+    $arvore = Invoke-RestMethod "https://api.github.com/repos/$repo/git/trees/${commit}?recursive=1" -Headers $ua
+    if (Test-Path $manifesto) {
+        (Get-Content $manifesto -Raw | ConvertFrom-Json).PSObject.Properties | ForEach-Object { $manif[$_.Name] = $_.Value }
     }
+    $arquivos = @($arvore.tree | Where-Object { $_.type -eq 'blob' -and $_.path -like 'chars/*' })
+    $wc = New-Object Net.WebClient
+    $wc.Headers.Add('User-Agent', 'JogoDeLuta')
+    $i = 0
+    foreach ($a in $arquivos) {
+        $i++
+        $dest = Join-Path $game ($a.path -replace '/', '\')
+        if ((Test-Path $dest) -and $manif[$a.path] -eq $a.sha) { continue }
+        New-Item -ItemType Directory -Force (Split-Path $dest) | Out-Null
+        Write-Host "Baixando $($a.path) ($i de $($arquivos.Count))..."
+        $url = "https://raw.githubusercontent.com/$repo/$commit/" + (($a.path -split '/' | ForEach-Object { [Uri]::EscapeDataString($_) }) -join '/')
+        $wc.DownloadFile($url, $dest)
+        $manif[$a.path] = $a.sha
+    }
+    Write-Host 'Jogo atualizado!' -ForegroundColor Green
 } catch {
     Write-Host "Nao consegui atualizar: $($_.Exception.Message)" -ForegroundColor Yellow
     if (-not (Test-Path (Join-Path $game 'chars\pengaro\pengaro.def'))) {
@@ -101,10 +58,7 @@ try {
     }
     Write-Host 'Abrindo a ultima versao que ja estava baixada.'
 } finally {
-    if ($mudou -and $manif.Count -gt 0) {
-        $manif | ConvertTo-Json | Set-Content "$manifesto.tmp" -Encoding ASCII
-        Move-Item -LiteralPath "$manifesto.tmp" -Destination $manifesto -Force
-    }
+    if ($manif.Count -gt 0) { $manif | ConvertTo-Json | Set-Content $manifesto -Encoding ASCII }
 }
 
 # 2. Baixa o IKEMEN GO na primeira vez
@@ -124,7 +78,7 @@ if (-not (Test-Path $exe)) {
 # 3. Instala os lutadores disponiveis e os registra na selecao.
 $select = Join-Path $motor 'data\select.def'
 $texto = [IO.File]::ReadAllText($select)
-foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven')) {
+foreach ($lutador in @('pengaro', 'hazaki', 'gutto')) {
     $origem = Join-Path $game "chars\$lutador"
     if (-not (Test-Path (Join-Path $origem "$lutador.def"))) { continue }
     robocopy $origem (Join-Path $motor "chars\$lutador") /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
@@ -134,15 +88,6 @@ foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven')) {
     }
 }
 [IO.File]::WriteAllText($select, $texto)
-
-# Layout Nazafights: espelha so a pasta dele em data\nazafight. O /MIR desfaz o que o Ajustar-Menus (passo 5)
-# injetou da ultima vez, por isso ele roda depois deste passo e injeta de novo.
-$motifOrigem = Join-Path $game 'motif\nazafight'
-$motifDef = Join-Path $motor 'data\nazafight\system.def'
-if (Test-Path (Join-Path $motifOrigem 'system.def')) {
-    robocopy $motifOrigem (Join-Path $motor 'data\nazafight') /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
-    if ($LASTEXITCODE -ge 8) { Fechar 'Nao consegui instalar o layout Nazafights.' }
-}
 
 # 4. Teclas do jogador 1: anda com W A S D, socos nas setas esquerda (fraco) e cima (forte),
 # chutes nas setas baixo (fraco) e direita (forte). z e w saem de d e w para nao colidir. O IKEMEN so cria o save\config.ini depois da
@@ -170,24 +115,9 @@ if (-not (Test-Path $cfg)) {
 }
 if (Test-Path $cfg) {
     Ajustar-Teclas $cfg
-    # Nome do jogo na barra da janela e layout Nazafights (se ele foi instalado; senao fica o motif que ja estava).
-    # Carrega a luta durante a tela de VS (esconde parte da espera) e estica a janela sem borrar o pixel art.
-    # VSync, tela cheia, modo de video, Framerate e volumes ficam como o jogador deixou.
+    # Nome do jogo na barra da janela
     $t = [IO.File]::ReadAllText($cfg)
-    $t = [regex]::Replace($t, '(?im)^WindowTitle\s*=[^\r\n]*', 'WindowTitle       = Nazafights')
-    if (Test-Path $motifDef) {
-        $linha = 'Motif             = data/nazafight/system.def'
-        if ($t -match '(?im)^Motif\s*=') {
-            $t = [regex]::Replace($t, '(?im)^Motif\s*=[^\r\n]*', $linha)
-        } else {
-            # Sem a linha o IKEMEN usa o motif padrao: poe logo abaixo do [Config], com a quebra de linha do arquivo.
-            $nl = if ($t -match "`r`n") { "`r`n" } else { "`n" }
-            $t = ([regex]'(?im)^\[Config\][^\r\n]*').Replace($t, ('$0' + $nl + $linha), 1)
-        }
-    }
-    $t = [regex]::Replace($t, '(?im)^(VsScreenLoading\s*=)[^\r\n]*', '${1} 1')
-    $t = [regex]::Replace($t, '(?im)^(WindowScaleMode\s*=)[^\r\n]*', '${1} 0')
-    [IO.File]::WriteAllText($cfg, $t)
+    [IO.File]::WriteAllText($cfg, [regex]::Replace($t, '(?im)^WindowTitle\s*=.*$', 'WindowTitle       = Nazafight'))
 }
 
 # 5. Menus: navega com W A S D e confirma so com Enter. Os botoes de ataque (as setas) nao confirmam
@@ -227,10 +157,22 @@ function Ajustar-Menus {
     $lua = Join-Path $motor 'external\script\main.lua'
     if (Test-Path $lua) {
         $l = [IO.File]::ReadAllText($lua)
-        if ($l -notmatch 'jogo-de-luta: so o Enter') {
-            $novo = "function main.f_btnPalNo(p)`n`t-- jogo-de-luta: so o Enter seleciona; os botoes de ataque nao`n`tif commandGetState(p, '/s') then return 1 end`n`treturn 0`nend"
+        if ($l -notmatch 'jogo-de-luta: Endiabrado') {
+            # So o Enter confirma; segurando o soco forte (y) junto com o Enter escolhe a paleta 2 (Pengaro Endiabrado).
+            $novo = "function main.f_btnPalNo(p)`n`t-- jogo-de-luta: Endiabrado = segurar o soco forte e apertar Enter; so o Enter confirma`n`tif commandGetState(p, '/s') then`n`t`tif commandGetState(p, '/y') then return 2 end`n`t`treturn 1`n`tend`n`treturn 0`nend"
             $l2 = [regex]::Replace($l, '(?s)function main\.f_btnPalNo\(p\).*?\r?\nend', { param($x) $novo }, 1)
             if ($l2 -ne $l) { [IO.File]::WriteAllText($lua, $l2) }
+        }
+    }
+    # A paleta 2 so existe no Pengaro: em qualquer outro lutador volta para a 1.
+    $st = Join-Path $motor 'external\script\start.lua'
+    if (Test-Path $st) {
+        $s = [IO.File]::ReadAllText($st)
+        if ($s -notmatch 'jogo-de-luta: paleta 2') {
+            $alvo = 'start.p[side].t_selTemp[member].pal = main.f_btnPalNo(cmd)'
+            $extra = $alvo + "`n`t`t`t`t`t-- jogo-de-luta: paleta 2 so no Pengaro`n`t`t`t`t`tif start.p[side].t_selTemp[member].pal == 2 and not tostring(start.f_getCharData(start.c[player].selRef).def):lower():find('pengaro', 1, true) then start.p[side].t_selTemp[member].pal = 1 end"
+            $s2 = $s.Replace($alvo, $extra)
+            if ($s2 -ne $s) { [IO.File]::WriteAllText($st, $s2) }
         }
     }
 }
