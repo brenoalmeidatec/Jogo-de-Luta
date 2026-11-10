@@ -40,8 +40,8 @@ pip install pillow numpy opencv-python-headless
 ```
 
 O Blender é a versão portátil 4.5 LTS, baixada de `download.blender.org/release/Blender4.5/` e conferida pelo `.sha256`.
-`animar_folha.py` procura em `~/blender/blender-4.5.15-windows-x64/blender.exe`; em outro lugar, defina a variável
-`BLENDER`. Sem Blender dá para trabalhar em tudo, menos nos quadros do meio novos.
+`animar_folha.py` usa a variável `BLENDER` ou acha o mais novo `blender-4.5.*-windows-x64` em `~/blender` ou
+`C:/Dev/Tools/Blender` (onde fica no PC de teste: 4.5.15). Sem Blender dá para trabalhar em tudo, menos nos quadros do meio novos.
 
 O jogo roda no IKEMEN GO v1.0.0. O Claude não consegue abrir o `Ikemen_GO.exe` neste PC do trabalho; quem testa é o Breno.
 O atalho `Jogo de Luta.lnk` baixa a `mugen` ao abrir. Antes de concluir qual versão ele testou, compare o tamanho do `.sff`

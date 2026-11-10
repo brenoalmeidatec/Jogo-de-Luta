@@ -36,7 +36,16 @@ FOLHAS_LUTADOR = {"gutto": FOLHAS_GUTTO, "raiclaven": FOLHAS_RAICLAVEN}.get(LUTA
 FOLHAS = RAIZ / "sprites" / LUTADOR / "quadros/folhas"
 QUADROS = RAIZ / "sprites" / LUTADOR / "quadros"
 QUADROS_ARCADE = RAIZ / "sprites" / LUTADOR / "quadros_arcade"  # arte arcade (quantizar_folha.py), fora do jogo por ora
-BLENDER = Path(os.environ.get("BLENDER", Path.home() / "blender/blender-4.5.15-windows-x64/blender.exe"))
+def _achar_blender():
+    """BLENDER do ambiente; senão o portátil 4.5 em ~/blender ou C:/Dev/Tools/Blender (o mais novo)."""
+    if os.environ.get("BLENDER"):
+        return Path(os.environ["BLENDER"])
+    achados = sorted(p for raiz in (Path.home() / "blender", Path("C:/Dev/Tools/Blender")) if raiz.is_dir()
+                     for p in raiz.glob("blender-4.5.*-windows-x64/blender.exe"))
+    return achados[-1] if achados else Path.home() / "blender/blender-4.5.15-windows-x64/blender.exe"
+
+
+BLENDER = _achar_blender()
 AMPLIA = 4  # o Blender trabalha 4x maior que o quadro final
 PASSO = 8  # um vértice a cada 2 pixels do quadro final
 LARG, ALT = 360, 260  # mesma tela dos sprites do jogo, com folga para chute alto e salto
