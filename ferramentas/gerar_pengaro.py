@@ -226,17 +226,34 @@ def escrever_sff(destino, sprites):
     for i in range(255):
         dados_pal += bytes((pal[i * 3], pal[i * 3 + 1], pal[i * 3 + 2], 255))
 
-    ldata = bytearray(dados_pal)
-    nos = bytearray()
+    itens = []
     for grupo, indice, img, ex, ey in sprites.lista:
         caixa = img.getchannel("A").point(lambda a: 255 if a >= 128 else 0).getbbox() or (0, 0, 1, 1)
         rec = img.crop(caixa)
         ind = rec.convert("RGB").quantize(palette=q, dither=Image.NONE)
         alfa = rec.getchannel("A").tobytes()
         px = bytes(0 if alfa[i] < 128 else v + 1 for i, v in enumerate(ind.tobytes()))
+        itens.append((grupo, indice, rec.width, rec.height, ex - caixa[0], ey - caixa[1], px))
+    gravar_sff(destino, dados_pal, itens)
+
+
+def gravar_sff(destino, dados_pal, itens):
+    """Grava o SFF v2.01 de itens (grupo, índice, largura, altura, eixo x, eixo y, pixels já quantizados).
+
+    Sprite com a mesma largura, altura e pixels de um anterior vira link (len = 0, link = número do nó do primeiro):
+    o IKEMEN (loadSff, shareCopy) reaproveita a textura e o eixo continua sendo o do próprio nó. O original sempre vem
+    antes, que é a única condição do motor. Também é usado por ferramentas/conferir_sff.py religar."""
+    ldata = bytearray(dados_pal)
+    nos = bytearray()
+    vistos = {}
+    for k, (grupo, indice, w, h, ax, ay, px) in enumerate(itens):
+        chave = (w, h, px)
+        if chave in vistos:
+            nos += struct.pack("<HHHHhhHBBIIHH", grupo, indice, w, h, ax, ay, vistos[chave], 2, 8, 0, 0, 0, 0)
+            continue
+        vistos[chave] = k
         corpo = struct.pack("<I", len(px)) + rle8(px)
-        nos += struct.pack("<HHHHhhHBBIIHH", grupo, indice, rec.width, rec.height,
-                           ex - caixa[0], ey - caixa[1], 0, 2, 8, len(ldata), len(corpo), 0, 0)
+        nos += struct.pack("<HHHHhhHBBIIHH", grupo, indice, w, h, ax, ay, 0, 2, 8, len(ldata), len(corpo), 0, 0)
         ldata += corpo
 
     ofs_pal = 512
@@ -246,7 +263,7 @@ def escrever_sff(destino, sprites):
     cab[0:12] = b"ElecbyteSpr\x00"
     cab[12:16] = bytes((0, 1, 0, 2))
     cab[24:28] = bytes((0, 1, 0, 2))
-    struct.pack_into("<8I", cab, 36, ofs_spr, len(sprites.lista), ofs_pal, 1, ofs_l, len(ldata), ofs_l + len(ldata), 0)
+    struct.pack_into("<8I", cab, 36, ofs_spr, len(itens), ofs_pal, 1, ofs_l, len(ldata), ofs_l + len(ldata), 0)
     no_pal = struct.pack("<HHHHII", 1, 1, 256, 0, 0, 1024)
     destino.write_bytes(bytes(cab) + no_pal + bytes(nos) + bytes(ldata))
 

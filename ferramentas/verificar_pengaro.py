@@ -34,9 +34,18 @@ def ler_sff():
     assert n_p == 1 and cols == 256 and pl == 1024, "paleta"
     pal = d[ofs_l + po:ofs_l + po + pl]
     sprites = {}
+    nos = []  # na ordem do arquivo, para seguir o link
     for k in range(n):
         s = struct.unpack("<HHHHhhHBBIIHH", d[ofs_s + 28 * k:ofs_s + 28 * k + 28])
-        grupo, ind, w, h, ax, ay, _, fmt, prof, ofs, tam, _, _ = s
+        grupo, ind, w, h, ax, ay, link, fmt, prof, ofs, tam, _, _ = s
+        if tam == 0:
+            # Sprite linkado: o motor (shareCopy) usa os pixels e o tamanho do nó `link`, que vem antes; o eixo é deste.
+            assert link < k, f"link para frente no sprite {grupo},{ind}"
+            lw, lh, _, _, lpx = nos[link]
+            assert (lw, lh) == (w, h), f"tamanho do link do sprite {grupo},{ind}"
+            nos.append((lw, lh, ax, ay, lpx))
+            sprites[(grupo, ind)] = nos[-1]
+            continue
         assert fmt == 2 and prof == 8, f"formato do sprite {grupo},{ind}"
         dado = d[ofs_l + ofs:ofs_l + ofs + tam]
         total = struct.unpack("<I", dado[:4])[0]
@@ -52,7 +61,8 @@ def ler_sff():
                 px.append(b)
                 j += 1
         assert len(px) == total, f"RLE do sprite {grupo},{ind}"
-        sprites[(grupo, ind)] = (w, h, ax, ay, bytes(px))
+        nos.append((w, h, ax, ay, bytes(px)))
+        sprites[(grupo, ind)] = nos[-1]
     return sprites, pal
 
 

@@ -4,7 +4,9 @@
   python ferramentas/video_golpe.py PASTA 200 210 1100      (ações escolhidas)
   python ferramentas/video_golpe.py PASTA --suspeitas       (só as que a análise acusar)
   python ferramentas/video_golpe.py PASTA --todas
-  opções: --segundos 6 (5 a 10), --escala 2, --hazaki, --sem-video
+  opções: --segundos 6 (5 a 10), --escala 2, --hazaki, --lutador gutto, --sff-de VITIMA (ação de arremesso
+          desenhada com o SFF da vítima, como o ChangeAnim2 faz), --despertado (aplica o [RemapPreset despertado]),
+          --sem-video
 
 Não abre o jogo: lê chars/<lutador>/<lutador>.sff e .air e mostra cada tick como o motor mostraria a animação
 (60 ticks por segundo, com o deslocamento x,y e o espelhamento de cada elemento). O movimento do corpo pela tela
@@ -237,12 +239,28 @@ def main():
 
     segundos = min(10, max(5, opcao("--segundos", 6)))
     escala = opcao("--escala", 2)
+    lutador = opcao("--lutador", "")
+    sff_de = opcao("--sff-de", "")
     flags = {a for a in args if a.startswith("--")}
     pedidas = [int(a) for a in args if not a.startswith("--")]
 
-    v.PERSONAGEM = "hazaki" if "--hazaki" in flags else "pengaro"
-    v.PASTA = Path(__file__).resolve().parent.parent / "chars" / v.PERSONAGEM
+    v.PERSONAGEM = lutador or ("hazaki" if "--hazaki" in flags else "pengaro")
+    chars = Path(__file__).resolve().parent.parent / "chars"
+    # --sff-de VITIMA: arremesso. O ChangeAnim2 desenha a vítima com o SFF dela e as ações do arremessador.
+    dono, v.PERSONAGEM = v.PERSONAGEM, sff_de or v.PERSONAGEM
+    v.PASTA = chars / v.PERSONAGEM
     sprites, pal = v.ler_sff()
+    v.PERSONAGEM, v.PASTA = dono, chars / dono
+    if "--despertado" in flags:
+        # Como o RemapSprite do Despertar: cada desenho vira o destino do [RemapPreset despertado] do dono do SFF.
+        cns = (chars / (sff_de or dono) / f"{sff_de or dono}.cns").read_text(encoding="utf-8")
+        bloco = re.search(r"^\[RemapPreset despertado\]\n(.*?)(?=^\[)", cns, re.M | re.S)
+        assert bloco, "sem [RemapPreset despertado] no .cns"
+        trocas = re.findall(r"^(\d+),\s*(\d+)\s*=\s*(\d+),\s*(\d+)", bloco.group(1), re.M)
+        originais, sprites = sprites, dict(sprites)
+        for g, i, g2, i2 in trocas:
+            sprites[(int(g), int(i))] = originais[(int(g2), int(i2))]
+        print(f"{len(trocas)} desenhos trocados pelo RemapPreset despertado")
     desenhos = Desenhos(sprites, pal)
     acoes = ler_air(v.PASTA, v.PERSONAGEM)
     alvo = pedidas or sorted(acoes)

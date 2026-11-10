@@ -3,6 +3,7 @@
 
   python ferramentas/conferir_sff.py gravar chars/pengaro/pengaro.sff base_pengaro.json
   python ferramentas/conferir_sff.py comparar base_pengaro.json novo_pengaro.json [--podado]
+  python ferramentas/conferir_sff.py religar velho.sff novo.sff   (regrava com links, sem requantizar)
 
 `gravar` lê o .sff seguindo os sprites linkados (len = 0: os pixels e o tamanho vêm do sprite `link`, como o
 shareCopy do IKEMEN faz) e grava, para cada (grupo, índice), o sha1 de largura, altura, eixo e pixels, mais o sha1
@@ -86,6 +87,17 @@ def comparar(a, b, podado=False):
     return erros
 
 
+def religar(origem, destino, manter=None):
+    """Regrava um .sff já gerado com o mesmo gravar_sff do gerador (duplicata vira link), sem requantizar: paleta
+    e pixels saem idênticos. Com `manter`, só os (grupo, índice) do conjunto ficam."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import gerar_pengaro as gp
+    pal, nos, _ = ler(origem)
+    itens = [(n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], n["px"]) for n in nos
+             if manter is None or (n["g"], n["i"]) in manter]
+    gp.gravar_sff(Path(destino), pal, itens)
+
+
 def main():
     args = sys.argv[1:]
     if len(args) == 3 and args[0] == "gravar":
@@ -93,6 +105,8 @@ def main():
         Path(args[2]).write_text(json.dumps(r, indent=0, sort_keys=True), encoding="utf-8")
         print(f"{args[1]}: {r['bytes'] / 1e6:.2f} MB, {r['nos']} nós ({r['linkados']} linkados), "
               f"{len(r['sprites'])} sprites, {r['pixels_textura'] / 1e6:.2f} Mpx de textura")
+    elif len(args) == 3 and args[0] == "religar":
+        religar(args[1], args[2])
     elif len(args) >= 3 and args[0] == "comparar":
         a = json.loads(Path(args[1]).read_text(encoding="utf-8"))
         b = json.loads(Path(args[2]).read_text(encoding="utf-8"))
