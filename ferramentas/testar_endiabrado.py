@@ -4,17 +4,18 @@ import os, re, shutil, subprocess, sys, tempfile, time
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
+CH = Path(os.environ.get("CHARS_DE", RAIZ))
 pal = sys.argv[1] if len(sys.argv) > 1 else "2"
 motor = Path(os.environ["USERPROFILE"]) / "JogoDeLuta" / "ikemen"
 tmp = Path(tempfile.mkdtemp(prefix="teste_pal_"))
 try:
     copia = tmp / "motor"
     shutil.copytree(motor, copia)
-    for nome in ("pengaro", "hazaki"):
-        shutil.copytree(RAIZ / "chars" / nome, copia / "chars" / nome, dirs_exist_ok=True)
+    for nome in ("pengaro",):
+        shutil.copytree(CH / "chars" / nome, copia / "chars" / nome, dirs_exist_ok=True)
     saida = tmp / "resultado.txt"
     dbg = copia / "external/script/debug.lua"
-    dbg.write_text(dbg.read_text(encoding="utf-8") + "\n" + (RAIZ / "ferramentas/robo/paleta.lua").read_text(encoding="utf-8").replace("@SAIDA@", saida.as_posix()), encoding="utf-8")
+    dbg.write_text(dbg.read_text(encoding="utf-8") + "\n" + (Path(__file__).resolve().parent / "robo/paleta.lua").read_text(encoding="utf-8").replace("@SAIDA@", saida.as_posix()), encoding="utf-8")
     proc = subprocess.Popen([str(copia / "Ikemen_GO.exe"), "-p1", "pengaro", "-p1.pal", pal, "-p2", "hazaki", "-s", "stages/stage0-720.def"], cwd=copia, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     limite = time.time() + 300
     while time.time() < limite and proc.poll() is None:
