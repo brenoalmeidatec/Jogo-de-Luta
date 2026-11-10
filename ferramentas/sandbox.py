@@ -52,7 +52,10 @@ try {
   Set-Content -Path $ini -Value $t -NoNewline -Encoding UTF8
   $env:GALLIUM_DRIVER = 'llvmpipe'
   Write-Output ("inicio do motor: " + (Get-Date -Format o))
-  $p = Start-Process -FilePath "$jogo\Ikemen_GO.exe" -ArgumentList '@ARGS@' -WorkingDirectory $jogo -PassThru `
+  # -ArgumentList '' falha no Start-Process: so passa quando houver argumentos.
+  $extra = @{}
+  if ('@ARGS@' -ne '') { $extra['ArgumentList'] = '@ARGS@' }
+  $p = Start-Process -FilePath "$jogo\Ikemen_GO.exe" @extra -WorkingDirectory $jogo -PassThru `
        -RedirectStandardOutput 'C:\nf\saida\motor_stdout.txt' -RedirectStandardError 'C:\nf\saida\motor_stderr.txt'
   $limite = (Get-Date).AddSeconds(@ESPERA@)
   $fim = 'C:\nf\saida\@FIM_ARQUIVO@'

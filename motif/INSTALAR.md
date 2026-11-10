@@ -4,49 +4,21 @@
 `python ferramentas/gerar_layout.py`, mas fica versionado porque o `.bat` não roda Python. Não edite à mão: mude o gerador
 e rode de novo (ele é determinístico, então o diff só mostra o que mudou de verdade).
 
-O `ferramentas/Jogo de Luta.bat` ainda **não** faz isto. Os passos abaixo são o que falta integrar nele, nesta ordem.
+O `ferramentas/Jogo de Luta.bat` já instala o motif sozinho. O que ele faz, na ordem:
 
-## 1. Baixar também `motif/*`
-
-No passo 2 (manifesto), o filtro passa a pegar as duas pastas:
-
-```powershell
-$arquivos = @($arvore.tree | Where-Object { $_.type -eq 'blob' -and ($_.path -like 'chars/*' -or $_.path -like 'motif/*') })
-```
-
-O resto do passo (manifesto por SHA, `DownloadFile`) não muda. Os arquivos caem em `$game\motif\nazafight\...`.
-
-## 2. Copiar para `data\nazafight` (logo depois do passo 3, dos lutadores)
-
-```powershell
-$motifOrigem = Join-Path $game 'motif\nazafight'
-if (Test-Path (Join-Path $motifOrigem 'system.def')) {
-    robocopy $motifOrigem (Join-Path $motor 'data\nazafight') /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
-    if ($LASTEXITCODE -ge 8) { Fechar 'Nao consegui instalar o layout Nazafight.' }
-}
-```
-
-O `/MIR` apaga o que o `Ajustar-Menus` injetou da última vez, então ele tem que vir **antes** do passo 5.
-
-## 3. Apontar o config para o motif (dentro do bloco `if (Test-Path $cfg)` do passo 4)
-
-Com o jogo fechado, na mesma leitura que já grava o `WindowTitle`:
-
-```powershell
-$t = [IO.File]::ReadAllText($cfg)
-$t = [regex]::Replace($t, '(?im)^WindowTitle\s*=.*$', 'WindowTitle       = Nazafight')
-if (Test-Path (Join-Path $motor 'data\nazafight\system.def')) {
-    $t = [regex]::Replace($t, '(?im)^Motif\s*=.*$', 'Motif             = data/nazafight/system.def')
-}
-[IO.File]::WriteAllText($cfg, $t)
-```
-
-Se o `config.ini` ainda não existir, vale a mesma abertura única que o passo 4 já faz para ele nascer.
-
-## 4. Depois disso, o passo 5 (`Ajustar-Menus`) roda como está
-
-Ele lê o `Motif` do config e injeta `menu.done.key = s` / `done.key = s` em `data\nazafight\system.def`. O system.def
-gerado já traz vazias as seções que ele procura (`[Option Info]`, `[Pause Menu]`, `[Replay Info]`, `[Continue Screen]`).
+1. **Download (passo 1).** Busca no GitHub a árvore do commit e, dela, as subárvores `chars` **e** `motif` (cada uma tem
+   o seu sha). Cada arquivo vira `chars/...` ou `motif/...` no manifesto (`%USERPROFILE%\JogoDeLuta\manifesto.json`) e
+   em `jogo\`; só baixa o que mudou de hash, sempre para `.part` e depois `Move-Item`.
+   O atalho "já está na versão mais nova" exige o mesmo sha de commit **e** que existam os marcadores
+   `jogo\chars\pengaro\pengaro.def` e `jogo\motif\nazafight\system.def` e todo arquivo listado no manifesto: se
+   faltar qualquer um, ele busca as listas de novo e baixa só o que falta.
+2. **Cópia (logo depois dos lutadores).** `robocopy /MIR` de `jogo\motif\nazafight` para `ikemen\data\nazafight`, só
+   essa pasta. O `/MIR` desfaz o que o `Ajustar-Menus` injetou da última vez; ele roda depois e injeta de novo.
+3. **Config (passo 4).** Na mesma leitura/escrita do `save\config.ini` que grava `WindowTitle = Nazafight`, se
+   `data\nazafight\system.def` existe, grava `Motif = data/nazafight/system.def`.
+4. **Menus (passo 5).** O `Ajustar-Menus` lê o `Motif` do config e injeta `menu.done.key = s` / `done.key = s` em
+   `data\nazafight\system.def`. O system.def gerado já traz vazias as seções que ele procura (`[Option Info]`,
+   `[Pause Menu]`, `[Replay Info]`, `[Continue Screen]`).
 
 ## Não fazer
 
@@ -54,9 +26,8 @@ gerado já traz vazias as seções que ele procura (`[Option Info]`, `[Pause Men
 - Não pôr `select.def` dentro de `motif/nazafight/`: ele passaria na frente do `data\select.def` que o passo 3 edita
   (o gerador falha se encontrar um).
 
-## Conferir depois de integrar
+## Voltar ao layout antigo
 
-1. Rodar o `.bat` numa pasta limpa: o `save\config.ini` final tem que ter `Motif = data/nazafight/system.def` e as teclas
-   do P1 preservadas.
-2. Abrir o jogo, ver o título NAZAFIGHT, a seleção e uma luta. Se der erro, ele vai para `ikemen\save\logs\Ikemen_*.log`.
-3. Para voltar ao layout antigo: trocar a linha do config para `Motif = data/ikemen1/system.def`.
+O `.bat` regrava o `Motif` a cada abertura. Para ver o antigo, troque a linha do config para
+`Motif = data/ikemen1/system.def` e abra o `Ikemen_GO.exe` direto, sem o `.bat`. Se der erro na tela, o log vai para
+`ikemen\save\logs\Ikemen_*.log`.
