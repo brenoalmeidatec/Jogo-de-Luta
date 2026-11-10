@@ -1,0 +1,276 @@
+; Nazafight - gerado por ferramentas/gerar_layout.py (nao edite a mao: rode o gerador).
+; Arte 100% desenhada por codigo em pixel art (grade logica ampliada 4x), paleta de Nazare (BA).
+
+[Info]
+name = Nazafight
+author = Nazafight
+versiondate = 11,10,2026
+mugenversion = 1.0
+ikemenversion = 1.0
+localcoord = 1280,720
+
+[Files]
+spr = system.sff
+snd = system.snd            ; nao existe aqui: cai em data/system.snd
+select = select.def         ; idem: data/select.def (o .bat edita esse; NUNCA ponha um select.def nesta pasta)
+fight = fight.def
+font1 = fonts/naza_menu.def
+font2 = fonts/naza_menu_ativo.def
+font3 = fonts/naza_tab.def
+font4 = fonts/naza_num.def
+
+[Title Info]
+fadein.time = 20
+fadeout.time = 10
+menu.pos = 640,487
+menu.item.font = 1,0,0
+menu.item.localcoord = 1280,720
+menu.item.spacing = 0,40
+menu.item.layerno = 2
+menu.item.active.font = 2,0,0
+menu.item.active.localcoord = 1280,720
+menu.item.active.layerno = 2
+menu.item.active.bg.spr = 131,0
+menu.item.active.bg.offset = 0,0
+menu.item.active.bg.localcoord = 1280,720
+menu.item.active.bg.layerno = 2
+menu.window.margins.y = 12,8
+menu.window.visibleitems = 6
+menu.boxcursor.visible = 0
+menu.boxcursor.localcoord = 1280,720
+menu.title.uppercase = 0
+menu.itemname.arcade = ARCADE
+menu.itemname.versus = VERSUS
+menu.itemname.training = TREINO
+menu.itemname.watch = ASSISTIR
+menu.itemname.options = OPÇÕES
+menu.itemname.exit = SAIR
+title.font = -1
+loading.font = 3,0,-1
+loading.offset = 1248,700
+loading.text = CARREGANDO...
+loading.localcoord = 1280,720
+footer.title.font = 3,0,1
+footer.title.offset = 8,716
+footer.title.scale = 0.5,0.5
+footer.title.text = NAZAFIGHT - RECONCAVO BAIANO
+footer.title.localcoord = 1280,720
+footer.info.font = 3,0,-1
+footer.info.offset = 1272,716
+footer.info.scale = 0.5,0.5
+footer.info.text = F1: INFO
+footer.info.localcoord = 1280,720
+footer.version.font = -1
+footer.version.localcoord = 1280,720
+footer.overlay.col = 20,12,16
+footer.overlay.alpha = 255,0
+footer.overlay.window = 0,700,1280,720
+footer.overlay.localcoord = 1280,720
+
+[TitleBGdef]
+bgclearcolor = 20,12,16
+
+[TitleBG Ceu]
+type = normal
+spriteno = 100,0
+layerno = 0
+start = -640,0
+
+[TitleBG Nuvens]
+type = normal
+spriteno = 100,1
+layerno = 0
+start = -640,48
+tile = 1,0
+velocity = -0.15,0
+
+[TitleBG Cidade]
+type = normal
+spriteno = 100,2
+layerno = 0
+start = -640,0
+
+[TitleBG Rio]
+type = normal
+spriteno = 100,3
+layerno = 0
+start = -640,0
+
+[TitleBG Brilho]
+type = anim
+actionno = 101
+layerno = 0
+start = -640,472
+
+[TitleBG Canoa]
+type = anim
+actionno = 110
+layerno = 0
+start = -880,496
+tile = 1,0
+tilespacing = 1700,0
+velocity = 0.4,0
+
+[TitleBG Painel]
+type = normal
+spriteno = 130,0
+layerno = 0
+start = -192,432
+
+[TitleBG Logo]
+type = anim
+actionno = 120
+layerno = 0
+start = 0,152
+
+[TitleBG Farinha]
+type = anim
+actionno = 121
+layerno = 0
+start = 0,264
+
+[TitleBG Subtitulo]
+type = normal
+spriteno = 0,1
+layerno = 0
+start = 0,288
+
+[Begin Action 101]
+101,0, 0,0, 10
+101,1, 0,0, 10
+101,2, 0,0, 10
+101,3, 0,0, 10
+
+[Begin Action 110]
+110,0, 0,0, 6
+110,1, 0,0, 6
+110,2, 0,0, 6
+110,3, 0,0, 6
+110,4, 0,0, 6
+110,5, 0,0, 6
+110,6, 0,0, 6
+110,7, 0,0, 6
+
+[Begin Action 120]
+0,0, 0,-160, 2
+0,0, 0,-100, 2
+0,0, 0,-48, 2
+0,0, 0,0, 2
+0,0, 0,12, 2
+0,0, 0,-8, 2
+0,0, 0,4, 2
+0,0, 0,-4, 2
+0,0, 0,0, -1
+
+[Begin Action 121]
+0,2, 0,0, 8
+121,1, 0,0, 4
+121,2, 0,0, 4
+121,3, 0,0, 5
+121,4, 0,0, 6
+121,5, 0,0, 8
+0,2, 0,0, -1
+
+[Select Info]
+fadein.time = 10
+fadeout.time = 10
+rows = 2
+columns = 4
+wrapping = 1
+pos = 372,448
+showemptyboxes = 1
+moveoveremptyboxes = 0
+cell.size = 128,128
+cell.spacing = 8,8
+cell.bg.spr = 300,0
+cell.random.spr = 300,1
+portrait.spr = 9000,0
+portrait.offset = 14,14
+portrait.scale = 1,1
+p1.cursor.startcell = 0,0
+p1.cursor.active.anim = 310
+p1.cursor.active.offset = -16,-16
+p1.cursor.done.spr = 312,0
+p1.cursor.done.offset = -16,-16
+p2.cursor.startcell = 0,3
+p2.cursor.active.anim = 311
+p2.cursor.active.offset = -16,-16
+p2.cursor.done.spr = 313,0
+p2.cursor.done.offset = -16,-16
+p2.cursor.blink = 0
+p1.face.spr = 9000,1
+p1.face.offset = 28,66
+p1.face.facing = 1
+p1.face.scale = 1,1
+p1.face.window = 24,64,472,448
+p2.face.spr = 9000,1
+p2.face.offset = 1252,66
+p2.face.facing = -1
+p2.face.scale = 1,1
+p2.face.window = 816,64,1264,448
+p1.name.font = 1,0,0
+p1.name.offset = 192,497
+p2.name.font = 1,0,0
+p2.name.offset = 1088,497
+title.font = 1,0,0
+title.offset = 640,52
+
+[Begin Action 310]
+310,0, 0,0, 8
+310,1, 0,0, 8
+
+[Begin Action 311]
+311,0, 0,0, 8
+311,1, 0,0, 8
+
+[SelectBGdef]
+bgclearcolor = 20,12,16
+
+[SelectBG Feira]
+type = normal
+spriteno = 200,0
+layerno = 0
+start = -640,0
+
+[VS Screen]
+match.font = 1,0,0
+match.offset = 640,48
+match.text = LUTA %i
+p1.spr = 9000,1
+p1.offset = 100,196
+p1.facing = 1
+p1.window = 0,44,632,580
+p2.spr = 9000,1
+p2.offset = 1180,196
+p2.facing = -1
+p2.window = 648,44,1280,580
+p1.name.font = 1,0,0
+p1.name.offset = 320,674
+p2.name.font = 1,0,0
+p2.name.offset = 960,674
+
+[VersusBGdef]
+bgclearcolor = 20,12,16
+
+[VersusBG Pano]
+type = normal
+spriteno = 400,0
+layerno = 0
+start = -640,0
+
+[VersusBG Emblema]
+type = normal
+spriteno = 400,1
+layerno = 0
+start = 0,360
+
+; secoes vazias: o .bat (Ajustar-Menus) injeta done.key nelas
+[Victory Screen]
+
+[Option Info]
+
+[Pause Menu]
+
+[Replay Info]
+
+[Continue Screen]

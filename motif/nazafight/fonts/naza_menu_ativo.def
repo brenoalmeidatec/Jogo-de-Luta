@@ -1,0 +1,13 @@
+; Fonte naza_menu_ativo do Nazafight, desenhada por codigo (ferramentas/gerar_layout.py)
+[FNT v2]
+fntversion = 2,00
+name = "naza_menu_ativo"
+author = "Nazafight"
+
+[Def]
+Type = bitmap
+BankType = palette
+Size = 16,44
+Spacing = 4,0
+Offset = 0,0
+File = naza_menu_ativo.sff
