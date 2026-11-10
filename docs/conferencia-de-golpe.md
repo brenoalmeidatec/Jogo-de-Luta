@@ -35,7 +35,8 @@ Roteiro fixo para fechar qualquer golpe ou lutador antes de subir na `mugen`. Ca
 ## Jogo
 
 - [ ] `python ferramentas/verificar_pengaro.py` e `--hazaki` passam.
-- [ ] `python ferramentas/testar_pengaro.py`: o robô entra em cada golpe, acerta e volta ao controle (126+ verificações).
+- [ ] `python ferramentas/testar_pengaro.py`: o robô entra em cada golpe, acerta e volta ao controle (146+ verificações).
+      Roda **dentro do Windows Sandbox** (`ferramentas/sandbox.py`, ~90 s); `--local` só no PC do Breno.
 - [ ] `python ferramentas/filmar_sandbox.py --despertar 2 --saida PASTA`: tire quadros do `luta.mp4`
       (`ffmpeg -i luta.mp4 -vf fps=4,scale=320:-2,tile=6x7 contato.png`) e olhe os suspeitos em tamanho real. Procure efeito fora do golpe, mancha, rastro escuro, troca de forma pulando de lugar.
 

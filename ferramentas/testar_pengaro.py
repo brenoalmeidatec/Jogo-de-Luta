@@ -1,7 +1,9 @@
 """Teste automático do Pengaró dentro do IKEMEN GO (um robô aperta os botões e confere o resultado).
 
-Uso:  python ferramentas/testar_pengaro.py            (usa o motor de %USERPROFILE%\\JogoDeLuta\\ikemen)
-      python ferramentas/testar_pengaro.py CAMINHO    (outra pasta do motor)
+Uso:  python ferramentas/testar_pengaro.py [--lutador gutto]          (roda DENTRO do Windows Sandbox: padrão)
+      python ferramentas/testar_pengaro.py --local [CAMINHO_DO_MOTOR]  (abre o motor nesta máquina; só no PC do Breno)
+
+Regra do dono (2026-11-10): no PC de teste o robô roda só na sandbox (ferramentas/sandbox.py), nunca na máquina local.
 
 Faz uma cópia do motor numa pasta temporária (o jogo instalado não é tocado), instala nela o Pengaró e o Hazaki da
 pasta chars/, injeta no .cmd comandos que um script Lua aciona (AssertCommand, PosSet) e roda uma luta de
@@ -50,39 +52,76 @@ def main():
         i = args.index("--lutador")
         lutador = args[i + 1]
         del args[i:i + 2]
+    local = "--local" in args
+    if local:
+        args.remove("--local")
     motor = Path(args[0]) if args else Path(os.environ["USERPROFILE"]) / "JogoDeLuta" / "ikemen"
     if not (motor / "Ikemen_GO.exe").exists():
         sys.exit(f"Não achei o Ikemen_GO.exe em {motor}. Abra o jogo uma vez pelo atalho para instalar o motor.")
     tmp = Path(tempfile.mkdtemp(prefix="teste_pengaro_"))
     try:
-        copia = tmp / "motor"
-        shutil.copytree(motor, copia)
-        for nome in (lutador, "hazaki"):
-            shutil.copytree(RAIZ / "chars" / nome, copia / "chars" / nome, dirs_exist_ok=True)
-            injetar(copia / "chars" / nome / f"{nome}.cmd", nome == "hazaki")
-        saida = tmp / "resultado.txt"
-        debug = copia / "external/script/debug.lua"
-        debug.write_text(debug.read_text(encoding="utf-8") + "\n" +
-                         (RAIZ / "ferramentas/robo/robo.lua").read_text(encoding="utf-8").replace("@SAIDA@", saida.as_posix()),
-                         encoding="utf-8")
-        print("Rodando o robô (a janela do jogo abre sozinha)...")
-        proc = subprocess.Popen([str(copia / "Ikemen_GO.exe"), "-p1", lutador, "-p2", "hazaki", "-s",
-                                 "stages/stage0-720.def"], cwd=copia, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        limite = time.time() + 1200
-        while time.time() < limite and proc.poll() is None:
-            if saida.exists() and re.search(r"^FIM|ERRO NO ROBO", saida.read_text(encoding="utf-8"), re.M):
-                break
-            time.sleep(2)
-        proc.kill()
-        if not saida.exists():
-            sys.exit("O robô não escreveu resultado: o motor fechou antes de começar.")
-        texto = saida.read_text(encoding="utf-8")
+        texto = rodar_local(motor, lutador, tmp) if local else rodar_sandbox(motor, lutador, tmp)
         print(texto)
         passou, falhou = texto.count("  PASS "), texto.count("  FAIL ")
         print(f"\nRESUMO: {passou} verificações passaram, {falhou} falharam.")
         sys.exit(1 if falhou or "ERRO NO ROBO" in texto else 0)
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
+
+
+def preparar(destino, motor, lutador, saida_lua):
+    """Escreve em destino/ o que substitui o motor: os .cmd injetados e o debug.lua com o robô."""
+    for nome in (lutador, "hazaki"):
+        arq = destino / "chars" / nome / f"{nome}.cmd"
+        arq.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(RAIZ / "chars" / nome / f"{nome}.cmd", arq)
+        injetar(arq, nome == "hazaki")
+    debug = destino / "external/script/debug.lua"
+    debug.parent.mkdir(parents=True, exist_ok=True)
+    debug.write_text((motor / "external/script/debug.lua").read_text(encoding="utf-8") + "\n" +
+                     (RAIZ / "ferramentas/robo/robo.lua").read_text(encoding="utf-8").replace("@SAIDA@", saida_lua),
+                     encoding="utf-8")
+
+
+def argumentos(lutador):
+    return ["-p1", lutador, "-p2", "hazaki", "-s", "stages/stage0-720.def"]
+
+
+def rodar_sandbox(motor, lutador, tmp):
+    import sandbox
+    if motor.resolve() != sandbox.MOTOR.resolve():
+        sys.exit(f"na sandbox o motor é sempre {sandbox.MOTOR}")
+    por_cima, saida = tmp / "por_cima", tmp / "saida"
+    preparar(por_cima, motor, lutador, "C:/nf/saida/resultado.txt")
+    print("Rodando o robô dentro do Windows Sandbox (OpenGL por software; leva vários minutos)...", flush=True)
+    sandbox.rodar([lutador, "hazaki"], argumentos(lutador), saida, por_cima=por_cima,
+                  fim_arquivo="resultado.txt", fim_regex="^FIM|ERRO NO ROBO", espera=2400)
+    res = saida / "resultado.txt"
+    if not res.exists():
+        log = saida / "log_sandbox.txt"
+        sys.exit("O robô não escreveu resultado na sandbox.\n" + (log.read_text(errors="replace") if log.exists() else ""))
+    return res.read_text(encoding="utf-8")
+
+
+def rodar_local(motor, lutador, tmp):
+    copia = tmp / "motor"
+    shutil.copytree(motor, copia)
+    for nome in (lutador, "hazaki"):
+        shutil.copytree(RAIZ / "chars" / nome, copia / "chars" / nome, dirs_exist_ok=True)
+    saida = tmp / "resultado.txt"
+    preparar(copia, motor, lutador, saida.as_posix())
+    print("Rodando o robô (a janela do jogo abre sozinha)...")
+    proc = subprocess.Popen([str(copia / "Ikemen_GO.exe")] + argumentos(lutador), cwd=copia,
+                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    limite = time.time() + 1200
+    while time.time() < limite and proc.poll() is None:
+        if saida.exists() and re.search(r"^FIM|ERRO NO ROBO", saida.read_text(encoding="utf-8"), re.M):
+            break
+        time.sleep(2)
+    proc.kill()
+    if not saida.exists():
+        sys.exit("O robô não escreveu resultado: o motor fechou antes de começar.")
+    return saida.read_text(encoding="utf-8")
 
 
 if __name__ == "__main__":

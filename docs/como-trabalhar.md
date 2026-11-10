@@ -96,6 +96,13 @@ Armadilhas já pagas:
   ele some quando a janela fecha.
 - Limites do navegador: 25 ações e uns 200 s por lote, 45 s por script.
 
+## Testes só na sandbox (regra do dono, 2026-11-10)
+
+No PC de teste, nada abre o `Ikemen_GO.exe` na máquina local: robô, filmagem e validação do motor rodam dentro do
+Windows Sandbox (sem rede, sem vGPU, OpenGL por software do Mesa). `ferramentas/sandbox.py` é a base (copia o motor,
+aplica uma pasta por cima, roda e traz `save/logs` e o arquivo de resultado de volta; espera a vez se outra sandbox estiver
+aberta). `testar_pengaro.py` usa a sandbox por padrão e `filmar_sandbox.py` filma. `filmar_luta.py` só roda com `--local`.
+
 ## Regras técnicas aprendidas
 
 - Com `localcoord = 320,240` e palco 16:9, a tela em unidades do lutador é 320 x 180. `ScreenWidth` e `ScreenPos` já vêm

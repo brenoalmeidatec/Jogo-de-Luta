@@ -49,6 +49,12 @@ def area_cliente(hwnd):
 
 def main():
     args = sys.argv[1:]
+    # Fotografa a área da tela do PC: já pegou a tela de bloqueio e janelas pessoais. Regra do dono (2026-11-10):
+    # filmar e testar só na sandbox. Fica disponível com --local para quem filma no próprio PC, ciente disso.
+    if "--local" not in args:
+        sys.exit("filmar_luta.py fotografa a tela desta máquina. Use ferramentas/filmar_sandbox.py "
+                 "(mesmas opções --p1 --segundos --despertar), ou passe --local se for mesmo para filmar aqui.")
+    args.remove("--local")
     saida = Path(args[0])
     segundos = float(args[args.index("--segundos") + 1]) if "--segundos" in args else 40
     despertar = float(args[args.index("--despertar") + 1]) if "--despertar" in args else None
