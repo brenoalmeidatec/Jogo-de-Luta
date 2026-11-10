@@ -25,32 +25,58 @@ function Fechar($msg) {
 }
 
 # 1. Atualiza o jogo. O repositorio tem centenas de MB de sprites que o jogo nao usa; so a pasta chars vale.
-# Baixa so os arquivos dela que mudaram desde a ultima vez (compara o hash de cada arquivo) e mostra o progresso.
+# Pergunta primeiro so o sha do commit (40 bytes): se e o mesmo da ultima atualizacao completa, nao baixa nada.
+# Se mudou, pega so a lista da pasta chars e baixa os arquivos dela que mudaram (compara o hash de cada arquivo).
+# Cada arquivo baixa para .part e so troca o antigo quando terminou: queda de rede nao deixa .sff pela metade.
 $manifesto = Join-Path $base 'manifesto.json'
 $manif = @{}
+if (Test-Path $manifesto) {
+    try {
+        (Get-Content $manifesto -Raw | ConvertFrom-Json).PSObject.Properties | ForEach-Object { $manif[$_.Name] = $_.Value }
+    } catch {
+        Write-Host 'O registro do que ja foi baixado estava estragado; vou conferir todos os arquivos.' -ForegroundColor Yellow
+        $manif = @{}
+    }
+}
+$mudou = $false
 try {
     Write-Host 'Procurando a versao mais nova do jogo no GitHub...'
     $ua = @{ 'User-Agent' = 'JogoDeLuta' }
-    $commit = (Invoke-RestMethod "https://api.github.com/repos/$repo/commits/$branch" -Headers $ua).sha
-    $arvore = Invoke-RestMethod "https://api.github.com/repos/$repo/git/trees/${commit}?recursive=1" -Headers $ua
-    if (Test-Path $manifesto) {
-        (Get-Content $manifesto -Raw | ConvertFrom-Json).PSObject.Properties | ForEach-Object { $manif[$_.Name] = $_.Value }
+    $api = New-Object Net.WebClient
+    $api.Headers.Add('User-Agent', 'JogoDeLuta')
+    $api.Headers.Add('Accept', 'application/vnd.github.sha')
+    $commit = $api.DownloadString("https://api.github.com/repos/$repo/commits/$branch").Trim()
+    if ($commit -notmatch '^[0-9a-f]{40}$') { throw "resposta estranha do GitHub: $commit" }
+    if ($manif['@commit'] -eq $commit -and (Test-Path (Join-Path $game 'chars\pengaro\pengaro.def'))) {
+        Write-Host 'O jogo ja esta na versao mais nova.' -ForegroundColor Green
+    } else {
+        $raiz = Invoke-RestMethod "https://api.github.com/repos/$repo/git/trees/$commit" -Headers $ua
+        $pasta = @($raiz.tree | Where-Object { $_.path -eq 'chars' -and $_.type -eq 'tree' })
+        if ($pasta.Count -ne 1) { throw 'a pasta chars nao apareceu no GitHub' }
+        $arvore = Invoke-RestMethod "https://api.github.com/repos/$repo/git/trees/$($pasta[0].sha)?recursive=1" -Headers $ua
+        if ($arvore.truncated) { throw 'a lista de arquivos veio cortada' }
+        $arquivos = @($arvore.tree | Where-Object { $_.type -eq 'blob' })
+        $wc = New-Object Net.WebClient
+        $wc.Headers.Add('User-Agent', 'JogoDeLuta')
+        $i = 0
+        foreach ($a in $arquivos) {
+            $i++
+            $caminho = "chars/$($a.path)"
+            $dest = Join-Path $game ($caminho -replace '/', '\')
+            if ((Test-Path $dest) -and $manif[$caminho] -eq $a.sha) { continue }
+            New-Item -ItemType Directory -Force (Split-Path $dest) | Out-Null
+            Write-Host "Baixando $caminho ($i de $($arquivos.Count))..."
+            $url = "https://raw.githubusercontent.com/$repo/$commit/" + (($caminho -split '/' | ForEach-Object { [Uri]::EscapeDataString($_) }) -join '/')
+            $parte = "$dest.part"
+            $wc.DownloadFile($url, $parte)
+            Move-Item -LiteralPath $parte -Destination $dest -Force
+            $manif[$caminho] = $a.sha
+            $mudou = $true
+        }
+        $manif['@commit'] = $commit
+        $mudou = $true
+        Write-Host 'Jogo atualizado!' -ForegroundColor Green
     }
-    $arquivos = @($arvore.tree | Where-Object { $_.type -eq 'blob' -and $_.path -like 'chars/*' })
-    $wc = New-Object Net.WebClient
-    $wc.Headers.Add('User-Agent', 'JogoDeLuta')
-    $i = 0
-    foreach ($a in $arquivos) {
-        $i++
-        $dest = Join-Path $game ($a.path -replace '/', '\')
-        if ((Test-Path $dest) -and $manif[$a.path] -eq $a.sha) { continue }
-        New-Item -ItemType Directory -Force (Split-Path $dest) | Out-Null
-        Write-Host "Baixando $($a.path) ($i de $($arquivos.Count))..."
-        $url = "https://raw.githubusercontent.com/$repo/$commit/" + (($a.path -split '/' | ForEach-Object { [Uri]::EscapeDataString($_) }) -join '/')
-        $wc.DownloadFile($url, $dest)
-        $manif[$a.path] = $a.sha
-    }
-    Write-Host 'Jogo atualizado!' -ForegroundColor Green
 } catch {
     Write-Host "Nao consegui atualizar: $($_.Exception.Message)" -ForegroundColor Yellow
     if (-not (Test-Path (Join-Path $game 'chars\pengaro\pengaro.def'))) {
@@ -58,7 +84,10 @@ try {
     }
     Write-Host 'Abrindo a ultima versao que ja estava baixada.'
 } finally {
-    if ($manif.Count -gt 0) { $manif | ConvertTo-Json | Set-Content $manifesto -Encoding ASCII }
+    if ($mudou -and $manif.Count -gt 0) {
+        $manif | ConvertTo-Json | Set-Content "$manifesto.tmp" -Encoding ASCII
+        Move-Item -LiteralPath "$manifesto.tmp" -Destination $manifesto -Force
+    }
 }
 
 # 2. Baixa o IKEMEN GO na primeira vez
@@ -118,6 +147,12 @@ if (Test-Path $cfg) {
     # Nome do jogo na barra da janela
     $t = [IO.File]::ReadAllText($cfg)
     [IO.File]::WriteAllText($cfg, [regex]::Replace($t, '(?im)^WindowTitle\s*=.*$', 'WindowTitle       = Nazafight'))
+    # Carrega a luta durante a tela de VS (esconde parte da espera) e estica a janela sem borrar o pixel art.
+    # VSync, tela cheia, modo de video, Framerate e volumes ficam como o jogador deixou.
+    $t = [IO.File]::ReadAllText($cfg)
+    $t = [regex]::Replace($t, '(?im)^(VsScreenLoading\s*=)[^\r\n]*', '${1} 1')
+    $t = [regex]::Replace($t, '(?im)^(WindowScaleMode\s*=)[^\r\n]*', '${1} 0')
+    [IO.File]::WriteAllText($cfg, $t)
 }
 
 # 5. Menus: navega com W A S D e confirma so com Enter. Os botoes de ataque (as setas) nao confirmam
