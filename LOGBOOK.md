@@ -303,3 +303,9 @@ filmagem (`ferramentas/filmar_luta.py`) ou com o Breno olhando.
   As entradas antigas deste LOGBOOK ficam como foram escritas.
 - Ainda no estilo antigo: `folhas_gutto.py` e `folhas_raiclaven.py` (prompts `CABECA` "16-bit SNES") e as folhas do
   Gutto e do Raiclaven no jogo. Folha nova sai pelo prompt base de `docs/arcade/<lutador>.md`.
+## 2026-11-10 (noite) — pausa: folhas arcade geradas, falta ligar no jogo
+
+- Robô rodado na sandbox a pedido do Breno: 146 PASS / 0 FAIL.
+- Agente do ChatGPT parado (dono desligou o note). Folhas em `sprites/<l>/quadros/folhas_arcade/`: Pengaró 20, Gutto 19, Raiclaven 19, Hazaki 15. Hazaki parou em "rolamento" (próxima da fila em `docs/arcade/fila.md`; "caneta" já aprovada pelo agente mas pode não ter sido salva).
+- Notado nas folhas cruas: escala varia entre ações (Raiclaven no `pulo` maior que no `ginga`); `cabecada` do Gutto é joelhada e a do Raiclaven é tesoura (renomear no código).
+- Próximo: terminar a fila do Hazaki (lote 3 dos demais, se houver), ligar `folhas_arcade` nos geradores (Pengaró primeiro: quantizar → Blender só nas ações fluidas → quantizar --meio → conferir_arte), validar na sandbox, depois o pente fino de animação/anatomia.
