@@ -164,3 +164,15 @@ código e os sprites vieram por `gh api` (zip e blobs) e os commits saíram pela
   Escala de 125% herdada do host exigia `__COMPAT_LAYER=HighDpiAware` (sem isso a janela vinha 1600x900 recortada).
 - **Pendente:** `--despertar` dentro da sandbox não foi filmado (lógica copiada do `filmar_luta.py`). `como-trabalhar.md`
   ainda cita o `filmar_luta.py` no estado de 2026-11-07.
+
+## 2026-11-10 — Estilo de pose segurada nos golpes do Pengaró (Claude)
+
+- **Feito:** `SECO()` + `Air.seco` em `gerar_pengaro.py`: golpes 200–3999 (fora projéteis, rolamento 700/705 e Despertar
+  2000), reações 5000–5017, defesa 130/150, queda 5100/5120 e 10/12 viram poses paradas (sem vai-e-volta e sem quadros
+  do meio). Contato num desenho só (o de maior alcance no caminho antigo) + 1 tick (fraco) ou 2 (forte) tirados da
+  recuperação; smear de até 2 ticks; recuperação longa vira poses de ~9. Assert confere soma de ticks, caixa e AnimElem.
+  10/12 passaram a 2 ticks (frame data). Tremida só no finalizador e no super final (metade). Faísca 8 ticks (4 x 2),
+  pico ~40 px. BGPalFX branco de 4 ticks na super, AfterImage de 2 em 2. Regra 7 reescrita; `video_golpe.py` aceita
+  até 9 ticks parados nessas ações. Robô na sandbox 146/0; vídeo em `%USERPROFILE%/JogoDeLuta/filmagens/estilo_seco`.
+- **Pendente:** ver no jogo a sensação (contato, recuperação, sem tremida, clarão da super); o Clsn1 aparado por
+  desenho agora segue a pose segurada (alcance máximo igual, ±3 px). SFF caiu de 11,7 para 6,9 MB (meio sem uso podado).

@@ -17,7 +17,8 @@ Não abre o jogo: lê chars/<lutador>/<lutador>.sff e .air e mostra cada tick co
   relatorio.md    tabela por ação e a lista de cada tick acusado
 
 A análise compara cada desenho com o anterior, no lugar em que ele aparece na tela:
-  parado   o mesmo desenho fica mais de 2 ticks (regra 7: mínimo de 30 desenhos por segundo)
+  parado   o mesmo desenho fica mais de 2 ticks (regra 7: movimento contínuo); nas ações de pose segurada do Pengaró
+           (gerar_pengaro.SECO: golpes, reações, defesa, queda) o limite é 9 ticks
   salto    a silhueta muda demais de um tick para o outro (1 - IoU acima de 0,45): pose que estala
   pés      o pé apoiado sobe ou afunda mais de 4 px entre dois desenhos no chão
   deslize  o centro do corpo anda mais de 10 px de um tick para o outro
@@ -37,6 +38,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import verificar_pengaro as v  # noqa: E402
 
 LIMITE_PARADO = 2
+LIMITE_SECO = 9  # pose segurada (regra 7): cada pose de recuperação fica 4 a 9 ticks
+LUTADOR = "pengaro"
 LIMITE_SALTO = 0.45
 LIMITE_PES = 4
 LIMITE_DESLIZE = 10
@@ -149,6 +152,10 @@ def analisar(acao, elementos, loop, desenhos):
     quadros, acusados = [], {}
     ant_el = ant_m = ant_med = None
     parado = 0
+    limite = LIMITE_PARADO
+    if LUTADOR == "pengaro":
+        from gerar_pengaro import SECO
+        limite = LIMITE_SECO if SECO(acao) else LIMITE_PARADO
     for n, (i, _) in enumerate(seq):
         el = elementos[i]
         tela, m = montar(desenhos, el)
@@ -156,7 +163,7 @@ def analisar(acao, elementos, loop, desenhos):
         mesmo = ant_el is not None and (el[0], el[1], el[2], el[3], el[5]) == ant_el
         if mesmo:
             parado += 1
-            if parado == LIMITE_PARADO + 1 and el[4] > 0:
+            if parado == limite + 1 and el[4] > 0:
                 acusados.setdefault(n, []).append(f"parado {sum(1 for j, _ in seq if j == i)}t")
         else:
             parado = 1
@@ -245,6 +252,8 @@ def main():
     pedidas = [int(a) for a in args if not a.startswith("--")]
 
     v.PERSONAGEM = lutador or ("hazaki" if "--hazaki" in flags else "pengaro")
+    global LUTADOR
+    LUTADOR = v.PERSONAGEM
     chars = Path(__file__).resolve().parent.parent / "chars"
     # --sff-de VITIMA: arremesso. O ChangeAnim2 desenha a vítima com o SFF dela e as ações do arremessador.
     dono, v.PERSONAGEM = v.PERSONAGEM, sff_de or v.PERSONAGEM
@@ -293,7 +302,7 @@ def main():
 
     (saida / "relatorio.md").write_text(
         f"# Análise quadro a quadro ({v.PERSONAGEM})\n\n"
-        "Limites: parado > 2 ticks, salto 1-IoU > 0,45, pés > 4 px, deslize > 10 px, tamanho > 15%.\n\n"
+        "Limites: parado > 2 ticks (pose segurada do Pengaró: > 9), salto 1-IoU > 0,45, pés > 4 px, deslize > 10 px, tamanho > 15%.\n\n"
         "| Ação | Ticks | Desenhos | Ticks acusados | Tipos |\n|---|---|---|---|---|\n"
         + "\n".join(linhas) + "\n\n## Ticks acusados\n" + "\n".join(detalhes) + "\n", encoding="utf-8")
     acusadas = sum(1 for l in linhas if not l.split("|")[4].strip() == "0")

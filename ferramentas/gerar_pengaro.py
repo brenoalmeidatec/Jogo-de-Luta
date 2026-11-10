@@ -66,6 +66,17 @@ RITMO = 1.5  # os golpes mostram o movimento inteiro; no tempo antigo pareciam a
 # recuperação e o resto seguem com RITMO, e é o preparo sem esticar que volta a casar com os `Time = N` do CNS.
 RITMO_PREPARO = 1.0
 PROJETEIS = {1005, 1006, 3005, 3006, 3010, 3011, 3012}
+# Estilo de pose segurada (regra 7, medido quadro a quadro em jogo de luta de arcade: só tempo e técnica). Nos golpes,
+# reações, defesa e queda o olho lê poses paradas e a troca entre elas é seca; o movimento contínuo (ginga, andar,
+# correr, pulo, entrada, vitória) continua fluido. Rolamento (700/705) é deslocamento e o Despertar (2000) é cena.
+FRACOS = {200, 230, 301, 321, 322, 340, 342, 400, 430, 600}  # = os golpes com hitsound F5,0 (main confere)
+SECO_FORA = {700, 705, 2000}
+
+
+def SECO(numero):
+    n = numero % 10000
+    return (200 <= n < 4000 and n not in PROJETEIS and n not in SECO_FORA or 5000 <= n <= 5017
+            or n in (10, 12, 130, 150, 5100, 5120))
 BALAO_TOPO_MINIMO = 40    # abaixo do relógio e dos nomes da HUD
 BALAO_MARGEM = 4          # folga até a borda da tela
 
@@ -308,6 +319,24 @@ NO_AR = [(-24, -24, 24, -100)]
 DEITADO = [(-60, 0, 60, -24)]
 
 
+def conferir_seco(numero, antes, depois, mapa):
+    """O estilo de pose segurada não mexe em frame data: mesma soma de ticks, mesma caixa em cada tick (e portanto o
+    mesmo 1º tick com caixa) e cada AnimElem do .cns começando no mesmo tick de antes."""
+    def por_tick(q):
+        saida = []
+        for e in q:
+            saida += [e[2] if len(e) > 2 and e[2] else None] * max(0, e[1])
+        return saida
+    inicio = lambda q, k: sum(max(1, e[1]) for e in q[:k])
+    a, b = por_tick(antes), por_tick(depois)
+    if antes[-1][1] < 0:  # pose final sem fim (golpe no ar): o contato segurado só adia o começo dela
+        assert b[:len(a)] == a and not any(b[len(a):]), f"ação {numero}: caixa mudou no estilo seco"
+    else:
+        assert a == b, f"ação {numero}: caixa ou tempo mudou no estilo seco"
+    assert (antes[-1][1] < 0) == (depois[-1][1] < 0), numero
+    assert all(inicio(antes, k) == inicio(depois, m - 1) for k, m in enumerate(mapa)), f"ação {numero}: AnimElem"
+
+
 class Air:
     def __init__(self, sprites, arte_despertada=None, hazaki=False):
         self.s = sprites
@@ -321,6 +350,13 @@ class Air:
     def fluido(self, numero, quadros):
         """Preenche cada elemento com os quadros do meio do Blender, sem mudar o tempo total nem a caixa de golpe.
         Guarda em self.mapas onde cada elemento foi parar, porque o .cns usa AnimElem."""
+        if SECO(numero):
+            if numero >= 10000:  # variante do Despertar: vem pronta da ação normal, com os mesmos elementos
+                self.mapas[numero] = list(range(1, len(quadros) + 1))
+                return quadros
+            novos = self.seco(numero, quadros)
+            conferir_seco(numero, quadros, novos, self.mapas[numero])
+            return novos
         novos, mapa = [], []
         for i, q in enumerate(quadros):
             mapa.append(len(novos) + 1)
@@ -347,6 +383,117 @@ class Air:
             for j in range(n):
                 t = ticks if ticks <= 0 else ticks // n + (1 if j < ticks % n else 0)
                 novos.append((caminho[j * len(caminho) // n], t, *q[2:]))
+        self.mapas[numero] = mapa
+        return novos
+
+    def frente(self, nome, caixa):
+        """Até onde o desenho vai para a frente na faixa de altura da caixa de golpe (para escolher a pose de contato)."""
+        if not hasattr(self, "_mascaras"):
+            self._mascaras = {}
+        if nome not in self._mascaras:
+            g, i = self.s.codigos[nome]
+            img, ex, ey = next((im, x, y) for gg, ii, im, x, y in self.s.lista if (gg, ii) == (g, i))
+            self._mascaras[nome] = (np.asarray(img.getchannel("A")) >= 128, ex, ey)
+        a, ex, ey = self._mascaras[nome]
+        y1, y2 = sorted((caixa[1], caixa[3]))
+        faixa = a[max(0, ey + y1):max(0, ey + y2 + 1)]
+        xs = np.nonzero(faixa.any(axis=0))[0]
+        return int(xs.max()) - ex if len(xs) else -999
+
+    def seco(self, numero, quadros):
+        """Pose segurada (regra 7): cada elemento mostra um desenho parado, sem vai-e-volta nem quadros do meio, salvo
+        o smear de até 2 ticks no fim da antecipação. O contato é um desenho só e fica h ticks a mais na tela (h = 1 no
+        fraco, 2 no forte), tirados do 1º elemento da recuperação: o tempo total, as caixas e os AnimElem do .cns não
+        mudam (o AnimElem desse elemento passa a apontar para o elemento novo, que começa no mesmo tick)."""
+        fraco = numero in FRACOS
+        h = 1 if fraco else 2
+        nomes = [q[0] for q in quadros]
+        com = [k for k, q in enumerate(quadros) if len(q) > 2 and q[2]]
+        k0 = com[0] if com else None
+        k1 = com[-1] if com else None
+        if com:
+            blocos = []
+            for k in com:
+                if blocos and blocos[-1][-1] == k - 1:
+                    blocos[-1].append(k)
+                else:
+                    blocos.append([k])
+
+            def candidatos(k):  # o que o elemento mostrava no fluido: o desenho e os quadros do meio até o seguinte
+                prox = quadros[k + 1][0] if k + 1 < len(quadros) else SEGUINTE.get(numero) or fim_da_folha(quadros[k][0])
+                return caminho_fluido(self.s, quadros[k][0], prox)
+
+            def mais_esticado(ks):  # a pose de maior alcance segura o contato: o alcance máximo não encolhe
+                caixa = quadros[ks[0]][2]
+                caixa = caixa[0] if isinstance(caixa[0], tuple) else caixa
+                return max((n for k in ks for n in candidatos(k)), key=lambda n: self.frente(n, caixa))
+            for bloco in blocos:
+                if len(bloco) <= 2:  # contato de um acerto: um desenho só segura o ativo inteiro
+                    melhor = mais_esticado(bloco)
+                    for k in bloco:
+                        nomes[k] = melhor
+                else:  # vários desenhos com caixa (giro, varrida): cada um segura o seu elemento
+                    for k in bloco:
+                        nomes[k] = mais_esticado([k])
+            pre = list(range(k0))
+            if fraco and pre:  # fraco: a antecipação é um desenho só, o da tensão
+                for k in pre:
+                    nomes[k] = nomes[pre[-1]]
+            elif len(pre) > 2:  # forte: carga e tensão
+                for k in pre[:-1]:
+                    nomes[k] = nomes[pre[-2]]
+            rec = [k for k in range(k1 + 1, len(quadros))]
+            if fraco and len(rec) > 2:  # fraco: a recuperação usa 2 poses
+                meio = (len(rec) + 1) // 2
+                for k in rec[:meio]:
+                    nomes[k] = nomes[rec[0]]
+                for k in rec[meio:]:
+                    nomes[k] = nomes[rec[-1]]
+        extra = None
+        if com and k1 + 1 < len(quadros):
+            t = quadros[k1 + 1][1]
+            if t == -1 or t >= h + 3:
+                extra = k1 + 1
+        novos, mapa = [], []
+        for i, q in enumerate(quadros):
+            mapa.append(len(novos) + 1)
+            ticks, resto = q[1], list(q[2:])
+            if i == extra:  # o contato fica h ticks a mais, sem caixa
+                flip = quadros[k1][3:4]
+                novos.append((nomes[k1], h, None, *flip))
+                ticks = ticks if ticks < 0 else ticks - h
+            if com and i == k0 - 1 and ticks >= 2:  # smear: os últimos quadros do meio antes do contato, a 1 tick
+                s = 1 if fraco else max(1, min(2, ticks - 2))
+                caminho = caminho_fluido(self.s, nomes[i], quadros[k0][0])[1:]
+                if caminho:
+                    s = min(s, len(caminho))
+                    novos.append((nomes[i], ticks - s, *resto))
+                    novos.extend((m, 1, *resto) for m in caminho[-s:])
+                    continue
+            if com and i > k1 and ticks > 9 and nomes[i] == q[0]:
+                # recuperação longa num desenho só (golpe de 3 desenhos, especial): vira poses de até ~9 ticks com troca
+                # seca. As poses são os desenhos da folha no caminho: do contato até este (só no 1º elemento da
+                # recuperação, que antes atravessava esse trecho) e deste até o seguinte (no último, até o fim da folha).
+                ultimo = i + 1 >= len(quadros)
+                prox = quadros[i + 1][0] if not ultimo else SEGUINTE.get(numero) or fim_da_folha(q[0])
+                seq = caminho_fluido(self.s, q[0], prox)
+                if ultimo and prox and prox != q[0] and desenho_de(prox):
+                    seq.append(prox)
+                if i == k1 + 1:
+                    seq = caminho_fluido(self.s, quadros[k1][0], q[0])[1:] + seq
+                chaves = list(dict.fromkeys(n for n in seq if desenho_de(n) and not n.startswith("m_")))
+                if len(chaves) >= 2:
+                    poses = chaves[-max(2, -(-ticks // 10)):]
+                else:
+                    n = min(len(seq), -(-ticks // 9))
+                    poses = [seq[round(j * (len(seq) - 1) / (n - 1)) if ultimo else j * len(seq) // n]
+                             for j in range(n)] if n > 1 else []
+                if len(poses) > 1:
+                    n = len(poses)
+                    for j, nome in enumerate(poses):
+                        novos.append((nome, ticks // n + (1 if j < ticks % n else 0), *resto))
+                    continue
+            novos.append((nomes[i], ticks, *resto))
         self.mapas[numero] = mapa
         return novos
 
@@ -480,13 +627,14 @@ def ler_efeito(nome):
 # Pengaró: efeitos desenhados no ChatGPT como os lutadores (ferramentas/efeitos_folha.py), em vez do pixelfx.
 # ação -> (efeito do normal, efeito do endiabrado, ticks por quadro ou sequência). O do endiabrado entra pelo RemapPreset.
 # Sequência de faísca (estilo KOF): (índice do quadro | "F" = clarão gerado do quadro de pico, ticks, escala).
-# O maior quadro cai no tick do contato e a faísca some em 9 a 14 ticks.
+# Medido em jogo de arcade (só o tempo): a faísca vive 8 ticks, 4 desenhos de 2 ticks, com o pico (o clarão) no 3º e
+# 4º tick, e o pico tem ~1/3 da altura do lutador (~40 de ~120 unidades, já com o sparkscale do IMPACTO). Some antes do
+# fim do congelamento. O finalizador fica maior e mais longo, como sotaque; todo efeito anda de 2 em 2 ticks.
 EFEITOS_PROPRIOS = Path(__file__).resolve().parent.parent / "sprites/pengaro/efeitos"
-FAISCA_FRACA = [("F", 1, .8), ("F", 1, 1), (8, 1, 1), (10, 1, 1), (12, 1, 1), (14, 2, 1), (17, 2, 1)]
-FAISCA_FORTE = [("F", 1, .9), ("F", 2, 1.1), (4, 1, 1), (6, 1, 1), (8, 1, 1), (10, 2, 1), (13, 2, 1), (16, 2, 1)]
-FAISCA_FINAL = [("F", 1, 1), ("F", 2, 1.25), (2, 1, 1), (4, 1, 1), (6, 1, 1), (8, 2, 1), (11, 2, 1), (14, 2, 1),
-                (18, 2, 1)]
-FAISCA_DEFESA = [(3, 1, 1), (6, 1, 1), (9, 1, 1), (12, 1, 1), (15, 2, 1)]
+FAISCA_FRACA = [(3, 2, .5), ("F", 2, .5), (14, 2, .5), (19, 2, .5)]
+FAISCA_FORTE = [(2, 2, .4), ("F", 2, .45), (12, 2, .4), (18, 2, .4)]
+FAISCA_FINAL = [("F", 2, 1), ("F", 2, 1.25), (4, 2, 1), (8, 2, 1), (13, 2, 1), (18, 2, 1)]
+FAISCA_DEFESA = [(3, 2, 1), (9, 2, 1), (15, 2, 1)]
 FX_PENGARO = {
     9200: ("whisky_acerto", "sombra_acerto", FAISCA_FRACA), 9201: ("whisky_forte", "sombra_forte", FAISCA_FORTE),
     9202: ("defesa", "defesa", FAISCA_DEFESA), 9204: ("defesa", "defesa", FAISCA_DEFESA),
@@ -548,10 +696,12 @@ def carregar_proprios(sprites):
             continue
         principal = normal or endiabrado
         lista = []
+        passo = 2 if ticks == 1 else 1  # efeito anda de 2 em 2 ticks: metade dos desenhos, a mesma duração
         for i, (q, pivo) in enumerate(quadros_proprios(principal)):
             chave = f"fx_{principal}_{i}"
             sprites.add(chave, q, numero, i, pivo)
-            lista.append((chave, ticks))
+            if i % passo == 0:
+                lista.append((chave, ticks * passo))
         if normal and endiabrado:
             par = quadros_proprios(endiabrado)
             sombra = []
@@ -1208,9 +1358,10 @@ def acoes_folhas(Q):
     Q(5, [("q_ginga_fluida0", 2), ("q_ginga_fluida1", 2), ("q_ginga_fluida2", 2)])
     Q(6, [(f("agachado", 4), 3), (f("agachado", 5), 3)], BAIXO)
     Q(100, [(f"q_anda_fluida{i}", 1) for i in range(0, quadros_do_loop("anda_fluida"), 3)])
-    Q(10, [(f("agachado", 1), 2), (f("agachado", 2), 2), (f("agachado", 3), 2)], BAIXO)
+    # em pé <-> agachado: troca seca de 2 ticks com um desenho só (eram 6 e 4; o estado já é C desde o tick 0)
+    Q(10, [(f("agachado", 2), 2)], BAIXO)
     Q(11, [(f("agachado", i), 8) for i in (4, 5, 6, 7, 6, 5)], BAIXO)
-    Q(12, [(f("agachado", 2), 2), (f("agachado", 1), 2)], BAIXO)
+    Q(12, [(f("agachado", 2), 2)], BAIXO)
     Q(40, [(f("pulo", 0), 4)])
     for n in (41, 42, 43):
         Q(n, [(f("pulo", 1), 3), (f("pulo", 2), 5), (f("pulo", 3), 6), (f("pulo", 4), -1)], NO_AR)
@@ -1712,11 +1863,13 @@ def faiscas(numero):
 IMPACTO = {
     "fraco": ((8, 8), (6, 6), None, None, 9200, 1, "5,0"),
     "medio": ((10, 10), (8, 8), None, None, 9201, .9, "5,1"),
-    "forte": ((12, 12), (9, 9), (6, 150, -3), (6, 150, -2), 9201, 1.15, "5,2"),
-    "especial": ((12, 12), (9, 9), (8, 150, -3), (6, 150, -3), 9201, 1.15, "5,2"),
-    "final": ((16, 16), (10, 10), (12, 150, -5), (8, 150, -3), 9205, 1.3, "5,3"),
-    "super": ((3, 6), (2, 6), (3, 170, -1), None, 9201, 1, "5,1"),
-    "super_final": ((20, 20), (12, 12), (20, 150, -6), (12, 150, -4), 9205, 1.5, "5,4"),
+    # Sem tremida no forte, no especial e no super (medida: zero; o peso vem do congelamento). O finalizador e o super
+    # final ficam com ela como sotaque, com metade da amplitude.
+    "forte": ((12, 12), (9, 9), None, None, 9201, 1.15, "5,2"),
+    "especial": ((12, 12), (9, 9), None, None, 9201, 1.15, "5,2"),
+    "final": ((16, 16), (10, 10), (12, 150, -3), (8, 150, -2), 9205, 1.3, "5,3"),
+    "super": ((3, 6), (2, 6), None, None, 9201, 1, "5,1"),
+    "super_final": ((20, 20), (12, 12), (20, 150, -3), (12, 150, -2), 9205, 1.5, "5,4"),
 }
 MODO_HAZAKI = False  # o Hazaki herda o CNS comum e tem que sair byte a byte igual: ele ignora a classe
 
@@ -2014,14 +2167,18 @@ def chuva_de_bebidas(numero):
 
 
 def superpausa(numero, trigger):
+    # Pengaró: clarão branco de 4 ticks na entrada da super (medido), depois o escurecido da pausa
+    clarao = ("" if MODO_HAZAKI else
+              f"[State {numero}, Clarão da super]\ntype = BGPalFX\ntrigger1 = {trigger}\ntime = 4\n"
+              "add = 255,255,255\nmul = 256,256,256\nignorehitpause = 1\n\n")
     return (f"[State {numero}, Pausa]\ntype = SuperPause\ntrigger1 = {trigger}\ntime = 30\nanim = 100\n"
-            "pos = 10, -60\nsound = F20,0\nmovetime = 0\ndarken = 1\n\n"
+            "pos = 10, -60\nsound = F20,0\nmovetime = 0\ndarken = 1\n\n" + clarao +
             f"[State {numero}, Rastro]\ntype = AfterImage\ntrigger1 = {trigger}\ntime = 40\n"
             # sem trans o motor desenha as cópias escurecidas por cima: no Despertar virava uma mancha preta no corpo
             + ("length = 8\ntrans = add\npalmul = .45,.25,.65\npaladd = 20,0,40\ntimegap = 2\nframegap = 3\n\n"
-               if MODO_HAZAKI else  # Pengaró: rastro cinza (o roxo somado ao palco azul ficava rosa)
+               if MODO_HAZAKI else  # Pengaró: rastro cinza (o roxo somado ao palco azul ficava rosa), de 2 em 2 ticks
                "length = 6\ntrans = add\npalcolor = 0\npalbright = 40,40,40\npaladd = 0,0,0\npalmul = .6,.6,.6\n"
-               "timegap = 1\nframegap = 2\n\n"))
+               "timegap = 2\nframegap = 2\n\n"))
 
 
 def cns_repertorio(hazaki):
@@ -3111,6 +3268,7 @@ def main():
     (SAIDA / "pengaro.air").write_text("\n".join(ajustar_clsn1(a.txt, s, preset)), encoding="utf-8", newline="\n")
     cns = despertar_do_pengaro(ajustar_sparkxy(remapear_animelem(montar_cns(), a.mapas), a.ativos))
     fracos = {int(n) for n in re.findall(r"\[State (\d+), Golpe\]\n(?:[^\n]+\n)*?hitsound = F5,0\n", cns)}
+    assert fracos == FRACOS, f"FRACOS (estilo seco) fora de dia: {sorted(fracos ^ FRACOS)}"
     volta = "reset = 1\n\n[State -2, Endiabrado desligado]"
     assert cns.count(volta) == 1
     cns = cns.replace(volta, "reset = 1\n\n" + aura_cns() + "[State -2, Endiabrado desligado]")

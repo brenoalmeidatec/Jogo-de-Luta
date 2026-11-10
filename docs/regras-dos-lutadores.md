@@ -417,17 +417,22 @@ com link e licença.
 
 ## 7. Regra da fluidez: quantos quadros cada animação tem
 
-O objetivo é que não dê para ver corte: o lutador tem que se mexer como uma filmagem ou uma cutscene. O jogo roda
-a **60 ticks por segundo**. A regra tem dois níveis:
+O jogo roda a **60 ticks por segundo** e tem dois estilos de animação, cada um no seu lugar:
 
-- **Mínimo (obrigatório para todo lutador):** nenhum desenho fica mais de **2 ticks** na tela (nunca abaixo de
-  30 desenhos por segundo), a não ser no congelamento de contato (`pausetime`), que é proposital. Lutador que não
-  bate o mínimo não entra.
-- **Meta (1 desenho novo por tick, 60 por segundo):** só na ginga, nos golpes fortes, nos especiais e no Despertar
-  (ativação e super), onde mais aparece. O resto pode ficar no mínimo.
+- **Movimento contínuo (ginga, andar, correr, pulo, virar, entrada e vitória): fluido.** Nenhum desenho fica mais
+  de **2 ticks** na tela (nunca abaixo de 30 desenhos por segundo). A meta de 1 desenho novo por tick (60 por
+  segundo) fica só na ginga, no andar e no corpo do Despertar fora da super.
+- **Golpes, reações, defesa e queda: pose segurada.** É o que se mede quadro a quadro nos jogos de luta de arcade:
+  o olho lê poses paradas e a troca entre elas é seca. A antecipação segura até 6 ticks; a pose de contato segura
+  todo o ativo e mais 1–2 ticks (1 no fraco, 2 no forte); cada pose de recuperação segura 4–9 ticks; o tranco da
+  reação segura o elemento inteiro e a pose da defesa segura enquanto dura. **Segurar é sprite parado**, sem
+  vai-e-volta e sem quadros do meio. Entre as poses a troca é seca, com no máximo **2 quadros de smear a 1 tick**
+  antes do contato.
+- **Efeitos, projéteis e o começo da super** andam de 2 em 2 ticks.
 
-Mais desenhos **não** deixam o golpe mais lento. O frame data (preparação, ativo, recuperação, seção 8.3) continua
-igual; os desenhos a mais só preenchem o movimento.
+O estilo não muda o frame data (preparação, ativo, recuperação, seção 8.3): o tempo total, a caixa e o tick em que
+ela liga ficam iguais. No Pengaró quem aplica isso é `SECO()` e `Air.seco` em `ferramentas/gerar_pengaro.py`, com
+um assert que confere soma de ticks, caixa por tick e os `AnimElem` do .cns.
 
 ### 7.1 Desenhos por animação
 
@@ -436,11 +441,12 @@ igual; os desenhos a mais só preenchem o movimento.
 | Parado / ginga | 16–24 | **32–48** | loop sem emenda: o último quadro encaixa no primeiro |
 | Andar, correr | 12–16 | | loop sem emenda, pé não desliza no chão |
 | Pulo (subida, topo, queda) | 12–16 | | |
-| Agachar, levantar do agachado, virar | 4–6 cada | | transição, não troca seca |
+| Agachar, levantar do agachado | 1 desenho, 1–2 ticks | | troca seca |
+| Virar | 4–6 | | transição fluida |
 | Defesa (entrar, segurar, sair) | 6–8 | | |
-| Soco ou chute fraco (normal e cada golpe de corrente) | 8–12 | | |
-| Soco ou chute forte (normal e cada golpe de corrente) | 14–20 | **28–36** | |
-| Finalizador de corrente, golpe de kombo | 14–20 | | |
+| Soco ou chute fraco (normal e cada golpe de corrente) | 4–6 distintos | | antecipação 1, smear 1, contato 1, recuperação 2 |
+| Soco ou chute forte (normal e cada golpe de corrente) | 6–9 distintos | | carga, tensão, smear 1–2, contato, 3 poses de recuperação |
+| Finalizador de corrente, golpe de kombo | 6–9 distintos | | como o forte; vários acertos: cada contato segurado no seu ativo |
 | Especial, projétil (o corpo) | 20–40 | **40–60** | o projétil em si tem animação própria em loop |
 | Ir para trás do oponente | 20–40 | **40–60** | é especial: sumir, viajar e chegar virando |
 | Agarrão (lutador e vítima) | 30–50 | | as duas animações casadas quadro a quadro |
@@ -451,13 +457,13 @@ igual; os desenhos a mais só preenchem o movimento.
 ### 7.2 O que todo golpe precisa ter
 
 1. **Antecipação:** o corpo prepara antes (recua o braço, gira o quadril). É o que avisa o golpe.
-2. **Smear (borrão) no movimento rápido:** nos 1–3 quadros mais rápidos, o membro estica ou deixa rastro, em vez
-   de pular de uma pose para a outra.
+2. **Smear (borrão) no movimento rápido:** no fim da antecipação, no máximo 2 ticks (1 ou 2 quadros do meio a 1
+   tick cada), o membro estica ou deixa rastro, em vez de pular de uma pose para a outra.
 3. **Continuação e movimento secundário:** depois do contato o corpo segue o embalo, e braço, cabelo, roupa e
    faixa chegam atrasados e balançam até parar.
 4. **Easing:** começa devagar, acelera e freia. Nada de movimento em velocidade constante.
-5. **Contato:** o quadro de contato é o mais forte da animação e é nele que entram a caixa de acerto, o efeito
-   do pixelfx e o congelamento.
+5. **Contato segurado:** o quadro de contato é o mais forte da animação (o de maior alcance), fica parado o ativo
+   inteiro e mais 1–2 ticks, e é nele que entram a caixa de acerto, o efeito e o congelamento.
 
 ### 7.3 Como produzir isso sem desenhar um por um
 
@@ -525,8 +531,8 @@ recuperação**. Os efeitos com ator trazem esse tempo no JSON (`meta.pixelfx.ac
 | No pixelfx | No CNS do IKEMEN | Piso por tipo de golpe |
 |---|---|---|
 | `windup` | quadros antes do quadro ativo no AIR | fraco 3–5, forte 7–10, finalizador 10–14 ticks |
-| `freeze` (congelar no contato) | `pausetime = P1, P2` do `HitDef` | fraco 6, forte 10, finalizador/super 14+ |
-| `shake` / `amp` | `EnvShake` no contato | forte e finalizador; super sempre |
+| `freeze` (congelar no contato) | `pausetime = P1, P2` do `HitDef` | fraco 7–8, forte 11–12, finalizador/super 14+ |
+| `shake` / `amp` | `envshake` no contato | só finalizador e super final; forte e super sem tremida (o peso vem do congelamento) |
 | `push` | `ground.velocity` e `guard.velocity` | forte empurra mais que fraco |
 | `recovery` | quadros depois do ativo | errar forte tem que doer |
 | o alvo balançando | `animtype` do `HitDef` (`Light`, `Medium`, `Hard`, `Back`, `Up`) | casar com a força do golpe |
@@ -558,9 +564,11 @@ Forma despertada
 
 Produção
 [ ] arte passou pelo processo da seção 6; licenças anotadas
-[ ] cada animação tem o mínimo de desenhos da seção 7.1, nenhum desenho passa de 2 ticks fora do congelamento
-[ ] (desejável) ginga, golpes fortes, especiais e Despertar na meta de 1 desenho por tick
-[ ] todo golpe tem antecipação, smear, continuação e easing (seção 7.2)
+[ ] cada animação tem os desenhos da seção 7.1; no movimento contínuo nenhum desenho passa de 2 ticks
+[ ] golpes, reações, defesa e queda em pose segurada (seção 7): contato no ativo + 1–2, recuperação 4–9 por pose,
+    smear de no máximo 2 ticks, sem vai-e-volta
+[ ] (desejável) ginga, andar e corpo do Despertar na meta de 1 desenho por tick
+[ ] todo golpe tem antecipação, smear, contato segurado e recuperação legível (seção 7.2)
 [ ] todo impacto usa efeito do pixelfx (seção 8.1), com pausetime/EnvShake pelo piso da 8.3
 [ ] caixas conferidas no editor; combos conferidos no ikemen-combo-finder
 [ ] gerador roda limpo e o verificador passa; nada editado à mão em chars/<nome>/
