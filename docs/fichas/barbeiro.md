@@ -1,4 +1,4 @@
-# Barbeiro (nome de luta a definir pelo Breno; id técnico `barbeiro`)
+# Raiclaven, o Barbeiro (id técnico `raiclaven`)
 
 Ficha no modelo da seção 10 de [`docs/regras-dos-lutadores.md`](../regras-dos-lutadores.md). Referência de arte:
 [`sprites/barbeiro/referencia.png`](../../sprites/barbeiro/referencia.png). Origem das ideias: áudio do Breno de 2026-11-06.
@@ -18,6 +18,21 @@ com pente e pincel de barba no bolso. Altura **120 px** (musculoso, entre o norm
 amarelo na Máquina Explosiva.
 
 Tudo na tela é pixel art desenhada à mão no estilo SNES/arcade. Nunca 3D pixelizado, nem como quebra-galho.
+
+## Estado (2026-11-10)
+
+- **Montado na forma normal:** referência aprovada pelo Breno (`sprites/raiclaven/quadros/folhas/referencia_ginga.png`) e
+  30 folhas próprias de barbeiro (pedidos em `ferramentas/folhas_raiclaven.py`), cortadas com `LUTADOR=raiclaven
+  animar_folha.py` e montadas por `ferramentas/gerar_raiclaven.py` em `chars/raiclaven`. Chat "Generate Fighting Sprite" no
+  ChatGPT (`chatgpt.com/c/6af2f2fe-a370-83e8-8f01-68ab7a3d36be`), feito pelo Brave.
+- **Próximo! forte (pedido do Breno):** joga o pente, some no talco, aparece nas costas e bate numa sequência própria de 3
+  acertos (folha `pente_combo`, estado 1701).
+- Ele usa a lógica de estados do kit (a mesma do Pengaró e do Gutto) com desenhos próprios em cada golpe; os comandos e
+  papéis da tabela de especiais abaixo ainda não foram ligados um a um. O robô passa 143 de 144 (a que falha, arte do
+  super no Despertar, falha igual no Gutto).
+- **Falta:** o Despertar (Surto de Tesoura) com arte própria (hoje: poses normais escurecidas; `despertar_a/b` são cópias da
+  provocação), Borrifada, Máquina Explosiva e Fila de Clientes com arte própria, efeitos prateados, retrato e áudios.
+  Não filmado: a captura de tela pegou outra janela por cima do jogo.
 
 ## Correntes (3 golpes + finalizador)
 

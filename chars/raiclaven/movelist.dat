@@ -1,0 +1,44 @@
+<#f0f000>:Especiais:</>
+Pente Voador <#bebebe>(projétil)</>			_D_F^K
+Tesoura Helicóptero				_D_B^K
+Tesoura Voadora					_F_D^P
+Varrida							_D_B^P
+Tesourão / Machadada de Tesoura	_D_F^P
+Cadeira Giratória		_B_D^K
+Borrifada <#bebebe>(projétil em arco)</>	_F_B^P
+Próximo! (a passa, b passa e chuta)	_F_B^K
+
+<#f0f000>:Exclusivos do Surto de Tesoura:</>
+Beijo do Cavalo <#bebebe>(projétil)</>	_D_D^X
+Coice da Corrente					_D_D^Y
+Galope Atravessado					_D_D^A
+Queda do Cavalo						_D_D^B
+Corrente Y e B de 4 golpes			^Y^Y^Y^Y / ^B^B^B^B
+Kombo do Cavalo						^B,^A,^X
+
+<#f0f000>:Correntes (acertando os 3, o 4º derruba):</>
+Soco fraco							^X^X^X^X
+Soco forte							^Y^Y^Y^Y
+Chute fraco							^A^A^A^A
+Chute forte							^B^B^B^B
+
+<#f0f000>:Kombos:</>
+Abertura							_F+^Y, ^X, ^B
+Alto e Baixo						^X, _D+^A, ^Y
+Empurrão							_B+^X, ^Y, _F+^B
+Lançador							^A, ^B, _D+^Y
+
+<#f0f000>:Supers:</>
+Próximo, Cliente! <#bebebe>(1000)</>	_B_F_D^K
+Saideira do Cavalo (no Surto de Tesoura)	_B_F_D^K
+Máquina Explosiva	_B_F_D^P
+
+<#f0f000>:Sistema:</>
+Surto de Tesoura <#bebebe>(barra cheia)</>	^X_+^Y
+Rolamento							^X_+^A
+Golpe de afastar (teep)				^Y_+^B
+Agarrão								[_B/_F]_+^Y
+Cabeça na Pia <#bebebe>(oponente agachado)</>	_D_+^Y
+Toalha Quente <#bebebe>(colado)</>		_B_F^Y
+Provocação							^C
+Parry                              _F^C

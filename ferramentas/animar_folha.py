@@ -23,12 +23,13 @@ import numpy as np
 from PIL import Image
 
 from folhas_gutto import FOLHAS_GUTTO
+from folhas_raiclaven import FOLHAS_RAICLAVEN
 from gerar_folhas import FOLHAS_PENGARO
 from recortar_quadros import PE_DE_TRAS, PIVO, RAIZ, fatias, ponto_ancora, tira_fundo
 
 # Qual lutador: LUTADOR=gutto python ferramentas/animar_folha.py ... (padrão: pengaro)
 LUTADOR = os.environ.get("LUTADOR", "pengaro")
-FOLHAS_LUTADOR = FOLHAS_GUTTO if LUTADOR == "gutto" else FOLHAS_PENGARO
+FOLHAS_LUTADOR = {"gutto": FOLHAS_GUTTO, "raiclaven": FOLHAS_RAICLAVEN}.get(LUTADOR, FOLHAS_PENGARO)
 FOLHAS = RAIZ / "sprites" / LUTADOR / "quadros/folhas"
 QUADROS = RAIZ / "sprites" / LUTADOR / "quadros"
 BLENDER = Path(os.environ.get("BLENDER", Path.home() / "blender/blender-4.5.15-windows-x64/blender.exe"))
@@ -37,7 +38,7 @@ PASSO = 8  # um vértice a cada 2 pixels do quadro final
 LARG, ALT = 360, 260  # mesma tela dos sprites do jogo, com folga para chute alto e salto
 DESLOCA = (180 - PIVO[0], 220 - PIVO[1])  # do pivô antigo para os pés na tela do jogo
 MEIOS = 6  # quadros do meio entre dois desenhos
-ESCALA_2172 = {"pengaro": 0.40, "gutto": 0.33}[LUTADOR]  # a figura em pé dá ~111 px numa folha de 2172 de largura; a escala segue a largura da folha (o Gutto sai maior na folha, 340 px contra 278)
+ESCALA_2172 = {"pengaro": 0.40, "gutto": 0.33, "raiclaven": 0.33}[LUTADOR]  # a figura em pé dá ~111 px numa folha de 2172 de largura; a escala segue a largura da folha (o Gutto sai maior na folha, 340 px contra 278)
 # Ginga: 8 desenhos + 8 x 7 = 64 quadros, um ciclo em cerca de 2 segundos. Andar: 8 + 8 x 5 = 48 quadros.
 LOOPS = {"ginga_fluida": ("ginga", 7), "anda_fluida": ("anda", 5), "ginga_endiabrada": ("ginga_endiabrada", 7),
          "e_anda_fluida": ("e_anda", 5)}
@@ -45,6 +46,8 @@ LOOPS = {"ginga_fluida": ("ginga", 7), "anda_fluida": ("anda", 5), "ginga_endiab
 # Folhas em que o ChatGPT desenhou a figura maior que na referência: guarda medida contra a ginga (113 px).
 AJUSTE = {"lata": 0.89, "derrota": 0.89} if LUTADOR == "gutto" else {}
 LIMPA_MAGENTA = {"endiabrado", "despertar_a", "despertar_b", "ginga_endiabrada"} if LUTADOR == "gutto" else set()
+if LUTADOR == "raiclaven":  # tesoura e camisa escuras: o magenta vaza na borda de todas as folhas
+    LIMPA_MAGENTA = set(FOLHAS_RAICLAVEN) | {"ginga_fluida", "anda_fluida"}
 POR_CELULA = {"despertar_b", "ginga_endiabrada", "endiabrado"}  # e todas as folhas e_<golpe>, as versões endiabradas
 
 
@@ -116,7 +119,7 @@ def poses(folha, ancora):
     """Corta a folha e devolve as poses alinhadas no chão, 4x maiores que o quadro final."""
     img = Image.open(folha)
     fator = ESCALA_2172 * 2172 / img.width * AMPLIA * AJUSTE.get(Path(folha).stem, 1)
-    if Path(folha).stem in POR_CELULA or Path(folha).stem.startswith("e_") or LUTADOR == "gutto":  # o Gutto: sempre por célula (golpes que avançam encostam nas figuras vizinhas)
+    if Path(folha).stem in POR_CELULA or Path(folha).stem.startswith("e_") or LUTADOR in ("gutto", "raiclaven"):  # Gutto e Raiclaven: sempre por célula (golpes que avançam encostam nas figuras vizinhas)
         return por_celula(img, fator)
     saida = []
     for q in fatias(tira_fundo(img), 8):
