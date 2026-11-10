@@ -55,6 +55,35 @@ FOLHAS_RAICLAVEN = {
 }
 
 
+# ---------------------------------------------------------------- Despertar: o CIENTISTA LOUCO (pedido do Breno, 2026-11-10)
+# Referência: folhas/cientista_modelo.png (anexada em todo pedido). Ele penteia o cabelo, põe os óculos, grita e o jaleco vem
+# voando e gruda nele. No Despertar ele luta parado, fazendo pose e dando ordens, e as criaturas do laboratório atacam.
+# As criaturas são monstros de laboratório inventados (pele costurada cinza-esverdeada, parafusos, olhos verdes), nunca
+# pessoas reais nem pessoas com deficiência (regra de conteúdo do jogo).
+CIENTISTA = {
+    "despertar_a": "penteia o cabelo para trás, põe os óculos de lente verde, sorri e começa a gritar",
+    "despertar_b": "grita, o jaleco vem voando, enrola e gruda nele, tubos e luvas encaixam, termina na pose de cientista",
+    "endiabrado": "8 poses: parado esfregando as luvas, andando, agachado examinando, apontando a tesoura (ordem), rindo de braços "
+                  "para cima, jogando tubo de ensaio, estalando os dedos, pulinho com o jaleco abrindo",
+    "e_anda": "andar de cientista na ponta dos pés", "e_agachado": "agacha e anota numa prancheta",
+    "e_pulo": "pulo com o jaleco abrindo como asa", "e_defesa": "defende com a prancheta e a tesoura",
+    "e_apanha": "apanha e os óculos entortam", "e_queda": "cai e os tubos se espalham", "e_levanta": "levanta ajeitando os óculos",
+    "e_soco": "estala os dedos (faísca verde), aponta e dá uma tesourada rápida",
+    "e_martelo": "ergue a tesoura como batuta de maestro e manda o ataque pesado",
+    "e_bola": "joga um tubo de ensaio verde (granada)", "e_cabecada": "tesoura para cima com choque verde (antiaéreo)",
+    "e_agarrao": "agarra e aplica uma seringa gigante de líquido verde", "e_rolamento": "some numa fumaça verde e reaparece",
+    "e_golaco": "super: raios verdes de laboratório em volta enquanto ri", "e_provoca": "anota na prancheta e balança a cabeça",
+    "e_vitoria": "ergue o tubo, ri e faz reverência", "e_derrota": "senta no chão com óculos quebrados",
+    "mutante_brutamontes": "brutamontes de um braço gigante costurado: pancada de cima para baixo",
+    "mutante_rasteiro": "criatura de quatro, rápida, morde baixo no tornozelo",
+    "mutante_saltador": "criatura de pernas de sapo com molas: salta e mergulha com as garras (antiaéreo e ataque aéreo)",
+    "clone_cabelo": "clone fracassado feito de cabelo vivo: chicotadas de cabelo",
+    "experimento_principal": "EXPERIMENTO 01, a criação principal: criatura alta, costurada, cabelo trançado com fios, braços "
+                             "longos, golpe duplo de garra e giro",
+    "fila_clientes": "cliente hipnotizado de olhos de coração e capa de barbeiro, andando (Fila de Clientes)",
+}
+
+
 def pedido(nome):
     return CABECA + FOLHAS_RAICLAVEN[nome][1]
 

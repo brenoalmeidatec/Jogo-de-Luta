@@ -34,6 +34,26 @@ Tudo na tela é pixel art desenhada à mão no estilo SNES/arcade. Nunca 3D pixe
   provocação), Borrifada, Máquina Explosiva e Fila de Clientes com arte própria, efeitos prateados, retrato e áudios.
   Não filmado: a captura de tela pegou outra janela por cima do jogo.
 
+## Despertar novo: o Cientista Louco (pedido do Breno, 2026-11-10; branch `raiclaven`)
+
+Substitui o "Surto de Tesoura" descrito no fim desta ficha.
+
+- **Transformação:** penteia o cabelo para trás, põe óculos de lente verde, grita, e o jaleco vem voando e gruda nele
+  (`despertar_a`, `despertar_b`). Modelo aprovado: `folhas/cientista_modelo.png`.
+- **Estilo de luta:** muda tudo. Ele fica quase parado, fazendo pose, estalando os dedos e dando ordens com a tesoura, e
+  as criaturas do laboratório lutam por ele. Golpes dele mesmo: tubo de ensaio (projétil), seringa (agarrão), choque
+  verde para cima (antiaéreo), fumaça verde (teleporte) e o super de raios.
+- **Criaturas (monstros de laboratório inventados):** Brutamontes (braço gigante), Rasteiro (morde baixo), Saltador
+  (pula e mergulha), Clone de Cabelo (chicotes de cabelo), **Experimento 01** (a criação principal, ataque principal dele)
+  e os Clientes hipnotizados da Fila de Clientes.
+- **Limite de conteúdo:** as criaturas não são pessoas com deficiência nem pessoas reais (regra do jogo). O pedido de
+  usar deficientes e uma mulher real como arma não entrou; a "mulher torta e estranha" virou o Experimento 01, uma criatura
+  inventada.
+- **Folhas prontas (26):** `despertar_a`, `despertar_b`, `endiabrado` (8 poses), 17 folhas `e_<golpe>` do cientista e
+  6 das criaturas. Pedidos em `CIENTISTA` de `ferramentas/folhas_raiclaven.py`.
+- **Ainda não está no jogo** (pedido do Breno): falta cortar, ligar as criaturas como ajudantes que atacam e montar o
+  Despertar no gerador.
+
 ## Correntes (3 golpes + finalizador)
 
 | Botão | 1º | 2º | 3º | Finalizador (derruba) |
