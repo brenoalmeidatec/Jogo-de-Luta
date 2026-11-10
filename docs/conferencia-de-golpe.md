@@ -22,14 +22,22 @@ Roteiro fixo para fechar qualquer golpe ou lutador antes de subir na `mugen`. Ca
       2 ticks, pose que estala, pé que sobe ou afunda, corpo que desliza, figura que muda de tamanho, emenda de loop) e
       o que o olho pega e a régua não pega (antecipação, smear, continuação, easing; regra 7.2). Não suba ação com
       tick acusado sem dizer, na entrega, por que ele ficou. Para o movimento pela tela, faça também uma filmagem curta
-      no jogo: `python ferramentas/filmar_luta.py PASTA --segundos 10`.
+      no jogo, pela sandbox (regra abaixo): `python ferramentas/filmar_sandbox.py --p1 X --golpes "<comandos>"`.
+- [ ] **Filmagem curta no jogo é sempre dentro do Windows Sandbox.** `python ferramentas/filmar_sandbox.py --p1 X --p2 Y
+      [--segundos 5-10] [--despertar N] [--golpes "x,garrafa_x,holddown+a"] [--saida PASTA]` abre uma sandbox sem rede e
+      sem vGPU (OpenGL por software do Mesa, em `%USERPROFILE%/JogoDeLuta/ferramentas_sandbox/mesa`), roda a luta e
+      grava `luta.mp4` 1280x720 a 60 fps lá dentro; a sandbox fecha sozinha. `--golpes` põe o P1 a 28 px do P2 parado e
+      repete os comandos do `.cmd` (sem ele, IA 8 x IA 8). O gdigrab da sandbox não passa de ~31 fps reais, então o
+      jogo roda a 1/4 da velocidade (`--lenta 4`) e o vídeo é retimado: cada quadro é ~1 tick, e `ticks.txt` confere.
+      **Não use `filmar_luta.py`**: ele fotografa a tela do PC e já pegou a tela de bloqueio e janelas pessoais do dono.
+      Só uma sandbox abre por vez; leva ~70 s (5 s) a ~90 s (10 s).
 
 ## Jogo
 
 - [ ] `python ferramentas/verificar_pengaro.py` e `--hazaki` passam.
 - [ ] `python ferramentas/testar_pengaro.py`: o robô entra em cada golpe, acerta e volta ao controle (126+ verificações).
-- [ ] `python ferramentas/filmar_luta.py PASTA --despertar 12`: olhe a folha `contato.png` e os quadros suspeitos em
-      tamanho real. Procure efeito fora do golpe, mancha, rastro escuro, troca de forma pulando de lugar.
+- [ ] `python ferramentas/filmar_sandbox.py --despertar 2 --saida PASTA`: tire quadros do `luta.mp4`
+      (`ffmpeg -i luta.mp4 -vf fps=4,scale=320:-2,tile=6x7 contato.png`) e olhe os suspeitos em tamanho real. Procure efeito fora do golpe, mancha, rastro escuro, troca de forma pulando de lugar.
 
 ## Efeitos
 

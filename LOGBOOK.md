@@ -151,3 +151,16 @@ código e os sprites vieram por `gh api` (zip e blobs) e os commits saíram pela
 - **Não visto no jogo por pessoa:** fluidez, a tela de VS carregando e a janela com `WindowScaleMode = 0`. O motor foi visto
   por foto do próprio framebuffer (Raiclaven x Hazaki com link, poses certas). Já existia: Hazaki arremessado pelos outros
   some (o .sff dele não tem os 25 desenhos de vítima; `verificar --hazaki` agora avisa).
+
+## 2026-11-10 — Filmagem do jogo dentro do Windows Sandbox (Claude)
+
+- **Feito:** `ferramentas/filmar_sandbox.py` (+ `ferramentas/robo/golpes.lua`). Monta um `.wsb` sem rede e sem vGPU
+  (motor, repo, Mesa e ffmpeg somente leitura; só a saída gravável), roda P1 x P2 com OpenGL por software (Mesa 26.2.6
+  llvmpipe, mesa-dist-win mingw x64, sha256 do .7z igual ao publicado, em `%USERPROFILE%/JogoDeLuta/ferramentas_sandbox/mesa`)
+  e grava `luta.mp4` com gdigrab lá dentro. Motivo: `filmar_luta.py` fotografava a tela do dono.
+- **Medido:** gdigrab na sandbox para em ~31 fps reais (BitBlt; `ddagrab` não abre sem GPU). Solução: jogo a 1/4
+  (`setAccel` no início do round, `TickInterpolation = 0`), captura a 15 fps, retimado para 60. Prova Pengaró x Hazaki
+  10 s: 1280x720, 600 quadros a 60/1, 607 ticks contados, 562 quadros distintos (os iguais são pose parada ou jitter).
+  Escala de 125% herdada do host exigia `__COMPAT_LAYER=HighDpiAware` (sem isso a janela vinha 1600x900 recortada).
+- **Pendente:** `--despertar` dentro da sandbox não foi filmado (lógica copiada do `filmar_luta.py`). `como-trabalhar.md`
+  ainda cita o `filmar_luta.py` no estado de 2026-11-07.
