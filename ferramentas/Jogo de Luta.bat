@@ -67,6 +67,9 @@ try {
                 [pscustomobject]@{ caminho = "$nome/$($_.path)"; sha = $_.sha }
             })
         }
+        # Os .def por ultimo e o system.def do motif no fim de tudo: se a rede cair no meio, o marcador que liga o
+        # layout (e o .def de cada lutador) so existe quando os arquivos que ele cita ja chegaram.
+        $arquivos = @($arquivos | Sort-Object { $_.caminho -eq 'motif/nazafight/system.def' }, { $_.caminho -like '*.def' }, caminho)
         $wc = New-Object Net.WebClient
         $wc.Headers.Add('User-Agent', 'JogoDeLuta')
         $i = 0
@@ -84,6 +87,9 @@ try {
             $manif[$caminho] = $a.sha
             $mudou = $true
         }
+        # Esquece arquivos que sairam do repositorio; senao o atalho acima nunca mais vale se um deles sumir do disco.
+        $noRepo = @{}; foreach ($a in $arquivos) { $noRepo[$a.caminho] = $true }
+        foreach ($k in @($manif.Keys)) { if ($k -ne '@commit' -and -not $noRepo.ContainsKey($k)) { $manif.Remove($k) } }
         $manif['@commit'] = $commit
         $mudou = $true
         Write-Host 'Jogo atualizado!' -ForegroundColor Green
@@ -170,7 +176,14 @@ if (Test-Path $cfg) {
     $t = [IO.File]::ReadAllText($cfg)
     $t = [regex]::Replace($t, '(?im)^WindowTitle\s*=[^\r\n]*', 'WindowTitle       = Nazafight')
     if (Test-Path $motifDef) {
-        $t = [regex]::Replace($t, '(?im)^Motif\s*=[^\r\n]*', 'Motif             = data/nazafight/system.def')
+        $linha = 'Motif             = data/nazafight/system.def'
+        if ($t -match '(?im)^Motif\s*=') {
+            $t = [regex]::Replace($t, '(?im)^Motif\s*=[^\r\n]*', $linha)
+        } else {
+            # Sem a linha o IKEMEN usa o motif padrao: poe logo abaixo do [Config], com a quebra de linha do arquivo.
+            $nl = if ($t -match "`r`n") { "`r`n" } else { "`n" }
+            $t = ([regex]'(?im)^\[Config\][^\r\n]*').Replace($t, ('$0' + $nl + $linha), 1)
+        }
     }
     $t = [regex]::Replace($t, '(?im)^(VsScreenLoading\s*=)[^\r\n]*', '${1} 1')
     $t = [regex]::Replace($t, '(?im)^(WindowScaleMode\s*=)[^\r\n]*', '${1} 0')

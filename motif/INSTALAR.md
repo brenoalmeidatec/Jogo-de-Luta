@@ -12,10 +12,14 @@ O `ferramentas/Jogo de Luta.bat` já instala o motif sozinho. O que ele faz, na 
    O atalho "já está na versão mais nova" exige o mesmo sha de commit **e** que existam os marcadores
    `jogo\chars\pengaro\pengaro.def` e `jogo\motif\nazafight\system.def` e todo arquivo listado no manifesto: se
    faltar qualquer um, ele busca as listas de novo e baixa só o que falta.
+   Os `.def` baixam por último e `motif/nazafight/system.def` no fim de tudo: se a rede cair no meio da primeira
+   instalação, o marcador não existe, o passo 2 não copia nada e o jogo abre no layout antigo em vez de apontar para
+   um motif sem `system.sff`. Arquivos que saíram do repositório saem do manifesto.
 2. **Cópia (logo depois dos lutadores).** `robocopy /MIR` de `jogo\motif\nazafight` para `ikemen\data\nazafight`, só
    essa pasta. O `/MIR` desfaz o que o `Ajustar-Menus` injetou da última vez; ele roda depois e injeta de novo.
 3. **Config (passo 4).** Na mesma leitura/escrita do `save\config.ini` que grava `WindowTitle = Nazafight`, se
-   `data\nazafight\system.def` existe, grava `Motif = data/nazafight/system.def`.
+   `data\nazafight\system.def` existe, grava `Motif = data/nazafight/system.def` (se o config não tem a linha `Motif`,
+   ela entra logo abaixo de `[Config]`).
 4. **Menus (passo 5).** O `Ajustar-Menus` lê o `Motif` do config e injeta `menu.done.key = s` / `done.key = s` em
    `data\nazafight\system.def`. O system.def gerado já traz vazias as seções que ele procura (`[Option Info]`,
    `[Pause Menu]`, `[Replay Info]`, `[Continue Screen]`).
