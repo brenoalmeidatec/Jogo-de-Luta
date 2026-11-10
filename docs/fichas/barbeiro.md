@@ -34,6 +34,55 @@ Tudo na tela é pixel art desenhada à mão no estilo SNES/arcade. Nunca 3D pixe
   provocação), Borrifada, Máquina Explosiva e Fila de Clientes com arte própria, efeitos prateados, retrato e áudios.
   Não filmado: a captura de tela pegou outra janela por cima do jogo.
 
+## Despertar novo: o Cientista Louco (pedido do Breno, 2026-11-10; branch `raiclaven`)
+
+Substitui o "Surto de Tesoura" descrito no fim desta ficha.
+
+- **Transformação:** penteia o cabelo para trás, põe óculos de lente verde, grita, e o jaleco vem voando e gruda nele
+  (`despertar_a`, `despertar_b`). Modelo aprovado: `folhas/cientista_modelo.png`.
+- **Estilo de luta:** muda tudo. Ele fica quase parado, fazendo pose, estalando os dedos e dando ordens com a tesoura, e
+  as criaturas do laboratório lutam por ele. Golpes dele mesmo: tubo de ensaio (projétil), seringa (agarrão), choque
+  verde para cima (antiaéreo), fumaça verde (teleporte) e o super de raios.
+- **Quem luta por ele (2ª versão, a 1ª de monstros de laboratório foi recusada pelo Breno):** clientes comuns da barbearia
+  que saíram errados da máquina e das poções dele, e a **Cliente Zero** presa na corrente.
+- **Limite de conteúdo:** ninguém aqui é pessoa com deficiência (cadeirante, microcefalia, deformidade de nascença) nem
+  pessoa real; o estranho vem do experimento dele (regra do jogo).
+- **Folhas:** `despertar_a`, `despertar_b`, `endiabrado` (8 poses), as `e_<golpe>` do cientista, `e_corrente_*` (ele
+  segurando a corrente), `mulher_*` (a Cliente Zero), `cobaia_*` e `fila_clientes`. Pedidos em `CIENTISTA` de
+  `ferramentas/folhas_raiclaven.py`.
+
+### Cliente Zero, a mulher na corrente (ataque principal)
+
+Era uma cliente comum; a máquina a deixou magra, cinzenta, torta, de cabelo vivo até o joelho e olhos verdes, mexendo aos
+trancos. Coleira de ferro no pescoço, corrente até a mão do cientista. Ela fica agachada como aranha na frente dele (ajudante
+que segue a posição dele, sem barra de vida própria; apanha junto com ele) e a corrente é desenhada entre os dois.
+
+| Golpe | Comando (Despertar) | Cientista | Cliente Zero | Papel |
+|---|---|---|---|---|
+| **Chicotada** | x | `e_corrente_chicotada`: estala a corrente | `mulher_chicotada`: bote com as duas garras | golpe médio rápido, alcance longo (a corrente estica) |
+| **Mangual** | y | `e_corrente_mangual`: gira acima da cabeça e desce | `mulher_mangual`: voa em arco e cai de cabeça e garras | **por cima** (defender em pé), derruba |
+| **Rasteira de Aranha** | ↓ + x | `e_corrente_parado` | `mulher_rasteja`: corre rente ao chão e volta puxada | **baixo**, avança meia tela |
+| **Pulo de Aranha** | ↓ + y | `e_corrente_parado` | `mulher_sobe`: salta e arranha para cima | **antiaéreo** |
+| **Abraço da Cliente** | → ← + y (agarrão) | `e_corrente_puxao`: puxa a corrente de volta | `mulher_agarra`: gruda no oponente | agarra a distância e **traz o oponente** até o cientista, que encerra com a seringa (`e_agarrao`) |
+| **Corrente Giratória** | super, ← → ↓ + x + y | `e_corrente_giro`: gira como arremesso de martelo | `mulher_mangual` em volta dele | 4 a 6 acertos dos dois lados, empurra |
+
+### Cobaias da barbearia (especiais de invocação)
+
+Cada uma entra por uma porta de fumaça verde atrás do cientista, faz um ataque e some. Ele só estala os dedos (`e_soco`) ou
+manda com a tesoura (`e_martelo`). Só uma cobaia por vez na tela.
+
+| Cobaia | Comando | Ataque | Papel |
+|---|---|---|---|
+| **Pescoço de Borracha** (`cobaia_pescoco`) | ↓ → x/y | o pescoço estica e dá cabeçada na altura da cabeça | **cutucada de longe**, forte vai mais longe |
+| **Cabelo Tentáculo** (`cobaia_tentaculo`) | ↓ ← x/y | tentáculos de cabelo varrem o chão e prendem o tornozelo | **baixo** que segura o oponente por um instante |
+| **Cabeça Virada** (`cobaia_avesso`) | → ↓ a/b | anda de costas, pula em arco e chuta caindo | **por cima / cruzado**, chega pelas costas |
+| **Balão de Gel** (`cobaia_gel`) | ↓ → a/b | rola até o oponente e estoura em gel | **projétil** que deixa poça de gel que escorrega e atrasa |
+
+Golpes dele mesmo continuam: tubo de ensaio (← ↓ x/y), choque verde para cima, fumaça verde (teleporte) e o super
+**Fila de Clientes** (clientes hipnotizados de olho de coração que passam pelo oponente e cortam o cabelo dele).
+- **Ainda não está no jogo** (pedido do Breno): falta cortar, ligar as criaturas como ajudantes que atacam e montar o
+  Despertar no gerador.
+
 ## Correntes (3 golpes + finalizador)
 
 | Botão | 1º | 2º | 3º | Finalizador (derruba) |

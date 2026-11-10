@@ -55,6 +55,44 @@ FOLHAS_RAICLAVEN = {
 }
 
 
+# ---------------------------------------------------------------- Despertar: o CIENTISTA LOUCO (pedido do Breno, 2026-11-10)
+# Referência: folhas/cientista_modelo.png (anexada em todo pedido). Ele penteia o cabelo, põe os óculos, grita e o jaleco vem
+# voando e gruda nele. No Despertar ele luta parado, fazendo pose e dando ordens, e quem ataca são as cobaias e a Cliente Zero.
+# O estranho delas vem do experimento dele: nunca pessoas reais nem pessoas com deficiência (regra de conteúdo do jogo).
+CIENTISTA = {
+    "despertar_a": "penteia o cabelo para trás, põe os óculos de lente verde, sorri e começa a gritar",
+    "despertar_b": "grita, o jaleco vem voando, enrola e gruda nele, tubos e luvas encaixam, termina na pose de cientista",
+    "endiabrado": "8 poses: parado esfregando as luvas, andando, agachado examinando, apontando a tesoura (ordem), rindo de braços "
+                  "para cima, jogando tubo de ensaio, estalando os dedos, pulinho com o jaleco abrindo",
+    "e_anda": "andar de cientista na ponta dos pés", "e_agachado": "agacha e anota numa prancheta",
+    "e_pulo": "pulo com o jaleco abrindo como asa", "e_defesa": "defende com a prancheta e a tesoura",
+    "e_apanha": "apanha e os óculos entortam", "e_queda": "cai e os tubos se espalham", "e_levanta": "levanta ajeitando os óculos",
+    "e_soco": "estala os dedos (faísca verde), aponta e dá uma tesourada rápida",
+    "e_martelo": "ergue a tesoura como batuta de maestro e manda o ataque pesado",
+    "e_bola": "joga um tubo de ensaio verde (granada)", "e_cabecada": "tesoura para cima com choque verde (antiaéreo)",
+    "e_agarrao": "agarra e aplica uma seringa gigante de líquido verde", "e_rolamento": "some numa fumaça verde e reaparece",
+    "e_golaco": "super: raios verdes de laboratório em volta enquanto ri", "e_provoca": "anota na prancheta e balança a cabeça",
+    "e_vitoria": "ergue o tubo, ri e faz reverência", "e_derrota": "senta no chão com óculos quebrados",
+    # quem luta por ele (2ª versão): clientes comuns que saíram errados da máquina e a Cliente Zero na corrente
+    "mulher_parada": "Cliente Zero: magra, cinzenta, cabelo vivo até o joelho, olhos verdes, coleira e corrente; agachada como aranha",
+    "mulher_chicotada": "Cliente Zero dá o bote com as duas garras, a corrente estica",
+    "mulher_mangual": "Cliente Zero voa em arco puxada pela corrente e cai de cabeça e garras",
+    "mulher_agarra": "Cliente Zero salta e gruda no oponente com braços, pernas e cabelo",
+    "mulher_rasteja": "Cliente Zero corre rente ao chão como aranha (loop)",
+    "mulher_sobe": "Cliente Zero salta e arranha para cima (antiaéreo)",
+    "e_corrente_parado": "cientista parado segurando a corrente (loop)",
+    "e_corrente_chicotada": "cientista estala a corrente para a frente",
+    "e_corrente_mangual": "cientista gira a corrente acima da cabeça e desce",
+    "e_corrente_puxao": "cientista puxa a corrente de volta, mão sobre mão",
+    "e_corrente_giro": "super: cientista gira em volta de si como arremesso de martelo",
+    "cobaia_pescoco": "cliente de pescoço de borracha: estica e dá cabeçada de longe",
+    "cobaia_tentaculo": "cliente de cabelo tentáculo: varre o chão e prende o tornozelo",
+    "cobaia_avesso": "cliente de cabeça virada: anda de costas, pula em arco e chuta caindo",
+    "cobaia_gel": "cliente inchado de gel: rola até o oponente e estoura numa poça de gel",
+    "fila_clientes": "cliente hipnotizado de olhos de coração e capa de barbeiro, andando (Fila de Clientes)",
+}
+
+
 def pedido(nome):
     return CABECA + FOLHAS_RAICLAVEN[nome][1]
 
