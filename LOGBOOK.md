@@ -269,3 +269,23 @@ determinístico: rodei 2 vezes e deu o mesmo hash.
 VS); o certo é redesenhar o 9000,0 em 25x25 na paleta, em `chars/`. (2) O `.bat` (`motif/INSTALAR.md`) não mudou. (3)
 **Não conferido na tela:** a direção real do esvaziamento, a posição da tarja e do retrato e o "08" só se confirmam com
 filmagem (`ferramentas/filmar_luta.py`) ou com o Breno olhando.
+
+## 2026-11-10 (tarde) — sandbox, layout no launcher, estilo seco, pipeline arcade
+
+- **Testes só na sandbox** (regra do dono): `ferramentas/sandbox.py` roda o IKEMEN dentro do Windows Sandbox (sem rede, sem vGPU,
+  Mesa llvmpipe) e espera a vez; `testar_pengaro.py` usa a sandbox por padrão (146 PASS em 86 s); `filmar_luta.py` só com
+  `--local`; `filmar_sandbox.py` filma a 60 fps de tempo de jogo (o jogo roda a 1/4 e o vídeo é retimado).
+- **Layout Nazafight** (título, seleção, VS, HUD) mesclado (eee2800) e instalado pelo launcher (1684d87, 6b7f275): baixa
+  `motif/` por manifesto, espelha em `ikemen/data/nazafight`, grava `Motif =` no config; `.def` por último, para queda de rede
+  não ligar motif pela metade. Visto na sandbox (título → seleção → luta, sem panic). Falta: retratos 9000,x na paleta; uma
+  pessoa olhar o HUD rodando.
+- **Estilo seco de arcade** no Pengaró (adde1e6): golpes, reações e defesa com contato segurado no hitstop e recuperação em
+  poses; sem tremida de tela; faísca 8 ticks. Filmado na sandbox; a super (clarão de 4 ticks) ainda não foi filmada.
+- **Pipeline arcade** (453680f): `quantizar_folha.py` (paleta fixa 15 cores), `conferir_arte.py`, `animar_folha.py --arcade`;
+  fichas e fila de 117 folhas em `docs/arcade/`. 7 folhas do Pengaró em `sprites/pengaro/quadros/folhas_arcade/` (8734ee1).
+  Nada das folhas arcade está ligado nos geradores ainda.
+- Blender 4.5.15 em `C:/Dev/Tools/Blender` (o 4.5.14 foi apagado a pedido).
+- **Próximo:** terminar a fila no ChatGPT (um agente gerando; downloads pedem clique em Salvar), ligar `folhas_arcade` nos
+  geradores (golpes como poses secas, Blender só em ginga/andar/pulo), depois pente fino de animação e anatomia em todos.
+  Decisões que ficaram com o Breno: diagonal/meia-lua (a regra proíbe hoje), Hazaki rival ou boneco, transformações por
+  paleta ou folha própria.
