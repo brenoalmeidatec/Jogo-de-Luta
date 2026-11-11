@@ -658,3 +658,25 @@ de base dele estão naquela branch. Só olhei os conceitos em tamanho reduzido.
 ficha; o chapéu do Hazak furado pelos chifres contra os golpes de chapéu; a Juliet Voadora do CK com o óculos nos olhos.
 
 **A seguir:** gerar o Grupo 1 dos quatro no ChatGPT (um chat por boss), começando pela ginga de cada um.
+
+## 2026-11-11 — Hazak boss, Grupo 1 gerado (12 folhas de arte bruta) (Claude, sessão do LightWolfMan)
+
+**Feito:** as 12 folhas do Grupo 1 do Hazak boss (`docs/arcade/fila_bosses.md`) geradas no ChatGPT, chat novo
+"Hazak boss" (https://chatgpt.com/c/6af4a584-a06c-83e8-b91d-7175f5fa6b58), e salvas em
+`sprites/hazaki/quadros/folhas_arcade/`: `d_parado`, `d_anda`, `d_tapa_anel`, `d_sapato_canela`, `d_apanha`, `d_queda`,
+`d_levanta`, `d_defesa`, `d_agachado`, `d_pulo`, `d_maleta_giro`, `fx_aura_asas`. Todas com 8 quadros separados e borda
+limpa (medido). Só arte bruta: nenhum gerador, `chars/` ou teste no motor.
+
+**Com ressalva (conferido em folha de contato reduzida):**
+- Escala: em pé o boss mede 385-393 px com chifres e sola em y≈561-571 (o normal mede 344 sem chapéu, sola em 536).
+  `d_maleta_giro` saiu ~9% menor (355 px, sola 540) e com a maleta perto do corpo (alcance curto); `d_apanha` ~5% menor
+  (371 px) e cai encolhido, não deitado reto.
+- `d_queda`: corpo deitado ~10% menor que o do normal e chão em y=415; o chapéu no peito tem dois calombos escuros.
+- `d_levanta`: q1 tem o chapéu no peito COM chifres (quatro chifres no quadro); sobretudo some em q1-3.
+- `d_pulo`: arco mais baixo que o do normal (sobe ~217 px contra ~285).
+- `d_parado`: parece haver uma segunda ponta de rabo entre as pernas, atrás da maleta.
+- `fx_aura_asas`: par de asas de 262 x ~200 px por célula (limite da célula de 271 px); para cobrir o lutador como no
+  conceito o motor teria de ampliar ~2x. Quase não mexe em q1-5; as notas soltas aparecem só em q6-8.
+
+**A seguir:** Grupo 2 do Hazak (43 folhas). Decidir se a aura de asas vale ser refeita em resolução maior (grade 4x2
+ou uma asa só espelhada), o que foge do padrão de 8 quadros em uma fileira.
