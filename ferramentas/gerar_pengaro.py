@@ -1461,8 +1461,10 @@ PASTA_ARCADE = {}
 # golaco 1: bebe com a mão da FRENTE e a de trás fica vazia; repete o 0 (gole com a mão de trás).
 # vitoria 3 a 7: bebe com a mão da frente (3, 4, 5) e segura a garrafa no peito (6, 7). A comemoração fica nos três
 # desenhos bons: ginga (0), garrafa subindo (1) e garrafa erguida (2), com um segundo brinde (1, 2) e a pose final no 2.
+# bola 2 (retoque 2): os dois braços saem do ombro de trás (um ergue a lata, o outro segura a garrafa) e o ombro da
+# frente fica sem braço; repete o 3 (o braço da lata já armado no alto), que é para onde o 2 ia.
 REPETE_ARCADE = {("golaco", 1): 0, ("vitoria", 3): 2, ("vitoria", 4): 1, ("vitoria", 5): 2, ("vitoria", 6): 2,
-                 ("vitoria", 7): 2}
+                 ("vitoria", 7): 2, ("bola", 2): 3}
 # Forma endiabrada das folhas novas que não têm e_<folha>: empresta o desenho endiabrado que a ação já usava
 # (correr = andar endiabrado; recuo = e_defesa 6), para o Despertar não mudar.
 ENDIABRADO_EMPRESTADO = {"corre": lambda i: ("anda_fluida", (0, 1, 2, 2, 3, 4, 5, 5)[i]), "recuo": lambda i: ("defesa", 6)}
@@ -1490,9 +1492,11 @@ CAIXA_ARCADE = {322: (12, -26, 78, -10), 342: (12, -26, 78, -10), 601: (12, -76,
                 1500: (8, -68, 60, -44), 1501: (8, -68, 60, -44)}
 # Clsn1 da variante despertada (1xxxx) quando o desenho endiabrado bate em outra altura: (ação normal) -> caixa.
 # 240: o chute endiabrado é mais alto (pé em x 61, y -114..-101); a caixa herdada ficava embaixo do pé, 19 px atrás.
-# 230, 1500, 1501 (Lote 6): a caixa normal subiu para a perna do chute arcade; o chute endiabrado (e_chute_baixo) não
-# foi redesenhado e continua baixo, então a variante despertada fica com a caixa que sempre teve.
-CAIXA_DESPERTADA = {240: (20, -116, 72, -58), 230: (12, -56, 58, -42), 1500: (8, -37, 64, -2), 1501: (8, -37, 64, -2)}
+# 230, 1500, 1501 (retoque 2 do Lote 6): o chute endiabrado (e_chute_baixo 3) também bate na altura da barriga (perna em
+# y -78..-60, pé em x 58). A caixa antiga ficava abaixo da perna: 0 pixel do desenho dentro dela no pisão (11500/11501,
+# alcance 20) e 20 px aquém do pé no 10230. Fica na perna, com o recuo de 8 px que toda variante despertada tem.
+CAIXA_DESPERTADA = {240: (20, -116, 72, -58), 230: (20, -78, 54, -58), 1500: (16, -78, 52, -58),
+                    1501: (16, -78, 52, -58)}
 
 
 def pasta_da_folha(folha):

@@ -593,3 +593,49 @@ compasso 4 e corrida, o pé de apoio pode andar alguns px entre desenhos); `gera
 
 **Pendente:** redesenhar golaco 2 e vitoria 4 a 8 se quiser os desenhos próprios; `despertar_a/b` e as `e_*`; grupo E
 do Lote 6 (opcional).
+
+## 2026-11-11 (Lote 6, retoque 2): achados da revisão cética do Pengaró arcade
+
+**Corrigido** (`ferramentas/retoques_arcade/lote6_retoque2.py` aplica os quatro retoques de PNG; rodar de novo não muda nada):
+
+- **Caneta flutuava 4 px** (349, 1300, 1301): `caneta` 0, 1, 2, 6, 7 terminavam na linha 214/215; desceram para a 219.
+  Medido no `.sff` final: base no chão em toda ação < 9000 fora os três quadros de voo da corrida (100.2, 100.3, 100.6).
+- **Mancha lilás/roxa no rosto da guarda** (`defesa` 3, 18 pixels): viraram pele e contorno.
+- **Cabelo nos vinhos da pele**: `compasso` 1 a 5 e `lata` 4 repintados (vinhos ligados ao cabelo dentro da caixa da
+  cabeça viram o escuro 33,2C,20).
+- **Garrafa trocando de lado no agarrão**: `agarrao` 4 e 5 (de costas) espelhados. O critério da casa fica um só:
+  garrafa e caneleira do lado de trás da TELA também nas vistas de costas (como já era em armada 2/3 e bola 3).
+- **bola 2** (dois braços saindo do ombro de trás): `REPETE_ARCADE[("bola", 2)] = 3`. A 1000/1001 arma direto com o
+  braço no alto; a 1600/1601 segura o desenho 3 por 9 + 6 ticks. Ticks iguais.
+- **Caixas do chute/pisão despertados** (`CAIXA_DESPERTADA`): o `e_chute_baixo` 3 também bate na barriga (perna em
+  y -78..-60, pé em x 58); a justificativa "continua baixo" estava errada. 10230: `(12,-56,39,-42)` para
+  `(20,-78,54,-58)`; 11500/11501: `(8,-37,20,-2)` (0 pixel do desenho dentro) para `(16,-78,52,-58)`. **Muda no jogo:**
+  alcance do pisão despertado de 20 para 52 e do chute B despertado de 39 para 54. É a única diferença no `.air`; o
+  `.cns` não mudou. `verificar_pengaro.py` deixou de avisar 11500/11501 (14 ações com aviso, 27 elementos).
+
+**Recusado, com motivo:**
+
+- Cabelo de `rolamento` 3: está no escuro certo; a contagem é baixa porque a cabeça está de ponta-cabeça e meio
+  escondida. Soco (`soco/meio/03_5`, `03_6`): a "tonsura" clara é o brilho do topo da cabeça do modelo, igual na ginga 3
+  e nos desenhos-chave soco 3, 4 e 5; não é defeito de quantização.
+- Armada 1200 x 1201: a diferença é de projeto (`60 + 8 * i`, fraca e forte). O ajuste automático só encurta caixa; o
+  1201 aparecia com 60 porque o desenho antigo o cortava.
+- Caixas 11 a 12 px além do membro (302, 311, 343, 344, 3410, 3431, 303, 3412, 3435, 3402, 3100): dentro do teto da
+  regra 8.3 (12 px); vêm de `SOBRA_MAXIMA_CLSN1`, porque a ação serve também à forma endiabrada.
+
+**Mudanças de caixa do commit 15004fb que ficaram fora da tabela dele** (conferidas, sem defeito): 840 alcance 40 para
+43 (o ajuste encurta menos com o desenho novo); 440 `(12,-22,78,-6)` para `(12,-18,78,-2)` e 10440 idem (saiu a ação
+escrita à mão do `chute_agachado`; voltou a caixa da `sequencia`); 3100/13100 com larguras novas nos elementos do giro
+(alcance máximo 90 igual); `[RemapPreset despertado]` de 772 para 494 linhas (menos sprites de quadro do meio).
+
+**Pendente (só sai com desenho novo ou decisão de jogo):** `bola` 2 de verdade (lata erguida com o braço da FRENTE);
+840 (agarrão agachado) usa o `agarrao` 2 em pé com a caixa na altura da coxa, falta um desenho de bote baixo (o
+`agarrao` 7 serviria, não troquei); 800/830 com a caixa 17 px aquém do punho (alcance de agarrão, de projeto); 3100.3 e
+3100.7 com a caixa de 100 px de altura sobre a rasteira agachada; avisos `[endiabrado]` do verificador (as `e_*`).
+
+**Conferido:** robô na sandbox depois da versão final (13:47 a 13:50, md5 de air/cns/sff igual antes e depois):
+**146 PASS / 0 FAIL**. Folhas de contato com caixa em `scratchpad/lote6/r2/` (C_caneta, C_agarrao_bola, C_desp,
+C_compasso_defesa_lata; z_cab2 = cabeças a 8x). **Não conferido:** nada filmado nem visto em movimento neste retoque;
+o robô não prova que o pisão despertado acerta com a caixa nova (não sei se há roteiro para 11500); `e_agarrao` 4/5 não
+foram espelhados (não olhei a forma endiabrada); Gutto, Raiclaven e Hazaki não foram regerados (o diff só toca
+`chars/pengaro`).
