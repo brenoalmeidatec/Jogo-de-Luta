@@ -535,3 +535,61 @@ imagem. Funcionou em `provoca` dizer "the arm on the LEFT side of the image is f
 to the mouth, the arm on the RIGHT side hangs empty"; em `golaco` e `vitoria` não pegou em todos os quadros. Pedir
 "magenta margin on all four sides" resolve corte na borda. Pendentes do Lote 6: grupo E (agachado, rasteirinha, queda,
 bicicleta), opcional.
+
+## 2026-11-11 (Lote 6 ligado): Pengaró normal inteiro na arte arcade, menos a cena do Despertar
+
+**Feito (`sprites/pengaro/quadros_arcade/`, `ferramentas/gerar_pengaro.py`, `chars/pengaro`):** as 17 folhas dos grupos
+A a D do Lote 6 foram convertidas e ligadas. `ARCADE` ganhou chute_baixo, defesa, bola, compasso, armada, caneta,
+rolamento, agarrao, golaco, lata, provoca, vitoria, derrota, corre e recuo; `rasteira` passou a ter pasta própria
+(`PASTA_ARCADE` vazio; `quadros_arcade/chute_agachado/` ficou em disco, sem uso); `anda` foi trocada pela folha nova.
+
+- **Conversão** (registro em `ferramentas/retoques_arcade/lote6_converter.py`, `lote6_cabelo.py`, `lote6_sementes.json`):
+  figuras separadas por peça ligada, tronco no eixo, base no chão (só `corre` guarda a altura dos quadros de voo),
+  paleta de 15 cores. Fator de escala só em `agarrao` (1.03) e `golaco` (0.917); as outras já vieram na escala da
+  ginga. Cabelo repintado em todos os quadros em que a quantização o levou para os vinhos da pele (cabeça achada pelo
+  topo da figura; 7 quadros com semente à mão; 12 quadros pulados porque o cabelo já estava escuro e o topo era a
+  garrafa ou a mão). `conferir_arte.py`: R1, R3, R4, R5 e R7 PASS nos 8 quadros das 17 folhas. **Rodar
+  `quantizar_folha.py` nessas folhas desfaz o cabelo e a escala.** Nenhum retoque de caneleira foi preciso.
+- **Desenhos com defeito, repetidos por outro da mesma folha** (`REPETE_ARCADE`): golaco 1 (bebe com a mão da frente)
+  vira o 0; vitoria 3 a 7 (bebe com a mão da frente, garrafa no peito) viram 2, 1, 2, 2, 2: a vitória é ginga,
+  garrafa subindo, garrafa erguida, segundo brinde e pose final com a garrafa no alto.
+- **Andar** (20/21): `LOOPS["anda_fluida"]` = desenhos 0, 2, 3, 4, 6, 7 em 6, 6, 5, 6, 6, 5 ticks (total 34, igual). Na
+  folha nova as duas pernas alternam e a base é a da ginga; a anterior levantava duas vezes a perna da caneleira.
+  `perna_de_tras_na_sombra` deixou de ser usada (era um remendo da folha antiga).
+- **Correr** (100): desenho próprio, os 8 da folha `corre` a 2 ticks (ciclo de 16; era o andar em 15). **Recuo** (105):
+  `recuo` 2 por 3 ticks e 3 até pousar (era a defesa inclinada). `corre` e `recuo` entraram no FIM de `FOLHAS`, para
+  nenhum outro sprite mudar de número. No Despertar as duas ações continuam com o desenho endiabrado de antes
+  (`ENDIABRADO_EMPRESTADO`: andar endiabrado e `e_defesa` 6).
+- **Desfeito:** o improviso da 1701 com a bola da levantada (volta a usar `rolamento`); o super 3100 voltou ao giro e à
+  armada (o giro agora é o compasso 4, perna esticada na frente: no 3 a perna ainda está atrás e a caixa do super não
+  tinha membro dentro); a ação 440 escrita à mão para o `chute_agachado` (a rasteira nova segue os índices da
+  `sequencia`); o corte da derrota no desenho 6 (vai até o 7).
+- **Caixas:** 230 sobe para a perna do chute novo, que bate na barriga: `(12,-66,62,-46)` (era `(12,-56,58,-42)`).
+  1500/1501: `(8,-68,60,-44)` (era `(8,-37,64,-2)`, abaixo da perna: o contato segurado caía no desenho da perna
+  dobrada e o alcance ia a 23). As variantes despertadas de 230, 1500 e 1501 ficam com a caixa antiga
+  (`CAIXA_DESPERTADA`), porque o `e_chute_baixo` não foi redesenhado.
+
+**Conferido:** comparação elemento a elemento do `.air` antes e depois: ticks de cada ação, início e duração do ativo
+iguais em todas, menos 100 (15 para 16), 105 (ganhou 3 ticks antes da pose sem fim) e 170 (um desenho a mais de 6
+ticks antes da pose final). A quantidade de elementos caiu nas ações das folhas novas (não há quadro do meio); os
+`AnimElem` do `.cns` foram renumerados pelo gerador e disparam no mesmo tick. No `.cns`, fora isso, só mudaram 4
+`sparkxy` (acompanham as caixas). `chars/gutto` e `chars/raiclaven` regerados com o mesmo md5.
+`verificar_pengaro.py` sem erro (16 ações com aviso de Clsn1, 29 elementos, todos `[endiabrado]`). Robô na sandbox
+rodado depois de regerar a versão final (13:22 a 13:24, md5 de air/cns/sff conferido depois): **146 PASS / 0 FAIL**.
+Filme de 8 s na sandbox (Pengaró x Gutto: chute 230, rasteira 440, compasso, armada, caneta, bola) olhado em tiras.
+Auditoria por contagem de cores dos sprites de toda ação < 10000: **só a 2000 (cena do Despertar, `despertar_a/b`)
+ainda usa arte antiga na forma normal.**
+
+**Mudou no jogo (precisa de olho de quem joga):** alcance da Clsn1: 230 de 58 para 62 (e a caixa 10 px mais alta);
+1500/1501 de 47 para 60, agora na altura da barriga (continua golpe baixo na guarda); 1100/1101 de 63 para 73
+(11100/11101 de 57 para 63); 1201 de 60 para 68; 3402 de 70 para 56; 760 de 39 para 37; 312, 333, 348, 3411, 3413,
+3434 +2; 313, 3422, 3423 +1; 11500/11501 (pisão despertado) de 28 para 20. Correr tem ciclo de 16 ticks. A 440 volta a
+ser o giro com as mãos no chão (era o chute rasteiro de guarda alta desde o dia 11).
+
+**Não conferido:** role_b e golaco não apareceram no filme (o golaco pede barra); vitória, derrota, entrada e
+provocação só nas folhas de contato, não em movimento; o Despertar por cima das folhas novas (o robô passa, ninguém
+olhou a tela); alinhamento horizontal quadro a quadro (o tronco fica no eixo, então em poses inclinadas, como
+compasso 4 e corrida, o pé de apoio pode andar alguns px entre desenhos); `gerar_hazaki.py` não foi rodado.
+
+**Pendente:** redesenhar golaco 2 e vitoria 4 a 8 se quiser os desenhos próprios; `despertar_a/b` e as `e_*`; grupo E
+do Lote 6 (opcional).
