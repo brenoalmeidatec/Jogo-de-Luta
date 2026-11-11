@@ -30,6 +30,7 @@ aditiva e pequena dentro de uma branch de frente.
 | `endiabrado` | `C:/Dev/Jogo-de-Luta-endiabrado` | Pengaró endiabrado boss final: Lote 7 de folhas e ligação |
 | `bosses` | `C:/Dev/Jogo-de-Luta-bosses` | folhas boss (endiabrado) de Hazak, Gutto, Raiclaven e CK |
 | `efeitos` | `C:/Dev/Jogo-de-Luta-efeitos` | sistema de aura animada (`ferramentas/aura.py`) e kit dos bosses |
+| `cenarios` | `C:/Dev/Jogo-de-Luta-cenarios` | cenários animados de Nazaré: gerador, cenário de teste e método |
 
 Quem junta as branches na `mugen` é o Claude orquestrador, depois de olhar o resultado (folha de contato, tira de filme,
 saída do robô). Relato de agente não vale como prova.
@@ -113,7 +114,16 @@ Pedido do Alisson (2026-11-11): "não quero nada estático... não quero um movi
   pede-se uma segunda folha para ter 16.
 - Fluidez só é dada como boa depois de vídeo curto olhado quadro a quadro.
 
-## 8. Como retomar
+## 8. Cenários animados
+
+Pedido do Alisson (2026-11-11): cenários de Nazaré das Farinhas (o Cristo, a Maria Fumaça, a praça da prefeitura, a
+passarela), animados. O método inteiro está em [`arcade/cenarios.md`](arcade/cenarios.md): a arte é feita em camadas PNG
+na malha do jogo (tela lógica 320x180, chão em y = 165), descrita num `cenarios/<id>/cenario.json`; o
+`ferramentas/gerar_cenario.py` simula a câmera, recusa cenário com furo e grava `stages/<id>.def` + `.sff`; o
+`ferramentas/filmar_cenario.py` filma o passeio pelas duas pontas na sandbox e monta as tiras. Foto e mapa dos lugares
+são só referência: desenho original, sem pessoa real, sem marca, foto fora do repositório.
+
+## 9. Como retomar
 
 Ler, nesta ordem: `docs/como-trabalhar.md`, este arquivo, as últimas entradas do `LOGBOOK.md` de cada branch da tabela
 da seção 2, e o `docs/arcade/registro_fila.md`. O estado de cada frente está no LOGBOOK da branch dela.

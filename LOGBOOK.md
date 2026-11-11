@@ -844,3 +844,19 @@ a ~150 / ~200 px está bom?; (6) a Estatueta do tamanho da mão (~15 px) ou maio
 - **Pendente:** Despertar do Hazak (Diabo Loiro: folhas `d_*` em geração na branch `bosses`), som próprio, retrato do
   Pengaró na barra de vida ainda antigo; robôs do Gutto e do Raiclaven não foram rodados contra o Hazak novo.
 - **Próximo:** juntar `ck`, `endiabrado`, `bosses` e `efeitos` conforme cada frente fechar e for conferida.
+
+## 2026-11-11 (cenários animados: base pronta, branch `cenarios`)
+
+- **Feito:** `ferramentas/gerar_cenario.py` (descrição em JSON com camadas PNG → `stages/<id>.def` + `.sff` RGBA, com
+  simulação da câmera, recusa de furo e prévia em GIF), `ferramentas/cenario_teste.py` (cenário de teste por código, em
+  `cenarios/teste/` e `stages/teste.*`), `ferramentas/filmar_cenario.py` + `ferramentas/robo/passeio.lua` (filme do
+  passeio pelas duas pontas, com tiras). `sandbox.py` e `filmar_sandbox.py` copiam `stages/` para o motor da sandbox; o
+  `filmar_sandbox.py` ganhou `--cenario` e `--passeio` (mudanças aditivas). Método e medidas da arte em
+  `docs/arcade/cenarios.md`. Provado em dois filmes de 8 s na sandbox: cenário carrega, pés na linha do chão (y = 165),
+  nenhuma borda preta nas pontas nem com a câmera no alto, paralaxe, nuvens, rio e bandeira em quadros, balão em seno,
+  barco por BGCtrl, camada de frente, luz somada e reflexo.
+- **Pendente:** a arte dos quatro lugares (Cristo, Maria Fumaça, praça da prefeitura, passarela) não existe; o launcher
+  não baixa nem instala `stages/` e o `select.def` não lista cenário (o que falta está na seção 7 do `cenarios.md`); o
+  padrão do jogo continua `stage0-720`. Não provado: tremor de tela, `subtrai`/`alfa`, outros BGCtrl, escolha pelo menu.
+- **Próximo:** referência dos lugares, fila de prompts das camadas, converter a arte para a malha 320x180 e gerar os
+  quatro cenários; depois ligar no launcher.
