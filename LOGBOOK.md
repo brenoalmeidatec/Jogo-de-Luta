@@ -856,3 +856,26 @@ a ~150 / ~200 px está bom?; (6) a Estatueta do tamanho da mão (~15 px) ou maio
   quatro auras. Os scripts ainda têm caminhos e medidas da asa do Hazak escritos à mão (não são genéricos).
 - **Próximo:** generalizar os scripts e aplicar em Gutto, Raiclaven, CK e Pengaró quando o uso do plano permitir
   (semana em 64% no Fable às 15h; a regra é parar em 80%).
+
+## 2026-11-11 (PARADA GERAL às 16h: onde cada frente ficou)
+
+O Alisson pediu para parar todos os trabalhos para trocar o modelo de raciocínio do Claude. Nada está rodando. Cada
+frente tem, no LOGBOOK da própria branch, uma entrada "PARADA de propósito" com o que foi feito e como retomar.
+**Nenhuma dessas branches foi conferida pelo orquestrador nem entrou na `mugen`.**
+
+| Branch | Ponta | Estado | Falta |
+|---|---|---|---|
+| `mugen` | esta | Pengaró normal inteiro em arte arcade (robô 146/0); Hazak novo sem o Despertar (176/0); método em `docs/metodo-do-claude.md` | nada pendente de parada |
+| `ck` | `e28e79f` | CK montado (`gerar_ck.py`, `chars/ck`), 4 folhas do Ratão refeitas; relato de robô 159/0 | céticos, retoque, conferir filme, juntar |
+| `endiabrado` | `0d304cc` (bom: `90e5575`) | Pengaró endiabrado boss final: 34 folhas geradas, convertidas e ligadas; a ponta guarda trabalho pela metade, não testado | terminar a ligação, céticos, retoque, robô, juntar |
+| `bosses` | `f380d59` | conceitos dos 4 bosses, fila completa, 16 folhas brutas do Diabo Loiro (Hazak) | resto do Hazak; Gutto, Raiclaven e CK inteiros; converter e ligar |
+| `efeitos` | `9a64d4f` (bom: `3c0b205`) | kit dos bosses (`docs/arcade/bosses_kit.md`), `ferramentas/aura.py` com lutador de teste, cético feito; a ponta guarda o retoque pela metade | terminar o retoque, refilmar, juntar |
+| `auras` | `40bc95f` (bom: `3e1c429`) | auras pelo Blender dos cinco (camadas em `sprites/<id>/aura/`), cético feito; a ponta guarda os 4 retoques pela metade | terminar retoques e fecho, ligar no jogo pelo `aura.py` |
+| `cenarios` | `b7ce776` | `gerar_cenario.py` provado com cenário de teste, pesquisa e projeto dos 4 cenários de Nazaré, 9 imagens brutas do Cristo | responder "Para o Alisson confirmar", resto da arte, montar, filmar |
+
+- **Ordem sugerida para retomar:** (1) `ck`: rodar céticos e retoque e juntar; (2) `endiabrado`: voltar a `90e5575`,
+  olhar o que a ponta mudou, terminar e conferir; (3) `efeitos` + `auras`: terminar retoques e ligar uma aura no jogo
+  (começar pela asa do Hazak); (4) `bosses`: seguir a fila; (5) `cenarios`: depois das respostas do Alisson.
+- **Na máquina:** a trava da sandbox (`%USERPROFILE%/JogoDeLuta/sandbox.trava`) foi removida depois de confirmar que
+  não havia sandbox aberta. Cada branch tem um worktree em `C:/Dev/Jogo-de-Luta-<branch>`.
+- **Uso do plano na parada:** perto de 65-70% da semana no Fable; a regra atual é parar só em 100%.
