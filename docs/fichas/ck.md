@@ -170,6 +170,12 @@ cortando com a garrafa e fecha quebrando uma garrafa nova na cabeça dele.
   o `gerar_ck.py` (no molde do `gerar_raiclaven.py`) com os comandos desta ficha, retrato, a vítima dos agarrões e o CK no
   `Jogo de Luta.bat`. Nada disso foi testado no motor ainda.
 - As fotos de referência do CK ficaram fora do repositório.
+- **Correções pedidas pelo Breno (2026-11-11, tarde):** braço de trás saindo pelas costas e garrafa trocando de mão.
+  Refeitos com a regra nova (luva de trás sempre na frente do queixo; caco sempre no braço de perto, desenhado na frente
+  do corpo; mão de trás vazia): `cabecada`, `golaco` e 18 folhas do Ratão. **Ainda a refazer** (o limite de imagens do
+  ChatGPT estourou): `e_provoca`, `e_vitoria`, `e_derrota`, `e_anda` e `e_beck` (feitos antes da regra) e `e_golaco` e
+  `e_juliet_voadora` (a garrafa ainda some ou sobe pelo braço de trás em alguns quadros). Os pedidos já estão com a regra
+  em `ferramentas/folhas_ck.py`.
 
 ## Folhas (ChatGPT, estilo arcade)
 
