@@ -897,3 +897,24 @@ a ~150 / ~200 px está bom?; (6) a Estatueta do tamanho da mão (~15 px) ou maio
   (raio do cone); aura 217x160 px para um corpo de 60x112.
 - **Pendente:** ligar no motor (nada visto no jogo; vídeo não assistido, só tiras). Tampinhas pouco legíveis em 1x;
   névoa da mesma cor da base da parede; sobra um toco reto na borda direita da parede.
+
+## 2026-11-11 — Aura do Pengaró: coluna de fumaça violeta-preta (método do Blender)
+
+- **Feito:** `ferramentas/aura_blender/pengaro_aura.py` + `sprites/pengaro/aura/` (480 PNG 360x200 + `aura.json`). Seis
+  camadas, na ordem de desenho: `coluna` (48 q, malha com espinha de 8 ossos em onda S que sobe + 2 ramos de base;
+  depois do render o miolo é reamostrado de baixo para cima em duas fases = a textura sobe 1 px por quadro),
+  `chicotes` (48 q, 6 malhas com cadeia de 3 a 6 ossos, raiz com sobra por cima da coluna), `anel_tras` (96 q, chão
+  desprojetado para vista de cima e girado no Blender como disco deitado, meia volta por laço, rachaduras pulsando,
+  bolhas de sombra em órbita), `fiapos` (96 q, línguas que se soltam do topo + faíscas lilás), `soltos` (96 q, 17
+  pedras em placa e 4 elos com 3 ossos, cada um na sua órbita) e `anel_frente` (96 q, À FRENTE do corpo, da linha da
+  sola para baixo). Sem redução: escala 112/488, a aura cabe inteira.
+- **Remendo declarado:** a coluna atrás do corpo é fumaça clonada de cima da cabeça (fica atrás dele); o topo da
+  coluna encostava na borda da folha e foi recortado em línguas; o disco do chão é a metade da frente do desenho
+  copiada em meia volta (simetria para o laço fechar em 96 quadros).
+- **Medido:** 15 cores; pixels parados 0 em cinco camadas e 4 de ~6,5 mil nos chicotes; nenhum par de quadros igual;
+  emenda da coluna 3,06 contra 3,04/3,13 das vizinhas (chicotes 0,99 contra 0,92/1,03); passo máximo 1,92 px
+  (juntas), 1 px (fluxo), 2,88 px (borda do anel); aura 192x180 px para um corpo de 99x108.
+- **Armadilha achada:** `bl_renderiza` só esconde os objetos das passadas dele. Objeto de outra passada (o disco, as
+  pedras) tem de ser escondido antes, senão sai em todas e a emenda de 48 quadros pula.
+- **Pendente:** ligar no motor (nada visto no jogo; vídeo não assistido, só tiras). O chão em 1x lê como disco violeta
+  riscado com faíscas brancas, não como lajes rachadas; elos pequenos (2 px de espessura); base da coluna carregada.
