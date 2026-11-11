@@ -905,13 +905,13 @@ a ~150 / ~200 px está bom?; (6) a Estatueta do tamanho da mão (~15 px) ou maio
   depois do render o miolo é reamostrado de baixo para cima em duas fases = a textura sobe 1 px por quadro),
   `chicotes` (48 q, 6 malhas com cadeia de 3 a 6 ossos, raiz com sobra por cima da coluna), `anel_tras` (96 q, chão
   desprojetado para vista de cima e girado no Blender como disco deitado, meia volta por laço, rachaduras pulsando,
-  bolhas de sombra em órbita), `fiapos` (96 q, línguas que se soltam do topo + faíscas lilás), `soltos` (96 q, 17
+  bolhas de sombra em órbita), `fiapos` (96 q, línguas que se soltam do topo + faíscas lilás), `soltos` (96 q, 15
   pedras em placa e 4 elos com 3 ossos, cada um na sua órbita) e `anel_frente` (96 q, À FRENTE do corpo, da linha da
   sola para baixo). Sem redução: escala 112/488, a aura cabe inteira.
 - **Remendo declarado:** a coluna atrás do corpo é fumaça clonada de cima da cabeça (fica atrás dele); o topo da
   coluna encostava na borda da folha e foi recortado em línguas; o disco do chão é a metade da frente do desenho
   copiada em meia volta (simetria para o laço fechar em 96 quadros).
-- **Medido:** 15 cores; pixels parados 0 em cinco camadas e 4 de ~6,5 mil nos chicotes; nenhum par de quadros igual;
+- **Medido:** 15 cores; pixels parados 0 em cinco camadas e 4 de ~2,5 mil nos chicotes; nenhum par de quadros igual;
   emenda da coluna 3,06 contra 3,04/3,13 das vizinhas (chicotes 0,99 contra 0,92/1,03); passo máximo 1,92 px
   (juntas), 1 px (fluxo), 2,88 px (borda do anel); aura 192x180 px para um corpo de 99x108.
 - **Armadilha achada:** `bl_renderiza` só esconde os objetos das passadas dele. Objeto de outra passada (o disco, as
