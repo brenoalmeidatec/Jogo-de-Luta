@@ -566,3 +566,17 @@ bicicleta), opcional.
 - Escala das `e_` varia entre folhas (em pé com cabelo de 297 a 313 px; `e_pulo` ~15-20% maior que a normal); o gerador já
   tem fator de escala por folha para o endiabrado.
 - Pendente: grupos B e C do Lote 7; ligar as `e_` no gerador (`ARCADE`, pasta `e_ginga` x `ginga_endiabrada`); paleta do boss.
+
+## 2026-11-11 — Endiabrado, Lote 7 grupo B gerado (12 folhas `e_`)
+
+- Geradas no mesmo chat e salvas em `sprites/pengaro/quadros/folhas_arcade/`: `e_chute_baixo`, `e_baixo_soco`, `e_cabecada`,
+  `e_rasteirinha`, `e_rasteira`, `e_ar_soco`, `e_bicicleta`, `e_bola`, `e_compasso`, `e_armada`, `e_caneta`, `e_rolamento`.
+  Cada pedido levou `e_conceito.png` + a folha normal do golpe (para `chute_baixo` e `rasteira`, as refeitas do Lote 6). Todas
+  em 2172x724, 8 quadros separados em `tira_fundo` + `fatias(…, 8)`. Conferidas a olho em tiras de contato ao lado da normal;
+  nada rodou no gerador, no jogo nem em sandbox.
+- Com ressalva: `e_caneta` ficou ~9% menor que as outras `e_` (em pé 277 px com cabelo, contra ~305) e com a perna da
+  rasteira encurtada: foi o jeito de caber 8 quadros separados (a `caneta.png` normal tem os quadros 6-7 encostados);
+  `e_cabecada` tem a algema do pulso da frente pouco legível nos quadros 1-3 e as rachaduras do peito puxando para o rosa.
+- Escala: em pé com cabelo 292-310 px; folhas agachadas/aéreas saíram na medida da normal + cabelo depois de dar a medida em
+  px no pedido (`e_baixo_soco` e `e_cabecada` precisaram de uma correção "85% do tamanho").
+- Pendente: grupo C do Lote 7 (7 `e_` + 3 `fx_aura_*`); ligar as `e_` no gerador; paleta do boss.
