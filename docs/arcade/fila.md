@@ -2946,6 +2946,11 @@ MOTION: possessed kip-up: 1 lying on the back; 2 knees pulled to the chest; 3 ro
 
 ## Lote 6: Pengaró inteiro na arte arcade (2026-11-11)
 
+> **Situação em 2026-11-11 (fim do dia):** grupos A a D gerados, convertidos e **ligados no jogo** (17 folhas em
+> `sprites/pengaro/quadros_arcade/`; ver LOGBOOK, "Lote 6 ligado"). Na forma normal só a cena do Despertar (2000,
+> `despertar_a/b`) ainda toca a arte antiga. Ficam por refazer, se alguém quiser os desenhos que hoje são repetidos:
+> `golaco` quadro 2 e `vitoria` quadros 4 a 8 (bebe com a mão da frente). Grupo E segue opcional.
+
 Fila do que ainda precisa ser **desenhado no ChatGPT** para o Pengaró normal ficar 100% na arte arcade (hoje só
 ginga, andar e levantada tocam arcade; os golpes são a arte antiga e ele troca de cabelo, pele e caneleira a cada
 golpe). Fora daqui: a forma Endiabrada (`e_*`, `endiabrado`, `ginga_endiabrada`, `despertar_a/b`), que será
