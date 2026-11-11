@@ -1011,3 +1011,7 @@ vídeo não assistido; o vapor continua ancorado na narina da pose parada; ferra
   ainda largos e vapor preso à narina da pose parada; Raiclaven, passo 3,14 px nas lâminas da frente; CK, toco de
   fumaça na borda direita e parede pouco viva pela métrica; Pengaró, chão ainda em riscos e mancha lisa entre as pernas.
 - **Próximo:** o Alisson vê os vídeos e diz quais retoques valem; depois, ligar as cinco no motor (branch `efeitos`).
+
+## 2026-11-11 (auras: PARADA às 17h20, o Alisson precisou desligar o notebook)
+
+Parada rápida. Último commit antes desta entrada: `67ac213e`. Arquivos alterados sem commit na hora da parada: 0 (guardados neste commit; **não testados**, se houver). Falta o que a entrada anterior desta branch lista; a etapa em andamento (retoque ou conferência) foi interrompida.
