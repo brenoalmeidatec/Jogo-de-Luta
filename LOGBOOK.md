@@ -833,3 +833,14 @@ estendidas (estilo); ginga com a cabeça oscilando 12 px (é a ginga).
 em pé); (3) rajada de super com congelamento de 14+ por golpe (regra 8.3 literal) ou o padrão curto do elenco?;
 (4) Rolada de Tatame com alcance limitado (~90 px) ou atravessa de qualquer distância como antes?; (5) Giro de Garagem
 a ~150 / ~200 px está bom?; (6) a Estatueta do tamanho da mão (~15 px) ou maior nas duas?
+
+## 2026-11-11 (hazak na mugen)
+
+- **Feito:** a branch `hazak` (Hazak recriado pela ficha do Breno: gerador novo `gerar_hazaki.py` + `hazaki_golpes.py`,
+  67 folhas em `quadros_arcade`, robô próprio) entrou na `mugen` com a aprovação do Alisson. Único conflito: este LOGBOOK
+  (as duas pontas tinham anexado entradas; ficaram as duas). Os quatro lutadores foram regerados na árvore juntada e
+  saíram com md5 idêntico ao que estava no git. Robô na sandbox, a partir da árvore juntada: Hazak **176 PASS / 0 FAIL**
+  (50 roteiros), Pengaró **146 PASS / 0 FAIL** (43 roteiros).
+- **Pendente:** Despertar do Hazak (Diabo Loiro: folhas `d_*` em geração na branch `bosses`), som próprio, retrato do
+  Pengaró na barra de vida ainda antigo; robôs do Gutto e do Raiclaven não foram rodados contra o Hazak novo.
+- **Próximo:** juntar `ck`, `endiabrado`, `bosses` e `efeitos` conforme cada frente fechar e for conferida.
