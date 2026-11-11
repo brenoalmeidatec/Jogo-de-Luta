@@ -580,3 +580,28 @@ bicicleta), opcional.
 - Escala: em pé com cabelo 292-310 px; folhas agachadas/aéreas saíram na medida da normal + cabelo depois de dar a medida em
   px no pedido (`e_baixo_soco` e `e_cabecada` precisaram de uma correção "85% do tamanho").
 - Pendente: grupo C do Lote 7 (7 `e_` + 3 `fx_aura_*`); ligar as `e_` no gerador; paleta do boss.
+
+## 2026-11-11 — Endiabrado, Lote 7 grupo C gerado (7 folhas `e_` + 3 `fx_aura_*`): lote completo
+
+- Geradas no mesmo chat ("Pengaró — arcade"). Em `sprites/pengaro/quadros/folhas_arcade/`: `e_agarrao`, `e_golaco`, `e_lata`
+  (folha nova), `e_provoca`, `e_vitoria`, `e_derrota`, `e_despertar`. Em `sprites/pengaro/quadros/folhas/` (fundo verde, de
+  onde `efeitos_folha.py` lê): `fx_aura_coluna`, `fx_aura_anel`, `fx_aura_detritos`. Todas 2172x724. As `e_` dão 8 quadros em
+  `tira_fundo` + `fatias(…, 8)`; as `fx_` dão 8 células em `efeitos_folha.recortar` e nenhum bloco cruza a divisão em oitavos.
+  Conferidas a olho em tiras de contato; nada rodou no gerador, no jogo nem em sandbox.
+- MOTION reescrito no pedido (o de `docs/arcade/fila.md` não descrevia a folha normal; fila.md NÃO foi editado):
+  `e_golaco` (quadros 1-4 seguem o gole/limpar a boca da normal, de punho vazio), `e_lata`, `e_provoca`, `e_vitoria` (quadro 8
+  de frente com o braço da frente estendido, como a normal, e não de braços cruzados) e `e_derrota` (cai sentado e reclama
+  sentado de pernas esticadas, como a normal, e não ajoelhado socando o chão). `e_agarrao` bateu com a normal sem mudança.
+- `e_despertar` (substitui `despertar_b`, 8 quadros): 1 Pengaró normal de mãos vazias com a mão no peito, 2 cai de quatro,
+  3 calça escurece e mancha violeta nas costas, 4 casaco + algemas + braceletes, 5 ajoelhado de cabeça para trás com cabelo
+  comprido e rachaduras, 6 num joelho só com a corda e os chifres, 7 em pé, 8 guarda do boss. Sem coluna, anel nem pedras.
+  O `despertar_b` antigo é em pé o tempo todo; este ajoelha (é o MOTION do Lote 7). Dono ainda precisa confirmar.
+- Ressalvas: `e_vitoria` ficou ~7% menor que as outras `e_` (em pé 287 px com cabelo; a 1ª veio 13% maior e a correção
+  passou do ponto): fator ~1,07 na ligação. `e_golaco` tem as rachaduras do peito bem acesas (tronco quase todo violeta nos
+  quadros 5-8). `fx_aura_detritos`: as peças PAIRAM (sobem ~14 px e voltam) em vez de subir e reentrar por baixo, para o
+  laço fechar; pedras marrom-rosadas (pedido era cinza-marrom); furos dos elos com resto de verde escuro. `fx_aura_coluna`:
+  a altura da coluna pulsa (478 a 568 px), base fixa em y=639; ~2% de pixels esverdeados dentro da fumaça. `fx_aura_anel`:
+  saiu um disco de chão rachado com borda escura (225x80 px), não um anel vazado; a posição dentro da célula varia até 7 px.
+- Lote 7 inteiro em disco (31 `e_` + 3 `fx_aura_*`). Pendente: ligar tudo no gerador (`ARCADE`, `e_ginga` x
+  `ginga_endiabrada`, `e_despertar` no lugar de `despertar_b`, Explod das três camadas da aura, escala por folha), refazer
+  `e_queda`, paleta do boss, e testar no sandbox.
