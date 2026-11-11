@@ -93,8 +93,43 @@ CIENTISTA = {
 }
 
 
+# ---------------------------------------------------------------- Pente fino de anatomia (2026-11-11): desenhos a refazer
+# O que o gerador não conserta sozinho (gerar_raiclaven.py só troca, corta ou retoca). `python ferramentas/folhas_raiclaven.py
+# nome` imprime o pedido com este MOTION no lugar do antigo. FIXO vai no fim de todos.
+FIXO = (" Anatomy rules for every frame: exactly two arms and two legs; the dark steel RIGHT arm always ends in the same giant"
+        " scissors, with exactly two straight blades and one pivot, always the same size as in the attached sheet; the human"
+        " LEFT arm is always fully visible, with the same brown skin tone as the face, and its hand always holds the same"
+        " black comb unless the motion says otherwise; nothing floats detached from the body; no object is drawn twice.")
+REDESENHAR = {
+    # derrota: a tesoura virava corrente com 3 garras e as pernas eram um volume só com uma sola gigante
+    "derrota": "defeated. Frame 1 stance with the knees giving way, frame 2 he drops down, frame 3 he lands sitting on the floor, frames 4 to 8 he stays sitting with BOTH legs stretched forward, clearly separated and readable, the closed scissors resting on the floor beside him, the comb hand hanging low, head down, sulking.",
+    # vitória: braço de carne sumia nos quadros 2-3, pele vermelha nos 4-6 e tesoura a 60% do tamanho nos 7-8
+    "vitoria": "a victory. Frame 1 stance, frames 2 and 3 he raises the scissors near his mouth and blows hair off the blades while the left hand keeps holding the comb at chest height, frames 4 to 6 he combs his own hair proudly with the comb, frames 7 and 8 he poses with the scissors open and raised over his shoulder, full size, the left fist on his hip, crazy grin.",
+    # agarrão: nos quadros 3-4 a tesoura sumia e a mão de metal segurava a toalha como mão comum
+    "agarrao": "Hot Towel grab. Frame 1 stance, frame 2 the LEFT human hand tucks the comb in the apron pocket and pulls out a white hot towel, frames 3 and 4 the LEFT hand alone wraps the towel around an invisible opponent's face and pulls, the scissors closed and held back on the steel arm, frames 5 and 6 he spins around and throws, frames 7 and 8 he takes the comb back out and calmly fixes his hair, posing. No second person is shown.",
+    # armada e caneta: o pente sumia da mão durante o golpe inteiro; na armada, 2 quadros de costas com corte seco
+    "armada": "Spinning Barber Chair kick. Frame 1 stance, frames 2 and 3 he pivots on the front foot and turns sideways, never showing his full back, frames 4 and 5 the back leg swings around stretched out high, frames 6 and 7 the leg comes down and he completes the turn, frame 8 stance.",
+    "caneta": "Scissors dash. Frame 1 stance, frames 2 and 3 he crouches and aims the scissors forward, frames 4 and 5 he lunges forward low and fast with the scissors open in front like a spear, frames 6 and 7 the scissors snap shut, frame 8 stance.",
+    # bola: braço de carne pintado de metal no quadro 3 e o pente já voando desenhado no corpo (o jogo solta o projétil)
+    "bola": "Flying Comb throw, body only. Frame 1 stance, frames 2 and 3 the human LEFT arm pulls the comb back behind the ear, frame 4 the arm whips forward, frame 5 the arm is fully stretched forward at chest height with the hand OPEN AND EMPTY, frames 6 and 7 follow-through with the empty hand, frame 8 stance with the comb back in the hand. The thrown comb is never drawn in the air.",
+    # rolamento: lâmina a mais em 3 quadros, caco branco solto, pente voando desenhado no corpo
+    "rolamento": "Next! talc teleport. Frame 1 stance, frame 2 he raises a handful of white talcum powder in the left hand, frame 3 he throws the talc down at his feet, frame 4 the white talc cloud covers him up to the chest, frame 5 only the white cloud remains, frame 6 he reappears out of a thin cloud in a low crouch with the scissors forward, frame 7 he rises, frame 8 stance.",
+    # compasso: tesoura saindo direto do ombro, sem antebraço, nos quadros 2 e 7; corpo imóvel
+    "compasso": "Scissor Helicopter. Frame 1 stance, frame 2 the steel arm rises with the elbow clearly bent and the forearm visible, frame 3 the arm is straight up over the head, frames 4 to 6 the arm spins the open scissors above the head like a helicopter blade while the torso leans with the spin, frame 7 the arm comes down with the elbow bent, frame 8 stance.",
+    # rasteira: duas vassouras no quadro 6
+    "rasteira": "a low sweep with ONE barber broom. Frame 1 deep crouch, frames 2 and 3 the left hand pulls one long barber broom from behind his back, frames 4 and 5 he sweeps the broom wide along the floor in front of him, frames 6 and 7 he lifts the same broom back up, frame 8 crouch with the broom gone. Both feet are always visible.",
+    # andar: a folha arcade serve, mas é um passo arrastado (a mesma perna na frente nas duas passadas)
+    "anda": "walking forward, an 8-frame loop with ALTERNATING legs. Frame 1 contact with the left leg in front, frame 2 the weight goes down on it, frame 3 the right leg passes under the body, frame 4 the body rises, frame 5 contact with the RIGHT leg in front, frame 6 the weight goes down on it, frame 7 the left leg passes under the body, frame 8 the body rises and flows back into frame 1. The scissors and the comb barely move.",
+    # ginga: a folha arcade serve, mas as pernas ficam paradas (só a mão e a tesoura mexem)
+    "ginga": "idle loop with weight transfer. Frames 1 to 4 the knees bend and the hips sink a little while the weight shifts to the back leg, frames 5 to 8 the hips rise and the weight comes back to the front leg, flowing into frame 1. The scissors open and close slowly. The comb stays still in the left hand, always seen from the same side.",
+    # Despertar: as duas pastas são a provocação repetida; falta a transformação (ficha: Surto de Tesoura / cientista)
+    "despertar_a": "the start of his transformation. Frames 1 and 2 he tucks the comb in the apron pocket, frames 3 and 4 he combs his hair back with the bare left hand, frames 5 and 6 the scissors lock wide open with a jolt, frames 7 and 8 he hunches forward, grinning wider, shoulders shaking.",
+    "despertar_b": "the end of his transformation. Frames 1 and 2 hunched forward, shaking, frames 3 and 4 the torso arches back, frames 5 and 6 he screams at the sky with both arms thrown wide and the scissors blades fully open, frames 7 and 8 he snaps back into the stance, laughing.",
+}
+
+
 def pedido(nome):
-    return CABECA + FOLHAS_RAICLAVEN[nome][1]
+    return CABECA + (REDESENHAR[nome] + FIXO if nome in REDESENHAR else FOLHAS_RAICLAVEN[nome][1])
 
 
 if __name__ == "__main__":

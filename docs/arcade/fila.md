@@ -2822,3 +2822,124 @@ Nada daqui entra na fila antes da resposta do dono. As MOTION propostas estão n
 | Raiclaven | `fx_corte`, `fx_talco`, `fx_borrifo`, `fx_maquina` (fundo verde) | junto com os golpes que usam |
 | Hazaki | `d_parado`, `d_soco`, `d_chute`, `d_agachado`, `d_rasteira`, `d_pulo`, `d_ascensao`, `d_punho`, `d_defesa`, `d_apanha` | rival x boneco; prompt `d_` com juba para trás, sem cavanhaque |
 | Hazaki | `vitima` (25 desenhos), `soco_perto`, `chute_perto`, `agarrao_faixa`, `agarrao_baixo`, `faixa_asfalto`, `pose_final`, `punho_chao`, `arremesso`, `rolada_tatame`, `ar_queda`, `fx_concreto`, `fx_cone`, `fx_brasa` | rival x boneco e mudanças de CNS |
+
+## Lote 5: desenhos pedidos pela auditoria de anatomia do Pengaró (2026-11-11)
+
+Saíram do pente fino de anatomia (branch `anatomia`, entrada de 2026-11-11 no `LOGBOOK.md`). Cada item é uma folha de 8
+quadros no chat "Pengaró — arcade", com a referência "Socos" anexada e o **prompt base do Pengaró** (o bloco inteiro das
+folhas acima), trocando só a linha `MOTION:`. Regra fixa em todas: **a caneleira fica sempre na perna de trás (a mesma
+em todos os quadros) e a garrafa fica sempre na mão de trás**; quando ele bebe, é a mão de trás que sobe. O que o jogo
+usa hoje no lugar de cada uma está na coluna "paliativo".
+
+| Folha (`sprites/pengaro/quadros/folhas_arcade/`) | Por quê | Paliativo no jogo hoje |
+|---|---|---|
+| `anda.png` (refazer) | os quadros 3 e 7 levantam a MESMA perna e 4-5-6 são quase iguais: falta a passagem da outra perna | 6 desenhos na ordem 0,2,3,4,1,5; a perna sem caneleira vai de trás para a frente sem quadro de passagem |
+| `corre.png` | não existe corrida: o jogo acelera o andar | desenhos do andar a 3 ticks |
+| `recuo.png` | o recuo é um desenho só deslizando | `defesa/06` parado |
+| `compasso.png` | perna de apoio some, duas caneleiras, caneleira de outra cor | folha antiga com o magenta limpo |
+| `chute_baixo.png` (refazer como chute em pé) | a folha arcade em disco é um chute rasteiro agachado, outro golpe | folha antiga com a caneleira da perna do chute repintada como calça |
+| `bola.png` | a garrafa some em 2 quadros e a lata troca de braço | folha antiga |
+| `provoca.png` | bebia com uma garrafa na boca e outra na mão | a garrafa da mão de trás foi apagada nos desenhos 2 e 3; a garrafa ainda muda de mão |
+| `vitoria.png` | a garrafa muda de mão para beber | corte seco entre os desenhos |
+| `caneta.png` | duas caneleiras e garrafa encolhida no quadro de contato | folha antiga |
+| `rolamento.png` | é um giro agachado no lugar, com duas caneleiras de costas | folha antiga com a franja limpa |
+| `queda.png` (refazer) | a folha arcade em disco tem o corpo em pé ~25% menor que o resto e o último quadro sem caneleira | folha antiga com o magenta limpo |
+| `lata.png` | abre a lata com duas mãos sem soltar a garrafa (três mãos) | a intro começa com a lata já na mão |
+| `ar_soco.png`, `bicicleta.png` (refazer) | no ar aparecem duas caneleiras (uma em cada canela); as folhas arcade em disco perdem a caneleira no meio | folhas antigas, sem retoque |
+| `ginga_endiabrada.png`, `e_anda.png`, `e_levanta.png` (forma endiabrada, referência do endiabrado) | 8 poses soltas, algema em dois tornozelos, andar sem passada, parada de mão com pés no lugar das mãos | só os desenhos limpos, segurados |
+
+`anda.png`:
+
+```
+MOTION: guarded walk forward, fists up, bottle hanging in the rear hand the whole time, a full two-step cycle where the two legs ALTERNATE: frame 1 contact, bare leg forward and shin-guard leg back; 2 weight sinks on the bare leg; 3 the shin-guard leg passes under the body with the knee high; 4 the shin-guard leg reaches forward; 5 contact with the legs swapped, shin-guard leg forward; 6 weight sinks on the shin-guard leg; 7 the BARE leg passes under the body with the knee high (never the shin-guard leg again); 8 the bare leg reaches forward and flows into frame 1. The shin guard stays on the same leg in all 8 frames. The sash tips and the pant legs lag 1-2 frames behind the body.
+```
+
+`corre.png`:
+
+```
+MOTION: run forward, torso leaning 20 degrees ahead, fists pumping, bottle in the rear hand; a full cycle with the legs alternating: 1 contact bare leg, 2 push-off, 3 both feet off the ground with the shin-guard leg passing, 4 shin-guard leg reaches, 5 contact shin-guard leg, 6 push-off, 7 both feet off the ground with the bare leg passing, 8 bare leg reaches and flows into frame 1. The shin guard stays on the same leg. The sash tips fly straight back.
+```
+
+`recuo.png`:
+
+```
+MOTION: short hop backward out of the ginga stance, always facing right: 1 stance; 2 knees bend and the weight goes to the rear leg; 3 both feet leave the ground, body leaning slightly back, guard up; 4 highest point of a low hop, legs tucked a little; 5 the rear foot reaches back for the ground; 6 landing on the rear foot, front foot still in the air; 7 both feet down, knees absorbing; 8 back to the stance of frame 1. Bottle in the rear hand and shin guard on the rear leg in every frame.
+```
+
+`compasso.png`:
+
+```
+MOTION: capoeira meia-lua de compasso (spinning heel kick with one hand on the ground): 1 ginga stance; 2 the torso twists and drops, front hand going to the ground; 3 front hand planted on the ground, bottle held up and back in the rear hand, the front leg stays bent and planted and fully visible; 4 the rear leg (the one with the shin guard) lifts straight and sweeps around; 5 that leg at its highest point passing over, heel leading, supporting leg bent and fully visible from hip to foot; 6 the leg comes down on the other side; 7 the foot touches the ground and the hand leaves the floor; 8 back to the stance. Exactly two legs in every frame, the shin guard only on the spinning leg, same patterned shin guard as the attached sheet.
+```
+
+`chute_baixo.png`:
+
+```
+MOTION: standing front push kick at belly height with the FRONT leg: 1 stance; 2 weight shifts to the rear leg (the shin-guard leg, which stays planted and visible with its shin guard in every frame); 3 front knee lifts to the chest; 4 the front leg extends; 5 contact: leg fully extended, foot flexed, drawn 15% larger, hips thrust forward, torso leaning back; 6 hold; 7 the knee folds back; 8 foot down, stance. The kicking leg never has a shin guard. Bottle in the rear hand.
+```
+
+`bola.png`:
+
+```
+MOTION: overhand throw of a beer can with the FRONT arm, the whisky bottle staying in the rear hand next to the hip in all 8 frames: 1 stance holding the can in the front hand; 2 the front arm cocks back over the shoulder; 3 torso wound up, can behind the head; 4 the arm whips forward; 5 release: front arm fully extended, hand open, no can; 6 follow-through, torso bent forward; 7 recovering; 8 stance with the front hand empty.
+```
+
+`provoca.png`:
+
+```
+MOTION: taunt: 1 stance; 2 he leans back, front hand open and relaxed; 3 the REAR hand lifts the same bottle it was already holding up to the mouth, front hand resting on the hip; 4 head tilted back, drinking from that bottle, only ONE bottle in the image; 5 the bottle comes down, he exhales with the mouth open; 6 the front hand beckons the opponent; 7 beckons again; 8 stance. The bottle never changes hand and there is never a second bottle.
+```
+
+`vitoria.png`:
+
+```
+MOTION: victory pose: 1 stance; 2 the rear hand raises the bottle high; 3 bottle at the highest point, chest out; 4 the SAME rear arm brings the bottle down to the mouth, front arm resting at the side; 5 drinking, head back; 6 drinking; 7 bottle lowered to chest height, big grin; 8 front arm opens to the crowd. The bottle stays in the rear hand in all 8 frames.
+```
+
+`caneta.png`:
+
+```
+MOTION: low sliding sweep (chapa de chão): 1 stance; 2 he drops, front hand to the ground; 3 sitting low on the supporting leg; 4 the front leg shoots forward along the ground; 5 contact: leg fully extended along the ground, foot flexed, drawn 15% larger; 6 hold; 7 the leg folds back; 8 rising to the stance. One shin guard only, on the supporting (rear) leg, in every frame; the whisky bottle keeps its full shape (neck, label) in the rear hand in every frame.
+```
+
+`rolamento.png`:
+
+```
+MOTION: low side roll past the opponent: 1 stance; 2 he drops into a squat, front hand to the ground; 3 tucks the head and rolls over the front shoulder; 4 upside down, back to the camera, both legs tucked and visible; 5 coming out of the roll on the other side; 6 feet touch the ground, still tucked; 7 squat facing right, guard up; 8 stance. Bottle always in the rear hand, shin guard always on the same leg (never two shin guards).
+```
+
+`queda.png`:
+
+```
+MOTION: knocked down: same size and scale as the attached sheet in every frame, including the standing ones. 1 hit, head snapping back, still standing; 2 falling backward, feet leaving the ground; 3 body horizontal in the air; 4 the back hits the ground, legs up; 5 small bounce; 6 settling; 7 lying on the back, knees slightly bent; 8 lying flat. Shin guard on the same leg and bottle in the rear hand in all 8 frames, including the last one.
+```
+
+`lata.png`:
+
+```
+MOTION: he drinks a can of beer while the whisky bottle stays in the rear hand: 1 stance with a closed can in the front hand; 2 the thumb of that SAME front hand pops the tab, the other hand keeps holding the bottle down at the hip, exactly two hands in the image; 3 can raised to the mouth; 4 drinking, head back; 5 drinking; 6 he crushes the empty can in the front fist; 7 laughs with the crushed can; 8 front hand open, can gone.
+```
+
+`ar_soco.png` e `bicicleta.png`:
+
+```
+MOTION: jumping downward punch: 1 airborne, knees tucked; 2 the front arm loads up beside the head, elbow bent, fist visible; 3 the fist starts down; 4 contact: front arm fully extended diagonally down, fist 15% larger; 5 hold; 6 the arm folds back; 7 knees tucked, guard up; 8 legs reaching for the ground. Exactly ONE shin guard, on the rear leg, visible in all 8 frames; the other shin is bare. Bottle in the rear hand.
+```
+
+```
+MOTION: airborne bicycle kick: 1 airborne, knees tucked; 2 the body leans back; 3 the front leg (bare shin, no shin guard) lifts; 4 that leg whips up; 5 contact: front leg fully extended upward, foot 15% larger, body almost horizontal; 6 hold; 7 the leg folds, body rotating upright; 8 knees tucked, ready to land. Exactly ONE shin guard, on the rear leg, visible in all 8 frames. Bottle in the rear hand.
+```
+
+Forma endiabrada (chat do endiabrado, referência do endiabrado, sem garrafa, algema em UM tornozelo só, o de trás):
+
+```
+MOTION: possessed capoeira ginga, one single cycle, side view the whole time (the chest never turns to the camera): 1 wide stance, claws up; 2 weight shifts to the front leg, rear heel lifts; 3 the rear leg steps far back, torso sinks, front hand guarding the face; 4 lowest point, rear leg stretched back; 5 the rear leg starts to come back, torso rising; 6 narrow stance, weight centered; 7 the rear foot steps out again; 8 wide stance that flows into frame 1. One ankle shackle only, on the rear ankle, in all 8 frames; no green, no magenta inside the figure.
+```
+
+```
+MOTION: possessed stalking walk forward, torso low, claws out, hands never touch the ground, legs ALTERNATING: 1 contact, rear-shackle leg back; 2 weight sinks; 3 the shackled leg passes under the body; 4 it reaches forward; 5 contact with the legs swapped; 6 weight sinks; 7 the other leg passes; 8 it reaches forward and flows into frame 1. One ankle shackle only, always on the same leg; both arms attached to the shoulders and fully visible in every frame.
+```
+
+```
+MOTION: possessed kip-up: 1 lying on the back; 2 knees pulled to the chest; 3 rolls onto the shoulders, both PALMS flat on the ground beside the head, fingers visible; 4 the legs go up together, feet pointing at the sky, the face visible between the arms; 5 the legs whip forward, body arching off the ground; 6 feet land, deep squat; 7 rising, guard up; 8 stance. Hands are hands with fingers in every frame, never feet; exactly two arms and two legs.
+```

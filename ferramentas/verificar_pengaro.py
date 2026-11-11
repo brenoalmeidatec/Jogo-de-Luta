@@ -31,7 +31,7 @@ def ler_sff():
     ofs_s, n, ofs_p, n_p, ofs_l, len_l, ofs_t, _ = struct.unpack("<8I", d[36:68])
     assert ofs_l + len_l == len(d) == ofs_t, "tamanho do SFF"
     g, i, cols, link, po, pl = struct.unpack("<HHHHII", d[ofs_p:ofs_p + 16])
-    assert n_p == 1 and cols == 256 and pl == 1024, "paleta"
+    assert n_p in (1, 2) and cols == 256 and pl == 1024, "paleta"  # a 2 é a cópia do Endiabrado na seleção
     pal = d[ofs_l + po:ofs_l + po + pl]
     sprites = {}
     nos = []  # na ordem do arquivo, para seguir o link

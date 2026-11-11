@@ -8,8 +8,12 @@ coração), o agarrão de comando, os textos e os nomes dos arquivos. Tudo o mai
   python ferramentas/animar_folha.py ... (com LUTADOR=gutto)   corta as folhas e faz os quadros do meio
   python ferramentas/gerar_gutto.py                            monta chars/gutto
 """
+import re
 import shutil
+from pathlib import Path
 
+import cv2
+import numpy as np
 from PIL import Image, ImageDraw
 
 import gerar_pengaro as gp
@@ -193,6 +197,177 @@ gp.DEF = DEF
 gp.GOLPES = GOLPES
 
 
+# ---------------------------------------------------------------- anatomia: o que sai do gerador comum e é trocado aqui
+# Ginga e andar só com DESENHOS segurados, sem os quadros de fluxo óptico das pastas ginga_fluida e anda_fluida (um
+# desenho-chave a cada 8 e a cada 6 arquivos). O fluxo não seguia braço nem perna: ficava parado e trocava de pose num
+# quadro só, e no meio da troca a luva virava borrão (lia como mão a mais). Os sprites continuam com o mesmo nome e
+# número (q_ginga_fluida<i>, q_anda_fluida<i>); o .air só usa os dos desenhos, e o .sff só leva o que o .air usa.
+# Ginga: desenhos 1, 2, 6 e 5. Ficam fora o 0, o 4 e o 7 (antebraço de trás levantado: o braço piscava para cima e para
+# baixo 3 vezes por ciclo) e o 3 (único com o pé da frente no ar: um tropeço solto no meio do loop).
+GINGA = ((1, 2, 6, 5), (9, 9, 9, 9))
+# Andar: junta o pé de trás (1), abre a passada (2), puxa o pé de trás (3), planta (4). Os desenhos 5 e 6 repetem o
+# "pé de trás colado no calcanhar" sem avançar e o 7 e o 0 repetem o 4: com eles o segundo passo quase não se mexia.
+ANDA = ((1, 2, 3, 4), (6, 6, 6, 6))
+# Forma de cavalo, desenho a desenho da ginga normal: só as chaves coerentes de ginga_endiabrada (00, 16, 48, 56). As
+# chaves 08 e 40 (bufando) são mais altas e marrons que as outras e a 24 e a 32 têm farelo rosa no chão.
+GINGA_CAVALO = {8: 0, 16: 16, 48: 48, 40: 56}
+PASSO_GINGA, PASSO_ANDA = 8, 6
+# Folha de cavalo cujo movimento é outro golpe: usa os desenhos de uma folha de cavalo que faz o movimento certo.
+#   chute_alto: e_chute_alto é um coice de quatro patas para TRÁS (as patas iam para longe do oponente); e_compasso gira
+#               de costas e solta o coice para a frente, na altura do golpe.
+#   rasteirinha: e_rasteirinha fica em pé os 8 desenhos; e_rasteira agacha e varre com a perna rente ao chão.
+FOLHA_CAVALO = {"chute_alto": ("e_compasso", (0, 1, 2, 3, 4, 5, 6, 7)),
+                "rasteirinha": ("e_rasteira", (0, 0, 3, 4, 4, 3, 5, 7))}
+# Intervalos (folha, desenho) sem quadro do meio, corte seco: derrota (os braços pulavam mão no peito -> abertos -> mão
+# no peito no meio de cada intervalo; é pose segurada de fim de luta).
+SEM_MEIO = {("derrota", i) for i in range(7)}
+# Retoques por desenho, na tela do jogo (360x260): (x0, y0, x1, y1, modo). "pinta" cobre o pixel claro/rosado da caixa
+# com a cor dos vizinhos (mancha em cima do corpo; "pinta_cinza" leva junto o risco cinza); "apaga" tira o pixel claro/rosado; "apaga_rosa" tira o que não é pele; "tudo" esvazia a caixa; "limpa" tira todo pixel de
+# vermelho acima de 140 (farelo solto no chão, ao lado de casco escuro).
+RETOQUES = {
+    ("martelo", "05"): [(178, 146, 204, 160, "pinta")],  # rastro rosado do golpe pintado no abdômen
+    ("martelo", "06"): [(160, 149, 194, 160, "pinta")],
+    ("rolamento", "01"): [(181, 193, 193, 204, "apaga_rosa")],  # borrão rosa entre as mãos e embaixo do tronco
+    ("rolamento", "02"): [(152, 194, 174, 210, "apaga_rosa"), (159, 197, 174, 211, "tudo")],
+    ("ar_soco", "04"): [(175, 158, 193, 173, "pinta_cinza")],  # rabisco cinza no flanco, embaixo da braçadeira
+    ("e_queda", "02"): [(180, 188, 200, 203, "pinta")],  # placa rosa no quadril
+    ("e_levanta", "01"): [(208, 203, 222, 217, "pinta")],  # mancha creme junto aos cascos
+    ("e_chute_baixo", "04"): [(186, 212, 221, 221, "limpa")],  # farelo rosa no chão
+    ("e_provoca", "01"): [(205, 213, 221, 221, "limpa")],
+    ("e_provoca", "02"): [(186, 211, 222, 221, "limpa")],
+    ("endiabrado", "06"): [(200, 153, 213, 160, "apaga")],  # zigue-zague rosa acima do fogo
+}
+
+
+def _claro(a):
+    r, g, b = (a[..., i].astype(int) for i in range(3))
+    return (a[..., 3] >= 128) & ((r > 170) & (b > 115) & (r - g > 20) | (g > 150) & (b > 140))
+
+
+def retocar(img, caixas):
+    a = np.array(img)
+    cheio = a[..., 3] >= 128
+    for x0, y0, x1, y1, modo in caixas:
+        dentro = np.zeros(a.shape[:2], bool)
+        dentro[y0:y1, x0:x1] = True
+        alvo = dentro & _claro(a)
+        if modo == "limpa":
+            a[dentro & (a[..., 0] > 140), 3] = 0
+        elif modo == "tudo":  # caixa só com resto, sem corpo dentro
+            a[dentro, 3] = 0
+        elif modo == "apaga_rosa":  # tudo que não é pele (azul chegando no verde): borrão rosa e o contorno roxo dele
+            a[dentro & cheio & (a[..., 2].astype(int) >= a[..., 1].astype(int) - 5), 3] = 0
+        elif modo == "apaga":
+            a[alvo, 3] = 0
+        else:
+            if modo == "pinta_cinza":  # risco cinza (sem cor) em cima da pele
+                rgb = a[..., :3].astype(int)
+                alvo |= dentro & cheio & (rgb.max(axis=2) > 100) & (rgb.max(axis=2) - rgb.min(axis=2) < 45)
+            # só o corpo serve de fonte da cor: o vazio em volta ainda guarda o magenta da folha por baixo do alfa
+            m = 8
+            ys, xs = slice(max(0, y0 - m), y1 + m), slice(max(0, x0 - m), x1 + m)
+            mascara = (cv2.dilate(alvo.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool) | ~cheio)[ys, xs]
+            a[ys, xs, :3] = cv2.inpaint(np.ascontiguousarray(a[ys, xs, :3]), mascara.astype(np.uint8) * 255, 3,
+                                        cv2.INPAINT_TELEA)
+    return Image.fromarray(a)
+
+
+def _pasta_e_desenho(arquivo):
+    """('queda', '04') para quadros/queda/04.png; ('queda', '03_4') para quadros/queda/meio/03_4.png."""
+    meio = arquivo.parent.name == "meio"
+    return (arquivo.parent.parent.name if meio else arquivo.parent.name), arquivo.stem
+
+
+def _de_cavalo(pasta):
+    return pasta.startswith("e_") or pasta in ("endiabrado", "ginga_endiabrada", "despertar_b")
+
+
+_abrir_quadro = gp.abrir_quadro
+
+
+def abrir_quadro(arquivo):
+    """O Gutto normal não tem rosa nem magenta em lugar nenhum (pele, calção preto, faixa branca): tudo que aparece
+    assim é resto do fundo magenta da folha (bloco preso entre o rosto e o punho no chute alto, dedos rosa na queda,
+    borrão no rolamento) ou efeito pintado no corpo (o coração do Beijinho, que o jogo já solta como projétil)."""
+    arquivo = Path(arquivo)
+    img = _abrir_quadro(arquivo)
+    pasta, desenho = _pasta_e_desenho(arquivo)
+    if QUADROS in arquivo.parents and not _de_cavalo(pasta) and pasta != "despertar_a":
+        img = gp.sem_rosa(img)
+    caixas = RETOQUES.get((pasta, desenho))
+    return retocar(img, caixas) if caixas else img
+
+
+gp.abrir_quadro = abrir_quadro
+
+_arquivo_loop, _pasta_endiabrada = gp.arquivo_loop_endiabrado, gp.pasta_endiabrada
+_chave_endiabrada, _par, _registra_meio, _caminho = (gp.arquivo_endiabrado_da_chave, gp.par_endiabrado,
+                                                     gp.registra_meio, gp.caminho_fluido)
+
+
+def arquivo_loop_endiabrado(pasta, i):
+    if pasta == "ginga_fluida" and i in GINGA_CAVALO:
+        return QUADROS / "ginga_endiabrada" / f"{GINGA_CAVALO[i]:02d}.png"
+    return _arquivo_loop(pasta, i)
+
+
+def pasta_endiabrada(pasta):
+    return (FOLHA_CAVALO[pasta][0], 1) if pasta in FOLHA_CAVALO else _pasta_endiabrada(pasta)
+
+
+def arquivo_endiabrado_da_chave(pasta, n):
+    if pasta in FOLHA_CAVALO:
+        outra, desenhos = FOLHA_CAVALO[pasta]
+        return QUADROS / outra / f"{desenhos[n]:02d}.png"
+    return _chave_endiabrada(pasta, n)
+
+
+def par_endiabrado(nome):
+    """Nas folhas trocadas o quadro do meio do cavalo vira o desenho-chave mais próximo (corte seco)."""
+    meio = re.fullmatch(r"m_([a-z_]+?)_(\d+)_(\d+)", nome)
+    if meio and meio[1] in FOLHA_CAVALO:
+        n = int(meio[2]) + (1 if int(meio[3]) >= 4 else 0)
+        return arquivo_endiabrado_da_chave(meio[1], n), meio[1], n
+    return _par(nome)
+
+
+def registra_meio(s, folha, intervalo, k):
+    return None if (folha, intervalo) in SEM_MEIO else _registra_meio(s, folha, intervalo, k)
+
+
+def caminho_fluido(s, atual, proximo):
+    return [q for q in _caminho(s, atual, proximo) if q is not None]
+
+
+gp.arquivo_loop_endiabrado, gp.pasta_endiabrada = arquivo_loop_endiabrado, pasta_endiabrada
+gp.arquivo_endiabrado_da_chave, gp.par_endiabrado = arquivo_endiabrado_da_chave, par_endiabrado
+gp.registra_meio, gp.caminho_fluido = registra_meio, caminho_fluido
+
+_acoes_folhas = gp.acoes_folhas
+
+
+def acoes_folhas(Q):
+    """As ações que mudam no Gutto vêm antes das do gerador comum: a primeira definição de cada ação é a que vale."""
+    ginga = [(f"q_ginga_fluida{PASSO_GINGA * d}", t) for d, t in zip(*GINGA)]
+    anda = [(f"q_anda_fluida{PASSO_ANDA * d}", t) for d, t in zip(*ANDA)]
+    Q(0, ginga)
+    Q(9203, [(nome.replace("q_ginga_fluida", "ginga_endiabrada"), t) for nome, t in ginga])
+    Q(5, [(ginga[0][0], 6)])  # virar
+    Q(20, anda)
+    Q(21, anda[::-1])
+    Q(100, [(nome, 3) for nome, _ in anda])  # correr: os mesmos desenhos na metade do tempo
+    # Despertar: despertar_a termina com a cabeça de cavalo pronta e despertar_b recomeçava do humano de bigode (0) e
+    # de um cavalo claro (1): a cabeça virava cavalo, voltava a ser gente e virava cavalo de novo. Emenda o a7 no b2
+    # (já cavalo, ainda de pés humanos). Mesma duração de antes (114 ticks).
+    f = lambda folha, i: f"f_{folha}{i}"
+    Q(2000, [(f("despertar_a", i), 7) for i in range(7)] + [(f("despertar_a", 7), 6)]
+          + [(f("despertar_b", i), t) for i, t in ((2, 10), (3, 10), (4, 10), (5, 10), (6, 9), (7, 10))])
+    _acoes_folhas(Q)
+
+
+gp.acoes_folhas = acoes_folhas
+
+
 def provisorio_endiabrado():
     """PROVISÓRIO: as 8 poses da forma de cavalo ainda não foram desenhadas (o ChatGPT bloqueou imagens por hoje).
     Enquanto isso, as poses normais saem escurecidas e avermelhadas. Apague a pasta quando a folha `endiabrado` chegar
@@ -228,7 +403,7 @@ def main():
     a = gp.montar_air(s, faiscas, arte_despertada=gp.arte_endiabrada(s))
     preset = gp.preset_despertado(s)
     (SAIDA / "gutto.air").write_text("\n".join(a.txt), encoding="utf-8", newline="\n")
-    cns = gp.remapear_animelem(gp.montar_cns(), a.mapas)
+    cns = gp.sem_ginga_9203(gp.remapear_animelem(gp.montar_cns(), a.mapas))
     # a aura do demônio cavalo pulsa em vermelho de brasa, não no violeta do Pengaró
     cns = cns.replace("add = 12, 0, 28", "add = 16, 0, 0").replace("sinadd = 10, 0, 18, 40", "sinadd = 14, 2, 0, 40")
     cns = cns.replace("[Data]", preset + "[Quotes]\n" + "".join(

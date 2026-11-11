@@ -450,6 +450,12 @@ O jogo roda a **60 ticks por segundo** e tem dois estilos de animação, cada um
   antes do contato.
 - **Efeitos, projéteis e o começo da super** andam de 2 em 2 ticks.
 
+**Anatomia vem antes da fluidez (2026-11-11).** Quadro do meio que inventa membro, troca a caneleira de perna, derrete
+cabeça ou garrafa **sai**: desenho segurado é melhor que desenho errado. Entremeio só entre dois desenhos quase iguais
+(respiração); onde a pose muda muito, a troca é seca. Por isso a ginga e o andar do Pengaró hoje são só desenhos da
+folha arcade (8 a 6 ticks e 6 a 5-8 ticks), sem fluxo óptico, e a forma endiabrada dele não usa quadro do meio. A
+tabela 7.1 continua sendo a meta, a ser cumprida com **desenho** (folha com mais quadros), não com deformação.
+
 O estilo não muda o frame data (preparação, ativo, recuperação, seção 8.3): o tempo total, a caixa e o tick em que
 ela liga ficam iguais. No Pengaró quem aplica isso é `SECO()` e `Air.seco` em `ferramentas/gerar_pengaro.py`, com
 um assert que confere soma de ticks, caixa por tick e os `AnimElem` do .cns.
