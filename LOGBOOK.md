@@ -898,3 +898,7 @@ a ~150 / ~200 px está bom?; (6) a Estatueta do tamanho da mão (~15 px) ou maio
 O Alisson pediu para parar os trabalhos para trocar o modelo de raciocínio do Claude. Kit dos bosses (docs/arcade/bosses_kit.md), sistema de aura animada (ferramentas/aura.py, lutador de teste, filmar_aura.py, medir_aura.py) e a conferência cética estão feitos; o retoque final da aura estava no meio (aura.py, gerar_teste_aura.py, bosses_kit.md, motif/fight.def e gerar_layout.py alterados). Falta: terminar o retoque, refilmar na sandbox, juntar na mugen.
 Último commit feito por um agente que terminou a etapa dele: `3c0b205`. O commit seguinte a esta entrada guarda o que estava
 pela metade na hora da parada (**não testado, pode estar quebrado**); para voltar ao estado bom, use `3c0b205`.
+
+## 2026-11-11 (efeitos: PARADA às 17h20, o Alisson precisou desligar o notebook)
+
+Parada rápida. Último commit antes desta entrada: `9a64d4fb`. Arquivos alterados sem commit na hora da parada: 1 (guardados neste commit; **não testados**, se houver). Falta o que a entrada anterior desta branch lista; a etapa em andamento (retoque ou conferência) foi interrompida.

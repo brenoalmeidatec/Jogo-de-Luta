@@ -378,9 +378,15 @@ def main():
             na_volta = max(viz[j][v(t)] for t in voltas)
             nota(f"P{j} vídeo, volta do loop nos ticks {voltas}: mudança {na_volta:.2f} = {na_volta / m:.2f}x a mediana",
                  na_volta / m <= 2.5)
+        ts = [t for t in range(SURTO1 - 2, SURTO1 + 70) if v(t) not in fora and 0 <= v(t) < total - 1]
         ds = trecho(j, SURTO1 - 2, SURTO1 + 70)
-        nota(f"P{j} vídeo, surto: mudança por quadro mediana {np.median(ds):.2f}, maior {ds.max():.2f} "
-             f"({ds.max() / np.median(ds):.2f}x a mediana do surto)", ds.max() / np.median(ds) <= 3.0)
+        # tranco é salto contra os vizinhos, não contra a mediana do trecho: o surto cresce de propósito (as peças
+        # que ele solta chegam acima das cabeças uns 25 ticks depois), então a mudança sobe em rampa e desce
+        loc = np.array([ds[i] / max(1e-6, float(np.median(np.r_[ds[max(0, i - 4):i], ds[i + 1:i + 5]])))
+                        for i in range(len(ds))])
+        nota(f"P{j} vídeo, surto: mudança por quadro mediana {np.median(ds):.2f}, maior {ds.max():.2f} no tick "
+             f"{ts[int(ds.argmax())]} ({ds.max() / np.median(ds):.2f}x a mediana do trecho); maior salto contra os 8 "
+             f"vizinhos {loc.max():.2f}x no tick {ts[int(loc.argmax())]}", loc.max() <= 2.5)
         dl = trecho(j, LIGA, LIGA + 40)
         nota(f"P{j} vídeo, ligando: maior mudança por quadro {dl.max():.2f} ({dl.max() / m:.2f}x a mediana do loop)",
              dl.max() / m <= 5.0)  # a coluna sobe dos pés: a borda dela cruza a faixa medida em poucos quadros
