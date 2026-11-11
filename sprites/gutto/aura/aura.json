@@ -56,74 +56,74 @@
    18
   ],
   [
-   138,
+   140,
    2,
    21
   ],
   [
-   166,
+   169,
    3,
    22
   ],
   [
-   193,
+   196,
    4,
-   27
+   28
   ],
   [
-   221,
-   6,
-   31
+   226,
+   5,
+   29
   ],
   [
-   210,
-   7,
-   58
-  ],
-  [
-   238,
-   10,
-   48
-  ],
-  [
-   245,
+   216,
    8,
-   72
+   45
   ],
   [
    243,
-   37,
-   83
+   8,
+   50
   ],
   [
-   246,
-   61,
-   105
+   244,
+   32,
+   70
   ],
   [
-   249,
-   88,
-   130
+   245,
+   60,
+   94
+  ],
+  [
+   248,
+   87,
+   120
   ],
   [
    250,
-   119,
-   157
+   117,
+   148
   ],
   [
    251,
-   150,
-   183
+   145,
+   172
   ],
   [
    252,
-   192,
-   214
+   177,
+   198
+  ],
+  [
+   252,
+   209,
+   224
   ],
   [
    253,
-   238,
-   245
+   242,
+   247
   ]
  ],
  "nota": "O pé do lutador fica em 'pe'; cada PNG tem o tamanho de 'tela'. Cada camada roda no seu laço (quadro = (tique // tiques_por_quadro) % quadros). O vapor é a única camada à frente do corpo e sai da narina da pose parada ('ancora'): em golpe ou pulo ele precisa seguir a cabeça ou ser desligado.",

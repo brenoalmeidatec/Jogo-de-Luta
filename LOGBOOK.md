@@ -942,3 +942,12 @@ a ~150 / ~200 px está bom?; (6) a Estatueta do tamanho da mão (~15 px) ou maio
 O Alisson pediu para parar os trabalhos para trocar o modelo de raciocínio do Claude. Auras pelo Blender: base comum (comum.py), asa do Hazak e as auras de Gutto, Raiclaven, CK e Pengaró foram feitas (camadas em sprites/<id>/aura/) e o cético conferiu; os quatro retoques estavam no meio (os quatro *_aura.py alterados, sem render novo). Falta: terminar os retoques, o fecho no docs/arcade/aura_blender.md, ligar no jogo pelo aura.py da branch efeitos.
 Último commit feito por um agente que terminou a etapa dele: `3e1c429`. O commit seguinte a esta entrada guarda o que estava
 pela metade na hora da parada (**não testado, pode estar quebrado**); para voltar ao estado bom, use `3e1c429`.
+
+## 2026-11-11 (auras: retoque do Gutto terminado)
+
+O gutto_aura.py que estava pela metade no commit da parada rodou inteiro sem erro e foi renderizado de novo. Defeitos do
+cético consertados pela causa: raios refeitos (20 raios em 3 portes, finos, ramificados, crescendo da raiz e sumindo na
+ponta, nascimentos escalonados: 5 a 9 vivos e 714 a 1786 px por quadro, nunca "nada"); buraco sem o corpo virou rabo de
+raio com 3 ossos (r1-r3) que afina até o chão; vapor sombreado com contorno e penacho maior; crateras redesenhadas como
+cova elíptica com lascas; topo dos raios em y>=7; carmesim menos rosa (azul limitado a verde+45). Pendente: ligar no jogo;
+vídeo não assistido; o vapor continua ancorado na narina da pose parada; ferraduras seguem 1,4x.
