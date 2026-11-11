@@ -17,6 +17,7 @@ faixa da regra (rampa da pele, sombra fria da calça, contorno sem preto); o arq
 """
 import colorsys
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -32,6 +33,9 @@ SPRITES = af.RAIZ / "sprites" / LUTADOR
 ENTRADA = SPRITES / "quadros/folhas_arcade"
 SAIDA = SPRITES / "quadros_arcade"
 PALETA = SPRITES / "paleta_arcade.json"
+FORMA = os.environ.get("FORMA", "")  # 2ª forma com paleta própria: FORMA=ratao (CK) usa paleta_arcade_ratao.json
+if FORMA:
+    PALETA = SPRITES / f"paleta_arcade_{FORMA}.json"
 MINIMO = 20  # nenhum canal abaixo disso (regra 5: nada de preto puro)
 
 # Papéis do Pengaró: janela HSV (matiz em graus, s e v de 0 a 1) para medir a cor na folha, e a faixa de matiz da regra
@@ -58,7 +62,53 @@ PAPEIS_PENGARO = {
         ("garrafa_ambar", "garrafa", (24, 40, .80, 1, .75, .96), None, {}),
     ],
 }
-PAPEIS = {"pengaro": PAPEIS_PENGARO}
+# CK, forma base (polo branca, short preto e branco, boné, luva vermelha). A pele dele é mais escura que a do Pengaró:
+# rampa sombra 2-10°, médio 11-19°, luz 20-30° (as mesmas faixas estão em conferir_arte.py). O vermelho escuro da luva
+# cai nas sombras da pele (mesmo vinho), por isso a luva só tem a cor viva. "branco_sombra" é a sombra fria da regra 4.
+PAPEIS_CK = {
+    "contorno_grupo": {"pele": "pele_contorno", "luva": "pele_contorno", "roupa": "roupa_contorno",
+                       "verde": "roupa_contorno"},
+    "cores": [
+        ("pele_contorno", "pele", (318, 352, .60, 1, .25, .48), (335, 350), {"v": .34}),
+        ("pele_sombra", "pele", (354, 7, .62, .82, .48, .69), (2, 10), {}),
+        ("pele_medio", "pele", (7, 15, .62, .82, .70, .87), (11, 19), {}),
+        ("pele_luz", "pele", (12, 20, .55, .78, .88, 1), (20, 30), {}),
+        ("luva_vermelho", "luva", (358, 7, .74, 1, .87, 1), None, {}),
+        ("roupa_contorno", "roupa", (266, 284, .60, .88, .24, .33), (250, 275), {"v": .32}),
+        ("roupa_preto", "roupa", (262, 282, .80, 1, .12, .26), None, {}),
+        ("roupa_roxo", "roupa", (268, 288, .38, .62, .33, .47), None, {}),
+        ("roupa_lilas_escuro", "roupa", (280, 296, .14, .36, .44, .63), None, {}),
+        ("roupa_lilas", "roupa", (280, 312, .05, .19, .62, .79), None, {}),
+        ("branco_sombra", "roupa", (262, 280, .28, .52, .72, .88), (240, 268), {}),
+        ("branco_meio", "roupa", (270, 295, .09, .27, .84, .92), None, {}),
+        ("branco", "roupa", (0, 360, 0, .08, .95, 1), None, {}),
+        ("verde", "verde", (120, 145, .45, 1, .35, .62), None, {}),
+        ("verde_luz", "verde", (135, 170, .14, .34, .52, .70), None, {}),
+    ],
+}
+# CK, Modo Ratão (cabelo platinado, camisa e bermuda azul-marinho e branco, regata, cordão de ouro, caco de garrafa).
+PAPEIS_CK_RATAO = {
+    "contorno_grupo": {"pele": "pele_contorno", "ouro": "pele_contorno", "roupa": "roupa_contorno",
+                       "garrafa": "roupa_contorno"},
+    "cores": [
+        ("pele_contorno", "pele", (318, 352, .60, 1, .22, .50), (335, 350), {"v": .34}),
+        ("pele_sombra", "pele", (352, 7, .58, .82, .50, .68), (2, 10), {}),
+        ("pele_medio", "pele", (8, 20, .62, .82, .70, .92), (11, 19), {}),
+        ("pele_luz", "pele", (20, 28, .55, .80, .93, 1), (20, 30), {}),
+        ("ouro", "ouro", (34, 52, .55, 1, .80, 1), None, {}),
+        ("roupa_contorno", "roupa", (258, 270, .85, 1, .14, .27), (250, 275), {"v": .26}),
+        ("roupa_marinho", "roupa", (266, 279, .66, .90, .27, .42), None, {}),
+        ("roupa_roxo", "roupa", (273, 284, .44, .72, .42, .53), None, {}),
+        ("roupa_lilas_escuro", "roupa", (279, 292, .22, .44, .52, .64), None, {}),
+        ("roupa_lilas", "roupa", (290, 325, .07, .20, .60, .84), None, {}),
+        ("branco_sombra", "roupa", (278, 288, .28, .42, .72, .84), (240, 268), {}),
+        ("branco_meio", "roupa", (280, 330, .07, .30, .88, .96), None, {}),
+        ("branco", "roupa", (0, 360, 0, .09, .95, 1), None, {}),
+        ("garrafa_escuro", "garrafa", (65, 100, .30, .60, .25, .42), None, {}),
+        ("garrafa_verde", "garrafa", (70, 100, .45, .80, .48, .70), None, {}),
+    ],
+}
+PAPEIS = {"pengaro": PAPEIS_PENGARO, "ck": PAPEIS_CK, "ck_ratao": PAPEIS_CK_RATAO}
 
 
 def hsv(rgb):
@@ -88,7 +138,7 @@ def pixels(quadros):
 
 
 def montar_paleta(nome):
-    papeis = PAPEIS[LUTADOR]
+    papeis = PAPEIS[LUTADOR + ("_" + FORMA if FORMA else "")]
     px = pixels(af.poses(ENTRADA / f"{nome}.png", "pes", 1)).astype(float)
     h, s, v = hsv(px)
     cores = []

@@ -26,6 +26,7 @@ import numpy as np
 from PIL import Image
 
 from folhas_gutto import FOLHAS_GUTTO
+from folhas_ck import NOMES as NOMES_CK
 from folhas_raiclaven import FOLHAS_RAICLAVEN
 from gerar_folhas import FOLHAS_PENGARO
 from recortar_quadros import PE_DE_TRAS, PIVO, RAIZ, fatias, ponto_ancora, tira_fundo
@@ -33,6 +34,9 @@ from recortar_quadros import PE_DE_TRAS, PIVO, RAIZ, fatias, ponto_ancora, tira_
 # Qual lutador: LUTADOR=gutto python ferramentas/animar_folha.py ... (padrão: pengaro)
 LUTADOR = os.environ.get("LUTADOR", "pengaro")
 FOLHAS_LUTADOR = {"gutto": FOLHAS_GUTTO, "raiclaven": FOLHAS_RAICLAVEN}.get(LUTADOR, FOLHAS_PENGARO)
+FOLHAS_CK = {n: ("pes", "") for n in NOMES_CK if not n.startswith("fx_")}  # base, despertar_a/b e as e_ do Modo Ratão
+if LUTADOR == "ck":
+    FOLHAS_LUTADOR = FOLHAS_CK
 FOLHAS = RAIZ / "sprites" / LUTADOR / "quadros/folhas"
 QUADROS = RAIZ / "sprites" / LUTADOR / "quadros"
 QUADROS_ARCADE = RAIZ / "sprites" / LUTADOR / "quadros_arcade"  # arte arcade (quantizar_folha.py), fora do jogo por ora
@@ -51,7 +55,7 @@ PASSO = 8  # um vértice a cada 2 pixels do quadro final
 LARG, ALT = 360, 260  # mesma tela dos sprites do jogo, com folga para chute alto e salto
 DESLOCA = (180 - PIVO[0], 220 - PIVO[1])  # do pivô antigo para os pés na tela do jogo
 MEIOS = 6  # quadros do meio entre dois desenhos
-ESCALA_2172 = {"pengaro": 0.40, "gutto": 0.33, "raiclaven": 0.33}[LUTADOR]  # a figura em pé dá ~111 px numa folha de 2172 de largura; a escala segue a largura da folha (o Gutto sai maior na folha, 340 px contra 278)
+ESCALA_2172 = {"pengaro": 0.40, "gutto": 0.33, "raiclaven": 0.33, "ck": 0.195}[LUTADOR]  # a figura em pé dá ~111 px numa folha de 2172 de largura; a escala segue a largura da folha (o Gutto sai maior na folha, 340 px contra 278)
 # Ginga: 8 desenhos + 8 x 7 = 64 quadros, um ciclo em cerca de 2 segundos. Andar: 8 + 8 x 5 = 48 quadros.
 LOOPS = {"ginga_fluida": ("ginga", 7), "anda_fluida": ("anda", 5), "ginga_endiabrada": ("ginga_endiabrada", 7),
          "e_anda_fluida": ("e_anda", 5)}
@@ -62,6 +66,17 @@ LIMPA_MAGENTA = {"endiabrado", "despertar_a", "despertar_b", "ginga_endiabrada"}
 if LUTADOR == "raiclaven":  # tesoura e camisa escuras: o magenta vaza na borda de todas as folhas
     LIMPA_MAGENTA = set(FOLHAS_RAICLAVEN) | {"ginga_fluida", "anda_fluida"}
 POR_CELULA = {"despertar_b", "ginga_endiabrada", "endiabrado"}  # e todas as folhas e_<golpe>, as versões endiabradas
+if LUTADOR == "ck":
+    # CK: a figura ocupa quase a célula inteira da folha (~573 px em pé numa folha de 2172), por isso a escala 0.195;
+    # sempre por célula (golpe que avança encosta na figura vizinha). AJUSTE: folhas em que a figura saiu de outro
+    # tamanho, medido pela largura da cabeça contra a referência da forma (ferramentas/converter_ck.py --medir).
+    POR_CELULA = POR_CELULA | set(FOLHAS_CK)
+    AJUSTE = {"soco": 1.04, "martelo": 1.16, "chute_baixo": 1.16, "chute_alto": 1.03, "afastar": 1.04, "agachado": 1.04,
+              "baixo_soco": 1.06, "rasteira": 1.04, "rasteirinha": 1.03, "ar_soco": 1.04, "pulo": 1.03, "queda": 1.45,
+              "e_martelo": 1.08, "e_chute_baixo": 1.06, "e_chute_alto": 1.07, "e_beck": 1.10, "e_golaco": 1.18,
+              "e_pulo": 1.05, "despertar_b": 1.07}
+    # O magenta sai ANTES de quantizar (fundo_ck, na função poses): os quadros arcade já chegam ao Blender na paleta e
+    # o sem_magenta apagaria o roxo do boné e da camisa do Ratão. Por isso o ck não entra em LIMPA_MAGENTA.
 
 
 # Pengaró: toda folha (normal e endiabrada) alinhada pelo centro do tronco no eixo do lutador. Alinhar pelo pé de trás
@@ -128,10 +143,70 @@ def por_celula(img, fator, amplia=AMPLIA):
     return saida
 
 
+def fundo_ck(img):
+    """CK: o fundo magenta das folhas vem com degradê (verde até ~40) e tira_fundo só apaga bolsão fechado de magenta
+    puro. Aqui tudo o que é fundo vira #FF00FF exato, para o tira_fundo levar também o vão entre braço e tronco."""
+    a = np.array(img.convert("RGB"))
+    r, g, b = (a[..., i].astype(int) for i in range(3))
+    fundo = (r > 170) & (b > 170) & (g < 130) & (np.abs(r - b) < 60)
+    a[fundo] = (255, 0, 255)
+    # Duas figuras vizinhas que se encostam (o pé de um chute no corpo do quadro seguinte) viram um pedaço só e o
+    # por_celula cairia no corte reto por coluna, que decepa o membro. Aqui o pedaço grudado é separado no ponto fino:
+    # desgasta até partir em dois corpos de células diferentes, cresce de volta e abre um fio de fundo na emenda.
+    largura = a.shape[1] / 8
+    for _ in range(4):  # três figuras grudadas saem em duas passadas
+        mudou = False
+        n, rotulos, dados, _ = cv2.connectedComponentsWithStats((~fundo).astype(np.uint8), connectivity=8)
+        for i in range(1, n):
+            x, y, w, h, area = dados[i]
+            if w < 1.2 * largura or area < 4000:
+                continue
+            pedaco = (rotulos[y:y + h, x:x + w] == i).astype(np.uint8)
+            emenda = np.zeros(pedaco.shape, bool)
+            for voltas in range(1, 17):
+                gasto = cv2.erode(pedaco, np.ones((3, 3), np.uint8), iterations=voltas)
+                m, rot, info, centros = cv2.connectedComponentsWithStats(gasto, connectivity=8)
+                grandes = [j for j in range(1, m) if info[j, cv2.CC_STAT_AREA] >= 0.2 * max(1, gasto.sum())]
+                xs = sorted(centros[j][0] for j in grandes)
+                # corpos de figuras diferentes ficam a quase uma célula um do outro (cabeça e tronco do deitado, não)
+                if len(xs) >= 2 and xs[-1] - xs[0] >= 0.75 * largura:
+                    break
+            else:
+                if w >= 1.8 * largura:  # emenda grossa: corte reto na coluna mais vazia do terço do meio
+                    corte = w // 3 + int(np.argmin(pedaco[:, w // 3:2 * w // 3].sum(axis=0)))
+                    emenda[:, corte:corte + 2] = pedaco[:, corte:corte + 2] > 0
+                    fundo[y:y + h, x:x + w] |= emenda
+                    mudou = True
+                continue
+            dono = np.where(np.isin(rot, grandes), rot, 0).astype(np.int32)
+            while True:  # cresce cada corpo de volta dentro do pedaço, um pixel por vez
+                livre = (pedaco > 0) & (dono == 0)
+                if not livre.any():
+                    break
+                novo = dono.copy()
+                for j in grandes:
+                    perto = cv2.dilate((dono == j).astype(np.uint8), np.ones((3, 3), np.uint8)) > 0
+                    novo[livre & perto & (novo == 0)] = j
+                if (novo == dono).all():
+                    break
+                dono = novo
+            for j in grandes:
+                outros = cv2.dilate(((dono > 0) & (dono != j)).astype(np.uint8), np.ones((3, 3), np.uint8)) > 0
+                emenda |= (dono == j) & outros
+            fundo[y:y + h, x:x + w] |= emenda
+            mudou = True
+        if not mudou:
+            break
+    a[fundo] = (255, 0, 255)
+    return Image.fromarray(a)
+
+
 def poses(folha, ancora, amplia=AMPLIA):
     """Corta a folha e devolve as poses alinhadas no chão, `amplia` vezes maiores que o quadro final (4 para o Blender,
     1 para a escala do jogo, que é o que quantizar_folha.py usa)."""
     img = Image.open(folha)
+    if LUTADOR == "ck":
+        img = fundo_ck(img)
     fator = ESCALA_2172 * 2172 / img.width * amplia * AJUSTE.get(Path(folha).stem, 1)
     if Path(folha).stem in POR_CELULA or Path(folha).stem.startswith("e_") or LUTADOR in ("gutto", "raiclaven"):  # Gutto e Raiclaven: sempre por célula (golpes que avançam encostam nas figuras vizinhas)
         return por_celula(img, fator, amplia)
