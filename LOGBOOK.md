@@ -856,3 +856,15 @@ a ~150 / ~200 px está bom?; (6) a Estatueta do tamanho da mão (~15 px) ou maio
   quatro auras. Os scripts ainda têm caminhos e medidas da asa do Hazak escritos à mão (não são genéricos).
 - **Próximo:** generalizar os scripts e aplicar em Gutto, Raiclaven, CK e Pengaró quando o uso do plano permitir
   (semana em 64% no Fable às 15h; a regra é parar em 80%).
+
+## 2026-11-11 (aura pelo Blender: peças comuns)
+
+- **Feito:** os scripts do teste da asa viraram `ferramentas/aura_blender/comum.py` (peças comuns), `hazak_asas.py`
+  (a asa reescrita em cima do comum) e `aura_modelo.py` (molde de aura nova); os quatro scripts antigos saíram. A asa
+  foi rodada de novo e comparada com a do teste aprovado: recortes, chão, coroa e partículas idênticos; asas com ~13
+  pixels diferentes por quadro (pesos em precisão dupla), sem diferença visível na tira. Camadas finais em
+  `sprites/hazaki/aura/` (288 PNG + `aura.json`). O conceito `d_conceito.png` do Hazak foi copiado da branch `bosses`
+  para o mesmo caminho, para o script rodar daqui. `docs/arcade/aura_blender.md` tem os 10 passos de uma aura nova.
+- **Pendente:** ligar no motor (ninguém viu isto dentro do jogo); auras do Gutto, Raiclaven, CK e Pengaró; caminho de
+  aura fria (sem ouro/fogo) só foi escrito, não testado com conceito de verdade.
+- **Próximo:** uma aura por lutador copiando o molde.
