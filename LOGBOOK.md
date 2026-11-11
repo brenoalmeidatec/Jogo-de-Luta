@@ -868,3 +868,16 @@ a ~150 / ~200 px está bom?; (6) a Estatueta do tamanho da mão (~15 px) ou maio
 - **Pendente:** ligar no motor (ninguém viu isto dentro do jogo); auras do Gutto, Raiclaven, CK e Pengaró; caminho de
   aura fria (sem ouro/fogo) só foi escrito, não testado com conceito de verdade.
 - **Próximo:** uma aura por lutador copiando o molde.
+
+## 2026-11-11 — Aura do Gutto: garanhão de raio vermelho (método do Blender)
+
+- **Feito:** `ferramentas/aura_blender/gutto_aura.py` + `sprites/gutto/aura/` (432 PNG 360x200 + `aura.json`). Cinco
+  camadas: `crateras` (96 q), `garanhao` (48 q, malha de 3536 vértices e 22 ossos: dorso, pescoço, cabeça, queixo,
+  duas patas de 3 juntas, três cadeias de crina de 4), `raios` (96 q, zigue-zague que sai das juntas, pisca e se
+  refaz), `ferraduras` (96 q) e `vapor` (96 q, a única À FRENTE do corpo). Sem redução: escala 112/450 do conceito.
+  Novidade em relação à asa: pesos por FAMÍLIA de osso (`pesos_por_familia`, no script), para a borda de uma pata não
+  ser puxada pela outra. Conceito `e_conceito.png` copiado da branch `bosses` para o mesmo caminho.
+- **Medido:** nenhum pixel parado em nenhuma camada, nenhum par de quadros igual, emenda do garanhão 6,68 contra
+  6,64/6,57 das vizinhas, passo máximo 3,0 px (casco de cima), 15 cores.
+- **Pendente:** ligar no motor (nada foi visto no jogo). O vapor sai da narina da pose parada: em golpe/pulo tem de
+  seguir a cabeça ou desligar. Ferraduras estão 1,4x o conceito (com 11 px viravam anel ilegível).

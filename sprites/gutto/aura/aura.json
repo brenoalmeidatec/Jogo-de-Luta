@@ -1,0 +1,131 @@
+{
+ "formato": 1,
+ "lutador": "gutto",
+ "aura": "garanhao",
+ "tela": [
+  360,
+  200
+ ],
+ "pe": [
+  180,
+  190
+ ],
+ "tiques_por_quadro": 2,
+ "alfa": "0 ou 255",
+ "arquivo": "{nome}_{quadro:02d}.png",
+ "camadas": [
+  {
+   "nome": "crateras",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "duas crateras de casco em brasa pulsando embaixo dos cascos do Gutto, com fagulhas"
+  },
+  {
+   "nome": "garanhao",
+   "quadros": 48,
+   "plano": "atras",
+   "o_que": "o cavalo de raio empinando, coice alternado, cabeça sacudindo, crina chicoteando (o tronco atrás do corpo é remendo)"
+  },
+  {
+   "nome": "raios",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "raios em zigue-zague que saem das juntas do cavalo, piscam e se refazem; faíscas de 4 pontas"
+  },
+  {
+   "nome": "ferraduras",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "quatro ferraduras-faísca flutuando e girando"
+  },
+  {
+   "nome": "vapor",
+   "quadros": 96,
+   "plano": "frente",
+   "o_que": "jato de vapor branco do nariz; ancorado na narina da pose parada",
+   "ancora": [
+    199.4,
+    109.9
+   ]
+  }
+ ],
+ "paleta": [
+  [
+   44,
+   8,
+   18
+  ],
+  [
+   138,
+   2,
+   21
+  ],
+  [
+   166,
+   3,
+   22
+  ],
+  [
+   193,
+   4,
+   27
+  ],
+  [
+   221,
+   6,
+   31
+  ],
+  [
+   210,
+   7,
+   58
+  ],
+  [
+   238,
+   10,
+   48
+  ],
+  [
+   245,
+   8,
+   72
+  ],
+  [
+   243,
+   37,
+   83
+  ],
+  [
+   246,
+   61,
+   105
+  ],
+  [
+   249,
+   88,
+   130
+  ],
+  [
+   250,
+   119,
+   157
+  ],
+  [
+   251,
+   150,
+   183
+  ],
+  [
+   252,
+   192,
+   214
+  ],
+  [
+   253,
+   238,
+   245
+  ]
+ ],
+ "nota": "O pé do lutador fica em 'pe'; cada PNG tem o tamanho de 'tela'. Cada camada roda no seu laço (quadro = (tique // tiques_por_quadro) % quadros). O vapor é a única camada à frente do corpo e sai da narina da pose parada ('ancora'): em golpe ou pulo ele precisa seguir a cabeça ou ser desligado.",
+ "gerado_por": "ferramentas/aura_blender/gutto_aura.py"
+}
