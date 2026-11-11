@@ -4,6 +4,8 @@
 > prefeitura, a passarela), **animados**, nada estático. Este arquivo é o método: as medidas que a arte precisa ter,
 > como o gerador monta o cenário e como se prova no motor. A base foi provada na sandbox com um cenário de teste
 > desenhado por código (`stages/teste.def`); a arte dos quatro lugares ainda não existe.
+> O projeto de cada lugar (camadas, hora do dia, o que se mexe) e a fila de prompts estão em
+> [`cenarios_nazare.md`](cenarios_nazare.md).
 
 ## 1. Como o motor enxerga o cenário (medido na sandbox, IKEMEN GO v1.0.0)
 

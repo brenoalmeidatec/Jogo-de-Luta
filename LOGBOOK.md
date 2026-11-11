@@ -860,3 +860,16 @@ a ~150 / ~200 px está bom?; (6) a Estatueta do tamanho da mão (~15 px) ou maio
   padrão do jogo continua `stage0-720`. Não provado: tremor de tela, `subtrai`/`alfa`, outros BGCtrl, escolha pelo menu.
 - **Próximo:** referência dos lugares, fila de prompts das camadas, converter a arte para a malha 320x180 e gerar os
   quatro cenários; depois ligar no launcher.
+
+## 2026-11-11 (cenários de Nazaré: projeto e fila de arte, branch `cenarios`)
+
+- **Feito:** `docs/arcade/cenarios_nazare.md`: projeto dos quatro cenários pedidos pelo Alisson (Cristo ao entardecer,
+  Maria Fumaça de noite dentro do galpão da estação, praça da prefeitura em manhã de sol, passarela ao amanhecer com
+  neblina), cada um com lugar real e fontes, camadas com tamanho e delta, paleta, lista do que se mexe (10 ou 11 por
+  cenário) e a fila de 64 imagens para o ChatGPT com prompt pronto (14 + 14 + 13 + 17 + 6 comuns).
+- **Pendente:** nenhuma imagem gerada; a ferramenta de conversão (recorte pela cor de fundo, redução, quantização, fatia
+  das folhas) e o script de montagem de cada cenário (luzes por código + `cenario.json`) não existem; posições são de
+  prancheta, sem prévia nem motor. O topo do documento tem 11 perguntas para o Alisson (qual Cristo, cor da prefeitura,
+  locomotiva dentro do galpão ou na rua, passarela nova ou antiga, luta na beira ou em cima dela, horas do dia).
+- **Próximo:** respostas do Alisson; gerar o lote piloto (4 primeiras imagens de cada cenário); escrever a conversão;
+  montar e filmar um cenário inteiro (sugestão: a praça) antes de pedir o resto.

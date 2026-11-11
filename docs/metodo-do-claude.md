@@ -123,6 +123,11 @@ na malha do jogo (tela lógica 320x180, chão em y = 165), descrita num `cenario
 `ferramentas/filmar_cenario.py` filma o passeio pelas duas pontas na sandbox e monta as tiras. Foto e mapa dos lugares
 são só referência: desenho original, sem pessoa real, sem marca, foto fora do repositório.
 
+O projeto dos quatro lugares e a fila de arte (64 imagens, com prompt) estão em
+[`arcade/cenarios_nazare.md`](arcade/cenarios_nazare.md): o plano principal é montado com peças e faixas que se repetem
+(o ChatGPT não entrega 768 px de largura com detalhe), a luz pequena é desenhada por código em camada somada, e o lote
+piloto (céu, piso e o lugar de cada cenário) passa pela conversão e pelo filme antes do resto.
+
 ## 9. Como retomar
 
 Ler, nesta ordem: `docs/como-trabalhar.md`, este arquivo, as últimas entradas do `LOGBOOK.md` de cada branch da tabela
