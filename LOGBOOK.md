@@ -535,3 +535,52 @@ imagem. Funcionou em `provoca` dizer "the arm on the LEFT side of the image is f
 to the mouth, the arm on the RIGHT side hangs empty"; em `golaco` e `vitoria` não pegou em todos os quadros. Pedir
 "magenta margin on all four sides" resolve corte na borda. Pendentes do Lote 6: grupo E (agachado, rasteirinha, queda,
 bicicleta), opcional.
+
+
+## 2026-11-11 (CK) — folhas revisadas e convertidas para a arte arcade (branch `ck`, itens 2 e 3 do pedido do Breno)
+
+**Feito:**
+
+- `quantizar_folha.py`: papéis `PAPEIS_CK` (base) e `PAPEIS_CK_RATAO`; `FORMA=ratao` troca a paleta para
+  `paleta_arcade_ratao.json`. `conferir_arte.py`: rampa da pele do CK (sombra 2-10°, médio 11-19°, luz 20-30°) e a sombra
+  fria da regra 4 é `branco_sombra`. `animar_folha.py`: `FOLHAS_CK`, escala 0.195 (a figura ocupa a célula inteira da
+  folha), `AJUSTE` por folha, sempre por célula, e `fundo_ck` (fundo com degradê vira magenta puro; figuras vizinhas
+  grudadas são separadas no ponto fino). O CK **não** entrou em `LIMPA_MAGENTA`: o `sem_magenta` apagaria o roxo do boné
+  e da camisa; o magenta sai antes de quantizar.
+- `sprites/ck/paleta_arcade.json` e `paleta_arcade_ratao.json` (15 cores cada, medidas nas duas referências).
+- `ferramentas/converter_ck.py` converte tudo de uma vez (leva ~15 min): 58 pastas em `sprites/ck/quadros_arcade/`
+  (8 desenhos cada, tela 360x260, base y=219, sem quadro do meio) e os efeitos em `sprites/ck/efeitos/` (aura, fumaca,
+  garrafa, paredao com 8 quadros; bone e juliet com 1, tirados das folhas do golpe; despertar_fumaca com 4).
+  `--contato DIR` gera folhas de contato e `--medir` as medidas. Retoques por código em
+  `ferramentas/retoques_arcade/ck.py` (rodar o converter refaz todos).
+- Altura em pé: base 113 px, Ratão 109-110 px (ele fica curvado). Queda e levantada têm escala por quadro
+  (`ESCALA_QUADRO` e `AJUSTE["queda"]`): o corpo deitado veio com ~65 px na folha e ficou com ~97-100.
+
+**Retoques por código:** `e_derrota` 8 = cópia do 7 (o 8 da folha encosta na borda); `e_agarrao` 7 = cópia do 8 (a
+garrafa trocava de mão); faísca amarela fora do `e_queda` 1, 5 e 6; boné, óculos e garrafa no ar fora do corpo
+(`bone_voador` 6, `e_juliet_voadora` 6, `e_bola` 6); **fiapo de fumaça e cigarro fora de todas as folhas `e_`** (com
+1-2 px ele virava um rabisco azul-escuro em cima da cabeça por causa do contorno de 1 px).
+
+**Defeitos que ficaram (número do quadro como na folha, 1 a 8):**
+
+- `queda` 5 e 6: as figuras se sobrepõem na folha; o 5 saiu sem os pés e a ponta do tênis dele ficou colada atrás da
+  cabeça do 6. Usar 4 -> 7 ou refazer a folha com mais espaço.
+- Garrafa na outra mão (o braço que sai do ombro da esquerda da imagem segura a garrafa e a mão vazia fica à direita):
+  `e_soco` 2 a 7, `e_caneta` 3 a 5; parecido em `e_martelo` 2 a 6 e `e_ar_soco` 2 a 6 (vi só na folha de contato
+  reduzida). No `e_rolamento` 7 ele está de costas e a garrafa aparece à esquerda. Não dá para resolver por código.
+- As 4 já marcadas para refazer (`e_provoca`, `e_beck`, `e_golaco`, `e_juliet_voadora`) foram convertidas como estão;
+  o `e_golaco` tem riscos de giro e estilhaço desenhados junto com o corpo.
+- `lata` 5 (manchas escuras na polo) e 6 (clarão vermelho no ombro de trás); `provoca` 2, 3 e 6 e `golaco` 4 (risquinhos
+  e luva solta desenhados); `rolamento` 2 e 3 (mancha rosa atrás do joelho); `e_vitoria` 3 sem a fumacinha (agora
+  nenhuma folha `e_` tem).
+- `despertar_a` 7-8 e `despertar_b` 1-2: a fumaça sai lilás na paleta do corpo (ela não tem cinza-esverdeado). Os
+  mesmos 4 quadros estão com as cores certas em `efeitos/despertar_fumaca/`.
+- `e_derrota`: sentado ele fica com ~50-60 px de altura (o base tem ~66).
+
+**conferir_arte.py (58 pastas, 464 quadros):** R1, R5 e R7 passam em todos. R3 e R4 falham só nos quadros sem pele ou
+sem branco (fumaça do Despertar, `afastar` 2). R10 falha em 55 pastas e R11 em 13: são do desenho (punho que cresce no
+contato, antecipação), não da conversão.
+
+**Não feito / a seguir:** quadros do meio (`animar_folha.py --arcade` + `quantizar_folha.py --meio` funcionam para o
+CK, testado no `soco` e apagado); `gerar_ck.py` (item 4); refazer no ChatGPT as 4 folhas do item 1 e, se o Breno quiser,
+`queda`, `e_soco` e `e_caneta`. Nada foi testado no motor: só folha de contato e script.
