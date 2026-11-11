@@ -966,3 +966,7 @@ pela metade na hora da parada (**não testado, pode estar quebrado**); para volt
 O Alisson pediu de novo para ir parando. A etapa "converter e ligar" terminou (entrada acima: estado conferido na
 sandbox, robô 146/0, dois filmes). Os dois céticos estavam rodando e foram interrompidos; o retoque final não rodou.
 Árvore limpa. Falta: céticos (modelo e jogo), retoque, o orquestrador olhar os filmes, e juntar na `mugen`.
+
+## 2026-11-11 (endiabrado: PARADA às 17h20, o Alisson precisou desligar o notebook)
+
+Parada rápida. Último commit antes desta entrada: `f3e86b1c`. Arquivos alterados sem commit na hora da parada: 0 (guardados neste commit; **não testados**, se houver). Falta o que a entrada anterior desta branch lista; a etapa em andamento (retoque ou conferência) foi interrompida.
