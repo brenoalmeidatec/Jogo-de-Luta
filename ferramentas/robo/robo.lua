@@ -9,6 +9,7 @@ do
     "golpe_216","golpe_246","golpe_201","golpe_231","golpe_1400","golpe_1401","golpe_1500","golpe_1501","golpe_3200","bola_fraca","bola_forte","parry","desperto","agacha","v10"}
   for _, nome in ipairs({"bfd_a","bfd_b","bfd_x","bfd_y","df_x","df_y","fb_x","fb_y","fd_x","fd_y","df_a","df_b","db_a",
     "db_b","bf_a","bf_b","bd_a","bd_b","db_x","db_y","bf_y"}) do CMDS[#CMDS + 1] = nome end  -- toques do Hazak
+  CMDS[#CMDS + 1] = "defende"  -- so o .cmd do Hazak tem o controlador (testar_pengaro.py); nos outros o mapa nao faz nada
 
   local function com(n, fn)
     local old = id()
@@ -21,7 +22,8 @@ do
     return com(n, function()
       return {st = stateNo(), t = time(), life = life(), pow = power(), ctrl = ctrl(), v10 = var(10), v20 = var(20), v37 = var(37),
               x = posX(), y = posY(), d = p2BodyDistX(), mc = moveContact(), mh = moveHit(), fa = facing(),
-              borda = frontEdgeBodyDist(), proj = numProj(), stt = stateType()}
+              borda = frontEdgeBodyDist(), proj = numProj(), stt = stateType(),
+              an = (anim and anim()) or -1, sx = (screenPosX and screenPosX()) or 0}
     end)
   end
 
@@ -616,6 +618,111 @@ do
     need(estadoEm(1000), 15, "cancelou 301 em 1000")
   end)
 
+  -- ---- defesa de verdade (o P2 e o Hazak com T_defende): entra na guarda do motor e segura para tras
+  local function p2defende(agachado)
+    press(2, agachado and {"holddown", "agacha", "holdback", "defende"} or {"holdback", "defende"}, 900)
+    wait(12)
+    note(function() return "P2 estado " .. snap(2).st .. " tipo " .. tostring(snap(2).stt) end)
+    acao(function() c.vida0 = lifeP2(); c.defendeu = false end)
+  end
+  -- vigia n ticks: anota se o P2 passou por um estado de golpe defendido (150 a 155)
+  local function espia(n)
+    local ate
+    add(function()
+      ate = ate or (clock() + n)
+      local s = snap(2).st
+      if s >= 150 and s <= 155 then c.defendeu = true end
+      return clock() >= ate
+    end)
+  end
+  local function seDefendeu() return "P2 defendeu: " .. tostring(c.defendeu) .. "; dano " .. (c.vida0 - lifeP2()) .. "; P2 estado " .. snap(2).st end
+  S("corrente x contra DEFESA DE VERDADE (P2 em guarda): o finalizador nao sai", function()
+    approach(28)
+    p2defende(false)
+    press(1, {"x"}, 2)
+    need(contatoEm(200), 60, "200 encostou")
+    espia(3)
+    press(1, {"x"}, 2); need(estadoEm(301), 20, "301")
+    need(contatoEm(301), 60, "301 encostou")
+    espia(3)
+    press(1, {"x"}, 2); need(estadoEm(302), 40, "302")
+    need(contatoEm(302), 60, "302 encostou")
+    espia(3)
+    press(1, {"x"}, 2); wait(15)
+    note(function() return "estado " .. st1() .. ", v10=" .. snap(1).v10 .. "; " .. seDefendeu() end)
+    need(function() return c.defendeu and c.vida0 == lifeP2() end, 1, "os golpes foram DEFENDIDOS (sem dano)", false)
+    need(function() return st1() ~= 303 end, 1, "finalizador NAO saiu com os golpes defendidos", false)
+  end)
+  S("Machado por cima (246) contra defesa AGACHADA: fura", function()
+    approach(40)
+    p2defende(true)
+    press(1, {"golpe_246"}, 2)
+    need(estadoEm(246), 12, "entrou em 246")
+    espia(50)
+    note(seDefendeu)
+    need(function() return c.vida0 - lifeP2() > 20 and not c.defendeu end, 1, "o por cima acertou quem defendia agachado", false)
+  end)
+  S("Machado por cima (246) contra defesa EM PE: defende", function()
+    approach(40)
+    p2defende(false)
+    press(1, {"golpe_246"}, 2)
+    need(estadoEm(246), 12, "entrou em 246")
+    espia(50)
+    note(seDefendeu)
+    need(function() return c.vida0 == lifeP2() and c.defendeu end, 1, "em pe o por cima foi defendido", false)
+  end)
+  S("Punho de Concreto (df_x) contra defesa EM PE: acerta (so defende agachado)", function()
+    approach(70)
+    p2defende(false)
+    press(1, {"df_x"}, 2)
+    need(estadoEm(1000), 12, "entrou em 1000")
+    espia(140)
+    note(seDefendeu)
+    need(function() return c.vida0 - lifeP2() > 20 and not c.defendeu end, 1, "a lasca acertou quem defendia em pe", false)
+  end)
+  S("Punho de Concreto (df_x) contra defesa AGACHADA: defende", function()
+    approach(70)
+    p2defende(true)
+    press(1, {"df_x"}, 2)
+    need(estadoEm(1000), 12, "entrou em 1000")
+    espia(140)
+    note(seDefendeu)
+    need(function() return c.vida0 - lifeP2() <= 10 and c.defendeu end, 1, "agachado a lasca foi defendida (so o dano de raspao)", false)
+  end)
+  S("Pega Bolado forte (bd_b) DEFENDIDO: cai no 1503 (erra feio)", function()
+    approach(130)
+    p2defende(false)
+    press(1, {"bd_b"}, 2)
+    need(estadoEm(1501), 12, "entrou em 1501")
+    need(estadoEm(1503), 120, "defendido, pousou no 1503", false)
+    note(seDefendeu)
+  end)
+  local function guardaContraBaixo(nome, cmd, est, reverte)
+    S(nome, function()
+      approach(28)
+      press(2, {"holddown", "agacha"}, 600)
+      wait(12)
+      acao(function() c.vida0 = lifeP2(); c.vida1 = snap(1).life; c.resp = false end)
+      press(1, {cmd}, 2)
+      need(estadoEm(est), 12, "entrou em " .. est)
+      press(2, {"a"}, 3)
+      local ate
+      add(function()
+        ate = ate or (clock() + 60)
+        if st1() == est + 2 then c.resp = true end
+        return clock() >= ate
+      end)
+      note(function() return "respondeu: " .. tostring(c.resp) .. "; dano no P2 " .. (c.vida0 - lifeP2()) .. "; dano no P1 " .. (c.vida1 - snap(1).life) end)
+      if reverte then
+        need(function() return c.resp and snap(1).life == c.vida1 end, 1, "reverteu o chute na canela do P2 agachado", false)
+      else
+        need(function() return (not c.resp) and snap(1).life < c.vida1 end, 1, "o x NAO pega golpe baixo: o P1 levou o chute na canela", false)
+      end
+    end)
+  end
+  guardaContraBaixo("Guarda de Aco y (db_y) contra golpe baixo: reverte", "db_y", 1101, true)
+  guardaContraBaixo("Guarda de Aco x (db_x) contra golpe baixo: nao reverte", "db_x", 1100, false)
+
   S("Despertar desligado: x + y com barra cheia nao transforma", function()
     approach(60)
     acao(function() com(1, function() setPower(3000); return 0 end) end)
@@ -624,6 +731,33 @@ do
     wait(14)
     note(function() local s = snap(1); return "estado " .. s.st .. ", var20=" .. s.v20 .. ", barra " .. s.pow end)
     need(function() local s = snap(1); return s.st ~= 2000 and s.v20 == 0 end, 1, "nao entrou no 2000 (Despertar pendente)", false)
+  end)
+
+  -- fica por ultimo: o nocaute acaba com o round
+  S("DERROTA: o P1 com 1 de vida leva um jab; levanta e foge da tela", function()
+    approach(28)
+    acao(function() com(1, function() setLife(1); return 0 end) end)
+    wait(3)
+    acao(function() local s = snap(1); c.x0 = s.x; c.fa = s.fa; c.saiu = false; c.viu171 = false end)
+    press(2, {"x"}, 3)
+    need(function() return snap(1).life <= 0 end, 60, "P1 nocauteado")
+    for i = 1, 30 do
+      local ate
+      add(function()
+        ate = ate or (clock() + 10)
+        local s = snap(1)
+        if s.an == 171 and not c.viu171 then c.viu171 = true; c.x171 = s.x end
+        if s.sx < -20 or s.sx > 340 then c.saiu = true end
+        return clock() >= ate
+      end)
+      note(function()
+        local s = snap(1)
+        return string.format("+%3d P1 estado %d anim %d x %.0f telaX %.0f facing %d; round %d", i * 10, s.st, s.an, s.x, s.sx, s.fa, roundState())
+      end)
+    end
+    need(function() return c.viu171 end, 1, "a animacao da fuga (171) tocou", false)
+    need(function() local s = snap(1); return c.x171 and (s.x - c.x171) * c.fa < -100 end, 1, "depois de levantar ele andou mais de 100 px para TRAS (para longe do oponente)", false)
+    need(function() return c.saiu end, 1, "saiu da tela (telaX fora de 0..320)", false)
   end)
 
   -- ---------------------------------------------------------------- motor do robo

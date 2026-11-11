@@ -18,17 +18,19 @@ SOMBRA = (0xa9, 0xa6, 0xcc)
 DIRECAO = {"N": (0, -1), "S": (0, 1), "L": (1, 0), "O": (-1, 0),
            "NE": (1, -1), "NO": (-1, -1), "SE": (1, 1), "SO": (-1, 1)}
 
-# (folha, desenho): (qual atadura, lado do cotovelo). qual: esq, dir, cima, baixo (pelo centro da mancha branca).
+# (folha, desenho): (qual atadura, lado do cotovelo[, percentil do corte: padrão 55, maior = tira mais fina]).
+# qual: esq, dir, cima, baixo (pelo centro da mancha branca).
 PINTA = {
     ("parado", 1): ("esq", "SO"), ("parado", 4): ("esq", "SO"),
-    ("agarrao_perna", 0): ("esq", "SO"), ("agarrao_perna", 7): ("esq", "SO"),
+    ("agarrao_perna", 0): ("esq", "SO"), ("agarrao_perna", 6): ("esq", "NO"),
+    ("agarrao_perna", 7): ("esq", "SO"),
     ("apanha", 2): ("esq", "O"), ("apanha", 7): ("baixo", "O"),
     ("chute_giratorio", 2): ("dir", "S"),
     ("corrida", 3): ("esq", "L"), ("corrida", 5): ("esq", "L"),
     ("derrota_sirene", 0): ("cima", "O"), ("derrota_sirene", 5): ("dir", "NE"),
-    ("guarda_aco", 2): ("esq", "S"),
+    ("guarda_aco", 2): ("esq", "SO", 82),
     ("rasteira", 1): ("baixo", "N"), ("rasteira_arco", 2): ("esq", "N"),
-    ("vitima_agarrado", 1): ("dir", "O"),
+    ("vitima_agarrado", 0): ("esq", "N"), ("vitima_agarrado", 1): ("esq", "NE"),
     ("vitima_arremessado", 2): ("baixo", "O"), ("vitima_arremessado", 6): ("dir", "N"),
     ("vitoria", 1): ("esq", "NO"), ("vitoria", 2): ("esq", "NO"),
     ("defesa_baixa", 2): ("baixo", "NO"),
@@ -56,7 +58,7 @@ def retocar(nome, i, img):
     for sobra in verdes[1:]:
         a[sobra, :3] = SOMBRA
     if (nome, i) in PINTA:
-        qual, lado = PINTA[(nome, i)]
+        qual, lado, *resto = PINTA[(nome, i)]
         if verdes:
             a[verdes[0], :3] = SOMBRA  # o resto de verde que havia (poucos pixels) sai; a pulseira é a pintada
         brancas = [b for b in manchas(cor(a, BRANCO) | cor(a, SOMBRA), junta=1) if b.sum() >= 6]
@@ -67,7 +69,7 @@ def retocar(nome, i, img):
             ys, xs = np.nonzero(alvo)
             dx, dy = DIRECAO[lado]
             proj = xs * dx + ys * dy
-            corte = np.percentile(proj, 55)
+            corte = np.percentile(proj, resto[0] if resto else 55)
             pega = proj >= corte
             a[ys[pega], xs[pega], :3] = VERDE
     return Image.fromarray(a), int(cor(a, VERDE).sum())

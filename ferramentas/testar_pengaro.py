@@ -44,6 +44,11 @@ def injetar(arq, hazaki):
     if hazaki:
         b += ('[State -1, T_agacha]\ntype = ChangeState\nvalue = 11\ntriggerall = map(t_agacha) = 1\n'
               'trigger1 = statetype = S && ctrl\n\n')
+        # defesa de verdade: com um golpe vindo (inguarddist) entra na guarda do motor (120) e o robô segura
+        # "holdback"; com t_agacha, defende agachado
+        b += ('[State -1, T_defende]\ntype = ChangeState\nvalue = 120\ntriggerall = map(t_defende) = 1\n'
+              'triggerall = statetype != A\ntriggerall = stateno != [120,155]\n'
+              'triggerall = map(t_agacha) = 0 || statetype = C\ntrigger1 = ctrl && inguarddist\n\n')
     assert "[Statedef -1]\n\n" in txt, f"sem Statedef -1 em {arq}"
     arq.write_text(txt.replace("[Statedef -1]\n\n", "[Statedef -1]\n\n" + b, 1), encoding="utf-8", newline="\n")
 

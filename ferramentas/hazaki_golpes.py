@@ -33,6 +33,7 @@ class Golpe:
     hit: int = None         # ground.hittime
     leve: bool = False      # conta na corrente de fracos (var(5))
     extra: str = ""         # controladores a mais, com {n} no lugar do número
+    no_hitdef: str = ""     # linhas a mais dentro do HitDef
 
 
 NORMAIS = [
@@ -68,6 +69,9 @@ NORMAIS = [
     Golpe(231, "Coice de calcanhar", "coice 1/3 2/4 3/4A 5/5 6/5 7/4", (-48, -68, -14, -46), 50, "forte"),
 ]
 
+# O oponente quica: bate no chão e sobe de novo bem mais alto que o quique comum do motor (-4,5).
+QUIQUE = "fall.yvelocity = -7\nfall.xvelocity = -1.2"
+
 ESTOURO = ("[State {n}, Asfalto]\ntype = Explod\ntrigger1 = MoveHit = 1\nanim = 9205\npostype = p1\npos = 40, 0\n"
            "removetime = -2\nsprpriority = 4\nownpal = 1\n\n")
 
@@ -77,14 +81,15 @@ CORRENTES = [
           avanco=2.5),
     Golpe(302, "Cutucão Sacana", "cutucao 2/2 3/2 4/3A 5/4 6/3 7/3", (16, -70, 50, -54), 30, "fraco", avanco=3),
     Golpe(303, "Tá Achando Ruim?", "tapa_costas 1/3 2/4 3/3 4/4A 5/5 6/6 7/5", (16, -96, 63, -80), 70, "final",
-          avanco=3, queda=True, vel="-4,-5", ar="-4,-5"),
+          avanco=3, queda=True, vel="-4,-5", ar="-4,-5", no_hitdef="p2stateno = 304"),  # 304: o oponente gira
     Golpe(311, "Cruzado", "cruzado 1/2 2/3 3/2 4/4A 5/5 6/4 7/4", (10, -92, 38, -74), 50, "forte", avanco=4.5),
     Golpe(312, "Cotovelada descendo", "cotovelada 1/3 2/4 4/4A 5/5 6/5 7/4", (8, -92, 40, -56), 55, "forte",
           avanco=4.5),
     Golpe(313, "Punho de Concreto curto", "calcada_levantada 1/4 2/4 3/3 4/4A 5/5 6/8 7/6", (12, -36, 41, 0), 80,
           "final", avanco=4, queda=True, vel="-2,-8", ar="-2,-8", extra=ESTOURO),
     Golpe(321, "Chute na cintura", "chute 2/2 3/2 4/3A 5/4 6/4 7/3", (14, -82, 61, -62), 30, "fraco", avanco=2.5),
-    Golpe(322, "Chute alto sem descer", "chute_alto_rajada 0/3 2/2 1/3A 2/4 4/3 7/3", (14, -104, 59, -74), 35,
+    # recolhe (0), chuta alto (1), recolhe (6) e desce (7): cada desenho uma vez só, sem vai-e-volta
+    Golpe(322, "Chute alto sem descer", "chute_alto_rajada 0/5 1/3A 6/5 7/5", (14, -104, 59, -74), 35,
           "fraco", avanco=2.5),
     Golpe(323, "Tesoura de Bairro", "tesoura 1/3 2/3 3/3 4/3 5/4A 6/7 7/6", (10, -88, 59, -66), 80, "final",
           avanco=3, queda=True, vel="-4,-5", ar="-4,-5"),
@@ -92,9 +97,9 @@ CORRENTES = [
           avanco=3),
     Golpe(332, "Chute de gancho", "chute_gancho 1/4 2/4 3/2A 4/3A 5/5 6/5 7/4", (12, -100, 42, -66), 60, "forte",
           avanco=4.5),
-    # o oponente quica: é jogado para baixo (cai no chão e sobe no quique do motor)
+    # o oponente quica: cai e sobe de novo num quique alto (QUIQUE)
     Golpe(333, "Machado de Dojô", "machado 1/3 2/4 3/6 4/4A 5/5 6/7 7/5", (10, -104, 51, -66), 85, "final",
-          avanco=3, queda=True, vel="-1.5,-3", ar="-1.5,7", extra=ESTOURO),
+          avanco=3, queda=True, vel="-1.5,-3", ar="-1.5,7", extra=ESTOURO, no_hitdef=QUIQUE),
 ]
 # acertos exigidos (var(10)) para o finalizador sair: a corrente x conta 4 porque o jab duplo acerta duas vezes
 ACERTOS_DO_FINAL = {"x": 4, "y": 3, "a": 3, "b": 3}
@@ -134,9 +139,9 @@ ANIM = {
     705: ("rolada_tatame 6/4 5/4 4/4 3/4 2/4 1/4", None, "C"),
     760: ("defesa 1/4A 2/10 3/10", CAIXA_REVERSAO, "S"),
     761: ("defesa 2/3", None, "S"),
-    800: ("agarrao_abraco 0/3A 1/9", (10, -90, 42, -50), "S"),
+    800: ("agarrao_abraco 0/3A 1/9", (10, -90, 58, -50), "S"),  # o gerador encurta até a mão + 4 px
     810: ("agarrao_abraco 1/4 2/5 3/5 4/4 5/5 6/5 7/8", None, "S"),
-    830: ("agarrao_cutucao 0/3A 1/9", (10, -90, 42, -50), "S"),
+    830: ("agarrao_cutucao 0/3A 1/9", (10, -90, 58, -50), "S"),
     831: ("agarrao_cutucao 1/3 2/4 3/6 4/6 3/6 4/6 5/6 6/6 7/12", None, "S"),
     840: ("agarrao_perna 1/3A 2/9", (10, -40, 46, -4), "C"),
     841: ("agarrao_perna 2/4 3/4 4/5 5/5 6/5 7/6", None, "C"),
@@ -219,5 +224,14 @@ Abraço de Quebrada <#bebebe>(colado)</>		[_B/_F]_+^Y
 Puxa a Perna <#bebebe>(oponente agachado)</>	_D_+^Y
 Cutucão Sacana <#bebebe>(agarrão, colado)</>	_B_F^Y
 Provocação							^C
-Parry								_F^C
+Parry								_F_+^C
+Corrida								_F_F
+Passo para trás						_B_B
+
+<#f0f000>:No ar:</>
+Soco de martelo						^X
+Cotovelo descendo					^Y
+Joelhada no ar						^A
+Chute duplo <#bebebe>(pega agachado)</>		^B
+Golpe de afastar no ar				^Y_+^B
 """

@@ -235,7 +235,7 @@ time = 1
 [State -1, Pode cancelar]
 type = VarSet
 trigger1 = 1
-var(1) = ctrl || ((stateno = 200 || stateno = 230 || stateno = 400 || stateno = 430 || stateno = 201 || stateno = 301 || stateno = 311 || stateno = 321 || stateno = 331 || stateno = 340 || stateno = 342 || stateno = 344 || stateno = 346) && movecontact && movecontact <= 8) || ((stateno = 210 || stateno = 240 || stateno = 410 || stateno = 216 || stateno = 302 || stateno = 312 || stateno = 322 || stateno = 332) && movehit && movehit <= 8)
+var(1) = ctrl || ((stateno = 200 || stateno = 210 || stateno = 230 || stateno = 240 || stateno = 400 || stateno = 430 || stateno = 201 || stateno = 301 || stateno = 311 || stateno = 321 || stateno = 331 || stateno = 340 || stateno = 342 || stateno = 344 || stateno = 346) && movecontact && movecontact <= 8) || ((stateno = 410 || stateno = 216 || stateno = 302 || stateno = 312 || stateno = 322 || stateno = 332) && movehit && movehit <= 8)
 
 [State -1, Rapidinho da Quebrada]
 type = ChangeState

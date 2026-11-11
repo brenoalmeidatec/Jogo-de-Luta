@@ -37,4 +37,13 @@ Abraço de Quebrada <#bebebe>(colado)</>		[_B/_F]_+^Y
 Puxa a Perna <#bebebe>(oponente agachado)</>	_D_+^Y
 Cutucão Sacana <#bebebe>(agarrão, colado)</>	_B_F^Y
 Provocação							^C
-Parry								_F^C
+Parry								_F_+^C
+Corrida								_F_F
+Passo para trás						_B_B
+
+<#f0f000>:No ar:</>
+Soco de martelo						^X
+Cotovelo descendo					^Y
+Joelhada no ar						^A
+Chute duplo <#bebebe>(pega agachado)</>		^B
+Golpe de afastar no ar				^Y_+^B

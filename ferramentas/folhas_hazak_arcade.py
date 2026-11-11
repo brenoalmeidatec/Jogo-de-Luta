@@ -23,7 +23,7 @@ from PIL import Image
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import quantizar_folha as qf  # noqa: E402  (só quantizar/limpar/para_imagem; a paleta é a do Hazak)
 from recortar_quadros import tira_fundo  # noqa: E402
-from retoques_arcade import hazak_pulseira  # noqa: E402
+from retoques_arcade import hazak_faixa, hazak_pulseira  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parent.parent
 SPRITES = RAIZ / "sprites/hazaki"
@@ -178,6 +178,7 @@ def converter(nome, dados, pal):
             tela.paste(g, (EIXO - centro, CHAO - g.height), g)
         qf.para_imagem(qf.quantizar(tela, dados, pal), pal).save(destino / f"{i:02d}.png")
     faltam = hazak_pulseira.aplicar(nome, destino)
+    hazak_faixa.aplicar(nome, destino)
     return f"{len(figs)} desenhos" + (f"; pulseira escondida ou faltando em {faltam}" if faltam else "")
 
 

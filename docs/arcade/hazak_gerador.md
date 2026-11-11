@@ -26,14 +26,29 @@
 >   Projéteis provisórios: a lasca e a estatueta saem das folhas `obj_lasca`/`obj_estatueta`, não do pixelfx (regra 8).
 > - **Vítima de arremesso:** todos os grupos de `gp.SPRITES_VITIMA` existem no `.sff` (o arremessado não some mais):
 >   preso = `vitima_agarrado` 1, curvado = `vitima_agarrado` 0, apanhando = `apanha` 2 e 3. Os desenhos de voo
->   (`vitima_agarrado` 3-7, `vitima_arremessado`) não entram: os arremessos dos outros só pedem as ações 5001 e 5030.
-> - **Provisório:** apanhar agachado (5020-5027) usa a folha `agachado`; sem som (nenhum `.snd`: falas e sirene são
->   áudio que o Breno manda); a fuga da sirene na derrota está escrita no `[Statedef -2]` mas **não foi vista rodando**.
+>   (`vitima_agarrado` 3-7, `vitima_arremessado`) não entram: os arremessos dos outros só pedem as ações 5001 e 5030
+>   do `.air` deles. As vítimas dos agarrões **do Hazak** usam as ações 5930 e 5931 do `.air` dele (só grupos de
+>   `SPRITES_VITIMA`); as 5001 e 5030 dele são só ele apanhando, com os desenhos da folha `apanha` (o verificador
+>   tem a exceção por lutador em `ACOES_VITIMA_DE`).
+> - **Provisório:** apanhar agachado (5020-5027) usa a folha `agachado`. Sem `.snd` próprio (falas, sirene e bordão são
+>   áudio que o Breno manda), mas os sons comuns do motor tocam com o som ligado: `F5,x` nos acertos e nos agarrões e
+>   `F20,0` na pausa dos supers. A fuga da derrota foi vista rodando (robô e filme) no retoque de 2026-11-11.
 > - **Rolada de Tatame b** chuta com a folha `chute`, não com o `coice` (depois de virar, o coice bateria para longe).
 > - **Corrente x:** o jab duplo (301) só continua para o Cutucão depois do 2º jab, e o finalizador exige 4 acertos.
 > - **Robô:** `python ferramentas/testar_pengaro.py --lutador hazaki` roda o roteiro próprio do Hazak (bloco no fim do
 >   `robo.lua`); os roteiros dos outros três não mudaram. O escape dos agarrões não dá para conferir pelo robô (preso,
 >   o oponente não roda o `[Statedef -1]` dele, onde o robô injeta o botão).
+> - **Retoque de 2026-11-11 (depois de dois céticos; o detalhe e os testes estão no `LOGBOOK.md`):** caixa de dano
+>   medida em cada desenho (tronco + membro), não mais uma por ação; caixa de golpe alta encolhida até o membro;
+>   desenhos de pulo e de golpe no ar centrados (os pés sobem, a cabeça não desce 47 px); Rolada de Tatame virou
+>   travessia (9 px por tick, até ~126 px; mais longe que ~90 px ela não passa); Giro de Garagem a 10,5 / 12,5 px por
+>   tick (~150 / ~200 px); Guarda de Aço x pega golpe de quem está em pé ou no ar (`SA`), o y pega tudo; Tá Achando
+>   Ruim? gira o oponente (estado 304) e o Machado de Dojô faz quicar (`fall.yvelocity = -7`); rastro de velocidade de
+>   2 ticks na corrida, na voadora e nas passagens do Rapidinho; poeira (`heavy-landing` pintado de cinza) no Giro e
+>   no Corte fortes e no Pega Bolado; cintilar dourado na Estatueta, que voa do tamanho que tem na mão e sem a base;
+>   tremida só em finalizador de corrente e golpe final de super; 1º golpe das correntes y e b cancela em especial no
+>   contato; efeitos só nos índices 16-255 da paleta. Derrota: o `5170` agora termina (com o último desenho em `-1` o
+>   nocauteado nunca chegava ao `5150` e a fuga não começava) e a tela só solta ele quando começa a correr.
 > - O `hazaki=True` continua no `gerar_pengaro.py` e no `repertorio.py` (ninguém mais chama): a retirada fica para
 >   depois, porque outra frente está mexendo nesses arquivos.
 

@@ -45,16 +45,19 @@ gp.PROJETEIS = {1005, 1605}
 gp.RITMO = gp.RITMO_PREPARO = 1.0       # os ticks de hazaki_golpes.py são os ticks do jogo
 gp.FRACOS = {g.n for g in hg.NORMAIS + hg.CORRENTES + hg.KOMBOS if g.classe == "fraco"}
 gp.BALOES_LIGADOS = False
-# efeitos do pixelfx (assets/efeitos), sem recolorir: acerto fraco, crítico, clarão, parry, asfalto, soco seco,
-# subida, pouso pesado, defesa e carga
-gp.FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9202: "hit-flash", 9204: "parry", 9205: "ground-slam",
-              9207: "blunt-hit", 9208: "uppercut", 9209: "heavy-landing", 9216: "shield-block", 9217: "charge-up"}
+# efeitos do pixelfx (assets/efeitos): acerto fraco, crítico, parry, asfalto, soco seco, subida, poeira de pé no chão
+# e defesa. O charge-up entra com o Despertar; o hit-flash não é usado.
+gp.FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9204: "parry", 9205: "ground-slam", 9207: "blunt-hit",
+              9208: "uppercut", 9209: "heavy-landing", 9216: "shield-block"}
 # classe -> (pausetime, guard.pausetime, envshake, fall.envshake, faísca, sparkscale, hitsound)
 gp.IMPACTO = {
     "fraco": ((7, 7), (6, 6), None, None, 9200, 1, "5,0"),
     "forte": ((11, 11), (9, 9), None, None, 9207, 1.1, "5,2"),
     "especial": ((12, 12), (9, 9), None, None, 9207, 1.15, "5,2"),
     "final": ((14, 14), (10, 10), (12, 150, -3), (8, 150, -2), 9201, 1.3, "5,3"),
+    # contra-ataque (resposta da Guarda de Aço): crit-hit e congelamento de finalizador, sem tremida (regra 8.3:
+    # tremida só no finalizador de corrente e no golpe final de super)
+    "contra": ((14, 14), (10, 10), None, None, 9201, 1.3, "5,3"),
     "super": ((3, 6), (2, 6), None, None, 9207, 1, "5,1"),
     "super_final": ((16, 16), (12, 12), (20, 150, -3), (12, 150, -2), 9201, 1.5, "5,4"),
 }
@@ -80,6 +83,54 @@ VITIMA = {48: ("vitima_agarrado", 0), 49: VITIMA_PRESO, 50: ("apanha", 3),
           382: ("vitima_agarrado", 0), 390: ("vitima_agarrado", 0),
           384: VITIMA_PRESO, 392: VITIMA_PRESO, 385: ("apanha", 2), 393: ("apanha", 2),
           386: ("apanha", 3), 394: ("apanha", 3)}
+
+# Desenhos de quem está no ar. A conversão assenta todo desenho no chão (o pixel mais baixo no eixo), então no pulo
+# os pés ficavam presos e era a cabeça que descia 47 px quando ele encolhia as pernas. Aqui o desenho sobe até o meio
+# do corpo ficar em CENTRO_NO_AR (o desenho esticado, de corpo inteiro, não sai do lugar). A caixa de golpe sobe junto.
+NO_AR_CENTRADO = {"pulo": range(1, 7)}
+CENTRO_NO_AR = 60
+
+
+def subida_no_ar(folha, i, img):
+    if not (folha.startswith("ar_") or i in NO_AR_CENTRADO.get(folha, ())):
+        return 0
+    caixa = img.getbbox()
+    return max(0, round(CENTRO_NO_AR - (caixa[3] - caixa[1]) / 2)) if caixa else 0
+
+
+# Estatueta Dourada em voo. Na mão (folha estatueta_arremesso) ela mede ~14 px e não tem base; a folha obj_estatueta
+# traz a estatueta com ~26 px e uma base azul-marinho, e ela "crescia" ao sair da mão. O projétil perde a base, encolhe
+# para o tamanho da mão e ganha o brilho dourado da ficha (um cintilar que troca de canto a cada desenho).
+PELE_E_DEBRUM = ((122, 46, 38), (176, 79, 48), (222, 132, 72), (246, 180, 104), (252, 217, 160), (216, 102, 28),
+                 (142, 58, 26))
+ESCALA_ESTATUETA = .6
+OURO, OURO_CLARO = (255, 214, 96), (255, 250, 214)
+
+
+def estatueta_em_voo(img, i):
+    a = np.array(img.convert("RGBA"))
+    fica = np.zeros(a.shape[:2], bool)
+    for c in PELE_E_DEBRUM:
+        fica |= (a[..., :3] == c).all(-1)
+    a[~fica] = 0
+    fig = Image.fromarray(a)
+    fig = fig.crop(fig.getbbox())
+    fig = fig.resize((max(1, round(fig.width * ESCALA_ESTATUETA)), max(1, round(fig.height * ESCALA_ESTATUETA))),
+                     Image.Resampling.NEAREST)
+    tela = Image.new("RGBA", (gp.LARG, gp.ALT))
+    cx, cy = gp.EIXO_X, gp.EIXO_Y - 10
+    tela.alpha_composite(fig, (cx - fig.width // 2, cy - fig.height // 2))
+    d = ImageDraw.Draw(tela)
+    # cintilar de 4 pontas: grande num canto nos desenhos pares, pequeno no canto oposto nos ímpares
+    lado, braco = ((1, -1), 3) if i % 2 == 0 else ((-1, 1), 2)
+    sx, sy = cx + lado[0] * (fig.width // 2), cy + lado[1] * (fig.height // 2)
+    d.line((sx - braco, sy, sx + braco, sy), fill=OURO + (255,))
+    d.line((sx, sy - braco, sx, sy + braco), fill=OURO + (255,))
+    d.point((sx, sy), fill=OURO_CLARO + (255,))
+    return tela
+
+
+VITIMA_PRESA, VITIMA_ENCOLHE = 5930, 5931  # ações do .air do Hazak que rodam no oponente agarrado
 
 DEF = """; Gerado por ferramentas/gerar_hazaki.py. Edite lá, não aqui.
 [Info]
@@ -159,6 +210,7 @@ def montar_sprites():
     s = gp.Sprites()
     s.folhas = False
     s.proximo = 1000
+    s.subida = {}  # nome do sprite -> quantos px o desenho subiu (NO_AR_CENTRADO)
     desenho = lambda folha, i: Image.open(QUADROS / folha / f"{i:02d}.png").convert("RGBA")
 
     # retratos (menu e barras)
@@ -182,6 +234,10 @@ def montar_sprites():
             img = desenho(folha, i)
             if (folha, i) in DESLOCA:
                 img = gp.move(img, DESLOCA[folha, i], 0)
+            sobe = subida_no_ar(folha, i, img)
+            if sobe:
+                img = gp.move(img, 0, -sobe)
+                s.subida[f"f_{folha}{i}"] = sobe
             s.add(f"f_{folha}{i}", img)
     s.add("f_agachado4r", gp.move(desenho("agachado", 4), -4, 0))  # apanhando agachado (provisório): recua 4 px
 
@@ -193,7 +249,7 @@ def montar_sprites():
     # projéteis (provisórios: saem das folhas obj_, não do pixelfx)
     for i in range(8):
         s.add(f"fx_lasca{i}", desenho("obj_lasca", i))
-        s.add(f"fx_estatueta{i}", desenho("obj_estatueta", i))
+        s.add(f"fx_estatueta{i}", estatueta_em_voo(desenho("obj_estatueta", i), i))
     return s
 
 
@@ -212,7 +268,7 @@ def carregar_faiscas(s):
             continue
         if g not in gp.TRANS_FX:
             img = gp.efeito_aditivo(img)
-        if g == 9205:
+        if g in (9205, 9209):
             img = gp.pintar(img, POEIRA)
         s.lista[k] = (g, i, img, ex, ey)
     for g in gp.FAISCAS:
@@ -229,6 +285,12 @@ def carregar_faiscas(s):
             if gg == g:
                 s.lista[k] = (gg, i, img, *centro)
     acoes[9205] = acoes[9205][:DESENHOS_DA_POEIRA]  # a poeira do pixelfx fica 3 s na tela: corta em ~1 s
+    acoes[9209] = acoes[9209][:22]  # poeira do pé: só a nuvem subindo e abrindo
+    # desenhos vazios no fim do efeito (o pixelfx termina em transparente): eram 4 a 18 ticks de nada na tela
+    vazio = {(g, i) for g, i, img, _, _ in s.lista if g in gp.FAISCAS and not img.getchannel("A").getbbox()}
+    for lista in acoes.values():
+        while len(lista) > 1 and s.codigos[lista[-1][0]] in vazio:
+            lista.pop()
     return acoes
 
 
@@ -260,8 +322,11 @@ def escrever_sff(destino, s, manter):
     pal = fixas + resto
     pal += [(0, 0, 0)] * (255 - len(pal))
     dados_pal = bytes((0, 0, 0, 0)) + b"".join(bytes((r, g, b, 255)) for r, g, b in pal)
+    # O que não é corpo (efeito, retrato, estatueta em voo) só usa os índices 16 a 255: os 15 primeiros são do corpo
+    # e vão trocar de cor com a paleta do Despertar.
     molde = Image.new("P", (1, 1))
-    molde.putpalette([v for c in pal for v in c] + list(pal[0]))  # a 256ª entrada repete a 1ª e volta para ela
+    livre = resto + [resto[-1] if resto else (0, 0, 0)] * (256 - len(resto))
+    molde.putpalette([v for c in livre for v in c])
 
     itens = []
     for grupo, indice, img, ex, ey in usados:
@@ -275,19 +340,72 @@ def escrever_sff(destino, s, manter):
                 px[opaco & (a[..., 0] == cor[0]) & (a[..., 1] == cor[1]) & (a[..., 2] == cor[2])] = k
         else:
             ind = np.asarray(rec.convert("RGB").quantize(palette=molde, dither=Image.NONE)).astype(np.int32)
-            ind[ind == 255] = 0
-            px = np.where(opaco, ind + 1, 0).astype(np.uint8)
+            ind[ind >= len(resto)] = len(resto) - 1
+            px = np.where(opaco, ind + 16, 0).astype(np.uint8)
         itens.append((grupo, indice, rec.width, rec.height, ex - caixa[0], ey - caixa[1], px.tobytes()))
     gp.gravar_sff(destino, dados_pal, itens)
     return len(itens)
 
 
 # ---------------------------------------------------------------- AIR
+MINIMO_DO_MEMBRO = 60  # pixels: menos que isso para fora do tronco (ponta de faixa, dedo) não ganha caixa de dano
+SAIDA_DO_MEMBRO = 14   # px além do tronco: menos que isso (punho da guarda, pé da base) fica só com a caixa do tronco
+
+
+def caixas_do_corpo(img, ex, ey):
+    """Caixas de dano (Clsn2) medidas no desenho: uma no tronco (as colunas cheias: 45% ou mais da coluna mais alta)
+    e uma em cada membro que sai dele 14 px ou mais para a frente ou para trás (perna do chute, braço do soco; o punho
+    da guarda e o pé da base não contam: parado, a caixa fica quase igual à antiga de 48 px). Antes cada ação
+    tinha uma caixa só, do tipo em pé / agachado / no ar: a joelhada subindo ficava com a cabeça e o tronco sem caixa
+    e a perna esticada de qualquer chute nunca podia ser acertada."""
+    ys, xs = np.nonzero(np.asarray(img.getchannel("A")) >= 128)
+    if not len(xs):
+        return []
+    x, y = xs - ex, ys - ey
+    cheias = np.bincount(x - x.min())
+    fortes = np.nonzero(cheias >= .45 * cheias.max())[0] + x.min()
+    x1, x2 = int(fortes.min()), int(fortes.max())
+    meio = (x >= x1) & (x <= x2)
+    caixas = [(x1, min(int(y[meio].max()) + 1, 0), x2, int(y[meio].min()) + 2)]
+    for lado in (x > x2, x < x1):
+        if lado.sum() >= MINIMO_DO_MEMBRO:
+            mx, my = x[lado], y[lado]
+            frente = mx.max() > x2
+            if (mx.max() - x2 if frente else x1 - mx.min()) < SAIDA_DO_MEMBRO:
+                continue
+            ponta = int(mx.max()) - 2 if frente else int(mx.min()) + 2
+            raiz = x2 if frente else x1
+            caixas.append((min(raiz, ponta), min(int(my.max()) + 1, 0), max(raiz, ponta), int(my.min()) + 1))
+    return caixas
+
+
+ALTA = 48  # caixa de golpe mais alta que isso é encolhida até o membro (as dos supers cobriam 20 a 30% de desenho)
+
+
+def caixa_no_membro(img, ex, ey, caixa, sobe):
+    """Sobe a caixa de golpe junto com o desenho (NO_AR_CENTRADO) e, se ela é alta, corta o vazio de cima e de baixo:
+    fica do pixel mais alto ao mais baixo que o desenho tem dentro dela, com 3 px de sobra."""
+    x1, y1, x2, y2 = caixa[0], caixa[1] - sobe, caixa[2], caixa[3] - sobe
+    if abs(y2 - y1) <= ALTA:
+        return x1, y1, x2, y2
+    ys, xs = np.nonzero(np.asarray(img.getchannel("A")) >= 128)
+    x, y = xs - ex, ys - ey
+    dentro = (x >= min(x1, x2)) & (x <= max(x1, x2)) & (y >= min(y1, y2)) & (y <= max(y1, y2))
+    if not dentro.any():
+        return x1, y1, x2, y2
+    topo, base = max(min(y1, y2), int(y[dentro].min()) - 3), min(max(y1, y2), int(y[dentro].max()) + 3)
+    return (x1, topo, x2, base) if y1 <= y2 else (x1, base, x2, topo)
+
+
 class Air:
-    """Emissor simples: cada elemento mostra o desenho escrito, pelos ticks escritos (sem quadros do meio)."""
+    """Emissor simples: cada elemento mostra o desenho escrito, pelos ticks escritos (sem quadros do meio).
+    Ação de corpo (caixa = CORPO, AGACHADO, NO_AR, DEITADO): a caixa de dano é medida em cada desenho
+    (caixas_do_corpo) e o argumento só diz que a ação tem corpo. Projétil e efeito usam a caixa passada."""
 
     def __init__(self, sprites):
         self.s = sprites
+        self.imagens = {(g, i): (img, ex, ey) for g, i, img, ex, ey in sprites.lista}
+        self.medidas = {}
         self.txt = ["; Gerado por ferramentas/gerar_hazaki.py. Edite lá, não aqui.\n"]
         self.acoes = set()
         self.ativos = {}  # ação -> (elemento em que a caixa de golpe liga, a caixa)
@@ -296,7 +414,8 @@ class Air:
         assert numero not in self.acoes, f"ação {numero} repetida"
         self.acoes.add(numero)
         t = [f"[Begin Action {numero}]"]
-        if caixa:
+        corpo = bool(caixa) and numero not in gp.PROJETEIS
+        if caixa and not corpo:
             t.append(f"Clsn2Default: {len(caixa)}")
             t += [f" Clsn2[{i}] = {c[0]},{c[1]},{c[2]},{c[3]}" for i, c in enumerate(caixa)]
         for i, q in enumerate(quadros):
@@ -304,7 +423,14 @@ class Air:
             golpe = q[2] if len(q) > 2 else None
             if loop == i:
                 t.append("Loopstart")
+            if corpo:
+                if nome not in self.medidas:
+                    self.medidas[nome] = caixas_do_corpo(*self.imagens[self.s.codigos[nome]])
+                dano = self.medidas[nome]
+                t.append(f"Clsn2: {len(dano)}")
+                t += [f" Clsn2[{j}] = {c[0]},{c[1]},{c[2]},{c[3]}" for j, c in enumerate(dano)]
             if golpe:
+                golpe = caixa_no_membro(*self.imagens[self.s.codigos[nome]], golpe, self.s.subida.get(nome, 0))
                 self.ativos.setdefault(numero, (i + 1, golpe))
                 t += ["Clsn1: 1", f" Clsn1[0] = {golpe[0]},{golpe[1]},{golpe[2]},{golpe[3]}"]
             elif numero in gp.PROJETEIS and caixa:  # projétil só acerta com Clsn1 em cada desenho
@@ -360,7 +486,7 @@ def montar_air(s, faiscas):
         Q(n, F("apanha 1/7 0/6"))
     for n in (5002, 5012):
         Q(n, F("apanha 3/6 2/5 1/4 0/2"))
-    Q(5001, [("vit49", 5), ("vit50", 5), ("vit48", 6)])  # só gp.SPRITES_VITIMA: é o que o arremessado mostra
+    Q(5001, F("apanha 2/5 1/5 0/6"))
     Q(5011, F("apanha 2/5 1/5 0/6"))
     for n in (5005, 5006, 5007, 5015, 5016, 5017):
         Q(n, F("apanha 1/4 0/4"))
@@ -368,8 +494,12 @@ def montar_air(s, faiscas):
         Q(n, [("f_agachado4r", 5), ("f_agachado3", 6)], AGACHADO)
     for n in (5025, 5026, 5027):
         Q(n, F("agachado 3/8"), AGACHADO)
-    Q(5030, [("vit49", -1)], NO_AR)
-    Q(5035, [("vit49", 6)], NO_AR)
+    Q(5030, F("apanha 3/4 4/-1"), NO_AR)  # lançado: sobe caindo para trás (antes mostrava a pose de "preso")
+    Q(5035, F("apanha 4/6"), NO_AR)
+    # O que as vítimas dos agarrões DELE mostram (ChangeAnim2: a ação é do Hazak, os desenhos são do oponente). Só
+    # grupos de gp.SPRITES_VITIMA, que todo lutador tem. Ficam fora das ações 5001/5030, que são ele apanhando.
+    Q(VITIMA_PRESA, [("vit49", -1)], NO_AR)
+    Q(VITIMA_ENCOLHE, [("vit49", 5), ("vit50", 5), ("vit48", 6)])
     Q(5040, F("apanha 4/-1"), NO_AR)
     Q(5050, F("apanha 4/5 5/5 6/-1"), NO_AR)
     for n in (5051, 5061, 5070):
@@ -380,8 +510,10 @@ def montar_air(s, faiscas):
         Q(n, F("queda 1/3 2/3"), DEITADO)
     for n in (5110, 5150):
         Q(n, F("queda 3/-1"), DEITADO)
-    for n in (5160, 5170):
-        Q(n, F("queda 2/6 3/-1"), DEITADO)
+    Q(5160, F("queda 2/6 3/-1"), DEITADO)
+    # 5170 (bateu no chão) tem de ACABAR: o 5110 do motor só manda o nocauteado para o 5150 quando AnimTime = 0, e com
+    # o último desenho em -1 ele ficava no 5110 para sempre (a fuga da derrota, que espera o 5150, nunca começava)
+    Q(5170, F("queda 2/5 3/5"), DEITADO)
     Q(5120, F("levanta 1/4 2/4 3/4 4/4 5/4 6/4 7/4"), AGACHADO)
     for n in (5200, 5210):
         Q(n, F("rolada_tatame 2/3 3/3 4/3 5/3"), AGACHADO)
@@ -389,7 +521,7 @@ def montar_air(s, faiscas):
 
     # projéteis (provisórios)
     Q(1005, [(f"fx_lasca{i}", 2) for i in range(8)], [(-12, -14, 12, 2)])
-    Q(1605, [(f"fx_estatueta{i}", 3) for i in range(8)], [(-10, -28, 10, 0)])
+    Q(1605, [(f"fx_estatueta{i}", 3) for i in range(8)], [(-9, -20, 9, 0)])
 
     # golpes
     for g in hg.NORMAIS + hg.CORRENTES + hg.KOMBOS:
@@ -435,7 +567,8 @@ def cns_golpe(g):
     for (inicio, _), dano in zip(trechos, danos):
         t += gp.hitdef(g.n, f"Time = {inicio}", f"{g.tipo}, NA", dano, tipo=g.animtype or animtype, guarda=g.guarda,
                        hit=g.hit or hit, escorrega=escorrega, vel=g.vel or vel, ar=g.ar or ar, queda=g.queda,
-                       recupera=g.recupera, chao=g.chao or ("Low" if g.guarda == "L" else "High"), classe=g.classe)
+                       recupera=g.recupera, chao=g.chao or ("Low" if g.guarda == "L" else "High"), classe=g.classe,
+                       extra=g.no_hitdef and g.no_hitdef + "\n")
     for inicio, _ in trechos[1:]:
         # 2º acerto do mesmo golpe (jab duplo): o MoveHit do 1º ainda está ligado quando o 2º HitDef sai, e a trava da
         # contagem da corrente (var(11), no -2) nunca veria o intervalo. Solta a trava aqui, depois do HitDef.
@@ -454,6 +587,23 @@ def projetil(n, gatilho, pid, acao, ofs, vel, dano, guarda, faisca, chao="High",
                f"sparkno = S{faisca}", "guard.sparkno = S9216", "sparkscale = 1, 1", "hitsound = F5,1",
                "guardsound = F6,0", f"ground.type = {chao}", "ground.slidetime = 12", "ground.hittime = 18",
                "ground.velocity = -4", "air.velocity = -2,-3.5")
+
+
+def rastro(n, gatilho, tempo):
+    """Rastro de velocidade curto da ficha: só as 2 últimas posições (2 ticks), somado e cinza."""
+    return ctl(n, "Rastro de velocidade", "AfterImage", f"trigger1 = {gatilho}", f"time = {tempo}", "length = 3",
+               "timegap = 1", "framegap = 1", "trans = add", "palcolor = 0", "palbright = 40,40,40",
+               "paladd = 0,0,0", "palmul = .6,.6,.6")
+
+
+def corta_rastro(n, gatilho="Time = 0"):
+    return ctl(n, "Fim do rastro", "AfterImageTime", f"trigger1 = {gatilho}", "time = 1")
+
+
+def poeira(n, gatilho, x=0):
+    """Poeira de asfalto no pé (heavy-landing do pixelfx, pintado de cinza): chutes fortes, arrancada e pouso."""
+    return ctl(n, "Poeira", "Explod", f"trigger1 = {gatilho}", "anim = 9209", "postype = p1", f"pos = {x}, 0",
+               "removetime = -2", "sprpriority = 4", "ownpal = 1")
 
 
 TODOS_OS_GOLPES = "SCA, NA, SA, HA, NP, SP, HP"
@@ -506,6 +656,15 @@ def cns_sistema():
              "[State 762, Abertura no ar]\ntype = SelfState\ntrigger1 = Time >= 14 && statetype = A\nvalue = 50\n"
              "ctrl = 1\n\n"
              "[State 762, Abertura no chão]\ntype = SelfState\ntrigger1 = Time >= 14\nvalue = 0\nctrl = 1\n\n")
+    # Tá Achando Ruim? (303): o tapa de costas de mão gira o oponente antes de derrubar. Roda no oponente, com a ação
+    # 5030 dele mesmo: uma volta inteira em dois meios giros (o VelMul mantém o rumo: a velocidade é relativa ao lado
+    # para onde ele olha) e depois a queda normal do motor (5050), com a derrubada do HitDef.
+    c.append("[Statedef 304]\ntype = A\nmovetype = H\nphysics = N\nvelset = -3.5,-5.5\nctrl = 0\n\n")
+    c.append(ctl(304, "Pose", "ChangeAnim", "trigger1 = Time = 0", "value = 5030"))
+    c.append(ctl(304, "Gravidade", "VelAdd", "trigger1 = 1", "y = .45"))
+    c.append(ctl(304, "Gira", "Turn", "trigger1 = Time = 5", "trigger2 = Time = 10"))
+    c.append(ctl(304, "Mantém o rumo", "VelMul", "trigger1 = Time = 5", "trigger2 = Time = 10", "x = -1"))
+    c.append(ctl(304, "Cai", "SelfState", "trigger1 = Time >= 15", "value = 5050"))
     return "".join(c)
 
 
@@ -517,9 +676,8 @@ def cns_agarroes():
         f"p2stateno = {p2}", "guard.dist = 0", "fall = 1")
     escapou = lambda n, ate, preso: ctl(n, "Escapou", "ChangeState", "trigger1 = Time > 1", f"trigger1 = Time < {ate}",
                                         f"trigger1 = enemynear,stateno != {preso}", "value = 0", "ctrl = 1")
-    pancada = lambda n, t: (ctl(n, f"Treme {t}", "EnvShake", f"trigger1 = Time = {t}", "time = 8", "freq = 150",
-                                "ampl = -3")
-                            + ctl(n, f"Som {t}", "PlaySnd", f"trigger1 = Time = {t}", "value = F5, 2"))
+    # sem tremida: a regra 8.3 só dá EnvShake ao finalizador de corrente e ao golpe final de super
+    pancada = lambda n, t: ctl(n, f"Som {t}", "PlaySnd", f"trigger1 = Time = {t}", "value = F5, 2")
 
     # Abraço de Quebrada (colado, frente ou trás + y): abraça, levanta e joga por cima do ombro
     c.append(ataque(800, juggle=0))
@@ -572,11 +730,11 @@ def cns_agarroes():
                  "value = 846"))
     c.append(gp.fim(831))
 
-    # estados do oponente (rodam nele, com os desenhos dele: só as ações 5001 e 5030)
+    # estados do oponente (rodam nele, com os desenhos dele e as ações VITIMA_PRESA / VITIMA_ENCOLHE do Hazak)
     escape = ('[State {n}, Escape]\ntype = SelfState\ntriggerall = Time <= 7\ntrigger1 = command = "y"\n'
               'trigger2 = command = "b"\nvalue = 0\nctrl = 1\n\n')
     solto = "[State {n}, Solto]\ntype = SelfState\ntrigger1 = !gethitvar(isbound)\nvalue = 5050\n\n"
-    for n, pose, com_escape in ((820, 5030, True), (832, 5030, True), (833, 5001, False)):
+    for n, pose, com_escape in ((820, VITIMA_PRESA, True), (832, VITIMA_PRESA, True), (833, VITIMA_ENCOLHE, False)):
         c.append(f"[Statedef {n}]\ntype = A\nmovetype = H\nphysics = N\nvelset = 0,0\n\n")
         c.append(ctl(n, "Pose", "ChangeAnim2", "trigger1 = Time = 0", f"value = {pose}"))
         if com_escape:
@@ -626,9 +784,12 @@ def cns_especiais():
         c.append(gp.fim(n))
 
     # Giro de Garagem (↓ → a/b): chute girando que atravessa meia tela; o b vai mais longe e derruba
-    for n, vx, dano, derruba in ((1300, 6.5, 65, False), (1301, 8.5, 85, True)):
+    # (a ficha pede meia tela = 160 px: 14 ticks a 10,5 no a ~ 150 px; 16 ticks a 12,5 no b ~ 200 px)
+    for n, vx, dano, derruba in ((1300, 10.5, 65, False), (1301, 12.5, 85, True)):
         c.append(ataque(n))
         c.append(ctl(n, "Avança", "VelSet", f"trigger1 = Time = [3,{fim_ativo(n) - 1}]", f"x = {vx}"))
+        if derruba:
+            c.append(poeira(n, "Time = 3"))
         c.append(H(n, dano=dano, tipo="Heavy" if derruba else "Medium", queda=derruba, hit=20, escorrega=7,
                    vel="-5,-4" if derruba else "-5", ar="-4,-4"))
         c.append(gp.fim(n))
@@ -637,35 +798,41 @@ def cns_especiais():
     for n, vx, dano, derruba in ((1400, 4, 55, False), (1401, 6, 75, True)):
         c.append(ataque(n, "C", "C"))
         c.append(ctl(n, "Desliza", "VelSet", f"trigger1 = Time = [{acerto(n)},{fim_ativo(n) - 1}]", f"x = {vx}"))
+        if derruba:
+            c.append(poeira(n, f"Time = {acerto(n)}", 10))
         c.append(H(n, attr="C, SA", dano=dano, guarda="L", chao="Trip" if derruba else "Low",
                    tipo="Back" if derruba else "Medium", queda=derruba, recupera=False, hit=20,
                    vel="-3,-2" if derruba else "-3", ar="-3,-2"))
         c.append(gp.fim(n, 11))
 
     # Rolada de Tatame (← → a/b): rola por baixo, passa por dentro do oponente e chega virado nas costas dele.
-    # Sem espaço atrás (canto), chega colado na frente. O a só passa; o b passa e já chuta.
-    cruza = 9
+    # É uma travessia (9 px por tick enquanto rola), não um salto de posição: rola até ficar 36 px atrás dele. Sem
+    # espaço atrás (canto: var(15) = 0), rola até colar na frente. Oponente longe demais (mais de ~90 px): a rolada
+    # acaba antes de passar. Invencível enquanto rola; a recuperação (o a) ou o chute (o b) ficam expostos.
     cabe = "p2dist x + 36 < frontedgebodydist"
-    for n in (1700, 1701):
+    rolando = "ifelse(var(15), p2dist x > -36, p2dist x > 28)"
+    for n, rola in ((1700, 16), (1701, 15)):  # ticks de rolamento (os 5 desenhos da rolada)
         c.append(ataque(n, fis="N", juggle=0))
-        c.append(ctl(n, "Invencivel", "NotHitBy", f"trigger1 = Time < {cruza + 4}", f"value = {TODOS_OS_GOLPES}",
+        c.append(ctl(n, "Cabe atrás", "VarSet", "trigger1 = Time = 0", f"var(15) = ({cabe})"))
+        c.append(ctl(n, "Invencivel", "NotHitBy", f"trigger1 = Time < {rola}", f"value = {TODOS_OS_GOLPES}",
                      "time = 1"))
-        c.append(ctl(n, "Atravessa", "PlayerPush", f"trigger1 = Time < {cruza + 6}", "value = 0"))
-        c.append(ctl(n, "Atras", "PosAdd", f"trigger1 = Time = {cruza}", "trigger1 = p2dist x > 0",
-                     f"trigger1 = {cabe}", "x = p2dist x + 36"))
-        c.append(ctl(n, "Vira", "Turn", f"trigger1 = Time = {cruza}", "trigger1 = p2dist x > 0",
-                     f"trigger1 = {cabe}"))
-        c.append(ctl(n, "Canto", "PosAdd", f"trigger1 = Time = {cruza}", "trigger1 = p2dist x > 0",
-                     f"trigger1 = !({cabe})", "x = max(p2dist x - 28, 0)"))
+        c.append(ctl(n, "Atravessa", "PlayerPush", f"trigger1 = Time < {rola + 2}", "value = 0"))
+        c.append(ctl(n, "Rola", "VelSet", f"trigger1 = Time = [2,{rola - 1}]", f"trigger1 = {rolando}", "x = 9"))
+        c.append(ctl(n, "Chegou", "VelSet", f"trigger1 = Time = [2,{rola - 1}]", f"trigger1 = !({rolando})",
+                     "x = 0"))
+        c.append(ctl(n, "Para", "VelSet", f"trigger1 = Time = {rola}", "x = 0"))
+        c.append(ctl(n, "Vira", "Turn", f"trigger1 = Time = {rola}", "trigger1 = p2dist x < 0"))
         if n == 1701:
             c.append(H(n, dano=50, tipo="Medium", hit=20, escorrega=7, vel="-5"))
         c.append(gp.fim(n))
 
     # Pega Bolado (← ↓ a/b): sai correndo e dá a voadora de dois pés. O b atravessa a tela e derruba; defendido,
     # cai no 1503 e fica aberto (erra feio).
-    for n, corre, vx, dano, derruba in ((1500, 6, 6, 70, False), (1501, 14, 8, 100, True)):
+    for n, corre, vx, dano, derruba in ((1500, 6, 6, 70, False), (1501, 14, 9.5, 100, True)):
         c.append(ataque(n, fis="N", velset="7.2,0"))
         c.append(ctl(n, "Zera", "VarSet", "trigger1 = Time = 0", "var(12) = 0"))
+        c.append(rastro(n, "Time = 0", 60))
+        c.append(poeira(n, f"Time = {corre}"))
         c.append(ctl(n, "Salta", "VelSet", f"trigger1 = Time = {corre}", f"x = {vx}", "y = -4.5"))
         c.append(ctl(n, "No ar", "StateTypeSet", f"trigger1 = Time = {corre}", "statetype = A"))
         c.append(ctl(n, "Gravidade", "VelAdd", "trigger1 = statetype = A", "y = .45"))
@@ -678,18 +845,20 @@ def cns_especiais():
     for n in (1502, 1503):
         c.append(gp.estado(n, "S", "I", "S", anim=n, velset="0,0"))
         c.append(ctl(n, "Chão", "PosSet", "trigger1 = Time = 0", "y = 0"))
+        c.append(corta_rastro(n))
+        c.append(poeira(n, "Time = 0"))
         c.append(gp.fim(n))
 
     # Guarda de Aço (↓ ← x/y): contra-ataque. Arma a guarda; se um golpe encostar na janela, responde com chute.
-    # O y pega golpe baixo também.
-    for n, atributos, dano in ((1100, "S, NA, SA", 60), (1101, "SCA, NA, SA", 70)):
+    # O x pega golpe de quem está em pé ou no ar; o y pega golpe baixo (de quem está agachado) também.
+    for n, atributos, dano in ((1100, "SA, NA, SA", 60), (1101, "SCA, NA, SA", 70)):
         c.append(gp.estado(n, "S", "A", "N", anim=n))
         c.append(gp.reversao(n, n + 2, atributos, "Time = [2,17]"))
         c.append(gp.fim(n))
         c.append(ataque(n + 2))
         c.append(ctl(n + 2, "Invencivel", "NotHitBy", f"trigger1 = Time < {acerto(n + 2)}", "value = SCA",
                      "time = 1"))
-        c.append(H(n + 2, dano=dano, classe="final", tipo="Heavy", queda=True, vel="-5,-4", ar="-5,-4", hit=20))
+        c.append(H(n + 2, dano=dano, classe="contra", tipo="Heavy", queda=True, vel="-5,-4", ar="-5,-4", hit=20))
         c.append(gp.fim(n + 2))
     return "".join(c)
 
@@ -727,7 +896,7 @@ def cns_supers():
     c.append(ataque(3003, juggle=0))
     c.append(ctl(3003, "Chão", "PosSet", "trigger1 = Time = 0", "y = 0"))
     c.append(S(3003, f"Time = {acerto(3003)}", 90, classe="super_final", tipo="Heavy", queda=True, recupera=False,
-               vel="-3,-4", ar="-2,7"))
+               vel="-3,-4", ar="-2,7", extra=hg.QUIQUE + "\n"))
     c.append(ctl(3003, "Asfalto", "Explod", "trigger1 = MoveHit = 1", "anim = 9205", "postype = p1", "pos = 40, 0",
                  "removetime = -2", "sprpriority = 4", "ownpal = 1"))
     c.append(ctl(3003, "Clarão", "BGPalFX", "trigger1 = MoveHit = 1", "time = 4", "add = 128, 128, 128",
@@ -745,6 +914,7 @@ def cns_supers():
     c.append(ctl(3200, "Invencivel", "NotHitBy", "trigger1 = 1", "value = SCA", "time = 1"))
     c.append(ctl(3200, "Passa", "ChangeState", f"trigger1 = Time >= {pose}", "value = 3201"))
     c.append(ataque(3201, fis="N", juggle=0, velset="12,0"))
+    c.append(rastro(3201, "Time = 0", passagem + 1))
     c.append(ctl(3201, "Zera", "VarSet", "trigger1 = Time = 0", "var(14) = 0"))
     c.append(ctl(3201, "Atravessa", "PlayerPush", "trigger1 = 1", "value = 0"))
     c.append(S(3201, f"Time = {acerto(3201)}", 45, tipo="Medium", hit=30, escorrega=0, vel="0", ar="0,-2",
@@ -758,6 +928,8 @@ def cns_supers():
                  "value = 3202"))
     c.append(ctl(3201, "De novo", "ChangeState", f"trigger1 = Time = {passagem}", "value = 3201"))
     c.append(ataque(3202, fis="N", juggle=0, velset="7,-3.5"))
+    c.append(rastro(3202, "Time = 0", 14))
+    c.append(poeira(3202, "Time = 0"))
     c.append(ctl(3202, "No ar", "StateTypeSet", "trigger1 = Time = 0", "statetype = A"))
     c.append(ctl(3202, "Gravidade", "VelAdd", "trigger1 = statetype = A", "y = .45"))
     c.append(S(3202, f"Time = {acerto(3202)}", 160, attr="A, HA", classe="super_final", tipo="Heavy", queda=True,
@@ -769,6 +941,7 @@ def cns_supers():
     c.append(ctl(3202, "Aterrissa", "StateTypeSet", f"trigger1 = {NO_CHAO}", "statetype = S"))
     c.append(gp.fim(3202))
     c.append(gp.estado(3203, "S", "I", "S", anim=3203, velset="4,0"))
+    c.append(corta_rastro(3203))
     c.append(gp.fim(3203))
     return "".join(c)
 
@@ -805,6 +978,32 @@ type = VarSet
 trigger1 = !MoveHit
 var(11) = 0
 
+; Rastro de velocidade da corrida (ficha): 2 ticks de rastro, renovado a cada 8 ticks; cortado ao sair da corrida
+; (menos para a voadora e os supers, que têm o rastro deles). O -2 roda antes da troca de estado do tick: o 1º tick
+; que ele vê do estado novo é o Time = 1 (com Time % 8 = 0 o rastro só nascia no 8º tick da corrida).
+[State -2, Rastro da corrida]
+type = AfterImage
+trigger1 = stateno = 100
+trigger1 = (Time % 8) = 1
+time = 8
+length = 3
+timegap = 1
+framegap = 1
+trans = add
+palcolor = 0
+palbright = 40,40,40
+paladd = 0,0,0
+palmul = .6,.6,.6
+
+[State -2, Fim do rastro da corrida]
+type = AfterImageTime
+trigger1 = prevstateno = 100
+trigger1 = Time <= 1
+trigger1 = stateno != 100
+trigger1 = stateno != [1500,1501]
+trigger1 = stateno != [3000,3299]
+time = 1
+
 [State -2, Passo para trás invencível]
 type = NotHitBy
 trigger1 = stateno = 105
@@ -813,8 +1012,9 @@ value = SCA
 time = 1
 
 ; Derrota: toca uma sirene (áudio pendente), ele levanta num pulo e foge correndo para fora da tela. Por nocaute o
-; estado continua o 5150 do motor (a lógica do KO não muda): só a animação e a posição mudam. Os desenhos da fuga já
-; correm para trás, por isso não há Turn.
+; estado continua o 5150 do motor (a lógica do KO não muda): só a animação e a posição mudam. Os desenhos 4 a 7 da
+; folha derrota_sirene foram desenhados olhando para TRÁS (para a esquerda da folha, de costas para o oponente): ele
+; corre de frente para a saída. Por isso não há Turn nem flip no .air.
 [State -2, Sirene: levanta]
 type = ChangeAnim
 trigger1 = !alive && stateno = 5150 && Time = 40
@@ -826,10 +1026,12 @@ trigger1 = anim = 171 && AnimElemNo(0) >= 6
 trigger2 = stateno = 170 && AnimElemNo(0) >= 3
 x = -5
 
+; A tela só solta ele quando começa a correr. Solta desde o começo da animação, a câmera largava o caído e ia para
+; o vencedor: ele saía do quadro ainda deitado e ninguém via o pulo nem a corrida (visto no filme).
 [State -2, Sirene: sai da tela]
 type = ScreenBound
-trigger1 = anim = 171
-trigger2 = stateno = 170
+trigger1 = anim = 171 && AnimElemNo(0) >= 6
+trigger2 = stateno = 170 && AnimElemNo(0) >= 3
 value = 0
 movecamera = 0,0
 
@@ -895,8 +1097,9 @@ def montar_cmd():
 
     c.append("[Statedef -1]\n\n")  # o robô injeta os comandos de teste logo depois desta linha
     ou = lambda estados: " || ".join(f"stateno = {n}" for n in estados)
-    no_contato = (200, 230, 400, 430, 201, 301, 311, 321, 331, 340, 342, 344, 346)
-    no_acerto = (210, 240, 410, 216, 302, 312, 322, 332)
+    # regra B.4: o 1º e o 2º golpe de corrente cancelam em especial no contato; o 3º só se acertou
+    no_contato = (200, 210, 230, 240, 400, 430, 201, 301, 311, 321, 331, 340, 342, 344, 346)
+    no_acerto = (410, 216, 302, 312, 322, 332)
     c.append("[State -1, Pode cancelar]\ntype = VarSet\ntrigger1 = 1\n"
              f"var(1) = ctrl || (({ou(no_contato)}) && movecontact && movecontact <= 8)"
              f" || (({ou(no_acerto)}) && movehit && movehit <= 8)\n\n")
