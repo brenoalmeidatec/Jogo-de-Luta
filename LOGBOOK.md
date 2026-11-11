@@ -550,3 +550,19 @@ bicicleta), opcional.
   `e_` para fundo verde); definir a paleta do boss; decidir se `e_despertar` substitui só `despertar_b`; ligar as
   `fx_aura_*` por `Explod`; `e_defesa`, `e_chute_baixo` e `e_rasteira` não têm folha normal aprovada nesta branch para
   servir de referência de pose.
+
+## 2026-11-11 — Endiabrado, Lote 7 grupo A gerado (12 folhas `e_`)
+
+- Geradas no ChatGPT (chat "Pengaró — arcade") e salvas em `sprites/pengaro/quadros/folhas_arcade/`: `e_ginga`, `e_anda`,
+  `e_soco`, `e_chute_alto`, `e_martelo`, `e_afastar`, `e_apanha`, `e_queda`, `e_levanta`, `e_defesa`, `e_agachado`, `e_pulo`.
+  Cada pedido levou `e_conceito.png` + a folha normal do golpe. As 12 passam em `tira_fundo` + `fatias(…, 8)` de
+  `recortar_quadros.py` (8 quadros separados). Conferidas a olho em tiras de contato; nada rodou no jogo nem em sandbox.
+- Com ressalva: `e_queda` ficou ~13% menor que a normal (deitado 251 px contra 290; existe
+  `ferramentas/retoques_arcade/queda_escala.py` para esse caso) e com as pernas levantadas nos quadros 4-7; `e_defesa` veio em
+  2143x734; `e_anda` repete os quadros 1-4 em 5-8 como a normal (as pernas não alternam); `e_agachado` é agachado nos 8
+  quadros, como a `agachado.png` normal (o MOTION da fila pedia descer da ginga: corrigir o texto da fila se for mantido assim).
+- Fundo magenta: o recorte não fura o corpo (rachaduras do peito, forro e chifres ficam), mas come a beirada das brasas da
+  barra da calça: ~3% da área da figura apagada contra ~2,2% nas folhas normais. Dá para seguir em magenta.
+- Escala das `e_` varia entre folhas (em pé com cabelo de 297 a 313 px; `e_pulo` ~15-20% maior que a normal); o gerador já
+  tem fator de escala por folha para o endiabrado.
+- Pendente: grupos B e C do Lote 7; ligar as `e_` no gerador (`ARCADE`, pasta `e_ginga` x `ginga_endiabrada`); paleta do boss.
