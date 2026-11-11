@@ -504,3 +504,34 @@ provoca, vitoria, derrota, despertar, chute_baixo, defesa e todas as `e_`.
 3200...), sem efeito: os gatilhos AnimElem foram renumerados e disparam no mesmo tick. A tabela de alcance estava
 incompleta (246, 260, 331, 341, 346, 3420, 601, 611, 3403, 1400/1401, 3200, 302/311/343/344/3410/3431 e várias 1xxxx
 também mudaram alguns px pelo recorte automático).
+
+## 2026-11-11: Pengaró, Lote 6 grupos A a D gerados no ChatGPT (17 folhas em `folhas_arcade`)
+
+Só as folhas brutas (2172x724, fundo magenta) em `sprites/pengaro/quadros/folhas_arcade/`. **Nada foi convertido nem
+ligado no gerador**: falta `quantizar_folha.py` -> `animar_folha.py --arcade` -> `quantizar_folha.py --meio` ->
+`conferir_arte.py` e pôr cada folha em `ARCADE` no `gerar_pengaro.py`. Nenhum teste de jogo rodado (sandbox não usada).
+
+Chat "Pengaró — arcade": https://chatgpt.com/c/6af486c5-5ea0-83e8-ab3c-0685922066a2, `soco.png` anexada em toda
+mensagem, prompt do Lote 6 de `docs/arcade/fila.md` sem mudança; nas refações, um parágrafo antes do prompt dizendo o
+defeito. Conferência no disco, ampliada, quadro a quadro; medida por coluna magenta e por peça ligada (as 17 têm 8
+figuras, uma por célula, sem pedaço solto). Commits c446477 (A), 41a045a (B), dc4cc4e (C), bca9a30 (D), todos em origin/mugen.
+
+| Folha | Tentativas | Resultado |
+|---|---|---|
+| defesa, chute_baixo, rasteira | 1 | aprovadas (as antigas estão no scratchpad `lote6/antigas/`) |
+| bola, armada, rolamento | 1 | aprovadas |
+| compasso | 2 | aprovada (1ª: quadro 3 sem caneleira). Quadros 6 e 7 se sobrepõem em coluna, mas são peças separadas |
+| agarrao | 3 | aprovada (1ª: garrafa do lado errado de costas, q5-6; 2ª: mão do q8 cortada na borda direita). ~3% menor |
+| caneta | 3 | **com defeito**: risco rosa-avermelhado fino (contorno fantasma) acima do pé no quadro 4 |
+| lata | 1 | aprovada |
+| provoca | 2 | aprovada (1ª bebia com a mão da frente em q3-4) |
+| derrota | 3 | aprovada (1ª: riscos de movimento na cabeça do q7; 2ª: dedos do pé do q8 cortados na borda). Chão em y=550, garrafa com gargalo à mostra |
+| golaco | 3 | **com defeito**: no quadro 2 bebe com a mão da FRENTE e o braço de trás fica solto (q1 corrigido). Figura em pé ereta com ~301 px (ginga 276), chão em y=552 |
+| vitoria | 3 | **com defeito** (salva a 2ª): quadros 4 a 6 bebem com a mão da FRENTE; no q7 a garrafa é segurada no peito com o polegar para cima. A 3ª tinha uma mão sem braço no q7 |
+| anda, corre, recuo | 1 | aprovadas (na corre as pontas da faixa voam para trás, saindo de trás da mão da garrafa) |
+
+O que aprendi para a próxima rodada: o modelo de imagem tende a levar a garrafa à boca com o braço do lado DIREITO da
+imagem. Funcionou em `provoca` dizer "the arm on the LEFT side of the image is folded across the chest holding the bottle
+to the mouth, the arm on the RIGHT side hangs empty"; em `golaco` e `vitoria` não pegou em todos os quadros. Pedir
+"magenta margin on all four sides" resolve corte na borda. Pendentes do Lote 6: grupo E (agachado, rasteirinha, queda,
+bicicleta), opcional.
