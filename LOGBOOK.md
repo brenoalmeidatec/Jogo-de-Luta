@@ -881,3 +881,19 @@ a ~150 / ~200 px está bom?; (6) a Estatueta do tamanho da mão (~15 px) ou maio
   6,64/6,57 das vizinhas, passo máximo 3,0 px (casco de cima), 15 cores.
 - **Pendente:** ligar no motor (nada foi visto no jogo). O vapor sai da narina da pose parada: em golpe/pulo tem de
   seguir a cabeça ou desligar. Ferraduras estão 1,4x o conceito (com 11 px viravam anel ilegível).
+
+## 2026-11-11 — Aura do CK: paredão de som de fumaça (método do Blender)
+
+- **Feito:** `ferramentas/aura_blender/ck_aura.py` + `sprites/ck/aura/` (384 PNG 360x200 + `aura.json`). Cinco camadas,
+  todas atrás do corpo: `paredao` (48 q, malha de ~9 mil vértices; 7 colunas de 5 ossos em chicote + 1 osso por cone
+  animado em ESCALA = deformação radial; tranco do objeto a cada batida), `aneis` (96 q), `nevoa` (96 q), `cacos`
+  (48 q, 15 recortes do conceito pulando no grave) e `fagulhas` (96 q, folhinhas laranja). Compasso de 4 tempos em 48
+  quadros (150 bpm a 2 tiques), 1º tempo no quadro 3 para a emenda cair fora do golpe. Sem redução: escala 112/569.
+- **Remendo declarado:** os rabos/anéis parados do conceito saíram da textura (cones refeitos pela simetria radial,
+  braços laterais cortados) e o miolo atrás do corpo são caixas dos lados copiadas (4 grandes + 1 pequena). Contraste
+  dos cones (aro escuro, miolo claro) pintado na textura; no golpe o miolo acende e corre uma onda clara.
+- **Medido:** 15 cores; pixels parados 147 de 21,6 mil no paredão (0,7%, dentro dos cones) e 0 nas outras; nenhum par
+  de quadros igual; emenda do paredão 2,25 contra 2,50/1,99 das vizinhas; passo máximo 1,66 px (juntas) e 2,06 px
+  (raio do cone); aura 217x160 px para um corpo de 60x112.
+- **Pendente:** ligar no motor (nada visto no jogo; vídeo não assistido, só tiras). Tampinhas pouco legíveis em 1x;
+  névoa da mesma cor da base da parede; sobra um toco reto na borda direita da parede.
