@@ -186,3 +186,97 @@ Todas em `sprites/ck/quadros/folhas_arcade/`, 8 quadros, magenta liso, com a `re
 com a `e_referencia_ginga.png`). Os nomes são os espaços do kit no gerador, como no Raiclaven; a lista e os pedidos
 completos estão em `ferramentas/folhas_ck.py`. O que falta para ir para o jogo: quantizar com a paleta fixa
 (`quantizar_folha.py` precisa dos papéis do CK), cortar e um `gerar_ck.py` no molde do `gerar_raiclaven.py`.
+
+## Pedido para o Alisson: o que falta no CK
+
+Oi, Alisson! O Breno pediu para você terminar o CK. A ficha inteira está acima e as regras são as de sempre:
+[`regras-dos-lutadores.md`](../regras-dos-lutadores.md) e o
+[estilo arcade da bíblia](../biblia-de-arte.md#estilo-arcade-anos-90). Abaixo, o estado e a lista do que falta.
+
+### O que já está pronto (na `mugen`)
+
+- **Modelo aprovado pelo Breno:** `sprites/ck/quadros/folhas/modelo.png`. À esquerda a forma base (Lacoste), à direita o
+  Modo Ratão (platinado, camisa estampada, chinelo com meia, caco de garrafa).
+- **62 folhas de 8 quadros** em `sprites/ck/quadros/folhas_arcade/`, fundo magenta. Os efeitos têm fundo verde, menos o
+  `fx_garrafa`, que é magenta porque a garrafa é verde.
+  - **Referências:** `referencia_ginga.png` (base) e `e_referencia_ginga.png` (Ratão). Anexe a certa em todo pedido novo.
+  - **Base:** 31 golpes com os nomes dos espaços do kit (`soco`, `martelo`, `cabecada`, `bola`, `bone_voador`, `golaco`...).
+  - **Transformação:** `despertar_a` (ele dança no paredão, acende o beck e a fumaça cobre tudo) e `despertar_b` (sai de
+    ratão, a garrafa cai do alto, ele pega e quebra).
+  - **Ratão:** 23 folhas `e_*`, todas com o jeito chapado e instável.
+  - **Efeitos:** `fx_aura` (a aura do Despertar), `fx_fumaca`, `fx_garrafa` e `fx_paredao`.
+- **Sprite do pod desenhado por código:** `sprites/ck/quadros/itens/pod.png`.
+- **Os pedidos de cada folha** estão em `ferramentas/folhas_ck.py`. Rode `python ferramentas/folhas_ck.py <nome>` para
+  imprimir o texto completo que vai para o ChatGPT.
+
+### 1. Refazer 4 folhas do Ratão (a garrafa está errada)
+
+Regra do Breno: **a garrafa fica sempre na mesma mão nos 8 quadros**, a mão da frente, que é a mais à direita na imagem.
+Nunca troca de mão, nunca some e nunca aparece uma segunda. A outra mão fica vazia, só com a atadura branca. O braço de
+trás nunca sai pelas costas.
+
+| Folha | O que está errado hoje |
+|---|---|
+| `e_provoca` | feita antes da regra: a garrafa pode trocar de mão |
+| `e_beck` | feita antes da regra. É a pose de soprar, sem desenhar fumaça (veja a nota do vape abaixo) |
+| `e_golaco` (super do Ratão) | em alguns quadros a garrafa sobe pelo braço de trás e passa por trás da cabeça |
+| `e_juliet_voadora` | a garrafa some quando ele joga o óculos. O óculos tem que sair da mão **vazia** |
+
+**Como pedir no ChatGPT:** anexe a `e_referencia_ginga.png` e cole o pedido do `folhas_ck.py`. O que mais ajudou:
+- escrever *"the bottle is always in the hand furthest to the RIGHT in the picture, only ONE bottle per frame"*;
+- quando sair quase certo, pedir a correção **em cima da imagem**, citando os quadros (*"frames 1 and 4 to 8 are correct,
+  only change frames 2 and 3: ..."*);
+- se um quadro teimar, dá para copiar um quadro vizinho certo ou apagar a garrafa extra por código. Foi assim no
+  `e_anda`, no `e_vitoria` e no `e_derrota`.
+
+**Nota do vape e do beck:** o ChatGPT se recusa a desenhar uso de vape e fumar como golpe. Por isso a Tragada (base, `bola`)
+e a Tragada de Beck (Ratão, `e_beck`) ficaram como **pose de soprar**. No jogo elas se juntam ao `pod.png` (só na base,
+desenhado na mão) e ao efeito `fx_fumaca` saindo da boca. Na transformação ele fuma normalmente, essa o ChatGPT desenhou.
+
+### 2. Revisar as outras folhas com o olho do jogo
+
+Eu revisei uma por uma, mas vale passar de novo procurando braço de trás nas costas, membro sobrando ou garrafa trocando
+de mão. O Breno achou esse erro duas vezes. Ficaram dois detalhes pequenos:
+- no `e_derrota`, o quadro 8 (cópia do 7) encosta na borda direita da imagem;
+- no `e_vitoria`, o quadro 3 ficou sem a fumacinha do beck.
+
+### 3. Passar pelo pipeline arcade
+
+1. Acrescentar os papéis do CK no `PAPEIS` do `quantizar_folha.py`. São duas formas:
+   - **base:** pele, polo branca, verde do jacaré e da gola, short preto e branco, luva vermelha, atadura e tênis;
+   - **Ratão:** pele, camisa e bermuda azul-marinho e branco, regata, cabelo platinado, ouro do cordão, verde da garrafa e
+     o chinelo.
+   Depois ajustar as faixas de matiz da pele dele no `conferir_arte.py`.
+2. Rodar `LUTADOR=ck python ferramentas/quantizar_folha.py --montar-paleta referencia_ginga` e conferir o
+   `paleta_arcade.json`. Depois rodar o mesmo para o Ratão.
+3. Quantizar → `animar_folha.py --arcade` → `quantizar_folha.py --meio` → `conferir_arte.py`, folha por folha. O
+   `animar_folha.py` precisa de `FOLHAS_CK` e de `ck` nas listas de corte por célula e de limpeza de magenta, como já
+   existe para o Raiclaven. As folhas de loop (`referencia_ginga`, `anda`, `e_*` equivalentes) passam só pelo quantizador
+   até o `--arcade` aceitar loop.
+
+### 4. Montar o lutador no jogo
+
+- **`ferramentas/gerar_ck.py`** no molde do `gerar_raiclaven.py`:
+  - `SAIDA = chars/ck`;
+  - os golpes, comandos e nomes da ficha acima (correntes, kombos, os 8 especiais, os 3 agarrões, os 2 supers);
+  - as falas de vitória e o `movelist.dat`.
+- **Projéteis:**
+  - o boné voador (vai e volta);
+  - a nuvem da Tragada (fica parada um tempo e tonteia);
+  - no Ratão, a garrafa voadora (`fx_garrafa`, em arco, deixa caco no chão) e a Juliet voadora (vai e volta).
+- **Despertar:**
+  - `despertar_a`, depois `despertar_b` com o `fx_paredao` atrás dele;
+  - a troca para as folhas `e_*` (como o `RemapPreset despertado` do Gutto e do Raiclaven);
+  - a aura `fx_aura` subindo dos pés enquanto durar;
+  - os golpes do Ratão variam um pouco o alcance e o tempo de cada vez (jeito "chapado").
+- **Entrada do round:** o `fx_paredao` aparece tocando atrás dele.
+- **Retrato da seleção**, os desenhos de vítima dos agarrões, e o CK na lista de lutadores do `ferramentas/Jogo de Luta.bat`.
+- **Aceite:**
+  - o checklist da seção 9 das regras, incluindo a **aura própria**: fumaça cinza-esverdeada, que nenhum outro usa;
+  - o robô (`testar_pengaro.py --lutador ck`);
+  - uma luta CPU x CPU sem erro, filmada na sandbox.
+
+### 5. Marcas (exceção que o Breno pediu)
+
+A base usa Lacoste e o Ratão usa o estilo de marca de "ratão". O Breno quer assim. Se um dia der problema com a dona da
+marca, é só trocar o logo por um inventado parecido, sem mudar o resto.
