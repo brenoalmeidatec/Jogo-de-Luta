@@ -14,7 +14,8 @@
 - Sem PR e sem Codex: o trabalho vai direto para a `mugen`. Frente grande ou arriscada roda numa branch própria e só
   entra na `mugen` depois de conferida (seção 2).
 - O Claude não digita senha. O login no ChatGPT é do Alisson; se aparecer diálogo "Salvar", ele confirma.
-- Parar tudo se o uso semanal do plano chegar a 80%.
+- Uso do plano: o Alisson mudou a regra em 2026-11-11, só parar em 100% do uso semanal (antes era 80%). Como o trabalho
+  para sozinho no teto, cada frente mantém commits pequenos e o LOGBOOK em dia.
 
 ## 2. Frentes em paralelo: uma branch e uma pasta por frente
 
