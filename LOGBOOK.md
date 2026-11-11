@@ -932,3 +932,31 @@ a ~150 / ~200 px está bom?; (6) a Estatueta do tamanho da mão (~15 px) ou maio
 O Alisson pediu para parar os trabalhos para trocar o modelo de raciocínio do Claude. Pengaró endiabrado boss final: as 34 folhas do Lote 7 foram geradas e convertidas e o boss foi ligado no jogo (aura em três Explod); a etapa 'converter e ligar' ainda estava rodando (mexendo em gerar_pengaro.py, na aura de detritos e no .sff) e os dois céticos e o retoque NÃO rodaram. Falta: conferir no filme da sandbox, rodar o robô depois do último estado, juntar na mugen.
 Último commit feito por um agente que terminou a etapa dele: `90e5575`. O commit seguinte a esta entrada guarda o que estava
 pela metade na hora da parada (**não testado, pode estar quebrado**); para voltar ao estado bom, use `90e5575`.
+
+## 2026-11-11 (endiabrado: retomada depois da parada, estado `0d304cc` conferido na sandbox)
+
+- O commit "INTERROMPIDO" (`0d304cc`) deixou de ser suspeito: rodei os quatro geradores (pengaro, gutto, raiclaven, hazaki)
+  em cima dele e `git status` ficou limpo (o `chars/pengaro` commitado é o que o gerador produz); `chars/gutto`,
+  `chars/raiclaven` e `chars/hazaki` são idênticos aos da `origin/mugen` (`git diff` vazio). A `mugen` (`e1f9dc1`) já está
+  dentro da branch.
+- O que o `0d304cc` mudou em relação ao `90e5575`: coluna da aura achatada (escala 1,1 x 0,68: ~1,25 vez a altura do boss,
+  não entra mais na barra de vida), detritos espalhados para os lados no `lote7_converter.py` (ficavam em cima das pernas) e
+  `e_despertar` do quadro 5 em diante só na paleta do boss (a pele saía laranja e trocava de cor ao entrar na ginga).
+- Sandbox, tudo neste estado: robô do Pengaró **146 passaram, 0 falharam** (43 roteiros, igual ao de antes); paleta 2 da
+  seleção (soco forte + Enter) pelo `robo/paleta.lua` rodado via `sandbox.py`: `var20=600 var37=1` nos ticks 30 e 700
+  (começa endiabrado e fica). Dois filmes: Despertar (10 s) e boss batendo (13 s, Despertar no tick 0).
+- Visto com os olhos nas tiras dos filmes: cena 2000 (garrafa quebra, cai de quatro, casaco, levanta) sem pulo de tamanho;
+  roupa do conceito em todos os golpes que apareceram (socos, chutes em pé e agachado, afastar, compasso, armada, caneta);
+  aura à parte em três camadas (disco no chão, coluna atrás, pedras e elos na frente), pés no chão, nenhum quadro magenta
+  ou verde. Ressalvas vistas: a pele do boss no jogo está mais vermelho-vinho do que o marrom-arroxeado do conceito; os
+  elos e pedras da frente passam por cima do braço/pernas do boss e às vezes do rosto do oponente; o primeiro quadro de
+  `e_despertar` (Pengaró normal desenhado na folha do boss) tem a pele mais alaranjada que a `despertar_a` que vem antes.
+- Ainda na arte antiga: a primeira metade da cena (`despertar_a`, 8 quadros, forma normal). Sem folha própria do boss (usam
+  pose emprestada das folhas `e_`): corre (de `e_anda`), recuo (de `e_pulo`/`e_defesa`), `juliet0-3`, `mortal0-11`,
+  `parado1-5`, `q_anda0-7`, `q_parado0-7`, `anda1-3`.
+- Não verificado: os especiais do fim da lista do filme (Sombra, Rolê, bola, agarrão, Golaço) não couberam nos 13 s e não
+  foram vistos em movimento na roupa nova (o robô passa por eles, mas robô não olha arte); queda/levanta/derrota/vitória do
+  boss só vistos na folha de contato dos quadros convertidos, não no jogo; `e_queda` continua a folha com defeito (menor
+  e de pernas levantadas nos quadros 4-7, compensada só por escala).
+- Próximo: o dono olhar os filmes e decidir (tom da pele, detritos na frente, `e_despertar` no lugar de `despertar_b`);
+  refazer `e_queda`; céticos + retoque; juntar na `mugen` (quem junta é o orquestrador).
