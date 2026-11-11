@@ -6,6 +6,8 @@ do
   local CMDS = {"x","y","a","b","c","holdfwd","holdback","holdup","holddown","agarrao_whisky","garrafa_x","garrafa_y",
     "role_a","role_b","sombra_x","sombra_y","sombra_a","sombra_b","despertar","FF","rolar","afastar","golaco",
     "golpe_216","golpe_246","golpe_201","golpe_231","golpe_1400","golpe_1401","golpe_1500","golpe_1501","golpe_3200","bola_fraca","bola_forte","parry","desperto","agacha","v10"}
+  local LUTADOR = "@LUTADOR@"  -- testar_pengaro.py troca pelo --lutador; sem a troca, valem os roteiros de sempre
+  for _, nome in ipairs({"baile", "caneta_x", "compasso_a"}) do CMDS[#CMDS + 1] = nome end  -- CK
 
   local function com(n, fn)
     local old = id()
@@ -149,7 +151,11 @@ do
   kombo("1 Abertura", {"golpe_216"}, {{de = 216, botoes = {"x"}, para = 340}, {de = 340, botoes = {"b"}, para = 341}})
   kombo("2 Alto e Baixo", {"x"}, {{de = 200, botoes = {"holddown", "a"}, para = 342}, {de = 342, botoes = {"y"}, para = 343}})
   kombo("3 Empurrao", {"golpe_201"}, {{de = 201, botoes = {"y"}, para = 344}, {de = 344, botoes = {"holdfwd", "b"}, para = 345}})
+  if LUTADOR ~= "ck" then
   kombo("4 Lancador", {"a"}, {{de = 230, botoes = {"b"}, para = 346}, {de = 346, botoes = {"holddown", "y"}, para = 347}})
+  else  -- CK: Sobe pro Teto (x, y, baixo + y)
+  kombo("4 Sobe pro Teto", {"x"}, {{de = 200, botoes = {"y"}, para = 346}, {de = 346, botoes = {"holddown", "y"}, para = 347}})
+  end
 
   S("agarrao Martelo e Garrafada", function()
     approach(8)
@@ -332,6 +338,7 @@ do
   end
   correnteDesp("y", "y", {3410, 3411, 3412, 3413})
   correnteDesp("b", "b", {3420, 3421, 3422, 3423})
+  if LUTADOR ~= "ck" then
   desperto("kombo Possessao (b, a, x)", function()
     approach(28)
     acao(function() c.vida0 = lifeP2() end)
@@ -343,6 +350,19 @@ do
     wait(70)
     note(function() return "dano " .. (c.vida0 - lifeP2()) end)
   end)
+  else  -- CK: Fim de Baile (x, frente + y, b)
+  desperto("kombo Fim de Baile (x, frente+y, b)", function()
+    approach(28)
+    acao(function() c.vida0 = lifeP2() end)
+    press(1, {"x"}, 2)
+    need(contatoEm(200), 60, "200 encostou")
+    press(1, {"holdfwd", "y"}, 2); need(estadoEm(3431), 20, "3431")
+    need(contatoEm(3431), 80, "3431 encostou")
+    press(1, {"b"}, 2); need(estadoEm(349), 20, "349")
+    wait(70)
+    note(function() return "dano " .. (c.vida0 - lifeP2()) end)
+  end)
+  end
 
   S("super 1: Chuva de Bebidas (1 estoque)", function()
     approach(80)
@@ -405,6 +425,55 @@ do
     press(1, {"garrafa_x"}, 2)
     need(estadoEm(1600), 15, "cancelou 301 em 1600")
   end)
+
+  if LUTADOR == "ck" then  -- golpes que so o CK tem
+    desperto("super: Baile da Esquina pelo comando proprio (tras, frente, baixo + x+y)", function()
+      approach(60)
+      acao(function() com(1, function() setPower(1000); return 0 end); c.vida0 = lifeP2() end)
+      wait(3)
+      press(1, {"baile"}, 3)
+      need(estadoEm(3100), 14, "entrou em 3100")
+      need(function() return st1() == 0 end, 300, "terminou", false)
+      note(function() return "dano " .. (c.vida0 - lifeP2()) end)
+      need(function() return c.vida0 - lifeP2() > 150 end, 1, "o super acertou (dano > 150)", false)
+    end)
+    S("Contragolpe (caneta_x) sem apanhar: guarda baixa e volta", function()
+      approach(60)
+      press(1, {"caneta_x"}, 2)
+      need(estadoEm(1300), 12, "entrou em 1300")
+      need(function() return st1() == 0 end, 200, "voltou ao 0", false)
+    end)
+    S("Contragolpe: apanhou na janela, responde com o cruzado (1310)", function()
+      approach(28)
+      acao(function() c.vida0 = lifeP2(); c.vida1 = snap(1).life end)
+      press(1, {"caneta_x"}, 2)
+      need(estadoEm(1300), 12, "entrou em 1300")
+      wait(4)
+      press(2, {"x"}, 3)
+      need(estadoEm(1310), 40, "aparou o soco e foi para 1310", false)
+      wait(70)
+      note(function() return "dano no P2 " .. (c.vida0 - lifeP2()) .. "; dano no P1 " .. (c.vida1 - snap(1).life) end)
+      need(function() return c.vida0 - lifeP2() > 0 end, 1, "o cruzado acertou", false)
+    end)
+    S("Pendulo (compasso_a): balanca e volta", function()
+      approach(60)
+      press(1, {"compasso_a"}, 2)
+      need(estadoEm(1100), 12, "entrou em 1100")
+      need(function() return st1() == 0 end, 200, "voltou ao 0", false)
+    end)
+    S("Pendulo: x no meio sai com o direto (1110)", function()
+      approach(28)
+      acao(function() c.vida0 = lifeP2() end)
+      press(1, {"compasso_a"}, 2)
+      need(estadoEm(1100), 12, "entrou em 1100")
+      wait(10)
+      press(1, {"x"}, 2)
+      need(estadoEm(1110), 20, "saiu com o direto (1110)", false)
+      wait(60)
+      note(function() return "dano " .. (c.vida0 - lifeP2()) end)
+      need(function() return c.vida0 - lifeP2() > 0 end, 1, "o direto acertou", false)
+    end)
+  end
 
   -- ---------------------------------------------------------------- motor do robo
   local fase, idx, espera = "espera", 0, 0

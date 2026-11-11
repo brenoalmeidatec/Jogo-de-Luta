@@ -124,7 +124,7 @@ if (-not (Test-Path $exe)) {
 # 3. Instala os lutadores disponiveis e os registra na selecao.
 $select = Join-Path $motor 'data\select.def'
 $texto = [IO.File]::ReadAllText($select)
-foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven')) {
+foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven', 'ck')) {
     $origem = Join-Path $game "chars\$lutador"
     if (-not (Test-Path (Join-Path $origem "$lutador.def"))) { continue }
     robocopy $origem (Join-Path $motor "chars\$lutador") /MIR /NFL /NDL /NJH /NJS /NP | Out-Null

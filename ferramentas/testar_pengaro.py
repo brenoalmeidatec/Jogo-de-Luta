@@ -25,6 +25,7 @@ CMDS = ["x", "y", "a", "b", "c", "holdfwd", "holdback", "holdup", "holddown", "a
         "garrafa_y", "role_a", "role_b", "sombra_x", "sombra_y", "sombra_a", "sombra_b", "despertar", "FF", "rolar",
         "afastar", "golaco", "golpe_216", "golpe_246", "golpe_201", "golpe_231", "golpe_1400", "golpe_1401",
         "golpe_1500", "golpe_1501", "golpe_3200", "bola_fraca", "bola_forte", "parry"]
+CMDS += ["baile", "caneta_x", "compasso_a"]  # CK: super do Ratão, Contragolpe e Pêndulo
 
 
 def injetar(arq, hazaki):
@@ -79,7 +80,8 @@ def preparar(destino, motor, lutador, saida_lua):
     debug = destino / "external/script/debug.lua"
     debug.parent.mkdir(parents=True, exist_ok=True)
     debug.write_text((motor / "external/script/debug.lua").read_text(encoding="utf-8") + "\n" +
-                     (RAIZ / "ferramentas/robo/robo.lua").read_text(encoding="utf-8").replace("@SAIDA@", saida_lua),
+                     (RAIZ / "ferramentas/robo/robo.lua").read_text(encoding="utf-8").replace("@SAIDA@", saida_lua)
+                     .replace("@LUTADOR@", lutador),
                      encoding="utf-8")
 
 
