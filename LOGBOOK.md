@@ -918,3 +918,21 @@ a ~150 / ~200 px está bom?; (6) a Estatueta do tamanho da mão (~15 px) ou maio
   pedras) tem de ser escondido antes, senão sai em todas e a emenda de 48 quadros pula.
 - **Pendente:** ligar no motor (nada visto no jogo; vídeo não assistido, só tiras). O chão em 1x lê como disco violeta
   riscado com faíscas brancas, não como lajes rachadas; elos pequenos (2 px de espessura); base da coluna carregada.
+
+## 2026-11-11 — Aura do Raiclaven: leque de lâminas de aço (branch `auras`)
+
+- **Feito:** `ferramentas/aura_blender/raiclaven_aura.py` + 480 PNG e `aura.json` em `sprites/raiclaven/aura/` (5 camadas
+  de 96 quadros a 2 tiques, todas atrás do corpo: `leque`, `foices`, `raios`, `lascas`, `limalha`). Conceito copiado
+  da branch `bosses` para `sprites/raiclaven/quadros/folhas_arcade/e_conceito.png`.
+- **Como:** o leque do conceito é uma massa encavalada que não gira em laço. Recortei 7 peças inteiras (2 tesouras,
+  adaga, pente, faca, navalha, foice), pus cada uma de pé e remontei em anéis REGULARES: 24 peças de fora (6 tipos x 4,
+  +90° por laço), 24 pontas atrás (+45°), 10 foices (-180°). O quadro 96 cai igual ao 0 porque o anel andou um número
+  inteiro de casas; a fase de cada peça usa ciclos não inteiros (m = k - w*d/n) para a onda fechar junto com o giro.
+  Tesoura = duas metades rígidas no parafuso (a de baixo é o espelho da lâmina + a argola do desenho). O lilás do
+  conceito foi tirado (aço cinza frio). Raios, brilho em espiral e limalha são Python em 1x.
+- **Medido:** 15 cores; pixels parados 0 nas 5 camadas; nenhum par de quadros igual; emenda do leque 11,28 contra
+  11,35/11,22 das vizinhas; passo máximo 2,11 px (anel de fora), 2,93 px (foices), 1,18 px (lascas); leque 182x183 px
+  para um corpo de 94x130 (112 do cabelo à sola).
+- **Pendente:** ligar no motor (nada visto no jogo; vídeo não assistido, só tiras). O leque virou círculo de raio 392 px
+  do conceito (lá ele tem 925 de largura por ~785 de altura e é aberto embaixo). Duas cores da paleta são quase iguais
+  (o contorno pintado nos recortes entrou no k-médias). O quadro 52 quase não tem raio.

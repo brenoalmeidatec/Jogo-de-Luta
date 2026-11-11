@@ -1,0 +1,131 @@
+{
+ "formato": 1,
+ "lutador": "raiclaven",
+ "aura": "leque_de_laminas",
+ "tela": [
+  360,
+  200
+ ],
+ "pe": [
+  180,
+  190
+ ],
+ "tiques_por_quadro": 2,
+ "alfa": "0 ou 255",
+ "arquivo": "{nome}_{quadro:02d}.png",
+ "camadas": [
+  {
+   "nome": "leque",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "anel de fora (24 lâminas, gira 90 graus por laço) sobre o anel de trás (24 pontas, 45 graus); tesouras abrindo e fechando"
+  },
+  {
+   "nome": "foices",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "anel de 10 foices, gira 180 graus por laço no sentido contrário, cada foice abre como garra"
+  },
+  {
+   "nome": "raios",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "arcos elétricos branco-prata entre as pontas das lâminas, das foices e das lascas"
+  },
+  {
+   "nome": "lascas",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "lascas de aço cravadas no chão, tremendo"
+  },
+  {
+   "nome": "limalha",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "limalha de aço subindo e piscando"
+  }
+ ],
+ "paleta": [
+  [
+   26,
+   28,
+   34
+  ],
+  [
+   27,
+   29,
+   34
+  ],
+  [
+   43,
+   45,
+   51
+  ],
+  [
+   60,
+   61,
+   68
+  ],
+  [
+   77,
+   79,
+   86
+  ],
+  [
+   93,
+   96,
+   103
+  ],
+  [
+   110,
+   112,
+   120
+  ],
+  [
+   128,
+   130,
+   139
+  ],
+  [
+   147,
+   150,
+   159
+  ],
+  [
+   168,
+   171,
+   181
+  ],
+  [
+   188,
+   192,
+   203
+  ],
+  [
+   208,
+   212,
+   225
+  ],
+  [
+   222,
+   226,
+   239
+  ],
+  [
+   236,
+   241,
+   252
+  ],
+  [
+   250,
+   252,
+   255
+  ]
+ ],
+ "gerado_por": "ferramentas/aura_blender/raiclaven_aura.py",
+ "centro_do_leque": [
+  182.6,
+  97.2
+ ],
+ "nota": "Todas as camadas têm 96 quadros e rodam juntas. O leque só emenda porque os anéis são simétricos: não troque o número de quadros de uma camada sem refazer o giro."
+}
