@@ -639,3 +639,37 @@ C_compasso_defesa_lata; z_cab2 = cabeças a 8x). **Não conferido:** nada filmad
 o robô não prova que o pisão despertado acerta com a caixa nova (não sei se há roteiro para 11500); `e_agarrao` 4/5 não
 foram espelhados (não olhei a forma endiabrada); Gutto, Raiclaven e Hazaki não foram regerados (o diff só toca
 `chars/pengaro`).
+
+---
+
+## 2026-11-11 (bosses, kit): plano de golpes, efeitos, aura e folhas da forma despertada dos cinco (branch `efeitos`)
+
+O dono aprovou a forma despertada de cada lutador como boss final e pediu: "eu não quero nada estático, essas auras e
+esses elementos vão ter que ter uma animação para dar movimento, e eu não quero um movimento todo duro, eu quero
+fluidez". Cada boss tem, só dele, aura, efeitos, especiais e estilo de ataque.
+
+**Feito (só documento, nenhum gerador nem `chars/` tocado):**
+- [`docs/arcade/bosses_kit.md`](docs/arcade/bosses_kit.md): regra do dono; regra de fluidez com critérios
+  verificáveis (corpo C1 a C8, efeito E1 a E12, os números do `aura_animada.md`); uma seção por lutador (Pengaró,
+  Gutto, Raiclaven, Hazak, CK) com tabela de golpes, efeitos, dicionário de aura pronto para o `ferramentas/aura.py`,
+  folhas que o kit pede e a fila não tem (com MOTION em inglês) e ordem de ligação no gerador; 44 decisões numeradas.
+- `docs/regras-dos-lutadores.md`, seção 9: linha nova no checklist (aura e efeitos animados em camadas, nada
+  estático, fluidez conferida em vídeo).
+- Nomes de folha conferidos por script contra `fila_bosses.md` (branch `bosses`) e o Lote 7 da `fila.md` (branch
+  `endiabrado`): 153 folhas pedidas fora das filas (66 de prioridade 1, 44 de fluidez, 43 só com proposta aprovada).
+
+**Achados que mudam o plano:** o kit despertado do Gutto é o do Pengaró byte a byte (`gerar_gutto.py` importa
+`pengaro_extra.py`); todo golpe próprio do Pengaró reaproveita folha da base; o `retocar()` do Raiclaven apaga a arte
+desperta; a fila boss do CK usa prefixo `b_`, não `e_`; a regra 5.1 (exclusivos em 5000 a 5999) bate com os estados
+de dano do motor.
+
+**Não verificado:** nada do kit rodou em motor. Os dicionários de aura não foram executados; `mistura="soma"` e
+`giro` de camada nunca foram à sandbox. Tempos e danos são calculados ou alvo, não medidos. `gerar_ck.py` não existia
+na leitura.
+
+**Pendente:** as 44 decisões (seção 8 do kit), a começar pela 1 (fluidez contra a regra 7), 2 (boss jogável ou chefe
+de arcade), 4 (faixa de estados) e 6 (reações da aura no `aura.py`); gerar as folhas de prioridade 1; rebase da branch
+`efeitos` sobre a `mugen` (14 commits atrás).
+
+**Próximo:** ligar a aura num lutador de verdade (Pengaró, com a coluna e o anel por código enquanto as `fx_aura_*`
+não chegam), filmar na sandbox e passar o `medir_aura.py`; depois os dados próprios do Gutto (`gutto_boss.py`).
