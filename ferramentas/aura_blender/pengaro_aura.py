@@ -50,6 +50,7 @@ PEDRAS = [("pedra01", 70, 130, 147, 215), ("pedra02", 220, 33, 262, 77), ("pedra
           ("pedra05", 33, 416, 85, 490), ("pedra06", 607, 88, 653, 140), ("pedra07", 596, 211, 637, 255), ("pedra08", 754, 344, 795, 388),
           ("pedra09", 597, 477, 641, 519), ("pedra10", 699, 442, 731, 472), ("pedra11", 707, 372, 740, 400), ("pedra12", 143, 546, 188, 593),
           ("pedra13", 36, 518, 65, 544), ("pedra14", 84, 493, 111, 525), ("pedra16", 560, 20, 630, 88)]
+MIOLO_ACESO = (150, 40, 225)
 ELOS = [("elo1", 165, 143, 240, 240), ("elo2", 170, 272, 237, 365), ("elo3", 655, 133, 757, 215), ("elo4", 607, 262, 677, 340)]
 
 # ------------------------------------------------------------------------------------------------------------- ossos
@@ -75,6 +76,47 @@ def _roxo(im, dr=35, dg=60):
     return (B > R + dr) & (B > G + dg)
 
 
+def brilho_comido(im, fg):
+    """O violeta vivo do desenho (clarões dentro da fumaça, halo em volta do corpo, rachaduras do chão) tem R e B altos
+    e G baixo: a chave de magenta levava junto e a aura saía escura, com furos, e o chão sem rachadura. Fundo é só o
+    magenta PURO; o que a chave tirou e não é puro é brilho, menos a franja de 3 px em volta do fundo (mistura de
+    borda, R quase igual a B). Devolve (máscara do brilho, imagem com o brilho puxado do rosa para o violeta)."""
+    from scipy import ndimage as ndi
+    R, G, B = [im[..., i].astype(int) for i in range(3)]
+    puro = ~fg & (R > 225) & (B > 225) & (G < 32)
+    franja = ndi.binary_dilation(puro, iterations=3) & (B - R < 25) & (G < 45)
+    br = ~fg & ~puro & ~franja
+    br[:, :V3[0]] = False; br[:, V3[1]:] = False
+    lab, comps = C.componentes(br)
+    viz = ndi.binary_dilation(fg, iterations=2)
+    for c in comps:                                     # farelo, e ilha de brilho que não encosta em desenho nenhum
+        if c["area"] < 6 or not (viz & (lab == c["i"])).any():
+            br[lab == c["i"]] = False
+    im2 = im.copy()
+    im2[..., 0] = np.where(br, np.clip(R - 0.22 * (R - G), 0, 255), R).astype(np.uint8)
+    return br, im2
+
+
+def topo_em_lobos(coluna, YY, XX, semente=7):
+    """O desenho encosta na borda de cima da folha (corte reto), então o topo da coluna tem de ser inventado. Em vez
+    de serrilhado regular, a borda é uma fila de LOBOS desiguais como as escamas de fumaça do próprio desenho: cada um
+    com largura, altura e tombo próprios (sorteio fixo), os vales entre eles em alturas diferentes."""
+    r = np.random.default_rng(semente)
+    H, W = coluna.shape
+    xs = np.where(coluna.any(0))[0]; x = float(xs.min()) - 10
+    y = YY.astype(np.float32); env = np.full((H, W), 1e9, np.float32)
+    while x < xs.max() + 10:
+        raio = float(r.uniform(15, 34)); topo = float(r.uniform(4, 44)); tombo = float(r.uniform(-0.5, 0.5))
+        cx = x + raio * 0.8; cy = topo + raio
+        d = (XX - cx - tombo * (cy - y)) / raio                     # o lobo tomba para um lado conforme sobe
+        dentro = np.abs(d) < 1
+        borda = cy - raio * np.sqrt(np.clip(1 - d * d, 0, 1))        # arco de cima do lobo
+        env = np.where(dentro, np.minimum(env, borda), env)
+        x += raio * float(r.uniform(1.0, 1.5))
+    vale = 52 + 10 * np.sin(XX / 47.0 + 1.1)                          # onde nenhum lobo cobre
+    return coluna & (y >= np.minimum(env, vale))
+
+
 def recortes(pasta):
     from scipy import ndimage as ndi
     from PIL import Image
@@ -82,6 +124,8 @@ def recortes(pasta):
     rec = os.path.join(pasta, "recortes"); os.makedirs(rec, exist_ok=True)
     im = C.le_rgb(SRC); H, W = im.shape[:2]
     fg = C.chave_magenta(im)
+    brilho, im_b = brilho_comido(im, fg)
+    print("brilho devolvido ao desenho (px):", int(brilho.sum()))
     YY, XX = np.mgrid[0:H, 0:W]
     # --- corpo: a vista 1 inteira (o recorta_corpo do comum perdia o pé de trás, preso só pela tornozeleira)
     corpo = np.zeros_like(fg); corpo[:, V1[0]:V1[1]] = fg[:, V1[0]:V1[1]]
@@ -100,6 +144,8 @@ def recortes(pasta):
     aura &= ~c3d
     aura &= ~C.derrame_de_borda(aura, im, largura=2)
     aura = ndi.binary_opening(aura, iterations=1)
+    aura |= brilho & ~c3d                               # depois da limpeza de borda: o brilho já foi triado por cor
+    im = im_b
     # --- pedras e elos: sprite solto de cada um; o buraco que deixam na fumaça é remendado
     objetos = np.zeros_like(aura); lista = []
     labA, compsA = C.componentes(aura)
@@ -116,7 +162,9 @@ def recortes(pasta):
             m = np.isin(l2, [c["i"] for c in c2 if c["area"] > 60])
             m = ndi.binary_closing(m, iterations=3) & cx_ & aura
             m = C.maior_componente(m, conect=8)                    # o resto é fumaça escura que passou pela cor
-            m = ndi.binary_fill_holes(m) & aura if nome.startswith("pedra") else m
+            if nome.startswith("pedra"):                           # espigão de fumaça grudado na pedra: abre e fica o maior
+                m = ndi.binary_fill_holes(m) & aura
+                m = C.maior_componente(ndi.binary_opening(m, iterations=4), conect=8)
             colado = True
         if m.sum() < 80:
             print("  objeto vazio:", nome); continue
@@ -152,6 +200,9 @@ def recortes(pasta):
     falta2 = C.remenda_clone(full, rgb, fum1, falta, (0, -230), vezes=1)
     falta3 = C.remenda_clone(full, rgb, fum1, falta2, (0, 230), vezes=1)
     C.remenda_vizinho(full, (fum1 | bur) & ~falta3, falta3)
+    # o remendo fica atrás do corpo e é rodeado pelo halo vivo do desenho: clareado para o violeta, vira miolo aceso
+    # da coluna em vez de deixar o fantasma da pose (anel claro em volta de um vão escuro) quando o corpo sai dali
+    full[bur] = np.clip(full[bur] + (np.array(MIOLO_ACESO) - full[bur]) * 0.42, 0, 255).astype(np.uint8)
     tudo = fum1 | bur
     print("fumaça px", int(tudo.sum()), "remendo do corpo", int(bur.sum()), "sem fonte", int(falta3.sum()), "buraco de objetos", int(bur_obj.sum()))
     # --- miolo (coluna) x chicotes
@@ -161,8 +212,14 @@ def recortes(pasta):
     segs = {k: [((a[0] + X0, a[1]), (b[0] + X0, b[1])) for a, b in zip(pts, pts[1:])] for k, pts in CHICOTES.items()}
     nomes = list(CHICOTES)
     pecas = {k: np.zeros_like(tudo) for k in nomes}
+    toca_miolo = ndi.binary_dilation(tudo & miolo_reg, iterations=4)
     for c in compsF:
         if c["area"] < 60:
+            continue
+        if c["area"] < 3000 and not (toca_miolo & (labF == c["i"])).any():
+            # mecha que no desenho já se soltou da fumaça: presa a um osso ela flutuava como lasca rígida, sem ligação
+            # com a coluna. Sai do recorte; quem faz esse papel são os fiapos, que nascem nas pontas e sobem sumindo.
+            print("  mecha solta fora do recorte:", c["area"], "px em", (c["x0"] - X0, c["y0"]))
             continue
         ys, xs = np.where(labF == c["i"]); P = np.stack([xs, ys], 1)[:: max(1, len(xs) // 400)]
         d = [C.dist_segmentos(P, segs[k]).min(1).mean() for k in nomes]
@@ -170,8 +227,7 @@ def recortes(pasta):
     info = dict(dx=dx, dy=dy, nota=nota, objetos=lista, chicotes={})
     arqs = []
     coluna = tudo & miolo_reg
-    # o desenho encosta na borda de cima da folha (corte reto): o topo é recortado em línguas
-    coluna &= ~(YY < 12 + 30 * (0.5 + 0.5 * np.sin(XX / 17.0) * np.cos(XX / 7.0 + 1.3)))
+    coluna = topo_em_lobos(coluna, YY, XX)
     for k in nomes:
         m = pecas[k]
         if m.sum() == 0:
@@ -183,21 +239,17 @@ def recortes(pasta):
         info["chicotes"][k] = dict(bbox=C.caixa(pm), area=int(pm.sum()), sobra=int(raiz.sum()))
     C.salva_rgba(f"{rec}/coluna.png", full, coluna)
     info["coluna_bbox"] = C.caixa(coluna)
-    # --- chão: vista de cima (desprojeta a elipse), buracos dos pés fechados com a metade oposta, simetria de meia volta
-    r = int(e["rx"]); T = 2 * r
-    v, u = np.mgrid[0:T, 0:T]; uu = u - r + 0.5; vv = v - r + 0.5
-    sx = np.clip(np.round(e["cx"] + uu).astype(int), 0, W - 1); sy = np.clip(np.round(e["cy"] + vv * e["ry"] / e["rx"]).astype(int), 0, H - 1)
+    # --- chão: o próprio desenho, de frente (as rachaduras acesas voltaram com o brilho). O que o corpo e as pedras
+    # tapavam é remendo com a cor vizinha e fica atrás dos pés.
     piso = aura & no_chao & ~ndi.binary_dilation(objetos, iterations=3)
-    tex = im[sy, sx]; val = piso[sy, sx] & (uu ** 2 + vv ** 2 <= r * r)
-    tex2 = np.where(val[..., None], tex, tex[::-1, ::-1]); val2 = val | val[::-1, ::-1]
-    frente = vv > 0                                                  # a metade da frente é a mais limpa (sem fumaça por cima)
-    texs = np.where(frente[..., None], tex2, tex2[::-1, ::-1]); vals = np.where(frente, val2, val2[::-1, ::-1])
-    falta = (uu ** 2 + vv ** 2 <= (0.93 * r) ** 2) & ~vals          # miolo do disco sem fonte (entre os pés): vizinho
-    texs = np.ascontiguousarray(texs)
-    C.remenda_vizinho(texs, vals, falta); vals = vals | falta
-    C.salva_rgba(f"{rec}/chao_topo.png", texs, vals)
-    C.salva_rgba(f"{rec}/chao_frente.png", im, piso)
-    info["chao"] = dict(e, lado=T, sem_fonte=int(falta.sum()))
+    tapado = ndi.binary_fill_holes(ndi.binary_closing(piso | (c3d & no_chao), iterations=3)) & no_chao & ~piso
+    chao_rgb = im.copy()
+    esq = tapado & (XX < e["cx"]); dir_ = tapado & (XX >= e["cx"])   # cada pé copia as lajes limpas do vão entre os dois
+    falta = C.remenda_clone(chao_rgb, im, piso, esq, (0, 135), vezes=1) | C.remenda_clone(chao_rgb, im, piso, dir_, (0, -135), vezes=1)
+    falta = C.remenda_clone(chao_rgb, im, piso, falta, (28, 0), vezes=2)
+    C.remenda_vizinho(chao_rgb, (piso | tapado) & ~falta, falta)
+    C.salva_rgba(f"{rec}/chao_frente.png", chao_rgb, piso | tapado)
+    info["chao"] = dict(e, remendo=int(tapado.sum()), remendo_sem_fonte=int(falta.sum()))
     json.dump(info, open(f"{rec}/info.json", "w"), indent=1)
     print({k: (v if not isinstance(v, (list, dict)) else len(v)) for k, v in info.items()})
     # --- prévias para OLHAR
@@ -219,7 +271,7 @@ def recortes(pasta):
         b_ = o["bbox"]; s = np.array(Image.open(f"{rec}/{o['nome']}.png"))[b_[1]:b_[3], b_[0]:b_[2]]; h, w = min(s.shape[0], 108), min(s.shape[1], 108)
         sub = fl[1:1 + h, i * 110 + 1:i * 110 + 1 + w]; mm = s[:h, :w, 3] > 0; sub[mm] = s[:h, :w, :3][mm]
     Image.fromarray(fl).save(f"{pasta}/p_objetos.png")
-    Image.fromarray(np.dstack([texs, (vals * 255).astype(np.uint8)])).resize((T // 2, T // 2)).save(f"{pasta}/p_chao_topo.png")
+    C.previa_recortes([f"{rec}/chao_frente.png"], f"{pasta}/p_chao.png", box, (H, W))
 
 
 # ------------------------------------------------------------------------------------------------------------ animação
@@ -232,6 +284,8 @@ ANIM_COLUNA = {"s1": (0.5, 0.00, 0.0, 0), "s2": (1.2, 0.10, 0.0, 0), "s3": (2.0,
 TREMOR_COLUNA = [dict(eixo="X", raio=9.0, fase=0.0, forca=7.0), dict(eixo="Z", raio=11.0, fase=2.1, forca=5.0)]
 TREMOR_CHICOTE = [dict(eixo="X", raio=8.0, fase=1.0, forca=4.0), dict(eixo="Z", raio=10.0, fase=3.3, forca=4.0)]
 # chicote: (fase em quadros, sinal, amplitude da ponta em graus). A raiz gira pouco e cedo; a ponta muito e tarde.
+CHAO_ARFA = 3.2                     # força do tremor vertical das lajes (px de jogo, pico a pico ~1,5)
+ESCALA_PEDRA, ESCALA_ELO = 1.35, 1.5
 MOV_CHICOTE = {"ea": (0, 1, 13.0), "eb": (17, -1, 12.0), "ec": (31, 1, 10.0), "da": (9, -1, 11.0), "db": (26, 1, 13.0), "dc": (40, -1, 12.0)}
 # elos: cadeia de 3 ossos ao longo da corrente (no recorte, somar X0): a corrente balança mole enquanto flutua
 OSSOS_ELO = {"elo1": [(228, 152), (205, 176), (186, 206), (181, 238)], "elo2": [(231, 279), (205, 296), (186, 326), (185, 362)],
@@ -284,19 +338,17 @@ def rig(pasta, so_pontos=False):
         C.bl_anima_objeto(pc["arm"], N, lambda t, ox_=ox_, oz_=oz_, j=j: dict(location=(ox_ + 1.0 * math.sin(t + j), 0, oz_ + 1.2 * math.sin(t + 1.7 * j))),
                           fase=fase)
         chic[k] = pc
-    # --- chão: disco deitado com a vista de cima como textura; meia volta no laço de N2 (a textura tem simetria de meia volta)
-    e = info["chao"]; mat, img = C.bl_material("mat_chao", f"{rec}/chao_topo.png")
-    r = e["rx"] * TELA.escala; cxg, czg = TELA.g(e["cx"], e["cy"])
-    me = bpy.data.meshes.new("chao"); me.from_pydata([(-r, -r, 0), (r, -r, 0), (r, r, 0), (-r, r, 0)], [], [(0, 1, 2, 3)])
-    uvl = me.uv_layers.new(name="uv")
-    for li, uv in enumerate([(0, 0), (1, 0), (1, 1), (0, 1)]):
-        uvl.data[li].uv = uv
-    me.materials.append(mat); disco = bpy.data.objects.new("chao", me); bpy.context.scene.collection.objects.link(disco)
-    disco.rotation_mode = "ZYX"                                          # gira em torno do próprio eixo e DEPOIS deita
-    alfa = math.asin(e["ry"] / e["rx"])
-    for f in range(N2 + 1):
-        disco.rotation_euler = (alfa, 0, math.pi * f / N2); disco.keyframe_insert("rotation_euler", frame=f)
-        disco.location = (cxg, 0, czg + 0.6 * math.sin(4 * math.pi * f / N2)); disco.keyframe_insert("location", frame=f)
+    # --- chão: o desenho de frente numa malha presa a um osso curto no centro. As lajes ARFAM (tremor vertical em laço,
+    # nulo debaixo dos pés e cheio na borda) e o chão inteiro respira; a luz das rachaduras é camada do compor.
+    e = info["chao"]
+    ch = C.bl_malha_com_ossos("chao", f"{rec}/chao_frente.png", [("c0", None, (e["cx"] - 30, e["cy"]), (e["cx"] + 30, e["cy"]))], TELA, N2,
+                              celula=6, margem=6, prof=lambda X, Z: 4.0,
+                              tremor=[dict(eixo="Z", raio=13.0, fase=0.6, forca=CHAO_ARFA), dict(eixo="X", raio=10.0, fase=2.4, forca=CHAO_ARFA * 0.5)],
+                              tremor_folga=2.0, tremor_rampa=30.0)
+    cox, coz = ch["origem"]
+    C.bl_anima_objeto(ch["arm"], N2, lambda t: dict(location=(cox, 0, coz + 0.5 * math.sin(2 * t)),
+                                                    scale=(1 + 0.02 * math.sin(2 * t + 0.9), 1, 1 + 0.05 * math.sin(2 * t))))
+    disco = ch["malha"]
     # --- pedras (placa rígida) e elos (malha com 3 ossos): cada um na sua órbita lenta, girando
     soltos = []
     for i, o in enumerate(info["objetos"]):
@@ -313,6 +365,8 @@ def rig(pasta, so_pontos=False):
             gy = math.radians(orb["giro"]) * math.sin(orb["kg"] * t + orb["fx"])          # balanço no plano da tela
             gz = math.radians(orb["vira"]) * math.sin(orb["kv"] * t + orb["fv"]) if placa else 0.0   # vira de lado (encurta)
             d["rotation_euler"] = (0, gy, gz)
+            k = ESCALA_PEDRA if placa else ESCALA_ELO      # no tamanho do jogo o desenho dava pedra de 4 px e elo de 2 px
+            d["scale"] = (k, k, k)
             return d
         C.bl_anima_objeto(ob, N2, mov)
 
@@ -348,8 +402,7 @@ def chicote(pasta, mostra=True):
 # ------------------------------------------------------------------------------------------------------------- camadas
 ESCURA = (20, 8, 30)                # contorno: o preto dos lutadores puxado para o violeta
 Y_CORTE = 190                       # linha da sola: o anel acima dela fica atrás dos pés, dali para baixo fica à frente
-FLUXO_P = 24                        # a textura da coluna sobe 24 px e recomeça (duas fases defasadas de meio período)
-N_FIAPOS, N_FAISCAS, N_SOMBRAS = 26, 30, 7
+N_FIAPOS, N_FAISCAS, N_SOMBRAS = 34, 30, 7
 
 
 def _uniforme(R):
@@ -358,26 +411,56 @@ def _uniforme(R):
     return o.reshape(R.shape)
 
 
-def fluxo(lst, ruido, n, P=FLUXO_P, y_base=186, onda=1.6, lam=34.0):
-    """A coluna SOBE: cada pixel do miolo mostra o desenho que estava `o` px abaixo dele, com `o` crescendo 1 px por
-    quadro de 0 a P. Duas fases defasadas de P/2; quem está perto de recomeçar some atrás da outra por um limiar de
-    ruído que sobe junto (sem salto). A amostra também serpenteia de lado (onda que sobe). Só troca índices da paleta
-    dentro da silhueta que o Blender entregou: não cria cor nem muda o contorno."""
-    H, W = lst[0].shape; YY, XX = np.mgrid[0:H, 0:W]; out = []
-    for f, A in enumerate(lst):
-        o1 = f % P; o2 = (f + P // 2) % P
-        w1 = 1.0 - abs(2.0 * o1 / P - 1.0)
-        usa1 = ruido(f) < w1
-        dxs = np.round(onda * np.clip((y_base - YY) / 60.0, 0, 1) * np.sin(2 * np.pi * (YY / lam + f / n))).astype(int)
+def escorre(arq, f, n, tela, amp=2.2, y_base=186.0):
+    """A fumaça ESCORRE para cima sem trocar de desenho: o quadro do Blender (4x) é amostrado com um deslocamento
+    pequeno e liso que é uma soma de ondas viajando para cima (frentes inclinadas, cada uma para um lado). Feito em 4x
+    e ANTES da redução: o desenho desliza em quartos de pixel, sem costura, sem fase que recomeça. O deslocamento some
+    na base (a coluna não descola do chão). Devolve (rgb, máscara) em 1x, como C.le_render.
+    Passo por quadro: amp * 2*pi/n por onda (0,29 px com amp 2,2 e n 48)."""
+    import cv2
+    im = cv2.imread(arq, cv2.IMREAD_UNCHANGED)
+    k = tela.amp; H, W = im.shape[:2]; YY, XX = np.mgrid[0:H, 0:W].astype(np.float32); y, x = YY / k, XX / k
+    t = 2 * np.pi * f / n
+    g = np.clip((y_base - y) / 50.0, 0, 1)
+    dy = amp * g * (np.sin(2 * np.pi * (y / 40.0 + x / 95.0) + t) + 0.5 * np.sin(2 * np.pi * (y / 27.0 - x / 60.0) + 2 * t + 1.9))
+    dx = amp * g * (0.7 * np.sin(2 * np.pi * (y / 52.0 - x / 130.0) + t + 2.0) + 0.3 * np.sin(2 * np.pi * (y / 23.0 + x / 75.0) + 2 * t + 0.4))
+    out = cv2.remap(im, (XX + dx * k).astype(np.float32), (YY + dy * k).astype(np.float32), cv2.INTER_NEAREST,
+                    borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+    return C.reduz(out[..., [2, 1, 0, 3]], k)
 
-        def amostra(o):
-            ys = YY + o; xs = XX + dxs
-            ok = (ys < H) & (xs >= 0) & (xs < W)
-            return np.where(ok, A[np.clip(ys, 0, H - 1), np.clip(xs, 0, W - 1)], -1)
-        S1, S2 = amostra(o1), amostra(o2)
-        S = np.where(usa1, S1, S2); S = np.where(S >= 0, S, np.where(usa1, S2, S1)); S = np.where(S >= 0, S, A)
-        out.append(np.where(A >= 0, S, -1).astype(np.int16))
-    return out
+
+def reduz_fino(arq, amp=4, lim=95.0, minimo=3):
+    """Redução que não apaga risco fino aceso (rachadura de 1 px): se o bloco amp x amp tem pelo menos `minimo`
+    subpixels claros (luminância > lim), a cor do pixel é a média só deles; senão é a média normal."""
+    from PIL import Image
+    a4 = np.array(Image.open(arq).convert("RGBA")); rgb, m = C.reduz(a4, amp)
+    h, w = m.shape
+    cl = (a4[..., 3] > 127) & ((a4[..., :3].astype(np.float32) @ np.array([0.299, 0.587, 0.114], np.float32)) > lim)
+    n = cl.reshape(h, amp, w, amp).sum((1, 3))
+    soma = (a4[..., :3].astype(np.float32) * cl[..., None]).reshape(h, amp, w, amp, 3).sum((1, 3))
+    fino = m & (n >= minimo)
+    rgb[fino] = soma[fino] / n[fino][:, None]
+    return rgb, m
+
+
+class Rampa:
+    """Degraus de luz DENTRO do violeta: clarear ou escurecer um pixel anda pela lista das cores violeta da paleta
+    (da mais escura à mais clara), nunca pelo índice cru, que passaria pelo marrom da pedra e pelo cinza do ferro."""
+
+    def __init__(self, pal):
+        c = pal.cores.astype(int)
+        self.idx = np.array([i for i in range(1, pal.n) if c[i][2] > c[i][1] + 40 and c[i][2] >= c[i][0]])
+        self.pos = np.full(pal.n + 1, -1); self.pos[self.idx] = np.arange(len(self.idx))
+
+    def anda(self, L, mask, k, piso=0, teto=None):
+        """Anda k degraus (k > 0 clareia até `teto`, k < 0 escurece até `piso`); quem já passou do limite fica."""
+        p = self.pos[L]; m = mask & (L >= 0) & (p >= 0)
+        teto = len(self.idx) - 1 if teto is None else teto
+        if k > 0:
+            L[m] = self.idx[np.maximum(p[m], np.minimum(p[m] + k, teto))]
+        else:
+            L[m] = self.idx[np.minimum(p[m], np.maximum(p[m] + k, piso))]
+        return L
 
 
 def contorno_de_fora(idx, cor, fecha=2, **kw):
@@ -387,6 +470,17 @@ def contorno_de_fora(idx, cor, fecha=2, **kw):
     cheio = ndi.binary_fill_holes(ndi.binary_closing(np.pad(m, 4), iterations=fecha))[4:-4, 4:-4] | m
     tmp = np.where(m, idx, np.where(cheio, 1, -1)).astype(np.int16)
     return np.where(m, C.contorno(tmp, cor, **kw), -1).astype(np.int16)
+
+
+def _fitas(seed, n=96):
+    """Ruído ladrilhável de fitas em pé (estreitas em x, compridas em y): o clarão sobe como língua, não como mancha."""
+    r = np.random.default_rng(seed); y, x = np.mgrid[0:n, 0:n] / n; t = np.zeros((n, n))
+    for _ in range(40):
+        fx = int(r.integers(-7, 8)); fy = int(r.integers(-2, 3))
+        if fx == 0:
+            continue
+        t += np.sin(2 * np.pi * (fx * x + fy * y) + r.uniform(0, 6.28)) / (1 + 0.2 * abs(fx))
+    return (t - t.min()) / (t.max() - t.min())
 
 
 def _bolha(L, x, y, r, c_corpo, c_luz, c_borda, achat=1.0, y_min=0, y_max=None):
@@ -423,33 +517,42 @@ def compor(pasta):
     breu = pal.mais_proxima((48, 14, 78))
     print("paleta", pal.lista(), "lilas", lilas, "viol", viol, "roxo", roxo, "breu", breu)
     RAMPA = [viol, viol, roxo, roxo, roxo, breu, breu, breu]         # língua de sombra: da base violeta à ponta de breu
-    campo = C.Campo(TELA, 48); R1 = _uniforme(C.ladrilho(1, n=48, fmax=3)); R2 = C.ladrilho(2, n=48, fmax=6); R3 = C.ladrilho(5, n=48, fmax=5)
+    campo = C.Campo(TELA, 48); R2 = C.ladrilho(2, n=48, fmax=6); R3 = C.ladrilho(5, n=48, fmax=5)
     campo.fecha(N, 1, 2); campo.fecha(N2, 1, 2)
+    campo96 = C.Campo(TELA, 96); campo96.fecha(N, 2)
+    R1 = _uniforme(_fitas(1)); rv = Rampa(pal); p_viol = int(rv.pos[viol]); p_lilas = int(rv.pos[lilas])
+    print("rampa violeta", [pal.cores[i].tolist() for i in rv.idx], "viol", p_viol, "lilas", p_lilas)
 
-    def r_fluxo(f):
-        return campo.rola(R1, f, vy=1)
+    def r_clarao(f):                                                   # fitas de luz subindo 2 px por quadro
+        return campo96.rola(R1, f, vy=2)
 
     def r_lingua(f, ox=0):
         return 0.5 * campo.rola(R2, f, vy=2, ox=ox) + 0.5 * campo.rola(R3, f, vy=1, ox=17 + ox)
 
     # --- coluna: render -> 1x -> paleta com histerese -> farelo fora -> FLUXO para cima
     le = lambda nome, n: [C.le_render(f"{pasta}/render/{nome}_{f:02d}.png", TELA.amp) for f in range(n)]
-    col_seca = [C.limpa(a, 10) for a in pal.encaixa_seq(le("coluna", N))]
-    col_flux = fluxo(col_seca, r_fluxo, N)
+    col_seca = [C.limpa(a, 10) for a in pal.encaixa_seq(le("coluna", N))]            # só para medir: sem escorrer
+    col_flux = [C.limpa(a, 10) for a in pal.encaixa_seq([escorre(f"{pasta}/render/coluna_{f:02d}.png", f, N, TELA) for f in range(N)])]
+    for f in range(N):                                                 # clarões: fitas que sobem acendendo o violeta por onde passam
+        g = r_clarao(f)
+        rv.anda(col_flux[f], g > 0.80, 1, teto=p_viol); rv.anda(col_flux[f], g > 0.93, 1, teto=p_viol)
+        rv.anda(col_flux[f], g < 0.10, -1, piso=1)
     chi_seca = [C.limpa(a, 8) for a in pal.encaixa_seq(le("chicotes", N))]
     coluna, chicotes = [], []
     for f in range(N):
         c, w = col_flux[f], chi_seca[f]
         # contorno do chicote só onde ele faz borda com o vazio (a sobra em cima da coluna não ganha risco)
-        w = w.copy(); C.cintila(w, r_lingua(f, 40), 0.70, 0.22, sobe=1, desce=1, piso=1, teto=viol)   # o miolo do chicote também vive
+        w = w.copy(); g = r_clarao((f + 13) % N)                       # a mesma luz que sobe pela coluna passa pelos chicotes
+        rv.anda(w, g > 0.78, 1, teto=p_viol); rv.anda(w, g < 0.14, -1, piso=1)
         u = np.where(w >= 0, w, c); cu = contorno_de_fora(u, pal.escura)
         w2 = np.where(w >= 0, cu, -1).astype(np.int16)
         wl = C.linguas(w2, r_lingua(f, 9), RAMPA, alt=4, forca=0.04)
         wl[(wl >= 0) & (w2 < 0) & (c >= 0)] = -1                       # língua do chicote não nasce por cima da coluna
         chicotes.append(wl)
         coluna.append(C.linguas(contorno_de_fora(c, pal.escura), r_lingua(f), RAMPA, alt=8, forca=0.10))
-    # --- chão: disco girando (Blender) -> paleta -> rachaduras pulsando (onda que sai do centro) -> sombras em órbita
-    chao = [C.limpa(a, 6) for a in pal.encaixa_seq(le("chao", N2), folga=200.0)]
+    # --- chão: lajes arfando (Blender) -> redução que guarda a rachadura fina -> paleta -> luz correndo pelas
+    # rachaduras do centro para a borda (degraus dentro do violeta, sem estouro branco) -> sombras em órbita
+    chao = [C.limpa(a, 6) for a in pal.encaixa_seq([reduz_fino(f"{pasta}/render/chao_{f:02d}.png", TELA.amp) for f in range(N2)], folga=200.0)]
     e = info["chao"]; ecx, ecy = TELA.conceito_para_jogo(e["cx"], e["cy"]); erx, ery = e["rx"] * TELA.escala, e["ry"] * TELA.escala
     YY, XX = TELA.grade(); dist = np.hypot(XX - ecx, (YY - ecy) * erx / ery)
     lum = pal.cores.astype(int) @ np.array([299, 587, 114]) / 1000.0
@@ -458,10 +561,11 @@ def compor(pasta):
     anel_t, anel_f = [], []
     for f in range(N2):
         a = chao[f].copy()
-        pulso = 0.5 + 0.5 * np.sin(2 * np.pi * (2 * f / N2) - dist / 13.0)
-        C.cintila(a, pulso, 0.62, 0.30, sobe=2, desce=1, piso=1, teto=pal.clara, mask=a >= claro_min)
-        mid = (a >= 2) & (a < claro_min)
-        a[mid & (pulso > 0.80)] += 1                                   # o brilho passa também pelas lajes
+        pulso = 0.5 + 0.5 * np.sin(2 * np.pi * (2 * f / N2) - dist / 13.0)   # onda de 82 px saindo do centro, 1,7 px por quadro
+        racha = a >= claro_min
+        rv.anda(a, racha & (pulso > 0.66), 1, teto=p_lilas)           # a crista acende a rachadura um degrau...
+        rv.anda(a, racha & (pulso < 0.30), -1, piso=max(p_viol - 1, 0))   # ...e o vale apaga um, sem sair do violeta vivo
+        rv.anda(a, ~racha & (pulso > 0.74), 1, teto=max(p_viol - 1, 0))   # a laje pega um reflexo quando a crista passa
         a = C.contorno(a, pal.escura)
         t, fr = vazio(), vazio()
         t[:Y_CORTE] = a[:Y_CORTE]; fr[Y_CORTE:] = a[Y_CORTE:]
@@ -515,9 +619,9 @@ def compor(pasta):
     CAM = {"coluna": coluna, "chicotes": chicotes, "anel_tras": anel_t, "fiapos": fiapos, "soltos": soltos, "anel_frente": anel_f}
     C.exporta_camadas(cam, CAM, pal)
     C.escreve_aura_json(cam, ID, AURA, TELA, TIQ, [
-        dict(nome="coluna", quadros=N, plano="atras", o_que="coluna de fumaça violeta-preta subindo, serpenteando"),
+        dict(nome="coluna", quadros=N, plano="atras", o_que="coluna de fumaça violeta-preta serpenteando, o miolo escorrendo para cima com clarões violeta subindo"),
         dict(nome="chicotes", quadros=N, plano="atras", o_que="chicotes de sombra dos lados, em cascata da raiz à ponta"),
-        dict(nome="anel_tras", quadros=N2, plano="atras", o_que="chão rachado girando (parte atrás dos pés), rachaduras pulsando, sombras em órbita"),
+        dict(nome="anel_tras", quadros=N2, plano="atras", o_que="chão rachado (parte atrás dos pés): lajes arfando, luz correndo pelas rachaduras do centro para a borda, sombras em órbita"),
         dict(nome="fiapos", quadros=N2, plano="atras", o_que="línguas que se soltam do topo e das pontas; faíscas lilás do chão"),
         dict(nome="soltos", quadros=N2, plano="atras", o_que="pedras e elos de corrente partida flutuando em órbitas lentas"),
         dict(nome="anel_frente", quadros=N2, plano="frente", o_que="chão rachado e sombras em órbita à frente dos pés (da linha da sola para baixo)")],
@@ -540,8 +644,8 @@ def compor(pasta):
     med["conjunto"] = dict(dif_min=round(min(dif), 3), dif_max=round(max(dif), 3), emenda=round(dif[-1], 3),
                            vizinhos_da_emenda=[round(dif[-2], 3), round(dif[0], 3)])
     med["chicote"] = chicote(pasta, mostra=False)
-    med["passo_max_px"] = dict(juntas=max(v["passo_max"] for v in med["chicote"].values()), fluxo_da_coluna=1.0,
-                               borda_do_anel=round(math.pi * erx / N2, 2), fiapo=0.55, faisca=1.1 + 0.012 * 2 * 40)
+    med["passo_max_px"] = dict(juntas=max(v["passo_max"] for v in med["chicote"].values()), escorrer_da_coluna=0.58, clarao=2.0,
+                               luz_das_rachaduras=1.7, sombras_em_orbita=round(math.pi * erx / N2, 2), fiapo=0.55, faisca=1.1 + 0.012 * 2 * 40)
     json.dump(med, open(f"{pasta}/medidas.json", "w"), indent=1)
     print(json.dumps({k: v for k, v in med.items() if k != "chicote"}, indent=0))
     # --- tiras e vídeo, corpo entre as camadas de trás e a da frente

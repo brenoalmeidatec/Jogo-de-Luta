@@ -39,6 +39,11 @@ NARINA = (1318, 383)    # de onde sai o vapor, na vista com aura
 # tronco que o corpo escondia (x, y, raio): remendo, fica atrás do corpo
 TRONCO = [(1345, 235, 70), (1300, 330, 82), (1262, 415, 62)]
 GARUPA = [(1250, 250, 60), (1215, 330, 66), (1200, 410, 50)]
+# rabo de raio: o tronco não acaba num corte, afina num chicote de raio que desce até o chão entre os cascos do Gutto
+# (remendo, atrás do corpo; textura = o próprio tronco do desenho, espelhado para baixo e espremido para a ponta)
+RABO_Y = (400, 672)     # da linha em que o tronco passa a ser rabo até a ponta
+RABO_PONTA_X = 1240
+RABO_FONTE = (1250, 80, 385, 235)   # faixa do tronco que vira textura: x do meio, meia largura, y de baixo, altura
 
 # ---------------------------------------------------------------------------------------------------------------- ossos
 # (nome, pai, cabeça, cauda) em px do conceito. A raiz é o dorso: a cabeça dele (escondida atrás do Gutto) é o pivô
@@ -56,11 +61,12 @@ OSSOS = [
     ("c2d", "c2c", (960, 152), (872, 162)),
     ("c3a", "dorso", (1232, 202), (1132, 216)), ("c3b", "c3a", (1132, 216), (1040, 236)), ("c3c", "c3b", (1040, 236), (950, 252)),
     ("c3d", "c3c", (950, 252), (862, 284)),
+    ("r1", "dorso", (1262, 440), (1254, 515)), ("r2", "r1", (1254, 515), (1245, 592)), ("r3", "r2", (1245, 592), (1240, 668)),
 ]
 # famílias de ossos: um vértice só pesa nos ossos da família do osso mais próximo (e nos "abertos" a todas).
 # Sem isso a borda de uma pata, que fica a 30 px da outra, sairia puxada pelas duas.
 FAMILIA = {"dorso": "t", "pescoco": "t", "cabeca": "t", "queixo": "q", "p1a": "1", "p1b": "1", "p1c": "1",
-           "p2a": "2", "p2b": "2", "p2c": "2"}
+           "p2a": "2", "p2b": "2", "p2c": "2", "r1": "r", "r2": "r", "r3": "r"}
 
 
 def familia(nome):
@@ -91,7 +97,7 @@ def recortes(pasta):
     # ---- aura na vista 3. Carmesim FRIO: o azul fica, mas limitado (o véu rosa-choque e a casca de magenta viram
     # carmesim), e nada de laranja (o verde nunca passa do azul)
     rgbA = im.copy()
-    rgbA[..., 2] = np.minimum(B, G + 70).astype(np.uint8)
+    rgbA[..., 2] = np.minimum(B, G + 45).astype(np.uint8)
     rgbA[..., 1] = np.minimum(G, rgbA[..., 2]).astype(np.uint8)
     aura = fg.copy(); aura[:, :AURA_X[0]] = False; aura[:, AURA_X[1]:] = False
     aura &= ~corpo3d
@@ -132,10 +138,32 @@ def recortes(pasta):
         if cpt["area"] < 1500:
             tot2 |= lab == cpt["i"]
     C.remenda_vizinho(full, tot, tot2 & ~tot); tot = tot2
-    # a barra de baixo do tronco acaba em dentes de raio (se o corpo sair da frente, não aparece um corte reto)
-    xs = np.arange(W); yy = np.arange(H)[:, None]
-    dente = 468 - 30 * np.abs(((xs - 1130) / 26.0) % 2 - 1) - 0.10 * np.abs(xs - 1275)
-    tot &= ~((yy > dente[None, :]) & (xs[None, :] > 1100) & (xs[None, :] < 1440) & (yy > 380))
+    # rabo de raio no lugar do corte: abaixo de RABO_Y[0] o tronco afina até a ponta, com a borda em dentes de raio
+    y0r, y1r = RABO_Y; xs = np.arange(W)[None, :].astype(float); yy = np.arange(H)[:, None].astype(float)
+    lin = tot[y0r - 6:y0r + 1].any(0); xl = xr = 1262                # o trecho do tronco (a pata de baixo fica fora)
+    while lin[xl - 1]:
+        xl -= 1
+    while lin[xr + 1]:
+        xr += 1
+    xl, xr = float(xl), float(xr)
+    t = np.clip((yy - y0r) / (y1r - y0r), 0, 1)
+    meio = (xl + xr) / 2 + (RABO_PONTA_X - (xl + xr) / 2) * t ** 0.8 + 16 * np.sin(2.3 * math.pi * t) * t * (1 - t) * 4 * 0.5
+    larg = (xr - xl) / 2 * (1 - t) ** 1.35 + 2.5
+
+    def dente(fase, passo):
+        return np.abs(((yy + fase) / passo) % 2 - 1)
+    le = larg * (0.80 + 0.30 * dente(0, 15) + 0.12 * dente(5, 6.5)); ld = larg * (0.80 + 0.30 * dente(9, 13) + 0.12 * dente(2, 7.5))
+    u = (xs - meio) / np.where(xs < meio, le, ld)
+    rabo = (np.abs(u) <= 1) & (yy >= y0r) & (yy <= y1r)
+    fx, fw, fy, fh = RABO_FONTE
+    sx = np.clip(np.round(fx + u * fw), 0, W - 1).astype(int); sy = np.clip(np.round(fy - t * fh + 0 * xs), 0, H - 1).astype(int)
+    tinha = tot.copy(); tot[y0r:, :1445] &= rabo[y0r:, :1445]
+    novo = rabo & ~tot
+    cor_rabo = full[sy, sx]; ok = tinha[sy, sx]
+    full[novo & ok] = cor_rabo[novo & ok]
+    tot |= novo
+    C.remenda_vizinho(full, tot & ~(novo & ~ok), novo & ~ok)
+    info.update(rabo_px=int(novo.sum()), rabo_sem_fonte_px=int((novo & ~ok).sum()), rabo_larg_no_topo=[xl, xr])
     C.salva_rgba(f"{rec}/cavalo.png", full, tot)
     info.update(cavalo_bbox=C.caixa(tot), remendo_px=int(toco.sum()), fragmentos=frag, soltos_fora=len(gotas))
     # ---- o que sobrou (raios soltos do desenho): só referência para posicionar a camada procedural
@@ -147,7 +175,7 @@ def recortes(pasta):
                       f"{pasta}/p_recortes.png", (780, 0, 1670, 724), (H, W))
     # prévia dos ossos em cima do recorte (cor = família de peso)
     pv = Image.open(f"{pasta}/p_recortes.png").convert("RGB"); d = ImageDraw.Draw(pv)
-    cor = {"t": (255, 255, 0), "q": (255, 160, 0), "1": (0, 255, 120), "2": (0, 200, 255), "c": (120, 160, 255)}
+    cor = {"r": (255, 120, 255), "t": (255, 255, 0), "q": (255, 160, 0), "1": (0, 255, 120), "2": (0, 200, 255), "c": (120, 160, 255)}
     for nm, pai, h, t in OSSOS:
         d.line([(h[0] - 780, h[1]), (t[0] - 780, t[1])], fill=cor[familia(nm)], width=3)
         d.ellipse([h[0] - 784, h[1] - 4, h[0] - 776, h[1] + 4], outline=(255, 255, 255))
@@ -165,11 +193,12 @@ ANIM = {"dorso": (-3.0, 0.00, 0.0, 0.0), "pescoco": (-3.5, 0.07, 1.0, 0.4),
         "p2a": (-7.0, 0.54, 0.0, 0.0), "p2b": (-10.5, 0.62, 2.0, 3.4), "p2c": (-11.0, 0.71, 2.6, 4.0),
         "c1a": (2.5, 0.12, 0.6, 0.0), "c1b": (4.0, 0.22, 1.2, 0.5), "c1c": (6.0, 0.33, 2.0, 1.0), "c1d": (9.0, 0.45, 3.0, 1.5),
         "c2a": (2.5, 0.15, 0.6, 1.3), "c2b": (4.5, 0.26, 1.3, 1.8), "c2c": (6.5, 0.37, 2.2, 2.3), "c2d": (9.5, 0.49, 3.2, 2.8),
+        "r1": (3.0, 0.10, 0.8, 0.5), "r2": (5.0, 0.24, 1.5, 1.2), "r3": (8.0, 0.40, 2.4, 2.0),
         "c3a": (2.5, 0.18, 0.7, 2.6), "c3b": (4.5, 0.30, 1.4, 3.1), "c3c": (7.0, 0.41, 2.4, 3.6), "c3d": (10.0, 0.53, 3.4, 4.1)}
 # cabeça e queixo: o harmônico é o 3º (sacode a cabeça três vezes por ciclo, relinchando: o queixo abre e fecha)
 ANIM_CABECA = {"cabeca": (-5.0, 0.14, 3.2, 0.0), "queixo": (6.0, 0.22, 4.0, 1.2)}
 CENTRO = 0.0
-PROF = {"t": 0.0, "q": -0.5, "1": 1.5, "2": -1.5, "c": 1.0}       # quem cobre quem: a pata de baixo passa na frente
+PROF = {"t": 0.0, "q": -0.5, "1": 1.5, "2": -1.5, "c": 1.0, "r": -2.5}       # quem cobre quem: a pata de baixo passa na frente
 
 
 def _segs():
@@ -189,7 +218,9 @@ def pesos_por_familia(XZ, k=4, folga=1.5, pot=3):
             return g == "q" or nomes[j] in ("cabeca", "pescoco")
         if f == "c":
             return g in ("c", "t")
-        return g in ("t", "c") or nomes[j] in ("p1a", "p2a")       # tronco, pescoço e cabeça
+        if f == "r":
+            return g == "r" or nomes[j] == "dorso"
+        return g in ("t", "c") or nomes[j] in ("p1a", "p2a", "r1")  # tronco, pescoço e cabeça
     M = np.array([[pode(fam[perto[i]], j) for j in range(len(nomes))] for i in range(len(XZ))])
     D2 = np.where(M, D, 1e9)
     ordem = np.argsort(D2, axis=1, kind="stable")[:, :k]; lin = np.arange(len(XZ))[:, None]
@@ -227,7 +258,7 @@ def rig(pasta, so_pontos=False):
 
 
 CHICOTE = ["cav_raiz", "cav_dorso", "cav_pescoco", "cav_cabeca", "cav_queixo", "cav_p1a", "cav_p1b", "cav_p1c", "cav_p2a", "cav_p2b", "cav_p2c",
-           "cav_c1a", "cav_c1b", "cav_c1c", "cav_c1d", "cav_c2a", "cav_c2b", "cav_c2c", "cav_c2d", "cav_c3a", "cav_c3b", "cav_c3c", "cav_c3d"]
+           "cav_c1a", "cav_c1b", "cav_c1c", "cav_c1d", "cav_c2a", "cav_c2b", "cav_c2c", "cav_c2d", "cav_c3a", "cav_c3b", "cav_c3c", "cav_c3d", "cav_r1", "cav_r2", "cav_r3"]
 
 
 def chicote(pasta, mostra=True):
@@ -238,56 +269,98 @@ def chicote(pasta, mostra=True):
 
 
 # ============================================================================================================== 3. compor
-# raios soltos: cada um liga uma junta do cavalo (ponto que o Blender exporta, então a raiz do raio ANDA com ele) a um
-# ponto sorteado numa caixa da tela (x0, x1, y0, y1). Renasce a cada "per" quadros (divisor de NPART) com outro traçado.
+# raios soltos: cada um nasce numa junta do cavalo (ponto que o Blender exporta, então a raiz do raio ANDA com ele; a
+# cada renascimento sorteia uma das juntas de "a") e vai até um ponto sorteado numa caixa da tela (x0, x1, y0, y1).
+# g = porte: 2 = raio grande (miolo branco de 3 px na raiz, afinando até 1 px na ponta), 1 = médio, 0 = fio.
+# Todos renascem a cada 24 quadros com outro traçado; os nascimentos são escalonados (b), então há sempre raio aceso
+# dos dois lados, como no desenho, e nunca "um raio enorme / nada".
+PER_RAIO = 24
 RAIOS = [
-    dict(a="cav_c3d", cx=(98, 132, 148, 184), per=24, b=0),        # da crina de baixo ao chão: o raio grande da esquerda no desenho
-    dict(a="cav_p2c", cx=(224, 252, 150, 186), per=24, b=11),      # do casco de baixo ao chão: o raio da direita no desenho
-    dict(a="cav_c2d", cx=(60, 84, 96, 126), per=32, b=5),
-    dict(a="cav_p1c", cx=(266, 296, 12, 44), per=32, b=17),        # do casco de cima às faíscas do canto
-    dict(a="cav_c1d", cx=(58, 96, 6, 26), per=48, b=27),
-    dict(a="cav_cabeca", cx=(236, 268, 5, 22), per=48, b=38),
-    dict(a="cav_p2c", cx=(272, 300, 96, 140), per=48, b=2),
-    dict(a="cav_c3c", cx=(120, 150, 96, 132), per=32, b=24),
-    dict(a="cav_p1b", cx=(250, 285, 60, 96), per=48, b=20),
-    dict(a="cav_c2c", cx=(74, 110, 44, 70), per=48, b=44),
-    dict(a="cav_c3d", cx=(64, 92, 132, 168), per=48, b=33),
-    dict(a="cav_queixo", cx=(250, 280, 28, 54), per=96, b=64),
-    dict(a="cav_c1c", cx=(100, 150, 4, 14), per=96, b=14),
+    dict(g=2, a=("cav_c3d", "cav_c3c"), cx=(92, 128, 160, 188)),      # esquerda: da crina de baixo ao chão
+    dict(g=2, a=("cav_p2c", "cav_p2b"), cx=(226, 258, 160, 188)),     # direita: do casco de baixo ao chão
+    dict(g=2, a=("cav_c2d", "cav_c3d"), cx=(44, 78, 118, 160)),
+    dict(g=2, a=("cav_p1c", "cav_p2c"), cx=(286, 318, 96, 150)),
+    dict(g=2, a=("cav_c3c", "cav_c3b"), cx=(112, 146, 150, 186)),
+    dict(g=2, a=("cav_p2c",), cx=(250, 290, 150, 186)),
+    dict(g=1, a=("cav_c1d", "cav_c2d"), cx=(34, 70, 22, 60)),
+    dict(g=1, a=("cav_p1c",), cx=(288, 322, 14, 50)),
+    dict(g=1, a=("cav_c2d", "cav_c2c"), cx=(40, 76, 70, 110)),
+    dict(g=1, a=("cav_cabeca", "cav_queixo"), cx=(262, 300, 8, 40)),
+    dict(g=1, a=("cav_c3d",), cx=(60, 96, 126, 170)),
+    dict(g=1, a=("cav_p1b", "cav_p1c"), cx=(292, 326, 50, 92)),
+    dict(g=1, a=("cav_c1c", "cav_c1d"), cx=(70, 120, 6, 18)),
+    dict(g=1, a=("cav_p2b", "cav_p2c"), cx=(262, 300, 120, 170)),
+    dict(g=0, a=("cav_c1d",), cx=(40, 66, 40, 70)),
+    dict(g=0, a=("cav_queixo",), cx=(276, 306, 44, 70)),
+    dict(g=0, a=("cav_c2c", "cav_c1c"), cx=(86, 120, 60, 96)),
+    dict(g=0, a=("cav_p1c",), cx=(296, 330, 76, 112)),
+    dict(g=0, a=("cav_c3d",), cx=(52, 84, 140, 176)),
+    dict(g=0, a=("cav_p2c",), cx=(276, 312, 132, 176)),
 ]
-VIDA_RAIO = 7           # 0-2 aceso, 3 apagado (pisca), 4-6 refeito com outro traçado e morrendo
+for _i, _r in enumerate(RAIOS):       # grandes: um nasce a cada 4 quadros alternando de lado; os outros nos intervalos
+    _r["per"] = PER_RAIO
+    _r["b"] = (4 * _i) % PER_RAIO if _r["g"] == 2 else (2 + 5 * _i + (_i % 3)) % PER_RAIO
+    _r["vida"] = 9 if _r["g"] == 2 else 7
+# idade -> (de onde, até onde do traçado se desenha, porte a menos, aceso?, traçado refeito?, falhado?)
+# o raio CRESCE da raiz, acende, treme, baixa, reacende com o traçado refeito e some da raiz para a ponta
+FASES = {9: [(0.0, 0.50, 0, 1, 0, 0), (0.0, 1.0, 0, 1, 0, 0), (0.0, 1.0, 0, 1, 0, 0), (0.0, 1.0, 0, 0, 0, 0), (0.0, 1.0, 0, 1, 1, 0),
+             (0.0, 1.0, 1, 1, 1, 0), (0.15, 1.0, 2, 1, 1, 0), (0.40, 1.0, 2, 0, 1, 1), (0.65, 1.0, 2, 0, 1, 1)],
+         7: [(0.0, 0.60, 0, 1, 0, 0), (0.0, 1.0, 0, 1, 0, 0), (0.0, 1.0, 0, 0, 0, 0), (0.0, 1.0, 0, 1, 1, 0), (0.0, 1.0, 0, 1, 1, 0),
+             (0.30, 1.0, 2, 0, 1, 1), (0.60, 1.0, 2, 0, 1, 1)]}
 N_FAISCAS = 22
 FER_ESC = 1.4           # ferradura 1,4x o tamanho do conceito: com 11 px ela virava um anel ilegível
 
 
-def traco(p0, p1, rs_grosso, rs_fino, passo=13.0, amp=(0.08, 0.17)):
-    """Zigue-zague em dente de serra de p0 a p1: quinas vivas alternando de lado (rs_grosso decide o desenho do raio;
-    rs_fino treme cada quina 1-2 px: é o traçado que se refaz). Devolve a lista de pontos."""
+def traco(p0, p1, rs_grosso, rs_fino, passo=11.0, amp=(0.07, 0.17), treme=0.8):
+    """Traçado de raio de p0 a p1: trechos de tamanho DESIGUAL com quinas vivas, quase sempre alternando de lado, e o
+    desvio diminuindo para a ponta (rs_grosso decide o desenho; rs_fino treme cada quina: o raio rasteja)."""
     p0 = np.array(p0, float); p1 = np.array(p1, float); d = p1 - p0; comp = float(np.hypot(*d))
-    K = max(3, int(round(comp / passo))); nrm = np.array([-d[1], d[0]]) / max(comp, 1e-6)
+    K = max(2, int(round(comp / passo))); nrm = np.array([-d[1], d[0]]) / max(comp, 1e-6)
+    ts = np.cumsum(rs_grosso.uniform(0.45, 1.6, K)); ts = ts[:-1] / ts[-1]
     sn = 1.0 if rs_grosso.uniform() < 0.5 else -1.0; pts = [p0]
-    for i in range(1, K):
-        t = (i + rs_grosso.uniform(-0.28, 0.28)) / K
-        pts.append(p0 + d * t + nrm * sn * comp * rs_grosso.uniform(*amp) * (0.6 + 0.8 * math.sin(math.pi * t)) + rs_fino.uniform(-1.6, 1.6, 2))
-        sn = -sn
+    for t in ts:
+        des = min(comp * rs_grosso.uniform(*amp), 11.0) * (1.15 - 0.6 * t)
+        pts.append(p0 + d * t + nrm * sn * des + rs_fino.uniform(-treme, treme, 2))
+        if rs_grosso.uniform() < 0.82:
+            sn = -sn
     return pts + [p1]
 
 
-def farpas(pts, rs, tam=(2.5, 5.0)):
-    """Em cada quina o traço passa um pouco do ponto: a farpa que faz o raio parecer raio e não fio."""
-    out = []
-    for a, b in zip(pts, pts[1:-1]):
-        d = b - a; n = float(np.hypot(*d))
-        if n > 1:
-            out.append([b, b + d / n * rs.uniform(*tam)])
+def amostra(pts, passo=0.5):
+    """Pontos a cada `passo` px ao longo da polilinha, com s = fração do comprimento (0 na raiz, 1 na ponta)."""
+    pts = np.array(pts, float); seg = np.hypot(*np.diff(pts, axis=0).T); tot = max(float(seg.sum()), 1e-6)
+    out = []; ac = 0.0
+    for a, b, l in zip(pts, pts[1:], seg):
+        for u in np.arange(0, 1, passo / max(l, passo)):
+            out.append((a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u, (ac + l * u) / tot))
+        ac += l
+    out.append((pts[-1][0], pts[-1][1], 1.0))
     return out
 
 
-def risca(L, pts, largura, cor):
+def pinta_raio(M, pts, g, s0=0.0, s1=1.0, t0=0.0):
+    """Carimba o traçado nas três máscaras M = (casca, halo, miolo), AFINANDO da raiz para a ponta.
+    Só o trecho s0..s1 é desenhado (raio crescendo / sumindo); t0 = quão "ponta" o traçado já nasce (ramo)."""
     import cv2
-    m = np.zeros(L.shape, np.uint8)
-    cv2.polylines(m, [np.round(np.array(pts)).astype(np.int32)], False, 1, largura, cv2.LINE_8)
-    L[m > 0] = cor
+    for x, y, s in amostra(pts):
+        if s < s0 or s > s1:
+            continue
+        t = t0 + (1 - t0) * (s / max(s1, 1e-6))
+        c = (int(round(x)), int(round(y)))
+        if g >= 2:
+            if t < 0.38:
+                cv2.circle(M[0], c, 2, 1, -1)
+            cv2.circle(M[1], c, 1 if t < 0.86 else 0, 1, -1)
+            if t < 0.72:
+                cv2.circle(M[2], c, 1 if t < 0.20 else 0, 1, -1)
+        elif g == 1:
+            cv2.circle(M[1], c, 1 if t < 0.80 else 0, 1, -1)
+            if t < 0.50:
+                cv2.circle(M[2], c, 0, 1, -1)
+        else:
+            cv2.circle(M[1 if t < 0.6 else 0], c, 0, 1, -1)       # fio: esfria para a ponta
+            if t < 0.34:
+                cv2.circle(M[2], c, 0, 1, -1)
 
 
 def compor(pasta):
@@ -331,89 +404,111 @@ def compor(pasta):
     for f, a in enumerate(seco):
         c = a.copy(); n = ruido(f)
         C.cintila(c, n, 0.68, 0.30, sobe=2, desce=1, mask=c > ESC)
-        garanhao.append(C.linguas(c, n, RAMPA, alt=5, forca=0.05))
+        c = C.linguas(c, n, RAMPA, alt=5, forca=0.05)
+        c[TELA.pe[1] + 1:] = -1                                  # a ponta do rabo não passa do chão
+        garanhao.append(c)
 
-    # ---------- crateras de casco: brasa que pulsa (uma defasada da outra), raia que estica e encolhe, fagulha subindo
-    ch_idx = pal.encaixa(*C.reduz(C.conceito_para_4x(f"{rec}/chao.png", TELA), AMP))
+    # ---------- crateras de casco. O recorte do desenho reduzido 4x virava um salpicado; a cratera é redesenhada com a
+    # forma do conceito e leitura de pixel art: cova elíptica de borda escura, brasa em anéis que respira (uma cratera
+    # defasada da outra), lascas de raio saindo da borda para os lados e para cima, fagulha subindo
+    ROSA2 = pal.mais_proxima((252, 192, 214)); ROSA3 = pal.mais_proxima((251, 150, 183))
     xc = [TELA.conceito_para_jogo(x + info["DX"], 700)[0] for x in CASCOS]
-    meio = int(round((xc[0] + xc[1]) / 2)); xs_ = np.arange(CW)
+    YY, XX = TELA.grade(); CY = TELA.pe[1] - 5.0
     fag = C.semeia(rng, 30, dict(k=("int", 0, 2), ox=("uni", -24, 24), b=("int", 0, NPART), dx=("uni", -0.3, 0.3), v=("uni", 0.6, 1.3),
                                  vida=("int", 16, 30)))
     for s in fag:
         s["x"] = int(round(xc[s["k"]] + s["ox"]))
     fagulha = C.desenha_fagulha(FRIO, y0=185, chao_y=TELA.pe[1])
+    rl = np.random.default_rng(23)
+    LASCAS = [[dict(th=math.radians(th + rl.uniform(-6, 6)), comp=cp * rl.uniform(0.85, 1.2), ph=rl.uniform(0, 6.28), h=int(rl.choice([2, 3, 4])))
+               for th, cp in ((4, 17), (176, 17), (20, 15), (160, 15), (42, 14), (138, 14), (66, 12), (114, 12), (90, 9), (-6, 11), (186, 11))]
+              for _ in (0, 1)]
     crateras = []
     for f in range(NPART):
         w = 2 * math.pi * f / NPART
-        pulso = [math.sin(2 * w), math.sin(2 * w + 2.4)]
-        src = np.empty(CW, int)
-        for k in (0, 1):                                         # cada cratera estica em x a partir do próprio casco
-            lado = (xs_ < meio) if k == 0 else (xs_ >= meio)
-            src[lado] = np.round(xc[k] + (xs_[lado] - xc[k]) / (1 + 0.11 * pulso[k])).astype(int)
-        c = np.where((src >= 0) & (src < CW), ch_idx[:, np.clip(src, 0, CW - 1)], -1).astype(np.int16)
-        dy = np.round(1.1 * np.sin(3 * w + xs_ / 7.0) + 0.8 * np.sin(2 * w - xs_ / 4.5 + 1.0)).astype(int)
-        c = C.ondula_colunas(c, dy, base=4, y_corte=TELA.pe[1] + 1)
+        c = np.full((CH, CW), -1, np.int16)
+        n = campo.rola(R3, f, vy=1, vx=2) * 0.6 + campo.rola(R2, f, vy=-1, vx=-3) * 0.4
+        for k in (0, 1):
+            p_ = math.sin(2 * w + 2.4 * k); q = 0.5 + 0.5 * p_
+            rx, ry = 24.0 + 3.0 * p_, 4.3 + 0.6 * p_
+            ex = (XX - xc[k]) / rx; ey = (YY - CY) / ry
+            d = np.sqrt(ex * ex + ey * ey) * (1 + 0.34 * (n - 0.5))
+            for lim, cor in ((1.0, FUNDO), (0.84, MEDIO), (0.66, VIVO), (0.36 + 0.16 * q, ROSA3), (0.20 + 0.16 * q, ROSA), (0.04 + 0.18 * q, BR)):
+                c[d < lim] = cor
+            for ls in LASCAS[k]:                                 # lasca: triângulo fino que estica e encolhe, miolo claro
+                cs, sn = math.cos(ls["th"]), math.sin(ls["th"])
+                bx, by = xc[k] + 0.78 * rx * cs, CY - 0.78 * ry * sn
+                cp = ls["comp"] * (0.72 + 0.34 * math.sin(ls["h"] * w + ls["ph"]) + 0.16 * p_)
+                tx, ty = bx + cp * cs, by - cp * sn * 0.8
+                tx += 1.2 * math.sin(3 * w + ls["ph"]); px_, py_ = -sn * 1.5, -cs * 0.9
+                m = np.zeros((CH, CW), np.uint8)
+                cv2.fillPoly(m, [np.round(np.array([[bx + px_, by + py_], [bx - px_, by - py_], [tx, ty]])).astype(np.int32)], 1)
+                cv2.line(m, (int(round(bx)), int(round(by))), (int(round(tx)), int(round(ty))), 1, 1)
+                c[(m > 0) & (c < VIVO)] = VIVO
+                m2 = np.zeros((CH, CW), np.uint8)
+                cv2.line(m2, (int(round(bx)), int(round(by))), (int(round(bx + 0.55 * (tx - bx))), int(round(by + 0.55 * (ty - by)))), 1, 1)
+                c[(m2 > 0) & (c <= VIVO)] = ROSA if q > 0.35 else ROSA3
+        c[TELA.pe[1] + 1:] = -1
         c = C.contorno(c, ESC)
-        for k in (0, 1):                                         # a brasa inteira clareia e escurece com o pulso
-            lado = ((xs_ < meio) if k == 0 else (xs_ >= meio))[None, :] & (c > ESC)
-            grau = 2 if pulso[k] > 0.75 else 1 if pulso[k] > 0.25 else -1 if pulso[k] < -0.45 else 0
-            c[lado] = np.clip(c[lado] + grau, 1, 14)
-        n = campo.rola(R3, f, vy=3, vx=2) * 0.6 + campo.rola(R2, f, vy=2, vx=-1) * 0.4
-        C.cintila(c, n, 0.62, 0.36, sobe=2, desce=1, mask=c > ESC)
-        c = C.linguas(c, n, RAMPA, alt=4, forca=0.10)
         C.emite(c, f, NPART, fag, fagulha)
         crateras.append(c)
 
-    # ---------- raios soltos: zigue-zague que pisca e se refaz
+    # ---------- raios soltos: muitos, finos, ramificados, dos dois lados; crescem da raiz, tremem, reacendem com o
+    # traçado refeito e somem para a ponta. Sem contorno escuro (como no desenho: miolo branco, casca carmesim)
     def ponta(nome, f):
         return np.array(pontos[f % N][nome][:2], float)
+    Y_TOPO = 5; LIM0 = (4, Y_TOPO); LIM1 = (CW - 5, TELA.pe[1] - 1)
 
     def raio(L, sd, a, f, i):
-        k = ((f - sd["b"]) % NPART) // sd["per"]                # encarnação: cada renascimento tem outro traçado
+        k = ((f - sd["b"]) % NPART) // sd["per"]                # encarnação: cada renascimento tem outro traçado e outra junta
+        s0, s1, menos, aceso, v, falha = FASES[sd["vida"]][a]
         rg = np.random.default_rng([91, i, k])
         x0, x1, y0, y1 = sd["cx"]; fim = np.array([rg.uniform(x0, x1), rg.uniform(y0, y1)])
-        ini = ponta(sd["a"], f)
-        if a == 3:
-            return False                                        # pisca
-        v = 0 if a < 3 else 1                                   # depois de piscar, o miúdo do traçado é outro
-        comp = float(np.hypot(*(fim - ini)))
-        pts = traco(ini, fim, np.random.default_rng([92, i, k]), np.random.default_rng([93, i, k, v, a]))
-        pts = [np.clip(p, (2, 2), (CW - 3, TELA.pe[1] - 1)) for p in pts]
-        rr = np.random.default_rng([94, i, k, v])
-        fp = farpas(pts, rr)
-        ram = []                                                # um ou dois ramos saindo de quinas do traçado
-        for _ in range(1 + (comp > 70)):
-            j = int(rr.integers(1, len(pts) - 1)); d = pts[j] - pts[j - 1]; ang = rr.uniform(0.5, 1.0) * rr.choice([-1, 1])
+        ini = ponta(sd["a"][int(rg.integers(0, len(sd["a"])))], f)
+        g = sd["g"]; comp = float(np.hypot(*(fim - ini)))
+        if g == 0 and comp > 26:                                # fio é curto: comprido ele vira arame
+            fim = ini + (fim - ini) * 26 / comp; comp = 26.0
+        pts = traco(ini, fim, np.random.default_rng([92, i, k]), np.random.default_rng([93, i, k, a]), treme=0.8 + 1.4 * v)
+        pts = [np.clip(p_, LIM0, LIM1) for p_ in pts]
+        rr = np.random.default_rng([94, i, k]); rj = np.random.default_rng([96, i, k, a])
+        cum = np.concatenate([[0], np.cumsum([np.hypot(*(b_ - a_)) for a_, b_ in zip(pts, pts[1:])])]); cum = cum / max(cum[-1], 1e-6)
+        ramos = []                                              # ramo: segue reto por onde o raio vinha quando ele quebra
+        quinas = list(rr.permutation(np.arange(1, len(pts) - 1)))[:(1, 2, 3)[g]]
+        for j in quinas:
+            d = pts[j] - pts[j - 1]; d = d / max(float(np.hypot(*d)), 1e-6); ang = rr.uniform(0.12, 0.55) * rr.choice([-1, 1])
             d = np.array([d[0] * math.cos(ang) - d[1] * math.sin(ang), d[0] * math.sin(ang) + d[1] * math.cos(ang)])
-            fimr = np.clip(pts[j] + d * rr.uniform(1.0, 1.8), (2, 2), (CW - 3, TELA.pe[1] - 1))
-            ram.append(traco(pts[j], fimr, rr, rr, passo=7.0, amp=(0.12, 0.22)))
-        T = np.full(L.shape, -1, np.int16)
-        if a in (0, 1, 4):                                      # aceso: carmesim com miolo branco, farpas e contorno escuro
-            risca(T, pts, 3, VIVO)
-            for r_ in ram + fp:
-                risca(T, r_, 1, VIVO)
-            risca(T, pts, 1, BR)
-            if a != 1:
-                for r_ in ram:
-                    risca(T, r_[:2], 1, ROSA)
-            borda = ndi.binary_dilation(T >= 0, structure=np.ones((3, 3))) & (T < 0)
-            T[borda] = ESC
-        elif a == 2:
-            risca(T, pts, 3, MEDIO); risca(T, pts, 1, ROSA)
-            for r_ in ram + fp:
-                risca(T, r_, 1, MEDIO)
-        elif a == 5:
-            risca(T, pts, 3, FUNDO); risca(T, pts, 1, VIVO)
-            for r_ in fp:
-                risca(T, r_, 1, FUNDO)
-        else:                                                   # 6: resto fino, falhado
-            risca(T, pts, 1, MEDIO)
-            T[R2[(np.arange(CH)[:, None] + 3 * i) % 96, (np.arange(CW)[None, :] + 5 * f) % 96] < 0.45] = -1
+            cr = max(5.0, comp * rr.uniform(0.22, 0.45) * (1 - 0.5 * cum[j]) * (1.0 if g == 2 else 0.6))
+            fr = np.clip(pts[j] + d * cr, LIM0, LIM1)
+            ramos.append((cum[j], traco(pts[j], fr, rr, rj, passo=7.0, amp=(0.10, 0.22), treme=0.7)))
+            if g == 2 and cr > 14:                              # raminho do ramo
+                rp = ramos[-1][1]; q_ = rp[len(rp) // 2]; d2 = np.array([d[1], -d[0]]) * rr.choice([-1, 1]) * 0.8 + d * 0.6
+                ramos.append((cum[j] + 0.01, [q_, np.clip(q_ + d2 * rr.uniform(4, 8), LIM0, LIM1)]))
+        M = [np.zeros((CH, CW), np.uint8) for _ in range(3)]
+        ge = max(g - menos, 0)
+        pinta_raio(M, pts, ge, s0, s1)
+        for sf, rp in ramos:
+            if s0 <= sf <= s1:
+                pinta_raio(M, rp, max(ge - 1, 0), 0.0, 1.0 if s1 >= 1 else 0.5, t0=max(sf, 0.45))
+        if aceso and s1 >= 1 and fim[1] > TELA.pe[1] - 9 and g >= 1:     # bateu no chão: estilhaço
+            for dx_, dy_ in ((-5, -2), (5, -2), (-2, -5), (3, -4)):
+                e = fim + np.array([dx_, dy_]) * rj.uniform(0.6, 1.2)
+                cv2.line(M[1], (int(fim[0]), int(fim[1])), (int(e[0]), int(e[1])), 1, 1)
+            cv2.circle(M[2], (int(fim[0]), int(fim[1])), 1, 1, -1)
+        if falha:                                               # resto: fio falhado pelo ruído
+            buraco = R2[(YY + 3 * i) % 96, (XX + 5 * f) % 96] < 0.42
+            for m_ in M:
+                m_[buraco] = 0
+        casca, halo, miolo = (FUNDO, MEDIO, ROSA3) if not aceso else (MEDIO, VIVO, BR)
+        if aceso and ge == 0:
+            miolo = ROSA
+        T = np.full((CH, CW), -1, np.int16)
+        T[M[0] > 0] = casca; T[M[1] > 0] = halo; T[M[2] > 0] = miolo
+        T[:Y_TOPO - 2] = -1
         L[T >= 0] = T[T >= 0]
-        return True
+        return bool((T >= 0).any())
 
     fs_sem = C.semeia(rng, N_FAISCAS, dict(b=("int", 0, NPART), per=lambda i, r: int(r.choice([24, 32, 48])), dx=("uni", -0.4, 0.4)))
-    ZONAS = [(60, 130, 20, 180), (228, 300, 8, 185), (130, 228, 4, 30), (96, 150, 110, 186), (215, 262, 100, 186)]
+    ZONAS = [(60, 130, 22, 180), (228, 300, 16, 185), (130, 228, 14, 32), (96, 150, 110, 186), (215, 262, 100, 186)]
 
     def faisca(L, sd, a, f, i):
         k = ((f - sd["b"]) % NPART) // sd["per"]
@@ -430,10 +525,11 @@ def compor(pasta):
     raios = []; viv = []
     for f in range(NPART):
         L = np.full((CH, CW), -1, np.int16)
+        viv.append(C.emite(L, f, NPART, RAIOS, raio))
         C.emite(L, f, NPART, fs_sem, faisca, vida=9)
-        viv.append(C.emite(L, f, NPART, RAIOS, raio, vida=VIDA_RAIO))
         raios.append(L)
-    print("RAIOS vivos por quadro:", min(viv), "a", max(viv))
+    print("RAIOS vivos por quadro:", min(viv), "a", max(viv), "| px por quadro:", min(int((r >= 0).sum()) for r in raios), "a",
+          max(int((r >= 0).sum()) for r in raios))
 
     # ---------- ferraduras-faísca: flutuam, giram como moeda (achatam em x), balançam e soltam brilho e rastro
     fer = []
@@ -477,38 +573,43 @@ def compor(pasta):
                     C.ponto(L, bx + t, by, BR if t == 0 else ROSA); C.ponto(L, bx, by + t, BR if t == 0 else ROSA)
         ferraduras.append(L)
 
-    # ---------- vapor do nariz (À FRENTE do corpo): dois jatos por laço, baforadas que crescem, sobem e se desfazem
+    # ---------- vapor do nariz (À FRENTE do corpo): dois bufos fortes por laço e um fio de respiração entre eles.
+    # Cada baforada é um gomo sombreado (claro em cima, rosa embaixo); juntas formam um penacho que abre e se desfaz
     nxg, nyg = TELA.conceito_para_jogo(*NARINA)
     vap = []
     for j in (0, 1):
-        for q in range(11):
-            vap.append(dict(b=int(48 * j + q * 1.4 + rng.integers(0, 2)), ang=rng.uniform(0.02, 0.38), v0=rng.uniform(1.7, 2.3),
-                            vida=int(rng.integers(15, 22)), cr=rng.uniform(0.20, 0.27), ph=rng.uniform(0, 6.28)))
+        for q in range(12):
+            vap.append(dict(b=int(48 * j + q * 1.5 + rng.integers(0, 2)), ang=rng.uniform(-0.10, 0.42), v0=rng.uniform(1.7, 2.5),
+                            vida=int(rng.integers(16, 24)), cr=rng.uniform(0.17, 0.25), ph=rng.uniform(0, 6.28)))
         for q in range(7):
-            vap.append(dict(b=int(48 * j + 17 + q * 4.4 + rng.integers(0, 3)), ang=rng.uniform(0.0, 0.5), v0=rng.uniform(0.9, 1.4),
-                            vida=int(rng.integers(12, 17)), cr=rng.uniform(0.13, 0.18), ph=rng.uniform(0, 6.28)))
-    YY, XX = TELA.grade()
+            vap.append(dict(b=int(48 * j + 19 + q * 4.2 + rng.integers(0, 3)), ang=rng.uniform(0.0, 0.5), v0=rng.uniform(0.8, 1.3),
+                            vida=int(rng.integers(13, 18)), cr=rng.uniform(0.11, 0.16), ph=rng.uniform(0, 6.28)))
 
     def baforada(L, sd, a, f, i):
-        dist = sd["v0"] * 6.0 * (1 - math.exp(-a / 6.0))
+        dist = sd["v0"] * 8.5 * (1 - math.exp(-a / 7.0))
         x = nxg + 2 + math.cos(sd["ang"]) * dist + 0.6 * math.sin(0.5 * a + sd["ph"])
-        y = nyg + 1 + math.sin(sd["ang"]) * dist - 0.018 * a * a
-        r = 1.3 + sd["cr"] * a
-        d2 = (XX - x) ** 2 + ((YY - y) * 1.15) ** 2
-        m = d2 <= r * r
+        y = nyg + 1 + math.sin(sd["ang"]) * dist - 0.016 * a * a
+        r = 1.2 + sd["cr"] * a
+        m = (XX - x) ** 2 + ((YY - y) * 1.12) ** 2 <= r * r
         fim = sd["vida"] - a
-        if fim < 6:                                              # desfaz comida pelo ruído
-            m &= R1[(YY + 2 * f) % 96, (XX + 7 * i) % 96] > (6 - fim) / 6.5
-        L[m] = BR
-        L[m & ((YY - y) > 0.35 * r) & ((XX - x) < 0.5 * r)] = ROSA          # sombra embaixo da bola
+        if fim < 7:                                              # desfaz comida pelo ruído
+            m &= R1[(YY + 2 * f) % 96, (XX + 7 * i) % 96] > (7 - fim) / 7.5
+        luz = ((XX - x) * 0.4 + (YY - y)) / r                    # luz de cima e da esquerda
+        L[m] = BR if fim >= 4 else ROSA2
+        L[m & (luz > 0.18)] = ROSA2 if fim >= 4 else ROSA3
+        L[m & (luz > 0.62)] = ROSA3
         return bool(m.any())
 
     vapor = []; vv = []
     for f in range(NPART):
         L = np.full((CH, CW), -1, np.int16)
         vv.append(C.emite(L, f, NPART, vap, baforada))
-        vapor.append(C.contorno(L, FUNDO))
-    print("VAPOR baforadas por quadro:", min(vv), "a", max(vv))
+        m = L >= 0; b = np.zeros_like(m)                         # contorno por FORA, embaixo e dos lados (em cima fica livre)
+        b[1:] |= m[:-1]; b[:, 1:] |= m[:, :-1]; b[:, :-1] |= m[:, 1:]
+        L[b & ~m] = FUNDO
+        vapor.append(L)
+    print("VAPOR baforadas por quadro:", min(vv), "a", max(vv), "| px:", min(int((v >= 0).sum()) for v in vapor), "a",
+          max(int((v >= 0).sum()) for v in vapor))
 
     # ---------- saída: camadas NA ORDEM DE DESENHO
     CAM = {"crateras": crateras, "garanhao": garanhao, "raios": raios, "ferraduras": ferraduras, "vapor": vapor}
@@ -558,6 +659,9 @@ def compor(pasta):
     med["largura_do_cavalo_sobre_altura_do_corpo"] = [round(min(larg) / hc, 2), round(max(larg) / hc, 2)]
     sil = np.stack(A0); med["garanhao_pixels_sempre_opacos_frac"] = round(float(sil.all(0).sum() / sil.any(0).sum()), 3)
     med["raios_vivos_min_max"] = [min(viv), max(viv)]; med["baforadas_min_max"] = [min(vv), max(vv)]
+    med["raios_px_min_max"] = [min(int((r >= 0).sum()) for r in raios), max(int((r >= 0).sum()) for r in raios)]
+    med["vapor_px_min_max"] = [min(int((v >= 0).sum()) for v in vapor), max(int((v >= 0).sum()) for v in vapor)]
+    med["y_min_por_camada"] = {nm: int(min(np.where((q >= 0).any(1))[0].min() for q in lst if (q >= 0).any())) for nm, lst in CAM.items()}
     med["quadros_sem_raio_nem_faisca"] = int(sum(not (r >= 0).any() for r in raios))
     med["escala_px_jogo_por_px_conceito"] = round(TELA.escala, 4); med["reducao_para_caber"] = "nenhuma"; med["ferradura_ampliada"] = FER_ESC
     med["tempo_render_blender_s"] = round(PT["tempo_render"], 1)

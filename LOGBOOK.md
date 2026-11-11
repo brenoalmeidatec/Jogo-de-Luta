@@ -936,3 +936,9 @@ a ~150 / ~200 px está bom?; (6) a Estatueta do tamanho da mão (~15 px) ou maio
 - **Pendente:** ligar no motor (nada visto no jogo; vídeo não assistido, só tiras). O leque virou círculo de raio 392 px
   do conceito (lá ele tem 925 de largura por ~785 de altura e é aberto embaixo). Duas cores da paleta são quase iguais
   (o contorno pintado nos recortes entrou no k-médias). O quadro 52 quase não tem raio.
+
+## 2026-11-11 (auras: frente PARADA de propósito às 16h)
+
+O Alisson pediu para parar os trabalhos para trocar o modelo de raciocínio do Claude. Auras pelo Blender: base comum (comum.py), asa do Hazak e as auras de Gutto, Raiclaven, CK e Pengaró foram feitas (camadas em sprites/<id>/aura/) e o cético conferiu; os quatro retoques estavam no meio (os quatro *_aura.py alterados, sem render novo). Falta: terminar os retoques, o fecho no docs/arcade/aura_blender.md, ligar no jogo pelo aura.py da branch efeitos.
+Último commit feito por um agente que terminou a etapa dele: `3e1c429`. O commit seguinte a esta entrada guarda o que estava
+pela metade na hora da parada (**não testado, pode estar quebrado**); para voltar ao estado bom, use `3e1c429`.

@@ -41,6 +41,7 @@ MIOLO = {"cem": ("dm", (990, 200, 1187, 372)), "ceb": ("db", (990, 372, 1187, 58
          "cdm": ("em", (1187, 200, 1384, 372)), "cdb": ("eb", (1187, 372, 1384, 585)),
          "ccp": ("ep", (1131, 120, 1249, 204))}          # atrás da cabeça: mais uma caixa pequena
 CAIXA_EP = (887, 130, 992, 212)
+GIRO_MIOLO = {"cem": 140.0, "ceb": -105.0, "cdm": 75.0, "cdb": 160.0, "ccp": -60.0}      # giro do cone de cada cópia (graus)
 # braços de fumaça do conceito que saíam para fora da parede (eram os anéis parados): saem, os anéis são camada própria
 BRACOS = [(666, 285, 792, 500), (1583, 268, 1696, 520)]
 # cacos de vidro e tampinhas no chão: caixas no conceito (x0, y0, x1, y1)
@@ -74,16 +75,40 @@ def _acha_centro(L, ok, c0, R, busca=8):
     return melhor[1]
 
 
-def _cone_redondo(rgb, ok, c, R):
-    """Refaz o cone pela simetria dele: em cada raio, a cor mediana ao longo do círculo (some o que passava por cima:
-    os rabos de fumaça do conceito). Devolve a máscara do disco refeito."""
+def _cone_limpo(rgb, L, ok, c, R):
+    """Limpa o cone SEM alisar: só o que passava por cima dele no conceito (rabo claro de fumaça, corpo, fagulha) é
+    trocado, e por outro pedaço do MESMO cone no mesmo raio (espelhado ou girado em volta do centro), que traz a
+    pincelada junto. A mediana por raio fica só para o que nenhum giro alcança (o miolo, de onde os rabos saíam).
+    Devolve a máscara do disco e a fração dele que precisou de mediana."""
+    from scipy import ndimage as ndi
     Rm = int(R * 1.04); raios = np.arange(0, Rm + 2, 1.0)
-    ys, xs = _polar(c, raios, 180)
-    v = np.where(ok[ys, xs][..., None], rgb[ys, xs].astype(np.float32), np.nan)
-    perfil = np.nanmedian(v, 1)
-    H, W = ok.shape; yy, xx = np.mgrid[0:H, 0:W]; r = np.hypot(xx - c[0], yy - c[1]); d = r <= Rm
-    rgb[d] = np.clip(perfil[np.round(r[d]).astype(int)], 0, 255).astype(np.uint8)
-    return d
+    ys, xs = _polar(c, raios, 180); okp = ok[ys, xs]
+    with np.errstate(all="ignore"):
+        import warnings
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            perfil = np.nanmedian(np.where(okp[..., None], rgb[ys, xs].astype(np.float32), np.nan), 1)
+            Lm = np.nanmedian(np.where(okp, L[ys, xs], np.nan), 1)
+    tem = np.nonzero(~np.isnan(Lm))[0]
+    for i in np.nonzero(np.isnan(Lm))[0]:                           # raio sem nenhum pixel bom: o raio bom mais perto
+        j = tem[np.argmin(np.abs(tem - i))]; perfil[i] = perfil[j]; Lm[i] = Lm[j]
+    H, W = ok.shape; yy, xx = np.mgrid[0:H, 0:W]; dx, dy = xx - c[0], yy - c[1]; r = np.hypot(dx, dy); d = r <= Rm
+    ri = np.clip(np.round(r).astype(int), 0, len(raios) - 1)
+    ruim = d & (~ok | (L > Lm[ri] + 20))
+    ruim = ndi.binary_dilation(ndi.binary_opening(ruim, iterations=1) | (d & ~ok), iterations=3) & d
+    bom = d & ~ruim; src = rgb.copy(); falta = ruim.copy(); ang = np.arctan2(dy, dx)
+    pi = np.pi
+    for T in (lambda a: pi - a, lambda a: -a, lambda a: a + pi, lambda a: a + pi / 2, lambda a: a - pi / 2,
+              lambda a: a + pi / 4, lambda a: a - pi / 4, lambda a: a + 3 * pi / 4, lambda a: a - 3 * pi / 4):
+        fy_, fx_ = np.nonzero(falta)
+        if not len(fy_):
+            break
+        a2 = T(ang[fy_, fx_]); rr = r[fy_, fx_]
+        sx = np.round(c[0] + rr * np.cos(a2)).astype(int); sy = np.round(c[1] + rr * np.sin(a2)).astype(int)
+        serve = (sx >= 0) & (sx < W) & (sy >= 0) & (sy < H); serve[serve] = bom[sy[serve], sx[serve]]
+        rgb[fy_[serve], fx_[serve]] = src[sy[serve], sx[serve]]; falta[fy_[serve], fx_[serve]] = False
+    rgb[falta] = np.clip(perfil[ri[falta]], 0, 255).astype(np.uint8)
+    return d, float(ruim.sum()) / d.sum(), float(falta.sum()) / d.sum()
 
 
 def recortes(pasta):
@@ -102,7 +127,7 @@ def recortes(pasta):
     aura &= ~C.derrame_de_borda(aura, im)
     rgb = im.copy(); R_, G_, B_ = C.canais(im); L = _lum(im)
     yy, xx = np.mgrid[0:H, 0:W]
-    info = dict(dx=dx, dy=dy, nota=nota, cones={}, cacos={})
+    info = dict(dx=dx, dy=dy, nota=nota, cones={}, cacos={}, cones_remendo={})
 
     # (a) fagulhas laranja do desenho: saem (viram partícula) e o lugar é fechado com o vizinho
     lar = aura & (R_ > 170) & (R_ - G_ > 45) & (B_ < 110)
@@ -135,7 +160,9 @@ def recortes(pasta):
     print("cones", cones)
     feito = np.zeros_like(aura)
     for nome, (x, y, R) in cones.items():
-        feito |= _cone_redondo(rgb, ok, (x, y), R)
+        d_, trocado, mediana = _cone_limpo(rgb, L, ok, (x, y), R); feito |= d_
+        info["cones_remendo"][nome] = dict(trocado=round(trocado, 3), mediana=round(mediana, 3))
+    print("cones: fração trocada / por mediana", info["cones_remendo"])
     # (e) painel das caixas grandes: o que é claro dentro do painel escuro é rabo de fumaça do conceito -> vizinho
     for nome, (cxa, c0, R) in GRANDES.items():
         x0, y0, x1, y1 = cxa; dentro = np.zeros_like(aura); dentro[y0 + 20:y1 - 20, x0 + 20:x1 - 20] = True
@@ -147,10 +174,16 @@ def recortes(pasta):
     miolo = np.zeros_like(aura)
     for nome, (fonte, (x0, y0, x1, y1)) in MIOLO.items():
         sx0, sy0, sx1, sy1 = GRANDES[fonte][0] if fonte in GRANDES else CAIXA_EP
-        rgb[y0:y1, x0:x1] = cv2.resize(rgb[sy0:sy1, sx0:sx1], (x1 - x0, y1 - y0), interpolation=cv2.INTER_NEAREST)
-        miolo[y0:y1, x0:x1] = True
+        # a cópia não fica igual à fonte: a caixa vai ESPELHADA e o cone (que é redondo) vai GIRADO em volta do centro
         fx, fy, fr = cones[fonte]; kx, ky = (x1 - x0) / (sx1 - sx0), (y1 - y0) / (sy1 - sy0)
-        cones[nome] = (x0 + (fx - sx0) * kx, y0 + (fy - sy0) * ky, fr * min(kx, ky))
+        pat = rgb[sy0:sy1, sx0:sx1].copy(); ph, pw = pat.shape[:2]
+        gir = cv2.warpAffine(pat, cv2.getRotationMatrix2D((float(fx - sx0), float(fy - sy0)), GIRO_MIOLO[nome], 1.0), (pw, ph),
+                             flags=cv2.INTER_NEAREST, borderMode=cv2.BORDER_REFLECT)
+        py_, px_ = np.mgrid[0:ph, 0:pw]; disco = np.hypot(px_ - (fx - sx0), py_ - (fy - sy0)) <= fr * 0.93
+        pat[disco] = gir[disco]; pat = pat[:, ::-1]; fxe = (pw - 1) - (fx - sx0)
+        rgb[y0:y1, x0:x1] = cv2.resize(np.ascontiguousarray(pat), (x1 - x0, y1 - y0), interpolation=cv2.INTER_NEAREST)
+        miolo[y0:y1, x0:x1] = True
+        cones[nome] = (x0 + fxe * kx, y0 + (fy - sy0) * ky, fr * min(kx, ky))
     # (g) o resto do buraco do corpo (cabeça em cima, pernas e pés embaixo) e os furos de fagulha/caco: vizinho
     alvo = (cna | lar | pecas_d) & ~miolo & ~feito
     base = alvo & (yy > 585) & (yy < 690) & (xx > 1010) & (xx < 1350)      # a base de fumaça passa por trás dos pés
@@ -179,10 +212,16 @@ def recortes(pasta):
         r = np.hypot(xx - x, yy - y) / R
         borda = np.clip(1 - np.abs(r - 0.96) / 0.10, 0, 1)                  # aro escuro
         f *= (1 - 0.55 * borda)[..., None]
-        domo = np.clip(1 - r / 0.30, 0, 1) ** 0.6                           # miolo claro
-        f += (np.array([226, 232, 190], np.float32) - f) * (0.80 * domo)[..., None]
-        meio = np.clip(1 - np.abs(r - 0.62) / 0.07, 0, 1)                   # um friso claro no meio do cone
-        f += (np.array([170, 178, 140], np.float32) - f) * (0.45 * meio)[..., None]
+        # miolo (a calota): uma meia-bola com luz de cima-esquerda e sombra embaixo à direita, não um disco de uma cor só
+        u, v = (xx - x) / (0.30 * R), (yy - y) / (0.30 * R); rd = np.hypot(u, v)
+        domo = np.clip((1 - rd) / 0.18, 0, 1)
+        luzd = np.clip(0.52 - 0.50 * (u + v) / 1.414 - 0.25 * rd * rd, 0, 1)             # 1 = virado para a luz
+        brilho = np.clip(1 - np.hypot(u + 0.34, v + 0.34) / 0.36, 0, 1)                  # o ponto de brilho
+        cor = (np.array([58, 68, 46], np.float32)[None, None] * (1 - luzd[..., None]) + np.array([206, 212, 168], np.float32)[None, None] * luzd[..., None])
+        cor += (np.array([236, 240, 204], np.float32) - cor) * brilho[..., None]
+        f += (cor - f) * (0.88 * domo)[..., None]
+        meio = np.clip(1 - np.abs(r - 0.62) / 0.07, 0, 1)                   # um friso claro no meio do cone (fraco: a pincelada manda)
+        f += (np.array([170, 178, 140], np.float32) - f) * (0.22 * meio)[..., None]
         luz = np.clip((-(xx - x) - (yy - y)) / (1.4 * R), -1, 1) * ((r > 0.3) & (r < 0.9))   # luz de cima-esquerda
         f *= (1 + 0.16 * luz)[..., None]
     rgb = np.clip(f, 0, 255).astype(np.uint8)
@@ -202,30 +241,32 @@ COL_X = [735, 880, 1030, 1185, 1340, 1490, 1640]                   # colunas de 
 COL_Y = [668, 520, 380, 240, 130, 42]                              # juntas de baixo para cima: a, b, c, d (topo), e (ponta)
 COL_N = "abcde"
 #          amplitude (graus), atraso (fração do ciclo), 2º harmônico, fase dele: embaixo pouco e cedo, em cima muito e tarde
-COL_ANIM = {"a": (0.22, 0.00, 0.0, 0.0), "b": (0.45, 0.05, 0.10, 0.4), "c": (0.85, 0.11, 0.30, 0.9),
-            "d": (2.2, 0.20, 1.0, 1.5), "e": (9.0, 0.32, 3.2, 2.2)}
+COL_ANIM = {"a": (0.55, 0.00, 0.0, 0.0), "b": (1.10, 0.05, 0.25, 0.4), "c": (1.90, 0.11, 0.70, 0.9),
+            "d": (4.0, 0.20, 1.8, 1.5), "e": (11.0, 0.32, 4.0, 2.2)}
+ESTICA = 0.020                                                     # cada pilha de caixas estica/achata no grave (fração da altura)
 COL_FASE = 5.0                                                     # quadros de atraso de uma coluna para a vizinha (onda de lado)
 TEMPOS = [1.00, 0.62, 0.78, 0.62]                                  # força de cada um dos 4 tempos (o 1º bate mais forte)
 #       cone: (quanto incha, atraso em quadros, contratempo?)
 BATE = {"eb": (0.30, 0, False), "db": (0.30, 0, False), "ceb": (0.28, 1, False), "cdb": (0.28, 1, False),
         "em": (0.24, 1, False), "dm": (0.24, 1, False), "cem": (0.22, 2, False), "cdm": (0.22, 2, False),
         "ep": (0.24, 0, True), "dp": (0.24, 0, True), "cep": (0.22, 1, True), "cdp": (0.22, 1, True), "ccp": (0.20, 2, True)}
-TREMOR = [dict(eixo="X", raio=9.0, fase=0.0, forca=4.5), dict(eixo="Z", raio=11.0, fase=2.1, forca=5.5)]
+TREMOR = [dict(eixo="X", raio=14.0, fase=0.0, forca=8.0), dict(eixo="Z", raio=17.0, fase=2.1, forca=9.5)]
 MIOLO_RET = (787, 115, 1580, 585)                                  # retângulo das caixas: lá dentro o tremor é fraco
 
 
-def golpe(d, tau=3.2, per=9.0):
+def golpe(d, tau=3.2, per=9.0, ataque=0.0):
     """Resposta de um cone a uma batida, d quadros depois dela: vai para frente de uma vez, volta passando do ponto e
-    assenta."""
-    return math.exp(-d / tau) * math.cos(2 * math.pi * d / per)
+    assenta. Com `ataque` (quadros) a subida não é de um quadro só (coisa pesada: a pilha de caixas)."""
+    g = math.exp(-d / tau) * math.cos(2 * math.pi * d / per)
+    return g * min(1.0, (d + 0.5) / ataque) if ataque else g
 
 
-def batida(f, atraso=0.0, contratempo=False, tau=3.2, per=9.0):
+def batida(f, atraso=0.0, contratempo=False, tau=3.2, per=9.0, ataque=0.0):
     """Soma das 4 batidas do compasso no quadro f (laço de N quadros). No contratempo bate no meio de cada tempo, igual."""
     t = 0.0
     for b in range(4):
         d = (f - F0 - b * NB - atraso - (NB / 2 if contratempo else 0)) % N
-        t += (0.8 if contratempo else TEMPOS[b]) * golpe(d, tau, per)
+        t += (0.8 if contratempo else TEMPOS[b]) * golpe(d, tau, per, ataque)
     return t
 
 
@@ -282,7 +323,7 @@ def rig(pasta, so_pontos=False):
     # tremor: fumaça solta (fora das caixas) treme inteira; caixa treme pouco; cone não treme
     x0, y0, x1, y1 = MIOLO_RET
     fora = np.maximum.reduce([x0 - P[:, 0], P[:, 0] - x1, y0 - P[:, 1], P[:, 1] - y1, np.zeros(len(P))])
-    wt = (0.28 + 0.72 * np.clip(fora / 45.0, 0, 1)) * resto
+    wt = (0.34 + 0.66 * np.clip(fora / 45.0, 0, 1)) * resto
     gt = ob.vertex_groups.new(name="tremor")
     for i in range(len(P)):
         gt.add([i], float(wt[i]), "REPLACE")
@@ -297,6 +338,12 @@ def rig(pasta, so_pontos=False):
     # colunas: onda que anda de lado (cada coluna atrasada da vizinha) e sobe em chicote
     for i in range(len(COL_X)):
         C.bl_anima_juntas(ao, {f"c{i}{l}": v for l, v in COL_ANIM.items()}, N, fase=i * COL_FASE)
+    # cada pilha estica e achata no grave (a do meio primeiro, as de fora depois): as caixas pulam, não só os cones
+    for i in range(len(COL_X)):
+        pb = ao.pose.bones[f"c{i}a"]
+        for f in range(N + 1):
+            e = batida(f, 0.5 + 1.5 * abs(i - 3), False, tau=4.0, per=11.0, ataque=2.0)
+            pb.scale = (1 - 0.35 * ESTICA * e, 1 + ESTICA * e, 1); pb.keyframe_insert("scale", frame=f)
     # cones: escala no plano da tela = deformação radial (o cone vem para frente e volta)
     for nm in info["cones"]:
         amp, atr, contra = BATE[nm]; pb = ao.pose.bones["k_" + nm]
@@ -344,8 +391,9 @@ def chicote(pasta, mostra=True):
 ANEIS = [(0, "eb"), (0, "cdm"), (1, "dm"), (2, "ceb"), (3, "em"), (4, "db"), (4, "cem"), (5, "eb"), (6, "cdb"), (7, "dm"),
          (0.5, "dp"), (1.5, "cep"), (2.5, "ep"), (3.5, "cdp"), (4.5, "ccp"), (5.5, "ep"), (6.5, "dp"), (7.5, "cep")]
 VIDA_ANEL = {True: 40, False: 26}        # grande, pequeno (quadros)
-FOLHAS = ["011/112/200", "110/012/002", "000/112/000", "010/010/020", "001/011/120", "100/110/021"]   # 1 claro, 2 escuro
-N_FAGULHAS = 22
+FOLHAS = ["011/112/200", "110/012/002", "000/112/000", "010/010/020", "001/011/120", "100/110/021", "0011/0112/1120/2200", "1100/2110/0211/0022"]   # 1 claro, 2 escuro
+N_FAGULHAS = 46
+AUMENTA_TAMPA, AUMENTA_CACO = 1.55, 1.25                            # no tamanho do conceito a tampinha tinha 8x5 px e lia como bolinha
 
 
 def _paleta(rec, src):
@@ -403,7 +451,19 @@ def compor(pasta):
         m = livre & (n > 0.63); out[m] = sobe(idx[m], 1)
         m = livre & (n < 0.37); out[m] = sobe(idx[m], -1)
         return out
-    seca = [veios(a, f) for f, a in enumerate(seca)]
+
+    def reflexo(idx, f):
+        """Dentro do cone nada fica parado nem liso: dois reflexos opostos giram devagar em volta do miolo (meia volta por
+        laço, cada cone para um lado), um degrau acima; entre eles, duas sombras um degrau abaixo."""
+        out = idx.copy()
+        for j, (nm, (_, _, Rg)) in enumerate(cones.items()):
+            px, py, _ = pontos[f]["k_" + nm]; dx, dy = XX - px, YY - py; r = np.hypot(dx, dy) / Rg
+            s_ = np.cos(2 * (np.arctan2(dy, dx) - (1 if j % 2 else -1) * math.pi * f / N - 0.9 * j))
+            faixa = (r > 0.36) & (r < 0.93) & (idx > 0)
+            m = faixa & (s_ > 0.90); out[m] = sobe(idx[m], 1)
+            m = faixa & (s_ < -0.94); out[m] = sobe(idx[m], -1)
+        return out
+    seca = [reflexo(veios(a, f), f) for f, a in enumerate(seca)]
 
     def realce(idx, f):
         """O miolo do cone acende no golpe e uma onda clara corre do miolo para a borda (contraste que faltava)."""
@@ -415,9 +475,15 @@ def compor(pasta):
             dur = 4 + 4 * forca
             if d < dur:
                 m = dentro & (np.abs(r - Rg * (0.30 + 0.62 * d / dur)) < 0.8)
-                out[m] = sobe(out[m], 3 if forca > 0.9 else 2)
-            m = dentro & (r < Rg * 0.30 * sc)
-            out[m] = sobe(out[m], 2 if sc > 1.06 else 1 if sc > 1.0 else 0 if sc > 0.97 else -1)
+                out[m] = sobe(out[m], 2)
+            # o miolo é uma meia-bola: no golpe só o lado da luz clareia (um degrau) e a sombra de baixo-direita fica,
+            # então ele nunca vira um disco de uma cor só
+            rd = Rg * 0.30 * sc; u = ((XX - px) + (YY - py)) / (1.414 * max(rd, 1e-3)); domo = dentro & (r < rd)
+            k = 1 if sc > 1.05 else 0 if sc > 0.97 else -1
+            if k:
+                m = domo & (u < 0.12); out[m] = sobe(out[m], k)
+            m = domo & (u > 0.42); out[m] = esc[np.minimum(pos[out[m]], TOPO - 3)]
+            m = domo & (u > 0.12) & (u <= 0.42); out[m] = esc[np.minimum(pos[out[m]], TOPO - 1)]
         return out
 
     def ruido_sobe(f):
@@ -441,26 +507,33 @@ def compor(pasta):
         rho = np.hypot(dx / ax, dy / ay) / ond
         dist = np.abs(rho - 1) * (ax * ay) / np.maximum(np.hypot(ax * np.sin(ang), ay * np.cos(ang)), 1e-3)    # ~px até a elipse
         n1 = campo.rola(R3, f, vy=1, ox=b * 7); n2 = campo.rola(R4, f, vx=1, oy=b * 5)
-        gomos = 0.72 + 0.50 * np.abs(np.sin(4.5 * ang + 0.05 * a + b))          # a faixa é feita de gomos de fumaça
-        esp = (4.4 - 2.0 * q) * gomos * (0.62 + 0.7 * n1)           # espessura da faixa, roída pelo ruído
-        m = (dist < esp) & (esp > 1.5) & (n2 > 1.25 * q ** 1.6 - 0.08)           # desfaz: o ruído come o anel aos pedaços
+        g = np.abs(np.sin(4.5 * ang + 0.05 * a + b))                # a faixa é feita de gomos de fumaça
+        # fim da vida: a faixa some primeiro ENTRE os gomos e cada gomo encolhe no lugar, como bafo de fumaça que se
+        # desmancha (nem lasca solta roída pelo ruído, nem aro fino de arame)
+        some = 1.7 * min(1.0, max(0.0, (q - 0.62) / 0.30)); fim = min(1.0, (1 - q) / 0.20)
+        esp = (4.4 - 1.6 * q) * (0.72 + 0.50 * g - some * (1 - g)) * (0.62 + 0.7 * n1) * (0.45 + 0.55 * fim)
+        m = (dist < esp) & (esp > 1.9) & (n2 > 0.45 * q ** 1.6 - 0.08)
         if not m.any():
             return
         luz = (rho < 1) == (dy > 0)                                 # a face de cima de cada gomo pega luz
-        tom = np.where(dist < 0.5 * esp, TOPO, TOPO - 1) - np.where(luz, 0, 2) - (1 if q > 0.6 else 0) - (1 if q > 0.85 else 0)
-        L[m] = esc[np.clip(tom, 3, TOPO)][m]
+        tom = np.where(dist < 0.5 * esp, TOPO, TOPO - 1) - np.where(luz, 0, 2) - (1 if q > 0.6 else 0) - (1 if q > 0.74 else 0) - (1 if q > 0.87 else 0)
+        A = np.full((CH, CW), -1, np.int16); A[m] = esc[np.clip(tom, 3, TOPO)][m]
+        A = C.limpa(A, int(12 + 16 * q))                        # pedaço pequeno some; quanto mais velho o anel, maior o corte
+        if q < 0.64:
+            A = C.contorno(A, pal.escura)                           # anel novo tem contorno; o velho perde e some na parede
+        L[A >= 0] = A[A >= 0]
     aneis = []
     for f in range(NPART):
         L = np.full((CH, CW), -1, np.int16)
         for t0, nm in ANEIS:
             anel(L, f, t0, nm)
-        aneis.append(C.contorno(C.limpa(L, 12), pal.escura))
+        aneis.append(L)
 
     # ---------------- névoa baixa: dois ruídos deslizando em sentidos opostos (a forma muda, não só anda)
     def nevoa(f):
         n = 0.55 * R3[(YY * 3) % 96, (XX + f) % 96] + 0.45 * R4[(YY * 3 + 31) % 96, (XX - f + 17) % 96]
         vert = np.where(YY < 186, 1 - (186 - YY) / 13.0, 1 - (YY - 186) / 8.0)
-        lado = np.clip(np.minimum(XX - 62, 298 - XX) / 26.0, 0, 1)
+        lado = np.clip(np.minimum(XX - 40, 320 - XX) / 30.0, 0, 1)
         den = n + 0.75 * np.clip(vert, -1, 1) + 0.10 * np.sin(XX / 19.0 + 0.7 + 2 * math.pi * f / NPART) - (1 - lado) * 0.8
         m = (den > 1.02) & (YY <= TELA.pe[1] + 3)
         L = np.full((CH, CW), -1, np.int16)
@@ -468,7 +541,7 @@ def compor(pasta):
         L = C.limpa(L, 8)
         cima = np.ones_like(m); cima[1:] = L[:-1] < 0; L[(L >= 0) & cima] = esc[TOPO]          # crista clara
         baixo = np.ones_like(m); baixo[:-1] = L[1:] < 0; L[(L >= 0) & baixo] = esc[TOPO - 4]   # barriga escura
-        return L
+        return C.contorno(L, pal.escura)                            # contorno embaixo e dos lados: lê como rolo de névoa na frente da base
     nevoas = [nevoa(f) for f in range(NPART)]
 
     # ---------------- cacos de vidro e tampinhas: pulam e giram a cada grave, os de perto do meio primeiro
@@ -477,9 +550,11 @@ def compor(pasta):
     for i, nome in enumerate(CACOS):
         x0, y0, x1, y1 = info["cacos"][nome]["bbox"]
         spr = cv2.imread(f"{rec}/{nome}.png", cv2.IMREAD_UNCHANGED)[y0:y1, x0:x1][..., [2, 1, 0, 3]]
-        spr = cv2.resize(spr, (max(4, round((x1 - x0) * k4)), max(4, round((y1 - y0) * k4))), interpolation=cv2.INTER_NEAREST)
+        ke = k4 * (AUMENTA_TAMPA if nome.startswith("tampa") else AUMENTA_CACO)
+        spr = cv2.resize(spr, (max(4, round((x1 - x0) * ke)), max(4, round((y1 - y0) * ke))), interpolation=cv2.INTER_NEAREST)
         gx, gy = TELA.conceito_para_jogo((x0 + x1) / 2, (y0 + y1) / 2)
-        leve = 1.0 if nome.startswith("tampa") else 0.7 if nome.startswith("caquinho") else 0.6
+        gy -= (y1 - y0) * (ke - k4) / (2 * TELA.amp)                # cresce para cima: a base continua no chão
+        leve = 1.0 if nome.startswith("tampa") else 0.9 if nome.startswith("caquinho") else 0.85
         pecas.append(dict(spr=spr, x=gx, y=gy, atraso=abs(gx - TELA.pe[0]) / 34.0 + float(rng.uniform(0, 1.2)), alt=leve * float(rng.uniform(2.6, 3.6)),
                           giro=float(rng.uniform(0.25, 0.5)) * (1 if i % 2 else -1), per=float(rng.uniform(4.2, 5.4)), cap=nome.startswith("tampa")))
 
@@ -574,6 +649,10 @@ def compor(pasta):
     C.tira([zoom(Q_[f], 60, 40, 300, 110) for f in range(0, 48, 4)], f"{pasta}/tira_zoom_topo.png", cols=3, esc=2,
            rotulos=[f"q{f:02d}" for f in range(0, 48, 4)])
     C.tira([C.compoe(fundo, f, CAM.values(), None, [], pal) for f in (0, 6, 30, 54)], f"{pasta}/tira_sem_corpo.png", cols=2, esc=3)
+    C.tira([zoom(C.compoe(fundo, f, [parede], None, [], pal), 60, 20, 300, 196) for f in range(0, 48, 6)], f"{pasta}/tira_parede_so.png", cols=4, esc=3,
+           rotulos=[f"q{f:02d}" for f in range(0, 48, 6)])          # só a parede, de 6 em 6: o balanço das caixas
+    C.tira([zoom(C.compoe(fundo, f, [parede, aneis], None, [], pal), 56, 60, 200, 190) for f in range(20, 44, 2)], f"{pasta}/tira_zoom_aneis.png", cols=4, esc=4,
+           rotulos=[f"q{f:02d}" for f in range(20, 44, 2)])         # anéis nascendo e se desfazendo
     C.video_laco(f"{pasta}/aura_ck.mp4", Q_, TIQ)
 
 
