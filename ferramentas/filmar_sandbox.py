@@ -20,6 +20,8 @@ Depois desliga a sandbox. Saída: luta.mp4, log_sandbox.txt e os logs do motor e
 comandos apertados no mesmo tick (holddown+a). O P2 fica parado. Sem --golpes, os dois lutam na IA 8.
 --despertar N: liga o Despertar do Pengaró aos N segundos de round (como filmar_luta.py).
 --roteiro: um .lua a mais, anexado ao debug.lua da cópia (hook.add("loop", ...), como o robo.lua).
+--cenario: o .def do cenário (padrão stages/stage0-720.def); a pasta stages/ do repositório é copiada para o motor.
+--passeio: filme de cenário: os dois sem IA passeiam juntos até as duas pontas e sobem (ferramentas/robo/passeio.lua).
 """
 import argparse
 import os
@@ -46,6 +48,7 @@ try {
   $jogo = 'C:\jogo'
   robocopy 'C:\nf\motor' $jogo /E /NFL /NDL /NJH /NJS /NP | Out-Null
   foreach ($c in @(@LUTADORES@)) { robocopy "C:\nf\repo\chars\$c" "$jogo\chars\$c" /E /NFL /NDL /NJH /NJS /NP | Out-Null }
+  if (Test-Path 'C:\nf\repo\stages') { robocopy 'C:\nf\repo\stages' "$jogo\stages" /E /NFL /NDL /NJH /NJS /NP | Out-Null }
   robocopy 'C:\nf\trabalho\por_cima' $jogo /E /NFL /NDL /NJH /NJS /NP | Out-Null
   Copy-Item 'C:\nf\mesa\opengl32.dll','C:\nf\mesa\libgallium_wgl.dll' $jogo
   $ini = "$jogo\save\config.ini"
@@ -162,6 +165,15 @@ def preparar_cmd(origem, destino, nomes_golpes, despertar):
     destino.write_text(txt.replace("[Statedef -1]\n\n", "[Statedef -1]\n\n" + b, 1), encoding="utf-8", newline="\n")
 
 
+def injetar_passeio(arquivo):
+    """PosAdd comandado por map (c_dx no mundo, c_dy na vertical) no [Statedef -1], para o passeio.lua."""
+    txt = arquivo.read_text(encoding="utf-8").replace("\r\n", "\n")
+    assert "[Statedef -1]\n\n" in txt, f"sem [Statedef -1] em {arquivo}"
+    b = ("[State -1, F_passeio]\ntype = PosAdd\ntrigger1 = map(c_dx) != 0 || map(c_dy) != 0\n"
+         "x = map(c_dx) * facing\ny = map(c_dy)\n\n")
+    arquivo.write_text(txt.replace("[Statedef -1]\n\n", "[Statedef -1]\n\n" + b, 1), encoding="utf-8", newline="\n")
+
+
 def wsb_xml(pastas, logon):
     m = "".join(f"    <MappedFolder><HostFolder>{h}</HostFolder><SandboxFolder>{s}</SandboxFolder>"
                 f"<ReadOnly>{'true' if ro else 'false'}</ReadOnly></MappedFolder>\n" for h, s, ro in pastas)
@@ -186,6 +198,8 @@ def main():
     ap.add_argument("--lenta", type=int, default=4,
                     help="o jogo roda a 1/LENTA da velocidade e o gdigrab grava a 60/LENTA fps (padrão 4)")
     ap.add_argument("--espera", type=float, default=900, help="segundos máximos esperando o vídeo")
+    ap.add_argument("--cenario", default="stages/stage0-720.def", help="cenário da luta (.def dentro do motor)")
+    ap.add_argument("--passeio", action="store_true", help="filme de cenário: os dois sem IA passeiam pelas pontas")
     a = ap.parse_args()
     if not 5 <= a.segundos <= 10:
         print(f"aviso: --segundos {a.segundos} fora da faixa recomendada de 5 a 10")
@@ -219,10 +233,18 @@ def main():
                 .replace("{@GOLPES@}", "{" + lista + "}").replace("= @DIST@", f"= {a.distancia}")
         if a.roteiro:
             lua += "\n" + a.roteiro.read_text(encoding="utf-8")
+        if a.passeio:
+            for c in dict.fromkeys((a.p1, a.p2)):
+                alvo = por_cima / "chars" / c / f"{c}.cmd"
+                if not alvo.exists():
+                    alvo.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(RAIZ / "chars" / c / f"{c}.cmd", alvo)
+                injetar_passeio(alvo)
+            lua += "\n" + (RAIZ / "ferramentas/robo/passeio.lua").read_text(encoding="utf-8")
         (por_cima / "external/script").mkdir(parents=True)
         (por_cima / "external/script/debug.lua").write_text(lua, encoding="utf-8")
-        args = ["-p1", a.p1, "-p2", a.p2, "-s", "stages/stage0-720.def", "-rounds", "1"]
-        if not golpes:
+        args = ["-p1", a.p1, "-p2", a.p2, "-s", a.cenario, "-rounds", "1"]
+        if not golpes and not a.passeio:
             args[2:2] = ["-p1.ai", "8"]
             args += ["-p2.ai", "8"]
         lutadores = ",".join(f"'{c}'" for c in dict.fromkeys((a.p1, a.p2)))
