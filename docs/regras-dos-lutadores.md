@@ -221,6 +221,26 @@ próprios, como o Diabo Loiro do Hazaki e o Pengaró endiabrado), e não só a m
 código serve no máximo como quebra-galho até a folha redesenhada ficar pronta, e o lutador só passa no checklist
 com a arte nova.
 
+### Toda forma despertada tem uma aura só dela
+
+Regra do Breno (2026-11-11): no Despertar, todo lutador ganha uma **aura própria**, para mostrar que ficou mais forte.
+Ela tem que ser diferente da aura de todos os outros lutadores na cor e na forma, e combinar com quem ele é. Não vale
+só um brilho genérico.
+
+- A aura é **efeito separado** do corpo: folha própria em fundo verde `#00FF00`, ligada por `Explod` em volta do lutador
+  enquanto o Despertar dura. Ela não vai desenhada nas folhas do corpo. O `PalFX` pode reforçar a cor, mas sozinho não
+  conta como aura.
+- A ficha do lutador diz como é a aura dele (cor, forma, de onde sai) e confere que nenhum outro já usa.
+- Auras de hoje, para não repetir:
+
+| Lutador | Aura no Despertar |
+|---|---|
+| Pengaró | fumaça violeta-escura das sombras |
+| Gutto | aura vermelha do demônio cara de cavalo |
+| Raiclaven | brilho prateado de aço (o Cientista Louco ainda vai ganhar a dele) |
+| Hazak | brasa laranja-ouro do Diabo Loiro |
+| CK | fumaça cinza-esverdeada do baseado, subindo dos pés |
+
 ### O que muda: golpes **novos**, não só mais fortes
 
 Transformou, ganhou coisa que não tinha. Pode reaproveitar parte do personagem base, mas o mínimo novo é:
@@ -557,6 +577,7 @@ Forma base
 [ ] 2 supers (1 e 2 estoques)
 [ ] Despertar com barra cheia + 2 botões (ou comando da ficha)
 [ ] forma despertada com arte própria redesenhada (não só recolorida)
+[ ] aura própria no Despertar, diferente da de todos os outros lutadores (efeito à parte, seção 4)
 
 Forma despertada
 [ ] 2 correntes novas, 6 normais novos, 4 especiais exclusivos, 1 projétil novo, 1 kombo novo, 1 super exclusivo
