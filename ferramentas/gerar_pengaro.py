@@ -315,6 +315,7 @@ def gravar_sff(destino, dados_pal, itens):
 
 CORPO = [(-24, 0, 24, -104)]
 BAIXO = [(-28, 0, 28, -70)]
+ROLANDO = [(-28, 0, 28, -70)]  # rolamento, caneta e levantada: não acompanha o BAIXO do Pengaró arcade (veja main)
 NO_AR = [(-24, -24, 24, -100)]
 DEITADO = [(-60, 0, 60, -24)]
 
@@ -557,6 +558,8 @@ class Air:
                     x1, y1, x2, y2 = resto[0]
                     recuo = min(8, (x2 - x1) // 4)
                     resto[0] = (x1 + recuo, y1, x2 - recuo, y2)
+                    if not self.hazaki and desenhado():
+                        resto[0] = CAIXA_DESPERTADA.get(numero, resto[0])
                 if i == len(quadros) - 1 and ticks > 0 and 1000 <= numero < 1600:
                     ticks += 6
                 variantes.append((self.arte_despertada[nome], ticks, *resto))
@@ -916,9 +919,9 @@ TROCA_POR_FOLHA = {
     "gira0": ("compasso", 2), "gira1": ("compasso", 3), "gira2": ("compasso", 4), "gira3": ("compasso", 5),
     "lata0": ("lata", 2), "lata1": ("lata", 4), "lata2": ("lata", 7),
     "soco0": ("soco", 3), "soco1": ("soco", 5), "soco2": ("soco", 5), "soco3": ("soco", 6),
-    "parado0": ("soco", 0), "anda0": ("anda_fluida", 0), "ar_chute": ("bicicleta", 3), "ar_cotovelo": ("ar_soco", 4),
+    "parado0": ("ginga_fluida", 0), "anda0": ("anda_fluida", 0), "ar_chute": ("bicicleta", 3), "ar_cotovelo": ("ar_soco", 4),
     "pisa": ("chute_baixo", 4), "defesa_baixa": ("agachado", 7),
-    **{f"corre{i}": ("anda_fluida", i * 12) for i in range(4)},
+    **{f"corre{i}": ("anda_fluida", i) for i in range(4)},
     **{f"tonto{i}": ("apanha", 3 + i % 2) for i in range(4)},
     **{f"rola{i}": ("rolamento", i) for i in range(8)},
     # sem bola: na intro, na provocação e na vitória ele dá um gole
@@ -953,6 +956,86 @@ def limpar_borda(img, tinta=True):
     return Image.fromarray(a)
 
 
+def sem_rosa(img, miolo_branco=False):
+    """Forma normal do Pengaró: ele não tem rosa nem magenta em lugar nenhum, então todo pixel assim é resto do fundo
+    da folha (mancha no quadril, ponto na boca, franja no cordão). Mancha que encosta no vazio some; a que está
+    fechada dentro do corpo é pintada com a cor dos vizinhos."""
+    import cv2
+    a = np.array(img)
+    r, g_, b = (a[..., i].astype(int) for i in range(3))
+    cheio = a[..., 3] >= 128
+    forte = cheio & (r > g_ + 40) & (b > g_ + 40)
+    if not forte.any():
+        return img
+    claro = cheio & (r > g_ + 18) & (b > g_ + 18) & (np.maximum(r, b) > 150)  # o halo lilás em volta da mancha
+    claro |= cheio & (r > g_ + 8) & (b > g_ + 8) & (np.minimum(r, b) > 225)  # e a parte quase branca dele
+    n, rotulos = cv2.connectedComponents((forte | claro).astype(np.uint8), connectivity=8)
+    rosa = np.isin(rotulos, np.unique(rotulos[forte])) & (forte | claro)
+    n, rotulos, dados, _ = cv2.connectedComponentsWithStats(rosa.astype(np.uint8), connectivity=8)
+    vazio = cv2.dilate((~cheio).astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool)
+    pintar = np.zeros(rosa.shape, bool)
+    fora = np.zeros(rosa.shape, bool)
+    for i in range(1, n):
+        pedaco = rotulos == i
+        if (pedaco & vazio).any():
+            a[pedaco, 3] = 0
+            fora |= pedaco
+        else:
+            pintar |= pedaco
+    # o miolo do clarão é branco puro (a calça é creme, puxa para o amarelo): sai junto com o rosa que o cercava,
+    # senão sobra uma tira branca serrilhada atrás da coxa (chute alto)
+    miolo = cheio & (r >= 248) & (b >= 248) & (g_ >= 230)
+    for _ in range(12 if miolo_branco else 0):
+        mais = miolo & ~fora & cv2.dilate(fora.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool)
+        if not mais.any():
+            break
+        a[mais, 3] = 0
+        fora |= mais
+    if pintar.any():
+        a[..., :3] = cv2.inpaint(np.ascontiguousarray(a[..., :3]), pintar.astype(np.uint8) * 255, 3, cv2.INPAINT_TELEA)
+    return limpar_borda(Image.fromarray(a), tinta=False)
+
+
+def sem_fundo_endiabrado(img):
+    """Folhas endiabradas do Pengaró: bloco de magenta vivo (a cor do fundo da folha) preso no vão entre braço, peito
+    e coxa. Só bloco de 8 px para cima e abaixo da cabeça: o brilho do olho é pequeno e fica. O que encosta no vazio
+    some; o que está fechado no corpo ganha a cor dos vizinhos."""
+    import cv2
+    a = np.array(img)
+    r, g_, b = (a[..., i].astype(int) for i in range(3))
+    cheio = a[..., 3] >= 128
+    ys = np.flatnonzero(cheio.any(axis=1))
+    if not len(ys):
+        return img
+    vivo = cheio & (r > 190) & (b > 190) & (g_ < 110)
+    n, rotulos, dados, _ = cv2.connectedComponentsWithStats(vivo.astype(np.uint8), connectivity=8)
+    vazio = cv2.dilate((~cheio).astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool)
+    pintar = np.zeros(vivo.shape, bool)
+    for i in range(1, n):
+        if dados[i, cv2.CC_STAT_AREA] < 8 or dados[i, cv2.CC_STAT_TOP] < ys[0] + 30 and dados[i, cv2.CC_STAT_AREA] < 40:
+            continue
+        pedaco = rotulos == i
+        if (pedaco & vazio).any():
+            a[pedaco, 3] = 0
+        else:
+            pintar |= pedaco
+    if pintar.any():
+        a[..., :3] = cv2.inpaint(np.ascontiguousarray(a[..., :3]), pintar.astype(np.uint8) * 255, 3, cv2.INPAINT_TELEA)
+    return Image.fromarray(a)
+
+
+def calca_roxa(img):
+    """Folhas endiabradas: em metade delas (andar, agachar...) a calça veio marrom-acinzentada e nas outras (ginga,
+    soco) roxa como o corpo; ele trocava de cor ao andar. O marrom vai para o roxo da ginga, no mesmo claro-escuro."""
+    a = np.array(img)
+    r, g_, b = (a[..., i].astype(float) for i in range(3))
+    marrom = (a[..., 3] >= 128) & (r > 40) & (g_ > 0.56 * r) & (g_ < 0.85 * r) & (b >= 0.9 * g_) & (r >= b)
+    a[marrom, 0] = np.round(r[marrom] * 0.97)
+    a[marrom, 1] = np.round(r[marrom] * 0.50)
+    a[marrom, 2] = np.round(r[marrom] * 0.92)
+    return Image.fromarray(a)
+
+
 RELEVO_ENDIABRADO = (190, 39, 168)  # cor mediana do relevo que o recorte antigo apagava das folhas endiabradas
 
 
@@ -968,7 +1051,55 @@ def fechar_furos(img, limite=40):
     for i in range(1, n):
         x, y, ww, hh, area = dados[i]
         if area <= limite and x > 0 and y > 0 and x + ww < w and y + hh < h:
-            a[rotulos == i] = (*RELEVO_ENDIABRADO, 255)
+            furo = rotulos == i
+            if QUADROS != QUADROS_PENGARO:
+                a[furo] = (*RELEVO_ENDIABRADO, 255)
+                continue
+            # Pengaró: o furo ganha a cor de quem está em volta dele, não o magenta vivo do relevo (ficava mancha de
+            # fundo no meio da figura); elo de corrente (borda cinza ou branca) é vão de verdade e fica aberto.
+            borda = cv2.dilate(furo.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool) & ~furo & (a[..., 3] >= 128)
+            em_volta = a[borda][:, :3].astype(int)
+            cor = np.median(em_volta, axis=0)
+            if cor.max() - cor.min() >= 40 and (em_volta.min(axis=1) > 100).mean() < 0.3:
+                a[furo] = (*(int(v) for v in cor), 255)
+    return Image.fromarray(a)
+
+
+# Folhas endiabradas em que a algema do tornozelo veio desenhada nos DOIS pés; na ginga, no andar e nos golpes só o
+# pé de trás tem. A do pé da frente é pintada com o roxo da perna.
+ALGEMA_SO_ATRAS = {"e_agachado"}
+
+
+def sem_algema_da_frente(img):
+    a = np.array(img)
+    cheio = a[..., 3] >= 128
+    ys, xs = np.flatnonzero(cheio.any(axis=1)), np.flatnonzero(cheio.any(axis=0))
+    if not len(ys):
+        return img
+    rgb = a[..., :3].astype(int)
+    cinza = cheio & (rgb.max(axis=2) - rgb.min(axis=2) < 40) & (rgb.max(axis=2) > 95)
+    regiao = np.zeros(cheio.shape, bool)
+    regiao[ys[-1] - int((ys[-1] - ys[0]) * 0.25):, (xs[0] + xs[-1]) // 2 + 8:] = True
+    alvo = cinza & regiao
+    claro = rgb.max(axis=2)[alvo] / 255
+    a[alvo, 0] = np.round(40 + 95 * claro)
+    a[alvo, 1] = np.round(18 + 45 * claro)
+    a[alvo, 2] = np.round(38 + 90 * claro)
+    return Image.fromarray(a)
+
+
+def sem_farelo(img):
+    """Transformação (despertar_b): pedaço pequeno solto, longe do corpo e da aura, é farelo do recorte e some."""
+    import cv2
+    a = np.array(img)
+    n, rotulos, dados, _ = cv2.connectedComponentsWithStats((a[..., 3] >= 128).astype(np.uint8), connectivity=8)
+    if n < 3:
+        return img
+    maior = 1 + int(np.argmax(dados[1:, cv2.CC_STAT_AREA]))
+    perto = cv2.dilate((rotulos == maior).astype(np.uint8), np.ones((17, 17), np.uint8)).astype(bool)
+    for i in range(1, n):
+        if i != maior and dados[i, cv2.CC_STAT_AREA] < 60 and not (perto & (rotulos == i)).any():
+            a[rotulos == i, 3] = 0
     return Image.fromarray(a)
 
 
@@ -993,7 +1124,88 @@ def abrir_quadro(arquivo):
         tela.alpha_composite(img, (EIXO_X - 104, EIXO_Y - 119))
         img = tela
     img = limpar_borda(img, tinta=forma is None)
-    return fechar_furos(img) if forma == "endiabrado" else img
+    if forma is None and RAIZ / "sprites/pengaro/quadros" in Path(arquivo).parents:
+        img = sem_rosa(img, miolo_branco=True)
+    elif forma == "endiabrado":  # forma_do_quadro só devolve isso para as folhas do Pengaró
+        img = calca_roxa(sem_fundo_endiabrado(img))
+        pasta = Path(arquivo).parent.parent.name if Path(arquivo).parent.name == "meio" else Path(arquivo).parent.name
+        if pasta in ALGEMA_SO_ATRAS:
+            img = sem_algema_da_frente(img)
+    img = fechar_furos(img) if forma == "endiabrado" else img
+    if forma == "despertar_b":
+        img = sem_farelo(img)
+    if RAIZ / "sprites/pengaro/quadros" in Path(arquivo).parents:
+        pasta = Path(arquivo).parent.parent.name if Path(arquivo).parent.name == "meio" else Path(arquivo).parent.name
+        if pasta in CANELEIRA_NO_APOIO:
+            img = canela_creme(img)
+            nome = Path(arquivo).stem
+            desenhos = CANELEIRA_NO_APOIO[pasta]
+            n = int(nome.split("_")[0])
+            if (n in desenhos and n + 1 in desenhos) if Path(arquivo).parent.name == "meio" else n in desenhos:
+                img = caneleira_no_apoio(img)
+        base = base_figura(img)
+        if pasta in PES_NO_CHAO and base is not None and 0 < abs(EIXO_Y - 1 - base) <= 3:
+            img = move(img, 0, EIXO_Y - 1 - base)
+    return img
+
+
+# Chutes em pé: nos desenhos do golpe a caneleira não estava em perna nenhuma (ou estava na que chuta) e voltava de
+# estalo no último desenho. A perna de apoio é a de trás, a da caneleira: ela é pintada na canela de apoio, do
+# tornozelo para cima, com a luz da própria calça. folha -> desenhos (e os quadros do meio entre eles).
+CANELEIRA_NO_APOIO = {"chute_baixo": range(2, 7), "chute_alto": range(1, 7), "afastar": (5,)}
+
+
+# O retoque que tirou a caneleira da perna que chuta pintou a canela com quatro tons de lilás frio, e a calça é creme:
+# ficava uma placa de outra cor. Os quatro tons vão para o creme da calça, do claro à sombra.
+PLACA_DA_CANELA = {(246, 242, 238): (254, 250, 228), (230, 224, 228): (252, 236, 208),
+                   (215, 207, 218): (238, 216, 190), (200, 190, 208): (208, 188, 172)}
+
+
+def canela_creme(img):
+    a = np.array(img)
+    for de, para in PLACA_DA_CANELA.items():
+        a[(a[..., :3] == de).all(axis=2) & (a[..., 3] >= 128), :3] = para
+    return Image.fromarray(a)
+
+
+def caneleira_no_apoio(img):
+    import cv2
+    a = np.array(img)
+    cheio = a[..., 3] >= 128
+    base = base_figura(img)
+    if base is None:
+        return img
+    rgb = a[..., :3].astype(int)
+    mx, mn = rgb.max(axis=2), rgb.min(axis=2)
+    pe = np.flatnonzero(cheio[base - 3:base + 1].any(axis=0))
+    quebra = np.flatnonzero(np.diff(pe) > 3)
+    pe = pe[:quebra[0] + 1] if len(quebra) else pe  # o pé mais atrás que pisa
+    calca = cheio & (mn > 105) & (mx - mn < 75) & (rgb[..., 0] - rgb[..., 2] < 70)
+    faixa = np.zeros(cheio.shape, bool)
+    faixa[base - 36:base - 6, max(0, pe[0] - 14):pe[-1] + 12] = True
+    n, rotulos, dados, _ = cv2.connectedComponentsWithStats((calca & faixa).astype(np.uint8), connectivity=4)
+    if n < 2:
+        return img
+    # o pedaço de calça logo acima do pé de apoio
+    perto = [i for i in range(1, n) if dados[i, cv2.CC_STAT_AREA] >= 60
+             and dados[i, cv2.CC_STAT_LEFT] <= pe[-1] and dados[i, cv2.CC_STAT_LEFT] + dados[i, cv2.CC_STAT_WIDTH] >= pe[0]]
+    if not perto:
+        return img
+    alvo = rotulos == max(perto, key=lambda i: dados[i, cv2.CC_STAT_AREA])
+    fechado = cv2.morphologyEx(alvo.astype(np.uint8), cv2.MORPH_CLOSE, np.ones((3, 3), np.uint8)).astype(bool)
+    alvo |= fechado & cheio & faixa & (mn > 80) & (rgb[..., 0] - rgb[..., 2] < 70)  # pontos claros soltos no meio
+    luz = np.clip((mx - 150) / 100, 0, 1)
+    ys, xs = np.nonzero(alvo)
+    trama = ((xs + ys) % 5 == 0) | ((xs - ys) % 5 == 0)
+    cor = np.stack([40 + 45 * luz[alvo], 52 + 45 * luz[alvo], 40 + 30 * luz[alvo]], axis=1)
+    cor[trama] *= 0.75
+    a[ys, xs, :3] = np.round(cor).astype(np.uint8)
+    return Image.fromarray(a)
+
+
+# Folhas em que ele está sempre com os pés no chão: desenho ou quadro do meio que veio 1 a 3 px acima ou abaixo da
+# linha do chão é assentado nela (agachado parado: a figura inteira subia 1 px, os pés junto, a cada respiração).
+PES_NO_CHAO = {"agachado", "e_agachado"}
 
 
 def centro_tronco(img):
@@ -1027,13 +1239,114 @@ def altura_corpo(img):
     return int(dados[1 + int(np.argmax(dados[1:, cv2.CC_STAT_AREA])), cv2.CC_STAT_HEIGHT]) if n > 1 else 0
 
 
-# Pasta normal -> (pasta endiabrada, passo entre os desenhos-chave). As folhas comuns são <folha> -> e_<folha>, passo 1.
-LOOPS_ENDIABRADOS = {"ginga_fluida": ("ginga_endiabrada", 8), "anda_fluida": ("e_anda_fluida", 6)}
+# Ginga e andar são SÓ desenhos, segurados (estilo arcade): nenhum quadro de fluxo óptico. Os quadros do meio que
+# existiam aqui (ginga_fluida, anda_fluida, 64 e 48 quadros) eram um desenho entortado até a metade e trocado pelo
+# seguinte; onde o braço mudava de lugar aparecia uma terceira mão e a caneleira trocava de perna. Os nomes dos
+# sprites (q_ginga_fluida<i>, q_anda_fluida<i>) ficaram, porque o resto do gerador e as ferramentas os conhecem.
+# nome do loop -> (folha em quadros_arcade/, desenhos na ordem em que tocam, ticks de cada um)
+QUADROS_ARCADE = RAIZ / "sprites/pengaro/quadros_arcade"
+LOOPS = {
+    # Um vai-e-volta só do pé de trás, com o da frente cravado: em pé (3, 7), pé de trás na ponta (5), afundo atrás
+    # (6, 2), volta na ponta do pé (1). Os desenhos 0 e 4 da folha (base aberta, tronco jogado para trás) ficam fora:
+    # entre eles e os vizinhos a cabeça andava 23 px e o pé de trás fazia zigue-zague (-45, -31, -57, -24...).
+    "ginga_fluida": ("ginga", (3, 7, 5, 6, 2, 1), (6, 6, 5, 7, 7, 5)),
+    # contato, passagem e contato da perna da caneleira (0, 2, 3); peso desce, impulso e saída da outra (4, 1, 5).
+    # Os desenhos 6 e 7 da folha ficam fora: o 6 repete o 2 (levanta a MESMA perna) e o 7 repete o 0.
+    # As duas metades da passada duram o mesmo (16 e 18 ticks): antes eram 16 e 21 e o passo mancava.
+    "anda_fluida": ("anda", (0, 2, 3, 4, 1, 5), (8, 8, 5, 4, 4, 5)),
+}
+# Forma endiabrada, desenho a desenho do loop normal: (pasta em quadros/, desenhos). Só os desenhos limpos da folha:
+# na ginga ficam fora o 3 e o 5 (algema nos dois tornozelos) e o 4 (mancha verde na coxa); em pé (0, 7), passo (1),
+# afundo (2, duas vezes: no 6 o pé da frente abre e o tronco pulava 40 px), passo (1), como a ginga normal. No andar só as poses de bote (1, 5, 3): alternar com a guarda em pé
+# (0, 4, 7) fazia a cabeça subir e descer 10 px e os braços trocarem de pose a cada desenho.
+LOOPS_ENDIABRADOS = {"ginga_fluida": ("ginga_endiabrada", (0, 7, 1, 2, 2, 1)),
+                     "anda_fluida": ("e_anda", (1, 5, 3, 3, 1, 5))}
+# Os grupos do .sff são dados em sequência e SPRITES_VITIMA (os desenhos que a vítima de um arremesso empresta, iguais
+# em todos os lutadores) guarda números fixos. Os loops de fluxo ocupavam 64 e 48 grupos; essas vagas ficam
+# reservadas (vazias) para nenhum sprite depois deles mudar de número.
+VAGAS_DO_FLUXO = {"ginga_fluida": 64, "anda_fluida": 48}
+PE_DA_FRENTE_ENDIABRADO = 205  # o mesmo para a ginga endiabrada (a base dela é mais fechada)
+PE_DA_FRENTE = 219  # x da ponta do pé da frente em todos os desenhos da ginga: o pé plantado não escorrega
+# Gutto e Raiclaven usam este módulo trocando QUADROS e ainda têm os loops de fluxo deles (pastas ginga_fluida,
+# anda_fluida, ginga_endiabrada, e_anda_fluida, com um desenho-chave a cada 8 ou 6 quadros): para eles nada muda.
+QUADROS_PENGARO = QUADROS
+FLUXO = {"ginga_fluida": ("ginga_endiabrada", 8), "anda_fluida": ("e_anda_fluida", 6)}
 _FATOR, _DX_CHAVE = {}, {}
 
 
+def desenhado():
+    """True no Pengaró: ginga e andar só com desenhos. False em quem ainda usa as pastas de fluxo."""
+    return QUADROS == QUADROS_PENGARO
+
+
+def passo_do_loop(pasta):
+    """De quantos em quantos quadros do loop há um desenho-chave."""
+    return 1 if desenhado() else FLUXO[pasta][1]
+
+
+def quadros_do_loop(pasta):
+    return len(LOOPS[pasta][1]) if desenhado() else len(list((QUADROS / pasta).glob("*.png")))
+
+
+def tempos_do_loop(pasta):
+    return LOOPS[pasta][2] if desenhado() else (2,) * quadros_do_loop(pasta)
+
+
+def quadro_loop(pasta, i):
+    """Desenho i do loop normal, na tela do jogo. Na ginga o pé da frente fica cravado no mesmo x (quem balança é o
+    tronco); no andar o tronco fica no eixo, porque quem anda é o jogo."""
+    if not desenhado():
+        return abrir_quadro(QUADROS / pasta / f"{i:02d}.png")
+    folha, ordem, _ = LOOPS[pasta]
+    img = Image.open(QUADROS_ARCADE / folha / f"{ordem[i]:02d}.png").convert("RGBA")
+    if pasta != "ginga_fluida":
+        return perna_de_tras_na_sombra(img) if ordem[i] == 0 else img
+    img = mao_sem_cordao(img)
+    chao = np.flatnonzero((np.asarray(img)[EIXO_Y - 6:EIXO_Y, :, 3] >= 128).any(axis=0))
+    return move(img, PE_DA_FRENTE - int(chao[-1])) if len(chao) else img
+
+
+def mao_sem_cordao(img):
+    """Ginga arcade: a quantização deixou pontos da cor do cordão (amarelo, laranja) e da sombra da calça (lilás, roxo)
+    nas pontas dos dedos da mão aberta. Acima da faixa só existe pele: esses pontos viram pele ou contorno."""
+    a = np.array(img)
+    rgb = a[..., :3].astype(int)
+    eh = lambda cor: (np.abs(rgb - np.array(cor)).sum(axis=2) < 12) & (a[..., 3] >= 128)
+    faixa = np.flatnonzero((eh((20, 156, 99)) | eh((20, 80, 63))).any(axis=1))
+    if not len(faixa):
+        return img
+    acima = np.zeros(a.shape[:2], bool)
+    acima[:faixa[0] - 2] = True
+    for cores, nova in ((((253, 197, 20), (223, 120, 20), (148, 146, 189)), (253, 195, 114)), (((53, 31, 92),), (76, 20, 20))):
+        for cor in cores:
+            a[acima & eh(cor), :3] = nova
+    return Image.fromarray(a)
+
+
+def perna_de_tras_na_sombra(img):
+    """Andar arcade, desenho 0: a perna sem caneleira (a de trás, lilás de sombra nos outros desenhos) está à frente e
+    veio clara da canela para baixo; a cor da mesma perna piscava na volta do ciclo. Fica na sombra como nos outros."""
+    a = np.array(img)
+    rgb = a[..., :3].astype(int)
+    eh = lambda cor: np.abs(rgb - np.array(cor)).sum(axis=2) < 12
+    regiao = np.zeros(a.shape[:2], bool)
+    regiao[174:, 184:] = True
+    regiao &= a[..., 3] >= 128
+    creme, branco = eh((253, 236, 207)) & regiao, eh((253, 250, 237)) & regiao
+    a[creme, :3] = (148, 146, 189)
+    a[branco, :3] = (253, 236, 207)
+    return Image.fromarray(a)
+
+
+def arquivo_loop_endiabrado(pasta, i):
+    if not desenhado():
+        return QUADROS / FLUXO[pasta][0] / f"{i:02d}.png"
+    outra, ordem = LOOPS_ENDIABRADOS[pasta]
+    return QUADROS / outra / f"{ordem[i]:02d}.png"
+
+
 def pasta_endiabrada(pasta):
-    return LOOPS_ENDIABRADOS.get(pasta, (f"e_{pasta}", 1))
+    return (f"e_{pasta}", 1)
 
 
 def fator_endiabrado(pasta):
@@ -1042,13 +1355,27 @@ def fator_endiabrado(pasta):
     contra a ginga."""
     if pasta not in _FATOR:
         if pasta == "endiabrado":
-            normais = [QUADROS / "ginga_fluida" / f"{8 * n:02d}.png" for n in range(8)]
+            p = passo_do_loop("ginga_fluida")
+            hn = [altura_corpo(quadro_loop("ginga_fluida", p * n)) for n in range(quadros_do_loop("ginga_fluida") // p)]
             endiabrados = [QUADROS / "endiabrado/00.png"]
+        elif pasta in LOOPS and pasta != "ginga_fluida" and desenhado():
+            # andar: os desenhos endiabrados usados são quase todos agachados e a mediana enganaria. A pose em pé do
+            # andar (a mais alta) fica do tamanho da pose em pé da ginga endiabrada.
+            # (a mais alta da FOLHA, a guarda em pé, mesmo quando o loop só usa as poses curvadas: senão o bote
+            # era esticado até a altura da guarda e o corpo engordava 18% ao sair da ginga)
+            alto = lambda p: max(altura_corpo(abrir_quadro(a))
+                                 for a in sorted((QUADROS / LOOPS_ENDIABRADOS[p][0]).glob("*.png")))
+            _FATOR[pasta] = fator_endiabrado("ginga_fluida") * alto("ginga_fluida") / alto(pasta)
+            return _FATOR[pasta]
+        elif pasta in LOOPS:
+            p = passo_do_loop(pasta)
+            hn = [altura_corpo(quadro_loop(pasta, p * n)) for n in range(quadros_do_loop(pasta) // p)]
+            endiabrados = [arquivo_loop_endiabrado(pasta, p * n) for n in range(quadros_do_loop(pasta) // p)]
         else:
             outra, passo = pasta_endiabrada(pasta)
-            normais = [QUADROS / pasta / f"{passo * n:02d}.png" for n in range(8)]
+            normais = [pasta_da_folha(pasta) / f"{passo * n:02d}.png" for n in range(8)]
             endiabrados = [QUADROS / outra / f"{passo * n:02d}.png" for n in range(8)]
-        hn = [altura_corpo(abrir_quadro(a)) for a in normais if a.exists()]
+            hn = [altura_corpo(abrir_quadro(a)) for a in normais if a.exists()]
         he = [altura_corpo(abrir_quadro(a)) for a in endiabrados if a.exists()]
         _FATOR[pasta] = max(0.75, min(1.3, float(np.median(hn)) / float(np.median(he)))) if hn and he else 1.0
     return _FATOR[pasta]
@@ -1087,20 +1414,78 @@ def colar_endiabrado(normal, endiabrado, fator=1.0, dx=None):
 def dx_chave(pasta, n):
     """dx do tronco medido só no desenho-chave n: os quadros do meio vêm entortados e enganam a medida."""
     if (pasta, n) not in _DX_CHAVE:
-        outra, passo = pasta_endiabrada(pasta)
-        a = centro_tronco(abrir_quadro(QUADROS / pasta / f"{passo * n:02d}.png"))
-        b = centro_tronco(abrir_quadro(QUADROS / outra / f"{passo * n:02d}.png"))
+        if pasta == "ginga_fluida" and desenhado():
+            # ginga: o pé da frente do endiabrado fica cravado no mesmo x em todos os desenhos, como no normal
+            # (alinhado pelo tronco, os dois pés pulavam 20 a 38 px a cada desenho)
+            e = abrir_quadro(arquivo_loop_endiabrado(pasta, n))
+            alfa = np.asarray(e)[..., 3] >= 128
+            base, cx, f = base_figura(e), centro_tronco(e), fator_endiabrado(pasta)
+            chao = np.flatnonzero(alfa[base - 12:base + 1].any(axis=0))  # 12 px: no afundo o pé da frente pisa mais alto
+            _DX_CHAVE[(pasta, n)] = round(PE_DA_FRENTE_ENDIABRADO - (cx + (int(chao[-1]) - cx) * f))
+            return _DX_CHAVE[(pasta, n)]
+        if pasta in LOOPS:
+            a = centro_tronco(quadro_loop(pasta, passo_do_loop(pasta) * n))
+            b = centro_tronco(abrir_quadro(arquivo_loop_endiabrado(pasta, passo_do_loop(pasta) * n)))
+        else:
+            outra, passo = pasta_endiabrada(pasta)
+            a = centro_tronco(abrir_quadro(pasta_da_folha(pasta) / f"{passo * n:02d}.png"))
+            b = centro_tronco(abrir_quadro(arquivo_endiabrado_da_chave(pasta, n)))
         _DX_CHAVE[(pasta, n)] = 0 if a is None or b is None else max(-24, min(24, round(a - b)))
     return _DX_CHAVE[(pasta, n)]
 
 
-def quadros_do_loop(pasta):
-    return len(list((QUADROS / pasta).glob("*.png")))
+# Folhas normais do Pengaró que já saem da arte arcade (quadros_arcade/<folha>, só os 8 desenhos, sem quadros do meio).
+# levanta: a folha antiga tinha duas caneleiras, braço terminando em pé e resto de magenta.
+# 2026-11-11: os golpes também. O lutador trocava de cabelo, tom de pele e caneleira a cada golpe (ginga arcade de 16
+# cores, golpe na arte antiga de milhares de cores e contorno mole). Só ficam na arte antiga as folhas sem desenho
+# arcade aprovado: chute_baixo e defesa (a folha arcade é de outro golpe / outro modelo) e as que ainda não foram
+# desenhadas (agarrao, armada, bola, caneta, compasso, derrota, golaco, lata, provoca, rolamento, vitoria, despertar).
+ARCADE = {"levanta", "soco", "chute_alto", "martelo", "afastar", "apanha", "queda", "pulo", "agachado", "baixo_soco",
+          "rasteirinha", "rasteira", "ar_soco", "bicicleta", "cabecada"}
+# Folha do gerador -> pasta em quadros_arcade/, quando o nome não é o mesmo. rasteira: a folha arcade da rasteira foi
+# reprovada (duas garrafas, joelheira verde no lugar da caneleira); no lugar dela entra o chute rasteiro dado da base
+# agachada (a folha que veio como "chute_baixo" e era outro golpe). O nome "rasteira" fica no gerador para os sprites
+# f_rasteira<i>, as ações e os desenhos endiabrados (e_rasteira) não mudarem de número.
+PASTA_ARCADE = {"rasteira": "chute_agachado"}
+# Desenho arcade deslocado em x (px). afastar 6: o pé de apoio (o de trás, plantado em x=-41 no 5 e -39 no 7) aparecia
+# em -29: o corpo dava um tranco para a frente e voltava.
+DESLOCA_ARCADE = {("afastar", 6): -10}
+
+
+# Golpes de pengaro_extra.py com desenho trocado no Pengaró arcade: estado -> {elemento (de 0): (folha, desenho)}.
+# 322 e 342 (rasteirinha do combo): o contato era o desenho 4, que troca a pose do braço (DESENHO_PROIBIDO); fica no 3,
+# como no 430. 1701 (rolê por trás e chute): os 15 ticks do rolê eram um desenho da folha antiga (rolamento, sem
+# folha arcade) e o chute era arcade; o rolê passa a ser a bola no chão da levantada arcade (levanta 2). É um desenho
+# só porque a regra da pose segurada (seco) já mostrava um só: a antecipação inteira fica no penúltimo desenho.
+DESENHOS_ARCADE_DO_GOLPE = {
+    322: {3: ("rasteirinha", 3)}, 342: {3: ("rasteirinha", 3)},
+    1701: {k: ("levanta", 2) for k in range(5)},
+}
+# Clsn1 do golpe no Pengaró arcade, quando o membro do desenho novo não fica onde a caixa do golpe antigo estava.
+# 322/342: o pé passa em x 76, y -24..-16 (a caixa estava embaixo da canela, 22 px atrás do pé). 601: a mão da frente
+# está em y -39..-24, abaixo da caixa (12,-76,56,-40).
+CAIXA_ARCADE = {322: (12, -26, 78, -10), 342: (12, -26, 78, -10), 601: (12, -76, 56, -24)}
+# Clsn1 da variante despertada (1xxxx) quando o desenho endiabrado bate em outra altura: (ação normal) -> caixa.
+# 240: o chute endiabrado é mais alto (pé em x 61, y -114..-101); a caixa herdada ficava embaixo do pé, 19 px atrás.
+CAIXA_DESPERTADA = {240: (20, -116, 72, -58)}
+
+
+def pasta_da_folha(folha):
+    if desenhado() and folha in ARCADE:
+        return QUADROS_ARCADE / PASTA_ARCADE.get(folha, folha)
+    return QUADROS / folha
 
 
 def quadro_folha(folha, i):
-    arquivo = QUADROS / folha / f"{i:02d}.png"
-    return abrir_quadro(arquivo) if arquivo.exists() else None
+    if folha in LOOPS:
+        return quadro_loop(folha, i)
+    arquivo = pasta_da_folha(folha) / f"{i:02d}.png"
+    if not arquivo.exists():
+        return None
+    img = abrir_quadro(arquivo)
+    if desenhado() and folha in ARCADE and (folha, i) in DESLOCA_ARCADE:
+        img = move(img, DESLOCA_ARCADE[(folha, i)])
+    return img
 
 
 def desenho_de(nome):
@@ -1108,7 +1493,7 @@ def desenho_de(nome):
     if nome in TROCA_POR_FOLHA:
         return TROCA_POR_FOLHA[nome]
     m = re.fullmatch(r"(?:f_|q_)([a-z_]+?)(\d+)", nome)
-    return (m[1], int(m[2])) if m and (QUADROS / m[1] / "meio").exists() else None
+    return (m[1], int(m[2])) if m and ((QUADROS / m[1] / "meio").exists() or desenhado() and m[1] in ARCADE) else None
 
 
 # Último desenho que cada folha pode mostrar: no golaço, do 5º em diante a chuva está desenhada no corpo.
@@ -1118,10 +1503,33 @@ ULTIMO_DESENHO = {"golaco": 4}
 SEGUINTE = {10: "f_agachado4", 11: "f_agachado4", 40: "f_pulo1", 120: "f_defesa3", 130: "f_defesa3"}
 
 
+# Intervalos (folha, desenho) em que o quadro do meio NÃO é usado no Pengaró: os dois desenhos são poses distantes
+# (a garrafa muda de mão, o braço troca) e a malha do Blender derrete cabeça, tronco ou garrafa. Vira corte seco.
+MEIO_PROIBIDO = {("vitoria", 2), ("vitoria", 5), ("despertar_a", 0), ("despertar_a", 4),
+                 ("provoca", 1), ("provoca", 2), ("provoca", 3), ("defesa", 1), ("defesa", 2),
+                 ("lata", 0), ("lata", 1)}
+# Desenhos que não entram no caminho entre dois outros. lata 1 (abrir o lacre): uma mão segura a garrafa, outra a
+# lata e uma TERCEIRA abre o lacre. A lata já está aberta na mão e ele vai direto para o gole.
+# rasteirinha 4 (arcade): no contato a mão da frente sai do chão e vira punho no peito, e no 5 volta ao chão; o
+# contato fica no desenho 3 (perna esticada, mão no chão).
+DESENHO_PROIBIDO = {("lata", 1), ("rasteirinha", 4)}
+# Desenhos endiabrados errados na origem, trocados pelo vizinho bom da mesma folha: (folha normal, desenho) -> desenho
+# de e_<folha>. e_levanta 3 e 4: parada de mão com pés no lugar das mãos. e_rolamento 4: massa ilegível.
+# e_baixo_soco 2 e e_rasteira 1-2: pose de outra família no meio da folha.
+TROCA_ENDIABRADA = {("levanta", 3): 2, ("levanta", 4): 5, ("rolamento", 4): 3, ("baixo_soco", 2): 1,
+                    ("rasteira", 1): 0, ("rasteira", 2): 3}
+
+
+def arquivo_endiabrado_da_chave(pasta, n):
+    if desenhado():
+        n = TROCA_ENDIABRADA.get((pasta, n), n)
+    return QUADROS / f"e_{pasta}" / f"{n:02d}.png"
+
+
 def registra_meio(s, folha, intervalo, k):
     """Quadro do meio `k` entre os desenhos `intervalo` e `intervalo + 1`, já no sprite do jogo; None se não existe."""
-    arquivo = QUADROS / folha / "meio" / f"{intervalo:02d}_{k}.png"
-    if not arquivo.exists():
+    arquivo = pasta_da_folha(folha) / "meio" / f"{intervalo:02d}_{k}.png"
+    if not arquivo.exists() or desenhado() and (folha, intervalo) in MEIO_PROIBIDO:
         return None
     nome = f"m_{folha}_{intervalo:02d}_{k}"
     if nome not in s.codigos:
@@ -1168,14 +1576,24 @@ def par_endiabrado(nome):
     """(arquivo endiabrado, pasta normal, posição em desenhos-chave) de um sprite do Pengaró, ou None se a folha não
     tem versão endiabrada. A posição é fracionária nos quadros do meio e nos loops (m_soco_03_2 fica em 3 + 2/7)."""
     meio = re.fullmatch(r"m_([a-z_]+?)_(\d+)_(\d+)", nome)
+    if meio and desenhado():
+        # No Pengaró a forma endiabrada não usa quadro do meio: os das folhas e_* vieram furados (olho e relevo
+        # apagados) e com cabeça e pernas esticadas pela malha. Cada um vira o desenho-chave mais próximo.
+        n = int(meio[2]) + (1 if int(meio[3]) >= 4 else 0)
+        return arquivo_endiabrado_da_chave(meio[1], n), meio[1], n
     if meio:
         return QUADROS / f"e_{meio[1]}/meio/{meio[2]}_{meio[3]}.png", meio[1], int(meio[2]) + int(meio[3]) / 7
     fluido = re.fullmatch(r"q_(ginga|anda)_fluida(\d+)", nome)
-    desenho = (f"{fluido[1]}_fluida", int(fluido[2])) if fluido else desenho_de(nome)
+    if fluido:
+        pasta = f"{fluido[1]}_fluida"
+        return arquivo_loop_endiabrado(pasta, int(fluido[2])), pasta, int(fluido[2]) / passo_do_loop(pasta)
+    desenho = desenho_de(nome)
     if not desenho:
         return None
+    if desenho[0] in LOOPS:
+        return arquivo_loop_endiabrado(desenho[0], desenho[1]), desenho[0], desenho[1] / passo_do_loop(desenho[0])
     outra, passo = pasta_endiabrada(desenho[0])
-    return QUADROS / outra / f"{desenho[1]:02d}.png", desenho[0], desenho[1] / passo
+    return arquivo_endiabrado_da_chave(desenho[0], desenho[1]), desenho[0], desenho[1] / passo
 
 
 def arquivo_endiabrado(nome):
@@ -1200,7 +1618,7 @@ def preset_despertado(s):
         if par and par[0].exists():
             arquivo, pasta, pos = par
             n = int(pos)
-            seguinte = (n + 1) % 8 if pasta in LOOPS_ENDIABRADOS else min(7, n + 1)
+            seguinte = (n + 1) % (quadros_do_loop(pasta) // passo_do_loop(pasta)) if pasta in LOOPS else min(7, n + 1)
             dx = round(dx_chave(pasta, n) + (dx_chave(pasta, seguinte) - dx_chave(pasta, n)) * (pos - n))
             s.add(destino, colar_endiabrado(normal, abrir_quadro(arquivo), fator_endiabrado(pasta), dx))
         elif nome.startswith(("m_despertar", "f_despertar", "f_lata", "m_lata")):
@@ -1276,10 +1694,13 @@ def caminho_fluido(s, atual, proximo):
     passo = 1 if para[1] > de[1] else -1
     caminho = []
     for i in range(de[1], para[1], passo):
-        caminho.append(atual if i == de[1] else f"f_{folha}{i}")
+        if i == de[1] or not (desenhado() and (folha, i) in DESENHO_PROIBIDO):
+            caminho.append(atual if i == de[1] else f"f_{folha}{i}")
         intervalo = min(i, i + passo)
-        arquivos = sorted((QUADROS / folha / "meio").glob(f"{intervalo:02d}_*.png"),
+        arquivos = sorted((pasta_da_folha(folha) / "meio").glob(f"{intervalo:02d}_*.png"),
                           key=lambda a: int(a.stem.split("_")[1]), reverse=passo < 0)
+        if desenhado() and (folha, intervalo) in MEIO_PROIBIDO:
+            arquivos = []  # corte seco: aqui o quadro do meio derrete
         for arquivo in arquivos:
             caminho.append(registra_meio(s, folha, intervalo, int(arquivo.stem.split("_")[1])))
     return caminho
@@ -1297,7 +1718,7 @@ def pe_no_chao(img, folha, n, k):
         return img
     for j in (n, n + 1):
         if (folha, j) not in _BASE_CHAVE:
-            _BASE_CHAVE[(folha, j)] = base_figura(abrir_quadro(QUADROS / folha / f"{j:02d}.png"))
+            _BASE_CHAVE[(folha, j)] = base_figura(abrir_quadro(pasta_da_folha(folha) / f"{j:02d}.png"))
     bases = [_BASE_CHAVE[(folha, n)], _BASE_CHAVE[(folha, n + 1)]]
     base = base_figura(img)
     if base is None or None in bases or any(abs(b - (EIXO_Y - 1)) > 3 for b in bases):
@@ -1355,23 +1776,30 @@ def acoes_folhas(Q):
     """Ações do Pengaró com a sequência inteira desenhada. Vêm antes das antigas, que então são ignoradas.
     Quantidade de quadros e tempos seguem os golpes antigos onde o .cns depende de AnimElem."""
     f = lambda folha, i: f"f_{folha}{i}"
-    Q(5, [("q_ginga_fluida0", 2), ("q_ginga_fluida1", 2), ("q_ginga_fluida2", 2)])
+    arcade = desenhado()  # Pengaró: golpes na arte arcade (ARCADE); Gutto e Raiclaven seguem como estavam
+    Q(5, [("q_ginga_fluida0", 6)] if desenhado() else [(f"q_ginga_fluida{i}", 2) for i in range(3)])  # virar
     Q(6, [(f("agachado", 4), 3), (f("agachado", 5), 3)], BAIXO)
-    Q(100, [(f"q_anda_fluida{i}", 1) for i in range(0, quadros_do_loop("anda_fluida"), 3)])
+    # correr: os mesmos desenhos do andar, sem o "peso desce", em menos da metade do tempo
+    Q(100, [(f"q_anda_fluida{i}", 3) for i in (0, 1, 2, 4, 5)] if desenhado() else
+      [(f"q_anda_fluida{i}", 1) for i in range(0, quadros_do_loop("anda_fluida"), 3)])
     # em pé <-> agachado: troca seca de 2 ticks com um desenho só (eram 6 e 4; o estado já é C desde o tick 0)
-    Q(10, [(f("agachado", 2), 2)], BAIXO)
+    Q(10, [(f("agachado", 0 if arcade else 2), 2)], BAIXO)
     Q(11, [(f("agachado", i), 8) for i in (4, 5, 6, 7, 6, 5)], BAIXO)
-    Q(12, [(f("agachado", 2), 2)], BAIXO)
+    Q(12, [(f("agachado", 0 if arcade else 2), 2)], BAIXO)
     Q(40, [(f("pulo", 0), 4)])
     for n in (41, 42, 43):
         Q(n, [(f("pulo", 1), 3), (f("pulo", 2), 5), (f("pulo", 3), 6), (f("pulo", 4), -1)], NO_AR)
     for n in (44, 45, 46):
         Q(n, [(f("pulo", 4), 6), (f("pulo", 5), 6), (f("pulo", 6), -1)], NO_AR)
     Q(47, [(f("pulo", 6), 2), (f("pulo", 7), 3)])
-    Q(120, [(f("defesa", 1), 2), (f("defesa", 2), 2)])
+    # no desenho 2 da defesa a garrafa aparece do outro lado dos braços cruzados: o Pengaró entra direto no 3
+    d2 = 3 if desenhado() else 2
+    Q(120, [(f("defesa", 1), 2), (f("defesa", d2), 2)])
     Q(130, [(f("defesa", 3), 10), (f("defesa", 4), 10)])
-    Q(140, [(f("defesa", 2), 2), (f("defesa", 1), 2)])
+    Q(140, [(f("defesa", d2), 2), (f("defesa", 1), 2)])
     Q(150, [(f("defesa", 5), 3), (f("defesa", 6), 3), (f("defesa", 7), -1)])
+    if desenhado():  # o desenho 7 tem um punho solto agarrado na garrafa caída: a derrota termina no 6
+        Q(170, [(f("derrota", i), 6) for i in range(6)] + [(f("derrota", 6), -1)])
     Q(170, [(f("derrota", i), 6) for i in range(7)] + [(f("derrota", 7), -1)])
     Q(181, [(f("vitoria", i), 6) for i in range(7)] + [(f("vitoria", 7), -1)])
     Q(195, [(f("provoca", i), 7) for i in range(8)])
@@ -1389,10 +1817,10 @@ def acoes_folhas(Q):
     Q(5110, [(f("queda", 7), -1)], DEITADO)
     Q(5160, [(f("queda", 6), 6), (f("queda", 7), -1)], DEITADO)
     Q(5170, [(f("queda", 6), 6), (f("queda", 7), -1)], DEITADO)
-    Q(5120, [(f("levanta", i), 4) for i in range(1, 8)], BAIXO)
+    Q(5120, [(f("levanta", i), 4) for i in range(1, 8)], ROLANDO)
     for n, t in ((700, 4), (5200, 3), (5210, 3)):
-        Q(n, [(f("rolamento", i), t) for i in range(8)], BAIXO if n == 700 else [])
-    Q(705, [(f("rolamento", i), 4) for i in range(7, -1, -1)], BAIXO)
+        Q(n, [(f("rolamento", i), t) for i in range(8)], ROLANDO if n == 700 else [])
+    Q(705, [(f("rolamento", i), 4) for i in range(7, -1, -1)], ROLANDO)
 
     def sequencia(n, folha, lig, ativo, rec, caixa, quadro_ativo=3, area=CORPO):
         """Liga, golpe e volta com os 8 desenhos, no mesmo tempo total do golpe antigo."""
@@ -1405,6 +1833,17 @@ def acoes_folhas(Q):
         Q(n, q, area)
 
     sequencia(230, "chute_baixo", 5, 3, 9, (12, -56, 58, -42))
+    if arcade:
+        # chute alto arcade: os desenhos 4 e 5 são os dois de perna esticada. O 5 abria a volta com 6 ticks sem caixa:
+        # fica com 2 e o resto vai para o joelho recolhendo (6) e o pé no chão (7). Mesmo total (18), mesmos elementos.
+        cx = (12, -100, 80, -58)
+        Q(240, [(f("chute_alto", 1), 5), (f("chute_alto", 2), 4), (f("chute_alto", 3), 1, cx),
+                (f("chute_alto", 4), 3, cx), (f("chute_alto", 5), 2), (f("chute_alto", 6), 8), (f("chute_alto", 7), 8)])
+        # cotovelada arcade: o desenho 3 ainda é a armação (cotovelo junto do rosto) e o contato é o 4. Mesmos tempos e
+        # a mesma quantidade de elementos (2 + 2 + 3) de sequencia(): o .cns usa AnimElem.
+        for n, t, cx in ((210, (4, 3, 1, 3, 6, 5, 5), (15, -92, 78, -64)), (215, (2, 2, 1, 2, 6, 4, 4), (12, -94, 66, -62))):
+            Q(n, [(f("martelo", d), tk, cx) if d == 4 else (f("martelo", d), tk)
+                  for d, tk in zip((2, 3, 4, 4, 5, 6, 7), t)])
     sequencia(240, "chute_alto", 9, 4, 18, (12, -100, 80, -58))
     # capoeira: cotovelada no soco forte, bênção no chute longo
     sequencia(210, "martelo", 7, 4, 16, (15, -92, 78, -64))
@@ -1417,12 +1856,27 @@ def acoes_folhas(Q):
           + [(f("compasso", 7), 14 + 6 * i)])
         Q(1200 + i, [(f("armada", 2), 4), (f("armada", 4), 6, (0, -130, 60 + 8 * i, -30)), (f("armada", 5), 8),
                      (f("armada", 6), -1)], NO_AR)
-        Q(1300 + i, [(f("caneta", 2), 10), (f("caneta", 4), 8, (10, -20, 70, -4)), (f("caneta", 7), 20 + 6 * i)], BAIXO)
-    sequencia(400, "baixo_soco", 4, 3, 7, (15, -56, 54, -42), quadro_ativo=4, area=BAIXO)
+        Q(1300 + i, [(f("caneta", 2), 10), (f("caneta", 4), 8, (10, -20, 70, -4)), (f("caneta", 7), 20 + 6 * i)], ROLANDO)
+    # (no arcade o punho do soco agachado fica 10 px mais alto: y de -66 a -55; o alcance é o mesmo)
+    sequencia(400, "baixo_soco", 4, 3, 7, (15, -66, 54, -52) if arcade else (15, -56, 54, -42), quadro_ativo=4,
+              area=BAIXO)
     sequencia(410, "cabecada", 6, 5, 18, (5, -122, 42, -60), area=BAIXO)
+    if arcade:
+        # rasteirinha arcade: o desenho 3 segura o contato (o 4 troca a pose do braço, veja DESENHO_PROIBIDO); o pé
+        # passa 8 px mais alto (y de -24 a -14). Mesmos 7 elementos e tempos de sequencia(430, ..., 5, 3, 10).
+        # A caixa vai até o pé (x 76): com 62 o pé passava 14 px além dela.
+        cx = (12, -26, 78, -10)
+        Q(430, [(f("rasteirinha", 1), 3), (f("rasteirinha", 2), 2), (f("rasteirinha", 3), 1, cx),
+                (f("rasteirinha", 3), 2, cx), (f("rasteirinha", 5), 4), (f("rasteirinha", 6), 3),
+                (f("rasteirinha", 7), 3)], BAIXO)
+        # rasteira (440): chute rasteiro da base agachada (PASTA_ARCADE). Perna desliza (2, 3), esticada rente ao chão
+        # (4, 5: pé em y de -21 a -10), recolhe (6) e base (7). Mesmos 7 elementos e tempos de sequencia(440, 10, 4, 22).
+        cx = (12, -22, 78, -6)
+        Q(440, [(f("rasteira", 2), 5), (f("rasteira", 3), 5), (f("rasteira", 4), 1, cx), (f("rasteira", 5), 3, cx),
+                (f("rasteira", 6), 8), (f("rasteira", 6), 7), (f("rasteira", 7), 7)], BAIXO)
     sequencia(430, "rasteirinha", 5, 3, 10, (12, -18, 62, -4), area=BAIXO)
     sequencia(440, "rasteira", 10, 4, 22, (12, -18, 78, -2), area=BAIXO)
-    Q(600, [(f("ar_soco", 2), 2), (f("ar_soco", 3), 3), (f("ar_soco", 4), 8, (8, -86, 50, -62)),
+    Q(600, [(f("ar_soco", 2), 2), (f("ar_soco", 3), 3), (f("ar_soco", 4), 8, (8, -86, 50, -46 if arcade else -62)),
             (f("ar_soco", 6), -1)], NO_AR)
     Q(650, [(f("bicicleta", 2), 3), (f("bicicleta", 3), 4), (f("bicicleta", 4), 6, (6, -70, 70, -20)),
             (f("bicicleta", 6), -1)], NO_AR)
@@ -1439,17 +1893,24 @@ def acoes_folhas(Q):
         if g.estado in folha_do_golpe:
             folha, desenhos = folha_do_golpe[g.estado]
             assert len(g.poses) == len(desenhos), g.estado
-            quadros = [(f(folha, d), tempo, g.caixa) if 0 < k < len(desenhos) - 1 else (f(folha, d), tempo)
+            cx = CAIXA_ARCADE.get(g.estado, g.caixa) if arcade else g.caixa
+            quadros = [(f(folha, d), tempo, cx) if 0 < k < len(desenhos) - 1 else (f(folha, d), tempo)
                        for k, (d, tempo) in enumerate(zip(desenhos, g.tempo))]
             Q(g.estado, quadros, NO_AR if g.tipo == "A" else CORPO)
     # (a Saideira Sombria, 3100, fica como está: com desenhos de uma folha só a caixa acompanha o punho e o super de perto
     # deixa de alcançar; mexer nisso muda o equilíbrio e precisa de teste de jogo)
     # aparar (760): defesa 2 -> 3 -> 4 em vez de pular entre poses soltas
-    Q(760, [(f("defesa", 2), 4, (-8, -105, 46, -12)), (f("defesa", 3), 10), (f("defesa", 4), 10)])
+    Q(760, [(f("defesa", d2), 4, (-8, -105, 46, -12)), (f("defesa", 3), 10), (f("defesa", 4), 10)])
     Q(610, [(f("bicicleta", 1), 6), (f("bicicleta", 4), 10, (6, -60, 62, -30)), (f("bicicleta", 6), -1)], NO_AR)
     # correntes, kombos, golpes do Despertar e especiais novos (dados em pengaro_extra.py)
     for m in extra.TODOS + extra.ESPECIAIS_A_MAO:
-        Q(m.estado, [(f(fl, d), n, m.caixa) if ativo else (f(fl, d), n) for fl, d, n, ativo in m.quadros],
+        quadros, caixa = m.quadros, m.caixa
+        if arcade and m.estado in DESENHOS_ARCADE_DO_GOLPE:
+            troca = DESENHOS_ARCADE_DO_GOLPE[m.estado]
+            quadros = [(*troca.get(k, (fl, d)), n, ativo) for k, (fl, d, n, ativo) in enumerate(quadros)]
+        if arcade:
+            caixa = CAIXA_ARCADE.get(m.estado, caixa)
+        Q(m.estado, [(f(fl, d), n, caixa) if ativo else (f(fl, d), n) for fl, d, n, ativo in quadros],
           BAIXO if m.area == "BAIXO" else CORPO)
     # agarrão de comando: errou, fica aberto; acertou, capoeira e whisky
     Q(830, [(f("agarrao", 2), 3, (10, -90, 42, -50)), (f("agarrao", 3), 4), (f("agarrao", 4), 4),
@@ -1471,6 +1932,15 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
     s = Sprites()
     s.folhas = not hazaki
     A = s.add
+    # parado e corrida saem do loop desenhado; em quem ainda tem as pastas de fluxo, dos desenhos de sempre
+    TROCA_POR_FOLHA["parado0"] = ("ginga_fluida", 0) if desenhado() else ("soco", 0)
+    if desenhado():
+        # lata: no desenho 1 ele abre a lata com duas mãos sem soltar a garrafa (três mãos); começa do 0, lata na mão
+        TROCA_POR_FOLHA.update({"embaixada0": ("lata", 0), "parry": ("defesa", 3)})
+        # agachado arcade: 8 desenhos da base agachada respirando (0 e 7 os mais altos, 3 o mais baixo), sem descida
+        TROCA_POR_FOLHA.update({"agacha0": ("agachado", 0), "agacha1": ("agachado", 3), "agacha2": ("agachado", 4),
+                                "defesa_baixa": ("agachado", 3)})
+    TROCA_POR_FOLHA.update({f"corre{i}": ("anda_fluida", i if desenhado() else i * 12) for i in range(4)})
 
     # retratos que o IKEMEN usa no menu e nas barras
     rosto = p["parado"].crop((EIXO_X - 24, EIXO_Y - 112, EIXO_X + 32, EIXO_Y - 56))
@@ -1547,7 +2017,14 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
                     quadro = estica(origens[nome], 1 + .012 * math.sin(i * math.tau / 8))
                 A(f"q_{nome}{i}", quadro)
             continue
-        for i, arquivo in enumerate(sorted((QUADROS / nome).glob("*.png"))):
+        if nome in LOOPS:
+            for i in range(quadros_do_loop(nome)):
+                A(f"q_{nome}{i}", quadro_loop(nome, i))
+            if desenhado():
+                s.proximo += VAGAS_DO_FLUXO[nome] - quadros_do_loop(nome)
+            continue
+        # soco: a pasta arcade no Pengaró (o soco fraco 200 usa q_soco<i>); parado e anda não têm ação no Pengaró
+        for i, arquivo in enumerate(sorted((pasta_da_folha(nome) if nome == "soco" else QUADROS / nome).glob("*.png"))):
             A(f"q_{nome}{i}", abrir_quadro(arquivo))
     A("soco0", mistura(p["parado"], p["soco"], 0.5))
     A("soco1", p["soco"])
@@ -1615,9 +2092,13 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
     A("lata2", estica(p["parado"], 1.03))
     if not hazaki:
         # ginga da forma despertada: a mesma ginga, de óculos, com as chamas por trás
-        for i in range(quadros_do_loop("ginga_endiabrada")):
-            A(f"ginga_endiabrada{i}", colar_endiabrado(None, abrir_quadro(QUADROS / f"ginga_endiabrada/{i:02d}.png"),
-                                                     fator_endiabrado("ginga_fluida")))
+        for i in range(quadros_do_loop("ginga_fluida")):  # o mesmo sprite que o remap do Despertar põe na ação 0
+            e = abrir_quadro(arquivo_loop_endiabrado("ginga_fluida", i))
+            A(f"ginga_endiabrada{i}", colar_endiabrado(quadro_loop("ginga_fluida", i), e, fator_endiabrado("ginga_fluida"),
+                                                     dx_chave("ginga_fluida", i)) if desenhado() else
+              colar_endiabrado(None, e, fator_endiabrado("ginga_fluida")))
+        if desenhado():
+            s.proximo += VAGAS_DO_FLUXO["ginga_fluida"] - quadros_do_loop("ginga_fluida")
     # balões
     for chave, texto in BALOES.items():
         A(f"balao_{chave}", balao(texto))
@@ -1682,11 +2163,11 @@ def montar_air(s, faiscas, hazaki=False, arte_despertada=None):
     if hazaki:
         Q(0, [(f"q_parado{i}", 6) for i in range(8)])
     else:
-        Q(0, [(f"q_ginga_fluida{i}", 2) for i in range(quadros_do_loop("ginga_fluida"))])
+        Q(0, [(f"q_ginga_fluida{i}", t) for i, t in enumerate(tempos_do_loop("ginga_fluida"))])
     if hazaki:
         Q(9203, [(f"juliet{i}", 6) for i in range(4)])
     else:
-        Q(9203, [(f"ginga_endiabrada{i}", 2) for i in range(quadros_do_loop("ginga_endiabrada"))])
+        Q(9203, [(f"ginga_endiabrada{i}", t) for i, t in enumerate(tempos_do_loop("ginga_fluida"))])
     Q(5, [("parado0", 3), ("anda0", 3)])
     Q(6, [("agacha0", 3), ("parado0", 3)], BAIXO)
     Q(10, [("agacha0", 3)], BAIXO)
@@ -1696,8 +2177,8 @@ def montar_air(s, faiscas, hazaki=False, arte_despertada=None):
         Q(20, [(f"q_anda{i}", 5) for i in range(8)])
         Q(21, [(f"q_anda{i}", 5) for i in range(7, -1, -1)])
     else:
-        Q(20, [(f"q_anda_fluida{i}", 2) for i in range(quadros_do_loop("anda_fluida"))])
-        Q(21, [(f"q_anda_fluida{i}", 2) for i in reversed(range(quadros_do_loop("anda_fluida")))])
+        Q(20, [(f"q_anda_fluida{i}", t) for i, t in enumerate(tempos_do_loop("anda_fluida"))])
+        Q(21, [(f"q_anda_fluida{i}", t) for i, t in reversed(list(enumerate(tempos_do_loop("anda_fluida"))))])
     Q(40, [("prepulo", 4)])
     for n in (41, 42, 43):
         Q(n, [("pulo_sobe", 8), ("pulo_topo", -1)] if hazaki else
@@ -1781,7 +2262,11 @@ def montar_air(s, faiscas, hazaki=False, arte_despertada=None):
         # Mão de Sombra: uma massa de sombra (o rastro do endiabrado no auge), não o bolão da lata
         Q(3012, [(f"fx_sombra_rastro_{i}", 2) for i in range(6, 14)], [(-40, -30, 40, 30)], loop=0)
     caixa_p = (0, -110, 90, -10)
-    Q(3100, [("chute0", 4)] + [(n, 4, caixa_p) for n in ("soco1", "chute1", "rasteira1", "soco2", "chute2", "gira1", "rasteira2", "kick_alto")] + [("chute3", 20)])
+    # No Pengaró o compasso (gira1) e a armada (kick_alto) ainda são da arte antiga (cabelo castanho, contorno mole, de
+    # costas com a garrafa do outro lado): no meio do super ele trocava de arte por 14 ticks. Entram a bênção (afastar
+    # 4) e o chute alto (4), que são arcade; mesmos tempos, mesma caixa de origem.
+    gira, alto = ("f_afastar4", "f_chute_alto4") if desenhado() and not hazaki else ("gira1", "kick_alto")
+    Q(3100, [("chute0", 4)] + [(n, 4, caixa_p) for n in ("soco1", "chute1", "rasteira1", "soco2", "chute2", gira, "rasteira2", alto)] + [("chute3", 20)])
     for g in golpes(hazaki):
         Q(g.estado, quadros_golpe(g), NO_AR if g.tipo == "A" else CORPO)
     Q(760, [("parry", 4, (-8, -105, 46, -12)), ("recua", 10), ("defesa", 10)])
@@ -3170,6 +3655,7 @@ def arte_endiabrada(s):
 
 SOBRA_CLSN1 = 4  # px de caixa de golpe além do membro visível (a regra 8.3 aceita até 12)
 LARGURA_MINIMA_CLSN1 = 12
+SOBRA_MAXIMA_CLSN1 = 12  # regra 8.3: teto de caixa além do membro da forma normal
 
 
 def ajustar_clsn1(blocos, s, preset):
@@ -3217,8 +3703,14 @@ def ajustar_clsn1(blocos, s, preset):
                     usa.append(pares.get((g, i)))
                 medidas = [frente(c, y1, y2) for c in usa if c]
                 medidas = [v for v in medidas if v is not None]
-                if medidas and max(x1, x2) > max(medidas) + SOBRA_CLSN1:
-                    ponta = max(max(medidas) + SOBRA_CLSN1, min(x1, x2) + LARGURA_MINIMA_CLSN1)
+                alvo = max(medidas) + SOBRA_CLSN1 if medidas else None
+                # ação sem variante 1xxxx serve às duas formas e usa a maior; mas nunca mais de SOBRA_MAXIMA_CLSN1
+                # além do membro da forma normal (a cabeçada 303 ficava 17 px à frente da cabeça)
+                normal = frente((g, i), y1, y2) if numero < 10000 and desenhado() else None
+                if medidas and normal is not None:
+                    alvo = min(alvo, normal + SOBRA_MAXIMA_CLSN1)
+                if medidas and max(x1, x2) > alvo:
+                    ponta = max(alvo, min(x1, x2) + LARGURA_MINIMA_CLSN1)
                     if x2 >= x1:
                         x2 = min(x2, ponta)
                     else:
@@ -3262,14 +3754,30 @@ def despertar_do_pengaro(cns):
     return cns
 
 
+def sem_ginga_9203(cns):
+    """A ginga do Despertar já sai da ação 0 pelo RemapPreset. O ChangeAnim para a 9203 brigava com o estado 0 do
+    motor (common1.cns.zss: `anim != 0` volta para a ação 0 todo tick): a animação recomeçava a cada tick e ele ficava
+    congelado no 1º desenho. Vale para o Pengaró, o Gutto e o Raiclaven (os três têm o preset)."""
+    bloco = re.compile(r"\[State -2, Ginga de Juliet\]\n(?:[^\n]+\n)+\n\[State -2, Tira os oculos\]\n(?:[^\n]+\n)+\n")
+    cns, n = bloco.subn("", cns)
+    assert n == 1, "bloco da ginga 9203 não encontrado"
+    return cns
+
+
 def main():
     SAIDA.mkdir(parents=True, exist_ok=True)
+    # Caixas de colisão do desenho arcade, só no Pengaró (Gutto, Raiclaven e Hazaki não passam por aqui): agachado de
+    # 77 a 85 px de altura (o antigo tinha 72) e deitado de 138 x 34 px (o antigo cabia em 120 x 24). Rolamento, caneta
+    # e levantada (ROLANDO) ficam como eram: a caneta passa por baixo de projétil.
+    BAIXO[0] = (-28, 0, 28, -80)
+    DEITADO[0] = (-70, 0, 70, -34)
     s = montar_sprites(retrato=RAIZ / "sprites/pengaro-selecao-kof.png")
     faiscas = carregar_faiscas(s)
     a = montar_air(s, faiscas, arte_despertada=arte_endiabrada(s))
     preset = preset_despertado(s)
     (SAIDA / "pengaro.air").write_text("\n".join(ajustar_clsn1(a.txt, s, preset)), encoding="utf-8", newline="\n")
     cns = despertar_do_pengaro(ajustar_sparkxy(remapear_animelem(montar_cns(), a.mapas), a.ativos))
+    cns = sem_ginga_9203(cns)
     fracos = {int(n) for n in re.findall(r"\[State (\d+), Golpe\]\n(?:[^\n]+\n)*?hitsound = F5,0\n", cns)}
     assert fracos == FRACOS, f"FRACOS (estilo seco) fora de dia: {sorted(fracos ^ FRACOS)}"
     volta = "reset = 1\n\n[State -2, Endiabrado desligado]"

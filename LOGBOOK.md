@@ -309,3 +309,198 @@ filmagem (`ferramentas/filmar_luta.py`) ou com o Breno olhando.
 - Agente do ChatGPT parado (dono desligou o note). Folhas em `sprites/<l>/quadros/folhas_arcade/`: Pengaró 20, Gutto 19, Raiclaven 19, Hazaki 15. Hazaki parou em "rolamento" (próxima da fila em `docs/arcade/fila.md`; "caneta" já aprovada pelo agente mas pode não ter sido salva).
 - Notado nas folhas cruas: escala varia entre ações (Raiclaven no `pulo` maior que no `ginga`); `cabecada` do Gutto é joelhada e a do Raiclaven é tesoura (renomear no código).
 - Próximo: terminar a fila do Hazaki (lote 3 dos demais, se houver), ligar `folhas_arcade` nos geradores (Pengaró primeiro: quantizar → Blender só nas ações fluidas → quantizar --meio → conferir_arte), validar na sandbox, depois o pente fino de animação/anatomia.
+
+## 2026-11-11 — Pengaró: pente fino de anatomia (branch `anatomia`, sem push)
+
+**Pedido do dono:** "corrija todos os erros de anatomia... quando ginga fica com três mãos, as pernas fazem movimentos
+estranhos, queria que ficasse bem natural".
+
+**Causa da ginga:** `ginga_fluida` tinha 64 quadros para 8 desenhos; os do meio eram fluxo óptico (um desenho entortado
+até a metade e trocado pelo seguinte) e os próprios desenhos 2 e 6 tinham braço duplicado e caneleira na outra perna.
+
+**Feito (4 commits):**
+
+- Ginga e andar só com desenhos da folha arcade, sem quadro do meio: `LOOPS` em `gerar_pengaro.py`. Ginga = 8 desenhos
+  de `quadros_arcade/ginga` a 6 ticks, com a ponta do pé da frente cravada no mesmo x (`PE_DA_FRENTE`); andar = desenhos
+  0,2,3,4,1,5 de `quadros_arcade/anda` (o 6 da folha levanta a mesma perna do 2); correr usa os mesmos a 3 ticks.
+  Pastas `ginga_fluida`, `anda_fluida`, `e_anda_fluida` apagadas; `ginga_endiabrada` ficou só com os 8 desenhos (00-07).
+- Endiabrado: ginga com os desenhos limpos 0,1,2,6,7 e andar com 0,1,5,7 (`LOOPS_ENDIABRADOS`); não usa mais quadro do
+  meio em nenhuma folha (`par_endiabrado`); desenhos errados trocados pelo vizinho (`TROCA_ENDIABRADA`).
+- `sem_rosa` / `sem_fundo_endiabrado` no `abrir_quadro`: tiram o resto de fundo magenta de todas as folhas na carga.
+- `MEIO_PROIBIDO`: corte seco onde o quadro do meio derretia (vitória, despertar_a, provocação, defesa).
+- `levanta` sai de `quadros_arcade` (`ARCADE`). Intro começa com a lata na mão; defesa entra no desenho 3; derrota
+  termina no 6.
+- Retoques de pixel nos desenhos (não refeitos pelo Blender): `chute_baixo` 03/05 e meios, `chute_alto` 01,
+  `provoca` 02/03, `e_anda` 05. **Cuidado:** rodar `animar_folha.py` nessas folhas recorta de novo da folha crua e
+  desfaz o retoque.
+- Os grupos do `.sff` dos loops antigos ficam reservados (`VAGAS_DO_FLUXO`) para `SPRITES_VITIMA` não mudar.
+- Gutto e Raiclaven usam `gerar_pengaro` trocando `QUADROS`: tudo isso só vale quando `desenhado()` é verdadeiro. Os
+  .air/.cns/.sff deles saem byte a byte iguais aos do gerador de antes (conferido por md5; os arquivos commitados em
+  `chars/gutto` e `chars/raiclaven` já estavam diferentes do que o gerador da `mugen` produz, não mexi).
+- `verificar_pengaro.py` falhava na `mugen` ("paleta": o .sff tem 2 paletas desde o Endiabrado na seleção); aceita 2.
+
+**Testado:** `verificar_pengaro.py` sem erro; robô na sandbox 146 PASS / 0 FAIL; ginga e andar filmados na sandbox.
+O motor só anda com tecla de verdade, então o filme do andar usa dois estados só da cópia da sandbox que tocam as
+ações 20/21 com a velocidade de andar: o estado 20 de verdade não foi filmado.
+
+**Pendente (precisa de desenho):** lista com MOTION pronta no fim de `docs/arcade/fila.md` (Lote 5). Não retocado: duas
+caneleiras no ar (`ar_soco`, `bicicleta`, `pulo` 03), `caneta` 04, `agarrao` 04/05, `armada`, `bola`, `compasso`,
+garrafa que muda de mão para beber, três famílias de cor nas folhas `e_`, olho furado em ~19 desenhos `e_`.
+
+
+## 2026-11-11 (2ª passada) — pente fino de anatomia depois da revisão dos céticos (branch `anatomia`, sem push)
+
+**Corrigido (tudo em `ferramentas/gerar_pengaro.py`, nada de quadro do meio novo):**
+
+- **Ginga:** agora é um vai-e-volta só. `LOOPS["ginga_fluida"]` = desenhos 3, 7, 5, 6, 2, 1 da folha arcade (em pé, pé de
+  trás na ponta, afundo, volta) a 6/6/5/7/7/5 ticks. Os desenhos 0 e 4 (base aberta com o tronco para trás) saíram: era
+  entre eles e os vizinhos que a cabeça pulava 23 px e o pé de trás fazia zigue-zague. Pé da frente cravado como antes.
+  `mao_sem_cordao` tira os pontos amarelos/lilás das pontas dos dedos.
+- **Andar:** as duas metades da passada duram quase o mesmo (8,8 / 5,4,4,5); `perna_de_tras_na_sombra` deixa a perna sem
+  caneleira lilás também no desenho 0 (a cor piscava na volta do ciclo).
+- **Intro (190/191/192):** saiu o desenho de abrir o lacre (`DESENHO_PROIBIDO`, `MEIO_PROIBIDO` lata 0 e 1): tinha TRÊS
+  mãos (garrafa, lata e uma abrindo o lacre). A lata já está na mão e ele vai direto para o gole.
+- **Chutes em pé (230, 240, 245, 246, 260...):** a caneleira sumia das duas pernas durante o golpe e voltava de estalo.
+  `caneleira_no_apoio` pinta a caneleira na canela da perna de apoio (a de trás) nos desenhos e quadros do meio do
+  golpe; `canela_creme` troca a placa lilás do retoque anterior pelo creme da calça; `sem_rosa(miolo_branco=True)` tira
+  a tira branca atrás da coxa no chute alto (miolo do clarão rosa do fundo).
+- **Agachado parado (11):** `PES_NO_CHAO` assenta todos os desenhos na linha do chão (subia 1 px com os pés junto).
+- **Endiabrado:** ginga 0, 7, 1, 2, 2, 1 com o pé da frente cravado (`PE_DA_FRENTE_ENDIABRADO`; antes os dois pés
+  pulavam 20-38 px); andar só com as poses de bote 1, 5, 3 (não alterna mais com a guarda em pé) e na escala da folha
+  (não engorda 18%); `calca_roxa` leva a calça marrom de metade das folhas `e_` para o roxo da ginga; `fechar_furos`
+  pinta com a cor de quem está em volta (era o magenta vivo que aparecia no meio da figura) e não fecha elo de
+  corrente; `sem_fundo_endiabrado` tira bloco grande de fundo também perto da cabeça (agachado); `sem_algema_da_frente`
+  no `e_agachado`; `sem_farelo` no `despertar_b`.
+- **Ginga do Despertar congelada (Pengaró, Gutto e Raiclaven):** `sem_ginga_9203` tira o ChangeAnim para a ação 9203. O
+  estado 0 do motor (`common1.cns.zss`: `anim != 0` → ação 0) desfazia a troca todo tick e a ginga despertada ficava
+  parada no 1º desenho. A ginga despertada sai da ação 0 pelo RemapPreset. O Hazaki ainda tem o bloco (não mexi).
+- 17 imagens de depuração `acao_*.png` saíram da raiz (ainda estão no histórico do commit 9d19c9a: juntar os commits
+  no merge).
+
+**Testado:** `verificar_pengaro.py` sem erro; robô na sandbox: Pengaró 146 PASS / 0 FAIL; Gutto e Raiclaven 143 / 1, a
+mesma falha de antes (`var(37) = 1 no meio do 3100`, checagem do robô que só vale para o Pengaró). Ginga normal e
+despertada filmadas na sandbox: as duas animam (a despertada não fica mais congelada).
+
+**Continua pendente (precisa de desenho novo, pedidos no Lote 5 de `docs/arcade/fila.md`):** ginga com desenho de
+passagem de verdade; andar com as duas passadas (hoje a 2ª metade tem 4 desenhos e a 1ª tem 2, o pé patina); corrida
+(usa os desenhos do andar); estilo: ginga, andar e levantada são folha arcade e o resto é a arte antiga; garrafa que
+troca de mão para beber (195, 181, 2000), que pula de lado na defesa (120-140) e vai para o peito no agachar; derrota
+sentado sem caneleira; duas caneleiras no ar (41, 600, 650, 700), bola, compasso; andar endiabrado sem passada de
+verdade; olho endiabrado apagado nos desenhos de cabeça baixa. Gutto e Raiclaven: tudo o que os céticos listaram menos
+a ginga 9203 (derrota, soco no ar, cavalo, Despertar do Gutto; objeto da mão, rasteira, rolamento, tesourada, vitória
+do Raiclaven) é defeito do próprio desenho e só sai com folha nova.
+
+
+## 2026-11-11 (fecho) — anatomia na mugen, Hazak em andamento, borrão do Pengaró diagnosticado
+
+- **Anatomia:** a branch `anatomia` entrou na `mugen` num commit só (fb95f91). Detalhes nas duas entradas acima.
+  Os três revisores NÃO aprovaram como "natural": o que sobra é defeito do desenho e só sai com folha nova.
+- **Borrão / troca de estilo do Pengaró (queixa do Alisson):** ginga, andar e levantada já são arte arcade (16 cores,
+  pixel seco); todos os golpes ainda são a arte antiga (milhares de cores, reduzida com LANCZOS = contorno mole). Na
+  tela ele troca de cara a cada golpe. Conserto: converter as folhas restantes para arcade. Das 62 pastas do Pengaró,
+  20 têm folha em `folhas_arcade/` e só 11 estão em `quadros_arcade/`; faltam gerar no ChatGPT ~22 normais (agarrao,
+  armada, bola, caneta, compasso, derrota, golaco, lata, provoca, rolamento, vitoria, despertar...) e todas as `e_`.
+  Gutto: 19 folhas arcade, nenhuma ligada (falta paleta arcade dele). Raiclaven: 19, 8 ligadas.
+- **Hazak (branch `hazak`, não vai para a mugen sem o Breno aprovar):** ficha do Breno em `docs/fichas/hazaki.md`;
+  fila de 120 folhas em `docs/arcade/fila_hazak.md`; especificação do gerador em `docs/arcade/hazak_gerador.md`;
+  lote 1 gerado (30 folhas na pasta). Lotes 2 a 4 sendo gerados; 5 a 7 (Diabo Loiro) esperam o Breno.
+  Perguntas abertas para o Breno: Nota Falsa/Suborno em ↓↑ bate com o superpulo (propus ↓←); Chuva de Dinheiro em x+y
+  contra a regra de super num botão; o que continua valendo dentro do Diabo Loiro; a fala da provocação.
+- **Pedido do Alisson:** forma Endiabrada do Pengaró redesenhada inteira, roupa de boss final e aura absurda (casa com
+  a regra nova do Breno: toda forma despertada tem aura própria). Fazer folha de conceito para ele aprovar antes.
+- **Falha 143/1 do robô em Gutto e Raiclaven** (`var(37)` no meio do 3100): já existia, ninguém investigou.
+- **Hazaki** ainda tem o bloco da ação 9203 que congelava a ginga do Despertar; sai no gerador novo.
+
+
+## 2026-11-11 (arcade) — golpes do Pengaró na arte arcade (branch `mugen`)
+
+**Por quê:** ginga, andar e levantada eram arte arcade (16 cores, pixel seco) e todos os golpes a arte antiga: na tela
+ele trocava de cabelo, tom de pele e caneleira a cada golpe e parecia borrado.
+
+**Feito (`ferramentas/gerar_pengaro.py`, `sprites/pengaro/quadros_arcade/`, `chars/pengaro`):**
+
+- `ARCADE` passou de `{levanta}` para 15 folhas: soco, chute_alto, martelo, afastar, apanha, queda, pulo, agachado,
+  baixo_soco, rasteirinha, rasteira, ar_soco, bicicleta, cabecada (e levanta). Saem de `quadros_arcade/<folha>/`, 8
+  desenhos segurados; quadro do meio só onde a pasta arcade tem `meio/` (soco, ar_soco, bicicleta, cabecada), e ali
+  ele entra só como smear de 1-2 ticks antes do contato.
+- `q_soco<i>` (soco fraco 200) lia `quadros/soco` direto; agora passa por `pasta_da_folha`.
+- `PASTA_ARCADE = {"rasteira": "chute_agachado"}`: a folha arcade da rasteira foi reprovada (duas garrafas, joelheira
+  verde) e a folha que veio como "chute_baixo" é um chute rasteiro agachado. Ela entra no lugar da rasteira (440 e os
+  sprites `rasteira0..3` do super 3100). **Muda a cara do 440**: chute rasteiro de guarda alta em vez do giro com as
+  mãos no chão. Decisão a confirmar com o dono.
+- Ações escritas à mão no arcade, com os MESMOS tempos e a mesma quantidade de elementos: 240 (o desenho 5 ainda é
+  perna esticada: 2 ticks, o resto vai para o 6 e o 7), 210/215 (cotovelada: armação 2-3, contato 4), 430 (contato no
+  desenho 3; o 4 troca a pose do braço e está em `DESENHO_PROIBIDO`), 440.
+- `DESLOCA_ARCADE`: afastar 6 em -10 px (pé de apoio plantado). Agachar (10/12) usa o desenho 0.
+- Caixas: Clsn1 do 400 sobe 10 px, do 430 8 px, do 440 4 px (o membro mudou de altura). No Pengaró o agachado passa a
+  `(-28,0,28,-80)` (era -70; o desenho tem 77-85 px) e o deitado a `(-70,0,70,-34)`; rolamento, caneta e levantada
+  ficam em -70 (`ROLANDO`). O resto das Clsn1 é recortado sozinho pelo `ajustar_clsn1` conforme o desenho novo.
+- Cabelo: a quantização levava o cabelo para os vinhos da pele em várias folhas. Repintado nos PNGs (pelos avaliadores
+  em martelo, afastar, apanha, pulo, agachado, baixo_soco, rasteirinha, chute_agachado; por mim em cabecada e ar_soco,
+  desenhos e `meio/`, e em queda). Scripts em `ferramentas/retoques_arcade/` (têm caminhos da sessão dentro; servem de
+  registro). **Rodar `quantizar_folha.py` de novo nessas folhas desfaz o retoque** (e a escala da queda e do agachado,
+  e a caneleira pintada na bicicleta 3-5).
+
+**Conferido:** tempos (início da caixa, duração do ativo, total) de TODAS as 254 ações iguais aos de antes, comparando
+os `.air`; `chars/gutto` e `chars/raiclaven` com o mesmo md5 antes e depois; `verificar_pengaro.py` sem erro; robô na
+sandbox 146 PASS / 0 FAIL; filme de 8 s na sandbox (soco, chutes, agachado, rasteiras) olhado em tiras.
+
+**Mudou no jogo (consequência do desenho, precisa de olho de quem joga):** alcance da Clsn1 pelo recorte automático:
+cotovelada 210/215/216 de 48 para 41; chute alto 240 de 58 para 79 (e 323, 3401, 3432 +11 a +16); soco no ar 600 de
+38 para 49; bicicleta 610/650 de 62/63 para 57. Agachado 10 px mais alto.
+
+**Ficou na arte antiga:** `chute_baixo` (230, 245, 231, 1500/1501, `pisa`) e `defesa` (120-150, 760): as folhas arcade
+são de outro golpe / outro modelo. E as folhas sem desenho arcade: agarrao, armada, bola, caneta, compasso, derrota,
+golaco, lata, provoca, rolamento, vitoria, despertar e todas as `e_` (o Endiabrado inteiro). Pedidos de desenho de
+chute_baixo, defesa, rasteira e agachado (cocorinha) com os avaliadores; entram em `docs/arcade/fila.md`.
+
+**Não conferido:** pulo e golpes no ar em movimento (o robô da filmagem não pula: `holdup` injetado não faz o motor
+pular); forma endiabrada por cima dos desenhos novos (o alinhamento usa a pose normal, que mudou em agachado, rasteira
+e cotovelada); `gerar_hazaki.py` não foi rodado (não usa as folhas, mas não foi medido). No 600 o contato segurado é o
+desenho 5 (braço dobrando), porque a caixa fica na altura do ombro e o punho do desenho 4 passa por baixo dela; para
+segurar o 4 a caixa teria de descer até o punho, o que muda o alcance do soco no ar.
+
+
+## 2026-11-11 (arcade, retoque) — o que os céticos acharam na integração dos golpes arcade do Pengaró
+
+**Corrigido (`ferramentas/gerar_pengaro.py`, `sprites/pengaro/quadros_arcade/`, `chars/pengaro`):**
+
+- **Deitado sem caneleira** (`queda/07`, ações 5110, 5150, 5160, 5170): caneleira pintada na canela da perna visível.
+  **Nó amarelo solto atrás do ombro** (`levanta/04`): apagado. Registro em
+  `ferramentas/retoques_arcade/retoque2_caneleira_no.py` (não rodar de novo: parte do PNG do commit 4fc03ed).
+- **Super 3100/13100 trocava de arte no meio:** no Pengaró o compasso (`gira1`) vira a bênção (`f_afastar4`) e a armada
+  (`kick_alto`) vira o chute alto (`f_chute_alto4`). O super inteiro é arcade. Alcance desses dois elementos pelo
+  recorte: 57 para 65 e 67 para 79 (13100: 57 para 63 e 67 para 65).
+- **1701 (rolê por trás e chute) misturava as artes:** os 15 ticks do rolê (um desenho só da folha antiga `rolamento`)
+  passam a ser a bola no chão da levantada arcade (`levanta 2`); `DESENHOS_ARCADE_DO_GOLPE`.
+- **Caixas (Clsn1) fora do membro:** 430 vai até o pé (x 62 para 78; 10430 54 para 70); 322 e 342 seguram o desenho 3
+  (o 4 é o `DESENHO_PROIBIDO`) com a caixa do 430; 600 desce até o punho (base -62 para -46; o contato segurado passa
+  a ser o quadro do meio 04_6, punho esticado); 601 desce até a mão (base -40 para -24); 10240 sobe até o pé do chute
+  endiabrado, que é mais alto (`CAIXA_DESPERTADA`: topo -100 para -116, alcance 56 para 65); `CAIXA_ARCADE`.
+- **Teto de sobra:** ação sem variante 1xxxx usa a maior medida entre as duas formas, mas agora nunca mais de 12 px
+  além do membro da forma normal (`SOBRA_MAXIMA_CLSN1`, só no Pengaró). A cabeçada 303 foi de 57 para 52 (estava 17 px
+  à frente da cabeça). Nenhuma outra caixa mudou por causa disso.
+
+**Conferido:** comparação elemento a elemento do `.air` antes e depois: só mudaram as ações 303, 322, 342, 430, 600,
+601, 1701, 3100, 10240, 10430, 10600, 10601, 13100; tempos e quantidade de elementos iguais. No `.cns` só mudaram
+sparkxy/pos de 7 linhas (acompanham as caixas). `chars/gutto` e `chars/raiclaven` regerados sem diferença.
+`verificar_pengaro.py` sem erro; avisos de Clsn1 de 29 para 26 elementos (saíram 303 e 3100; os que sobram são todos
+`[endiabrado]`). Robô na sandbox, rodado depois de regerar (12:12): 146 PASS / 0 FAIL.
+
+**Recusado / fica como está:**
+
+- Cabelo do apanha (tufo cheio atrás): é a cabeça jogada para trás, com a nuca à mostra; a cor é a da paleta. Mudar o
+  corte é redesenhar a cabeça de 4 desenhos.
+- Garrafa "pousada" na bananeira (`levanta/03`): ela está encostada na mão de apoio; lê-se como garrafa na mão.
+- Agachado em -80: o desenho tem 77 a 85 px. Consequência no jogo: os golpes 301, 340 e 343 (Gutto, Raiclaven e o
+  próprio Pengaró), com base da caixa em -70, agora acertam o Pengaró agachado com 10 px de folga. Precisa de olho de
+  quem joga.
+
+**Pendente (precisa de folha arcade nova):** entrada 190 (e 181, 191, 192, 195: folha `lata`, arte antiga, 115 a 121 px
+contra 110 da ginga); rolamento (700, 705, 1700, 3402, 5200, 5210); compasso, armada, caneta, bola, agarrao, golaco,
+provoca, vitoria, derrota, despertar, chute_baixo, defesa e todas as `e_`.
+
+**Correções ao relato anterior:** a quantidade de elementos do `.air` mudou em várias ações (210/215, 240, 430, 440,
+3200...), sem efeito: os gatilhos AnimElem foram renumerados e disparam no mesmo tick. A tabela de alcance estava
+incompleta (246, 260, 331, 341, 346, 3420, 601, 611, 3403, 1400/1401, 3200, 302/311/343/344/3410/3431 e várias 1xxxx
+também mudaram alguns px pelo recorte automático).

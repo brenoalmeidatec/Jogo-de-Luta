@@ -115,6 +115,9 @@ python ferramentas/conferir_arte.py soco --relatorio conferir_soco.md   # PASS/F
 - `conferir_arte.py soco --pasta quadros` mede a arte atual, para comparar. `--forte` cobra a regra 11 como golpe forte.
 - `animar_folha.py --arcade` ainda **não aceita loops** (`parado`, `ginga`, `anda`): as folhas de loop só passam pelo
   quantizador até isso mudar.
+- **Ligado no Pengaró desde 2026-11-11:** `ginga` e `anda` (loops, em `LOOPS` do gerador, só desenhos segurados) e
+  `levanta` (em `ARCADE`). O resto ainda é a arte antiga. Para ligar outra folha: `quantizar_folha.py <folha>`, olhar
+  a folha de contato, pôr o nome em `ARCADE` e conferir a caixa de golpe.
 - Ligar no jogo: o `gerar_<lutador>.py` lê `quadros_arcade/<nome>` quando a pasta existir (os nomes de arquivo já são os
   mesmos); o `.sff` já é indexado, então a paleta pode virar a paleta do SFF e preparar a troca da transformação.
 
