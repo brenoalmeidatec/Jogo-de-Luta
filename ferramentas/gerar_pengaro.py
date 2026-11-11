@@ -1734,8 +1734,11 @@ def preset_despertado(s):
 # Lote 7: a aura do boss é efeito à parte (regra da seção 4), em três camadas desenhadas (fx_aura_*.png, fundo verde):
 # anel de sombra no chão atrás dos pés, coluna de fumaça atrás do corpo e detritos (pedras e elos) na frente.
 # ação -> (pasta em sprites/pengaro/efeitos, sprpriority, pos y, escala x, escala y, só no chão)
-AURA_BOSS = {9211: ("aura_anel", -3, 14, 1.25, 1, True), 9210: ("aura_coluna", -2, 6, 1.2, 1, False),
-             9218: ("aura_detritos", 4, 0, 1.5, 1.1, False)}
+# A coluna tem 228 px na escala do corpo e a tela mostra ~150 px acima do chão antes da barra de vida, que o Explod
+# cobre: ela entra achatada a 0,68 (155 px, 1,25 vez a altura do boss). Os detritos entram do tamanho em que foram
+# desenhados, já espalhados para os lados pelo lote7_converter.py (em cima do corpo escondiam as pernas).
+AURA_BOSS = {9211: ("aura_anel", -3, 14, 1.25, 1, True), 9210: ("aura_coluna", -2, 6, 1.1, .68, False),
+             9218: ("aura_detritos", 4, -4, 1, .75, False)}
 AURA_LIGADA = "(var(20) > 0 || stateno = 3100 || (stateno = 2000 && Time >= 83)) && alive"  # 83: ajoelhado, já de casaco
 AURA_DESLIGADA = "(var(20) <= 0 && stateno != 3100 && !(stateno = 2000 && Time >= 83)) || !alive"
 

@@ -148,7 +148,9 @@ def converter(nomes):
             g = q.resize((max(1, round(q.width * f)), max(1, round(q.height * f))), Image.LANCZOS)
             tela = Image.new("RGBA", (LARG, ALT))
             tela.paste(g, (EIXO - round(af.tronco(q) * f), CHAO - g.height), g)
-            dd, pp = (d2, p2) if nome == "despertar" else (dados, pal)
+            # e_despertar: até o 4 ainda é o Pengaró (pele e calça dele); do 5 em diante já é o boss, na paleta do boss
+            # (com as duas paletas a pele do boss em pé saía laranja e trocava de cor ao entrar na ginga)
+            dd, pp = (d2, p2) if nome == "despertar" and i < 5 else (dados, pal)
             idx = qf.quantizar(tela, dd, pp)
             if i in PELE_ACESA.get(nome, ()):
                 pele_apagada(idx, dd)
@@ -158,6 +160,31 @@ def converter(nomes):
 
 
 AURA = ("coluna", "anel", "detritos")
+
+
+ESPALHA = 2.0  # os detritos vieram todos em cima do corpo (191 px de largura na folha): cada peça vai para fora
+
+
+def espalhar(cel):
+    """Afasta cada pedra e cada pedaço de corrente do eixo, sem mudar o tamanho da peça: a peça é o bloco que ela
+    ocupa somando os 8 quadros (elas pairam no lugar), e o bloco inteiro anda (ESPALHA - 1) vezes a distância ao eixo."""
+    h, w = cel[0].shape[:2]
+    juntos = np.max([c[..., 3] for c in cel], axis=0) > 0
+    n, rot, st, cen = cv2.connectedComponentsWithStats(cv2.dilate(juntos.astype(np.uint8), np.ones((5, 5), np.uint8)), 8)
+    xs = np.nonzero(juntos)[1]
+    eixo = (xs.min() + xs.max()) / 2
+    margem = round((xs.max() - xs.min()) / 2 * (ESPALHA - 1)) + 4
+    saida = []
+    for c in cel:
+        novo = np.zeros((h, w + 2 * margem, 4), np.uint8)
+        for k in range(1, n):
+            m = (rot == k) & (c[..., 3] > 0)
+            if m.any():
+                dx = margem + round((cen[k][0] - eixo) * (ESPALHA - 1))
+                yy, xx = np.nonzero(m)
+                novo[yy, xx + dx] = c[yy, xx]
+        saida.append(novo)
+    return saida
 
 
 def aura():
@@ -170,6 +197,8 @@ def aura():
             c[verde & (g > 110), 3] = 0
             resto = (c[..., 3] > 0) & (g > r + 10)  # e o esverdeado que mistura com a fumaça fica azul-violeta
             c[..., 1][resto] = np.minimum(r, b)[resto]
+        if nome == "detritos":
+            cel = espalhar(cel)
         juntos = np.max([c[..., 3] for c in cel], axis=0)
         ys, xs = np.nonzero(juntos)
         f = af.ESCALA_2172

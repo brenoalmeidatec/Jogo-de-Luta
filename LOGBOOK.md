@@ -926,3 +926,9 @@ a ~150 / ~200 px está bom?; (6) a Estatueta do tamanho da mão (~15 px) ou maio
 - Lote 7 inteiro em disco (31 `e_` + 3 `fx_aura_*`). Pendente: ligar tudo no gerador (`ARCADE`, `e_ginga` x
   `ginga_endiabrada`, `e_despertar` no lugar de `despertar_b`, Explod das três camadas da aura, escala por folha), refazer
   `e_queda`, paleta do boss, e testar no sandbox.
+
+## 2026-11-11 (endiabrado: frente PARADA de propósito às 16h)
+
+O Alisson pediu para parar os trabalhos para trocar o modelo de raciocínio do Claude. Pengaró endiabrado boss final: as 34 folhas do Lote 7 foram geradas e convertidas e o boss foi ligado no jogo (aura em três Explod); a etapa 'converter e ligar' ainda estava rodando (mexendo em gerar_pengaro.py, na aura de detritos e no .sff) e os dois céticos e o retoque NÃO rodaram. Falta: conferir no filme da sandbox, rodar o robô depois do último estado, juntar na mugen.
+Último commit feito por um agente que terminou a etapa dele: `90e5575`. O commit seguinte a esta entrada guarda o que estava
+pela metade na hora da parada (**não testado, pode estar quebrado**); para voltar ao estado bom, use `90e5575`.
