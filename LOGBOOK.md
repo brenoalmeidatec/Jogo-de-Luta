@@ -504,3 +504,42 @@ provoca, vitoria, derrota, despertar, chute_baixo, defesa e todas as `e_`.
 3200...), sem efeito: os gatilhos AnimElem foram renumerados e disparam no mesmo tick. A tabela de alcance estava
 incompleta (246, 260, 331, 341, 346, 3420, 601, 611, 3403, 1400/1401, 3200, 302/311/343/344/3410/3431 e várias 1xxxx
 também mudaram alguns px pelo recorte automático).
+
+
+## 2026-11-11 (Hazak, arte) — 67 folhas arcade do Hazak convertidas para `quadros_arcade` (branch `hazak`)
+
+**Feito (só arquivos do Hazak; nada de `animar_folha.py`, `quantizar_folha.py` nem `gerar_pengaro.py` foi editado):**
+
+- `ferramentas/folhas_hazak_arcade.py` (novo): corta as 8 figuras de cada `sprites/hazaki/quadros/folhas_arcade/*.png`
+  (por célula, sem magenta), põe na escala, quantiza sem dithering com as funções do `quantizar_folha` e grava
+  `sprites/hazaki/quadros_arcade/<folha>/00..07.png`. Tela 360x260, eixo (centro do tronco) em x=180, base em y=220,
+  igual aos outros. `--medir` (tamanhos na folha crua) e `--contato DIR` (folhas de contato).
+- Paleta: `sprites/hazaki/paleta_arcade.json`, as 15 cores da tabela (a) de `docs/arcade/hazaki.md` (contorno, pele 5,
+  gi 3, debrum 2, faixa/cabelo, atadura 2, pulseira). A patroa tem `paleta_arcade_patroa.json`: as do Hazak sem a
+  pulseira mais 4 próprias (cabelo castanho, mostarda, jeans, jeans sombra) = 18; com a paleta dele a camiseta virava pele.
+- Escala única `109/344` (0,3169): a figura em pé tem 344 px na folha crua e sai com 109-110 px. Exceções (`FATOR`):
+  `queda` 1,25-1,3; `vitima_arremessado` 1,2; `voadora` 1,12-1,25 nos quadros 1-6; `apanha` 5-7 1,08-1,12;
+  `derrota_sirene` 0-1 1,15/1,1 (corpo deitado que veio menor); `obj_lasca` e `obj_estatueta` 0,5 (13-31 px);
+  `patroa_*` 0,959 (100 px = 92% dele).
+- Pulseira (`ferramentas/retoques_arcade/hazak_pulseira.py`, roda no fim da conversão): uma pulseira só por desenho
+  (a duplicada e os pixels soltos viram sombra de atadura; duplicada de verdade em `agarrao_cutucao` 0, `ar_joelho` 7,
+  `ar_soco` 6, `vitima_agarrado` 5) e pintada onde faltou, em 20 desenhos (tabela `PINTA`: parado 1 e 4,
+  agarrao_perna 0 e 7, apanha 2 e 7, chute_giratorio 2, corrida 3 e 5, derrota_sirene 0 e 5, guarda_aco 2, rasteira 1,
+  rasteira_arco 2, vitima_agarrado 1, vitima_arremessado 2 e 6, vitoria 1 e 2, defesa_baixa 2).
+
+**Conferido:** 536 PNG em 67 pastas, todos 360x260, alfa só 0/255, só cores da paleta, base em y=220, nenhum cortado
+na borda. Folhas de contato de todas as pastas olhadas uma vez (a 2x), e os desenhos retocados a 5x.
+
+**Defeitos que ficaram / não conferido:**
+
+- Pulseira com poucos pixels (5-7, não repintada): agarrao_perna 6, anda 1, apanha 6, ar_soco 5, chute_giratorio 4,
+  giro_garagem 2 e 3, levanta 2. Sem pulseira: tapa_costas 2 (de costas, mãos escondidas). Não conferi desenho a desenho
+  se a pulseira está no pulso CERTO nos 500 e poucos que já tinham uma; em `derrota_sirene` 4, 6 e 7 ela parece grande
+  demais e no braço da frente.
+- `chute_alto_rajada`: a faixa da cintura veio marrom-alaranjada na folha crua (nas outras é preta).
+- `parado`: a respiração desce de 110 para 98 px (quadro 3), bastante para uma ginga; quem ligar no gerador escolhe os quadros.
+- `guarda_aco` 2: a pulseira pintada ficou larga (braços cruzados, as duas ataduras formam uma mancha só).
+- O eixo é o centro do tronco de cada figura: golpe que avança o corpo não avança no desenho (o gerador desloca, como
+  o `DESLOCA_ARCADE` do Pengaró). Pé de apoio cravado entre quadros não foi medido.
+- Nada rodado no jogo: nenhuma pasta está ligada no `gerar_hazaki.py` (é a outra parte da frente). Sem quadros do
+  meio (`meio/`). O Despertar (`d_*`) não existe ainda: pendente, fora desta rodada.
