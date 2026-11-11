@@ -951,3 +951,17 @@ ponta, nascimentos escalonados: 5 a 9 vivos e 714 a 1786 px por quadro, nunca "n
 raio com 3 ossos (r1-r3) que afina até o chão; vapor sombreado com contorno e penacho maior; crateras redesenhadas como
 cova elíptica com lascas; topo dos raios em y>=7; carmesim menos rosa (azul limitado a verde+45). Pendente: ligar no jogo;
 vídeo não assistido; o vapor continua ancorado na narina da pose parada; ferraduras seguem 1,4x.
+
+## 2026-11-11 — Aura do CK, retoque (defeitos do cético)
+- **Feito:** rodei o `ck_aura.py` que tinha ficado pela metade na parada (recortes, rig, chicote, compor, instala) e
+  publiquei `sprites/ck/aura/` (384 PNG + `aura.json`). Clarão chapado da batida: o miolo do cone virou meia-bola com
+  luz e sombra e só o lado da luz clareia no golpe (olhei quadros 2 a 5 em zoom: sem disco liso). Parede mais viva:
+  amplitude das colunas maior (0,55° embaixo a 11° na ponta), cada pilha estica e achata no grave, tremor mais forte.
+  Cones limpos trocando só o que passava por cima por outro pedaço do mesmo cone (a pincelada fica). Caixas do miolo
+  espelhadas e com o cone girado (não são mais cópia direta). Anel no fim da vida encolhe por gomo em vez de virar
+  lasca. Tampinhas e cacos maiores, 46 fagulhas, névoa com contorno.
+- **Medido:** paredão com 7 pixels parados (antes 147; a nota anterior "dentro dos cones" nunca foi confirmada),
+  silhueta muda 2,5% por quadro (antes 2,0%; asa 12,2%, mas a parede é bloco e a asa é pena fina), cintilação 5,4%
+  (antes 4,5%; asa 4,3%), passo máximo 2,56 px. `cacos` tem 6 pixels parados. 15 cores, alfa 0/255.
+- **Pendente:** toco reto de fumaça na borda direita (braço cortado) continua; nada visto dentro do jogo nem o vídeo
+  assistido.
