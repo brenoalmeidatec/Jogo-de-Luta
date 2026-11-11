@@ -965,3 +965,16 @@ vídeo não assistido; o vapor continua ancorado na narina da pose parada; ferra
   (antes 4,5%; asa 4,3%), passo máximo 2,56 px. `cacos` tem 6 pixels parados. 15 cores, alfa 0/255.
 - **Pendente:** toco reto de fumaça na borda direita (braço cortado) continua; nada visto dentro do jogo nem o vídeo
   assistido.
+
+## 2026-11-11 (aura do Pengaró: retoque do cético)
+
+- **Feito:** rodado e conferido o retoque que tinha ficado pela metade no `40bc95f` (`pengaro_aura.py` não mudou desde
+  então). A subida da coluna em duas fases (que deixava retângulos e barra reta no miolo e trocava o desenho de uma vez)
+  saiu; no lugar, `escorre` desliza o render 4x por ondas lisas antes da redução, e clarões violeta sobem em fitas pela
+  rampa só do violeta. O violeta vivo que a chave de magenta comia voltou (`brilho_comido`), o topo virou lobos
+  desiguais, as mechas soltas saíram do recorte (os fiapos fazem o papel), pedras e elos cresceram (1,35x / 1,5x), o
+  espigão da pedra06 saiu, o chão é o desenho de frente com lajes arfando e luz correndo pelas rachaduras.
+- **Medidas:** coluna muda no máximo 31,6% dos pixels por quadro (era 50%), emenda 2,13 entre vizinhas 2,16/2,21;
+  480 PNG 360x200, alfa 0/255, 15 cores. Poucos pixels fixos por camada (57 coluna, 24 chicotes, 81 anel_tras, 31 anel_frente).
+- **Pendente:** o chão em 1x ainda lê mais como riscos horizontais claros do que como lajes; o remendo atrás do corpo
+  aparece entre as pernas como mancha violeta lisa. Nada visto no jogo.
