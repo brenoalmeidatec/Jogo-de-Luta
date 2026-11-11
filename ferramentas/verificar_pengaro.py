@@ -221,6 +221,11 @@ def conferir_baloes(cns, acoes, sprites, pal):
                 erros.append(f"balão {numero} é mais largo que a tela")
 
 
+# Lutador cujo ChangeAnim2 (o oponente agarrado) usa ações próprias em vez das 5001/5030: nele as 5001/5030 são só
+# ele mesmo apanhando e podem usar os desenhos dele. Hazak: gerar_hazaki.py, VITIMA_PRESA e VITIMA_ENCOLHE.
+ACOES_VITIMA_DE = {"hazaki": (5930, 5931)}
+
+
 def conferir_sprites_podados(sprites, cns):
     """O gerador poda do .sff o que não aparece (gerar_pengaro.sprites_mantidos). Confere que ficou tudo que o jogo
     pode pedir: destino do RemapPreset despertado e os desenhos de vítima de arremesso (SPRITES_VITIMA)."""
@@ -237,7 +242,7 @@ def conferir_sprites_podados(sprites, cns):
     # Toda ação de vítima de todo lutador precisa caber em SPRITES_VITIMA, senão a poda dos outros apaga o desenho.
     for arq in sorted(PASTA.parent.glob("*/*.air")):
         texto = arq.read_text(encoding="utf-8")
-        for n in gp.ACOES_VITIMA:
+        for n in ACOES_VITIMA_DE.get(arq.stem, gp.ACOES_VITIMA):
             m = re.search(rf"^\[Begin Action {n}\]\n(.*?)(?=^\[Begin|\Z)", texto, re.M | re.S)
             fora = {(int(g), int(i)) for g, i in gp.RE_ELEMENTO.findall(m.group(1))} - gp.SPRITES_VITIMA if m else set()
             if fora:
