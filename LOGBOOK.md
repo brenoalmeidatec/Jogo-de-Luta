@@ -978,3 +978,14 @@ vídeo não assistido; o vapor continua ancorado na narina da pose parada; ferra
   480 PNG 360x200, alfa 0/255, 15 cores. Poucos pixels fixos por camada (57 coluna, 24 chicotes, 81 anel_tras, 31 anel_frente).
 - **Pendente:** o chão em 1x ainda lê mais como riscos horizontais claros do que como lajes; o remendo atrás do corpo
   aparece entre as pernas como mancha violeta lisa. Nada visto no jogo.
+
+## 2026-11-11 — Aura do Raiclaven, retoque do cético (branch `auras`)
+
+- **Feito:** o retoque que estava pela metade em `40bc95f` (raiclaven_aura.py) rodou inteiro sem erro e foi re-renderizado.
+  A forma voltou à do conceito: leque duplo (duas asas de 9 lâminas + adaga do meio), aberto embaixo, coração de 12
+  foices, moldura de raio branco com clarão azul-gelo (não é mais arame de 1 px), roseta de pontas atrás do corpo
+  (remendo: sem corpo não há vão nem tocos). Nada gira em roda: cada asa abre e fecha em cascata (fase cresce de cima
+  para baixo, 17,7 → 33,3 quadros), lâminas estocam em onda, tesouras cortam. Paleta sem cores repetidas (menor
+  distância 27). Miolo do leque muda 57,8% por quadro e a silhueta 11,9% (asa: 55% e 12,3%). Raios não tocam y=0 (y_min 1).
+- **Pendente:** passo máximo das lâminas da frente 3,14 px (pouco acima de ~3); 236 px de lâmina ainda no vão de baixo
+  (pontas das asas descendo ao lado das pernas); vídeo não assistido; nada visto no jogo.
