@@ -451,11 +451,12 @@ def acoes_ck(Q):
     for n in (5020, 5021, 5022):  # apanhando agachado: encolhe atrás das luvas (não há folha própria)
         Q(n, [(f("agachado", 3), 4), (f("agachado", 4), 8)], BAIXO)
         Q(n + 5, [(f("agachado", 5), 8)], BAIXO)
-    # queda: os desenhos 5 e 6 da folha saíram com as figuras sobrepostas (sem os pés); cai do 4 direto para o 7
-    Q(5100, [(f("queda", 3), 3), (f("queda", 4), 6)], DEITADO)
-    Q(5101, [(f("queda", 4), 6)], DEITADO)
-    Q(5160, [(f("queda", 4), 6), (f("queda", 7), -1)], DEITADO)
-    Q(5170, [(f("queda", 4), 6), (f("queda", 7), -1)], DEITADO)
+    # queda (folha refeita, 8 figuras separadas): 4 de costas no ar, 5 bate no chão, 6 quica, 7 deitado. Mesmos
+    # desenhos e tempos do Pengaró
+    Q(5100, [(f("queda", 4), 3), (f("queda", 5), 3), (f("queda", 6), 3)], DEITADO)
+    Q(5101, [(f("queda", 5), 3), (f("queda", 6), 3)], DEITADO)
+    Q(5160, [(f("queda", 6), 6), (f("queda", 7), -1)], DEITADO)
+    Q(5170, [(f("queda", 6), 6), (f("queda", 7), -1)], DEITADO)
     # rolar para trás: só abaixa e balança (os desenhos 4 a 6 do rolamento estão de costas)
     Q(705, [(f("rolamento", d), t) for d, t in ((1, 4), (2, 5), (3, 6), (3, 5), (2, 5), (1, 4), (0, 3))], ROLANDO)
     # entrada do round (190), no lugar da embaixadinha do kit: aquecimento de sombra

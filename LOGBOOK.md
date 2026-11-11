@@ -673,3 +673,42 @@ reconverter as folhas (15 min) e rodar o gerador.
 **A seguir:** o Breno olhar o filme e decidir o tamanho e o `↓ ↑`; refazer as 4 folhas `e_` do item 1 e a `queda`;
 pedir as folhas que faltam (Pêndulo, ganchos, joelhada, Voadora, Saideira) e trocar as emprestadas; juntar a `ck` na
 `mugen` (quem junta é o orquestrador: `robo.lua`, `testar_pengaro.py` e o `.bat` têm só linhas novas).
+
+## 2026-11-11 (CK) — item 1 do pedido: 4 folhas do Ratão refeitas no ChatGPT, mais 3 extras (branch `ck`)
+
+**Feito** (chat novo "CK — arcade", `e_referencia_ginga.png` anexada; a `queda` com a `referencia_ginga.png`):
+
+| Folha | Estado | Tentativas | O que ficou |
+|---|---|---|---|
+| `e_provoca` | aprovada | 1 | garrafa na mão mais à direita nos 8; o dedo é da mão vazia; sem risquinhos de efeito |
+| `e_beck` | aprovada | 1 | garrafa visível nos 8 (antes sumia no 4 e ia para a mão de trás no 5-6); pose de soprar, sem fumaça |
+| `e_golaco` | aprovada | 1 | uma garrafa só, nunca atrás da cabeça, sem cacos nem riscos de giro, nunca de costas |
+| `e_juliet_voadora` | aprovada | 2 | óculos sai da mão vazia e fica solto no ar no quadro 6; sem óculos na cabeça do 3 ao 8 |
+| `e_soco` (extra) | com ressalva | 2 | no quadro 5 a garrafa ainda fica na mão de trás: no conversor o 5 é cópia do 4 (`COPIA` em `retoques_arcade/ck.py`) |
+| `e_caneta` (extra) | aprovada | 1 | garrafa à frente nos 8 (antes ia para trás nos quadros 3 a 5) |
+| `queda` (extra, base) | aprovada com ressalva | 1 | 8 figuras separadas e inteiras (antes a 5 e a 6 se sobrepunham); deitado de joelhos dobrados, 70 px de comprido contra 96 do `levanta` |
+
+- As 7 foram convertidas com `converter_ck.py` (mesma paleta). `AJUSTE` no `animar_folha.py`: `e_beck` saiu (a folha nova
+  veio no tamanho da referência), `queda` 1.45 -> 1.20, novos `e_caneta` 1.25, `e_soco` 1.14, `e_juliet_voadora` 1.06;
+  `e_golaco` continua 1.18. Em pé: 109-114 px nas seis do Ratão. `efeitos/juliet` agora tem 11x4 (era 16x6).
+- `gerar_ck.py`: a queda usa os desenhos 4-5-6 e 6-7 (os mesmos e os mesmos tempos do Pengaró), agora que o 5 e o 6
+  existem inteiros. `chars/ck` regenerado (o `.cns` muda porque avanço e posição da faísca são medidos no desenho).
+- `folhas_ck.py`: os pedidos usados estão gravados (MOTION novo das 7; a regra da garrafa e a medida em px entram no fim
+  de todo pedido do Ratão).
+
+**Conferido:**
+- Com os olhos: as 9 imagens geradas em tira de 1800 px (quadro a quadro, de que lado está a garrafa) e os 56 quadros
+  convertidos em tira 2x. Não olhei em movimento: nenhum filme novo.
+- Script: 8 corpos separados por folha (componentes ligados), borda 100% magenta, 2172x724; `conferir_arte.py` R1, R3,
+  R4, R5 e R7 passam nos 56 quadros (R10/R11 falham como nas outras folhas: são regras do desenho).
+- Robô `testar_pengaro.py --lutador ck` na sandbox: **159 PASS / 0 FAIL**, igual a antes.
+- `chars/gutto`, `hazaki`, `pengaro`, `raiclaven`: md5 igual antes e depois (`85cb5631…`).
+
+**Ficou / a seguir:**
+- `e_soco` 5 (cópia do 4), `e_martelo` 7 e `e_ar_soco` 2-6 (garrafa do lado de dentro; não refiz, só vi na folha de
+  contato), `e_rolamento` 7 (de costas). Os outros defeitos da entrada de conversão continuam (lata 5-6, provoca 2-3-6,
+  golaco 4, rolamento 2-3).
+- No Ratão os ganchos da corrente y e do Gingado b continuam emprestando `e_golaco` 3 e 5, que agora são a rasteira
+  deslizando e o agachado (antes: rasteira e giro de costas). Continua provisório.
+- O registro do procedimento do ChatGPT desta rodada está no `registro_fila.md` do scratchpad da sessão (não está no
+  repositório); o que importa dele está em `folhas_ck.py`.

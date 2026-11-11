@@ -2925,7 +2925,7 @@ velset = 0,0
 [State 3410, Avanço]
 type = VelSet
 trigger1 = Time = 1
-x = 2.36
+x = 0.45
 
 [State 3410, Freia]
 type = VelSet
@@ -2943,7 +2943,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
-sparkxy = -10, -65
+sparkxy = -10, -81
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
@@ -2975,7 +2975,7 @@ velset = 0,0
 [State 3411, Avanço]
 type = VelSet
 trigger1 = Time = 1
-x = 5.6
+x = 4.3
 
 [State 3411, Freia]
 type = VelSet
@@ -2993,7 +2993,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
-sparkxy = -10, -29
+sparkxy = -10, -80
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
@@ -3025,7 +3025,7 @@ velset = 0,0
 [State 3412, Avanço]
 type = VelSet
 trigger1 = Time = 4
-x = 2.55
+x = 2.18
 
 [State 3412, Freia]
 type = VelSet
@@ -3043,7 +3043,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
-sparkxy = -10, -78
+sparkxy = -10, -77
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
@@ -3284,7 +3284,7 @@ velset = 0,0
 [State 3423, Avanço]
 type = VelSet
 trigger1 = Time = 7
-x = 3.07
+x = 2.0
 
 [State 3423, Freia]
 type = VelSet
@@ -7147,7 +7147,7 @@ type = Explod
 trigger1 = Anim = 3401 && AnimElem = 3 && var(20) <= 0
 anim = 9214
 postype = p1
-pos = 37, 0
+pos = 57, 0
 bindtime = 3
 removetime = 8
 sprpriority = 3
@@ -7160,7 +7160,7 @@ type = Explod
 trigger1 = Anim = 3401 && AnimElem = 3 && var(20) > 0
 anim = 9215
 postype = p1
-pos = 37, 0
+pos = 57, 0
 bindtime = 3
 removetime = 8
 sprpriority = 3
@@ -7173,7 +7173,7 @@ type = Explod
 trigger1 = Anim = 3410 && AnimElem = 2 && var(20) <= 0
 anim = 9213
 postype = p1
-pos = 22, -65
+pos = 43, -81
 bindtime = 3
 removetime = 8
 sprpriority = 3
@@ -7186,7 +7186,7 @@ type = Explod
 trigger1 = Anim = 3410 && AnimElem = 2 && var(20) > 0
 anim = 9212
 postype = p1
-pos = 22, -65
+pos = 43, -81
 bindtime = 3
 removetime = 8
 sprpriority = 3
@@ -7197,9 +7197,9 @@ ignorehitpause = 1
 [State -3, Efeito do golpe 3411]
 type = Explod
 trigger1 = Anim = 3411 && AnimElem = 2 && var(20) <= 0
-anim = 9214
+anim = 9213
 postype = p1
-pos = 16, 0
+pos = 29, -80
 bindtime = 3
 removetime = 8
 sprpriority = 3
@@ -7210,9 +7210,9 @@ ignorehitpause = 1
 [State -3, Efeito do golpe 3411]
 type = Explod
 trigger1 = Anim = 3411 && AnimElem = 2 && var(20) > 0
-anim = 9215
+anim = 9212
 postype = p1
-pos = 16, 0
+pos = 29, -80
 bindtime = 3
 removetime = 8
 sprpriority = 3
@@ -7225,7 +7225,7 @@ type = Explod
 trigger1 = Anim = 3412 && AnimElem = 3 && var(20) <= 0
 anim = 9213
 postype = p1
-pos = 44, -78
+pos = 48, -77
 bindtime = 3
 removetime = 8
 sprpriority = 3
@@ -7238,7 +7238,7 @@ type = Explod
 trigger1 = Anim = 3412 && AnimElem = 3 && var(20) > 0
 anim = 9212
 postype = p1
-pos = 44, -78
+pos = 48, -77
 bindtime = 3
 removetime = 8
 sprpriority = 3
@@ -7355,7 +7355,7 @@ type = Explod
 trigger1 = Anim = 3423 && AnimElem = 3 && var(20) <= 0
 anim = 9214
 postype = p1
-pos = 37, 0
+pos = 57, 0
 bindtime = 3
 removetime = 8
 sprpriority = 3
@@ -7368,7 +7368,7 @@ type = Explod
 trigger1 = Anim = 3423 && AnimElem = 3 && var(20) > 0
 anim = 9215
 postype = p1
-pos = 37, 0
+pos = 57, 0
 bindtime = 3
 removetime = 8
 sprpriority = 3
@@ -7550,7 +7550,7 @@ type = Explod
 trigger1 = Anim = 10210 && AnimElem = 3 && var(20) > 0
 anim = 9212
 postype = p1
-pos = 44, -78
+pos = 48, -77
 bindtime = 3
 removetime = 8
 sprpriority = 3
@@ -7563,7 +7563,7 @@ type = Explod
 trigger1 = Anim = 10215 && AnimElem = 3 && var(20) > 0
 anim = 9212
 postype = p1
-pos = 44, -78
+pos = 48, -77
 bindtime = 3
 removetime = 8
 sprpriority = 3
@@ -7758,7 +7758,7 @@ type = Explod
 trigger1 = Anim = 11400 && AnimElem = 3 && var(20) > 0
 anim = 9215
 postype = p1
-pos = 37, 0
+pos = 57, 0
 bindtime = 3
 removetime = 8
 sprpriority = 3
@@ -7771,7 +7771,7 @@ type = Explod
 trigger1 = Anim = 11401 && AnimElem = 3 && var(20) > 0
 anim = 9215
 postype = p1
-pos = 37, 0
+pos = 57, 0
 bindtime = 3
 removetime = 8
 sprpriority = 3
