@@ -34,8 +34,9 @@ continuam em [`regras-dos-lutadores.md`](regras-dos-lutadores.md). Estilo e core
   e revolto com pontas violeta, dois chifres curtos de fumaça; casaco de mestre preto sem manga com friso dourado e
   forro roxo, barra rasgada até a canela; rachaduras violeta no peito; corda trançada ouro e violeta; calça preta com
   barra em brasa; algemas de corrente partida nos dois pulsos e nos dois tornozelos; braceletes de ouro. A aura (coluna
-  de fumaça, anel de sombra no chão, elos e pedras flutuando) é efeito à parte. As folhas ainda não foram geradas: o
-  jogo toca a arte antiga até o Lote 7 de `docs/arcade/fila.md` entrar.
+  de fumaça, anel de sombra no chão, elos e pedras flutuando) é efeito à parte, em três Explod. Lote 7 ligado em
+  2026-11-11: `quadros_arcade/e_<golpe>/` (paleta `paleta_arcade_endiabrado.json`, conversão em
+  `ferramentas/retoques_arcade/lote7_converter.py`); só a primeira metade da cena do Despertar (`despertar_a`) segue antiga.
 
 ## Preparar outra máquina
 
