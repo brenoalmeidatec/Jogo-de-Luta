@@ -57,7 +57,7 @@ FOLHAS_CK = {
     "bicicleta": "a flying knee in mid air. All frames in the air. 1 tucked, 2 and 3 he pulls the gloves down, 4 and 5 the front knee drives forward at head height, 6 to 8 back to tucked.",
     "defesa": "blocking, high peek-a-boo guard. 1 guard, 2 and 3 he tucks both gloves tight on the face and elbows on the ribs, 4 and 5 he holds the block, 6 and 7 the impact pushes him back a little, 8 still blocking.",
     "apanha": "getting hit in the face. 1 guard, 2 and 3 the head snaps back, cap tilting, mouth open, 4 and 5 the torso bends back with the gloves flung out, 6 to 8 he shakes it off and returns to guard, grin coming back.",
-    "queda": "being knocked down. 1 hit and bending back, 2 feet leaving the ground, 3 and 4 flying backward horizontally, 5 and 6 falling onto his back, 7 bouncing on the floor, 8 lying flat on his back.",
+    "queda": "being knocked down, 8 clearly SEPARATED figures: 1 hit and bending back, standing, 2 feet leaving the ground, body tilted back, 3 and 4 flying backward in the air, body diagonal, 5 body horizontal in the air, face up, 6 landing on his back on the ground, legs up, 7 a small bounce, 8 lying flat on his back on the ground, head on the left, feet on the right. The cap stays on the head.",
     "levanta": "getting up from the floor. 1 flat on his back, 2 and 3 he rolls to the side, 4 and 5 kip-up springing off the shoulders, 6 and 7 landing on his feet and fixing the cap, 8 guard.",
     "rolamento": "the Slip Dodge, going past the opponent: 1 guard, 2 he ducks low under an invisible punch, 3 and 4 he weaves sideways in a deep U motion stepping forward, 5 and 6 he pivots on the front foot turning around, 7 he comes up facing left already in guard, 8 he turns back to face right in guard.",
     "agarrao": "collar grab. 1 guard, 2 the front glove reaches forward and grabs an invisible collar, 3 and 4 he pulls in and hits three short back-hand punches, 5 and 6 he shoves forward with both gloves, 7 and 8 he fixes the cap, grinning. No second person is shown.",
@@ -90,7 +90,7 @@ DESPERTAR = {
 # folhas e_<nome> do Modo Ratão (anexe a e_referencia_ginga)
 FOLHAS_RATAO |= {
     "anda": "walking forward, an 8-frame loop: relaxed funk-party swagger, rolling shoulders, slides scuffing, bottle swinging low; frame 8 flows back into frame 1.",
-    "soco": "two bottle slashes. 1 stance, 2 the bottle hand cocks back, 3 a horizontal slash at chest height, 4 the backhand slash returning, 5 he steps in, 6 a straight stab with the broken bottle fully extended, 7 recovering, 8 stance.",
+    "soco": "two bottle slashes, both done ONLY with the bottle hand (the hand furthest to the right): 1 stance, 2 the bottle hand pulls back a little toward the chest, the empty hand stays near the chin on the left, 3 a horizontal slash forward at chest height, bottle arm fully extended to the right, 4 the bottle swings back across in a backhand, still in front of the body, 5 he steps in, bottle chambered at the front hip, 6 a straight stab with the broken bottle fully extended to the right, 7 recovering, bottle still forward, 8 stance. In every frame the bottle is further to the right than the empty hand.",
     "martelo": "an overhead bottle smash. 1 stance, 2 and 3 the bottle rises high over the head, 4 and 5 he smashes it down and forward at head height, 6 and 7 he straightens, 8 stance.",
     "chute_baixo": "a slide slap kick to the shin. 1 stance, 2 the front foot lifts with the rubber slide, 3 chambers low, 4 and 5 the slide slaps forward at shin height, 6 and 7 back, 8 stance.",
     "chute_alto": "a high funk-dance kick with the slide. 1 stance, 2 and 3 he spins into a dance step, 4 and 5 the leg kicks high at head height, slide almost flying off, 6 and 7 back down, 8 stance.",
@@ -107,11 +107,11 @@ FOLHAS_RATAO |= {
     "agarrao": "street grab. 1 stance, 2 the free hand grabs an invisible collar, 3 and 4 he blows smoke in the face, 5 and 6 he headbutts and shoves, 7 and 8 he fixes the sunglasses. No second person is shown.",
     "bola": "Flying Bottle: 1 stance, 2 he pulls a new whole green bottle from behind his back with the free hand, 3 and 4 he winds back, 5 and 6 he lobs it forward high in an arc and it leaves the hand, 7 follow-through, 8 stance.",
     # idem: o ChatGPT recusou fumar como golpe; pose de soprar + fx_fumaca (Tragada de Beck)
-    "beck": "big breath attack pose: 1 stance, 2 he leans back lazily, 3 and 4 he inhales deeply, chest swelling, eyes rolling up, 5 and 6 he leans forward off-balance and blows a strong breath forward with puffed cheeks (no smoke drawn), 7 he stumbles a step, 8 stance.",
-    "juliet_voadora": "Flying Sunglasses: 1 stance, 2 he grabs the sunglasses from his head, 3 and 4 winds back sideways, 5 and 6 throws them spinning flat at chest height and they leave the hand, 7 open hand waiting, 8 stance without sunglasses.",
-    "caneta": "Ratao Step dash: 1 stance, 2 and 3 he starts a fast funk footwork step, 4 and 5 he dashes forward dancing with a slide kick fully extended, 6 and 7 he spins out of it, 8 stance.",
-    "golaco": "a super move, Street Party: 1 stance, 2 he raises the bottle and grins, 3 to 6 a frenzy dancing in place: slash, slide kick, slash, spin, 7 and 8 a final big overhead smash with a second bottle shattering and a pose.",
-    "provoca": "a taunt. 1 to 3 he dances a short funk step, 4 to 6 he wiggles his eyebrows and wags a finger at the opponent, 7 and 8 he laughs lazily.",
+    "beck": "big breath attack pose: 1 stance, 2 he leans back lazily, 3 and 4 he inhales deeply, chest swelling, head tilted up, eyes rolling up, 5 and 6 he leans forward off-balance and blows a strong breath forward with puffed cheeks (no smoke drawn, nothing comes out of the mouth), 7 he stumbles a step, 8 stance. The bottle stays low and in front of the body, in the hand furthest to the right, clearly visible in ALL 8 frames, also in 4, 5 and 6; the empty hand swings back to the left for balance.",
+    "juliet_voadora": "Flying Sunglasses: 1 stance with the sunglasses on top of the head, 2 the EMPTY hand (the one on the left side of the body) reaches up and takes the sunglasses from the head, 3 and 4 that hand winds back to the left holding the sunglasses, 5 the arm swings forward at chest height, sunglasses still in the fingers, 6 the arm is fully extended forward and the sunglasses float flat in the air just beyond the open fingers (no lines around them), 7 open empty hand still extended forward, no sunglasses anywhere in the picture, 8 stance. From frame 3 to frame 8 there are NO sunglasses on his head. The bottle stays low beside the front hip in the other hand, clearly visible in all 8 frames, and it is never thrown.",
+    "caneta": "Ratao Step dash: 1 stance, 2 and 3 a fast funk footwork step, knees crossing, 4 and 5 he drops low and slides forward with the front leg fully extended to the right along the ground (a slide kick), 6 and 7 he pops back up off-balance, knees high, 8 stance. He always faces right and never turns his back. In all 8 frames the bottle is held forward in the hand furthest to the right, in front of the chest or above the front knee, and the empty hand is behind it on the left, swinging for balance.",
+    "golaco": "a super move, Street Party, a frenzy in place, always facing right, he never turns his back to the viewer: 1 stance, 2 he lifts the bottle forward to face height and grins, 3 a horizontal bottle slash forward at chest height, bottle arm fully extended to the right, 4 a low slide kick, front leg fully extended to the right along the ground, the bottle held forward above the knee, 5 he rises with a diagonal upward bottle slash, arm extended forward and up, 6 a tight off-balance crouch, bottle pulled in front of the chest, 7 a small hop with the bottle raised forward and high in FRONT of his face, 8 he lands in a wide squat smashing the bottle down and forward at head height, arm fully extended to the right. One single bottle the whole time, it stays whole (same broken shape as the reference), no second bottle, no shards, no explosion.",
+    "provoca": "a taunt. 1 stance, 2 and 3 a short lazy funk step in place, 4 to 6 the EMPTY hand (the one on the left side of the body) rises to face height and wags its index finger at the opponent while he wiggles his eyebrows, 7 and 8 he laughs lazily with the head tilted back, empty hand resting on the belly. The bottle stays low beside the front hip, in the hand furthest to the right, in all 8 frames. No little lines around the finger or the head.",
     "vitoria": "a victory. 1 stance, 2 and 3 he lowers the sunglasses over his eyes, 4 to 6 he dances, 7 and 8 he poses with the bottle on the shoulder.",
     "derrota": "defeated. 1 and 2 he drops to sit, 3 to 8 sitting with legs out, sunglasses crooked, joint gone out, dazed.",
 }
@@ -125,14 +125,25 @@ FOLHAS_FX = {
 }
 
 
+# O que fez as folhas refeitas em 2026-11-11 saírem certas de primeira (entra no fim de todo pedido do Ratão)
+GARRAFA_E_MEDIDA = (
+    "BOTTLE CHECK (most important rule): the bottle is always in the hand furthest to the RIGHT in the picture, only ONE bottle per frame, in all 8 frames. The other hand (the one more to the left) is always EMPTY, white wraps only. The bottle never goes behind the head or behind the back, never changes hands, never disappears, never breaks further."
+    "\n\n"
+    "SIZE: the image is 2172x724 pixels. Do not enlarge the figure: head, torso and limbs have exactly the same pixel size as in the attached sheet (standing, about 545 pixels from the soles to the top of the hair, soles at about y=655). Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours. Do NOT draw motion lines, speed lines, swirls, impact flashes, sparkles, shards, dust or any other effect: only the character (and his bottle).")
+# folha -> texto a mais no fim do pedido (forma base)
+EXTRA = {
+    "queda": "\n\n" "SIZE: the image is 2172x724 pixels and each of the 8 cells is 271 pixels wide. No figure may be wider than 240 pixels: when the body is horizontal or lying down, draw it with the knees bent so that it fits inside its own cell. Every figure has at least 20 pixels of empty magenta on each side and never overlaps or touches its neighbour. Head, torso and limbs keep the same proportions as the attached sheet. Frames 6, 7 and 8 lie on the same ground line at about y=655. Do NOT draw motion lines, impact flashes, stars, dust or any other effect.",
+}
+
+
 def pedido(nome):
     if nome in FOLHAS_FX:
         return CABECA_FX + FOLHAS_FX[nome]
     if nome in DESPERTAR:
         return (CABECA if nome == "despertar_a" else CABECA_RATAO) + DESPERTAR[nome]
     if nome.startswith("e_"):
-        return CABECA_RATAO + FOLHAS_RATAO[nome[2:]]
-    return CABECA + FOLHAS_CK[nome]
+        return CABECA_RATAO + FOLHAS_RATAO[nome[2:]] + "\n\n" + GARRAFA_E_MEDIDA
+    return CABECA + FOLHAS_CK[nome] + EXTRA.get(nome, "")
 
 
 NOMES = [*FOLHAS_CK, *DESPERTAR, *("e_" + n for n in FOLHAS_RATAO), *FOLHAS_FX]
