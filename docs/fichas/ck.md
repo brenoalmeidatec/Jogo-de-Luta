@@ -99,10 +99,14 @@ ritmo e entra na guarda. O paredão some quando o round começa.
 ## Despertar: **Modo Ratão**
 
 - **Ativação:** barra cheia + **x + y**, gasta a barra inteira.
-- **Animação (do áudio):** o paredão aparece atrás dele tocando, ele dá uma dançadinha e uma gingada, joga o boné para
-  trás, o cabelo fica platinado, a roupa troca para a do ratão (camisa estampada aberta, regata, bermuda, chinelo com meia,
-  Juliet na cabeça, cordão de ouro), ele põe a mão no chão, pega uma garrafa, **quebra no chão** e levanta com o caco na mão
-  e um beck aceso na boca. Invencível durante a animação, empurra o oponente. A aura de fumaça sobe dos pés.
+- **Animação (pedido do Breno, 2026-11-11):** o paredão aparece atrás dele tocando e ele dança. Tira as luvas, puxa o beck,
+  dá uma tragada funda e solta uma fumaçona que **cobre o corpo todo**. Quando a fumaça passa, ele já está de ratão
+  (platinado, camisa estampada aberta, regata, bermuda, chinelo com meia, Juliet na cabeça, cordão de ouro). A turma do
+  paredão joga uma garrafa no chão, ele olha, pega, **quebra no chão** e luta com o caco. Invencível durante a animação,
+  empurra o oponente. A aura de fumaça sobe dos pés. Folhas `despertar_a` (base) e `despertar_b` (ratão) + `fx_paredao`.
+- **Jeito de bater (pedido do Breno):** chapado, **todo golpe é instável e louco**: cambaleia, quase cai, bate de ângulo
+  estranho, lento e de repente explosivo. No jogo: os normais do Ratão variam um pouco o alcance e o tempo de cada vez
+  (sorteio pequeno), e alguns têm um tropeço que vira golpe baixo.
 - **O que ganha:** alcance com a garrafa, cortes que fazem o oponente sangrar a vida aos pouquinhos (dano pequeno por
   um tempo), e a fumaça tonteia mais.
 - **O que perde:** sem luva, larga o boxe certinho: a esquiva fica mais lenta e o Contragolpe sai do kit (está chapado).
@@ -151,6 +155,21 @@ cortando com a garrafa e fecha quebrando uma garrafa nova na cabeça dele.
 - **Derrota:** senta no chão, tira o boné e coça a cabeça, inconformado.
 - **Vitória:** ajeita o boné, tira as luvas com os dentes e faz pose de campeão, rindo.
 - **Provocação (c):** bate as luvas, abaixa a guarda e chama com a mão ("vem").
+
+## Estado (2026-11-11)
+
+- **62 folhas prontas** em `sprites/ck/quadros/folhas_arcade/`: referência e 31 da forma base, `despertar_a/b` (a
+  transformação nova: dança no paredão, fuma, a fumaça cobre tudo, sai de ratão, pega a garrafa que jogaram e quebra), a
+  referência e 23 do Modo Ratão (instáveis, chapado) e 4 efeitos (`fx_aura`, `fx_fumaca`, `fx_garrafa` em magenta,
+  `fx_paredao`). Cada folha foi revisada a olho (anatomia e regra da seção 7); as que falharam foram refeitas (uppercut com
+  braço sumindo nas costas, soco no ar fraco, garrafa sumindo, garrafa aparecendo antes da hora no Despertar).
+- **Recusas do ChatGPT:** ele não desenha uso de vape nem fumar como golpe. A Tragada (pod) e a Tragada de Beck viraram
+  **pose de soprar** + `fx_fumaca`, e o pod é desenhado por código (`sprites/ck/quadros/itens/pod.png`). O jogo junta as
+  três peças. A cena de fumar dentro da transformação ele desenhou.
+- **Falta para ir para o jogo:** papéis do CK no `quantizar_folha.py`, passar as folhas pelo pipeline arcade, cortar,
+  o `gerar_ck.py` (no molde do `gerar_raiclaven.py`) com os comandos desta ficha, retrato, a vítima dos agarrões e o CK no
+  `Jogo de Luta.bat`. Nada disso foi testado no motor ainda.
+- As fotos de referência do CK ficaram fora do repositório.
 
 ## Folhas (ChatGPT, estilo arcade)
 

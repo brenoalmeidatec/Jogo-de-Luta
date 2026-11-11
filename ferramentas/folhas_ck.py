@@ -14,9 +14,13 @@ Layout: one single row of 8 frames in 8 equal-width cells, wide image, side view
 
 Consecutive frames differ by a small amount, so the motion looks smooth in sequence.
 
+Anatomy check for every frame: exactly two arms and two legs, both hands always visible, the arm that is not attacking stays in front of the body guarding the chin, never hidden behind the back or the torso, elbows and knees bend the natural way, no extra or missing limbs, the body never twists into an impossible pose.
+
+Fighting-game timing (attacks): a clear anticipation pose before the hit (shoulder or hip loads back), at most one stretched smear pose right before contact, the contact pose with the striking limb fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the shorts, cap and polo collar lag 1-2 frames behind the body and settle.
+
 MOTION: """
 
-CABECA = """Generate ONE image with your image generation tool. Do not write code and do not edit any file.
+CABECA ="""Generate ONE image with your image generation tool. Do not write code and do not edit any file.
 
 The attached sprite sheet shows the exact character to keep: CK, the cheeky street boxer. Same young Black man, slim athletic build, short black hair, thin mustache and chin goatee, small stud earrings, cocky grin. Same outfit: white Lacoste polo shirt with green collar trim and the small green crocodile on the left chest, black Lacoste cap with the small green crocodile, loose black-and-white wavy-pattern basketball shorts, plain white sneakers, red boxing gloves with white wrist wraps. Same colors and same size as the attached sheet. He fights like a street boxer: slips, weaves, counters, punches, and dirty street kicks.
 
@@ -24,7 +28,7 @@ The attached sprite sheet shows the exact character to keep: CK, the cheeky stre
 
 CABECA_RATAO = """Generate ONE image with your image generation tool. Do not write code and do not edit any file.
 
-The attached sprite sheet shows the exact character to keep: CK in RATAO MODE (awakened). Same young Black man and face, short bleached platinum white hair, mirrored wraparound sunglasses pushed up on the head, half-closed reddish stoned eyes, relaxed smirk, a lit hand-rolled joint between the lips with a thin smoke trail, thick gold chain. Patterned navy-and-white short-sleeve shirt worn open over a white tank top, matching patterned board shorts, white socks with dark rubber slides. No gloves: white hand wraps only, and a broken green glass bottle held by the neck in the front hand. Same colors and same size as the attached sheet. He fights loose and dirty like a street brawler dancing at a funk party, slashing with the broken bottle.
+The attached sprite sheet shows the exact character to keep: CK in RATAO MODE (awakened). Same young Black man and face, short bleached platinum white hair, mirrored wraparound sunglasses pushed up on the head, half-closed reddish stoned eyes, relaxed smirk, a lit hand-rolled joint between the lips with a thin smoke trail, thick gold chain. Patterned navy-and-white short-sleeve shirt worn open over a white tank top, matching patterned board shorts, white socks with dark rubber slides. No gloves: white hand wraps only, and a broken green glass bottle held by the neck in the front hand. Same colors and same size as the attached sheet. He is stoned, so every move is UNSTABLE and CRAZY: he wobbles, stumbles, sways off-balance, almost falls and then strikes from weird angles, lazy then suddenly explosive, like a dizzy funk-party brawler slashing with the broken bottle (the bottle stays in the same front hand in every frame).
 
 """ + ESTILO
 
@@ -57,7 +61,9 @@ FOLHAS_CK = {
     "levanta": "getting up from the floor. 1 flat on his back, 2 and 3 he rolls to the side, 4 and 5 kip-up springing off the shoulders, 6 and 7 landing on his feet and fixing the cap, 8 guard.",
     "rolamento": "the Slip Dodge, going past the opponent: 1 guard, 2 he ducks low under an invisible punch, 3 and 4 he weaves sideways in a deep U motion stepping forward, 5 and 6 he pivots on the front foot turning around, 7 he comes up facing left already in guard, 8 he turns back to face right in guard.",
     "agarrao": "collar grab. 1 guard, 2 the front glove reaches forward and grabs an invisible collar, 3 and 4 he pulls in and hits three short back-hand punches, 5 and 6 he shoves forward with both gloves, 7 and 8 he fixes the cap, grinning. No second person is shown.",
-    "bola": "Vape Puff: 1 guard, 2 he pulls a small vape pen from the shorts pocket with the front glove, 3 and 4 he takes a long drag, chest swelling, eyes closed, 5 and 6 he blows a thick white cloud forward at face height, 7 he pockets the vape, 8 guard.",
+    # o ChatGPT não desenha uso de vape: a folha é só a pose de soprar; o pod (quadros/itens/pod.png) é desenhado por
+    # código e a nuvem é o fx_fumaca, montados no gerador (Tragada, ↓ → x/y)
+    "bola": "big breath attack pose: 1 guard, 2 the front glove comes up to the mouth, 3 and 4 he inhales deeply with the glove at the lips, chest swelling, eyes closed, 5 and 6 he leans forward and blows a strong breath forward with puffed cheeks and pursed lips (no smoke drawn, no object in the hand), 7 he lowers the glove, 8 guard.",
     "bone_voador": "Flying Cap: 1 guard, 2 he grabs the black cap off his head, 3 and 4 he winds it back sideways like a frisbee, 5 and 6 he flicks it forward spinning flat at chest height and the cap leaves the hand, 7 his hand stays open waiting, bare head, 8 guard without the cap.",
     "compasso": "spinning backfist. 1 guard, 2 and 3 he steps across and spins showing the back, 4 and 5 the back of the glove whips around at head height, fully extended, 6 and 7 he completes the turn, 8 guard.",
     "armada": "Counter stance: 1 guard, 2 and 3 he drops the gloves low and taunts with a smirk, 4 he slips sideways as if dodging, 5 and 6 he fires a hard counter cross fully extended, glove 15% bigger, 7 recovering, 8 guard.",
@@ -70,9 +76,19 @@ FOLHAS_CK = {
 }
 
 FOLHAS_RATAO = {
-    "e_referencia_ginga": "idle loop, the reference for every Ratao Mode sheet: loose funk-party sway in place, knees bouncing to the beat, the broken bottle held low in the front hand, the back hand relaxed, the joint smoking. Frames 1 to 4 he sinks, 5 to 8 he rises; frame 8 flows back into frame 1.",
-    "despertar_a": "the transformation, part one, still in the BASE FORM outfit of CK with the white Lacoste polo and red gloves: 1 guard, 2 he lowers the guard and nods to an unseen beat, 3 and 4 he does a little dance, shoulders rolling, 5 a hip-swinging ginga step, 6 he tosses the cap backward over his shoulder, 7 his hair starts turning platinum white, 8 he pulls the gloves off.",
-    "despertar_b": "the transformation, part two: 1 his clothes swap to the patterned open shirt, tank top, board shorts and slides, sunglasses on the head, 2 he crouches and puts one hand on the ground, 3 he picks up a whole green glass bottle from the floor, 4 he smashes it on the ground with shards flying, 5 he rises holding the broken neck, 6 he lights a joint with the other hand, 7 he takes a drag, 8 he blows smoke and settles into the stance of the attached sheet.",
+    "referencia_ginga": "idle loop, the reference for every Ratao Mode sheet: loose funk-party sway in place, knees bouncing to the beat, the broken bottle held low in the front hand, the back hand relaxed, the joint smoking. Frames 1 to 4 he sinks, 5 to 8 he rises; frame 8 flows back into frame 1.",
+}
+
+# a transformação: despertar_a ainda com a roupa da base (anexe a referencia_ginga), despertar_b já de ratão
+DESPERTAR = {
+    # pedido do Breno (2026-11-11): dança no paredão, fuma, a fumaça cobre tudo, sai transformado, a turma do paredão
+    # joga uma garrafa no chão, ele quebra e luta com ela. O paredão em si é o efeito fx_paredao, atrás dele.
+    "despertar_a": "the transformation, part one, still in the BASE FORM outfit of CK with the white Lacoste polo, cap and red gloves, dancing to a loud street party sound system behind him (the sound system is not drawn): 1 he drops the guard and nods to the beat, 2 and 3 a funk-party dance, shoulders rolling and knees bouncing, 4 he pulls the gloves off and tucks them in the shorts, 5 he takes a hand-rolled joint from behind his ear and lights it, 6 a long deep drag, chest swelling, 7 he blows out a huge thick grey-green smoke cloud that starts covering his body, 8 the smoke cloud covers almost all of him, only the silhouette shows.",
+    "despertar_b": "the transformation, part two, already in RATAO MODE: 1 thick grey-green smoke still covering most of the body, 2 the smoke thins and reveals him transformed (platinum white hair, sunglasses on the head, open patterned shirt, board shorts, socks and slides, joint in the mouth), 3 the smoke is gone and he stands relaxed, 4 a whole green glass bottle drops in from above and lands at his feet, he looks down at it, 5 he crouches and picks it up by the neck, 6 he smashes it on the ground with green shards flying, 7 he rises holding the broken neck like a weapon, 8 he settles into the stance of the attached sheet with a lazy smirk.",
+}
+
+# folhas e_<nome> do Modo Ratão (anexe a e_referencia_ginga)
+FOLHAS_RATAO |= {
     "anda": "walking forward, an 8-frame loop: relaxed funk-party swagger, rolling shoulders, slides scuffing, bottle swinging low; frame 8 flows back into frame 1.",
     "soco": "two bottle slashes. 1 stance, 2 the bottle hand cocks back, 3 a horizontal slash at chest height, 4 the backhand slash returning, 5 he steps in, 6 a straight stab with the broken bottle fully extended, 7 recovering, 8 stance.",
     "martelo": "an overhead bottle smash. 1 stance, 2 and 3 the bottle rises high over the head, 4 and 5 he smashes it down and forward at head height, 6 and 7 he straightens, 8 stance.",
@@ -90,19 +106,21 @@ FOLHAS_RATAO = {
     "rolamento": "funk-dance roll behind the opponent: 1 stance, 2 he spins into a low dance step, 3 and 4 he rolls forward on one shoulder, 5 and 6 he springs up turning around, 7 he faces left, 8 he turns back to face right in the stance.",
     "agarrao": "street grab. 1 stance, 2 the free hand grabs an invisible collar, 3 and 4 he blows smoke in the face, 5 and 6 he headbutts and shoves, 7 and 8 he fixes the sunglasses. No second person is shown.",
     "bola": "Flying Bottle: 1 stance, 2 he pulls a new whole green bottle from behind his back with the free hand, 3 and 4 he winds back, 5 and 6 he lobs it forward high in an arc and it leaves the hand, 7 follow-through, 8 stance.",
-    "beck": "Joint Drag: 1 stance, 2 he takes the joint from his lips, 3 and 4 he inhales long, chest swelling, eyes rolling up, 5 and 6 he blows a huge thick grey-green cloud forward, 7 the joint back in the mouth, 8 stance.",
+    # idem: o ChatGPT recusou fumar como golpe; pose de soprar + fx_fumaca (Tragada de Beck)
+    "beck": "big breath attack pose: 1 stance, 2 he leans back lazily, 3 and 4 he inhales deeply, chest swelling, eyes rolling up, 5 and 6 he leans forward off-balance and blows a strong breath forward with puffed cheeks (no smoke drawn), 7 he stumbles a step, 8 stance.",
     "juliet_voadora": "Flying Sunglasses: 1 stance, 2 he grabs the sunglasses from his head, 3 and 4 winds back sideways, 5 and 6 throws them spinning flat at chest height and they leave the hand, 7 open hand waiting, 8 stance without sunglasses.",
     "caneta": "Ratao Step dash: 1 stance, 2 and 3 he starts a fast funk footwork step, 4 and 5 he dashes forward dancing with a slide kick fully extended, 6 and 7 he spins out of it, 8 stance.",
     "golaco": "a super move, Street Party: 1 stance, 2 he raises the bottle and grins, 3 to 6 a frenzy dancing in place: slash, slide kick, slash, spin, 7 and 8 a final big overhead smash with a second bottle shattering and a pose.",
-    "provoca": "a taunt. 1 to 3 he dances a short funk step, 4 to 6 he blows a smoke ring toward the opponent, 7 and 8 he laughs lazily.",
-    "vitoria": "a victory. 1 stance, 2 and 3 he lowers the sunglasses over his eyes, 4 to 6 he dances, 7 and 8 he poses with the bottle on the shoulder blowing smoke up.",
+    "provoca": "a taunt. 1 to 3 he dances a short funk step, 4 to 6 he wiggles his eyebrows and wags a finger at the opponent, 7 and 8 he laughs lazily.",
+    "vitoria": "a victory. 1 stance, 2 and 3 he lowers the sunglasses over his eyes, 4 to 6 he dances, 7 and 8 he poses with the bottle on the shoulder.",
     "derrota": "defeated. 1 and 2 he drops to sit, 3 to 8 sitting with legs out, sunglasses crooked, joint gone out, dazed.",
 }
 
 FOLHAS_FX = {
     "fx_aura": "Ratao Mode aura that rises from a fighter's feet: thick slow grey-green smoke swirling upward from the ground in a column about as tall as a man, with a few tiny orange ember sparks. Frames loop: the smoke curls rise and fade at the top, frame 8 flows back into frame 1.",
-    "fx_fumaca": "a puff of thick vape smoke blown forward: frame 1 a small burst, frames 2 to 5 it grows into a big round white cloud with a soft lilac tint, frames 6 to 8 it lingers and slowly thins.",
-    "fx_garrafa": "a thrown green glass bottle spinning in the air, frames 1 to 6 rotating 60 degrees each, frames 7 and 8 it shatters into green glass shards on impact.",
+    "fx_fumaca": "a puff of thick white smoke blown forward: frame 1 a small burst, frames 2 to 5 it grows into a big round white cloud with a soft lilac tint, frames 6 to 8 it lingers and slowly thins.",
+    # fundo MAGENTA (a garrafa é verde e sumiria no fundo verde)
+    "fx_garrafa": "(use a flat solid magenta #FF00FF background instead of green) a thrown green glass bottle spinning in the air, frames 1 to 6 rotating 60 degrees each, frames 7 and 8 it shatters into green glass shards on impact.",
     "fx_paredao": "a big Brazilian street sound system (paredao): a wall of stacked black speaker boxes with chrome rims and small colored lights, frames 1 to 8 the speaker cones pump with the bass and the lights blink. No brand names, no text.",
 }
 
@@ -110,10 +128,14 @@ FOLHAS_FX = {
 def pedido(nome):
     if nome in FOLHAS_FX:
         return CABECA_FX + FOLHAS_FX[nome]
-    if nome in FOLHAS_RATAO:
-        return (CABECA if nome == "despertar_a" else CABECA_RATAO) + FOLHAS_RATAO[nome]
+    if nome in DESPERTAR:
+        return (CABECA if nome == "despertar_a" else CABECA_RATAO) + DESPERTAR[nome]
+    if nome.startswith("e_"):
+        return CABECA_RATAO + FOLHAS_RATAO[nome[2:]]
     return CABECA + FOLHAS_CK[nome]
 
 
+NOMES = [*FOLHAS_CK, *DESPERTAR, *("e_" + n for n in FOLHAS_RATAO), *FOLHAS_FX]
+
 if __name__ == "__main__":
-    print(pedido(sys.argv[1]) if len(sys.argv) > 1 else "\n".join([*FOLHAS_CK, *FOLHAS_RATAO, *FOLHAS_FX]))
+    print(pedido(sys.argv[1]) if len(sys.argv) > 1 else "\n".join(NOMES))
