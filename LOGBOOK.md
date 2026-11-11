@@ -712,3 +712,11 @@ pedir as folhas que faltam (Pêndulo, ganchos, joelhada, Voadora, Saideira) e tr
   deslizando e o agachado (antes: rasteira e giro de costas). Continua provisório.
 - O registro do procedimento do ChatGPT desta rodada está no `registro_fila.md` do scratchpad da sessão (não está no
   repositório); o que importa dele está em `folhas_ck.py`.
+
+## 2026-11-11 (ck: frente PARADA de propósito às 16h)
+
+O Alisson pediu para parar os trabalhos para trocar o modelo de raciocínio do Claude. O CK está montado no jogo
+(`gerar_ck.py`, `chars/ck`, pipeline arcade das 62 folhas, as 4 folhas do Ratão refeitas e o lutador regenerado; o
+agente relatou robô 159 PASS / 0 FAIL na sandbox). Os dois céticos (regras e olhos) estavam rodando e foram
+interrompidos; o retoque final não rodou. Árvore limpa, tudo enviado. Falta: a conferência cética, o retoque, o
+orquestrador olhar o filme, e juntar na `mugen`.
