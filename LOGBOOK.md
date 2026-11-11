@@ -873,3 +873,20 @@ a ~150 / ~200 px está bom?; (6) a Estatueta do tamanho da mão (~15 px) ou maio
   locomotiva dentro do galpão ou na rua, passarela nova ou antiga, luta na beira ou em cima dela, horas do dia).
 - **Próximo:** respostas do Alisson; gerar o lote piloto (4 primeiras imagens de cada cenário); escrever a conversão;
   montar e filmar um cenário inteiro (sugestão: a praça) antes de pedir o resto.
+
+## 2026-11-11 (cenários: frente PARADA de propósito às 15h50)
+
+O Alisson pediu para ir parando os trabalhos aos poucos, para mudar o modelo de trabalho com segurança. Esta frente
+(cenários animados de Nazaré: Cristo, Maria Fumaça, praça da prefeitura e passarela) foi interrompida durante a
+geração da arte do primeiro cenário.
+
+- **Feito e no git:** `ferramentas/gerar_cenario.py` (camadas, paralaxe, quadros, velocidade, seno, camada de frente),
+  `filmar_cenario.py`, cenário de teste `stages/teste.def` provado na sandbox, `sandbox.py` levando `stages/` ao motor;
+  método e medidas em `docs/arcade/cenarios.md`; pesquisa dos quatro lugares, projeto e fila de 64 imagens com prompt
+  em `docs/arcade/cenarios_nazare.md`; 9 imagens brutas do Cristo em `sprites/cenarios/cristo/bruto/` (céu, chão,
+  cristo, morro, torres, longe, nuvens longe e perto, cerca).
+- **Não feito:** o resto da arte do Cristo; toda a arte da Maria Fumaça, da praça e da passarela; a montagem dos quatro
+  cenários, o filme na sandbox e a conferência. Nenhum cenário de Nazaré existe no jogo ainda.
+- **Antes de retomar:** responder a lista "Para o Alisson confirmar" no topo de `docs/arcade/cenarios_nazare.md`
+  (qual Cristo, como ele está hoje, onde fica a Maria Fumaça, qual passarela). Depois seguir a fila do mesmo arquivo a
+  partir da primeira imagem do Cristo que não está em `bruto/`.
