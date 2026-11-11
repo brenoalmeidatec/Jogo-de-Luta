@@ -17,6 +17,7 @@ faixa da regra (rampa da pele, sombra fria da calça, contorno sem preto); o arq
 """
 import colorsys
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -31,7 +32,10 @@ LUTADOR = af.LUTADOR
 SPRITES = af.RAIZ / "sprites" / LUTADOR
 ENTRADA = SPRITES / "quadros/folhas_arcade"
 SAIDA = SPRITES / "quadros_arcade"
-PALETA = SPRITES / "paleta_arcade.json"
+# FORMA=endiabrado: outra forma do mesmo lutador, com paleta e papéis próprios (paleta_arcade_endiabrado.json). As
+# folhas dela são as e_<golpe>.png da mesma pasta. Sem FORMA nada muda.
+FORMA = os.environ.get("FORMA", "")
+PALETA = SPRITES / (f"paleta_arcade_{FORMA}.json" if FORMA else "paleta_arcade.json")
 MINIMO = 20  # nenhum canal abaixo disso (regra 5: nada de preto puro)
 
 # Papéis do Pengaró: janela HSV (matiz em graus, s e v de 0 a 1) para medir a cor na folha, e a faixa de matiz da regra
@@ -58,7 +62,31 @@ PAPEIS_PENGARO = {
         ("garrafa_ambar", "garrafa", (24, 40, .80, 1, .75, .96), None, {}),
     ],
 }
-PAPEIS = {"pengaro": PAPEIS_PENGARO}
+# Pengaró Endiabrado (boss final, conceito e_conceito.png): pele marrom-arroxeada, casaco e calça pretos, violeta da
+# sombra (forro, rachaduras, brasa, pontas do cabelo, chifres), ferro das algemas e ouro (friso, braceletes, corda).
+# O preto do casaco fecha o contorno de tudo que não é pele; o cabelo usa o preto e o ferro escuro.
+PAPEIS_PENGARO_ENDIABRADO = {
+    "contorno_grupo": {"pele": "pele_contorno", "casaco": "casaco_contorno", "violeta": "casaco_contorno",
+                       "ferro": "casaco_contorno", "ouro": "casaco_contorno"},
+    "cores": [
+        ("casaco_contorno", "casaco", (0, 360, 0, 1, 0, .13), None, {"v": .12}),
+        ("pele_contorno", "pele", (320, 352, .45, 1, .17, .30), None, {}),
+        ("pele_sombra", "pele", (335, 360, .50, 1, .34, .52), None, {}),
+        ("pele_medio", "pele", (335, 360, .45, .80, .54, .70), None, {}),
+        ("pele_luz", "pele", (340, 5, .35, .70, .72, .90), None, {}),
+        ("violeta_fundo", "violeta", (270, 300, .60, 1, .14, .27), None, {}),
+        ("violeta_sombra", "violeta", (270, 300, .60, 1, .30, .48), None, {}),
+        ("violeta_medio", "violeta", (270, 300, .60, 1, .52, .72), None, {}),
+        ("violeta_claro", "violeta", (280, 310, .40, .85, .75, .95), None, {}),
+        ("violeta_brilho", "violeta", (0, 360, 0, .25, .82, 1), None, {}),
+        ("ferro_escuro", "ferro", (270, 320, .20, .50, .22, .36), None, {}),
+        ("ferro_claro", "ferro", (260, 320, .12, .38, .42, .66), None, {}),
+        ("ouro_escuro", "ouro", (12, 28, .65, 1, .48, .72), None, {}),
+        ("ouro_medio", "ouro", (28, 42, .65, 1, .82, 1), None, {}),
+        ("ouro_claro", "ouro", (44, 58, .35, .75, .92, 1), None, {}),
+    ],
+}
+PAPEIS = {"pengaro": PAPEIS_PENGARO, "pengaro_endiabrado": PAPEIS_PENGARO_ENDIABRADO}
 
 
 def hsv(rgb):
@@ -88,7 +116,7 @@ def pixels(quadros):
 
 
 def montar_paleta(nome):
-    papeis = PAPEIS[LUTADOR]
+    papeis = PAPEIS[f"{LUTADOR}_{FORMA}" if FORMA else LUTADOR]
     px = pixels(af.poses(ENTRADA / f"{nome}.png", "pes", 1)).astype(float)
     h, s, v = hsv(px)
     cores = []
@@ -107,7 +135,7 @@ def montar_paleta(nome):
                       "pixels": int(m.sum()), "matiz_alvo": faixa})
     rgbs = {tuple(c["rgb"]) for c in cores}
     assert len(rgbs) == len(cores) == 15, f"paleta com {len(rgbs)} cores distintas"
-    dados = {"lutador": LUTADOR, "fonte": f"quadros/folhas_arcade/{nome}.png",
+    dados = {"lutador": LUTADOR, **({"forma": FORMA} if FORMA else {}), "fonte": f"quadros/folhas_arcade/{nome}.png",
              "nota": "15 cores + transparente. rgb é o que vale; medido é a mediana do papel na folha, antes do ajuste "
                      "de matiz. Retoque à mão se precisar e rode conferir_arte.py.",
              "contorno_grupo": papeis["contorno_grupo"], "cores": cores}
