@@ -1,0 +1,151 @@
+{
+ "lutador": "hazaki",
+ "fonte": "docs/arcade/hazaki.md (a)",
+ "nota": "15 cores + transparente, forma normal. Escrito por ferramentas/folhas_hazak_arcade.py.",
+ "contorno_grupo": {
+  "pele": "pele_contorno",
+  "roupa": "roupa_contorno",
+  "debrum": "roupa_contorno",
+  "faixa": "roupa_contorno",
+  "atadura": "roupa_contorno",
+  "pulseira": "roupa_contorno",
+  "patroa": "roupa_contorno"
+ },
+ "cores": [
+  {
+   "id": "roupa_contorno",
+   "grupo": "roupa",
+   "rgb": [
+    28,
+    24,
+    50
+   ]
+  },
+  {
+   "id": "pele_contorno",
+   "grupo": "pele",
+   "rgb": [
+    122,
+    46,
+    38
+   ]
+  },
+  {
+   "id": "pele_sombra",
+   "grupo": "pele",
+   "rgb": [
+    176,
+    79,
+    48
+   ]
+  },
+  {
+   "id": "pele_medio",
+   "grupo": "pele",
+   "rgb": [
+    222,
+    132,
+    72
+   ]
+  },
+  {
+   "id": "pele_luz",
+   "grupo": "pele",
+   "rgb": [
+    246,
+    180,
+    104
+   ]
+  },
+  {
+   "id": "pele_brilho",
+   "grupo": "pele",
+   "rgb": [
+    252,
+    217,
+    160
+   ]
+  },
+  {
+   "id": "gi_escuro",
+   "grupo": "roupa",
+   "rgb": [
+    43,
+    38,
+    80
+   ]
+  },
+  {
+   "id": "gi_medio",
+   "grupo": "roupa",
+   "rgb": [
+    71,
+    67,
+    106
+   ]
+  },
+  {
+   "id": "gi_luz",
+   "grupo": "roupa",
+   "rgb": [
+    108,
+    110,
+    156
+   ]
+  },
+  {
+   "id": "debrum_laranja",
+   "grupo": "debrum",
+   "rgb": [
+    216,
+    102,
+    28
+   ]
+  },
+  {
+   "id": "debrum_sombra",
+   "grupo": "debrum",
+   "rgb": [
+    142,
+    58,
+    26
+   ]
+  },
+  {
+   "id": "faixa_cabelo",
+   "grupo": "faixa",
+   "rgb": [
+    58,
+    42,
+    48
+   ]
+  },
+  {
+   "id": "atadura_branca",
+   "grupo": "atadura",
+   "rgb": [
+    244,
+    241,
+    234
+   ]
+  },
+  {
+   "id": "atadura_sombra",
+   "grupo": "atadura",
+   "rgb": [
+    169,
+    166,
+    204
+   ]
+  },
+  {
+   "id": "pulseira",
+   "grupo": "pulseira",
+   "rgb": [
+    42,
+    157,
+    154
+   ]
+  }
+ ]
+}

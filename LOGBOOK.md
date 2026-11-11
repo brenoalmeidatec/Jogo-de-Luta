@@ -673,3 +673,222 @@ de arcade), 4 (faixa de estados) e 6 (reações da aura no `aura.py`); gerar as 
 
 **Próximo:** ligar a aura num lutador de verdade (Pengaró, com a coluna e o anel por código enquanto as `fx_aura_*`
 não chegam), filmar na sandbox e passar o `medir_aura.py`; depois os dados próprios do Gutto (`gutto_boss.py`).
+
+---
+
+## 2026-11-11 (método em .md)
+
+- **Feito:** a pedido do Alisson, o jeito de trabalhar do Claude passou a ficar versionado: `docs/metodo-do-claude.md`
+  (índice: frentes por branch, ciclo fila → fazer → sandbox → céticos → retoque, arte no ChatGPT, pipeline arcade,
+  endiabrado = modo de Despertar com cara de boss final, aura animada e fluidez) e `docs/arcade/registro_fila.md`
+  (procedimento da automação do ChatGPT e tabela das folhas, que estava só no rascunho da sessão).
+- **Pendente:** as frentes `hazak`, `ck`, `endiabrado`, `bosses` e `efeitos` ainda não entraram na `mugen`; o teste da
+  asa do Hazak no Blender não terminou (se aprovado, a seção 7 do método ganha o passo a passo).
+- **Próximo:** ao fechar cada frente, copiar para o repo o que os agentes anotaram fora dele e atualizar o método.
+
+## 2026-11-11 (Hazak, arte) — 67 folhas arcade do Hazak convertidas para `quadros_arcade` (branch `hazak`)
+
+**Feito (só arquivos do Hazak; nada de `animar_folha.py`, `quantizar_folha.py` nem `gerar_pengaro.py` foi editado):**
+
+- `ferramentas/folhas_hazak_arcade.py` (novo): corta as 8 figuras de cada `sprites/hazaki/quadros/folhas_arcade/*.png`
+  (por célula, sem magenta), põe na escala, quantiza sem dithering com as funções do `quantizar_folha` e grava
+  `sprites/hazaki/quadros_arcade/<folha>/00..07.png`. Tela 360x260, eixo (centro do tronco) em x=180, base em y=220,
+  igual aos outros. `--medir` (tamanhos na folha crua) e `--contato DIR` (folhas de contato).
+- Paleta: `sprites/hazaki/paleta_arcade.json`, as 15 cores da tabela (a) de `docs/arcade/hazaki.md` (contorno, pele 5,
+  gi 3, debrum 2, faixa/cabelo, atadura 2, pulseira). A patroa tem `paleta_arcade_patroa.json`: as do Hazak sem a
+  pulseira mais 4 próprias (cabelo castanho, mostarda, jeans, jeans sombra) = 18; com a paleta dele a camiseta virava pele.
+- Escala única `109/344` (0,3169): a figura em pé tem 344 px na folha crua e sai com 109-110 px. Exceções (`FATOR`):
+  `queda` 1,25-1,3; `vitima_arremessado` 1,2; `voadora` 1,12-1,25 nos quadros 1-6; `apanha` 5-7 1,08-1,12;
+  `derrota_sirene` 0-1 1,15/1,1 (corpo deitado que veio menor); `obj_lasca` e `obj_estatueta` 0,5 (13-31 px);
+  `patroa_*` 0,959 (100 px = 92% dele).
+- Pulseira (`ferramentas/retoques_arcade/hazak_pulseira.py`, roda no fim da conversão): uma pulseira só por desenho
+  (a duplicada e os pixels soltos viram sombra de atadura; duplicada de verdade em `agarrao_cutucao` 0, `ar_joelho` 7,
+  `ar_soco` 6, `vitima_agarrado` 5) e pintada onde faltou, em 20 desenhos (tabela `PINTA`: parado 1 e 4,
+  agarrao_perna 0 e 7, apanha 2 e 7, chute_giratorio 2, corrida 3 e 5, derrota_sirene 0 e 5, guarda_aco 2, rasteira 1,
+  rasteira_arco 2, vitima_agarrado 1, vitima_arremessado 2 e 6, vitoria 1 e 2, defesa_baixa 2).
+
+**Conferido:** 536 PNG em 67 pastas, todos 360x260, alfa só 0/255, só cores da paleta, base em y=220, nenhum cortado
+na borda. Folhas de contato de todas as pastas olhadas uma vez (a 2x), e os desenhos retocados a 5x.
+
+**Defeitos que ficaram / não conferido:**
+
+- Pulseira com poucos pixels (5-7, não repintada): agarrao_perna 6, anda 1, apanha 6, ar_soco 5, chute_giratorio 4,
+  giro_garagem 2 e 3, levanta 2. Sem pulseira: tapa_costas 2 (de costas, mãos escondidas). Não conferi desenho a desenho
+  se a pulseira está no pulso CERTO nos 500 e poucos que já tinham uma; em `derrota_sirene` 4, 6 e 7 ela parece grande
+  demais e no braço da frente.
+- `chute_alto_rajada`: a faixa da cintura veio marrom-alaranjada na folha crua (nas outras é preta).
+- `parado`: a respiração desce de 110 para 98 px (quadro 3), bastante para uma ginga; quem ligar no gerador escolhe os quadros.
+- `guarda_aco` 2: a pulseira pintada ficou larga (braços cruzados, as duas ataduras formam uma mancha só).
+- O eixo é o centro do tronco de cada figura: golpe que avança o corpo não avança no desenho (o gerador desloca, como
+  o `DESLOCA_ARCADE` do Pengaró). Pé de apoio cravado entre quadros não foi medido.
+- Nada rodado no jogo: nenhuma pasta está ligada no `gerar_hazaki.py` (é a outra parte da frente). Sem quadros do
+  meio (`meio/`). O Despertar (`d_*`) não existe ainda: pendente, fora desta rodada.
+
+
+## 2026-11-11 (Hazak, gerador) — gerador novo do Hazak, ficha inteira menos o Despertar (branch `hazak`)
+
+**Feito (só arquivos do Hazak e o robô, de forma aditiva; `gerar_pengaro.py`, `repertorio.py`, `animar_folha.py` e
+`quantizar_folha.py` não foram editados):**
+
+- `ferramentas/gerar_hazaki.py` reescrito e `ferramentas/hazaki_golpes.py` novo (só dados, notação `"folha d/tA"`).
+  Importa o `gerar_pengaro` como biblioteca e NÃO chama `montar_sprites/air/cns/cmd`. Lê
+  `sprites/hazaki/quadros_arcade`. `--contato DIR` grava folhas de contato lidas de volta do `.sff`.
+- `chars/hazaki` regerado: 16 normais, 4 correntes de 3 + finalizador, 4 kombos, 8 especiais (fraco/forte), 3 agarrões,
+  2 supers, rolamento, afastar, parry, provocação, intro, vitória e derrota. Nome na tela **Hazak** (id `hazaki`).
+  Vida 900, defesa 90, anda 3,4 / -2,8, corre 7,2. Paleta fixa: índices 1-15 do `.sff` = `paleta_arcade.json`
+  (conferido lendo o `.sff` de volta: 0 sprites do corpo com cor fora das 15).
+- **Furo "arremessado some" fechado:** os 28 grupos de `gp.SPRITES_VITIMA` existem no `.sff` do Hazak (preso =
+  `vitima_agarrado` 1, curvado = `vitima_agarrado` 0, apanhando = `apanha` 2/3). Visto no filme: o Pengaró agarra
+  (Martelo e Garrafada), bate, joga, e o Hazak aparece do começo ao fim.
+- Robô: `testar_pengaro.py` ganhou os 21 comandos de toque do Hazak e passa `@LUTADOR@` ao `robo.lua`; no `robo.lua`
+  os roteiros antigos só registram se o P1 não é o hazaki e há um bloco novo só para ele (41 roteiros). `corrente()`
+  ganhou um 6º parâmetro opcional (janela, padrão 20). Para pengaro/gutto/raiclaven a lista continua com 43 roteiros
+  (conferido carregando o Lua antes e depois).
+- Docs: seção Hazaki do `README.md`, nota de estado no topo de `docs/arcade/hazak_gerador.md`.
+
+**Testes (Windows Sandbox, depois da versão final dos arquivos):**
+
+- `verificar_pengaro.py --hazaki`: 761 sprites, 162 ações, 90 estados, 42 comandos, 0 erros, 0 avisos.
+- Robô `--lutador hazaki`: **151 PASS / 0 FAIL**, 41 roteiros. Danos medidos (P2 com defesa 90): correntes x 161,
+  y 267, a 189, b 295; kombos 166 / 127 / 167 / 162; Cutucão Sacana 155; Puxa a Perna 111; Abraço 133; Punho de
+  Concreto 67 / 78; Estatueta 78 / 89; Ascensão 89 / 122; Giro 72 / 94; Corte de Base 61 / 83; Pega Bolado 78 / 111;
+  Guarda de Aço 67 (P1 sem dano); Faixa no Asfalto 268 (inteiro: 3001, 3002, 3003); Rapidinho 378 (4 passagens + voadora).
+- Robô do Pengaró contra o Hazak novo: **146 PASS / 0 FAIL**, 43 roteiros (igual à linha de base).
+- `chars/pengaro`, `chars/gutto`, `chars/raiclaven`: md5 de todos os arquivos igual ao de antes.
+- Filmes de 8 s (Hazak x Pengaró: x, y, a, b, baixo+y, baixo+b, Punho de Concreto, Estatueta, Giro de Garagem) e de 6 s
+  (Pengaró agarrando o Hazak), tiras olhadas. Folhas de contato dos sprites finais olhadas (8 de corpo, outros, efeitos).
+
+**Consertos no caminho (com a medida):** o jab duplo era cancelado antes do 2º jab e a trava `var(11)` não contava o
+2º acerto (finalizador x não saía: `FAIL foi para 303`); agora o 301 só continua depois do 2º jab e solta a trava no
+2º HitDef. Efeitos do pixelfx crus viravam bloco branco e pontilhado: todos com mistura aditiva. A faísca saía ~27 px
+acima do golpe (pivô do pixelfx embaixo): pivô no centro do clarão. Poeira do `ground-slam` pintada de cinza e cortada
+de ~190 para 56 ticks. `rasteira` 3-5 e `rasteira_arco` 4-5 deslocadas 21-28 px (a conversão centrava pela caixa).
+
+**Pendente / provisório / NÃO conferido:**
+
+- **Despertar (Diabo Loiro) não existe:** sem folhas `d_*`. Sem comando, sem estado 2000, sem patroa, sem paleta `_d`
+  (nem as 4 cores da patroa no `.sff`). Correntes/normais/especiais/super do Despertar da ficha: nada feito.
+- Sem som (não há `.snd`): falas, sirene e bordão esperam o áudio do Breno.
+- **Derrota com sirene:** escrita no `[Statedef -2]` (levanta e foge para fora da tela), NUNCA vista rodando: nenhum
+  teste levou o Hazak ao nocaute nem ao fim do tempo. Intro, vitória, provocação, parry, rolamento, guard cancel,
+  golpes no ar, golpe de afastar, coice, pulo, corrida e defesa também não foram vistos nem testados pelo robô.
+- Escape dos agarrões (y/b nos 7 primeiros ticks): o robô não consegue conferir (preso, o P2 não roda o `-1` dele).
+- Supers e agarrões do Hazak passaram no robô mas não foram filmados. Projétil da Estatueta: o robô mede o acerto,
+  o voo não apareceu no recorte das tiras. Rapidinho no canto e contra oponente defendendo: não testado.
+- Sem quadros do meio (8 desenhos por folha, abaixo dos mínimos da regra 7.1). Apanhar agachado usa a folha `agachado`.
+  Lasca e estatueta saem das folhas `obj_` (provisório, a regra 8 pede pixelfx). A poeira aditiva lê como névoa clara
+  no palco azul de teste. Retrato: o `sprites/hazaki-selecao-kof.png` antigo.
+- Equilíbrio é chute meu: alcance curto compensado com passo à frente (cruzado, cotovelada, gancho, cotovelo), danos,
+  hitstun e empurrão precisam de olho de quem joga. Punho de Concreto acerta o oponente que acabou de cair.
+- `gerar_gutto`/`gerar_raiclaven` e os robôs deles não foram rodados (o `.cmd`/`.cns` deles não mudou; o boneco P2 mudou).
+- O `hazaki=True` continua no `gerar_pengaro.py`/`repertorio.py` sem ninguém chamar: retirar quando a outra frente
+  largar esses arquivos. `NOMES` do `gerar_layout.py` ainda diz "Hazaki".
+- Conflitos ficha x regras e a saída adotada: seção 5 e nota de estado de `docs/arcade/hazak_gerador.md` (numeração do
+  elenco em vez da 5.1; nomes repetidos da ficha; agarrão em pé H-; Rolada b com a folha `chute`).
+
+## 2026-11-11 (Hazak, retoque) — conferência de dois céticos sobre o gerador novo (branch `hazak`)
+
+**Corrigido (gerador, `hazaki_golpes.py`, retoques de arte; `gerar_pengaro.py` não foi editado):**
+
+- **Derrota:** defeito de verdade achado no robô: o nocauteado ficava no `5110` para sempre (a ação `5170` terminava em
+  `-1` e o `5110` do motor só passa ao `5150` com `AnimTime = 0`), então a fuga, que espera o `5150`, nunca começava.
+  A `5170` agora termina. Segundo defeito, visto no filme: com o `ScreenBound` solto desde o começo da animação a câmera
+  largava o caído e ele saía do quadro ainda deitado; agora a tela só solta quando ele começa a correr. O que o cético
+  apontou (corre de costas) **não procede**: os desenhos 4 a 7 de `derrota_sirene` olham para trás; no filme ele levanta
+  num pulo, vira de costas para o oponente e corre de frente para a saída.
+- **Caixa de dano por desenho** (`caixas_do_corpo`): tronco + membro que sai dele 14 px ou mais, medidos no sprite, em
+  vez de uma caixa por ação (parado, a caixa fica quase igual à antiga: -22..27 contra -24..24). Caixa de golpe alta (supers 3001/3002/3003, joelhada) encolhida até o membro (`caixa_no_membro`).
+  Caixa dos agarrões 800/830 chega até a mão.
+- **Pulo e golpes no ar:** desenhos centrados (os pés sobem 4 a 21 px; antes a cabeça descia 47 px com os pés presos);
+  a caixa de golpe sobe junto.
+- **Apanhar:** as ações 5001/5030/5035 dele usam a folha `apanha` (antes mostravam a pose de "preso" a cada golpe que
+  o lançava). As vítimas dos agarrões dele passaram para as ações 5930/5931. `verificar_pengaro.py` ganhou a exceção
+  por lutador `ACOES_VITIMA_DE` (aditiva).
+- **Guarda de Aço x:** `reversal.attr = SA, NA, SA` (em pé e no ar; só o y pega golpe baixo). A resposta 1102/1103 ficou
+  sem tremida (classe nova `contra`); os agarrões também (regra 8.3).
+- **Rolada de Tatame:** travessia de verdade (9 px por tick enquanto rola, até ~126 px), não mais um `PosAdd` de um
+  tick. Oponente a mais de ~90 px: a rolada acaba antes de passar. Invencível só enquanto rola (16 / 15 ticks).
+- **Finalizadores:** Tá Achando Ruim? manda o oponente para o estado 304 (dois meios giros e a queda do motor); Machado
+  de Dojô (333 e o fecho 3003 do super) com `fall.yvelocity = -7` (quique alto).
+- **Efeitos da ficha:** rastro de velocidade de 2 ticks na corrida (`-2`), no Pega Bolado e nas passagens e na voadora
+  do Rapidinho; poeira (`heavy-landing` cinza) no Giro e no Corte fortes, na arrancada e no pouso do Pega Bolado;
+  cintilar dourado na Estatueta. O rastro da corrida nascia só no 8º tick (o `-2` vê o estado novo a partir do
+  `Time = 1`): consertado depois de ver o filme sem rastro.
+- **Estatueta:** o projétil sai do tamanho que tem na mão (~15 px, sem a base azul-marinho da folha `obj_`).
+- **Alcance:** Giro de Garagem a 10,5 / 12,5 px por tick (~150 / ~200 px; a ficha pede meia tela); Pega Bolado b salta a
+  9,5. **322** (chute alto) sem vai-e-volta: `0, 1, 6, 7`. 1º golpe das correntes y e b cancela em especial no contato
+  (regra B.4). Movelist: `Parry` com `+`, corrida, passo para trás e golpes no ar.
+- **`.sff`:** efeitos, retratos e estatueta só usam os índices 16-255 (0 pixels deles nos índices do corpo); desenhos
+  vazios no fim dos efeitos cortados; `hit-flash` e `charge-up` (sem uso) saíram. 614 sprites.
+- **Arte (pixel, reproduzível pelo `folhas_hazak_arcade.py`):** pulseira no pulso de trás em `vitima_agarrado` 0 e 1 e
+  `agarrao_perna` 6; borrão verde-água do `guarda_aco` 2 virou tira; atadura branca no pulso do `soco_reto` 4 e 5;
+  pontas da faixa do `chute_alto_rajada` 0-6 na cor da faixa (`retoques_arcade/hazak_faixa.py`, novo).
+
+**Robô (aditivo, só no bloco do Hazak e no `.cmd` do Hazak):** `T_defende` (o P2 entra na guarda do motor quando vem
+golpe e segura para trás) e 9 roteiros novos: corrente x contra defesa de verdade, Machado por cima contra defesa
+agachada e em pé, Punho de Concreto contra defesa em pé e agachada, Pega Bolado defendido (1503), Guarda de Aço y e x
+contra golpe baixo, derrota. Para pengaro/gutto/raiclaven a lista continua com 43 roteiros (conferido carregando o Lua).
+
+**Testes (Windows Sandbox, depois da versão final; md5 de `chars/hazaki` igual antes e depois do robô):**
+
+- `verificar_pengaro.py --hazaki`: 614 sprites, 162 ações, 91 estados, 42 comandos, 0 erros, 0 avisos.
+- Robô `--lutador hazaki`: **176 PASS / 0 FAIL, 50 roteiros**. Danos iguais aos da rodada anterior. Defesa de verdade:
+  corrente x defendida (P2 em 150/151, dano 0, `v10 = 0`, finalizador não saiu); 246 fura a defesa agachada (61) e é
+  defendido em pé; lasca acerta quem defende em pé (67) e é defendida agachado (raspão 6); Pega Bolado b defendido
+  pousa no 1503; Guarda de Aço y reverte o chute na canela (78, sem dano nele) e o x não (leva 24). Derrota: 5110 →
+  5150, ação 171, correu para trás até sair da tela.
+- Robô do Pengaró contra o Hazak novo: **146 PASS / 0 FAIL**, 43 roteiros (igual à linha de base). Uma rodada antes,
+  com a caixa de membro também no punho da guarda (35 px à frente), a LATADA do Pengaró nascia dentro do Hazak e o
+  roteiro 15 falhava ("projetil na tela"): por isso o limite de 14 px.
+- `chars/pengaro`, `chars/gutto`, `chars/raiclaven`: sem mudança (`git status`). Robôs do Gutto e do Raiclaven não rodados.
+- Filmes de 8 s e tiras em `scratchpad/hazak_gen/r2/` (`filme_derrota`, `filme_golpes`, `filme_especiais`); folhas de
+  contato dos sprites finais na mesma pasta.
+
+**Recusado (com motivo):** fuga de costas (acima); "bloco de pele" no `estatueta_arremesso` 3 (é o punho fechado);
+kombos sem pose própria (a regra C diz que kombo é sequência de normais e não há folha para eles); rajadas dos supers
+com congelamento 3,6 (é o padrão `super` da biblioteca, igual ao do Pengaró: 14+ só no golpe final); escala das pernas
+estendidas (estilo); ginga com a cabeça oscilando 12 px (é a ginga).
+
+**Pendente / NÃO conferido:**
+
+- Despertar inteiro (sem folhas `d_*`), som próprio (sirene, falas), quadros do meio (regra 7.1).
+- Arte que pede desenho novo: olhos que leem como óculos escuros em `chute_alto_rajada` 1/3, `ascensao` 4 e `voadora`
+  4/5; pontas avermelhadas da faixa em `apanha` 1-6.
+- Guarda de Aço contra golpe no ar: só por leitura (`SA`). Escape dos agarrões: o robô não consegue conferir.
+- Não vistos nem testados: intro, vitória (só o começo aparece no filme da derrota), provocação, parry, rolamento,
+  guard cancel, golpes no ar (as caixas mudaram de altura com o desenho centrado), afastar, coice, pulo, passo para trás.
+- O giro do oponente no 304 roda (robô e filme), mas com a pose de ar do Pengaró o giro lê pouco. Poeira e asfalto
+  continuam claros no palco azul de teste (mistura aditiva).
+- A caixa de dano por desenho não foi vista no editor nem no combo-finder; equilíbrio continua estimativa.
+- Os três filmes são de builds anteriores ao último ajuste: depois de `filme_derrota` e `filme_golpes` mudou o gatilho
+  do rastro da corrida; depois de `filme_especiais` mudou só o limite de 14 px da caixa de dano (não aparece em filme).
+  O robô e as folhas de contato são da versão final.
+
+**Perguntas para o Breno:** (1) Guarda de Aço x deve pegar golpe no ar? (ficha só diz que o y pega baixo também);
+(2) kombos com pose própria, e "Rasteira de Calçada" terminando em rasteira de verdade? (hoje fecha num chute lateral
+em pé); (3) rajada de super com congelamento de 14+ por golpe (regra 8.3 literal) ou o padrão curto do elenco?;
+(4) Rolada de Tatame com alcance limitado (~90 px) ou atravessa de qualquer distância como antes?; (5) Giro de Garagem
+a ~150 / ~200 px está bom?; (6) a Estatueta do tamanho da mão (~15 px) ou maior nas duas?
+
+## 2026-11-11 (hazak na mugen)
+
+- **Feito:** a branch `hazak` (Hazak recriado pela ficha do Breno: gerador novo `gerar_hazaki.py` + `hazaki_golpes.py`,
+  67 folhas em `quadros_arcade`, robô próprio) entrou na `mugen` com a aprovação do Alisson. Único conflito: este LOGBOOK
+  (as duas pontas tinham anexado entradas; ficaram as duas). Os quatro lutadores foram regerados na árvore juntada e
+  saíram com md5 idêntico ao que estava no git. Robô na sandbox, a partir da árvore juntada: Hazak **176 PASS / 0 FAIL**
+  (50 roteiros), Pengaró **146 PASS / 0 FAIL** (43 roteiros).
+- **Pendente:** Despertar do Hazak (Diabo Loiro: folhas `d_*` em geração na branch `bosses`), som próprio, retrato do
+  Pengaró na barra de vida ainda antigo; robôs do Gutto e do Raiclaven não foram rodados contra o Hazak novo.
+- **Próximo:** juntar `ck`, `endiabrado`, `bosses` e `efeitos` conforme cada frente fechar e for conferida.
+
+## 2026-11-11 (aura pelo Blender vira padrão)
+
+- **Feito:** teste da asa do Hazak (Diabo Loiro) animada no Blender a partir do conceito aprovado: asa com ossos batendo
+  em laço de 48 quadros, notas caindo, ouro pingando, coroa e brasa, em camadas de 15 cores. O Alisson viu o vídeo e
+  aprovou o método como padrão das auras. Scripts em `ferramentas/aura_blender/`, passo a passo em
+  `docs/arcade/aura_blender.md`, seção 7 de `docs/metodo-do-claude.md` atualizada.
+- **Pendente:** o teste foi vídeo montado fora do jogo, comparado só com o desenho parado (a folha de 8 quadros do
+  ChatGPT não existia); falta ligar no motor pelo `ferramentas/aura.py` (branch `efeitos`) e fazer o rig das outras
+  quatro auras. Os scripts ainda têm caminhos e medidas da asa do Hazak escritos à mão (não são genéricos).
+- **Próximo:** generalizar os scripts e aplicar em Gutto, Raiclaven, CK e Pengaró quando o uso do plano permitir
+  (semana em 64% no Fable às 15h; a regra é parar em 80%).
