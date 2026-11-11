@@ -558,6 +558,8 @@ class Air:
                     x1, y1, x2, y2 = resto[0]
                     recuo = min(8, (x2 - x1) // 4)
                     resto[0] = (x1 + recuo, y1, x2 - recuo, y2)
+                    if not self.hazaki and desenhado():
+                        resto[0] = CAIXA_DESPERTADA.get(numero, resto[0])
                 if i == len(quadros) - 1 and ticks > 0 and 1000 <= numero < 1600:
                     ticks += 6
                 variantes.append((self.arte_despertada[nome], ticks, *resto))
@@ -1450,6 +1452,24 @@ PASTA_ARCADE = {"rasteira": "chute_agachado"}
 DESLOCA_ARCADE = {("afastar", 6): -10}
 
 
+# Golpes de pengaro_extra.py com desenho trocado no Pengaró arcade: estado -> {elemento (de 0): (folha, desenho)}.
+# 322 e 342 (rasteirinha do combo): o contato era o desenho 4, que troca a pose do braço (DESENHO_PROIBIDO); fica no 3,
+# como no 430. 1701 (rolê por trás e chute): os 15 ticks do rolê eram um desenho da folha antiga (rolamento, sem
+# folha arcade) e o chute era arcade; o rolê passa a ser a bola no chão da levantada arcade (levanta 2). É um desenho
+# só porque a regra da pose segurada (seco) já mostrava um só: a antecipação inteira fica no penúltimo desenho.
+DESENHOS_ARCADE_DO_GOLPE = {
+    322: {3: ("rasteirinha", 3)}, 342: {3: ("rasteirinha", 3)},
+    1701: {k: ("levanta", 2) for k in range(5)},
+}
+# Clsn1 do golpe no Pengaró arcade, quando o membro do desenho novo não fica onde a caixa do golpe antigo estava.
+# 322/342: o pé passa em x 76, y -24..-16 (a caixa estava embaixo da canela, 22 px atrás do pé). 601: a mão da frente
+# está em y -39..-24, abaixo da caixa (12,-76,56,-40).
+CAIXA_ARCADE = {322: (12, -26, 78, -10), 342: (12, -26, 78, -10), 601: (12, -76, 56, -24)}
+# Clsn1 da variante despertada (1xxxx) quando o desenho endiabrado bate em outra altura: (ação normal) -> caixa.
+# 240: o chute endiabrado é mais alto (pé em x 61, y -114..-101); a caixa herdada ficava embaixo do pé, 19 px atrás.
+CAIXA_DESPERTADA = {240: (20, -116, 72, -58)}
+
+
 def pasta_da_folha(folha):
     if desenhado() and folha in ARCADE:
         return QUADROS_ARCADE / PASTA_ARCADE.get(folha, folha)
@@ -1844,7 +1864,8 @@ def acoes_folhas(Q):
     if arcade:
         # rasteirinha arcade: o desenho 3 segura o contato (o 4 troca a pose do braço, veja DESENHO_PROIBIDO); o pé
         # passa 8 px mais alto (y de -24 a -14). Mesmos 7 elementos e tempos de sequencia(430, ..., 5, 3, 10).
-        cx = (12, -26, 62, -10)
+        # A caixa vai até o pé (x 76): com 62 o pé passava 14 px além dela.
+        cx = (12, -26, 78, -10)
         Q(430, [(f("rasteirinha", 1), 3), (f("rasteirinha", 2), 2), (f("rasteirinha", 3), 1, cx),
                 (f("rasteirinha", 3), 2, cx), (f("rasteirinha", 5), 4), (f("rasteirinha", 6), 3),
                 (f("rasteirinha", 7), 3)], BAIXO)
@@ -1855,7 +1876,7 @@ def acoes_folhas(Q):
                 (f("rasteira", 6), 8), (f("rasteira", 6), 7), (f("rasteira", 7), 7)], BAIXO)
     sequencia(430, "rasteirinha", 5, 3, 10, (12, -18, 62, -4), area=BAIXO)
     sequencia(440, "rasteira", 10, 4, 22, (12, -18, 78, -2), area=BAIXO)
-    Q(600, [(f("ar_soco", 2), 2), (f("ar_soco", 3), 3), (f("ar_soco", 4), 8, (8, -86, 50, -62)),
+    Q(600, [(f("ar_soco", 2), 2), (f("ar_soco", 3), 3), (f("ar_soco", 4), 8, (8, -86, 50, -46 if arcade else -62)),
             (f("ar_soco", 6), -1)], NO_AR)
     Q(650, [(f("bicicleta", 2), 3), (f("bicicleta", 3), 4), (f("bicicleta", 4), 6, (6, -70, 70, -20)),
             (f("bicicleta", 6), -1)], NO_AR)
@@ -1872,7 +1893,8 @@ def acoes_folhas(Q):
         if g.estado in folha_do_golpe:
             folha, desenhos = folha_do_golpe[g.estado]
             assert len(g.poses) == len(desenhos), g.estado
-            quadros = [(f(folha, d), tempo, g.caixa) if 0 < k < len(desenhos) - 1 else (f(folha, d), tempo)
+            cx = CAIXA_ARCADE.get(g.estado, g.caixa) if arcade else g.caixa
+            quadros = [(f(folha, d), tempo, cx) if 0 < k < len(desenhos) - 1 else (f(folha, d), tempo)
                        for k, (d, tempo) in enumerate(zip(desenhos, g.tempo))]
             Q(g.estado, quadros, NO_AR if g.tipo == "A" else CORPO)
     # (a Saideira Sombria, 3100, fica como está: com desenhos de uma folha só a caixa acompanha o punho e o super de perto
@@ -1882,7 +1904,13 @@ def acoes_folhas(Q):
     Q(610, [(f("bicicleta", 1), 6), (f("bicicleta", 4), 10, (6, -60, 62, -30)), (f("bicicleta", 6), -1)], NO_AR)
     # correntes, kombos, golpes do Despertar e especiais novos (dados em pengaro_extra.py)
     for m in extra.TODOS + extra.ESPECIAIS_A_MAO:
-        Q(m.estado, [(f(fl, d), n, m.caixa) if ativo else (f(fl, d), n) for fl, d, n, ativo in m.quadros],
+        quadros, caixa = m.quadros, m.caixa
+        if arcade and m.estado in DESENHOS_ARCADE_DO_GOLPE:
+            troca = DESENHOS_ARCADE_DO_GOLPE[m.estado]
+            quadros = [(*troca.get(k, (fl, d)), n, ativo) for k, (fl, d, n, ativo) in enumerate(quadros)]
+        if arcade:
+            caixa = CAIXA_ARCADE.get(m.estado, caixa)
+        Q(m.estado, [(f(fl, d), n, caixa) if ativo else (f(fl, d), n) for fl, d, n, ativo in quadros],
           BAIXO if m.area == "BAIXO" else CORPO)
     # agarrão de comando: errou, fica aberto; acertou, capoeira e whisky
     Q(830, [(f("agarrao", 2), 3, (10, -90, 42, -50)), (f("agarrao", 3), 4), (f("agarrao", 4), 4),
@@ -2234,7 +2262,11 @@ def montar_air(s, faiscas, hazaki=False, arte_despertada=None):
         # Mão de Sombra: uma massa de sombra (o rastro do endiabrado no auge), não o bolão da lata
         Q(3012, [(f"fx_sombra_rastro_{i}", 2) for i in range(6, 14)], [(-40, -30, 40, 30)], loop=0)
     caixa_p = (0, -110, 90, -10)
-    Q(3100, [("chute0", 4)] + [(n, 4, caixa_p) for n in ("soco1", "chute1", "rasteira1", "soco2", "chute2", "gira1", "rasteira2", "kick_alto")] + [("chute3", 20)])
+    # No Pengaró o compasso (gira1) e a armada (kick_alto) ainda são da arte antiga (cabelo castanho, contorno mole, de
+    # costas com a garrafa do outro lado): no meio do super ele trocava de arte por 14 ticks. Entram a bênção (afastar
+    # 4) e o chute alto (4), que são arcade; mesmos tempos, mesma caixa de origem.
+    gira, alto = ("f_afastar4", "f_chute_alto4") if desenhado() and not hazaki else ("gira1", "kick_alto")
+    Q(3100, [("chute0", 4)] + [(n, 4, caixa_p) for n in ("soco1", "chute1", "rasteira1", "soco2", "chute2", gira, "rasteira2", alto)] + [("chute3", 20)])
     for g in golpes(hazaki):
         Q(g.estado, quadros_golpe(g), NO_AR if g.tipo == "A" else CORPO)
     Q(760, [("parry", 4, (-8, -105, 46, -12)), ("recua", 10), ("defesa", 10)])
@@ -3623,6 +3655,7 @@ def arte_endiabrada(s):
 
 SOBRA_CLSN1 = 4  # px de caixa de golpe além do membro visível (a regra 8.3 aceita até 12)
 LARGURA_MINIMA_CLSN1 = 12
+SOBRA_MAXIMA_CLSN1 = 12  # regra 8.3: teto de caixa além do membro da forma normal
 
 
 def ajustar_clsn1(blocos, s, preset):
@@ -3670,8 +3703,14 @@ def ajustar_clsn1(blocos, s, preset):
                     usa.append(pares.get((g, i)))
                 medidas = [frente(c, y1, y2) for c in usa if c]
                 medidas = [v for v in medidas if v is not None]
-                if medidas and max(x1, x2) > max(medidas) + SOBRA_CLSN1:
-                    ponta = max(max(medidas) + SOBRA_CLSN1, min(x1, x2) + LARGURA_MINIMA_CLSN1)
+                alvo = max(medidas) + SOBRA_CLSN1 if medidas else None
+                # ação sem variante 1xxxx serve às duas formas e usa a maior; mas nunca mais de SOBRA_MAXIMA_CLSN1
+                # além do membro da forma normal (a cabeçada 303 ficava 17 px à frente da cabeça)
+                normal = frente((g, i), y1, y2) if numero < 10000 and desenhado() else None
+                if medidas and normal is not None:
+                    alvo = min(alvo, normal + SOBRA_MAXIMA_CLSN1)
+                if medidas and max(x1, x2) > alvo:
+                    ponta = max(alvo, min(x1, x2) + LARGURA_MINIMA_CLSN1)
                     if x2 >= x1:
                         x2 = min(x2, ponta)
                     else:
