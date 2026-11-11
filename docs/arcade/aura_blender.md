@@ -99,3 +99,22 @@ corpo. Cada camada roda no seu próprio laço: quadro = (tique // tiques_por_qua
 - Os remendos (raiz atrás do corpo, buraco dos pés no chão) e os números de corte continuam escritos à mão por aura.
 - Partículas com desenho próprio (a nota de dinheiro do Hazak) ficam no script da aura; no comum só há fagulha e gota.
 - Um osso só gira no plano da tela; profundidade é fingida com escala. Não há deformação por curva nem física.
+
+## As cinco auras (estado em 2026-11-11)
+
+Todas: PNG 360x200, alfa 0/255, 15 cores (paleta no `aura.json`), pé em (180,190), 2 tiques por quadro, quadro =
+`(tique // 2) % quadros` de cada camada. Arquivos `sprites/<id>/aura/{nome}_{quadro:02d}.png` + `aura.json`. Tamanho =
+caixa da união de todos os quadros de todas as camadas, medida nos PNG instalados. Render bruto, vídeo e tiras ficam
+fora do repositório, na pasta de trabalho de cada aura. **Nenhuma roda no jogo ainda.**
+
+| Lutador | Script | Camadas (quadros; plano) | PNG | Tamanho (x / y) | Pendências |
+|---|---|---|---|---|---|
+| Hazak (`hazaki`) | `hazak_asas.py` | chao 96, asas 48, coroa 48, particulas 96; tudo atrás | 288 | 313x179 (x 27–339, y 11–189) | é a referência aprovada pelo Alisson; falta só ligar no motor |
+| Gutto | `gutto_aura.py` | crateras 96, garanhao 48, raios 96, ferraduras 96 atrás; vapor 96 **à frente** | 432 | 296x184 (x 35–330, y 7–190) | alguns raios grandes ainda em zigue-zague largo (q12–q15, direita): o dono julga; garanhão ferve 47–71% por quadro; ferraduras 1,4x o conceito; vapor preso à narina da pose parada (em golpe/pulo seguir a cabeça ou desligar) |
+| Raiclaven | `raiclaven_aura.py` | leque, foices, raios, lascas, limalha, todas 96 e atrás; rodam juntas (o raio segue as pontas) | 480 | 253x190 (x 55–307, y 1–190) | passo das lâminas da frente 3,14 px (pouco acima de ~3); 236 px de lâmina no vão de baixo; raio azul-gelo (conceito puxa para violeta, regra sem lilás); emenda dos raios só conferida por número |
+| CK | `ck_aura.py` | paredao 48, aneis 96, nevoa 96, cacos 48, fagulhas 96; tudo atrás; compasso de 4 tempos em 48 quadros | 384 | 252x163 (x 56–307, y 29–191) | toco reto de fumaça na borda direita alta; silhueta do paredão muda só 2,5% por quadro (asa 12,2%); cintilação 5,4%; 7 px parados no paredão e 6 nos cacos |
+| Pengaró | `pengaro_aura.py` | coluna 48, chicotes 48 (usar no mesmo quadro), anel_tras, fiapos, soltos 96 atrás; anel_frente 96 **à frente** | 480 | 192x187 (x 82–273, y 11–197) | chão ainda lê como riscos claros e não lajes; mancha violeta lisa entre as pernas (remendo); topo com cara de serrilhado; px parados: coluna 57, chicotes 24, anel_tras 81, anel_frente 31 |
+
+Comum a todas: nenhum vídeo dos retoques foi assistido (só as tiras); nada testado em fundo claro, em outras poses,
+na borda da tela nem com as barras de vida. Para ir ao jogo: ligar pelo `ferramentas/aura.py` da branch `efeitos`
+(camadas atrás/à frente do corpo, laço por camada, desligar o que está preso à pose parada).

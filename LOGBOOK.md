@@ -989,3 +989,25 @@ vídeo não assistido; o vapor continua ancorado na narina da pose parada; ferra
   distância 27). Miolo do leque muda 57,8% por quadro e a silhueta 11,9% (asa: 55% e 12,3%). Raios não tocam y=0 (y_min 1).
 - **Pendente:** passo máximo das lâminas da frente 3,14 px (pouco acima de ~3); 236 px de lâmina ainda no vão de baixo
   (pontas das asas descendo ao lado das pernas); vídeo não assistido; nada visto no jogo.
+
+## 2026-11-11 (auras pelo Blender: frente fechada)
+
+- **Feito:** as cinco auras do Despertar estão em camadas pelo método do Blender (conceito aprovado como textura,
+  ossos em cascata, efeitos em Python por cima), 2 tiques por quadro, pé em (180,190). Tabela com script, camadas,
+  quadros, tamanho e pendências em `docs/arcade/aura_blender.md` ("As cinco auras").
+  - **Hazak** (`hazak_asas.py`, `sprites/hazaki/aura/`, 288 PNG): asas, coroa, chão e partículas; é a referência
+    aprovada, sem retoque.
+  - **Gutto** (`gutto_aura.py`, `sprites/gutto/aura/`, 432 PNG, commit `2949112`): raios finos com galhos, rabo de
+    raio no lugar do corte do tronco, vapor e crateras redesenhados, nada acima de y=7.
+  - **Raiclaven** (`raiclaven_aura.py`, `sprites/raiclaven/aura/`, 480 PNG, commit `1356a3a`): leque duplo aberto
+    embaixo, em cascata e sem roda, moldura de raio com clarão, roseta atrás do corpo.
+  - **CK** (`ck_aura.py`, `sprites/ck/aura/`, 384 PNG, commit `e1be37b`): miolo do cone com volume na batida, parede
+    que balança e estica, cones com pincelada, caixas do miolo espelhadas.
+  - **Pengaró** (`pengaro_aura.py`, `sprites/pengaro/aura/`, 480 PNG, commit `11f8fb7`): miolo escorrendo sem
+    costura, brilho violeta devolvido, topo em lobos, chão de frente.
+  Render bruto, vídeos e tiras ficaram fora do repositório (pasta de trabalho de cada aura, no scratchpad da sessão).
+- **Pendente:** **nada disso roda no jogo ainda**: falta ligar pelo `ferramentas/aura.py` da branch `efeitos`. Vídeos
+  dos retoques não assistidos (só tiras); nada em fundo claro nem em outras poses. Por aura: Gutto, raios grandes
+  ainda largos e vapor preso à narina da pose parada; Raiclaven, passo 3,14 px nas lâminas da frente; CK, toco de
+  fumaça na borda direita e parede pouco viva pela métrica; Pengaró, chão ainda em riscos e mancha lisa entre as pernas.
+- **Próximo:** o Alisson vê os vídeos e diz quais retoques valem; depois, ligar as cinco no motor (branch `efeitos`).
