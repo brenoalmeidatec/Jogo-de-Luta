@@ -3773,7 +3773,7 @@ def despertar_do_pengaro(cns):
          "[State -2, Zera ressaca na intro]\ntype = VarSet\ntrigger1 = roundstate < 2\nvar(21) = 0\n\n"
          "[State -2, Conta Despertar]\ntype = VarAdd"),
         ("[State -2, Ressaca começa]",
-         "[State -2, Endiabrado pela seleção]\ntype = VarSet\ntrigger1 = palno = 2\nvar(20) = 600\n\n"
+         "[State -2, Endiabrado pela seleção]\ntype = VarSet\ntrigger1 = palno = 2 && roundstate >= 2\nvar(20) = 600\n\n"
          "[State -2, Ressaca começa]"),
         ("[State -2, Bônus de dano]",
          "[State -2, Fumaça na saída do Despertar]\ntype = Explod\ntrigger1 = var(20) = 12 && NumExplod(9215) = 0\n"
