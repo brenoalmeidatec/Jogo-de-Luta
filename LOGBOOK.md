@@ -639,3 +639,13 @@ C_compasso_defesa_lata; z_cab2 = cabeças a 8x). **Não conferido:** nada filmad
 o robô não prova que o pisão despertado acerta com a caixa nova (não sei se há roteiro para 11500); `e_agarrao` 4/5 não
 foram espelhados (não olhei a forma endiabrada); Gutto, Raiclaven e Hazaki não foram regerados (o diff só toca
 `chars/pengaro`).
+
+## 2026-11-11 (método em .md)
+
+- **Feito:** a pedido do Alisson, o jeito de trabalhar do Claude passou a ficar versionado: `docs/metodo-do-claude.md`
+  (índice: frentes por branch, ciclo fila → fazer → sandbox → céticos → retoque, arte no ChatGPT, pipeline arcade,
+  endiabrado = modo de Despertar com cara de boss final, aura animada e fluidez) e `docs/arcade/registro_fila.md`
+  (procedimento da automação do ChatGPT e tabela das folhas, que estava só no rascunho da sessão).
+- **Pendente:** as frentes `hazak`, `ck`, `endiabrado`, `bosses` e `efeitos` ainda não entraram na `mugen`; o teste da
+  asa do Hazak no Blender não terminou (se aprovado, a seção 7 do método ganha o passo a passo).
+- **Próximo:** ao fechar cada frente, copiar para o repo o que os agentes anotaram fora dele e atualizar o método.
