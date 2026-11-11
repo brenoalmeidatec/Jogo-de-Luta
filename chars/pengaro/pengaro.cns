@@ -6039,7 +6039,7 @@ var(20) = -1
 
 [State -2, Endiabrado pela seleção]
 type = VarSet
-trigger1 = palno = 2
+trigger1 = palno = 2 && roundstate >= 2
 var(20) = 600
 
 [State -2, Ressaca começa]
