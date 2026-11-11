@@ -535,3 +535,18 @@ imagem. Funcionou em `provoca` dizer "the arm on the LEFT side of the image is f
 to the mouth, the arm on the RIGHT side hangs empty"; em `golaco` e `vitoria` não pegou em todos os quadros. Pedir
 "magenta margin on all four sides" resolve corte na borda. Pendentes do Lote 6: grupo E (agachado, rasteirinha, queda,
 bicicleta), opcional.
+
+## 2026-11-11: Endiabrado vira boss final, lote preparado (branch `endiabrado`)
+
+- O dono aprovou o conceito do Pengaró Endiabrado como boss final: `sprites/pengaro/quadros/folhas_arcade/e_conceito.png`
+  (frente sem aura, costas, frente com aura, rosto).
+- `docs/arcade/fila.md` ganhou o **Lote 7**: prompt base do boss, prompt base da aura e 34 folhas com MOTION, em três
+  grupos (A 12, B 12, C 10): 30 `e_<golpe>` (uma para cada folha que o gerador usa, incluindo `e_ginga`, `e_anda` e a
+  `e_lata` que não existia), `e_despertar` e três `fx_aura_*` (coluna, anel, detritos) em fundo verde.
+- Textos atualizados para o modelo novo: `docs/como-trabalhar.md`, `docs/fichas/pengaro.md`, `docs/arcade/pengaro.md`,
+  `docs/biblia-de-arte.md`. A linha da tabela de auras em `regras-dos-lutadores.md` não mudou.
+- **Nada foi gerado nem ligado no jogo**: o gerador não foi tocado e o jogo continua com a arte antiga do endiabrado.
+- Pendente: gerar o grupo A começando por `e_ginga` e medir se o recorte de magenta come o violeta (se comer, passar as
+  `e_` para fundo verde); definir a paleta do boss; decidir se `e_despertar` substitui só `despertar_b`; ligar as
+  `fx_aura_*` por `Explod`; `e_defesa`, `e_chute_baixo` e `e_rasteira` não têm folha normal aprovada nesta branch para
+  servir de referência de pose.
