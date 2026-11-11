@@ -844,3 +844,15 @@ a ~150 / ~200 px está bom?; (6) a Estatueta do tamanho da mão (~15 px) ou maio
 - **Pendente:** Despertar do Hazak (Diabo Loiro: folhas `d_*` em geração na branch `bosses`), som próprio, retrato do
   Pengaró na barra de vida ainda antigo; robôs do Gutto e do Raiclaven não foram rodados contra o Hazak novo.
 - **Próximo:** juntar `ck`, `endiabrado`, `bosses` e `efeitos` conforme cada frente fechar e for conferida.
+
+## 2026-11-11 (aura pelo Blender vira padrão)
+
+- **Feito:** teste da asa do Hazak (Diabo Loiro) animada no Blender a partir do conceito aprovado: asa com ossos batendo
+  em laço de 48 quadros, notas caindo, ouro pingando, coroa e brasa, em camadas de 15 cores. O Alisson viu o vídeo e
+  aprovou o método como padrão das auras. Scripts em `ferramentas/aura_blender/`, passo a passo em
+  `docs/arcade/aura_blender.md`, seção 7 de `docs/metodo-do-claude.md` atualizada.
+- **Pendente:** o teste foi vídeo montado fora do jogo, comparado só com o desenho parado (a folha de 8 quadros do
+  ChatGPT não existia); falta ligar no motor pelo `ferramentas/aura.py` (branch `efeitos`) e fazer o rig das outras
+  quatro auras. Os scripts ainda têm caminhos e medidas da asa do Hazak escritos à mão (não são genéricos).
+- **Próximo:** generalizar os scripts e aplicar em Gutto, Raiclaven, CK e Pengaró quando o uso do plano permitir
+  (semana em 64% no Fable às 15h; a regra é parar em 80%).

@@ -104,10 +104,16 @@ Pedido do Alisson (2026-11-11): "não quero nada estático... não quero um movi
   gira, sobe, respira, fora de sincronia com as outras; reage a golpe (incha no especial) e some com fade. Partículas
   soltas (elos, pedras, notas, lascas, anéis) nascem em pontos variados. A ferramenta comum é `ferramentas/aura.py`
   (branch `efeitos`; a documentação dela entra em `docs/arcade/aura_animada.md` quando a frente fechar).
-- **Quadros dos efeitos pelo Blender** (em teste com a asa do Hazak): em vez de uma folha de 8 quadros redesenhada, o
-  próprio desenho aprovado é recortado em peças e animado com ossos e deformação (a asa bate, o leque gira), mais
-  simulação para fumaça, fogo e raio. Loop de 24 a 32 quadros sem emenda, render pequeno sem suavização, paleta fixa.
-  Se o teste for aprovado, vira o padrão das cinco auras e este parágrafo ganha o passo a passo.
+- **Quadros dos efeitos pelo Blender (padrão aprovado pelo Alisson em 2026-11-11, depois do teste com a asa do Hazak):**
+  em vez de uma folha de 8 quadros redesenhada, o próprio desenho do conceito aprovado vira textura de uma malha com
+  ossos e o Blender só entorta; fogo, fumaça, raio, gotas e partículas entram como camadas em laço por cima. Passo a
+  passo e scripts: [`arcade/aura_blender.md`](arcade/aura_blender.md) e `ferramentas/aura_blender/`
+  (`recortes.py` → `rig_asa.py` no Blender → `compor.py`). Números do teste: laço de 48 quadros a 2 tiques, ponta
+  chegando ~0,28 s depois da raiz, passo máximo de 2,7 px por quadro, 15 cores fixas, alfa 0/255, camadas separadas
+  de 360x200 com o pé do lutador em (180,190). Limites conhecidos: o miolo do desenho "ferve" um pouco ao girar; a
+  raiz escondida atrás do corpo é remendo e pode aparecer em golpe; a aura do conceito ocupa quase a tela inteira.
+  Cada aura nova (garanhão do Gutto, leque do Raiclaven, paredão do CK, coluna do Pengaró) ganha o seu `rig_*.py`
+  no mesmo molde. Ainda falta ver rodando dentro do jogo.
 - **Corpo continua desenhado.** A fluidez vem de antecipação, recuperação gradual (3 quadros ou mais), pano, cabelo,
   rabo e corrente atrasando 1 a 2 quadros, e deslocamento por velocidade em vez de salto. Onde 8 desenhos não bastam,
   pede-se uma segunda folha para ter 16.
