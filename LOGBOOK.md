@@ -584,3 +584,92 @@ contato, antecipação), não da conversão.
 **Não feito / a seguir:** quadros do meio (`animar_folha.py --arcade` + `quantizar_folha.py --meio` funcionam para o
 CK, testado no `soco` e apagado); `gerar_ck.py` (item 4); refazer no ChatGPT as 4 folhas do item 1 e, se o Breno quiser,
 `queda`, `e_soco` e `e_caneta`. Nada foi testado no motor: só folha de contato e script.
+
+## 2026-11-11 (CK) — lutador montado no jogo: `gerar_ck.py`, `chars/ck`, robô e filme (branch `ck`, item 4 do pedido)
+
+**Feito.** `ferramentas/gerar_ck.py` (no molde do `gerar_raiclaven.py`, mas só sobre o `gerar_pengaro.py`, no modo "só
+desenhos") gera `chars/ck` com a ficha inteira. O kit é o do Pengaró (mesmos números de estado e nomes de comando, que
+é o que o robô testa); a arte, os movimentos dos comandos e os golpes são do CK.
+
+- **Arte:** as 58 pastas de `sprites/ck/quadros_arcade` e os efeitos de `sprites/ck/efeitos`, sem quadro do meio. O
+  conversor centra cada figura na célula; nas folhas de golpe o gerador ancora o calcanhar de trás onde ele fica na
+  guarda (`ANCORA`), senão o corpo escorregava até 17 px para trás ao bater e o punho ia só 34 px à frente.
+- **Caixas de golpe medidas no desenho** (`caixa()`): o pedaço do corpo que passa de 24 px à frente do eixo, com 4 px
+  de sobra. Os golpes só do Ratão e as variantes despertadas dos normais (`gp.CAIXA_DESPERTADA`) são medidos no
+  desenho do Ratão (a chinelada alta bate na cabeça, o chute da base na barriga).
+- **Braço curto:** o soco do CK vai uns 40 px à frente (o do Pengaró, 70). Para as correntes encaixarem, cada golpe
+  entra com um passo (`com_passo`, avanço de 2 a 6,5 px por tick até a caixa + passo chegar a 80 px) e os normais do
+  kit ganham um passo de até 3 ticks antes do contato (`NORMAIS_DO_KIT`, alvo 52 px).
+- **Comandos da ficha:** Tragada `↓ →` x/y, Boné Voador `→ ←` x/y, Levanta, Comédia `→ ↓` x/y, Bote `↓ →` a/b, Bicuda
+  Baixa `↓ ←` a/b, Gingado de Esquiva `← →` a/b, Contragolpe `↓ ←` x/y, Pêndulo `← ↓` a/b, Saideira `← →` y, Rajada
+  `← → ↓` a/b, Nocaute `← → ↓` x/y. Ratão: Garrafa Voadora `↓ →` x/y, Tragada de Beck `↓ ↑` x/y, óculos `→ ←` x/y,
+  Passinho Ratão `→ ←` a/b, Grave do Paredão `↓ ↑` a/b, Baile `← → ↓` x+y (e o comando da Rajada, que no Ratão vira o
+  Baile). Kombo 4 é x, y, ↓ + y; kombo do Ratão é x, → + y, b.
+- **Estados com lógica própria** (o resto é o CNS do kit): Tragada (1000/1001, nuvem que anda pouco, para e fica 150 a
+  180 ticks; quem encosta leva 25 e fica 45 ticks tonto; o pod aparece na luva), Boné Voador (1600/1601, projétil
+  que freia, volta e some na cabeça; ele fica sem boné esperando e põe de volta na ação 1602), Contragolpe (1300/1301
+  com `ReversalDef` e o cruzado 1310), Pêndulo (1100/1101 com `NotHitBy SA` e saída no direto 1110), Rajada da
+  Esquina (3000: 7 socos de 22 e a voadora de 70), Tragada de Beck (3400), Garrafa Voadora (3402: arco, estilhaça e
+  deixa cacos 120 ticks), Grave do Paredão (3403), corte descendo no ar (3436).
+- **Modo Ratão:** `despertar_a`/`despertar_b` com os 4 quadros de `efeitos/despertar_fumaca` no lugar dos de fumaça
+  lilás; `RemapPreset` para as folhas `e_`; **aura = `fx_aura` num Explod à parte** (ação 9210, atrás do corpo, presa
+  ao lutador) e PalFX esverdeado leve. Jeito chapado: nos estados 3410 a 3435 o alcance (0 a 5 px) e o tempo do
+  contato (0 a 2 ticks) são sorteados; corte de garrafa sangra 3 de vida a cada 15 ticks por 90 ticks (não mata).
+  Perde o Contragolpe e a esquiva do Pêndulo liga 3 ticks depois.
+- **Paredão (`fx_paredao`, ação 9250):** atrás dele na entrada do round (some quando o round começa), no Despertar,
+  no Baile da Esquina e no Grave.
+- **Textos:** 8 falas de vitória, `movelist.dat` (o óculos aparece como "Óculos Voador": sem nome de marca em texto do
+  jogo). Retrato: `sprites/ck-selecao-kof.png`, o busto do desenho 0 da `referencia_ginga` em resolução cheia.
+- **Instalação e robô (só linhas novas):** `'ck'` na lista do `ferramentas/Jogo de Luta.bat`; `robo.lua` recebe o
+  `--lutador` (`@LUTADOR@`) e, com `ck`, troca o kombo 4 e o kombo do Despertar e roda 5 roteiros a mais (Baile pelo
+  comando próprio, Contragolpe sem apanhar e apanhando, Pêndulo e saída no direto).
+- **Vítima dos agarrões:** as ações 5001 e 5030 usam os sprites 382, 384-386 e 49, que já estão em
+  `gp.SPRITES_VITIMA` (os mesmos números do Gutto e do Raiclaven); o `main` confere.
+
+**Testado (só na sandbox):**
+
+- Robô `testar_pengaro.py --lutador ck`: **159 PASS / 0 FAIL** em 48 roteiros (1ª rodada: 158/1, a nuvem fraca nascia
+  em cima de quem estava a 70 px e acertava no mesmo tick; passou a nascer junto da boca e parar a ~55 px).
+- Robô do Pengaró depois das mudanças no `robo.lua`: 146 PASS / 0 FAIL em 43 roteiros, igual ao registrado antes.
+- `chars/gutto`, `hazaki`, `pengaro` e `raiclaven`: md5 igual antes e depois (`85cb5631…`).
+- Dois filmes CPU x CPU de 10 s contra o Pengaró (`filmar_sandbox.py`, o segundo com `--despertar 1`), olhados em
+  tiras de 16 quadros a 3 por segundo e em 4 recortes em resolução cheia: ele aparece, com retrato na HUD, pés na
+  linha do chão com sombra, sem pixel magenta ou verde, golpes legíveis; no Despertar o paredão fica atrás dele, a
+  fumaça cobre o corpo, ele sai de Ratão com a garrafa e a aura verde sobe dos pés como efeito à parte; log do motor
+  sem erro (só os avisos de `buffer time` que todos têm). Os vídeos não estão no repositório.
+
+**Provisório (funciona, mas não é o que a ficha pede no fim):**
+
+- **Folhas emprestadas** (não há desenho próprio): Pêndulo = `rolamento` 1-2; ganchos da corrente y e do Gingado b =
+  `golaco` 3 e 5; joelhada = `chute_alto` 2; chute alto de rua = `afastar` 4; Voadora da Esquina e fim da Rajada =
+  `bicicleta` (desenho de ar, no chão parece agachado); cotovelada e chute duplo no ar = `ar_soco` e `bicicleta`;
+  pisão = `afastar` 5; tapa de luva = `compasso` 4; Saideira = `agarrao` + `martelo` + `chute_baixo`; Bicuda Baixa =
+  `rasteirinha`; Grave = `chute_baixo`; apanhando agachado = `agachado`. No Ratão (`E_FOLHA`): `afastar` ->
+  `e_chute_alto`, `baixo_soco` -> `e_agachado` (o soco agachado não aparece), `rasteirinha` -> `e_rasteira`,
+  `bicicleta` -> `e_ar_soco`, `compasso` e `armada` -> `e_martelo`, `lata` -> `e_provoca`.
+- **`↓ ↑` + botão:** o ↑ faz pular. A entrada aceita o pré-pulo e os 7 primeiros ticks do pulo e o golpe volta para o
+  chão. O robô entra por `AssertCommand`, então **ninguém apertou isso na mão**. Se ficar ruim, a saída é `↓ ↓` como
+  no Pengaró (muda a ficha: decisão do Breno).
+- Tragada de Beck não segue o oponente (nuvem grande e lenta, reta). Garrafa Voadora tem uma versão só (x e y iguais)
+  e os cacos nascem num ponto fixo (a 206 px), só se a garrafa não acertou antes.
+- Nocaute de Rua é o super de 3 golpes do kit com os desenhos do CK e invencível no preparo: sem esquiva, câmera
+  lenta nem o oponente rodando. Levanta, Comédia forte ficou invencível até o fim do ativo, sem a recuperação longa.
+- Boné Voador: ele fica parado, sem boné, até o boné voltar (36 ticks no x, 59 no y).
+- Golpes das correntes e kombos que valem nas duas formas (301 a 347) têm a caixa medida no desenho da base; no Ratão
+  os chutes com `e_chute_alto` batem mais alto que a caixa.
+- Faíscas: os desenhos do Pengaró repintados (branco na base, verde de vidro no Ratão). A ressaca depois do Despertar
+  é a do kit (a ficha não fala dela). O tropeço que vira golpe baixo não foi feito.
+- O gancho do Gingado b não acerta no roteiro do robô (dano 0), igual ao chute do Rolê do Pengaró no mesmo roteiro:
+  é do kit e ninguém investigou.
+
+**Não verificado:** `select.def` (não existe no repositório; quem registra é o `.bat`, que não foi rodado); o
+`verificar_pengaro.py` (só conhece Pengaró e Hazaki); caixas no editor e combos no ikemen-combo-finder; treino dos dois
+lados; som (desligado na sandbox); entrada do round e vitória em movimento (o filme começa com o round aberto).
+
+**Tamanho:** em pé ele mede 113 px (Pengaró 110 na ginga, Gutto 114, Raiclaven 119), mas tem 47 px de largura contra
+77 a 90 dos outros: no filme ele parece pequeno ao lado do Pengaró. É a escala 0,195 do `converter_ck.py`; mudar é
+reconverter as folhas (15 min) e rodar o gerador.
+
+**A seguir:** o Breno olhar o filme e decidir o tamanho e o `↓ ↑`; refazer as 4 folhas `e_` do item 1 e a `queda`;
+pedir as folhas que faltam (Pêndulo, ganchos, joelhada, Voadora, Saideira) e trocar as emprestadas; juntar a `ck` na
+`mugen` (quem junta é o orquestrador: `robo.lua`, `testar_pengaro.py` e o `.bat` têm só linhas novas).
