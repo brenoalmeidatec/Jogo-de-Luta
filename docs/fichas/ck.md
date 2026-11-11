@@ -172,9 +172,12 @@ cortando com a garrafa e fecha quebrando uma garrafa nova na cabeça dele.
 - As fotos de referência do CK ficaram fora do repositório.
 - **Correções pedidas pelo Breno (2026-11-11, tarde):** braço de trás saindo pelas costas e garrafa trocando de mão.
   Refeitos com a regra nova (luva de trás sempre na frente do queixo; caco sempre no braço de perto, desenhado na frente
-  do corpo; mão de trás vazia): `cabecada`, `golaco` e 18 folhas do Ratão. **Ainda a refazer** (o limite de imagens do
-  ChatGPT estourou): `e_provoca`, `e_vitoria`, `e_derrota`, `e_anda` e `e_beck` (feitos antes da regra) e `e_golaco` e
-  `e_juliet_voadora` (a garrafa ainda some ou sobe pelo braço de trás em alguns quadros). Os pedidos já estão com a regra
+  do corpo; mão de trás vazia): `cabecada`, `golaco` e 18 folhas do Ratão. Na segunda conta (gratuita) saíram `e_anda`,
+  `e_vitoria` e `e_derrota` com a garrafa certa, com retoque por código onde o ChatGPT não acertou (garrafa extra apagada
+  no quadro 6 do `e_anda`; quadros 2–3 da vitória e 8 da derrota copiados de quadros vizinhos certos). **Ainda a refazer**
+  (as duas contas bateram o limite de imagens): `e_provoca` e `e_beck` (feitos antes da regra) e `e_golaco` e
+  `e_juliet_voadora` (a garrafa ainda some ou sobe pelo braço de trás em alguns quadros). Dica que funcionou melhor no
+  ChatGPT: dizer que a garrafa fica na mão "mais à direita na imagem" e pedir correção em cima da imagem, quadro a quadro. Os pedidos já estão com a regra
   em `ferramentas/folhas_ck.py`.
 
 ## Folhas (ChatGPT, estilo arcade)
