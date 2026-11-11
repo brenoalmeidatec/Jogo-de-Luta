@@ -53,6 +53,9 @@ continua proibido no corpo; a fluidez do corpo vem de desenho. Na aura e nos efe
 | C5 | **Sem pose trocando seca.** Entre duas poses em que o membro anda mais de 20 px há 1 ou 2 smears de 1 tick, ou um desenho de passagem. Fora do contato nenhum desenho segura mais de 9 ticks. Nenhum vai-e-volta de desenho (ex.: 4, 3, 4) | `.air`: tempos por elemento; tira: nenhum par de quadros vizinhos com o membro pulando sem smear |
 | C6 | **Movimento contínuo.** Ginga com ≥ 16 desenhos e andar/correr com ≥ 12, nenhum acima de 2 ticks. Enquanto só houver folha de 8, o teto é 4 ticks por desenho e a folha `_b` fica na lista de pedidos | `.air` das ações de parado, andar e correr da forma |
 | C7 | **Corpo nunca parado sozinho.** Enquanto um desenho do corpo segura mais de 6 ticks (contato de super, espera do projétil), algum efeito preso ao golpe está andando (rastro, vapor, corrente, aura em surto) | tira do golpe |
+| C9 | **Uma folha, um golpe.** Cada golpe próprio tem a sua folha de 8 desenhos. Folha dividida entre dois golpes, ou golpe montado com 2 ou 3 desenhos fatiados de outra folha, não passa: não sobra desenho para a antecipação (C1) nem para a recuperação (C2) | tabela de golpes: entre os golpes próprios nenhum nome se repete na coluna Folha |
+| C10 | **Ritmo próprio.** Golpes da mesma corrente não repetem a notação de tempos: o que abre entra rápido, o do meio segura, o último carrega. Notação igual golpe após golpe é metrônomo | tabela de golpes: notação e início/ativo/total diferentes de um golpe para o seguinte |
+| C11 | **Sem sorteio.** Nenhum `random` escolhe animação, tempo ou alcance. Variação só determinística (alterna pelo contador de uso) e só de desenho: o frame data é o mesmo nas variantes | grep por `random` nos estados de golpe |
 | C8 | **Frame data intacto.** Soma de ticks, caixa por tick e tick em que a caixa liga iguais aos da tabela do kit | assert do gerador e robô |
 
 C5 afrouxa a "troca seca" da regra 7 só no sentido de exigir smear ou desenho de passagem; não libera entremeio
@@ -62,46 +65,59 @@ automático. É a decisão 1 da seção 8.
 
 | # | Aceite | Limite |
 |---|---|---|
-| E1 | mesmo quadro de uma camada na tela | no máximo 3 ticks (`tempo` da camada ≤ 3; padrão 2) |
+| E1 | mesmo quadro de uma camada na tela | no máximo 3 ticks (`tempo` da camada ≤ 3; padrão 2); camada com menos de 8 quadros o `aura.py` recusa |
 | E2 | mudança entre quadros do vídeo no loop | percentil 95 / mediana ≤ 2,5; maior / mediana ≤ 3,5; nenhum quadro parado |
 | E3 | volta do loop (último desenho para o primeiro) | ≤ 2,5x a mediana |
-| E4 | escala por tick | ≤ 3% no loop, 6% no surto, 5% ligando e desligando |
-| E5 | camadas fora de fase | correlação da escala < 0,9 em módulo entre qualquer par; elementos diferentes ao mesmo tempo |
-| E6 | surto (especial, super) | escala passa do máximo calmo; animação a 1 quadro por tick |
-| E7 | virada | todas as camadas passam para o lado novo |
+| E4 | grade do pixel | no loop o motor **não escala nem gira** nada: escala 1 e ângulo 0 em toda camada e toda partícula. O que cresce, gira ou balança é **assado em quadros** (`aura.reduzir`, `aura.girar_loop`, `aura.ondular`, `escala`/`giro` da `Particula`). A escala do motor só sai de 1 ligando, desligando e no surto, e anda ≤ 7% por tick |
+| E5 | camadas vivas e fora de fase | a posição muda em ≥ 90% dos ticks, no máximo 1 px por tick (tremor incluído); correlação da posição < 0,9 em módulo entre qualquer par; elementos diferentes ao mesmo tempo |
+| E6 | surto | escala passa de 1,05; animação a 1 quadro por tick; folga de 90 ticks entre um surto e o próximo. O gatilho é **super e especial escolhido** (`StateNo = [3000, 3999]` mais `disparo_surto()` nos que merecem), não a faixa inteira dos especiais |
+| E7 | virada | não é corte: as camadas apagam, trocam de lado 3 a 8 ticks depois do lutador e voltam |
 | E8 | franja | 0 pixel do fundo (`#00FF00` ou magenta) a mais |
-| E9 | corpo na frente | ≥ 80% da pele igual com a aura ligada |
+| E9 | corpo legível | medido **por faixa** contra o mesmo desenho sem aura, no loop **e no surto**: tronco ≥ 97%, pernas ≥ 95%, pés ≥ 60% dos pixels do corpo iguais. Na frente do corpo só existe névoa rasteira: camada `"frente"` com no máximo 13% da altura do lutador acima dos pés, alfa ≤ 0,5 contando o surto, e que não é cópia de outra camada. Partícula nunca passa na frente. O `aura.py` recusa montar fora disso |
 | E10 | tamanho | aura ≥ 2x a altura do lutador |
 | E11 | desligar | nenhum `Explod` vivo depois do fade (cerca de 35 ticks) |
-| E12 | efeito solto (faísca, rastro, projétil, onda) | ≥ 6 desenhos, 2 ticks cada, nasce e morre com fade ou escala; nunca 1 sprite fixo. Este não é medido pelo `medir_aura.py`: confere-se no `.air` e na tira |
+| E12 | efeito solto e partícula | ≥ 6 desenhos, 2 ticks cada, nasce e morre com fade ou escala; **nunca 1 sprite parado**. Peça de assinatura (elo, ferradura, nota, lâmina, anel) tem ≥ 4 desenhos próprios dela virando; farelo miúdo (lasca, fagulha de 3 a 5 px) pode ser 1 desenho com giro e escala assados. Partícula de um desenho só, sem giro nem escala, o `aura.py` recusa |
+| E13 | HUD na frente | nas caixas da vida, do retrato, do nome e do poder, ≤ 0,5% dos pixels muda com a aura ligada (o HUD do jogo tem `layerno = 1`) |
+| E14 | custo | no máximo 30 `Explod` vivos por aura no pior caso (camadas + partículas no surto); o `aura.py` faz a conta e recusa montar acima |
+| E15 | nunca para | a aura roda no `[Statedef -4]`: segue viva em superpausa de outro, com o lutador em estado custom (agarrado), na intro e na pose de vitória; antes da intro de cada round não sobra `Explod` |
+| E16 | espalhamento das partículas | duas peças seguidas nascem a ≥ 20% da área uma da outra (o `resumo()` da aura imprime); nada de fila que anda |
 
-Limite conhecido do teste: E2 foi afrouxado depois de ver os dados (o gravador da sandbox pula e repete quadros) e E5
-subiu de 0,6 para 0,9. Não testado ainda em nenhum filme: troca de round, lutador pulando (camada de chão), super
-pausa, golpe recebido, KO, `mistura="soma"`, `giro` de camada, e a aura num lutador de verdade (a paleta global de 255
-cores vai requantizar as cores dela).
+E1 a E11 e E13 a E15 são medidos em filme pelo `medir_aura.py` (E15 no roteiro `extra`); E12 confere-se no `.air` e
+na tira; E16 sai da conta do `aura.py`. Limite conhecido do teste: E2 foi afrouxado depois de ver os dados (o
+gravador da sandbox pula e repete quadros). **Não testado em nenhum filme:** `mistura="soma"`, golpe recebido com
+dano, e a aura num lutador de verdade (só o `escrever_sff` do Hazak foi rodado no host com os quadros da aura: as
+cores saíram exatas, mas ali a aura não disputava as 240 cores com as faíscas).
 
 ### 2.3 O que o `aura.py` faz e o que fica com o gerador
 
-O `aura.py` entrega: camadas em loop presas ao lutador (pulso, deriva, tremor, giro, balanço, alfa), partículas
-(nascem numa área, andam, giram, somem), fade de entrada e saída, virada e **um** tipo de reação, o surto. Reações
-específicas de cada boss (o garanhão dar o coice junto, as asas fecharem na defesa, a lâmina do leque estocar, o anel
-soltar onda no pouso) **não estão no `aura.py`**: são `Explod` avulsos do gerador, disparados no estado do golpe. Em
-cada lutador elas aparecem em "Reações fora do `aura.py`". Também não há hoje: órbita com troca de plano (frente e
-atrás), camada que atrasa em relação ao corpo, e troca de animação de uma camada viva (`anim` não troca por
-`ModifyExplod` neste motor). Esconder uma camada enquanto a reação toca também não existe: ou a reação é desenhada
-para passar por cima da camada, ou o `aura.py` ganha esse recurso (decisão 6).
+O `aura.py` entrega: camadas em loop presas ao lutador (deriva, tremor e alfa pelo motor; crescer, girar e balançar
+assados no desenho), partículas (nascem numa área, andam, giram, somem), fade de entrada e saída, virada suave,
+**um** tipo de reação, o surto, e `esconde`: uma camada apaga enquanto uma condição vale. Reações específicas de cada
+boss (o garanhão dar o coice junto, as asas fecharem na defesa, a lâmina do leque estocar, o anel soltar onda no
+pouso) **não estão no `aura.py`**: são `Explod` avulsos do gerador, disparados no estado do golpe; a camada em loop
+que a reação substitui leva `esconde=` com a mesma condição, para não aparecerem dois garanhões nem dois pares de
+asas. Em cada lutador elas aparecem em "Reações fora do `aura.py`". Também não há hoje: órbita com troca de plano
+(partícula não passa na frente do corpo, de propósito), camada que atrasa em relação ao corpo, e troca de animação
+de uma camada viva (`anim` não troca por `ModifyExplod` neste motor).
 
 Em todos os dicionários abaixo: `RAIZ` e `sprites` são os do gerador; tamanhos em px do jogo (tela 320x240, lutador
-perto de 110 px); `base=9300` em todos, porque cada lutador tem o seu `.air` e `.sff`. Posições e amplitudes são ponto
-de partida, a acertar no filme. Nenhum destes dicionários foi executado.
+perto de 110 px); **`base=9600` em todos** (em 2026-11-11 o maior número que algum gerador usa é 9305, no CK, que já
+ocupa 9300 a 9305; depois de montar, `AURA.conferir(grupos=..., acoes=..., explods=...)` falha se bater). Posições e
+amplitudes são ponto de partida, a acertar no filme. Os cinco foram **montados** com arte de mentira (as folhas
+`fx_aura_*` não existem): o `aura.py` aceitou os limites da frente, o teto de 30 `Explod` e as partículas; nenhum
+rodou no motor. Folha marcada FOLHA NOVA não está em fila nenhuma.
+
+Camada que vem do Blender (`docs/arcade/aura_blender.md`) já chega em laço e na grade: entra com
+`aura.ler_quadros(pasta)` no lugar da linha `recortar_folha`/`alongar_loop`, sem `ondular`.
 
 ### 2.4 Ordem de ligação comum a todos os geradores
 
 1. Converter as folhas boss para `quadros_arcade` e ligar a troca de desenho da forma (o que cada gerador já usa:
    `RemapSprite` ou animação +10000). Antes, tirar o que apaga ou sobrescreve arte desperta (ver cada lutador).
 2. **Remover** a aura antiga (`aura_cns()`, Explods 9210/9211, PalFX de aura) e pôr `AURA.registrar(sprites)`,
-   `air += AURA.air()` e `AURA.cns()` no `[Statedef -2]`, depois da contagem do `var(20)`. Não empilhar a nova sobre a
-   velha.
+   `air += AURA.air()` e `AURA.cns()` num **`[Statedef -4]`** (se o lutador não tem, `AURA.cns(cabecalho=True)` já
+   traz a linha). É -4 e não -2 porque o -2 para em pausa e superpausa. Não empilhar a nova sobre a velha. No
+   Hazak, o `registrar(s)` devolve o conjunto que tem de entrar no `manter` do `escrever_sff`.
 3. Dados dos golpes próprios num módulo só de dados (`pengaro_extra.py`, `gutto_boss.py`, `raiclaven_boss.py`,
    `hazaki_diabo.py`, `ck_boss.py`) e os estados à mão.
 4. Efeitos de golpe (acerto, rastro, projétil) e as reações fora do `aura.py`.
@@ -162,7 +178,7 @@ Despertar, então `→ ← + x/y` fica livre.
 
 | Estado | Nome | Comando | Folha | iní/ativo/total | Dano | Alc. | Ideia |
 |---|---|---|---|---|---|---|---|
-| 3404 / 3405 | Chicote de Elo | → ← + x / y | `e_chicote` + `_b` + `fx_corrente_chicote` | 14/6/48 e 18/6/54 | 70 / 90 | 150 / 190 | a corrente da algema estica como chicote; a forte puxa o oponente. Ocupa o papel do 2º projétil |
+| 3404 / 3405 | Chicote de Elo | → ← + x / y | `e_chicote` + `_b` + `fx_corrente_chicote` | 14/6/48 e 18/6/54 | 70 / 90 | 150 / 190 | a corrente da algema estica como chicote; a fraca bate no meio e empurra, a forte bate por cima e derruba no lugar. **Não puxa** (puxar com corrente é só do Raiclaven, decisão 48). Ocupa o papel do 2º projétil |
 | 1000 / 1001 (ramo desperto) | Pedra de Sombra | ↓ → + a / b | `e_bola` redesenhada + `fx_pedra` | os da Latada | iguais | tela | boss de mãos vazias chuta uma pedra da aura em vez de lata |
 | 835 / 836 | Algema | colado, ← → + y | `e_algema` + `_b` + `e_algema_vitima` | 5 de pega | 60 + 90 | colado | laça com a corrente, gira e bate no chão dentro do anel (no lugar da garrafada 830/831) |
 | 3406 | Véu do Mestre | ← ↓ + x / y | `e_veu` | 4/14/40 | 0 (contra 90) | curto | gira o casaco: apaga projétil; se tomar golpe no ativo, some e reaparece batendo |
@@ -192,34 +208,43 @@ Despertar, então `→ ← + x/y` fica livre.
 
 ```python
 import aura
+M = aura.Movimento
 F = RAIZ / "sprites/pengaro/quadros/folhas"
-coluna = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_coluna.png"), altura=236), total=32)
+coluna = aura.ondular(aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_coluna.png"), altura=236),
+                                        total=32), amplitude=3)            # o balanço é assado, não giro do motor
 anel = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_anel.png"), largura=176, ancora="centro"),
                          total=24, metodo="mistura")
-pecas = aura.recortar_folha(F / "fx_aura_detritos.png")          # 8 células: conferir quais são pedra e quais elo
-pedra, elo = aura.enquadrar(pecas[0:1], altura=11), aura.enquadrar(pecas[4:5], altura=13)
-AURA = aura.Aura("pengaro", ligada="var(20) > 0", surto="StateNo = [1000, 3999] && Time = 1", base=9300, camadas=[
-    aura.Camada("anel", anel, plano="chao", pos=(0, -3), surto_incha=0.35,
-                mov=aura.Movimento(pulso=(0.05, 0.03), contrafase=False, deriva=(0, 0), alfa=0.9)),
-    aura.Camada("coluna", coluna, plano="tras", pos=(-4, 2),
-                mov=aura.Movimento(pulso=(0.05, 0.07), deriva=(3, 4), balanco=2.5)),
-    aura.Camada("chicotes", coluna, plano="tras", pos=(12, 2), escala=(-0.7, 0.78),
-                mov=aura.Movimento(pulso=(0.08, 0.05), pulso_periodo=71, deriva=(5, 2), deriva_periodo=113,
-                                   balanco=4, alfa=0.6)),
-    aura.Camada("pes", coluna, plano="frente", pos=(2, 4), escala=(0.55, 0.2), mov=aura.Movimento(alfa=0.45)),
+chicotes = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_chicotes.png"), altura=190),
+                             total=24)                                     # FOLHA NOVA: correntes chicoteando
+nevoa = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_nevoa.png"), altura=13), total=24)  # NOVA
+pecas = aura.recortar_folha(F / "fx_aura_detritos.png")   # 8 células: 4 desenhos da pedra virando, 4 do elo virando
+pedra = aura.enquadrar(pecas[0:4], altura=11, ancora="centro")
+elo = aura.enquadrar(pecas[4:8], altura=13, ancora="centro")
+AURA = aura.Aura("pengaro", ligada="var(20) > 0", surto="StateNo = [3000, 3999] && Time = 1", base=9600, camadas=[
+    aura.Camada("anel", anel, plano="chao", pos=(0, -3), surto_incha=0.25, mov=M(deriva=(0, 0), alfa=0.9)),
+    aura.Camada("coluna", coluna, plano="tras", pos=(-4, 2), mov=M(deriva=(3, 4))),
+    aura.Camada("chicotes", chicotes, plano="tras", pos=(12, 2), mov=M(deriva=(5, 2), deriva_periodo=113, alfa=0.7)),
+    aura.Camada("nevoa", nevoa, plano="frente", pos=(2, 3), surto_incha=0.0, surto_alfa=0.08,
+                mov=M(deriva=(3, 0.5), deriva_periodo=90, alfa=0.4, respira=0.2)),
 ], particulas=[
-    aura.Particula("pedra", pedra, periodo=9, vida=64, area=(-58, 0, 58, -24), vel=(0, -0.55), vel_var=(0.5, 0.5),
-                   giro=(0, 90), plano="frente", semente=1),
+    aura.Particula("pedra", pedra, periodo=12, vida=64, area=(-58, 0, 58, -24), vel=(0, -0.55), vel_var=(0.5, 0.5),
+                   giro=(0, 90), semente=1),
     aura.Particula("elo", elo, periodo=17, vida=78, area=(-52, -4, 52, -30), vel=(0, -0.45), vel_var=(0.6, 0.4),
-                   giro=(-40, 140), plano="tras", semente=2),
-    aura.Particula("lasca", aura.pedra_procedural(5), periodo=6, vida=40, area=(-64, 0, 64, -10), vel=(0, -0.9),
-                   plano="frente", semente=3),
+                   giro=(-40, 140), semente=2),
+    aura.Particula("lasca", aura.pedra_procedural(5), periodo=10, vida=40, area=(-64, 0, 64, -10), vel=(0, -0.9),
+                   giro=(0, 200), escala=(1.0, 0.6), semente=3),
 ])
 ```
 
-Enquanto as três folhas não existirem, a aura "sombra" do `gerar_teste_aura.py` (toda por código) serve de
-substituta: é a que foi filmada. Com `fx_aura_coluna_b` (16 desenhos), a coluna sai de `recortar_folha` das duas
-folhas juntas e o `alongar_loop` vai a 48.
+Mudou em relação à primeira versão do kit: a camada "chicotes" era a coluna de fumaça espelhada e reduzida (não
+era chicote nem corrente) e a camada "pes" era a mesma coluna achatada por cima dos pés. Agora os chicotes pedem
+**folha própria** (`fx_aura_chicotes`: 2 ou 3 correntes saindo da fumaça e estalando, 8 desenhos) e a frente é só a
+névoa rasteira (`fx_aura_nevoa`, 13 px de altura; enquanto não existir, `aura.nevoa_rasteira(124, 13, 24)` em
+violeta). Pedra e elo têm 4 desenhos cada, virando; nenhuma partícula passa na frente do corpo.
+
+Enquanto as folhas não existirem, a aura "sombra" do `gerar_teste_aura.py` (toda por código) serve de substituta: é
+a que foi filmada. Com `fx_aura_coluna_b` (16 desenhos), a coluna sai de `recortar_folha` das duas folhas juntas e o
+`alongar_loop` vai a 48.
 
 **Reações fora do `aura.py`:** onda do anel (cópia do anel em soma, escala 1,0 a 1,6 em 10 ticks) no pouso e em todo
 finalizador; coluna encolhendo e piscando ao apanhar; coluna falhando de 4 em 4 ticks nos últimos 120 ticks do
@@ -326,34 +351,44 @@ Como `gerar_gutto.py` não se edita nesta rodada, o executor entrega `ferramenta
 
 ### 4.1 Golpes do boss
 
-Os estados já existem (herdados); o que muda é o **dado**, que passa a ser do Gutto, e a folha. Nomes propostos, fora
-os quatro especiais do movelist. Dano base (no Despertar, x1,45).
+Os estados já existem (herdados); o que muda é o **dado**, que passa a ser do Gutto, e a folha. A primeira versão
+desta tabela repetia a do Pengaró número por número (era o que o gerador dá hoje) e dividia folhas entre golpes: não
+passava na própria regra do dono. Os números abaixo são o **alvo do Gutto**, não o herdado: ele é o pesado do
+elenco. Entra de 2 a 6 ticks mais tarde que o Pengaró, bate de 10 a 25% mais forte e mais longe, dá menos acertos
+por golpe, empurra mais, e três golpes aguentam um golpe fraco na subida (armadura). Nada medido em jogo. Dano base
+(no Despertar, x1,45). Cada golpe tem a sua folha (C9).
 
-| Estado | Nome | Comando | Folha (fila) | iní/ativo/total | Dano | Alc. | Propriedade |
+| Estado | Nome | Comando | Folha | iní/ativo/total | Dano | Alc. | Propriedade |
 |---|---|---|---|---|---|---|---|
-| 3410 | Marreta de Ferro | y | `e_martelo` | 7/8/31 | 55 | 78 | avança 1,8, cancela em especial |
-| 3411 | Pisão de Casco | y, y | `e_chute_baixo` | 7/8/39 | 60 | 72 | cancela se acertou |
-| 3412 | Chifrada | y, y, y | `e_cabecada` | 10/8/36 | 70 | 52 | |
-| 3413 | Coice de Roda | y x4 (3 acertos) | `e_compasso` | 8/8/43 | 120 | 90 | derruba, avança 2,2 |
-| 3420 | Coice Alto | b | `e_chute_alto` | 7/8/39 | 60 | 76 | abre o kombo |
-| 3421 | Empurrão de Casco | b, b | `e_afastar` | 7/8/39 | 70 | 82 | empurra -7 |
-| 3422 | Gancho Giratório | b, b, b | `e_armada` | 8/12/38 | 75 | 80 | por cima |
-| 3423 | Coice da Corrente Partida | b x4 (3 acertos) | **falta** `e_coice_final` (hoje repete `e_armada`) | 10/18/52 | 125 | 86 | derruba |
-| 3430 | Chifrada Subindo | ↓ + y | `e_cabecada` | 11/8/39 | 95 | 46 | antiaéreo, lança (-2, -10) |
-| 3431 | Patada Dupla | → + y | `e_soco` (a folha já tem dois golpes) | 9/8/42 | 50+60 | 70 | 2 acertos, avança 2,4 |
-| 3432 | Pisão de Cima | → + b | `e_chute_baixo` | 11/10/51 | 100 | 92 | por cima |
-| 3433 | Garra de Recuo | ← + x | `e_soco` | 5/7/24 | 58 | 66 | recua 1,0 |
-| 3434 | Coice de Recuo | ← + a | `e_compasso` | 7/8/39 | 70 | 66 | derruba, recua |
-| 3435 | Varrida de Rabo | ↓ + b | `e_rasteira` | 11/10/54 | 100 | 90 | baixo, rasteira |
-| 348 | Coice Giratório | b, a | `e_compasso` | 8/8/43 | 65 | 80 | 2º do kombo |
-| 349 | Carrinho de Satanás | b, a, x | `e_caneta` | 8/12/46 | 80 | 76 | baixo, derruba |
-| 3400 | Bufada de Fogo (movelist: "Beijo do Cavalo") | ↓ ↓ + x | `e_bola` + `fx_bufada` | solta no 25 / total 64 | 50 x 2 | tela | projétil que acelera, 1 por vez |
-| 3401 | Coice da Corrente | ↓ ↓ + y | `e_chute_alto` | 9/10/52 | 115 | 88 | avança 5,0, derruba |
-| 3402 | Galope Atravessado | ↓ ↓ + a | `e_rolamento` (na fila já é a investida que passa para trás) | 6/8/41 | 75 | 70 | invencível, chega virado |
-| 3403 | Queda do Cavalo | ↓ ↓ + b | `e_bicicleta` | 12 / até pousar | 105 | 70 | salta e mergulha, estouro no chão |
-| 3100 | Saideira do Cavalo | ← → ↓ + a/b | `e_golaco` | 8 acertos de 4 em 4 + final no 36 | 47x8 + 60 | perto | super, encerra o Despertar |
+| 3410 | Marreta de Ferro | y | `e_martelo` | 10/6/36 | 68 | 84 | avança 1,2; aguenta 1 golpe fraco do tick 4 ao 10; cancela em especial |
+| 3411 | Pisão de Casco | y, y | `e_chute_baixo` | 9/5/35 | 62 | 64 | baixo; treme a tela 4 ticks; cancela se acertou |
+| 3412 | Chifrada | y, y, y | `e_cabecada` | 12/7/40 | 82 | 58 | empurra -9 |
+| 3413 | Coice de Roda | y x4 (2 acertos) | **FOLHA NOVA** `e_coice_roda` | 13/5+5/50 | 60+85 | 96 | derruba; quica o oponente no canto |
+| 3420 | Coice Alto | b | `e_chute_alto` | 9/6/34 | 66 | 82 | abre o kombo |
+| 3421 | Empurrão de Casco | b, b | `e_afastar` | 8/9/38 | 58 | 88 | empurra -11, o maior empurrão do elenco |
+| 3422 | Gancho Giratório | b, b, b | `e_armada` | 11/10/42 | 84 | 78 | por cima |
+| 3423 | Coice de Aríete | b x4 (1 acerto) | **falta** `e_coice_final` | 16/6/58 | 150 | 92 | um coice só, pesado: derruba e joga a meia tela; aguenta 1 golpe fraco do tick 6 ao 16 |
+| 3430 | Chifrada Subindo | ↓ + y | **FOLHA NOVA** `e_chifrada_sobe` | 9/9/44 | 104 | 50 | antiaéreo, lança (-1, -11,5) |
+| 3431 | Patada Dupla | → + y | `e_soco` (a folha já tem dois golpes) | 11/4+4/46 | 44+72 | 74 | 2 acertos, avança 2,0 |
+| 3432 | Pisão de Cima | → + b | **FOLHA NOVA** `e_pisao_cima` | 15/7/52 | 112 | 80 | por cima; onda baixa de 40 px no pouso do casco |
+| 3433 | Garra de Recuo | ← + x | **FOLHA NOVA** `e_garra_recuo` | 6/5/27 | 52 | 70 | recua 1,4 |
+| 3434 | Coice de Recuo | ← + a | **FOLHA NOVA** `e_coice_recuo` | 9/6/41 | 78 | 86 | derruba; ele sai 30 px para trás |
+| 3435 | Varrida de Rabo | ↓ + b | `e_rasteira` | 13/12/56 | 92 | 104 | baixo; a rasteira mais longa do elenco |
+| 348 | Coice Giratório | b, a | `e_compasso` | 10/7/40 | 72 | 84 | 2º do kombo |
+| 349 | Carrinho de Guerra | b, a, x | `e_caneta` | 11/14/52 | 88 | corre 70 px | baixo, derruba |
+| 3400 | Bufada de Fogo (movelist: "Beijo do Cavalo") | ↓ ↓ + x | `e_bola` + `fx_bufada` | solta no 30 / total 70 | 95 x 1 | tela | um projétil só, grande e lento (vel 2,2), some ao bater; 1 por vez |
+| 3401 | Estouro de Casco | ↓ ↓ + y | **FOLHA NOVA** `e_coice_corrente` | 12/8/58 | 128 | 94 | avança 4,0, derruba; na guarda tira 30% a mais |
+| 3402 | Galope Atravessado | ↓ ↓ + a | `e_rolamento` (na fila já é a investida que passa para trás) | 9/12/48 | 82 | atravessa 120 px | invencível do tick 3 ao 14, chega virado |
+| 3403 | Queda do Cavalo | ↓ ↓ + b | `e_bicicleta` | 15 / até pousar | 118 | 76 | salta e mergulha; estouro no chão com onda de 60 px |
+| 3100 | Estouro do Garanhão | ← → ↓ + a/b | `e_estouro_a/b/c` + `fx_aura_garanhao_estouro` | 6 / 5 acertos de 12 em 12 + final / ~110 | 60x5 + 120 | tela, a caixa segue o garanhão | super, encerra o Despertar: o garanhão da aura se solta e atravessa a tela pisoteando; o Gutto fecha com o coice. Conferir o desenho contra a decisão 47 |
 | 3200 | Fúria do Cavalo | ← → ↓ + x/y | poses de soco e chute | não li | 345 em 3 | 87 | 2 estoques, versão boss do Bando de Chutes |
 | 2000 | Endiabrado | x + y, barra cheia | `despertar_boss` (fila: uma folha só) | 114 total | 0 | empurra | invencível |
+
+Folhas novas desta revisão (prioridade 1, MOTION a escrever junto com as da 4.5): `e_coice_roda` (meia-volta e dois
+coices de costas, um por perna), `e_chifrada_sobe` (agacha, sobe de chifre), `e_pisao_cima` (levanta o joelho até o
+peito e desce o casco), `e_garra_recuo` (tapa de mão aberta saindo de ré), `e_coice_recuo` (coice de uma perna só
+pulando para trás), `e_coice_corrente` (corre dois passos e solta os dois cascos). A "Saideira do Cavalo" (os 8
+acertos do Pengaró) saiu: o 3100 dele é o Estouro do Garanhão.
 
 Continuam da base com pose de cavalo: normais, correntes x e a, agarrões (o 830 vira mordida, `e_agarrao`), 1000/1001
 (sai "dobrada" no Despertar), 1100 a 1501 e o Teleporte de Ginga. O **Beijinho em Arco (1600/1601) é bloqueado** no
@@ -364,7 +399,7 @@ que o grep não mostrou em uso; não usar 5000 a 5999 (decisão 4).
 
 | Estado | Nome | Comando | Folhas | iní/ativo/total | Dano | Alcance | Propriedade |
 |---|---|---|---|---|---|---|---|
-| 3440 / 3441 | Laço da Corrente | → ← + x / y | `e_laco_a` + `e_laco_b` | 14/6/52 e 17/6/58 | 60 / 80 | 150 (caixa fina na corrente desenhada) | arranca a corrente do pescoço e chicoteia; x puxa em pé, y puxa e derruba |
+| 3440 / 3441 | Relincho de Guerra | → ← + x / y | `e_relincho_a` + `e_relincho_b` + `fx_relincho` | 12/8/44 e 22/10/60 | 0 / 40 | cone de 120 px à frente | urro de garanhão: x não dá dano, empurra -14 e deixa o oponente 20 ticks sem agir (abre a guarda); y carrega, dá dano e derruba. Substitui o Laço da Corrente, que repetia o chicote que puxa de outros três bosses (decisão 48) |
 | 3450 / 3451 | Investida de Chifres | → ↓ + a / b | `e_investida_a` + `e_investida_b` | 12/14/50 e 16/18/60 | 90 / 115 | corre 110 / 170 px | cabeça baixa; b aguenta 1 golpe e quica o oponente no canto |
 | 3460 / 3461 | Empinada | ← ↓ + x / y | `e_empinada_a` + `e_empinada_b` | 16/4+6/58 e 20/4+8/66 | 70+40 / 90+50 | cascos por cima + onda baixa de 110 px | empina e desce os dois cascos; cratera; o garanhão da aura desce junto |
 | 3470 / 3471 | Ferradura-Faísca (opcional) | ← → + a / b | `e_ferradura_arremesso` + `fx_ferradura_voa` | solta no 14 / total 44 | 55 / 70 | projétil rasteiro, vel 4 / 5,5, quica 1 vez | bate baixo; papel diferente da Bufada |
@@ -392,40 +427,46 @@ ferradura nem o vapor das narinas** (o conceito mostra tudo junto). Rampa sugeri
 
 ```python
 import aura
+M = aura.Movimento
 F = RAIZ / "sprites/gutto/quadros/folhas_arcade"
 garanhao = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_garanhao.png"), altura=232),
                              total=32, metodo="mistura")           # raio: "mistura" ou "dissolve", não "fluxo"
+raios = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_garanhao_raios.png"), altura=232),
+                          total=24, metodo="dissolve")             # FOLHA NOVA: só os raios do contorno, sem o corpo
 crateras = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_crateras.png"), largura=150,
                                             ancora="centro"), total=20, metodo="mistura")
-ferradura = aura.enquadrar(aura.recortar_folha(F / "fx_ferradura.png"), altura=14)
-vapor = aura.enquadrar(aura.recortar_folha(F / "fx_vapor.png"), altura=26)
-AURA = aura.Aura("gutto", ligada="var(20) > 0", surto="StateNo = [1000, 3999] && Time = 1", base=9300, camadas=[
-    aura.Camada("crateras", crateras, plano="chao", pos=(0, -2), surto_incha=0.3,
-                mov=aura.Movimento(pulso=(0.03, 0.03), contrafase=False, pulso_periodo=40, deriva=(0, 0),
-                                   alfa=0.9, respira=0.3, respira_periodo=40)),
-    aura.Camada("garanhao", garanhao, tempo=3, plano="tras", pos=(-20, 0), mistura="soma", surto_incha=0.18,
-                mov=aura.Movimento(pulso=(0.03, 0.05), pulso_periodo=120, deriva=(2, 5), deriva_periodo=170,
-                                   balanco=3, balanco_periodo=120, tremor=0.6, alfa=0.8, respira=0.2)),
-    aura.Camada("eco", garanhao, tempo=3, plano="tras", pos=(-26, 0), escala=(1.08, 1.06), mistura="soma",
-                mov=aura.Movimento(pulso=(0.06, 0.04), pulso_periodo=83, deriva=(4, 3), deriva_periodo=97,
-                                   tremor=1.2, alfa=0.3, respira=0.5, respira_periodo=31)),
+ferradura = aura.enquadrar(aura.recortar_folha(F / "fx_ferradura.png"), altura=14, ancora="centro")   # 8 desenhos
+faisca = aura.enquadrar(aura.recortar_folha(F / "fx_faisca_casco.png"), altura=7, ancora="centro")    # FOLHA NOVA
+vapor = aura.enquadrar(aura.recortar_folha(F / "fx_vapor.png"), altura=26, ancora="centro")
+AURA = aura.Aura("gutto", ligada="var(20) > 0", surto="StateNo = [3000, 3999] && Time = 1", base=9600, camadas=[
+    aura.Camada("crateras", crateras, plano="chao", pos=(0, -2), surto_incha=0.2,
+                mov=M(deriva=(0, 0), alfa=0.9, respira=0.3, respira_periodo=40)),
+    aura.Camada("garanhao", garanhao, tempo=3, plano="tras", pos=(-20, 0), mistura="soma",
+                esconde="map(gutto_reacao) > 0",        # o gerador põe 1 enquanto o garanhão do coice ou da empinada toca
+                mov=M(deriva=(2, 5), deriva_periodo=170, tremor=0.6, alfa=0.8, respira=0.2)),
+    aura.Camada("raios", raios, plano="tras", pos=(-20, 0), mistura="soma", esconde="map(gutto_reacao) > 0",
+                mov=M(deriva=(3, 2), deriva_periodo=97, tremor=1.2, alfa=0.45, respira=0.5, respira_periodo=31)),
 ], particulas=[
-    aura.Particula("ferradura", ferradura, periodo=22, vida=90, area=(-46, -20, 46, -90), vel=(0.9, -0.5),
-                   vel_var=(2.2, 0.6), giro=(0, 540), plano="frente", mistura="soma", semente=1),
-    aura.Particula("ferradura2", ferradura, periodo=22, vida=90, area=(-46, -20, 46, -90), vel=(-0.9, -0.5),
-                   vel_var=(2.2, 0.6), giro=(0, -540), plano="tras", mistura="soma", semente=2),
-    aura.Particula("faisca", ferradura[3:4], periodo=5, vida=26, area=(-60, 0, 60, -160), vel=(0, -0.6),
-                   vel_var=(2.4, 1.6), escala=(0.5, 0.2), plano="tras", mistura="soma", semente=3),
+    aura.Particula("ferradura", ferradura, periodo=14, vida=90, area=(-46, -20, 46, -90), vel=(0, -0.5),
+                   vel_var=(3.0, 0.6), mistura="soma", semente=1),
+    aura.Particula("faisca", faisca, periodo=6, vida=26, area=(-60, 0, 60, -160), vel=(0, -0.6),
+                   vel_var=(2.4, 1.6), mistura="soma", semente=3),
     aura.Particula("vapor", vapor, periodo=90, vida=40, area=(14, -98, 20, -102), vel=(0.7, -0.5),
-                   vel_var=(0.2, 0.2), escala=(0.8, 1.6), plano="frente", alfa=0.7, surto_extra=1, semente=4),
+                   vel_var=(0.2, 0.2), escala=(0.8, 1.6), alfa=0.7, surto_extra=1, semente=4),
 ])
 ```
 
-O garanhão tem `tempo=3` (16 desenhos pedidos, 3 ticks cada; cabe no limite E1). A camada "eco" é a mesma folha um
-pouco maior e mais fraca, fora de fase: dá o faiscar do contorno sem pedir folha. `mistura="soma"` nunca foi testada
-no motor; se falhar, volta para `"normal"`. A órbita elíptica das quatro ferraduras (metade da volta atrás, metade à
-frente) não existe no `aura.py`: as duas partículas em planos opostos e sentidos opostos são a aproximação. O vapor
-nasce na altura das narinas (x 14 a 20, y -98 a -102: conferir na arte nova).
+O garanhão tem `tempo=3` (16 desenhos pedidos, 3 ticks cada; cabe no limite E1). A camada "eco" da primeira versão
+era a mesma folha do garanhão um pouco maior: saiu. No lugar entra `fx_aura_garanhao_raios`, **folha própria** só
+com os raios do contorno (8 desenhos, sem o corpo do cavalo), em soma e fora de fase. As duas partículas de
+ferradura eram a mesma sequência deslocada: viraram uma, com 8 desenhos da ferradura virando, que sai para os dois
+lados. A faísca era um desenho da ferradura reduzido: pede `fx_faisca_casco` (6 desenhos). Nenhuma partícula passa
+na frente do corpo (a órbita com metade da volta à frente saiu: escondia golpe). `mistura="soma"` nunca foi testada
+no motor; se falhar, volta para `"normal"`. O vapor nasce na altura das narinas (conferir na arte nova).
+
+As camadas "garanhao" e "raios" levam `esconde="map(gutto_reacao) > 0"`: o gerador põe esse map em 1 enquanto a
+reação (`fx_aura_garanhao_coice`, `fx_aura_garanhao_empina`) toca, e o garanhão em loop apaga em cerca de 8 ticks e
+volta depois. Assim não aparecem dois garanhões.
 
 **Reações fora do `aura.py`:** `fx_aura_garanhao_coice` junto com o quadro ativo de todo coice (3413, 3420, 3423,
 3401, 348, 1100) e `fx_aura_garanhao_empina` na Empinada e no pouso da Queda, **só visuais, sem caixa** (regra 8.3);
@@ -479,8 +520,8 @@ o 3402 usa `e_rolamento` (não `e_galope`, que na fila é a corrida).
 | 2 | `despertar_boss_c` | end of the transformation: 1-3 both hooves stamp down, 4-5 he snorts and lowers the horns, 6-8 settles into the war stance |
 | 2 | `e_golaco_b` | super, second half of the flurry of hooves: 1-4 four more hoof strikes alternating legs, each a clear contact pose, 5-6 he turns for the final back kick, 7-8 leg locked out |
 | 2 | `e_agarrao_b` | bite throw, second half, only him drawn: 1-3 he shakes the head side to side holding the unseen opponent in his teeth, 4-5 flings it away to the right, 6-8 spits and wipes the muzzle |
-| P | `e_laco_a` | chain lasso, first half: 1 stance, 2 grabs the broken chain at his neck, 3-4 rips it off and swings it once overhead, 5-6 throws the arm forward, 7-8 arm fully extended |
-| P | `e_laco_b` | chain lasso, second half: 1-2 holds the taut chain, 3-5 hauls back with the whole body, 6-8 loops the chain back over his neck |
+| P | `e_relincho_a` | war neigh, light: 1 stance, 2-3 rears the head back filling the chest, horns up, 4-5 throws the head forward mouth wide open, mane and tail blown back, 6 holds the roar, 7-8 chest empties and he settles |
+| P | `e_relincho_b` | war neigh, heavy: 1-3 long wind-up, both fists clenched low, one hoof scraping the ground twice, 4-5 rears up on the back leg and roars downward, 6 holds, 7-8 lands the hoof and exhales (pair with `fx_relincho`: red shout cone, 8 drawings that open and thin out) |
 | P | `e_investida_a` | horn charge, first half: 1 stance, 2-3 scrapes a hoof and lowers the horns, 4-8 runs bent forward with the horns leading |
 | P | `e_investida_b` | horn charge, second half: 1-3 still charging, 4-5 tosses the head upward at impact, 6-8 skids to a stop and straightens |
 | P | `e_empinada_a` | rearing stomp, first half: 1 stance, 2-4 rears up on the hind legs, both front hooves high, 5-6 hangs at the top, 7-8 starts to fall forward |
@@ -523,7 +564,7 @@ na fila.
 | Golpe | Comando | Estado | Folha | Tempos | Dano | Alc. | Propriedade | |
 |---|---|---|---|---|---|---|---|---|
 | Chicotada (Cliente Zero dá o bote) | x | 3436 | `e_corrente_chicotada` + **falta** `mulher_chicotada` | 8/4/30 | 55 | 150 | médio, cancela | P [F] |
-| Segundo Bote | x, x | 3440 | a mesma, desenhos 3 a 7 | 6/4/26 | 45 | 150 | médio | P [prop] |
+| Segundo Bote | x, x | 3440 | **FOLHA NOVA** `e_corrente_bote2` (a Cliente recolhe e dá o bote por baixo) | 9/5/31 | 45 | 150 | baixo | P [prop] |
 | Puxão de Coleira | x, x, x | 3441 | `e_corrente_puxao` | 8/4/30 | 50 | 150 | traz o oponente 60 px | P [prop] |
 | Queda de Aranha | x x4 | 3442 | `e_corrente_mangual` + **falta** `mulher_mangual` | 14/5/46 | 115 | 130 | finalizador, derruba | P [prop] |
 | Mangual | y | 3410 | `e_corrente_mangual` | 16/5/44 | 95 | 110 a 170 | por cima, derruba, golpe único | P [F] |
@@ -533,7 +574,7 @@ na fila.
 | Voadora Rasante | b, b, b | 3422 | **falta** `e_bicicleta` | 9/5/34 | 75 | 85 | por cima | P |
 | Cadeira de 3 Voltas | b x4 | 3423 | **falta** `e_compasso` + `_b` | 16/3x3/56 | 125 | 90 | 3 acertos, derruba | P |
 | Rasteira de Aranha | ↓ + x | 3438 | `e_corrente_parado` + **falta** `mulher_rasteja` | 10/12/40 | 50 | 160 | baixo | P [F] |
-| Pulo de Aranha | ↓ + y | 3430 | `e_corrente_parado` + **falta** `mulher_sobe` | 6/8/38 | 85 | 20 a 90, até y -150 | antiaéreo | P [F] |
+| Pulo de Aranha | ↓ + y | 3430 | **FOLHA NOVA** `e_corrente_salto` + **falta** `mulher_sobe` | 6/8/38 | 85 | 20 a 90, até y -150 | antiaéreo | P [F] |
 | Canela de Aço | ↓ + a | 430 (+10000) | **falta** `e_rasteirinha` | 5/3/18 | 35 | 60 | baixo | V |
 | Rasteira de Lâmina | ↓ + b | 3435 | **falta** `e_rasteira` | 10/5/40 | 100 | 95 | baixo, derruba, deixa lascas | P |
 | Pistão | → + y | 3431 | **falta** `e_pistao` | 9/3+3/36 | 50+60 | 85 | braço mecânico dispara, 2 acertos | P [prop] |
@@ -554,9 +595,9 @@ Normais novos: 9 (mínimo 6); correntes novas: x e b. No gerador, o laço `("y",
 | Golpe | Comando | Estado | Folha | Tempos | Dano | Alcance | Propriedade | |
 |---|---|---|---|---|---|---|---|---|
 | Balão de Gel | ↓ ↓ + x | 3400 | `e_soco` + **falta** `cobaia_gel` | 18 / até estourar / 50 | 70 | tela | projétil novo; poça que atrasa por 120 ticks | P [F] |
-| Pescoço de Borracha | ↓ ↓ + y | 3401 | `e_soco` + **falta** `cobaia_pescoco` | 14/6/46 | 85 | 190 | cutucada alta, erra agachado | P [F] |
-| Cabeça Virada | ↓ ↓ + a | 3402 | `e_martelo` + **falta** `cobaia_avesso` | 20/6/56 | 95 | cai a 120-200 | por cima, cruza | P [F] |
-| Cabelo Tentáculo | ↓ ↓ + b | 3403 | `e_martelo` + **falta** `cobaia_tentaculo` | 16/8/50 | 55 | 180 | baixo, prende 30 ticks | P [F] |
+| Pescoço de Borracha | ↓ ↓ + y | 3401 | **FOLHA NOVA** `e_pescoco` + **falta** `cobaia_pescoco` | 14/6/46 | 85 | 190 | cutucada alta, erra agachado | P [F] |
+| Cabeça Virada | ↓ ↓ + a | 3402 | **FOLHA NOVA** `e_cabeca_virada` + **falta** `cobaia_avesso` | 20/6/56 | 95 | cai a 120-200 | por cima, cruza | P [F] |
+| Cabelo Tentáculo | ↓ ↓ + b | 3403 | **FOLHA NOVA** `e_tentaculo` + **falta** `cobaia_tentaculo` | 16/8/50 | 55 | 180 | baixo, prende 30 ticks | P [F] |
 | Vendaval do Leque | ↓ → + a / b | 1000/1001 | `e_bola` | 12/-/40 e 16/-/48 | 30 por lâmina | tela | 3 ou 5 lâminas da aura disparam em fila | V [prop] |
 | Tubo de Ensaio | → ← + x / y | 1600/1601 (religar) | `e_bola` + `fx_tubo` | 14/-/44 | 75 / 90 | 110 / 190 | granada em arco, deixa poça | V [F] |
 | Serra Circular | ↓ ← + a / b | 1100/1101 | **falta** `e_compasso` + `_b` | 10 / 5 acertos / 60 | 5x22 / 6x22 | 84 | empurra | V [F] |
@@ -593,45 +634,50 @@ Tesoura Cravada (3430), 830 = Seringa de perto, 3100 = Vendaval total do leque.
 
 ### 5.3 Aura (dicionário para o `aura.py`)
 
-O leque e o anel **giram no motor** (`giro`, graus por tick), em vez de folha com 8 poses do leque inteiro, que daria
-giro duro. A folha `fx_aura_leque` da fila entra como **um desenho** (ou os 8 como brilho correndo pelas lâminas)
-centrado no peito.
-
 ```python
 import aura
+M = aura.Movimento
 F = RAIZ / "sprites/raiclaven/quadros/folhas_arcade"
-leque = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_leque.png"), altura=236, ancora="centro"),
-                          total=24, metodo="mistura")
-foices = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_foices.png"), altura=120,
-                                          ancora="centro"), total=16, metodo="mistura")   # folha que falta
-raios = aura.enquadrar(aura.recortar_folha(F / "fx_raios_prata.png"), altura=200, ancora="centro")  # falta
-lascas = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_lascas.png"), largura=170), total=20,
-                           metodo="mistura")
-lamina = aura.enquadrar(aura.recortar_folha(F / "fx_aura_pecas.png"), altura=18, ancora="centro")   # falta
-AURA = aura.Aura("raiclaven", ligada="var(20) > 0", surto="StateNo = [1000, 3999] && Time = 1", base=9300, camadas=[
-    aura.Camada("leque", leque, plano="tras", pos=(-2, -62), surto_incha=0.4, surto_tremor=0.5,
-                mov=aura.Movimento(pulso=(0.03, 0.03), contrafase=False, pulso_periodo=90, deriva=(0, 2),
-                                   giro=0.5, alfa=0.95, respira=0.05)),          # 1 volta em 12 s
-    aura.Camada("raios", raios, plano="tras", pos=(-2, -62), mistura="soma", surto_alfa=0.3,
-                mov=aura.Movimento(pulso=(0.06, 0.06), pulso_periodo=37, deriva=(0, 0), balanco=20,
-                                   balanco_periodo=53, alfa=0.7, respira=0.6, respira_periodo=11)),
-    aura.Camada("foices", foices, plano="tras", pos=(-2, -62), surto_incha=0.15,
-                mov=aura.Movimento(pulso=(0.04, 0.04), contrafase=False, pulso_periodo=61, deriva=(0, 0),
-                                   giro=-3.0, alfa=0.9)),                        # sentido contrário, 1 volta em 2 s
-    aura.Camada("lascas", lascas, plano="frente", pos=(0, 2), surto_incha=0.3,
-                mov=aura.Movimento(pulso=(0.02, 0.10), pulso_periodo=40, deriva=(0, 0), alfa=1.0, respira=0)),
+# leque: 8 desenhos do brilho correndo pelas lâminas, desenhado com 12 lâminas IGUAIS; o giro é assado (1/12 de volta
+# em 48 quadros de 2 ticks = 0,31 grau por tick) e fecha sozinho por causa da simetria
+leque = aura.girar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_leque.png"), altura=236, ancora="centro"),
+                        quadros=48, volta=1 / 12)
+# anel de 6 foices iguais, sentido contrário: 1/6 de volta em 24 quadros de 1 tick = 2,5 graus por tick
+foices = aura.girar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_foices.png"), altura=120, ancora="centro"),
+                         quadros=24, volta=1 / 6, sentido=-1)              # folha que falta
+raios = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_raios_prata.png"), altura=200, ancora="centro"),
+                          total=16, metodo="dissolve")                     # folha que falta
+lascas = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_lascas.png"), largura=170,
+                                          ancora="centro"), total=20, metodo="mistura")
+pecas = aura.recortar_folha(F / "fx_aura_pecas.png")          # falta: 4 desenhos da navalha virando, 4 da lasca
+lamina = aura.enquadrar(pecas[0:4], altura=18, ancora="centro")
+lasca = aura.enquadrar(pecas[4:8], altura=8, ancora="centro")
+AURA = aura.Aura("raiclaven", ligada="var(20) > 0", surto="StateNo = [3000, 3999] && Time = 1", base=9600, camadas=[
+    aura.Camada("lascas", lascas, plano="chao", pos=(0, -2), surto_incha=0.2, mov=M(deriva=(0, 0), alfa=1.0, respira=0)),
+    aura.Camada("leque", leque, plano="tras", pos=(-2, -62), eixo=(leque[0].shape[1] // 2, leque[0].shape[0] // 2),
+                surto_incha=0.15, surto_tremor=0.5, mov=M(deriva=(0, 2), alfa=0.95, respira=0.05)),
+    aura.Camada("raios", raios, plano="tras", pos=(-2, -62), eixo=(raios[0].shape[1] // 2, raios[0].shape[0] // 2),
+                mistura="soma", surto_alfa=0.3, mov=M(deriva=(0, 0), tremor=0.8, alfa=0.7, respira=0.6, respira_periodo=11)),
+    aura.Camada("foices", foices, tempo=1, plano="tras", pos=(-2, -62),
+                eixo=(foices[0].shape[1] // 2, foices[0].shape[0] // 2), mov=M(deriva=(0, 0), alfa=0.9)),
 ], particulas=[
-    aura.Particula("lamina", lamina[0:1], periodo=24, vida=60, area=(-70, -20, 70, -150), vel=(0, -0.3),
-                   vel_var=(1.0, 0.6), giro=(0, 360), plano="tras", semente=1),
-    aura.Particula("lasca", lamina[4:5], periodo=10, vida=34, area=(-70, 0, 70, -6), vel=(0, -1.4),
-                   vel_var=(0.8, 0.8), grav=(0, 0.08), giro=(0, 200), escala=(0.6, 0.4), plano="frente", semente=2),
+    aura.Particula("lamina", lamina, periodo=24, vida=60, area=(-70, -20, 70, -150), vel=(0, -0.3),
+                   vel_var=(1.0, 0.6), giro=(0, 360), semente=1),
+    aura.Particula("lasca", lasca, periodo=10, vida=34, area=(-70, 0, 70, -6), vel=(0, -1.4),
+                   vel_var=(0.8, 0.8), grav=(0, 0.08), giro=(0, 200), escala=(1.0, 0.6), semente=2),
 ])
 ```
 
-Avisos: `giro` de camada e `mistura="soma"` **nunca rodaram no motor**; se o giro contínuo falhar, o caminho é pedir
-folha girada (24 desenhos do anel). A camada "lascas" está em `plano="frente"` e portanto acompanha o pulo; se tiver
-que ficar no chão, vira `plano="chao"` (que fica atrás do corpo). O arco entre as bobinas da cabeça (opcional) não
-entra: precisaria de posição por desenho do corpo.
+O leque e o anel **não giram no motor**: giro do motor quebra a grade do pixel (o leque de 236 px virava mosaico
+torto na tela de 1280). O giro é **assado** por `aura.girar_loop`, que roda o desenho na grade do jogo. Para o loop
+fechar sem pedir a volta inteira, o leque tem de ser desenhado com 12 lâminas iguais (o loop cobre 1/12 de volta) e
+o anel com 6 foices iguais (1/6 de volta). Os 8 desenhos da folha são o brilho correndo pelas lâminas e andam junto
+com o giro. Os raios balançavam 20 graus pelo motor: agora são 8 desenhos próprios em `"dissolve"`.
+
+Avisos: `mistura="soma"` **nunca rodou no motor**. A camada "lascas" foi para `plano="chao"` (fica no chão no pulo e
+atrás do corpo): na frente ela não cabia no limite de altura e de alfa do E9. As partículas pedem 4 desenhos da
+navalha e 4 da lasca (`fx_aura_pecas`). O arco entre as bobinas da cabeça (opcional) não entra: precisaria de
+posição por desenho do corpo. O `girar_loop` com 48 quadros de 336 px pesa no `.sff`: medir quando a folha existir.
 
 **Reações fora do `aura.py`:** no Vendaval as lâminas disparadas somem do leque e renascem uma a uma em 40 ticks; no
 golpe forte a lâmina do lado do golpe estoca 12 px e volta; ao apanhar o leque estremece e 2 ou 3 lâminas caem; na
@@ -742,15 +788,19 @@ P = próprio; B = versão boss de golpe da base; PROP = proposta.
 
 **Correntes novas (P)**
 
+Cada golpe tem o seu ritmo (C10): a primeira versão dava a mesma notação aos seis. Na corrente y a maleta abre
+carregada (11 de início), volta no embalo (7) e fecha por cima, lenta e seca (16); na corrente b o sapato entra
+rápido na canela (7), empurra segurando na barriga (10) e o coice de costas gira antes de sair (15). Números alvo.
+
 | Nº | Nome | Comando | Folha (fila) | Notação sugerida | Tempos | Dano | Alc. | Propriedade |
 |---|---|---|---|---|---|---|---|---|
-| 3410 | Maletada de lado | y | `d_maletada_lado` | 1/3 2/4 3/2 4/4A 5/5 6/6 7/5 | 9/4/29 | 45 | 70 | forte, empurra -6 |
-| 3411 | Maletada de volta | y, y | `d_maletada_volta` | 1/3 2/4 3/2 4/4A 5/5 6/6 7/5 | 9/4/29 | 50 | 68 | forte, -6 |
-| 3412 | Maletada de cima | y, y, y | `d_maletada_cima` | 1/3 2/4 3/2 4/4A 5/6 6/6 7/5 | 9/4/30 | 55 | 60 | forte |
+| 3410 | Maletada de lado | y | `d_maletada_lado` | 1/4 2/5 3/2 4/3A 5/4 6/6 7/6 | 11/3/30 | 45 | 70 | forte, empurra -6 |
+| 3411 | Maletada de volta | y, y | `d_maletada_volta` | 1/2 2/3 3/2 4/4A 5/6 6/5 7/4 | 7/4/26 | 50 | 68 | forte, -6 |
+| 3412 | Maletada de cima | y, y, y | `d_maletada_cima` | 1/5 2/6 3/3 4/2 5/4A 6/7 7/7 | 16/4/34 | 55 | 60 | forte |
 | 3413 | Negócio Fechado | y x4 (3 acertos) | `d_negocio_fechado` + **falta** `_b` | 1/4 2/5 3/4 4/5A 5/6 6/8 7/6 | 13/5/38 | 90 | 62 | final, derruba, tremida, cancela em especial e super |
-| 3420 | Sapato na canela | b | `d_sapato_canela` | 1/3 2/4 3/2 4/4A 5/5 6/5 7/4 | 9/4/27 | 40 | 66 | forte, -6 |
-| 3421 | Sapato na barriga | b, b | `d_sapato_barriga` | 1/3 2/4 3/2 4/4A 5/5 6/5 7/5 | 9/4/28 | 50 | 68 | forte, -7 |
-| 3422 | Coice de costas | b, b, b | `d_coice_costas` | 1/3 2/4 3/2 4/4A 5/5 6/6 7/5 | 9/4/29 | 60 | 64 | forte |
+| 3420 | Sapato na canela | b | `d_sapato_canela` | 1/2 2/3 3/2 4/3A 5/4 6/5 7/4 | 7/3/23 | 40 | 66 | forte, -6 |
+| 3421 | Sapato na barriga | b, b | `d_sapato_barriga` | 1/3 2/5 3/2 4/5A 5/6 6/5 7/4 | 10/5/30 | 50 | 68 | forte, -7 |
+| 3422 | Coice de costas | b, b, b | `d_coice_costas` | 1/4 2/4 3/5 4/2 5/4A 6/8 7/6 | 15/4/33 | 60 | 64 | forte |
 | 3423 | Pisão de Chefe | b x4 (3 acertos) | `d_pisao_chefe` + **falta** `_b` | 1/4 2/5 3/4 4/5A 5/6 6/9 7/7 | 13/5/40 | 95 | 58 | final, derruba, tremida; arruma a gravata no fim |
 
 **Normais novos (P)**
@@ -827,42 +877,53 @@ No conceito as asas abertas têm perto de 290 px no jogo, quase a tela inteira. 
 
 ```python
 import aura
+M = aura.Movimento
 F = RAIZ / "sprites/hazaki/quadros/folhas_arcade"
+# As asas, a coroa e a brasa saem do Blender já em laço (docs/arcade/aura_blender.md): quando a pasta de camadas
+# existir, cada linha abaixo vira `aura.ler_quadros(PASTA / "asas")` etc. e o resto do dicionário não muda.
 asas = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_asas.png"), largura=184), total=32)
 coroa = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_coroa.png"), largura=40,
                                          ancora="centro"), total=20)
-brasa = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_brasa.png"), largura=170), total=24)
-nota = aura.enquadrar(aura.recortar_folha(F / "fx_notas.png"), altura=12, ancora="centro")
+brasa = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_brasa.png"), largura=170,
+                                         ancora="centro"), total=24)
+borda = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_brasa_borda.png"), altura=12),
+                          total=24)                                        # FOLHA NOVA: línguas baixas da borda da frente
+nota = aura.enquadrar(aura.recortar_folha(F / "fx_notas.png"), altura=12, ancora="centro")          # 8 desenhos
 gota = aura.enquadrar(aura.recortar_folha(F / "fx_gota_ouro.png"), altura=8, ancora="centro")       # folha que falta
-AURA = aura.Aura("hazak", ligada="var(20) > 0", surto="StateNo = [1000, 3999] && Time = 1", base=9300, camadas=[
-    aura.Camada("brasa", brasa, tempo=3, plano="chao", pos=(0, -2), surto_incha=0.3,
-                mov=aura.Movimento(pulso=(0.04, 0.10), pulso_periodo=47, deriva=(3, 0), deriva_periodo=110,
-                                   alfa=0.9, respira=0.25, respira_periodo=29)),
-    aura.Camada("asas", asas, plano="tras", pos=(-6, -30), surto_incha=0.25,
-                mov=aura.Movimento(pulso=(0.05, 0.03), pulso_periodo=64, deriva=(2, 4), deriva_periodo=128,
-                                   balanco=2, balanco_periodo=64, alfa=0.92, respira=0.1)),
+fagulha = aura.pedra_procedural(3, cores=((255, 150, 40), (255, 230, 150)), contorno=(200, 70, 20))
+AURA = aura.Aura("hazak", ligada="var(20) > 0", surto="StateNo = [3000, 3999] && Time = 1", base=9600, camadas=[
+    aura.Camada("brasa", brasa, tempo=3, plano="chao", pos=(0, -2), surto_incha=0.2,
+                mov=M(deriva=(3, 0), deriva_periodo=110, alfa=0.9, respira=0.25, respira_periodo=29)),
+    aura.Camada("asas", asas, plano="tras", pos=(-6, -30), surto_incha=0.15, esconde="map(hazak_reacao) > 0",
+                mov=M(deriva=(2, 4), deriva_periodo=128, alfa=0.92, respira=0.1)),
     aura.Camada("coroa", coroa, plano="tras", pos=(2, -128), surto_incha=0.1, surto_tremor=0.5,
-                mov=aura.Movimento(pulso=(0.03, 0.03), contrafase=False, pulso_periodo=50, deriva=(1, 2),
-                                   deriva_periodo=90, balanco=5, balanco_periodo=140, alfa=1.0, respira=0.05)),
-    aura.Camada("brasa_frente", brasa, tempo=3, plano="frente", pos=(0, 4), escala=(-1.0, 0.45),
-                mov=aura.Movimento(pulso=(0.03, 0.12), pulso_periodo=37, deriva=(4, 0), alfa=0.6, respira=0.3)),
+                mov=M(deriva=(1, 2), deriva_periodo=90, alfa=1.0, respira=0.05)),
+    aura.Camada("borda", borda, tempo=3, plano="frente", pos=(0, 3), surto_incha=0.0, surto_alfa=0.05,
+                mov=M(deriva=(4, 0), alfa=0.45, respira=0.3)),
 ], particulas=[
     aura.Particula("nota", nota, periodo=20, vida=40, area=(-50, -10, 50, -110), vel=(-0.4, -1.2),
-                   vel_var=(0.8, 0.6), grav=(0, 0.01), giro=(0, 200), plano="frente", semente=1),
-    aura.Particula("fagulha", nota[0:1], periodo=6, vida=30, area=(-80, 0, 80, -8), vel=(0, -1.6),
-                   vel_var=(1.0, 0.8), escala=(0.3, 0.1), plano="tras", mistura="soma", semente=2),
+                   vel_var=(0.8, 0.6), grav=(0, 0.01), giro=(0, 200), semente=1),
+    aura.Particula("fagulha", fagulha, periodo=6, vida=30, area=(-80, 0, 80, -8), vel=(0, -1.6),
+                   vel_var=(1.0, 0.8), giro=(0, 180), escala=(1.0, 0.5), mistura="soma", semente=2),
     aura.Particula("gota", gota, periodo=26, vida=36, area=(-86, -70, 86, -120), vel=(0, 0.4), vel_var=(0.2, 0.2),
-                   grav=(0, 0.25), escala=(1.0, 1.4), plano="tras", sai=0.2, surto_extra=2, semente=3),
+                   grav=(0, 0.25), escala=(1.0, 1.4), sai=0.2, semente=3),
     aura.Particula("pingo", gota, periodo=50, vida=30, area=(-6, -124, 10, -126), vel=(0, 0.3), grav=(0, 0.2),
-                   plano="tras", sai=0.2, surto_extra=1, semente=4),
+                   sai=0.2, surto_extra=1, semente=4),
 ])
 ```
 
 A coroa é camada `"tras"` com posição acima do chapéu: fica atrás do corpo por plano, mas acima da cabeça não há
 corpo para cobrir. Se os chifres passarem na frente dela e ficar errado, a coroa precisa de `prioridade` própria. A
-camada `brasa` em `"chao"` some no pulo; a `brasa_frente` acompanha (é a borda da frente). A "fagulha" reusa um
-desenho da nota em escala pequena e soma: trocar por sprite próprio quando houver. A gota que estala ao tocar o chão
-(pingo no chão) não existe na `Particula` (ela some por tempo, não por altura).
+camada `brasa` em `"chao"` fica no chão no pulo. A "brasa_frente" da primeira versão era a brasa espelhada e
+achatada por cima dos pés: saiu, e a borda da frente pede **folha própria** baixa (`fx_aura_brasa_borda`, 12 px). A
+fagulha é farelo de 3 px por código, com giro e escala assados. A gota que estala ao tocar o chão não existe na
+`Particula` (ela some por tempo, não por altura). A camada "asas" leva `esconde="map(hazak_reacao) > 0"`: o gerador
+liga o map enquanto `fx_asas_bate`, `fx_asas_fecha` ou `fx_asas_abre` toca.
+
+**Dois avisos do gerador do Hazak** (`gerar_hazaki.py`, branch `hazak`): ele não tem a classe `Sprites`, tem
+`escrever_sff(destino, s, manter)` com os índices 1 a 15 da paleta presos ao corpo; `manter |= AURA.registrar(s)`
+resolve (rodado no host com a aura de teste: cores exatas). E hoje o `var(20)` dele é sempre 0 (o Despertar não
+entrou): a condição `ligada` só passa a valer quando o estado do Despertar existir.
 
 **Reações fora do `aura.py`:**
 
@@ -983,8 +1044,8 @@ P = próprio (na ficha); V = versão boss de golpe da base; PROP = proposta. "sa
 
 | Estado | Nome | Comando | Folha | i/a/t | Dano | Alc. | Propriedade | |
 |---|---|---|---|---|---|---|---|---|
-| 200 (+10000) | Corte Curto | x | `b_soco` 1 a 4 | 4/3/17 | 38 | 62 | cancela, sangra leve | V |
-| 3410 | Corte de Lado | y | `b_soco` 1 a 3 | 7/4/26 | 58 | 80 | cancela, sangra | P |
+| 200 (+10000) | Corte Curto | x | `b_soco` | 4/3/17 | 38 | 62 | cancela, sangra leve | V |
+| 3410 | Corte de Lado | y | **FOLHA NOVA** `b_corte_lado` | 7/4/26 | 58 | 80 | cancela, sangra | P |
 | 230 (+10000) | Chinelada na Canela | a | `b_chute_baixo` | 5/3/19 | 40 | 64 | médio | V |
 | 3420 | Chinelada Alta | b | `b_chute_alto` | 9/4/30 | 62 | 78 | alto | P |
 | 400 (+10000) | Estocada Baixa | ↓ + x | **falta** `b_baixo_soco` | 4/3/16 | 35 | 56 | agachado | V |
@@ -1004,8 +1065,8 @@ P = próprio (na ficha); V = versão boss de golpe da base; PROP = proposta. "sa
 | Estado | Nome | Comando | Folha | i/a/t | Dano | Alc. | Propriedade | |
 |---|---|---|---|---|---|---|---|---|
 | 301 a 303 (+10000) | Uno-Dos de Caco | x x x x | `b_soco` | kit | 35 / 45 / 90 | 58 a 70 | 303 derruba | V |
-| 3411 | Corte de Volta | y, y | `b_soco` 4 a 5 | 6/3/24 | 60 | 78 | revés, sangra | P |
-| 3412 | Estocada | y, y, y | `b_soco` 5 a 7 | 8/4/28 | 70 | 86 | sangra | P |
+| 3411 | Corte de Volta | y, y | **FOLHA NOVA** `b_corte_volta` | 6/3/24 | 60 | 78 | revés, sangra | P |
+| 3412 | Estocada | y, y, y | **FOLHA NOVA** `b_estocada` | 8/4/28 | 70 | 86 | sangra | P |
 | 3413 | Caco no Peito | y x4 | **falta** `b_caco_no_peito` | 12/5/44 | 120 | 88, avanço 2,2 | lança, sangra forte | P |
 | 321 a 323 (+10000) | corrente a | a a a a | `b_chute_baixo` | kit | kit | kit | 323 joga longe | V |
 | 3421 | Chute de Meia | b, b | **falta** `b_chute_meia` | 7/3/26 | 65 | 72 | médio | P |
@@ -1021,7 +1082,6 @@ P = próprio (na ficha); V = versão boss de golpe da base; PROP = proposta. "sa
 | 3450 / 3451 | Tragada de Beck | ↓ ↑ + x / y (recomendado ↓ ↓) | `b_beck` + fumaça | 18 / nuvem 150 ou 210 / 48 | 25 + tonteio | nasce a 50 px, segue a 0,6 / 0,9 px por tick | nuvem teleguiada lenta | P |
 | 3460 / 3461 | Passinho Ratão | → ← + a / b | `b_caneta` + **falta** `b_caneta_b` | 10 / 3 ou 5 acertos / 52 ou 64 | 3x28 / 5x24 | 120 / 180 px a 4,5 | avanço de vários acertos; o último do b derruba | P |
 | 3470 / 3471 | Grave do Paredão | ↓ ↑ + a / b (recomendado ↓ ↓) | `b_grave` + `fx_grave` | 8/6/40 e 12/8/50 | 30 / 45 | onda 140 / 220 px | empurra longe (vel -9); o b derruba | P |
-| 3480 / 3481 | Cordão de Rato | ↓ ← + x / y | **falta** `b_cordao` | 16/5/44 e 20/5/52 | 55 / 85 | 120 | x chicoteia o cordão e puxa; y laça por cima e bate no chão | PROP |
 | 3490 / 3491 | Tampinha no Olho | ← ↓ + x / y | **falta** `b_tampinha` | 9/-/34 | 3x18 | reto / leque | 3 tampinhas rápidas | PROP |
 | - | Caixa Ligada | extensão do 3471 | paredão | - | - | - | depois do Grave forte o paredão fica 180 ticks soltando 1 anel por batida, que empurra sem dano | PROP |
 | 1600 / 1601 (+10000) | Juliet Voadora | → ← + x / y | `b_juliet_voadora` | 12/-/40 | 60 | curto / tela | bumerangue; sem óculos até voltar | V |
@@ -1039,9 +1099,11 @@ Notas:
 - **Numeração:** o kit comum só tem 3400 a 3403 para especial exclusivo, um número por golpe, com código do Pengaró
   pendurado. Os especiais do CK têm fraco e forte, daí as dezenas 3440 a 3491 (abaixo de 4000, como o `efeitos_cns`
   exige).
-- **Jeito chapado:** não sortear tempo em runtime (quebra o assert de soma de ticks e o robô). Duas animações por
-  normal, cada uma com frame data fixo: A limpa e B "tropeço" (+3 de início, +8 px de alcance; em 3410, 3420 e 3431
-  a B acerta baixo). Sorteio na entrada do estado (`random < 300` → B). O robô testa as duas.
+- **Jeito chapado:** nada de sorteio (C11). Duas animações por normal, A limpa e B "tropeço", com **o mesmo frame
+  data** (mesmo início, mesma caixa, mesmo alcance): a B só troca o desenho. Alternam pelo contador de uso do golpe
+  (a cada terceira vez sai a B), então o replay sai igual e o robô testa uma tabela só. A versão anterior sorteava
+  com `random < 300` e a B tinha +3 de início e +8 px de alcance: era frame data aleatório.
+- **Cordão de Rato saiu** (3480/3481): era o quarto chicote que puxa do kit (decisão 48). O `↓ ←` do CK fica livre.
 - **Contagem da regra 4:** a ficha conta "y em pé" e "b em pé" duas vezes (normal novo e 1º da corrente). Sem
   repetir são 4 normais novos (3430, 3431, 3433, 600); por isso as propostas 3432 e 3435.
 - Bicuda Baixa (1400) e Pêndulo (1500): a ficha não diz se ficam; Contragolpe (1100) sai.
@@ -1064,37 +1126,38 @@ Notas:
 
 ```python
 import aura
+M = aura.Movimento
 F = RAIZ / "sprites/ck/quadros/folhas_arcade"
 paredao = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura_paredao.png"), altura=228), total=28)
-fio = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura.png"), altura=150), total=24)
-nevoa = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_nevoa_chao.png"), largura=220), total=20)  # falta
+fio = aura.ondular(aura.reduzir(aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_aura.png"), altura=150),
+                                                  total=24), 0.6, 1.0), amplitude=3)   # mais fino: reduzido na arte
+nevoa = aura.alongar_loop(aura.enquadrar(aura.recortar_folha(F / "fx_nevoa_chao.png"), altura=13), total=20)  # falta
 anel = aura.enquadrar(aura.recortar_folha(F / "fx_aura_aneis.png"), altura=26, ancora="centro")
-AURA = aura.Aura("ck", ligada="var(20) > 0", surto="StateNo = [1000, 3999] && Time = 1", base=9300, camadas=[
-    aura.Camada("paredao", paredao, plano="tras", pos=(-30, 0), surto_incha=0.1, surto_tremor=2.5,
-                mov=aura.Movimento(pulso=(0.03, 0.05), contrafase=False, pulso_periodo=28, deriva=(2, 2),
-                                   deriva_periodo=160, alfa=0.9, respira=0.1, respira_periodo=40)),
-    aura.Camada("fio", fio, tempo=3, plano="tras", pos=(-2, 2), escala=(0.6, 1.0),
-                mov=aura.Movimento(pulso=(0.06, 0.04), pulso_periodo=67, deriva=(3, 3), balanco=3, alfa=0.5)),
-    aura.Camada("nevoa", nevoa, plano="frente", pos=(0, 4), escala=(1.0, 0.6),
-                mov=aura.Movimento(pulso=(0.05, 0.08), pulso_periodo=40, deriva=(8, 0), deriva_periodo=120,
-                                   alfa=0.5, respira=0.2)),
+brasa = aura.pedra_procedural(3, cores=((120, 200, 90), (220, 255, 190)))
+AURA = aura.Aura("ck", ligada="var(20) > 0", surto="StateNo = [3000, 3999] && Time = 1", base=9600, camadas=[
+    aura.Camada("paredao", paredao, plano="tras", pos=(-30, 0), surto_incha=0.08, surto_tremor=2.5,
+                mov=M(deriva=(2, 2), deriva_periodo=160, alfa=0.9, respira=0.1, respira_periodo=28)),
+    aura.Camada("fio", fio, tempo=3, plano="tras", pos=(-2, 2), mov=M(deriva=(3, 3), alfa=0.5)),
+    aura.Camada("nevoa", nevoa, plano="frente", pos=(0, 3), surto_incha=0.0, surto_alfa=0.08,
+                mov=M(deriva=(8, 0), deriva_periodo=120, alfa=0.4, respira=0.2)),
 ], particulas=[
     aura.Particula("anel_alto", anel, periodo=56, vida=48, area=(-44, -120, -30, -130), vel=(0.6, -0.15),
-                   vel_var=(0.2, 0.1), escala=(0.6, 1.8), plano="frente", alfa=0.8, semente=1),
+                   vel_var=(0.2, 0.1), escala=(0.6, 1.8), alfa=0.8, semente=1),
     aura.Particula("anel_baixo", anel, periodo=56, vida=48, area=(-44, -50, -30, -60), vel=(-0.6, -0.15),
-                   vel_var=(0.2, 0.1), escala=(0.6, 1.8), plano="tras", alfa=0.8, semente=2),
-    aura.Particula("brasa", aura.pedra_procedural(3, cores=((120, 200, 90), (220, 255, 190))), periodo=8, vida=50,
-                   area=(-50, 0, 50, -20), vel=(0, -1.2), vel_var=(0.6, 0.8), plano="frente", mistura="soma",
-                   semente=3),
+                   vel_var=(0.2, 0.1), escala=(0.6, 1.8), alfa=0.8, semente=2),
+    aura.Particula("brasa", brasa, periodo=8, vida=50, area=(-50, 0, 50, -20), vel=(0, -1.2), vel_var=(0.6, 0.8),
+                   giro=(0, 180), escala=(1.0, 0.4), mistura="soma", semente=3),
 ])
 ```
 
-O pulso do paredão tem período de 28 ticks, **uma batida a cerca de 128 BPM**; os dois anéis nascem a cada 56 (um
-por batida, alternando alto e baixo, um na frente e outro atrás do corpo: é a órbita do conceito). O pulso do
-`aura.py` é seno, não o "estufa em 2 ticks e volta em 5 desenhos" do plano: a batida seca tem que estar **desenhada
-na folha** `fx_aura_paredao`. Enquanto `fx_nevoa_chao` não existir, a névoa sai da `fx_aura` achatada
-(`escala=(1.4, 0.25)`), como a camada "pes" do filme de teste. Esta aura é parente da "ck" que foi filmada (P1 do
-`gerar_teste_aura.py`), que usava as folhas antigas `fx_paredao`, `fx_aura` e `fx_fumaca`.
+O CK já usa os grupos de sprite 9300 a 9305 (`ck_fumaca`, `ck_garrafa`, `ck_bone`, `ck_paredao`, `ck_pod`,
+`ck_dfum`): por isso a aura fica em `base=9600`. O paredão respira no alfa a cada 28 ticks, **uma batida a cerca de
+128 BPM**; os dois anéis nascem a cada 56 (um por batida, alternando alto e baixo), os dois atrás do corpo. A
+batida seca ("estufa em 2 ticks e volta em 5 desenhos") tem que estar **desenhada na folha** `fx_aura_paredao`: o
+motor não escala a camada. Enquanto `fx_nevoa_chao` não existir, a névoa é `aura.nevoa_rasteira(124, 13, 24,
+cores=((120, 132, 118), (190, 200, 186)), contorno=(60, 70, 60))`, a mesma do filme de teste (a `fx_aura` achatada
+por cima dos pés saiu: escondia os pés). O "fio" é a `fx_aura` reduzida na arte (`aura.reduzir`), não pelo motor.
+Esta aura é parente da "ck" que foi filmada (P1 do `gerar_teste_aura.py`).
 
 **Reações fora do `aura.py`:** batida forte do paredão e um anel grande no congelamento de golpe forte ou
 finalizador; anéis no dobro do ritmo durante especial (o surto já triplica as partículas); `fx_paredao` preto por
@@ -1216,8 +1279,8 @@ Tudo o que os cinco planos deixaram em aberto, numerado. Onde há recomendação
 
 **Gutto**
 
-15. Aprovar as propostas: Laço da Corrente, Investida de Chifres, Empinada, Galope; e a Ferradura-Faísca entra?
-16. O Estouro do Garanhão substitui a Saideira no 3100, ou vira um terceiro super?
+15. Aprovar as propostas: Relincho de Guerra (no lugar do Laço da Corrente, decisão 48), Investida de Chifres, Empinada, Galope; e a Ferradura-Faísca entra?
+16. O Estouro do Garanhão é o 3100 do Gutto (a 4.1 já tirou a Saideira herdada do Pengaró). Confirma, ou ele vira um terceiro super?
 17. Tamanho do boss: 112 px, ou maior, como a ficha diz ("corpo maior")? Muda `CORPO` e as caixas.
 18. O Beijinho continua existindo no demônio, ou tudo vira bufada? (o movelist diz "Beijo do Cavalo", a ficha diz
     bufada de fogo; a segunda variação do Beijinho segue "(confirmar)" na ficha)
@@ -1262,7 +1325,7 @@ Tudo o que os cinco planos deixaram em aberto, numerado. Onde há recomendação
 
 35. As folhas do Ratão antigo (`e_*`) serão todas refeitas no visual do conceito como `b_*`, e o prefixo `b_` fica?
 36. ↓ ↑ ou ↓ ↓ na Tragada de Beck e no Grave do Paredão. → ↓ ↓: com ↓ ↑ o personagem pula antes do botão.
-37. Aprovar ou não: Tropeção, Rasteira de Baile como normal novo, Cordão de Rato, Tampinha no Olho, Caixa Ligada.
+37. Aprovar ou não: Tropeção, Rasteira de Baile como normal novo, Tampinha no Olho, Caixa Ligada (o Cordão de Rato saiu).
 38. Bicuda Baixa e Pêndulo ficam no Ratão? Com que pose?
 39. O beck some no boss (o conceito não mostra)? Se some, a Tragada de Beck e o Assopro na Cara continuam?
 40. A Juliet fica nos olhos (conceito)? Depois da Juliet Voadora ele luta sem óculos até ela voltar?
@@ -1272,6 +1335,27 @@ Tudo o que os cinco planos deixaram em aberto, numerado. Onde há recomendação
 43. O paredão bate em ritmo fixo de 28 ticks, ou segue o áudio que ainda vai chegar?
 44. Marcas: a estampa tipo Cyclone e o formato da Juliet seguem o risco já anotado na ficha. Tatuagens entram no
     prompt?
+
+**Retoque de 2026-11-11 (revisão cética)**
+
+45. **HUD na frente da luta.** Feito nesta rodada: o `gerar_layout.py` põe `layerno = 1` em vida, poder, retrato,
+    nome, relógio, acertos e vitórias. Sem isso o motor desenha o HUD atrás dos lutadores e a aura de mais de 2x a
+    altura cobria relógio e barras. Efeito colateral no jogo inteiro: lutador que pula alto passa **por trás** das
+    barras. Desfazer é tirar a chamada `hud_por_cima` do `fight_def()`. Confirma?
+46. **Golpe da base com arte trocada não é estilo próprio.** As linhas "V" (Raiclaven, CK), o bloco "B" (Hazak) e o
+    "continuam da base" (Pengaró, Gutto) são o golpe da base com desenho novo. O pedido foi estilo de ataque só
+    dele. O kit **não resolve isso**: resolve só os golpes "P". Decidir, por boss, quais normais e agarrões ganham
+    dado próprio (como foi feito na 4.1 do Gutto) e quais podem ficar da base.
+47. **Nome ou pose que lembra jogo comercial ou marca** (alerta por descrição; ninguém comparou com arte de jogo
+    nenhum): Chapéu Bumerangue (ficha do Hazak: chapéu arremessado que volta), Juliet Voadora e a estampa tipo
+    Cyclone (ficha do CK: marcas reais), Pescoço de Borracha (ficha do barbeiro: membro que estica a 190 px), e o
+    garanhão gigante que atravessa a tela no super do Gutto. Os três primeiros vêm das fichas; trocar nome ou
+    mecânica é decisão do dono.
+48. **Puxar com corrente ou corda é só do Raiclaven** (a Cliente na coleira, que vem da ficha). A primeira versão
+    dava o mesmo golpe novo a quatro bosses. Saíram: o puxão do Chicote de Elo (Pengaró: agora só bate), o Laço da
+    Corrente (Gutto: virou Relincho de Guerra) e o Cordão de Rato (CK). Confirma, ou o Raiclaven também perde?
+49. **Gutto com dado próprio.** A 4.1 agora é alvo dele (pesado, armadura em três golpes, um projétil só, coice
+    único no finalizador b), não o herdado do Pengaró. Aprovar o perfil antes de alguém escrever o `gutto_boss.py`.
 
 ### Contagem das folhas que o kit pede e a fila não tem
 
@@ -1283,6 +1367,13 @@ Tudo o que os cinco planos deixaram em aberto, numerado. Onde há recomendação
 | Hazak | 6 | 15 | 6 | 27 |
 | CK | 12 | 9 | 3 | 24 |
 | **Total** | 66 | 44 | 43 | **153** |
+| Retoque (folha própria por golpe e por camada) | +19 | 0 | 0 | **172** |
+
+As 19 do retoque: Pengaró 2 (`fx_aura_chicotes`, `fx_aura_nevoa`), Gutto 8 (as seis de golpe da 4.1,
+`fx_aura_garanhao_raios`, `fx_faisca_casco`), Raiclaven 5 (`e_corrente_bote2`, `e_corrente_salto`, `e_pescoco`,
+`e_cabeca_virada`, `e_tentaculo`), Hazak 1 (`fx_aura_brasa_borda`), CK 3 (`b_corte_lado`, `b_corte_volta`,
+`b_estocada`). Nas propostas, o Gutto troca `e_laco_a/b` por `e_relincho_a/b` e `fx_relincho`, e o CK perde
+`b_cordao`: a conta da coluna fica igual.
 
 Prioridade 1 = sem a folha o golpe ou a camada continua com arte emprestada ou não existe; 2 = fluidez (folhas `_b`,
 cenas, vítimas); proposta = depende das decisões 10, 15, 20, 30 e 37.
@@ -1292,9 +1383,13 @@ cenas, vítimas); proposta = depende das decisões 10, 15, 20, 30 e 37.
 - **Conferido lendo:** as cinco fichas, os dados de golpe e os comandos dos geradores (em trechos), as seções 4, 5,
   7, 8 e 9 das regras, os cinco conceitos (imagem), a `fila_bosses.md` inteira nas tabelas de folhas e os títulos do
   Lote 7.
-- **Conferido no motor:** só o sistema de aura, com um lutador de teste (`chars/teste_aura`), quatro filmes na
-  sandbox, o último com 0 falhas no `medir_aura.py`.
-- **Não verificado:** nenhum golpe, tempo ou caixa deste documento rodou em jogo. Nenhum dicionário de aura da seção
-  3 a 7 foi executado; `mistura="soma"` e `giro` de camada nunca foram ao motor.
-  Os números de estado e de efeito dados como "livres" vieram de grep, não de leitura inteira dos geradores. O
-  `gerar_ck.py` não existia na leitura. As folhas boss já geradas não foram abertas, só listadas.
+- **Conferido no motor:** só o sistema de aura, com um lutador de teste (`chars/teste_aura`) e o HUD do jogo, na
+  sandbox. Roteiro padrão (liga, loop, surto, vira, desliga) e roteiro extra (superpausa, estado custom, pulo, KO
+  com pose de vitória, round 2); números no `aura_animada.md`.
+- **Conferido no host:** os cinco dicionários de aura montam no `aura.py` com arte de mentira (limite da frente,
+  teto de 30 Explods, partícula viva); os quadros da aura passam pelo `escrever_sff` do Hazak com as cores exatas.
+- **Não verificado:** nenhum golpe, tempo ou caixa deste documento rodou em jogo; os números da 4.1 do Gutto e os
+  ritmos do Hazak são alvo. Nenhum dicionário de aura rodou no motor nem com a arte de verdade; `mistura="soma"`
+  nunca foi ao motor; `aura.girar_loop` só foi rodado no host.
+  Os números de estado e de efeito dados como "livres" vieram de grep, não de leitura inteira dos geradores. As
+  folhas boss já geradas não foram abertas, só listadas. Nenhum nome ou pose foi comparado com jogo comercial.
