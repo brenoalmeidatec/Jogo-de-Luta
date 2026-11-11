@@ -960,3 +960,9 @@ pela metade na hora da parada (**não testado, pode estar quebrado**); para volt
   e de pernas levantadas nos quadros 4-7, compensada só por escala).
 - Próximo: o dono olhar os filmes e decidir (tom da pele, detritos na frente, `e_despertar` no lugar de `despertar_b`);
   refazer `e_queda`; céticos + retoque; juntar na `mugen` (quem junta é o orquestrador).
+
+## 2026-11-11 (endiabrado: PARADA de propósito às 16h50)
+
+O Alisson pediu de novo para ir parando. A etapa "converter e ligar" terminou (entrada acima: estado conferido na
+sandbox, robô 146/0, dois filmes). Os dois céticos estavam rodando e foram interrompidos; o retoque final não rodou.
+Árvore limpa. Falta: céticos (modelo e jogo), retoque, o orquestrador olhar os filmes, e juntar na `mugen`.
