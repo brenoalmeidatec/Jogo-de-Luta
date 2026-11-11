@@ -315,6 +315,7 @@ def gravar_sff(destino, dados_pal, itens):
 
 CORPO = [(-24, 0, 24, -104)]
 BAIXO = [(-28, 0, 28, -70)]
+ROLANDO = [(-28, 0, 28, -70)]  # rolamento, caneta e levantada: não acompanha o BAIXO do Pengaró arcade (veja main)
 NO_AR = [(-24, -24, 24, -100)]
 DEITADO = [(-60, 0, 60, -24)]
 
@@ -1433,18 +1434,38 @@ def dx_chave(pasta, n):
 
 # Folhas normais do Pengaró que já saem da arte arcade (quadros_arcade/<folha>, só os 8 desenhos, sem quadros do meio).
 # levanta: a folha antiga tinha duas caneleiras, braço terminando em pé e resto de magenta.
-ARCADE = {"levanta"}
+# 2026-11-11: os golpes também. O lutador trocava de cabelo, tom de pele e caneleira a cada golpe (ginga arcade de 16
+# cores, golpe na arte antiga de milhares de cores e contorno mole). Só ficam na arte antiga as folhas sem desenho
+# arcade aprovado: chute_baixo e defesa (a folha arcade é de outro golpe / outro modelo) e as que ainda não foram
+# desenhadas (agarrao, armada, bola, caneta, compasso, derrota, golaco, lata, provoca, rolamento, vitoria, despertar).
+ARCADE = {"levanta", "soco", "chute_alto", "martelo", "afastar", "apanha", "queda", "pulo", "agachado", "baixo_soco",
+          "rasteirinha", "rasteira", "ar_soco", "bicicleta", "cabecada"}
+# Folha do gerador -> pasta em quadros_arcade/, quando o nome não é o mesmo. rasteira: a folha arcade da rasteira foi
+# reprovada (duas garrafas, joelheira verde no lugar da caneleira); no lugar dela entra o chute rasteiro dado da base
+# agachada (a folha que veio como "chute_baixo" e era outro golpe). O nome "rasteira" fica no gerador para os sprites
+# f_rasteira<i>, as ações e os desenhos endiabrados (e_rasteira) não mudarem de número.
+PASTA_ARCADE = {"rasteira": "chute_agachado"}
+# Desenho arcade deslocado em x (px). afastar 6: o pé de apoio (o de trás, plantado em x=-41 no 5 e -39 no 7) aparecia
+# em -29: o corpo dava um tranco para a frente e voltava.
+DESLOCA_ARCADE = {("afastar", 6): -10}
 
 
 def pasta_da_folha(folha):
-    return QUADROS_ARCADE / folha if desenhado() and folha in ARCADE else QUADROS / folha
+    if desenhado() and folha in ARCADE:
+        return QUADROS_ARCADE / PASTA_ARCADE.get(folha, folha)
+    return QUADROS / folha
 
 
 def quadro_folha(folha, i):
     if folha in LOOPS:
         return quadro_loop(folha, i)
     arquivo = pasta_da_folha(folha) / f"{i:02d}.png"
-    return abrir_quadro(arquivo) if arquivo.exists() else None
+    if not arquivo.exists():
+        return None
+    img = abrir_quadro(arquivo)
+    if desenhado() and folha in ARCADE and (folha, i) in DESLOCA_ARCADE:
+        img = move(img, DESLOCA_ARCADE[(folha, i)])
+    return img
 
 
 def desenho_de(nome):
@@ -1469,7 +1490,9 @@ MEIO_PROIBIDO = {("vitoria", 2), ("vitoria", 5), ("despertar_a", 0), ("despertar
                  ("lata", 0), ("lata", 1)}
 # Desenhos que não entram no caminho entre dois outros. lata 1 (abrir o lacre): uma mão segura a garrafa, outra a
 # lata e uma TERCEIRA abre o lacre. A lata já está aberta na mão e ele vai direto para o gole.
-DESENHO_PROIBIDO = {("lata", 1)}
+# rasteirinha 4 (arcade): no contato a mão da frente sai do chão e vira punho no peito, e no 5 volta ao chão; o
+# contato fica no desenho 3 (perna esticada, mão no chão).
+DESENHO_PROIBIDO = {("lata", 1), ("rasteirinha", 4)}
 # Desenhos endiabrados errados na origem, trocados pelo vizinho bom da mesma folha: (folha normal, desenho) -> desenho
 # de e_<folha>. e_levanta 3 e 4: parada de mão com pés no lugar das mãos. e_rolamento 4: massa ilegível.
 # e_baixo_soco 2 e e_rasteira 1-2: pose de outra família no meio da folha.
@@ -1733,15 +1756,16 @@ def acoes_folhas(Q):
     """Ações do Pengaró com a sequência inteira desenhada. Vêm antes das antigas, que então são ignoradas.
     Quantidade de quadros e tempos seguem os golpes antigos onde o .cns depende de AnimElem."""
     f = lambda folha, i: f"f_{folha}{i}"
+    arcade = desenhado()  # Pengaró: golpes na arte arcade (ARCADE); Gutto e Raiclaven seguem como estavam
     Q(5, [("q_ginga_fluida0", 6)] if desenhado() else [(f"q_ginga_fluida{i}", 2) for i in range(3)])  # virar
     Q(6, [(f("agachado", 4), 3), (f("agachado", 5), 3)], BAIXO)
     # correr: os mesmos desenhos do andar, sem o "peso desce", em menos da metade do tempo
     Q(100, [(f"q_anda_fluida{i}", 3) for i in (0, 1, 2, 4, 5)] if desenhado() else
       [(f"q_anda_fluida{i}", 1) for i in range(0, quadros_do_loop("anda_fluida"), 3)])
     # em pé <-> agachado: troca seca de 2 ticks com um desenho só (eram 6 e 4; o estado já é C desde o tick 0)
-    Q(10, [(f("agachado", 2), 2)], BAIXO)
+    Q(10, [(f("agachado", 0 if arcade else 2), 2)], BAIXO)
     Q(11, [(f("agachado", i), 8) for i in (4, 5, 6, 7, 6, 5)], BAIXO)
-    Q(12, [(f("agachado", 2), 2)], BAIXO)
+    Q(12, [(f("agachado", 0 if arcade else 2), 2)], BAIXO)
     Q(40, [(f("pulo", 0), 4)])
     for n in (41, 42, 43):
         Q(n, [(f("pulo", 1), 3), (f("pulo", 2), 5), (f("pulo", 3), 6), (f("pulo", 4), -1)], NO_AR)
@@ -1773,10 +1797,10 @@ def acoes_folhas(Q):
     Q(5110, [(f("queda", 7), -1)], DEITADO)
     Q(5160, [(f("queda", 6), 6), (f("queda", 7), -1)], DEITADO)
     Q(5170, [(f("queda", 6), 6), (f("queda", 7), -1)], DEITADO)
-    Q(5120, [(f("levanta", i), 4) for i in range(1, 8)], BAIXO)
+    Q(5120, [(f("levanta", i), 4) for i in range(1, 8)], ROLANDO)
     for n, t in ((700, 4), (5200, 3), (5210, 3)):
-        Q(n, [(f("rolamento", i), t) for i in range(8)], BAIXO if n == 700 else [])
-    Q(705, [(f("rolamento", i), 4) for i in range(7, -1, -1)], BAIXO)
+        Q(n, [(f("rolamento", i), t) for i in range(8)], ROLANDO if n == 700 else [])
+    Q(705, [(f("rolamento", i), 4) for i in range(7, -1, -1)], ROLANDO)
 
     def sequencia(n, folha, lig, ativo, rec, caixa, quadro_ativo=3, area=CORPO):
         """Liga, golpe e volta com os 8 desenhos, no mesmo tempo total do golpe antigo."""
@@ -1789,6 +1813,17 @@ def acoes_folhas(Q):
         Q(n, q, area)
 
     sequencia(230, "chute_baixo", 5, 3, 9, (12, -56, 58, -42))
+    if arcade:
+        # chute alto arcade: os desenhos 4 e 5 são os dois de perna esticada. O 5 abria a volta com 6 ticks sem caixa:
+        # fica com 2 e o resto vai para o joelho recolhendo (6) e o pé no chão (7). Mesmo total (18), mesmos elementos.
+        cx = (12, -100, 80, -58)
+        Q(240, [(f("chute_alto", 1), 5), (f("chute_alto", 2), 4), (f("chute_alto", 3), 1, cx),
+                (f("chute_alto", 4), 3, cx), (f("chute_alto", 5), 2), (f("chute_alto", 6), 8), (f("chute_alto", 7), 8)])
+        # cotovelada arcade: o desenho 3 ainda é a armação (cotovelo junto do rosto) e o contato é o 4. Mesmos tempos e
+        # a mesma quantidade de elementos (2 + 2 + 3) de sequencia(): o .cns usa AnimElem.
+        for n, t, cx in ((210, (4, 3, 1, 3, 6, 5, 5), (15, -92, 78, -64)), (215, (2, 2, 1, 2, 6, 4, 4), (12, -94, 66, -62))):
+            Q(n, [(f("martelo", d), tk, cx) if d == 4 else (f("martelo", d), tk)
+                  for d, tk in zip((2, 3, 4, 4, 5, 6, 7), t)])
     sequencia(240, "chute_alto", 9, 4, 18, (12, -100, 80, -58))
     # capoeira: cotovelada no soco forte, bênção no chute longo
     sequencia(210, "martelo", 7, 4, 16, (15, -92, 78, -64))
@@ -1801,9 +1836,23 @@ def acoes_folhas(Q):
           + [(f("compasso", 7), 14 + 6 * i)])
         Q(1200 + i, [(f("armada", 2), 4), (f("armada", 4), 6, (0, -130, 60 + 8 * i, -30)), (f("armada", 5), 8),
                      (f("armada", 6), -1)], NO_AR)
-        Q(1300 + i, [(f("caneta", 2), 10), (f("caneta", 4), 8, (10, -20, 70, -4)), (f("caneta", 7), 20 + 6 * i)], BAIXO)
-    sequencia(400, "baixo_soco", 4, 3, 7, (15, -56, 54, -42), quadro_ativo=4, area=BAIXO)
+        Q(1300 + i, [(f("caneta", 2), 10), (f("caneta", 4), 8, (10, -20, 70, -4)), (f("caneta", 7), 20 + 6 * i)], ROLANDO)
+    # (no arcade o punho do soco agachado fica 10 px mais alto: y de -66 a -55; o alcance é o mesmo)
+    sequencia(400, "baixo_soco", 4, 3, 7, (15, -66, 54, -52) if arcade else (15, -56, 54, -42), quadro_ativo=4,
+              area=BAIXO)
     sequencia(410, "cabecada", 6, 5, 18, (5, -122, 42, -60), area=BAIXO)
+    if arcade:
+        # rasteirinha arcade: o desenho 3 segura o contato (o 4 troca a pose do braço, veja DESENHO_PROIBIDO); o pé
+        # passa 8 px mais alto (y de -24 a -14). Mesmos 7 elementos e tempos de sequencia(430, ..., 5, 3, 10).
+        cx = (12, -26, 62, -10)
+        Q(430, [(f("rasteirinha", 1), 3), (f("rasteirinha", 2), 2), (f("rasteirinha", 3), 1, cx),
+                (f("rasteirinha", 3), 2, cx), (f("rasteirinha", 5), 4), (f("rasteirinha", 6), 3),
+                (f("rasteirinha", 7), 3)], BAIXO)
+        # rasteira (440): chute rasteiro da base agachada (PASTA_ARCADE). Perna desliza (2, 3), esticada rente ao chão
+        # (4, 5: pé em y de -21 a -10), recolhe (6) e base (7). Mesmos 7 elementos e tempos de sequencia(440, 10, 4, 22).
+        cx = (12, -22, 78, -6)
+        Q(440, [(f("rasteira", 2), 5), (f("rasteira", 3), 5), (f("rasteira", 4), 1, cx), (f("rasteira", 5), 3, cx),
+                (f("rasteira", 6), 8), (f("rasteira", 6), 7), (f("rasteira", 7), 7)], BAIXO)
     sequencia(430, "rasteirinha", 5, 3, 10, (12, -18, 62, -4), area=BAIXO)
     sequencia(440, "rasteira", 10, 4, 22, (12, -18, 78, -2), area=BAIXO)
     Q(600, [(f("ar_soco", 2), 2), (f("ar_soco", 3), 3), (f("ar_soco", 4), 8, (8, -86, 50, -62)),
@@ -1860,6 +1909,9 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
     if desenhado():
         # lata: no desenho 1 ele abre a lata com duas mãos sem soltar a garrafa (três mãos); começa do 0, lata na mão
         TROCA_POR_FOLHA.update({"embaixada0": ("lata", 0), "parry": ("defesa", 3)})
+        # agachado arcade: 8 desenhos da base agachada respirando (0 e 7 os mais altos, 3 o mais baixo), sem descida
+        TROCA_POR_FOLHA.update({"agacha0": ("agachado", 0), "agacha1": ("agachado", 3), "agacha2": ("agachado", 4),
+                                "defesa_baixa": ("agachado", 3)})
     TROCA_POR_FOLHA.update({f"corre{i}": ("anda_fluida", i if desenhado() else i * 12) for i in range(4)})
 
     # retratos que o IKEMEN usa no menu e nas barras
@@ -1943,7 +1995,8 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
             if desenhado():
                 s.proximo += VAGAS_DO_FLUXO[nome] - quadros_do_loop(nome)
             continue
-        for i, arquivo in enumerate(sorted((QUADROS / nome).glob("*.png"))):
+        # soco: a pasta arcade no Pengaró (o soco fraco 200 usa q_soco<i>); parado e anda não têm ação no Pengaró
+        for i, arquivo in enumerate(sorted((pasta_da_folha(nome) if nome == "soco" else QUADROS / nome).glob("*.png"))):
             A(f"q_{nome}{i}", abrir_quadro(arquivo))
     A("soco0", mistura(p["parado"], p["soco"], 0.5))
     A("soco1", p["soco"])
@@ -3674,6 +3727,11 @@ def sem_ginga_9203(cns):
 
 def main():
     SAIDA.mkdir(parents=True, exist_ok=True)
+    # Caixas de colisão do desenho arcade, só no Pengaró (Gutto, Raiclaven e Hazaki não passam por aqui): agachado de
+    # 77 a 85 px de altura (o antigo tinha 72) e deitado de 138 x 34 px (o antigo cabia em 120 x 24). Rolamento, caneta
+    # e levantada (ROLANDO) ficam como eram: a caneta passa por baixo de projétil.
+    BAIXO[0] = (-28, 0, 28, -80)
+    DEITADO[0] = (-70, 0, 70, -34)
     s = montar_sprites(retrato=RAIZ / "sprites/pengaro-selecao-kof.png")
     faiscas = carregar_faiscas(s)
     a = montar_air(s, faiscas, arte_despertada=arte_endiabrada(s))
