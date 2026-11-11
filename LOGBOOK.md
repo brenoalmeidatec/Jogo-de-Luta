@@ -639,3 +639,22 @@ C_compasso_defesa_lata; z_cab2 = cabeças a 8x). **Não conferido:** nada filmad
 o robô não prova que o pisão despertado acerta com a caixa nova (não sei se há roteiro para 11500); `e_agarrao` 4/5 não
 foram espelhados (não olhei a forma endiabrada); Gutto, Raiclaven e Hazaki não foram regerados (o diff só toca
 `chars/pengaro`).
+
+## 2026-11-11 — Bosses: conceitos e fila das folhas boss (branch `bosses`)
+
+**Feito:** entraram os quatro conceitos de boss final da forma despertada, aprovados pelo Breno hoje
+(`sprites/<lutador>/quadros/folhas_arcade/e_conceito.png`; Hazak é `d_conceito.png`), e a fila
+[`docs/arcade/fila_bosses.md`](docs/arcade/fila_bosses.md): regra do dono (cada boss com aura, efeitos, especiais e
+estilo de ataque só dele), tabela das cinco auras, prompt base + MODEL LOCK por lutador e uma linha de MOTION por
+folha, em dois grupos (Grupo 1 = as 12 que mais aparecem). 142 folhas: Hazak 55 (`d_`), Gutto 36 (`e_`), Raiclaven 32
+(`e_`, cabelo verde travado), CK 31 (`b_`, para não escrever por cima das `e_` do Ratão).
+
+**Não feito / não conferido:** nenhuma imagem gerada, nada cortado nem ligado no jogo, geradores e `chars/` intocados.
+As linhas `d_` do Hazak vêm da `fila_hazak.md` da branch `hazak` com ajustes para capa, rabo e chapéu furado; as folhas
+de base dele estão naquela branch. Só olhei os conceitos em tamanho reduzido.
+
+**Pendente (decisão do Breno):** as dúvidas no fim de cada seção da fila. As maiores: as criaturas do Raiclaven
+(Cliente Zero, cobaias) não têm arte arcade e o boss depende delas; especiais e super exclusivos do Gutto sem nome na
+ficha; o chapéu do Hazak furado pelos chifres contra os golpes de chapéu; a Juliet Voadora do CK com o óculos nos olhos.
+
+**A seguir:** gerar o Grupo 1 dos quatro no ChatGPT (um chat por boss), começando pela ginga de cada um.
