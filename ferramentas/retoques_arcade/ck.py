@@ -14,6 +14,7 @@ from PIL import Image
 COPIA = {
     ("e_derrota", 7): 6,   # o 8 da folha é cópia do 7 cortada pela borda direita da imagem
     ("e_agarrao", 6): 7,   # no 7 a garrafa passa para a mão de trás (a da frente vai à testa); entra a guarda do 8
+    ("e_soco", 4): 3,      # folha refeita: no 5 a garrafa fica na mão de trás, junto do quadril; entra o 4
 }
 
 

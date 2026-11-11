@@ -72,8 +72,8 @@ if LUTADOR == "ck":
     # tamanho, medido pela largura da cabeça contra a referência da forma (ferramentas/converter_ck.py --medir).
     POR_CELULA = POR_CELULA | set(FOLHAS_CK)
     AJUSTE = {"soco": 1.04, "martelo": 1.16, "chute_baixo": 1.16, "chute_alto": 1.03, "afastar": 1.04, "agachado": 1.04,
-              "baixo_soco": 1.06, "rasteira": 1.04, "rasteirinha": 1.03, "ar_soco": 1.04, "pulo": 1.03, "queda": 1.45,
-              "e_martelo": 1.08, "e_chute_baixo": 1.06, "e_chute_alto": 1.07, "e_beck": 1.10, "e_golaco": 1.18,
+              "baixo_soco": 1.06, "rasteira": 1.04, "rasteirinha": 1.03, "ar_soco": 1.04, "pulo": 1.03, "queda": 1.20,
+              "e_martelo": 1.08, "e_chute_baixo": 1.06, "e_chute_alto": 1.07, "e_golaco": 1.18, "e_caneta": 1.25, "e_soco": 1.14, "e_juliet_voadora": 1.06,
               "e_pulo": 1.05, "despertar_b": 1.07}
     # O magenta sai ANTES de quantizar (fundo_ck, na função poses): os quadros arcade já chegam ao Blender na paleta e
     # o sem_magenta apagaria o roxo do boné e da camisa do Ratão. Por isso o ck não entra em LIMPA_MAGENTA.
