@@ -720,3 +720,82 @@ O Alisson pediu para parar os trabalhos para trocar o modelo de raciocínio do C
 agente relatou robô 159 PASS / 0 FAIL na sandbox). Os dois céticos (regras e olhos) estavam rodando e foram
 interrompidos; o retoque final não rodou. Árvore limpa, tudo enviado. Falta: a conferência cética, o retoque, o
 orquestrador olhar o filme, e juntar na `mugen`.
+
+## 2026-11-11 (CK) — retoque final depois dos dois céticos (branch `ck`)
+
+Os dois céticos (regras e olhos) rodaram sobre o `e28e79f`. O que era defeito de verdade foi consertado no
+`gerar_ck.py` (nada editado à mão em `chars/ck`); o que precisa de desenho novo ficou anotado.
+
+**Consertado (causa):**
+- **Aura do Ratão**: era o desenho inteiro (coluna de fumaça + um monte no chão), opaco e preso ao lutador: virava um
+  arbusto em que ele pisava e que subia junto no pulo. Agora entra só a coluna (sem as 22 linhas do monte, base
+  desfeita em xadrez), translúcida (`trans = addalpha`, `alpha = 216, 100`), um pouco maior (1,5 x 1,25).
+- **Baile da Esquina não encerra mais o Ratão**: o kit zerava `var(20)` no 1º tick do 3100 (regra do Pengaró) e a aura
+  sumia no próprio super. No CK o bloco `Fim Despertar` sai; a ficha só diz "1 estoque, só no Despertar".
+- **`← → ↓ + a/b` no Ratão volta a ser a Rajada da Esquina** (a entrada do kit que levava ao Baile saiu); o Baile é
+  só `← → ↓ + x+y`.
+- **Rajada, Baile e Nocaute no Ratão não piscam mais entre em pé e deitado**: a folha `golaco` (ganchos) passava para
+  a `e_golaco` desenho a desenho, e na `e_golaco` refeita o 3 é a rasteira deslizando e o 5-6 o agachado. Agora os
+  ganchos do Ratão usam só as estocadas em pé da `e_golaco` (1, 2, 4, 7). Isso também conserta o gancho da corrente
+  y (311, 312) e o do Gingado b (1701). O soco agachado do Ratão (400) usa o agachado e a estocada rente ao chão
+  (`e_golaco` 5 e 3) no lugar da `e_agachado` parada.
+- **Caixas do Ratão**: as correntes e os kombos da base (301-347, que saem também no Ratão) e o 1701 ganharam a
+  variante `1xxxx` com a caixa medida no desenho do Ratão (antes: caixa da base, com 0 pixels do desenho dentro no
+  323, 341, 331, 345). 3000 e 3200 no Ratão: caixa das estocadas.
+- **Caixas da base**: Bote (1400/1401) era do boné ao chão, agora só a faixa do braço; Rajada (3000) e Nocaute (3200)
+  de 60 para 40 px de altura (ombro ao fígado).
+- **Pixels soltos acima da cabeça no Ratão**: toda ilha de até 12 px sai na leitura do quadro `e_`.
+- **Tragada**: a fraca para a uns 70 px (era 55 e não alcançava a meia distância), a forte a uns 175 px (era 117).
+  Cada projétil trava só a si mesmo: a nuvem no ar não impede mais o Boné Voador, nem o contrário.
+- **Boné Voador forte** atravessa a tela (pico a ~307 px; era 177). O CK fica preso no estado até o boné voltar (92
+  ticks).
+- **Encosta na Parede** (`← + x, y, → + b`): do 344 não sai mais o Gingado b (`← → b` é o mesmo movimento).
+- **Agarrão em pé**: o dano de 100 sai em três socos (30, 30, 40 nos ticks 4, 9 e 14). A animação é a mesma.
+- Rótulos do Pengaró no `.cmd` (Chuva de Bebidas, Mao de Sombra...) trocados pelos nomes do CK (só comentário).
+- `robo.lua`: 5 roteiros novos só do CK (Baile não encerra o Ratão; Rajada no Ratão; Encosta com `role_b` junto;
+  Tragada no ar não trava o Boné; agarrão em 3 socos) e uma linha mudada: o roteiro comum do 3100 aperta `baile`
+  quando o lutador é o CK.
+
+**Não era defeito (conferido com os olhos, zoom 4x-5x):**
+- "`e_beck` com duas garrafas": os sprites 947/948 são da `e_bola` (Garrafa Voadora): a segunda garrafa é a que ele
+  arremessa. A `e_beck` tem uma garrafa só nos 8. A Tragada não existe no Ratão (ação 11000 nunca toca).
+- "Tênis vermelho na rasteira e no levanta": é a luva. Na `rasteira` ele apoia a mão no chão (braço, faixa branca do
+  punho, luva); no `levanta` são as mãos no chão do kip-up.
+
+**Conferido:**
+- Robô na sandbox, depois da última geração: **CK 175 PASS / 0 FAIL** (53 roteiros), **Pengaró 146 PASS / 0 FAIL**.
+- md5 de `chars/gutto|hazaki|pengaro|raiclaven` igual antes e depois (`d72661c2…` no conjunto).
+- Com os olhos: folhas de ação com caixa (base e Ratão) de 311, 312, 313, 323, 331, 332, 333, 340-347, 301-303, 321,
+  400, 1701, 3000, 3100, 3200, 1400, 9210; dois filmes de 10 s na sandbox (CK x Pengaró parado, golpes por roteiro, a
+  barra mantida em 1 estoque por um Lua só do filme), olhados em tira de 12 em 12 quadros: Tragada forte chega longe e
+  acerta, Bote, Rajada; Despertar com paredão e fumaça, aura translúcida em volta das pernas (esverdeada sobre o
+  paredão, puxa para o azul-esverdeado sobre o cenário azul), aura ligada durante e depois do Baile, Rajada no Ratão
+  toda em pé, gancho do Gingado. Log do motor sem erro.
+
+**Não verificado:** Boné forte atravessando a tela (na tira o boné não aparece nítido); Nocaute de Rua no filme (não
+saiu: o Lua do filme só garante 1 estoque); o agarrão em movimento; comandos por direcional de verdade (o robô aperta
+por `AssertCommand`); som; entrada do round e vitória em movimento; caixas no editor; treino dos dois lados.
+`conferir_arte.py` e `verificar_pengaro.py` não foram rodados.
+
+**Ficou (precisa de desenho novo ou de decisão do Breno):**
+- Folhas emprestadas no Ratão continuam: Voadora/fim da Rajada (`bicicleta` -> `e_ar_soco`), Tapa/Contragolpe
+  (`compasso`, `armada` -> `e_martelo`), `lata` -> `e_provoca`, `bone_voador` -> `e_juliet_voadora`; ganchos e soco
+  agachado agora são estocadas da `e_golaco`. Faltam as folhas `e_` próprias (ganchos, joelhada, voadora, Pêndulo).
+- `queda`: deitado de joelhos dobrados mede 69 px contra 113 em pé e 96 no `levanta` 1: precisa de folha com o corpo
+  esticado (aumentar a escala engordaria os 4 primeiros desenhos).
+- Assopro na Cara (3433): a caixa é a fumaça na frente da boca, mas não há desenho de fumaça nesse golpe.
+- `e_soco` 5 cópia do 4; `e_martelo` 7 e `e_ar_soco` 2-6 com a garrafa do lado de dentro; 260 quadro 7 (perna
+  estendida 10 ticks na recuperação).
+- Clarão do golpe final dos supers no Ratão: sai como um bloco creme-esverdeado de borda reta (é o `quadro_flash` do
+  kit sobre a `sombra_forte` do Pengaró, que tem o desenho cortado na borda; no CK a cor clara deixa o corte mais
+  visível). Visto no filme do Despertar. É do gerador comum: não mexi.
+- Flash azul/branco do Despertar e poeira laranja (9214) são as cores do kit.
+- Decisões: tamanho/largura do CK (0,195 no `converter_ck.py`); a Tragada "tonteia" só como atordoamento longo (não há
+  estado de tonto no kit); Tragada de Beck que segue, tropeço do Ratão, cacos em ponto fixo e Nocaute de Rua (fora da
+  ficha); agarrão que sai com `→/← + b` colado e rouba o Pisão de Rua de perto (kit); alcance curto dos normais; o Baile
+  continua batendo sem o bônus de 45% do Ratão, como no kit (436 de dano no robô; com o bônus ia a 631); Boné forte deixa o CK 1,5 s parado.
+
+
+## 2026-11-11 (ck: PARADA às 17h20, o Alisson precisou desligar o notebook)
+
+Parada rápida. Último commit antes desta entrada: `e28e79f7`. Arquivos alterados sem commit na hora da parada: 7 (guardados neste commit; **não testados**, se houver). Falta o que a entrada anterior desta branch lista; a etapa em andamento (retoque ou conferência) foi interrompida.

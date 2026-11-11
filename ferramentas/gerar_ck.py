@@ -62,6 +62,13 @@ def _abrir(arquivo):
     a[..., 3] = np.where(a[..., 3] >= 128, 255, 0)
     pasta = Path(arquivo).parent.name
     ratao = pasta.startswith("e_")
+    if ratao:
+        # risquinhos soltos acima da cabeça (resto do fiapo de fumaça depois de quantizar): sai toda ilha de até 12 px
+        import cv2
+        n, rot, info, _ = cv2.connectedComponentsWithStats((a[..., 3] > 0).astype(np.uint8), connectivity=8)
+        for k in range(1, n):
+            if info[k, cv2.CC_STAT_AREA] <= 12:
+                a[rot == k] = 0
     if (pasta[2:] if ratao else pasta) in ANCORA and a.shape[:2] == (gp.ALT, gp.LARG):
         chao = np.flatnonzero((a[EY - 8:EY, :, 3] > 0).any(axis=0))
         if len(chao):
@@ -87,7 +94,11 @@ gp.colar_endiabrado = lambda normal, endiabrado, fator=1.0, dx=None: endiabrado
 
 # Folha da base sem folha e_ própria: usa a folha do Ratão que faz o movimento mais parecido (provisório, veja o
 # LOGBOOK). (folha do Ratão, desenhos na ordem dos 8 da base ou None para os mesmos).
-E_FOLHA = {"afastar": ("e_chute_alto", None), "baixo_soco": ("e_agachado", None),
+# golaco (ganchos da base): na e_golaco refeita o desenho 3 é a rasteira deslizando e o 5-6 o agachado; os ganchos do
+# Ratão usam só as estocadas em pé (1 arma, 2 estoca, 4 estoca por cima, 7 estoca baixa de passo) e o soco agachado
+# usa o agachado (5) e a estocada rente ao chão (3).
+E_FOLHA = {"afastar": ("e_chute_alto", None), "baixo_soco": ("e_golaco", (5, 5, 5, 3, 3, 5, 5, 5)),
+           "golaco": ("e_golaco", (0, 1, 2, 4, 4, 7, 2, 7)),
            "rasteirinha": ("e_rasteira", (0, 0, 3, 4, 4, 3, 5, 7)), "bicicleta": ("e_ar_soco", None),
            "compasso": ("e_martelo", None), "armada": ("e_martelo", None), "lata": ("e_provoca", None),
            "bone_voador": ("e_juliet_voadora", None), "e_beck": ("e_beck", None)}
@@ -306,10 +317,32 @@ gp.CAIXA_DESPERTADA = {
     1400: _e("caneta", 4), 1401: _e("caneta", 4), 1500: _e("rasteirinha", 4), 1501: _e("rasteirinha", 4),
     1200: (0, -138, 44, -40), 1201: (0, -138, 50, -40),
 }
+def _caixa_ratao(m):
+    """Caixa do golpe medida no desenho do Ratão que entra no lugar do desenho de contato (se não houver membro à
+    frente, fica a da base)."""
+    a = gp._trechos_ativos(m)[0][1] - 1  # o último desenho do 1º trecho ativo é o do contato (a pose segurada)
+    folha, d = m.quadros[a][:2]
+    return _e(folha, d, m.caixa)
+
+
+# correntes e kombos da base também saem no Ratão (y, b e os kombos): ganham a variante 1xxxx com a caixa do Ratão
+for _m in gp.extra.CORRENTES + gp.extra.KOMBOS:
+    if _m.estado != 322:  # joelhada: a caixa é o joelho, igual nas duas formas
+        gp.ATAQUES_DESPERTADOS.add(_m.estado)
+        gp.CAIXA_DESPERTADA[_m.estado] = _caixa_ratao(_m)
+gp.CAIXA_DESPERTADA[313] = gp.CAIXA_DESPERTADA[347] = E_UPPER  # a garrafa sobe acima da cabeça, junto do corpo
+gp.CAIXA_DESPERTADA[400] = (10, -54, 46, -36)                  # estocada rente ao chão (e_golaco 3): a garrafa
+gp.ATAQUES_DESPERTADOS.add(1701)
+gp.CAIXA_DESPERTADA[1701] = _e("golaco", 3)
+# supers de soco: no Ratão são estocadas (e_golaco 2, 4 e 7); a caixa cobre as três alturas
+_est = [_e("golaco", d) for d in (2, 3, 5)]
+CX_ESTOCADAS = (10, min(c[1] for c in _est), max(c[2] for c in _est), max(c[3] for c in _est))
+gp.CAIXA_DESPERTADA[3000] = gp.CAIXA_DESPERTADA[3200] = CX_ESTOCADAS
 gp.extra.TODOS = (gp.extra.CORRENTES + gp.extra.KOMBOS + gp.extra.DESPERTO_KOMBO + gp.extra.DESPERTO_CORRENTES
                   + gp.extra.DESPERTO_NORMAIS + gp.extra.DESPERTO_ESPECIAL)
 
 # ---- golpes com lógica própria: aqui só a animação (os tempos saem de gp.inicios_extra)
+CX_RAJADA = (6, -100, 44, -60)    # Rajada e Nocaute: a luva dos ganchos (do ombro ao fígado), não o corpo todo
 CX_GUARDA = (-8, -105, 30, -12)   # Contragolpe: o corpo inteiro é a caixa que apara (como o parry 760)
 CX_GRAVE = (-10, -110, 110, 0)    # Grave do Paredão: a onda do grave, não um membro
 M = {m.estado: m for m in (
@@ -331,7 +364,7 @@ M = {m.estado: m for m in (
     N(1101, "Pêndulo longo", "rolamento 1/4 2/5 1/5 2/5 1/5 2/5 1/5 0/6", (0, 0, 0, 0), []),
     N(1110, "Pêndulo: direto", "soco 4/3 5/4A 6/6 7/6", SOCO_C, [80], attr="S, SA"),
     N(3000, "Rajada da Esquina",
-      "golaco 1/6 2/3A 3/3A 4/3A 5/3A 2/3A 3/3A 6/4A bicicleta 2/3 3/4A 4/5 pulo 6/4 7/6", (6, -104, 44, -44), []),
+      "golaco 1/6 2/3A 3/3A 4/3A 5/3A 2/3A 3/3A 6/4A bicicleta 2/3 3/4A 4/5 pulo 6/4 7/6", CX_RAJADA, []),
     N(3400, "Tragada de Beck", "e_beck 1/4 2/5 3/5 4/6 5/6 6/6 7/6", (0, 0, 0, 0), []),
     N(3402, "Garrafa Voadora", "bola 1/5 2/6 3/4 4/5 5/6 7/22", (0, 0, 0, 0), []),
     N(3403, "Grave do Paredão", "chute_baixo 1/5 2/5 3/6A 5/8 7/10", CX_GRAVE, [30]),
@@ -404,8 +437,11 @@ NORMAIS_CK = (
     Golpe(611, "Chute Duplo", "b", P3, (9, 6, -1), (-20, -60, 34, -6), 88, "A", "HA"),
 )
 # (estado, nome, nome no Ratão, direção, botões, caixa, dano, avanço, guarda, o forte derruba)
+# Bote: o desenho inteiro passa de 24 px do eixo (ele se joga), então a caixa medida pegava do boné ao chão; fica
+# só a faixa do braço esticado
+CX_BOTE = (10, _c("caneta", 4)[1] + 8, _c("caneta", 4)[2], _c("caneta", 4)[1] + 44)
 FAMILIAS_CK = (
-    (1400, "Bote", "Bote de Garrafa", "~D, F", "ab", _c("caneta", 4), 73, 8.0, "MA", True),
+    (1400, "Bote", "Bote de Garrafa", "~D, F", "ab", CX_BOTE, 73, 8.0, "MA", True),
     (1500, "Bicuda Baixa", "Chinelada Rasteira", "~D, B", "ab", _c("rasteirinha", 4), 70, 5.5, "L", True),
 )
 
@@ -417,7 +453,7 @@ def golpes_ck(hazaki=False):
             yield Golpe(n + i, nome, f"{direcao}, {botao}", P3, (8 + i * 3, 4 + i * 2, 16 + i * 7), cx, dano + i * 22,
                         guarda=guarda, avanco=avanco * (1 + i * .35), queda=queda and i == 1, nome_desperto=desperto,
                         lancamento="-3,-3.5")
-    yield Golpe(3200, "Nocaute de Rua", "~B, F, D, x", ("a",) * 5, (11, 5, 5, 6, 26), (6, -104, 46, -50), 345,
+    yield Golpe(3200, "Nocaute de Rua", "~B, F, D, x", ("a",) * 5, (11, 5, 5, 6, 26), (6, -100, 46, -60), 345,
                 avanco=4, queda=True, custo=2000, nome_desperto="Nocaute de Rua")
 
 
@@ -558,11 +594,20 @@ gp.FX_PENGARO = {k: v for k, v in gp.FX_PENGARO.items() if k != 9211}
 gp.FX_PENGARO[9210] = (None, "ck_aura", 5)
 gp.CHAO = gp.CHAO | {"ck_aura"}
 _quadros_proprios = gp.quadros_proprios
+AURA_MONTE = 22  # linhas de baixo do desenho da aura (o monte de fumaça no chão), que não entram
 
 
 def quadros_proprios(nome):
     if nome == "ck_aura":
-        qs = [Image.open(a).convert("RGBA") for a in sorted((EFEITOS / "aura").glob("*.png"))]
+        # o desenho tem um monte de fumaça no pé da coluna: opaco e preso ao lutador ele virava um arbusto em que o
+        # CK pisava (e subia junto no pulo). Fica só a coluna, com a base desfeita em xadrez; o Explod é translúcido.
+        qs = []
+        for arq in sorted((EFEITOS / "aura").glob("*.png")):
+            a = np.array(Image.open(arq).convert("RGBA"))
+            a = a[:a.shape[0] - AURA_MONTE]
+            yy, xx = np.mgrid[:a.shape[0], :a.shape[1]]
+            a[(yy >= a.shape[0] - 8) & ((xx + yy) % 2 == 0), 3] = 0
+            qs.append(Image.fromarray(a))
         return [(q, (q.width // 2, q.height - 1)) for q in qs]
     rampa = VIDRO if nome.startswith("sombra") else BRANCA if nome.startswith("whisky") else None
     return [(gp.pintar(q, rampa) if rampa else q, pivo) for q, pivo in _quadros_proprios(nome)]
@@ -574,8 +619,9 @@ gp.quadros_proprios = quadros_proprios
 def aura_cns():
     """A aura do Modo Ratão: fumaça cinza-esverdeada subindo dos pés, presa ao lutador, atrás do corpo."""
     return ("[State -2, Aura de fumaça]\ntype = Explod\ntrigger1 = var(20) > 0 && alive && NumExplod(9210) = 0\n"
-            "anim = 9210\nid = 9210\npostype = p1\npos = 0, 2\nbindtime = -1\nremovetime = -1\nsprpriority = -1\n"
-            "ownpal = 1\nscale = 1, 1\nignorehitpause = 1\nsupermovetime = -1\n\n"
+            "anim = 9210\nid = 9210\npostype = p1\npos = -4, 0\nbindtime = -1\nremovetime = -1\nsprpriority = -1\n"
+            "ownpal = 1\nscale = 1.5, 1.25\ntrans = addalpha\nalpha = 216, 100\nignorehitpause = 1\n"
+            "supermovetime = -1\n\n"
             "[State -2, Tira a aura]\ntype = RemoveExplod\ntrigger1 = var(20) <= 0 || !alive\n"
             "trigger1 = NumExplod(9210)\nid = 9210\nignorehitpause = 1\n\n")
 
@@ -632,8 +678,8 @@ def nuvem(n, gatilho, id_, vel, mul, dura, escala, stun, dano=25, ofs="46, -90")
 def cns_ck(cns):
     E, fim, hitdef, ini = gp.estado, gp.fim, gp.hitdef, lambda n: gp.inicios_extra(M[n])[0]
     # ---- Tragada (↓ → + x/y): puxa o pod e solta a nuvem. x perto e pequena, y longe e maior
-    # (a fraca nasce junto da boca e para a uns 55 px: é armadilha, não alcança quem está a meia distância)
-    for n, vel, mul, dura, escala in ((1000, 1.6, .9, 150, .75), (1001, 5, .93, 180, 1)):
+    # (a fraca nasce junto da boca e para a uns 70 px; a forte para a uns 175 px)
+    for n, vel, mul, dura, escala in ((1000, 3.0, .9, 150, .75), (1001, 9, .93, 180, 1)):
         i = ini(n)
         cns = trocar_estado(cns, n, E(n, "S", "A", "S", anim=n, juggle=4)
                             + f"[State {n}, Pod]\ntype = Explod\ntrigger1 = Time = {i[0] + 2}\ntrigger1 = var(20) = 0\n"
@@ -642,7 +688,7 @@ def cns_ck(cns):
                             + ritmo(nuvem(n, f"Time = {i[3]}", 1000, vel, mul, dura, escala, 30,
                                           ofs="40, -90" if n == 1000 else "46, -90")) + fim(n))
     # ---- Boné Voador (→ ← + x/y): sai da mão, vai e volta para a cabeça. No Ratão é o óculos (mesma lógica)
-    for n, vel, freio in ((1600, 6.5, .36), (1601, 10, .34)):
+    for n, vel, freio in ((1600, 6.5, .36), (1601, 12, .26)):
         i = ini(n)
         solta, volta = i[3], round(2 * vel / freio)
         proj = "".join(
@@ -837,10 +883,19 @@ def cmd_ck(cmd):
     # Baile da Esquina: só no Ratão, com ← → ↓ + x+y (e com o comando do super da base, que no Ratão vira o Baile)
     velho = "triggerall = ((var(20) > 0) || (life <= 200 && power >= 2000))"
     assert velho in cmd
-    na_entrada("Saideira Sombria", 3100, lambda b: b.replace(velho, "triggerall = var(20) > 0"))
+    # o ← → ↓ + a/b do kit levava ao Baile no Ratão e escondia a Rajada: sai; o Baile é só ← → ↓ + x+y
+    na_entrada("Saideira Sombria", 3100, lambda b: "")
     cmd = antes_de(cmd, "[State -1, Nocaute de Rua]", gp.entrada(
         "Baile da Esquina", 3100, ['command = "baile"', "power >= 1000", "var(20) > 0", "statetype != A"],
         ("var(1)", "(stateno = [1000,1501]) && movehit && movehit <= 8")))
+    # Encosta na Parede (← + x, y, → + b): ← segurado e depois → + b é o mesmo movimento do Gingado b (← → b), que
+    # vem antes na lista e roubava o fim do kombo; do 344 não sai Gingado b
+    na_entrada("Role por tras e chute", 1701, com("stateno != 344"))
+    # cada projétil trava só a si mesmo: a nuvem da Tragada (2,5 s no ar) não impede o Boné, nem o contrário
+    trava = "triggerall = numprojid(1000) + numprojid(1001) + numprojid(1002) + numprojid(1003) = 0\n"
+    for titulo, n, proj in (("Bola forte", 1001, 1000), ("Bola fraca", 1000, 1000),
+                            ("Garrafada forte", 1601, 1002), ("Garrafada fraca", 1600, 1002)):
+        na_entrada(titulo, n, lambda b, proj=proj: b.replace(trava, f"triggerall = numprojid({proj}) = 0\n"))
     # Sobe pro Teto: x, y, ↓ + y (no kit era a, b, ↓ + y)
     na_entrada("Kombo 4: b", 346, lambda b: b.replace('command = "b"', 'command = "y"').replace(
         "stateno = 230 && movecontact", "stateno = 200 && movecontact").replace(
@@ -853,6 +908,11 @@ def cmd_ck(cmd):
     i = cmd.index("[State -1, Golpe no ar]")
     cmd = cmd[:i] + gp.entrada("Desp: Corte descendo", 3436, ['command = "x"', "statetype = A", "var(20) > 0"],
                                ("ctrl",)) + cmd[i:]
+    for velho, novo in (("Chuva de Bebidas", "Rajada da Esquina"), ("Mao de Sombra", "Tragada de Beck"),
+                        ("Queda Escura", "Grave do Paredao"), ("Sombra Atravessada", "Garrafa Voadora"),
+                        ("Garrafada f", "Bone Voador f"), ("Role por tras", "Gingado de Esquiva")):
+        assert f"[State -1, {velho}" in cmd, velho
+        cmd = cmd.replace(f"[State -1, {velho}", f"[State -1, {novo}")  # rótulos do kit do Pengaró (só comentário)
     return cmd.replace("gerar_pengaro.py", "gerar_ck.py")
 
 
@@ -1011,6 +1071,22 @@ def main():
     cns = cns.replace("[Data]", preset + "[Quotes]\n" + "".join(
         f'victory{i + 1} = "{v}"\n' for i, v in enumerate(gp.VITORIAS)) + "\n[Data]", 1)
     cns = cns.replace("gerar_pengaro.py", "gerar_ck.py")
+    # Baile da Esquina (ficha: 1 estoque, só no Despertar): no kit o super encerrava o Despertar no 1º tick e a aura
+    # sumia durante o próprio super. No CK o Ratão continua.
+    cns, k = re.subn(r"\[State 3100, Fim Despertar\]\n(?:[^\n]+\n)+\n", "", cns)
+    assert k == 1
+    # ...mas o dano do Baile continua o de antes: no kit ele batia já sem o bônus de 45% do Despertar (436 de dano;
+    # com o bônus ia a 631 por 1 estoque)
+    velho = "value = ifelse(var(20) > 0, 1.45, 1)"
+    assert cns.count(velho) == 1
+    cns = cns.replace(velho, "value = ifelse(var(20) > 0 && stateno != 3100, 1.45, 1)")
+    # Agarrão em pé (ficha: três socos curtos e empurra): o dano de 100 sai em três socos (30, 30, 40)
+    velho = "[State 810, Dano]\ntype = TargetLifeAdd\ntrigger1 = Time = 14\nvalue = -100\n\n"
+    assert cns.count(velho) == 1
+    cns = cns.replace(velho, "".join(
+        f"[State 810, Soco {i}]\ntype = TargetLifeAdd\ntrigger1 = Time = {t}\nvalue = -{d}\n\n"
+        + (f"[State 810, Som {i}]\ntype = PlaySnd\ntrigger1 = Time = {t}\nvalue = F5, 0\n\n" if t < 14 else "")
+        for i, (t, d) in enumerate(((4, 30), (9, 30), (14, 40)), 1)))
     (SAIDA / "ck.air").write_text(air, encoding="utf-8", newline="\n")
     (SAIDA / "ck.cns").write_text(cns, encoding="utf-8", newline="\n")
     gp.escrever_sff(SAIDA / "ck.sff", s, manter=gp.sprites_mantidos(air, cns))

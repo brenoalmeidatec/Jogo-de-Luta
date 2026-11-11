@@ -334,17 +334,7 @@ triggerall = command = "golpe_1501"
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Saideira Sombria]
-type = ChangeState
-value = 3100
-triggerall = command = "golaco"
-triggerall = power >= 1000
-triggerall = var(20) > 0
-triggerall = statetype != A
-trigger1 = var(1)
-trigger2 = (stateno = [1000,1501]) && movehit && movehit <= 8
-
-[State -1, Chuva de Bebidas]
+[State -1, Rajada da Esquina]
 type = ChangeState
 value = 3000
 triggerall = command = "golaco"
@@ -411,7 +401,7 @@ type = ChangeState
 value = 1001
 triggerall = var(20) = 0
 triggerall = command = "bola_forte"
-triggerall = numprojid(1000) + numprojid(1001) + numprojid(1002) + numprojid(1003) = 0
+triggerall = numprojid(1000) = 0
 triggerall = statetype != A
 trigger1 = var(1)
 
@@ -420,35 +410,36 @@ type = ChangeState
 value = 1000
 triggerall = var(20) = 0
 triggerall = command = "bola_fraca"
-triggerall = numprojid(1000) + numprojid(1001) + numprojid(1002) + numprojid(1003) = 0
+triggerall = numprojid(1000) = 0
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Garrafada forte]
+[State -1, Bone Voador forte]
 type = ChangeState
 value = 1601
 triggerall = command = "garrafa_y"
-triggerall = numprojid(1000) + numprojid(1001) + numprojid(1002) + numprojid(1003) = 0
+triggerall = numprojid(1002) = 0
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Garrafada fraca]
+[State -1, Bone Voador fraca]
 type = ChangeState
 value = 1600
 triggerall = command = "garrafa_x"
-triggerall = numprojid(1000) + numprojid(1001) + numprojid(1002) + numprojid(1003) = 0
+triggerall = numprojid(1002) = 0
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Role por tras e chute]
+[State -1, Gingado de Esquiva e chute]
 type = ChangeState
 value = 1701
+triggerall = stateno != 344
 triggerall = command = "role_b"
 triggerall = p2dist x > 0
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Role por tras]
+[State -1, Gingado de Esquiva]
 type = ChangeState
 value = 1700
 triggerall = command = "role_a"
@@ -456,7 +447,7 @@ triggerall = p2dist x > 0
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Mao de Sombra]
+[State -1, Tragada de Beck]
 type = ChangeState
 value = 3400
 triggerall = command = "sombra_x"
@@ -474,7 +465,7 @@ triggerall = var(20) > 0
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Sombra Atravessada]
+[State -1, Garrafa Voadora]
 type = ChangeState
 value = 3402
 triggerall = command = "sombra_a"
@@ -482,7 +473,7 @@ triggerall = var(20) > 0
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Queda Escura]
+[State -1, Grave do Paredao]
 type = ChangeState
 value = 3403
 triggerall = command = "sombra_b"

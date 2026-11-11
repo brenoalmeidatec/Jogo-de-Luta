@@ -1515,10 +1515,30 @@ type = Turn
 trigger1 = Time = 14
 trigger1 = var(2)
 
-[State 810, Dano]
+[State 810, Soco 1]
+type = TargetLifeAdd
+trigger1 = Time = 4
+value = -30
+
+[State 810, Som 1]
+type = PlaySnd
+trigger1 = Time = 4
+value = F5, 0
+
+[State 810, Soco 2]
+type = TargetLifeAdd
+trigger1 = Time = 9
+value = -30
+
+[State 810, Som 2]
+type = PlaySnd
+trigger1 = Time = 9
+value = F5, 0
+
+[State 810, Soco 3]
 type = TargetLifeAdd
 trigger1 = Time = 14
-value = -100
+value = -40
 
 [State 810, Treme]
 type = EnvShake
@@ -1775,6 +1795,12 @@ anim = 301
 juggle = 3
 velset = 0,0
 
+[State 301, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10301
+
 [State 301, Avanço]
 type = VelSet
 trigger1 = Time = 1
@@ -1849,6 +1875,12 @@ anim = 302
 juggle = 3
 velset = 0,0
 
+[State 302, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10302
+
 [State 302, Avanço]
 type = VelSet
 trigger1 = Time = 3
@@ -1898,6 +1930,12 @@ sprpriority = 2
 anim = 303
 juggle = 3
 velset = 0,0
+
+[State 303, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10303
 
 [State 303, Avanço]
 type = VelSet
@@ -1982,6 +2020,12 @@ anim = 311
 juggle = 3
 velset = 0,0
 
+[State 311, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10311
+
 [State 311, Avanço]
 type = VelSet
 trigger1 = Time = 4
@@ -2032,6 +2076,12 @@ anim = 312
 juggle = 3
 velset = 0,0
 
+[State 312, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10312
+
 [State 312, Avanço]
 type = VelSet
 trigger1 = Time = 4
@@ -2081,6 +2131,12 @@ sprpriority = 2
 anim = 313
 juggle = 3
 velset = 0,0
+
+[State 313, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10313
 
 [State 313, Avanço]
 type = VelSet
@@ -2140,6 +2196,12 @@ sprpriority = 2
 anim = 321
 juggle = 3
 velset = 0,0
+
+[State 321, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10321
 
 [State 321, Avanço]
 type = VelSet
@@ -2241,6 +2303,12 @@ anim = 323
 juggle = 3
 velset = 0,0
 
+[State 323, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10323
+
 [State 323, Avanço]
 type = VelSet
 trigger1 = Time = 3
@@ -2300,6 +2368,12 @@ anim = 331
 juggle = 3
 velset = 0,0
 
+[State 331, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10331
+
 [State 331, Avanço]
 type = VelSet
 trigger1 = Time = 5
@@ -2350,6 +2424,12 @@ anim = 332
 juggle = 3
 velset = 0,0
 
+[State 332, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10332
+
 [State 332, Avanço]
 type = VelSet
 trigger1 = Time = 5
@@ -2399,6 +2479,12 @@ sprpriority = 2
 anim = 333
 juggle = 3
 velset = 0,0
+
+[State 333, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10333
 
 [State 333, Avanço]
 type = VelSet
@@ -2459,6 +2545,12 @@ anim = 340
 juggle = 3
 velset = 0,0
 
+[State 340, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10340
+
 [State 340, Avanço]
 type = VelSet
 trigger1 = Time = 1
@@ -2508,6 +2600,12 @@ sprpriority = 2
 anim = 341
 juggle = 3
 velset = 0,0
+
+[State 341, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10341
 
 [State 341, Avanço]
 type = VelSet
@@ -2559,6 +2657,12 @@ anim = 342
 juggle = 3
 velset = 0,0
 
+[State 342, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10342
+
 [State 342, Avanço]
 type = VelSet
 trigger1 = Time = 3
@@ -2608,6 +2712,12 @@ sprpriority = 2
 anim = 343
 juggle = 3
 velset = 0,0
+
+[State 343, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10343
 
 [State 343, Avanço]
 type = VelSet
@@ -2661,6 +2771,12 @@ anim = 344
 juggle = 3
 velset = 0,0
 
+[State 344, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10344
+
 [State 344, Avanço]
 type = VelSet
 trigger1 = Time = 4
@@ -2710,6 +2826,12 @@ sprpriority = 2
 anim = 345
 juggle = 3
 velset = 0,0
+
+[State 345, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10345
 
 [State 345, Avanço]
 type = VelSet
@@ -2761,6 +2883,12 @@ anim = 346
 juggle = 3
 velset = 0,0
 
+[State 346, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10346
+
 [State 346, Avanço]
 type = VelSet
 trigger1 = Time = 3
@@ -2810,6 +2938,12 @@ sprpriority = 2
 anim = 347
 juggle = 3
 velset = 0,0
+
+[State 347, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10347
 
 [State 347, Avanço]
 type = VelSet
@@ -3829,10 +3963,10 @@ projremanim = -1
 projhits = 2
 projmisstime = 20
 projpriority = 2
-projremovetime = 59
+projremovetime = 92
 offset = 30, -84
-velocity = 10, 0
-accel = -0.34, 0
+velocity = 12, 0
+accel = -0.26, 0
 attr = S, SP
 damage = 45, 3
 animtype = Med
@@ -3862,10 +3996,10 @@ projremanim = -1
 projhits = 2
 projmisstime = 20
 projpriority = 2
-projremovetime = 59
+projremovetime = 92
 offset = 30, -84
-velocity = 10, 0
-accel = -0.34, 0
+velocity = 12, 0
+accel = -0.26, 0
 attr = S, SP
 damage = 45, 3
 animtype = Med
@@ -3953,6 +4087,12 @@ sprpriority = 2
 anim = 1701
 juggle = 0
 velset = 0,0
+
+[State 1701, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 11701
 
 [State 1701, Invencivel]
 type = NotHitBy
@@ -4354,7 +4494,7 @@ projpriority = 1
 projremovetime = 150
 projscale = 0.75, 0.75
 offset = 40, -90
-velocity = 1.6, 0
+velocity = 3.0, 0
 velmul = 0.9, 1
 attr = S, SP
 damage = 25, 2
@@ -4420,7 +4560,7 @@ projpriority = 1
 projremovetime = 180
 projscale = 1, 1
 offset = 46, -90
-velocity = 5, 0
+velocity = 9, 0
 velmul = 0.93, 1
 attr = S, SP
 damage = 25, 2
@@ -4790,7 +4930,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
-sparkxy = -10, -74
+sparkxy = -10, -80
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1, 1
@@ -4815,7 +4955,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
-sparkxy = -10, -74
+sparkxy = -10, -80
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1, 1
@@ -4840,7 +4980,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
-sparkxy = -10, -74
+sparkxy = -10, -80
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1, 1
@@ -4865,7 +5005,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
-sparkxy = -10, -74
+sparkxy = -10, -80
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1, 1
@@ -4890,7 +5030,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
-sparkxy = -10, -74
+sparkxy = -10, -80
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1, 1
@@ -4915,7 +5055,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
-sparkxy = -10, -74
+sparkxy = -10, -80
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1, 1
@@ -4940,7 +5080,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
-sparkxy = -10, -74
+sparkxy = -10, -80
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1, 1
@@ -4965,7 +5105,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 20, 20
 guard.pausetime = 12, 12
-sparkxy = -10, -74
+sparkxy = -10, -80
 sparkno = S(ifelse(var(20) > 0, 9235, 9205))
 guard.sparkno = S9202
 sparkscale = 1.5, 1.5
@@ -5050,11 +5190,6 @@ framegap = 2
 type = PowerAdd
 trigger1 = Time = 0
 value = ifelse(var(20) > 0, -1000, -2000)
-
-[State 3100, Fim Despertar]
-type = VarSet
-trigger1 = Time = 0
-var(20) = 0
 
 [State 3100, Invencivel]
 type = NotHitBy
@@ -5690,7 +5825,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
-sparkxy = -10, -43
+sparkxy = -10, -58
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
@@ -5746,7 +5881,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
-sparkxy = -10, -43
+sparkxy = -10, -58
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
@@ -5992,7 +6127,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
-sparkxy = -10, -77
+sparkxy = -10, -80
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1, 1
@@ -6016,7 +6151,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
-sparkxy = -10, -77
+sparkxy = -10, -80
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1, 1
@@ -6040,7 +6175,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 20, 20
 guard.pausetime = 12, 12
-sparkxy = -10, -77
+sparkxy = -10, -80
 sparkno = S(ifelse(var(20) > 0, 9235, 9205))
 guard.sparkno = S9202
 sparkscale = 1.5, 1.5
@@ -6321,7 +6456,7 @@ supermovetime = -1
 [State -2, Bônus de dano]
 type = AttackMulSet
 trigger1 = 1
-value = ifelse(var(20) > 0, 1.45, 1)
+value = ifelse(var(20) > 0 && stateno != 3100, 1.45, 1)
 
 [State -2, Vira endiabrado]
 type = RemapSprite
@@ -6345,12 +6480,14 @@ trigger1 = var(20) > 0 && alive && NumExplod(9210) = 0
 anim = 9210
 id = 9210
 postype = p1
-pos = 0, 2
+pos = -4, 0
 bindtime = -1
 removetime = -1
 sprpriority = -1
 ownpal = 1
-scale = 1, 1
+scale = 1.5, 1.25
+trans = addalpha
+alpha = 216, 100
 ignorehitpause = 1
 supermovetime = -1
 
@@ -6531,36 +6668,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 302]
-type = Explod
-trigger1 = Anim = 302 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 42, -87
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 311]
 type = Explod
 trigger1 = Anim = 311 && AnimElem = 3 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 26, -86
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 311]
-type = Explod
-trigger1 = Anim = 311 && AnimElem = 3 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 26, -86
 bindtime = 3
@@ -6583,36 +6694,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 312]
-type = Explod
-trigger1 = Anim = 312 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 18, -66
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 313]
 type = Explod
 trigger1 = Anim = 313 && AnimElem = 4 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 30, -96
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 313]
-type = Explod
-trigger1 = Anim = 313 && AnimElem = 4 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 30, -96
 bindtime = 3
@@ -6635,36 +6720,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 323]
-type = Explod
-trigger1 = Anim = 323 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 34, -56
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 331]
 type = Explod
 trigger1 = Anim = 331 && AnimElem = 3 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 29, -62
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 331]
-type = Explod
-trigger1 = Anim = 331 && AnimElem = 3 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 29, -62
 bindtime = 3
@@ -6687,36 +6746,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 332]
-type = Explod
-trigger1 = Anim = 332 && AnimElem = 3 && var(20) > 0
-anim = 9215
-postype = p1
-pos = 39, 0
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 333]
 type = Explod
 trigger1 = Anim = 333 && AnimElem = 3 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 22, -57
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 333]
-type = Explod
-trigger1 = Anim = 333 && AnimElem = 3 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 22, -57
 bindtime = 3
@@ -6739,36 +6772,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 341]
-type = Explod
-trigger1 = Anim = 341 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 34, -56
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 343]
 type = Explod
 trigger1 = Anim = 343 && AnimElem = 3 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 34, -71
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 343]
-type = Explod
-trigger1 = Anim = 343 && AnimElem = 3 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 34, -71
 bindtime = 3
@@ -6791,36 +6798,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 344]
-type = Explod
-trigger1 = Anim = 344 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 42, -87
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 345]
 type = Explod
 trigger1 = Anim = 345 && AnimElem = 3 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 29, -62
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 345]
-type = Explod
-trigger1 = Anim = 345 && AnimElem = 3 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 29, -62
 bindtime = 3
@@ -6843,36 +6824,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 346]
-type = Explod
-trigger1 = Anim = 346 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 42, -87
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 347]
 type = Explod
 trigger1 = Anim = 347 && AnimElem = 4 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 30, -96
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 347]
-type = Explod
-trigger1 = Anim = 347 && AnimElem = 4 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 30, -96
 bindtime = 3
@@ -7069,7 +7024,7 @@ type = Explod
 trigger1 = Anim = 1400 && AnimElem = 3 && var(20) <= 0
 anim = 9213
 postype = p1
-pos = 65, -43
+pos = 65, -58
 bindtime = 3
 removetime = 8
 sprpriority = 3
@@ -7082,7 +7037,7 @@ type = Explod
 trigger1 = Anim = 1401 && AnimElem = 3 && var(20) <= 0
 anim = 9213
 postype = p1
-pos = 65, -43
+pos = 65, -58
 bindtime = 3
 removetime = 8
 sprpriority = 3
@@ -7094,19 +7049,6 @@ ignorehitpause = 1
 type = Explod
 trigger1 = Anim = 1701 && AnimElem = 7 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 26, -86
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 1701]
-type = Explod
-trigger1 = Anim = 1701 && AnimElem = 7 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 26, -86
 bindtime = 3
@@ -7134,7 +7076,7 @@ type = Explod
 trigger1 = Anim = 3200 && AnimElem = 2 && var(20) <= 0
 anim = 9213
 postype = p1
-pos = 38, -77
+pos = 38, -80
 bindtime = 3
 removetime = 8
 sprpriority = 3
@@ -7649,6 +7591,188 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
+[State -3, Efeito do golpe 10302]
+type = Explod
+trigger1 = Anim = 10302 && AnimElem = 3 && var(20) > 0
+anim = 9212
+postype = p1
+pos = 48, -77
+bindtime = 3
+removetime = 8
+sprpriority = 3
+ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+
+[State -3, Efeito do golpe 10311]
+type = Explod
+trigger1 = Anim = 10311 && AnimElem = 3 && var(20) > 0
+anim = 9212
+postype = p1
+pos = 33, -93
+bindtime = 3
+removetime = 8
+sprpriority = 3
+ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+
+[State -3, Efeito do golpe 10312]
+type = Explod
+trigger1 = Anim = 10312 && AnimElem = 3 && var(20) > 0
+anim = 9212
+postype = p1
+pos = 48, -66
+bindtime = 3
+removetime = 8
+sprpriority = 3
+ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+
+[State -3, Efeito do golpe 10313]
+type = Explod
+trigger1 = Anim = 10313 && AnimElem = 4 && var(20) > 0
+anim = 9212
+postype = p1
+pos = 36, -98
+bindtime = 3
+removetime = 8
+sprpriority = 3
+ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+
+[State -3, Efeito do golpe 10323]
+type = Explod
+trigger1 = Anim = 10323 && AnimElem = 3 && var(20) > 0
+anim = 9212
+postype = p1
+pos = 22, -90
+bindtime = 3
+removetime = 8
+sprpriority = 3
+ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+
+[State -3, Efeito do golpe 10331]
+type = Explod
+trigger1 = Anim = 10331 && AnimElem = 3 && var(20) > 0
+anim = 9212
+postype = p1
+pos = 22, -90
+bindtime = 3
+removetime = 8
+sprpriority = 3
+ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+
+[State -3, Efeito do golpe 10332]
+type = Explod
+trigger1 = Anim = 10332 && AnimElem = 3 && var(20) > 0
+anim = 9215
+postype = p1
+pos = 45, 0
+bindtime = 3
+removetime = 8
+sprpriority = 3
+ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+
+[State -3, Efeito do golpe 10333]
+type = Explod
+trigger1 = Anim = 10333 && AnimElem = 3 && var(20) > 0
+anim = 9215
+postype = p1
+pos = 22, 0
+bindtime = 3
+removetime = 8
+sprpriority = 3
+ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+
+[State -3, Efeito do golpe 10341]
+type = Explod
+trigger1 = Anim = 10341 && AnimElem = 3 && var(20) > 0
+anim = 9212
+postype = p1
+pos = 22, -90
+bindtime = 3
+removetime = 8
+sprpriority = 3
+ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+
+[State -3, Efeito do golpe 10343]
+type = Explod
+trigger1 = Anim = 10343 && AnimElem = 3 && var(20) > 0
+anim = 9212
+postype = p1
+pos = 35, -63
+bindtime = 3
+removetime = 8
+sprpriority = 3
+ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+
+[State -3, Efeito do golpe 10344]
+type = Explod
+trigger1 = Anim = 10344 && AnimElem = 3 && var(20) > 0
+anim = 9212
+postype = p1
+pos = 48, -77
+bindtime = 3
+removetime = 8
+sprpriority = 3
+ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+
+[State -3, Efeito do golpe 10345]
+type = Explod
+trigger1 = Anim = 10345 && AnimElem = 3 && var(20) > 0
+anim = 9212
+postype = p1
+pos = 22, -90
+bindtime = 3
+removetime = 8
+sprpriority = 3
+ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+
+[State -3, Efeito do golpe 10346]
+type = Explod
+trigger1 = Anim = 10346 && AnimElem = 3 && var(20) > 0
+anim = 9212
+postype = p1
+pos = 48, -77
+bindtime = 3
+removetime = 8
+sprpriority = 3
+ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+
+[State -3, Efeito do golpe 10347]
+type = Explod
+trigger1 = Anim = 10347 && AnimElem = 4 && var(20) > 0
+anim = 9212
+postype = p1
+pos = 36, -98
+bindtime = 3
+removetime = 8
+sprpriority = 3
+ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+
 [State -3, Efeito do golpe 10410]
 type = Explod
 trigger1 = Anim = 10410 && AnimElem = 3 && var(20) > 0
@@ -7779,6 +7903,19 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
+[State -3, Efeito do golpe 11701]
+type = Explod
+trigger1 = Anim = 11701 && AnimElem = 7 && var(20) > 0
+anim = 9212
+postype = p1
+pos = 33, -93
+bindtime = 3
+removetime = 8
+sprpriority = 3
+ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+
 [State -3, Efeito do golpe 13100]
 type = Explod
 trigger1 = Anim = 13100 && AnimElem = 2 && var(20) > 0
@@ -7797,7 +7934,7 @@ type = Explod
 trigger1 = Anim = 13200 && AnimElem = 2 && var(20) > 0
 anim = 9212
 postype = p1
-pos = 30, -77
+pos = 48, -82
 bindtime = 3
 removetime = 8
 sprpriority = 3
