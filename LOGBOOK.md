@@ -680,3 +680,18 @@ limpa (medido). Só arte bruta: nenhum gerador, `chars/` ou teste no motor.
 
 **A seguir:** Grupo 2 do Hazak (43 folhas). Decidir se a aura de asas vale ser refeita em resolução maior (grade 4x2
 ou uma asa só espelhada), o que foge do padrão de 8 quadros em uma fileira.
+
+## 2026-11-11 (bosses: frente PARADA de propósito às 15h50)
+
+O Alisson pediu para ir parando os trabalhos aos poucos, para mudar o modelo de trabalho com segurança. Esta frente
+(folhas boss de Hazak, Gutto, Raiclaven e CK no ChatGPT) foi interrompida no meio do grupo 2 do Hazak.
+
+- **Feito e no git:** os quatro conceitos aprovados (`e_conceito.png`; Hazak `d_conceito.png`), a fila completa com
+  prompts em `docs/arcade/fila_bosses.md`, e 16 folhas brutas do Hazak boss em `sprites/hazaki/quadros/folhas_arcade/`:
+  `d_parado`, `d_anda`, `d_corrida`, `d_vira`, `d_agachado`, `d_pulo`, `d_defesa`, `d_defesa_baixa`, `d_apanha`,
+  `d_queda`, `d_levanta`, `d_vitoria`, `d_maleta_giro`, `d_sapato_canela`, `d_tapa_anel` e `fx_aura_asas`.
+- **Não feito:** o resto do grupo 2 do Hazak; nenhuma folha de Gutto, Raiclaven e CK; a conferência cética. Nada foi
+  convertido para `quadros_arcade` nem ligado em gerador; nada rodou no jogo.
+- **Como retomar:** seguir a fila em `docs/arcade/fila_bosses.md` a partir da primeira folha do grupo 2 do Hazak que
+  não está na lista acima; procedimento em `docs/arcade/registro_fila.md` (mugen). Uma folha que estava sendo gerada
+  na hora da parada pode ter ficado só no chat "Hazak — arcade", sem ser salva.
