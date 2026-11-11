@@ -543,3 +543,65 @@ na borda. Folhas de contato de todas as pastas olhadas uma vez (a 2x), e os dese
   o `DESLOCA_ARCADE` do Pengaró). Pé de apoio cravado entre quadros não foi medido.
 - Nada rodado no jogo: nenhuma pasta está ligada no `gerar_hazaki.py` (é a outra parte da frente). Sem quadros do
   meio (`meio/`). O Despertar (`d_*`) não existe ainda: pendente, fora desta rodada.
+
+
+## 2026-11-11 (Hazak, gerador) — gerador novo do Hazak, ficha inteira menos o Despertar (branch `hazak`)
+
+**Feito (só arquivos do Hazak e o robô, de forma aditiva; `gerar_pengaro.py`, `repertorio.py`, `animar_folha.py` e
+`quantizar_folha.py` não foram editados):**
+
+- `ferramentas/gerar_hazaki.py` reescrito e `ferramentas/hazaki_golpes.py` novo (só dados, notação `"folha d/tA"`).
+  Importa o `gerar_pengaro` como biblioteca e NÃO chama `montar_sprites/air/cns/cmd`. Lê
+  `sprites/hazaki/quadros_arcade`. `--contato DIR` grava folhas de contato lidas de volta do `.sff`.
+- `chars/hazaki` regerado: 16 normais, 4 correntes de 3 + finalizador, 4 kombos, 8 especiais (fraco/forte), 3 agarrões,
+  2 supers, rolamento, afastar, parry, provocação, intro, vitória e derrota. Nome na tela **Hazak** (id `hazaki`).
+  Vida 900, defesa 90, anda 3,4 / -2,8, corre 7,2. Paleta fixa: índices 1-15 do `.sff` = `paleta_arcade.json`
+  (conferido lendo o `.sff` de volta: 0 sprites do corpo com cor fora das 15).
+- **Furo "arremessado some" fechado:** os 28 grupos de `gp.SPRITES_VITIMA` existem no `.sff` do Hazak (preso =
+  `vitima_agarrado` 1, curvado = `vitima_agarrado` 0, apanhando = `apanha` 2/3). Visto no filme: o Pengaró agarra
+  (Martelo e Garrafada), bate, joga, e o Hazak aparece do começo ao fim.
+- Robô: `testar_pengaro.py` ganhou os 21 comandos de toque do Hazak e passa `@LUTADOR@` ao `robo.lua`; no `robo.lua`
+  os roteiros antigos só registram se o P1 não é o hazaki e há um bloco novo só para ele (41 roteiros). `corrente()`
+  ganhou um 6º parâmetro opcional (janela, padrão 20). Para pengaro/gutto/raiclaven a lista continua com 43 roteiros
+  (conferido carregando o Lua antes e depois).
+- Docs: seção Hazaki do `README.md`, nota de estado no topo de `docs/arcade/hazak_gerador.md`.
+
+**Testes (Windows Sandbox, depois da versão final dos arquivos):**
+
+- `verificar_pengaro.py --hazaki`: 761 sprites, 162 ações, 90 estados, 42 comandos, 0 erros, 0 avisos.
+- Robô `--lutador hazaki`: **151 PASS / 0 FAIL**, 41 roteiros. Danos medidos (P2 com defesa 90): correntes x 161,
+  y 267, a 189, b 295; kombos 166 / 127 / 167 / 162; Cutucão Sacana 155; Puxa a Perna 111; Abraço 133; Punho de
+  Concreto 67 / 78; Estatueta 78 / 89; Ascensão 89 / 122; Giro 72 / 94; Corte de Base 61 / 83; Pega Bolado 78 / 111;
+  Guarda de Aço 67 (P1 sem dano); Faixa no Asfalto 268 (inteiro: 3001, 3002, 3003); Rapidinho 378 (4 passagens + voadora).
+- Robô do Pengaró contra o Hazak novo: **146 PASS / 0 FAIL**, 43 roteiros (igual à linha de base).
+- `chars/pengaro`, `chars/gutto`, `chars/raiclaven`: md5 de todos os arquivos igual ao de antes.
+- Filmes de 8 s (Hazak x Pengaró: x, y, a, b, baixo+y, baixo+b, Punho de Concreto, Estatueta, Giro de Garagem) e de 6 s
+  (Pengaró agarrando o Hazak), tiras olhadas. Folhas de contato dos sprites finais olhadas (8 de corpo, outros, efeitos).
+
+**Consertos no caminho (com a medida):** o jab duplo era cancelado antes do 2º jab e a trava `var(11)` não contava o
+2º acerto (finalizador x não saía: `FAIL foi para 303`); agora o 301 só continua depois do 2º jab e solta a trava no
+2º HitDef. Efeitos do pixelfx crus viravam bloco branco e pontilhado: todos com mistura aditiva. A faísca saía ~27 px
+acima do golpe (pivô do pixelfx embaixo): pivô no centro do clarão. Poeira do `ground-slam` pintada de cinza e cortada
+de ~190 para 56 ticks. `rasteira` 3-5 e `rasteira_arco` 4-5 deslocadas 21-28 px (a conversão centrava pela caixa).
+
+**Pendente / provisório / NÃO conferido:**
+
+- **Despertar (Diabo Loiro) não existe:** sem folhas `d_*`. Sem comando, sem estado 2000, sem patroa, sem paleta `_d`
+  (nem as 4 cores da patroa no `.sff`). Correntes/normais/especiais/super do Despertar da ficha: nada feito.
+- Sem som (não há `.snd`): falas, sirene e bordão esperam o áudio do Breno.
+- **Derrota com sirene:** escrita no `[Statedef -2]` (levanta e foge para fora da tela), NUNCA vista rodando: nenhum
+  teste levou o Hazak ao nocaute nem ao fim do tempo. Intro, vitória, provocação, parry, rolamento, guard cancel,
+  golpes no ar, golpe de afastar, coice, pulo, corrida e defesa também não foram vistos nem testados pelo robô.
+- Escape dos agarrões (y/b nos 7 primeiros ticks): o robô não consegue conferir (preso, o P2 não roda o `-1` dele).
+- Supers e agarrões do Hazak passaram no robô mas não foram filmados. Projétil da Estatueta: o robô mede o acerto,
+  o voo não apareceu no recorte das tiras. Rapidinho no canto e contra oponente defendendo: não testado.
+- Sem quadros do meio (8 desenhos por folha, abaixo dos mínimos da regra 7.1). Apanhar agachado usa a folha `agachado`.
+  Lasca e estatueta saem das folhas `obj_` (provisório, a regra 8 pede pixelfx). A poeira aditiva lê como névoa clara
+  no palco azul de teste. Retrato: o `sprites/hazaki-selecao-kof.png` antigo.
+- Equilíbrio é chute meu: alcance curto compensado com passo à frente (cruzado, cotovelada, gancho, cotovelo), danos,
+  hitstun e empurrão precisam de olho de quem joga. Punho de Concreto acerta o oponente que acabou de cair.
+- `gerar_gutto`/`gerar_raiclaven` e os robôs deles não foram rodados (o `.cmd`/`.cns` deles não mudou; o boneco P2 mudou).
+- O `hazaki=True` continua no `gerar_pengaro.py`/`repertorio.py` sem ninguém chamar: retirar quando a outra frente
+  largar esses arquivos. `NOMES` do `gerar_layout.py` ainda diz "Hazaki".
+- Conflitos ficha x regras e a saída adotada: seção 5 e nota de estado de `docs/arcade/hazak_gerador.md` (numeração do
+  elenco em vez da 5.1; nomes repetidos da ficha; agarrão em pé H-; Rolada b com a folha `chute`).

@@ -7,6 +7,36 @@
 > tela vira **Hazak**. Teste só pela sandbox (`ferramentas/sandbox.py` e o que roda em cima dela): **nunca abrir o
 > `Ikemen_GO.exe` nesta máquina**.
 
+> **Estado em 2026-11-11 (o que foi implementado de verdade).** O gerador novo existe: `ferramentas/gerar_hazaki.py`
+> + `ferramentas/hazaki_golpes.py`, lendo `sprites/hazaki/quadros_arcade` (convertido por
+> `ferramentas/folhas_hazak_arcade.py`, não pelo `animar_folha.py`). Entrou a ficha inteira **menos o Despertar**.
+> Onde este documento e o que foi feito divergem, vale o código:
+>
+> - **Despertar (Diabo Loiro) fora:** as folhas `d_*` não existem. Não há comando `despertar`, estado 2000, RemapSprite,
+>   paleta `_d`, cena da patroa nem velocidade por `var(20)`; `var(20)` e `var(37)` ficam reservadas e sempre 0. As
+>   seções 6 e 7 daqui continuam sendo o projeto dele. A paleta da patroa (`paleta_arcade_patroa.json`, 4 cores
+>   próprias) ainda não tem lugar no `.sff`.
+> - **Sem quadros do meio e sem o estilo seco do `gp.Air`:** o gerador tem um emissor de `.air` próprio e simples; cada
+>   elemento mostra o desenho e os ticks escritos em `hazaki_golpes.py` (notação `"folha d/tA"`). Nada de
+>   `animar_folha.py`/`quantizar_folha.py`/`meio/`. Fica abaixo dos mínimos de desenho da regra 7.1 (8 desenhos por folha).
+> - **Gatilhos por `Time`**, calculados da própria notação (o tick do 1º desenho com `A`), nunca `AnimElem`.
+> - **Paleta fixa no `.sff`:** índices 1 a 15 = `paleta_arcade.json` (o corpo sai com a cor exata, conferido lendo o
+>   `.sff` de volta); as outras 240 cores são dos efeitos e retratos.
+> - **Efeitos:** pixelfx sem recolorir, todos com mistura aditiva; o `ground-slam` é pintado de cinza (asfalto).
+>   Projéteis provisórios: a lasca e a estatueta saem das folhas `obj_lasca`/`obj_estatueta`, não do pixelfx (regra 8).
+> - **Vítima de arremesso:** todos os grupos de `gp.SPRITES_VITIMA` existem no `.sff` (o arremessado não some mais):
+>   preso = `vitima_agarrado` 1, curvado = `vitima_agarrado` 0, apanhando = `apanha` 2 e 3. Os desenhos de voo
+>   (`vitima_agarrado` 3-7, `vitima_arremessado`) não entram: os arremessos dos outros só pedem as ações 5001 e 5030.
+> - **Provisório:** apanhar agachado (5020-5027) usa a folha `agachado`; sem som (nenhum `.snd`: falas e sirene são
+>   áudio que o Breno manda); a fuga da sirene na derrota está escrita no `[Statedef -2]` mas **não foi vista rodando**.
+> - **Rolada de Tatame b** chuta com a folha `chute`, não com o `coice` (depois de virar, o coice bateria para longe).
+> - **Corrente x:** o jab duplo (301) só continua para o Cutucão depois do 2º jab, e o finalizador exige 4 acertos.
+> - **Robô:** `python ferramentas/testar_pengaro.py --lutador hazaki` roda o roteiro próprio do Hazak (bloco no fim do
+>   `robo.lua`); os roteiros dos outros três não mudaram. O escape dos agarrões não dá para conferir pelo robô (preso,
+>   o oponente não roda o `[Statedef -1]` dele, onde o robô injeta o botão).
+> - O `hazaki=True` continua no `gerar_pengaro.py` e no `repertorio.py` (ninguém mais chama): a retirada fica para
+>   depois, porque outra frente está mexendo nesses arquivos.
+
 ## 1. Arquitetura
 
 Hoje o `gerar_hazaki.py` (118 linhas) recorta `karate.png` e chama `montar_sprites/air/cns/cmd(hazaki=True)` do Pengaró.

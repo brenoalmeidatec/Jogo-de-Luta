@@ -100,25 +100,34 @@ normais. A arte do Endiabrado (cabeça de cavalo) e 5 folhas provisórias (`ferr
 limite de imagens do ChatGPT liberar. Ficha em `docs/fichas/gutto.md`; gerar com `python ferramentas/gerar_gutto.py`;
 testar com `python ferramentas/testar_pengaro.py --lutador gutto`.
 
-## Hazaki
+## Hazaki (na tela: Hazak)
 
-Karateca de guarda firme, com golpes de alcance e antiaéreos. No Despertar, vira o Diabo Loiro.
+Karatê de quebrada com perna de taekwondo: o mais rápido do elenco (anda 3,4 e corre 7,2), com menos vida (900) e
+defesa (90). Ficha em `docs/fichas/hazaki.md`; golpes em `ferramentas/hazaki_golpes.py`; gerar com
+`python ferramentas/gerar_hazaki.py` (gerador próprio, lê `sprites/hazaki/quadros_arcade`); testar com
+`python ferramentas/testar_pengaro.py --lutador hazaki`. **O Despertar (Diabo Loiro) ainda não entrou**: as folhas
+`d_*` não existem; não há comando nem estado de Despertar nesta versão.
 
 | Especial | Comando |
 |---|---|
-| Punho de Concreto | baixo, frente + x ou y |
-| Guarda de Aço | baixo, trás + x ou y |
-| Ascensão de Faixa | frente, baixo + x ou y |
-| Giro de Garagem | baixo, frente + a ou b |
-| Corte de Base | baixo, trás + a ou b |
-| Salto de Dojô | trás, baixo + a ou b |
+| Punho de Concreto (projétil rasteiro) | baixo, frente + x ou y |
+| Estatueta Dourada (projétil em arco) | frente, trás + x ou y |
+| Ascensão de Faixa (antiaéreo) | frente, baixo + x ou y |
+| Guarda de Aço (contra-ataque) | baixo, trás + x ou y |
+| Giro de Garagem (avanço) | baixo, frente + a ou b |
+| Corte de Base (golpe baixo) | baixo, trás + a ou b |
+| Rolada de Tatame (vai para trás do oponente) | trás, frente + a ou b |
+| Pega Bolado (corre e dá a voadora) | trás, baixo + a ou b |
 | Faixa no Asfalto (1 estoque) | trás, frente, baixo + a ou b |
-| Pose Final (2 estoques) | trás, frente, baixo + x ou y |
-| Despertar: Diabo Loiro (1 estoque) | x + a + y |
+| Rapidinho da Quebrada (2 estoques) | trás, frente, baixo + x ou y |
+| Cutucão Sacana (agarrão de comando, colado) | trás, frente + y |
+
+Correntes de 3 golpes + finalizador nos quatro botões, 4 kombos (frente + b, a, b; x, baixo + a, b; trás + x, y,
+frente + y; a, b, baixo + y), agarrão em pé (frente ou trás + y) e agachado (baixo + y, oponente agachado).
 
 Os dois podem aparar golpes físicos com frente + c. As quatro teclas de ataque têm golpes
 próprios em pé, agachados e no ar. Em pé, frente + y/b e trás + x/a dão golpes direcionais.
-À distância de agarrão, frente ou trás + y/b dá prioridade ao agarrão.
+À distância de agarrão, frente ou trás + y (no Pengaró, também + b) dá prioridade ao agarrão.
 
 A lista de golpes também aparece no menu de pausa do jogo. O nome dos especiais trava na gagueira e só sai inteiro se o golpe acertar; no Despertar ele fala liso. A gagueira é só balão e nunca muda o tempo dos golpes.
 
