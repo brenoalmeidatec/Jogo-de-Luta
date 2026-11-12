@@ -11,11 +11,12 @@ corpo e altura, sem garrafa; pele marrom-escura arroxeada, olhos violeta sem pup
 pontas violeta e dois chifres curtos de fumaça; casaco de mestre preto sem manga com friso dourado e forro roxo, barra
 rasgada até a canela; rachaduras violeta no peito; corda trançada ouro e violeta com duas pontas até o joelho; calça
 preta com barra em brasa violeta; algemas de corrente partida nos pulsos e tornozelos; braceletes de ouro.
-Aura do Despertar: fumaça violeta-escura das sombras, à parte do corpo e toda ATRÁS dos lutadores (nunca cobre corpo
-nenhum): coluna de fumaça violeta-preta com chicotes e fiapos que nasce do chão e fica no chão no pulo, anel de sombra
-girando no chão rachado (metade atrás da coluna, metade na frente dela) e elos de corrente e pedras em órbita em volta
-do corpo. Camadas feitas no Blender a partir do conceito (`sprites/pengaro/aura/`, `ferramentas/aura_blender/`),
-ligadas no jogo por `ferramentas/aura_pengaro.py` (Explods 9600 a 9603 no `[Statedef -4]`). Liga com o Despertar
+Aura do Despertar (discreta, [regra dos efeitos proporcionais](../regra-efeitos-proporcionais.md) de 2026-11-12):
+fumaça violeta-escura das sombras, à parte do corpo e toda ATRÁS dos lutadores (nunca cobre corpo nenhum): fumaça
+violeta-preta baixa, do chão até o peito, saindo de um chão rachado pequeno, que fica no chão no pulo. É a coluna e o
+chão da aura grande do Blender encolhidos em volta do pé (sem chicotes, fiapos, pedras nem elos), em 3x
+(`sprites/pengaro/aura/`, `ferramentas/aura_blender/discreta.py`), ligada no jogo por `ferramentas/aura_pengaro.py`
+(1 Explod, 9600, scale 1/3, alfa 0,5, no `[Statedef -4]`). O boss se vê pela arte nova, não pela aura. Liga com o Despertar
 (e na transformação e no super 3100), incha nos supers, apaga junto com a forma endiabrada. Matiz média 281°: nenhum
 outro lutador usa violeta (CK 72°, Gutto 350°, Hazak 30°, Raiclaven 220°). As folhas `fx_aura_*` do Lote 7 não são
 mais usadas.

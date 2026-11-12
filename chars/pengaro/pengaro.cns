@@ -7664,7 +7664,7 @@ ignorehitpause = 1
 
 [Statedef -4]
 
-; ---- Aura animada 'pengaro' (ferramentas/aura.py): 4 camadas, 0 partículas, explods 9600 a 9603, no máximo 4 vivos
+; ---- Aura animada 'pengaro' (ferramentas/aura.py): 1 camadas, 0 partículas, explods 9600 a 9600, no máximo 1 vivos
 [State -4, Aura pengaro: zera au_pengaro_f antes do round]
 type = MapSet
 trigger1 = RoundState = 0
@@ -7727,24 +7727,6 @@ trigger1 = RoundState = 0 && NumExplod(9600)
 id = 9600
 ignorehitpause = 1
 
-[State -4, Aura pengaro: limpa 9601 antes do round]
-type = RemoveExplod
-trigger1 = RoundState = 0 && NumExplod(9601)
-id = 9601
-ignorehitpause = 1
-
-[State -4, Aura pengaro: limpa 9602 antes do round]
-type = RemoveExplod
-trigger1 = RoundState = 0 && NumExplod(9602)
-id = 9602
-ignorehitpause = 1
-
-[State -4, Aura pengaro: limpa 9603 antes do round]
-type = RemoveExplod
-trigger1 = RoundState = 0 && NumExplod(9603)
-id = 9603
-ignorehitpause = 1
-
 [State -4, Aura pengaro: tempo volta a zero ao ligar]
 type = MapSet
 trigger1 = map(au_pengaro_f) <= 0
@@ -7756,7 +7738,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = RoundState > 0
 map = "au_pengaro_f"
-value = ifelse((var(20) > 34 || (StateNo = 3100 && AnimTime < -34) || (StateNo = 2000 && Time >= 83)) && Alive && RoundState > 0, min(1, map(au_pengaro_f) + 0.0227), max(0, map(au_pengaro_f) - 0.0294))
+value = ifelse((var(20) > 34 || (StateNo = 3100 && AnimTime < -34) || (StateNo = 2000 && Time >= 83)) && Alive && RoundState > 0, min(1, map(au_pengaro_f) + 0.0385), max(0, map(au_pengaro_f) - 0.0294))
 ignorehitpause = 1
 
 [State -4, Aura pengaro: fade suave]
@@ -7843,7 +7825,7 @@ map = "au_pengaro_c"
 value = 1
 ignorehitpause = 1
 
-[State -4, Aura pengaro anel_tras: nasce]
+[State -4, Aura pengaro discreta: nasce]
 type = Explod
 trigger1 = map(au_pengaro_f) > 0 && NumExplod(9600) = 0
 anim = 9600
@@ -7855,31 +7837,9 @@ pos = 0, 0
 facing = 1
 bindtime = 0
 removetime = -1
-sprpriority = -7
-ownpal = 1
-scale = 0.3, 0.08
-trans = addalpha
-alpha = 0, 255
-removeongethit = 0
-supermovetime = -1
-pausemovetime = -1
-ignorehitpause = 1
-
-[State -4, Aura pengaro coluna: nasce]
-type = Explod
-trigger1 = map(au_pengaro_f) > 0 && NumExplod(9601) = 0
-anim = 9601
-id = 9601
-animelem = 38
-animelemtime = 1
-postype = p1
-pos = 0, 0
-facing = 1
-bindtime = 0
-removetime = -1
 sprpriority = -6
 ownpal = 1
-scale = 0.3, 0.08
+scale = 0.1, 0.0267
 trans = addalpha
 alpha = 0, 255
 removeongethit = 0
@@ -7887,130 +7847,27 @@ supermovetime = -1
 pausemovetime = -1
 ignorehitpause = 1
 
-[State -4, Aura pengaro anel_frente: nasce]
-type = Explod
-trigger1 = map(au_pengaro_f) > 0 && NumExplod(9602) = 0
-anim = 9602
-id = 9602
-animelem = 1
-animelemtime = 0
-postype = p1
-pos = 0, 0
-facing = 1
-bindtime = 0
-removetime = -1
-sprpriority = -5
-ownpal = 1
-scale = 0.3, 0.08
-trans = addalpha
-alpha = 0, 255
-removeongethit = 0
-supermovetime = -1
-pausemovetime = -1
-ignorehitpause = 1
-
-[State -4, Aura pengaro soltos: nasce]
-type = Explod
-trigger1 = map(au_pengaro_f) > 0 && NumExplod(9603) = 0
-anim = 9603
-id = 9603
-animelem = 16
-animelemtime = 0
-postype = p1
-pos = 0, 0
-facing = 1
-bindtime = -1
-removetime = -1
-sprpriority = -4
-ownpal = 1
-scale = 0.3, 0.08
-trans = addalpha
-alpha = 0, 255
-removeongethit = 0
-supermovetime = -1
-pausemovetime = -1
-ignorehitpause = 1
-
-[State -4, Aura pengaro anel_tras: move]
+[State -4, Aura pengaro discreta: move]
 type = ModifyExplod
 trigger1 = NumExplod(9600) && map(au_pengaro_v) <= 0.6
 id = 9600
 postype = p1
-pos = 0, 0 - min(0, Pos Y)
-scale = (0.3 + 0.7 * map(au_pengaro_e)) * (1 + 0.12 * map(au_pengaro_k)), (0.3 + 0.7 * map(au_pengaro_e)) * (1 + 0.12 * map(au_pengaro_k))
+pos = 0 + 1 * sin((map(au_pengaro_t) + 0) * 0.037 + 1.3) + (0 + 1 * map(au_pengaro_k)) * sin((map(au_pengaro_t) + 0) * 1.2566 + 0), 0 + 0.6 * sin((map(au_pengaro_t) + 0) * 0.0445 + 2.9) - min(0, Pos Y)
+scale = (0.7 + 0.3 * map(au_pengaro_e)) * (1 + 0.12 * map(au_pengaro_k)) * 0.3333, (0.08 + 0.92 * map(au_pengaro_e)) * (1 + 0.12 * map(au_pengaro_k)) * 0.3333
 bindtime = 0
 trans = addalpha
-alpha = floor(255 * min(1, max(0, (0.92 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0 * sin((map(au_pengaro_t) + 0) * 0.0849 + 0.4)) + 0.08 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6)) * max(0, 1 + min(0, Pos Y + Vel Y) / 90.0)))), 255 - floor(255 * min(1, max(0, (0.92 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0 * sin((map(au_pengaro_t) + 0) * 0.0849 + 0.4)) + 0.08 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6)) * max(0, 1 + min(0, Pos Y + Vel Y) / 90.0))))
+alpha = floor(255 * min(1, max(0, (0.5 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0.08 * sin((map(au_pengaro_t) + 0) * 0.0849 + 0.4)) + 0.1 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.5 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0.08 * sin((map(au_pengaro_t) + 0) * 0.0849 + 0.4)) + 0.1 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6)))))
 ignorehitpause = 1
 
-[State -4, Aura pengaro anel_tras: apaga para virar]
+[State -4, Aura pengaro discreta: apaga para virar]
 type = ModifyExplod
 trigger1 = NumExplod(9600) && map(au_pengaro_v) > 0.6
 id = 9600
 trans = addalpha
-alpha = floor(255 * min(1, max(0, (0.92 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0 * sin((map(au_pengaro_t) + 0) * 0.0849 + 0.4)) + 0.08 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6)) * max(0, 1 + min(0, Pos Y + Vel Y) / 90.0)))), 255 - floor(255 * min(1, max(0, (0.92 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0 * sin((map(au_pengaro_t) + 0) * 0.0849 + 0.4)) + 0.08 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6)) * max(0, 1 + min(0, Pos Y + Vel Y) / 90.0))))
+alpha = floor(255 * min(1, max(0, (0.5 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0.08 * sin((map(au_pengaro_t) + 0) * 0.0849 + 0.4)) + 0.1 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.5 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0.08 * sin((map(au_pengaro_t) + 0) * 0.0849 + 0.4)) + 0.1 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6)))))
 ignorehitpause = 1
 
-[State -4, Aura pengaro coluna: move]
-type = ModifyExplod
-trigger1 = NumExplod(9601) && map(au_pengaro_v) <= 0.6
-id = 9601
-postype = p1
-pos = 0 + 1.6 * sin((map(au_pengaro_t) + 37.7) * 0.0291 + 2.3) + (0 + 1.5 * map(au_pengaro_k)) * sin((map(au_pengaro_t) + 37.7) * 1.2566 + 2.1), 0 + 1.4 * sin((map(au_pengaro_t) + 37.7) * 0.0351 + 4.6) - min(0, Pos Y)
-scale = (0.7 + 0.3 * map(au_pengaro_e)) * (1 + 0.12 * map(au_pengaro_k)), (0.08 + 0.92 * map(au_pengaro_e)) * (1 + 0.12 * map(au_pengaro_k))
-bindtime = 0
-trans = addalpha
-alpha = floor(255 * min(1, max(0, (0.9 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0.1 * sin((map(au_pengaro_t) + 37.7) * 0.0669 + 2.7)) + 0.15 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.9 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0.1 * sin((map(au_pengaro_t) + 37.7) * 0.0669 + 2.7)) + 0.15 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6)))))
-ignorehitpause = 1
-
-[State -4, Aura pengaro coluna: apaga para virar]
-type = ModifyExplod
-trigger1 = NumExplod(9601) && map(au_pengaro_v) > 0.6
-id = 9601
-trans = addalpha
-alpha = floor(255 * min(1, max(0, (0.9 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0.1 * sin((map(au_pengaro_t) + 37.7) * 0.0669 + 2.7)) + 0.15 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.9 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0.1 * sin((map(au_pengaro_t) + 37.7) * 0.0669 + 2.7)) + 0.15 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6)))))
-ignorehitpause = 1
-
-[State -4, Aura pengaro anel_frente: move]
-type = ModifyExplod
-trigger1 = NumExplod(9602) && map(au_pengaro_v) <= 0.6
-id = 9602
-postype = p1
-pos = 0, 0 - min(0, Pos Y)
-scale = (0.3 + 0.7 * map(au_pengaro_e)) * (1 + 0.12 * map(au_pengaro_k)), (0.3 + 0.7 * map(au_pengaro_e)) * (1 + 0.12 * map(au_pengaro_k))
-bindtime = 0
-trans = addalpha
-alpha = floor(255 * min(1, max(0, (0.92 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0 * sin((map(au_pengaro_t) + 75.4) * 0.1075 + 5)) + 0.08 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6)) * max(0, 1 + min(0, Pos Y + Vel Y) / 90.0)))), 255 - floor(255 * min(1, max(0, (0.92 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0 * sin((map(au_pengaro_t) + 75.4) * 0.1075 + 5)) + 0.08 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6)) * max(0, 1 + min(0, Pos Y + Vel Y) / 90.0))))
-ignorehitpause = 1
-
-[State -4, Aura pengaro anel_frente: apaga para virar]
-type = ModifyExplod
-trigger1 = NumExplod(9602) && map(au_pengaro_v) > 0.6
-id = 9602
-trans = addalpha
-alpha = floor(255 * min(1, max(0, (0.92 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0 * sin((map(au_pengaro_t) + 75.4) * 0.1075 + 5)) + 0.08 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6)) * max(0, 1 + min(0, Pos Y + Vel Y) / 90.0)))), 255 - floor(255 * min(1, max(0, (0.92 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0 * sin((map(au_pengaro_t) + 75.4) * 0.1075 + 5)) + 0.08 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6)) * max(0, 1 + min(0, Pos Y + Vel Y) / 90.0))))
-ignorehitpause = 1
-
-[State -4, Aura pengaro soltos: move]
-type = ModifyExplod
-trigger1 = NumExplod(9603) && map(au_pengaro_v) <= 0.6
-id = 9603
-postype = p1
-pos = 0 + 2.4 * sin((map(au_pengaro_t) + 113.1) * 0.0602 + 4.3) + (0 + 1.5 * map(au_pengaro_k)) * sin((map(au_pengaro_t) + 113.1) * 1.2566 + 6.3), 0 + 3 * sin((map(au_pengaro_t) + 113.1) * 0.0726 + 8)
-scale = (0.7 + 0.3 * map(au_pengaro_e)) * (1 + 0.12 * map(au_pengaro_k)), (0.08 + 0.92 * map(au_pengaro_e)) * (1 + 0.12 * map(au_pengaro_k))
-trans = addalpha
-alpha = floor(255 * min(1, max(0, (0.95 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0.06 * sin((map(au_pengaro_t) + 113.1) * 0.057 + 7.3)) + 0.15 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.95 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0.06 * sin((map(au_pengaro_t) + 113.1) * 0.057 + 7.3)) + 0.15 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6)))))
-ignorehitpause = 1
-
-[State -4, Aura pengaro soltos: apaga para virar]
-type = ModifyExplod
-trigger1 = NumExplod(9603) && map(au_pengaro_v) > 0.6
-id = 9603
-trans = addalpha
-alpha = floor(255 * min(1, max(0, (0.95 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0.06 * sin((map(au_pengaro_t) + 113.1) * 0.057 + 7.3)) + 0.15 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.95 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0.06 * sin((map(au_pengaro_t) + 113.1) * 0.057 + 7.3)) + 0.15 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.6 + 0.4 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6)))))
-ignorehitpause = 1
-
-[State -4, Aura pengaro anel_tras: corre no surto]
+[State -4, Aura pengaro discreta: corre no surto]
 type = ModifyExplod
 trigger1 = NumExplod(9600) && map(au_pengaro_k) > 0.5
 id = 9600
@@ -8018,51 +7875,9 @@ animelem = ((ExplodVar(9600, 0, animelem) - 0) % 96) + 1
 animelemtime = 0
 ignorehitpause = 1
 
-[State -4, Aura pengaro anel_tras: some]
+[State -4, Aura pengaro discreta: some]
 type = RemoveExplod
 trigger1 = map(au_pengaro_f) <= 0 && NumExplod(9600)
 id = 9600
-ignorehitpause = 1
-
-[State -4, Aura pengaro coluna: corre no surto]
-type = ModifyExplod
-trigger1 = NumExplod(9601) && map(au_pengaro_k) > 0.5
-id = 9601
-animelem = ((ExplodVar(9601, 0, animelem) - 1) % 96) + 1
-animelemtime = 1
-ignorehitpause = 1
-
-[State -4, Aura pengaro coluna: some]
-type = RemoveExplod
-trigger1 = map(au_pengaro_f) <= 0 && NumExplod(9601)
-id = 9601
-ignorehitpause = 1
-
-[State -4, Aura pengaro anel_frente: corre no surto]
-type = ModifyExplod
-trigger1 = NumExplod(9602) && map(au_pengaro_k) > 0.5
-id = 9602
-animelem = ((ExplodVar(9602, 0, animelem) - 0) % 96) + 1
-animelemtime = 0
-ignorehitpause = 1
-
-[State -4, Aura pengaro anel_frente: some]
-type = RemoveExplod
-trigger1 = map(au_pengaro_f) <= 0 && NumExplod(9602)
-id = 9602
-ignorehitpause = 1
-
-[State -4, Aura pengaro soltos: corre no surto]
-type = ModifyExplod
-trigger1 = NumExplod(9603) && map(au_pengaro_k) > 0.5
-id = 9603
-animelem = ((ExplodVar(9603, 0, animelem) - 0) % 96) + 1
-animelemtime = 0
-ignorehitpause = 1
-
-[State -4, Aura pengaro soltos: some]
-type = RemoveExplod
-trigger1 = map(au_pengaro_f) <= 0 && NumExplod(9603)
-id = 9603
 ignorehitpause = 1
 

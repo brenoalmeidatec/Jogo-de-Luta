@@ -1744,8 +1744,8 @@ def preset_despertado(s):
 
 
 # Lote 7: a aura antiga do boss (fx_aura_anel, fx_aura_coluna e fx_aura_detritos nas ações 9211, 9210 e 9218) não
-# nasce mais no jogo: a aura do endiabrado é a do Blender, ligada por ferramentas/aura_pengaro.py ([Statedef -4],
-# Explods 9600 a 9603). Os desenhos antigos seguem carregados só porque entram na escolha da paleta do .sff: tirá-los
+# nasce mais no jogo: a aura do endiabrado é a do Blender (uma camada discreta em 3x, regra dos efeitos
+# proporcionais), ligada por ferramentas/aura_pengaro.py ([Statedef -4], Explod 9600). Os desenhos antigos seguem carregados só porque entram na escolha da paleta do .sff: tirá-los
 # da lista mudaria as 255 cores e todos os pixels da forma base. As ações deles NÃO vão para o .air: a paleta sai
 # antes da poda (escrever_sff), então a poda tira os 24 desenhos do .sff e a paleta não muda.
 AURA_BOSS = {9211: "aura_anel", 9210: "aura_coluna", 9218: "aura_detritos"}
@@ -3892,7 +3892,7 @@ def main():
         del faiscas[anim]
     a = montar_air(s, faiscas, arte_despertada=arte_endiabrada(s))
     preset = preset_despertado(s)
-    aura = aura_pengaro.ligar(s)  # aura do endiabrado (Blender): grupos e ações 9600 a 9603, fora da paleta
+    aura = aura_pengaro.ligar(s)  # aura do endiabrado (Blender, discreta, 3x): grupo e ação 9600, fora da paleta
     (SAIDA / "pengaro.air").write_text("\n".join(ajustar_clsn1(a.txt, s, preset)) + "\n" + aura.air(),
                                        encoding="utf-8", newline="\n")
     cns = despertar_do_pengaro(ajustar_sparkxy(remapear_animelem(montar_cns(), a.mapas), a.ativos))

@@ -494,6 +494,8 @@ class Camada:
                                      # e não apaga com a altura (só a camada de plano "chao" apaga)
     cresce: bool = True              # na entrada e na saída a camada cresce (escala do motor, passageira); False =
                                      # só o alfa (o paredão do CK achatado a 8% virava elipse, cético de 2026-11-12)
+    res: int = 1                     # px do quadro por px do jogo. 3 = desenho em 3x (docs/regra-efeitos-proporcionais.md):
+                                     # o Explod não usa a escala do lutador, então a escala dele vai a 1/res em tudo
 
     def troca(self, i):
         return (i if self.tique is None else self.tique) % self.tempo
@@ -576,7 +578,7 @@ class Aura:
             assert c.tempo <= 3, f"camada {c.nome}: quadro parado por mais de 3 ticks não é fluido"
             assert len(c.quadros) >= 8, f"camada {c.nome}: {len(c.quadros)} quadros; camada parada ou curta não passa"
             if c.plano == "frente":
-                sobe = self._eixo(c)[1] - c.pos[1]
+                sobe = self._eixo(c)[1] / c.res - c.pos[1]
                 limite = self.FRENTE_ALTURA * altura_lutador
                 assert sobe <= limite + 0.5, (f"camada {c.nome}: a frente sobe {sobe:.0f} px acima dos pés "
                                               f"(máximo {limite:.0f}): ela esconderia pernas e golpe baixo")
@@ -606,6 +608,25 @@ class Aura:
 
     def ids(self):
         return list(range(self.base, self.base + len(self.camadas) + len(self.particulas)))
+
+    # Regra dos efeitos proporcionais (Breno, 2026-11-12): a aura do Despertar é discreta. Uma camada leve, atrás do
+    # corpo, que não passa do peito, translúcida (o fundo aparece através dela) e desenhada em 3x.
+    DISCRETA_CAMADAS = 1
+    DISCRETA_ALTURA = 0.65   # fração da altura do lutador (o peito fica em ~0,7; a cabeça começa em ~0,85)
+    DISCRETA_ALFA = 0.65     # alfa máximo, contando a respiração e o surto
+
+    def conferir_discreta(self):
+        """Falha se a aura não segue a regra dos efeitos proporcionais (docs/regra-efeitos-proporcionais.md)."""
+        assert len(self.camadas) <= self.DISCRETA_CAMADAS and not self.particulas, \
+            f"aura {self.nome}: {len(self.camadas)} camadas e {len(self.particulas)} partículas (a regra é uma só)"
+        assert all(c.plano != "frente" for c in self.camadas), f"aura {self.nome}: camada na frente do corpo"
+        assert all(c.res == 3 for c in self.camadas), f"aura {self.nome}: desenho fora de 3x"
+        alt = self.altura()
+        assert alt <= self.DISCRETA_ALTURA * self.altura_lutador, \
+            f"aura {self.nome}: {alt:.0f} px de altura (máximo {self.DISCRETA_ALTURA * self.altura_lutador:.0f})"
+        for c in self.camadas:
+            pico = c.mov.alfa * (1 + c.mov.respira) + c.surto_alfa
+            assert pico <= self.DISCRETA_ALFA + 1e-6, f"aura {self.nome}: alfa até {pico:.2f} (máximo {self.DISCRETA_ALFA})"
 
     def conferir(self, grupos=(), acoes=(), explods=()):
         """Falha se o lutador já usa algum número da aura (grupos de sprite, ações do .air, ids de Explod)."""
@@ -680,8 +701,11 @@ class Aura:
         return entrou
 
     def altura(self):
-        """Altura da aura em px do jogo acima dos pés (a camada mais alta)."""
-        return max(self._eixo(c)[1] - c.pos[1] for c in self.camadas)
+        """Altura da aura em px do jogo acima dos pés: do pé ao pixel opaco mais alto de todos os quadros (a camada
+        mais alta)."""
+        def topo(c):
+            return min(int(np.argmax(np.asarray(self._img(q))[..., 3].any(axis=1))) for q in c.quadros)
+        return max((self._eixo(c)[1] - topo(c)) / c.res - c.pos[1] for c in self.camadas)
 
     def teto_particula(self, p):
         """Máximo de peças vivas desta partícula: as do regime calmo mais as que um surto inteiro solta a mais."""
@@ -742,6 +766,8 @@ class Aura:
         t = f"(map({self.m('t')}) + {_n(fase)})"
         f, k, v = f"map({self.m('e')})", f"map({self.m('k')})", f"map({self.m('v')})"
         incha = f"(1 + {_n(c.surto_incha)} * {k})"
+        if c.res != 1:         # desenho em 3x: a escala do motor é 1/res (o resto multiplica em cima)
+            incha = f"{incha} * {_n(1 / c.res)}"
         if not c.cresce:       # entra e sai só pelo alfa (um muro achatado vira elipse: paredão do CK)
             sx = sy = incha
         elif c.plano == "chao":  # o anel abre do centro
@@ -807,7 +833,8 @@ class Aura:
                 f"pos = {_n(c.pos[0])}, {_n(c.pos[1])}\n"
                 f"facing = 1\nbindtime = {0 if c.presa_ao_chao else -1}\nremovetime = -1\n"
                 f"sprpriority = {self._prioridade(i, c)}\nownpal = 1\n"
-                f"scale = {'0.3, 0.08' if c.cresce else '1, 1'}\ntrans = addalpha\nalpha = 0, 255\n"
+                f"scale = {_n(0.3 / c.res) if c.cresce else _n(1 / c.res)}, {_n(0.08 / c.res) if c.cresce else _n(1 / c.res)}"
+                f"\ntrans = addalpha\nalpha = 0, 255\n"
                 f"removeongethit = 0\nsupermovetime = -1\npausemovetime = -1\nignorehitpause = 1\n\n")
 
     def _acaso(self, j, p, canal):

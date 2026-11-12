@@ -1,54 +1,25 @@
 {
- "formato": 1,
+ "formato": 2,
  "lutador": "pengaro",
- "aura": "coluna_de_fumaca",
+ "aura": "discreta",
  "tela": [
-  360,
-  200
+  1080,
+  600
  ],
  "pe": [
-  180,
-  190
+  540,
+  570
  ],
+ "escala": 3,
  "tiques_por_quadro": 2,
  "alfa": "0 ou 255",
  "arquivo": "{nome}_{quadro:02d}.png",
  "camadas": [
   {
-   "nome": "coluna",
-   "quadros": 48,
-   "plano": "atras",
-   "o_que": "coluna de fumaça violeta-preta serpenteando, o miolo escorrendo para cima com clarões violeta subindo"
-  },
-  {
-   "nome": "chicotes",
-   "quadros": 48,
-   "plano": "atras",
-   "o_que": "chicotes de sombra dos lados, em cascata da raiz à ponta"
-  },
-  {
-   "nome": "anel_tras",
+   "nome": "discreta",
    "quadros": 96,
    "plano": "atras",
-   "o_que": "chão rachado (parte atrás dos pés): lajes arfando, luz correndo pelas rachaduras do centro para a borda, sombras em órbita"
-  },
-  {
-   "nome": "fiapos",
-   "quadros": 96,
-   "plano": "atras",
-   "o_que": "línguas que se soltam do topo e das pontas; faíscas lilás do chão"
-  },
-  {
-   "nome": "soltos",
-   "quadros": 96,
-   "plano": "atras",
-   "o_que": "pedras e elos de corrente partida flutuando em órbitas lentas"
-  },
-  {
-   "nome": "anel_frente",
-   "quadros": 96,
-   "plano": "frente",
-   "o_que": "chão rachado e sombras em órbita à frente dos pés (da linha da sola para baixo)"
+   "o_que": "fumaça violeta-preta das sombras, baixa (do chão até o peito), saindo de um chão rachado pequeno"
   }
  ],
  "paleta": [
@@ -128,6 +99,6 @@
    215
   ]
  ],
- "gerado_por": "ferramentas/aura_blender/pengaro_aura.py",
- "nota": "coluna e chicotes têm o mesmo laço (48) e foram contornados juntos: use os dois no mesmo quadro"
+ "nota": "Regra dos efeitos proporcionais (Breno, 2026-11-12): uma camada leve, baixa, atrás do corpo, em 3x. Peças do rig.blend da aura grande (pengaro_aura.py) encolhidas em volta do pé: malha_chao 0.55x0.55, malha_coluna 0.62x0.38",
+ "gerado_por": "ferramentas/aura_blender/discreta.py"
 }

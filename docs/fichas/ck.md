@@ -19,14 +19,16 @@ Risco anotado: logo de verdade num jogo público pode dar problema com a dona da
 parecida sem mudar o resto.
 **Efeitos:** impacto de soco seco (poeira curta) e faísca branca no contra-ataque. Fumaça do pod: nuvem branca com
 cheiro de "uva" (lilás clara). No endiabrado: estilhaço verde de vidro na garrafa e a aura.
-**Aura do Despertar (regra da seção 4; boss final, 2026-11-12):** o **paredão de som de fumaça cinza-esverdeada**
-do conceito aprovado (`e_conceito.png`), soltando anéis dos cones, com névoa e cacos no chão e folhinhas de brasa
-laranja subindo. Nenhum outro lutador usa (Pengaró violeta, Gutto vermelho, Raiclaven prata, Hazak laranja-ouro).
-Feito no Blender (`sprites/ck/aura/`) e ligado por `ferramentas/aura_ck.py`: 3 Explods (9600 a 9602) atrás dos dois
-lutadores, no chão no pulo, entrando e saindo só pelo alfa. Na cena, a caixa preta do paredão apaga atrás da nuvem
-de fumaça e o paredão de fumaça nasce no mesmo trecho; no Ratão ele é o paredão: o Baile e o Grave o fazem inchar
-(surto), sem caixa preta por cima. A saída anda com o var(20) e acaba no tique em que o corpo volta. Nada pintado no
-corpo: o PalFX verde e o rastro do Despertar inteiro saíram.
+**Aura do Despertar (regra da seção 4 e [regra dos efeitos proporcionais](../regra-efeitos-proporcionais.md),
+2026-11-12):** discreta. Um **paredãozinho de som de fumaça cinza-esverdeada** atrás das pernas, do chão até a
+cintura, com os cones batendo no compasso: o paredão do conceito aprovado (`e_conceito.png`) em miniatura, sem anéis,
+névoa, cacos nem fagulhas. Nenhum outro lutador usa (Pengaró violeta, Gutto vermelho, Raiclaven prata, Hazak
+laranja-ouro). Feito no Blender em 3x (`sprites/ck/aura/`, `ferramentas/aura_blender/discreta.py`) e ligado por
+`ferramentas/aura_ck.py`: 1 Explod (9600, scale 1/3, alfa 0,5) atrás dos dois lutadores, no chão no pulo, entrando e
+saindo só pelo alfa. Na cena, a caixa preta do paredão apaga atrás da nuvem de fumaça e o paredãozinho nasce no mesmo
+trecho. O Baile e o Grave voltam a ter o paredão do golpe (9250, como na mugen), e a aura incha neles (surto). A saída
+anda com o var(20) e acaba no tique em que o corpo volta. Nada pintado no corpo: o PalFX verde e o rastro do
+Despertar inteiro saíram.
 
 ## O que o áudio pediu
 
@@ -109,7 +111,7 @@ ritmo e entra na guarda. O paredão some quando o round começa.
   dá uma tragada funda e solta uma fumaçona que **cobre o corpo todo**. Quando a fumaça passa, ele já está de ratão
   (platinado, camisa estampada aberta, regata, bermuda, chinelo com meia, Juliet na cabeça, cordão de ouro). A turma do
   paredão joga uma garrafa no chão, ele olha, pega, **quebra no chão** e luta com o caco. Invencível durante a animação,
-  empurra o oponente. O paredão vira o paredão de fumaça da aura atrás da nuvem. Folhas `despertar_a` (base) e `despertar_b` (ratão) + `fx_paredao`.
+  empurra o oponente. O paredão vira o paredãozinho de fumaça da aura atrás da nuvem. Folhas `despertar_a` (base) e `despertar_b` (ratão) + `fx_paredao`.
 - **Jeito de bater (pedido do Breno):** chapado, **todo golpe é instável e louco**: cambaleia, quase cai, bate de ângulo
   estranho, lento e de repente explosivo. No jogo: os normais do Ratão variam um pouco o alcance e o tempo de cada vez
   (sorteio pequeno), e alguns têm um tropeço que vira golpe baixo.
@@ -137,7 +139,7 @@ leve), b em pé vira **chinelada alta**.
 | Garrafa Voadora | ↓ → x/y | **projétil novo**: arremessa uma garrafa em arco que estilhaça no chão e deixa cacos um tempo |
 | Tragada de Beck | ↓ ↑ x/y | puxa o beck e solta uma nuvem grande que segue o oponente devagar |
 | Passinho Ratão | → ← a/b | avanço dançando o passinho do baile, várias chineladas |
-| Grave do Paredão | ↓ ↑ a/b | bate o pé, o paredão (o da aura, no Ratão) incha no grave e empurra o oponente para longe (quebra a pressão) |
+| Grave do Paredão | ↓ ↑ a/b | bate o pé, o paredão aparece, o grave (a aura incha no Ratão) empurra o oponente para longe (quebra a pressão) |
 
 ### Kombo novo (1)
 
@@ -145,7 +147,7 @@ leve), b em pé vira **chinelada alta**.
 
 ### Super exclusivo (1): **Baile da Esquina**
 
-← → ↓ + x + y, 1 estoque, só no Despertar. O paredão (o da aura) incha tocando, o grave treme a tela, o CK dança em volta do oponente
+← → ↓ + x + y, 1 estoque, só no Despertar. O paredão aparece tocando (e a aura incha), o grave treme a tela, o CK dança em volta do oponente
 cortando com a garrafa e fecha quebrando uma garrafa nova na cabeça dele.
 
 ### Especiais da base que ficam

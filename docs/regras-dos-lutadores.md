@@ -230,16 +230,21 @@ só um brilho genérico.
 - A aura é **efeito separado** do corpo: folha própria em fundo verde `#00FF00`, ligada por `Explod` em volta do lutador
   enquanto o Despertar dura. Ela não vai desenhada nas folhas do corpo. O `PalFX` pode reforçar a cor, mas sozinho não
   conta como aura.
+- A aura é **discreta** ([regra dos efeitos proporcionais](regra-efeitos-proporcionais.md), Breno, 2026-11-12, acima
+  da ideia antiga de "aura enorme de boss final"): **uma camada leve**, atrás do corpo, que não passa do peito (65% da
+  altura do lutador), translúcida (alfa até 0,65 contando o surto) e com o corpo sempre legível por cima. Desenho em
+  3x, do Blender, quantizado no estilo arcade, com `scale = 1/3` no `Explod` (`aura.Camada(res=3)`). O
+  `Aura.conferir_discreta()` do `ferramentas/aura.py` falha o gerador fora disso. O boss se vê pela arte nova.
 - A ficha do lutador diz como é a aura dele (cor, forma, de onde sai) e confere que nenhum outro já usa.
 - Auras de hoje, para não repetir:
 
 | Lutador | Aura no Despertar |
 |---|---|
-| Pengaró | fumaça violeta-escura das sombras |
+| Pengaró | fumaça violeta-escura das sombras, baixa, saindo de um chão rachado pequeno |
 | Gutto | aura vermelha do demônio cara de cavalo |
 | Raiclaven | brilho prateado de aço (o Cientista Louco ainda vai ganhar a dele) |
 | Hazak | brasa laranja-ouro do Diabo Loiro |
-| CK | paredão de som de fumaça cinza-esverdeada soltando anéis, névoa e cacos no chão (Modo Ratão, boss final) |
+| CK | paredãozinho de som de fumaça cinza-esverdeada atrás das pernas, cones batendo (Modo Ratão) |
 
 ### O que muda: golpes **novos**, não só mais fortes
 
@@ -586,13 +591,14 @@ Forma base
 [ ] 2 supers (1 e 2 estoques)
 [ ] Despertar com barra cheia + 2 botões (ou comando da ficha)
 [ ] forma despertada com arte própria redesenhada (não só recolorida)
-[ ] aura própria no Despertar, diferente da de todos os outros lutadores (efeito à parte, seção 4)
+[ ] aura própria no Despertar, diferente da de todos os outros lutadores (efeito à parte, seção 4), DISCRETA:
+    uma camada leve em 3x, até o peito, translúcida (docs/regra-efeitos-proporcionais.md, Aura.conferir_discreta)
 
 Forma despertada
 [ ] 2 correntes novas, 6 normais novos, 4 especiais exclusivos, 1 projétil novo, 1 kombo novo, 1 super exclusivo
 [ ] especiais da base que ficam mudam de pose ou função
-[ ] aura e efeitos animados em camadas (ferramentas/aura.py), nada estático; fluidez do corpo e dos efeitos
-    conferida em vídeo da sandbox pelos critérios de docs/arcade/bosses_kit.md, seção 2
+[ ] aura e efeitos animados (ferramentas/aura.py), nada estático; fluidez do corpo e dos efeitos conferida em vídeo
+    da sandbox pelos critérios de docs/arcade/bosses_kit.md, seção 2 (aura: medir_aura.py --discreta)
 
 Produção
 [ ] arte passou pelo processo da seção 6; licenças anotadas

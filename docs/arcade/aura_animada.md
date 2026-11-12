@@ -9,6 +9,23 @@ ticks, e entre um quadro e outro o motor mexe cada camada a cada tick (posição
 Kit dos cinco bosses (dicionário de aura de cada um): [`bosses_kit.md`](bosses_kit.md). Camada feita no Blender:
 [`aura_blender.md`](aura_blender.md).
 
+## Regra de 2026-11-12: a aura do lutador de verdade é discreta
+
+A [regra dos efeitos proporcionais](../regra-efeitos-proporcionais.md) do Breno vale acima do resto deste documento
+(e da ideia antiga de "aura enorme de boss final"): a aura do Despertar é **uma camada leve**, atrás do corpo, que não
+passa do peito, translúcida, com o corpo sempre legível por cima. O boss se vê pela arte nova, não pela aura.
+
+- Desenho em **3x** (`ferramentas/aura_blender/discreta.py`: o rig do Blender da aura grande encolhido em volta do
+  pé, renderizado em 6x e reduzido a 3x, paleta arcade da aura) e `aura.Camada(..., res=3)`: o `aura.py` põe a
+  escala do `Explod` em 1/3 em tudo (nascer, regime, surto), porque o `Explod` não usa a escala do lutador.
+- `Aura.conferir_discreta()` falha o gerador se a aura tiver mais de uma camada, partícula, camada na frente, desenho
+  fora de 3x, altura acima de 65% do lutador (`DISCRETA_ALTURA`) ou alfa acima de 0,65 contando respiração e surto
+  (`DISCRETA_ALFA`). Hoje: Pengaró e CK, alfa 0,5 (respira 8%, surto +0,1).
+- No filme: `medir_aura.py --discreta --referencia <filme sem aura> --lutador <id>` (ver Teste e aceite).
+
+O resto deste documento (camadas, partículas, aceite de 2x a altura) descreve o sistema e o lutador de teste
+(`chars/teste_aura`), que continuam valendo como laboratório.
+
 ## Como um gerador usa
 
 ```python
@@ -124,7 +141,15 @@ python ferramentas/filmar_aura.py --lutador pengaro --sem-aura --saida P4   # me
 python ferramentas/medir_aura.py P3 --referencia P4   # corpo medido contra o despertado sem aura, não contra a base
 python ferramentas/filmar_aura.py --lutador pengaro --roteiro luta --saida P5   # perto, super 3000 de verdade, pulo,
                                                       # fim natural do Despertar do P2, KO e pose de vitória (olhar)
+# aura discreta (regra dos efeitos proporcionais): mede embaixo, dos lados do corpo, e troca os aceites de tamanho
+python ferramentas/medir_aura.py P3 --referencia P4 --discreta --lutador pengaro
 ```
+
+Com `--discreta` mudam os aceites: a escala de regime é a do desenho (1/3), a mudança entre quadros é medida na faixa
+de 2 a 66 px acima do chão fora de todo pixel de corpo do filme de referência (P1 do lado esquerdo, P2 do direito),
+o tamanho passa a ser **máximo** (a aura muda a tela no máximo até 65% da altura do lutador, fora do corpo), entra a
+**opacidade** (alfa estimado nos pixels só de aura, cor da paleta da aura misturada ao fundo de antes de ligar:
+mediana ≤ 0,6) e o corpo legível sobe para **≥ 99%** em tronco, pernas e pés.
 
 O P1 usa a aura "ck" (folhas `fx_paredao`, `fx_aura`, `fx_fumaca` + névoa por código) e o P2 a "sombra" (toda por
 código). Roteiro padrão: liga aos 60 ticks, surta aos 220 e 390, vira os dois aos 320, desliga aos 480 e repete o

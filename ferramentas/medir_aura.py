@@ -21,9 +21,18 @@ Aceite do roteiro padrao (docs/arcade/aura_animada.md):
   - o corpo fica legível, medido por faixa contra o mesmo desenho sem aura: tronco >= 97%, pernas >= 95% e pés
     >= 60% dos pixels do corpo iguais, no loop E no surto;
   - o HUD fica na frente da aura: nas caixas da vida, do retrato e do poder, no máximo 0,5% dos pixels muda;
-  - a aura tem pelo menos 2x a altura do lutador; no pior tick, no máximo 30 Explods por lutador;
+  - a aura tem pelo menos 1,4x a altura do lutador; no pior tick, no máximo 30 Explods por lutador;
   - a virada não é um corte: as camadas apagam, trocam de lado alguns ticks depois do lutador e voltam;
   - a aura some inteira depois de desligar (nenhum Explod sobra).
+Com --discreta (a aura do Despertar de um lutador de verdade, regra dos efeitos proporcionais de 2026-11-12; pede
+--referencia e --lutador), o que muda:
+  - a escala de regime é a do desenho (1/3 para a camada em 3x), e tudo que é "escala 1" vale contra ela;
+  - a mudança entre quadros vizinhos é medida na faixa BAIXA dos lados do corpo (de 2 a 66 px do jogo acima do chão,
+    fora de todo pixel que o corpo ocupa no filme de referência, nos dois lados da tela), não acima das cabeças;
+  - tamanho MÁXIMO: a aura muda a tela no máximo até 65% da altura do lutador (o peito), medido fora do corpo;
+  - opacidade: nos pixels em que só a aura mexe, o alfa estimado (cor da paleta da aura misturada ao fundo de antes
+    de ligar) tem mediana <= 0,6: o fundo aparece através dela;
+  - corpo legível: tronco, pernas e pés >= 99% iguais ao filme sem aura (a aura discreta não passa na frente de nada).
 Aceite do roteiro extra: a aura não para em superpausa nem com o lutador em estado custom; a camada de chão fica no
 chão no pulo; o vencedor segue com a aura até a pose de vitória e o derrotado perde; antes da intro do round
 seguinte não sobra Explod; na intro a aura volta.
@@ -234,7 +243,13 @@ def main():
     ap.add_argument("--referencia", type=Path,
                     help="filme do mesmo roteiro com a aura desligada (filmar_aura.py --lutador X --sem-aura): o corpo"
                          " legível é medido contra ele, no mesmo tick, e não contra o começo do filme")
+    ap.add_argument("--discreta", action="store_true",
+                    help="aura discreta (regra dos efeitos proporcionais): faixa baixa, tamanho máximo, opacidade e corpo"
+                         " legível >= 99%%; pede --referencia e --lutador")
+    ap.add_argument("--lutador", help="com --discreta: lutador de chars/ (a paleta da aura sai de sprites/<id>/aura)")
     a = ap.parse_args()
+    if a.discreta and not (a.referencia and a.lutador):
+        sys.exit("--discreta pede --referencia (o filme sem aura) e --lutador")
     saida = (a.saida or a.filme / "medida").resolve()
     saida.mkdir(parents=True, exist_ok=True)
     if a.extra:
@@ -261,15 +276,44 @@ def main():
     ceus = {1: (20, 140, 420, 190), 2: (580, 140, 1100, 190)}  # acima das cabeças e abaixo do HUD: só a aura mexe
 
     def rec(img, cx):
+        if isinstance(cx, np.ndarray):  # máscara (aura discreta): os pixels dela
+            return img[cx]
         x0, y0, x1, y1 = cx
         return img[y0:y1, x0:x1]
 
+    corpos = None
+    if a.discreta:
+        # A aura discreta não chega acima das cabeças: a faixa medida é a de baixo, dos lados de fora dos dois corpos
+        # (P1 à esquerda dele, P2 à direita dele), fora de todo pixel que um corpo ocupa em algum quadro do filme de
+        # referência (forma base e despertada, ginga inteira), com 2 px do jogo de folga.
+        from scipy import ndimage as ndi
+        corpos = np.zeros(base.shape[:2], bool)
+        v_ref_fim = ref_total                        # o filme inteiro: os corpos antes e depois da virada
+        for n in range(v_ref_fim):
+            r = quadro(ref_todos, n)
+            corpos |= ~((r[..., 2] > r[..., 0] + 25) & (r[..., 2] > r[..., 1] + 5))
+        corpos[:CHAO_Y - (ALTURA_LUTADOR + 20) * PX] = False
+        corpos[CHAO_Y:] = False
+        corpos = ndi.binary_dilation(corpos, iterations=2 * PX)
+        baixa = np.zeros_like(corpos)
+        baixa[CHAO_Y - 66 * PX:CHAO_Y - 2 * PX] = True
+        meio = (640 - 90 * PX + 640 + 20 * PX) // 2       # entre o P1 (x = -90) e o P2 (x = 20) antes da virada
+        lados = {1: baixa.copy(), 2: baixa.copy()}
+        lados[1][:, meio:] = False
+        lados[2][:, :meio] = False
+        ceus = {j: lados[j] & ~corpos for j in (1, 2)}
+        nota(f"discreta: faixa baixa fora dos corpos com {int(ceus[1].sum())} px (P1) e {int(ceus[2].sum())} px (P2) "
+             f"(referência: {v_ref_fim} quadros)", min(int(ceus[1].sum()), int(ceus[2].sum())) > 2000)
+
     ceu = ceus[2]
     liga_video = next(n for n in range(1, total) if np.abs(rec(quadro(todos, n), ceu) - rec(base, ceu)).mean() > 1.0)
-    liga_log = next(t for t in sorted(ticks) if ticks[t][2]["camadas"] and
-                    (ticks[t][2]["camadas"].get(min(ticks[t][2]["camadas"]) + 1) or {}).get("sy", 0) > 0.5)
+    if a.discreta:  # a camada nasce sem alfa e fica visível em 1 ou 2 ticks: vale o tique em que o Explod nasce
+        liga_log = next(t for t in sorted(ticks) if ticks[t][2]["camadas"] and any(ticks[t][2]["camadas"].values()))
+    else:
+        liga_log = next(t for t in sorted(ticks) if ticks[t][2]["camadas"] and
+                        (ticks[t][2]["camadas"].get(min(ticks[t][2]["camadas"]) + 1) or {}).get("sy", 0) > 0.5)
     atraso = liga_log - liga_video  # tick do log = quadro do vídeo + atraso
-    nota(f"vídeo: {total} quadros; a coluna chega à faixa acima da cabeça no quadro {liga_video} = tick {liga_log} "
+    nota(f"vídeo: {total} quadros; a aura chega à faixa medida no quadro {liga_video} = tick {liga_log} "
          f"do log (atraso {atraso})")
 
     # segundo ponto de sincronia: o tick em que o P1 troca de lado (some da esquerda num quadro só). O motor na
@@ -300,15 +344,21 @@ def main():
     # ---- log: o que o motor fez
     camadas = {j: sorted(ticks[LIGA + 40][j]["camadas"]) for j in (1, 2)}
     loop = (LIGA + 60, SURTO1 - 2)
+    # a camada que as medidas de uma camada só olham: a segunda (a aura grande), ou a única (a discreta)
+    principal = {j: camadas[j][min(1, len(camadas[j]) - 1)] for j in (1, 2)}
+    # escala de regime: 1 (desenho em 1x) ou 1/3 (desenho em 3x, regra dos efeitos proporcionais); "escala 1" é ela
+    esc = {(j, c): float(np.median(np.abs(serie(ticks, j, c, "sx", *loop)))) for j in (1, 2) for c in camadas[j]}
     for j in (1, 2):
         for c in camadas[j]:
+            e = esc[j, c]
             el = serie(ticks, j, c, "el", *loop)
             espera = maior_espera(list(el))
             nota(f"P{j} camada {c}: {len(set(el))} quadros no loop, o mesmo quadro fica no máximo {espera} ticks", espera <= 3)
             sx, sy, an = (serie(ticks, j, c, k, *loop) for k in ("sx", "sy", "an"))
-            fora_de_1 = max(np.abs(np.abs(sx) - 1).max(), np.abs(sy - 1).max())
-            nota(f"P{j} camada {c}: no loop o motor não escala nem gira (maior desvio da escala {fora_de_1:.4f}, "
-                 f"ângulo máximo {np.abs(an).max():.2f})", fora_de_1 < 0.001 and np.abs(an).max() < 0.01)
+            fora_de_1 = max(np.abs(np.abs(sx) - e).max(), np.abs(sy - e).max())
+            nota(f"P{j} camada {c}: no loop o motor não escala nem gira (escala de regime {e:.4f}, maior desvio "
+                 f"{fora_de_1:.4f}, ângulo máximo {np.abs(an).max():.2f})",
+                 min(abs(e - 1), abs(e - 1 / 3)) < 0.001 and fora_de_1 < 0.001 and np.abs(an).max() < 0.01)
             px, py = (serie(ticks, j, c, k, *loop) for k in ("px", "py"))
             passo = np.hypot(np.diff(px), np.diff(py))
             deriva = px.max() - px.min() + py.max() - py.min() > 0.5
@@ -317,7 +367,7 @@ def main():
                  passo.max() <= 1.0 and (not deriva or (passo > 0).mean() >= 0.9))
             for nome, (ta, tb) in (("surto", (SURTO1, SURTO1 + 70)), ("liga", (LIGA + 1, LIGA + 40)),
                                    ("desliga", (DESLIGA, DESLIGA + 34))):
-                d = max(np.abs(np.diff(np.abs(serie(ticks, j, c, k, ta, tb)))).max() for k in ("sx", "sy"))
+                d = max(np.abs(np.diff(np.abs(serie(ticks, j, c, k, ta, tb)))).max() for k in ("sx", "sy")) / e
                 nota(f"P{j} camada {c}: escala anda no máximo {d * 100:.2f}% por tick no trecho {nome}", d <= 0.07)
         px = {c: serie(ticks, j, c, "px", *loop) for c in camadas[j]}
         vivas = [c for c in camadas[j] if px[c].max() - px[c].min() > 0.5]
@@ -328,16 +378,17 @@ def main():
         juntos = np.mean([len({ticks[t][j]["camadas"][c]["el"] for c in camadas[j]}) for t in range(*loop)])
         nota(f"P{j}: em média {juntos:.1f} elementos diferentes ao mesmo tempo em {len(camadas[j])} camadas",
              juntos >= len(camadas[j]) - 1)
-        pico = max(np.abs(serie(ticks, j, camadas[j][1], "sx", SURTO1, SURTO1 + 70)))
-        nota(f"P{j} surto: a escala da camada {camadas[j][1]} vai de 1.000 a {pico:.3f} e volta a "
-             f"{np.abs(serie(ticks, j, camadas[j][1], 'sx', VIRA - 12, VIRA - 2)).max():.3f}", pico > 1.05)
-        el_surto = serie(ticks, j, camadas[j][1], "el", SURTO1 + 12, SURTO1 + 30)
-        passo = np.mean(np.diff(el_surto) % len(set(serie(ticks, j, camadas[j][1], "el", *loop))))
+        c1, e1 = principal[j], esc[j, principal[j]]
+        pico = max(np.abs(serie(ticks, j, c1, "sx", SURTO1, SURTO1 + 70))) / e1
+        nota(f"P{j} surto: a escala da camada {c1} vai de 1.000 a {pico:.3f} da de regime e volta a "
+             f"{np.abs(serie(ticks, j, c1, 'sx', VIRA - 12, VIRA - 2)).max() / e1:.3f}", pico > 1.05)
+        el_surto = serie(ticks, j, c1, "el", SURTO1 + 12, SURTO1 + 30)
+        passo = np.mean(np.diff(el_surto) % len(set(serie(ticks, j, c1, "el", *loop))))
         nota(f"P{j} surto: a animação anda {passo:.2f} quadro por tick (calma: 0.5)", passo > 0.8)
         antes, depois = ticks[VIRA - 5][j], ticks[VIRA + 20][j]
         fa = [depois["camadas"][c]["fa"] for c in camadas[j]]
         t_lut = next(t for t in range(VIRA - 5, VIRA + 20) if ticks[t][j]["f"] != antes["f"])
-        t_cam = next(t for t in range(VIRA - 5, VIRA + 30) if ticks[t][j]["camadas"][camadas[j][1]]["fa"] != antes["f"])
+        t_cam = next(t for t in range(VIRA - 5, VIRA + 30) if ticks[t][j]["camadas"][principal[j]]["fa"] != antes["f"])
         nota(f"P{j} virada: lutador de {antes['f']:+d} para {depois['f']:+d} no tick {t_lut}; as camadas trocam de lado "
              f"{t_cam - t_lut} ticks depois (apagando antes), camadas agora {fa}",
              depois["f"] == -antes["f"] and all(x == depois["f"] for x in fa) and 3 <= t_cam - t_lut <= 8)
@@ -360,6 +411,8 @@ def main():
 
     # ---- vídeo: mudança entre quadros vizinhos, medida acima das cabeças (embaixo o corpo de teste ginga)
     ceus[0] = (20, 140, 1260, 190)  # a faixa inteira: depois da virada as duas auras se cruzam
+    if a.discreta:
+        ceus[0] = (ceus[1] | ceus[2]) if corpos is not None else ceus[0]
     viz = {j: np.zeros(total - 1) for j in (0, 1, 2)}
     anterior = quadro(todos, 0)
     for n in range(1, total):
@@ -386,7 +439,7 @@ def main():
              f"maior {d.max():.2f}; percentil 95/mediana {np.percentile(d, 95) / m:.2f}, maior/mediana {d.max() / m:.2f}; "
              f"quadros parados {parados}", np.percentile(d, 95) / m <= 2.5 and d.max() / m <= 3.5 and parados == 0)
         # emenda: ticks em que a camada principal volta do último elemento para o primeiro
-        el = {t: ticks[t][j]["camadas"][camadas[j][1]]["el"] for t in range(loop[0], loop[1] + 1)}
+        el = {t: ticks[t][j]["camadas"][principal[j]]["el"] for t in range(loop[0], loop[1] + 1)}
         voltas = [t for t in range(loop[0], loop[1]) if el[t + 1] < el[t] and v(t) not in fora]
         if voltas:
             na_volta = max(viz[j][v(t)] for t in voltas)
@@ -434,6 +487,8 @@ def main():
         return m
 
     FAIXAS = (("tronco", ALTURA_LUTADOR + 4, 45, 0.97), ("pernas", 45, 10, 0.95), ("pés", 10, 0, 0.60))
+    if a.discreta:  # a aura discreta não passa na frente de nada: o corpo inteiro fica como sem ela
+        FAIXAS = tuple((nome, alto, baixo, 0.99) for nome, alto, baixo, _ in FAIXAS)
 
     def legivel(nome, j, pares, x0, x1, pasta_ref=None):
         """pares: [(quadro com aura, [quadros de referência sem aura])]. O pior par decide, faixa por faixa."""
@@ -467,6 +522,49 @@ def main():
     sem = quadro(todos, n_sem)
     colunas = {1: (120, 440), 2: (560, 880)}                     # antes da virada: P1 em x=-90, P2 em x=20
     colunas_depois = {1: (880, 1280), 2: (480, 860)}             # depois: P1 à direita do P2 (o motor os afasta)
+
+    def medir_discreta(j):
+        """Tamanho MÁXIMO e opacidade da aura discreta do jogador j, nos pixels em que só a aura mexe: diferença
+        contra o quadro de antes de ligar, fora de todo pixel de corpo do filme de referência, do lado do jogador
+        (P1 à esquerda do meio, P2 à direita), entre o HUD de cima e o chão."""
+        import json
+        pal = np.array(json.loads((Path(__file__).resolve().parent.parent / "sprites" / a.lutador / "aura" /
+                                   "aura.json").read_text(encoding="utf-8"))["paleta"], float)
+        lado = np.zeros(sem.shape[:2], bool)
+        lado[120:CHAO_Y] = True
+        meio = (640 - 90 * PX + 640 + 20 * PX) // 2
+        if j == 1:
+            lado[:, meio:] = False
+        else:
+            lado[:, :meio] = False
+        lado &= ~corpos
+        topo, alfas = CHAO_Y, []
+        for t in range(loop[0], loop[1], 7):
+            com = quadro(todos, v(t))
+            m = lado & (np.abs(com - sem).max(axis=2) > 40)
+            ys = np.nonzero(m.any(axis=1))[0]
+            if len(ys):
+                topo = min(topo, int(ys.min()))
+            # alfa: a cor observada é alfa * cor da paleta + (1 - alfa) * fundo; fica a cor da paleta que melhor explica
+            obs, bg = com[m].astype(float), sem[m].astype(float)
+            dif = pal[None] - bg[:, None]
+            den = (dif ** 2).sum(-1)
+            al = np.clip(((obs - bg)[:, None] * dif).sum(-1) / np.maximum(den, 1), 0, 1)
+            res = np.linalg.norm(obs[:, None] - (bg[:, None] + al[..., None] * dif), axis=-1)
+            res[den < 60 ** 2] = np.inf          # cor da paleta perto demais do fundo: o alfa fica indefinido
+            k = res.argmin(1)
+            bom = res[np.arange(len(k)), k] < 30
+            alfas.append(al[np.arange(len(k)), k][bom])
+        alfas = np.concatenate(alfas) if alfas else np.zeros(0)
+        visivel = (CHAO_Y - topo) / PX
+        teto = 0.65 * ALTURA_LUTADOR
+        nota(f"P{j} tamanho (discreta): a aura muda a tela dos pés até {visivel:.0f} px do jogo acima do chão, "
+             f"fora do corpo; máximo {teto:.0f} (65% do lutador de {ALTURA_LUTADOR} px)", 0 < visivel <= teto)
+        med = float(np.median(alfas)) if len(alfas) else float("nan")
+        nota(f"P{j} opacidade (discreta): alfa estimado em {len(alfas)} pixels só de aura: mediana {med:.2f}, "
+             f"percentil 90 {np.percentile(alfas, 90) if len(alfas) else float('nan'):.2f} (máximo da mediana 0,60)",
+             len(alfas) > 500 and med <= 0.6)
+
     for j in (1, 2):
         x0, x1 = colunas[j]
         antes = int(verde(sem[90:CHAO_Y, x0 - 100:x1 + 100]).sum())
@@ -494,6 +592,9 @@ def main():
             pares = [(v(SURTO2 + d), [n for n in range(v(SURTO2 + d) - 20, v(SURTO2 + d) + 21) if 0 <= n < ref_total])
                      for d in range(6, 40, 3)]
         legivel("surto", j, [p for p in pares if p[1]], x0, x1, ref_todos)
+        if a.discreta:
+            medir_discreta(j)
+            continue
         com = quadro(todos, v(loop[0] + 20))
         mudou = np.abs(com - sem).max(axis=2) > 40
         mudou[:, :colunas[j][0] - 20] = False

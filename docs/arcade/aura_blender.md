@@ -12,6 +12,22 @@ teste com a asa do Hazak.
 - `hazak_asas.py` — a aura do Hazak (asas, coroa, brasa, notas, gotas). É a referência de nível.
 - `aura_modelo.py` — molde comentado de uma aura nova (uma peça com ossos, fogo na borda, fagulhas).
 
+## Aura discreta (regra de 2026-11-12)
+
+A [regra dos efeitos proporcionais](../regra-efeitos-proporcionais.md) vale acima do resto: no jogo a aura é **uma
+camada leve**, baixa (até o peito), translúcida, em **3x**. Os scripts abaixo continuam fazendo a aura grande (é dela
+que sai o rig), e `discreta.py` tira dela a camada do jogo:
+
+    python ferramentas/aura_blender/<lutador>_aura.py <pasta> recortes rig      # rig.blend (se a pasta não tiver)
+    python ferramentas/aura_blender/discreta.py <lutador> <pasta>               # render 6x, compor 3x, instala
+
+`discreta.py` abre o `rig.blend`, deixa só as peças de `DISCRETA[lutador]`, encolhe cada uma em volta do pé (vazio pai
+na origem com escala (sx, 1, sz)), renderiza em 6x (2160x1200) uma passada por peça e reduz a 3x (1080x600, pé em
+(540, 570)) pela média 2x2; depois paleta fixa da aura (as 15 cores do `aura.json`) com histerese, contorno escuro de
+2 px e farelo apagado. O `instala` apaga os PNG da aura grande de `sprites/<id>/aura/` e grava `discreta_NN.png` +
+`aura.json` (formato 2, `escala: 3`). Hoje: Pengaró (coluna 0,62x0,38 + chão 0,55, 96 quadros) e CK (paredão 0,36,
+48 quadros). Quem liga no jogo é o `ferramentas/aura_<lutador>.py` com `aura.Camada(res=3)`.
+
 ## Rodar
 
     python ferramentas/aura_blender/hazak_asas.py <pasta de trabalho>                  # tudo (~1 min)
@@ -105,7 +121,7 @@ corpo. Cada camada roda no seu próprio laço: quadro = (tique // tiques_por_qua
 Todas: PNG 360x200, alfa 0/255, 15 cores (paleta no `aura.json`), pé em (180,190), 2 tiques por quadro, quadro =
 `(tique // 2) % quadros` de cada camada. Arquivos `sprites/<id>/aura/{nome}_{quadro:02d}.png` + `aura.json`. Tamanho =
 caixa da união de todos os quadros de todas as camadas, medida nos PNG instalados. Render bruto, vídeo e tiras ficam
-fora do repositório, na pasta de trabalho de cada aura. **Só a do Pengaró e a do CK rodam no jogo** (2026-11-12, `ferramentas/aura_pengaro.py` e `ferramentas/aura_ck.py`; as outras ainda não).
+fora do repositório, na pasta de trabalho de cada aura. **Só a do Pengaró e a do CK rodam no jogo** (2026-11-12, `ferramentas/aura_pengaro.py` e `ferramentas/aura_ck.py`; as outras ainda não), e na versão discreta (seção acima): os PNG da aura grande dos dois saíram de `sprites/<id>/aura/` e a tabela abaixo descreve o rig de onde ela sai.
 
 | Lutador | Script | Camadas (quadros; plano) | PNG | Tamanho (x / y) | Pendências |
 |---|---|---|---|---|---|
