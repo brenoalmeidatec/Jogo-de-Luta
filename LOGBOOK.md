@@ -708,3 +708,18 @@ Retomada da frente bosses (o dono liberou o orçamento). As 43 folhas do grupo 2
   desce 5 px ao longo da folha, `fx_notas` desce em bloco (o laço 8→1 dá salto). Linha de chão varia entre folhas
   (539 a 634); nada convertido para `quadros_arcade`, nada ligado em gerador, nada rodou no jogo.
 - **A seguir:** grupos 1 e 2 de Gutto, Raiclaven e CK (`docs/arcade/fila_bosses.md`); conferência cética do Hazak boss.
+
+## 2026-11-12 — Gutto boss: grupo 1 completo (arte bruta)
+
+As 12 folhas do grupo 1 do Gutto boss estão em `sprites/gutto/quadros/folhas_arcade/`, com prefixo **`b_`** (não
+`e_` como diz a fila), porque o Gutto já tem `e_` antigas em `quadros/folhas/` e a regra da rodada manda não colidir:
+`b_ginga`, `b_anda`, `b_soco`, `b_chute_alto`, `b_apanha`, `b_queda`, `b_levanta`, `b_defesa`, `b_agachado`,
+`b_pulo`, `b_compasso` (Coice de Garanhão) e `fx_aura_garanhao`. Geradas no chat do conceito do Gutto no ChatGPT, na
+escala da forma base (corpo ~345 px, sola ~560-580; o `b_pulo` pousa em 634, como a base que pousa em 612).
+- Refeitas: `b_soco` e `b_chute_alto` (quadros encostados; o chute também subiu para a altura da cabeça),
+  `b_apanha` e `b_queda` (colunas sobrepostas), `b_compasso` duas vezes (a 1ª não lia como coice; a 2ª 11% menor),
+  `fx_aura_garanhao` duas vezes (a 1ª com metade da altura; a 2ª saindo da célula).
+- Ressalvas: `b_compasso` q4 encosta ~2 px do casco na crina do q5; `b_soco` q6 é um direto de trás, não martelo
+  por cima; `fx_aura_garanhao` anima pouco e as patas de trás viram raios. Nada convertido para `quadros_arcade`,
+  nada ligado em gerador, nada rodou no jogo.
+- **A seguir:** grupo 2 do Gutto (prefixo `b_` também), depois Raiclaven e CK.
