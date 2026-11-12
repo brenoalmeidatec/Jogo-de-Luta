@@ -29,8 +29,13 @@ K3 = np.ones((3, 3), np.uint8)
 
 
 def mascara(a):
+    """Pixels de figura. O fundo é o da cor do canto: magenta (corpo) OU verde (aura). Só um dos dois, porque há
+    figura com verde vivo (cabelo e tanques do Raiclaven, garrafa do CK) em folha de fundo magenta."""
     r, g, b = (a[..., i].astype(int) for i in range(3))
-    return ~(((r > 170) & (g < 100) & (b > 170)) | ((g > 170) & (r < 120) & (b < 120)))
+    cr, cg, cb = (int(v) for v in a[3, 3])
+    if cg > 170 and cr < 120 and cb < 120:
+        return ~((g > 170) & (r < 120) & (b < 120))
+    return ~((r > 170) & (g < 100) & (b > 170))
 
 
 def gargalo(a, A, B, fundo):
@@ -79,7 +84,10 @@ def linha(a, A, B, fundo, faixa=1, ponta_max=1500):
     encostado no corte) são apagadas, para não irem parar no quadro vizinho."""
     W = a.shape[1]
     x = round(B * W / 8)
-    a[:, x - faixa:x + faixa + 1][mascara(a[:, x - faixa:x + faixa + 1])] = fundo
+    corte = mascara(a)
+    corte[:, :x - faixa] = False
+    corte[:, x + faixa + 1:] = False
+    a[corte] = fundo
     n, lab, st, _ = cv2.connectedComponentsWithStats(mascara(a).astype(np.uint8), connectivity=8)
     apagadas = 0
     for i in range(1, n):
