@@ -38,6 +38,14 @@ Radeon RX 7600 XT; 16 GB) o trabalho pesado não pode travar o uso. Regra, aplic
 - Desligar: `LEVE=0` (tudo) ou `LEVE_GPU=0` (sandbox volta ao llvmpipe). `python ferramentas/leve.py` aplica a regra
   em sandbox, Blender e ffmpeg que já estejam rodando.
 
+- **Windows Update não reinicia no meio do trabalho** (pedido do Alisson em 2026-11-12, depois que o update reiniciou
+  o notebook às 03:27 e derrubou dois trabalhos da noite). A configuração do Windows é feita pelo Alisson (o Claude não
+  mexe em configuração do sistema): reinício automático desligado com usuário logado e, antes de noite longa, pausar as
+  atualizações. Do lado do Claude: antes de começar trabalho pesado ou noturno, olhar se há reinício pendente
+  (`HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired`) e avisar; commits
+  pequenos com push; depois de um reinício, conferir `git status` de cada worktree e retomar o workflow pelo
+  `resumeFromRunId`.
+
 ## 2. Frentes em paralelo: uma branch e uma pasta por frente
 
 Cada frente trabalha num *worktree* separado, para duas frentes nunca editarem a mesma pasta ao mesmo tempo. Arquivos
