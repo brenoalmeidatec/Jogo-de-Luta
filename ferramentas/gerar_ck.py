@@ -22,6 +22,7 @@ import numpy as np
 from PIL import Image
 
 import gerar_pengaro as gp
+import aura_ck
 from repertorio import Golpe
 
 N = gp.extra.N
@@ -637,7 +638,10 @@ def efeitos_ck(s):
 
 
 # ---- faíscas e aura: os desenhos de faísca são os do Pengaró repintados (branco seco na base, verde de vidro no
-# Ratão); a aura (9210) é a fumaça verde do CK, um Explod à parte, atrás do corpo
+# Ratão). A aura do Modo Ratão é a do Blender (paredão de som de fumaça), ligada por ferramentas/aura_ck.py
+# ([Statedef -4], Explods 9600 a 9602). A fumaça verde antiga (ck_aura, ação 9210) não nasce mais no jogo: os
+# desenhos dela seguem carregados só porque entram na escolha da paleta do .sff (tirá-los mudaria as 255 cores e
+# todos os pixels da forma base); a ação sai do .air e a poda os tira do .sff, como no Pengaró.
 BRANCA = ((0, (40, 40, 50)), (.5, (190, 190, 200)), (1, (255, 255, 255)))
 VIDRO = ((0, (8, 30, 12)), (.4, (40, 120, 50)), (.75, (120, 210, 110)), (1, (230, 255, 220)))
 gp.CLARAO = {"whisky": ((255, 255, 255), (40, 40, 50)), "sombra": ((200, 255, 190), (8, 30, 12))}
@@ -665,21 +669,6 @@ def quadros_proprios(nome):
 
 
 gp.quadros_proprios = quadros_proprios
-
-
-def aura_cns():
-    """A aura do Modo Ratão: fumaça cinza-esverdeada subindo do chão, atrás do corpo, translúcida (o fundo continua
-    aparecendo através dela: com alpha 216,100 o fundo caía a 39% e a fumaça lia como bloco). Segue o CK só no x: a
-    cada tick o ModifyExplod desconta a altura dele (pos y = -Pos Y), então no pulo a coluna fica no chão em vez de
-    subir colada nos pés."""
-    return ("[State -2, Aura de fumaça]\ntype = Explod\ntrigger1 = var(20) > 0 && alive && NumExplod(9210) = 0\n"
-            "anim = 9210\nid = 9210\npostype = p1\npos = -4, 0\nbindtime = -1\nremovetime = -1\nsprpriority = -1\n"
-            "ownpal = 1\nscale = 1.5, 1.25\ntrans = addalpha\nalpha = 128, 192\nignorehitpause = 1\n"
-            "supermovetime = -1\npausemovetime = -1\n\n"
-            "[State -2, Aura no chão]\ntype = ModifyExplod\ntrigger1 = NumExplod(9210)\nid = 9210\n"
-            "postype = p1\npos = -4, floor(-Pos Y)\nignorehitpause = 1\n\n"
-            "[State -2, Tira a aura]\ntype = RemoveExplod\ntrigger1 = var(20) <= 0 || !alive\n"
-            "trigger1 = NumExplod(9210)\nid = 9210\nignorehitpause = 1\n\n")
 
 
 # ================================================================ estados próprios (.cns)
@@ -1104,13 +1093,15 @@ def main():
     gp.DEITADO[0] = (-62, 0, 40, -28)  # deitado: 97 x 26 px
     s = gp.montar_sprites(retrato=RETRATO)
     efeitos_ck(s)
-    faiscas = gp.carregar_proprios(s)  # faíscas do kit repintadas + a aura do CK (quadros_proprios acima)
+    faiscas = gp.carregar_proprios(s)  # faíscas do kit repintadas + a fumaça antiga (só pela paleta)
     cns = cns_ck(gp.montar_cns())
     # estilo de pose segurada: os fracos são os golpes com hitsound F5,0 (no Pengaró a lista é fixa e conferida)
     gp.FRACOS = {int(n) for n in re.findall(r"\[State (\d+), Golpe\]\n(?:[^\n]+\n)*?hitsound = F5,0\n", cns)}
+    del faiscas[9210]  # a fumaça antiga: só pela paleta, fora do .air (a poda a tira do .sff)
     a = gp.montar_air(s, faiscas, arte_despertada=gp.arte_endiabrada(s))
     preset = gp.preset_despertado(s)
-    air = "\n".join(ajustar_clsn1(a.txt, s, preset)).replace("gerar_pengaro.py", "gerar_ck.py")
+    aura = aura_ck.ligar(s)  # aura do Ratão (Blender): grupos e ações 9600 a 9602, fora da paleta
+    air = "\n".join(ajustar_clsn1(a.txt, s, preset)).replace("gerar_pengaro.py", "gerar_ck.py") + "\n" + aura.air()
     vitima = {(int(g), int(i)) for n in gp.ACOES_VITIMA
               for g, i in gp.RE_ELEMENTO.findall(air.split(f"[Begin Action {n}]")[1].split("[Begin Action")[0])}
     assert vitima <= gp.SPRITES_VITIMA, f"sprites da vítima fora do conjunto comum: {sorted(vitima - gp.SPRITES_VITIMA)}"
@@ -1122,9 +1113,6 @@ def main():
     cns, k = re.subn(r"\[State -2, Endiabrado pela seleção\]\n(?:[^\n]+\n)+\n", "", cns)
     assert k == 1
     cns = cns.replace("anim = 9215\nid = 9215", "anim = 9253\nid = 9215")  # saída do Ratão: fumaça do CK
-    volta = "reset = 1\n\n[State -2, Endiabrado desligado]"
-    assert cns.count(volta) == 1
-    cns = cns.replace(volta, "reset = 1\n\n" + aura_cns() + "[State -2, Endiabrado desligado]")
     cns = cns.replace("add = 12, 0, 28", "add = 6, 10, 4").replace("sinadd = 10, 0, 18, 40", "sinadd = 4, 8, 2, 40")
     cns = cns.rstrip() + "\n\n" + gp.efeitos_cns(a.ativos, gp.FRACOS)
     cns = cns.replace("[Data]", preset + "[Quotes]\n" + "".join(
@@ -1147,6 +1135,9 @@ def main():
         + (f"[State 810, Som {i}]\ntype = PlaySnd\ntrigger1 = Time = {t}\nvalue = F5, 0\n\n" if t < 14 else "")
         for i, (t, d) in enumerate(((4, 30), (9, 30), (14, 40)), 1)))
     (SAIDA / "ck.air").write_text(air, encoding="utf-8", newline="\n")
+    assert "[Statedef -4]" not in cns and "NumExplod(9210)" not in cns, "o CK ganhou um -4 ou a aura antiga voltou"
+    aura.conferir(acoes=a.acoes, explods=re.findall(r"^\s*id\s*=\s*(\d+)", cns, re.M))
+    cns = cns.rstrip() + "\n\n" + aura.cns(cabecalho=True)
     (SAIDA / "ck.cns").write_text(cns, encoding="utf-8", newline="\n")
     gp.escrever_sff(SAIDA / "ck.sff", s, manter=gp.sprites_mantidos(air, cns))
     (SAIDA / "ck.cmd").write_text(cmd_ck(gp.montar_cmd()), encoding="utf-8")
