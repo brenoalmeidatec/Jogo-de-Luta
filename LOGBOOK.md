@@ -695,3 +695,16 @@ O Alisson pediu para ir parando os trabalhos aos poucos, para mudar o modelo de 
 - **Como retomar:** seguir a fila em `docs/arcade/fila_bosses.md` a partir da primeira folha do grupo 2 do Hazak que
   não está na lista acima; procedimento em `docs/arcade/registro_fila.md` (mugen). Uma folha que estava sendo gerada
   na hora da parada pode ter ficado só no chat "Hazak — arcade", sem ser salva.
+
+## 2026-11-12 — Hazak boss: grupo 2 completo (arte bruta)
+
+Retomada da frente bosses (o dono liberou o orçamento). As 43 folhas do grupo 2 do Hazak boss estão em
+`sprites/hazaki/quadros/folhas_arcade/` (com o grupo 1, as 55 `d_`/`fx_` + `despertar_virada` da fila).
+- 13 delas já tinham sido geradas antes da parada e estavam só no scratchpad; foram conferidas a olho e salvas.
+- As outras 26 saíram no chat "Hazak boss" do ChatGPT; 6 refeitas uma vez (`d_maleta_sobe` rabo cortado na borda,
+  `d_fumaca` 10% maior, `d_agarrao_abraco`/`d_ar_soco`/`d_cotovelo_faixa` com braço sem manga, `fx_notas` sem células,
+  `fx_aura_brasa` achatada).
+- Ressalvas: `d_estatueta_gigante` ~8% menor, `d_chute_lateral` ~6% menor, `despertar_virada` cresce ~5% e o chão
+  desce 5 px ao longo da folha, `fx_notas` desce em bloco (o laço 8→1 dá salto). Linha de chão varia entre folhas
+  (539 a 634); nada convertido para `quadros_arcade`, nada ligado em gerador, nada rodou no jogo.
+- **A seguir:** grupos 1 e 2 de Gutto, Raiclaven e CK (`docs/arcade/fila_bosses.md`); conferência cética do Hazak boss.
