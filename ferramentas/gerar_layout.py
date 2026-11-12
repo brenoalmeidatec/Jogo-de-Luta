@@ -2216,7 +2216,29 @@ useiconupto = 4
         t += f"62,{q}, 0,0, {tm}\n"
     t += ("\n; Caxixi de estoque quebrando. Pronto, mas sem gatilho no v1.0.0 (o Powerbar nao avisa o gasto).\n"
           "[Begin Action 700]\n70,0, 0,0, 3\n70,1, 0,0, 3\n70,2, 0,0, 3\n70,3, 0,0, 3\n71,0, 0,0, -1\n")
-    return t
+    return hud_por_cima(t)
+
+
+HUD_POR_CIMA = ("Lifebar", "Powerbar", "Face", "Name", "Time", "Combo", "WinIcon")
+
+
+def hud_por_cima(t):
+    """Todo elemento do HUD (vida, poder, retrato, nome, relogio, acertos, vitorias) ganha `layerno = 1`.
+
+    Sem isso o motor desenha o HUD na camada 0, ATRAS dos lutadores e dos Explods (heranca do MUGEN): a aura do
+    Despertar, que tem mais de 2x a altura do lutador, passava por cima do relogio e das barras. Com layerno = 1 o
+    HUD fica na frente de tudo o que e da luta (lutador que pula alto passa por tras da barra, nao por cima)."""
+    saida, secao = [], ""
+    for linha in t.split("\n"):
+        saida.append(linha)
+        s = linha.strip()
+        if s.startswith("["):
+            secao = s.strip("[]")
+        elif secao in HUD_POR_CIMA and "=" in s and not s.startswith(";"):
+            chave = s.split("=")[0].strip()
+            if chave.rsplit(".", 1)[-1] in ("spr", "anim", "font"):
+                saida.append(f"{chave.rsplit('.', 1)[0]}.layerno = 1")
+    return "\n".join(saida)
 
 
 # ----------------------------------------------------------------------------------------------------------

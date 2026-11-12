@@ -588,6 +588,8 @@ Forma base
 Forma despertada
 [ ] 2 correntes novas, 6 normais novos, 4 especiais exclusivos, 1 projétil novo, 1 kombo novo, 1 super exclusivo
 [ ] especiais da base que ficam mudam de pose ou função
+[ ] aura e efeitos animados em camadas (ferramentas/aura.py), nada estático; fluidez do corpo e dos efeitos
+    conferida em vídeo da sandbox pelos critérios de docs/arcade/bosses_kit.md, seção 2
 
 Produção
 [ ] arte passou pelo processo da seção 6; licenças anotadas

@@ -640,6 +640,42 @@ o robô não prova que o pisão despertado acerta com a caixa nova (não sei se 
 foram espelhados (não olhei a forma endiabrada); Gutto, Raiclaven e Hazaki não foram regerados (o diff só toca
 `chars/pengaro`).
 
+---
+
+## 2026-11-11 (bosses, kit): plano de golpes, efeitos, aura e folhas da forma despertada dos cinco (branch `efeitos`)
+
+O dono aprovou a forma despertada de cada lutador como boss final e pediu: "eu não quero nada estático, essas auras e
+esses elementos vão ter que ter uma animação para dar movimento, e eu não quero um movimento todo duro, eu quero
+fluidez". Cada boss tem, só dele, aura, efeitos, especiais e estilo de ataque.
+
+**Feito (só documento, nenhum gerador nem `chars/` tocado):**
+- [`docs/arcade/bosses_kit.md`](docs/arcade/bosses_kit.md): regra do dono; regra de fluidez com critérios
+  verificáveis (corpo C1 a C8, efeito E1 a E12, os números do `aura_animada.md`); uma seção por lutador (Pengaró,
+  Gutto, Raiclaven, Hazak, CK) com tabela de golpes, efeitos, dicionário de aura pronto para o `ferramentas/aura.py`,
+  folhas que o kit pede e a fila não tem (com MOTION em inglês) e ordem de ligação no gerador; 44 decisões numeradas.
+- `docs/regras-dos-lutadores.md`, seção 9: linha nova no checklist (aura e efeitos animados em camadas, nada
+  estático, fluidez conferida em vídeo).
+- Nomes de folha conferidos por script contra `fila_bosses.md` (branch `bosses`) e o Lote 7 da `fila.md` (branch
+  `endiabrado`): 153 folhas pedidas fora das filas (66 de prioridade 1, 44 de fluidez, 43 só com proposta aprovada).
+
+**Achados que mudam o plano:** o kit despertado do Gutto é o do Pengaró byte a byte (`gerar_gutto.py` importa
+`pengaro_extra.py`); todo golpe próprio do Pengaró reaproveita folha da base; o `retocar()` do Raiclaven apaga a arte
+desperta; a fila boss do CK usa prefixo `b_`, não `e_`; a regra 5.1 (exclusivos em 5000 a 5999) bate com os estados
+de dano do motor.
+
+**Não verificado:** nada do kit rodou em motor. Os dicionários de aura não foram executados; `mistura="soma"` e
+`giro` de camada nunca foram à sandbox. Tempos e danos são calculados ou alvo, não medidos. `gerar_ck.py` não existia
+na leitura.
+
+**Pendente:** as 44 decisões (seção 8 do kit), a começar pela 1 (fluidez contra a regra 7), 2 (boss jogável ou chefe
+de arcade), 4 (faixa de estados) e 6 (reações da aura no `aura.py`); gerar as folhas de prioridade 1; rebase da branch
+`efeitos` sobre a `mugen` (14 commits atrás).
+
+**Próximo:** ligar a aura num lutador de verdade (Pengaró, com a coluna e o anel por código enquanto as `fx_aura_*`
+não chegam), filmar na sandbox e passar o `medir_aura.py`; depois os dados próprios do Gutto (`gutto_boss.py`).
+
+---
+
 ## 2026-11-11 (método em .md)
 
 - **Feito:** a pedido do Alisson, o jeito de trabalhar do Claude passou a ficar versionado: `docs/metodo-do-claude.md`
@@ -1448,3 +1484,44 @@ vídeo não assistido; o vapor continua ancorado na narina da pose parada; ferra
 ## 2026-11-11 (auras: PARADA às 17h20, o Alisson precisou desligar o notebook)
 
 Parada rápida. Último commit antes desta entrada: `67ac213e`. Arquivos alterados sem commit na hora da parada: 0 (guardados neste commit; **não testados**, se houver). Falta o que a entrada anterior desta branch lista; a etapa em andamento (retoque ou conferência) foi interrompida.
+## 2026-11-11 (efeitos: frente PARADA de propósito às 16h)
+
+O Alisson pediu para parar os trabalhos para trocar o modelo de raciocínio do Claude. Kit dos bosses (docs/arcade/bosses_kit.md), sistema de aura animada (ferramentas/aura.py, lutador de teste, filmar_aura.py, medir_aura.py) e a conferência cética estão feitos; o retoque final da aura estava no meio (aura.py, gerar_teste_aura.py, bosses_kit.md, motif/fight.def e gerar_layout.py alterados). Falta: terminar o retoque, refilmar na sandbox, juntar na mugen.
+Último commit feito por um agente que terminou a etapa dele: `3c0b205`. O commit seguinte a esta entrada guarda o que estava
+pela metade na hora da parada (**não testado, pode estar quebrado**); para voltar ao estado bom, use `3c0b205`.
+
+## 2026-11-11 (efeitos: PARADA às 17h20, o Alisson precisou desligar o notebook)
+
+Parada rápida. Último commit antes desta entrada: `9a64d4fb`. Arquivos alterados sem commit na hora da parada: 1 (guardados neste commit; **não testados**, se houver). Falta o que a entrada anterior desta branch lista; a etapa em andamento (retoque ou conferência) foi interrompida.
+
+## 2026-11-11 (efeitos: retoque da revisão cética da aura terminado e filmado)
+
+Retomado do commit de parada `589511d` (o retoque estava pela metade, sem teste). Tudo refilmado na sandbox com o
+código final (uma por vez, som desligado): roteiro padrão de 10 s e roteiro extra de 2 rounds.
+
+- **Feito, conferido no filme:** HUD na frente da aura (`layerno = 1` no `fight.def` pelo `gerar_layout.py`: 0,00%
+  das caixas de vida, retrato, nome e poder mudam; relógio visto na tira); só névoa rasteira na frente do corpo
+  (pés 91,7% a 96,4% iguais ao desenho sem aura, pernas e tronco 99,8% a 100%, no loop e no surto); a aura segue na
+  intro e na pose de vitória (`RoundState > 0`) e roda no `[Statedef -4]` (anda em superpausa e em estado custom);
+  motor não escala nem gira nada no loop (crescer, girar, balançar assados); partículas em sequência de baixa
+  discrepância (peças seguidas a 24% a 43% da área); surto só nos supers, com folga de 90 ticks; virada apaga e troca
+  em 5 ticks; ligar cresce dos pés; `base=9600` (o CK usa 9300 a 9305); `registrar()` aceita a lista do Hazak;
+  `filmar_aura.py` acusa pane do motor; a branch segue `origin/efeitos` (pull limpo). Kit: decisões 45 a 49.
+- **Consertado nesta etapa:** (1) anel de chão subia 8,4 px no tick da decolagem do pulo (o `-4` roda antes do estado
+  que dá a velocidade): a camada `"chao"` agora é solta (`bindtime = 0` no Explod e no ModifyExplod; sem o do
+  ModifyExplod o `postype` volta a prender, visto no filme): desvio 0,00 px no pulo de 84 px. (2) régua do corpo no
+  `medir_aura.py` comparava com um quadro de antes do `PosSet` (12% igual, falso): agora usa o quadro sem aura que
+  mais bate no tronco. (3) `docs/arcade/aura_animada.md` reescrito (falava de `-2`, `pulso`, `balanco`, `base=9300`).
+- **Medidas finais (ck / sombra):** loop p95/mediana 1,99 / 2,04, maior/mediana 2,18 / 2,22, 0 quadros parados;
+  volta do loop 1,18x / 0,82x; mesmo quadro no máximo 2 ticks; surto: maior salto contra os vizinhos 1,63x / 1,86x;
+  Explods 14 / 18 no loop, 22 / 29 no pior tick (teto 30); desligar em 35 ticks, 0 Explod no fim.
+- **Pendente / não verificado:** a régua do surto foi trocada pelo construtor anterior depois de falhar (contra a
+  mediana do trecho dá 3,8x no P2: é o tremor de propósito do surto, ±1,2 px por tick; fica dito no
+  `aura_animada.md`); no surto e no ligar o motor ainda escala (até 25% no anel, ≤ 7% por tick: grade do pixel
+  fora por uns 30 ticks); camada de chão com o lutador andando (atraso de 1 tick em x) não filmada; `mistura="soma"`,
+  golpe recebido, aura num lutador de verdade; os cinco dicionários do kit só montados no host com arte de mentira
+  (montam, pior caso 30 Explods no Pengaró). Itens do kit que são decisão do dono: 45 a 49 (seção 8).
+- **Próximo:** juntar `efeitos` na `mugen` quando o Alisson aprovar; ligar a aura no primeiro gerador de verdade
+  quando as folhas `fx_aura_*` existirem.
+- Filmes: `scratchpad/aura/final/aura_teste.mp4` (+ `aura_teste_tira.png`), `padrao3/`, `extra4/` (medidas em
+  `padrao3_medir.txt` e `extra4_medir.txt`).
