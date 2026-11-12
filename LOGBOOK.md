@@ -1630,3 +1630,25 @@ Branch `aura-pengaro` (worktree `C:/Dev/Jogo-de-Luta-aurapengaro`, tem `mugen` +
 - **Próximo:** retomar o workflow `aura-ck-no-jogo` (run wf_2d43efbc-ea1) ou refazer só o fim do retoque: robô CK e
   Pengaró na sandbox, filme final, tira olhada, veredito. Não juntar na `mugen` sem o Alisson (depende da `efeitos`,
   que põe o HUD por cima no jogo inteiro).
+
+## 2026-11-12 — Aura do CK, fim do retoque (branch `aura-ck`)
+
+- **Feito:** o retoque dos céticos já estava em 73ebc8b9 e e9c2336e (saída presa ao var(20) pelo `resta`, entrada e
+  saída só pelo alfa, sem caixa preta no Baile e no Grave, caixa da cena apagando atrás da nuvem, sem PalFX nem
+  AfterImage no Ratão, docs da ficha e da tabela de auras, roteiro `cena` no `filmar_aura.py`). Esta rodada só
+  conferiu: o `gerar_ck.py` reproduz o `chars/ck` do commit byte a byte.
+- **Conferido na sandbox (uma por vez):** robô CK 191/0, robô Pengaró 151/0. Filme `--roteiro cena` (caminho de
+  verdade: 2000 → Baile 3100 → Grave 3403 → fim natural) olhado em tira: a caixa preta apaga sob a nuvem e o paredão
+  de fumaça nasce no lugar, sem buraco e sem dois paredões; Baile e Grave sem caixa preta, paredão inchando no surto;
+  corpo do Ratão sem halo nem tinta; a aura acaba de apagar no tique em que o corpo volta (fumaça branca de saída).
+  Filme padrão + `--referencia` (refilmada, o corpo mudou sem o PalFX): HUD 0,00%, corpo ≥ 99,4%, ligando 1,73x/1,50x,
+  desligando 0,07x, virada 5 tiques, 3 Explods. **Falham:** tamanho (129/142 px contra 155) e, nesta captura, laço
+  (1 quadro parado) e surto (2,60x/2,71x contra os vizinhos, tique 279). Os dois últimos são a mesma causa, vista na
+  diferença por quadro: o paredão (a massa grande) troca de desenho a cada 2 tiques, então os quadros alternam
+  mudança grande/pequena (~10 contra ~2). O filme do construtor passou nisso por sorte da captura.
+- **Pendente (decisão do dono ou desenho):** rerender do paredão no Blender com o dobro de quadros (troca a cada
+  tique; ~+1 MB no `.sff`) resolve o laço e o surto; o tamanho (paredão ~1,25x o CK, conceito aprovado) pede
+  rerender maior se o dono quiser "aura enorme" de verdade; dois Ratões perto viram um paredão que cobre a tela;
+  o muro espelha na virada (fica 60% e translúcido uns 10 tiques); nenhum vídeo assistido em tempo real.
+  Não juntar na `mugen` sem o Alisson.
+- Filmes, tiras, robôs e medidas: `scratchpad/aurack/final/` desta sessão (fora do repositório).
