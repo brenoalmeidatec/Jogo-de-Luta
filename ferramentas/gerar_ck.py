@@ -22,6 +22,7 @@ import numpy as np
 from PIL import Image
 
 import gerar_pengaro as gp
+import aura_ck
 import hd
 from repertorio import Golpe
 
@@ -639,7 +640,10 @@ def efeitos_ck(s):
 
 
 # ---- faíscas e aura: os desenhos de faísca são os do Pengaró repintados (branco seco na base, verde de vidro no
-# Ratão); a aura (9210) é a fumaça verde do CK, um Explod à parte, atrás do corpo
+# Ratão). A aura do Modo Ratão é a do Blender (paredão de som de fumaça), ligada por ferramentas/aura_ck.py
+# ([Statedef -4], Explods 9600 a 9602). A fumaça verde antiga (ck_aura, ação 9210) não nasce mais no jogo: os
+# desenhos dela seguem carregados só porque entram na escolha da paleta do .sff (tirá-los mudaria as 255 cores e
+# todos os pixels da forma base); a ação sai do .air e a poda os tira do .sff, como no Pengaró.
 BRANCA = ((0, (40, 40, 50)), (.5, (190, 190, 200)), (1, (255, 255, 255)))
 VIDRO = ((0, (8, 30, 12)), (.4, (40, 120, 50)), (.75, (120, 210, 110)), (1, (230, 255, 220)))
 gp.CLARAO = {"whisky": ((255, 255, 255), (40, 40, 50)), "sombra": ((200, 255, 190), (8, 30, 12))}
@@ -667,21 +671,6 @@ def quadros_proprios(nome):
 
 
 gp.quadros_proprios = quadros_proprios
-
-
-def aura_cns():
-    """A aura do Modo Ratão: fumaça cinza-esverdeada subindo do chão, atrás do corpo, translúcida (o fundo continua
-    aparecendo através dela: com alpha 216,100 o fundo caía a 39% e a fumaça lia como bloco). Segue o CK só no x: a
-    cada tick o ModifyExplod desconta a altura dele (pos y = -Pos Y), então no pulo a coluna fica no chão em vez de
-    subir colada nos pés."""
-    return ("[State -2, Aura de fumaça]\ntype = Explod\ntrigger1 = var(20) > 0 && alive && NumExplod(9210) = 0\n"
-            "anim = 9210\nid = 9210\npostype = p1\npos = -4, 0\nbindtime = -1\nremovetime = -1\nsprpriority = -1\n"
-            "ownpal = 1\nscale = 1.5, 1.25\ntrans = addalpha\nalpha = 128, 192\nignorehitpause = 1\n"
-            "supermovetime = -1\npausemovetime = -1\n\n"
-            "[State -2, Aura no chão]\ntype = ModifyExplod\ntrigger1 = NumExplod(9210)\nid = 9210\n"
-            "postype = p1\npos = -4, floor(-Pos Y)\nignorehitpause = 1\n\n"
-            "[State -2, Tira a aura]\ntype = RemoveExplod\ntrigger1 = var(20) <= 0 || !alive\n"
-            "trigger1 = NumExplod(9210)\nid = 9210\nignorehitpause = 1\n\n")
 
 
 # ================================================================ estados próprios (.cns)
@@ -812,15 +801,25 @@ def cns_ck(cns):
         b, "[State 3200, Golpe]", "[State 3200, Invencivel]\ntype = NotHitBy\ntrigger1 = Time < 11\nvalue = SCA\n"
                                   "time = 1\n\n"))
 
-    # ---- Baile da Esquina (3100, super do Ratão): o paredão toca, o grave treme a tela, ele entra cortando
+    # ---- Baile da Esquina (3100, super do Ratão): o grave treme a tela, ele entra cortando. O paredão que toca é o
+    # da aura do Ratão (ferramentas/aura_ck.py, em surto no tique 1): a caixa preta (9250) por cima dele era corte seco
+    # e dois paredões juntos (cético de 2026-11-12)
     def baile(b):
         velho = "[State 3100, Avança]\ntype = VelSet\ntrigger1 = Time = 4\nx = 2\n"
         assert velho in b
         b = b.replace(velho, velho.replace("x = 2", "x = 8"))
-        return antes_de(b, "[State 3100, Avança]", paredao(3100, "Time = 0", 80) + tremor(3100, "Time = 4", 50))
+        return antes_de(b, "[State 3100, Avança]", tremor(3100, "Time = 4", 50))
     cns = no_estado(cns, 3100, baile)
-    # ---- Despertar (2000): o paredão aparece atrás dele durante a cena
-    cns = no_estado(cns, 2000, lambda b: antes_de(b, "[State 2000, Liga]", paredao(2000, "Time = 0", 112)))
+    # ---- Despertar (2000): a caixa preta toca atrás dele enquanto ele dança; quando a fumaça cobre tudo
+    # (aura_ck.FUMACA a aura_ck.RATAO) ela apaga e o paredão de fumaça da aura nasce no mesmo trecho, atrás da nuvem.
+    # O removetime 112 fica só de garantia: ele conta na superpausa e venceria no tique 82 do estado.
+    a0, a1 = aura_ck.FUMACA, aura_ck.RATAO
+    some = (f"[State 2000, Paredão vira fumaça]\ntype = ModifyExplod\ntrigger1 = Time >= {a0} && Time < {a1}\n"
+            f"id = 9250\ntrans = addalpha\nalpha = floor(255 * ({a1} - Time) / {a1 - a0}), "
+            f"255 - floor(255 * ({a1} - Time) / {a1 - a0})\nignorehitpause = 1\n\n"
+            f"[State 2000, Paredão sai]\ntype = RemoveExplod\ntrigger1 = Time >= {a1}\ntrigger1 = NumExplod(9250)\n"
+            "id = 9250\nignorehitpause = 1\n\n")
+    cns = no_estado(cns, 2000, lambda b: antes_de(b, "[State 2000, Liga]", paredao(2000, "Time = 0", 112) + some))
     # ---- entrada do round (191): o paredão toca atrás dele e some quando o round começa (no -2)
     cns = no_estado(cns, 191, lambda b: antes_de(b, "[State 191, Fim]", paredao(191, "Time = 0", -1, 9254)))
     # ---- Ratão: ↓ ↑ pode pegar o lutador no começo do pulo; o golpe sai do chão
@@ -849,11 +848,12 @@ def cns_ck(cns):
                "hitsound = F5,0\nguardsound = F6,0\nground.type = Low\nground.slidetime = 6\nground.hittime = 14\n"
                "ground.velocity = -2\nair.velocity = -1,-2\n\n")
     cns = trocar_estado(cns, 3402, E(3402, "S", "A", "S", anim=3402, juggle=4) + ritmo(garrafa) + fim(3402))
-    # Grave do Paredão (↓ ↑ + a/b): bate o pé, o paredão aparece e o grave empurra para longe
+    # Grave do Paredão (↓ ↑ + a/b): bate o pé, o paredão da aura incha no grave (surto) e o grave empurra para longe
     i = ini(3403)
+    assert aura_ck.GRAVE == i[2], f"o surto do Grave (aura_ck.GRAVE = {aura_ck.GRAVE}) fora do grave (tique {i[2]})"
     cns = trocar_estado(cns, 3403, E(3403, "S", "A", "S", anim=3403, juggle=4) + chao(3403)
                         + "[State 3403, Invencivel]\ntype = NotHitBy\ntrigger1 = Time < 8\nvalue = SCA\ntime = 1\n\n"
-                        + paredao(3403, "Time = 0", i[2] + 24) + tremor(3403, f"Time = {i[2]}", 16, -4)
+                        + tremor(3403, f"Time = {i[2]}", 16, -4)
                         + ritmo(hitdef(3403, f"Time = {i[2]}", "S, SA", 30, tipo="Heavy", hit=18, escorrega=14,
                                        vel="-12", ar="-8,-4", pausa=(4, 10), pesado=True, classe="especial"))
                         + fim(3403))
@@ -1106,13 +1106,15 @@ def main():
     gp.DEITADO[0] = (-62, 0, 40, -28)  # deitado: 97 x 26 px
     s = gp.montar_sprites(retrato=RETRATO)
     efeitos_ck(s)
-    faiscas = gp.carregar_proprios(s)  # faíscas do kit repintadas + a aura do CK (quadros_proprios acima)
+    faiscas = gp.carregar_proprios(s)  # faíscas do kit repintadas + a fumaça antiga (só pela paleta)
     cns = cns_ck(gp.montar_cns())
     # estilo de pose segurada: os fracos são os golpes com hitsound F5,0 (no Pengaró a lista é fixa e conferida)
     gp.FRACOS = {int(n) for n in re.findall(r"\[State (\d+), Golpe\]\n(?:[^\n]+\n)*?hitsound = F5,0\n", cns)}
+    del faiscas[9210]  # a fumaça antiga: só pela paleta, fora do .air (a poda a tira do .sff)
     a = gp.montar_air(s, faiscas, arte_despertada=gp.arte_endiabrada(s))
     preset = gp.preset_despertado(s)
-    air = "\n".join(ajustar_clsn1(a.txt, s, preset)).replace("gerar_pengaro.py", "gerar_ck.py")
+    aura = aura_ck.ligar(s)  # aura do Ratão (Blender): grupos e ações 9600 a 9602, fora da paleta
+    air = "\n".join(ajustar_clsn1(a.txt, s, preset)).replace("gerar_pengaro.py", "gerar_ck.py") + "\n" + aura.air()
     vitima = {(int(g), int(i)) for n in gp.ACOES_VITIMA
               for g, i in gp.RE_ELEMENTO.findall(air.split(f"[Begin Action {n}]")[1].split("[Begin Action")[0])}
     assert vitima <= gp.SPRITES_VITIMA, f"sprites da vítima fora do conjunto comum: {sorted(vitima - gp.SPRITES_VITIMA)}"
@@ -1124,10 +1126,12 @@ def main():
     cns, k = re.subn(r"\[State -2, Endiabrado pela seleção\]\n(?:[^\n]+\n)+\n", "", cns)
     assert k == 1
     cns = cns.replace("anim = 9215\nid = 9215", "anim = 9253\nid = 9215")  # saída do Ratão: fumaça do CK
-    volta = "reset = 1\n\n[State -2, Endiabrado desligado]"
-    assert cns.count(volta) == 1
-    cns = cns.replace(volta, "reset = 1\n\n" + aura_cns() + "[State -2, Endiabrado desligado]")
-    cns = cns.replace("add = 12, 0, 28", "add = 6, 10, 4").replace("sinadd = 10, 0, 18, 40", "sinadd = 4, 8, 2, 40")
+    # nada da aura pintado no corpo (regras-dos-lutadores, seção 4): sai o PalFX que tingia o Ratão (como no Lote 7 do
+    # Pengaró) e o rastro (AfterImageTime) que mantinha o AfterImage da cena vivo o Despertar inteiro, um halo
+    # branco-azulado em volta do corpo (cético de 2026-11-12). O rastro de 40 tiques de cada super continua.
+    cns = gp.sem_tinta_do_despertar(cns)
+    cns, k = re.subn(r"\[State -2, Rastro\]\ntype = AfterImageTime\n(?:[^\n]+\n)+\n", "", cns)
+    assert k == 1, "rastro do Despertar não encontrado"
     cns = cns.rstrip() + "\n\n" + gp.efeitos_cns(a.ativos, gp.FRACOS)
     cns = cns.replace("[Data]", preset + "[Quotes]\n" + "".join(
         f'victory{i + 1} = "{v}"\n' for i, v in enumerate(gp.VITORIAS)) + "\n[Data]", 1)
@@ -1148,7 +1152,12 @@ def main():
         f"[State 810, Soco {i}]\ntype = TargetLifeAdd\ntrigger1 = Time = {t}\nvalue = -{d}\n\n"
         + (f"[State 810, Som {i}]\ntype = PlaySnd\ntrigger1 = Time = {t}\nvalue = F5, 0\n\n" if t < 14 else "")
         for i, (t, d) in enumerate(((4, 30), (9, 30), (14, 40)), 1)))
-    # corpo em alta resolução (ferramentas/hd.py): os desenhos 3x de quadros_arcade_hd e o lutador em 1/3
+    assert "[Statedef -4]" not in cns and "NumExplod(9210)" not in cns, "o CK ganhou um -4 ou a aura antiga voltou"
+    aura.conferir(acoes=a.acoes, explods=re.findall(r"^\s*id\s*=\s*(\d+)", cns, re.M))
+    cns = cns.rstrip() + "\n\n" + aura.cns(cabecalho=True)
+    # corpo em alta resolução (ferramentas/hd.py): os desenhos 3x de quadros_arcade_hd e o lutador em 1/3. Vem DEPOIS
+    # da aura entrar no .cns: o hd.py só reconhece as ações 9600 a 9602 como efeito (e as deixa em 1x) pelos Explods
+    # delas; antes disso a aura contava como corpo e era ampliada 3x (o Explod não usa a escala do lutador).
     if QUADROS_HD.exists():
         air, cns = hd.aplicar(s, air, cns, [(QUADROS, QUADROS_HD)], gp.SPRITES_VITIMA)
     (SAIDA / "ck.air").write_text(air, encoding="utf-8", newline="\n")

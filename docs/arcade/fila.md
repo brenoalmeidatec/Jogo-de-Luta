@@ -3640,7 +3640,8 @@ larga com barra em brasa violeta; pés descalços; algema de ferro com 3 elos de
 dois tornozelos; bracelete de ouro nos dois antebraços.
 
 **A aura é efeito à parte** (regra da seção 4 de `docs/regras-dos-lutadores.md`): coluna de fumaça, anel de sombra e
-detritos vão em três folhas `fx_aura_*` de fundo verde `#00FF00`, ligadas por `Explod`. Nenhuma folha `e_` leva aura:
+detritos. (2026-11-12: a aura do jogo saiu do Blender, `sprites/pengaro/aura/` ligada por `ferramentas/aura_pengaro.py`;
+as três folhas `fx_aura_*` abaixo não precisam mais ser pedidas.) Nenhuma folha `e_` leva aura:
 o prompt base proíbe fumaça, anel, rachadura no chão e pedra flutuando; só os dois chifres de fumaça ficam no corpo.
 
 ### O que o jogo usa hoje (lido em `ferramentas/gerar_pengaro.py`)

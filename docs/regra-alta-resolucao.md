@@ -53,7 +53,9 @@ pixel do desenho num pixel da tela. O boneco fica do mesmo tamanho na tela, mas 
 - **Folha nova ou refeita:** depois do conversor de sempre, gere o gêmeo 3x dela pela tabela acima e rode o gerador do
   lutador de novo. Sem isso, o gerador usa o gêmeo velho ou só amplia.
 - **Lutador novo:** no fim do `gerar_<nome>.py`, chame o `hd.aplicar(s, air, cns, [(pasta 1x, pasta 3x)],
-  gp.SPRITES_VITIMA)` antes de gravar `.air`, `.cns` e `.sff`, como nos cinco geradores de hoje.
+  gp.SPRITES_VITIMA)` antes de gravar `.air`, `.cns` e `.sff`, como nos cinco geradores de hoje. Chame **depois** de
+  o `.cns` estar completo (aura do `aura.py` incluída): o `hd.py` só sabe que uma ação é efeito pelo Explod que a usa;
+  se a aura entrar no `.cns` depois, os sprites dela contam como corpo e saem ampliados 3x (gigantes na tela).
 - **Gutto e Raiclaven numa máquina nova:** rode `python ferramentas/hd_blender.py gutto` (e `raiclaven`) antes de mexer
   no gerador. Sem `quadros_hd/`, o gerador avisa com "ATENÇÃO" e o lutador sai em 1x.
 - **Antes de subir:**

@@ -239,7 +239,7 @@ só um brilho genérico.
 | Gutto | aura vermelha do demônio cara de cavalo |
 | Raiclaven | brilho prateado de aço (o Cientista Louco ainda vai ganhar a dele) |
 | Hazak | brasa laranja-ouro do Diabo Loiro |
-| CK | fumaça cinza-esverdeada do baseado, subindo dos pés |
+| CK | paredão de som de fumaça cinza-esverdeada soltando anéis, névoa e cacos no chão (Modo Ratão, boss final) |
 
 ### O que muda: golpes **novos**, não só mais fortes
 
@@ -591,6 +591,8 @@ Forma base
 Forma despertada
 [ ] 2 correntes novas, 6 normais novos, 4 especiais exclusivos, 1 projétil novo, 1 kombo novo, 1 super exclusivo
 [ ] especiais da base que ficam mudam de pose ou função
+[ ] aura e efeitos animados em camadas (ferramentas/aura.py), nada estático; fluidez do corpo e dos efeitos
+    conferida em vídeo da sandbox pelos critérios de docs/arcade/bosses_kit.md, seção 2
 
 Produção
 [ ] arte passou pelo processo da seção 6; licenças anotadas

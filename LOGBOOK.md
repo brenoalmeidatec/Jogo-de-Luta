@@ -640,6 +640,42 @@ o robô não prova que o pisão despertado acerta com a caixa nova (não sei se 
 foram espelhados (não olhei a forma endiabrada); Gutto, Raiclaven e Hazaki não foram regerados (o diff só toca
 `chars/pengaro`).
 
+---
+
+## 2026-11-11 (bosses, kit): plano de golpes, efeitos, aura e folhas da forma despertada dos cinco (branch `efeitos`)
+
+O dono aprovou a forma despertada de cada lutador como boss final e pediu: "eu não quero nada estático, essas auras e
+esses elementos vão ter que ter uma animação para dar movimento, e eu não quero um movimento todo duro, eu quero
+fluidez". Cada boss tem, só dele, aura, efeitos, especiais e estilo de ataque.
+
+**Feito (só documento, nenhum gerador nem `chars/` tocado):**
+- [`docs/arcade/bosses_kit.md`](docs/arcade/bosses_kit.md): regra do dono; regra de fluidez com critérios
+  verificáveis (corpo C1 a C8, efeito E1 a E12, os números do `aura_animada.md`); uma seção por lutador (Pengaró,
+  Gutto, Raiclaven, Hazak, CK) com tabela de golpes, efeitos, dicionário de aura pronto para o `ferramentas/aura.py`,
+  folhas que o kit pede e a fila não tem (com MOTION em inglês) e ordem de ligação no gerador; 44 decisões numeradas.
+- `docs/regras-dos-lutadores.md`, seção 9: linha nova no checklist (aura e efeitos animados em camadas, nada
+  estático, fluidez conferida em vídeo).
+- Nomes de folha conferidos por script contra `fila_bosses.md` (branch `bosses`) e o Lote 7 da `fila.md` (branch
+  `endiabrado`): 153 folhas pedidas fora das filas (66 de prioridade 1, 44 de fluidez, 43 só com proposta aprovada).
+
+**Achados que mudam o plano:** o kit despertado do Gutto é o do Pengaró byte a byte (`gerar_gutto.py` importa
+`pengaro_extra.py`); todo golpe próprio do Pengaró reaproveita folha da base; o `retocar()` do Raiclaven apaga a arte
+desperta; a fila boss do CK usa prefixo `b_`, não `e_`; a regra 5.1 (exclusivos em 5000 a 5999) bate com os estados
+de dano do motor.
+
+**Não verificado:** nada do kit rodou em motor. Os dicionários de aura não foram executados; `mistura="soma"` e
+`giro` de camada nunca foram à sandbox. Tempos e danos são calculados ou alvo, não medidos. `gerar_ck.py` não existia
+na leitura.
+
+**Pendente:** as 44 decisões (seção 8 do kit), a começar pela 1 (fluidez contra a regra 7), 2 (boss jogável ou chefe
+de arcade), 4 (faixa de estados) e 6 (reações da aura no `aura.py`); gerar as folhas de prioridade 1; rebase da branch
+`efeitos` sobre a `mugen` (14 commits atrás).
+
+**Próximo:** ligar a aura num lutador de verdade (Pengaró, com a coluna e o anel por código enquanto as `fx_aura_*`
+não chegam), filmar na sandbox e passar o `medir_aura.py`; depois os dados próprios do Gutto (`gutto_boss.py`).
+
+---
+
 ## 2026-11-11 (método em .md)
 
 - **Feito:** a pedido do Alisson, o jeito de trabalhar do Claude passou a ficar versionado: `docs/metodo-do-claude.md`
@@ -1291,6 +1327,311 @@ Parada rápida. Último commit antes desta entrada: `f3e86b1c`. Arquivos alterad
   "clarão creme dos supers" já pendente, mais visível no Ratão.
 - **Próximo:** o orquestrador juntar `ck` na `mugen`; o Breno decidir R4/O10/R9 e o clarão.
 
+## 2026-11-11 (aura pelo Blender: peças comuns)
+
+- **Feito:** os scripts do teste da asa viraram `ferramentas/aura_blender/comum.py` (peças comuns), `hazak_asas.py`
+  (a asa reescrita em cima do comum) e `aura_modelo.py` (molde de aura nova); os quatro scripts antigos saíram. A asa
+  foi rodada de novo e comparada com a do teste aprovado: recortes, chão, coroa e partículas idênticos; asas com ~13
+  pixels diferentes por quadro (pesos em precisão dupla), sem diferença visível na tira. Camadas finais em
+  `sprites/hazaki/aura/` (288 PNG + `aura.json`). O conceito `d_conceito.png` do Hazak foi copiado da branch `bosses`
+  para o mesmo caminho, para o script rodar daqui. `docs/arcade/aura_blender.md` tem os 10 passos de uma aura nova.
+- **Pendente:** ligar no motor (ninguém viu isto dentro do jogo); auras do Gutto, Raiclaven, CK e Pengaró; caminho de
+  aura fria (sem ouro/fogo) só foi escrito, não testado com conceito de verdade.
+- **Próximo:** uma aura por lutador copiando o molde.
+
+## 2026-11-11 — Aura do Gutto: garanhão de raio vermelho (método do Blender)
+
+- **Feito:** `ferramentas/aura_blender/gutto_aura.py` + `sprites/gutto/aura/` (432 PNG 360x200 + `aura.json`). Cinco
+  camadas: `crateras` (96 q), `garanhao` (48 q, malha de 3536 vértices e 22 ossos: dorso, pescoço, cabeça, queixo,
+  duas patas de 3 juntas, três cadeias de crina de 4), `raios` (96 q, zigue-zague que sai das juntas, pisca e se
+  refaz), `ferraduras` (96 q) e `vapor` (96 q, a única À FRENTE do corpo). Sem redução: escala 112/450 do conceito.
+  Novidade em relação à asa: pesos por FAMÍLIA de osso (`pesos_por_familia`, no script), para a borda de uma pata não
+  ser puxada pela outra. Conceito `e_conceito.png` copiado da branch `bosses` para o mesmo caminho.
+- **Medido:** nenhum pixel parado em nenhuma camada, nenhum par de quadros igual, emenda do garanhão 6,68 contra
+  6,64/6,57 das vizinhas, passo máximo 3,0 px (casco de cima), 15 cores.
+- **Pendente:** ligar no motor (nada foi visto no jogo). O vapor sai da narina da pose parada: em golpe/pulo tem de
+  seguir a cabeça ou desligar. Ferraduras estão 1,4x o conceito (com 11 px viravam anel ilegível).
+
+## 2026-11-11 — Aura do CK: paredão de som de fumaça (método do Blender)
+
+- **Feito:** `ferramentas/aura_blender/ck_aura.py` + `sprites/ck/aura/` (384 PNG 360x200 + `aura.json`). Cinco camadas,
+  todas atrás do corpo: `paredao` (48 q, malha de ~9 mil vértices; 7 colunas de 5 ossos em chicote + 1 osso por cone
+  animado em ESCALA = deformação radial; tranco do objeto a cada batida), `aneis` (96 q), `nevoa` (96 q), `cacos`
+  (48 q, 15 recortes do conceito pulando no grave) e `fagulhas` (96 q, folhinhas laranja). Compasso de 4 tempos em 48
+  quadros (150 bpm a 2 tiques), 1º tempo no quadro 3 para a emenda cair fora do golpe. Sem redução: escala 112/569.
+- **Remendo declarado:** os rabos/anéis parados do conceito saíram da textura (cones refeitos pela simetria radial,
+  braços laterais cortados) e o miolo atrás do corpo são caixas dos lados copiadas (4 grandes + 1 pequena). Contraste
+  dos cones (aro escuro, miolo claro) pintado na textura; no golpe o miolo acende e corre uma onda clara.
+- **Medido:** 15 cores; pixels parados 147 de 21,6 mil no paredão (0,7%, dentro dos cones) e 0 nas outras; nenhum par
+  de quadros igual; emenda do paredão 2,25 contra 2,50/1,99 das vizinhas; passo máximo 1,66 px (juntas) e 2,06 px
+  (raio do cone); aura 217x160 px para um corpo de 60x112.
+- **Pendente:** ligar no motor (nada visto no jogo; vídeo não assistido, só tiras). Tampinhas pouco legíveis em 1x;
+  névoa da mesma cor da base da parede; sobra um toco reto na borda direita da parede.
+
+## 2026-11-11 — Aura do Pengaró: coluna de fumaça violeta-preta (método do Blender)
+
+- **Feito:** `ferramentas/aura_blender/pengaro_aura.py` + `sprites/pengaro/aura/` (480 PNG 360x200 + `aura.json`). Seis
+  camadas, na ordem de desenho: `coluna` (48 q, malha com espinha de 8 ossos em onda S que sobe + 2 ramos de base;
+  depois do render o miolo é reamostrado de baixo para cima em duas fases = a textura sobe 1 px por quadro),
+  `chicotes` (48 q, 6 malhas com cadeia de 3 a 6 ossos, raiz com sobra por cima da coluna), `anel_tras` (96 q, chão
+  desprojetado para vista de cima e girado no Blender como disco deitado, meia volta por laço, rachaduras pulsando,
+  bolhas de sombra em órbita), `fiapos` (96 q, línguas que se soltam do topo + faíscas lilás), `soltos` (96 q, 15
+  pedras em placa e 4 elos com 3 ossos, cada um na sua órbita) e `anel_frente` (96 q, À FRENTE do corpo, da linha da
+  sola para baixo). Sem redução: escala 112/488, a aura cabe inteira.
+- **Remendo declarado:** a coluna atrás do corpo é fumaça clonada de cima da cabeça (fica atrás dele); o topo da
+  coluna encostava na borda da folha e foi recortado em línguas; o disco do chão é a metade da frente do desenho
+  copiada em meia volta (simetria para o laço fechar em 96 quadros).
+- **Medido:** 15 cores; pixels parados 0 em cinco camadas e 4 de ~2,5 mil nos chicotes; nenhum par de quadros igual;
+  emenda da coluna 3,06 contra 3,04/3,13 das vizinhas (chicotes 0,99 contra 0,92/1,03); passo máximo 1,92 px
+  (juntas), 1 px (fluxo), 2,88 px (borda do anel); aura 192x180 px para um corpo de 99x108.
+- **Armadilha achada:** `bl_renderiza` só esconde os objetos das passadas dele. Objeto de outra passada (o disco, as
+  pedras) tem de ser escondido antes, senão sai em todas e a emenda de 48 quadros pula.
+- **Pendente:** ligar no motor (nada visto no jogo; vídeo não assistido, só tiras). O chão em 1x lê como disco violeta
+  riscado com faíscas brancas, não como lajes rachadas; elos pequenos (2 px de espessura); base da coluna carregada.
+
+## 2026-11-11 — Aura do Raiclaven: leque de lâminas de aço (branch `auras`)
+
+- **Feito:** `ferramentas/aura_blender/raiclaven_aura.py` + 480 PNG e `aura.json` em `sprites/raiclaven/aura/` (5 camadas
+  de 96 quadros a 2 tiques, todas atrás do corpo: `leque`, `foices`, `raios`, `lascas`, `limalha`). Conceito copiado
+  da branch `bosses` para `sprites/raiclaven/quadros/folhas_arcade/e_conceito.png`.
+- **Como:** o leque do conceito é uma massa encavalada que não gira em laço. Recortei 7 peças inteiras (2 tesouras,
+  adaga, pente, faca, navalha, foice), pus cada uma de pé e remontei em anéis REGULARES: 24 peças de fora (6 tipos x 4,
+  +90° por laço), 24 pontas atrás (+45°), 10 foices (-180°). O quadro 96 cai igual ao 0 porque o anel andou um número
+  inteiro de casas; a fase de cada peça usa ciclos não inteiros (m = k - w*d/n) para a onda fechar junto com o giro.
+  Tesoura = duas metades rígidas no parafuso (a de baixo é o espelho da lâmina + a argola do desenho). O lilás do
+  conceito foi tirado (aço cinza frio). Raios, brilho em espiral e limalha são Python em 1x.
+- **Medido:** 15 cores; pixels parados 0 nas 5 camadas; nenhum par de quadros igual; emenda do leque 11,28 contra
+  11,35/11,22 das vizinhas; passo máximo 2,11 px (anel de fora), 2,93 px (foices), 1,18 px (lascas); leque 182x183 px
+  para um corpo de 94x130 (112 do cabelo à sola).
+- **Pendente:** ligar no motor (nada visto no jogo; vídeo não assistido, só tiras). O leque virou círculo de raio 392 px
+  do conceito (lá ele tem 925 de largura por ~785 de altura e é aberto embaixo). Duas cores da paleta são quase iguais
+  (o contorno pintado nos recortes entrou no k-médias). O quadro 52 quase não tem raio.
+
+## 2026-11-11 (auras: frente PARADA de propósito às 16h)
+
+O Alisson pediu para parar os trabalhos para trocar o modelo de raciocínio do Claude. Auras pelo Blender: base comum (comum.py), asa do Hazak e as auras de Gutto, Raiclaven, CK e Pengaró foram feitas (camadas em sprites/<id>/aura/) e o cético conferiu; os quatro retoques estavam no meio (os quatro *_aura.py alterados, sem render novo). Falta: terminar os retoques, o fecho no docs/arcade/aura_blender.md, ligar no jogo pelo aura.py da branch efeitos.
+Último commit feito por um agente que terminou a etapa dele: `3e1c429`. O commit seguinte a esta entrada guarda o que estava
+pela metade na hora da parada (**não testado, pode estar quebrado**); para voltar ao estado bom, use `3e1c429`.
+
+## 2026-11-11 (auras: retoque do Gutto terminado)
+
+O gutto_aura.py que estava pela metade no commit da parada rodou inteiro sem erro e foi renderizado de novo. Defeitos do
+cético consertados pela causa: raios refeitos (20 raios em 3 portes, finos, ramificados, crescendo da raiz e sumindo na
+ponta, nascimentos escalonados: 5 a 9 vivos e 714 a 1786 px por quadro, nunca "nada"); buraco sem o corpo virou rabo de
+raio com 3 ossos (r1-r3) que afina até o chão; vapor sombreado com contorno e penacho maior; crateras redesenhadas como
+cova elíptica com lascas; topo dos raios em y>=7; carmesim menos rosa (azul limitado a verde+45). Pendente: ligar no jogo;
+vídeo não assistido; o vapor continua ancorado na narina da pose parada; ferraduras seguem 1,4x.
+
+## 2026-11-11 — Aura do CK, retoque (defeitos do cético)
+- **Feito:** rodei o `ck_aura.py` que tinha ficado pela metade na parada (recortes, rig, chicote, compor, instala) e
+  publiquei `sprites/ck/aura/` (384 PNG + `aura.json`). Clarão chapado da batida: o miolo do cone virou meia-bola com
+  luz e sombra e só o lado da luz clareia no golpe (olhei quadros 2 a 5 em zoom: sem disco liso). Parede mais viva:
+  amplitude das colunas maior (0,55° embaixo a 11° na ponta), cada pilha estica e achata no grave, tremor mais forte.
+  Cones limpos trocando só o que passava por cima por outro pedaço do mesmo cone (a pincelada fica). Caixas do miolo
+  espelhadas e com o cone girado (não são mais cópia direta). Anel no fim da vida encolhe por gomo em vez de virar
+  lasca. Tampinhas e cacos maiores, 46 fagulhas, névoa com contorno.
+- **Medido:** paredão com 7 pixels parados (antes 147; a nota anterior "dentro dos cones" nunca foi confirmada),
+  silhueta muda 2,5% por quadro (antes 2,0%; asa 12,2%, mas a parede é bloco e a asa é pena fina), cintilação 5,4%
+  (antes 4,5%; asa 4,3%), passo máximo 2,56 px. `cacos` tem 6 pixels parados. 15 cores, alfa 0/255.
+- **Pendente:** toco reto de fumaça na borda direita (braço cortado) continua; nada visto dentro do jogo nem o vídeo
+  assistido.
+
+## 2026-11-11 (aura do Pengaró: retoque do cético)
+
+- **Feito:** rodado e conferido o retoque que tinha ficado pela metade no `40bc95f` (`pengaro_aura.py` não mudou desde
+  então). A subida da coluna em duas fases (que deixava retângulos e barra reta no miolo e trocava o desenho de uma vez)
+  saiu; no lugar, `escorre` desliza o render 4x por ondas lisas antes da redução, e clarões violeta sobem em fitas pela
+  rampa só do violeta. O violeta vivo que a chave de magenta comia voltou (`brilho_comido`), o topo virou lobos
+  desiguais, as mechas soltas saíram do recorte (os fiapos fazem o papel), pedras e elos cresceram (1,35x / 1,5x), o
+  espigão da pedra06 saiu, o chão é o desenho de frente com lajes arfando e luz correndo pelas rachaduras.
+- **Medidas:** coluna muda no máximo 31,6% dos pixels por quadro (era 50%), emenda 2,13 entre vizinhas 2,16/2,21;
+  480 PNG 360x200, alfa 0/255, 15 cores. Poucos pixels fixos por camada (57 coluna, 24 chicotes, 81 anel_tras, 31 anel_frente).
+- **Pendente:** o chão em 1x ainda lê mais como riscos horizontais claros do que como lajes; o remendo atrás do corpo
+  aparece entre as pernas como mancha violeta lisa. Nada visto no jogo.
+
+## 2026-11-11 — Aura do Raiclaven, retoque do cético (branch `auras`)
+
+- **Feito:** o retoque que estava pela metade em `40bc95f` (raiclaven_aura.py) rodou inteiro sem erro e foi re-renderizado.
+  A forma voltou à do conceito: leque duplo (duas asas de 9 lâminas + adaga do meio), aberto embaixo, coração de 12
+  foices, moldura de raio branco com clarão azul-gelo (não é mais arame de 1 px), roseta de pontas atrás do corpo
+  (remendo: sem corpo não há vão nem tocos). Nada gira em roda: cada asa abre e fecha em cascata (fase cresce de cima
+  para baixo, 17,7 → 33,3 quadros), lâminas estocam em onda, tesouras cortam. Paleta sem cores repetidas (menor
+  distância 27). Miolo do leque muda 57,8% por quadro e a silhueta 11,9% (asa: 55% e 12,3%). Raios não tocam y=0 (y_min 1).
+- **Pendente:** passo máximo das lâminas da frente 3,14 px (pouco acima de ~3); 236 px de lâmina ainda no vão de baixo
+  (pontas das asas descendo ao lado das pernas); vídeo não assistido; nada visto no jogo.
+
+## 2026-11-11 (auras pelo Blender: frente fechada)
+
+- **Feito:** as cinco auras do Despertar estão em camadas pelo método do Blender (conceito aprovado como textura,
+  ossos em cascata, efeitos em Python por cima), 2 tiques por quadro, pé em (180,190). Tabela com script, camadas,
+  quadros, tamanho e pendências em `docs/arcade/aura_blender.md` ("As cinco auras").
+  - **Hazak** (`hazak_asas.py`, `sprites/hazaki/aura/`, 288 PNG): asas, coroa, chão e partículas; é a referência
+    aprovada, sem retoque.
+  - **Gutto** (`gutto_aura.py`, `sprites/gutto/aura/`, 432 PNG, commit `2949112`): raios finos com galhos, rabo de
+    raio no lugar do corte do tronco, vapor e crateras redesenhados, nada acima de y=7.
+  - **Raiclaven** (`raiclaven_aura.py`, `sprites/raiclaven/aura/`, 480 PNG, commit `1356a3a`): leque duplo aberto
+    embaixo, em cascata e sem roda, moldura de raio com clarão, roseta atrás do corpo.
+  - **CK** (`ck_aura.py`, `sprites/ck/aura/`, 384 PNG, commit `e1be37b`): miolo do cone com volume na batida, parede
+    que balança e estica, cones com pincelada, caixas do miolo espelhadas.
+  - **Pengaró** (`pengaro_aura.py`, `sprites/pengaro/aura/`, 480 PNG, commit `11f8fb7`): miolo escorrendo sem
+    costura, brilho violeta devolvido, topo em lobos, chão de frente.
+  Render bruto, vídeos e tiras ficaram fora do repositório (pasta de trabalho de cada aura, no scratchpad da sessão).
+- **Pendente:** **nada disso roda no jogo ainda**: falta ligar pelo `ferramentas/aura.py` da branch `efeitos`. Vídeos
+  dos retoques não assistidos (só tiras); nada em fundo claro nem em outras poses. Por aura: Gutto, raios grandes
+  ainda largos e vapor preso à narina da pose parada; Raiclaven, passo 3,14 px nas lâminas da frente; CK, toco de
+  fumaça na borda direita e parede pouco viva pela métrica; Pengaró, chão ainda em riscos e mancha lisa entre as pernas.
+- **Próximo:** o Alisson vê os vídeos e diz quais retoques valem; depois, ligar as cinco no motor (branch `efeitos`).
+
+## 2026-11-11 (auras: PARADA às 17h20, o Alisson precisou desligar o notebook)
+
+Parada rápida. Último commit antes desta entrada: `67ac213e`. Arquivos alterados sem commit na hora da parada: 0 (guardados neste commit; **não testados**, se houver). Falta o que a entrada anterior desta branch lista; a etapa em andamento (retoque ou conferência) foi interrompida.
+## 2026-11-11 (efeitos: frente PARADA de propósito às 16h)
+
+O Alisson pediu para parar os trabalhos para trocar o modelo de raciocínio do Claude. Kit dos bosses (docs/arcade/bosses_kit.md), sistema de aura animada (ferramentas/aura.py, lutador de teste, filmar_aura.py, medir_aura.py) e a conferência cética estão feitos; o retoque final da aura estava no meio (aura.py, gerar_teste_aura.py, bosses_kit.md, motif/fight.def e gerar_layout.py alterados). Falta: terminar o retoque, refilmar na sandbox, juntar na mugen.
+Último commit feito por um agente que terminou a etapa dele: `3c0b205`. O commit seguinte a esta entrada guarda o que estava
+pela metade na hora da parada (**não testado, pode estar quebrado**); para voltar ao estado bom, use `3c0b205`.
+
+## 2026-11-11 (efeitos: PARADA às 17h20, o Alisson precisou desligar o notebook)
+
+Parada rápida. Último commit antes desta entrada: `9a64d4fb`. Arquivos alterados sem commit na hora da parada: 1 (guardados neste commit; **não testados**, se houver). Falta o que a entrada anterior desta branch lista; a etapa em andamento (retoque ou conferência) foi interrompida.
+
+## 2026-11-11 (efeitos: retoque da revisão cética da aura terminado e filmado)
+
+Retomado do commit de parada `589511d` (o retoque estava pela metade, sem teste). Tudo refilmado na sandbox com o
+código final (uma por vez, som desligado): roteiro padrão de 10 s e roteiro extra de 2 rounds.
+
+- **Feito, conferido no filme:** HUD na frente da aura (`layerno = 1` no `fight.def` pelo `gerar_layout.py`: 0,00%
+  das caixas de vida, retrato, nome e poder mudam; relógio visto na tira); só névoa rasteira na frente do corpo
+  (pés 91,7% a 96,4% iguais ao desenho sem aura, pernas e tronco 99,8% a 100%, no loop e no surto); a aura segue na
+  intro e na pose de vitória (`RoundState > 0`) e roda no `[Statedef -4]` (anda em superpausa e em estado custom);
+  motor não escala nem gira nada no loop (crescer, girar, balançar assados); partículas em sequência de baixa
+  discrepância (peças seguidas a 24% a 43% da área); surto só nos supers, com folga de 90 ticks; virada apaga e troca
+  em 5 ticks; ligar cresce dos pés; `base=9600` (o CK usa 9300 a 9305); `registrar()` aceita a lista do Hazak;
+  `filmar_aura.py` acusa pane do motor; a branch segue `origin/efeitos` (pull limpo). Kit: decisões 45 a 49.
+- **Consertado nesta etapa:** (1) anel de chão subia 8,4 px no tick da decolagem do pulo (o `-4` roda antes do estado
+  que dá a velocidade): a camada `"chao"` agora é solta (`bindtime = 0` no Explod e no ModifyExplod; sem o do
+  ModifyExplod o `postype` volta a prender, visto no filme): desvio 0,00 px no pulo de 84 px. (2) régua do corpo no
+  `medir_aura.py` comparava com um quadro de antes do `PosSet` (12% igual, falso): agora usa o quadro sem aura que
+  mais bate no tronco. (3) `docs/arcade/aura_animada.md` reescrito (falava de `-2`, `pulso`, `balanco`, `base=9300`).
+- **Medidas finais (ck / sombra):** loop p95/mediana 1,99 / 2,04, maior/mediana 2,18 / 2,22, 0 quadros parados;
+  volta do loop 1,18x / 0,82x; mesmo quadro no máximo 2 ticks; surto: maior salto contra os vizinhos 1,63x / 1,86x;
+  Explods 14 / 18 no loop, 22 / 29 no pior tick (teto 30); desligar em 35 ticks, 0 Explod no fim.
+- **Pendente / não verificado:** a régua do surto foi trocada pelo construtor anterior depois de falhar (contra a
+  mediana do trecho dá 3,8x no P2: é o tremor de propósito do surto, ±1,2 px por tick; fica dito no
+  `aura_animada.md`); no surto e no ligar o motor ainda escala (até 25% no anel, ≤ 7% por tick: grade do pixel
+  fora por uns 30 ticks); camada de chão com o lutador andando (atraso de 1 tick em x) não filmada; `mistura="soma"`,
+  golpe recebido, aura num lutador de verdade; os cinco dicionários do kit só montados no host com arte de mentira
+  (montam, pior caso 30 Explods no Pengaró). Itens do kit que são decisão do dono: 45 a 49 (seção 8).
+- **Próximo:** juntar `efeitos` na `mugen` quando o Alisson aprovar; ligar a aura no primeiro gerador de verdade
+  quando as folhas `fx_aura_*` existirem.
+- Filmes: `scratchpad/aura/final/aura_teste.mp4` (+ `aura_teste_tira.png`), `padrao3/`, `extra4/` (medidas em
+  `padrao3_medir.txt` e `extra4_medir.txt`).
+
+## 2026-11-12 (aura-pengaro: aura do Blender ligada no Pengaró endiabrado)
+
+Branch `aura-pengaro` (worktree `C:/Dev/Jogo-de-Luta-aurapengaro`, tem `mugen` + `auras` + `efeitos`).
+
+- **Feito:** `ferramentas/aura_pengaro.py` (novo) liga as camadas de `sprites/pengaro/aura/` pelo `aura.py` no
+  `[Statedef -4]` do Pengaró: Explods 9600 anel_tras (chão), 9601 coluna (coluna + chicotes + fiapos num desenho
+  só, contornados juntos no Blender), 9602 anel_frente (chão, prioridade de frente, rasteiro: 10 px acima da sola,
+  alfa até 0,49 com surto), 9603 soltos (pedras e elos). Liga com `var(20) > 0`, estado 3100 e o 2000 a partir do
+  Time 83; surto nos supers 3000/3100/3200 e no Time 86 da transformação; entrada em 44 tiques. A aura antiga
+  (Explods 9210/9211/9218 no `-2`, com os detritos na frente do corpo) saiu; os desenhos dela continuam no `.sff`
+  só porque entram na escolha da paleta. A aura fica fora da paleta (`Sprites.fora_da_paleta`): paleta e os 711
+  sprites antigos idênticos byte a byte; os outros lutadores de `chars/` com o mesmo md5. Custo: dois tons lilás
+  claros da aura caem na mesma cor da paleta do corpo (o mais claro, 152,13,239, vira 139,19,216).
+- **Ferramentas:** `aura.py` ganhou `Camada.tique` (padrão igual ao de antes; `teste_aura` sai igual).
+  `filmar_aura.py --lutador X [--sem-aura]` filma a aura de um lutador de verdade (os dois lados na cor 1, Despertar
+  e surto injetados no `.cmd`); `medir_aura.py --referencia` mede o corpo contra o filme sem aura (a forma
+  despertada tem outro desenho, comparar com o começo do filme dava 10% falso).
+- **Conferido:** robô `testar_pengaro.py` 146 passaram, 0 falharam; `verificar_pengaro.py` sai 0. Filme do roteiro
+  padrão + referência: tronco 100%, pernas 99,9-100%, pés 95,8% (loop) e 98,1-98,2% (surto) iguais ao despertado sem
+  aura; motor sem escala/giro no laço; mesmo quadro no máximo 2 tiques; volta do laço 0,69x/0,89x; ligando 3,8x/3,4x;
+  surto 1,69x/1,57x contra os vizinhos; HUD 0,00%; 4 Explods; virada em 5 tiques; desliga em ~36 tiques, 0 no fim.
+  Retoque pelo filme: pedras andavam junto da coluna (correlação -0,95, deriva lenta) e a coluna e as pedras trocavam
+  de quadro no mesmo tique (p95/mediana 2,6-2,7); ligando dava 6,5x (entrada de 26 tiques).
+- **Pendente / não verificado:** 1 falha no `medir_aura`: P1 tem 5 quadros quase parados no alto da tela (o P2 passa):
+  a massa da coluna é desenhada a 2 tiques por quadro (Blender), e no tique sem troca só mexem as pedras e a deriva.
+  Conserto pela causa = renderizar a coluna com o dobro de quadros a 1 tique (aumenta o `.sff` ~1,8 MB): decisão do
+  dono. No pulo a coluna sobe junto com o corpo (o anel fica no chão): olhar se agrada. Surto num super de verdade,
+  pose de vitória, round 2 e o roteiro extra não filmados com o Pengaró; fundo claro e outros cenários não vistos;
+  nenhum vídeo assistido em tempo real, só tiras.
+- **Próximo:** o Alisson olhar `pengaro_despertar_luta.mp4`; decidir o rerender a 1 tique; juntar na `mugen` quando
+  aprovar. Filmes e tiras: `scratchpad/aurapengaro/` desta sessão (fora do repositório).
+
+## 2026-11-12 — Aura do Pengaró: retoque depois das revisões céticas (branch `aura-pengaro`)
+
+- **Consertado pela causa:** (1) o `anel_frente` (9602) tinha `sprpriority 5` e tingia os pés dos dois lutadores e o
+  Pengaró caído: agora fica em -5, atrás de qualquer lutador (o mais baixo é o -3 do estado 5150), com o mesmo alfa,
+  escala e posição do `anel_tras` (sem respirar nem tremer, que andam com fase por camada; as metades não descolam).
+  Pés no `medir_aura`: 95,8% → 99,9-100%. (2) Virada: a aura apagava até 30% e o boss sumia a cada troca de lado
+  (pixels roxos 125 mil → 14 mil); `Aura(virada_fundo=...)`, o Pengaró usa 0,6 (mínimo 50 mil). (3) No pulo a coluna
+  subia junto e a base reta virava um prato no ar: `Camada(no_chao=True)` a deixa no chão (sem apagar com a altura).
+  (4) A aura seguia cheia ~15 tiques em volta do corpo já de calça branca: `LIGADA` agora desliga com `var(20) > 34`
+  e no 3100 com `AnimTime < -34`, o fade acaba junto com a forma endiabrada (robô: 0 camadas no tique em que o corpo
+  volta, no fim natural e no fim do 3100). (5) As ações 9210/9211/9218 da aura antiga saíram do `.air`: a poda tira os
+  24 desenhos do `.sff` (3,87 → 3,74 MB), paleta e os outros 1071 sprites iguais (`conferir_sff`, 0 diferenças).
+  (6) Ficha `docs/fichas/pengaro.md`, `docs/arcade/pengaro.md` e Lote 7 da fila diziam pedras "na frente" e folhas
+  `fx_aura_*`: corrigido. Comentário morto em `aura_pengaro.py` saiu.
+- **Ferramentas:** `aura.py` ganhou `no_chao` e `virada_fundo` (padrões iguais aos de antes: `teste_aura` sai com o
+  mesmo md5). Robô: 5 checagens novas da aura (4 camadas no Despertar, apagada quando o corpo volta, no fim natural e
+  no fim do 3100; `T_fimdesp` injetado). `filmar_aura.py --lutador X --roteiro luta`: perto, super 3000 de verdade,
+  pulo, fim natural do Despertar do P2, KO e pose de vitória. `medir_aura`: o corte do quadro repetido pelo gravador
+  passou a valer também no trecho de desligar (era só até DESLIGA); no filme os dois maiores saltos ficavam ao lado de
+  quadros com tudo parado, corpo inclusive. O filme antigo dá 2,89x com ou sem o corte; o novo, 2,89x (bruto igual).
+- **Conferido:** robô 151 passaram, 0 falharam; `verificar_pengaro` 0; filme padrão + `--referencia filme_sem_aura`:
+  tudo OK menos os quadros "parados" do laço (P1 5, P2 1). Diagnóstico confirmado: no alto da tela só a coluna mexe, e
+  ela troca de quadro a cada 2 tiques (dentro do aceite de ≤ 3 do `aura.py`); nos tiques sem troca o céu do P1 muda
+  ~1,0 enquanto o chão muda 2-5 (não é o gravador, que zera tudo). Filme luta olhado em tiras: Pengaró caído por cima
+  do próprio anel, pés limpos por cima do anel do outro, coluna no chão no pulo, HUD do jogo na frente, surto pelo
+  super de verdade (escala 1,0 → 1,07, anéis sem tremor), aura do vencedor até o fim da pose de vitória.
+- **Pendente (decisão do dono ou desenho):** coluna a 1 tique (dobro de quadros no Blender, ~+1,8 MB) se os quadros
+  "parados" incomodarem; camada presa ao chão fica parada 5 tiques na virada se o lutador estiver se movendo (visto
+  só com o PosSet do filme; tentar postype+facing deu lado errado); cor da coluna mais violeta saturado que o
+  violeta-preto do conceito e o anel pouco legível como "anel girando" (desenho); contraste do casaco com a fumaça
+  não medido; boss pela seleção (cor 2) entra na intro sem aura (o corpo também); gatilhos `StateNo` sem filtro de
+  estado custom (latente, nenhum lutador manda para 2000/3000-3200); escala 1,12 do motor no surto (passageira);
+  texto "VENCEU" não aparece no modo do filme (não visto); nenhum vídeo assistido em tempo real.
+- Filmes, tiras e medidas: `scratchpad/aurapengaro/final/` desta sessão (fora do repositório).
+
+## 2026-11-12 — Aura do CK (Modo Ratão) ligada no jogo (branch `aura-ck`)
+
+- **Feito:** `ferramentas/aura_ck.py` (molde do `aura_pengaro.py`) liga as camadas do Blender de `sprites/ck/aura/`
+  pelo `aura.py`, no `[Statedef -4]`, Explods 9600 a 9602 (os efeitos do CK seguem em 9300-9305): **paredão+anéis**
+  numa camada (os anéis saem dos cones; separados descolariam), **chão** (névoa+cacos) e **fagulhas**. Todas atrás de
+  qualquer lutador (-7, -6, -5; o mais baixo de lutador é -3) e no chão no pulo (`no_chao`); paredão troca de quadro no
+  tique ímpar, chão e fagulhas no par; entrada 44, virada a 60%. Nasce quando o Ratão sai da fumaça (estado 2000,
+  tique 69); surto nos supers, no Grave (3403) e na quebra da garrafa (2000, tique 90); desliga 34 tiques antes do
+  var(20) acabar (no Baile, pelo AnimTime). O paredão da aura usa `esconde`: some enquanto o paredão de cena (Explod
+  9250: cena, Baile, Grave) está na tela e volta depois, sem dois paredões. A fumaça verde antiga (`aura_cns`, ação
+  9210) saiu: os desenhos dela ficam só pela paleta e a poda os tira do `.sff`.
+- **Conferido:** `conferir_sff` paleta igual e os 658 sprites antigos iguais (só os 288 da aura entram, os 8 da 9210
+  saem; `.sff` 1,20 → 3,13 MB); md5 de `chars/` dos outros lutadores igual. Robô CK 191/0 (antes 175/0; checagens
+  novas: sem aura antes do tique 69, 3 camadas e paredão escondido enquanto o de cena toca — ele sai no tique 84, a
+  superpausa de 30 conta no `removetime` —, aura apaga até 2 tiques depois do corpo voltar, aura inteira depois do
+  Baile, paredão some e volta no Grave). Robô Pengaró 151/0. Filme padrão + `--referencia` sem aura: tudo OK menos
+  "tamanho" (abaixo); laço p95/mediana 1,93/2,02, 0 quadros parados (o paredão e as fagulhas trocam em tiques
+  diferentes); surto 1,91x/1,89x contra os vizinhos; corpo tronco/pernas/pés ≥ 99,3%; HUD 0,00%; 3 Explods; virada em
+  5 tiques; desliga em 36. Filme luta olhado em tira: pés limpos, CK pula por cima do paredão, fim natural do P2 apaga
+  junto com a volta do corpo, aura do vencedor na pose de vitória.
+- **Pendente / não verificado:** `medir_aura` falha em "tamanho": a aura sobe 130-142 px (aceite 1,4x o lutador =
+  155 px). É a proporção do conceito aprovado (paredão ~1,25x o CK); subir pede rerender no Blender ou escala no motor
+  (proibida): decisão do dono. Cores: a aura é levada para a paleta do CK (fora da escolha da paleta) e o cinza-verde
+  sai um pouco mais verde e as fagulhas mais amarelas (distância até 21 nas cores do paredão, 47 no laranja). O
+  paredão de cena some e o da aura volta noutra posição (x -46 contra 0): troca vista só no robô, não em filme. Cena
+  do Despertar, Baile e Grave não filmados; dois Ratões perto viram um paredão só, enorme; nenhum vídeo assistido em
+  tempo real, só tiras.
+- Filmes, tiras e medidas: `scratchpad/aurack/` desta sessão (fora do repositório).
+
+## 2026-11-12 — PARADA a pedido do Alisson (aura do CK, branch aura-ck)
+
+- O Alisson pediu para parar ("vou ter que começar outro trabalho"). A aura do Blender do CK está ligada no Modo Ratão
+  (f53a4fbd, 6543bcce) e o retoque dos céticos andou até 73ebc8b9; este commit guarda o que o retoque tinha mexido
+  (docs e `filmar_aura.py`) sem ter refilmado nem rodado o robô de novo.
+- **Próximo:** retomar o workflow `aura-ck-no-jogo` (run wf_2d43efbc-ea1) ou refazer só o fim do retoque: robô CK e
+  Pengaró na sandbox, filme final, tira olhada, veredito. Não juntar na `mugen` sem o Alisson (depende da `efeitos`,
+  que põe o HUD por cima no jogo inteiro).
+
 ## 2026-11-12 — Lutadores em alta resolução: fim do borrado (Claude, sessão do Breno)
 
 **Pedido do Breno:** no jogo o Pengaró, o Hazak e o CK pareciam borrados, embora as folhas estivessem nítidas. Ele
@@ -1326,3 +1667,25 @@ O `hd.py` passou a aceitar recorte 1-4 px diferente, porque o gerador limpa a bo
 **Pendente:**
 - Quadros montados por código continuam só ampliados: no Pengaró, parte do Despertar e alguns aéreos (104 sprites).
 - Se uma folha for refeita, rode o `hd_guiado.py` dela, senão o gerador usa o gêmeo velho ou amplia.
+
+## 2026-11-12 — Aura do CK, fim do retoque (branch `aura-ck`)
+
+- **Feito:** o retoque dos céticos já estava em 73ebc8b9 e e9c2336e (saída presa ao var(20) pelo `resta`, entrada e
+  saída só pelo alfa, sem caixa preta no Baile e no Grave, caixa da cena apagando atrás da nuvem, sem PalFX nem
+  AfterImage no Ratão, docs da ficha e da tabela de auras, roteiro `cena` no `filmar_aura.py`). Esta rodada só
+  conferiu: o `gerar_ck.py` reproduz o `chars/ck` do commit byte a byte.
+- **Conferido na sandbox (uma por vez):** robô CK 191/0, robô Pengaró 151/0. Filme `--roteiro cena` (caminho de
+  verdade: 2000 → Baile 3100 → Grave 3403 → fim natural) olhado em tira: a caixa preta apaga sob a nuvem e o paredão
+  de fumaça nasce no lugar, sem buraco e sem dois paredões; Baile e Grave sem caixa preta, paredão inchando no surto;
+  corpo do Ratão sem halo nem tinta; a aura acaba de apagar no tique em que o corpo volta (fumaça branca de saída).
+  Filme padrão + `--referencia` (refilmada, o corpo mudou sem o PalFX): HUD 0,00%, corpo ≥ 99,4%, ligando 1,73x/1,50x,
+  desligando 0,07x, virada 5 tiques, 3 Explods. **Falham:** tamanho (129/142 px contra 155) e, nesta captura, laço
+  (1 quadro parado) e surto (2,60x/2,71x contra os vizinhos, tique 279). Os dois últimos são a mesma causa, vista na
+  diferença por quadro: o paredão (a massa grande) troca de desenho a cada 2 tiques, então os quadros alternam
+  mudança grande/pequena (~10 contra ~2). O filme do construtor passou nisso por sorte da captura.
+- **Pendente (decisão do dono ou desenho):** rerender do paredão no Blender com o dobro de quadros (troca a cada
+  tique; ~+1 MB no `.sff`) resolve o laço e o surto; o tamanho (paredão ~1,25x o CK, conceito aprovado) pede
+  rerender maior se o dono quiser "aura enorme" de verdade; dois Ratões perto viram um paredão que cobre a tela;
+  o muro espelha na virada (fica 60% e translúcido uns 10 tiques); nenhum vídeo assistido em tempo real.
+  Não juntar na `mugen` sem o Alisson.
+- Filmes, tiras, robôs e medidas: `scratchpad/aurack/final/` desta sessão (fora do repositório).
