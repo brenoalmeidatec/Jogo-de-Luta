@@ -1671,26 +1671,26 @@ trigger1 = enemynear,stateno != 832
 value = 0
 ctrl = 1
 
-[State 831, Capoeira dano]
+[State 831, Tapa na nuca: dano]
 type = TargetLifeAdd
 trigger1 = Time = 26
 trigger1 = NumTarget
 value = -60
 
-[State 831, Capoeira acerta]
+[State 831, Tapa na nuca: acerta]
 type = TargetState
 trigger1 = Time = 26
 trigger1 = NumTarget
 value = 833
 
-[State 831, Capoeira treme]
+[State 831, Tapa na nuca: treme]
 type = EnvShake
 trigger1 = Time = 26
 time = 8
 freq = 60
 ampl = -4
 
-[State 831, Capoeira faisca]
+[State 831, Tapa na nuca: faisca]
 type = Explod
 trigger1 = Time = 26
 anim = ifelse(var(20) > 0, 9231, 9201)
@@ -1700,18 +1700,18 @@ removetime = -2
 sprpriority = 4
 ownpal = 1
 
-[State 831, Capoeira som]
+[State 831, Tapa na nuca: som]
 type = PlaySnd
 trigger1 = Time = 26
 value = F5, 2
 
-[State 831, Whisky dano]
+[State 831, Bicuda: dano]
 type = TargetLifeAdd
 trigger1 = Time = 66
 trigger1 = NumTarget
 value = -90
 
-[State 831, Whisky estoura]
+[State 831, Bicuda: estoura]
 type = Explod
 trigger1 = Time = 66
 anim = ifelse(var(20) > 0, 9231, 9201)
@@ -1721,14 +1721,14 @@ removetime = -2
 sprpriority = 5
 ownpal = 1
 
-[State 831, Whisky treme]
+[State 831, Bicuda: treme]
 type = EnvShake
 trigger1 = Time = 66
 time = 12
 freq = 60
 ampl = -5
 
-[State 831, Whisky som]
+[State 831, Bicuda: som]
 type = PlaySnd
 trigger1 = Time = 66
 value = F5, 2
@@ -4256,7 +4256,7 @@ y = 0
 [State 3400, Nuvem]
 type = Projectile
 trigger1 = Time = 22
-projid = 1003
+projid = 1004
 projanim = 1005
 projhitanim = 1006
 projremanim = 1006
@@ -6487,9 +6487,18 @@ sprpriority = -1
 ownpal = 1
 scale = 1.5, 1.25
 trans = addalpha
-alpha = 216, 100
+alpha = 128, 192
 ignorehitpause = 1
 supermovetime = -1
+pausemovetime = -1
+
+[State -2, Aura no chão]
+type = ModifyExplod
+trigger1 = NumExplod(9210)
+id = 9210
+postype = p1
+pos = -4, floor(-Pos Y)
+ignorehitpause = 1
 
 [State -2, Tira a aura]
 type = RemoveExplod

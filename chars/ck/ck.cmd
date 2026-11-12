@@ -451,7 +451,7 @@ trigger1 = var(1)
 type = ChangeState
 value = 3400
 triggerall = command = "sombra_x"
-triggerall = numprojid(1000) + numprojid(1001) + numprojid(1002) + numprojid(1003) = 0
+triggerall = numprojid(1004) = 0
 triggerall = var(20) > 0
 triggerall = statetype != A || (stateno = 50 && Time < 8)
 trigger1 = var(1)
@@ -563,7 +563,7 @@ triggerall = command = "afastar"
 triggerall = statetype = S
 trigger1 = var(1)
 
-[State -1, Agarrao whisky]
+[State -1, Saideira]
 type = ChangeState
 value = 830
 triggerall = command = "agarrao_whisky"
