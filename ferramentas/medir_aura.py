@@ -404,9 +404,20 @@ def main():
         dl = trecho(j, LIGA, LIGA + 40)
         nota(f"P{j} vídeo, ligando: maior mudança por quadro {dl.max():.2f} ({dl.max() / m:.2f}x a mediana do loop)",
              dl.max() / m <= 5.0)  # a coluna sobe dos pés: a borda dela cruza a faixa medida em poucos quadros
-    antes_d, dd = trecho(0, DESLIGA - 60, DESLIGA), trecho(0, DESLIGA, min(DESLIGA + 60, total + atraso - 2))
+    antes_d = trecho(0, DESLIGA - 60, DESLIGA)
+    md = float(np.median(antes_d))
+    # o mesmo corte do quadro repetido pelo gravador, agora no trecho de desligar (antes só valia até DESLIGA): a
+    # faixa inteira quase parada enquanto a aura ainda encolhe é captura repetida, e o quadro anterior leva o passo
+    # dobrado (filme de 2026-11-12: dois quadros com tudo parado, o corpo inclusive, e os de antes com o dobro)
+    fim_d = min(DESLIGA + 60, total + atraso - 2)
+    janela = [v(t) for t in range(DESLIGA, fim_d) if 0 <= v(t) < total - 1]
+    rep_d = {n for n in janela if viz[0][n] < 0.2 * md and viz[0][n - 1] >= 0.2 * md}
+    fora |= rep_d | {n - 1 for n in rep_d}
+    bruto = max(viz[0][n] for n in janela)
+    dd = trecho(0, DESLIGA, fim_d)
     nota(f"vídeo, desligando (as duas auras, faixa inteira): maior mudança por quadro {dd.max():.2f} = "
-         f"{dd.max() / np.median(antes_d):.2f}x a mediana dos 60 ticks de antes", dd.max() / np.median(antes_d) <= 3.0)
+         f"{dd.max() / md:.2f}x a mediana dos 60 ticks de antes (sem os {len(rep_d)} repetidos do gravador e os "
+         f"quadros de antes deles; com eles: {bruto / md:.2f}x)", dd.max() / md <= 3.0)
 
     # ---- franja verde, corpo legível por faixa, HUD na frente, tamanho
     def verde(img):

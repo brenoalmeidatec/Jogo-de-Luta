@@ -14,6 +14,10 @@ Com --lutador X (um lutador de chars/ com a aura do aura.py no .cns), os dois la
 injeta no .cmd o que o lutador de teste já traz: t_desp liga o Despertar (var(20) = 600; t_desp = 0 zera), t_surto
 dispara o surto direto no map da aura (o corpo fica parado; o "especial sem aura" do fim também é só a ginga) e
 t_pos põe no lugar. Os ids das camadas saem do comentário que o aura.py escreve no .cns. Sem `esconde`, h = -1.
+Roteiro "luta" (só com --lutador, 1 round, o que o padrão não cobre num lutador de verdade): os dois perto (o P2
+em pé e caído dentro do anel do P1), Despertar dos dois; o P1 solta o super 3000 de verdade (surto pelo gatilho do
+.cns, superpausa) e pula; o Despertar do P2 acaba sozinho (var(20) = 40 e o -2 conta até 0: fumaça de saída, o corpo
+volta); KO do P2, o P1 segue com a aura na pose de vitória e no texto de vitória. Não tem medir_aura: olhar as tiras.
 Os dois usam o HUD do jogo (motif/nazafight deste checkout), não o do motor.
 Saída em PASTA: luta.mp4 (60 fps, um tick por quadro), aura_log.txt (por tick e por lutador: lado, posição, estado,
 nº de explods e, de cada camada, escala, posição, elemento da animação e ângulo lidos do motor), ticks.txt e os logs
@@ -37,13 +41,16 @@ LIGA, SURTO1, VIRA, SURTO2, DESLIGA = 60, 220, 320, 390, 480
 SOCO_SEM_AURA = 545  # o mesmo especial com a aura já apagada: referência do corpo para medir o surto
 # roteiro extra (ticks do round 1; no round 2 o Despertar segue ligado até o tick X_DESLIGA2)
 X_LIGA, X_SUPER, X_GOLPE, X_PULO, X_KO, X_DESLIGA2 = 30, 120, 220, 320, 420, 90
+# roteiro luta (--lutador)
+L_LIGA, L_SUPER, L_PULO, L_FIM, L_KO = 30, 140, 330, 400, 520
 CAMADAS = {1: [9600, 9601, 9602, 9603], 2: [9640, 9641, 9642, 9643]}
 
 ROTEIRO = """
 -- ROTEIRO DO TESTE DE AURA (so na copia de dentro da sandbox)
 do
   local g, t, rn = 0, 0, 0
-  local extra = @EXTRA@
+  local extra = @EXTRA@  -- extra e luta: loga todo tick (intro, KO, pose de vitória)
+  local luta = @LUTA@
   local log = io.open("C:/nf/saida/aura_log.txt", "w")
   local CAM = {[1] = {@C1@}, [2] = {@C2@}}
   local H = {[1] = @H1@, [2] = @H2@}
@@ -72,6 +79,15 @@ do
             mapSet("t_pos", 0)
             if t == 2 then mapSet("t_posx", n == 1 and -90 or 20); mapSet("t_pos", 1) end
             if t == @VIRA@ and n == 1 then mapSet("t_posx", 118); mapSet("t_pos", 1) end
+          elseif rs == 2 and luta then
+            if n == 1 then mapSet("t_desp", t >= @L_LIGA@ and 1 or 0)
+            else mapSet("t_desp", t < @L_LIGA@ and 0 or (t < @L_FIM@ and 1 or 2)) end
+            mapSet("t_fim", (n == 2 and t == @L_FIM@) and 1 or 0)
+            mapSet("t_super", (n == 1 and t == @L_SUPER@) and 1 or 0)
+            mapSet("t_pulo", (n == 1 and t == @L_PULO@) and 1 or 0)
+            mapSet("t_pos", 0)
+            if t == 2 then mapSet("t_posx", n == 1 and -45 or 45); mapSet("t_pos", 1) end
+            if n == 2 and t == @L_KO@ then setLife(0) end
           elseif rs == 2 then
             if rn == 1 then mapSet("t_desp", t >= @X_LIGA@ and 1 or 0)
             elseif t >= @X_DESLIGA2@ then mapSet("t_desp", 0) end
@@ -118,6 +134,21 @@ type = VarSet
 trigger1 = map(t_desp) = 0 && RoundState = 2 && var(20) > 0
 var(20) = 0
 
+[State -1, Filme da aura: fim natural do Despertar (t_desp = 2 deixa o var(20) contar)]
+type = VarSet
+trigger1 = map(t_fim) = 1 && var(20) > 40
+var(20) = 40
+
+[State -1, Filme da aura: super de verdade]
+type = ChangeState
+trigger1 = map(t_super) = 1 && RoundState = 2
+value = 3000
+
+[State -1, Filme da aura: pulo]
+type = ChangeState
+trigger1 = map(t_pulo) = 1 && RoundState = 2 && StateType != A
+value = 40
+
 [State -1, Filme da aura: surto]
 type = MapSet
 trigger1 = map(t_surto) = 1 && map(au_@AURA@_f) > 0 && map(au_@AURA@_r) <= 0
@@ -155,8 +186,8 @@ def pane(saida):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--saida", type=Path, required=True)
-    ap.add_argument("--roteiro", choices=("padrao", "extra"), default="padrao")
-    ap.add_argument("--segundos", type=float, help="padrão: 10 (roteiro padrao) ou 26 (extra)")
+    ap.add_argument("--roteiro", choices=("padrao", "extra", "luta"), default="padrao")
+    ap.add_argument("--segundos", type=float, help="padrão: 10 (roteiro padrao), 26 (extra) ou 16 (luta)")
     ap.add_argument("--lenta", type=int, help="padrão: 6 (roteiro padrao) ou 3 (extra); o motor na sandbox, sem placa de vídeo, não segura mais que isso")
     ap.add_argument("--espera", type=float, default=900)
     ap.add_argument("--arranque", type=float, default=360,
@@ -168,16 +199,19 @@ def main():
                     help="com --lutador: o mesmo roteiro com a aura desligada no .cns (Despertar ligado): referência do corpo"
                          " para medir_aura.py --referencia (a forma despertada tem outro desenho que a base)")
     a = ap.parse_args()
-    extra = a.roteiro == "extra"
+    luta = a.roteiro == "luta"
+    extra = a.roteiro in ("extra", "luta")
     teste = a.lutador == "teste_aura"
+    if luta and teste:
+        sys.exit("o roteiro luta é de um lutador de verdade: use --lutador")
     camadas, mapas_h = CAMADAS, ('"au_ck_h2"', '"au_sombra_h2"')
     if not teste:
-        if extra:
-            sys.exit("--lutador só com o roteiro padrao (o extra usa os estados de teste 1100, 1300 e 1310)")
+        if extra and not luta:
+            sys.exit("--lutador só com os roteiros padrao e luta (o extra usa os estados de teste 1100, 1300 e 1310)")
         nome_aura, ids = aura_do_lutador(a.lutador)
         camadas, mapas_h = {1: ids, 2: ids}, ("nil", "nil")
-    segundos = a.segundos or (26 if extra else 10)
-    lenta = a.lenta or (3 if extra else 6)
+    segundos = a.segundos or (16 if luta else 26 if extra else 10)
+    lenta = a.lenta or (3 if extra and not luta else 6)
     if teste and not (fs.RAIZ / "chars/teste_aura/teste_aura.sff").exists():
         sys.exit("rode antes: python ferramentas/gerar_teste_aura.py")
     ffmpeg = shutil.which("ffmpeg")
@@ -194,7 +228,9 @@ def main():
         for chave, valor in (("@C1@", ", ".join(map(str, camadas[1]))), ("@C2@", ", ".join(map(str, camadas[2]))),
                              ("@H1@", mapas_h[0]), ("@H2@", mapas_h[1]),
                              ("@LIGA@", LIGA), ("@DESLIGA@", DESLIGA), ("@SURTO1@", SURTO1), ("@SURTO2@", SURTO2),
-                             ("@VIRA@", VIRA), ("@SOCO@", SOCO_SEM_AURA), ("@FIM@", int(segundos * 60) + 600), ("@EXTRA@", str(extra).lower()),
+                             ("@VIRA@", VIRA), ("@SOCO@", SOCO_SEM_AURA), ("@FIM@", int(segundos * 60) + 600), ("@EXTRA@", str(extra).lower()), ("@LUTA@", str(luta).lower()),
+                             ("@L_LIGA@", L_LIGA), ("@L_SUPER@", L_SUPER), ("@L_PULO@", L_PULO), ("@L_FIM@", L_FIM),
+                             ("@L_KO@", L_KO),
                              ("@X_LIGA@", X_LIGA), ("@X_SUPER@", X_SUPER), ("@X_GOLPE@", X_GOLPE),
                              ("@X_PULO@", X_PULO), ("@X_KO@", X_KO), ("@X_DESLIGA2@", X_DESLIGA2)):
             roteiro = roteiro.replace(chave, str(valor))
@@ -209,7 +245,7 @@ def main():
             assert marca in ps1
             ps1 = ps1.replace(marca, "@('Motif','data/nazafight/system.def')," + marca)
         args = ["-p1", a.lutador, "-p2", a.lutador, "-s", "stages/stage0-720.def", "-rounds",
-                "2" if extra else "1"]
+                "2" if extra and not luta else "1"]
         if not teste:  # a cor 2 do Pengaró é o endiabrado pela seleção: os dois na cor 1
             args += ["-p1.color", "1", "-p2.color", "1"]
             cmd = (fs.RAIZ / "chars" / a.lutador / f"{a.lutador}.cmd").read_text(encoding="utf-8")
