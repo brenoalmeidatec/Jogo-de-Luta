@@ -408,8 +408,17 @@ def main():
     cns = cns.replace("add = 12, 0, 28", "add = 16, 0, 0").replace("sinadd = 10, 0, 18, 40", "sinadd = 14, 2, 0, 40")
     cns = cns.replace("[Data]", preset + "[Quotes]\n" + "".join(
         f'victory{i + 1} = "{v}"\n' for i, v in enumerate(gp.VITORIAS)) + "\n[Data]", 1)
+    air = "\n".join(a.txt)
+    # corpo em alta resolução (ferramentas/hd.py): os mesmos quadros em 3x, de quadros_hd/ (animar_folha.py com HD=3)
+    if (QUADROS.parent / "quadros_hd").exists():
+        import hd
+        air, cns = hd.aplicar(s, air, cns, [(QUADROS, QUADROS.parent / "quadros_hd")], gp.SPRITES_VITIMA)
+        (SAIDA / "gutto.air").write_text(air, encoding="utf-8", newline="\n")
+    else:
+        print("ATENÇÃO: sem sprites/gutto/quadros_hd (fica fora do git: ~200-340 MB). O lutador sai em 1x, borrado. "
+              "Gere com: python ferramentas/hd_blender.py gutto  (uns 20 min; depois rode este gerador de novo)")
     (SAIDA / "gutto.cns").write_text(cns, encoding="utf-8", newline="\n")
-    gp.escrever_sff(SAIDA / "gutto.sff", s, manter=gp.sprites_mantidos("\n".join(a.txt), cns))
+    gp.escrever_sff(SAIDA / "gutto.sff", s, manter=gp.sprites_mantidos(air, cns))
     (SAIDA / "gutto.cmd").write_text(gp.montar_cmd(), encoding="utf-8")
     (SAIDA / "gutto.def").write_text(DEF, encoding="utf-8", newline="\n")
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")

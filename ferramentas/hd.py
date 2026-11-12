@@ -18,6 +18,7 @@ não usa (só com syncid) e projétil só com size.proj.doscale (0 por padrão).
 import os
 import re
 
+import cv2
 import numpy as np
 from PIL import Image
 
@@ -65,6 +66,14 @@ def acoes_de_efeito(cns):
     return nums, duvida
 
 
+def _assinatura(rec):
+    """Silhueta e cor média em 8x8, para escolher rápido os candidatos parecidos."""
+    m = (rec[..., 3] >= 128).astype(np.float32)
+    pequeno = cv2.resize(np.dstack([m, rec[..., :3] / 255 * m[..., None]]).astype(np.float32), (8, 8),
+                         interpolation=cv2.INTER_AREA)
+    return pequeno.ravel()
+
+
 def _caixa(a):
     m = a[..., 3] >= 128
     ys, xs = np.nonzero(m)
@@ -78,9 +87,10 @@ class Indice:
 
     def __init__(self, pares):
         self.por_tamanho = {}
+        self.assinaturas = {}
         for pasta1, pastahd in pares:
-            for arq in sorted(pasta1.glob("*/*.png")):
-                gemeo = pastahd / arq.parent.name / arq.name
+            for arq in sorted(pasta1.rglob("*.png")):  # <folha>/NN.png e <folha>/meio/NN_k.png
+                gemeo = pastahd / arq.relative_to(pasta1)
                 if not gemeo.exists():
                     continue
                 a = np.asarray(Image.open(arq).convert("RGBA"))
@@ -92,8 +102,12 @@ class Indice:
                     x0, y0, x1, y1 = cx
                     rec = b[y0:y1, x0:x1]
                     self.por_tamanho.setdefault(rec.shape[:2], []).append((rec, (x0, y0), gemeo, espelho))
+                    self.assinaturas.setdefault(rec.shape[:2], []).append(_assinatura(rec))
 
     def achar(self, rec):
+        """(origem do recorte no quadro de 1x, gêmeo HD, espelho) do quadro que deu `rec`, ou None. Primeiro o mesmo
+        tamanho, pixel a pixel; senão um recorte até 4 px maior ou menor (o gerador limpa a borda do quadro: some 1 ou 2
+        px de contorno), alinhado em até 2 px, pela silhueta e pela cor."""
         melhor, nota = None, 0.9
         for cand, origem, gemeo, espelho in self.por_tamanho.get(rec.shape[:2], ()):
             ma, mb = rec[..., 3] >= 128, cand[..., 3] >= 128
@@ -101,6 +115,36 @@ class Indice:
             n = ((ma == mb) & (~ma | perto)).mean()
             if n > nota:
                 melhor, nota = (origem, gemeo, espelho), n
+        return melhor or self._aproximado(rec)
+
+    def _aproximado(self, rec):
+        h, w = rec.shape[:2]
+        ma = rec[..., 3] >= 128
+        melhor, nota = None, 0.92
+        # só os 6 candidatos de tamanho vizinho com a assinatura (silhueta e cor em 8x8) mais parecida
+        sig = _assinatura(rec)
+        cands = [(float(np.abs(s - sig).sum()), c) for dh in range(-4, 5) for dw in range(-4, 5)
+                 for c, s in zip(self.por_tamanho.get((h + dh, w + dw), ()), self.assinaturas.get((h + dh, w + dw), ()))]
+        for _, (cand, (ox, oy), gemeo, espelho) in sorted(cands, key=lambda t: t[0])[:6]:
+            hc, wc = cand.shape[:2]
+            mb = cand[..., 3] >= 128
+            for dy in range(-2, 3):
+                for dx in range(-2, 3):
+                    # rec[y, x] corresponde a cand[y + dy, x + dx]
+                    y0, x0 = max(0, -dy), max(0, -dx)
+                    y1, x1 = min(h, hc - dy), min(w, wc - dx)
+                    if y1 - y0 < h * .8 or x1 - x0 < w * .8:
+                        continue
+                    a, b = ma[y0:y1, x0:x1], mb[y0 + dy:y1 + dy, x0 + dx:x1 + dx]
+                    inter = (a & b).sum()
+                    iou = inter / max(1, ma.sum() + mb.sum() - inter)
+                    if iou <= nota:
+                        continue
+                    ca = rec[y0:y1, x0:x1, :3].astype(int)[a & b]
+                    cb = cand[y0 + dy:y1 + dy, x0 + dx:x1 + dx, :3].astype(int)[a & b]
+                    if np.abs(ca - cb).sum(axis=1).mean() > 40:
+                        continue
+                    melhor, nota = ((ox + dx, oy + dy), gemeo, espelho), iou
         return melhor
 
 

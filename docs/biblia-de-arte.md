@@ -111,8 +111,10 @@ projétil e retrato ficam em 1x, porque o motor não aplica a escala do lutador 
   caminho direto `HD=3 python ferramentas/converter_ck.py <folha>`.
 - **Sem gêmeo 3x**, o sprite só é ampliado e fica igual a antes. É o caso de quadro montado por código, de folha sem
   original e de quadro do meio do Blender. O gerador imprime quantos sprites ficaram assim.
-- Ligado em: Pengaró, Hazak e CK. O Gutto e o Raiclaven ainda não: os quadros do meio do Blender deles são de 1x, e
-  misturar quadro nítido com quadro borrado na mesma animação pisca.
+- **Gutto e Raiclaven** (arte antiga, com quadros do meio do Blender): rode `python ferramentas/hd_blender.py <lutador>`.
+  Ele repete o `animar_folha.py` com `HD=3`, que é a mesma renderização 4x do Blender reduzida para 3x, e grava em
+  `quadros_hd/`. Essa pasta fica fora do git (~550 MB nos dois). Sem ela o gerador avisa e o lutador sai em 1x.
+- Ligado em todos: Pengaró, Hazak, CK, Gutto e Raiclaven.
 
 ### Pipeline
 

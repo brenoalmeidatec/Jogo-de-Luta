@@ -370,8 +370,17 @@ def main():
     cns = cns.replace("add = 12, 0, 28", "add = 14, 14, 18").replace("sinadd = 10, 0, 18, 40", "sinadd = 10, 10, 14, 40")
     cns = cns.replace("[Data]", preset + "[Quotes]\n" + "".join(
         f'victory{i + 1} = "{v}"\n' for i, v in enumerate(gp.VITORIAS)) + "\n[Data]", 1)
+    air = "\n".join(a.txt)
+    # corpo em alta resolução (ferramentas/hd.py): os mesmos quadros em 3x, de quadros_hd/ (animar_folha.py com HD=3)
+    if (QUADROS.parent / "quadros_hd").exists():
+        import hd
+        air, cns = hd.aplicar(s, air, cns, [(QUADROS, QUADROS.parent / "quadros_hd")], gp.SPRITES_VITIMA)
+        (SAIDA / "raiclaven.air").write_text(air, encoding="utf-8", newline="\n")
+    else:
+        print("ATENÇÃO: sem sprites/raiclaven/quadros_hd (fica fora do git: ~200-340 MB). O lutador sai em 1x, borrado. "
+              "Gere com: python ferramentas/hd_blender.py raiclaven  (uns 20 min; depois rode este gerador de novo)")
     (SAIDA / "raiclaven.cns").write_text(cns, encoding="utf-8", newline="\n")
-    gp.escrever_sff(SAIDA / "raiclaven.sff", s, manter=gp.sprites_mantidos("\n".join(a.txt), cns))
+    gp.escrever_sff(SAIDA / "raiclaven.sff", s, manter=gp.sprites_mantidos(air, cns))
     (SAIDA / "raiclaven.cmd").write_text(gp.montar_cmd(), encoding="utf-8")
     (SAIDA / "raiclaven.def").write_text(DEF, encoding="utf-8", newline="\n")
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")

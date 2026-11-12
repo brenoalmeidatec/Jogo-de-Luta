@@ -51,6 +51,9 @@ def _achar_blender():
 
 BLENDER = _achar_blender()
 AMPLIA = 4  # o Blender trabalha 4x maior que o quadro final
+# HD=3: grava em quadros_hd/ os mesmos quadros (chaves e meio) em 3x, reduzidos da mesma renderização 4x do Blender;
+# quadros/ de 1x não muda. O gerador troca cada sprite pelo gêmeo 3x (ferramentas/hd.py).
+HD = int(os.environ.get("HD", "1"))
 PASSO = 8  # um vértice a cada 2 pixels do quadro final
 LARG, ALT = 360, 260  # mesma tela dos sprites do jogo, com folga para chute alto e salto
 DESLOCA = (180 - PIVO[0], 220 - PIVO[1])  # do pivô antigo para os pés na tela do jogo
@@ -223,14 +226,14 @@ def poses(folha, ancora, amplia=AMPLIA):
     return saida
 
 
-def sem_magenta(img):
+def sem_magenta(img, minimo=15):
     """Tira a fumaça que o ChatGPT misturou com o fundo magenta (fiapos rosa) e as sobras de menos de 15 pixels."""
     a = np.array(img).astype(int)
     r, g, b = a[..., 0], a[..., 1], a[..., 2]
     a[(a[..., 3] > 0) & (r > 110) & (b > 90) & (g < 0.75 * np.minimum(r, b)), 3] = 0
     n, rotulos, dados, _ = cv2.connectedComponentsWithStats((a[..., 3] > 0).astype(np.uint8), connectivity=8)
     for i in range(1, n):
-        if dados[i, cv2.CC_STAT_AREA] < 15:
+        if dados[i, cv2.CC_STAT_AREA] < minimo:
             a[rotulos == i, 3] = 0
     return Image.fromarray(a.astype(np.uint8))
 
@@ -290,7 +293,7 @@ def animar(nome, arcade=False):
         subprocess.run([str(BLENDER), "-b", "--python-exit-code", "1", "--python",
                         str(RAIZ / "ferramentas/blender_sprites.py"), "--", str(pasta)],
                        check=True, stdout=subprocess.DEVNULL)
-        destino = (QUADROS_ARCADE if arcade else QUADROS) / nome
+        destino = (QUADROS_ARCADE if arcade else QUADROS.parent / "quadros_hd" if HD > 1 else QUADROS) / nome
         apagar = destino / "meio" if arcade else destino  # no arcade os desenhos 00..07 ficam como estão
         if apagar.exists():
             shutil.rmtree(apagar)
@@ -298,10 +301,10 @@ def animar(nome, arcade=False):
         for n, q in enumerate(quadros):
             if arcade and not q["nome"].startswith("meio/"):
                 continue
-            img = Image.open(pasta / q["saida"]).convert("RGBA").resize((LARG, ALT), Image.LANCZOS)
+            img = Image.open(pasta / q["saida"]).convert("RGBA").resize((LARG * HD, ALT * HD), Image.LANCZOS)
             img.putalpha(img.getchannel("A").point(lambda v: 255 if v >= 128 else 0))
             if nome in LIMPA_MAGENTA or (LUTADOR == "gutto" and nome.startswith("e_")):
-                img = sem_magenta(img)
+                img = sem_magenta(img, 15 * HD * HD)
             img.save(destino / (f"{n:02d}.png" if loop else f"{q['nome']}.png"))
         if loop:
             (destino / "meio").rmdir()

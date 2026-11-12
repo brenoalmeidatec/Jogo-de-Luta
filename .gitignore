@@ -1,2 +1,6 @@
 .env
 __pycache__/
+
+# quadros 3x do Gutto e do Raiclaven (~550 MB): gere com python ferramentas/hd_blender.py <lutador>
+sprites/gutto/quadros_hd/
+sprites/raiclaven/quadros_hd/

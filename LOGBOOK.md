@@ -1316,7 +1316,13 @@ estica, e o rosto, os olhos e os músculos viravam blocos 3x3.
   **mesmo dano e mesmos estados** nos 53 roteiros; Pengaró 146/146 e Hazak 175/176 (a mesma falha de antes), sem nenhuma diferença entre antes e depois.
 - `.sff`: CK de 1,1 para 3,9 MB, Pengaró de 2 para 5,5 MB, Hazak de 1,1 para 4,2 MB.
 
+**Depois, no mesmo dia: Gutto e Raiclaven.** `animar_folha.py` ganhou `HD=3` (a mesma renderização 4x do Blender reduzida
+para 3x, em `quadros_hd/`). Os quadros do meio também saem em 3x, então nada pisca. `ferramentas/hd_blender.py <lutador>`
+roda tudo em ~20 min. `quadros_hd` do Gutto e do Raiclaven fica fora do git (~550 MB), e o gerador avisa se faltar.
+O `hd.py` passou a aceitar recorte 1-4 px diferente, porque o gerador limpa a borda (Gutto: de 260 para 575 sprites em
+3x), com pré-filtro por assinatura 8x8 (de 16 min para 86 s). Robô antes e depois: Gutto 143/144 e Raiclaven 143/144
+(a mesma falha de antes), sem diferença. `.sff`: Gutto 21 MB, Raiclaven 22 MB.
+
 **Pendente:**
-- Gutto e Raiclaven (os quadros do meio do Blender são de 1x).
 - Quadros montados por código continuam só ampliados: no Pengaró, parte do Despertar e alguns aéreos (104 sprites).
 - Se uma folha for refeita, rode o `hd_guiado.py` dela, senão o gerador usa o gêmeo velho ou amplia.
