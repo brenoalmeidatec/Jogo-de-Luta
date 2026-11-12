@@ -25,6 +25,9 @@ import subprocess
 import sys
 import tempfile
 import time
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import leve  # noqa: E402
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
@@ -51,12 +54,22 @@ try {
   }
   Set-Content -Path $ini -Value $t -NoNewline -Encoding UTF8
   $env:GALLIUM_DRIVER = 'llvmpipe'
+  if ('@GPU@' -eq '1') {  # ferramentas/leve.py: OpenGL do Mesa sobre o DirectX 12 da GPU que a sandbox recebe
+    Copy-Item 'C:\nf\mesa\dxil.dll' $jogo -ErrorAction SilentlyContinue
+    $env:GALLIUM_DRIVER = 'd3d12'
+    $env:MESA_D3D12_DEFAULT_ADAPTER_NAME = 'Intel'  # Iris Xe para o jogo; a Radeon fica livre para o dono
+    Get-CimInstance Win32_VideoController | ForEach-Object { Write-Output ("gpu na sandbox: " + $_.Name) }
+  }
+  # ferramentas/leve.py: a VM da sandbox nao aceita afinidade pelo host, entao o trabalho e limitado aqui dentro:
+  # llvmpipe com 2 threads e o motor preso a 2 vCPUs (mais lento, mas sem ocupar o notebook inteiro).
+  if ('@LEVE@' -eq '1') { $env:LP_NUM_THREADS = '2' }
   Write-Output ("inicio do motor: " + (Get-Date -Format o))
   # -ArgumentList '' falha no Start-Process: so passa quando houver argumentos.
   $extra = @{}
   if ('@ARGS@' -ne '') { $extra['ArgumentList'] = '@ARGS@' }
   $p = Start-Process -FilePath "$jogo\Ikemen_GO.exe" @extra -WorkingDirectory $jogo -PassThru `
        -RedirectStandardOutput 'C:\nf\saida\motor_stdout.txt' -RedirectStandardError 'C:\nf\saida\motor_stderr.txt'
+  if ('@LEVE@' -eq '1') { try { $p.ProcessorAffinity = [IntPtr]3; $p.PriorityClass = 'BelowNormal' } catch {} }
   $limite = (Get-Date).AddSeconds(@ESPERA@)
   $fim = 'C:\nf\saida\@FIM_ARQUIVO@'
   $motivo = 'tempo esgotado'
@@ -103,7 +116,7 @@ def fechar_sandbox():
 def wsb_xml(pastas, logon):
     m = "".join(f"    <MappedFolder><HostFolder>{h}</HostFolder><SandboxFolder>{s}</SandboxFolder>"
                 f"<ReadOnly>{'true' if ro else 'false'}</ReadOnly></MappedFolder>\n" for h, s, ro in pastas)
-    return ("<Configuration>\n  <vGPU>Disable</vGPU>\n  <Networking>Disable</Networking>\n"
+    return (f"<Configuration>\n  <vGPU>{'Enable' if leve.GPU else 'Disable'}</vGPU>\n  <Networking>Disable</Networking>\n"
             "  <AudioInput>Disable</AudioInput>\n  <VideoInput>Disable</VideoInput>\n"
             "  <ClipboardRedirection>Disable</ClipboardRedirection>\n  <PrinterRedirection>Disable</PrinterRedirection>\n"
             "  <ProtectedClient>Disable</ProtectedClient>\n  <MemoryInMB>4096</MemoryInMB>\n"
@@ -157,7 +170,7 @@ def rodar(lutadores, args, saida, por_cima=None, ini=None, fim_arquivo="resultad
         pares = {**INI_PADRAO, **(ini or {})}
         ini_ps = ",".join(f"@('{_ps_str(re.escape(k))}','{_ps_str(v)}')" for k, v in pares.items())
         ps1 = (PS1.replace("@LUTADORES@", ",".join(f"'{c}'" for c in dict.fromkeys(lutadores)))
-               .replace("@INI@", ini_ps).replace("@ARGS@", _ps_str(" ".join(args)))
+               .replace("@INI@", ini_ps).replace("@LEVE@", "1" if leve.LIGADO else "0").replace("@GPU@", "1" if leve.GPU else "0").replace("@ARGS@", _ps_str(" ".join(args)))
                .replace("@ESPERA@", str(int(espera))).replace("@FIM_ARQUIVO@", _ps_str(fim_arquivo))
                .replace("@FIM_REGEX@", _ps_str(fim_regex)))
         (trab / "rodar.ps1").write_text(ps1, encoding="utf-8-sig")
@@ -166,14 +179,17 @@ def rodar(lutadores, args, saida, por_cima=None, ini=None, fim_arquivo="resultad
         wsb = trab / "rodar.wsb"
         wsb.write_text(wsb_xml(pastas, r"powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\nf\trabalho\rodar.ps1"),
                        encoding="utf-8")
-        print(f"abrindo a Windows Sandbox (sem rede, sem vGPU); saída em {saida}", flush=True)
+        print(f"abrindo a Windows Sandbox (sem rede, vGPU {'ligada' if leve.GPU else 'desligada'}); saída em {saida}", flush=True)
         t0 = time.time()
-        subprocess.Popen([str(SANDBOX_EXE), str(wsb)])
+        subprocess.Popen([str(SANDBOX_EXE), str(wsb)], creationflags=leve.IDLE)
+        vigia = leve.vigia(leve.SANDBOX)  # sandbox em Idle e só nos núcleos E (ferramentas/leve.py)
+        vigia.__enter__()
         # margem para o boot da sandbox e a cópia do motor antes do relógio do rodar.ps1 começar
         while time.time() - t0 < espera + 300 and not (saida / "pronto.txt").exists():
             time.sleep(2)
         pronto = (saida / "pronto.txt").exists()
         time.sleep(3)
+        vigia.__exit__(None, None, None)
         fechar_sandbox()
         print(f"sandbox {'terminou' if pronto else 'NÃO terminou'} em {time.time() - t0:.0f} s", flush=True)
         return pronto

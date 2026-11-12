@@ -17,6 +17,27 @@
 - Uso do plano: o Alisson mudou a regra em 2026-11-11, só parar em 100% do uso semanal (antes era 80%). Como o trabalho
   para sozinho no teto, cada frente mantém commits pequenos e o LOGBOOK em dia.
 
+### Notebook leve: o Alisson usa a máquina enquanto o trabalho roda (2026-11-11)
+
+Neste notebook (i5-1345U: lógicos 0 a 3 = 2 núcleos de desempenho com HT, 4 a 11 = 8 núcleos de eficiência; Iris Xe +
+Radeon RX 7600 XT; 16 GB) o trabalho pesado não pode travar o uso. Regra, aplicada por `ferramentas/leve.py`:
+
+- **Um trabalho pesado por vez** (sandbox, Blender, render de vídeo), em fila. Agentes que só leem e escrevem texto
+  pesam pouco; quem pesa são os processos que eles disparam. Nada de seis frentes com Blender e sandbox ao mesmo tempo.
+- **Prioridade Idle e só núcleos E** em todo processo pesado no host (`leve.aliviar(pid)`, `creationflags=leve.IDLE`).
+  Os núcleos de desempenho ficam livres para o dono. A ideia veio da sessão de edição de vídeo, que caiu de 80-99% de
+  carga para ~3% com isso.
+- **Sandbox com GPU:** `sandbox.py` (robô) liga a vGPU e o jogo desenha pelo Mesa d3d12 na **Iris Xe**
+  (`MESA_D3D12_DEFAULT_ADAPTER_NAME=Intel`); a **Radeon fica livre** para o dono e para vídeo. Medido na mesma luta de
+  60 s: carga acima do fundo caiu de +40 / +37 pontos (núcleos P / E) para +18 / +10. Robô 146/0 nos dois modos.
+- **Limite dentro da sandbox:** a VM (`vmmemWindowsSandbox`) recusa prioridade e afinidade pelo host, então o motor lá
+  dentro fica preso a 2 vCPUs, com `LP_NUM_THREADS=2` e ffmpeg `-threads 2`.
+- **Filmagem continua no processador** (`filmar_sandbox.py`): com a GPU o `gdigrab` grava tela preta. Próximo passo, não
+  testado: `ddagrab` (Desktop Duplication) com recorte da janela. `LEVE_GPU_FILME=1` liga a GPU na filmagem para testar.
+- **Blender e ffmpeg no host:** `blender -b -t 4` e `ffmpeg -threads 2`, com `leve.aliviar` no processo.
+- Desligar: `LEVE=0` (tudo) ou `LEVE_GPU=0` (sandbox volta ao llvmpipe). `python ferramentas/leve.py` aplica a regra
+  em sandbox, Blender e ffmpeg que já estejam rodando.
+
 ## 2. Frentes em paralelo: uma branch e uma pasta por frente
 
 Cada frente trabalha num *worktree* separado, para duas frentes nunca editarem a mesma pasta ao mesmo tempo. Arquivos

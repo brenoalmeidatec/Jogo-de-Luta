@@ -1257,3 +1257,13 @@ sandbox, robô 146/0, dois filmes). Os dois céticos estavam rodando e foram int
 ## 2026-11-11 (endiabrado: PARADA às 17h20, o Alisson precisou desligar o notebook)
 
 Parada rápida. Último commit antes desta entrada: `f3e86b1c`. Arquivos alterados sem commit na hora da parada: 0 (guardados neste commit; **não testados**, se houver). Falta o que a entrada anterior desta branch lista; a etapa em andamento (retoque ou conferência) foi interrompida.
+
+## 2026-11-11 (notebook leve: sandbox na Iris Xe, pesados em Idle nos núcleos E)
+
+- **Feito:** `ferramentas/leve.py` e regra "Notebook leve" na seção 1 de `docs/metodo-do-claude.md`, combinada com a
+  sessão de edição de vídeo. `sandbox.py` agora liga a vGPU e o jogo desenha pelo Mesa d3d12 na Iris Xe (`dxil.dll` do
+  mesmo pacote mesa-dist-win 26.2.6 copiado para `%USERPROFILE%/JogoDeLuta/ferramentas_sandbox/mesa`); processos da
+  sandbox no host em Idle e núcleos E; dentro dela, motor em 2 vCPUs e `LP_NUM_THREADS=2`. Medido: carga acima do fundo
+  de +40/+37 para +18/+10 pontos (P/E) na mesma luta. Robô Pengaró 146/0 com GPU; filme de 5 s (sem GPU) conferido.
+- **Pendente:** filmar com GPU (gdigrab grava preto; tentar ddagrab); a VM recusa afinidade pelo host (talvez com
+  administrador, não testado); aplicar `leve.aliviar` nos scripts de Blender da branch `auras`.
