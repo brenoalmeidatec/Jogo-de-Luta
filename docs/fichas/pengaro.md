@@ -4,7 +4,8 @@ Estilo de luta: capoeira de bar. Ginga, rasteira, compasso (parada de mão) e ar
 de trás e lata de cerveja para arremessar. Gosta de chimpanzés (faz parte da história).
 Personalidade / falas: boleiro, cachaceiro e resenhista. As falas estão desligadas (`BALOES_LIGADOS = False`) até o
 Breno gravar os áudios; os textos em `BALOES` ficam de roteiro.
-Cores e paleta: pele morena, calça de capoeira clara, faixa verde e amarela; no Despertar vira o endiabrado, o
+Cores e paleta: pele negra retinta, a mais escura do elenco (mais que o Gutto e o CK; pedido do Breno em 2026-11-12,
+detalhes em `docs/arcade/pengaro.md`), calça de capoeira clara, faixa verde e amarela; no Despertar vira o endiabrado, o
 boss final (conceito aprovado em 2026-11-11, `sprites/pengaro/quadros/folhas_arcade/e_conceito.png`): mesmo rosto,
 corpo e altura, sem garrafa; pele marrom-escura arroxeada, olhos violeta sem pupila, cabelo comprido e revolto com
 pontas violeta e dois chifres curtos de fumaça; casaco de mestre preto sem manga com friso dourado e forro roxo, barra

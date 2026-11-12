@@ -5,6 +5,39 @@
 > [`../biblia-de-arte.md`](../biblia-de-arte.md#estilo-arcade-anos-90). Folhas de contato e medições brutas ficaram no
 > scratchpad da sessão, fora do repo.
 
+## Pedido do Breno para o Alisson (2026-11-12): Pengaró com a pele bem mais escura
+
+Na forma base o Pengaró tem que ser **bem mais escuro**: a pessoa de verdade é negra retinta. Ele tem que ser o lutador
+**mais escuro do elenco, mais que o Gutto e mais que o CK**. Hoje ele está ao contrário: com a pele mais clara e mais
+amarelada dos três (o próprio estudo abaixo já anotava "pele mais clara e amarelada que a atual").
+
+O que fazer:
+
+1. **Paleta da pele** (`sprites/pengaro/paleta_arcade.json` e a tabela abaixo). Proposta que mantém as faixas de matiz da
+   regra 3, o contorno sem canal abaixo de 20 (regra 5) e fica abaixo do Gutto em cada tom:
+
+   | Papel | Hoje | Proposta | H / S / V | Gutto, para comparar |
+   |---|---|---|---|---|
+   | `pele_contorno` | `#4C1414` | `#3A1416` | 357° / 66% / 23% | — |
+   | `pele_sombra` | `#8A321C` | `#47201A` | 8° / 63% / 28% | `#6E3226` (V 43%) |
+   | `pele_medio` | `#DF7E3F` | `#723F1E` | 24° / 74% / 45% | `#985630` (V 60%) |
+   | `pele_luz` | `#FDC372` | `#A2753E` | 33° / 62% / 64% | `#C4894C` (V 77%) |
+   | `pele_brilho` | `#FDECCF` | `#D9A066` | 30° / 53% / 85% | `#E8C08A` (V 91%) |
+
+   O CK (`sprites/ck/paleta_arcade.json`) tem o médio em `#D05534` (V 82%), então ele já fica bem mais claro. Os valores
+   são ponto de partida: confira no jogo, ao lado do Gutto e do CK, e ajuste à mão se precisar. Depois rode o
+   `conferir_arte.py`.
+2. **Prompt do ChatGPT:** em todo pedido do Pengaró base, trocar "skin" por *"very dark brown skin, the darkest skin of
+   the cast, darker than the attached sheet if the sheet looks lighter"*. A folha "Socos" anexada como referência também
+   está clara. O certo é gerar uma referência nova já escura e passar a anexar ela.
+3. **Folhas que já existem** (`sprites/pengaro/quadros/folhas_arcade/` e a arte atual em `quadros/`): re-quantizar com a
+   paleta nova. Como a quantização é por papel, a pele troca de tom sem redesenhar. Só precisa refazer no ChatGPT a folha
+   em que o sombreado ficar estranho.
+4. **O endiabrado continua diferente da base.** Ele é a pele quase preta arroxeada com relevo roxo
+   (`paleta_arcade_endiabrado.json`). Com a base mais escura, conferir que a troca ainda se nota: o endiabrado vai mais
+   para o roxo e para o preto, e a base fica marrom.
+5. Atualizar a frase "pele morena" em `docs/fichas/pengaro.md` (já trocada para "pele negra retinta").
+
 ## Paleta fixa (15 cores + transparente)
 
 Arquivo de dados: `sprites/pengaro/paleta_arcade.json` (montado por `quantizar_folha.py --montar-paleta soco` e ajustado
