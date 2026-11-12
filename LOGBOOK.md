@@ -1525,3 +1525,35 @@ código final (uma por vez, som desligado): roteiro padrão de 10 s e roteiro ex
   quando as folhas `fx_aura_*` existirem.
 - Filmes: `scratchpad/aura/final/aura_teste.mp4` (+ `aura_teste_tira.png`), `padrao3/`, `extra4/` (medidas em
   `padrao3_medir.txt` e `extra4_medir.txt`).
+
+## 2026-11-12 (aura-pengaro: aura do Blender ligada no Pengaró endiabrado)
+
+Branch `aura-pengaro` (worktree `C:/Dev/Jogo-de-Luta-aurapengaro`, tem `mugen` + `auras` + `efeitos`).
+
+- **Feito:** `ferramentas/aura_pengaro.py` (novo) liga as camadas de `sprites/pengaro/aura/` pelo `aura.py` no
+  `[Statedef -4]` do Pengaró: Explods 9600 anel_tras (chão), 9601 coluna (coluna + chicotes + fiapos num desenho
+  só, contornados juntos no Blender), 9602 anel_frente (chão, prioridade de frente, rasteiro: 10 px acima da sola,
+  alfa até 0,49 com surto), 9603 soltos (pedras e elos). Liga com `var(20) > 0`, estado 3100 e o 2000 a partir do
+  Time 83; surto nos supers 3000/3100/3200 e no Time 86 da transformação; entrada em 44 tiques. A aura antiga
+  (Explods 9210/9211/9218 no `-2`, com os detritos na frente do corpo) saiu; os desenhos dela continuam no `.sff`
+  só porque entram na escolha da paleta. A aura fica fora da paleta (`Sprites.fora_da_paleta`): paleta e os 711
+  sprites antigos idênticos byte a byte; os outros lutadores de `chars/` com o mesmo md5. Custo: dois tons lilás
+  claros da aura caem na mesma cor da paleta do corpo (o mais claro, 152,13,239, vira 139,19,216).
+- **Ferramentas:** `aura.py` ganhou `Camada.tique` (padrão igual ao de antes; `teste_aura` sai igual).
+  `filmar_aura.py --lutador X [--sem-aura]` filma a aura de um lutador de verdade (os dois lados na cor 1, Despertar
+  e surto injetados no `.cmd`); `medir_aura.py --referencia` mede o corpo contra o filme sem aura (a forma
+  despertada tem outro desenho, comparar com o começo do filme dava 10% falso).
+- **Conferido:** robô `testar_pengaro.py` 146 passaram, 0 falharam; `verificar_pengaro.py` sai 0. Filme do roteiro
+  padrão + referência: tronco 100%, pernas 99,9-100%, pés 95,8% (loop) e 98,1-98,2% (surto) iguais ao despertado sem
+  aura; motor sem escala/giro no laço; mesmo quadro no máximo 2 tiques; volta do laço 0,69x/0,89x; ligando 3,8x/3,4x;
+  surto 1,69x/1,57x contra os vizinhos; HUD 0,00%; 4 Explods; virada em 5 tiques; desliga em ~36 tiques, 0 no fim.
+  Retoque pelo filme: pedras andavam junto da coluna (correlação -0,95, deriva lenta) e a coluna e as pedras trocavam
+  de quadro no mesmo tique (p95/mediana 2,6-2,7); ligando dava 6,5x (entrada de 26 tiques).
+- **Pendente / não verificado:** 1 falha no `medir_aura`: P1 tem 5 quadros quase parados no alto da tela (o P2 passa):
+  a massa da coluna é desenhada a 2 tiques por quadro (Blender), e no tique sem troca só mexem as pedras e a deriva.
+  Conserto pela causa = renderizar a coluna com o dobro de quadros a 1 tique (aumenta o `.sff` ~1,8 MB): decisão do
+  dono. No pulo a coluna sobe junto com o corpo (o anel fica no chão): olhar se agrada. Surto num super de verdade,
+  pose de vitória, round 2 e o roteiro extra não filmados com o Pengaró; fundo claro e outros cenários não vistos;
+  nenhum vídeo assistido em tempo real, só tiras.
+- **Próximo:** o Alisson olhar `pengaro_despertar_luta.mp4`; decidir o rerender a 1 tique; juntar na `mugen` quando
+  aprovar. Filmes e tiras: `scratchpad/aurapengaro/` desta sessão (fora do repositório).

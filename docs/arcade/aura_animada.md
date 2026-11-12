@@ -37,6 +37,8 @@ cns += AURA.cns(cabecalho=True)    # [Statedef -4] + controladores (sem cabecalh
   especiais escolhidos o gerador põe `AURA.disparo_surto()` dentro do estado). Por uns 30 ticks a aura incha
   (`surto_incha`, padrão 12%), treme (`surto_tremor`), o tempo dela corre 2,6x, a animação anda 1 quadro por tick e
   as partículas nascem `surto_extra` vezes mais. Depois de um surto há folga de 90 ticks antes do próximo.
+- `tique`: em que tique do passo a camada troca de quadro (padrão: índice % tempo). Camadas desenhadas juntas (as
+  metades de um anel) no mesmo tique; camadas que dividem a mesma região, em tiques diferentes.
 - `esconde`: expressão por camada; enquanto vale, a camada apaga (~8 ticks) e volta depois. Serve para a reação
   avulsa do gerador (o garanhão do coice, as asas que fecham) tocar no lugar da camada em loop, sem dobrar.
 - Virada: quando o lutador vira, as camadas apagam, trocam de lado 5 ticks depois e voltam (12 ticks no total).
@@ -105,6 +107,10 @@ python ferramentas/filmar_aura.py --saida PASTA                # sandbox, 10 s: 
 python ferramentas/medir_aura.py PASTA                         # medidas.txt, 2 s quadro a quadro, tiras; sai 1 se falhar
 python ferramentas/filmar_aura.py --roteiro extra --saida P2   # 2 rounds: superpausa, estado custom, pulo, KO, round 2
 python ferramentas/medir_aura.py P2 --extra
+# lutador de verdade (aura do aura.py no .cns, Despertar por var(20)): os dois lados são ele, na cor 1
+python ferramentas/filmar_aura.py --lutador pengaro --saida P3
+python ferramentas/filmar_aura.py --lutador pengaro --sem-aura --saida P4   # mesmo roteiro, aura desligada
+python ferramentas/medir_aura.py P3 --referencia P4   # corpo medido contra o despertado sem aura, não contra a base
 ```
 
 O P1 usa a aura "ck" (folhas `fx_paredao`, `fx_aura`, `fx_fumaca` + névoa por código) e o P2 a "sombra" (toda por

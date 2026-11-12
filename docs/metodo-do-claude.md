@@ -135,7 +135,7 @@ Pedido do Alisson (2026-11-11): "não quero nada estático... não quero um movi
   de 360x200 com o pé do lutador em (180,190). Limites conhecidos: o miolo do desenho "ferve" um pouco ao girar; a
   raiz escondida atrás do corpo é remendo e pode aparecer em golpe; a aura do conceito ocupa quase a tela inteira.
   Cada aura nova (garanhão do Gutto, leque do Raiclaven, paredão do CK, coluna do Pengaró) ganha o seu
-  `<lutador>_<aura>.py` copiado do molde; as camadas finais ficam em `sprites/<id>/aura/` com um `aura.json`. Ainda falta ver rodando dentro do jogo.
+  `<lutador>_<aura>.py` copiado do molde; as camadas finais ficam em `sprites/<id>/aura/` com um `aura.json`. A do Pengaró já roda no jogo (`ferramentas/aura_pengaro.py`, 2026-11-12); as outras ainda não.
 - **Corpo continua desenhado.** A fluidez vem de antecipação, recuperação gradual (3 quadros ou mais), pano, cabelo,
   rabo e corrente atrasando 1 a 2 quadros, e deslocamento por velocidade em vez de salto. Onde 8 desenhos não bastam,
   pede-se uma segunda folha para ter 16.

@@ -105,7 +105,7 @@ corpo. Cada camada roda no seu próprio laço: quadro = (tique // tiques_por_qua
 Todas: PNG 360x200, alfa 0/255, 15 cores (paleta no `aura.json`), pé em (180,190), 2 tiques por quadro, quadro =
 `(tique // 2) % quadros` de cada camada. Arquivos `sprites/<id>/aura/{nome}_{quadro:02d}.png` + `aura.json`. Tamanho =
 caixa da união de todos os quadros de todas as camadas, medida nos PNG instalados. Render bruto, vídeo e tiras ficam
-fora do repositório, na pasta de trabalho de cada aura. **Nenhuma roda no jogo ainda.**
+fora do repositório, na pasta de trabalho de cada aura. **Só a do Pengaró roda no jogo** (2026-11-12, `ferramentas/aura_pengaro.py`; as outras ainda não).
 
 | Lutador | Script | Camadas (quadros; plano) | PNG | Tamanho (x / y) | Pendências |
 |---|---|---|---|---|---|
