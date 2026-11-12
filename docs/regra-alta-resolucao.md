@@ -30,6 +30,9 @@ pixel do desenho num pixel da tela. O boneco fica do mesmo tamanho na tela, mas 
 1. **`ferramentas/hd.py`**, chamado no fim do `gerar_<lutador>.py`:
    - troca cada sprite do corpo pelo gêmeo 3x do mesmo quadro. O gêmeo é achado comparando pixels com o quadro de 1x;
      a comparação aceita retoque pequeno, borda limpa pelo gerador e quadro espelhado;
+   - conta como corpo também o destino de todo `[RemapPreset ...]` do `.cns` (a forma despertada do kit troca o
+     sprite do corpo pelo `RemapSprite`, fora do `.air`). Até 2026-11-12 isso faltava: o despertado do CK, do Pengaró,
+     do Gutto e do Raiclaven saía em 1x e o motor desenhava em 1/3 do tamanho (visto no filme da integração);
    - multiplica por 3 toda caixa Clsn do `.air`;
    - põe `[Size]` em 1/3 no `.cns`;
    - deixa em 1x o sprite que só aparece em Explod, projétil ou faísca própria (`S`), e o retrato (grupo 9000);

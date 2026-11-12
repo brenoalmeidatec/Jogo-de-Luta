@@ -38,6 +38,21 @@ def acoes(air):
     return out
 
 
+RE_PRESET = re.compile(r"^\[RemapPreset [^\]\n]*\]\n(.*?)(?=^\[|\Z)", re.M | re.S | re.I)
+RE_TROCA = re.compile(r"^\s*(\d+)\s*,\s*(\d+)\s*=\s*(\d+)\s*,\s*(\d+)", re.M)
+
+
+def trocas_do_remap(cns):
+    """Pares ((grupo, índice) de origem, (grupo, índice) de destino) de todo [RemapPreset ...] do .cns."""
+    return [((int(a), int(b)), (int(c), int(d))) for bloco in RE_PRESET.findall(cns)
+            for a, b, c, d in RE_TROCA.findall(bloco)]
+
+
+def destinos_do_remap(cns, origens):
+    """Destinos de RemapPreset cuja origem está em `origens`."""
+    return {d for o, d in trocas_do_remap(cns) if o in origens}
+
+
 def acoes_de_efeito(cns):
     """Ações que o motor desenha sem a escala do lutador: anim de Explod/ModifyExplod (sem F), anim de projétil e
     faísca própria (sparkno/guard.sparkno com S). Expressão no lugar do número fica de fora (devolvida à parte)."""
@@ -156,6 +171,12 @@ def aplicar(s, air, cns, pares, vitima=frozenset()):
     efeito_n, duvida = acoes_de_efeito(cns)
     corpo_spr = set().union(*(v for k, v in por_acao.items() if k not in efeito_n)) | set(vitima)
     efeito_spr = set().union(*(v for k, v in por_acao.items() if k in efeito_n)) if efeito_n else set()
+    # o RemapSprite (forma despertada: [RemapPreset despertado]) desenha o destino no lugar do corpo, com a escala do
+    # lutador: o destino é corpo mesmo fora do .air. Sem isso ele ficava em 1x e o Despertar aparecia em 1/3 do tamanho.
+    remap = destinos_do_remap(cns, corpo_spr)
+    assert not remap & efeito_spr and not {o for o, d in trocas_do_remap(cns) if o in corpo_spr} & efeito_spr, \
+        "sprite de RemapPreset também usado em efeito: a cópia (grupo + 20000) não seguiria o remap"
+    corpo_spr |= remap
     dos_dois = efeito_spr & corpo_spr
     # sprite usado no corpo E num efeito: o efeito fica com o original (1x) e as ações do corpo passam a uma cópia num
     # grupo livre (grupo + 20000), que vira HD como qualquer sprite do corpo
