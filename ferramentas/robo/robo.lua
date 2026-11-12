@@ -29,7 +29,7 @@ do
   end
 
   local function clock() return roundTime() end
-  -- camadas vivas da aura do endiabrado do Pengaro (ferramentas/aura_pengaro.py: Explods 9600 a 9603)
+  -- camadas vivas da aura do endiabrado (aura.py: Pengaro 9600 a 9603, CK 9600 a 9602)
   local function auraN(n)
     return com(n, function() local k = 0; for e = 9600, 9603 do k = k + numExplod(e) end; return k end)
   end
@@ -275,6 +275,18 @@ do
     wait(3)
     press(1, {"despertar"}, 3)
     need(estadoEm(2000), 12, "entrou em 2000")
+    if LUTADOR == "ck" then  -- a aura do Ratao nasce quando ele sai da fumaca (tique 69) e o paredao dela espera o de cena
+      need(function() local s = snap(1); return s.st == 2000 and s.t >= 60 end, 200, "cena no tique 60 (a superpausa de 30 conta no relogio)")
+      need(function() return auraN(1) == 0 end, 1, "sem aura antes de o Ratao sair da fumaca", false)
+      need(function() local s = snap(1); return s.st == 2000 and s.t >= 76 end, 60, "cena no tique 76")
+      note(function() local p, h = com(1, function() return numExplod(9250) end), com(1, function() return map("au_ck_h0") end)
+        return string.format("tique 76: paredao de cena %d, h0 %.2f, camadas %d", p, h, auraN(1)) end)
+      need(function() local p, h = com(1, function() return numExplod(9250) end), com(1, function() return map("au_ck_h0") end)
+        return auraN(1) == 3 and (p == 0 or h > 0.9) end, 1,
+        "aura nascida (3 camadas) e o paredao dela apagado enquanto o paredao da cena toca", false)
+      need(function() return com(1, function() return numExplod(9250) end) == 0 end, 60, "paredao de cena saiu")
+      note(function() local s = snap(1); return "paredao de cena saiu no tique " .. s.t .. " do estado " .. s.st end)
+    end
     need(function() return st1() ~= 2000 end, 500, "transformacao terminou", false)
     note(function() local s = snap(1); return "var20=" .. s.v20 .. " power=" .. s.pow .. " dist " .. c.d0 .. " -> " .. s.d end)
     need(function() local s = snap(1); return s.v20 > 0 and s.pow == 0 end, 1, "despertou e gastou a barra toda", false)
@@ -307,6 +319,34 @@ do
       acao(function() c.aura_volta = auraN(1); c.t_volta = clock() end)
       need(function() return auraN(1) == 0 end, 2, "a aura apaga no maximo 2 tiques depois do corpo voltar", false)
       note(function() return "camadas quando o corpo voltou: " .. c.aura_volta .. "; apagou " .. (clock() - c.t_volta) .. " tiques depois" end)
+    end)
+  end
+  if LUTADOR == "ck" then
+    -- aura do Ratao (ferramentas/aura_ck.py: paredao 9600, chao 9601, fagulhas 9602): liga inteira e ja apagou
+    -- quando o corpo volta a forma base (o fade de saida acaba junto com o var(20))
+    desperto("aura do Ratao: liga as 3 camadas e apaga junto com a forma do Ratao", function()
+      wait(70)
+      need(function() return auraN(1) == 3 end, 10, "as 3 camadas da aura (9600 a 9602) vivas no Despertar")
+      need(function() return com(1, function() return map("au_ck_h0") end) < 0.05 end, 1, "o paredao da aura aparece (sem paredao de cena)", false)
+      add(function() held[1].fimdesp = clock() + 2; return true end)
+      need(function() local v = snap(1).v20; return v > 0 and v <= 40 end, 10, "Despertar no fim (var20 <= 40)")
+      need(function() return snap(1).v37 == 0 end, 60, "o corpo voltou a forma base (var37 = 0)")
+      acao(function() c.aura_volta = auraN(1); c.t_volta = clock() end)
+      need(function() return auraN(1) == 0 end, 2, "a aura apaga no maximo 2 tiques depois do corpo voltar", false)
+      note(function() return "camadas quando o corpo voltou: " .. c.aura_volta .. "; apagou " .. (clock() - c.t_volta) .. " tiques depois" end)
+    end)
+    -- o Grave do Paredao poe o paredao de cena (Explod 9250): o da aura sai da frente enquanto ele toca e volta depois
+    desperto("aura do Ratao: o paredao dela da lugar ao paredao do Grave (3403) e volta", function()
+      approach(50)
+      wait(40)
+      press(1, {"sombra_b"}, 3)
+      need(estadoEm(3403), 14, "entrou em 3403")
+      need(function() return com(1, function() return numExplod(9250) end) > 0 end, 20, "paredao de cena na tela")
+      wait(12)
+      need(function() return com(1, function() return map("au_ck_h0") end) > 0.9 end, 1, "paredao da aura apagado enquanto o de cena toca", false)
+      need(function() return com(1, function() return numExplod(9250) end) == 0 end, 80, "paredao de cena saiu")
+      wait(20)
+      need(function() return com(1, function() return map("au_ck_h0") end) < 0.01 and auraN(1) == 3 end, 1, "paredao da aura de volta, 3 camadas", false)
     end)
   end
   local function exclusivo(nome, cmd, est, dist)
@@ -471,6 +511,7 @@ do
       need(function() local s = snap(1); return s.st == 3100 and s.t > 20 and s.v20 > 0 end, 80, "var(20) > 0 no meio do 3100")
       need(function() return st1() == 0 end, 300, "terminou", false)
       need(function() return snap(1).v20 > 0 end, 1, "continua no Ratao depois do Baile", false)
+      need(function() return auraN(1) == 3 end, 1, "a aura do Ratao segue inteira depois do Baile (3 camadas)", false)
     end)
     desperto("Rajada da Esquina no Ratao (golaco entra em 3000, nao no Baile)", function()
       approach(80)

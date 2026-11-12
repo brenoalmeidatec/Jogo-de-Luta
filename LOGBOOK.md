@@ -1592,3 +1592,32 @@ Branch `aura-pengaro` (worktree `C:/Dev/Jogo-de-Luta-aurapengaro`, tem `mugen` +
   estado custom (latente, nenhum lutador manda para 2000/3000-3200); escala 1,12 do motor no surto (passageira);
   texto "VENCEU" não aparece no modo do filme (não visto); nenhum vídeo assistido em tempo real.
 - Filmes, tiras e medidas: `scratchpad/aurapengaro/final/` desta sessão (fora do repositório).
+
+## 2026-11-12 — Aura do CK (Modo Ratão) ligada no jogo (branch `aura-ck`)
+
+- **Feito:** `ferramentas/aura_ck.py` (molde do `aura_pengaro.py`) liga as camadas do Blender de `sprites/ck/aura/`
+  pelo `aura.py`, no `[Statedef -4]`, Explods 9600 a 9602 (os efeitos do CK seguem em 9300-9305): **paredão+anéis**
+  numa camada (os anéis saem dos cones; separados descolariam), **chão** (névoa+cacos) e **fagulhas**. Todas atrás de
+  qualquer lutador (-7, -6, -5; o mais baixo de lutador é -3) e no chão no pulo (`no_chao`); paredão troca de quadro no
+  tique ímpar, chão e fagulhas no par; entrada 44, virada a 60%. Nasce quando o Ratão sai da fumaça (estado 2000,
+  tique 69); surto nos supers, no Grave (3403) e na quebra da garrafa (2000, tique 90); desliga 34 tiques antes do
+  var(20) acabar (no Baile, pelo AnimTime). O paredão da aura usa `esconde`: some enquanto o paredão de cena (Explod
+  9250: cena, Baile, Grave) está na tela e volta depois, sem dois paredões. A fumaça verde antiga (`aura_cns`, ação
+  9210) saiu: os desenhos dela ficam só pela paleta e a poda os tira do `.sff`.
+- **Conferido:** `conferir_sff` paleta igual e os 658 sprites antigos iguais (só os 288 da aura entram, os 8 da 9210
+  saem; `.sff` 1,20 → 3,13 MB); md5 de `chars/` dos outros lutadores igual. Robô CK 191/0 (antes 175/0; checagens
+  novas: sem aura antes do tique 69, 3 camadas e paredão escondido enquanto o de cena toca — ele sai no tique 84, a
+  superpausa de 30 conta no `removetime` —, aura apaga até 2 tiques depois do corpo voltar, aura inteira depois do
+  Baile, paredão some e volta no Grave). Robô Pengaró 151/0. Filme padrão + `--referencia` sem aura: tudo OK menos
+  "tamanho" (abaixo); laço p95/mediana 1,93/2,02, 0 quadros parados (o paredão e as fagulhas trocam em tiques
+  diferentes); surto 1,91x/1,89x contra os vizinhos; corpo tronco/pernas/pés ≥ 99,3%; HUD 0,00%; 3 Explods; virada em
+  5 tiques; desliga em 36. Filme luta olhado em tira: pés limpos, CK pula por cima do paredão, fim natural do P2 apaga
+  junto com a volta do corpo, aura do vencedor na pose de vitória.
+- **Pendente / não verificado:** `medir_aura` falha em "tamanho": a aura sobe 130-142 px (aceite 1,4x o lutador =
+  155 px). É a proporção do conceito aprovado (paredão ~1,25x o CK); subir pede rerender no Blender ou escala no motor
+  (proibida): decisão do dono. Cores: a aura é levada para a paleta do CK (fora da escolha da paleta) e o cinza-verde
+  sai um pouco mais verde e as fagulhas mais amarelas (distância até 21 nas cores do paredão, 47 no laranja). O
+  paredão de cena some e o da aura volta noutra posição (x -46 contra 0): troca vista só no robô, não em filme. Cena
+  do Despertar, Baile e Grave não filmados; dois Ratões perto viram um paredão só, enorme; nenhum vídeo assistido em
+  tempo real, só tiras.
+- Filmes, tiras e medidas: `scratchpad/aurack/` desta sessão (fora do repositório).

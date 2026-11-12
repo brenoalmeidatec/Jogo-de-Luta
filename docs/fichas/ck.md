@@ -21,6 +21,10 @@ parecida sem mudar o resto.
 cheiro de "uva" (lilás clara). No endiabrado: estilhaço verde de vidro na garrafa e a aura.
 **Aura do Despertar (regra da seção 4):** **fumaça cinza-esverdeada do baseado subindo dos pés**, densa e lenta, com
 umas folhinhas de brasa. Nenhum outro lutador usa (Pengaró violeta, Gutto vermelho, Raiclaven prata, Hazak laranja-ouro).
+No jogo (2026-11-12, boss final): o **paredão de som de fumaça** do conceito aprovado (`e_conceito.png`), feito no
+Blender (`sprites/ck/aura/`) e ligado por `ferramentas/aura_ck.py`: paredão soltando anéis dos cones, névoa e cacos no
+chão, fagulhas laranja subindo; 3 Explods (9600 a 9602) atrás dos dois lutadores, no chão no pulo. Nasce quando o
+Ratão sai da fumaça na cena e dá lugar ao paredão de cena (cena, Baile, Grave) enquanto ele toca.
 
 ## O que o áudio pediu
 
@@ -270,7 +274,7 @@ de mão. O Breno achou esse erro duas vezes. Ficaram dois detalhes pequenos:
 - **Despertar:**
   - `despertar_a`, depois `despertar_b` com o `fx_paredao` atrás dele;
   - a troca para as folhas `e_*` (como o `RemapPreset despertado` do Gutto e do Raiclaven);
-  - a aura `fx_aura` subindo dos pés enquanto durar;
+  - a aura enquanto durar (era a `fx_aura`; desde 2026-11-12 é o paredão do Blender, `ferramentas/aura_ck.py`);
   - os golpes do Ratão variam um pouco o alcance e o tempo de cada vez (jeito "chapado").
 - **Entrada do round:** o `fx_paredao` aparece tocando atrás dele.
 - **Retrato da seleção**, os desenhos de vítima dos agarrões, e o CK na lista de lutadores do `ferramentas/Jogo de Luta.bat`.
