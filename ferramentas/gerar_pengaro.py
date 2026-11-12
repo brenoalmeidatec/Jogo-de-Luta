@@ -24,6 +24,7 @@ from repertorio import golpes, quadros as quadros_golpe
 import pengaro_extra as extra
 
 import itens_pengaro
+import aura_pengaro
 
 RAIZ = Path(__file__).resolve().parent.parent
 FOLHA = RAIZ / "sprites/pengaro/pixel/pengaro.png"
@@ -258,8 +259,11 @@ def sprites_mantidos(air, cns):
 
 def escrever_sff(destino, sprites, manter=None):
     """Com `manter`, só grava os (grupo, índice) do conjunto (todo o resto é pulado, e o grupo 9000 sempre fica).
-    A paleta sai antes da poda e da lista inteira: podar antes mudaria o MEDIANCUT e todos os pixels."""
-    imagens = [s[2] for s in sprites.lista]
+    A paleta sai antes da poda e da lista inteira: podar antes mudaria o MEDIANCUT e todos os pixels.
+    Os (grupo, índice) de `sprites.fora_da_paleta` (a aura animada) não entram na escolha das cores: vão para a cor
+    mais perto da paleta do resto, que sai igual com ou sem eles."""
+    fora = getattr(sprites, "fora_da_paleta", set())
+    imagens = [s[2] for s in sprites.lista if (s[0], s[1]) not in fora]
     q = paleta_global(imagens)
     pal = q.getpalette()[: 255 * 3]
     pal += [0] * (255 * 3 - len(pal))
@@ -1731,31 +1735,11 @@ def preset_despertado(s):
     return "\n".join(linhas) + "\n\n"
 
 
-# Lote 7: a aura do boss é efeito à parte (regra da seção 4), em três camadas desenhadas (fx_aura_*.png, fundo verde):
-# anel de sombra no chão atrás dos pés, coluna de fumaça atrás do corpo e detritos (pedras e elos) na frente.
-# ação -> (pasta em sprites/pengaro/efeitos, sprpriority, pos y, escala x, escala y, só no chão)
-# A coluna tem 228 px na escala do corpo e a tela mostra ~150 px acima do chão antes da barra de vida, que o Explod
-# cobre: ela entra achatada a 0,68 (155 px, 1,25 vez a altura do boss). Os detritos entram do tamanho em que foram
-# desenhados, já espalhados para os lados pelo lote7_converter.py (em cima do corpo escondiam as pernas).
-AURA_BOSS = {9211: ("aura_anel", -3, 14, 1.25, 1, True), 9210: ("aura_coluna", -2, 6, 1.1, .68, False),
-             9218: ("aura_detritos", 4, -4, 1, .75, False)}
-AURA_LIGADA = "(var(20) > 0 || stateno = 3100 || (stateno = 2000 && Time >= 83)) && alive"  # 83: ajoelhado, já de casaco
-AURA_DESLIGADA = "(var(20) <= 0 && stateno != 3100 && !(stateno = 2000 && Time >= 83)) || !alive"
-
-
-def aura_boss_cns():
-    """As três camadas da aura no [Statedef -2]: nascem quando o boss aparece na cena do Despertar (ou no começo do
-    round, pela seleção) e somem no mesmo tick em que a forma acaba. O anel só existe no chão."""
-    t = []
-    for anim, (nome, prioridade, y, ex, ey, so_chao) in AURA_BOSS.items():
-        nasce, some = (" && statetype != A", " || statetype = A") if so_chao else ("", "")
-        t.append(f"[State -2, Aura do boss: {nome}]\ntype = Explod\ntrigger1 = {AURA_LIGADA} && NumExplod({anim}) = 0{nasce}\n"
-                 f"anim = {anim}\nid = {anim}\npostype = p1\npos = 0, {y}\nbindtime = -1\nremovetime = -1\n"
-                 f"sprpriority = {prioridade}\nownpal = 1\nscale = {ex}, {ey}\nignorehitpause = 1\nsupermovetime = -1\n"
-                 f"pausemovetime = -1\n\n")
-        t.append(f"[State -2, Tira aura do boss: {nome}]\ntype = RemoveExplod\ntrigger1 = {AURA_DESLIGADA}{some}\n"
-                 f"trigger1 = NumExplod({anim})\nid = {anim}\nignorehitpause = 1\n\n")
-    return "".join(t)
+# Lote 7: a aura antiga do boss (fx_aura_anel, fx_aura_coluna e fx_aura_detritos nas ações 9211, 9210 e 9218) não
+# nasce mais no jogo: a aura do endiabrado é a do Blender, ligada por ferramentas/aura_pengaro.py ([Statedef -4],
+# Explods 9600 a 9603). Os desenhos antigos seguem carregados só porque entram na escolha da paleta do .sff: tirá-los
+# mudaria as 255 cores e todos os pixels da forma base.
+AURA_BOSS = {9211: "aura_anel", 9210: "aura_coluna", 9218: "aura_detritos"}
 
 
 def sem_tinta_do_despertar(cns):
@@ -1765,20 +1749,6 @@ def sem_tinta_do_despertar(cns):
     cns, n = bloco.subn("", cns)
     assert n == 1, "PalFX da aura não encontrado"
     return cns
-
-
-def aura_cns():
-    """Aura do endiabrado no [Statedef -2], logo depois da volta ao normal: some no mesmo tick em que a forma acaba.
-    A sombra nos pés só existe no chão."""
-    t = []
-    for anim, nome, prioridade, nasce, some in ((9210, "Aura de sombra", -1, "", ""),
-                                                 (9211, "Sombra nos pés", -2, " && statetype != A", " || statetype = A")):
-        t.append(f"[State -2, {nome}]\ntype = Explod\ntrigger1 = var(20) > 0 && alive && NumExplod({anim}) = 0{nasce}\n"
-                 f"anim = {anim}\nid = {anim}\npostype = p1\npos = 0, 2\nbindtime = -1\nremovetime = -1\n"
-                 f"sprpriority = {prioridade}\nownpal = 1\nscale = 1, 1\nignorehitpause = 1\nsupermovetime = -1\n\n")
-        t.append(f"[State -2, Tira {nome.lower()}]\ntype = RemoveExplod\ntrigger1 = var(20) <= 0 || !alive{some}\n"
-                 f"trigger1 = NumExplod({anim})\nid = {anim}\nignorehitpause = 1\n\n")
-    return "".join(t)
 
 
 # ações que já têm o próprio Impacto/Estouro (9205/9235) ou não são golpe de membro: sem rastro por cima
@@ -3903,23 +3873,26 @@ def main():
     # e levantada (ROLANDO) ficam como eram: a caneta passa por baixo de projétil.
     BAIXO[0] = (-28, 0, 28, -80)
     DEITADO[0] = (-70, 0, 70, -34)
-    # Lote 7: a aura do boss em três camadas, 8 desenhos de 5 ticks cada (laço de 40), todas com o pivô na base
-    for anim, (nome, *_) in AURA_BOSS.items():
+    # Lote 7: os desenhos da aura antiga seguem no .sff só pela paleta (veja AURA_BOSS); a aura do jogo é a 9600
+    for anim, nome in AURA_BOSS.items():
         FX_PENGARO[anim] = (None, nome, 5)
         CHAO.add(nome)
     s = montar_sprites(retrato=RAIZ / "sprites/pengaro-selecao-kof.png")
     faiscas = carregar_faiscas(s)
     a = montar_air(s, faiscas, arte_despertada=arte_endiabrada(s))
     preset = preset_despertado(s)
-    (SAIDA / "pengaro.air").write_text("\n".join(ajustar_clsn1(a.txt, s, preset)), encoding="utf-8", newline="\n")
+    aura = aura_pengaro.ligar(s)  # aura do endiabrado (Blender): grupos e ações 9600 a 9603, fora da paleta
+    (SAIDA / "pengaro.air").write_text("\n".join(ajustar_clsn1(a.txt, s, preset)) + "\n" + aura.air(),
+                                       encoding="utf-8", newline="\n")
     cns = despertar_do_pengaro(ajustar_sparkxy(remapear_animelem(montar_cns(), a.mapas), a.ativos))
     cns = sem_ginga_9203(cns)
     fracos = {int(n) for n in re.findall(r"\[State (\d+), Golpe\]\n(?:[^\n]+\n)*?hitsound = F5,0\n", cns)}
     assert fracos == FRACOS, f"FRACOS (estilo seco) fora de dia: {sorted(fracos ^ FRACOS)}"
-    volta = "reset = 1\n\n[State -2, Endiabrado desligado]"
-    assert cns.count(volta) == 1
-    cns = sem_tinta_do_despertar(cns.replace(volta, "reset = 1\n\n" + aura_boss_cns() + "[State -2, Endiabrado desligado]"))
+    cns = sem_tinta_do_despertar(cns)
     cns = cns.rstrip() + "\n\n" + efeitos_cns(a.ativos, fracos)
+    assert "[Statedef -4]" not in cns, "o Pengaró ganhou um -4: a aura entra nele com cabecalho=False"
+    aura.conferir(acoes=a.acoes, explods=re.findall(r"^\s*id\s*=\s*(\d+)", cns, re.M))
+    cns = cns.rstrip() + "\n\n" + aura.cns(cabecalho=True)
     cns = cns.replace("[Data]", preset + "[Quotes]\n" + "".join(f'victory{i + 1} = "{v}"\n' for i, v in enumerate(VITORIAS)) + "\n[Data]", 1)
     (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8", newline="\n")
     air = (SAIDA / "pengaro.air").read_text(encoding="utf-8")
