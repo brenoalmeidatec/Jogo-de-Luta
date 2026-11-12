@@ -275,17 +275,18 @@ do
     wait(3)
     press(1, {"despertar"}, 3)
     need(estadoEm(2000), 12, "entrou em 2000")
-    if LUTADOR == "ck" then  -- a aura do Ratao nasce quando ele sai da fumaca (tique 69) e o paredao dela espera o de cena
-      need(function() local s = snap(1); return s.st == 2000 and s.t >= 60 end, 200, "cena no tique 60 (a superpausa de 30 conta no relogio)")
-      need(function() return auraN(1) == 0 end, 1, "sem aura antes de o Ratao sair da fumaca", false)
-      need(function() local s = snap(1); return s.st == 2000 and s.t >= 76 end, 60, "cena no tique 76")
-      note(function() local p, h = com(1, function() return numExplod(9250) end), com(1, function() return map("au_ck_h0") end)
-        return string.format("tique 76: paredao de cena %d, h0 %.2f, camadas %d", p, h, auraN(1)) end)
-      need(function() local p, h = com(1, function() return numExplod(9250) end), com(1, function() return map("au_ck_h0") end)
-        return auraN(1) == 3 and (p == 0 or h > 0.9) end, 1,
-        "aura nascida (3 camadas) e o paredao dela apagado enquanto o paredao da cena toca", false)
-      need(function() return com(1, function() return numExplod(9250) end) == 0 end, 60, "paredao de cena saiu")
-      note(function() local s = snap(1); return "paredao de cena saiu no tique " .. s.t .. " do estado " .. s.st end)
+    if LUTADOR == "ck" then
+      -- a caixa preta da cena (Explod 9250) apaga atras da nuvem (tiques 42 a 68) e sai quando o Ratao sai da fumaca
+      -- (69); a aura nasce no mesmo trecho (aura_ck.FUMACA): nunca os dois paredoes inteiros, nunca buraco
+      local caixa = function() return com(1, function() return numExplod(9250) end) end
+      need(function() local s = snap(1); return s.st == 2000 and s.t >= 38 end, 200, "cena no tique 38 (a superpausa de 30 conta no relogio)")
+      need(function() return auraN(1) == 0 and caixa() == 1 end, 1, "antes da fumaca: caixa preta na tela e nenhuma aura", false)
+      need(function() local s = snap(1); return s.st == 2000 and s.t >= 60 end, 30, "cena no tique 60")
+      note(function() return string.format("tique 60: caixa %d, camadas %d, fade %.2f", caixa(), auraN(1),
+        com(1, function() return map("au_ck_f") end)) end)
+      need(function() return auraN(1) == 3 and caixa() == 1 end, 1, "na nuvem: a aura nasce (3 camadas) enquanto a caixa apaga", false)
+      need(function() local s = snap(1); return s.st == 2000 and s.t >= 70 end, 20, "cena no tique 70")
+      need(function() return auraN(1) == 3 and caixa() == 0 end, 1, "o Ratao sai da fumaca: caixa preta fora, aura viva", false)
     end
     need(function() return st1() ~= 2000 end, 500, "transformacao terminou", false)
     note(function() local s = snap(1); return "var20=" .. s.v20 .. " power=" .. s.pow .. " dist " .. c.d0 .. " -> " .. s.d end)
@@ -327,26 +328,30 @@ do
     desperto("aura do Ratao: liga as 3 camadas e apaga junto com a forma do Ratao", function()
       wait(70)
       need(function() return auraN(1) == 3 end, 10, "as 3 camadas da aura (9600 a 9602) vivas no Despertar")
-      need(function() return com(1, function() return map("au_ck_h0") end) < 0.05 end, 1, "o paredao da aura aparece (sem paredao de cena)", false)
       add(function() held[1].fimdesp = clock() + 2; return true end)
       need(function() local v = snap(1).v20; return v > 0 and v <= 40 end, 10, "Despertar no fim (var20 <= 40)")
+      -- a saida anda com o var(20) (aura_ck.RESTA), nao com o relogio do -4: o fade e var(20)/34 no fim
+      need(function() local v = snap(1).v20; return v > 0 and v <= 8 end, 40, "var20 <= 8")
+      acao(function() c.v20 = snap(1).v20; c.f = com(1, function() return map("au_ck_f") end) end)
+      note(function() return string.format("var20 %d: fade %.3f (var20/34 = %.3f), camadas %d", c.v20, c.f, c.v20 / 34, auraN(1)) end)
+      need(function() return math.abs(c.f - c.v20 / 34) < 0.035 and auraN(1) == 3 end, 1,
+        "no fim a aura segue o var(20): fade = var20/34 e as 3 camadas vivas", false)
       need(function() return snap(1).v37 == 0 end, 60, "o corpo voltou a forma base (var37 = 0)")
       acao(function() c.aura_volta = auraN(1); c.t_volta = clock() end)
       need(function() return auraN(1) == 0 end, 2, "a aura apaga no maximo 2 tiques depois do corpo voltar", false)
       note(function() return "camadas quando o corpo voltou: " .. c.aura_volta .. "; apagou " .. (clock() - c.t_volta) .. " tiques depois" end)
     end)
-    -- o Grave do Paredao poe o paredao de cena (Explod 9250): o da aura sai da frente enquanto ele toca e volta depois
-    desperto("aura do Ratao: o paredao dela da lugar ao paredao do Grave (3403) e volta", function()
+    -- no Grave do Paredao o paredao e o da aura: sem caixa preta (9250), e ele incha (surto) no grave
+    desperto("aura do Ratao: o Grave (3403) faz o paredao da aura inchar, sem caixa preta", function()
       approach(50)
       wait(40)
       press(1, {"sombra_b"}, 3)
       need(estadoEm(3403), 14, "entrou em 3403")
-      need(function() return com(1, function() return numExplod(9250) end) > 0 end, 20, "paredao de cena na tela")
-      wait(12)
-      need(function() return com(1, function() return map("au_ck_h0") end) > 0.9 end, 1, "paredao da aura apagado enquanto o de cena toca", false)
-      need(function() return com(1, function() return numExplod(9250) end) == 0 end, 80, "paredao de cena saiu")
-      wait(20)
-      need(function() return com(1, function() return map("au_ck_h0") end) < 0.01 and auraN(1) == 3 end, 1, "paredao da aura de volta, 3 camadas", false)
+      acao(function() c.caixa = 0 end)
+      need(function()
+        c.caixa = math.max(c.caixa, com(1, function() return numExplod(9250) end))
+        return com(1, function() return map("au_ck_k") end) > 0.3 end, 30, "o surto do grave incha a aura")
+      need(function() return auraN(1) == 3 and c.caixa == 0 end, 1, "3 camadas e nenhuma caixa preta no Grave", false)
     end)
   end
   local function exclusivo(nome, cmd, est, dist)

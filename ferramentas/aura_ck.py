@@ -8,18 +8,21 @@ No jogo viram 3 camadas (Explods 9600 a 9602, [Statedef -4]), todas ATRÁS de qu
 lutador é o -3 do caído morto, estado 5150 do common1) e todas no chão no pulo (no_chao: o paredão é um muro de
 caixas, não sobe com o CK; a base reta dele no ar virava um prato solto, como a coluna do Pengaró):
   9600 paredao   paredão + anéis num desenho só: os anéis saem dos cones, e com deriva e início próprios descolariam
-                 deles. Some (em ~8 tiques) enquanto o paredão de cena do gerador (Explod 9250: cena do Despertar,
-                 Baile 3100, Grave 3403) está na tela, e volta depois: dois paredões não se dobram (sprpriority -7)
+                 deles (sprpriority -7). No Ratão ele É o paredão: o Baile e o Grave não põem mais a caixa preta do
+                 gerador (Explod 9250) por cima dele, e o surto faz o paredão "aparecer tocando" (cético de
+                 2026-11-12: a troca caixa/aura era corte seco, com buraco e dois paredões juntos)
   9601 chao      névoa rasteira + cacos e tampinhas, na frente da base do paredão (sprpriority -6)
   9602 fagulhas  folhinhas de brasa subindo, deriva própria e curta (sprpriority -5)
 Troca de quadro: o paredão no tique ímpar, chão e fagulhas no par. O paredão e as fagulhas dividem o alto da tela;
 trocando em tiques diferentes, todo tique tem desenho novo lá em cima (o Pengaró falhou nisso com uma camada só).
-Entrada em 44 tiques (como o Pengaró): o paredão é largo e denso, em 26 ele brotava de uma vez.
+Entrada em 44 tiques, só pelo alfa (cresce=False): achatado a 8% o muro virava elipse. Na cena (2000) ela começa
+quando a fumaça cobre tudo (tique 42) e a caixa preta da cena apaga no mesmo trecho (gerar_ck.py): a caixa vira o
+paredão de fumaça atrás da nuvem, e o Ratão sai dela no tique 69 com o paredão já subindo.
 Virada a 60% (virada_fundo): com 30% o boss sumia a cada troca de lado (filme do Pengaró, 2026-11-12).
-Desliga ANTES de o corpo voltar: o fade de saída (34 tiques) acaba no tique em que o var(20) chega a 0, quando o
-"Endiabrado desligado" do -2 volta o corpo à forma base. No Baile (3100) o Ratão continua (gerar_ck.py tira o "Fim
-Despertar" dele); se o var(20) acabar dentro do Baile, o corpo só volta quando ele acaba: a aura segue até o fim
-pelo AnimTime.
+Saída presa ao contador (resta): o fade nunca passa de resta/34, então acaba no tique em que o var(20) chega a 0 e
+o corpo volta, mesmo com pausa, superpausa ou hitpause no fim (o -4 anda nelas, o var(20) do -2 não). No Baile
+(3100) o Ratão continua até o fim da animação: resta é o maior entre o var(20) e o AnimTime; Baile interrompido com
+o var(20) já zerado corta a aura no mesmo tique em que o corpo volta.
 
 As cores das camadas NÃO entram na escolha da paleta do .sff (Sprites.fora_da_paleta): a paleta da forma base sai
 idêntica e a aura é levada para a cor mais perto dela.
@@ -36,16 +39,18 @@ RAIZ = Path(__file__).resolve().parent.parent
 PASTA = RAIZ / "sprites/ck/aura"
 SAI = 34                     # tiques do fade de saída (o padrão do aura.py)
 PRIORIDADE_MIN_LUTADOR = -3  # common1.cns.zss, estado 5150 (caído morto); nenhum lutador de chars/ desce disso
-SURGE = 69                   # tique da cena do Despertar (estado 2000) em que o Ratão sai da fumaça (ação 2000 do .air)
+FUMACA = 42                  # tique da cena do Despertar (estado 2000) em que a fumaça cobre tudo (ação 2000: 6 x 7)
+RATAO = 69                   # tique em que o Ratão sai da fumaça (fim dos 4 desenhos de fumaça: 7 + 6 + 7 + 7)
+GRAVE = 10                   # tique do grave no Grave do Paredão (3403): o EnvShake e o golpe (conferido no gerar_ck.py)
 
-# Liga quando o Ratão sai da fumaça na cena da transformação e segue no Despertar (var 20); desliga SAI tiques antes
-# do fim, para o fade acabar junto com a forma. No Baile com o var(20) já no fim, o Ratão segue até o AnimTime 0.
-LIGADA = (f"var(20) > {SAI} || (StateNo = 3100 && var(37) = 1 && AnimTime < -{SAI}) "
-          f"|| (StateNo = 2000 && Time >= {SURGE})")
-# Surto: os supers, o Grave do Paredão e o instante em que ele quebra a garrafa no chão na cena (despertar_b quadro 5, tique 90).
-SURTO = "((StateNo = 3000 || StateNo = 3100 || StateNo = 3200 || StateNo = 3403) && Time = 1) || (StateNo = 2000 && Time = 90)"
-# o paredão de cena (ação 9250, id 9250) do gerador: enquanto ele toca, o paredão da aura sai da frente
-PAREDAO_DE_CENA = "NumExplod(9250) > 0"
+# Ticks que faltam para o corpo voltar à forma base: na cena, a partir da fumaça, "muito" (o var(20) só liga no fim
+# dela); no Baile, o maior entre o var(20) e o resto da animação (o Ratão segue até o fim do Baile); fora, o var(20).
+RESTA = (f"ifelse(StateNo = 2000, ifelse(Time >= {FUMACA}, 999, 0), "
+         f"ifelse(StateNo = 3100 && var(37) = 1, max(var(20), -AnimTime), var(20)))")
+LIGADA = f"({RESTA}) > 0"
+# Surto: os supers, o grave do Grave do Paredão e o instante em que ele quebra a garrafa na cena (despertar_b quadro 5, tique 90).
+SURTO = (f"((StateNo = 3000 || StateNo = 3100 || StateNo = 3200) && Time = 1) || (StateNo = 3403 && Time = {GRAVE}) "
+         f"|| (StateNo = 2000 && Time = 90)")
 
 
 def _ler(info, nome):
@@ -77,17 +82,17 @@ def montar():
 
     camadas = [
         aura.Camada("paredao", paredao, plano="tras", no_chao=True, eixo=pe, tique=1, prioridade=-7,
-                    esconde=PAREDAO_DE_CENA,
-                    mov=aura.Movimento(deriva=(1.2, 0.8), deriva_periodo=170, alfa=0.92, respira=0.08)),
-        aura.Camada("chao", chao, plano="tras", no_chao=True, eixo=pe, tique=0, prioridade=-6,
+                    cresce=False, mov=aura.Movimento(deriva=(1.2, 0.8), deriva_periodo=170, alfa=0.92, respira=0.08)),
+        aura.Camada("chao", chao, plano="tras", no_chao=True, eixo=pe, tique=0, prioridade=-6, cresce=False,
                     mov=aura.Movimento(deriva=(1.0, 0), deriva_periodo=130, alfa=0.9, respira=0.06),
                     surto_tremor=0.8),
-        aura.Camada("fagulhas", fagulhas, plano="tras", no_chao=True, eixo=pe, tique=0, prioridade=-5,
+        aura.Camada("fagulhas", fagulhas, plano="tras", no_chao=True, eixo=pe, tique=0, prioridade=-5, cresce=False,
                     mov=aura.Movimento(deriva=(2.4, 3.0), deriva_periodo=70, alfa=0.95, respira=0.06)),
     ]
     assert all(c.prioridade < PRIORIDADE_MIN_LUTADOR for c in camadas), "camada da aura na frente de um lutador"
     assert camadas[0].troca(0) != camadas[2].troca(2), "paredão e fagulhas trocam de quadro no mesmo tique"
-    return aura.Aura("ck", camadas, ligada=LIGADA, surto=SURTO, base=9600, entra=44, sai=SAI, virada_fundo=0.6)
+    return aura.Aura("ck", camadas, ligada=LIGADA, surto=SURTO, base=9600, entra=44, sai=SAI, virada_fundo=0.6,
+                     resta=RESTA)
 
 
 def ligar(sprites):

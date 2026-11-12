@@ -492,6 +492,8 @@ class Camada:
     no_chao: bool = None             # fica no chão quando o lutador sai dele (pulo, queda); None = só o plano "chao".
                                      # Uma coluna que nasce do chão usa True com plano "tras": não sobe junto no pulo
                                      # e não apaga com a altura (só a camada de plano "chao" apaga)
+    cresce: bool = True              # na entrada e na saída a camada cresce (escala do motor, passageira); False =
+                                     # só o alfa (o paredão do CK achatado a 8% virava elipse, cético de 2026-11-12)
 
     def troca(self, i):
         return (i if self.tique is None else self.tique) % self.tempo
@@ -556,10 +558,14 @@ class Aura:
 
     def __init__(self, nome, camadas, particulas=(), ligada="var(20) > 0", surto=None, base=9600,
                  entra=26, sai=34, surto_ticks=30, surto_acel=1.6, surto_folga=90, altura_lutador=110,
-                 teto_explods=30, virada_fundo=0.3):
+                 teto_explods=30, virada_fundo=0.3, resta=None):
         assert re.fullmatch(r"[a-z0-9]+", nome), "nome da aura: só letras minúsculas e números"
         self.nome, self.camadas, self.particulas = nome, list(camadas), list(particulas)
         self.ligada, self.surto, self.base = ligada, surto, base
+        # resta: expressão do .cns com os ticks que faltam para o corpo voltar (ex. "var(20)"). O fade nunca passa de
+        # resta / sai: a saída anda junto com o contador do lutador, e não pelo relógio do -4 (o -4 roda em pausa,
+        # superpausa e hitpause; o var(20) do -2 para nelas). None = fade pelo relógio, como antes.
+        self.resta = resta
         self.entra, self.sai, self.surto_ticks, self.surto_acel = entra, sai, surto_ticks, surto_acel
         self.surto_folga, self.altura_lutador, self.teto_explods = surto_folga, altura_lutador, teto_explods
         # na virada a aura apaga até esta fração do alfa, troca de lado e volta (0,3: some quase toda; 1: nem apaga)
@@ -736,7 +742,9 @@ class Aura:
         t = f"(map({self.m('t')}) + {_n(fase)})"
         f, k, v = f"map({self.m('e')})", f"map({self.m('k')})", f"map({self.m('v')})"
         incha = f"(1 + {_n(c.surto_incha)} * {k})"
-        if c.plano == "chao":  # o anel abre do centro
+        if not c.cresce:       # entra e sai só pelo alfa (um muro achatado vira elipse: paredão do CK)
+            sx = sy = incha
+        elif c.plano == "chao":  # o anel abre do centro
             sx = sy = f"(0.3 + 0.7 * {f}) * {incha}"
         else:                  # a coluna cresce dos pés: nasce rente ao chão e sobe
             sx, sy = f"(0.7 + 0.3 * {f}) * {incha}", f"(0.08 + 0.92 * {f}) * {incha}"
@@ -799,7 +807,7 @@ class Aura:
                 f"pos = {_n(c.pos[0])}, {_n(c.pos[1])}\n"
                 f"facing = 1\nbindtime = {0 if c.presa_ao_chao else -1}\nremovetime = -1\n"
                 f"sprpriority = {self._prioridade(i, c)}\nownpal = 1\n"
-                f"scale = 0.3, 0.08\ntrans = addalpha\nalpha = 0, 255\n"
+                f"scale = {'0.3, 0.08' if c.cresce else '1, 1'}\ntrans = addalpha\nalpha = 0, 255\n"
                 f"removeongethit = 0\nsupermovetime = -1\npausemovetime = -1\nignorehitpause = 1\n\n")
 
     def _acaso(self, j, p, canal):
@@ -873,8 +881,10 @@ class Aura:
             c.append(f"[State -4, Aura {self.nome}: limpa {i} antes do round]\ntype = RemoveExplod\n"
                      f"trigger1 = RoundState = 0 && NumExplod({i})\nid = {i}\nignorehitpause = 1\n\n")
         c.append(mapa(t, "tempo volta a zero ao ligar", f"map({f}) <= 0", "0"))
-        c.append(mapa(f, "fade", "RoundState > 0",
-                      f"ifelse({ligada}, min(1, map({f}) + {_n(1 / self.entra)}), max(0, map({f}) - {_n(1 / self.sai)}))"))
+        fade = f"ifelse({ligada}, min(1, map({f}) + {_n(1 / self.entra)}), max(0, map({f}) - {_n(1 / self.sai)}))"
+        if self.resta:
+            fade = f"min({fade}, max(0, {self.resta}) / {self.sai})"
+        c.append(mapa(f, "fade", "RoundState > 0", fade))
         c.append(mapa(e, "fade suave", "1", f"map({f}) * map({f}) * (3 - 2 * map({f}))"))
         # virada: a aura apaga um pouco (5 ticks), troca de lado e volta (7 ticks), em vez de espelhar num tick só
         c.append(mapa(v, "virada passa", f"map({v}) > 0", f"max(0, map({v}) - {_n(1 / 12)})"))
