@@ -42,6 +42,8 @@ def injetar(arq, hazaki):
     b += '[State -1, T_pos]\ntype = PosSet\ntrigger1 = map(t_pos) = 1\nx = map(t_posx) - 1000\n\n'
     b += '[State -1, T_v10]\ntype = VarSet\ntrigger1 = map(t_v10) = 1\nvar(10) = 2\n\n'
     b += '[State -1, T_desperto]\ntype = VarSet\ntrigger1 = map(t_desperto) = 1\nvar(20) = 600\n\n'
+    # fim natural do Despertar: o var(20) desce até 0 sozinho (a aura tem de apagar junto com a forma endiabrada)
+    b += '[State -1, T_fimdesp]\ntype = VarSet\ntrigger1 = map(t_fimdesp) = 1 && var(20) > 40\nvar(20) = 40\n\n'
     if hazaki:
         b += ('[State -1, T_agacha]\ntype = ChangeState\nvalue = 11\ntriggerall = map(t_agacha) = 1\n'
               'trigger1 = statetype = S && ctrl\n\n')

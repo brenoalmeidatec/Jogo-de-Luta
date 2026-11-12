@@ -6,7 +6,7 @@ do
   local function log(s) LOG:write(s, "\n"); LOG:flush() end
   local CMDS = {"x","y","a","b","c","holdfwd","holdback","holdup","holddown","agarrao_whisky","garrafa_x","garrafa_y",
     "role_a","role_b","sombra_x","sombra_y","sombra_a","sombra_b","despertar","FF","rolar","afastar","golaco",
-    "golpe_216","golpe_246","golpe_201","golpe_231","golpe_1400","golpe_1401","golpe_1500","golpe_1501","golpe_3200","bola_fraca","bola_forte","parry","desperto","agacha","v10"}
+    "golpe_216","golpe_246","golpe_201","golpe_231","golpe_1400","golpe_1401","golpe_1500","golpe_1501","golpe_3200","bola_fraca","bola_forte","parry","desperto","agacha","v10","fimdesp"}
   for _, nome in ipairs({"bfd_a","bfd_b","bfd_x","bfd_y","df_x","df_y","fb_x","fb_y","fd_x","fd_y","df_a","df_b","db_a",
     "db_b","bf_a","bf_b","bd_a","bd_b","db_x","db_y","bf_y"}) do CMDS[#CMDS + 1] = nome end  -- toques do Hazak
   CMDS[#CMDS + 1] = "defende"  -- so o .cmd do Hazak tem o controlador (testar_pengaro.py); nos outros o mapa nao faz nada
@@ -29,6 +29,10 @@ do
   end
 
   local function clock() return roundTime() end
+  -- camadas vivas da aura do endiabrado do Pengaro (ferramentas/aura_pengaro.py: Explods 9600 a 9603)
+  local function auraN(n)
+    return com(n, function() local k = 0; for e = 9600, 9603 do k = k + numExplod(e) end; return k end)
+  end
   local held = {{}, {}}
   local pendingPos = {}
   local function setMaps()
@@ -292,6 +296,19 @@ do
       build()
     end)
   end
+  if LUTADOR == "pengaro" then
+    -- a aura liga inteira e ja apagou quando o corpo volta a forma base (o fade de saida acaba junto com o var(20))
+    desperto("aura do endiabrado: liga as 4 camadas e apaga junto com a forma endiabrada", function()
+      wait(70)
+      need(function() return auraN(1) == 4 end, 10, "as 4 camadas da aura (9600 a 9603) vivas no Despertar")
+      add(function() held[1].fimdesp = clock() + 2; return true end)
+      need(function() local v = snap(1).v20; return v > 0 and v <= 40 end, 10, "Despertar no fim (var20 <= 40)")
+      need(function() return snap(1).v37 == 0 end, 60, "o corpo voltou a forma base (var37 = 0)")
+      acao(function() c.aura_volta = auraN(1); c.t_volta = clock() end)
+      need(function() return auraN(1) == 0 end, 2, "a aura apaga no maximo 2 tiques depois do corpo voltar", false)
+      note(function() return "camadas quando o corpo voltou: " .. c.aura_volta .. "; apagou " .. (clock() - c.t_volta) .. " tiques depois" end)
+    end)
+  end
   local function exclusivo(nome, cmd, est, dist)
     desperto(nome, function()
       approach(dist)
@@ -390,6 +407,9 @@ do
     need(estadoEm(3100), 14, "entrou em 3100")
     need(function() local s = snap(1); return s.st == 3100 and s.t > 20 and s.v37 == 1 end, 80, "var(37) = 1 (arte endiabrada) no meio do 3100")
     need(function() return st1() == 0 end, 300, "terminou", false)
+    if LUTADOR == "pengaro" then  -- o 3100 zera o var(20): a aura apaga antes de ele acabar, pelo AnimTime
+      need(function() return auraN(1) == 0 end, 2, "a aura ja apagou quando o 3100 acabou (forma base)", false)
+    end
     note(function() local s = snap(1); return "dano " .. (c.vida0 - lifeP2()) .. "; var20=" .. s.v20 .. " var37=" .. s.v37 end)
     need(function() return c.vida0 - lifeP2() > 150 end, 1, "o super acertou (dano > 150)", false)
   end)
