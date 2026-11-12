@@ -1557,3 +1557,38 @@ Branch `aura-pengaro` (worktree `C:/Dev/Jogo-de-Luta-aurapengaro`, tem `mugen` +
   nenhum vídeo assistido em tempo real, só tiras.
 - **Próximo:** o Alisson olhar `pengaro_despertar_luta.mp4`; decidir o rerender a 1 tique; juntar na `mugen` quando
   aprovar. Filmes e tiras: `scratchpad/aurapengaro/` desta sessão (fora do repositório).
+
+## 2026-11-12 — Aura do Pengaró: retoque depois das revisões céticas (branch `aura-pengaro`)
+
+- **Consertado pela causa:** (1) o `anel_frente` (9602) tinha `sprpriority 5` e tingia os pés dos dois lutadores e o
+  Pengaró caído: agora fica em -5, atrás de qualquer lutador (o mais baixo é o -3 do estado 5150), com o mesmo alfa,
+  escala e posição do `anel_tras` (sem respirar nem tremer, que andam com fase por camada; as metades não descolam).
+  Pés no `medir_aura`: 95,8% → 99,9-100%. (2) Virada: a aura apagava até 30% e o boss sumia a cada troca de lado
+  (pixels roxos 125 mil → 14 mil); `Aura(virada_fundo=...)`, o Pengaró usa 0,6 (mínimo 50 mil). (3) No pulo a coluna
+  subia junto e a base reta virava um prato no ar: `Camada(no_chao=True)` a deixa no chão (sem apagar com a altura).
+  (4) A aura seguia cheia ~15 tiques em volta do corpo já de calça branca: `LIGADA` agora desliga com `var(20) > 34`
+  e no 3100 com `AnimTime < -34`, o fade acaba junto com a forma endiabrada (robô: 0 camadas no tique em que o corpo
+  volta, no fim natural e no fim do 3100). (5) As ações 9210/9211/9218 da aura antiga saíram do `.air`: a poda tira os
+  24 desenhos do `.sff` (3,87 → 3,74 MB), paleta e os outros 1071 sprites iguais (`conferir_sff`, 0 diferenças).
+  (6) Ficha `docs/fichas/pengaro.md`, `docs/arcade/pengaro.md` e Lote 7 da fila diziam pedras "na frente" e folhas
+  `fx_aura_*`: corrigido. Comentário morto em `aura_pengaro.py` saiu.
+- **Ferramentas:** `aura.py` ganhou `no_chao` e `virada_fundo` (padrões iguais aos de antes: `teste_aura` sai com o
+  mesmo md5). Robô: 5 checagens novas da aura (4 camadas no Despertar, apagada quando o corpo volta, no fim natural e
+  no fim do 3100; `T_fimdesp` injetado). `filmar_aura.py --lutador X --roteiro luta`: perto, super 3000 de verdade,
+  pulo, fim natural do Despertar do P2, KO e pose de vitória. `medir_aura`: o corte do quadro repetido pelo gravador
+  passou a valer também no trecho de desligar (era só até DESLIGA); no filme os dois maiores saltos ficavam ao lado de
+  quadros com tudo parado, corpo inclusive. O filme antigo dá 2,89x com ou sem o corte; o novo, 2,89x (bruto igual).
+- **Conferido:** robô 151 passaram, 0 falharam; `verificar_pengaro` 0; filme padrão + `--referencia filme_sem_aura`:
+  tudo OK menos os quadros "parados" do laço (P1 5, P2 1). Diagnóstico confirmado: no alto da tela só a coluna mexe, e
+  ela troca de quadro a cada 2 tiques (dentro do aceite de ≤ 3 do `aura.py`); nos tiques sem troca o céu do P1 muda
+  ~1,0 enquanto o chão muda 2-5 (não é o gravador, que zera tudo). Filme luta olhado em tiras: Pengaró caído por cima
+  do próprio anel, pés limpos por cima do anel do outro, coluna no chão no pulo, HUD do jogo na frente, surto pelo
+  super de verdade (escala 1,0 → 1,07, anéis sem tremor), aura do vencedor até o fim da pose de vitória.
+- **Pendente (decisão do dono ou desenho):** coluna a 1 tique (dobro de quadros no Blender, ~+1,8 MB) se os quadros
+  "parados" incomodarem; camada presa ao chão fica parada 5 tiques na virada se o lutador estiver se movendo (visto
+  só com o PosSet do filme; tentar postype+facing deu lado errado); cor da coluna mais violeta saturado que o
+  violeta-preto do conceito e o anel pouco legível como "anel girando" (desenho); contraste do casaco com a fumaça
+  não medido; boss pela seleção (cor 2) entra na intro sem aura (o corpo também); gatilhos `StateNo` sem filtro de
+  estado custom (latente, nenhum lutador manda para 2000/3000-3200); escala 1,12 do motor no surto (passageira);
+  texto "VENCEU" não aparece no modo do filme (não visto); nenhum vídeo assistido em tempo real.
+- Filmes, tiras e medidas: `scratchpad/aurapengaro/final/` desta sessão (fora do repositório).

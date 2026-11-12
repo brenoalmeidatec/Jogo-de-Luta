@@ -42,6 +42,11 @@ cns += AURA.cns(cabecalho=True)    # [Statedef -4] + controladores (sem cabecalh
 - `esconde`: expressão por camada; enquanto vale, a camada apaga (~8 ticks) e volta depois. Serve para a reação
   avulsa do gerador (o garanhão do coice, as asas que fecham) tocar no lugar da camada em loop, sem dobrar.
 - Virada: quando o lutador vira, as camadas apagam, trocam de lado 5 ticks depois e voltam (12 ticks no total).
+  `Aura(virada_fundo=0.3)` é até onde o alfa desce: 0,3 some quase tudo (bom para aura pequena); a do Pengaró usa 0,6,
+  porque com 0,3 o boss sumia a cada troca de lado (pixels roxos de 52 mil para 5 mil no filme de 2026-11-12).
+- `no_chao`: `True` numa camada de plano `"tras"` (uma coluna que nasce do chão) a deixa no chão no pulo e na queda,
+  como a de plano `"chao"`, mas sem apagar com a altura. Presa ao corpo, a base reta da coluna do Pengaró virava um
+  prato solto no ar.
 - Variáveis: só `map` (`au_<nome>_f`, `_e`, `_s`, `_k`, `_t`, `_c`, `_r`, `_v`, `_l`, `_n<j>`, `_h<i>`). Não gasta
   `var()` do lutador.
 - Números: ações, ids de `Explod` e grupos de sprite de `base` a `base + camadas + partículas - 1`. **`base=9600`**:
@@ -111,6 +116,8 @@ python ferramentas/medir_aura.py P2 --extra
 python ferramentas/filmar_aura.py --lutador pengaro --saida P3
 python ferramentas/filmar_aura.py --lutador pengaro --sem-aura --saida P4   # mesmo roteiro, aura desligada
 python ferramentas/medir_aura.py P3 --referencia P4   # corpo medido contra o despertado sem aura, não contra a base
+python ferramentas/filmar_aura.py --lutador pengaro --roteiro luta --saida P5   # perto, super 3000 de verdade, pulo,
+                                                      # fim natural do Despertar do P2, KO e pose de vitória (olhar)
 ```
 
 O P1 usa a aura "ck" (folhas `fx_paredao`, `fx_aura`, `fx_fumaca` + névoa por código) e o P2 a "sombra" (toda por

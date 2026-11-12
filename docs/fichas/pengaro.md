@@ -10,9 +10,14 @@ corpo e altura, sem garrafa; pele marrom-escura arroxeada, olhos violeta sem pup
 pontas violeta e dois chifres curtos de fumaça; casaco de mestre preto sem manga com friso dourado e forro roxo, barra
 rasgada até a canela; rachaduras violeta no peito; corda trançada ouro e violeta com duas pontas até o joelho; calça
 preta com barra em brasa violeta; algemas de corrente partida nos pulsos e tornozelos; braceletes de ouro.
-Aura do Despertar: fumaça violeta-escura das sombras, em três camadas à parte do corpo: coluna de fumaça violeta-preta
-atrás, anel de sombra girando no chão rachado, elos de corrente e pedras flutuando na frente (`fx_aura_coluna`,
-`fx_aura_anel`, `fx_aura_detritos`, Lote 7 de `docs/arcade/fila.md`; ainda não geradas).
+Aura do Despertar: fumaça violeta-escura das sombras, à parte do corpo e toda ATRÁS dos lutadores (nunca cobre corpo
+nenhum): coluna de fumaça violeta-preta com chicotes e fiapos que nasce do chão e fica no chão no pulo, anel de sombra
+girando no chão rachado (metade atrás da coluna, metade na frente dela) e elos de corrente e pedras em órbita em volta
+do corpo. Camadas feitas no Blender a partir do conceito (`sprites/pengaro/aura/`, `ferramentas/aura_blender/`),
+ligadas no jogo por `ferramentas/aura_pengaro.py` (Explods 9600 a 9603 no `[Statedef -4]`). Liga com o Despertar
+(e na transformação e no super 3100), incha nos supers, apaga junto com a forma endiabrada. Matiz média 281°: nenhum
+outro lutador usa violeta (CK 72°, Gutto 350°, Hazak 30°, Raiclaven 220°). As folhas `fx_aura_*` do Lote 7 não são
+mais usadas.
 Efeitos (pixelfx e recolor): hit-spark nos fracos, crit-hit nos fortes e finalizadores, ground-slam na Queda Escura
 e no Pisão de Bar, fumaça roxa no Despertar.
 
