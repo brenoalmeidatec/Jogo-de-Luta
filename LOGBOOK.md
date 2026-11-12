@@ -1267,3 +1267,26 @@ Parada rápida. Último commit antes desta entrada: `f3e86b1c`. Arquivos alterad
   de +40/+37 para +18/+10 pontos (P/E) na mesma luta. Robô Pengaró 146/0 com GPU; filme de 5 s (sem GPU) conferido.
 - **Pendente:** filmar com GPU (gdigrab grava preto; tentar ddagrab); a VM recusa afinidade pelo host (talvez com
   administrador, não testado); aplicar `leve.aliviar` nos scripts de Blender da branch `auras`.
+
+## 2026-11-11 (CK: conserto do que sobrou dos céticos, branch `ck`)
+
+- **Feito (código):** `gerar_ck.py` voltou a rodar (o Lote 7 do Pengaró fazia o gerador comum ler `e_despertar`,
+  `colar_boss`, `POSE_BOSS`, `REPETE_ARCADE` e as folhas `corre`/`recuo`; o CK desliga tudo isso e sai igual ao de
+  antes, menos a derrota, que agora mostra os 8 desenhos). Aura do Ratão: `addalpha 128,192` (o fundo aparece) e
+  `ModifyExplod` com `postype = p1` e `pos y = -Pos Y` a cada tick: no pulo fica no chão e segue só no x (visto no
+  filme; sem o `postype` o motor ignorava o `pos` e a aura subia). Fim da Rajada no Ratão (13000) com o chute alto em
+  pé da `e_chute_alto` 3-7 e caixa no pé. Tragada de Beck com nuvem 1004 e trava só nela. Rótulos do 831 e do `.cmd`.
+- **Feito (retoque por script):** tênis do pé de apoio da `rasteira` 1-5 repintado de vermelho para o tênis
+  (`retoques_arcade/ck.py`, também ligado no `converter_ck`, que não foi rodado). Sobram 1-2 px de laranja no 1 e no 4.
+- **Não era defeito:** as "duas garrafas" são da `e_bola` 2-3 (não da `e_beck`): ele puxa uma segunda garrafa e a joga
+  na Garrafa Voadora (3402), a dele fica no quadril. O vermelho no chão do `levanta` são as luvas (mãos no chão).
+- **Visto:** robô CK 175/0 e Pengaró 146/0; filmes CPU x CPU, `--despertar 1` e um roteiro com Rajada e Tragada de Beck
+  no Ratão (tiras olhadas). Camadas animadas da aura do CK existem na branch `auras` (`sprites/ck/aura/aura.json`:
+  paredão, anéis, névoa): não ligadas, é outra frente.
+- **Pendente (pede desenho):** fumaça do Assopro no 3433; soco agachado do Ratão com antecipação (860≡861); queda
+  esticada (393-396); folhas `e_` próprias de ganchos, voadora, lata, boné e Tapa/Contragolpe; `e_soco` 5; agarrão com
+  três socos; risco na testa do 989/957/965. **Pendente (código, decisão do Breno):** Tragada que tonteia (R4), alcance
+  dos normais (O10), `→/← + b` colado roubando o Pisão (R9). **Achado novo:** o clarão do 1º tick das faíscas fortes
+  do Ratão (verde-claro, `quadro_flash`) cobre o oponente como um bloco com borda reta (filme, quadros 238 e 565): é o
+  "clarão creme dos supers" já pendente, mais visível no Ratão.
+- **Próximo:** o orquestrador juntar `ck` na `mugen`; o Breno decidir R4/O10/R9 e o clarão.

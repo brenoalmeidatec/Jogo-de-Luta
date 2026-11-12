@@ -35,12 +35,32 @@ EX, EY = gp.EIXO_X, gp.EIXO_Y
 # ================================================================ o gerador comum no modo "só desenhos" (arcade)
 gp.SAIDA = SAIDA
 gp.QUADROS = gp.QUADROS_PENGARO = gp.QUADROS_ARCADE = QUADROS  # desenhado() verdadeiro: ginga e andar sem fluxo
-gp.FOLHAS = gp.FOLHAS + ("bone_voador", "e_beck")  # no fim: os números dos sprites de antes não andam
+# no fim: os números dos sprites de antes não andam. corre e recuo (Lote 7) são folhas do Pengaró que o CK não tem.
+gp.FOLHAS = tuple(f for f in gp.FOLHAS if f not in ("corre", "recuo")) + ("bone_voador", "e_beck")
 gp.ARCADE = set(gp.FOLHAS)
 # retoques que são do desenho do Pengaró: nada disso vale para as folhas do CK
 gp.PASTA_ARCADE, gp.DESLOCA_ARCADE, gp.DESENHOS_ARCADE_DO_GOLPE = {}, {}, {}
 gp.CAIXA_ARCADE, gp.CAIXA_DESPERTADA, gp.ULTIMO_DESENHO, gp.TROCA_ENDIABRADA = {}, {}, {}, {}
 gp.MEIO_PROIBIDO, gp.DESENHO_PROIBIDO, gp.ALGEMA_SO_ATRAS = set(), set(), set()
+# Lote 7 do Pengaró (2026-11-11, o Endiabrado virou boss na arte arcade) mudou o gerador comum para as folhas DELE:
+# a 2ª metade do Despertar lê quadros_arcade/e_despertar (que o CK não tem: o gerador quebrava com FileNotFoundError),
+# as folhas e_ passam por colar_boss (que desliza o desenho até 30 px), o sprite sem folha cai em POSE_BOSS e alguns
+# desenhos se repetem (REPETE_ARCADE). Nada disso vale para o CK: o Despertar dele é a folha despertar_b dele e o
+# Ratão entra como está, no lugar em que foi desenhado.
+gp.BOSS, gp.TROCA_BOSS, gp.REPETE_ARCADE, gp.ENDIABRADO_EMPRESTADO = set(), {}, {}, {}
+gp.eh_boss = lambda arquivo: False
+gp.colar_boss = lambda normal, boss: boss
+_quadro_folha_do_kit = gp.quadro_folha
+
+
+def quadro_folha(folha, i):
+    if folha == "despertar_b":
+        arquivo = QUADROS / folha / f"{i:02d}.png"
+        return abrir_quadro(arquivo) if arquivo.exists() else None
+    return _quadro_folha_do_kit(folha, i)
+
+
+gp.quadro_folha = quadro_folha
 gp.LOOPS = {"ginga_fluida": ("referencia_ginga", tuple(range(8)), (5,) * 8),
             "anda_fluida": ("anda", tuple(range(8)), (5,) * 8)}
 gp.LOOPS_ENDIABRADOS = {"ginga_fluida": ("e_referencia_ginga", tuple(range(8))),
@@ -115,6 +135,8 @@ gp.pasta_endiabrada = lambda pasta: (E_FOLHA.get(pasta, (f"e_{pasta}", None))[0]
 # especial e pulo (a ordem de gp.POSES_ENDIABRADO)
 POSES_RATAO = (("e_referencia_ginga", 0), ("e_anda", 2), ("e_agachado", 6), ("e_soco", 5), ("e_chute_alto", 4),
                ("e_cabecada", 4), ("e_bola", 4), ("e_pulo", 3))
+# Lote 7: o preset_despertado do kit lê a pose de reserva por POSE_BOSS (folha normal, desenho) e arquivo_ratao
+gp.POSE_BOSS = {i: (folha[2:], d) for i, (folha, d) in enumerate(POSES_RATAO)}
 
 
 def carregar_poses():
@@ -338,6 +360,29 @@ gp.CAIXA_DESPERTADA[1701] = _e("golaco", 3)
 _est = [_e("golaco", d) for d in (2, 3, 5)]
 CX_ESTOCADAS = (10, min(c[1] for c in _est), max(c[2] for c in _est), max(c[3] for c in _est))
 gp.CAIXA_DESPERTADA[3000] = gp.CAIXA_DESPERTADA[3200] = CX_ESTOCADAS
+# Fim da Rajada no Ratão (13000): na base é a voadora (bicicleta 2-4) e a aterrissagem (pulo 6-7); no Ratão esses
+# desenhos viravam e_ar_soco e e_pulo, poses de pulo encolhido num golpe que não sai do chão, e a caixa ficava acima
+# do desenho (32 px dentro). No Ratão o fim é o chute alto em pé da e_chute_alto (3 arma, 4 estica, 5 recolhe, 6-7
+# guarda), com a caixa no pé esticado. Mesmos tempos e o mesmo número de elementos: o .cns conta por Time.
+FIM_RAJADA_RATAO = {"f_bicicleta2": "f_chute_alto3", "f_bicicleta3": "f_chute_alto4", "f_bicicleta4": "f_chute_alto5",
+                    "f_pulo6": "f_chute_alto6", "f_pulo7": "f_chute_alto7"}
+_acao_do_kit = gp.Air.acao
+
+
+def _acao(self, numero, quadros, *resto, **k):
+    if numero == 13000:
+        novos = []
+        for nome, ticks, *cx in quadros:
+            novo = FIM_RAJADA_RATAO.get(nome, nome)
+            if novo == "f_chute_alto4" and cx and cx[0]:
+                cx = [E_CHUTE, *cx[1:]]
+            novos.append((novo, ticks, *cx))
+        assert sum(n != q[0] for (n, *_), q in zip(novos, quadros)) == 6, "fim da Rajada mudou no kit"
+        quadros = novos
+    return _acao_do_kit(self, numero, quadros, *resto, **k)
+
+
+gp.Air.acao = _acao
 gp.extra.TODOS = (gp.extra.CORRENTES + gp.extra.KOMBOS + gp.extra.DESPERTO_KOMBO + gp.extra.DESPERTO_CORRENTES
                   + gp.extra.DESPERTO_NORMAIS + gp.extra.DESPERTO_ESPECIAL)
 
@@ -390,7 +435,10 @@ _cns_agarrao = gp.cns_agarrao_whisky
 
 def cns_saideira():
     texto = _cns_agarrao()  # sem a garrafa do Pengaró caindo
-    return texto[:texto.index("[State 831, Garrafa]")] + texto[texto.index("[State 831, Whisky dano]"):]
+    texto = texto[:texto.index("[State 831, Garrafa]")] + texto[texto.index("[State 831, Whisky dano]"):]
+    # rótulos do kit com o golpe do CK (ficha: tapa na nuca e bicuda); só nomes, o motor não lê
+    return texto.replace("[State 831, Capoeira ", "[State 831, Tapa na nuca: ").replace(
+        "[State 831, Whisky ", "[State 831, Bicuda: ")
 
 
 gp.cns_agarrao_whisky = cns_saideira
@@ -480,6 +528,9 @@ def acoes_ck(Q):
     for m in gp.extra.ESPECIAIS_A_MAO:
         Q(m.estado, [(f(fl, d), n, m.caixa) if ativo else (f(fl, d), n) for fl, d, n, ativo in m.quadros],
           BAIXO if m.area == "BAIXO" else CORPO)
+    # correr: o andar do CK em 3 ticks (o kit, no Lote 7, passou a ler a folha corre, que é só do Pengaró)
+    Q(100, [(f"q_anda_fluida{i}", 3) for i in (0, 1, 2, 4, 5)])
+    Q(105, [("recua", -1)], NO_AR)  # recuo: a pose de reserva de antes (o kit agora lê a folha recuo do Pengaró)
     # agachar: a folha desce nos desenhos 0 a 3 e fica embaixo balançando do 4 ao 7
     Q(10, [(f("agachado", 2), 2)], BAIXO)
     Q(11, [(f("agachado", i), 8) for i in (4, 5, 6, 7, 6, 5)], BAIXO)
@@ -617,11 +668,16 @@ gp.quadros_proprios = quadros_proprios
 
 
 def aura_cns():
-    """A aura do Modo Ratão: fumaça cinza-esverdeada subindo dos pés, presa ao lutador, atrás do corpo."""
+    """A aura do Modo Ratão: fumaça cinza-esverdeada subindo do chão, atrás do corpo, translúcida (o fundo continua
+    aparecendo através dela: com alpha 216,100 o fundo caía a 39% e a fumaça lia como bloco). Segue o CK só no x: a
+    cada tick o ModifyExplod desconta a altura dele (pos y = -Pos Y), então no pulo a coluna fica no chão em vez de
+    subir colada nos pés."""
     return ("[State -2, Aura de fumaça]\ntype = Explod\ntrigger1 = var(20) > 0 && alive && NumExplod(9210) = 0\n"
             "anim = 9210\nid = 9210\npostype = p1\npos = -4, 0\nbindtime = -1\nremovetime = -1\nsprpriority = -1\n"
-            "ownpal = 1\nscale = 1.5, 1.25\ntrans = addalpha\nalpha = 216, 100\nignorehitpause = 1\n"
-            "supermovetime = -1\n\n"
+            "ownpal = 1\nscale = 1.5, 1.25\ntrans = addalpha\nalpha = 128, 192\nignorehitpause = 1\n"
+            "supermovetime = -1\npausemovetime = -1\n\n"
+            "[State -2, Aura no chão]\ntype = ModifyExplod\ntrigger1 = NumExplod(9210)\nid = 9210\n"
+            "postype = p1\npos = -4, floor(-Pos Y)\nignorehitpause = 1\n\n"
             "[State -2, Tira a aura]\ntype = RemoveExplod\ntrigger1 = var(20) <= 0 || !alive\n"
             "trigger1 = NumExplod(9210)\nid = 9210\nignorehitpause = 1\n\n")
 
@@ -771,7 +827,7 @@ def cns_ck(cns):
     # Tragada de Beck (↓ ↑ + x/y): nuvem grande e lenta, tonteia mais
     i = ini(3400)
     cns = trocar_estado(cns, 3400, E(3400, "S", "A", "S", anim=3400, juggle=4) + chao(3400)
-                        + ritmo(nuvem(3400, f"Time = {i[3]}", 1003, 1.6, .985, 200, 1.4, 44, dano=30, ofs="50, -84"))
+                        + ritmo(nuvem(3400, f"Time = {i[3]}", 1004, 1.6, .985, 200, 1.4, 44, dano=30, ofs="50, -84"))
                         + fim(3400))
     # Garrafa Voadora (↓ → + x/y): arco; estilhaça no chão e os cacos ficam um tempo (pegam por baixo)
     i = ini(3402)
@@ -896,6 +952,9 @@ def cmd_ck(cmd):
     for titulo, n, proj in (("Bola forte", 1001, 1000), ("Bola fraca", 1000, 1000),
                             ("Garrafada forte", 1601, 1002), ("Garrafada fraca", 1600, 1002)):
         na_entrada(titulo, n, lambda b, proj=proj: b.replace(trava, f"triggerall = numprojid({proj}) = 0\n"))
+    # Tragada de Beck: a nuvem tem id próprio (1004; o 1003 é dos cacos da Garrafa) e trava só a si mesma. Antes os
+    # Óculos e a Garrafa no ar (1002) e os cacos no chão impediam a Tragada.
+    na_entrada("Mao de Sombra", 3400, lambda b: b.replace(trava, "triggerall = numprojid(1004) = 0\n"))
     # Sobe pro Teto: x, y, ↓ + y (no kit era a, b, ↓ + y)
     na_entrada("Kombo 4: b", 346, lambda b: b.replace('command = "b"', 'command = "y"').replace(
         "stateno = 230 && movecontact", "stateno = 200 && movecontact").replace(
@@ -913,7 +972,7 @@ def cmd_ck(cmd):
                         ("Garrafada f", "Bone Voador f"), ("Role por tras", "Gingado de Esquiva")):
         assert f"[State -1, {velho}" in cmd, velho
         cmd = cmd.replace(f"[State -1, {velho}", f"[State -1, {novo}")  # rótulos do kit do Pengaró (só comentário)
-    return cmd.replace("gerar_pengaro.py", "gerar_ck.py")
+    return cmd.replace("gerar_pengaro.py", "gerar_ck.py").replace("[State -1, Agarrao whisky]", "[State -1, Saideira]")
 
 
 # ================================================================ textos
