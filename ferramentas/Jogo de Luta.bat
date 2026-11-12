@@ -1,6 +1,7 @@
 @echo off
 title Nazafights
-powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((Get-Content -LiteralPath '%~f0' -Raw) -split '#PS#START\r?\n',2)[1]"
+set "NAZA_BAT=%~f0"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((Get-Content -LiteralPath '%~f0' -Raw) -split '#PS#START\r?\n',2)[1]" & exit /b
 exit /b
 #PS#START
 # Nazafights: baixa a versao mais nova do GitHub e abre o jogo no IKEMEN GO.
@@ -49,6 +50,24 @@ try {
     $api.Headers.Add('Accept', 'application/vnd.github.sha')
     $commit = $api.DownloadString("https://api.github.com/repos/$repo/commits/$branch").Trim()
     if ($commit -notmatch '^[0-9a-f]{40}$') { throw "resposta estranha do GitHub: $commit" }
+    # O proprio launcher tambem se atualiza: compara com o ferramentas/Jogo de Luta.bat do mesmo commit e, se mudou,
+    # troca este arquivo e abre o novo. O "& exit /b" da linha do powershell (la em cima) faz o cmd sair sem reler
+    # este arquivo depois da troca. NAZA_ATUALIZOU evita trocar duas vezes seguidas.
+    if ($env:NAZA_BAT -and -not $env:NAZA_ATUALIZOU) {
+        $web = New-Object Net.WebClient
+        $web.Headers.Add('User-Agent', 'JogoDeLuta')
+        $novo = $web.DownloadData("https://raw.githubusercontent.com/$repo/$commit/ferramentas/Jogo%20de%20Luta.bat")
+        $txtNovo = [Text.Encoding]::UTF8.GetString($novo) -replace "`r`n", "`n"
+        $txtAtual = [IO.File]::ReadAllText($env:NAZA_BAT) -replace "`r`n", "`n"
+        if ($txtNovo -match '#PS#START' -and $txtNovo -ne $txtAtual) {
+            Write-Host 'Atualizando o proprio launcher...' -ForegroundColor Yellow
+            [IO.File]::WriteAllBytes("$env:NAZA_BAT.novo", $novo)
+            Move-Item -LiteralPath "$env:NAZA_BAT.novo" -Destination $env:NAZA_BAT -Force
+            $env:NAZA_ATUALIZOU = '1'
+            Start-Process cmd -ArgumentList '/c', "`"$env:NAZA_BAT`""
+            exit 0
+        }
+    }
     # Atalho so vale se, alem do commit igual, existem os dois marcadores e todo arquivo do manifesto.
     $marcadores = @('chars/pengaro/pengaro.def', 'motif/nazafight/system.def') + @($manif.Keys | Where-Object { $_ -ne '@commit' })
     $faltando = @($marcadores | Where-Object { -not (Test-Path -LiteralPath (Join-Path $game ($_ -replace '/', '\'))) })
