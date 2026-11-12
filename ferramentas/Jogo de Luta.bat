@@ -1,6 +1,7 @@
 @echo off
 title Nazafights
-powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((Get-Content -LiteralPath '%~f0' -Raw) -split '#PS#START\r?\n',2)[1]"
+set "NAZA_BAT=%~f0"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((Get-Content -LiteralPath '%~f0' -Raw) -split '#PS#START\r?\n',2)[1]" & exit /b
 exit /b
 #PS#START
 # Nazafights: baixa a versao mais nova do GitHub e abre o jogo no IKEMEN GO.
@@ -49,6 +50,24 @@ try {
     $api.Headers.Add('Accept', 'application/vnd.github.sha')
     $commit = $api.DownloadString("https://api.github.com/repos/$repo/commits/$branch").Trim()
     if ($commit -notmatch '^[0-9a-f]{40}$') { throw "resposta estranha do GitHub: $commit" }
+    # O proprio launcher tambem se atualiza: compara com o ferramentas/Jogo de Luta.bat do mesmo commit e, se mudou,
+    # troca este arquivo e abre o novo. O "& exit /b" da linha do powershell (la em cima) faz o cmd sair sem reler
+    # este arquivo depois da troca. NAZA_ATUALIZOU evita trocar duas vezes seguidas.
+    if ($env:NAZA_BAT -and -not $env:NAZA_ATUALIZOU) {
+        $web = New-Object Net.WebClient
+        $web.Headers.Add('User-Agent', 'JogoDeLuta')
+        $novo = $web.DownloadData("https://raw.githubusercontent.com/$repo/$commit/ferramentas/Jogo%20de%20Luta.bat")
+        $txtNovo = [Text.Encoding]::UTF8.GetString($novo) -replace "`r`n", "`n"
+        $txtAtual = [IO.File]::ReadAllText($env:NAZA_BAT) -replace "`r`n", "`n"
+        if ($txtNovo -match '#PS#START' -and $txtNovo -ne $txtAtual) {
+            Write-Host 'Atualizando o proprio launcher...' -ForegroundColor Yellow
+            [IO.File]::WriteAllBytes("$env:NAZA_BAT.novo", $novo)
+            Move-Item -LiteralPath "$env:NAZA_BAT.novo" -Destination $env:NAZA_BAT -Force
+            $env:NAZA_ATUALIZOU = '1'
+            Start-Process cmd -ArgumentList '/c', "`"$env:NAZA_BAT`""
+            exit 0
+        }
+    }
     # Atalho so vale se, alem do commit igual, existem os dois marcadores e todo arquivo do manifesto.
     $marcadores = @('chars/pengaro/pengaro.def', 'motif/nazafight/system.def') + @($manif.Keys | Where-Object { $_ -ne '@commit' })
     $faltando = @($marcadores | Where-Object { -not (Test-Path -LiteralPath (Join-Path $game ($_ -replace '/', '\'))) })
@@ -124,7 +143,7 @@ if (-not (Test-Path $exe)) {
 # 3. Instala os lutadores disponiveis e os registra na selecao.
 $select = Join-Path $motor 'data\select.def'
 $texto = [IO.File]::ReadAllText($select)
-foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven')) {
+foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven', 'ck')) {
     $origem = Join-Path $game "chars\$lutador"
     if (-not (Test-Path (Join-Path $origem "$lutador.def"))) { continue }
     robocopy $origem (Join-Path $motor "chars\$lutador") /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
@@ -133,6 +152,9 @@ foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven')) {
         $texto = $texto -replace '(?m)^randomselect', "$lutador, stages/stage0-720.def`r`nrandomselect"
     }
 }
+# Tira da selecao os lutadores de exemplo que vem com o IKEMEN (Kung Fu Man e variacoes): so comenta a linha,
+# os arquivos ficam (o motor ainda pode precisar deles).
+$texto = [regex]::Replace($texto, '(?m)^([ \t]*kfm\w*[ \t]*,)', ';$1')
 [IO.File]::WriteAllText($select, $texto)
 
 # Layout Nazafights: espelha so a pasta dele em data\nazafight. O /MIR desfaz o que o Ajustar-Menus (passo 5)
@@ -227,9 +249,12 @@ function Ajustar-Menus {
     $lua = Join-Path $motor 'external\script\main.lua'
     if (Test-Path $lua) {
         $l = [IO.File]::ReadAllText($lua)
-        if ($l -notmatch 'jogo-de-luta: Endiabrado') {
-            # So o Enter confirma; segurando o soco forte (y) junto com o Enter escolhe a paleta 2 (Pengaro Endiabrado).
-            $novo = "function main.f_btnPalNo(p)`n`t-- jogo-de-luta: Endiabrado = segurar o soco forte e apertar Enter; so o Enter confirma`n`tif commandGetState(p, '/s') then`n`t`tif commandGetState(p, '/y') then return 2 end`n`t`treturn 1`n`tend`n`treturn 0`nend"
+        if ($l -notmatch 'jogo-de-luta: Endiabrado v2') {
+            # Enter escolhe o lutador normal; o soco forte (y) escolhe a paleta 2 (Pengaro Endiabrado; nos outros vira 1).
+            # Os dois contam no APERTO ('s', 'y'), nao enquanto estao segurados ('/s'): segurado, o Enter que escolheu
+            # o 1o lutador confirmava sozinho o 2o (no modo assistir sempre saia o primeiro da lista). O motor nao tem
+            # o comando '/y' (segurar y) na tela de selecao, so 'y'.
+            $novo = "function main.f_btnPalNo(p)`n`t-- jogo-de-luta: Endiabrado v2 = Enter escolhe normal, soco forte escolhe o endiabrado; conta no aperto`n`tif commandGetState(p, 's') then return 1 end`n`tif commandGetState(p, 'y') then return 2 end`n`treturn 0`nend"
             $l2 = [regex]::Replace($l, '(?s)function main\.f_btnPalNo\(p\).*?\r?\nend', { param($x) $novo }, 1)
             if ($l2 -ne $l) { [IO.File]::WriteAllText($lua, $l2) }
         }

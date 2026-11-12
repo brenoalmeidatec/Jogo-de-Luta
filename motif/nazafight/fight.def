@@ -146,6 +146,15 @@ match.wins = 2
 match.maxdrawgames = 1
 start.waittime = 30
 ctrl.time = 30
+; Fim de round mais rapido (estilo KOF). Padrao do IKEMEN: camera lenta 60 ticks a 1/4, espera 45 + 45 ticks e
+; round acabando 300 ticks depois do KO: ~3 s do KO ate a pose de vitoria.
+slow.time = 24
+slow.fadetime = 16
+slow.speed = 0.5
+over.hittime = 10
+over.waittime = 15
+over.wintime = 10
+over.time = 220
 round.default.font = 4,0,0
 round.default.text = "ROUND %i"
 round.default.displaytime = 60

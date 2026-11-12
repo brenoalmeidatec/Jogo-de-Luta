@@ -20,15 +20,20 @@ jogo ficam em [`regras-dos-lutadores.md`](regras-dos-lutadores.md); o jeito de p
 
 | | Normal | Endiabrado (Despertar) |
 |---|---|---|
-| Pele | morena, tom médio (matiz perto de 23°) | quase preta, relevo roxo escuro; corpo inteiro, sem fumaça no corpo |
-| Olhos | normais | violeta brilhante |
-| Calça | branca, listras verde e amarela | carvão, barra rasgada, brasas violeta |
-| Faixa | teal, cordão amarelo | cordão amarelo brilhando |
-| Perna | caneleira verde escura | algema de corrente partida no tornozelo |
-| Mão de trás | garrafa de whisky âmbar, rótulo creme | livre, garra; algemas nos pulsos |
+| Pele | morena, tom médio (matiz perto de 23°) | marrom-escura arroxeada; corpo inteiro, rachaduras violeta acesas no peito |
+| Olhos | normais | violeta brilhante, sem pupila |
+| Cabelo | escuro, curto | mais comprido e revolto, pontas violeta, dois chifres curtos de fumaça violeta |
+| Tronco | nu | casaco de mestre preto sem manga, aberto no peito, friso dourado, forro roxo, barra rasgada até a canela |
+| Calça | branca, listras verde e amarela | preta e larga, barra em brasa violeta |
+| Faixa | teal, cordão amarelo | corda grossa trançada ouro e violeta, duas pontas com pingente até o joelho |
+| Perna | caneleira verde escura | algema de ferro com 3 elos de corrente partida nos dois tornozelos |
+| Mão de trás | garrafa de whisky âmbar, rótulo creme | vazia; algema com corrente partida e bracelete de ouro nos dois braços |
 | Efeitos | whisky: âmbar e dourado (`WHISKY` em `gerar_pengaro.py`) | sombra: violeta e preto (`SOMBRA`, `SOMBRA_ESCURA`) |
 
-Referências na biblioteca do ChatGPT: "Socos" (normal) e "Oito Movimentos" (endiabrado). Meça o matiz da pele das folhas
+O endiabrado é o boss final do conceito aprovado em 2026-11-11 (`sprites/pengaro/quadros/folhas_arcade/e_conceito.png`);
+a aura dele (coluna de fumaça violeta-preta, anel de sombra no chão rachado, elos e pedras flutuando) é efeito à parte.
+
+Referências: "Socos" na biblioteca do ChatGPT (normal) e o arquivo `e_conceito.png` (endiabrado). Meça o matiz da pele das folhas
 novas: acima de 26° ele está desviando para o amarelo.
 
 ## Efeitos
@@ -88,8 +93,9 @@ antes de re-quantizar). As faixas de matiz da regra 3 são as do Pengaró; cada 
 | 12 | Roupa reage: calça abre no chute, pontas de faixa ou cordão atrasam 1–2 quadros | quadros vizinhos | dobra e atraso presentes | olho |
 
 O ChatGPT não entrega 15 cores: entrega pose e volume. A paleta entra depois, por quantização sem dithering para a
-paleta fixa, com retoque à mão onde sobrar chiado. Transformações (endiabrado, Surto, Diabo Loiro): troca de paleta sobre
-o mesmo desenho onde der; folha própria só onde o desenho muda. Índice de paleta compartilhado (lâmina e dente, por
+paleta fixa, com retoque à mão onde sobrar chiado. Transformações (Surto, Diabo Loiro): troca de paleta sobre
+o mesmo desenho onde der; folha própria só onde o desenho muda. O endiabrado do Pengaró muda de roupa inteira (boss
+final) e por isso é todo em folha própria. Índice de paleta compartilhado (lâmina e dente, por
 exemplo) não pode ser trocado sozinho: o que precisa mudar de cor isolado vai desenhado.
 
 ### Pipeline

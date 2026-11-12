@@ -5,6 +5,50 @@
 > [`../biblia-de-arte.md`](../biblia-de-arte.md#estilo-arcade-anos-90). Folhas de contato e medições brutas ficaram no
 > scratchpad da sessão, fora do repo.
 
+## Pedido do Breno para o Alisson (2026-11-12): Pengaró com a pele bem mais escura
+
+Na forma base o Pengaró tem que ser **bem mais escuro**: a pessoa de verdade é negra retinta. Ele tem que ser o lutador
+**mais escuro do elenco, mais que o Gutto e mais que o CK**. Hoje ele está ao contrário: com a pele mais clara e mais
+amarelada dos três (o próprio estudo abaixo já anotava "pele mais clara e amarelada que a atual").
+
+**Não gere nada de novo no ChatGPT (decisão do Breno): troque a cor nos desenhos que já existem, como edição de imagem.**
+A pose, o sombreado e o desenho continuam os mesmos; só muda o tom da pele. Só as folhas que ainda forem geradas daqui
+para frente passam pelo ChatGPT, e com uma referência já escurecida por este mesmo processo.
+
+O que fazer:
+
+1. **Paleta da pele** (`sprites/pengaro/paleta_arcade.json` e a tabela abaixo). Proposta que mantém as faixas de matiz da
+   regra 3, o contorno sem canal abaixo de 20 (regra 5) e fica abaixo do Gutto em cada tom:
+
+   | Papel | Hoje | Proposta | H / S / V | Gutto, para comparar |
+   |---|---|---|---|---|
+   | `pele_contorno` | `#4C1414` | `#3A1416` | 357° / 66% / 23% | — |
+   | `pele_sombra` | `#8A321C` | `#47201A` | 8° / 63% / 28% | `#6E3226` (V 43%) |
+   | `pele_medio` | `#DF7E3F` | `#723F1E` | 24° / 74% / 45% | `#985630` (V 60%) |
+   | `pele_luz` | `#FDC372` | `#A2753E` | 33° / 62% / 64% | `#C4894C` (V 77%) |
+   | `pele_brilho` | `#FDECCF` | `#D9A066` | 30° / 53% / 85% | `#E8C08A` (V 91%) |
+
+   O CK (`sprites/ck/paleta_arcade.json`) tem o médio em `#D05534` (V 82%), então ele já fica bem mais claro. Os valores
+   são ponto de partida: confira no jogo, ao lado do Gutto e do CK, e ajuste à mão se precisar. Depois rode o
+   `conferir_arte.py`.
+2. **Folhas arcade que já existem** (`sprites/pengaro/quadros/folhas_arcade/`): re-quantizar com a paleta nova. Como a
+   quantização é por papel, cada pixel de pele troca para o tom novo do mesmo papel, sem redesenhar.
+3. **Arte atual que ainda não é arcade** (`sprites/pengaro/quadros/` e o que o gerador usa hoje): um script de recolor que
+   acha os pixels de pele pelo matiz e pela saturação e leva cada um para o tom novo equivalente (sombra para sombra, luz
+   para luz). Precisa **poupar a garrafa âmbar**, que tem um tom parecido (ver a nota "Âmbar da garrafa" abaixo):
+   - restringir pelo papel no JSON quando houver;
+   - ou excluir a região da garrafa, que fica sempre na mão de trás;
+   - ou separar pela saturação, porque o âmbar é bem mais saturado que a pele.
+
+   Depois é só rodar o `gerar_pengaro.py` de novo.
+4. **Referência para as folhas futuras:** escurecer a folha "Socos" (a referência anexada nos pedidos) pelo mesmo recolor e
+   anexar essa. No prompt, trocar "skin" por *"very dark brown skin, the darkest skin of the cast, exactly like the
+   attached sheet"*.
+5. **O endiabrado continua diferente da base.** Ele é a pele quase preta arroxeada com relevo roxo
+   (`paleta_arcade_endiabrado.json`). Com a base mais escura, conferir que a troca ainda se nota: o endiabrado vai mais
+   para o roxo e para o preto, e a base fica marrom.
+6. Atualizar a frase "pele morena" em `docs/fichas/pengaro.md` (já trocada para "pele negra retinta").
+
 ## Paleta fixa (15 cores + transparente)
 
 Arquivo de dados: `sprites/pengaro/paleta_arcade.json` (montado por `quantizar_folha.py --montar-paleta soco` e ajustado
@@ -63,8 +107,10 @@ MOTION: <bloco da folha>
 Consecutive frames differ by a small amount, so the motion looks smooth in sequence.
 ```
 
-Endiabrado: troca de paleta sobre o mesmo desenho onde der (pele, calça, olhos); folha `e_` própria só onde o desenho
-muda (algema, barra rasgada, garra). Enquanto isso não for decidido, nenhuma `e_` entra na fila.
+Endiabrado: decidido em 2026-11-11. É o boss final do conceito `sprites/pengaro/quadros/folhas_arcade/e_conceito.png`
+(casaco de mestre preto, corda trançada, quatro algemas, braceletes, chifres de fumaça, sem garrafa). O desenho muda
+inteiro, então troca de paleta não serve: cada golpe tem folha `e_` própria, com prompt base próprio, e a aura vai em
+folhas `fx_aura_*` à parte. A fila está no Lote 7 de `fila.md`. A paleta do boss ainda não foi medida.
 
 ## Folhas em ordem (MOTION)
 

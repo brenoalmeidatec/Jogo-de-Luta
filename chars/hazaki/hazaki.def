@@ -1,8 +1,8 @@
 ; Gerado por ferramentas/gerar_hazaki.py. Edite lá, não aqui.
 [Info]
-name = "Hazaki"
-displayname = "Hazaki"
-versiondate = 11,05,2026
+name = "Hazak"
+displayname = "Hazak"
+versiondate = 11,11,2026
 mugenversion = 1.1
 author = "Breno"
 pal.defaults = 1

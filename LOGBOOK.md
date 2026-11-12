@@ -640,6 +640,7 @@ o robô não prova que o pisão despertado acerta com a caixa nova (não sei se 
 foram espelhados (não olhei a forma endiabrada); Gutto, Raiclaven e Hazaki não foram regerados (o diff só toca
 `chars/pengaro`).
 
+<<<<<<< HEAD
 ## 2026-11-11 — Bosses: conceitos e fila das folhas boss (branch `bosses`)
 
 **Feito:** entraram os quatro conceitos de boss final da forma despertada, aprovados pelo Breno hoje
@@ -749,3 +750,655 @@ As 24 folhas do grupo 2 do Gutto boss estão em `sprites/gutto/quadros/folhas_ar
   divisas q3|q4, q4|q5, q5|q6 (~35-40 px de altura de contato; 3 tentativas, nenhuma separou; recortar na linha da
   célula). `b_anda` refeita 1x (saiu 7% maior). Nada convertido, nada ligado em gerador, nada rodou no jogo.
 - **A seguir:** grupo 2 do Raiclaven (20 folhas) e CK (31); conferência cética do Raiclaven boss.
+=======
+## 2026-11-11 (método em .md)
+
+- **Feito:** a pedido do Alisson, o jeito de trabalhar do Claude passou a ficar versionado: `docs/metodo-do-claude.md`
+  (índice: frentes por branch, ciclo fila → fazer → sandbox → céticos → retoque, arte no ChatGPT, pipeline arcade,
+  endiabrado = modo de Despertar com cara de boss final, aura animada e fluidez) e `docs/arcade/registro_fila.md`
+  (procedimento da automação do ChatGPT e tabela das folhas, que estava só no rascunho da sessão).
+- **Pendente:** as frentes `hazak`, `ck`, `endiabrado`, `bosses` e `efeitos` ainda não entraram na `mugen`; o teste da
+  asa do Hazak no Blender não terminou (se aprovado, a seção 7 do método ganha o passo a passo).
+- **Próximo:** ao fechar cada frente, copiar para o repo o que os agentes anotaram fora dele e atualizar o método.
+
+## 2026-11-11 (Hazak, arte) — 67 folhas arcade do Hazak convertidas para `quadros_arcade` (branch `hazak`)
+
+**Feito (só arquivos do Hazak; nada de `animar_folha.py`, `quantizar_folha.py` nem `gerar_pengaro.py` foi editado):**
+
+- `ferramentas/folhas_hazak_arcade.py` (novo): corta as 8 figuras de cada `sprites/hazaki/quadros/folhas_arcade/*.png`
+  (por célula, sem magenta), põe na escala, quantiza sem dithering com as funções do `quantizar_folha` e grava
+  `sprites/hazaki/quadros_arcade/<folha>/00..07.png`. Tela 360x260, eixo (centro do tronco) em x=180, base em y=220,
+  igual aos outros. `--medir` (tamanhos na folha crua) e `--contato DIR` (folhas de contato).
+- Paleta: `sprites/hazaki/paleta_arcade.json`, as 15 cores da tabela (a) de `docs/arcade/hazaki.md` (contorno, pele 5,
+  gi 3, debrum 2, faixa/cabelo, atadura 2, pulseira). A patroa tem `paleta_arcade_patroa.json`: as do Hazak sem a
+  pulseira mais 4 próprias (cabelo castanho, mostarda, jeans, jeans sombra) = 18; com a paleta dele a camiseta virava pele.
+- Escala única `109/344` (0,3169): a figura em pé tem 344 px na folha crua e sai com 109-110 px. Exceções (`FATOR`):
+  `queda` 1,25-1,3; `vitima_arremessado` 1,2; `voadora` 1,12-1,25 nos quadros 1-6; `apanha` 5-7 1,08-1,12;
+  `derrota_sirene` 0-1 1,15/1,1 (corpo deitado que veio menor); `obj_lasca` e `obj_estatueta` 0,5 (13-31 px);
+  `patroa_*` 0,959 (100 px = 92% dele).
+- Pulseira (`ferramentas/retoques_arcade/hazak_pulseira.py`, roda no fim da conversão): uma pulseira só por desenho
+  (a duplicada e os pixels soltos viram sombra de atadura; duplicada de verdade em `agarrao_cutucao` 0, `ar_joelho` 7,
+  `ar_soco` 6, `vitima_agarrado` 5) e pintada onde faltou, em 20 desenhos (tabela `PINTA`: parado 1 e 4,
+  agarrao_perna 0 e 7, apanha 2 e 7, chute_giratorio 2, corrida 3 e 5, derrota_sirene 0 e 5, guarda_aco 2, rasteira 1,
+  rasteira_arco 2, vitima_agarrado 1, vitima_arremessado 2 e 6, vitoria 1 e 2, defesa_baixa 2).
+
+**Conferido:** 536 PNG em 67 pastas, todos 360x260, alfa só 0/255, só cores da paleta, base em y=220, nenhum cortado
+na borda. Folhas de contato de todas as pastas olhadas uma vez (a 2x), e os desenhos retocados a 5x.
+
+**Defeitos que ficaram / não conferido:**
+
+- Pulseira com poucos pixels (5-7, não repintada): agarrao_perna 6, anda 1, apanha 6, ar_soco 5, chute_giratorio 4,
+  giro_garagem 2 e 3, levanta 2. Sem pulseira: tapa_costas 2 (de costas, mãos escondidas). Não conferi desenho a desenho
+  se a pulseira está no pulso CERTO nos 500 e poucos que já tinham uma; em `derrota_sirene` 4, 6 e 7 ela parece grande
+  demais e no braço da frente.
+- `chute_alto_rajada`: a faixa da cintura veio marrom-alaranjada na folha crua (nas outras é preta).
+- `parado`: a respiração desce de 110 para 98 px (quadro 3), bastante para uma ginga; quem ligar no gerador escolhe os quadros.
+- `guarda_aco` 2: a pulseira pintada ficou larga (braços cruzados, as duas ataduras formam uma mancha só).
+- O eixo é o centro do tronco de cada figura: golpe que avança o corpo não avança no desenho (o gerador desloca, como
+  o `DESLOCA_ARCADE` do Pengaró). Pé de apoio cravado entre quadros não foi medido.
+- Nada rodado no jogo: nenhuma pasta está ligada no `gerar_hazaki.py` (é a outra parte da frente). Sem quadros do
+  meio (`meio/`). O Despertar (`d_*`) não existe ainda: pendente, fora desta rodada.
+
+
+## 2026-11-11 (Hazak, gerador) — gerador novo do Hazak, ficha inteira menos o Despertar (branch `hazak`)
+
+**Feito (só arquivos do Hazak e o robô, de forma aditiva; `gerar_pengaro.py`, `repertorio.py`, `animar_folha.py` e
+`quantizar_folha.py` não foram editados):**
+
+- `ferramentas/gerar_hazaki.py` reescrito e `ferramentas/hazaki_golpes.py` novo (só dados, notação `"folha d/tA"`).
+  Importa o `gerar_pengaro` como biblioteca e NÃO chama `montar_sprites/air/cns/cmd`. Lê
+  `sprites/hazaki/quadros_arcade`. `--contato DIR` grava folhas de contato lidas de volta do `.sff`.
+- `chars/hazaki` regerado: 16 normais, 4 correntes de 3 + finalizador, 4 kombos, 8 especiais (fraco/forte), 3 agarrões,
+  2 supers, rolamento, afastar, parry, provocação, intro, vitória e derrota. Nome na tela **Hazak** (id `hazaki`).
+  Vida 900, defesa 90, anda 3,4 / -2,8, corre 7,2. Paleta fixa: índices 1-15 do `.sff` = `paleta_arcade.json`
+  (conferido lendo o `.sff` de volta: 0 sprites do corpo com cor fora das 15).
+- **Furo "arremessado some" fechado:** os 28 grupos de `gp.SPRITES_VITIMA` existem no `.sff` do Hazak (preso =
+  `vitima_agarrado` 1, curvado = `vitima_agarrado` 0, apanhando = `apanha` 2/3). Visto no filme: o Pengaró agarra
+  (Martelo e Garrafada), bate, joga, e o Hazak aparece do começo ao fim.
+- Robô: `testar_pengaro.py` ganhou os 21 comandos de toque do Hazak e passa `@LUTADOR@` ao `robo.lua`; no `robo.lua`
+  os roteiros antigos só registram se o P1 não é o hazaki e há um bloco novo só para ele (41 roteiros). `corrente()`
+  ganhou um 6º parâmetro opcional (janela, padrão 20). Para pengaro/gutto/raiclaven a lista continua com 43 roteiros
+  (conferido carregando o Lua antes e depois).
+- Docs: seção Hazaki do `README.md`, nota de estado no topo de `docs/arcade/hazak_gerador.md`.
+
+**Testes (Windows Sandbox, depois da versão final dos arquivos):**
+
+- `verificar_pengaro.py --hazaki`: 761 sprites, 162 ações, 90 estados, 42 comandos, 0 erros, 0 avisos.
+- Robô `--lutador hazaki`: **151 PASS / 0 FAIL**, 41 roteiros. Danos medidos (P2 com defesa 90): correntes x 161,
+  y 267, a 189, b 295; kombos 166 / 127 / 167 / 162; Cutucão Sacana 155; Puxa a Perna 111; Abraço 133; Punho de
+  Concreto 67 / 78; Estatueta 78 / 89; Ascensão 89 / 122; Giro 72 / 94; Corte de Base 61 / 83; Pega Bolado 78 / 111;
+  Guarda de Aço 67 (P1 sem dano); Faixa no Asfalto 268 (inteiro: 3001, 3002, 3003); Rapidinho 378 (4 passagens + voadora).
+- Robô do Pengaró contra o Hazak novo: **146 PASS / 0 FAIL**, 43 roteiros (igual à linha de base).
+- `chars/pengaro`, `chars/gutto`, `chars/raiclaven`: md5 de todos os arquivos igual ao de antes.
+- Filmes de 8 s (Hazak x Pengaró: x, y, a, b, baixo+y, baixo+b, Punho de Concreto, Estatueta, Giro de Garagem) e de 6 s
+  (Pengaró agarrando o Hazak), tiras olhadas. Folhas de contato dos sprites finais olhadas (8 de corpo, outros, efeitos).
+
+**Consertos no caminho (com a medida):** o jab duplo era cancelado antes do 2º jab e a trava `var(11)` não contava o
+2º acerto (finalizador x não saía: `FAIL foi para 303`); agora o 301 só continua depois do 2º jab e solta a trava no
+2º HitDef. Efeitos do pixelfx crus viravam bloco branco e pontilhado: todos com mistura aditiva. A faísca saía ~27 px
+acima do golpe (pivô do pixelfx embaixo): pivô no centro do clarão. Poeira do `ground-slam` pintada de cinza e cortada
+de ~190 para 56 ticks. `rasteira` 3-5 e `rasteira_arco` 4-5 deslocadas 21-28 px (a conversão centrava pela caixa).
+
+**Pendente / provisório / NÃO conferido:**
+
+- **Despertar (Diabo Loiro) não existe:** sem folhas `d_*`. Sem comando, sem estado 2000, sem patroa, sem paleta `_d`
+  (nem as 4 cores da patroa no `.sff`). Correntes/normais/especiais/super do Despertar da ficha: nada feito.
+- Sem som (não há `.snd`): falas, sirene e bordão esperam o áudio do Breno.
+- **Derrota com sirene:** escrita no `[Statedef -2]` (levanta e foge para fora da tela), NUNCA vista rodando: nenhum
+  teste levou o Hazak ao nocaute nem ao fim do tempo. Intro, vitória, provocação, parry, rolamento, guard cancel,
+  golpes no ar, golpe de afastar, coice, pulo, corrida e defesa também não foram vistos nem testados pelo robô.
+- Escape dos agarrões (y/b nos 7 primeiros ticks): o robô não consegue conferir (preso, o P2 não roda o `-1` dele).
+- Supers e agarrões do Hazak passaram no robô mas não foram filmados. Projétil da Estatueta: o robô mede o acerto,
+  o voo não apareceu no recorte das tiras. Rapidinho no canto e contra oponente defendendo: não testado.
+- Sem quadros do meio (8 desenhos por folha, abaixo dos mínimos da regra 7.1). Apanhar agachado usa a folha `agachado`.
+  Lasca e estatueta saem das folhas `obj_` (provisório, a regra 8 pede pixelfx). A poeira aditiva lê como névoa clara
+  no palco azul de teste. Retrato: o `sprites/hazaki-selecao-kof.png` antigo.
+- Equilíbrio é chute meu: alcance curto compensado com passo à frente (cruzado, cotovelada, gancho, cotovelo), danos,
+  hitstun e empurrão precisam de olho de quem joga. Punho de Concreto acerta o oponente que acabou de cair.
+- `gerar_gutto`/`gerar_raiclaven` e os robôs deles não foram rodados (o `.cmd`/`.cns` deles não mudou; o boneco P2 mudou).
+- O `hazaki=True` continua no `gerar_pengaro.py`/`repertorio.py` sem ninguém chamar: retirar quando a outra frente
+  largar esses arquivos. `NOMES` do `gerar_layout.py` ainda diz "Hazaki".
+- Conflitos ficha x regras e a saída adotada: seção 5 e nota de estado de `docs/arcade/hazak_gerador.md` (numeração do
+  elenco em vez da 5.1; nomes repetidos da ficha; agarrão em pé H-; Rolada b com a folha `chute`).
+
+## 2026-11-11 (Hazak, retoque) — conferência de dois céticos sobre o gerador novo (branch `hazak`)
+
+**Corrigido (gerador, `hazaki_golpes.py`, retoques de arte; `gerar_pengaro.py` não foi editado):**
+
+- **Derrota:** defeito de verdade achado no robô: o nocauteado ficava no `5110` para sempre (a ação `5170` terminava em
+  `-1` e o `5110` do motor só passa ao `5150` com `AnimTime = 0`), então a fuga, que espera o `5150`, nunca começava.
+  A `5170` agora termina. Segundo defeito, visto no filme: com o `ScreenBound` solto desde o começo da animação a câmera
+  largava o caído e ele saía do quadro ainda deitado; agora a tela só solta quando ele começa a correr. O que o cético
+  apontou (corre de costas) **não procede**: os desenhos 4 a 7 de `derrota_sirene` olham para trás; no filme ele levanta
+  num pulo, vira de costas para o oponente e corre de frente para a saída.
+- **Caixa de dano por desenho** (`caixas_do_corpo`): tronco + membro que sai dele 14 px ou mais, medidos no sprite, em
+  vez de uma caixa por ação (parado, a caixa fica quase igual à antiga: -22..27 contra -24..24). Caixa de golpe alta (supers 3001/3002/3003, joelhada) encolhida até o membro (`caixa_no_membro`).
+  Caixa dos agarrões 800/830 chega até a mão.
+- **Pulo e golpes no ar:** desenhos centrados (os pés sobem 4 a 21 px; antes a cabeça descia 47 px com os pés presos);
+  a caixa de golpe sobe junto.
+- **Apanhar:** as ações 5001/5030/5035 dele usam a folha `apanha` (antes mostravam a pose de "preso" a cada golpe que
+  o lançava). As vítimas dos agarrões dele passaram para as ações 5930/5931. `verificar_pengaro.py` ganhou a exceção
+  por lutador `ACOES_VITIMA_DE` (aditiva).
+- **Guarda de Aço x:** `reversal.attr = SA, NA, SA` (em pé e no ar; só o y pega golpe baixo). A resposta 1102/1103 ficou
+  sem tremida (classe nova `contra`); os agarrões também (regra 8.3).
+- **Rolada de Tatame:** travessia de verdade (9 px por tick enquanto rola, até ~126 px), não mais um `PosAdd` de um
+  tick. Oponente a mais de ~90 px: a rolada acaba antes de passar. Invencível só enquanto rola (16 / 15 ticks).
+- **Finalizadores:** Tá Achando Ruim? manda o oponente para o estado 304 (dois meios giros e a queda do motor); Machado
+  de Dojô (333 e o fecho 3003 do super) com `fall.yvelocity = -7` (quique alto).
+- **Efeitos da ficha:** rastro de velocidade de 2 ticks na corrida (`-2`), no Pega Bolado e nas passagens e na voadora
+  do Rapidinho; poeira (`heavy-landing` cinza) no Giro e no Corte fortes, na arrancada e no pouso do Pega Bolado;
+  cintilar dourado na Estatueta. O rastro da corrida nascia só no 8º tick (o `-2` vê o estado novo a partir do
+  `Time = 1`): consertado depois de ver o filme sem rastro.
+- **Estatueta:** o projétil sai do tamanho que tem na mão (~15 px, sem a base azul-marinho da folha `obj_`).
+- **Alcance:** Giro de Garagem a 10,5 / 12,5 px por tick (~150 / ~200 px; a ficha pede meia tela); Pega Bolado b salta a
+  9,5. **322** (chute alto) sem vai-e-volta: `0, 1, 6, 7`. 1º golpe das correntes y e b cancela em especial no contato
+  (regra B.4). Movelist: `Parry` com `+`, corrida, passo para trás e golpes no ar.
+- **`.sff`:** efeitos, retratos e estatueta só usam os índices 16-255 (0 pixels deles nos índices do corpo); desenhos
+  vazios no fim dos efeitos cortados; `hit-flash` e `charge-up` (sem uso) saíram. 614 sprites.
+- **Arte (pixel, reproduzível pelo `folhas_hazak_arcade.py`):** pulseira no pulso de trás em `vitima_agarrado` 0 e 1 e
+  `agarrao_perna` 6; borrão verde-água do `guarda_aco` 2 virou tira; atadura branca no pulso do `soco_reto` 4 e 5;
+  pontas da faixa do `chute_alto_rajada` 0-6 na cor da faixa (`retoques_arcade/hazak_faixa.py`, novo).
+
+**Robô (aditivo, só no bloco do Hazak e no `.cmd` do Hazak):** `T_defende` (o P2 entra na guarda do motor quando vem
+golpe e segura para trás) e 9 roteiros novos: corrente x contra defesa de verdade, Machado por cima contra defesa
+agachada e em pé, Punho de Concreto contra defesa em pé e agachada, Pega Bolado defendido (1503), Guarda de Aço y e x
+contra golpe baixo, derrota. Para pengaro/gutto/raiclaven a lista continua com 43 roteiros (conferido carregando o Lua).
+
+**Testes (Windows Sandbox, depois da versão final; md5 de `chars/hazaki` igual antes e depois do robô):**
+
+- `verificar_pengaro.py --hazaki`: 614 sprites, 162 ações, 91 estados, 42 comandos, 0 erros, 0 avisos.
+- Robô `--lutador hazaki`: **176 PASS / 0 FAIL, 50 roteiros**. Danos iguais aos da rodada anterior. Defesa de verdade:
+  corrente x defendida (P2 em 150/151, dano 0, `v10 = 0`, finalizador não saiu); 246 fura a defesa agachada (61) e é
+  defendido em pé; lasca acerta quem defende em pé (67) e é defendida agachado (raspão 6); Pega Bolado b defendido
+  pousa no 1503; Guarda de Aço y reverte o chute na canela (78, sem dano nele) e o x não (leva 24). Derrota: 5110 →
+  5150, ação 171, correu para trás até sair da tela.
+- Robô do Pengaró contra o Hazak novo: **146 PASS / 0 FAIL**, 43 roteiros (igual à linha de base). Uma rodada antes,
+  com a caixa de membro também no punho da guarda (35 px à frente), a LATADA do Pengaró nascia dentro do Hazak e o
+  roteiro 15 falhava ("projetil na tela"): por isso o limite de 14 px.
+- `chars/pengaro`, `chars/gutto`, `chars/raiclaven`: sem mudança (`git status`). Robôs do Gutto e do Raiclaven não rodados.
+- Filmes de 8 s e tiras em `scratchpad/hazak_gen/r2/` (`filme_derrota`, `filme_golpes`, `filme_especiais`); folhas de
+  contato dos sprites finais na mesma pasta.
+
+**Recusado (com motivo):** fuga de costas (acima); "bloco de pele" no `estatueta_arremesso` 3 (é o punho fechado);
+kombos sem pose própria (a regra C diz que kombo é sequência de normais e não há folha para eles); rajadas dos supers
+com congelamento 3,6 (é o padrão `super` da biblioteca, igual ao do Pengaró: 14+ só no golpe final); escala das pernas
+estendidas (estilo); ginga com a cabeça oscilando 12 px (é a ginga).
+
+**Pendente / NÃO conferido:**
+
+- Despertar inteiro (sem folhas `d_*`), som próprio (sirene, falas), quadros do meio (regra 7.1).
+- Arte que pede desenho novo: olhos que leem como óculos escuros em `chute_alto_rajada` 1/3, `ascensao` 4 e `voadora`
+  4/5; pontas avermelhadas da faixa em `apanha` 1-6.
+- Guarda de Aço contra golpe no ar: só por leitura (`SA`). Escape dos agarrões: o robô não consegue conferir.
+- Não vistos nem testados: intro, vitória (só o começo aparece no filme da derrota), provocação, parry, rolamento,
+  guard cancel, golpes no ar (as caixas mudaram de altura com o desenho centrado), afastar, coice, pulo, passo para trás.
+- O giro do oponente no 304 roda (robô e filme), mas com a pose de ar do Pengaró o giro lê pouco. Poeira e asfalto
+  continuam claros no palco azul de teste (mistura aditiva).
+- A caixa de dano por desenho não foi vista no editor nem no combo-finder; equilíbrio continua estimativa.
+- Os três filmes são de builds anteriores ao último ajuste: depois de `filme_derrota` e `filme_golpes` mudou o gatilho
+  do rastro da corrida; depois de `filme_especiais` mudou só o limite de 14 px da caixa de dano (não aparece em filme).
+  O robô e as folhas de contato são da versão final.
+
+**Perguntas para o Breno:** (1) Guarda de Aço x deve pegar golpe no ar? (ficha só diz que o y pega baixo também);
+(2) kombos com pose própria, e "Rasteira de Calçada" terminando em rasteira de verdade? (hoje fecha num chute lateral
+em pé); (3) rajada de super com congelamento de 14+ por golpe (regra 8.3 literal) ou o padrão curto do elenco?;
+(4) Rolada de Tatame com alcance limitado (~90 px) ou atravessa de qualquer distância como antes?; (5) Giro de Garagem
+a ~150 / ~200 px está bom?; (6) a Estatueta do tamanho da mão (~15 px) ou maior nas duas?
+
+## 2026-11-11 (hazak na mugen)
+
+- **Feito:** a branch `hazak` (Hazak recriado pela ficha do Breno: gerador novo `gerar_hazaki.py` + `hazaki_golpes.py`,
+  67 folhas em `quadros_arcade`, robô próprio) entrou na `mugen` com a aprovação do Alisson. Único conflito: este LOGBOOK
+  (as duas pontas tinham anexado entradas; ficaram as duas). Os quatro lutadores foram regerados na árvore juntada e
+  saíram com md5 idêntico ao que estava no git. Robô na sandbox, a partir da árvore juntada: Hazak **176 PASS / 0 FAIL**
+  (50 roteiros), Pengaró **146 PASS / 0 FAIL** (43 roteiros).
+- **Pendente:** Despertar do Hazak (Diabo Loiro: folhas `d_*` em geração na branch `bosses`), som próprio, retrato do
+  Pengaró na barra de vida ainda antigo; robôs do Gutto e do Raiclaven não foram rodados contra o Hazak novo.
+- **Próximo:** juntar `ck`, `endiabrado`, `bosses` e `efeitos` conforme cada frente fechar e for conferida.
+
+## 2026-11-11 (aura pelo Blender vira padrão)
+
+- **Feito:** teste da asa do Hazak (Diabo Loiro) animada no Blender a partir do conceito aprovado: asa com ossos batendo
+  em laço de 48 quadros, notas caindo, ouro pingando, coroa e brasa, em camadas de 15 cores. O Alisson viu o vídeo e
+  aprovou o método como padrão das auras. Scripts em `ferramentas/aura_blender/`, passo a passo em
+  `docs/arcade/aura_blender.md`, seção 7 de `docs/metodo-do-claude.md` atualizada.
+- **Pendente:** o teste foi vídeo montado fora do jogo, comparado só com o desenho parado (a folha de 8 quadros do
+  ChatGPT não existia); falta ligar no motor pelo `ferramentas/aura.py` (branch `efeitos`) e fazer o rig das outras
+  quatro auras. Os scripts ainda têm caminhos e medidas da asa do Hazak escritos à mão (não são genéricos).
+- **Próximo:** generalizar os scripts e aplicar em Gutto, Raiclaven, CK e Pengaró quando o uso do plano permitir
+  (semana em 64% no Fable às 15h; a regra é parar em 80%).
+
+## 2026-11-11 (PARADA GERAL às 16h: onde cada frente ficou)
+
+O Alisson pediu para parar todos os trabalhos para trocar o modelo de raciocínio do Claude. Nada está rodando. Cada
+frente tem, no LOGBOOK da própria branch, uma entrada "PARADA de propósito" com o que foi feito e como retomar.
+**Nenhuma dessas branches foi conferida pelo orquestrador nem entrou na `mugen`.**
+
+| Branch | Ponta | Estado | Falta |
+|---|---|---|---|
+| `mugen` | esta | Pengaró normal inteiro em arte arcade (robô 146/0); Hazak novo sem o Despertar (176/0); método em `docs/metodo-do-claude.md` | nada pendente de parada |
+| `ck` | `e28e79f` | CK montado (`gerar_ck.py`, `chars/ck`), 4 folhas do Ratão refeitas; relato de robô 159/0 | céticos, retoque, conferir filme, juntar |
+| `endiabrado` | `0d304cc` (bom: `90e5575`) | Pengaró endiabrado boss final: 34 folhas geradas, convertidas e ligadas; a ponta guarda trabalho pela metade, não testado | terminar a ligação, céticos, retoque, robô, juntar |
+| `bosses` | `f380d59` | conceitos dos 4 bosses, fila completa, 16 folhas brutas do Diabo Loiro (Hazak) | resto do Hazak; Gutto, Raiclaven e CK inteiros; converter e ligar |
+| `efeitos` | `9a64d4f` (bom: `3c0b205`) | kit dos bosses (`docs/arcade/bosses_kit.md`), `ferramentas/aura.py` com lutador de teste, cético feito; a ponta guarda o retoque pela metade | terminar o retoque, refilmar, juntar |
+| `auras` | `40bc95f` (bom: `3e1c429`) | auras pelo Blender dos cinco (camadas em `sprites/<id>/aura/`), cético feito; a ponta guarda os 4 retoques pela metade | terminar retoques e fecho, ligar no jogo pelo `aura.py` |
+| `cenarios` | `b7ce776` | `gerar_cenario.py` provado com cenário de teste, pesquisa e projeto dos 4 cenários de Nazaré, 9 imagens brutas do Cristo | responder "Para o Alisson confirmar", resto da arte, montar, filmar |
+
+- **Ordem sugerida para retomar:** (1) `ck`: rodar céticos e retoque e juntar; (2) `endiabrado`: voltar a `90e5575`,
+  olhar o que a ponta mudou, terminar e conferir; (3) `efeitos` + `auras`: terminar retoques e ligar uma aura no jogo
+  (começar pela asa do Hazak); (4) `bosses`: seguir a fila; (5) `cenarios`: depois das respostas do Alisson.
+- **Na máquina:** a trava da sandbox (`%USERPROFILE%/JogoDeLuta/sandbox.trava`) foi removida depois de confirmar que
+  não havia sandbox aberta. Cada branch tem um worktree em `C:/Dev/Jogo-de-Luta-<branch>`.
+- **Uso do plano na parada:** perto de 65-70% da semana no Fable; a regra atual é parar só em 100%.
+
+
+## 2026-11-11 (CK) — folhas revisadas e convertidas para a arte arcade (branch `ck`, itens 2 e 3 do pedido do Breno)
+
+**Feito:**
+
+- `quantizar_folha.py`: papéis `PAPEIS_CK` (base) e `PAPEIS_CK_RATAO`; `FORMA=ratao` troca a paleta para
+  `paleta_arcade_ratao.json`. `conferir_arte.py`: rampa da pele do CK (sombra 2-10°, médio 11-19°, luz 20-30°) e a sombra
+  fria da regra 4 é `branco_sombra`. `animar_folha.py`: `FOLHAS_CK`, escala 0.195 (a figura ocupa a célula inteira da
+  folha), `AJUSTE` por folha, sempre por célula, e `fundo_ck` (fundo com degradê vira magenta puro; figuras vizinhas
+  grudadas são separadas no ponto fino). O CK **não** entrou em `LIMPA_MAGENTA`: o `sem_magenta` apagaria o roxo do boné
+  e da camisa; o magenta sai antes de quantizar.
+- `sprites/ck/paleta_arcade.json` e `paleta_arcade_ratao.json` (15 cores cada, medidas nas duas referências).
+- `ferramentas/converter_ck.py` converte tudo de uma vez (leva ~15 min): 58 pastas em `sprites/ck/quadros_arcade/`
+  (8 desenhos cada, tela 360x260, base y=219, sem quadro do meio) e os efeitos em `sprites/ck/efeitos/` (aura, fumaca,
+  garrafa, paredao com 8 quadros; bone e juliet com 1, tirados das folhas do golpe; despertar_fumaca com 4).
+  `--contato DIR` gera folhas de contato e `--medir` as medidas. Retoques por código em
+  `ferramentas/retoques_arcade/ck.py` (rodar o converter refaz todos).
+- Altura em pé: base 113 px, Ratão 109-110 px (ele fica curvado). Queda e levantada têm escala por quadro
+  (`ESCALA_QUADRO` e `AJUSTE["queda"]`): o corpo deitado veio com ~65 px na folha e ficou com ~97-100.
+
+**Retoques por código:** `e_derrota` 8 = cópia do 7 (o 8 da folha encosta na borda); `e_agarrao` 7 = cópia do 8 (a
+garrafa trocava de mão); faísca amarela fora do `e_queda` 1, 5 e 6; boné, óculos e garrafa no ar fora do corpo
+(`bone_voador` 6, `e_juliet_voadora` 6, `e_bola` 6); **fiapo de fumaça e cigarro fora de todas as folhas `e_`** (com
+1-2 px ele virava um rabisco azul-escuro em cima da cabeça por causa do contorno de 1 px).
+
+**Defeitos que ficaram (número do quadro como na folha, 1 a 8):**
+
+- `queda` 5 e 6: as figuras se sobrepõem na folha; o 5 saiu sem os pés e a ponta do tênis dele ficou colada atrás da
+  cabeça do 6. Usar 4 -> 7 ou refazer a folha com mais espaço.
+- Garrafa na outra mão (o braço que sai do ombro da esquerda da imagem segura a garrafa e a mão vazia fica à direita):
+  `e_soco` 2 a 7, `e_caneta` 3 a 5; parecido em `e_martelo` 2 a 6 e `e_ar_soco` 2 a 6 (vi só na folha de contato
+  reduzida). No `e_rolamento` 7 ele está de costas e a garrafa aparece à esquerda. Não dá para resolver por código.
+- As 4 já marcadas para refazer (`e_provoca`, `e_beck`, `e_golaco`, `e_juliet_voadora`) foram convertidas como estão;
+  o `e_golaco` tem riscos de giro e estilhaço desenhados junto com o corpo.
+- `lata` 5 (manchas escuras na polo) e 6 (clarão vermelho no ombro de trás); `provoca` 2, 3 e 6 e `golaco` 4 (risquinhos
+  e luva solta desenhados); `rolamento` 2 e 3 (mancha rosa atrás do joelho); `e_vitoria` 3 sem a fumacinha (agora
+  nenhuma folha `e_` tem).
+- `despertar_a` 7-8 e `despertar_b` 1-2: a fumaça sai lilás na paleta do corpo (ela não tem cinza-esverdeado). Os
+  mesmos 4 quadros estão com as cores certas em `efeitos/despertar_fumaca/`.
+- `e_derrota`: sentado ele fica com ~50-60 px de altura (o base tem ~66).
+
+**conferir_arte.py (58 pastas, 464 quadros):** R1, R5 e R7 passam em todos. R3 e R4 falham só nos quadros sem pele ou
+sem branco (fumaça do Despertar, `afastar` 2). R10 falha em 55 pastas e R11 em 13: são do desenho (punho que cresce no
+contato, antecipação), não da conversão.
+
+**Não feito / a seguir:** quadros do meio (`animar_folha.py --arcade` + `quantizar_folha.py --meio` funcionam para o
+CK, testado no `soco` e apagado); `gerar_ck.py` (item 4); refazer no ChatGPT as 4 folhas do item 1 e, se o Breno quiser,
+`queda`, `e_soco` e `e_caneta`. Nada foi testado no motor: só folha de contato e script.
+
+## 2026-11-11 (CK) — lutador montado no jogo: `gerar_ck.py`, `chars/ck`, robô e filme (branch `ck`, item 4 do pedido)
+
+**Feito.** `ferramentas/gerar_ck.py` (no molde do `gerar_raiclaven.py`, mas só sobre o `gerar_pengaro.py`, no modo "só
+desenhos") gera `chars/ck` com a ficha inteira. O kit é o do Pengaró (mesmos números de estado e nomes de comando, que
+é o que o robô testa); a arte, os movimentos dos comandos e os golpes são do CK.
+
+- **Arte:** as 58 pastas de `sprites/ck/quadros_arcade` e os efeitos de `sprites/ck/efeitos`, sem quadro do meio. O
+  conversor centra cada figura na célula; nas folhas de golpe o gerador ancora o calcanhar de trás onde ele fica na
+  guarda (`ANCORA`), senão o corpo escorregava até 17 px para trás ao bater e o punho ia só 34 px à frente.
+- **Caixas de golpe medidas no desenho** (`caixa()`): o pedaço do corpo que passa de 24 px à frente do eixo, com 4 px
+  de sobra. Os golpes só do Ratão e as variantes despertadas dos normais (`gp.CAIXA_DESPERTADA`) são medidos no
+  desenho do Ratão (a chinelada alta bate na cabeça, o chute da base na barriga).
+- **Braço curto:** o soco do CK vai uns 40 px à frente (o do Pengaró, 70). Para as correntes encaixarem, cada golpe
+  entra com um passo (`com_passo`, avanço de 2 a 6,5 px por tick até a caixa + passo chegar a 80 px) e os normais do
+  kit ganham um passo de até 3 ticks antes do contato (`NORMAIS_DO_KIT`, alvo 52 px).
+- **Comandos da ficha:** Tragada `↓ →` x/y, Boné Voador `→ ←` x/y, Levanta, Comédia `→ ↓` x/y, Bote `↓ →` a/b, Bicuda
+  Baixa `↓ ←` a/b, Gingado de Esquiva `← →` a/b, Contragolpe `↓ ←` x/y, Pêndulo `← ↓` a/b, Saideira `← →` y, Rajada
+  `← → ↓` a/b, Nocaute `← → ↓` x/y. Ratão: Garrafa Voadora `↓ →` x/y, Tragada de Beck `↓ ↑` x/y, óculos `→ ←` x/y,
+  Passinho Ratão `→ ←` a/b, Grave do Paredão `↓ ↑` a/b, Baile `← → ↓` x+y (e o comando da Rajada, que no Ratão vira o
+  Baile). Kombo 4 é x, y, ↓ + y; kombo do Ratão é x, → + y, b.
+- **Estados com lógica própria** (o resto é o CNS do kit): Tragada (1000/1001, nuvem que anda pouco, para e fica 150 a
+  180 ticks; quem encosta leva 25 e fica 45 ticks tonto; o pod aparece na luva), Boné Voador (1600/1601, projétil
+  que freia, volta e some na cabeça; ele fica sem boné esperando e põe de volta na ação 1602), Contragolpe (1300/1301
+  com `ReversalDef` e o cruzado 1310), Pêndulo (1100/1101 com `NotHitBy SA` e saída no direto 1110), Rajada da
+  Esquina (3000: 7 socos de 22 e a voadora de 70), Tragada de Beck (3400), Garrafa Voadora (3402: arco, estilhaça e
+  deixa cacos 120 ticks), Grave do Paredão (3403), corte descendo no ar (3436).
+- **Modo Ratão:** `despertar_a`/`despertar_b` com os 4 quadros de `efeitos/despertar_fumaca` no lugar dos de fumaça
+  lilás; `RemapPreset` para as folhas `e_`; **aura = `fx_aura` num Explod à parte** (ação 9210, atrás do corpo, presa
+  ao lutador) e PalFX esverdeado leve. Jeito chapado: nos estados 3410 a 3435 o alcance (0 a 5 px) e o tempo do
+  contato (0 a 2 ticks) são sorteados; corte de garrafa sangra 3 de vida a cada 15 ticks por 90 ticks (não mata).
+  Perde o Contragolpe e a esquiva do Pêndulo liga 3 ticks depois.
+- **Paredão (`fx_paredao`, ação 9250):** atrás dele na entrada do round (some quando o round começa), no Despertar,
+  no Baile da Esquina e no Grave.
+- **Textos:** 8 falas de vitória, `movelist.dat` (o óculos aparece como "Óculos Voador": sem nome de marca em texto do
+  jogo). Retrato: `sprites/ck-selecao-kof.png`, o busto do desenho 0 da `referencia_ginga` em resolução cheia.
+- **Instalação e robô (só linhas novas):** `'ck'` na lista do `ferramentas/Jogo de Luta.bat`; `robo.lua` recebe o
+  `--lutador` (`@LUTADOR@`) e, com `ck`, troca o kombo 4 e o kombo do Despertar e roda 5 roteiros a mais (Baile pelo
+  comando próprio, Contragolpe sem apanhar e apanhando, Pêndulo e saída no direto).
+- **Vítima dos agarrões:** as ações 5001 e 5030 usam os sprites 382, 384-386 e 49, que já estão em
+  `gp.SPRITES_VITIMA` (os mesmos números do Gutto e do Raiclaven); o `main` confere.
+
+**Testado (só na sandbox):**
+
+- Robô `testar_pengaro.py --lutador ck`: **159 PASS / 0 FAIL** em 48 roteiros (1ª rodada: 158/1, a nuvem fraca nascia
+  em cima de quem estava a 70 px e acertava no mesmo tick; passou a nascer junto da boca e parar a ~55 px).
+- Robô do Pengaró depois das mudanças no `robo.lua`: 146 PASS / 0 FAIL em 43 roteiros, igual ao registrado antes.
+- `chars/gutto`, `hazaki`, `pengaro` e `raiclaven`: md5 igual antes e depois (`85cb5631…`).
+- Dois filmes CPU x CPU de 10 s contra o Pengaró (`filmar_sandbox.py`, o segundo com `--despertar 1`), olhados em
+  tiras de 16 quadros a 3 por segundo e em 4 recortes em resolução cheia: ele aparece, com retrato na HUD, pés na
+  linha do chão com sombra, sem pixel magenta ou verde, golpes legíveis; no Despertar o paredão fica atrás dele, a
+  fumaça cobre o corpo, ele sai de Ratão com a garrafa e a aura verde sobe dos pés como efeito à parte; log do motor
+  sem erro (só os avisos de `buffer time` que todos têm). Os vídeos não estão no repositório.
+
+**Provisório (funciona, mas não é o que a ficha pede no fim):**
+
+- **Folhas emprestadas** (não há desenho próprio): Pêndulo = `rolamento` 1-2; ganchos da corrente y e do Gingado b =
+  `golaco` 3 e 5; joelhada = `chute_alto` 2; chute alto de rua = `afastar` 4; Voadora da Esquina e fim da Rajada =
+  `bicicleta` (desenho de ar, no chão parece agachado); cotovelada e chute duplo no ar = `ar_soco` e `bicicleta`;
+  pisão = `afastar` 5; tapa de luva = `compasso` 4; Saideira = `agarrao` + `martelo` + `chute_baixo`; Bicuda Baixa =
+  `rasteirinha`; Grave = `chute_baixo`; apanhando agachado = `agachado`. No Ratão (`E_FOLHA`): `afastar` ->
+  `e_chute_alto`, `baixo_soco` -> `e_agachado` (o soco agachado não aparece), `rasteirinha` -> `e_rasteira`,
+  `bicicleta` -> `e_ar_soco`, `compasso` e `armada` -> `e_martelo`, `lata` -> `e_provoca`.
+- **`↓ ↑` + botão:** o ↑ faz pular. A entrada aceita o pré-pulo e os 7 primeiros ticks do pulo e o golpe volta para o
+  chão. O robô entra por `AssertCommand`, então **ninguém apertou isso na mão**. Se ficar ruim, a saída é `↓ ↓` como
+  no Pengaró (muda a ficha: decisão do Breno).
+- Tragada de Beck não segue o oponente (nuvem grande e lenta, reta). Garrafa Voadora tem uma versão só (x e y iguais)
+  e os cacos nascem num ponto fixo (a 206 px), só se a garrafa não acertou antes.
+- Nocaute de Rua é o super de 3 golpes do kit com os desenhos do CK e invencível no preparo: sem esquiva, câmera
+  lenta nem o oponente rodando. Levanta, Comédia forte ficou invencível até o fim do ativo, sem a recuperação longa.
+- Boné Voador: ele fica parado, sem boné, até o boné voltar (36 ticks no x, 59 no y).
+- Golpes das correntes e kombos que valem nas duas formas (301 a 347) têm a caixa medida no desenho da base; no Ratão
+  os chutes com `e_chute_alto` batem mais alto que a caixa.
+- Faíscas: os desenhos do Pengaró repintados (branco na base, verde de vidro no Ratão). A ressaca depois do Despertar
+  é a do kit (a ficha não fala dela). O tropeço que vira golpe baixo não foi feito.
+- O gancho do Gingado b não acerta no roteiro do robô (dano 0), igual ao chute do Rolê do Pengaró no mesmo roteiro:
+  é do kit e ninguém investigou.
+
+**Não verificado:** `select.def` (não existe no repositório; quem registra é o `.bat`, que não foi rodado); o
+`verificar_pengaro.py` (só conhece Pengaró e Hazaki); caixas no editor e combos no ikemen-combo-finder; treino dos dois
+lados; som (desligado na sandbox); entrada do round e vitória em movimento (o filme começa com o round aberto).
+
+**Tamanho:** em pé ele mede 113 px (Pengaró 110 na ginga, Gutto 114, Raiclaven 119), mas tem 47 px de largura contra
+77 a 90 dos outros: no filme ele parece pequeno ao lado do Pengaró. É a escala 0,195 do `converter_ck.py`; mudar é
+reconverter as folhas (15 min) e rodar o gerador.
+
+**A seguir:** o Breno olhar o filme e decidir o tamanho e o `↓ ↑`; refazer as 4 folhas `e_` do item 1 e a `queda`;
+pedir as folhas que faltam (Pêndulo, ganchos, joelhada, Voadora, Saideira) e trocar as emprestadas; juntar a `ck` na
+`mugen` (quem junta é o orquestrador: `robo.lua`, `testar_pengaro.py` e o `.bat` têm só linhas novas).
+
+## 2026-11-11 (CK) — item 1 do pedido: 4 folhas do Ratão refeitas no ChatGPT, mais 3 extras (branch `ck`)
+
+**Feito** (chat novo "CK — arcade", `e_referencia_ginga.png` anexada; a `queda` com a `referencia_ginga.png`):
+
+| Folha | Estado | Tentativas | O que ficou |
+|---|---|---|---|
+| `e_provoca` | aprovada | 1 | garrafa na mão mais à direita nos 8; o dedo é da mão vazia; sem risquinhos de efeito |
+| `e_beck` | aprovada | 1 | garrafa visível nos 8 (antes sumia no 4 e ia para a mão de trás no 5-6); pose de soprar, sem fumaça |
+| `e_golaco` | aprovada | 1 | uma garrafa só, nunca atrás da cabeça, sem cacos nem riscos de giro, nunca de costas |
+| `e_juliet_voadora` | aprovada | 2 | óculos sai da mão vazia e fica solto no ar no quadro 6; sem óculos na cabeça do 3 ao 8 |
+| `e_soco` (extra) | com ressalva | 2 | no quadro 5 a garrafa ainda fica na mão de trás: no conversor o 5 é cópia do 4 (`COPIA` em `retoques_arcade/ck.py`) |
+| `e_caneta` (extra) | aprovada | 1 | garrafa à frente nos 8 (antes ia para trás nos quadros 3 a 5) |
+| `queda` (extra, base) | aprovada com ressalva | 1 | 8 figuras separadas e inteiras (antes a 5 e a 6 se sobrepunham); deitado de joelhos dobrados, 70 px de comprido contra 96 do `levanta` |
+
+- As 7 foram convertidas com `converter_ck.py` (mesma paleta). `AJUSTE` no `animar_folha.py`: `e_beck` saiu (a folha nova
+  veio no tamanho da referência), `queda` 1.45 -> 1.20, novos `e_caneta` 1.25, `e_soco` 1.14, `e_juliet_voadora` 1.06;
+  `e_golaco` continua 1.18. Em pé: 109-114 px nas seis do Ratão. `efeitos/juliet` agora tem 11x4 (era 16x6).
+- `gerar_ck.py`: a queda usa os desenhos 4-5-6 e 6-7 (os mesmos e os mesmos tempos do Pengaró), agora que o 5 e o 6
+  existem inteiros. `chars/ck` regenerado (o `.cns` muda porque avanço e posição da faísca são medidos no desenho).
+- `folhas_ck.py`: os pedidos usados estão gravados (MOTION novo das 7; a regra da garrafa e a medida em px entram no fim
+  de todo pedido do Ratão).
+
+**Conferido:**
+- Com os olhos: as 9 imagens geradas em tira de 1800 px (quadro a quadro, de que lado está a garrafa) e os 56 quadros
+  convertidos em tira 2x. Não olhei em movimento: nenhum filme novo.
+- Script: 8 corpos separados por folha (componentes ligados), borda 100% magenta, 2172x724; `conferir_arte.py` R1, R3,
+  R4, R5 e R7 passam nos 56 quadros (R10/R11 falham como nas outras folhas: são regras do desenho).
+- Robô `testar_pengaro.py --lutador ck` na sandbox: **159 PASS / 0 FAIL**, igual a antes.
+- `chars/gutto`, `hazaki`, `pengaro`, `raiclaven`: md5 igual antes e depois (`85cb5631…`).
+
+**Ficou / a seguir:**
+- `e_soco` 5 (cópia do 4), `e_martelo` 7 e `e_ar_soco` 2-6 (garrafa do lado de dentro; não refiz, só vi na folha de
+  contato), `e_rolamento` 7 (de costas). Os outros defeitos da entrada de conversão continuam (lata 5-6, provoca 2-3-6,
+  golaco 4, rolamento 2-3).
+- No Ratão os ganchos da corrente y e do Gingado b continuam emprestando `e_golaco` 3 e 5, que agora são a rasteira
+  deslizando e o agachado (antes: rasteira e giro de costas). Continua provisório.
+- O registro do procedimento do ChatGPT desta rodada está no `registro_fila.md` do scratchpad da sessão (não está no
+  repositório); o que importa dele está em `folhas_ck.py`.
+
+## 2026-11-11 (ck: frente PARADA de propósito às 16h)
+
+O Alisson pediu para parar os trabalhos para trocar o modelo de raciocínio do Claude. O CK está montado no jogo
+(`gerar_ck.py`, `chars/ck`, pipeline arcade das 62 folhas, as 4 folhas do Ratão refeitas e o lutador regenerado; o
+agente relatou robô 159 PASS / 0 FAIL na sandbox). Os dois céticos (regras e olhos) estavam rodando e foram
+interrompidos; o retoque final não rodou. Árvore limpa, tudo enviado. Falta: a conferência cética, o retoque, o
+orquestrador olhar o filme, e juntar na `mugen`.
+
+## 2026-11-11 (CK) — retoque final depois dos dois céticos (branch `ck`)
+
+Os dois céticos (regras e olhos) rodaram sobre o `e28e79f`. O que era defeito de verdade foi consertado no
+`gerar_ck.py` (nada editado à mão em `chars/ck`); o que precisa de desenho novo ficou anotado.
+
+**Consertado (causa):**
+- **Aura do Ratão**: era o desenho inteiro (coluna de fumaça + um monte no chão), opaco e preso ao lutador: virava um
+  arbusto em que ele pisava e que subia junto no pulo. Agora entra só a coluna (sem as 22 linhas do monte, base
+  desfeita em xadrez), translúcida (`trans = addalpha`, `alpha = 216, 100`), um pouco maior (1,5 x 1,25).
+- **Baile da Esquina não encerra mais o Ratão**: o kit zerava `var(20)` no 1º tick do 3100 (regra do Pengaró) e a aura
+  sumia no próprio super. No CK o bloco `Fim Despertar` sai; a ficha só diz "1 estoque, só no Despertar".
+- **`← → ↓ + a/b` no Ratão volta a ser a Rajada da Esquina** (a entrada do kit que levava ao Baile saiu); o Baile é
+  só `← → ↓ + x+y`.
+- **Rajada, Baile e Nocaute no Ratão não piscam mais entre em pé e deitado**: a folha `golaco` (ganchos) passava para
+  a `e_golaco` desenho a desenho, e na `e_golaco` refeita o 3 é a rasteira deslizando e o 5-6 o agachado. Agora os
+  ganchos do Ratão usam só as estocadas em pé da `e_golaco` (1, 2, 4, 7). Isso também conserta o gancho da corrente
+  y (311, 312) e o do Gingado b (1701). O soco agachado do Ratão (400) usa o agachado e a estocada rente ao chão
+  (`e_golaco` 5 e 3) no lugar da `e_agachado` parada.
+- **Caixas do Ratão**: as correntes e os kombos da base (301-347, que saem também no Ratão) e o 1701 ganharam a
+  variante `1xxxx` com a caixa medida no desenho do Ratão (antes: caixa da base, com 0 pixels do desenho dentro no
+  323, 341, 331, 345). 3000 e 3200 no Ratão: caixa das estocadas.
+- **Caixas da base**: Bote (1400/1401) era do boné ao chão, agora só a faixa do braço; Rajada (3000) e Nocaute (3200)
+  de 60 para 40 px de altura (ombro ao fígado).
+- **Pixels soltos acima da cabeça no Ratão**: toda ilha de até 12 px sai na leitura do quadro `e_`.
+- **Tragada**: a fraca para a uns 70 px (era 55 e não alcançava a meia distância), a forte a uns 175 px (era 117).
+  Cada projétil trava só a si mesmo: a nuvem no ar não impede mais o Boné Voador, nem o contrário.
+- **Boné Voador forte** atravessa a tela (pico a ~307 px; era 177). O CK fica preso no estado até o boné voltar (92
+  ticks).
+- **Encosta na Parede** (`← + x, y, → + b`): do 344 não sai mais o Gingado b (`← → b` é o mesmo movimento).
+- **Agarrão em pé**: o dano de 100 sai em três socos (30, 30, 40 nos ticks 4, 9 e 14). A animação é a mesma.
+- Rótulos do Pengaró no `.cmd` (Chuva de Bebidas, Mao de Sombra...) trocados pelos nomes do CK (só comentário).
+- `robo.lua`: 5 roteiros novos só do CK (Baile não encerra o Ratão; Rajada no Ratão; Encosta com `role_b` junto;
+  Tragada no ar não trava o Boné; agarrão em 3 socos) e uma linha mudada: o roteiro comum do 3100 aperta `baile`
+  quando o lutador é o CK.
+
+**Não era defeito (conferido com os olhos, zoom 4x-5x):**
+- "`e_beck` com duas garrafas": os sprites 947/948 são da `e_bola` (Garrafa Voadora): a segunda garrafa é a que ele
+  arremessa. A `e_beck` tem uma garrafa só nos 8. A Tragada não existe no Ratão (ação 11000 nunca toca).
+- "Tênis vermelho na rasteira e no levanta": é a luva. Na `rasteira` ele apoia a mão no chão (braço, faixa branca do
+  punho, luva); no `levanta` são as mãos no chão do kip-up.
+
+**Conferido:**
+- Robô na sandbox, depois da última geração: **CK 175 PASS / 0 FAIL** (53 roteiros), **Pengaró 146 PASS / 0 FAIL**.
+- md5 de `chars/gutto|hazaki|pengaro|raiclaven` igual antes e depois (`d72661c2…` no conjunto).
+- Com os olhos: folhas de ação com caixa (base e Ratão) de 311, 312, 313, 323, 331, 332, 333, 340-347, 301-303, 321,
+  400, 1701, 3000, 3100, 3200, 1400, 9210; dois filmes de 10 s na sandbox (CK x Pengaró parado, golpes por roteiro, a
+  barra mantida em 1 estoque por um Lua só do filme), olhados em tira de 12 em 12 quadros: Tragada forte chega longe e
+  acerta, Bote, Rajada; Despertar com paredão e fumaça, aura translúcida em volta das pernas (esverdeada sobre o
+  paredão, puxa para o azul-esverdeado sobre o cenário azul), aura ligada durante e depois do Baile, Rajada no Ratão
+  toda em pé, gancho do Gingado. Log do motor sem erro.
+
+**Não verificado:** Boné forte atravessando a tela (na tira o boné não aparece nítido); Nocaute de Rua no filme (não
+saiu: o Lua do filme só garante 1 estoque); o agarrão em movimento; comandos por direcional de verdade (o robô aperta
+por `AssertCommand`); som; entrada do round e vitória em movimento; caixas no editor; treino dos dois lados.
+`conferir_arte.py` e `verificar_pengaro.py` não foram rodados.
+
+**Ficou (precisa de desenho novo ou de decisão do Breno):**
+- Folhas emprestadas no Ratão continuam: Voadora/fim da Rajada (`bicicleta` -> `e_ar_soco`), Tapa/Contragolpe
+  (`compasso`, `armada` -> `e_martelo`), `lata` -> `e_provoca`, `bone_voador` -> `e_juliet_voadora`; ganchos e soco
+  agachado agora são estocadas da `e_golaco`. Faltam as folhas `e_` próprias (ganchos, joelhada, voadora, Pêndulo).
+- `queda`: deitado de joelhos dobrados mede 69 px contra 113 em pé e 96 no `levanta` 1: precisa de folha com o corpo
+  esticado (aumentar a escala engordaria os 4 primeiros desenhos).
+- Assopro na Cara (3433): a caixa é a fumaça na frente da boca, mas não há desenho de fumaça nesse golpe.
+- `e_soco` 5 cópia do 4; `e_martelo` 7 e `e_ar_soco` 2-6 com a garrafa do lado de dentro; 260 quadro 7 (perna
+  estendida 10 ticks na recuperação).
+- Clarão do golpe final dos supers no Ratão: sai como um bloco creme-esverdeado de borda reta (é o `quadro_flash` do
+  kit sobre a `sombra_forte` do Pengaró, que tem o desenho cortado na borda; no CK a cor clara deixa o corte mais
+  visível). Visto no filme do Despertar. É do gerador comum: não mexi.
+- Flash azul/branco do Despertar e poeira laranja (9214) são as cores do kit.
+- Decisões: tamanho/largura do CK (0,195 no `converter_ck.py`); a Tragada "tonteia" só como atordoamento longo (não há
+  estado de tonto no kit); Tragada de Beck que segue, tropeço do Ratão, cacos em ponto fixo e Nocaute de Rua (fora da
+  ficha); agarrão que sai com `→/← + b` colado e rouba o Pisão de Rua de perto (kit); alcance curto dos normais; o Baile
+  continua batendo sem o bônus de 45% do Ratão, como no kit (436 de dano no robô; com o bônus ia a 631); Boné forte deixa o CK 1,5 s parado.
+
+
+## 2026-11-11 (ck: PARADA às 17h20, o Alisson precisou desligar o notebook)
+
+Parada rápida. Último commit antes desta entrada: `e28e79f7`. Arquivos alterados sem commit na hora da parada: 7 (guardados neste commit; **não testados**, se houver). Falta o que a entrada anterior desta branch lista; a etapa em andamento (retoque ou conferência) foi interrompida.
+
+## 2026-11-11: Endiabrado vira boss final, lote preparado (branch `endiabrado`)
+
+- O dono aprovou o conceito do Pengaró Endiabrado como boss final: `sprites/pengaro/quadros/folhas_arcade/e_conceito.png`
+  (frente sem aura, costas, frente com aura, rosto).
+- `docs/arcade/fila.md` ganhou o **Lote 7**: prompt base do boss, prompt base da aura e 34 folhas com MOTION, em três
+  grupos (A 12, B 12, C 10): 30 `e_<golpe>` (uma para cada folha que o gerador usa, incluindo `e_ginga`, `e_anda` e a
+  `e_lata` que não existia), `e_despertar` e três `fx_aura_*` (coluna, anel, detritos) em fundo verde.
+- Textos atualizados para o modelo novo: `docs/como-trabalhar.md`, `docs/fichas/pengaro.md`, `docs/arcade/pengaro.md`,
+  `docs/biblia-de-arte.md`. A linha da tabela de auras em `regras-dos-lutadores.md` não mudou.
+- **Nada foi gerado nem ligado no jogo**: o gerador não foi tocado e o jogo continua com a arte antiga do endiabrado.
+- Pendente: gerar o grupo A começando por `e_ginga` e medir se o recorte de magenta come o violeta (se comer, passar as
+  `e_` para fundo verde); definir a paleta do boss; decidir se `e_despertar` substitui só `despertar_b`; ligar as
+  `fx_aura_*` por `Explod`; `e_defesa`, `e_chute_baixo` e `e_rasteira` não têm folha normal aprovada nesta branch para
+  servir de referência de pose.
+
+## 2026-11-11 — Endiabrado, Lote 7 grupo A gerado (12 folhas `e_`)
+
+- Geradas no ChatGPT (chat "Pengaró — arcade") e salvas em `sprites/pengaro/quadros/folhas_arcade/`: `e_ginga`, `e_anda`,
+  `e_soco`, `e_chute_alto`, `e_martelo`, `e_afastar`, `e_apanha`, `e_queda`, `e_levanta`, `e_defesa`, `e_agachado`, `e_pulo`.
+  Cada pedido levou `e_conceito.png` + a folha normal do golpe. As 12 passam em `tira_fundo` + `fatias(…, 8)` de
+  `recortar_quadros.py` (8 quadros separados). Conferidas a olho em tiras de contato; nada rodou no jogo nem em sandbox.
+- Com ressalva: `e_queda` ficou ~13% menor que a normal (deitado 251 px contra 290; existe
+  `ferramentas/retoques_arcade/queda_escala.py` para esse caso) e com as pernas levantadas nos quadros 4-7; `e_defesa` veio em
+  2143x734; `e_anda` repete os quadros 1-4 em 5-8 como a normal (as pernas não alternam); `e_agachado` é agachado nos 8
+  quadros, como a `agachado.png` normal (o MOTION da fila pedia descer da ginga: corrigir o texto da fila se for mantido assim).
+- Fundo magenta: o recorte não fura o corpo (rachaduras do peito, forro e chifres ficam), mas come a beirada das brasas da
+  barra da calça: ~3% da área da figura apagada contra ~2,2% nas folhas normais. Dá para seguir em magenta.
+- Escala das `e_` varia entre folhas (em pé com cabelo de 297 a 313 px; `e_pulo` ~15-20% maior que a normal); o gerador já
+  tem fator de escala por folha para o endiabrado.
+- Pendente: grupos B e C do Lote 7; ligar as `e_` no gerador (`ARCADE`, pasta `e_ginga` x `ginga_endiabrada`); paleta do boss.
+
+## 2026-11-11 — Endiabrado, Lote 7 grupo B gerado (12 folhas `e_`)
+
+- Geradas no mesmo chat e salvas em `sprites/pengaro/quadros/folhas_arcade/`: `e_chute_baixo`, `e_baixo_soco`, `e_cabecada`,
+  `e_rasteirinha`, `e_rasteira`, `e_ar_soco`, `e_bicicleta`, `e_bola`, `e_compasso`, `e_armada`, `e_caneta`, `e_rolamento`.
+  Cada pedido levou `e_conceito.png` + a folha normal do golpe (para `chute_baixo` e `rasteira`, as refeitas do Lote 6). Todas
+  em 2172x724, 8 quadros separados em `tira_fundo` + `fatias(…, 8)`. Conferidas a olho em tiras de contato ao lado da normal;
+  nada rodou no gerador, no jogo nem em sandbox.
+- Com ressalva: `e_caneta` ficou ~9% menor que as outras `e_` (em pé 277 px com cabelo, contra ~305) e com a perna da
+  rasteira encurtada: foi o jeito de caber 8 quadros separados (a `caneta.png` normal tem os quadros 6-7 encostados);
+  `e_cabecada` tem a algema do pulso da frente pouco legível nos quadros 1-3 e as rachaduras do peito puxando para o rosa.
+- Escala: em pé com cabelo 292-310 px; folhas agachadas/aéreas saíram na medida da normal + cabelo depois de dar a medida em
+  px no pedido (`e_baixo_soco` e `e_cabecada` precisaram de uma correção "85% do tamanho").
+- Pendente: grupo C do Lote 7 (7 `e_` + 3 `fx_aura_*`); ligar as `e_` no gerador; paleta do boss.
+
+## 2026-11-11 — Endiabrado, Lote 7 grupo C gerado (7 folhas `e_` + 3 `fx_aura_*`): lote completo
+
+- Geradas no mesmo chat ("Pengaró — arcade"). Em `sprites/pengaro/quadros/folhas_arcade/`: `e_agarrao`, `e_golaco`, `e_lata`
+  (folha nova), `e_provoca`, `e_vitoria`, `e_derrota`, `e_despertar`. Em `sprites/pengaro/quadros/folhas/` (fundo verde, de
+  onde `efeitos_folha.py` lê): `fx_aura_coluna`, `fx_aura_anel`, `fx_aura_detritos`. Todas 2172x724. As `e_` dão 8 quadros em
+  `tira_fundo` + `fatias(…, 8)`; as `fx_` dão 8 células em `efeitos_folha.recortar` e nenhum bloco cruza a divisão em oitavos.
+  Conferidas a olho em tiras de contato; nada rodou no gerador, no jogo nem em sandbox.
+- MOTION reescrito no pedido (o de `docs/arcade/fila.md` não descrevia a folha normal; fila.md NÃO foi editado):
+  `e_golaco` (quadros 1-4 seguem o gole/limpar a boca da normal, de punho vazio), `e_lata`, `e_provoca`, `e_vitoria` (quadro 8
+  de frente com o braço da frente estendido, como a normal, e não de braços cruzados) e `e_derrota` (cai sentado e reclama
+  sentado de pernas esticadas, como a normal, e não ajoelhado socando o chão). `e_agarrao` bateu com a normal sem mudança.
+- `e_despertar` (substitui `despertar_b`, 8 quadros): 1 Pengaró normal de mãos vazias com a mão no peito, 2 cai de quatro,
+  3 calça escurece e mancha violeta nas costas, 4 casaco + algemas + braceletes, 5 ajoelhado de cabeça para trás com cabelo
+  comprido e rachaduras, 6 num joelho só com a corda e os chifres, 7 em pé, 8 guarda do boss. Sem coluna, anel nem pedras.
+  O `despertar_b` antigo é em pé o tempo todo; este ajoelha (é o MOTION do Lote 7). Dono ainda precisa confirmar.
+- Ressalvas: `e_vitoria` ficou ~7% menor que as outras `e_` (em pé 287 px com cabelo; a 1ª veio 13% maior e a correção
+  passou do ponto): fator ~1,07 na ligação. `e_golaco` tem as rachaduras do peito bem acesas (tronco quase todo violeta nos
+  quadros 5-8). `fx_aura_detritos`: as peças PAIRAM (sobem ~14 px e voltam) em vez de subir e reentrar por baixo, para o
+  laço fechar; pedras marrom-rosadas (pedido era cinza-marrom); furos dos elos com resto de verde escuro. `fx_aura_coluna`:
+  a altura da coluna pulsa (478 a 568 px), base fixa em y=639; ~2% de pixels esverdeados dentro da fumaça. `fx_aura_anel`:
+  saiu um disco de chão rachado com borda escura (225x80 px), não um anel vazado; a posição dentro da célula varia até 7 px.
+- Lote 7 inteiro em disco (31 `e_` + 3 `fx_aura_*`). Pendente: ligar tudo no gerador (`ARCADE`, `e_ginga` x
+  `ginga_endiabrada`, `e_despertar` no lugar de `despertar_b`, Explod das três camadas da aura, escala por folha), refazer
+  `e_queda`, paleta do boss, e testar no sandbox.
+
+## 2026-11-11 (endiabrado: frente PARADA de propósito às 16h)
+
+O Alisson pediu para parar os trabalhos para trocar o modelo de raciocínio do Claude. Pengaró endiabrado boss final: as 34 folhas do Lote 7 foram geradas e convertidas e o boss foi ligado no jogo (aura em três Explod); a etapa 'converter e ligar' ainda estava rodando (mexendo em gerar_pengaro.py, na aura de detritos e no .sff) e os dois céticos e o retoque NÃO rodaram. Falta: conferir no filme da sandbox, rodar o robô depois do último estado, juntar na mugen.
+Último commit feito por um agente que terminou a etapa dele: `90e5575`. O commit seguinte a esta entrada guarda o que estava
+pela metade na hora da parada (**não testado, pode estar quebrado**); para voltar ao estado bom, use `90e5575`.
+
+## 2026-11-11 (endiabrado: retomada depois da parada, estado `0d304cc` conferido na sandbox)
+
+- O commit "INTERROMPIDO" (`0d304cc`) deixou de ser suspeito: rodei os quatro geradores (pengaro, gutto, raiclaven, hazaki)
+  em cima dele e `git status` ficou limpo (o `chars/pengaro` commitado é o que o gerador produz); `chars/gutto`,
+  `chars/raiclaven` e `chars/hazaki` são idênticos aos da `origin/mugen` (`git diff` vazio). A `mugen` (`e1f9dc1`) já está
+  dentro da branch.
+- O que o `0d304cc` mudou em relação ao `90e5575`: coluna da aura achatada (escala 1,1 x 0,68: ~1,25 vez a altura do boss,
+  não entra mais na barra de vida), detritos espalhados para os lados no `lote7_converter.py` (ficavam em cima das pernas) e
+  `e_despertar` do quadro 5 em diante só na paleta do boss (a pele saía laranja e trocava de cor ao entrar na ginga).
+- Sandbox, tudo neste estado: robô do Pengaró **146 passaram, 0 falharam** (43 roteiros, igual ao de antes); paleta 2 da
+  seleção (soco forte + Enter) pelo `robo/paleta.lua` rodado via `sandbox.py`: `var20=600 var37=1` nos ticks 30 e 700
+  (começa endiabrado e fica). Dois filmes: Despertar (10 s) e boss batendo (13 s, Despertar no tick 0).
+- Visto com os olhos nas tiras dos filmes: cena 2000 (garrafa quebra, cai de quatro, casaco, levanta) sem pulo de tamanho;
+  roupa do conceito em todos os golpes que apareceram (socos, chutes em pé e agachado, afastar, compasso, armada, caneta);
+  aura à parte em três camadas (disco no chão, coluna atrás, pedras e elos na frente), pés no chão, nenhum quadro magenta
+  ou verde. Ressalvas vistas: a pele do boss no jogo está mais vermelho-vinho do que o marrom-arroxeado do conceito; os
+  elos e pedras da frente passam por cima do braço/pernas do boss e às vezes do rosto do oponente; o primeiro quadro de
+  `e_despertar` (Pengaró normal desenhado na folha do boss) tem a pele mais alaranjada que a `despertar_a` que vem antes.
+- Ainda na arte antiga: a primeira metade da cena (`despertar_a`, 8 quadros, forma normal). Sem folha própria do boss (usam
+  pose emprestada das folhas `e_`): corre (de `e_anda`), recuo (de `e_pulo`/`e_defesa`), `juliet0-3`, `mortal0-11`,
+  `parado1-5`, `q_anda0-7`, `q_parado0-7`, `anda1-3`.
+- Não verificado: os especiais do fim da lista do filme (Sombra, Rolê, bola, agarrão, Golaço) não couberam nos 13 s e não
+  foram vistos em movimento na roupa nova (o robô passa por eles, mas robô não olha arte); queda/levanta/derrota/vitória do
+  boss só vistos na folha de contato dos quadros convertidos, não no jogo; `e_queda` continua a folha com defeito (menor
+  e de pernas levantadas nos quadros 4-7, compensada só por escala).
+- Próximo: o dono olhar os filmes e decidir (tom da pele, detritos na frente, `e_despertar` no lugar de `despertar_b`);
+  refazer `e_queda`; céticos + retoque; juntar na `mugen` (quem junta é o orquestrador).
+
+## 2026-11-11 (endiabrado: PARADA de propósito às 16h50)
+
+O Alisson pediu de novo para ir parando. A etapa "converter e ligar" terminou (entrada acima: estado conferido na
+sandbox, robô 146/0, dois filmes). Os dois céticos estavam rodando e foram interrompidos; o retoque final não rodou.
+Árvore limpa. Falta: céticos (modelo e jogo), retoque, o orquestrador olhar os filmes, e juntar na `mugen`.
+
+## 2026-11-11 (endiabrado: PARADA às 17h20, o Alisson precisou desligar o notebook)
+
+Parada rápida. Último commit antes desta entrada: `f3e86b1c`. Arquivos alterados sem commit na hora da parada: 0 (guardados neste commit; **não testados**, se houver). Falta o que a entrada anterior desta branch lista; a etapa em andamento (retoque ou conferência) foi interrompida.
+
+## 2026-11-11 (notebook leve: sandbox na Iris Xe, pesados em Idle nos núcleos E)
+
+- **Feito:** `ferramentas/leve.py` e regra "Notebook leve" na seção 1 de `docs/metodo-do-claude.md`, combinada com a
+  sessão de edição de vídeo. `sandbox.py` agora liga a vGPU e o jogo desenha pelo Mesa d3d12 na Iris Xe (`dxil.dll` do
+  mesmo pacote mesa-dist-win 26.2.6 copiado para `%USERPROFILE%/JogoDeLuta/ferramentas_sandbox/mesa`); processos da
+  sandbox no host em Idle e núcleos E; dentro dela, motor em 2 vCPUs e `LP_NUM_THREADS=2`. Medido: carga acima do fundo
+  de +40/+37 para +18/+10 pontos (P/E) na mesma luta. Robô Pengaró 146/0 com GPU; filme de 5 s (sem GPU) conferido.
+- **Pendente:** filmar com GPU (gdigrab grava preto; tentar ddagrab); a VM recusa afinidade pelo host (talvez com
+  administrador, não testado); aplicar `leve.aliviar` nos scripts de Blender da branch `auras`.
+
+## 2026-11-11 (CK: conserto do que sobrou dos céticos, branch `ck`)
+
+- **Feito (código):** `gerar_ck.py` voltou a rodar (o Lote 7 do Pengaró fazia o gerador comum ler `e_despertar`,
+  `colar_boss`, `POSE_BOSS`, `REPETE_ARCADE` e as folhas `corre`/`recuo`; o CK desliga tudo isso e sai igual ao de
+  antes, menos a derrota, que agora mostra os 8 desenhos). Aura do Ratão: `addalpha 128,192` (o fundo aparece) e
+  `ModifyExplod` com `postype = p1` e `pos y = -Pos Y` a cada tick: no pulo fica no chão e segue só no x (visto no
+  filme; sem o `postype` o motor ignorava o `pos` e a aura subia). Fim da Rajada no Ratão (13000) com o chute alto em
+  pé da `e_chute_alto` 3-7 e caixa no pé. Tragada de Beck com nuvem 1004 e trava só nela. Rótulos do 831 e do `.cmd`.
+- **Feito (retoque por script):** tênis do pé de apoio da `rasteira` 1-5 repintado de vermelho para o tênis
+  (`retoques_arcade/ck.py`, também ligado no `converter_ck`, que não foi rodado). Sobram 1-2 px de laranja no 1 e no 4.
+- **Não era defeito:** as "duas garrafas" são da `e_bola` 2-3 (não da `e_beck`): ele puxa uma segunda garrafa e a joga
+  na Garrafa Voadora (3402), a dele fica no quadril. O vermelho no chão do `levanta` são as luvas (mãos no chão).
+- **Visto:** robô CK 175/0 e Pengaró 146/0; filmes CPU x CPU, `--despertar 1` e um roteiro com Rajada e Tragada de Beck
+  no Ratão (tiras olhadas). Camadas animadas da aura do CK existem na branch `auras` (`sprites/ck/aura/aura.json`:
+  paredão, anéis, névoa): não ligadas, é outra frente.
+- **Pendente (pede desenho):** fumaça do Assopro no 3433; soco agachado do Ratão com antecipação (860≡861); queda
+  esticada (393-396); folhas `e_` próprias de ganchos, voadora, lata, boné e Tapa/Contragolpe; `e_soco` 5; agarrão com
+  três socos; risco na testa do 989/957/965. **Pendente (código, decisão do Breno):** Tragada que tonteia (R4), alcance
+  dos normais (O10), `→/← + b` colado roubando o Pisão (R9). **Achado novo:** o clarão do 1º tick das faíscas fortes
+  do Ratão (verde-claro, `quadro_flash`) cobre o oponente como um bloco com borda reta (filme, quadros 238 e 565): é o
+  "clarão creme dos supers" já pendente, mais visível no Ratão.
+- **Próximo:** o orquestrador juntar `ck` na `mugen`; o Breno decidir R4/O10/R9 e o clarão.
+>>>>>>> f9ea86016e0624241a7c3c794acedf48e50baf6c

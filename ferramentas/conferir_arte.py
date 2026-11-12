@@ -34,6 +34,9 @@ LIMITE_SOLTO = 0.02
 LIMITE_DOBRADO = 0.35
 PUNHO = (0.10, 0.20)
 GUARDA = 1  # quadro de guarda com o punho fechado (o 0 é a mão aberta da ginga)
+if SPRITES.name == "ck":  # CK (base e Ratão): pele mais escura; a sombra fria da regra 4 é a do branco (polo, regata, meia)
+    RAMPA = {"pele_sombra": (2, 10), "pele_medio": (11, 19), "pele_luz": (20, 30)}
+    SOMBRA_CALCA = "branco_sombra"
 
 
 def h_s(rgb):

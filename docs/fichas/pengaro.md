@@ -4,8 +4,16 @@ Estilo de luta: capoeira de bar. Ginga, rasteira, compasso (parada de mão) e ar
 de trás e lata de cerveja para arremessar. Gosta de chimpanzés (faz parte da história).
 Personalidade / falas: boleiro, cachaceiro e resenhista. As falas estão desligadas (`BALOES_LIGADOS = False`) até o
 Breno gravar os áudios; os textos em `BALOES` ficam de roteiro.
-Cores e paleta: pele morena, calça de capoeira clara, faixa verde e amarela; no Despertar vira o endiabrado (corpo
-quase preto com relevo roxo, olhos violeta, algemas de corrente partida e fumaça), sem garrafa.
+Cores e paleta: pele negra retinta, a mais escura do elenco (mais que o Gutto e o CK; pedido do Breno em 2026-11-12,
+detalhes em `docs/arcade/pengaro.md`), calça de capoeira clara, faixa verde e amarela; no Despertar vira o endiabrado, o
+boss final (conceito aprovado em 2026-11-11, `sprites/pengaro/quadros/folhas_arcade/e_conceito.png`): mesmo rosto,
+corpo e altura, sem garrafa; pele marrom-escura arroxeada, olhos violeta sem pupila, cabelo comprido e revolto com
+pontas violeta e dois chifres curtos de fumaça; casaco de mestre preto sem manga com friso dourado e forro roxo, barra
+rasgada até a canela; rachaduras violeta no peito; corda trançada ouro e violeta com duas pontas até o joelho; calça
+preta com barra em brasa violeta; algemas de corrente partida nos pulsos e tornozelos; braceletes de ouro.
+Aura do Despertar: fumaça violeta-escura das sombras, em três camadas à parte do corpo: coluna de fumaça violeta-preta
+atrás, anel de sombra girando no chão rachado, elos de corrente e pedras flutuando na frente (`fx_aura_coluna`,
+`fx_aura_anel`, `fx_aura_detritos`, Lote 7 de `docs/arcade/fila.md`; ainda não geradas).
 Efeitos (pixelfx e recolor): hit-spark nos fracos, crit-hit nos fortes e finalizadores, ground-slam na Queda Escura
 e no Pisão de Bar, fumaça roxa no Despertar.
 

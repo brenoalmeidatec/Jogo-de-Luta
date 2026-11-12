@@ -29,7 +29,14 @@ continuam em [`regras-dos-lutadores.md`](regras-dos-lutadores.md). Estilo e core
 
 - Forma normal: garrafa de whisky na mão de trás, desenhada em todo quadro.
 - Despertar: ele bebe, vê a garrafa vazia, joga no chão, ela quebra e as sombras o possuem.
-- Endiabrado: **sem garrafa**, corpo quase preto com relevo roxo, olhos violeta, algemas de corrente partida e fumaça.
+- Endiabrado: **boss final** (conceito aprovado em 2026-11-11, `sprites/pengaro/quadros/folhas_arcade/e_conceito.png`).
+  Mesmo rosto, corpo e altura, **sem garrafa**; pele marrom-escura arroxeada, olhos violeta sem pupila, cabelo comprido
+  e revolto com pontas violeta, dois chifres curtos de fumaça; casaco de mestre preto sem manga com friso dourado e
+  forro roxo, barra rasgada até a canela; rachaduras violeta no peito; corda trançada ouro e violeta; calça preta com
+  barra em brasa; algemas de corrente partida nos dois pulsos e nos dois tornozelos; braceletes de ouro. A aura (coluna
+  de fumaça, anel de sombra no chão, elos e pedras flutuando) é efeito à parte, em três Explod. Lote 7 ligado em
+  2026-11-11: `quadros_arcade/e_<golpe>/` (paleta `paleta_arcade_endiabrado.json`, conversão em
+  `ferramentas/retoques_arcade/lote7_converter.py`); só a primeira metade da cena do Despertar (`despertar_a`) segue antiga.
 
 ## Preparar outra máquina
 
@@ -77,9 +84,9 @@ Formas transformadas: gere a folha `e_<golpe>` para cada movimento, nos mesmos 8
 Chats, na conta do Breno:
 
 - Pengaró: `chatgpt.com/c/6aedc940-1554-83e9-8fd3-f7f26e9b8c02`, referência "Socos" na biblioteca.
-- Pengaró endiabrado: `chatgpt.com/c/6aedf8e0-e03c-83e9-90ac-d2df1778cdca`. Desde 2026-11-07 a referência é a folha
-  `e_soco.png` (corpo inteiro), anexada da memória da página em cada pedido; a "Oito Movimentos" antiga (fumaça no corpo)
-  não vale mais. O título ainda é "Generate 8 Frame Sprite"; renomeie.
+- Pengaró endiabrado: `chatgpt.com/c/6aedf8e0-e03c-83e9-90ac-d2df1778cdca`. É o chat da arte antiga (referência `e_soco.png`
+  antiga, corpo quase preto). Para o boss final (Lote 7 de `docs/arcade/fila.md`) abra um chat novo e anexe em toda
+  mensagem `folhas_arcade/e_conceito.png` mais a folha arcade normal do golpe.
 - Efeitos do Pengaró: `chatgpt.com/c/6aef1007-b9b0-83e8-9958-ca11fa475ce5`, fundo verde. Título "Generate Pixel Art Sprite
   Sheet"; renomeie.
 - Anexar sem a janela de arquivo: um `File` feito do blob guardado em `__f` vai para o `input[type=file]` da página por

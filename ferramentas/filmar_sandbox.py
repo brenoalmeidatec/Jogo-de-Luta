@@ -29,6 +29,9 @@ import subprocess
 import sys
 import tempfile
 import time
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import leve  # noqa: E402
 from datetime import datetime
 from pathlib import Path
 
@@ -56,6 +59,15 @@ try {
   }
   Set-Content -Path $ini -Value $t -NoNewline -Encoding UTF8
   $env:GALLIUM_DRIVER = 'llvmpipe'
+  if ('@GPU@' -eq '1') {  # ferramentas/leve.py: OpenGL do Mesa sobre o DirectX 12 da GPU que a sandbox recebe
+    Copy-Item 'C:\nf\mesa\dxil.dll' $jogo -ErrorAction SilentlyContinue
+    $env:GALLIUM_DRIVER = 'd3d12'
+    $env:MESA_D3D12_DEFAULT_ADAPTER_NAME = 'Intel'  # Iris Xe para o jogo; a Radeon fica livre para o dono
+    Get-CimInstance Win32_VideoController | ForEach-Object { Write-Output ("gpu na sandbox: " + $_.Name) }
+  }
+  # ferramentas/leve.py: a VM da sandbox nao aceita afinidade pelo host, entao o trabalho e limitado aqui dentro:
+  # llvmpipe com 2 threads e o motor preso a 2 vCPUs (mais lento, mas sem ocupar o notebook inteiro).
+  if ('@LEVE@' -eq '1') { $env:LP_NUM_THREADS = '2' }
   # A sandbox herda a escala do host (125%): sem isto a janela vira 1600x900 esticada e o gdigrab recorta errado.
   $env:__COMPAT_LAYER = 'HighDpiAware'
   # ffmpeg local e já aberto uma vez: rodar do compartilhamento demora segundos e atrasaria o começo da gravação.
@@ -64,13 +76,14 @@ try {
   Write-Output ("inicio do jogo: " + (Get-Date -Format o))
   $p = Start-Process -FilePath "$jogo\Ikemen_GO.exe" -ArgumentList '@ARGS@' -WorkingDirectory $jogo -PassThru `
        -RedirectStandardOutput 'C:\nf\saida\motor_stdout.txt' -RedirectStandardError 'C:\nf\saida\motor_stderr.txt'
+  if ('@LEVE@' -eq '1') { try { $p.ProcessorAffinity = [IntPtr]3; $p.PriorityClass = 'BelowNormal' } catch {} }
   $limite = (Get-Date).AddSeconds(180)
   while (-not (Test-Path "$jogo\luta_comecou.txt") -and (Get-Date) -lt $limite -and -not $p.HasExited) { Start-Sleep -Milliseconds 100 }
   if (-not (Test-Path "$jogo\luta_comecou.txt")) { Write-Output "o round nao comecou (motor saiu: $($p.HasExited))" }
   else {
     Write-Output ("round comecou: " + (Get-Date -Format o))
     & 'C:\ff\ffmpeg.exe' -hide_banner -loglevel warning -y -f gdigrab -framerate @FPS_CAPTURA@ -draw_mouse 0 `
-      -t @SEGUNDOS_REAIS@ -i 'title=@TITULO@' -vf 'setpts=(PTS-STARTPTS)/@LENTA@,fps=60' -c:v libx264 -preset ultrafast `
+      -t @SEGUNDOS_REAIS@ -i 'title=@TITULO@' -vf 'setpts=(PTS-STARTPTS)/@LENTA@,fps=60' -c:v libx264 -preset ultrafast -threads 2 `
       -crf 16 -pix_fmt yuv420p 'C:\nf\saida\luta.mp4' 2>&1 | Out-String | Write-Output
     Write-Output "ffmpeg saiu com $LASTEXITCODE"
     Set-Content "$jogo\parar.txt" 'parar'
@@ -165,7 +178,7 @@ def preparar_cmd(origem, destino, nomes_golpes, despertar):
 def wsb_xml(pastas, logon):
     m = "".join(f"    <MappedFolder><HostFolder>{h}</HostFolder><SandboxFolder>{s}</SandboxFolder>"
                 f"<ReadOnly>{'true' if ro else 'false'}</ReadOnly></MappedFolder>\n" for h, s, ro in pastas)
-    return ("<Configuration>\n  <vGPU>Disable</vGPU>\n  <Networking>Disable</Networking>\n"
+    return (f"<Configuration>\n  <vGPU>{'Enable' if leve.GPU_FILME else 'Disable'}</vGPU>\n  <Networking>Disable</Networking>\n"
             "  <AudioInput>Disable</AudioInput>\n  <VideoInput>Disable</VideoInput>\n"
             "  <ClipboardRedirection>Disable</ClipboardRedirection>\n  <PrinterRedirection>Disable</PrinterRedirection>\n"
             "  <ProtectedClient>Disable</ProtectedClient>\n  <MemoryInMB>4096</MemoryInMB>\n"
@@ -226,7 +239,7 @@ def main():
             args[2:2] = ["-p1.ai", "8"]
             args += ["-p2.ai", "8"]
         lutadores = ",".join(f"'{c}'" for c in dict.fromkeys((a.p1, a.p2)))
-        ps1 = (PS1.replace("@LUTADORES@", lutadores).replace("@ARGS@", " ".join(args))
+        ps1 = (PS1.replace("@LUTADORES@", lutadores).replace("@ARGS@", " ".join(args)).replace("@LEVE@", "1" if leve.LIGADO else "0").replace("@GPU@", "1" if leve.GPU_FILME else "0")
                .replace("@SEGUNDOS_REAIS@", f"{a.segundos * a.lenta:g}").replace("@LENTA@", str(a.lenta))
                .replace("@FPS_CAPTURA@", f"{60 / a.lenta:g}").replace("@TITULO@", titulo_da_janela()))
         (trab / "rodar.ps1").write_text(ps1, encoding="utf-8-sig")
@@ -239,11 +252,14 @@ def main():
         shutil.copy2(wsb, saida / "filme.wsb")  # fica junto do vídeo para conferir o que a sandbox recebeu
         print(f"abrindo a Windows Sandbox (sem rede, sem vGPU); saída em {saida}")
         t0 = time.time()
-        subprocess.Popen([str(SANDBOX_EXE), str(wsb)])
+        subprocess.Popen([str(SANDBOX_EXE), str(wsb)], creationflags=leve.IDLE)
+        vigia = leve.vigia(leve.SANDBOX)  # sandbox em Idle e só nos núcleos E (ferramentas/leve.py)
+        vigia.__enter__()
         while time.time() - t0 < a.espera and not (saida / "pronto.txt").exists():
             time.sleep(2)
         pronto = (saida / "pronto.txt").exists()
         time.sleep(3)
+        vigia.__exit__(None, None, None)
         fechar_sandbox()
         video = saida / "luta.mp4"
         if not pronto:

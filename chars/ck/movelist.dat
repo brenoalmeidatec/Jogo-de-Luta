@@ -1,0 +1,45 @@
+<#f0f000>:Especiais:</>
+Tragada <#bebebe>(nuvem que fica parada e tonteia)</>	_D_F^P
+Boné Voador <#bebebe>(vai e volta)</>			_F_B^P
+Levanta, Comédia <#bebebe>(antiaéreo)</>		_F_D^P
+Bote <#bebebe>(avanço)</>					_D_F^K
+Bicuda Baixa <#bebebe>(golpe baixo)</>			_D_B^K
+Gingado de Esquiva <#bebebe>(a passa, b passa e bate)</>	_B_F^K
+Contragolpe <#bebebe>(apanhou na guarda baixa, responde)</>	_D_B^P
+Pêndulo <#bebebe>(esquiva; x ou y sai com soco)</>	_B_D^K
+
+<#f0f000>:Só no Modo Ratão:</>
+Garrafa Voadora <#bebebe>(arco, deixa caco no chão)</>	_D_F^P
+Tragada de Beck <#bebebe>(nuvem grande)</>		_D_U^P
+Óculos Voador <#bebebe>(vai e volta)</>			_F_B^P
+Passinho Ratão <#bebebe>(avanço)</>				_F_B^K
+Grave do Paredão <#bebebe>(empurra para longe)</>	_D_U^K
+Corrente Y e B de 4 golpes			^Y^Y^Y^Y / ^B^B^B^B
+Fim de Baile						^X, _F+^Y, ^B
+
+<#f0f000>:Correntes (acertando os 3, o 4º derruba):</>
+Jab, Jab Duplo, Cruzado, Uno-Dos de Rua		^X^X^X^X
+Direto, Ganchos, Levanta, Comédia			^Y^Y^Y^Y
+Bicuda, Chute Baixo, Joelhada, Bicuda de Pedreiro	^A^A^A^A
+Chute Frontal, Chute Alto, Pisão, Voadora da Esquina	^B^B^B^B
+
+<#f0f000>:Kombos:</>
+Bom Dia, Cumpadi					_F+^Y, ^X, ^B
+Sobe e Desce						^X, _D+^A, ^Y
+Encosta na Parede					_B+^X, ^Y, _F+^B
+Sobe pro Teto						^X, ^Y, _D+^Y
+
+<#f0f000>:Supers:</>
+Rajada da Esquina <#bebebe>(1000)</>		_B_F_D^K
+Nocaute de Rua <#bebebe>(2000)</>			_B_F_D^P
+Baile da Esquina <#bebebe>(1000, no Modo Ratão)</>	_B_F_D^X_+^Y
+
+<#f0f000>:Sistema:</>
+Modo Ratão <#bebebe>(barra cheia)</>		^X_+^Y
+Rolamento							^X_+^A
+Golpe de afastar					^Y_+^B
+Gola na Mão <#bebebe>(agarrão)</>			[_B/_F]_+^Y
+Abaixa Aí <#bebebe>(oponente agachado)</>	_D_+^Y
+Saideira <#bebebe>(colado)</>				_B_F^Y
+Provocação							^C
+Parry                              _F^C

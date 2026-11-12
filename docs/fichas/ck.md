@@ -211,6 +211,9 @@ Oi, Alisson! O Breno pediu para você terminar o CK. A ficha inteira está acima
 
 ### 1. Refazer 4 folhas do Ratão (a garrafa está errada)
 
+> **Feito em 2026-11-11** (branch `ck`): as 4 foram refeitas e convertidas, mais `e_soco`, `e_caneta` e `queda`. Detalhes e
+> o que ficou no `LOGBOOK.md`, entrada "(CK) — item 1 do pedido".
+
 Regra do Breno: **a garrafa fica sempre na mesma mão nos 8 quadros**, a mão da frente, que é a mais à direita na imagem.
 Nunca troca de mão, nunca some e nunca aparece uma segunda. A outra mão fica vazia, só com a atadura branca. O braço de
 trás nunca sai pelas costas.

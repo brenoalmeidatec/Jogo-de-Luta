@@ -2814,7 +2814,7 @@ Nada daqui entra na fila antes da resposta do dono. As MOTION propostas estão n
 
 | Lutador | Folhas | Depende de |
 |---|---|---|
-| Pengaró | `endiabrado`, `despertar_a`, `despertar_b` e as 28 `e_` | troca de paleta x folha própria (`arte.md`: `e_` só onde o desenho muda) |
+| Pengaró | `endiabrado`, `despertar_a`, `despertar_b` e as 28 `e_` | decidido em 2026-11-11: folha própria, boss final. Ver Lote 7 |
 | Pengaró | `ar_bencao` (especial no ar), quadro final de lançar do super máximo, `arrastao` (se houver carga) | itens 10 e 11 do kit e decisão da carga |
 | Gutto | `endiabrado`, `ginga_endiabrada`, `despertar_a`, `despertar_b` e as `e_` gêmeas (mesmo MOTION, prompt do demônio) | paleta do demônio medida (falta branco para cós e braçadeira) |
 | Gutto | `cotovelo_sobe` (opção B do antiaéreo), `soco_forte`, `clinch`, `super_joelhos`, `super_final`, `ar_cotovelo`, `corre`, `e_corre` | itens 1, 3, 5, 6, 8, 9 e 10 do kit |
@@ -2930,7 +2930,7 @@ MOTION: jumping downward punch: 1 airborne, knees tucked; 2 the front arm loads 
 MOTION: airborne bicycle kick: 1 airborne, knees tucked; 2 the body leans back; 3 the front leg (bare shin, no shin guard) lifts; 4 that leg whips up; 5 contact: front leg fully extended upward, foot 15% larger, body almost horizontal; 6 hold; 7 the leg folds, body rotating upright; 8 knees tucked, ready to land. Exactly ONE shin guard, on the rear leg, visible in all 8 frames. Bottle in the rear hand.
 ```
 
-Forma endiabrada (chat do endiabrado, referência do endiabrado, sem garrafa, algema em UM tornozelo só, o de trás):
+Forma endiabrada (**substituído pelo Lote 7**, boss final; o texto abaixo é do modelo antigo e não vale mais) (chat do endiabrado, referência do endiabrado, sem garrafa, algema em UM tornozelo só, o de trás):
 
 ```
 MOTION: possessed capoeira ginga, one single cycle, side view the whole time (the chest never turns to the camera): 1 wide stance, claws up; 2 weight shifts to the front leg, rear heel lifts; 3 the rear leg steps far back, torso sinks, front hand guarding the face; 4 lowest point, rear leg stretched back; 5 the rear leg starts to come back, torso rising; 6 narrow stance, weight centered; 7 the rear foot steps out again; 8 wide stance that flows into frame 1. One ankle shackle only, on the rear ankle, in all 8 frames; no green, no magenta inside the figure.
@@ -2957,8 +2957,8 @@ golpe). Fora daqui: a forma Endiabrada (`e_*`, `endiabrado`, `ginga_endiabrada`,
 redesenhada à parte, e os efeitos `fx_*`.
 
 **Este lote substitui o Lote 5 para a forma normal** (os MOTION de lá foram fundidos aqui, já com o prompt inteiro) e
-substitui os prompts dos lotes 2 e 3 das mesmas folhas. Do Lote 5 continuam valendo só os três pedidos da forma
-endiabrada, parados até o redesenho. `ar_soco` saiu da fila: a folha arcade em disco foi aprovada.
+substitui os prompts dos lotes 2 e 3 das mesmas folhas. Os três pedidos da forma endiabrada do Lote 5
+foram substituídos pelo Lote 7 (boss final). `ar_soco` saiu da fila: a folha arcade em disco foi aprovada.
 
 **Não precisam de desenho** (folha arcade aprovada e já em `quadros_arcade/`, falta só ligar no gerador): `soco`,
 `parado`, `chute_alto`, `martelo`, `afastar`, `apanha`, `pulo`, `baixo_soco`, `ar_soco`, `cabecada`, `levanta`,
@@ -3624,3 +3624,405 @@ Ordem sugerida (primeiro o que mais aparece numa luta):
 
 Cada grupo passa inteiro pelo pipeline e por um vídeo na sandbox antes de abrir o próximo: se `defesa`,
 `chute_baixo` e `rasteira` não saírem no modelo com este prompt, ajustar o `MODEL LOCK` antes de gastar as outras.
+
+## Lote 7: Pengaró Endiabrado, boss final (2026-11-11)
+
+O dono aprovou em 2026-11-11 o conceito do Endiabrado como **boss final**:
+`sprites/pengaro/quadros/folhas_arcade/e_conceito.png` (da esquerda para a direita: frente sem aura, costas, frente
+com aura, rosto). Este lote redesenha a forma inteira nesse modelo e substitui os três pedidos da forma endiabrada
+que tinham sobrado do Lote 5. Nada aqui foi gerado ainda.
+
+**Modelo:** mesmo rosto, corpo e altura do Pengaró, **sem garrafa** (mãos vazias); pele marrom-escura arroxeada; olhos
+violeta sem pupila; cabelo mais comprido e revolto com pontas violeta; dois chifres curtos de fumaça violeta; casaco de
+mestre preto sem manga, aberto no peito, friso dourado, forro roxo, barra rasgada em pontas até a canela; rachaduras
+violeta acesas no peito; corda grossa trançada ouro e violeta com duas pontas com pingente até o joelho; calça preta
+larga com barra em brasa violeta; pés descalços; algema de ferro com 3 elos de corrente partida nos dois pulsos e nos
+dois tornozelos; bracelete de ouro nos dois antebraços.
+
+**A aura é efeito à parte** (regra da seção 4 de `docs/regras-dos-lutadores.md`): coluna de fumaça, anel de sombra e
+detritos vão em três folhas `fx_aura_*` de fundo verde `#00FF00`, ligadas por `Explod`. Nenhuma folha `e_` leva aura:
+o prompt base proíbe fumaça, anel, rachadura no chão e pedra flutuando; só os dois chifres de fumaça ficam no corpo.
+
+### O que o jogo usa hoje (lido em `ferramentas/gerar_pengaro.py`)
+
+- `pasta_endiabrada(pasta)` devolve `e_<pasta>` para **toda** folha de `FOLHAS`: o desenho `n` de `e_<golpe>` entra no
+  lugar do desenho `n` do golpe normal pelo `RemapSprite` do Despertar. Por isso cada `e_` repete a ordem dos quadros
+  da folha normal: mudou a ordem, mudou o golpe.
+- `LOOPS_ENDIABRADOS`: a ginga vem da pasta `ginga_endiabrada` (desenhos 0, 7, 1, 2, 2, 1) e o andar de `e_anda`
+  (desenhos 1, 5, 3, 3, 1, 5), porque as folhas antigas tinham desenhos sujos. Com folhas limpas os loops podem usar
+  os 8 desenhos na ordem da normal. A folha nova da ginga se chama `e_ginga`; na hora de ligar, ou o gerador passa a
+  ler `e_ginga`, ou os quadros vão para `ginga_endiabrada`.
+- Folha `endiabrado` (8 poses soltas, `POSES_ENDIABRADO`): reserva para sprite sem `e_` própria. Não entra no lote; com
+  o lote completo ela deixa de ser necessária.
+- `TROCA_ENDIABRADA` remenda desenhos errados de `e_levanta`, `e_rolamento`, `e_baixo_soco` e `e_rasteira`: os MOTION
+  abaixo pedem esses quadros certos, para o remendo sair.
+- Em disco hoje (arte antiga, `quadros/e_*`): 28 pastas, uma para cada folha de `FOLHAS` menos `lata` (não existe
+  `e_lata`) e `despertar_a/b`, mais `e_anda`, `ginga_endiabrada` e `endiabrado`. `ARCADE` (as normais que já tocam
+  arcade) não tem nenhuma `e_`: a forma endiabrada inteira ainda é a arte antiga.
+- Fora do lote: `corre`, `recuo` e `parado` têm folha arcade normal, mas o gerador ainda não as usa (a corrida toca
+  `anda_fluida`). Quando entrarem no jogo, pedir `e_corre` e `e_recuo` com este mesmo prompt base.
+
+### Como gerar
+
+1. Chat novo "Pengaró Endiabrado — boss", uma folha por mensagem. As `e_` vão para
+   `sprites/pengaro/quadros/folhas_arcade/e_<golpe>.png`; as `fx_aura_*` vão para `sprites/pengaro/quadros/folhas/`
+   (é de lá que o `efeitos_folha.py` lê).
+2. **Anexos em toda mensagem de `e_`:** primeiro `e_conceito.png` (o modelo), depois a folha arcade normal do mesmo
+   golpe (as poses). Onde a folha diz que não há normal aprovada, vai só o conceito e vale o texto do MOTION.
+   Nas `fx_aura_*` vai só o conceito.
+3. Prompt = prompt base abaixo com a linha `MOTION:` trocada pela da folha.
+4. Conferir antes de aceitar, quadro a quadro: 8 quadros inteiros; mãos vazias; quatro algemas com corrente; dois
+   braceletes; casaco, corda com duas pontas e chifres presentes; **nenhuma** aura, fumaça solta ou rachadura no chão;
+   figura em pé da altura da normal; mesma pose da folha normal quadro a quadro. Reprovou: gerar de novo no mesmo chat.
+5. Risco a medir logo na primeira folha (`e_ginga`): o recorte tira o magenta que encosta na borda
+   (`r > 150, b > 150, g < 110` em `recortar_quadros.py`), e violeta claro cai nessa faixa. Se chifres, forro ou
+   brasas sumirem no recorte, passar as `e_` para fundo verde `#00FF00` antes de gastar o resto do lote.
+6. Depois: `quantizar_folha.py` (paleta própria do boss, a definir com a primeira folha) -> `animar_folha.py --arcade`
+   -> `conferir_arte.py`, e só então ligar no gerador. Só estilo geral de luta 2D dos anos 90, nada copiado de jogo
+   comercial.
+
+### Prompt base do boss (folhas `e_`)
+
+```
+Generate ONE image with your image generation tool. Do not write code and do not edit any file.
+Two images are attached. The FIRST is the character concept (four views on magenta): it shows the exact character to
+draw, the final-boss form of the fighter. The SECOND is the 8-frame sprite sheet of this same move in his normal form:
+take from it ONLY the poses, the frame order, the body size and the ground line; never its clothes, its bottle or its
+shin guard. If only the concept is attached, follow the MOTION text for the poses.
+MODEL LOCK, true in all 8 frames: the same man as the concept, same face, same muscular body, same height. Dark brown
+skin with a purple tint. Glowing violet eyes with no pupils. Long wild dark-brown hair with violet tips, and two short
+horns made of violet smoke rising from the hair. Sleeveless black master's coat, open on the chest, gold trim along every
+edge, purple lining, the hem torn into long points that reach the shins. Glowing violet cracks on the bare chest. Thick
+braided rope belt of gold and violet strands, knotted at the front, with two ends hanging to the knee, each ending in a
+gold tassel. Wide black pants with a ragged hem glowing like violet embers. Barefoot. An iron shackle with exactly 3 links
+of broken chain on BOTH wrists and on BOTH ankles (four shackles). A wide gold bracer on BOTH forearms, above the wrist
+shackles. BOTH HANDS EMPTY in every frame: no bottle, no can, no weapon, no object of any kind. No shin guard, no green
+sash, no white pants. Exactly two arms, two hands and two legs. The body has the same size and proportions as in the
+second attached sheet in every frame: a standing frame is exactly as tall as the standing figure of that sheet.
+NO AURA in this image: no smoke column, no shadow ring, no cracks on the ground, no floating rocks, no loose chain links
+in the air, no glow around the body, no motion lines, no impact effects. The only smoke allowed is the two small horns.
+Art style: generic hand-pixeled 1990s arcade 2D fighting game sprite, original character, not copied from any existing
+game. Heroic anatomy: broad shoulders, narrow waist, big hands and feet, thick forearms and calves. Shading in 2-3 large
+hard-edged flat planes per form, no gradients, no dithering, no noise, no texture, no veins, abdomen as 6 simple blocks.
+Shadows shift hue: skin shadows go toward deep violet-wine, highlights toward warm tan; the black cloth is shaded with
+dark blue-violet planes and one cool lilac highlight plane, never flat pure black and never grey; the gold has 3 flat
+tones, dark ochre, gold and pale yellow. Every violet in the figure is a cold blue-violet, clearly darker and bluer than
+the background, never pink and never magenta. 1-pixel colored outline (dark wine on skin, dark blue-violet on clothes),
+never pure black, lighter or missing on the lit side. Small hard 1-3 pixel specular highlights on forehead, shoulder,
+chest, knuckles, bracers and shackles, one highlight band on the hair. Limited palette look. No brand, logo or text.
+Secondary motion: the torn coat hem, the two rope ends with tassels, the hair and the broken chain links lag 1-2 frames
+behind the body.
+Layout: one single row of 8 frames, evenly spaced, wide image, side view, always facing right, same size and scale as the
+second attached sheet, feet on the same ground line, magenta margin on all four sides so nothing is cut at the border.
+Flat solid magenta background (#FF00FF) everywhere, no shadow, no ground, no text, no numbers, no borders, no effects.
+Only this one man in the image, no opponent.
+MOTION: <linha da folha>
+Consecutive frames differ by a small amount, so the motion looks smooth in sequence.
+```
+
+### Prompt base da aura (folhas `fx_aura_*`)
+
+```
+Generate ONE image with your image generation tool. Do not write code and do not edit any file.
+The attached character concept is ONLY a color and style reference for the aura in its third view (violet-black smoke,
+shadow ring, floating chain links and rocks). Do NOT draw the man, any body part or any clothing: this image contains the
+effect alone.
+Art style: generic hand-pixeled 1990s arcade 2D fighting game effect sprite, original, not copied from any existing game.
+Fully opaque pixels, hard edges, 3-4 flat tones per shape: near-black violet, dark violet, bright violet and a small
+lilac-white core; no gradients, no dithering, no soft glow, no transparency, no blur.
+Layout: one single row of 8 frames, evenly spaced, wide image, same position and same scale in every frame, green margin
+on all four sides. Flat solid green background (#00FF00) everywhere, no ground line, no text, no numbers, no borders.
+Nothing green in the effect itself.
+MOTION: <linha da folha>
+Frame 8 flows back into frame 1 as a seamless loop; consecutive frames differ by a small amount.
+```
+
+### Grupo A: base e o que se vê em toda luta (12)
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_ginga.png`
+
+Referência de pose: `folhas_arcade/ginga.png`. Alimenta: ação 0 (ginga, loop `ginga_fluida`); hoje vem de `quadros/ginga_endiabrada` (desenhos 0, 7, 1, 2, 2, 1) e a pose 0 da folha `endiabrado`.
+
+```
+MOTION: the capoeira ginga of the second sheet, pose by pose, as a boss: slower and heavier, chest open, chin down, eyes fixed on the opponent. Frame 1 both feet parallel and wide, knees bent, torso leaning slightly forward, open clawed hands; frames 2 and 3 the right leg steps far back on the ball of the foot and the left arm crosses in front of the face while the other arm swings low and back; frame 4 he starts to return; frame 5 feet parallel and wide again; frames 6 and 7 the left leg steps far back and the arms swap; frame 8 returning to frame 1. The front foot stays planted on the same spot in all 8 frames. The coat hem and the rope ends sway opposite to the body. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_anda.png`
+
+Referência de pose: `folhas_arcade/anda.png`. Alimenta: andar para a frente e para trás (loop `anda_fluida`, hoje desenhos 1, 5, 3, 3, 1, 5 de `e_anda`) e os sprites `corre0-3`.
+
+```
+MOTION: slow menacing walk forward, torso upright, arms low and open with clawed hands, a full two-step cycle where the two legs ALTERNATE: frame 1 contact, front leg forward; 2 weight sinks on it; 3 the other leg passes under the body with the knee high; 4 that leg reaches forward; 5 contact with the legs swapped; 6 weight sinks; 7 the first leg passes under the body with the knee high; 8 it reaches forward and flows into frame 1. The head stays at the same height in all 8 frames (no bobbing). The ankle chains drag behind each foot. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_soco.png`
+
+Referência de pose: `folhas_arcade/soco.png`. Alimenta: soco fraco (200, 201) e sprites `soco0-3`.
+
+```
+MOTION: quick straight punch with the front fist: frame 1 stance, frame 2 the shoulder loads back, frame 3 small step in, frame 4 fist travels out, frame 5 contact: the fist is drawn 20% larger than in frame 1, shoulder thrust forward, torso turned showing the chest, frame 6 hold with the arm fully extended, frame 7 the arm halfway back with the elbow bent and the fist still closed, frame 8 back to the stance with exactly the same hand shape as frame 1. The wrist chain of the punching arm whips forward on frame 5 and trails back after. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_chute_alto.png`
+
+Referência de pose: `folhas_arcade/chute_alto.png`. Alimenta: chute forte (240, 246) e sprites `chute0-3`.
+
+```
+MOTION: meia-lua de frente, a high crescent kick. Frame 1 ginga stance, frame 2 weight on the support leg, frame 3 the straight leg rises from the outside, frames 4 and 5 the leg sweeps across at head height, fully extended, frames 6 and 7 the leg comes down, frame 8 ginga stance. On the contact frames the foot is drawn 15% larger than in frame 1, hip thrust forward and torso turned; the recovery takes at least 3 frames, never snapping back in one frame. The coat hem opens like a fan behind the kicking leg and the ankle chain follows the arc of the foot. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_martelo.png`
+
+Referência de pose: `folhas_arcade/martelo.png`. Alimenta: cotovelada forte (216).
+
+```
+MOTION: a strong elbow strike. Frame 1 ginga stance, frame 2 torso twists back, frame 3 the elbow rises to shoulder height, frames 4 and 5 the torso whips forward with the elbow leading at chin height, the gold bracer catching the light, frames 6 and 7 he recovers, frame 8 ginga stance. On the contact frames the elbow and forearm are drawn 15% larger, shoulder thrust forward and torso turned; the recovery takes at least 3 frames. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_afastar.png`
+
+Referência de pose: `folhas_arcade/afastar.png`. Alimenta: chute que lança (sprites `f_afastar<i>`).
+
+```
+MOTION: a heavy pushing kick that launches the opponent. Frame 1 ginga stance, frames 2 and 3 the knee chambers high against the chest, frames 4 and 5 the leg thrusts straight forward at chest height, sole first, with the torso leaning back, frames 6 and 7 the foot lands forward, frame 8 ginga stance. On the contact frames the foot is drawn 15% larger and the hip is thrust forward; the recovery takes at least 3 frames. The support foot stays planted on the same spot in all 8 frames. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_apanha.png`
+
+Referência de pose: `folhas_arcade/apanha.png`. Alimenta: apanhando em pé (`apanha0-2`) e tonto (`tonto0-3`).
+
+```
+MOTION: getting hit in the face. Frame 1 ginga stance, frames 2 and 3 the head snaps back, teeth clenched, hair thrown forward, frames 4 and 5 the torso bends backward with the arms flung and the wrist chains flying, frames 6 to 8 he recovers to the ginga stance, glaring. The recovery is longer than the hit. The violet eyes stay lit in every frame. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_queda.png`
+
+Referência de pose: `folhas_arcade/queda.png`. Alimenta: queda (`cai0-2`) e deitado (`deitado`).
+
+```
+MOTION: knocked down, the body at the same size and scale as the second sheet in every frame. Frame 1 hit, head snapping back, still standing; 2 falling backward, feet leaving the ground; 3 body horizontal in the air, coat spread under him; 4 the back hits the ground, legs up; 5 small bounce; 6 settling; 7 lying on the back, knees slightly bent; 8 lying flat on the back, head to the left, coat spread flat on the ground. All four shackles stay visible, including in the last frame. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_levanta.png`
+
+Referência de pose: `folhas_arcade/levanta.png`. Alimenta: levantar (`levanta0-2`); hoje os desenhos 3 e 4 de `e_levanta` são trocados pelos vizinhos (`TROCA_ENDIABRADA`).
+
+```
+MOTION: getting up with a capoeira kip-up. Frame 1 flat on his back, same body size as the last frame of the knockdown; frames 2 and 3 knees pull to the chest, hands by the head; frames 4 and 5 he kicks up off his hands, body arched, feet leading (hands are hands and feet are feet: never a handstand); frames 6 and 7 landing crouched; frame 8 ginga stance. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_defesa.png`
+
+Referência de pose: (sem folha normal aprovada em origin/mugen: segue o MOTION; se a `defesa.png` refeita do Lote 6 já estiver no disco, anexar). Alimenta: defesa em pé (120 a 150), aparar (760), sprites `defesa`, `defesa_ai`, `recua`, `parry`.
+
+```
+MOTION: standing block with the FRONT forearm, the gold bracer taking the blow. Frame 1 ginga guard; 2 the front forearm rises, chin drops, rear shoulder pulled back; 3 front forearm vertical covering the face, closed fist at forehead height, bracer facing the opponent (the hold pose); 4 same pose, teeth clenched, shoulders hunched; 5 same pose, torso rocked slightly back by an impact; 6 bigger impact, both feet slide a little backward, knees more bent; 7 leaning back, weight on the rear leg, forearm still high; 8 firm block again, same as frame 3. The rear hand stays low and open beside the rear hip in all 8 frames. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_agachado.png`
+
+Referência de pose: `folhas_arcade/agachado.png`. Alimenta: agachar e agachado (`agacha0-2`, `defesa_baixa`).
+
+```
+MOTION: crouching down and crouch idle. Frame 1 ginga stance; 2 knees bending, torso lowering, guard up; 3 halfway down; 4 deep crouch, heels down, front fist up guarding the chin, rear hand open beside the hip, head about 75% of the standing height, coat hem pooled on the ground; 5 to 8 the same deep crouch breathing, the head moving only 1-2 pixels, feet planted in exactly the same place. The crouching body keeps the same head and torso size as the standing frame. A shackle is visible on each ankle. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_pulo.png`
+
+Referência de pose: `folhas_arcade/pulo.png`. Alimenta: pulo (`prepulo`, `pulo_sobe`, `pulo_topo`, `pulo_desce`, `pouso`).
+
+```
+MOTION: a jump. Frame 1 knees bent ready to jump, frame 2 pushing off the ground, frame 3 rising with legs starting to tuck, coat hem and rope ends pulled downward, frame 4 tucked at the top, frame 5 still tucked and turning, frame 6 falling with legs opening, coat hem and rope ends flying upward, frame 7 reaching for the ground, frame 8 landing with knees bent, coat settling. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+### Grupo B: resto dos golpes normais e os especiais (12)
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_chute_baixo.png`
+
+Referência de pose: (sem folha normal aprovada em origin/mugen: a `chute_baixo.png` em disco é outro golpe; segue o MOTION; se a refeita do Lote 6 já estiver no disco, anexar). Alimenta: chute fraco (230, 231, 245), 1500/1501 e sprite `pisa`.
+
+```
+MOTION: standing front push kick at belly height with the FRONT leg. Frame 1 ginga stance; 2 weight shifts onto the rear leg, which stays planted and visible in all 8 frames; 3 the front knee lifts to the chest; 4 the front leg shoots out, almost straight, sole forward, at belly height; 5 contact: leg fully straight, foot flexed, hips thrust forward, torso leaning slightly back; 6 the knee folds back, foot pulled in (already folding, no reach); 7 the foot comes down, knee still bent; 8 foot on the ground, ginga stance. On the contact frame the foot is drawn 15% larger than in frame 1; the leg comes back gradually. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_baixo_soco.png`
+
+Referência de pose: `folhas_arcade/baixo_soco.png`. Alimenta: soco agachado (sprite `baixo_soco`); hoje o desenho 2 de `e_baixo_soco` é trocado (`TROCA_ENDIABRADA`).
+
+```
+MOTION: a low jab from the deep squat. Frame 1 deep squat with one hand on the ground, frames 2 and 3 the shoulder loads, frames 4 and 5 the free arm punches straight forward at waist height, fist 15% larger, shoulder thrust forward, frames 6 to 8 back to the squat. Frames 1 and 8 equal the deep crouch of the crouch sheet. The same squat family in all 8 frames: he never stands up. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_cabecada.png`
+
+Referência de pose: `folhas_arcade/cabecada.png`. Alimenta: antiaéreo agachado (`baixo_cima0-1`).
+
+```
+MOTION: a rising anti-air head butt from the squat. Frame 1 deep squat, frames 2 and 3 the legs push up, frames 4 and 5 the whole body drives upward head first, fully stretched, arms pulled back, hair and smoke horns swept down by the speed, frames 6 to 8 he falls back into the squat. The recovery takes at least 3 frames. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_rasteirinha.png`
+
+Referência de pose: `folhas_arcade/rasteirinha.png`. Alimenta: chute fraco agachado.
+
+```
+MOTION: short crouching sweep. Frame 1 deep crouch with the guard up; 2 the front hand goes to the ground; 3 the front leg slides out along the ground; 4 that leg almost straight, low; 5 contact: leg fully extended close to the ground, the front hand STILL planted on the ground; 6 the leg folds back; 7 the front hand leaves the ground; 8 deep crouch with the guard up, same as frame 1. On the contact frame the foot is drawn 15% larger; the ankle chain of the sweeping leg skims the ground. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_rasteira.png`
+
+Referência de pose: (sem folha normal aprovada em origin/mugen: o jogo toca `chute_agachado` no lugar; segue o MOTION; se a `rasteira.png` refeita do Lote 6 já estiver no disco, anexar). Alimenta: rasteira (`rasteira0-3`, `f_rasteira<i>`); hoje os desenhos 1 e 2 de `e_rasteira` são trocados (`TROCA_ENDIABRADA`).
+
+```
+MOTION: capoeira rasteira, a full low leg sweep with both hands on the ground. Frame 1 deep squat, both open hands going to the ground; 2 the body turns low, weight on the hands; 3 the front leg starts to sweep forward close to the ground; 4 that leg straight and low, halfway through the arc; 5 contact: the leg fully stretched along the ground, hips turned; 6 the leg starts to fold back; 7 almost folded; 8 deep squat, same as frame 1. The same low family in all 8 frames: he never stands up. On the contact frame the foot is drawn 15% larger. The coat hem drags on the ground behind the hips, never between the legs. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_ar_soco.png`
+
+Referência de pose: `folhas_arcade/ar_soco.png`. Alimenta: soco no ar (601), sprites `ar_soco`, `ar_cotovelo`.
+
+```
+MOTION: a downward punch in mid air. All 8 frames are in the air with the legs tucked. Frames 1 to 3 the arm winds up above the head, frames 4 and 5 the arm strikes down and forward, fist 15% larger, wrist chain trailing above it, frames 6 to 8 he recovers the tucked pose. The coat hem and the rope ends fly upward in every frame. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_bicicleta.png`
+
+Referência de pose: `folhas_arcade/bicicleta.png`. Alimenta: chute no ar (611), sprites `bicicleta`, `ar_chute`.
+
+```
+MOTION: airborne bicycle kick, no ground contact in any frame. Frame 1 airborne, knees tucked; 2 the body leans back; 3 the front leg lifts; 4 that leg whips up; 5 contact: front leg fully extended upward, body almost horizontal; 6 hold, same pose; 7 the leg folds, body rotating upright; 8 knees tucked, ready to land. On the contact frame the foot is drawn 15% larger. The coat hangs down from the shoulders and never covers the kicking leg. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_bola.png`
+
+Referência de pose: `folhas_arcade/bola.png`. Alimenta: especial de projétil (sprite `especial`); o projétil é efeito à parte.
+
+```
+MOTION: overhand throw with the FRONT arm, as if hurling something heavy, but the hand is EMPTY in all 8 frames and nothing is drawn in the air. Frame 1 stance, front hand closed in a loose fist at chest height; 2 the front arm cocks back over the shoulder; 3 torso wound up, fist behind the head; 4 the arm whips forward; 5 release: front arm fully extended forward, hand open with clawed fingers, 15% larger; 6 follow-through, torso bent forward; 7 recovering; 8 stance with the front hand open. The rear hand stays low and open beside the hip. The wrist chain of the throwing arm snaps forward on frame 5. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_compasso.png`
+
+Referência de pose: `folhas_arcade/compasso.png`. Alimenta: especial 1100 (`gira0-3`).
+
+```
+MOTION: capoeira meia-lua de compasso, a spinning heel kick with one hand on the ground. Frame 1 ginga stance; 2 the torso twists and drops, front hand going to the ground; 3 front hand planted on the ground, rear arm up and back for balance, the front leg bent, planted and fully visible; 4 the rear leg lifts straight and sweeps around; 5 contact: that leg at its highest point passing over, heel leading, 15% larger, the supporting leg bent and fully visible from hip to foot; 6 the leg comes down on the other side; 7 the foot touches the ground and the hand leaves the floor; 8 back to the stance. The coat hem spins outward as a torn disc around the hips and never hides the supporting leg. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_armada.png`
+
+Referência de pose: `folhas_arcade/armada.png`. Alimenta: especial 1200 (`kick_alto`).
+
+```
+MOTION: armada, a rising spinning kick. Frame 1 ginga stance; 2 he dips, knees bent, gathering; 3 he jumps turning his back to the camera (the back of the coat as in the second view of the concept), rear leg tucked under the body, front knee lifting; 4 airborne, the front leg starts to swing out; 5 contact: front leg straight and high at head height, hips turned, foot 15% larger; 6 the leg sweeps past and lowers, still airborne; 7 falling, both legs tucked, facing right again; 8 landing in the ginga stance. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_caneta.png`
+
+Referência de pose: `folhas_arcade/caneta.png`. Alimenta: especial 1300.
+
+```
+MOTION: low sliding sweep along the ground. Frame 1 stance; 2 he drops, front hand to the ground; 3 sitting low on the supporting rear leg; 4 the front leg shoots forward along the ground; 5 contact: leg fully extended along the ground, foot flexed, 15% larger; 6 hold, same pose; 7 the leg folds back; 8 rising to the stance. The rear hand stays open and off the ground. The coat hem trails flat on the ground behind him. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_rolamento.png`
+
+Referência de pose: `folhas_arcade/rolamento.png`. Alimenta: rolamento e Rolê por Trás (1700, 1701; `rola0-7`); hoje o desenho 4 de `e_rolamento` é trocado (`TROCA_ENDIABRADA`).
+
+```
+MOTION: low forward roll past the opponent. Frame 1 stance; 2 he drops into a squat, front hand to the ground; 3 tucks the head and rolls over the front shoulder; 4 upside down, back to the camera, both legs tucked and clearly visible, a readable ball shape with head, back and legs distinct; 5 coming out of the roll; 6 feet touch the ground, still tucked; 7 squat facing right, guard up; 8 stance. The coat wraps around the body during the roll, the rope ends and chains trail behind. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+### Grupo C: agarrão, super, cenas, Despertar e aura (10)
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_agarrao.png`
+
+Referência de pose: `folhas_arcade/agarrao.png`. Alimenta: agarrão e arremesso (`agarra`, `joga`).
+
+```
+MOTION: standing grab and hip throw using only the FRONT arm; the opponent is NOT drawn. Frame 1 stance; 2 the front arm reaches forward, hand open like a claw; 3 grab: the front hand closes into a fist at chest height, arm extended; 4 he pulls that fist in to his chest, torso turning; 5 he pivots, back turning to the camera, hips loaded, knees bent; 6 mid-pivot, low, back to the camera (back of the coat as in the second view of the concept); 7 throw: facing right again, torso bent forward, the front arm swung down and forward, hand opening; 8 follow-through, low, front hand near the floor. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_golaco.png`
+
+Referência de pose: `folhas_arcade/golaco.png`. Alimenta: preparação do super (3000).
+
+```
+MOTION: super move wind-up, no objects and no effects in the air in any frame. Frame 1 head bowed, both fists closed at the hips, shoulders hunched; 2 he draws a deep breath, chest swelling, the cracks on the chest brighter; 3 the head lifts, teeth bared; 4 both arms rising, chest filling; 5 both arms thrown up to the sky with clawed open hands, roaring, head back, the wrist chains flung upward; 6 to 8 he holds the arms up roaring, with a small sway, the coat hem and rope ends lifted as if by an updraft. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_lata.png`
+
+Referência de pose: `folhas_arcade/lata.png`. Alimenta: gole da intro, da provocação e da vitória (`lata0-2`, `embaixada0-3`); hoje não existe `e_lata`.
+
+```
+MOTION: he gathers power in the FRONT hand and crushes it; no can, no bottle, nothing is held and no effect is drawn. Frame 1 stance, front hand open, palm up at chest height; 2 the fingers curl like claws; 3 the hand rises to face height, he stares into the palm; 4 head tilted back, eyes wide, mouth open in a silent laugh; 5 head further back; 6 he clenches the front hand into a tight fist; 7 laughs, fist shaking in front of the chest; 8 the front hand opens and drops back to the guard. The rear hand stays low and open beside the hip. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_provoca.png`
+
+Referência de pose: `folhas_arcade/provoca.png`. Alimenta: provocação.
+
+```
+MOTION: taunt. Frame 1 stance; 2 he straightens up to full height and leans back, arms dropping open, guard abandoned; 3 the rear hand rests on the rope belt, the front hand hangs relaxed; 4 head tilted back, laughing at the sky; 5 the head comes down, he exhales with the mouth open; 6 the front hand beckons the opponent, palm up; 7 beckons again; 8 stance. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_vitoria.png`
+
+Referência de pose: `folhas_arcade/vitoria.png`. Alimenta: pose de vitória.
+
+```
+MOTION: victory pose. Frame 1 stance; 2 the rear fist rises; 3 rear fist at the highest point, chest out, the broken wrist chain hanging from it; 4 he brings that fist down in front of the face and looks at the shackle; 5 he clenches the fist harder, head lowering; 6 same, shoulders rising with a breath; 7 the fist lowers to chest height, cold half smile; 8 he turns the head toward the camera, arms crossed over the chest, coat and rope ends settling (final hold pose). Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_derrota.png`
+
+Referência de pose: `folhas_arcade/derrota.png`. Alimenta: derrota por tempo.
+
+```
+MOTION: defeat by time over. Frame 1 stance, shoulders dropping; 2 the legs give way and he drops to one knee; 3 sitting back on his heels, both fists on the ground beside the knees, the wrist chains lying on the floor; 4 he punches the ground with the front fist; 5 head thrown back, shouting; 6 the smoke horns shrink to half their size, the head starts to lower; 7 the horns are almost gone, shoulders sagging; 8 slumped, head down, front hand on the knee, hair covering the eyes (final hold pose). Shackles visible on both ankles while he kneels. Both hands stay empty; four shackles and two gold bracers in every frame.
+```
+
+#### `sprites/pengaro/quadros/folhas_arcade/e_despertar.png`
+
+Referência de pose: (conceito + `folhas_arcade/soco.png`, que dá o modelo normal do quadro 1). Alimenta: a transformação: entra no lugar de `despertar_b` (a possessão); `despertar_a` (beber, ver a garrafa vazia, jogar e quebrar) continua na forma normal.
+
+```
+MOTION: the transformation, the ONE sheet where the model changes along the row and where shadow may touch the body. Frame 1 the NORMAL fighter exactly as in the second attached sheet (white capoeira pants, green sash, olive shin guard) but with both hands EMPTY, clutching his chest, staggering; 2 he drops to both knees, head down, hands on the ground; 3 dark violet shadow climbs his legs and back like liquid smoke, the white pants turning black from the hem upward, the shin guard and the green sash gone; 4 the shadow covers the torso and hardens into the sleeveless black coat with gold trim, iron shackles with broken chains snap onto both wrists and both ankles, gold bracers on the forearms; 5 still kneeling, head thrown back, eyes turning solid violet, violet cracks opening on the chest, hair growing longer and wilder; 6 he rises on one knee, the braided gold and violet rope knotted at the waist, the two smoke horns forming; 7 standing up, chest open, fists clenched, complete final-boss model exactly as the concept; 8 the boss ginga stance, same pose as frame 1 of the boss idle sheet. No smoke column, no ground ring, no floating rocks: only the shadow that crawls on his own body in frames 3 to 5.
+```
+
+#### `sprites/pengaro/quadros/folhas/fx_aura_coluna.png`
+
+Referência de pose: (só o conceito, 3ª vista). Alimenta: aura do Despertar, camada de trás: `Explod` atrás do lutador enquanto o Despertar dura.
+
+```
+MOTION: a huge column of violet-black smoke rising from a point at the bottom center of each frame, about twice as tall as it is wide, widest at the base and breaking into curling tongues at the top. Frames 1 to 8 the smoke rolls upward in a continuous loop: each curl climbs about one eighth of the height per frame, new curls are born at the base, and two or three thin shadow whips lash out sideways from the lower half and curl back. The center of the lower half is a darker hollow, because a fighter will be drawn in front of it. The base stays at exactly the same spot and the same width in all 8 frames. No ground, no ring, no rocks, no chains.
+```
+
+#### `sprites/pengaro/quadros/folhas/fx_aura_anel.png`
+
+Referência de pose: (só o conceito, 3ª vista). Alimenta: aura do Despertar, no chão: `Explod` nos pés, atrás do corpo.
+
+```
+MOTION: a ring of shadow spinning flat on the ground, seen from the side as a wide flattened ellipse about five times wider than tall, centered in each frame. The ring is near-black violet with a brighter violet inner edge; inside it the ground is cracked, the cracks glowing bright violet and radiating from the center. Frames 1 to 8 the ring turns one eighth of a full revolution per frame (follow three darker lumps on the rim as they travel around) while the cracks pulse: brightest on frames 1 and 5, dimmest on 3 and 7. Short flames of shadow flicker upward from the rim, never taller than the ellipse itself. The ellipse keeps exactly the same size and position in all 8 frames. Nothing above the ring: no column, no rocks, no chains.
+```
+
+#### `sprites/pengaro/quadros/folhas/fx_aura_detritos.png`
+
+Referência de pose: (só o conceito, 3ª vista). Alimenta: aura do Despertar, camada da frente: `Explod` por cima do lutador.
+
+```
+MOTION: debris floating upward in a loose cloud: exactly 5 small grey-brown rocks with violet rim light and exactly 4 broken iron chain pieces of 2 or 3 links each, spread over the whole frame with the center left emptier, because a fighter will stand there. Frames 1 to 8 every piece drifts slowly upward and turns a little, each at its own speed; a piece that leaves the top of the frame re-enters at the bottom in the same column, so frame 8 flows into frame 1. The pieces keep the same size and shape in all 8 frames. No smoke, no ring, no ground, no glow: only the rocks and the chain pieces.
+```
+
+### Contagem e ordem
+
+| Grupo | Folhas | Quantas |
+|---|---|---|
+| A | `e_ginga`, `e_anda`, `e_soco`, `e_chute_alto`, `e_martelo`, `e_afastar`, `e_apanha`, `e_queda`, `e_levanta`, `e_defesa`, `e_agachado`, `e_pulo` | 12 |
+| B | `e_chute_baixo`, `e_baixo_soco`, `e_cabecada`, `e_rasteirinha`, `e_rasteira`, `e_ar_soco`, `e_bicicleta`, `e_bola`, `e_compasso`, `e_armada`, `e_caneta`, `e_rolamento` | 12 |
+| C | `e_agarrao`, `e_golaco`, `e_lata`, `e_provoca`, `e_vitoria`, `e_derrota`, `e_despertar`, `fx_aura_coluna`, `fx_aura_anel`, `fx_aura_detritos` | 10 |
+| **Total** | | **34** |
+
+Cada grupo passa inteiro pelo pipeline e por um vídeo na sandbox antes de abrir o próximo. Se `e_ginga`, `e_anda` e
+`e_soco` não saírem no modelo com este prompt, ajustar o `MODEL LOCK` antes de gastar as outras.

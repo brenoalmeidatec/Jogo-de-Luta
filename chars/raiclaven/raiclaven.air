@@ -488,7 +488,7 @@ Clsn2Default: 1
 Clsn2Default: 1
  Clsn2[0] = -60,0,60,-24
 395,0, 0,0, 6
-396,0, 0,0, -1
+396,0, 0,0, 10
 
 [Begin Action 5120]
 Clsn2Default: 1
