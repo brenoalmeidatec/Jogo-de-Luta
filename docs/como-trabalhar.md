@@ -20,6 +20,14 @@ continuam em [`regras-dos-lutadores.md`](regras-dos-lutadores.md). Estilo e core
   [Estilo arcade anos 90 da bíblia](biblia-de-arte.md#estilo-arcade-anos-90), com as 12 regras, a paleta fixa e o
   pipeline `quantizar_folha` → `animar_folha --arcade` → `conferir_arte`. A arte antiga sai conforme as folhas arcade
   forem entrando. Nunca 3D pixelizado: o boneco 3D do PR #17 foi rejeitado.
+- **Quem faz o quê** (Breno, 2026-11-12): o Breno e o Claude desenham, isto é, ficha, folhas no ChatGPT e o pedido em
+  `.md`, e **mandam para o Alisson**. O Alisson coloca no jogo, sempre na regra do 3x
+  ([`regra-alta-resolucao.md`](regra-alta-resolucao.md)) e com os efeitos pela
+  [`regra-efeitos-proporcionais.md`](regra-efeitos-proporcionais.md). O Claude não liga sprite novo no jogo, a não ser
+  que o Breno peça.
+- **Efeitos simples e do tamanho do golpe** (Breno, 2026-11-12): golpe fraco tem só um ventinho, e golpe forte que joga
+  longe tem impacto maior. Aura e efeito do endiabrado ficam discretos. Efeitos novos são feitos no Blender. Tudo em
+  [`regra-efeitos-proporcionais.md`](regra-efeitos-proporcionais.md).
 - **Lutador em alta resolução é a regra** (Breno, 2026-11-12): o corpo vai para o jogo desenhado em 3x e mostrado em
   1/3, para o motor não esticar e o boneco não ficar borrado. Folha nova ou refeita ganha o gêmeo 3x antes de subir.
   Tudo em [`regra-alta-resolucao.md`](regra-alta-resolucao.md).
