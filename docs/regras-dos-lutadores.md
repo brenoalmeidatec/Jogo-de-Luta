@@ -239,7 +239,7 @@ só um brilho genérico.
 | Gutto | aura vermelha do demônio cara de cavalo |
 | Raiclaven | brilho prateado de aço (o Cientista Louco ainda vai ganhar a dele) |
 | Hazak | brasa laranja-ouro do Diabo Loiro |
-| CK | fumaça cinza-esverdeada do baseado, subindo dos pés |
+| CK | paredão de som de fumaça cinza-esverdeada soltando anéis, névoa e cacos no chão (Modo Ratão, boss final) |
 
 ### O que muda: golpes **novos**, não só mais fortes
 

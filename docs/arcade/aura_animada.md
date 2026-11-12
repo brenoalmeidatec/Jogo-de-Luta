@@ -41,6 +41,12 @@ cns += AURA.cns(cabecalho=True)    # [Statedef -4] + controladores (sem cabecalh
   metades de um anel) no mesmo tique; camadas que dividem a mesma região, em tiques diferentes.
 - `esconde`: expressão por camada; enquanto vale, a camada apaga (~8 ticks) e volta depois. Serve para a reação
   avulsa do gerador (o garanhão do coice, as asas que fecham) tocar no lugar da camada em loop, sem dobrar.
+- `cresce`: `False` numa camada faz a entrada e a saída só pelo alfa (padrão `True`: a camada cresce, escala do
+  motor passageira). O paredão do CK achatado a 8% virava elipse azulada (cético de 2026-11-12).
+- `Aura(resta=...)`: expressão com os ticks que faltam para o corpo voltar (ex. `var(20)`); o fade nunca passa de
+  `resta / sai`. Sem ela a saída conta pelo relógio do `-4`, que anda em pausa, superpausa e hitpause, enquanto o
+  `var(20)` do `-2` para: um hitpause ou uma super do oponente no fim do Despertar apagava a aura antes de o corpo
+  voltar. A do CK usa; a do Pengaró ainda não (pendência).
 - Virada: quando o lutador vira, as camadas apagam, trocam de lado 5 ticks depois e voltam (12 ticks no total).
   `Aura(virada_fundo=0.3)` é até onde o alfa desce: 0,3 some quase tudo (bom para aura pequena); a do Pengaró usa 0,6,
   porque com 0,3 o boss sumia a cada troca de lado (pixels roxos de 52 mil para 5 mil no filme de 2026-11-12).

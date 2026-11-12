@@ -1621,3 +1621,12 @@ Branch `aura-pengaro` (worktree `C:/Dev/Jogo-de-Luta-aurapengaro`, tem `mugen` +
   do Despertar, Baile e Grave não filmados; dois Ratões perto viram um paredão só, enorme; nenhum vídeo assistido em
   tempo real, só tiras.
 - Filmes, tiras e medidas: `scratchpad/aurack/` desta sessão (fora do repositório).
+
+## 2026-11-12 — PARADA a pedido do Alisson (aura do CK, branch aura-ck)
+
+- O Alisson pediu para parar ("vou ter que começar outro trabalho"). A aura do Blender do CK está ligada no Modo Ratão
+  (f53a4fbd, 6543bcce) e o retoque dos céticos andou até 73ebc8b9; este commit guarda o que o retoque tinha mexido
+  (docs e `filmar_aura.py`) sem ter refilmado nem rodado o robô de novo.
+- **Próximo:** retomar o workflow `aura-ck-no-jogo` (run wf_2d43efbc-ea1) ou refazer só o fim do retoque: robô CK e
+  Pengaró na sandbox, filme final, tira olhada, veredito. Não juntar na `mugen` sem o Alisson (depende da `efeitos`,
+  que põe o HUD por cima no jogo inteiro).
