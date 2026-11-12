@@ -77,7 +77,7 @@ try {
         $raiz = Invoke-RestMethod "https://api.github.com/repos/$repo/git/trees/$commit" -Headers $ua
         # Cada pasta tem a sua subarvore (sha proprio); o caminho de cada arquivo leva o nome da pasta na frente.
         $arquivos = @()
-        foreach ($nome in @('chars', 'motif')) {
+        foreach ($nome in @('chars', 'motif', 'stages')) {
             $pasta = @($raiz.tree | Where-Object { $_.path -eq $nome -and $_.type -eq 'tree' })
             if ($pasta.Count -ne 1) { throw "a pasta $nome nao apareceu no GitHub" }
             $arvore = Invoke-RestMethod "https://api.github.com/repos/$repo/git/trees/$($pasta[0].sha)?recursive=1" -Headers $ua
@@ -143,13 +143,25 @@ if (-not (Test-Path $exe)) {
 # 3. Instala os lutadores disponiveis e os registra na selecao.
 $select = Join-Path $motor 'data\select.def'
 $texto = [IO.File]::ReadAllText($select)
+# Cenarios Nazafights (stages\ do jogo) vao para o stages\ do motor sem /MIR, que apagaria os cenarios do proprio motor.
+# Com a Maria Fumaca instalada, ela vira o cenario das lutas e entra na lista de cenarios.
+$cenario = 'stages/stage0-720.def'
+if (Test-Path (Join-Path $game 'stages\maria_fumaca.def')) {
+    robocopy (Join-Path $game 'stages') (Join-Path $motor 'stages') /E /NFL /NDL /NJH /NJS /NP | Out-Null
+    if ($LASTEXITCODE -ge 8) { Fechar 'Nao consegui instalar os cenarios.' }
+    $cenario = 'stages/maria_fumaca.def'
+    $texto = [regex]::Replace($texto, '(?m)^(\s*(?:pengaro|hazaki|gutto|raiclaven|ck)\s*,\s*)stages/stage0[-\w]*\.def', "`$1$cenario")
+    if ($texto -notmatch '(?m)^\s*stages/maria_fumaca\.def') {
+        $texto = [regex]::Replace($texto, '(?im)^\[ExtraStages\][^\r\n]*\r?\n', "`$0stages/maria_fumaca.def`r`n")
+    }
+}
 foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven', 'ck')) {
     $origem = Join-Path $game "chars\$lutador"
     if (-not (Test-Path (Join-Path $origem "$lutador.def"))) { continue }
     robocopy $origem (Join-Path $motor "chars\$lutador") /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
     if ($LASTEXITCODE -ge 8) { Fechar "Nao consegui instalar $lutador." }
     if ($texto -notmatch "(?m)^\s*$lutador\s*(?:,|$)") {
-        $texto = $texto -replace '(?m)^randomselect', "$lutador, stages/stage0-720.def`r`nrandomselect"
+        $texto = $texto -replace '(?m)^randomselect', "$lutador, $cenario`r`nrandomselect"
     }
 }
 # Tira da selecao os lutadores de exemplo que vem com o IKEMEN (Kung Fu Man e variacoes): so comenta a linha,

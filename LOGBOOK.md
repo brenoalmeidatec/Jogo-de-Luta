@@ -1326,3 +1326,19 @@ O `hd.py` passou a aceitar recorte 1-4 px diferente, porque o gerador limpa a bo
 **Pendente:**
 - Quadros montados por código continuam só ampliados: no Pengaró, parte do Despertar e alguns aéreos (104 sprites).
 - Se uma folha for refeita, rode o `hd_guiado.py` dela, senão o gerador usa o gêmeo velho ou amplia.
+## 2026-11-12 — Cenário da Maria Fumaça montado e ligado no launcher (Claude)
+
+**Pedido do Breno:** cenário de Nazaré com a Maria Fumaça (o Alisson faz o do Cristo), feito por nós, não pelo Alisson.
+
+- Fundo: `sprites/cenarios/maria_fumaca/esbocos/esboco1.png`, aprovado pelo Breno, usado do tamanho em que saiu
+  (1672x941) num cenário de `localcoord 1280,720` (o `gerar_cenario.py` da branch `cenarios` ganhou o campo `tela`).
+  A câmera anda 196 px para cada lado e sobe 160.
+- Camadas (`cenarios/maria_fumaca/cenario.json`): `fora` (o esboço inteiro), `dioquevara` e o `paredao` com a
+  `galera` passando na rua, `grade` (barras azuis de fora, na frente deles), `salao` (o esboço com os dois arcos vazados),
+  `banco` (três jovens) e `mesas` (pizza e cerveja).
+- Figurantes: folhas de 8 poses no ChatGPT (`sprites/cenarios/maria_fumaca/folhas/`) e quadros do meio no Blender pelo
+  `ferramentas/animar_cenario.py` (o desenho é entortado, nada de 3D). A Dioquevara é prima do Breno e topou aparecer.
+  Ela passa a cada ~40 s, e o paredão a cada ~70 s.
+- O maluco da caixa de som foi feito e tirado a pedido do Breno.
+- Launcher: baixa também `stages/`, copia para o motor sem `/MIR` e põe `stages/maria_fumaca.def` como cenário dos
+  cinco lutadores e em `[ExtraStages]`.
