@@ -701,7 +701,7 @@ O Alisson pediu para ir parando os trabalhos aos poucos, para mudar o modelo de 
 Retomada da frente bosses (o dono liberou o orçamento). As 43 folhas do grupo 2 do Hazak boss estão em
 `sprites/hazaki/quadros/folhas_arcade/` (com o grupo 1, as 55 `d_`/`fx_` + `despertar_virada` da fila).
 - 13 delas já tinham sido geradas antes da parada e estavam só no scratchpad; foram conferidas a olho e salvas.
-- As outras 26 saíram no chat "Hazak boss" do ChatGPT; 6 refeitas uma vez (`d_maleta_sobe` rabo cortado na borda,
+- As outras 26 saíram no chat "Hazak boss" do ChatGPT; 7 refeitas uma vez (`d_maleta_sobe` rabo cortado na borda,
   `d_fumaca` 10% maior, `d_agarrao_abraco`/`d_ar_soco`/`d_cotovelo_faixa` com braço sem manga, `fx_notas` sem células,
   `fx_aura_brasa` achatada).
 - Ressalvas: `d_estatueta_gigante` ~8% menor, `d_chute_lateral` ~6% menor, `despertar_virada` cresce ~5% e o chão
