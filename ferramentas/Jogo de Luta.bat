@@ -124,7 +124,7 @@ if (-not (Test-Path $exe)) {
 # 3. Instala os lutadores disponiveis e os registra na selecao.
 $select = Join-Path $motor 'data\select.def'
 $texto = [IO.File]::ReadAllText($select)
-foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven')) {
+foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven', 'ck')) {
     $origem = Join-Path $game "chars\$lutador"
     if (-not (Test-Path (Join-Path $origem "$lutador.def"))) { continue }
     robocopy $origem (Join-Path $motor "chars\$lutador") /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
@@ -133,6 +133,9 @@ foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven')) {
         $texto = $texto -replace '(?m)^randomselect', "$lutador, stages/stage0-720.def`r`nrandomselect"
     }
 }
+# Tira da selecao os lutadores de exemplo que vem com o IKEMEN (Kung Fu Man e variacoes): so comenta a linha,
+# os arquivos ficam (o motor ainda pode precisar deles).
+$texto = [regex]::Replace($texto, '(?m)^([ \t]*kfm\w*[ \t]*,)', ';$1')
 [IO.File]::WriteAllText($select, $texto)
 
 # Layout Nazafights: espelha so a pasta dele em data\nazafight. O /MIR desfaz o que o Ajustar-Menus (passo 5)
@@ -227,9 +230,12 @@ function Ajustar-Menus {
     $lua = Join-Path $motor 'external\script\main.lua'
     if (Test-Path $lua) {
         $l = [IO.File]::ReadAllText($lua)
-        if ($l -notmatch 'jogo-de-luta: Endiabrado') {
-            # So o Enter confirma; segurando o soco forte (y) junto com o Enter escolhe a paleta 2 (Pengaro Endiabrado).
-            $novo = "function main.f_btnPalNo(p)`n`t-- jogo-de-luta: Endiabrado = segurar o soco forte e apertar Enter; so o Enter confirma`n`tif commandGetState(p, '/s') then`n`t`tif commandGetState(p, '/y') then return 2 end`n`t`treturn 1`n`tend`n`treturn 0`nend"
+        if ($l -notmatch 'jogo-de-luta: Endiabrado v2') {
+            # Enter escolhe o lutador normal; o soco forte (y) escolhe a paleta 2 (Pengaro Endiabrado; nos outros vira 1).
+            # Os dois contam no APERTO ('s', 'y'), nao enquanto estao segurados ('/s'): segurado, o Enter que escolheu
+            # o 1o lutador confirmava sozinho o 2o (no modo assistir sempre saia o primeiro da lista). O motor nao tem
+            # o comando '/y' (segurar y) na tela de selecao, so 'y'.
+            $novo = "function main.f_btnPalNo(p)`n`t-- jogo-de-luta: Endiabrado v2 = Enter escolhe normal, soco forte escolhe o endiabrado; conta no aperto`n`tif commandGetState(p, 's') then return 1 end`n`tif commandGetState(p, 'y') then return 2 end`n`treturn 0`nend"
             $l2 = [regex]::Replace($l, '(?s)function main\.f_btnPalNo\(p\).*?\r?\nend', { param($x) $novo }, 1)
             if ($l2 -ne $l) { [IO.File]::WriteAllText($lua, $l2) }
         }

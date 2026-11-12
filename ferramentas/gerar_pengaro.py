@@ -1115,9 +1115,17 @@ def forma_do_quadro(arquivo):
     return "despertar_b" if pasta == "despertar_b" else None
 
 
+def eh_boss(arquivo):
+    """Desenho do Endiabrado na arte arcade (quadros_arcade/e_<folha>/NN.png, Lote 7)."""
+    arquivo = Path(arquivo)
+    return arquivo.parent.name.startswith("e_") and arquivo.parent.parent == QUADROS_ARCADE
+
+
 def abrir_quadro(arquivo):
     """Quadro do Blender já vem na tela do jogo; os antigos, de 224x128, são colados com os pés no eixo."""
     img = Image.open(arquivo).convert("RGBA")
+    if eh_boss(arquivo):  # Lote 7: já vem na tela do jogo, na paleta do boss; o violeta é do desenho, não franja
+        return limpar_borda(img, tinta=False)
     forma = forma_do_quadro(arquivo)
     if img.size != (LARG, ALT):
         tela = Image.new("RGBA", (LARG, ALT))
@@ -1264,8 +1272,11 @@ LOOPS = {
 # na ginga ficam fora o 3 e o 5 (algema nos dois tornozelos) e o 4 (mancha verde na coxa); em pé (0, 7), passo (1),
 # afundo (2, duas vezes: no 6 o pé da frente abre e o tronco pulava 40 px), passo (1), como a ginga normal. No andar só as poses de bote (1, 5, 3): alternar com a guarda em pé
 # (0, 4, 7) fazia a cabeça subir e descer 10 px e os braços trocarem de pose a cada desenho.
-LOOPS_ENDIABRADOS = {"ginga_fluida": ("ginga_endiabrada", (0, 7, 1, 2, 2, 1)),
-                     "anda_fluida": ("e_anda", (1, 5, 3, 3, 1, 5))}
+# (Lote 7, 2026-11-11: o Endiabrado virou o boss final na arte arcade e as folhas e_ginga e e_anda seguem a folha
+# normal desenho a desenho; o loop toca os MESMOS desenhos, na mesma ordem e nos mesmos tempos do normal. As pastas
+# antigas quadros/ginga_endiabrada e quadros/e_anda saíram do jogo.)
+LOOPS_ENDIABRADOS = {"ginga_fluida": ("e_ginga", LOOPS["ginga_fluida"][1]),
+                     "anda_fluida": ("e_anda", LOOPS["anda_fluida"][1])}
 # Os grupos do .sff são dados em sequência e SPRITES_VITIMA (os desenhos que a vítima de um arremesso empresta, iguais
 # em todos os lutadores) guarda números fixos. Os loops de fluxo ocupavam 64 e 48 grupos; essas vagas ficam
 # reservadas (vazias) para nenhum sprite depois deles mudar de número.
@@ -1347,7 +1358,7 @@ def arquivo_loop_endiabrado(pasta, i):
     if not desenhado():
         return QUADROS / FLUXO[pasta][0] / f"{i:02d}.png"
     outra, ordem = LOOPS_ENDIABRADOS[pasta]
-    return QUADROS / outra / f"{ordem[i]:02d}.png"
+    return QUADROS_ARCADE / outra / f"{ordem[i]:02d}.png"
 
 
 def pasta_endiabrada(pasta):
@@ -1358,6 +1369,8 @@ def fator_endiabrado(pasta):
     """Um fator de escala por folha: altura mediana do normal / do endiabrado nos 8 desenhos-chave, entre 0,75 e 1,3.
     Um fator por quadro faria a respiração da ginga tremer. 'endiabrado' (as poses do fallback) mede a pose parada
     contra a ginga."""
+    if desenhado() and (pasta in LOOPS or pasta in BOSS):
+        return 1.0  # Lote 7: a escala do boss já vem certa do lote7_converter.py
     if pasta not in _FATOR:
         if pasta == "endiabrado":
             p = passo_do_loop("ginga_fluida")
@@ -1416,6 +1429,22 @@ def colar_endiabrado(normal, endiabrado, fator=1.0, dx=None):
     return tela
 
 
+def colar_boss(normal, boss):
+    """Lote 7: põe o desenho do boss em cima do desenho normal que ele substitui. Os dois já estão na mesma escala e
+    com a base no chão; aqui a base do boss vai para a base do normal e o corpo desliza em x até 30 px para o lugar em
+    que as duas silhuetas mais se cobrem (pés e tronco no mesmo lugar, mesmo com o casaco e o cabelo sobrando)."""
+    a = np.asarray(normal)[..., 3] >= 128
+    b = np.asarray(boss)[..., 3] >= 128
+    if not a.any() or not b.any():
+        return boss
+    dy = base_figura(normal) - base_figura(boss)
+    b = np.roll(b, dy, axis=0)
+    cobre = {dx: int((a & np.roll(b, dx, axis=1)).sum()) for dx in range(-30, 31)}
+    melhor = max(cobre.values())
+    dx = min((d for d, c in cobre.items() if c >= melhor * .99), key=abs)
+    return move(boss, dx, dy)
+
+
 def dx_chave(pasta, n):
     """dx do tronco medido só no desenho-chave n: os quadros do meio vêm entortados e enganam a medida."""
     if (pasta, n) not in _DX_CHAVE:
@@ -1467,7 +1496,7 @@ REPETE_ARCADE = {("golaco", 1): 0, ("vitoria", 3): 2, ("vitoria", 4): 1, ("vitor
                  ("vitoria", 7): 2, ("bola", 2): 3}
 # Forma endiabrada das folhas novas que não têm e_<folha>: empresta o desenho endiabrado que a ação já usava
 # (correr = andar endiabrado; recuo = e_defesa 6), para o Despertar não mudar.
-ENDIABRADO_EMPRESTADO = {"corre": lambda i: ("anda_fluida", (0, 1, 2, 2, 3, 4, 5, 5)[i]), "recuo": lambda i: ("defesa", 6)}
+ENDIABRADO_EMPRESTADO = {"corre": lambda i: ("anda_fluida", (0, 1, 2, 2, 3, 4, 5, 5)[i]), "recuo": lambda i: ("pulo", 3) if i >= 2 else ("defesa", 6)}  # Lote 7: no ar, o boss encolhido do pulo
 # Desenho arcade deslocado em x (px). afastar 6: o pé de apoio (o de trás, plantado em x=-41 no 5 e -39 no 7) aparecia
 # em -29: o corpo dava um tranco para a frente e voltava.
 DESLOCA_ARCADE = {("afastar", 6): -10}
@@ -1495,8 +1524,24 @@ CAIXA_ARCADE = {322: (12, -26, 78, -10), 342: (12, -26, 78, -10), 601: (12, -76,
 # 230, 1500, 1501 (retoque 2 do Lote 6): o chute endiabrado (e_chute_baixo 3) também bate na altura da barriga (perna em
 # y -78..-60, pé em x 58). A caixa antiga ficava abaixo da perna: 0 pixel do desenho dentro dela no pisão (11500/11501,
 # alcance 20) e 20 px aquém do pé no 10230. Fica na perna, com o recuo de 8 px que toda variante despertada tem.
-CAIXA_DESPERTADA = {240: (20, -116, 72, -58), 230: (20, -78, 54, -58), 1500: (16, -78, 52, -58),
+CAIXA_DESPERTADA_ANTIGA = {240: (20, -116, 72, -58), 230: (20, -78, 54, -58), 1500: (16, -78, 52, -58),
                     1501: (16, -78, 52, -58)}
+# Lote 7: o boss bate com o mesmo desenho do normal (mesma pose, mesmo alcance); a caixa despertada volta a ser a do
+# normal com o recuo de 8 px, e o ajustar_clsn1 a encurta até o membro.
+CAIXA_DESPERTADA = {}
+
+
+# Lote 7 (2026-11-11): folhas do Endiabrado (boss final, conceito e_conceito.png) na arte arcade, em
+# quadros_arcade/e_<folha>/00..07.png (ferramentas/retoques_arcade/lote7_converter.py). Seguem a folha normal desenho a
+# desenho; o RemapPreset troca cada desenho normal pelo do boss com colar_boss. Não têm quadro do meio.
+BOSS = {"afastar", "agachado", "agarrao", "apanha", "ar_soco", "armada", "baixo_soco", "bicicleta", "bola", "cabecada",
+        "caneta", "chute_alto", "chute_baixo", "compasso", "defesa", "derrota", "golaco", "lata", "levanta", "martelo",
+        "provoca", "pulo", "queda", "rasteira", "rasteirinha", "rolamento", "soco", "vitoria"}
+# Desenho do boss com defeito na origem, trocado por outro da mesma folha: (folha normal, desenho) -> desenho.
+TROCA_BOSS = {}
+# Sprite antigo sem folha (os das 9 poses que nenhuma TROCA_POR_FOLHA cobre): pose de POSES_ENDIABRADO -> desenho do boss.
+POSE_BOSS = {0: ("ginga_fluida", 0), 1: ("anda_fluida", 0), 2: ("agachado", 0), 3: ("soco", 5), 4: ("chute_alto", 4),
+             5: ("cabecada", 4), 6: ("bola", 4), 7: ("pulo", 3)}
 
 
 def pasta_da_folha(folha):
@@ -1508,6 +1553,10 @@ def pasta_da_folha(folha):
 def quadro_folha(folha, i):
     if folha in LOOPS:
         return quadro_loop(folha, i)
+    if desenhado() and folha == "despertar_b":
+        # Lote 7: a segunda metade da cena do Despertar é a folha e_despertar (o Pengaró de mãos vazias cai de joelhos,
+        # a roupa do boss aparece e ele se levanta na guarda). O nome f_despertar_b<i> ficou para os números não mudarem.
+        return abrir_quadro(QUADROS_ARCADE / "e_despertar" / f"{i:02d}.png")
     if desenhado() and folha in ARCADE:
         i = REPETE_ARCADE.get((folha, i), i)
     arquivo = pasta_da_folha(folha) / f"{i:02d}.png"
@@ -1538,7 +1587,8 @@ SEGUINTE = {10: "f_agachado4", 11: "f_agachado4", 40: "f_pulo1", 120: "f_defesa3
 # (a garrafa muda de mão, o braço troca) e a malha do Blender derrete cabeça, tronco ou garrafa. Vira corte seco.
 MEIO_PROIBIDO = {("vitoria", 2), ("vitoria", 5), ("despertar_a", 0), ("despertar_a", 4),
                  ("provoca", 1), ("provoca", 2), ("provoca", 3), ("defesa", 1), ("defesa", 2),
-                 ("lata", 0), ("lata", 1)}
+                 ("lata", 0), ("lata", 1),
+                 *(("despertar_b", i) for i in range(7))}  # Lote 7: e_despertar não tem quadro do meio
 # Desenhos que não entram no caminho entre dois outros. lata 1 (abrir o lacre): uma mão segura a garrafa, outra a
 # lata e uma TERCEIRA abre o lacre. A lata já está aberta na mão e ele vai direto para o gole.
 # rasteirinha 4 (arcade): no contato a mão da frente sai do chão e vira punho no peito, e no 5 volta ao chão; o
@@ -1552,6 +1602,8 @@ TROCA_ENDIABRADA = {("levanta", 3): 2, ("levanta", 4): 5, ("rolamento", 4): 3, (
 
 
 def arquivo_endiabrado_da_chave(pasta, n):
+    if desenhado() and pasta in BOSS:
+        return QUADROS_ARCADE / f"e_{pasta}" / f"{TROCA_BOSS.get((pasta, n), n):02d}.png"
     if desenhado():
         n = TROCA_ENDIABRADA.get((pasta, n), n)
     return QUADROS / f"e_{pasta}" / f"{n:02d}.png"
@@ -1635,6 +1687,9 @@ def arquivo_endiabrado(nome):
     return par[0] if par else None
 
 
+SEM_FOLHA_BOSS = []  # sprites do jogo que caíram numa pose emprestada do boss (para o relatório do gerador)
+
+
 def preset_despertado(s):
     """[RemapPreset despertado]: no Despertar, cada desenho do Pengaró vira o endiabrado, em qualquer animação.
     Sprite antigo sem folha endiabrada (corrida, tontura) cai numa pose parada, para a garrafa nunca aparecer."""
@@ -1652,10 +1707,18 @@ def preset_despertado(s):
             arquivo, pasta, pos = par
             n = int(pos)
             seguinte = (n + 1) % (quadros_do_loop(pasta) // passo_do_loop(pasta)) if pasta in LOOPS else min(7, n + 1)
-            dx = round(dx_chave(pasta, n) + (dx_chave(pasta, seguinte) - dx_chave(pasta, n)) * (pos - n))
-            s.add(destino, colar_endiabrado(normal, abrir_quadro(arquivo), fator_endiabrado(pasta), dx))
+            if eh_boss(arquivo):
+                s.add(destino, colar_boss(normal, abrir_quadro(arquivo)))
+            else:
+                dx = round(dx_chave(pasta, n) + (dx_chave(pasta, seguinte) - dx_chave(pasta, n)) * (pos - n))
+                s.add(destino, colar_endiabrado(normal, abrir_quadro(arquivo), fator_endiabrado(pasta), dx))
         elif nome.startswith(("m_despertar", "f_despertar", "f_lata", "m_lata")):
             continue
+        elif desenhado():  # Lote 7: sem folha, cai numa pose do boss (a arte antiga de quadros/endiabrado saiu do jogo)
+            folha, n = POSE_BOSS[pose.get(nome, 0)]
+            arquivo = arquivo_loop_endiabrado(folha, n) if folha in LOOPS else arquivo_endiabrado_da_chave(folha, n)
+            SEM_FOLHA_BOSS.append(nome)
+            s.add(destino, colar_boss(normal, abrir_quadro(arquivo)))
         else:
             s.add(destino, colar_endiabrado(normal, abrir_quadro(QUADROS / f"endiabrado/{pose.get(nome, 0):02d}.png"),
                                             fator_endiabrado("endiabrado")))
@@ -1666,6 +1729,42 @@ def preset_despertado(s):
             g, i = s.codigos[f"d{nome}"]
             linhas.append(f"{grupo},{indice} = {g},{i}")
     return "\n".join(linhas) + "\n\n"
+
+
+# Lote 7: a aura do boss é efeito à parte (regra da seção 4), em três camadas desenhadas (fx_aura_*.png, fundo verde):
+# anel de sombra no chão atrás dos pés, coluna de fumaça atrás do corpo e detritos (pedras e elos) na frente.
+# ação -> (pasta em sprites/pengaro/efeitos, sprpriority, pos y, escala x, escala y, só no chão)
+# A coluna tem 228 px na escala do corpo e a tela mostra ~150 px acima do chão antes da barra de vida, que o Explod
+# cobre: ela entra achatada a 0,68 (155 px, 1,25 vez a altura do boss). Os detritos entram do tamanho em que foram
+# desenhados, já espalhados para os lados pelo lote7_converter.py (em cima do corpo escondiam as pernas).
+AURA_BOSS = {9211: ("aura_anel", -3, 14, 1.25, 1, True), 9210: ("aura_coluna", -2, 6, 1.1, .68, False),
+             9218: ("aura_detritos", 4, -4, 1, .75, False)}
+AURA_LIGADA = "(var(20) > 0 || stateno = 3100 || (stateno = 2000 && Time >= 83)) && alive"  # 83: ajoelhado, já de casaco
+AURA_DESLIGADA = "(var(20) <= 0 && stateno != 3100 && !(stateno = 2000 && Time >= 83)) || !alive"
+
+
+def aura_boss_cns():
+    """As três camadas da aura no [Statedef -2]: nascem quando o boss aparece na cena do Despertar (ou no começo do
+    round, pela seleção) e somem no mesmo tick em que a forma acaba. O anel só existe no chão."""
+    t = []
+    for anim, (nome, prioridade, y, ex, ey, so_chao) in AURA_BOSS.items():
+        nasce, some = (" && statetype != A", " || statetype = A") if so_chao else ("", "")
+        t.append(f"[State -2, Aura do boss: {nome}]\ntype = Explod\ntrigger1 = {AURA_LIGADA} && NumExplod({anim}) = 0{nasce}\n"
+                 f"anim = {anim}\nid = {anim}\npostype = p1\npos = 0, {y}\nbindtime = -1\nremovetime = -1\n"
+                 f"sprpriority = {prioridade}\nownpal = 1\nscale = {ex}, {ey}\nignorehitpause = 1\nsupermovetime = -1\n"
+                 f"pausemovetime = -1\n\n")
+        t.append(f"[State -2, Tira aura do boss: {nome}]\ntype = RemoveExplod\ntrigger1 = {AURA_DESLIGADA}{some}\n"
+                 f"trigger1 = NumExplod({anim})\nid = {anim}\nignorehitpause = 1\n\n")
+    return "".join(t)
+
+
+def sem_tinta_do_despertar(cns):
+    """Lote 7: o PalFX que somava violeta ao corpo do Endiabrado (recoloração do desenho antigo) sai: o boss já vem
+    pintado na paleta dele, e a aura é efeito à parte."""
+    bloco = re.compile(r"\[State -2, Aura\]\ntype = PalFX\n(?:[^\n]+\n)+\n")
+    cns, n = bloco.subn("", cns)
+    assert n == 1, "PalFX da aura não encontrado"
+    return cns
 
 
 def aura_cns():
@@ -2127,8 +2226,7 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
         # ginga da forma despertada: a mesma ginga, de óculos, com as chamas por trás
         for i in range(quadros_do_loop("ginga_fluida")):  # o mesmo sprite que o remap do Despertar põe na ação 0
             e = abrir_quadro(arquivo_loop_endiabrado("ginga_fluida", i))
-            A(f"ginga_endiabrada{i}", colar_endiabrado(quadro_loop("ginga_fluida", i), e, fator_endiabrado("ginga_fluida"),
-                                                     dx_chave("ginga_fluida", i)) if desenhado() else
+            A(f"ginga_endiabrada{i}", colar_boss(quadro_loop("ginga_fluida", i), e) if desenhado() else
               colar_endiabrado(None, e, fator_endiabrado("ginga_fluida")))
         if desenhado():
             s.proximo += VAGAS_DO_FLUXO["ginga_fluida"] - quadros_do_loop("ginga_fluida")
@@ -3804,6 +3902,10 @@ def main():
     # e levantada (ROLANDO) ficam como eram: a caneta passa por baixo de projétil.
     BAIXO[0] = (-28, 0, 28, -80)
     DEITADO[0] = (-70, 0, 70, -34)
+    # Lote 7: a aura do boss em três camadas, 8 desenhos de 5 ticks cada (laço de 40), todas com o pivô na base
+    for anim, (nome, *_) in AURA_BOSS.items():
+        FX_PENGARO[anim] = (None, nome, 5)
+        CHAO.add(nome)
     s = montar_sprites(retrato=RAIZ / "sprites/pengaro-selecao-kof.png")
     faiscas = carregar_faiscas(s)
     a = montar_air(s, faiscas, arte_despertada=arte_endiabrada(s))
@@ -3815,7 +3917,7 @@ def main():
     assert fracos == FRACOS, f"FRACOS (estilo seco) fora de dia: {sorted(fracos ^ FRACOS)}"
     volta = "reset = 1\n\n[State -2, Endiabrado desligado]"
     assert cns.count(volta) == 1
-    cns = cns.replace(volta, "reset = 1\n\n" + aura_cns() + "[State -2, Endiabrado desligado]")
+    cns = sem_tinta_do_despertar(cns.replace(volta, "reset = 1\n\n" + aura_boss_cns() + "[State -2, Endiabrado desligado]"))
     cns = cns.rstrip() + "\n\n" + efeitos_cns(a.ativos, fracos)
     cns = cns.replace("[Data]", preset + "[Quotes]\n" + "".join(f'victory{i + 1} = "{v}"\n' for i, v in enumerate(VITORIAS)) + "\n[Data]", 1)
     (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8", newline="\n")
@@ -3825,6 +3927,8 @@ def main():
     (SAIDA / "pengaro.def").write_text(DEF, encoding="utf-8", newline="\n")
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
+    if SEM_FOLHA_BOSS:
+        print("Endiabrado sem folha própria (pose emprestada do boss):", " ".join(sorted(SEM_FOLHA_BOSS)))
 
 
 if __name__ == "__main__":

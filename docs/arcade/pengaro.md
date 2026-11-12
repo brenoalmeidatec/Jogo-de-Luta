@@ -63,8 +63,10 @@ MOTION: <bloco da folha>
 Consecutive frames differ by a small amount, so the motion looks smooth in sequence.
 ```
 
-Endiabrado: troca de paleta sobre o mesmo desenho onde der (pele, calça, olhos); folha `e_` própria só onde o desenho
-muda (algema, barra rasgada, garra). Enquanto isso não for decidido, nenhuma `e_` entra na fila.
+Endiabrado: decidido em 2026-11-11. É o boss final do conceito `sprites/pengaro/quadros/folhas_arcade/e_conceito.png`
+(casaco de mestre preto, corda trançada, quatro algemas, braceletes, chifres de fumaça, sem garrafa). O desenho muda
+inteiro, então troca de paleta não serve: cada golpe tem folha `e_` própria, com prompt base próprio, e a aura vai em
+folhas `fx_aura_*` à parte. A fila está no Lote 7 de `fila.md`. A paleta do boss ainda não foi medida.
 
 ## Folhas em ordem (MOTION)
 
