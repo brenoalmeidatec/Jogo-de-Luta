@@ -10,6 +10,8 @@ import cv2
 import numpy as np
 from PIL import Image
 
+E = 1  # escala da tela (converter_ck.py HD=3 põe 3): medidas em px abaixo multiplicam por E
+
 # (folha, quadro) -> quadro da mesma folha que entra no lugar
 COPIA = {
     ("e_derrota", 7): 6,   # o 8 da folha é cópia do 7 cortada pela borda direita da imagem
@@ -30,7 +32,7 @@ def sem_fiapo(q):
     cabeça. Sai o que é claro e mais fino que 3 px; a fumaça, se o jogo quiser, entra como efeito."""
     a = np.array(q)
     opaco = (a[..., 3] > 0).astype(np.uint8)
-    fino = (opaco > 0) & (cv2.morphologyEx(opaco, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8)) == 0)
+    fino = (opaco > 0) & (cv2.morphologyEx(opaco, cv2.MORPH_OPEN, np.ones((3 * E, 3 * E), np.uint8)) == 0)
     r, g, b = (a[..., i].astype(int) for i in range(3))
     maior, menor = np.maximum(np.maximum(r, g), b), np.minimum(np.minimum(r, g), b)
     claro = (maior > 140) & (maior - menor < 0.24 * maior)
@@ -38,7 +40,7 @@ def sem_fiapo(q):
     # o que sobra do fiapo fica solto em cima da cabeça: sai todo pedaço pequeno que não é o corpo
     n, rot, info, _ = cv2.connectedComponentsWithStats((a[..., 3] > 0).astype(np.uint8), connectivity=8)
     for i in range(1, n):
-        if info[i, cv2.CC_STAT_AREA] < 25:
+        if info[i, cv2.CC_STAT_AREA] < 25 * E * E:
             a[rot == i] = 0
     return Image.fromarray(a)
 
@@ -50,13 +52,13 @@ def sem_faisca(q):
     h, s, v = np.vectorize(colorsys.rgb_to_hsv)(r, g, b)
     opaco = a[..., 3] > 0
     amarelo = opaco & (h * 360 >= 46) & (h * 360 <= 68) & (s > .35) & (v > .85)
-    perto = cv2.dilate(amarelo.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0
+    perto = cv2.dilate(amarelo.astype(np.uint8), np.ones((5 * E, 5 * E), np.uint8)) > 0
     claro = opaco & (v > .9) & (s < .35) & (h * 360 > 30) & (h * 360 < 75)  # miolo creme da estrela, não o branco lilás
     a[amarelo | (perto & claro)] = 0
     # farelo que sobra da estrela
     n, rot, info, _ = cv2.connectedComponentsWithStats((a[..., 3] > 0).astype(np.uint8), connectivity=8)
     for i in range(1, n):
-        if info[i, cv2.CC_STAT_AREA] < 6:
+        if info[i, cv2.CC_STAT_AREA] < 6 * E * E:
             a[rot == i] = 0
     return Image.fromarray(a)
 
@@ -84,12 +86,12 @@ def tenis_da_cor_certa(q):
     if not len(linhas):
         return q
     faixa = np.zeros_like(op)
-    faixa[max(0, linhas[-1] - 13):linhas[-1] + 1] = True
+    faixa[max(0, linhas[-1] - 14 * E + 1):linhas[-1] + 1] = True
     r, g, b = (a[..., k].astype(int) for k in range(3))
     vivo = op & faixa & (r >= 200) & (g < 90) & (b < 90)
     if not vivo.any():
         return q
-    perto = cv2.dilate(vivo.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0
+    perto = cv2.dilate(vivo.astype(np.uint8), np.ones((5 * E, 5 * E), np.uint8)) > 0
     vermelho = op & faixa & perto & (r >= 60) & (g < 0.45 * r) & (b < 0.6 * r)
     lum = 0.3 * r + 0.59 * g + 0.11 * b
     cor = np.select([lum < 50, lum < 95, vivo], [0, 1, 3], 2)

@@ -200,20 +200,25 @@ class Sprites:
 
 
 def rle8(px):
-    """Formato 2 do SFF v2. Bytes 0x40-0x7F são contagem, então valor assim precisa ir como run."""
-    out = bytearray()
-    i, n = 0, len(px)
-    while i < n:
-        v = px[i]
-        run = 1
-        while i + run < n and px[i + run] == v and run < 63:
-            run += 1
-        if run > 1 or (v & 0xC0) == 0x40:
-            out += bytes((0x40 | run, v))
-        else:
-            out.append(v)
-        i += run
-    return bytes(out)
+    """Formato 2 do SFF v2. Bytes 0x40-0x7F são contagem, então valor assim precisa ir como run.
+    Em numpy (os sprites HD têm 9x mais pixels): mesmo resultado do laço antigo, run de no máximo 63."""
+    a = np.frombuffer(bytes(px), np.uint8)
+    if not len(a):
+        return b""
+    inicio = np.flatnonzero(np.r_[True, a[1:] != a[:-1]])
+    comp = np.diff(np.r_[inicio, len(a)])
+    pedacos = (comp + 62) // 63                        # cada run vira pedaços de até 63
+    v = np.repeat(a[inicio], pedacos)
+    tam = np.full(pedacos.sum(), 63)
+    fim = np.cumsum(pedacos) - 1
+    tam[fim] = comp - (pedacos - 1) * 63               # o último pedaço de cada run fica com o resto
+    par = (tam > 1) | ((v & 0xC0) == 0x40)
+    out = np.zeros(len(v) * 2, np.uint8)
+    pos = np.cumsum(np.where(par, 2, 1)) - np.where(par, 2, 1)
+    out[pos[par]] = (0x40 | tam[par]).astype(np.uint8)
+    out[pos[par] + 1] = v[par]
+    out[pos[~par]] = v[~par]
+    return out[:pos[-1] + (2 if par[-1] else 1)].tobytes()
 
 
 def paleta_global(imagens):
@@ -274,8 +279,8 @@ def escrever_sff(destino, sprites, manter=None):
         caixa = img.getchannel("A").point(lambda a: 255 if a >= 128 else 0).getbbox() or (0, 0, 1, 1)
         rec = img.crop(caixa)
         ind = rec.convert("RGB").quantize(palette=q, dither=Image.NONE)
-        alfa = rec.getchannel("A").tobytes()
-        px = bytes(0 if alfa[i] < 128 else v + 1 for i, v in enumerate(ind.tobytes()))
+        alfa = np.asarray(rec.getchannel("A"))
+        px = np.where(alfa < 128, 0, np.asarray(ind).astype(np.uint16) + 1).astype(np.uint8).tobytes()
         itens.append((grupo, indice, rec.width, rec.height, ex - caixa[0], ey - caixa[1], px))
     gravar_sff(destino, dados_pal, itens)
 

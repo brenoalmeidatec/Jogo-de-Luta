@@ -22,12 +22,14 @@ import numpy as np
 from PIL import Image
 
 import gerar_pengaro as gp
+import hd
 from repertorio import Golpe
 
 N = gp.extra.N
 RAIZ = gp.RAIZ
 SAIDA = RAIZ / "chars/ck"
 QUADROS = RAIZ / "sprites/ck/quadros_arcade"
+QUADROS_HD = RAIZ / "sprites/ck/quadros_arcade_hd"  # os mesmos desenhos em 3x (converter_ck.py com HD=3)
 EFEITOS = RAIZ / "sprites/ck/efeitos"
 RETRATO = RAIZ / "sprites/ck-selecao-kof.png"
 EX, EY = gp.EIXO_X, gp.EIXO_Y
@@ -1146,6 +1148,9 @@ def main():
         f"[State 810, Soco {i}]\ntype = TargetLifeAdd\ntrigger1 = Time = {t}\nvalue = -{d}\n\n"
         + (f"[State 810, Som {i}]\ntype = PlaySnd\ntrigger1 = Time = {t}\nvalue = F5, 0\n\n" if t < 14 else "")
         for i, (t, d) in enumerate(((4, 30), (9, 30), (14, 40)), 1)))
+    # corpo em alta resolução (ferramentas/hd.py): os desenhos 3x de quadros_arcade_hd e o lutador em 1/3
+    if QUADROS_HD.exists():
+        air, cns = hd.aplicar(s, air, cns, [(QUADROS, QUADROS_HD)], gp.SPRITES_VITIMA)
     (SAIDA / "ck.air").write_text(air, encoding="utf-8", newline="\n")
     (SAIDA / "ck.cns").write_text(cns, encoding="utf-8", newline="\n")
     gp.escrever_sff(SAIDA / "ck.sff", s, manter=gp.sprites_mantidos(air, cns))

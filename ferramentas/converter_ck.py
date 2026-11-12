@@ -39,10 +39,14 @@ import ck as retoques  # noqa: E402
 
 SPRITES = af.RAIZ / "sprites/ck"
 ENTRADA = SPRITES / "quadros/folhas_arcade"
-SAIDA = SPRITES / "quadros_arcade"
+# HD=3: os mesmos desenhos no triplo da resolução, em quadros_arcade_hd/ (tela 1080x780, pés em 540,660). O gerador
+# troca cada sprite do jogo pelo gêmeo HD e desenha o lutador em 1/3 (gerar_pengaro.HD); os efeitos ficam como estão.
+HD = int(os.environ.get("HD", "1"))
+retoques.E = HD
+SAIDA = SPRITES / ("quadros_arcade_hd" if HD > 1 else "quadros_arcade")
 EFEITOS_SAIDA = SPRITES / "efeitos"
-BASE_Y = af.PIVO[1] + af.DESLOCA[1]  # 220: a figura ocupa até a linha 219
-EIXO_X = af.PIVO[0] + af.DESLOCA[0]  # 180
+BASE_Y = (af.PIVO[1] + af.DESLOCA[1]) * HD  # 220: a figura ocupa até a linha 219
+EIXO_X = (af.PIVO[0] + af.DESLOCA[0]) * HD  # 180
 
 # Escala por quadro (vezes a escala da folha). Deitado, o corpo tem ~65 px de comprido na célula; em pé tem 112.
 ESCALA_QUADRO = {
@@ -134,14 +138,15 @@ def cortar(nome):
         g.putalpha(g.getchannel("A").point(lambda v: 255 if v >= 128 else 0))
         soltos[efeito_solto] = g
     if nome not in ESCALA_QUADRO:
-        return af.por_celula(folha, fator, 1), soltos
+        return af.por_celula(folha, fator * HD, HD), soltos
     saida = []
+    eixo1 = EIXO_X // HD  # eixo na tela de 1x; a tela de 4x tem o eixo em 4 * eixo1
     for q, k in zip(af.por_celula(folha, fator * 4, 4), ESCALA_QUADRO[nome]):
         x0, y0, x1, y1 = q.getbbox()
         fig = q.crop((x0, y0, x1, y1))
-        fig = fig.resize((max(1, round(fig.width * k / 4)), max(1, round(fig.height * k / 4))), Image.LANCZOS)
-        tela = Image.new("RGBA", (af.LARG, af.ALT))
-        centro = EIXO_X + ((x0 + x1) / 2 - EIXO_X * 4) * k / 4
+        fig = fig.resize((max(1, round(fig.width * k * HD / 4)), max(1, round(fig.height * k * HD / 4))), Image.LANCZOS)
+        tela = Image.new("RGBA", (af.LARG * HD, af.ALT * HD))
+        centro = EIXO_X + ((x0 + x1) / 2 - eixo1 * 4) * k * HD / 4
         tela.paste(fig, (round(centro - fig.width / 2), BASE_Y - fig.height), fig)
         saida.append(tela)
     return saida, soltos
@@ -182,14 +187,14 @@ def solto_como_efeito(nome, img, dados, pal):
 def corpo(nome):
     dados, pal = paleta(nome)
     quadros, soltos = cortar(nome)
-    for efeito_solto, img in soltos.items():
+    for efeito_solto, img in soltos.items() if HD == 1 else ():  # no HD só o corpo: os efeitos ficam os de 1x
         solto_como_efeito(efeito_solto, img, dados, pal)
     destino = SAIDA / nome
     destino.mkdir(parents=True, exist_ok=True)
     prontos = []
     for i, q in enumerate(quadros):
         q = no_chao(retoques.retocar(nome, i, q, nome.startswith("e_")))
-        if (nome, i) in FUMACA_DO_DESPERTAR:
+        if (nome, i) in FUMACA_DO_DESPERTAR and HD == 1:
             fumaca_do_despertar(FUMACA_DO_DESPERTAR[nome, i], q)
         prontos.append(qf.para_imagem(qf.quantizar(q, dados, pal), pal))
     for (folha, i), origem in retoques.COPIA.items():
@@ -315,7 +320,7 @@ def main():
         return contato(args[1])
     if args[:1] == ["--medir"]:
         return medir()
-    nomes = args or [*af.FOLHAS_CK, *(f"fx_{n}" for n in EFEITOS)]
+    nomes = args or [*af.FOLHAS_CK, *((f"fx_{n}" for n in EFEITOS) if HD == 1 else ())]
     for nome in nomes:
         if nome.startswith("fx_"):
             efeito(nome.removeprefix("fx_"))
