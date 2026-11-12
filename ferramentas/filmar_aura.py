@@ -3,12 +3,17 @@
 
   python ferramentas/gerar_teste_aura.py
   python ferramentas/filmar_aura.py --saida PASTA [--roteiro padrao|extra] [--segundos 10] [--lenta 6]
+  python ferramentas/filmar_aura.py --saida PASTA --lutador pengaro      (a aura de um lutador de verdade)
 
 Roteiro "padrao" (10 s): P1 (aura "ck") e P2 (aura "sombra") parados; liga o Despertar dos dois, solta dois surtos
 (o especial de teste, estado 1000), troca o P1 de lado para os dois virarem, desliga e, com a aura apagada, repete o especial (referência do corpo).
 Roteiro "extra" (2 rounds, o que o padrão não cobre): superpausa do P1, P2 em estado custom (golpe de teste), os
 dois pulando, KO do P2 (a aura do vencedor tem de seguir na pose de vitória) e o round 2 (nada sobra antes da intro;
 a aura volta na intro porque o Despertar segue ligado).
+Com --lutador X (um lutador de chars/ com a aura do aura.py no .cns), os dois lados são X na cor 1, e o filme
+injeta no .cmd o que o lutador de teste já traz: t_desp liga o Despertar (var(20) = 600; t_desp = 0 zera), t_surto
+dispara o surto direto no map da aura (o corpo fica parado; o "especial sem aura" do fim também é só a ginga) e
+t_pos põe no lugar. Os ids das camadas saem do comentário que o aura.py escreve no .cns. Sem `esconde`, h = -1.
 Os dois usam o HUD do jogo (motif/nazafight deste checkout), não o do motor.
 Saída em PASTA: luta.mp4 (60 fps, um tick por quadro), aura_log.txt (por tick e por lutador: lado, posição, estado,
 nº de explods e, de cada camada, escala, posição, elemento da animação e ângulo lidos do motor), ticks.txt e os logs
@@ -41,6 +46,7 @@ do
   local extra = @EXTRA@
   local log = io.open("C:/nf/saida/aura_log.txt", "w")
   local CAM = {[1] = {@C1@}, [2] = {@C2@}}
+  local H = {[1] = @H1@, [2] = @H2@}
   local function com(n, fn)
     local old = id()
     player(n)
@@ -77,7 +83,7 @@ do
             if rn == 1 and n == 2 and t == @X_KO@ then setLife(0) end
           end
           linha[#linha + 1] = string.format("P%d f=%d x=%.1f st=%d ne=%d y=%.1f h=%.2f", n, facing(), posX(),
-            stateNo(), numExplod(), posY(), map(n == 1 and "au_ck_h2" or "au_sombra_h2"))
+            stateNo(), numExplod(), posY(), H[n] and map(H[n]) or -1)
           for _, e in ipairs(CAM[n]) do
             if numExplod(e) > 0 then
               linha[#linha + 1] = string.format("%d sx=%s sy=%s px=%s py=%s el=%s an=%s fa=%s", e,
@@ -101,6 +107,41 @@ end
 """
 
 
+# o que o lutador de teste traz no .cmd, para um lutador de verdade (Despertar por var(20), como o Pengaró)
+INJETA = """[State -1, Filme da aura: Despertar ligado]
+type = VarSet
+trigger1 = map(t_desp) = 1 && RoundState = 2
+var(20) = 600
+
+[State -1, Filme da aura: Despertar desligado]
+type = VarSet
+trigger1 = map(t_desp) = 0 && RoundState = 2 && var(20) > 0
+var(20) = 0
+
+[State -1, Filme da aura: surto]
+type = MapSet
+trigger1 = map(t_surto) = 1 && map(au_@AURA@_f) > 0 && map(au_@AURA@_r) <= 0
+map = "au_@AURA@_s"
+value = 1
+
+[State -1, Filme da aura: põe no lugar]
+type = PosSet
+trigger1 = map(t_pos) = 1
+x = map(t_posx)
+
+"""
+
+
+def aura_do_lutador(lutador):
+    """(nome da aura, ids das camadas) lidos do comentário que o aura.py escreve no .cns do lutador."""
+    import re
+    cns = (fs.RAIZ / "chars" / lutador / f"{lutador}.cns").read_text(encoding="utf-8")
+    m = re.search(r"^; ---- Aura animada '(\w+)' .*?: (\d+) camadas, \d+ partículas, explods (\d+) a", cns, re.M)
+    if not m:
+        sys.exit(f"chars/{lutador}/{lutador}.cns não tem aura do ferramentas/aura.py")
+    return m[1], list(range(int(m[3]), int(m[3]) + int(m[2])))
+
+
 def pane(saida):
     """Texto do erro se o roteiro falhou dentro do motor (linha ERRO no log), senão None."""
     log = saida / "aura_log.txt"
@@ -122,11 +163,22 @@ def main():
                     help="segundos para o roteiro começar a escrever o log; se não começar, é pane do motor")
     ap.add_argument("--hud", choices=("jogo", "motor"), default="jogo",
                     help="jogo: motif/nazafight deste checkout; motor: o que estiver no config do motor")
+    ap.add_argument("--lutador", default="teste_aura", help="lutador de chars/ (padrão: o de teste, chars/teste_aura)")
+    ap.add_argument("--sem-aura", action="store_true",
+                    help="com --lutador: o mesmo roteiro com a aura desligada no .cns (Despertar ligado): referência do corpo"
+                         " para medir_aura.py --referencia (a forma despertada tem outro desenho que a base)")
     a = ap.parse_args()
     extra = a.roteiro == "extra"
+    teste = a.lutador == "teste_aura"
+    camadas, mapas_h = CAMADAS, ('"au_ck_h2"', '"au_sombra_h2"')
+    if not teste:
+        if extra:
+            sys.exit("--lutador só com o roteiro padrao (o extra usa os estados de teste 1100, 1300 e 1310)")
+        nome_aura, ids = aura_do_lutador(a.lutador)
+        camadas, mapas_h = {1: ids, 2: ids}, ("nil", "nil")
     segundos = a.segundos or (26 if extra else 10)
     lenta = a.lenta or (3 if extra else 6)
-    if not (fs.RAIZ / "chars/teste_aura/teste_aura.sff").exists():
+    if teste and not (fs.RAIZ / "chars/teste_aura/teste_aura.sff").exists():
         sys.exit("rode antes: python ferramentas/gerar_teste_aura.py")
     ffmpeg = shutil.which("ffmpeg")
     if not ffmpeg:
@@ -139,7 +191,8 @@ def main():
         for velho in ("luta.mp4", "pronto.txt", "log_sandbox.txt", "ticks.txt", "aura_log.txt"):
             (saida / velho).unlink(missing_ok=True)
         roteiro = ROTEIRO
-        for chave, valor in (("@C1@", ", ".join(map(str, CAMADAS[1]))), ("@C2@", ", ".join(map(str, CAMADAS[2]))),
+        for chave, valor in (("@C1@", ", ".join(map(str, camadas[1]))), ("@C2@", ", ".join(map(str, camadas[2]))),
+                             ("@H1@", mapas_h[0]), ("@H2@", mapas_h[1]),
                              ("@LIGA@", LIGA), ("@DESLIGA@", DESLIGA), ("@SURTO1@", SURTO1), ("@SURTO2@", SURTO2),
                              ("@VIRA@", VIRA), ("@SOCO@", SOCO_SEM_AURA), ("@FIM@", int(segundos * 60) + 600), ("@EXTRA@", str(extra).lower()),
                              ("@X_LIGA@", X_LIGA), ("@X_SUPER@", X_SUPER), ("@X_GOLPE@", X_GOLPE),
@@ -155,9 +208,24 @@ def main():
             marca = "@('MasterVolume','0')"
             assert marca in ps1
             ps1 = ps1.replace(marca, "@('Motif','data/nazafight/system.def')," + marca)
-        args = ["-p1", "teste_aura", "-p2", "teste_aura", "-s", "stages/stage0-720.def", "-rounds",
+        args = ["-p1", a.lutador, "-p2", a.lutador, "-s", "stages/stage0-720.def", "-rounds",
                 "2" if extra else "1"]
-        ps1 = (ps1.replace("@LUTADORES@", "'teste_aura'").replace("@ARGS@", " ".join(args))
+        if not teste:  # a cor 2 do Pengaró é o endiabrado pela seleção: os dois na cor 1
+            args += ["-p1.color", "1", "-p2.color", "1"]
+            cmd = (fs.RAIZ / "chars" / a.lutador / f"{a.lutador}.cmd").read_text(encoding="utf-8")
+            marca_cmd = "[Statedef -1]\n\n"
+            assert marca_cmd in cmd, f"sem [Statedef -1] em {a.lutador}.cmd"
+            destino = trab / "por_cima/chars" / a.lutador / f"{a.lutador}.cmd"
+            destino.parent.mkdir(parents=True)
+            destino.write_text(cmd.replace(marca_cmd, marca_cmd + INJETA.replace("@AURA@", nome_aura), 1),
+                               encoding="utf-8", newline="\n")
+            if a.sem_aura:  # o fade da aura nunca sobe: nenhum Explod da aura nasce
+                cns = (fs.RAIZ / "chars" / a.lutador / f"{a.lutador}.cns").read_text(encoding="utf-8")
+                fade = f"[State -4, Aura {nome_aura}: fade]\ntype = MapSet\ntrigger1 = RoundState > 0\n"
+                assert cns.count(fade) == 1, "controlador do fade da aura não encontrado"
+                (destino.parent / f"{a.lutador}.cns").write_text(cns.replace(fade, fade.replace("RoundState > 0", "0")),
+                                                               encoding="utf-8", newline="\n")
+        ps1 = (ps1.replace("@LUTADORES@", f"'{a.lutador}'").replace("@ARGS@", " ".join(args))
                .replace("@SEGUNDOS_REAIS@", f"{segundos * lenta:g}").replace("@LENTA@", str(lenta))
                .replace("@FPS_CAPTURA@", f"{60 / lenta:g}").replace("@TITULO@", fs.titulo_da_janela()))
         (trab / "rodar.ps1").write_text(ps1, encoding="utf-8-sig")

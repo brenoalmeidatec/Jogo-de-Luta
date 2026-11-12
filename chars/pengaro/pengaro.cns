@@ -7756,7 +7756,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = RoundState > 0
 map = "au_pengaro_f"
-value = ifelse((var(20) > 0 || StateNo = 3100 || (StateNo = 2000 && Time >= 83)) && Alive && RoundState > 0, min(1, map(au_pengaro_f) + 0.0385), max(0, map(au_pengaro_f) - 0.0294))
+value = ifelse((var(20) > 0 || StateNo = 3100 || (StateNo = 2000 && Time >= 83)) && Alive && RoundState > 0, min(1, map(au_pengaro_f) + 0.0227), max(0, map(au_pengaro_f) - 0.0294))
 ignorehitpause = 1
 
 [State -4, Aura pengaro: fade suave]
@@ -7915,7 +7915,7 @@ trigger1 = map(au_pengaro_f) > 0 && NumExplod(9603) = 0
 anim = 9603
 id = 9603
 animelem = 16
-animelemtime = 1
+animelemtime = 0
 postype = p1
 pos = 0, 0
 facing = 1
@@ -7995,7 +7995,7 @@ type = ModifyExplod
 trigger1 = NumExplod(9603) && map(au_pengaro_v) <= 0.6
 id = 9603
 postype = p1
-pos = 0 + 2.4 * sin((map(au_pengaro_t) + 113.1) * 0.0201 + 4.3) + (0 + 1.5 * map(au_pengaro_k)) * sin((map(au_pengaro_t) + 113.1) * 1.2566 + 6.3), 0 + 3 * sin((map(au_pengaro_t) + 113.1) * 0.0242 + 8)
+pos = 0 + 2.4 * sin((map(au_pengaro_t) + 113.1) * 0.0602 + 4.3) + (0 + 1.5 * map(au_pengaro_k)) * sin((map(au_pengaro_t) + 113.1) * 1.2566 + 6.3), 0 + 3 * sin((map(au_pengaro_t) + 113.1) * 0.0726 + 8)
 scale = (0.7 + 0.3 * map(au_pengaro_e)) * (1 + 0.12 * map(au_pengaro_k)), (0.08 + 0.92 * map(au_pengaro_e)) * (1 + 0.12 * map(au_pengaro_k))
 trans = addalpha
 alpha = floor(255 * min(1, max(0, (0.95 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0.06 * sin((map(au_pengaro_t) + 113.1) * 0.057 + 7.3)) + 0.15 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.3 + 0.7 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.95 * min(1, 1.6 * map(au_pengaro_e)) * (1 + 0.06 * sin((map(au_pengaro_t) + 113.1) * 0.057 + 7.3)) + 0.15 * map(au_pengaro_k) * map(au_pengaro_e)) * (0.3 + 0.7 * ifelse(map(au_pengaro_v) > 0.6, (map(au_pengaro_v) - 0.6) / 0.4, (0.6 - map(au_pengaro_v)) / 0.6)))))
@@ -8055,8 +8055,8 @@ ignorehitpause = 1
 type = ModifyExplod
 trigger1 = NumExplod(9603) && map(au_pengaro_k) > 0.5
 id = 9603
-animelem = ((ExplodVar(9603, 0, animelem) - 1) % 96) + 1
-animelemtime = 1
+animelem = ((ExplodVar(9603, 0, animelem) - 0) % 96) + 1
+animelemtime = 0
 ignorehitpause = 1
 
 [State -4, Aura pengaro soltos: some]

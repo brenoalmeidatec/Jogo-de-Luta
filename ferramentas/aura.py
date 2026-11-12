@@ -486,6 +486,12 @@ class Camada:
     prioridade: int = None           # sprpriority; None = pelo plano e pela ordem
     esconde: str = None              # expressão do .cns: enquanto for verdade a camada apaga (em ~8 ticks) e volta
                                      # depois; para a reação avulsa do gerador tocar no lugar dela, sem dobrar
+    tique: int = None                # tique do passo (0..tempo-1) em que a camada troca de quadro; None = índice % tempo.
+                                     # Camadas desenhadas juntas (as metades de um anel) trocam no mesmo tique; as que
+                                     # dividem a mesma região da tela, em tiques diferentes (todo tique tem desenho novo)
+
+    def troca(self, i):
+        return (i if self.tique is None else self.tique) % self.tempo
 
 
 @dataclass
@@ -772,7 +778,7 @@ class Aura:
         inicio = c.inicio if c.inicio is not None else 1 + (i * max(1, round(n * 0.382))) % n
         return (f"[State -4, Aura {self.nome} {c.nome}: nasce]\ntype = Explod\n"
                 f"trigger1 = map({self.m('f')}) > 0 && NumExplod({e}) = 0\n"
-                f"anim = {e}\nid = {e}\nanimelem = {inicio}\nanimelemtime = {i % c.tempo}\npostype = p1\n"
+                f"anim = {e}\nid = {e}\nanimelem = {inicio}\nanimelemtime = {c.troca(i)}\npostype = p1\n"
                 f"pos = {_n(c.pos[0])}, {_n(c.pos[1])}\n"
                 f"facing = 1\nbindtime = {0 if c.plano == 'chao' else -1}\nremovetime = -1\n"
                 f"sprpriority = {self._prioridade(i, c)}\nownpal = 1\n"
@@ -886,8 +892,8 @@ class Aura:
             # no surto a animação também corre: um quadro por tick
             c.append(f"[State -4, Aura {self.nome} {cam.nome}: corre no surto]\ntype = ModifyExplod\n"
                      f"trigger1 = NumExplod({n}) && map({k}) > 0.5\nid = {n}\n"
-                     f"animelem = ((ExplodVar({n}, 0, animelem) - {1 if i % cam.tempo == cam.tempo - 1 else 0}) "
-                     f"% {len(cam.quadros)}) + 1\nanimelemtime = {i % cam.tempo}\nignorehitpause = 1\n\n")
+                     f"animelem = ((ExplodVar({n}, 0, animelem) - {1 if cam.troca(i) == cam.tempo - 1 else 0}) "
+                     f"% {len(cam.quadros)}) + 1\nanimelemtime = {cam.troca(i)}\nignorehitpause = 1\n\n")
             c.append(f"[State -4, Aura {self.nome} {cam.nome}: some]\ntype = RemoveExplod\n"
                      f"trigger1 = map({f}) <= 0 && NumExplod({n})\nid = {n}\nignorehitpause = 1\n\n")
         for j, p in enumerate(self.particulas):

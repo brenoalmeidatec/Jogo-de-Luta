@@ -231,6 +231,9 @@ def main():
     ap.add_argument("--saida", type=Path)
     ap.add_argument("--inicio", type=int, default=160, help="primeiro tick dos 2 s guardados quadro a quadro")
     ap.add_argument("--extra", action="store_true", help="o filme é do roteiro extra (mede só o log)")
+    ap.add_argument("--referencia", type=Path,
+                    help="filme do mesmo roteiro com a aura desligada (filmar_aura.py --lutador X --sem-aura): o corpo"
+                         " legível é medido contra ele, no mesmo tick, e não contra o começo do filme")
     a = ap.parse_args()
     saida = (a.saida or a.filme / "medida").resolve()
     saida.mkdir(parents=True, exist_ok=True)
@@ -242,6 +245,14 @@ def main():
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(a.filme / "luta.mp4"), "-start_number", "0",
                     str(todos / "%04d.png")], check=True)
     total = len(list(todos.glob("*.png")))
+    ref_todos, ref_total = None, 0
+    if a.referencia:
+        ref_todos = saida / "todos_referencia"
+        shutil.rmtree(ref_todos, ignore_errors=True)
+        ref_todos.mkdir()
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(a.referencia / "luta.mp4"), "-start_number", "0",
+                        str(ref_todos / "%04d.png")], check=True)
+        ref_total = len(list(ref_todos.glob("*.png")))
     ticks = ler_log(a.filme / "aura_log.txt")
     nota = Notas()
 
@@ -336,9 +347,12 @@ def main():
              f"{ticks[ultimo][j]['ne']}", ticks[ultimo][j]["ne"] == 0)
         h_surto = min(ticks[t][j]["h"] for t in range(SURTO2 + 14, SURTO2 + 38))
         h_calmo = max(ticks[t][j]["h"] for t in range(*loop))
-        nota(f"P{j} esconde: a camada {camadas[j][2]} apaga enquanto o especial toca (fator {h_surto:.2f} no surto, "
-             f"{h_calmo:.2f} no loop) e volta ({ticks[SURTO2 + 75][j]['h']:.2f} 75 ticks depois)",
-             h_surto > 0.9 and h_calmo == 0 and ticks[SURTO2 + 75][j]["h"] == 0)
+        if h_surto == h_calmo == -1:  # filmar_aura.py --lutador: a aura do lutador não tem camada com `esconde`
+            nota(f"P{j} esconde: nenhuma camada com esconde nesta aura (não medido)")
+        else:
+            nota(f"P{j} esconde: a camada {camadas[j][2]} apaga enquanto o especial toca (fator {h_surto:.2f} no "
+                 f"surto, {h_calmo:.2f} no loop) e volta ({ticks[SURTO2 + 75][j]['h']:.2f} 75 ticks depois)",
+                 h_surto > 0.9 and h_calmo == 0 and ticks[SURTO2 + 75][j]["h"] == 0)
         ne_loop = max(ticks[t][j]["ne"] for t in range(*loop))
         ne_pico = max(ticks[t][j]["ne"] for t in ticks)
         nota(f"P{j} explods vivos: até {ne_loop} no loop calmo, {ne_pico} no pior tick do filme (teto {TETO_EXPLODS})",
@@ -410,7 +424,7 @@ def main():
 
     FAIXAS = (("tronco", ALTURA_LUTADOR + 4, 45, 0.97), ("pernas", 45, 10, 0.95), ("pés", 10, 0, 0.60))
 
-    def legivel(nome, j, pares, x0, x1):
+    def legivel(nome, j, pares, x0, x1, pasta_ref=None):
         """pares: [(quadro com aura, [quadros de referência sem aura])]. O pior par decide, faixa por faixa."""
         pior = {f[0]: (1.0, None) for f in FAIXAS}
         for n_com, refs in pares:
@@ -418,7 +432,7 @@ def main():
             # a captura escorrega 1 ou 2 quadros: fica a referência em que o tronco mais bate
             melhor = None
             for n_ref in refs:
-                ref = quadro(todos, n_ref)
+                ref = quadro(pasta_ref or todos, n_ref)
                 corpo = corpo_de(ref, x0, x1)
                 igual = np.abs(com - ref).max(axis=2) <= 24
                 tronco = corpo.copy()
@@ -455,14 +469,20 @@ def main():
         # corpo com ele mesmo em outro lugar (12% igual, falso).
         refs = list(range(0, v(LIGA) - 1))
         pares = [(v(t), refs) for t in range(loop[0], loop[1], 7)]
-        legivel("loop", j, [p for p in pares if p[1]], x0, x1)
+        if ref_todos:  # lutador de verdade: o mesmo tick do filme sem aura (a captura escorrega: janela de ±20)
+            pares = [(v(t), [n for n in range(v(t) - 20, v(t) + 21) if 0 <= n < ref_total])
+                     for t in range(loop[0], loop[1], 7)]
+        legivel("loop", j, [p for p in pares if p[1]], x0, x1, ref_todos)
         # surto: o corpo está no soco do estado 1000; referência = o mesmo soco dado sem aura no fim do filme
         x0, x1 = colunas_depois[j]
         # (janela larga: no fim do filme o gravador pode estar alguns quadros fora do passo; vale o quadro do soco
         # sem aura em que o tronco mais bate, e pernas e pés são medidos nesse mesmo quadro)
         pares = [(v(SURTO2 + d), [v(SOCO_SEM_AURA + d) + e for e in range(-15, 16) if v(SOCO_SEM_AURA + d) + e < total])
                  for d in range(6, 40, 3)]
-        legivel("surto", j, [p for p in pares if p[1]], x0, x1)
+        if ref_todos:
+            pares = [(v(SURTO2 + d), [n for n in range(v(SURTO2 + d) - 20, v(SURTO2 + d) + 21) if 0 <= n < ref_total])
+                     for d in range(6, 40, 3)]
+        legivel("surto", j, [p for p in pares if p[1]], x0, x1, ref_todos)
         com = quadro(todos, v(loop[0] + 20))
         mudou = np.abs(com - sem).max(axis=2) > 40
         mudou[:, :colunas[j][0] - 20] = False
@@ -491,6 +511,8 @@ def main():
              colunas=6 if nome in ("resumo", "pes") else 15)
     nota(f"tiras: {saida}/tira_*.png")
     shutil.rmtree(todos, ignore_errors=True)
+    if ref_todos:
+        shutil.rmtree(ref_todos, ignore_errors=True)
     nota.fechar(saida / "medidas.txt")
 
 

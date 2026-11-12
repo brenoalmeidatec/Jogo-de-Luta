@@ -10,9 +10,14 @@ No jogo viram 4 camadas (Explods 9600 a 9603, [Statedef -4]):
                     das pontas dos chicotes; separados, a deriva do motor e o início de cada camada os descolariam
   9602 anel_frente  a metade da frente do chão rachado: rasteira (no máximo 13% da altura do lutador acima dos pés),
                     alfa até 0,5 contando o surto; plano "chao" com prioridade de frente, para ficar no chão no pulo
-                    junto com a metade de trás. Os dois anéis nascem no mesmo quadro, sem deriva e com a mesma
-                    paridade de índice (a troca de quadro cai no mesmo tique), senão as rachaduras não se encontram
-  9603 soltos       pedras e elos de corrente em órbita, deriva própria
+                    junto com a metade de trás. Os dois anéis nascem no mesmo quadro, sem deriva e trocam de quadro
+                    no mesmo tique (Camada.tique), senão as rachaduras não se encontram
+  9603 soltos       pedras e elos de corrente em órbita, deriva própria (período curto: com a deriva lenta da coluna,
+                    as duas andavam juntas, correlação -0,95 no filme de 2026-11-12)
+Troca de quadro: anéis e pedras no tique par, coluna no ímpar. A coluna e as pedras dividem o alto da tela; trocando
+juntas, um tique tinha desenho novo e o seguinte não (p95/mediana 2,6-2,7 no filme de 2026-11-12, limite 2,5).
+Entrada em 44 tiques (o aura.py usa 26): a coluna é 1,5x mais alta que o lutador e densa; em 26 tiques a borda dela
+cruzava o alto da tela num pulo (6,5x a mudança do laço, limite 5).
 Nada vai na frente do corpo além do anel rasteiro.
 
 As cores das camadas NÃO entram na escolha da paleta do .sff (Sprites.fora_da_paleta): a paleta da forma base sai
@@ -70,19 +75,19 @@ def montar():
     parado = aura.Movimento(deriva=(0, 0), alfa=0.92, respira=0.08, respira_periodo=96)
     frente = aura.Movimento(deriva=(0, 0), alfa=0.37, respira=0.1, respira_periodo=96)
     camadas = [
-        aura.Camada("anel_tras", anel_tras, plano="chao", eixo=pe, inicio=1, prioridade=-7, mov=parado),
-        aura.Camada("coluna", coluna, plano="tras", eixo=pe, prioridade=-6,
+        aura.Camada("anel_tras", anel_tras, plano="chao", eixo=pe, inicio=1, tique=0, prioridade=-7, mov=parado),
+        aura.Camada("coluna", coluna, plano="tras", eixo=pe, tique=1, prioridade=-6,
                     mov=aura.Movimento(deriva=(1.6, 1.4), deriva_periodo=170, alfa=0.9, respira=0.1)),
-        aura.Camada("anel_frente", anel_frente, plano="chao", eixo=pe, inicio=1, prioridade=5, mov=frente,
+        aura.Camada("anel_frente", anel_frente, plano="chao", eixo=pe, inicio=1, tique=0, prioridade=5, mov=frente,
                     surto_alfa=0.08),
-        aura.Camada("soltos", soltos, plano="tras", eixo=pe, prioridade=-4,
-                    mov=aura.Movimento(deriva=(2.4, 3.0), deriva_periodo=210, alfa=0.95, respira=0.06)),
+        aura.Camada("soltos", soltos, plano="tras", eixo=pe, tique=0, prioridade=-4,
+                    mov=aura.Movimento(deriva=(2.4, 3.0), deriva_periodo=70, alfa=0.95, respira=0.06)),
     ]
     f = camadas[2]
     assert f.mov.alfa * (1 + f.mov.respira) + f.surto_alfa <= FRENTE_ALFA + 1e-6, "anel_frente opaco demais"
-    # o aura.py troca o quadro da camada i no tique i % tempo: os anéis (0 e 2) trocam juntos
-    assert camadas[0].tempo == camadas[2].tempo == 2
-    return aura.Aura("pengaro", camadas, ligada=LIGADA, surto=SURTO, base=9600, altura_lutador=ALTURA_LUTADOR)
+    assert camadas[0].troca(0) == camadas[2].troca(2), "as metades do anel trocam de quadro em tiques diferentes"
+    return aura.Aura("pengaro", camadas, ligada=LIGADA, surto=SURTO, base=9600, entra=44,
+                     altura_lutador=ALTURA_LUTADOR)
 
 
 def ligar(sprites):
