@@ -11,6 +11,10 @@ Na forma base o Pengaró tem que ser **bem mais escuro**: a pessoa de verdade é
 **mais escuro do elenco, mais que o Gutto e mais que o CK**. Hoje ele está ao contrário: com a pele mais clara e mais
 amarelada dos três (o próprio estudo abaixo já anotava "pele mais clara e amarelada que a atual").
 
+**Não gere nada de novo no ChatGPT (decisão do Breno): troque a cor nos desenhos que já existem, como edição de imagem.**
+A pose, o sombreado e o desenho continuam os mesmos; só muda o tom da pele. Só as folhas que ainda forem geradas daqui
+para frente passam pelo ChatGPT, e com uma referência já escurecida por este mesmo processo.
+
 O que fazer:
 
 1. **Paleta da pele** (`sprites/pengaro/paleta_arcade.json` e a tabela abaixo). Proposta que mantém as faixas de matiz da
@@ -27,16 +31,23 @@ O que fazer:
    O CK (`sprites/ck/paleta_arcade.json`) tem o médio em `#D05534` (V 82%), então ele já fica bem mais claro. Os valores
    são ponto de partida: confira no jogo, ao lado do Gutto e do CK, e ajuste à mão se precisar. Depois rode o
    `conferir_arte.py`.
-2. **Prompt do ChatGPT:** em todo pedido do Pengaró base, trocar "skin" por *"very dark brown skin, the darkest skin of
-   the cast, darker than the attached sheet if the sheet looks lighter"*. A folha "Socos" anexada como referência também
-   está clara. O certo é gerar uma referência nova já escura e passar a anexar ela.
-3. **Folhas que já existem** (`sprites/pengaro/quadros/folhas_arcade/` e a arte atual em `quadros/`): re-quantizar com a
-   paleta nova. Como a quantização é por papel, a pele troca de tom sem redesenhar. Só precisa refazer no ChatGPT a folha
-   em que o sombreado ficar estranho.
-4. **O endiabrado continua diferente da base.** Ele é a pele quase preta arroxeada com relevo roxo
+2. **Folhas arcade que já existem** (`sprites/pengaro/quadros/folhas_arcade/`): re-quantizar com a paleta nova. Como a
+   quantização é por papel, cada pixel de pele troca para o tom novo do mesmo papel, sem redesenhar.
+3. **Arte atual que ainda não é arcade** (`sprites/pengaro/quadros/` e o que o gerador usa hoje): um script de recolor que
+   acha os pixels de pele pelo matiz e pela saturação e leva cada um para o tom novo equivalente (sombra para sombra, luz
+   para luz). Precisa **poupar a garrafa âmbar**, que tem um tom parecido (ver a nota "Âmbar da garrafa" abaixo):
+   - restringir pelo papel no JSON quando houver;
+   - ou excluir a região da garrafa, que fica sempre na mão de trás;
+   - ou separar pela saturação, porque o âmbar é bem mais saturado que a pele.
+
+   Depois é só rodar o `gerar_pengaro.py` de novo.
+4. **Referência para as folhas futuras:** escurecer a folha "Socos" (a referência anexada nos pedidos) pelo mesmo recolor e
+   anexar essa. No prompt, trocar "skin" por *"very dark brown skin, the darkest skin of the cast, exactly like the
+   attached sheet"*.
+5. **O endiabrado continua diferente da base.** Ele é a pele quase preta arroxeada com relevo roxo
    (`paleta_arcade_endiabrado.json`). Com a base mais escura, conferir que a troca ainda se nota: o endiabrado vai mais
    para o roxo e para o preto, e a base fica marrom.
-5. Atualizar a frase "pele morena" em `docs/fichas/pengaro.md` (já trocada para "pele negra retinta").
+6. Atualizar a frase "pele morena" em `docs/fichas/pengaro.md` (já trocada para "pele negra retinta").
 
 ## Paleta fixa (15 cores + transparente)
 
