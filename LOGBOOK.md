@@ -1440,3 +1440,19 @@ Parada rápida. Último commit antes desta entrada: `f3e86b1c`. Arquivos alterad
   estátua de caratê da `d_estatueta_gigante` (pede refeita sem rosto), `b_queda` q1 do Gutto (o gerador já tem FATOR).
 - **Próximo:** o dono entrar de novo no ChatGPT do navegador do app; então refazer a lista acima (os anexos do CK em
   scratchpad `bosses/ck/srv` já usam o conceito sem a marca).
+
+## 2026-11-12 ~20:10-21:00 — Raiclaven boss: corpo do grupo 2 completo (10 folhas, chat do conceito)
+- **Feito:** as 10 folhas de corpo que faltavam, no chat do conceito (`6af49cb3-…`), sem abrir chat novo; login OK o
+  tempo todo, sem limite de conta. Commits `d7808c3a` (b_chute_alto, b_baixo_soco, b_ar_soco, b_provoca),
+  `20d8bcb6` (b_vitoria, b_derrota, b_corrente_mangual, b_corrente_puxao), `d74561b0` (b_corrente_giro,
+  despertar_boss). Todas 2172x724, 8 figuras separadas (componentes), cabelo verde, óculos e tesoura na mão de aço.
+- **Aprovadas:** b_chute_alto, b_provoca, b_vitoria, b_corrente_puxao (tesoura no gancho do cinto q2-q7), b_baixo_soco
+  e b_derrota (1 refeita cada: tesoura invadindo o vizinho / quadros sentados a 2-3 px).
+- **Com ressalva:** `b_ar_soco` (tesoura do q4 passa 2 px sob o q5 na coluna, sem encostar); `b_corrente_mangual`
+  (3ª tentativa: ~6% menor, 366 px com as bobinas, corrente curta ~90 px, vãos q1/q2 8 px e q4/q5 7 px);
+  `b_corrente_giro` (2ª de 3: ~5% menor, sola em 550, q3/q4 a 4 px e q4/q5 sem coluna vazia, não encostam — caso
+  para `boss_descola.py`); `despertar_boss` (de primeira; barbeiro 355 px igual à ginga base, boss ~4% maior que a
+  b_ginga, 414 contra ~395 com as bobinas).
+- **Não geradas (vão para o Blender, regra-efeitos-proporcionais):** fx_aura_lascas, fx_tubo, fx_choque.
+- **Pendente:** a lista de refazer do Raiclaven (b_agarrao, b_corrente_chicotada, b_rolamento, b_corrente_parado)
+  continua de pé; o chat do conceito ainda serve para ela, por isso não foi apagado. Cético das 10 novas; converter.
