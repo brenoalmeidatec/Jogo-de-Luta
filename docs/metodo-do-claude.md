@@ -45,6 +45,12 @@ Radeon RX 7600 XT; 16 GB) o trabalho pesado não pode travar o uso. Regra, aplic
   (`HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired`) e avisar; commits
   pequenos com push; depois de um reinício, conferir `git status` de cada worktree e retomar o workflow pelo
   `resumeFromRunId`.
+- **Parar um workflow não para o que os agentes deixaram rodando** (2026-11-12: a Windows Sandbox ficou reabrindo
+  sozinha depois da parada, com o Alisson precisando da máquina). Um agente pode lançar uma fila em segundo plano
+  (`fila*.sh` com `filmar_aura.py`, `testar_pengaro.py` em série), e ela sobrevive ao `TaskStop`. Ao parar: matar os
+  processos cuja linha de comando tem `fila*.sh`, `filmar_aura`, `testar_pengaro` ou `medir_aura`, fechar a sandbox
+  (`sandbox.fechar_sandbox()` e, se sobrar, `taskkill /F /IM WindowsSandboxRemoteSession.exe` e
+  `WindowsSandboxServer.exe`), tirar a `sandbox.trava` e conferir de novo a lista de processos depois de uns segundos.
 
 ## 2. Frentes em paralelo: uma branch e uma pasta por frente
 
