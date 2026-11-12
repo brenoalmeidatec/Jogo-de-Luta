@@ -1420,3 +1420,23 @@ Parada rápida. Último commit antes desta entrada: `f3e86b1c`. Arquivos alterad
   olhadas numa miniatura: roupa roxa de boss, garrafa verde, fundo magenta. Ainda sem conferência do cético.
 - **Próximo:** retomar o mesmo workflow; o que está pronto volta do cache, e o agente do grupo deve pular as folhas
   que já existem no disco.
+
+## 2026-11-12 19:30 — folhas boss: fase de refazer (só os retoques por script; ChatGPT deslogado)
+- **Bloqueio:** o ChatGPT do navegador do app continua deslogado (19:05 e 19:28: `/api/auth/session` vazio, o chat
+  redireciona para a home com "Entrar"). Nenhuma folha foi regerada. Ficam para refazer no ChatGPT, no chat de cada
+  lutador: Hazak `d_sapato_barriga` (pé descalço q2, q3, q7), `d_agarrao_perna` (braço sem manga q2-q3),
+  `d_ar_cotovelo` (braço nu q4-q6), `d_chapeu_arremesso` (maleta some q3), `d_levanta` (4 chifres q1, sem sobretudo
+  q1-q3), `d_maleta_giro` (alcance curto; a escala já foi acertada); Raiclaven `b_agarrao` (q6 cabelo preto e sem óculos,
+  tesoura some q3-q6), `b_corrente_chicotada` (14% menor, corrente curta), `b_rolamento` (só agacha), `b_corrente_parado`
+  (corrente agora é um toco; pede corrente pendendo dentro do quadro); CK `b_soco` (caco na mão de trás no q5).
+- **Feito por script** (ferramentas/retoques_arcade/): `boss_descola.py` separou quadros encostados em `d_chute_baixo`,
+  `b_compasso` (Gutto), `fx_aura_leque` (e tela 2172x724) e `b_corrente_parado`; `boss_escala.py` acertou a escala de
+  `d_maleta_giro`, `d_chute_lateral`, `d_maletada_cima`, `d_vira` (tela 2172x724), `d_estatueta_gigante`,
+  `despertar_virada` e a `despertar_boss` do Gutto; `ck_marca_bermuda.py` apagou a marca de olho com redemoinho
+  (cara de logo) do bermudão no `e_conceito` do CK e em `b_ginga`, `b_anda`, `b_soco`; chão da `b_soco` do CK em 661.
+  Folha de contato antes/depois: scratchpad `bosses/refeitas.png`.
+- **Não mexi:** `b_martelo` e `b_corrente_chicotada` do Raiclaven (escalar faz encostar no vizinho), chão das demais
+  (os conversores alinham pela caixa da figura), 2ª ponta de rabo do Hazak (não sei se é rabo ou barra do sobretudo),
+  estátua de caratê da `d_estatueta_gigante` (pede refeita sem rosto), `b_queda` q1 do Gutto (o gerador já tem FATOR).
+- **Próximo:** o dono entrar de novo no ChatGPT do navegador do app; então refazer a lista acima (os anexos do CK em
+  scratchpad `bosses/ck/srv` já usam o conceito sem a marca).
