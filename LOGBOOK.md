@@ -1290,3 +1290,161 @@ Parada rápida. Último commit antes desta entrada: `f3e86b1c`. Arquivos alterad
   do Ratão (verde-claro, `quadro_flash`) cobre o oponente como um bloco com borda reta (filme, quadros 238 e 565): é o
   "clarão creme dos supers" já pendente, mais visível no Ratão.
 - **Próximo:** o orquestrador juntar `ck` na `mugen`; o Breno decidir R4/O10/R9 e o clarão.
+## 2026-11-11 (aura pelo Blender: peças comuns)
+
+- **Feito:** os scripts do teste da asa viraram `ferramentas/aura_blender/comum.py` (peças comuns), `hazak_asas.py`
+  (a asa reescrita em cima do comum) e `aura_modelo.py` (molde de aura nova); os quatro scripts antigos saíram. A asa
+  foi rodada de novo e comparada com a do teste aprovado: recortes, chão, coroa e partículas idênticos; asas com ~13
+  pixels diferentes por quadro (pesos em precisão dupla), sem diferença visível na tira. Camadas finais em
+  `sprites/hazaki/aura/` (288 PNG + `aura.json`). O conceito `d_conceito.png` do Hazak foi copiado da branch `bosses`
+  para o mesmo caminho, para o script rodar daqui. `docs/arcade/aura_blender.md` tem os 10 passos de uma aura nova.
+- **Pendente:** ligar no motor (ninguém viu isto dentro do jogo); auras do Gutto, Raiclaven, CK e Pengaró; caminho de
+  aura fria (sem ouro/fogo) só foi escrito, não testado com conceito de verdade.
+- **Próximo:** uma aura por lutador copiando o molde.
+
+## 2026-11-11 — Aura do Gutto: garanhão de raio vermelho (método do Blender)
+
+- **Feito:** `ferramentas/aura_blender/gutto_aura.py` + `sprites/gutto/aura/` (432 PNG 360x200 + `aura.json`). Cinco
+  camadas: `crateras` (96 q), `garanhao` (48 q, malha de 3536 vértices e 22 ossos: dorso, pescoço, cabeça, queixo,
+  duas patas de 3 juntas, três cadeias de crina de 4), `raios` (96 q, zigue-zague que sai das juntas, pisca e se
+  refaz), `ferraduras` (96 q) e `vapor` (96 q, a única À FRENTE do corpo). Sem redução: escala 112/450 do conceito.
+  Novidade em relação à asa: pesos por FAMÍLIA de osso (`pesos_por_familia`, no script), para a borda de uma pata não
+  ser puxada pela outra. Conceito `e_conceito.png` copiado da branch `bosses` para o mesmo caminho.
+- **Medido:** nenhum pixel parado em nenhuma camada, nenhum par de quadros igual, emenda do garanhão 6,68 contra
+  6,64/6,57 das vizinhas, passo máximo 3,0 px (casco de cima), 15 cores.
+- **Pendente:** ligar no motor (nada foi visto no jogo). O vapor sai da narina da pose parada: em golpe/pulo tem de
+  seguir a cabeça ou desligar. Ferraduras estão 1,4x o conceito (com 11 px viravam anel ilegível).
+
+## 2026-11-11 — Aura do CK: paredão de som de fumaça (método do Blender)
+
+- **Feito:** `ferramentas/aura_blender/ck_aura.py` + `sprites/ck/aura/` (384 PNG 360x200 + `aura.json`). Cinco camadas,
+  todas atrás do corpo: `paredao` (48 q, malha de ~9 mil vértices; 7 colunas de 5 ossos em chicote + 1 osso por cone
+  animado em ESCALA = deformação radial; tranco do objeto a cada batida), `aneis` (96 q), `nevoa` (96 q), `cacos`
+  (48 q, 15 recortes do conceito pulando no grave) e `fagulhas` (96 q, folhinhas laranja). Compasso de 4 tempos em 48
+  quadros (150 bpm a 2 tiques), 1º tempo no quadro 3 para a emenda cair fora do golpe. Sem redução: escala 112/569.
+- **Remendo declarado:** os rabos/anéis parados do conceito saíram da textura (cones refeitos pela simetria radial,
+  braços laterais cortados) e o miolo atrás do corpo são caixas dos lados copiadas (4 grandes + 1 pequena). Contraste
+  dos cones (aro escuro, miolo claro) pintado na textura; no golpe o miolo acende e corre uma onda clara.
+- **Medido:** 15 cores; pixels parados 147 de 21,6 mil no paredão (0,7%, dentro dos cones) e 0 nas outras; nenhum par
+  de quadros igual; emenda do paredão 2,25 contra 2,50/1,99 das vizinhas; passo máximo 1,66 px (juntas) e 2,06 px
+  (raio do cone); aura 217x160 px para um corpo de 60x112.
+- **Pendente:** ligar no motor (nada visto no jogo; vídeo não assistido, só tiras). Tampinhas pouco legíveis em 1x;
+  névoa da mesma cor da base da parede; sobra um toco reto na borda direita da parede.
+
+## 2026-11-11 — Aura do Pengaró: coluna de fumaça violeta-preta (método do Blender)
+
+- **Feito:** `ferramentas/aura_blender/pengaro_aura.py` + `sprites/pengaro/aura/` (480 PNG 360x200 + `aura.json`). Seis
+  camadas, na ordem de desenho: `coluna` (48 q, malha com espinha de 8 ossos em onda S que sobe + 2 ramos de base;
+  depois do render o miolo é reamostrado de baixo para cima em duas fases = a textura sobe 1 px por quadro),
+  `chicotes` (48 q, 6 malhas com cadeia de 3 a 6 ossos, raiz com sobra por cima da coluna), `anel_tras` (96 q, chão
+  desprojetado para vista de cima e girado no Blender como disco deitado, meia volta por laço, rachaduras pulsando,
+  bolhas de sombra em órbita), `fiapos` (96 q, línguas que se soltam do topo + faíscas lilás), `soltos` (96 q, 15
+  pedras em placa e 4 elos com 3 ossos, cada um na sua órbita) e `anel_frente` (96 q, À FRENTE do corpo, da linha da
+  sola para baixo). Sem redução: escala 112/488, a aura cabe inteira.
+- **Remendo declarado:** a coluna atrás do corpo é fumaça clonada de cima da cabeça (fica atrás dele); o topo da
+  coluna encostava na borda da folha e foi recortado em línguas; o disco do chão é a metade da frente do desenho
+  copiada em meia volta (simetria para o laço fechar em 96 quadros).
+- **Medido:** 15 cores; pixels parados 0 em cinco camadas e 4 de ~2,5 mil nos chicotes; nenhum par de quadros igual;
+  emenda da coluna 3,06 contra 3,04/3,13 das vizinhas (chicotes 0,99 contra 0,92/1,03); passo máximo 1,92 px
+  (juntas), 1 px (fluxo), 2,88 px (borda do anel); aura 192x180 px para um corpo de 99x108.
+- **Armadilha achada:** `bl_renderiza` só esconde os objetos das passadas dele. Objeto de outra passada (o disco, as
+  pedras) tem de ser escondido antes, senão sai em todas e a emenda de 48 quadros pula.
+- **Pendente:** ligar no motor (nada visto no jogo; vídeo não assistido, só tiras). O chão em 1x lê como disco violeta
+  riscado com faíscas brancas, não como lajes rachadas; elos pequenos (2 px de espessura); base da coluna carregada.
+
+## 2026-11-11 — Aura do Raiclaven: leque de lâminas de aço (branch `auras`)
+
+- **Feito:** `ferramentas/aura_blender/raiclaven_aura.py` + 480 PNG e `aura.json` em `sprites/raiclaven/aura/` (5 camadas
+  de 96 quadros a 2 tiques, todas atrás do corpo: `leque`, `foices`, `raios`, `lascas`, `limalha`). Conceito copiado
+  da branch `bosses` para `sprites/raiclaven/quadros/folhas_arcade/e_conceito.png`.
+- **Como:** o leque do conceito é uma massa encavalada que não gira em laço. Recortei 7 peças inteiras (2 tesouras,
+  adaga, pente, faca, navalha, foice), pus cada uma de pé e remontei em anéis REGULARES: 24 peças de fora (6 tipos x 4,
+  +90° por laço), 24 pontas atrás (+45°), 10 foices (-180°). O quadro 96 cai igual ao 0 porque o anel andou um número
+  inteiro de casas; a fase de cada peça usa ciclos não inteiros (m = k - w*d/n) para a onda fechar junto com o giro.
+  Tesoura = duas metades rígidas no parafuso (a de baixo é o espelho da lâmina + a argola do desenho). O lilás do
+  conceito foi tirado (aço cinza frio). Raios, brilho em espiral e limalha são Python em 1x.
+- **Medido:** 15 cores; pixels parados 0 nas 5 camadas; nenhum par de quadros igual; emenda do leque 11,28 contra
+  11,35/11,22 das vizinhas; passo máximo 2,11 px (anel de fora), 2,93 px (foices), 1,18 px (lascas); leque 182x183 px
+  para um corpo de 94x130 (112 do cabelo à sola).
+- **Pendente:** ligar no motor (nada visto no jogo; vídeo não assistido, só tiras). O leque virou círculo de raio 392 px
+  do conceito (lá ele tem 925 de largura por ~785 de altura e é aberto embaixo). Duas cores da paleta são quase iguais
+  (o contorno pintado nos recortes entrou no k-médias). O quadro 52 quase não tem raio.
+
+## 2026-11-11 (auras: frente PARADA de propósito às 16h)
+
+O Alisson pediu para parar os trabalhos para trocar o modelo de raciocínio do Claude. Auras pelo Blender: base comum (comum.py), asa do Hazak e as auras de Gutto, Raiclaven, CK e Pengaró foram feitas (camadas em sprites/<id>/aura/) e o cético conferiu; os quatro retoques estavam no meio (os quatro *_aura.py alterados, sem render novo). Falta: terminar os retoques, o fecho no docs/arcade/aura_blender.md, ligar no jogo pelo aura.py da branch efeitos.
+Último commit feito por um agente que terminou a etapa dele: `3e1c429`. O commit seguinte a esta entrada guarda o que estava
+pela metade na hora da parada (**não testado, pode estar quebrado**); para voltar ao estado bom, use `3e1c429`.
+
+## 2026-11-11 (auras: retoque do Gutto terminado)
+
+O gutto_aura.py que estava pela metade no commit da parada rodou inteiro sem erro e foi renderizado de novo. Defeitos do
+cético consertados pela causa: raios refeitos (20 raios em 3 portes, finos, ramificados, crescendo da raiz e sumindo na
+ponta, nascimentos escalonados: 5 a 9 vivos e 714 a 1786 px por quadro, nunca "nada"); buraco sem o corpo virou rabo de
+raio com 3 ossos (r1-r3) que afina até o chão; vapor sombreado com contorno e penacho maior; crateras redesenhadas como
+cova elíptica com lascas; topo dos raios em y>=7; carmesim menos rosa (azul limitado a verde+45). Pendente: ligar no jogo;
+vídeo não assistido; o vapor continua ancorado na narina da pose parada; ferraduras seguem 1,4x.
+
+## 2026-11-11 — Aura do CK, retoque (defeitos do cético)
+- **Feito:** rodei o `ck_aura.py` que tinha ficado pela metade na parada (recortes, rig, chicote, compor, instala) e
+  publiquei `sprites/ck/aura/` (384 PNG + `aura.json`). Clarão chapado da batida: o miolo do cone virou meia-bola com
+  luz e sombra e só o lado da luz clareia no golpe (olhei quadros 2 a 5 em zoom: sem disco liso). Parede mais viva:
+  amplitude das colunas maior (0,55° embaixo a 11° na ponta), cada pilha estica e achata no grave, tremor mais forte.
+  Cones limpos trocando só o que passava por cima por outro pedaço do mesmo cone (a pincelada fica). Caixas do miolo
+  espelhadas e com o cone girado (não são mais cópia direta). Anel no fim da vida encolhe por gomo em vez de virar
+  lasca. Tampinhas e cacos maiores, 46 fagulhas, névoa com contorno.
+- **Medido:** paredão com 7 pixels parados (antes 147; a nota anterior "dentro dos cones" nunca foi confirmada),
+  silhueta muda 2,5% por quadro (antes 2,0%; asa 12,2%, mas a parede é bloco e a asa é pena fina), cintilação 5,4%
+  (antes 4,5%; asa 4,3%), passo máximo 2,56 px. `cacos` tem 6 pixels parados. 15 cores, alfa 0/255.
+- **Pendente:** toco reto de fumaça na borda direita (braço cortado) continua; nada visto dentro do jogo nem o vídeo
+  assistido.
+
+## 2026-11-11 (aura do Pengaró: retoque do cético)
+
+- **Feito:** rodado e conferido o retoque que tinha ficado pela metade no `40bc95f` (`pengaro_aura.py` não mudou desde
+  então). A subida da coluna em duas fases (que deixava retângulos e barra reta no miolo e trocava o desenho de uma vez)
+  saiu; no lugar, `escorre` desliza o render 4x por ondas lisas antes da redução, e clarões violeta sobem em fitas pela
+  rampa só do violeta. O violeta vivo que a chave de magenta comia voltou (`brilho_comido`), o topo virou lobos
+  desiguais, as mechas soltas saíram do recorte (os fiapos fazem o papel), pedras e elos cresceram (1,35x / 1,5x), o
+  espigão da pedra06 saiu, o chão é o desenho de frente com lajes arfando e luz correndo pelas rachaduras.
+- **Medidas:** coluna muda no máximo 31,6% dos pixels por quadro (era 50%), emenda 2,13 entre vizinhas 2,16/2,21;
+  480 PNG 360x200, alfa 0/255, 15 cores. Poucos pixels fixos por camada (57 coluna, 24 chicotes, 81 anel_tras, 31 anel_frente).
+- **Pendente:** o chão em 1x ainda lê mais como riscos horizontais claros do que como lajes; o remendo atrás do corpo
+  aparece entre as pernas como mancha violeta lisa. Nada visto no jogo.
+
+## 2026-11-11 — Aura do Raiclaven, retoque do cético (branch `auras`)
+
+- **Feito:** o retoque que estava pela metade em `40bc95f` (raiclaven_aura.py) rodou inteiro sem erro e foi re-renderizado.
+  A forma voltou à do conceito: leque duplo (duas asas de 9 lâminas + adaga do meio), aberto embaixo, coração de 12
+  foices, moldura de raio branco com clarão azul-gelo (não é mais arame de 1 px), roseta de pontas atrás do corpo
+  (remendo: sem corpo não há vão nem tocos). Nada gira em roda: cada asa abre e fecha em cascata (fase cresce de cima
+  para baixo, 17,7 → 33,3 quadros), lâminas estocam em onda, tesouras cortam. Paleta sem cores repetidas (menor
+  distância 27). Miolo do leque muda 57,8% por quadro e a silhueta 11,9% (asa: 55% e 12,3%). Raios não tocam y=0 (y_min 1).
+- **Pendente:** passo máximo das lâminas da frente 3,14 px (pouco acima de ~3); 236 px de lâmina ainda no vão de baixo
+  (pontas das asas descendo ao lado das pernas); vídeo não assistido; nada visto no jogo.
+
+## 2026-11-11 (auras pelo Blender: frente fechada)
+
+- **Feito:** as cinco auras do Despertar estão em camadas pelo método do Blender (conceito aprovado como textura,
+  ossos em cascata, efeitos em Python por cima), 2 tiques por quadro, pé em (180,190). Tabela com script, camadas,
+  quadros, tamanho e pendências em `docs/arcade/aura_blender.md` ("As cinco auras").
+  - **Hazak** (`hazak_asas.py`, `sprites/hazaki/aura/`, 288 PNG): asas, coroa, chão e partículas; é a referência
+    aprovada, sem retoque.
+  - **Gutto** (`gutto_aura.py`, `sprites/gutto/aura/`, 432 PNG, commit `2949112`): raios finos com galhos, rabo de
+    raio no lugar do corte do tronco, vapor e crateras redesenhados, nada acima de y=7.
+  - **Raiclaven** (`raiclaven_aura.py`, `sprites/raiclaven/aura/`, 480 PNG, commit `1356a3a`): leque duplo aberto
+    embaixo, em cascata e sem roda, moldura de raio com clarão, roseta atrás do corpo.
+  - **CK** (`ck_aura.py`, `sprites/ck/aura/`, 384 PNG, commit `e1be37b`): miolo do cone com volume na batida, parede
+    que balança e estica, cones com pincelada, caixas do miolo espelhadas.
+  - **Pengaró** (`pengaro_aura.py`, `sprites/pengaro/aura/`, 480 PNG, commit `11f8fb7`): miolo escorrendo sem
+    costura, brilho violeta devolvido, topo em lobos, chão de frente.
+  Render bruto, vídeos e tiras ficaram fora do repositório (pasta de trabalho de cada aura, no scratchpad da sessão).
+- **Pendente:** **nada disso roda no jogo ainda**: falta ligar pelo `ferramentas/aura.py` da branch `efeitos`. Vídeos
+  dos retoques não assistidos (só tiras); nada em fundo claro nem em outras poses. Por aura: Gutto, raios grandes
+  ainda largos e vapor preso à narina da pose parada; Raiclaven, passo 3,14 px nas lâminas da frente; CK, toco de
+  fumaça na borda direita e parede pouco viva pela métrica; Pengaró, chão ainda em riscos e mancha lisa entre as pernas.
+- **Próximo:** o Alisson vê os vídeos e diz quais retoques valem; depois, ligar as cinco no motor (branch `efeitos`).
+
+## 2026-11-11 (auras: PARADA às 17h20, o Alisson precisou desligar o notebook)
+
+Parada rápida. Último commit antes desta entrada: `67ac213e`. Arquivos alterados sem commit na hora da parada: 0 (guardados neste commit; **não testados**, se houver). Falta o que a entrada anterior desta branch lista; a etapa em andamento (retoque ou conferência) foi interrompida.

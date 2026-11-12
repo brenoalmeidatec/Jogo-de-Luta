@@ -130,12 +130,12 @@ Pedido do Alisson (2026-11-11): "não quero nada estático... não quero um movi
   em vez de uma folha de 8 quadros redesenhada, o próprio desenho do conceito aprovado vira textura de uma malha com
   ossos e o Blender só entorta; fogo, fumaça, raio, gotas e partículas entram como camadas em laço por cima. Passo a
   passo e scripts: [`arcade/aura_blender.md`](arcade/aura_blender.md) e `ferramentas/aura_blender/`
-  (`recortes.py` → `rig_asa.py` no Blender → `compor.py`). Números do teste: laço de 48 quadros a 2 tiques, ponta
+  (`comum.py` com as peças comuns, `hazak_asas.py` como exemplo, `aura_modelo.py` como molde). Números do teste: laço de 48 quadros a 2 tiques, ponta
   chegando ~0,28 s depois da raiz, passo máximo de 2,7 px por quadro, 15 cores fixas, alfa 0/255, camadas separadas
   de 360x200 com o pé do lutador em (180,190). Limites conhecidos: o miolo do desenho "ferve" um pouco ao girar; a
   raiz escondida atrás do corpo é remendo e pode aparecer em golpe; a aura do conceito ocupa quase a tela inteira.
-  Cada aura nova (garanhão do Gutto, leque do Raiclaven, paredão do CK, coluna do Pengaró) ganha o seu `rig_*.py`
-  no mesmo molde. Ainda falta ver rodando dentro do jogo.
+  Cada aura nova (garanhão do Gutto, leque do Raiclaven, paredão do CK, coluna do Pengaró) ganha o seu
+  `<lutador>_<aura>.py` copiado do molde; as camadas finais ficam em `sprites/<id>/aura/` com um `aura.json`. Ainda falta ver rodando dentro do jogo.
 - **Corpo continua desenhado.** A fluidez vem de antecipação, recuperação gradual (3 quadros ou mais), pano, cabelo,
   rabo e corrente atrasando 1 a 2 quadros, e deslocamento por velocidade em vez de salto. Onde 8 desenhos não bastam,
   pede-se uma segunda folha para ter 16.
