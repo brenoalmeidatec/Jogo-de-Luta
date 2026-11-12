@@ -739,3 +739,13 @@ As 24 folhas do grupo 2 do Gutto boss estão em `sprites/gutto/quadros/folhas_ar
   `b_vitoria` mãos abertas em q4-6; `b_galope` com colunas sobrepostas (8 figuras soltas). Nada convertido para
   `quadros_arcade`, nada ligado em gerador, nada rodou no jogo.
 - **A seguir:** grupos 1 e 2 de Raiclaven e CK; conferência cética do Gutto boss.
+
+## 2026-11-12 — Raiclaven boss: grupo 1 completo
+
+- 12 folhas em `sprites/raiclaven/quadros/folhas_arcade/`, prefixo `b_` (há `e_` antigas em `quadros/folhas/`):
+  b_ginga, b_anda, b_soco, b_chute_baixo, b_apanha, b_queda, b_levanta, b_defesa, b_agachado, b_pulo, b_bola,
+  fx_aura_leque. Commits 4d33468, 76ced58, 94bd316. Chat do conceito (cabelo verde em todas as que vi).
+- Ressalvas: `b_pulo` pousa em y≈615 (a base pousa em 592); `fx_aura_leque` com as pontas dos leques encostando nas
+  divisas q3|q4, q4|q5, q5|q6 (~35-40 px de altura de contato; 3 tentativas, nenhuma separou; recortar na linha da
+  célula). `b_anda` refeita 1x (saiu 7% maior). Nada convertido, nada ligado em gerador, nada rodou no jogo.
+- **A seguir:** grupo 2 do Raiclaven (20 folhas) e CK (31); conferência cética do Raiclaven boss.
