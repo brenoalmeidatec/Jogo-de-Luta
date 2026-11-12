@@ -723,3 +723,19 @@ escala da forma base (corpo ~345 px, sola ~560-580; o `b_pulo` pousa em 634, com
   por cima; `fx_aura_garanhao` anima pouco e as patas de trás viram raios. Nada convertido para `quadros_arcade`,
   nada ligado em gerador, nada rodou no jogo.
 - **A seguir:** grupo 2 do Gutto (prefixo `b_` também), depois Raiclaven e CK.
+
+## 2026-11-12 — Gutto boss: grupo 2 completo (arte bruta)
+
+As 24 folhas do grupo 2 do Gutto boss estão em `sprites/gutto/quadros/folhas_arcade/` (prefixo `b_`, como no grupo 1;
+`despertar_boss` e os `fx_` sem prefixo, nomes que não colidiam): `b_chute_baixo`, `b_martelo`, `b_afastar`,
+`b_baixo_soco`, `b_cabecada`, `b_rasteirinha`, `b_rasteira`, `b_ar_soco`, `b_bicicleta`, `b_rolamento`, `b_agarrao`,
+`b_bola`, `b_armada`, `b_caneta`, `b_golaco`, `b_galope`, `b_provoca`, `b_vitoria`, `b_derrota`, `despertar_boss`,
+`fx_aura_crateras`, `fx_bufada`, `fx_ferradura`, `fx_vapor`. Com o grupo 1, o Gutto boss tem as 36 da fila.
+- Refeitas: `b_afastar` e `b_rasteira` (vapor branco desenhado no nariz, que é efeito à parte), `b_vitoria` (sem
+  chifres, faixa, ombreira e braceletes em q2-6), `despertar_boss` duas vezes (1ª: boss final 25% maior que a
+  `b_ginga`; 2ª: humano 18% menor), `fx_aura_crateras` (achatada, 41-69 px).
+- Ressalvas: `despertar_boss` humano ~11% menor que a forma normal (302 contra ~340), sem a empinada do q5;
+  `b_martelo` bate com os punhos à frente, não juntos de cima; `b_bicicleta` chuta na cintura, não na cabeça;
+  `b_vitoria` mãos abertas em q4-6; `b_galope` com colunas sobrepostas (8 figuras soltas). Nada convertido para
+  `quadros_arcade`, nada ligado em gerador, nada rodou no jogo.
+- **A seguir:** grupos 1 e 2 de Raiclaven e CK; conferência cética do Gutto boss.
