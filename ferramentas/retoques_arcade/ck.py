@@ -67,9 +67,62 @@ LIMPA = {
 }
 
 
+# Rasteira da base, desenhos 1 a 5: o pé de apoio (o de trás, plantado) veio com o tênis na cor da luva (vermelho);
+# a canela e a meia branca mostram que é pé, não mão no chão. O tênis do CK é o da outra perna: contorno roxo-escuro,
+# lilás e branco. No levanta (kip-up) o vermelho no chão são as luvas, de mãos no chão: fica como está.
+TENIS_VERMELHO = {("rasteira", i) for i in range(1, 6)}
+TENIS = ((56, 23, 82), (150, 132, 209), (174, 156, 177), (212, 184, 227))  # do escuro ao claro, o tênis da frente
+
+
+def tenis_da_cor_certa(q):
+    """Repinta de tênis a mancha vermelha que toca o chão (as 14 linhas de baixo da figura): o vermelho vivo e o vinho e
+    o vermelho-escuro ligados a ele, até 2 px do vivo (a pele da canela, laranja, não entra). Funciona antes de
+    quantizar (converter_ck) e depois (quadro já na paleta): a cor sai pela luminância, sempre uma das de TENIS."""
+    a = np.array(q.convert("RGBA"))
+    op = a[..., 3] >= 128
+    linhas = np.flatnonzero(op.any(axis=1))
+    if not len(linhas):
+        return q
+    faixa = np.zeros_like(op)
+    faixa[max(0, linhas[-1] - 13):linhas[-1] + 1] = True
+    r, g, b = (a[..., k].astype(int) for k in range(3))
+    vivo = op & faixa & (r >= 200) & (g < 90) & (b < 90)
+    if not vivo.any():
+        return q
+    perto = cv2.dilate(vivo.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0
+    vermelho = op & faixa & perto & (r >= 60) & (g < 0.45 * r) & (b < 0.6 * r)
+    lum = 0.3 * r + 0.59 * g + 0.11 * b
+    cor = np.select([lum < 50, lum < 95, vivo], [0, 1, 3], 2)
+    tinta = np.array(TENIS, np.uint8)[cor]
+    a[vermelho, :3] = tinta[vermelho]
+    # brilho laranja no tênis (3 ou mais dos 8 vizinhos repintados): vira o lilás claro; a canela, acima da meia branca,
+    # não encosta no tênis repintado
+    vizinhos = cv2.filter2D(vermelho.astype(np.float32), -1, np.ones((3, 3), np.float32), borderType=cv2.BORDER_CONSTANT)
+    dentro = op & faixa & ~vermelho & (vizinhos >= 3) & (r > g) & (g > b)
+    a[dentro, :3] = TENIS[3]
+    return Image.fromarray(a)
+
+
 def retocar(folha, i, q, ratao):
     """ratao: folhas e_* (o despertar_b fica com a fumaça e os cacos da garrafa)."""
+    if (folha, i) in TENIS_VERMELHO:
+        q = tenis_da_cor_certa(q)
     for passo in LIMPA.get((folha, i), ()):
         if passo == "faisca":
             q = sem_faisca(q)
     return sem_fiapo(q) if ratao else q
+
+
+if __name__ == "__main__":
+    # aplica o retoque do tênis direto nos quadros já convertidos (sem rodar o converter_ck inteiro, ~15 min); rodar
+    # de novo não muda nada (não sobra vermelho vivo no tênis)
+    from pathlib import Path
+    pasta = Path(__file__).resolve().parents[2] / "sprites/ck/quadros_arcade"
+    for folha, i in sorted(TENIS_VERMELHO):
+        arquivo = pasta / folha / f"{i:02d}.png"
+        antes = Image.open(arquivo).convert("RGBA")
+        depois = tenis_da_cor_certa(antes)
+        muda = int((np.asarray(antes) != np.asarray(depois)).any(axis=2).sum())
+        if muda:
+            depois.save(arquivo)
+        print(f"{folha} {i}: {muda} px repintados")
