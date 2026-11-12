@@ -98,6 +98,22 @@ o mesmo desenho onde der; folha própria só onde o desenho muda. O endiabrado d
 final) e por isso é todo em folha própria. Índice de paleta compartilhado (lâmina e dente, por
 exemplo) não pode ser trocado sozinho: o que precisa mudar de cor isolado vai desenhado.
 
+### Alta resolução (HD), desde 2026-11-12
+
+O jogo desenha o corpo dos lutadores em **3x** (pedido do Breno: no jogo os bonecos ficavam borrados). O quadro de 1x
+(360x260, boneco de ~110 px) continua sendo o que o gerador monta, mede e confere. No fim, o `ferramentas/hd.py` troca
+cada sprite do corpo pelo gêmeo 3x de `quadros_arcade_hd/<folha>/NN.png`, multiplica as caixas Clsn por 3 e põe
+`[Size] xscale = yscale = 1/3`. Assim o motor desenha um pixel do desenho por pixel da tela, sem esticar nada. Efeito,
+projétil e retrato ficam em 1x, porque o motor não aplica a escala do lutador neles.
+
+- **Folha nova ou refeita:** depois do conversor de sempre, rode `python ferramentas/hd_guiado.py <lutador> <folha>`.
+  Ele recria o quadro em 3x a partir da folha original, com as cores e os retoques do quadro de 1x. O CK também tem o
+  caminho direto `HD=3 python ferramentas/converter_ck.py <folha>`.
+- **Sem gêmeo 3x**, o sprite só é ampliado e fica igual a antes. É o caso de quadro montado por código, de folha sem
+  original e de quadro do meio do Blender. O gerador imprime quantos sprites ficaram assim.
+- Ligado em: Pengaró, Hazak e CK. O Gutto e o Raiclaven ainda não: os quadros do meio do Blender deles são de 1x, e
+  misturar quadro nítido com quadro borrado na mesma animação pisca.
+
 ### Pipeline
 
 As folhas novas ficam em `sprites/<lutador>/quadros/folhas_arcade/<folha>.png` e a saída em

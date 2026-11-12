@@ -1290,3 +1290,33 @@ Parada rápida. Último commit antes desta entrada: `f3e86b1c`. Arquivos alterad
   do Ratão (verde-claro, `quadro_flash`) cobre o oponente como um bloco com borda reta (filme, quadros 238 e 565): é o
   "clarão creme dos supers" já pendente, mais visível no Ratão.
 - **Próximo:** o orquestrador juntar `ck` na `mugen`; o Breno decidir R4/O10/R9 e o clarão.
+
+## 2026-11-12 — Lutadores em alta resolução: fim do borrado (Claude, sessão do Breno)
+
+**Pedido do Breno:** no jogo o Pengaró, o Hazak e o CK pareciam borrados, embora as folhas estivessem nítidas. Ele
+pediu para resolver sem perder a fluidez.
+
+**Causa (medida numa foto do jogo):** o boneco do quadro de jogo tem ~110 px de altura e o motor estica 3x
+(localcoord 320x240 numa tela de 720). A folha do ChatGPT tem o boneco com ~600 px: o detalhe se perdia no encolhe e
+estica, e o rosto, os olhos e os músculos viravam blocos 3x3.
+
+**Feito:**
+- `ferramentas/hd.py`: no fim do gerador, cada sprite do corpo é trocado pelo gêmeo 3x do mesmo quadro (achado pela
+  comparação de pixels com o 1x, aceita retoque pequeno e espelho). As Clsn multiplicam por 3 e `[Size]` fica em 1/3.
+  Efeito, projétil, faísca própria e retrato ficam em 1x: conferido no código do IKEMEN v1.0.0 (Explod só usa a escala
+  com syncid; projétil só com `size.proj.doscale`). Um sprite usado no corpo e num efeito ao mesmo tempo é copiado
+  (grupo + 20000).
+- `ferramentas/hd_guiado.py <lutador>`: recria `quadros_arcade_hd/` a partir das folhas originais, guiado pelo quadro de
+  1x. Ele registra escala e posição pela silhueta e pinta cada pixel 3x só com as cores do 1x na vizinhança 3x3, então
+  herda paleta e retoques. O CK também ganhou `HD=3` no `converter_ck.py`, com os limiares em px do `retoques_arcade/ck.py`
+  escalados.
+- `rle8` e a quantização do `escrever_sff` passaram para numpy: mesmo resultado (testado contra o laço antigo) com 9x
+  mais pixels.
+- Ligado no Pengaró, no Hazak e no CK. Robô antes e depois (`testar_pengaro.py --local`, mesmo motor): CK 175/175,
+  **mesmo dano e mesmos estados** nos 53 roteiros; Pengaró 146/146 e Hazak 175/176 (a mesma falha de antes), sem nenhuma diferença entre antes e depois.
+- `.sff`: CK de 1,1 para 3,9 MB, Pengaró de 2 para 5,5 MB, Hazak de 1,1 para 4,2 MB.
+
+**Pendente:**
+- Gutto e Raiclaven (os quadros do meio do Blender são de 1x).
+- Quadros montados por código continuam só ampliados: no Pengaró, parte do Despertar e alguns aéreos (104 sprites).
+- Se uma folha for refeita, rode o `hd_guiado.py` dela, senão o gerador usa o gêmeo velho ou amplia.

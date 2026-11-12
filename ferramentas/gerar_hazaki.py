@@ -1269,6 +1269,10 @@ def main():
         a.ativos[numero] = (k, tuple(int(v) for v in caixa.groups()))
     cns = gp.ajustar_sparkxy(montar_cns(), a.ativos)
     cmd = montar_cmd()
+    # corpo em alta resolução (ferramentas/hd.py): os desenhos 3x de quadros_arcade_hd (ferramentas/hd_guiado.py)
+    if (QUADROS.parent / "quadros_arcade_hd").exists():
+        import hd
+        air, cns = hd.aplicar(s, air, cns, [(QUADROS, QUADROS.parent / "quadros_arcade_hd")], gp.SPRITES_VITIMA)
     (SAIDA / "hazaki.cns").write_text(cns.rstrip() + "\n", encoding="utf-8", newline="\n")
     (SAIDA / "hazaki.cmd").write_text(cmd.rstrip() + "\n", encoding="utf-8", newline="\n")
     (SAIDA / "hazaki.air").write_text(air, encoding="utf-8", newline="\n")

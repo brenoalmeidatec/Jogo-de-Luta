@@ -1258,6 +1258,7 @@ def altura_corpo(img):
 # sprites (q_ginga_fluida<i>, q_anda_fluida<i>) ficaram, porque o resto do gerador e as ferramentas os conhecem.
 # nome do loop -> (folha em quadros_arcade/, desenhos na ordem em que tocam, ticks de cada um)
 QUADROS_ARCADE = RAIZ / "sprites/pengaro/quadros_arcade"
+QUADROS_ARCADE_HD = RAIZ / "sprites/pengaro/quadros_arcade_hd"  # os mesmos desenhos em 3x (hd_guiado.py)
 LOOPS = {
     # Um vai-e-volta só do pé de trás, com o da frente cravado: em pé (3, 7), pé de trás na ponta (5), afundo atrás
     # (6, 2), volta na ponta do pé (1). Os desenhos 0 e 4 da folha (base aberta, tronco jogado para trás) ficam fora:
@@ -3928,6 +3929,12 @@ def main():
     cns = cns.replace("[Data]", preset + "[Quotes]\n" + "".join(f'victory{i + 1} = "{v}"\n' for i, v in enumerate(VITORIAS)) + "\n[Data]", 1)
     (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8", newline="\n")
     air = (SAIDA / "pengaro.air").read_text(encoding="utf-8")
+    # corpo em alta resolução (ferramentas/hd.py): os desenhos 3x de quadros_arcade_hd (ferramentas/hd_guiado.py)
+    if QUADROS_ARCADE_HD.exists():
+        import hd
+        air, cns = hd.aplicar(s, air, cns, [(QUADROS_ARCADE, QUADROS_ARCADE_HD)], SPRITES_VITIMA)
+        (SAIDA / "pengaro.air").write_text(air, encoding="utf-8", newline="\n")
+        (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8", newline="\n")
     escrever_sff(SAIDA / "pengaro.sff", s, manter=sprites_mantidos(air, cns))
     (SAIDA / "pengaro.cmd").write_text(montar_cmd(), encoding="utf-8")
     (SAIDA / "pengaro.def").write_text(DEF, encoding="utf-8", newline="\n")
