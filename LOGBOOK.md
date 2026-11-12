@@ -640,7 +640,6 @@ o robô não prova que o pisão despertado acerta com a caixa nova (não sei se 
 foram espelhados (não olhei a forma endiabrada); Gutto, Raiclaven e Hazaki não foram regerados (o diff só toca
 `chars/pengaro`).
 
-<<<<<<< HEAD
 ## 2026-11-11 — Bosses: conceitos e fila das folhas boss (branch `bosses`)
 
 **Feito:** entraram os quatro conceitos de boss final da forma despertada, aprovados pelo Breno hoje
@@ -750,7 +749,6 @@ As 24 folhas do grupo 2 do Gutto boss estão em `sprites/gutto/quadros/folhas_ar
   divisas q3|q4, q4|q5, q5|q6 (~35-40 px de altura de contato; 3 tentativas, nenhuma separou; recortar na linha da
   célula). `b_anda` refeita 1x (saiu 7% maior). Nada convertido, nada ligado em gerador, nada rodou no jogo.
 - **A seguir:** grupo 2 do Raiclaven (20 folhas) e CK (31); conferência cética do Raiclaven boss.
-=======
 ## 2026-11-11 (método em .md)
 
 - **Feito:** a pedido do Alisson, o jeito de trabalhar do Claude passou a ficar versionado: `docs/metodo-do-claude.md`
@@ -1401,4 +1399,15 @@ Parada rápida. Último commit antes desta entrada: `f3e86b1c`. Arquivos alterad
   do Ratão (verde-claro, `quadro_flash`) cobre o oponente como um bloco com borda reta (filme, quadros 238 e 565): é o
   "clarão creme dos supers" já pendente, mais visível no Ratão.
 - **Próximo:** o orquestrador juntar `ck` na `mugen`; o Breno decidir R4/O10/R9 e o clarão.
->>>>>>> f9ea86016e0624241a7c3c794acedf48e50baf6c
+
+## 2026-11-12 — PARADA a pedido do Alisson (folhas boss, branch bosses)
+
+- Feito: Hazak 55/55 (`d_`), Gutto 36/36 (`b_`), Raiclaven grupo 1 (12, `b_`, cabelo verde). O Windows Update reiniciou
+  o PC às 03:27 e deslogou o ChatGPT; o Alisson entrou de novo e o Raiclaven foi retomado até fechar o grupo 1.
+- Falta: Raiclaven grupo 2 (20), CK grupos 1 e 2 (31), cético de tudo e a fase de refazer. Já apontado pelo cético da
+  rodada anterior (Hazak): `d_sapato_barriga` com pé descalço (q2, q3, q7), `d_agarrao_perna` sem manga (q2, q3) e
+  pulseira dupla (q7), `despertar_virada` 12% maior que a ginga, `d_maleta_giro` 10% menor e curta, pulseiras duplas
+  para retoque à mão.
+- Na parada, um `git pull` (o upstream desta branch é `origin/mugen`) juntou a `mugen` (f9ea860) na `bosses` com
+  conflito no LOGBOOK que foi para o commit b5a3f68 com marcas; este commit tira as marcas, mantendo os dois lados.
+- **Próximo:** retomar o workflow `bosses-folhas-elenco` (run wf_a1cdd201-96e); o que está pronto volta do cache.
