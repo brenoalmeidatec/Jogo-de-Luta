@@ -1411,3 +1411,12 @@ Parada rápida. Último commit antes desta entrada: `f3e86b1c`. Arquivos alterad
 - Na parada, um `git pull` (o upstream desta branch é `origin/mugen`) juntou a `mugen` (f9ea860) na `bosses` com
   conflito no LOGBOOK que foi para o commit b5a3f68 com marcas; este commit tira as marcas, mantendo os dois lados.
 - **Próximo:** retomar o workflow `bosses-folhas-elenco` (run wf_a1cdd201-96e); o que está pronto volta do cache.
+
+## 2026-11-12 13:00 — folhas boss: segunda parada (30 minutos pedidos pelo Alisson)
+- Retomado o workflow `bosses-folhas-elenco` (run wf_a1cdd201-96e) às 12:30 e parado às 13:00, como combinado.
+- **Raiclaven grupo 2:** 7 de 20 folhas prontas e enviadas (`b_martelo`, `b_cabecada`, `b_agarrao`, `b_rolamento`,
+  `b_golaco`, `b_corrente_parado`, `b_corrente_chicotada`; as correntes têm defeito anotado no commit 6a1762f9).
+- **CK grupo 1:** 3 folhas brutas salvas neste commit (`b_ginga`, `b_anda`, `b_soco`, 8 quadros cada, 2172x724),
+  olhadas numa miniatura: roupa roxa de boss, garrafa verde, fundo magenta. Ainda sem conferência do cético.
+- **Próximo:** retomar o mesmo workflow; o que está pronto volta do cache, e o agente do grupo deve pular as folhas
+  que já existem no disco.
