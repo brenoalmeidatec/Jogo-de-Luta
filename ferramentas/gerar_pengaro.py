@@ -1738,7 +1738,8 @@ def preset_despertado(s):
 # Lote 7: a aura antiga do boss (fx_aura_anel, fx_aura_coluna e fx_aura_detritos nas ações 9211, 9210 e 9218) não
 # nasce mais no jogo: a aura do endiabrado é a do Blender, ligada por ferramentas/aura_pengaro.py ([Statedef -4],
 # Explods 9600 a 9603). Os desenhos antigos seguem carregados só porque entram na escolha da paleta do .sff: tirá-los
-# mudaria as 255 cores e todos os pixels da forma base.
+# da lista mudaria as 255 cores e todos os pixels da forma base. As ações deles NÃO vão para o .air: a paleta sai
+# antes da poda (escrever_sff), então a poda tira os 24 desenhos do .sff e a paleta não muda.
 AURA_BOSS = {9211: "aura_anel", 9210: "aura_coluna", 9218: "aura_detritos"}
 
 
@@ -3879,6 +3880,8 @@ def main():
         CHAO.add(nome)
     s = montar_sprites(retrato=RAIZ / "sprites/pengaro-selecao-kof.png")
     faiscas = carregar_faiscas(s)
+    for anim in AURA_BOSS:  # só pela paleta: fora do .air, e a poda os tira do .sff
+        del faiscas[anim]
     a = montar_air(s, faiscas, arte_despertada=arte_endiabrada(s))
     preset = preset_despertado(s)
     aura = aura_pengaro.ligar(s)  # aura do endiabrado (Blender): grupos e ações 9600 a 9603, fora da paleta

@@ -489,9 +489,16 @@ class Camada:
     tique: int = None                # tique do passo (0..tempo-1) em que a camada troca de quadro; None = índice % tempo.
                                      # Camadas desenhadas juntas (as metades de um anel) trocam no mesmo tique; as que
                                      # dividem a mesma região da tela, em tiques diferentes (todo tique tem desenho novo)
+    no_chao: bool = None             # fica no chão quando o lutador sai dele (pulo, queda); None = só o plano "chao".
+                                     # Uma coluna que nasce do chão usa True com plano "tras": não sobe junto no pulo
+                                     # e não apaga com a altura (só a camada de plano "chao" apaga)
 
     def troca(self, i):
         return (i if self.tique is None else self.tique) % self.tempo
+
+    @property
+    def presa_ao_chao(self):
+        return self.plano == "chao" if self.no_chao is None else self.no_chao
 
 
 @dataclass
@@ -549,12 +556,15 @@ class Aura:
 
     def __init__(self, nome, camadas, particulas=(), ligada="var(20) > 0", surto=None, base=9600,
                  entra=26, sai=34, surto_ticks=30, surto_acel=1.6, surto_folga=90, altura_lutador=110,
-                 teto_explods=30):
+                 teto_explods=30, virada_fundo=0.3):
         assert re.fullmatch(r"[a-z0-9]+", nome), "nome da aura: só letras minúsculas e números"
         self.nome, self.camadas, self.particulas = nome, list(camadas), list(particulas)
         self.ligada, self.surto, self.base = ligada, surto, base
         self.entra, self.sai, self.surto_ticks, self.surto_acel = entra, sai, surto_ticks, surto_acel
         self.surto_folga, self.altura_lutador, self.teto_explods = surto_folga, altura_lutador, teto_explods
+        # na virada a aura apaga até esta fração do alfa, troca de lado e volta (0,3: some quase toda; 1: nem apaga)
+        assert 0 < virada_fundo <= 1, virada_fundo
+        self.virada_fundo = virada_fundo
         for c in self.camadas:
             assert c.plano in ("tras", "chao", "frente"), c.plano
             assert c.tempo <= 3, f"camada {c.nome}: quadro parado por mais de 3 ticks não é fluido"
@@ -743,10 +753,11 @@ class Aura:
         alfa = (f"({_n(mv.alfa)} * min(1, 1.6 * {f}) * (1 + "
                 f"{_seno(mv.respira, mv.respira_periodo * desvio, 0.4 + 2.3 * i, t)})"
                 f" + {_n(c.surto_alfa)} * {k} * {f})"
-                f" * (0.3 + 0.7 * ifelse({v} > 0.6, ({v} - 0.6) / 0.4, (0.6 - {v}) / 0.6))")
+                f" * ({_n(self.virada_fundo)} + {_n(1 - self.virada_fundo)} * "
+                f"ifelse({v} > 0.6, ({v} - 0.6) / 0.4, (0.6 - {v}) / 0.6))")
         if c.esconde:
             alfa += f" * (1 - map({self.m(f'h{i}')}))"
-        if c.plano == "chao":  # fica no chão quando o lutador pula, e some com a altura
+        if c.presa_ao_chao:  # fica no chão quando o lutador pula (a de plano "chao" também some com a altura)
             # A camada de chão NÃO é presa ao lutador (bindtime 0 no Explod E no ModifyExplod: o postype = p1 do
             # ModifyExplod volta a prender se o bindtime = 0 não vier junto; visto no filme). O ModifyExplod a põe na
             # posição do lutador no momento em que o -4 roda, já descontada a altura, e ela fica lá quando o motor
@@ -755,15 +766,21 @@ class Aura:
             # acima do chão num tick, filmes extra de 2026-11-11; solta: desvio 0,00 px no pulo inteiro).
             # Custo: em x ela segue o lutador com 1 tick de atraso (não filmado com o lutador andando).
             py += " - min(0, Pos Y)"
-            alfa += " * max(0, 1 + min(0, Pos Y + Vel Y) / 90.0)"
+            if c.plano == "chao":
+                alfa += " * max(0, 1 + min(0, Pos Y + Vel Y) / 90.0)"
         src = f"floor(255 * min(1, max(0, {alfa})))"
         trans = ["trans = addalpha", f"alpha = {src}, {'255' if c.mistura == 'soma' else f'255 - {src}'}",
                  "ignorehitpause = 1"]
         sempre = [f"[State -4, Aura {self.nome} {c.nome}: move]", "type = ModifyExplod",
                   f"trigger1 = NumExplod({e}) && {v} <= 0.6", f"id = {e}", "postype = p1", f"pos = {px}, {py}",
-                  f"scale = {sx}, {sy}"] + (["bindtime = 0"] if c.plano == "chao" else []) + trans
+                  f"scale = {sx}, {sy}"] + (["bindtime = 0"] if c.presa_ao_chao else []) + trans
         virando = [f"[State -4, Aura {self.nome} {c.nome}: apaga para virar]", "type = ModifyExplod",
                    f"trigger1 = NumExplod({e}) && {v} > 0.6", f"id = {e}"] + trans
+        # Limite conhecido: a camada presa ao chão (bindtime 0) só anda pelo postype, que este controlador não usa (o
+        # postype refaz o lado): nos 5 ticks em que apaga para virar, ela fica onde estava. Com o lutador parado não
+        # se vê; com o PosSet do filme (lutador teletransportado) a coluna ficou para trás 5 ticks (2026-11-12).
+        # Tentado postype + facing = -1 aqui: no log a camada trocou de lado 0 a 1 tick depois e o P2 ficou com ela
+        # do lado errado até o fim (o facing dado fica guardado). Voltou ao de antes.
         return "\n".join(sempre) + "\n\n" + "\n".join(virando) + "\n\n"
 
     def _prioridade(self, i, c):
@@ -780,7 +797,7 @@ class Aura:
                 f"trigger1 = map({self.m('f')}) > 0 && NumExplod({e}) = 0\n"
                 f"anim = {e}\nid = {e}\nanimelem = {inicio}\nanimelemtime = {c.troca(i)}\npostype = p1\n"
                 f"pos = {_n(c.pos[0])}, {_n(c.pos[1])}\n"
-                f"facing = 1\nbindtime = {0 if c.plano == 'chao' else -1}\nremovetime = -1\n"
+                f"facing = 1\nbindtime = {0 if c.presa_ao_chao else -1}\nremovetime = -1\n"
                 f"sprpriority = {self._prioridade(i, c)}\nownpal = 1\n"
                 f"scale = 0.3, 0.08\ntrans = addalpha\nalpha = 0, 255\n"
                 f"removeongethit = 0\nsupermovetime = -1\npausemovetime = -1\nignorehitpause = 1\n\n")
