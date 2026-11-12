@@ -20,6 +20,20 @@ com raios, que parecia uma rede de futebol). Cada lutador ganha um parry **seu**
   - Quadros 4–8 são o "acertou": a reação, que é onde mora a piada (base) ou o poder (endiabrado).
   - Depois do conversor, gere o gêmeo 3x ([regra da alta resolução](regra-alta-resolucao.md)).
 
+## Depois do parry: o inimigo fica aberto para apanhar
+
+Lembrete do Breno (2026-11-12): o parry certo **não atordoa** (não é estado de tonto), mas deixa o oponente
+**vulnerável**. É a hora de bater, e a piada não pode roubar essa janela.
+
+- **O oponente:** vai para o estado 762, de abertura, sem defesa e sem poder agir. Fica nele **20 ticks** (hoje são 14),
+  o bastante para encaixar um golpe médio ou um especial, e cai normalmente se apanhar no ar.
+- **Quem deu o parry:** a animação do acertou (quadros 4–8) **pode ser cancelada** em qualquer normal, especial ou super a
+  partir do quadro do contato (quadro 4). A piada só toca inteira se o jogador não apertar nada. Quem quer punir bate na
+  hora, e quem quer zoar deixa a animação rolar e perde a chance.
+- Se o jogador não bater, o oponente volta antes de a piada acabar, e ninguém leva vantagem de graça.
+- **Robô:** parry certo seguido de soco tem que acertar, e parry certo seguido de nada não pode deixar ninguém
+  travado.
+
 ## Pedido para o Alisson: colocar os parries no jogo
 
 As 10 folhas da forma base já estão prontas, em `sprites/<lutador>/quadros/folhas_arcade/parry_alto.png` e
