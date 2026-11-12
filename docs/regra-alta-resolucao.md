@@ -32,7 +32,8 @@ pixel do desenho num pixel da tela. O boneco fica do mesmo tamanho na tela, mas 
      a comparação aceita retoque pequeno, borda limpa pelo gerador e quadro espelhado;
    - conta como corpo também o destino de todo `[RemapPreset ...]` do `.cns` (a forma despertada do kit troca o
      sprite do corpo pelo `RemapSprite`, fora do `.air`). Até 2026-11-12 isso faltava: o despertado do CK, do Pengaró,
-     do Gutto e do Raiclaven saía em 1x e o motor desenhava em 1/3 do tamanho (visto no filme da integração);
+     do Gutto e do Raiclaven saía em 1x e o motor desenhava em 1/3 do tamanho (visto no filme da integração). Na escolha
+     das 255 cores esse destino entra pelo desenho de 1x (`paleta_de`), então a paleta e a forma base saem iguais;
    - multiplica por 3 toda caixa Clsn do `.air`;
    - põe `[Size]` em 1/3 no `.cns`;
    - deixa em 1x o sprite que só aparece em Explod, projétil ou faísca própria (`S`), e o retrato (grupo 9000);

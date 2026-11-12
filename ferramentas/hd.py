@@ -176,6 +176,9 @@ def aplicar(s, air, cns, pares, vitima=frozenset()):
     remap = destinos_do_remap(cns, corpo_spr)
     assert not remap & efeito_spr and not {o for o, d in trocas_do_remap(cns) if o in corpo_spr} & efeito_spr, \
         "sprite de RemapPreset também usado em efeito: a cópia (grupo + 20000) não seguiria o remap"
+    # e entra na escolha da paleta pelo desenho de 1x (as mesmas cores, 9x menos pixels): a paleta, e com ela todo pixel
+    # da forma base, sai igual à de quando o despertado era 1x (escrever_sff do gerar_pengaro lê `paleta_de`)
+    s.paleta_de = getattr(s, "paleta_de", {}) | {(g, i): img for g, i, img, *_ in s.lista if (g, i) in remap - corpo_spr}
     corpo_spr |= remap
     dos_dois = efeito_spr & corpo_spr
     # sprite usado no corpo E num efeito: o efeito fica com o original (1x) e as ações do corpo passam a uma cópia num

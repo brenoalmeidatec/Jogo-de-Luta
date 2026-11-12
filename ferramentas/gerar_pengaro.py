@@ -266,9 +266,11 @@ def escrever_sff(destino, sprites, manter=None):
     """Com `manter`, só grava os (grupo, índice) do conjunto (todo o resto é pulado, e o grupo 9000 sempre fica).
     A paleta sai antes da poda e da lista inteira: podar antes mudaria o MEDIANCUT e todos os pixels.
     Os (grupo, índice) de `sprites.fora_da_paleta` (a aura animada) não entram na escolha das cores: vão para a cor
-    mais perto da paleta do resto, que sai igual com ou sem eles."""
+    mais perto da paleta do resto, que sai igual com ou sem eles. `sprites.paleta_de` troca, só na escolha das cores, um
+    sprite pelo desenho dele em 1x (o despertado do hd.py)."""
     fora = getattr(sprites, "fora_da_paleta", set())
-    imagens = [s[2] for s in sprites.lista if (s[0], s[1]) not in fora]
+    de = getattr(sprites, "paleta_de", {})
+    imagens = [de.get((s[0], s[1]), s[2]) for s in sprites.lista if (s[0], s[1]) not in fora]
     q = paleta_global(imagens)
     pal = q.getpalette()[: 255 * 3]
     pal += [0] * (255 * 3 - len(pal))
