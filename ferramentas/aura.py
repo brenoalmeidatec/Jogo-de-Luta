@@ -741,15 +741,21 @@ class Aura:
         if c.esconde:
             alfa += f" * (1 - map({self.m(f'h{i}')}))"
         if c.plano == "chao":  # fica no chão quando o lutador pula, e some com a altura
-            # o -4 roda antes de o motor andar o lutador no tick: a altura que vai para a tela é Pos Y + Vel Y
-            py += " - min(0, Pos Y + Vel Y)"
+            # A camada de chão NÃO é presa ao lutador (bindtime 0 no Explod E no ModifyExplod: o postype = p1 do
+            # ModifyExplod volta a prender se o bindtime = 0 não vier junto; visto no filme). O ModifyExplod a põe na
+            # posição do lutador no momento em que o -4 roda, já descontada a altura, e ela fica lá quando o motor
+            # anda o lutador no resto do tick. Presa, com `Pos Y + Vel Y`, ela subia junto no tick da decolagem: o
+            # -4 roda antes do estado que dá a velocidade do pulo, então nem Pos Y nem Vel Y avisam (anel 8,4 px
+            # acima do chão num tick, filmes extra de 2026-11-11; solta: desvio 0,00 px no pulo inteiro).
+            # Custo: em x ela segue o lutador com 1 tick de atraso (não filmado com o lutador andando).
+            py += " - min(0, Pos Y)"
             alfa += " * max(0, 1 + min(0, Pos Y + Vel Y) / 90.0)"
         src = f"floor(255 * min(1, max(0, {alfa})))"
         trans = ["trans = addalpha", f"alpha = {src}, {'255' if c.mistura == 'soma' else f'255 - {src}'}",
                  "ignorehitpause = 1"]
         sempre = [f"[State -4, Aura {self.nome} {c.nome}: move]", "type = ModifyExplod",
                   f"trigger1 = NumExplod({e}) && {v} <= 0.6", f"id = {e}", "postype = p1", f"pos = {px}, {py}",
-                  f"scale = {sx}, {sy}"] + trans
+                  f"scale = {sx}, {sy}"] + (["bindtime = 0"] if c.plano == "chao" else []) + trans
         virando = [f"[State -4, Aura {self.nome} {c.nome}: apaga para virar]", "type = ModifyExplod",
                    f"trigger1 = NumExplod({e}) && {v} > 0.6", f"id = {e}"] + trans
         return "\n".join(sempre) + "\n\n" + "\n".join(virando) + "\n\n"
@@ -768,7 +774,8 @@ class Aura:
                 f"trigger1 = map({self.m('f')}) > 0 && NumExplod({e}) = 0\n"
                 f"anim = {e}\nid = {e}\nanimelem = {inicio}\nanimelemtime = {i % c.tempo}\npostype = p1\n"
                 f"pos = {_n(c.pos[0])}, {_n(c.pos[1])}\n"
-                f"facing = 1\nbindtime = -1\nremovetime = -1\nsprpriority = {self._prioridade(i, c)}\nownpal = 1\n"
+                f"facing = 1\nbindtime = {0 if c.plano == 'chao' else -1}\nremovetime = -1\n"
+                f"sprpriority = {self._prioridade(i, c)}\nownpal = 1\n"
                 f"scale = 0.3, 0.08\ntrans = addalpha\nalpha = 0, 255\n"
                 f"removeongethit = 0\nsupermovetime = -1\npausemovetime = -1\nignorehitpause = 1\n\n")
 

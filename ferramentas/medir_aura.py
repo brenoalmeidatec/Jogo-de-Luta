@@ -448,13 +448,13 @@ def main():
         pior = max(int(verde(quadro(todos, v(t))[90:CHAO_Y, x0 - 100:x1 + 100]).sum()) for t in range(loop[0], loop[1], 3))
         nota(f"P{j} pixels de verde de fundo na região da aura: {antes} antes de ligar, {pior} no pior quadro do loop",
              pior <= antes)
-        # loop: a ginga dá uma volta a cada 48 ticks; referência = o mesmo desenho antes de ligar
-        pares = []
-        for t in range(loop[0], loop[1], 7):
-            n = v(t)
-            k = (n - 2) // 48
-            pares.append((n, [n - 48 * kk + d for kk in (k, k - 1) for d in (-2, -1, 0, 1, 2)
-                              if 0 <= n - 48 * kk + d < v(LIGA) - 1]))
+        # loop: referência = o mesmo desenho da ginga antes de ligar. Candidatos: todos os quadros do vídeo antes de
+        # a aura ligar; fica o que mais bate no tronco (a aura de trás não cobre o tronco). Antes procurava só 48
+        # ticks para trás pela conta tick -> quadro, mas no começo do vídeo o gravador ainda não está no passo (o
+        # quadro 17 do filme de 2026-11-11 ainda mostra o lutador ANTES do PosSet do tick 2) e a régua comparava o
+        # corpo com ele mesmo em outro lugar (12% igual, falso).
+        refs = list(range(0, v(LIGA) - 1))
+        pares = [(v(t), refs) for t in range(loop[0], loop[1], 7)]
         legivel("loop", j, [p for p in pares if p[1]], x0, x1)
         # surto: o corpo está no soco do estado 1000; referência = o mesmo soco dado sem aura no fim do filme
         x0, x1 = colunas_depois[j]

@@ -902,3 +902,35 @@ pela metade na hora da parada (**não testado, pode estar quebrado**); para volt
 ## 2026-11-11 (efeitos: PARADA às 17h20, o Alisson precisou desligar o notebook)
 
 Parada rápida. Último commit antes desta entrada: `9a64d4fb`. Arquivos alterados sem commit na hora da parada: 1 (guardados neste commit; **não testados**, se houver). Falta o que a entrada anterior desta branch lista; a etapa em andamento (retoque ou conferência) foi interrompida.
+
+## 2026-11-11 (efeitos: retoque da revisão cética da aura terminado e filmado)
+
+Retomado do commit de parada `589511d` (o retoque estava pela metade, sem teste). Tudo refilmado na sandbox com o
+código final (uma por vez, som desligado): roteiro padrão de 10 s e roteiro extra de 2 rounds.
+
+- **Feito, conferido no filme:** HUD na frente da aura (`layerno = 1` no `fight.def` pelo `gerar_layout.py`: 0,00%
+  das caixas de vida, retrato, nome e poder mudam; relógio visto na tira); só névoa rasteira na frente do corpo
+  (pés 91,7% a 96,4% iguais ao desenho sem aura, pernas e tronco 99,8% a 100%, no loop e no surto); a aura segue na
+  intro e na pose de vitória (`RoundState > 0`) e roda no `[Statedef -4]` (anda em superpausa e em estado custom);
+  motor não escala nem gira nada no loop (crescer, girar, balançar assados); partículas em sequência de baixa
+  discrepância (peças seguidas a 24% a 43% da área); surto só nos supers, com folga de 90 ticks; virada apaga e troca
+  em 5 ticks; ligar cresce dos pés; `base=9600` (o CK usa 9300 a 9305); `registrar()` aceita a lista do Hazak;
+  `filmar_aura.py` acusa pane do motor; a branch segue `origin/efeitos` (pull limpo). Kit: decisões 45 a 49.
+- **Consertado nesta etapa:** (1) anel de chão subia 8,4 px no tick da decolagem do pulo (o `-4` roda antes do estado
+  que dá a velocidade): a camada `"chao"` agora é solta (`bindtime = 0` no Explod e no ModifyExplod; sem o do
+  ModifyExplod o `postype` volta a prender, visto no filme): desvio 0,00 px no pulo de 84 px. (2) régua do corpo no
+  `medir_aura.py` comparava com um quadro de antes do `PosSet` (12% igual, falso): agora usa o quadro sem aura que
+  mais bate no tronco. (3) `docs/arcade/aura_animada.md` reescrito (falava de `-2`, `pulso`, `balanco`, `base=9300`).
+- **Medidas finais (ck / sombra):** loop p95/mediana 1,99 / 2,04, maior/mediana 2,18 / 2,22, 0 quadros parados;
+  volta do loop 1,18x / 0,82x; mesmo quadro no máximo 2 ticks; surto: maior salto contra os vizinhos 1,63x / 1,86x;
+  Explods 14 / 18 no loop, 22 / 29 no pior tick (teto 30); desligar em 35 ticks, 0 Explod no fim.
+- **Pendente / não verificado:** a régua do surto foi trocada pelo construtor anterior depois de falhar (contra a
+  mediana do trecho dá 3,8x no P2: é o tremor de propósito do surto, ±1,2 px por tick; fica dito no
+  `aura_animada.md`); no surto e no ligar o motor ainda escala (até 25% no anel, ≤ 7% por tick: grade do pixel
+  fora por uns 30 ticks); camada de chão com o lutador andando (atraso de 1 tick em x) não filmada; `mistura="soma"`,
+  golpe recebido, aura num lutador de verdade; os cinco dicionários do kit só montados no host com arte de mentira
+  (montam, pior caso 30 Explods no Pengaró). Itens do kit que são decisão do dono: 45 a 49 (seção 8).
+- **Próximo:** juntar `efeitos` na `mugen` quando o Alisson aprovar; ligar a aura no primeiro gerador de verdade
+  quando as folhas `fx_aura_*` existirem.
+- Filmes: `scratchpad/aura/final/aura_teste.mp4` (+ `aura_teste_tira.png`), `padrao3/`, `extra4/` (medidas em
+  `padrao3_medir.txt` e `extra4_medir.txt`).
