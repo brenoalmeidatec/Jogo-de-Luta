@@ -492,7 +492,7 @@ def acoes_ck(Q):
     Q(5100, [(f("queda", 4), 3), (f("queda", 5), 3), (f("queda", 6), 3)], DEITADO)
     Q(5101, [(f("queda", 5), 3), (f("queda", 6), 3)], DEITADO)
     Q(5160, [(f("queda", 6), 6), (f("queda", 7), -1)], DEITADO)
-    Q(5170, [(f("queda", 6), 6), (f("queda", 7), -1)], DEITADO)
+    Q(5170, [(f("queda", 6), 6), (f("queda", 7), 10)], DEITADO)  # tem de acabar (ver gerar_hazaki.py)
     # rolar para trás: só abaixa e balança (os desenhos 4 a 6 do rolamento estão de costas)
     Q(705, [(f("rolamento", d), t) for d, t in ((1, 4), (2, 5), (3, 6), (3, 5), (2, 5), (1, 4), (0, 3))], ROLANDO)
     # entrada do round (190), no lugar da embaixadinha do kit: aquecimento de sombra

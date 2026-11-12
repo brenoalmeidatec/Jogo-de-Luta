@@ -433,7 +433,7 @@ Clsn2Default: 1
 Clsn2Default: 1
  Clsn2[0] = -62,0,40,-28
 395,0, 0,0, 6
-396,0, 0,0, -1
+396,0, 0,0, 10
 
 [Begin Action 705]
 Clsn2Default: 1

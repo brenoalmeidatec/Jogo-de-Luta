@@ -1950,7 +1950,8 @@ def acoes_folhas(Q):
     Q(5101, [(f("queda", 5), 3), (f("queda", 6), 3)], DEITADO)
     Q(5110, [(f("queda", 7), -1)], DEITADO)
     Q(5160, [(f("queda", 6), 6), (f("queda", 7), -1)], DEITADO)
-    Q(5170, [(f("queda", 6), 6), (f("queda", 7), -1)], DEITADO)
+    Q(5170, [(f("queda", 6), 6), (f("queda", 7), 10)], DEITADO)  # 5170 (bateu no chão) tem de ACABAR: o 5110 do motor só manda o nocauteado para o 5150 quando AnimTime = 0;
+    # com -1 no fim o motor esperava 900 ticks (over.forcewintime) para mostrar a vitória.
     Q(5120, [(f("levanta", i), 4) for i in range(1, 8)], ROLANDO)
     for n, t in ((700, 4), (5200, 3), (5210, 3)):
         Q(n, [(f("rolamento", i), t) for i in range(8)], ROLANDO if n == 700 else [])
@@ -2429,7 +2430,7 @@ def montar_air(s, faiscas, hazaki=False, arte_despertada=None):
     Q(5120, [("levanta0", 8), ("levanta1", 8), ("levanta2", 8)], BAIXO)
     Q(5150, [("deitado", -1)], DEITADO)
     Q(5160, [("cai2", 6), ("deitado", -1)], DEITADO)
-    Q(5170, [("cai2", 6), ("deitado", -1)], DEITADO)
+    Q(5170, [("cai2", 6), ("deitado", 10)], DEITADO)
     Q(5200, [(f"rola{i}", 3) for i in range(8)], [])
     Q(5210, [(f"rola{i}", 3) for i in range(8)], [])
     Q(5300, [(f"tonto{i}", 8) for i in range(4)])
