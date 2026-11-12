@@ -435,6 +435,9 @@ com link e licença.
 
 ---
 
+**Alta resolução (regra do Breno, 2026-11-12):** todo lutador vai para o jogo com o corpo em 3x e mostrado em 1/3, para
+o motor não esticar o desenho. Como fazer e o que conferir: [`regra-alta-resolucao.md`](regra-alta-resolucao.md).
+
 ## 7. Regra da fluidez: quantos quadros cada animação tem
 
 O jogo roda a **60 ticks por segundo** e tem dois estilos de animação, cada um no seu lugar:
@@ -599,6 +602,8 @@ Produção
 [ ] todo impacto usa efeito do pixelfx (seção 8.1), com pausetime/EnvShake pelo piso da 8.3
 [ ] caixas conferidas no editor; combos conferidos no ikemen-combo-finder
 [ ] gerador roda limpo e o verificador passa; nada editado à mão em chars/<nome>/
+[ ] corpo em alta resolução (docs/regra-alta-resolucao.md): gêmeos 3x gerados, linha HD: sem "só ampliados" de
+    golpe comum, boneco nítido numa foto do jogo
 [ ] movelist.dat e README batem com o .cmd
 [ ] testado no treino dos dois lados e no canto; uma luta CPU x CPU sem erro no log
 ```

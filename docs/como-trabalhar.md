@@ -20,6 +20,9 @@ continuam em [`regras-dos-lutadores.md`](regras-dos-lutadores.md). Estilo e core
   [Estilo arcade anos 90 da bíblia](biblia-de-arte.md#estilo-arcade-anos-90), com as 12 regras, a paleta fixa e o
   pipeline `quantizar_folha` → `animar_folha --arcade` → `conferir_arte`. A arte antiga sai conforme as folhas arcade
   forem entrando. Nunca 3D pixelizado: o boneco 3D do PR #17 foi rejeitado.
+- **Lutador em alta resolução é a regra** (Breno, 2026-11-12): o corpo vai para o jogo desenhado em 3x e mostrado em
+  1/3, para o motor não esticar e o boneco não ficar borrado. Folha nova ou refeita ganha o gêmeo 3x antes de subir.
+  Tudo em [`regra-alta-resolucao.md`](regra-alta-resolucao.md).
 - **Blender só deforma os sprites desenhados** para criar os quadros do meio. Nunca modela o personagem.
 - **Proporção de KOF:** os lutadores em escala 1, cerca de 110 de 180 de altura de tela.
 - **Conteúdo:** resenha pesada pode. Não pode piada de escravidão nem o estereótipo da mulher loira. Lata e garrafa sem
