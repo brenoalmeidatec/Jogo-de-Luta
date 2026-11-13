@@ -1802,3 +1802,31 @@ junto (223 e 157 cores de 256 em comum, ~750 sprites requantizados, retratos inc
   no Despertar (o CK e o Pengaró já não têm).
 - Parry: nenhum roteiro do robô cobre; não filmado.
 - Breno: ver no jogo a largura da aura do Pengaró (176 px) e a cor das duas auras.
+
+## 2026-11-12, 23:58 — Junção sobe na mugen; folhas boss prontas na branch bosses (Claude, orquestrador)
+
+**Subiu na mugen:** o integra-mugen inteiro (até este commit). Dois céticos novos conferiram a rodada 3 (e6750263), um
+por código e outro na sandbox, e nenhum achou defeito alto. Conferido por eles:
+- forma base de CK, Pengaró, Gutto, Raiclaven e Hazak igual à da mugen (paleta byte a byte; só 3 sprites do CK e do
+  Pengaró trocaram 1x ampliado pelo 3x certo);
+- despertado do tamanho da forma base (era 1/3 na mugen), CK/Pengaró/Raiclaven 100% com gêmeo 3x;
+- fantasma azul permanente fora; HUD na frente da faísca; `gerar_layout.py`, `gerar_ck.py` e `gerar_pengaro.py`
+  reproduzem `chars/` byte a byte.
+
+**Pendências dos céticos (nenhuma piora a mugen):**
+- Gutto despertado: 442 de 474 sprites só ampliados, e as ações 181, 601 e 10601 misturam 3x com 1x (piscam).
+- Gutto e Raiclaven sem aura própria em sprite (só o PalFX de tinta).
+- O `.sff` do Gutto e do Raiclaven depende do `conferir_sff.py transplantar` (documentado em `regra-alta-resolucao.md`).
+- Rastro de 40 tiques do super do Pengaró despertado ainda grande; clarão 9205 cobre o tronco do P2 por uns quadros.
+  Breno decide se entram na regra dos efeitos proporcionais.
+
+**Folhas boss (branch `bosses`, a8009718, não entra na mugen ainda):** Hazak 55/55, Gutto 36, Raiclaven e CK com todo
+o corpo; folhas `fx_*` ficam para o Blender. Ainda com defeito: CK `b_ar_soco` e `b_martelo` (parcial), Raiclaven
+`b_corrente_chicotada` e `b_corrente_mangual` (~9% menores). Detalhes no LOGBOOK da `bosses`.
+
+**ChatGPT:** os 4 chats boss (Gutto, Raiclaven, CK, Hazak) foram apagados e conferidos (404). Ficaram, para o dono
+decidir: "Hazak — arcade", "CK — arcade", "Pengaró — arcade", "Generate Hazak Image", "Generate Sunset Background" e
+uns de pixel art de 2026-11-08 de origem incerta. Refazer folha boss agora pede chat novo com o conceito anexado do disco.
+
+**Próximo:** missão do Breno (Pengaró e Hazak no estilo do CK e do Gutto), efeitos `fx_*` no Blender, pendências acima,
+cenários.
