@@ -1472,3 +1472,30 @@ Parada rápida. Último commit antes desta entrada: `f3e86b1c`. Arquivos alterad
 - **Pendente:** CK grupo 2 (15 de corpo + despertar_boss; fx_aura_aneis, fx_grave, fx_cacos vão para o Blender);
   refazer a `b_soco` (caco na mão de trás no q5); acertar chão (626-649) por script ou no conversor. O chat do conceito
   do CK continua necessário para o grupo 2, por isso não foi apagado.
+
+## 2026-11-12 ~21:13-22:05 — CK boss: corpo do grupo 2 completo (16 folhas, chat do conceito)
+- **Feito:** as 16 folhas de corpo do grupo 2 do CK boss (`b_` + `despertar_boss`), no chat do conceito (`6af49f6a-…`),
+  sem abrir chat novo; login OK o tempo todo, sem limite de conta. 31 imagens (16 + 15 refeitas). Commits `0712f36d`
+  (b_martelo, b_chute_baixo, b_cabecada, b_rasteira), `4a41a7ae` (b_ar_soco, b_rolamento, b_agarrao, b_bola),
+  `c1ade358` (b_beck, b_juliet_voadora, b_caneta, b_golaco), `3e81884b` (b_provoca, b_vitoria, b_derrota,
+  despertar_boss). Todas 2172x724, 8 figuras separadas (nenhuma encosta na outra), fundo magenta, sem aura nem fumaça.
+- **Aprovadas:** b_juliet_voadora e b_provoca (de primeira, 533-536 px, sola 661-662, igual à b_ginga), b_cabecada
+  (3ª: caco voltou para a mão da frente e a pochete apareceu no q3-q6), b_bola, b_derrota (2ª: garrafa no chão
+  quebrada, não inteira).
+- **Com ressalva:** b_martelo (2ª; ~5% menor, caixas sobrepostas em x no q4-q7 sem encostar); b_chute_baixo (2ª; 497 px,
+  ~7% menor, sola 629); b_rasteira (2ª; pochete reposta; sola 620, escala igual à base); b_ar_soco (2ª; q2 ainda com a
+  mão vazia à direita do caco); b_rolamento (3ª; 474 px, ~12% menor; ponta do caco do q8 encosta na borda direita,
+  1-2 px); **b_agarrao (3 tentativas, q5 com o óculos na testa no cabeceio)**; b_beck (3ª; q2 com o óculos pouco
+  visível, olhando para cima); b_caneta (461 px, ~14% menor que a b_ginga mas igual à base e_caneta, sola 600);
+  b_golaco (1ª guardada: 438 px, ~18% menor que a b_ginga e ~12% menor que a base; a refeita deu +4% e encostou na
+  borda); b_vitoria (3ª; q7-q8 o caco no ombro fica na mão dobrada e a mão da direita é o punho vazio);
+  despertar_boss (q1-q2 Ratão de óculos na cabeça e uma corrente; q3 a estampa some num quadro escuro e volta no q4,
+  porque o Ratão atual já tem a camisa de ondas; q8 com 501 px na guarda baixa).
+- **Marca de logo:** o modelo insiste numa marca oval com redemoinho na camisa/bermudão; tirei por pedido em b_cabecada,
+  b_rolamento, b_agarrao, b_beck e b_vitoria; ainda há um traço curvo pequeno na manga em b_juliet_voadora e b_provoca
+  (não conferido em tamanho cheio em todas).
+- **Não geradas (vão para o Blender, regra-efeitos-proporcionais):** fx_aura_aneis, fx_grave, fx_cacos.
+- **Pendente:** CK boss tem agora as 27 folhas de corpo da fila; faltam só as 4 fx (Blender). Refazer: `b_soco`
+  (caco na mão de trás no q5, de antes) e `b_agarrao` q5 (óculos). Chão e escala variam (sola 600-674; 438-540 px):
+  acertar por script ou no conversor. O chat do conceito do CK não foi apagado porque ainda serve para a lista de
+  refazer; pode ser apagado depois dela.
