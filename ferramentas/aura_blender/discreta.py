@@ -34,13 +34,16 @@ RES = 3          # px da camada por px do jogo
 AMP = 2          # o render sai em RES * AMP e é reduzido AMP vezes
 TELA = (360, 200)
 PE = (180, 190)
+SUB = 2          # quadros renderizados por quadro do laço do rig (subframe): troca de desenho todo tique no jogo, na
+                 # mesma velocidade da aura grande (que trocava a cada 2). Com uma camada só e troca a cada 2 tiques,
+                 # o tique do meio ficava parado (a deriva é sub-pixel): medir_aura acusou no filme de 2026-11-12
 
 # Por lutador: peças do rig.blend (malha, (sx, sz) em volta do pé, quadros do laço da peça), da de trás para a da
 # frente. A altura e a largura da aura grande vêm do conceito; aqui elas encolhem até a aura ficar abaixo do peito.
 DISCRETA = {
     "pengaro": dict(
         script="pengaro_aura.py",
-        pecas=[("malha_chao", (0.55, 0.55), 96), ("malha_coluna", (0.62, 0.38), 48)],
+        pecas=[("malha_chao", (0.7, 0.7), 96), ("malha_coluna", (0.85, 0.38), 48)],
         o_que="fumaça violeta-preta das sombras, baixa (do chão até o peito), saindo de um chão rachado pequeno"),
     "ck": dict(
         script="ck_aura.py",
@@ -72,9 +75,9 @@ def render(lutador, pasta):
     for nome, _, n in d["pecas"]:
         for o in malhas:
             o.hide_render = o is not pecas[nome]
-        for f in range(n):
-            cena.frame_set(f)
-            cena.render.filepath = os.path.join(saida, f"{nome}_{f:02d}.png")
+        for f in range(n * SUB):
+            cena.frame_set(f // SUB, subframe=(f % SUB) / SUB)
+            cena.render.filepath = os.path.join(saida, f"{nome}_{f:03d}.png")
             bpy.ops.render.render(write_still=True)
     print("TEMPO_RENDER", time.time() - t0)
 
@@ -97,17 +100,17 @@ def compor(lutador, pasta):
     d = DISCRETA[lutador]
     info = json.load(open(os.path.join(C.RAIZ, "sprites", lutador, "aura", "aura.json"), encoding="utf-8"))
     pal = C.Paleta(info["paleta"])
-    n = int(np.lcm.reduce([k for _, _, k in d["pecas"]]))
+    n = int(np.lcm.reduce([k * SUB for _, _, k in d["pecas"]]))
     def le(arq):  # em uint8: 144 quadros de 1080x600 em float passariam de 1 GB
         rgb, m = C.le_render(arq, AMP)
         return np.clip(np.round(rgb), 0, 255).astype(np.uint8), m
-    pecas = {nome: [le(os.path.join(pasta, "discreta", "render", f"{nome}_{f:02d}.png")) for f in range(k)]
+    pecas = {nome: [le(os.path.join(pasta, "discreta", "render", f"{nome}_{f:03d}.png")) for f in range(k * SUB)]
              for nome, _, k in d["pecas"]}
     quadros = []
     for f in range(n):
         rgb, m = None, None
         for nome, _, k in d["pecas"]:
-            r, mm = pecas[nome][f % k]
+            r, mm = pecas[nome][f % (k * SUB)]
             if rgb is None:
                 rgb, m = r.copy(), mm.copy()
             else:
@@ -149,7 +152,7 @@ def instala(lutador, pasta):
     for f in range(n):
         shutil.copy2(os.path.join(cam, f"discreta_{f:02d}.png"), destino)
     novo = dict(formato=2, lutador=lutador, aura="discreta", tela=[TELA[0] * RES, TELA[1] * RES],
-                pe=[PE[0] * RES, PE[1] * RES], escala=RES, tiques_por_quadro=2, alfa="0 ou 255",
+                pe=[PE[0] * RES, PE[1] * RES], escala=RES, tiques_por_quadro=1, alfa="0 ou 255",
                 arquivo="{nome}_{quadro:02d}.png",
                 camadas=[dict(nome="discreta", quadros=n, plano="atras", o_que=d["o_que"])],
                 paleta=info["paleta"],

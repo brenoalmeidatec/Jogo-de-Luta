@@ -8130,7 +8130,7 @@ ignorehitpause = 1
 type = ModifyExplod
 trigger1 = NumExplod(9600) && map(au_ck_k) > 0.5
 id = 9600
-animelem = ((ExplodVar(9600, 0, animelem) - 0) % 48) + 1
+animelem = ((ExplodVar(9600, 0, animelem) - 1) % 96) + 1
 animelemtime = 0
 ignorehitpause = 1
 

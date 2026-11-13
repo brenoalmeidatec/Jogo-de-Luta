@@ -4,8 +4,8 @@ Segue a regra dos efeitos proporcionais (docs/regra-efeitos-proporcionais.md, Br
 baixa e translúcida, atrás do corpo, com o corpo sempre legível por cima. O boss se vê pela arte nova, não pela aura.
 
 A camada está pronta em sprites/pengaro/aura/ (ferramentas/aura_blender/discreta.py): fumaça violeta-preta das
-sombras saindo de um chão rachado pequeno, do chão até o peito, 96 quadros em 3x (1080x600, pé em (540, 570)),
-2 tiques por quadro. É a coluna e o chão do rig.blend da aura grande (pengaro_aura.py) encolhidos em volta do pé.
+sombras saindo de um chão rachado pequeno, do chão até o peito, 192 quadros em 3x (1080x600, pé em (540, 570)),
+1 tique por quadro (desenho novo todo tique: com uma camada só, trocar a cada 2 deixava o tique do meio parado). É a coluna e o chão do rig.blend da aura grande (pengaro_aura.py) encolhidos em volta do pé.
 
 No jogo: um Explod (9600, [Statedef -4]) com scale 1/3 (o Explod não usa a escala do lutador), alfa 0,5, atrás de
 qualquer lutador (sprpriority -6; o mais baixo de um lutador é o -3 do caído morto, estado 5150 do common1) e no
@@ -42,12 +42,13 @@ SURTO = "((StateNo = 3000 || StateNo = 3100 || StateNo = 3200) && Time = 1) || (
 
 def montar():
     info = json.loads((PASTA / "aura.json").read_text(encoding="utf-8"))
-    assert info["formato"] == 2 and info["escala"] == 3 and info["tiques_por_quadro"] == 2, info
+    assert info["formato"] == 2 and info["escala"] == 3 and info["tiques_por_quadro"] == 1, info
     assert [c["nome"] for c in info["camadas"]] == ["discreta"] and info["camadas"][0]["plano"] == "atras", info
     n = info["camadas"][0]["quadros"]
     quadros = [np.asarray(Image.open(PASTA / info["arquivo"].format(nome="discreta", quadro=q)).convert("RGBA"))
                for q in range(n)]
-    camada = aura.Camada("discreta", quadros, plano="tras", no_chao=True, eixo=tuple(info["pe"]), res=info["escala"],
+    camada = aura.Camada("discreta", quadros, tempo=info["tiques_por_quadro"], plano="tras", no_chao=True,
+                         eixo=tuple(info["pe"]), res=info["escala"],
                          prioridade=-6, surto_alfa=0.1, surto_tremor=1.0,
                          mov=aura.Movimento(deriva=(1.0, 0.6), deriva_periodo=170, alfa=0.5, respira=0.08))
     assert camada.prioridade < PRIORIDADE_MIN_LUTADOR, "camada da aura na frente de um lutador"

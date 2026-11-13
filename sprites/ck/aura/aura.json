@@ -11,13 +11,13 @@
   570
  ],
  "escala": 3,
- "tiques_por_quadro": 2,
+ "tiques_por_quadro": 1,
  "alfa": "0 ou 255",
  "arquivo": "{nome}_{quadro:02d}.png",
  "camadas": [
   {
    "nome": "discreta",
-   "quadros": 48,
+   "quadros": 96,
    "plano": "atras",
    "o_que": "paredão de som de fumaça cinza-esverdeada pequeno, atrás das pernas (até a cintura), cones batendo"
   }

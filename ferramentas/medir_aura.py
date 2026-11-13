@@ -306,7 +306,11 @@ def main():
              f"(referência: {v_ref_fim} quadros)", min(int(ceus[1].sum()), int(ceus[2].sum())) > 2000)
 
     ceu = ceus[2]
-    liga_video = next(n for n in range(1, total) if np.abs(rec(quadro(todos, n), ceu) - rec(base, ceu)).mean() > 1.0)
+    limiar = 1.0
+    if a.discreta:  # a aura discreta entra pelo alfa numa faixa larga: vale o primeiro quadro acima do ruído da captura
+        ruido = [np.abs(rec(quadro(todos, n), ceu) - rec(base, ceu)).mean() for n in range(1, 21)]
+        limiar = max(0.1, 2.5 * float(np.median(ruido)))
+    liga_video = next(n for n in range(1, total) if np.abs(rec(quadro(todos, n), ceu) - rec(base, ceu)).mean() > limiar)
     if a.discreta:  # a camada nasce sem alfa e fica visível em 1 ou 2 ticks: vale o tique em que o Explod nasce
         liga_log = next(t for t in sorted(ticks) if ticks[t][2]["camadas"] and any(ticks[t][2]["camadas"].values()))
     else:
@@ -542,6 +546,13 @@ def main():
         for t in range(loop[0], loop[1], 7):
             com = quadro(todos, v(t))
             m = lado & (np.abs(com - sem).max(axis=2) > 40)
+            # pedaço solto pequeno não é aura: ponta de cabelo ou corrente da ginga que o filme de referência não pegou
+            # naquele quadro (2026-11-12: 3 px de cabelo do endiabrado a 111 px do chão viravam "aura de 111 px")
+            from scipy import ndimage as ndi
+            rot, n_rot = ndi.label(m, structure=np.ones((3, 3)))
+            if n_rot:
+                tam = ndi.sum(m, rot, range(1, n_rot + 1))
+                m &= np.isin(rot, 1 + np.nonzero(tam >= 60)[0])
             ys = np.nonzero(m.any(axis=1))[0]
             if len(ys):
                 topo = min(topo, int(ys.min()))

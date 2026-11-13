@@ -25,8 +25,12 @@ que sai o rig), e `discreta.py` tira dela a camada do jogo:
 na origem com escala (sx, 1, sz)), renderiza em 6x (2160x1200) uma passada por peça e reduz a 3x (1080x600, pé em
 (540, 570)) pela média 2x2; depois paleta fixa da aura (as 15 cores do `aura.json`) com histerese, contorno escuro de
 2 px e farelo apagado. O `instala` apaga os PNG da aura grande de `sprites/<id>/aura/` e grava `discreta_NN.png` +
-`aura.json` (formato 2, `escala: 3`). Hoje: Pengaró (coluna 0,62x0,38 + chão 0,55, 96 quadros) e CK (paredão 0,36,
-48 quadros). Quem liga no jogo é o `ferramentas/aura_<lutador>.py` com `aura.Camada(res=3)`.
+`aura.json` (formato 2, `escala: 3`). Cada quadro do laço do rig sai em 2 (`SUB`, subframe do Blender) e o jogo troca de
+desenho todo tique (`tiques_por_quadro: 1`), na mesma velocidade da aura grande: com uma camada só e troca a cada 2
+tiques, o tique do meio ficava parado (a deriva do motor é sub-pixel). Hoje: Pengaró (coluna 0,85x0,38 + chão 0,7,
+192 quadros, 61 px de altura e 155 de largura: mais estreita, ela sumia atrás das pernas abertas do endiabrado) e CK
+(paredão 0,36, 96 quadros, 49 px de altura e 72 de largura). Quem liga no jogo é o
+`ferramentas/aura_<lutador>.py` com `aura.Camada(res=3, tempo=1)`.
 
 ## Rodar
 

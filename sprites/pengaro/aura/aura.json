@@ -11,13 +11,13 @@
   570
  ],
  "escala": 3,
- "tiques_por_quadro": 2,
+ "tiques_por_quadro": 1,
  "alfa": "0 ou 255",
  "arquivo": "{nome}_{quadro:02d}.png",
  "camadas": [
   {
    "nome": "discreta",
-   "quadros": 96,
+   "quadros": 192,
    "plano": "atras",
    "o_que": "fumaça violeta-preta das sombras, baixa (do chão até o peito), saindo de um chão rachado pequeno"
   }
@@ -99,6 +99,6 @@
    215
   ]
  ],
- "nota": "Regra dos efeitos proporcionais (Breno, 2026-11-12): uma camada leve, baixa, atrás do corpo, em 3x. Peças do rig.blend da aura grande (pengaro_aura.py) encolhidas em volta do pé: malha_chao 0.55x0.55, malha_coluna 0.62x0.38",
+ "nota": "Regra dos efeitos proporcionais (Breno, 2026-11-12): uma camada leve, baixa, atrás do corpo, em 3x. Peças do rig.blend da aura grande (pengaro_aura.py) encolhidas em volta do pé: malha_chao 0.7x0.7, malha_coluna 0.85x0.38",
  "gerado_por": "ferramentas/aura_blender/discreta.py"
 }
