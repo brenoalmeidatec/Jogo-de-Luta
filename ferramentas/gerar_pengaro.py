@@ -650,7 +650,8 @@ def ler_efeito(nome):
 
 
 # Pengaró: efeitos desenhados no ChatGPT como os lutadores (ferramentas/efeitos_folha.py), em vez do pixelfx.
-# ação -> (efeito do normal, efeito do endiabrado, ticks por quadro ou sequência). O do endiabrado entra pelo RemapPreset.
+# ação -> (efeito do normal, efeito do endiabrado, ticks por quadro ou sequência). Com efeito do normal, só ele entra
+# no jogo (as duas formas usam a mesma faísca, regra dos efeitos proporcionais); o do endiabrado só vale sem o normal.
 # Sequência de faísca (estilo KOF): (índice do quadro | "F" = clarão gerado do quadro de pico, ticks, escala).
 # Medido em jogo de arcade (só o tempo): a faísca vive 8 ticks, 4 desenhos de 2 ticks, com o pico (o clarão) no 3º e
 # 4º tick, e o pico tem ~1/3 da altura do lutador (~40 de ~120 unidades, já com o sparkscale do IMPACTO). Some antes do
@@ -1761,22 +1762,19 @@ SEM_RASTRO = {760, 800, 830, 840, 1500, 1501, 3403}
 
 def efeitos_cns(ativos, fracos=frozenset()):
     """[Statedef -3] com o rastro que acompanha cada golpe médio para cima, que nasce no elemento em que a caixa de
-    golpe liga, na ponta da caixa (onde está o punho ou o pé). Golpe fraco não ganha rastro: errar não parece acerto."""
+    golpe liga, na ponta da caixa (onde está o punho ou o pé). Golpe fraco não ganha rastro: errar não parece acerto.
+    Só na forma normal: o corte de sombra (9212) e a poeira violeta (9215) que o endiabrado punha em todo golpe saíram
+    (regra dos efeitos proporcionais do Breno, 2026-11-12). A ação do endiabrado (anim + 10000) não ganha nada; a
+    normal, que o endiabrado também usa com os sprites trocados, só fora do Despertar."""
     t = ["[Statedef -3]\n"]
     for anim, (elemento, caixa) in sorted(ativos.items()):
-        base = anim - 10000 if anim >= 10000 else anim
-        if not 200 <= base < 4000 or base == 2000 or base in SEM_RASTRO or base in fracos:
+        if not 200 <= anim < 4000 or anim == 2000 or anim in SEM_RASTRO or anim in fracos:
             continue
         x1, y1, x2, y2 = caixa
-        aereo = 600 <= base < 700
+        aereo = 600 <= anim < 700
         chao = max(y1, y2) >= -25 and abs(y2 - y1) <= 30 and not aereo  # rasteira: poeira no chão
         x = max(x1, x2) - 8
         pos = f"{x}, 0" if chao else f"{x}, {(y1 + y2) // 2}"
-        # Só na forma normal: o corte de sombra (9212) e a poeira violeta (9215) que o endiabrado punha em todo golpe
-        # saíram (regra dos efeitos proporcionais do Breno, 2026-11-12). A ação do endiabrado (anim + 10000) não ganha
-        # nada; a normal, que o endiabrado também usa com os sprites trocados, só fora do Despertar.
-        if anim >= 10000:
-            continue
         efeito = 9214 if chao else 9213
         t.append(f"[State -3, Efeito do golpe {anim}]\ntype = Explod\n"
                  f"trigger1 = Anim = {anim} && AnimElem = {elemento} && var(20) <= 0\n"

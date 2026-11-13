@@ -19,7 +19,12 @@ chão da aura grande do Blender encolhidos em volta do pé (sem chicotes, fiapos
 (1 Explod, 9600, scale 1/3, alfa 0,5, no `[Statedef -4]`; entra em 44 ticks e sai em 34 só pelo alfa, sem crescer). O boss se vê pela arte nova, não pela aura. Liga com o Despertar
 (e na transformação e no super 3100), incha nos supers, apaga junto com a forma endiabrada. Matiz média 281°: nenhum
 outro lutador usa violeta (CK 72°, Gutto 350°, Hazak 30°, Raiclaven 220°). As folhas `fx_aura_*` do Lote 7 não são
-mais usadas.
+mais usadas. Tamanho no pior tique (`aura.altura()`/`largura()`, com surto e deriva): 69 px de altura (teto 71) e
+**176 px de largura**, ~2,5x a largura dele e o dobro da aura do CK (84 px): baixa, mas larga. A regra não põe teto
+de largura; falta o Breno julgar se ainda é discreta.
+Golpes do endiabrado: as mesmas faíscas da forma normal, sem o corte de sombra / poeira violeta em todo golpe e sem
+o rastro (AfterImage) o Despertar inteiro (regra dos efeitos proporcionais, 2026-11-12); o rastro de 40 tiques de
+cada super continua.
 Efeitos (pixelfx e recolor): hit-spark nos fracos, crit-hit nos fortes e finalizadores, ground-slam na Queda Escura
 e no Pisão de Bar, fumaça roxa no Despertar.
 

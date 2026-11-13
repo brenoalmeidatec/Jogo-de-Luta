@@ -84,7 +84,7 @@ automático. É a decisão 1 da seção 8.
 | E10 | tamanho | aura ≥ 2x a altura do lutador |
 | E11 | desligar | nenhum `Explod` vivo depois do fade (cerca de 35 ticks) |
 | E12 | efeito solto e partícula | ≥ 6 desenhos, 2 ticks cada, nasce e morre com fade ou escala; **nunca 1 sprite parado**. Peça de assinatura (elo, ferradura, nota, lâmina, anel) tem ≥ 4 desenhos próprios dela virando; farelo miúdo (lasca, fagulha de 3 a 5 px) pode ser 1 desenho com giro e escala assados. Partícula de um desenho só, sem giro nem escala, o `aura.py` recusa |
-| E13 | HUD na frente | nas caixas da vida, do retrato, do nome e do poder, ≤ 0,5% dos pixels muda com a aura ligada (o HUD do jogo tem `layerno = 1`) |
+| E13 | HUD na frente | nas caixas da vida, do retrato, do nome e do poder, ≤ 0,5% dos pixels muda com a aura ligada (o HUD do jogo tem `layerno = 2`) |
 | E14 | custo | no máximo 30 `Explod` vivos por aura no pior caso (camadas + partículas no surto); o `aura.py` faz a conta e recusa montar acima |
 | E15 | nunca para | a aura roda no `[Statedef -4]`: segue viva em superpausa de outro, com o lutador em estado custom (agarrado), na intro e na pose de vitória; antes da intro de cada round não sobra `Explod` |
 | E16 | espalhamento das partículas | duas peças seguidas nascem a ≥ 20% da área uma da outra (o `resumo()` da aura imprime); nada de fila que anda |

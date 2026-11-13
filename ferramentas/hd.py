@@ -236,6 +236,14 @@ def aplicar(s, air, cns, pares, vitima=frozenset()):
     print(f"HD: {hd} sprites trocados pelo desenho 3x, {ampliado} só ampliados, {len(efeito_spr - corpo_spr)} de "
           f"efeito em 1x" + (f"; {len(dos_dois)} sprites em corpo E efeito (copiados: o efeito fica em 1x)" if dos_dois else "")
           + (f"; anim de Explod por expressão: {sorted(set(duvida))}" if duvida else ""))
+    # Despertado que mistura desenho 3x com 1x só ampliado na mesma ação pisca de nitidez na tela (a ginga parada do
+    # CK, cético de 2026-11-12): conta aqui, em cada geração. Ação inteira ampliada fica só grossa, sem piscar.
+    destino = dict(trocas_do_remap(cns))
+    amp = set(sem_gemeo)
+    mistas = sorted(n for n, spr in por_acao.items() if n not in efeito_n
+                    and len({destino[x] in amp for x in spr if x in destino}) == 2)
+    if destino:
+        print(f"HD do despertado: {len(mistas)} ações misturam 3x com 1x ampliado" + (f" {mistas[:12]}" if mistas else ""))
     if os.environ.get("HD_LISTA"):
         print("  sem gêmeo:", sem_gemeo)
         print("  corpo e efeito:", sorted(dos_dois))

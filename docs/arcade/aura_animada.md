@@ -127,8 +127,9 @@ Conferido no fonte da tag v1.0.0 (`src/bytecode.go`, `src/char.go`, `src/compile
 - Camadas com o mesmo `tempo` trocavam de quadro todas no mesmo tick. Cada camada nasce com `animelemtime` diferente,
   e todo tick tem desenho novo.
 - HUD: o motor desenha vida, poder, retrato, nome e relógio atrás dos lutadores e dos `Explod`, a não ser que o
-  elemento tenha `layerno = 1`. O `gerar_layout.py` põe isso em todos (`hud_por_cima`). Efeito colateral: lutador
-  que pula alto passa por trás das barras.
+  elemento tenha `layerno`. Com `layerno = 1` a faísca de acerto (camada de cima do motor) ainda tampava o relógio;
+  o `gerar_layout.py` põe `layerno = 2` em todos (`hud_por_cima`, 2026-11-12). Efeito colateral: lutador que pula
+  alto passa por trás das barras.
 
 ## Teste e aceite
 

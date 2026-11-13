@@ -1752,3 +1752,53 @@ O `hd.py` passou a aceitar recorte 1-4 px diferente, porque o gerador limpa a bo
 - Gutto despertado: 442 sprites só ampliados, pede folhas 3x da forma.
 - Breno olhar a aura discreta no jogo (cor e tamanho) e o rastro do Pengaró.
 - Filmes, tiras e medidas: `scratchpad/integra2/` da sessão do construtor (fora do repositório).
+
+## 2026-11-12 — integra-mugen, rodada 3: o que os céticos acharam (Claude, construtor do orquestrador)
+
+**Correção da entrada de cima:** no `f559931a` a forma base do Gutto e do Raiclaven NÃO era igual à da mugen. Os
+`quadros_hd/` regerados nesta máquina (`hd_blender.py`, fora do git) saem diferentes dos do Breno, e a paleta mudou
+junto (223 e 157 cores de 256 em comum, ~750 sprites requantizados, retratos inclusive). Consertado abaixo.
+
+**O que mudou** (commits `cc5d57c2` e o seguinte):
+- **Despertado inteiro em 3x** (`hd.py`): a caixa do quadro ignora pontinhos soltos de até 12 px. O gerador do CK apaga
+  essas ilhas do quadro do Ratão e o PNG de 1x ainda as tinha; a caixa saía 3 a 5 px mais alta e o gêmeo não era
+  achado. A ginga parada do CK alternava 3x com 1x ampliado (HHHAHAHH). Agora o gerador imprime
+  `HD do despertado: N ações misturam 3x com 1x ampliado`: **CK 0 (antes 72), Pengaró 0 (antes 74), Raiclaven 0**;
+  Gutto 3 (181, 601, 10601) e 198 inteiras só ampliadas (a arte dele é reescalada pelo `fator_endiabrado`, e o gêmeo
+  3x não acompanha escala: é código a fazer, não folha). Linhas `HD:` — CK 501 / 47 / 165, Pengaró 501 / 83 / 266,
+  Gutto 606 / 565 / 40, Raiclaven 1057 / 112 / 40, Hazak 404 / 0 / 208 (Hazak byte a byte igual).
+- **Paleta fixa** (`sprites/<l>/paleta_sff.act` = a paleta da mugen; `escrever_sff` usa ela; `conferir_sff.py paleta`
+  regrava): sem ela o gêmeo a mais refazia o MEDIANCUT e mudava a cor de 19% dos pixels da forma base do CK.
+- **Gutto e Raiclaven com a base da mugen** (`conferir_sff.py transplantar base.sff chars/<l>`): só o despertado vem do
+  gerador. Contra a `origin/mugen`: paleta igual e **0 sprite fora do despertado diferente** nos quatro. CK e Pengaró
+  mudam fora do RemapPreset só em sprites do Despertar (CK 265/267 da 9203, Pengaró 601 da 2000, agora 3x) e nos 4 da
+  3012 do CK (a cópia HD saiu, o próprio sprite virou HD).
+- **Endiabrado sem efeito a mais** (regra dos efeitos proporcionais): saiu o `AfterImageTime` do Despertar inteiro
+  (fantasma azul) do kit, para todos; saíram a faísca própria do endiabrado (92xx + 30) e o corte de sombra / poeira
+  violeta em todo golpe (9212/9215 no `[Statedef -3]`). O endiabrado usa as faíscas da forma normal; o rastro de 40
+  tiques de cada super continua.
+- **HUD com `layerno = 2`** (`gerar_layout.py`): com 1 a faísca de acerto (camada de cima do motor) ainda tampava o
+  relógio e a vida do P2 no super 3000 do Pengaró. `gerar_layout.py` agora reproduz o `fight.def` (slow.*, over.*).
+- `aura.altura()` com surto e deriva (CK 55 px, Pengaró 69 px, teto 71); `aura.largura()` no resumo (CK 84, **Pengaró
+  176 px**, anotado na ficha para o Breno). `bosses_kit.md` avisa que a regra de 2026-11-12 vale acima dele.
+  `regra-alta-resolucao.md`: hd_blender entre máquinas, paleta fixa, tamanhos (CK 7,3 MB, Pengaró 12,6, Gutto 30,8,
+  Raiclaven 23,1, Hazak 4,4). Checklist da seção 9 com a linha do despertado e a do endiabrado.
+
+**Números** (sandbox, um por vez):
+- Robôs: CK 191/0, Pengaró 151/0, Gutto 143/1, Raiclaven 143/1; estados, vidas e danos iguais à rodada anterior (CK,
+  Pengaró) e à mugen (Gutto, Raiclaven; a falha é a mesma da mugen, `var(37) = 1 (arte endiabrada) no meio do 3100`).
+- `medir_aura --discreta`: CK 61 OK / 0 falha, Pengaró 59 OK / 0 falha (refilme; o 1º filme de cada deu 3 e 1 falhas
+  de captura — quadro "parado" e salto no surto, com o motor andando 1 desenho por tique, como já tinha acontecido).
+  CK: loop 0,74/0,33, surto 1,42x/1,50x contra os vizinhos, 41 px, alfa 0,49, pernas ≥ 99,5%. Pengaró: loop
+  0,47/0,22, surto 1,39x/1,76x, 15/10 px, alfa 0,48/0,49, pernas ≥ 99,9%.
+- Filmes: Pengaró `luta` sem o fantasma azul (pulo e parado); no super 3000 o HUD fica na frente da faísca. CK `cena`:
+  ginga do despertado nítida em todos os quadros (q452 a q485, eram q458/q470 em blocão). Sem quadro preso nem piscada.
+
+**Pendente:**
+- A faísca final dos supers (9205, `FAISCA_FINAL`: clarão branco de ~150 px com borda reta de caixa, nas duas formas,
+  já na mugen) cobre o tronco do P2 por ~4 quadros. A regra deixa o super ter o efeito grande; a arte nova sai na
+  missão dos efeitos do Blender.
+- Gutto despertado só ampliado (escala do `fator_endiabrado`). Gutto e Raiclaven ainda têm o PalFX que tinge o corpo
+  no Despertar (o CK e o Pengaró já não têm).
+- Parry: nenhum roteiro do robô cobre; não filmado.
+- Breno: ver no jogo a largura da aura do Pengaró (176 px) e a cor das duas auras.

@@ -2232,12 +2232,14 @@ HUD_POR_CIMA = ("Lifebar", "Powerbar", "Face", "Name", "Time", "Combo", "WinIcon
 
 
 def hud_por_cima(t):
-    """Todo elemento do HUD (vida, poder, retrato, nome, relogio, acertos, vitorias) ganha `layerno = 1`.
+    """Todo elemento do HUD (vida, poder, retrato, nome, relogio, acertos, vitorias) ganha `layerno = 2`.
 
     Sem isso o motor desenha o HUD na camada 0, ATRAS dos lutadores e dos Explods (heranca do MUGEN): a aura antiga
-    do Despertar (mais de 2x a altura do lutador, antes da regra da aura discreta) e as faiscas grandes passavam por
-    cima do relogio e das barras. Com layerno = 1 o HUD fica na frente de tudo o que e da luta (lutador que pula alto
-    passa por tras da barra, nao por cima)."""
+    do Despertar (mais de 2x a altura do lutador, antes da regra da aura discreta) passava por cima do relogio e das
+    barras. Com layerno = 1 o HUD ficava na frente dos lutadores, mas a faisca de acerto (que o motor desenha na
+    camada de cima, a dos Explods ontop) ainda tampava o relogio e a vida do P2 no super do Pengaro (filme da
+    sandbox, cetico de 2026-11-12). Com layerno = 2 (o mesmo que o fight.def do motor usa no contador de combo) o HUD
+    fica na frente de tudo o que e da luta (lutador que pula alto passa por tras da barra, nao por cima)."""
     saida, secao = [], ""
     for linha in t.split("\n"):
         saida.append(linha)
@@ -2247,7 +2249,7 @@ def hud_por_cima(t):
         elif secao in HUD_POR_CIMA and "=" in s and not s.startswith(";"):
             chave = s.split("=")[0].strip()
             if chave.rsplit(".", 1)[-1] in ("spr", "anim", "font"):
-                saida.append(f"{chave.rsplit('.', 1)[0]}.layerno = 1")
+                saida.append(f"{chave.rsplit('.', 1)[0]}.layerno = 2")
     return "\n".join(saida)
 
 
