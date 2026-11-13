@@ -24,6 +24,8 @@ PONTOS = {
     "b_ginga": [(202, 478), (465, 481), (734, 488), (999, 497), (1264, 487), (1531, 483), (1802, 480), (2078, 480)],
     "b_anda": [(501, 494), (751, 476), (1562, 462)],  # nos outros quadros a perna da marca está de costas
     "b_soco": [(204, 471, 13, 8), (458, 470, 15, 8), (716, 460), (1015, 462), (1261, 452), (1532, 457), (1826, 462), (2095, 472, 15, 8)],
+    # 2026-11-12 (cetico 3): marca fina de onda com olho que sobrou na barra do bermudao depois da refeita
+    "b_golaco": [(2047, 449, 14, 8)],
 }
 # pedaço claro da marca: centro a até RAIO px do ponto e caixa de no máximo LARG_MAX x ALT_MAX (as listras da
 # camuflagem em volta são mais compridas que isso e ficam)
