@@ -1516,14 +1516,13 @@ PASTA_ARCADE = {}
 # desenhos bons: ginga (0), garrafa subindo (1) e garrafa erguida (2), com um segundo brinde (1, 2) e a pose final no 2.
 # bola 2 (retoque 2): os dois braços saem do ombro de trás (um ergue a lata, o outro segura a garrafa) e o ombro da
 # frente fica sem braço; repete o 3 (o braço da lata já armado no alto), que é para onde o 2 ia.
-REPETE_ARCADE = {("golaco", 1): 0, ("vitoria", 3): 2, ("vitoria", 4): 1, ("vitoria", 5): 2, ("vitoria", 6): 2,
-                 ("vitoria", 7): 2, ("bola", 2): 3}
+REPETE_ARCADE = {}  # desenhos do padrão novo (2026-11-13, folhas_novas): os defeitos antigos não existem mais
 # Forma endiabrada das folhas novas que não têm e_<folha>: empresta o desenho endiabrado que a ação já usava
 # (correr = andar endiabrado; recuo = e_defesa 6), para o Despertar não mudar.
 ENDIABRADO_EMPRESTADO = {"corre": lambda i: ("anda_fluida", (0, 1, 2, 2, 3, 4, 5, 5)[i]), "recuo": lambda i: ("pulo", 3) if i >= 2 else ("defesa", 6)}  # Lote 7: no ar, o boss encolhido do pulo
 # Desenho arcade deslocado em x (px). afastar 6: o pé de apoio (o de trás, plantado em x=-41 no 5 e -39 no 7) aparecia
 # em -29: o corpo dava um tranco para a frente e voltava.
-DESLOCA_ARCADE = {("afastar", 6): -10}
+DESLOCA_ARCADE = {}  # padrão novo (2026-11-13)
 
 
 # Golpes de pengaro_extra.py com desenho trocado no Pengaró arcade: estado -> {elemento (de 0): (folha, desenho)}.
