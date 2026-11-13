@@ -51,6 +51,14 @@ Radeon RX 7600 XT; 16 GB) o trabalho pesado não pode travar o uso. Regra, aplic
   processos cuja linha de comando tem `fila*.sh`, `filmar_aura`, `testar_pengaro` ou `medir_aura`, fechar a sandbox
   (`sandbox.fechar_sandbox()` e, se sobrar, `taskkill /F /IM WindowsSandboxRemoteSession.exe` e
   `WindowsSandboxServer.exe`), tirar a `sandbox.trava` e conferir de novo a lista de processos depois de uns segundos.
+- **ChatGPT sem acúmulo de chats** (pedido do Alisson, 2026-11-12): use o chat do conceito do lutador; chat novo só se
+  o antigo travar, e anote a URL. Quando a rodada acabar e o chat não for mais necessário, **apague** (menu do chat >
+  Excluir, ou `PATCH /backend-api/conversation/<id>` com `{"is_visible": false}`). Apague só chats que o trabalho do
+  jogo criou; chat pessoal da conta nunca se toca, e chat antigo de que não se sabe a origem vai numa lista para o dono
+  decidir. Último passo de todo workflow de imagens: um agente de limpeza que apaga e confere.
+- **Login do ChatGPT no navegador embutido cai sozinho** (2026-11-12, entre 13:00 e 18:40, sem reinício). Hipótese não
+  provada: cai quando o painel fica sem aba. Agente abre a própria aba com `tabs_create`, fecha só a sua e nunca fecha
+  a `seed`. Se aparecer "Entrar", para, salva o que tem e avisa; o dono entra de novo.
 
 ## 2. Frentes em paralelo: uma branch e uma pasta por frente
 
