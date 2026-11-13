@@ -26,7 +26,8 @@ continuam em [`regras-dos-lutadores.md`](regras-dos-lutadores.md). Estilo e core
   [`regra-efeitos-proporcionais.md`](regra-efeitos-proporcionais.md). O Claude não liga sprite novo no jogo, a não ser
   que o Breno peça.
 - **Efeitos simples e do tamanho do golpe** (Breno, 2026-11-12): golpe fraco tem só um ventinho, e golpe forte que joga
-  longe tem impacto maior. Aura e efeito do endiabrado ficam discretos. Efeitos novos são feitos no Blender. Tudo em
+  longe tem impacto maior. **O endiabrado não muda:** aura grande e monstruosa e os efeitos dele como eram (correção do
+  Breno, 2026-11-13). Efeitos novos são feitos no Blender. Tudo em
   [`regra-efeitos-proporcionais.md`](regra-efeitos-proporcionais.md).
 - **Lutador em alta resolução é a regra** (Breno, 2026-11-12): o corpo vai para o jogo desenhado em 3x e mostrado em
   1/3, para o motor não esticar e o boneco não ficar borrado. Folha nova ou refeita ganha o gêmeo 3x antes de subir.

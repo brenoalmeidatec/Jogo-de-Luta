@@ -11,6 +11,8 @@ corpo e altura, sem garrafa; pele marrom-escura arroxeada, olhos violeta sem pup
 pontas violeta e dois chifres curtos de fumaça; casaco de mestre preto sem manga com friso dourado e forro roxo, barra
 rasgada até a canela; rachaduras violeta no peito; corda trançada ouro e violeta com duas pontas até o joelho; calça
 preta com barra em brasa violeta; algemas de corrente partida nos pulsos e tornozelos; braceletes de ouro.
+> **Desfeito em 2026-11-13 (correção do Breno):** o Despertar volta a ter a aura grande e monstruosa e os efeitos do endiabrado. O que segue sobre a aura discreta ficou só como histórico. Ver [regra dos efeitos proporcionais](../regra-efeitos-proporcionais.md).
+
 Aura do Despertar (discreta, [regra dos efeitos proporcionais](../regra-efeitos-proporcionais.md) de 2026-11-12):
 fumaça violeta-escura das sombras, à parte do corpo e toda ATRÁS dos lutadores (nunca cobre corpo nenhum): fumaça
 violeta-preta baixa, do chão até o peito, saindo de um chão rachado pequeno, que fica no chão no pulo. É a coluna e o

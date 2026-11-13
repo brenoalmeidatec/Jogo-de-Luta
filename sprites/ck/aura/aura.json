@@ -1,25 +1,48 @@
 {
- "formato": 2,
+ "formato": 1,
  "lutador": "ck",
- "aura": "discreta",
+ "aura": "paredao",
  "tela": [
-  1080,
-  600
+  360,
+  200
  ],
  "pe": [
-  540,
-  570
+  180,
+  190
  ],
- "escala": 3,
- "tiques_por_quadro": 1,
+ "tiques_por_quadro": 2,
  "alfa": "0 ou 255",
  "arquivo": "{nome}_{quadro:02d}.png",
  "camadas": [
   {
-   "nome": "discreta",
+   "nome": "paredao",
+   "quadros": 48,
+   "plano": "atras",
+   "o_que": "parede de caixas de som de fumaça: cones pulsando no grave, topo desfiando"
+  },
+  {
+   "nome": "aneis",
    "quadros": 96,
    "plano": "atras",
-   "o_que": "paredão de som de fumaça cinza-esverdeada pequeno, atrás das pernas (até a cintura), cones batendo"
+   "o_que": "anéis de fumaça que saem dos cones, crescem, se afastam e se desfazem"
+  },
+  {
+   "nome": "nevoa",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "névoa baixa deslizando no chão"
+  },
+  {
+   "nome": "cacos",
+   "quadros": 48,
+   "plano": "atras",
+   "o_que": "cacos de vidro verde e tampinhas pulando a cada grave"
+  },
+  {
+   "nome": "fagulhas",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "fagulhas laranja em forma de folha subindo"
   }
  ],
  "paleta": [
@@ -99,6 +122,6 @@
    178
   ]
  ],
- "nota": "Regra dos efeitos proporcionais (Breno, 2026-11-12): uma camada leve, baixa, atrás do corpo, em 3x. Peças do rig.blend da aura grande (ck_aura.py) encolhidas em volta do pé: malha_paredao 0.36x0.36",
- "gerado_por": "ferramentas/aura_blender/discreta.py"
+ "nota": "Compasso de 4 tempos em 48 quadros (12 por tempo, 150 bpm a 2 tiques). Tudo atrás do corpo. O miolo da parede (atrás do corpo) é remendo: caixas dos lados copiadas.",
+ "gerado_por": "ferramentas/aura_blender/ck_aura.py"
 }

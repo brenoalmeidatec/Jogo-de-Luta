@@ -1903,3 +1903,34 @@ feio, alto (o pote do relógio descia até y = 150) e a barra de poder ficava na
   - O "?" da escolha aleatória aparece desencaixado sobre a célula vazia da grade.
   - O sprite de luta do Pengaró continua de pele clara (missão do Alisson em
     `docs/arcade/pedido-pengaro-hazak-nitidez.md`).
+
+## 2026-11-13 — Auras grandes e efeitos do endiabrado de volta (Claude, sessão do Breno)
+
+**Correção do Breno:** "eu queria que os efeitos de combate ficassem mais simples, e eu falei que no modo endiabrado eu
+não queria que mudasse nada, queria as auras monstruosas e grandes para mostrar que tem poder". A regra de 2026-11-12
+foi lida como "aura discreta" (o erro começou no texto que eu escrevi na `regra-efeitos-proporcionais.md`). Desfeito:
+
+- **Aura grande do CK e do Pengaró:** `aura_ck.py`, `aura_pengaro.py` e `sprites/{ck,pengaro}/aura/` voltaram à versão
+  de antes do 624030c9 (Pengaró com 4 camadas, 9600 a 9603; CK com 3, 9600 a 9602). No CK, o Baile e o Grave voltam
+  a usar o paredão da aura em surto, sem a caixa preta 9250.
+- **Efeitos do endiabrado:** os blocos de efeito do cc5d57c2 foram desfeitos no `gerar_pengaro.py`, `gerar_ck.py` e
+  `gerar_hazaki.py`. Voltaram o rastro do Despertar (AfterImageTime), a faísca própria do endiabrado (92xx + 30) e o
+  corte de sombra e a poeira violeta em todo golpe.
+  - Ficaram a paleta fixa, o despertado em 3x e o HUD na frente da faísca.
+- **Lutadores:** o CK e o Pengaró foram gerados de novo. O Gutto e o Raiclaven também, e depois passaram pelo
+  `conferir_sff.py transplantar` com a base do ca786230 (a forma base é a da mugen). Os retratos novos foram regravados
+  (`trocar_retratos.py`, que agora não duplica se rodar duas vezes). O Hazak não mudou.
+- **Robô** (`testar_pengaro.py --local`, `robo.lua` de volta às checagens da aura grande):
+
+  | Lutador | Passou | Falhou |
+  |---|---|---|
+  | Pengaró | 151 | 0 |
+  | CK | 191 | 0 |
+  | Gutto | 143 | 1 |
+  | Raiclaven | 143 | 1 |
+
+  A falha do Gutto e do Raiclaven é a mesma de antes na mugen.
+- **Docs:** a regra dos efeitos, as regras dos lutadores (seção 4 e checklist), `como-trabalhar`, `bosses_kit` e
+  avisos em `aura_animada`, `aura_blender` e nas fichas. **Não use `discreta.py` nem `conferir_discreta()` em
+  lutador de verdade.**
+- **Não visto em tempo real:** o filme de aura só roda na sandbox. O robô confere as camadas vivas no Despertar.

@@ -669,6 +669,7 @@ FX_PENGARO = {
     9213: ("whisky_rastro", None, 1), 9214: ("poeira", None, 1), 9215: (None, "sombra_chao", 1),
 }
 CHAO = {"poeira", "sombra_aura", "sombra_chao"}
+FAISCA_POR_FORMA = False
 
 
 def quadros_proprios(nome):
@@ -717,6 +718,7 @@ def carregar_proprios(sprites):
     for numero, (normal, endiabrado, ticks) in FX_PENGARO.items():
         if isinstance(ticks, list):
             acoes[numero] = sequencia_faisca(sprites, numero, normal, ticks, "fx")
+            acoes[numero + 30] = sequencia_faisca(sprites, numero + 30, endiabrado, ticks, "dfx")
             continue
         principal = normal or endiabrado
         lista = []
@@ -726,7 +728,17 @@ def carregar_proprios(sprites):
             sprites.add(chave, q, numero, i, pivo)
             if i % passo == 0:
                 lista.append((chave, ticks * passo))
+        if normal and endiabrado:
+            par = quadros_proprios(endiabrado)
+            sombra = []
+            for i in range(len(lista)):
+                q, pivo = par[round(i * (len(par) - 1) / max(1, len(lista) - 1))]
+                sprites.add(f"dfx_{principal}_{i}", q, numero + 30, i, pivo)
+                sombra.append((f"dfx_{principal}_{i}", ticks))
+            acoes[numero + 30] = sombra  # faísca do endiabrado, escolhida no HitDef (faiscas)
         acoes[numero] = lista
+    global FAISCA_POR_FORMA
+    FAISCA_POR_FORMA = True
     return acoes
 
 
@@ -1736,12 +1748,16 @@ def preset_despertado(s):
                                             fator_endiabrado("endiabrado")))
         g, i = s.codigos[destino]
         linhas.append(f"{grupo},{indice} = {g},{i}")
+    for nome, (grupo, indice) in s.codigos.items():  # faíscas: whisky no normal, sombra no Despertar
+        if nome.startswith("fx_") and f"d{nome}" in s.codigos:
+            g, i = s.codigos[f"d{nome}"]
+            linhas.append(f"{grupo},{indice} = {g},{i}")
     return "\n".join(linhas) + "\n\n"
 
 
 # Lote 7: a aura antiga do boss (fx_aura_anel, fx_aura_coluna e fx_aura_detritos nas ações 9211, 9210 e 9218) não
-# nasce mais no jogo: a aura do endiabrado é a do Blender (uma camada discreta em 3x, regra dos efeitos
-# proporcionais), ligada por ferramentas/aura_pengaro.py ([Statedef -4], Explod 9600). Os desenhos antigos seguem carregados só porque entram na escolha da paleta do .sff: tirá-los
+# nasce mais no jogo: a aura do endiabrado é a do Blender (a aura grande, que o Breno quer de volta no
+# Despertar, 2026-11-13), ligada por ferramentas/aura_pengaro.py ([Statedef -4], Explods 9600 a 9603). Os desenhos antigos seguem carregados só porque entram na escolha da paleta do .sff: tirá-los
 # da lista mudaria as 255 cores e todos os pixels da forma base. As ações deles NÃO vão para o .air: a paleta sai
 # antes da poda (escrever_sff), então a poda tira os 24 desenhos do .sff e a paleta não muda.
 AURA_BOSS = {9211: "aura_anel", 9210: "aura_coluna", 9218: "aura_detritos"}
@@ -1756,30 +1772,36 @@ def sem_tinta_do_despertar(cns):
     return cns
 
 
-# ações que já têm o próprio Impacto/Estouro (9205) ou não são golpe de membro: sem rastro por cima
+# ações que já têm o próprio Impacto/Estouro (9205/9235) ou não são golpe de membro: sem rastro por cima
 SEM_RASTRO = {760, 800, 830, 840, 1500, 1501, 3403}
 
 
 def efeitos_cns(ativos, fracos=frozenset()):
     """[Statedef -3] com o rastro que acompanha cada golpe médio para cima, que nasce no elemento em que a caixa de
-    golpe liga, na ponta da caixa (onde está o punho ou o pé). Golpe fraco não ganha rastro: errar não parece acerto.
-    Só na forma normal: o corte de sombra (9212) e a poeira violeta (9215) que o endiabrado punha em todo golpe saíram
-    (regra dos efeitos proporcionais do Breno, 2026-11-12). A ação do endiabrado (anim + 10000) não ganha nada; a
-    normal, que o endiabrado também usa com os sprites trocados, só fora do Despertar."""
+    golpe liga, na ponta da caixa (onde está o punho ou o pé). Golpe fraco não ganha rastro: errar não parece acerto."""
     t = ["[Statedef -3]\n"]
     for anim, (elemento, caixa) in sorted(ativos.items()):
-        if not 200 <= anim < 4000 or anim == 2000 or anim in SEM_RASTRO or anim in fracos:
+        base = anim - 10000 if anim >= 10000 else anim
+        if not 200 <= base < 4000 or base == 2000 or base in SEM_RASTRO or base in fracos:
             continue
         x1, y1, x2, y2 = caixa
-        aereo = 600 <= anim < 700
+        aereo = 600 <= base < 700
         chao = max(y1, y2) >= -25 and abs(y2 - y1) <= 30 and not aereo  # rasteira: poeira no chão
         x = max(x1, x2) - 8
         pos = f"{x}, 0" if chao else f"{x}, {(y1 + y2) // 2}"
-        efeito = 9214 if chao else 9213
-        t.append(f"[State -3, Efeito do golpe {anim}]\ntype = Explod\n"
-                 f"trigger1 = Anim = {anim} && AnimElem = {elemento} && var(20) <= 0\n"
-                 f"anim = {efeito}\npostype = p1\npos = {pos}\nbindtime = 3\nremovetime = 8\nsprpriority = 3\n"
-                 f"ownpal = 1\nscale = .75, .75\nignorehitpause = 1\n\n")
+        # Alguns golpes do endiabrado usam a ação normal com os sprites trocados: a forma decide pelo var(20).
+        if anim >= 10000:
+            formas = [(True, "var(20) > 0")]
+        elif anim + 10000 in ativos:
+            formas = [(False, "var(20) <= 0")]
+        else:
+            formas = [(False, "var(20) <= 0"), (True, "var(20) > 0")]
+        for endiabrado, forma in formas:
+            efeito = (9215 if endiabrado else 9214) if chao else (9212 if endiabrado else 9213)
+            t.append(f"[State -3, Efeito do golpe {anim}]\ntype = Explod\n"
+                     f"trigger1 = Anim = {anim} && AnimElem = {elemento} && {forma}\n"
+                     f"anim = {efeito}\npostype = p1\npos = {pos}\nbindtime = 3\nremovetime = 8\nsprpriority = 3\n"
+                     f"ownpal = 1\nscale = .75, .75\nignorehitpause = 1\n\n")
     return "".join(t)
 
 
@@ -2430,11 +2452,18 @@ def estado(numero, tipo="S", mov="A", fis="S", anim=None, juggle=None, velset="0
     return resultado
 
 
+def fx_forma(numero):
+    """Explod de efeito: no Despertar usa o par do endiabrado (numero + 30), quando os efeitos próprios existem."""
+    return f"ifelse(var(20) > 0, {numero + 30}, {numero})" if FAISCA_POR_FORMA else str(numero)
+
+
 def faiscas(numero):
-    """Faísca de acerto e de defesa. A mesma nas duas formas: a faísca própria do endiabrado (92xx + 30, sombra
-    violeta, com um clarão branco em caixa que passava por cima do HUD no super) saiu pela regra dos efeitos
-    proporcionais do Breno (2026-11-12): o endiabrado não põe efeito a mais em todo golpe."""
-    return f"sparkno = S{numero}", "guard.sparkno = S9202"
+    """O motor desenha a faísca de acerto sem a troca de sprites do Despertar: com os efeitos próprios do Pengaró,
+    o golpe escolhe pelo var(20) entre a faísca do normal (92xx) e a do endiabrado (92xx + 30)."""
+    if not FAISCA_POR_FORMA:
+        return f"sparkno = S{numero}", "guard.sparkno = S9202"
+    # a defesa usa a mesma faísca neutra nas duas formas: no endiabrado ela tem que parecer diferente do acerto
+    return f"sparkno = S(ifelse(var(20) > 0, {numero + 30}, {numero}))", "guard.sparkno = S9202"
 
 
 # Impacto estilo KOF por classe de golpe (só a mecânica: congelamento, tremida, faísca e som do motor).
@@ -2729,8 +2758,8 @@ def chuva_de_bebidas(numero):
     for i, dx in enumerate((-30, 24, -8, 36, -40, 6)):
         ultima = i == 5
         t += [f"[State {numero}, Bebida {i + 1}]", "type = Projectile", f"trigger1 = AnimElemTime(5) = {i * 6}",
-              "projid = 3000", f"projanim = {3010 + i % 2}", f"projhitanim = {9200}",
-              f"projremanim = {9200}",
+              "projid = 3000", f"projanim = {3010 + i % 2}", f"projhitanim = {fx_forma(9200)}",
+              f"projremanim = {fx_forma(9200)}",
               "postype = p2", f"offset = {dx}, {-210 - 18 * (i % 3)}", f"velocity = 0, {7 + i % 2}",
               "projpriority = 3", "projremovetime = 80", "projheightbound = -400, 1", "attr = S, HP",
               f"damage = {60 if ultima else 42}, 6", "animtype = Heavy" if ultima else "animtype = Med",
@@ -2807,7 +2836,7 @@ def cns_repertorio(hazaki):
                      "time = 4\nadd = 128, 128, 128\nignorehitpause = 1\n\n")
         if tipo != "A":
             if 1500 <= n <= 1501 or (hazaki and n in (1300, 1301, 3200)):
-                efeito = 9206 if hazaki else 9205
+                efeito = 9206 if hazaki else fx_forma(9205)
                 c.append(f"[State {n}, Impacto visual]\ntype = Explod\ntrigger1 = AnimElem = 2\n"
                          f"trigger1 = var(20) > 0\nanim = {efeito}\npostype = p1\npos = 30, -15\n"
                          "removetime = -2\nsprpriority = 4\nownpal = 1\n\n")
@@ -2925,14 +2954,14 @@ def cns_agarrao_whisky():
          f"[State 831, Capoeira dano]\ntype = TargetLifeAdd\ntrigger1 = Time = {contato}\ntrigger1 = NumTarget\nvalue = -60\n\n",
          f"[State 831, Capoeira acerta]\ntype = TargetState\ntrigger1 = Time = {contato}\ntrigger1 = NumTarget\nvalue = 833\n\n",
          f"[State 831, Capoeira treme]\ntype = EnvShake\ntrigger1 = Time = {contato}\ntime = 8\nfreq = 60\nampl = -4\n\n",
-         f"[State 831, Capoeira faisca]\ntype = Explod\ntrigger1 = Time = {contato}\nanim = {9201}\npostype = p1\n"
+         f"[State 831, Capoeira faisca]\ntype = Explod\ntrigger1 = Time = {contato}\nanim = {fx_forma(9201)}\npostype = p1\n"
          "pos = 62, -80\nremovetime = -2\nsprpriority = 4\nownpal = 1\n\n",
          f"[State 831, Capoeira som]\ntype = PlaySnd\ntrigger1 = Time = {contato}\nvalue = F5, 2\n\n",
          # whisky: sai da mão no desenho da bola e cai girando em cima do oponente
          f"[State 831, Garrafa]\ntype = Explod\ntrigger1 = Time = {solta}\nanim = 3010\npostype = p1\n"
          "pos = 38, -150\nvel = 0, 4\naccel = 0, .55\nremovetime = 13\nsprpriority = 5\nownpal = 1\n\n",
          f"[State 831, Whisky dano]\ntype = TargetLifeAdd\ntrigger1 = Time = {lanca}\ntrigger1 = NumTarget\nvalue = -90\n\n",
-         f"[State 831, Whisky estoura]\ntype = Explod\ntrigger1 = Time = {lanca}\nanim = {9201}\npostype = p1\n"
+         f"[State 831, Whisky estoura]\ntype = Explod\ntrigger1 = Time = {lanca}\nanim = {fx_forma(9201)}\npostype = p1\n"
          "pos = 38, -60\nremovetime = -2\nsprpriority = 5\nownpal = 1\n\n",
          f"[State 831, Whisky treme]\ntype = EnvShake\ntrigger1 = Time = {lanca}\ntime = 12\nfreq = 60\nampl = -5\n\n",
          f"[State 831, Whisky som]\ntype = PlaySnd\ntrigger1 = Time = {lanca}\nvalue = F5, 2\n\n",
@@ -3017,7 +3046,7 @@ def cns_especiais_extra():
         ini, _ = inicios_extra(ai[n])
         t.append(estado(n, "S", "A", "S", anim=n, juggle=4))
         t.append(f"[State {n}, Garrafa]\ntype = Projectile\ntrigger1 = Time = {ini[3]}\nprojid = 1002\n"
-                 f"projanim = 3010\nprojhitanim = {9200}\nprojremanim = {9200}\nprojhits = 1\nprojpriority = 2\n"
+                 f"projanim = 3010\nprojhitanim = {fx_forma(9200)}\nprojremanim = {fx_forma(9200)}\nprojhits = 1\nprojpriority = 2\n"
                  f"offset = 52, -96\nvelocity = {vx}, {vy}\naccel = 0, {0.20 if n == 1600 else 0.26}\n"
                  "projheightbound = -400, 0\nattr = S, SP\ndamage = 75, 5\nanimtype = Med\nguardflag = MA\n"
                  f"hitflag = MAF\npausetime = 4, 10\nsparkxy = 0, 0\n{chr(10).join(faiscas(9200))}\nsparkscale = 1, 1\n"
@@ -3056,7 +3085,7 @@ def cns_especiais_extra():
     ini, _ = inicios_extra(ai[3400])
     t.append(estado(3400, "S", "A", "S", anim=3400, juggle=4))
     t.append(f"[State 3400, Mão]\ntype = Projectile\ntrigger1 = Time = {ini[3]}\nprojid = 1003\nprojanim = 3012\n"
-             "projhitanim = 9201\nprojremanim = 9201\nprojhits = 2\nprojmisstime = 8\nprojpriority = 3\n"
+             "projhitanim = 9231\nprojremanim = 9231\nprojhits = 2\nprojmisstime = 8\nprojpriority = 3\n"
              "offset = 60, -80\nvelocity = 1.8, 0\naccel = 0.07, 0\nattr = S, SP\ndamage = 50, 5\n"
              "animtype = Med\nguardflag = MA\nhitflag = MAF\npausetime = 8, 10\nsparkxy = 0, 0\n"
              f"{chr(10).join(faiscas(9201))}\nsparkscale = 1.15, 1.15\nenvshake.time = 6\nenvshake.freq = 150\n"
@@ -3076,7 +3105,7 @@ def cns_especiais_extra():
     t.append(hitdef(3403, "Time >= 8 && Vel Y > 0", "A, SA", 105, tipo="Heavy", queda=True, vel="-4,-6",
                     ar="-4,-6", pausa=(12, 12), hit=22, escorrega=8, pesado=True, extra="persistent = 0\n",
                     classe="especial"))
-    t.append(f"[State 3403, Estouro]\ntype = Explod\ntrigger1 = Pos Y >= 0 && Vel Y > 0\nanim = {9205}\n"
+    t.append(f"[State 3403, Estouro]\ntype = Explod\ntrigger1 = Pos Y >= 0 && Vel Y > 0\nanim = {fx_forma(9205)}\n"
              "postype = p1\npos = 40, -15\nremovetime = -2\nsprpriority = 4\nownpal = 1\n\n")
     t.append("[State 3403, Treme]\ntype = EnvShake\ntrigger1 = Pos Y >= 0 && Vel Y > 0 && MoveHit\ntime = 10\n"
              "freq = 150\nampl = -4\n\n")
@@ -3193,9 +3222,9 @@ def montar_cns(hazaki=False):
         c.append(estado(n, "S", "A", "S", anim=n, juggle=4))
         c.append(fala(n, "bola_trava", "Time = 0 & var(20) = 0"))
         c.append(fala(n, "bola_liso", "Time = 0 & var(20) > 0"))
-        c.append(projetil(n, "AnimElem = 2", 1005, 1006 if hazaki else 9200, vel, 70, "S, SP", ofs="62, -86" if not hazaki else "70, -12"))
+        c.append(projetil(n, "AnimElem = 2", 1005, 1006 if hazaki else fx_forma(9200), vel, 70, "S, SP", ofs="62, -86" if not hazaki else "70, -12"))
         c.append(f"[State {n}, Dobrada]\ntype = Projectile\ntrigger1 = AnimElem = 3\ntrigger1 = var(20) > 0\n"
-                 f"projid = 1001\nprojanim = 1005\nprojhitanim = {9200}\nprojremanim = {9200}\noffset = {'70, -12' if hazaki else '62, -86'}\n"
+                 f"projid = 1001\nprojanim = 1005\nprojhitanim = {fx_forma(9200)}\nprojremanim = {fx_forma(9200)}\noffset = {'70, -12' if hazaki else '62, -86'}\n"
                  f"velocity = {vel + 1.2}, 0\nattr = S, SP\ndamage = 50, 4\nanimtype = Med\nguardflag = MA\n"
                  f"hitflag = MAF\npausetime = 4, 10\n{chr(10).join(faiscas(9200))}\nsparkscale = 1, 1\n"
                  "hitsound = F5,1\nguardsound = F6,0\nground.type = High\n"
@@ -3391,11 +3420,12 @@ time = 2
 add = 12, 0, 28
 sinadd = 10, 0, 18, 40
 
+[State -2, Rastro]
+type = AfterImageTime
+trigger1 = var(20) > 0
+time = 2
+
 """)
-    # Sem [State -2, Rastro] (AfterImageTime enquanto var(20) > 0): ele mantinha vivo o AfterImage de 40 tiques do
-    # Despertar (2000) e dos supers o Despertar inteiro, um fantasma azul do tamanho do lutador atrás dele, que na tela
-    # parecia de novo a aura gigante (regra dos efeitos proporcionais do Breno, 2026-11-12: o rastro do endiabrado
-    # sai). O AfterImage de 40 tiques de cada super continua, só no tempo do próprio golpe.
     c.append(fala(-2, "ressaca", "var(21) = 59"))
     c.append("[State -2, Ressaca anda devagar]\ntype = PosAdd\ntrigger1 = stateno = 20\ntrigger1 = var(21) > 0\n"
              "x = -vel x * .2\n\n")
@@ -3872,10 +3902,9 @@ def main():
     faiscas = carregar_faiscas(s)
     for anim in AURA_BOSS:  # só pela paleta: fora do .air, e a poda os tira do .sff
         del faiscas[anim]
-    del faiscas[9212]  # o corte de sombra saiu dos golpes do endiabrado; os desenhos seguem na Mão de Sombra (3012)
     a = montar_air(s, faiscas, arte_despertada=arte_endiabrada(s))
     preset = preset_despertado(s)
-    aura = aura_pengaro.ligar(s)  # aura do endiabrado (Blender, discreta, 3x): grupo e ação 9600, fora da paleta
+    aura = aura_pengaro.ligar(s)  # aura do endiabrado (Blender): grupos e ações 9600 a 9603, fora da paleta
     (SAIDA / "pengaro.air").write_text("\n".join(ajustar_clsn1(a.txt, s, preset)) + "\n" + aura.air(),
                                        encoding="utf-8", newline="\n")
     cns = despertar_do_pengaro(ajustar_sparkxy(remapear_animelem(montar_cns(), a.mapas), a.ativos))

@@ -5,6 +5,8 @@ do áudio que o Breno mandou em 2026-11-11. Arte no [estilo arcade anos 90](../b
 Modelo aprovado pelo Breno: [`sprites/ck/quadros/folhas/modelo.png`](../../sprites/ck/quadros/folhas/modelo.png)
 (esquerda: base; direita: endiabrado). Roteiro das folhas: `ferramentas/folhas_ck.py`.
 
+> **Desfeito em 2026-11-13 (correção do Breno):** o Despertar volta a ter a aura grande e monstruosa e os efeitos do endiabrado. O que segue sobre a aura discreta ficou só como histórico. Ver [regra dos efeitos proporcionais](../regra-efeitos-proporcionais.md).
+
 **Estilo de luta:** boxe com briga de rua. O forte dele é **esquiva e contra-ataque**: pêndulo, passo lateral, e responde
 quando o outro erra. Socos de boxe nas mãos, bicuda e chute de rua nas pernas. Médio de velocidade, ótimo de perto.
 **Personalidade / falas:** sacana, debochado, marrento. Ri da cara do oponente, ajeita o boné, chama para a briga.

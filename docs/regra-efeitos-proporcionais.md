@@ -19,14 +19,20 @@ não roubar a cena: **simples, sutil e proporcional à força**.
 - O efeito nasce **no ponto do contato** (a ponta do punho ou do pé), não no meio do corpo.
 - O efeito dura pouco: some antes da recuperação do golpe acabar.
 
-## Auras e efeitos do endiabrado: mais simples
+## O endiabrado NÃO entra nesta regra: aura monstruosa e grande
 
-- **Aura do Despertar** (as auras de cada lutador da [regra da aura](regras-dos-lutadores.md)): continua, mas **discreta**.
-  Menos altura e menos transparência opaca, e o corpo do lutador sempre legível por cima. Hoje tem aura em três camadas
-  (Pengaró): fica no máximo uma camada leve.
-- **Efeitos que o endiabrado põe em todo golpe** (rastro, brasa, corte violeta etc.): tire ou reduza ao mínimo. O
-  Despertar já se vê pela arte nova e pela aura.
-- A transformação (Despertar) pode ter efeito maior, porque é um momento especial e curto.
+**Correção do Breno (2026-11-13):** "no modo endiabrado eu não queria que mudasse nada, eu queria daquele jeito, com as
+auras monstruosas e grandes para mostrar que tem poder". A regra de 2026-11-12 foi lida errado (como "aura discreta") e
+desfeita em 2026-11-13.
+
+- **Aura do Despertar** (as auras de cada lutador da [regra da aura](regras-dos-lutadores.md)): **grande, com várias
+  camadas, monstruosa**. É o que mostra que o boss tem poder. Não vale encolher, deixar translúcida nem reduzir a uma
+  camada.
+- **Efeitos do endiabrado** (rastro do Despertar, faísca própria do endiabrado, corte de sombra e poeira violeta em todo
+  golpe): **ficam como estavam**. O endiabrado não muda.
+- O que fica simples e proporcional é o efeito de combate da **forma normal** (a tabela acima).
+- O que fica de pé da regra de 2026-11-12 é que a aura é efeito à parte, atrás do corpo, sem tingir o corpo. Ela também
+  continua sem tampar o HUD.
 
 ## Como fazer os efeitos: no Blender
 

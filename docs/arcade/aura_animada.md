@@ -11,6 +11,8 @@ Kit dos cinco bosses (dicionário de aura de cada um): [`bosses_kit.md`](bosses_
 
 ## Regra de 2026-11-12: a aura do lutador de verdade é discreta
 
+> **Desfeito em 2026-11-13 (correção do Breno):** o Despertar volta a ter a aura grande e monstruosa e os efeitos do endiabrado. O que segue sobre a aura discreta ficou só como histórico. Ver [regra dos efeitos proporcionais](../regra-efeitos-proporcionais.md).
+
 A [regra dos efeitos proporcionais](../regra-efeitos-proporcionais.md) do Breno vale acima do resto deste documento
 (e da ideia antiga de "aura enorme de boss final"): a aura do Despertar é **uma camada leve**, atrás do corpo, que não
 passa do peito, translúcida, com o corpo sempre legível por cima. O boss se vê pela arte nova, não pela aura.

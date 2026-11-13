@@ -640,8 +640,8 @@ def efeitos_ck(s):
 
 
 # ---- faíscas e aura: os desenhos de faísca são os do Pengaró repintados (branco seco na base, verde de vidro no
-# Ratão). A aura do Modo Ratão é a do Blender (paredãozinho de som de fumaça, discreto: regra dos efeitos
-# proporcionais), ligada por ferramentas/aura_ck.py ([Statedef -4], Explod 9600). A fumaça verde antiga (ck_aura, ação 9210) não nasce mais no jogo: os
+# Ratão). A aura do Modo Ratão é a do Blender (paredão de som de fumaça, grande: o Breno quer a aura
+# monstruosa no Despertar, 2026-11-13), ligada por ferramentas/aura_ck.py ([Statedef -4], Explods 9600 a 9602). A fumaça verde antiga (ck_aura, ação 9210) não nasce mais no jogo: os
 # desenhos dela seguem carregados só porque entram na escolha da paleta do .sff (tirá-los mudaria as 255 cores e
 # todos os pixels da forma base); a ação sai do .air e a poda os tira do .sff, como no Pengaró.
 BRANCA = ((0, (40, 40, 50)), (.5, (190, 190, 200)), (1, (255, 255, 255)))
@@ -801,14 +801,14 @@ def cns_ck(cns):
         b, "[State 3200, Golpe]", "[State 3200, Invencivel]\ntype = NotHitBy\ntrigger1 = Time < 11\nvalue = SCA\n"
                                   "time = 1\n\n"))
 
-    # ---- Baile da Esquina (3100, super do Ratão): o paredão toca, o grave treme a tela, ele entra cortando. O paredão
-    # é o do golpe (9250, como na mugen): a aura do Ratão ficou discreta (regra dos efeitos proporcionais) e não faz
-    # mais esse papel; o super é o lugar do efeito grande
+    # ---- Baile da Esquina (3100, super do Ratão): o grave treme a tela, ele entra cortando. O paredão que toca é o
+    # da aura do Ratão (ferramentas/aura_ck.py, em surto no tique 1): a caixa preta (9250) por cima dele era corte seco
+    # e dois paredões juntos (cético de 2026-11-12). A aura grande voltou a pedido do Breno (2026-11-13)
     def baile(b):
         velho = "[State 3100, Avança]\ntype = VelSet\ntrigger1 = Time = 4\nx = 2\n"
         assert velho in b
         b = b.replace(velho, velho.replace("x = 2", "x = 8"))
-        return antes_de(b, "[State 3100, Avança]", paredao(3100, "Time = 0", 80) + tremor(3100, "Time = 4", 50))
+        return antes_de(b, "[State 3100, Avança]", tremor(3100, "Time = 4", 50))
     cns = no_estado(cns, 3100, baile)
     # ---- Despertar (2000): a caixa preta toca atrás dele enquanto ele dança; quando a fumaça cobre tudo
     # (aura_ck.FUMACA a aura_ck.RATAO) ela apaga e o paredão de fumaça da aura nasce no mesmo trecho, atrás da nuvem.
@@ -848,13 +848,12 @@ def cns_ck(cns):
                "hitsound = F5,0\nguardsound = F6,0\nground.type = Low\nground.slidetime = 6\nground.hittime = 14\n"
                "ground.velocity = -2\nair.velocity = -1,-2\n\n")
     cns = trocar_estado(cns, 3402, E(3402, "S", "A", "S", anim=3402, juggle=4) + ritmo(garrafa) + fim(3402))
-    # Grave do Paredão (↓ ↑ + a/b): bate o pé, o paredão aparece (9250, como na mugen), a aura incha no grave (surto)
-    # e o grave empurra para longe
+    # Grave do Paredão (↓ ↑ + a/b): bate o pé, o paredão da aura incha no grave (surto) e o grave empurra para longe
     i = ini(3403)
     assert aura_ck.GRAVE == i[2], f"o surto do Grave (aura_ck.GRAVE = {aura_ck.GRAVE}) fora do grave (tique {i[2]})"
     cns = trocar_estado(cns, 3403, E(3403, "S", "A", "S", anim=3403, juggle=4) + chao(3403)
                         + "[State 3403, Invencivel]\ntype = NotHitBy\ntrigger1 = Time < 8\nvalue = SCA\ntime = 1\n\n"
-                        + paredao(3403, "Time = 0", i[2] + 24) + tremor(3403, f"Time = {i[2]}", 16, -4)
+                        + tremor(3403, f"Time = {i[2]}", 16, -4)
                         + ritmo(hitdef(3403, f"Time = {i[2]}", "S, SA", 30, tipo="Heavy", hit=18, escorrega=14,
                                        vel="-12", ar="-8,-4", pausa=(4, 10), pesado=True, classe="especial"))
                         + fim(3403))
@@ -1112,12 +1111,9 @@ def main():
     # estilo de pose segurada: os fracos são os golpes com hitsound F5,0 (no Pengaró a lista é fixa e conferida)
     gp.FRACOS = {int(n) for n in re.findall(r"\[State (\d+), Golpe\]\n(?:[^\n]+\n)*?hitsound = F5,0\n", cns)}
     del faiscas[9210]  # a fumaça antiga: só pela paleta, fora do .air (a poda a tira do .sff)
-    # o corte de sombra (9212) e a poeira violeta (9215) saíram dos golpes do Ratão (efeitos proporcionais) e a saída
-    # do Ratão usa a fumaça do CK (9253): ações sem uso fora do .air (os desenhos da 9212 seguem na Mão de Sombra)
-    del faiscas[9212], faiscas[9215]
     a = gp.montar_air(s, faiscas, arte_despertada=gp.arte_endiabrada(s))
     preset = gp.preset_despertado(s)
-    aura = aura_ck.ligar(s)  # aura do Ratão (Blender, discreta, 3x): grupo e ação 9600, fora da paleta
+    aura = aura_ck.ligar(s)  # aura do Ratão (Blender): grupos e ações 9600 a 9602, fora da paleta
     air = "\n".join(ajustar_clsn1(a.txt, s, preset)).replace("gerar_pengaro.py", "gerar_ck.py") + "\n" + aura.air()
     vitima = {(int(g), int(i)) for n in gp.ACOES_VITIMA
               for g, i in gp.RE_ELEMENTO.findall(air.split(f"[Begin Action {n}]")[1].split("[Begin Action")[0])}
@@ -1131,8 +1127,11 @@ def main():
     assert k == 1
     cns = cns.replace("anim = 9215\nid = 9215", "anim = 9253\nid = 9215")  # saída do Ratão: fumaça do CK
     # nada da aura pintado no corpo (regras-dos-lutadores, seção 4): sai o PalFX que tingia o Ratão (como no Lote 7 do
-    # Pengaró). O rastro do Despertar inteiro (AfterImageTime) já saiu do kit do Pengaró, para todos.
+    # Pengaró) e o rastro (AfterImageTime) que mantinha o AfterImage da cena vivo o Despertar inteiro, um halo
+    # branco-azulado em volta do corpo (cético de 2026-11-12). O rastro de 40 tiques de cada super continua.
     cns = gp.sem_tinta_do_despertar(cns)
+    cns, k = re.subn(r"\[State -2, Rastro\]\ntype = AfterImageTime\n(?:[^\n]+\n)+\n", "", cns)
+    assert k == 1, "rastro do Despertar não encontrado"
     cns = cns.rstrip() + "\n\n" + gp.efeitos_cns(a.ativos, gp.FRACOS)
     cns = cns.replace("[Data]", preset + "[Quotes]\n" + "".join(
         f'victory{i + 1} = "{v}"\n' for i, v in enumerate(gp.VITORIAS)) + "\n[Data]", 1)

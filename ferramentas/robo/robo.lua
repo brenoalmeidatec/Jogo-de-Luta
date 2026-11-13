@@ -29,8 +29,7 @@ do
   end
 
   local function clock() return roundTime() end
-  -- camadas vivas da aura do endiabrado (aura.py, regra dos efeitos proporcionais: uma camada discreta, 9600, no
-  -- Pengaro e no CK; conta ate 9603 para pegar camada que sobrou de versao velha)
+  -- camadas vivas da aura do endiabrado (aura.py: Pengaro 9600 a 9603, CK 9600 a 9602)
   local function auraN(n)
     return com(n, function() local k = 0; for e = 9600, 9603 do k = k + numExplod(e) end; return k end)
   end
@@ -285,9 +284,9 @@ do
       need(function() local s = snap(1); return s.st == 2000 and s.t >= 60 end, 30, "cena no tique 60")
       note(function() return string.format("tique 60: caixa %d, camadas %d, fade %.2f", caixa(), auraN(1),
         com(1, function() return map("au_ck_f") end)) end)
-      need(function() return auraN(1) == 1 and caixa() == 1 end, 1, "na nuvem: a aura nasce (1 camada) enquanto a caixa apaga", false)
+      need(function() return auraN(1) == 3 and caixa() == 1 end, 1, "na nuvem: a aura nasce (3 camadas) enquanto a caixa apaga", false)
       need(function() local s = snap(1); return s.st == 2000 and s.t >= 70 end, 20, "cena no tique 70")
-      need(function() return auraN(1) == 1 and caixa() == 0 end, 1, "o Ratao sai da fumaca: caixa preta fora, aura viva", false)
+      need(function() return auraN(1) == 3 and caixa() == 0 end, 1, "o Ratao sai da fumaca: caixa preta fora, aura viva", false)
     end
     need(function() return st1() ~= 2000 end, 500, "transformacao terminou", false)
     note(function() local s = snap(1); return "var20=" .. s.v20 .. " power=" .. s.pow .. " dist " .. c.d0 .. " -> " .. s.d end)
@@ -312,9 +311,9 @@ do
   end
   if LUTADOR == "pengaro" then
     -- a aura liga inteira e ja apagou quando o corpo volta a forma base (o fade de saida acaba junto com o var(20))
-    desperto("aura do endiabrado: liga a camada e apaga junto com a forma endiabrada", function()
+    desperto("aura do endiabrado: liga as 4 camadas e apaga junto com a forma endiabrada", function()
       wait(70)
-      need(function() return auraN(1) == 1 end, 10, "a camada da aura (9600) viva no Despertar")
+      need(function() return auraN(1) == 4 end, 10, "as 4 camadas da aura (9600 a 9603) vivas no Despertar")
       add(function() held[1].fimdesp = clock() + 2; return true end)
       need(function() local v = snap(1).v20; return v > 0 and v <= 40 end, 10, "Despertar no fim (var20 <= 40)")
       need(function() return snap(1).v37 == 0 end, 60, "o corpo voltou a forma base (var37 = 0)")
@@ -324,27 +323,26 @@ do
     end)
   end
   if LUTADOR == "ck" then
-    -- aura do Ratao (ferramentas/aura_ck.py: o paredaozinho discreto, 9600): liga e ja apagou
+    -- aura do Ratao (ferramentas/aura_ck.py: paredao 9600, chao 9601, fagulhas 9602): liga inteira e ja apagou
     -- quando o corpo volta a forma base (o fade de saida acaba junto com o var(20))
-    desperto("aura do Ratao: liga a camada e apaga junto com a forma do Ratao", function()
+    desperto("aura do Ratao: liga as 3 camadas e apaga junto com a forma do Ratao", function()
       wait(70)
-      need(function() return auraN(1) == 1 end, 10, "a camada da aura (9600) viva no Despertar")
+      need(function() return auraN(1) == 3 end, 10, "as 3 camadas da aura (9600 a 9602) vivas no Despertar")
       add(function() held[1].fimdesp = clock() + 2; return true end)
       need(function() local v = snap(1).v20; return v > 0 and v <= 40 end, 10, "Despertar no fim (var20 <= 40)")
       -- a saida anda com o var(20) (aura_ck.RESTA), nao com o relogio do -4: o fade e var(20)/34 no fim
       need(function() local v = snap(1).v20; return v > 0 and v <= 8 end, 40, "var20 <= 8")
       acao(function() c.v20 = snap(1).v20; c.f = com(1, function() return map("au_ck_f") end) end)
       note(function() return string.format("var20 %d: fade %.3f (var20/34 = %.3f), camadas %d", c.v20, c.f, c.v20 / 34, auraN(1)) end)
-      need(function() return math.abs(c.f - c.v20 / 34) < 0.035 and auraN(1) == 1 end, 1,
-        "no fim a aura segue o var(20): fade = var20/34 e a camada viva", false)
+      need(function() return math.abs(c.f - c.v20 / 34) < 0.035 and auraN(1) == 3 end, 1,
+        "no fim a aura segue o var(20): fade = var20/34 e as 3 camadas vivas", false)
       need(function() return snap(1).v37 == 0 end, 60, "o corpo voltou a forma base (var37 = 0)")
       acao(function() c.aura_volta = auraN(1); c.t_volta = clock() end)
       need(function() return auraN(1) == 0 end, 2, "a aura apaga no maximo 2 tiques depois do corpo voltar", false)
       note(function() return "camadas quando o corpo voltou: " .. c.aura_volta .. "; apagou " .. (clock() - c.t_volta) .. " tiques depois" end)
     end)
-    -- no Grave do Paredao o paredao e o do golpe (9250, como na mugen: a aura discreta nao faz mais esse papel), e a
-    -- aura incha (surto) no grave
-    desperto("aura do Ratao: o Grave (3403) poe o paredao do golpe e faz a aura inchar", function()
+    -- no Grave do Paredao o paredao e o da aura: sem caixa preta (9250), e ele incha (surto) no grave
+    desperto("aura do Ratao: o Grave (3403) faz o paredao da aura inchar, sem caixa preta", function()
       approach(50)
       wait(40)
       press(1, {"sombra_b"}, 3)
@@ -353,7 +351,7 @@ do
       need(function()
         c.caixa = math.max(c.caixa, com(1, function() return numExplod(9250) end))
         return com(1, function() return map("au_ck_k") end) > 0.3 end, 30, "o surto do grave incha a aura")
-      need(function() return auraN(1) == 1 and c.caixa == 1 end, 1, "a aura viva e o paredao do golpe (9250) no Grave", false)
+      need(function() return auraN(1) == 3 and c.caixa == 0 end, 1, "3 camadas e nenhuma caixa preta no Grave", false)
     end)
   end
   local function exclusivo(nome, cmd, est, dist)
@@ -518,7 +516,7 @@ do
       need(function() local s = snap(1); return s.st == 3100 and s.t > 20 and s.v20 > 0 end, 80, "var(20) > 0 no meio do 3100")
       need(function() return st1() == 0 end, 300, "terminou", false)
       need(function() return snap(1).v20 > 0 end, 1, "continua no Ratao depois do Baile", false)
-      need(function() return auraN(1) == 1 end, 1, "a aura do Ratao segue viva depois do Baile", false)
+      need(function() return auraN(1) == 3 end, 1, "a aura do Ratao segue inteira depois do Baile (3 camadas)", false)
     end)
     desperto("Rajada da Esquina no Ratao (golaco entra em 3000, nao no Baile)", function()
       approach(80)

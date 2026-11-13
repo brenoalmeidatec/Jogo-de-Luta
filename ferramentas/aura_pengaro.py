@@ -1,21 +1,36 @@
-"""Aura do Pengaró endiabrado no jogo: a camada discreta do Blender ligada pelo ferramentas/aura.py.
+"""Aura do Pengaró endiabrado (boss final) no jogo: as camadas do Blender ligadas pelo ferramentas/aura.py.
 
-Segue a regra dos efeitos proporcionais (docs/regra-efeitos-proporcionais.md, Breno, 2026-11-12): UMA camada leve,
-baixa e translúcida, atrás do corpo, com o corpo sempre legível por cima. O boss se vê pela arte nova, não pela aura.
+Camadas prontas em sprites/pengaro/aura/ (ferramentas/aura_blender/pengaro_aura.py, ver docs/arcade/aura_blender.md):
+coluna 48, chicotes 48, anel_tras 96, fiapos 96, soltos 96 (atrás) e anel_frente 96 (à frente, da sola para baixo),
+todas 360x200 com o pé do lutador em (180, 190), 2 tiques por quadro.
 
-A camada está pronta em sprites/pengaro/aura/ (ferramentas/aura_blender/discreta.py): fumaça violeta-preta das
-sombras saindo de um chão rachado pequeno, do chão até o peito, 192 quadros em 3x (1080x600, pé em (540, 570)),
-1 tique por quadro (desenho novo todo tique: com uma camada só, trocar a cada 2 deixava o tique do meio parado). É a coluna e o chão do rig.blend da aura grande (pengaro_aura.py) encolhidos em volta do pé.
-
-No jogo: um Explod (9600, [Statedef -4]) com scale 1/3 (o Explod não usa a escala do lutador), alfa 0,5, atrás de
-qualquer lutador (sprpriority -6; o mais baixo de um lutador é o -3 do caído morto, estado 5150 do common1) e no
-chão no pulo e na queda (no_chao: a fumaça sai do chão rachado, não sobe com ele).
-Virada: a aura apaga só até 60% do alfa (virada_fundo) antes de trocar de lado.
+No jogo viram 4 camadas (Explods 9600 a 9603, [Statedef -4]), todas ATRÁS de qualquer lutador:
+  9600 anel_tras    chão rachado atrás dos pés; fica no chão no pulo (plano "chao", sprpriority -7)
+  9601 coluna       coluna + chicotes + fiapos num desenho só: foram contornados juntos no Blender e as línguas saem
+                    das pontas dos chicotes; separados, a deriva do motor e o início de cada camada os descolariam.
+                    Nasce do chão e FICA no chão no pulo e na queda (no_chao): presa ao corpo, a base reta dela
+                    virava um prato solto no ar (filme de 2026-11-12). Não apaga com a altura (sprpriority -6)
+  9602 anel_frente  a metade da frente do chão rachado, na frente da coluna e ATRÁS dos lutadores (sprpriority -5:
+                    o mais baixo de um lutador é o -3 do caído morto, estado 5150 do common1). Com prioridade 5 ela
+                    tingia os pés dos dois lutadores e o Pengaró caído. Mesmo alfa, mesma escala e mesma posição da
+                    metade de trás (sem respirar e sem tremor, que têm fase por camada): as duas metades nunca
+                    descolam. Os dois anéis nascem no mesmo quadro, sem deriva e trocam de quadro no mesmo tique
+                    (Camada.tique), senão as rachaduras não se encontram
+  9603 soltos       pedras e elos de corrente em órbita, deriva própria (período curto: com a deriva lenta da coluna,
+                    as duas andavam juntas, correlação -0,95 no filme de 2026-11-12); acompanham o corpo
+Troca de quadro: anéis e pedras no tique par, coluna no ímpar. A coluna e as pedras dividem o alto da tela; trocando
+juntas, um tique tinha desenho novo e o seguinte não (p95/mediana 2,6-2,7 no filme de 2026-11-12, limite 2,5).
+Entrada em 44 tiques (o aura.py usa 26): a coluna é 1,5x mais alta que o lutador e densa; em 26 tiques a borda dela
+cruzava o alto da tela num pulo (6,5x a mudança do laço, limite 5).
+Nada vai na frente de corpo nenhum.
+Virada: a aura apaga só até 60% do alfa (virada_fundo) antes de trocar de lado; com os 30% do aura.py o boss sumia
+a cada troca de lado (pixels roxos de 52 mil para 5 mil no filme de 2026-11-12). O espelho de um desenho destes muda
+~3,5x o passo de um quadro, então a 60% ele não vira corte.
 Desliga ANTES de o corpo voltar: o fade de saída (34 tiques) acaba no tique em que o var(20) chega a 0 (o corpo volta
-à forma base nesse tique, pelo RemapSprite do -2). O mesmo no fim do super 3100 (que zera o var(20) no começo):
-pelo AnimTime.
+à forma base nesse tique, pelo RemapSprite do -2). Desligando no 0, a aura do endiabrado ficava cheia em volta do corpo
+de calça branca por uns 15 tiques. O mesmo no fim do super 3100 (que zera o var(20) no começo): pelo AnimTime.
 
-As cores da camada NÃO entram na escolha da paleta do .sff (Sprites.fora_da_paleta): a paleta da forma base sai
+As cores das camadas NÃO entram na escolha da paleta do .sff (Sprites.fora_da_paleta): a paleta da forma base sai
 idêntica e a aura é levada para a cor mais perto dela.
 """
 import json
@@ -40,25 +55,48 @@ LIGADA = (f"var(20) > {SAI} || (StateNo = 3100 && AnimTime < -{SAI}) || (StateNo
 SURTO = "((StateNo = 3000 || StateNo = 3100 || StateNo = 3200) && Time = 1) || (StateNo = 2000 && Time = 86)"
 
 
+def _ler(info, nome):
+    n = next(c["quadros"] for c in info["camadas"] if c["nome"] == nome)
+    return [np.asarray(Image.open(PASTA / info["arquivo"].format(nome=nome, quadro=q)).convert("RGBA")) for q in range(n)]
+
+
+def _sobre(*camadas):
+    """Uma camada só, desenhada na ordem dada, num laço do tamanho da mais longa (as de 48 repetem 2 vezes em 96)."""
+    n = max(len(c) for c in camadas)
+    assert all(n % len(c) == 0 for c in camadas)
+    saida = []
+    for q in range(n):
+        img = Image.fromarray(camadas[0][q % len(camadas[0])], "RGBA")
+        for c in camadas[1:]:
+            img.alpha_composite(Image.fromarray(c[q % len(c)], "RGBA"))
+        saida.append(np.asarray(img))
+    return saida
+
+
 def montar():
     info = json.loads((PASTA / "aura.json").read_text(encoding="utf-8"))
-    assert info["formato"] == 2 and info["escala"] == 3 and info["tiques_por_quadro"] == 1, info
-    assert [c["nome"] for c in info["camadas"]] == ["discreta"] and info["camadas"][0]["plano"] == "atras", info
-    n = info["camadas"][0]["quadros"]
-    quadros = [np.asarray(Image.open(PASTA / info["arquivo"].format(nome="discreta", quadro=q)).convert("RGBA"))
-               for q in range(n)]
-    camada = aura.Camada("discreta", quadros, tempo=info["tiques_por_quadro"], plano="tras", no_chao=True,
-                         eixo=tuple(info["pe"]), res=info["escala"],
-                         prioridade=-6, cresce=False, surto_alfa=0.1, surto_tremor=1.0,
-                         # entra e sai só pelo alfa, como o CK: a coluna crescendo dos pés cruzava a faixa baixa em
-                         # poucos quadros (ligando 8x e desligando 4,8x a mudança do loop no filme de 2026-11-12);
-                         # entra em 44 tiques, como o CK
-                         mov=aura.Movimento(deriva=(1.0, 0.6), deriva_periodo=170, alfa=0.5, respira=0.08))
-    assert camada.prioridade < PRIORIDADE_MIN_LUTADOR, "camada da aura na frente de um lutador"
-    a = aura.Aura("pengaro", [camada], ligada=LIGADA, surto=SURTO, base=9600, entra=44, sai=SAI,
-                  altura_lutador=ALTURA_LUTADOR, virada_fundo=0.6)
-    a.conferir_discreta()
-    return a
+    assert info["tela"] == [360, 200] and info["tiques_por_quadro"] == 2, info
+    pe = tuple(info["pe"])
+    coluna = _sobre(_ler(info, "coluna"), _ler(info, "chicotes"), _ler(info, "fiapos"))
+    anel_tras, anel_frente, soltos = (_ler(info, n) for n in ("anel_tras", "anel_frente", "soltos"))
+
+    # as duas metades do anel: o mesmo movimento (sem respiração nem tremor, que andam com fase por camada)
+    def anel(nome, quadros, prioridade):
+        return aura.Camada(nome, quadros, plano="chao", eixo=pe, inicio=1, tique=0, prioridade=prioridade,
+                           mov=aura.Movimento(deriva=(0, 0), alfa=0.92, respira=0), surto_alfa=0.08, surto_tremor=0)
+
+    camadas = [
+        anel("anel_tras", anel_tras, -7),
+        aura.Camada("coluna", coluna, plano="tras", no_chao=True, eixo=pe, tique=1, prioridade=-6,
+                    mov=aura.Movimento(deriva=(1.6, 1.4), deriva_periodo=170, alfa=0.9, respira=0.1)),
+        anel("anel_frente", anel_frente, -5),
+        aura.Camada("soltos", soltos, plano="tras", eixo=pe, tique=0, prioridade=-4,
+                    mov=aura.Movimento(deriva=(2.4, 3.0), deriva_periodo=70, alfa=0.95, respira=0.06)),
+    ]
+    assert all(c.prioridade < PRIORIDADE_MIN_LUTADOR for c in camadas), "camada da aura na frente de um lutador"
+    assert camadas[0].troca(0) == camadas[2].troca(2), "as metades do anel trocam de quadro em tiques diferentes"
+    return aura.Aura("pengaro", camadas, ligada=LIGADA, surto=SURTO, base=9600, entra=44, sai=SAI,
+                     altura_lutador=ALTURA_LUTADOR, virada_fundo=0.6)
 
 
 def ligar(sprites):

@@ -230,11 +230,11 @@ só um brilho genérico.
 - A aura é **efeito separado** do corpo: folha própria em fundo verde `#00FF00`, ligada por `Explod` em volta do lutador
   enquanto o Despertar dura. Ela não vai desenhada nas folhas do corpo. O `PalFX` pode reforçar a cor, mas sozinho não
   conta como aura.
-- A aura é **discreta** ([regra dos efeitos proporcionais](regra-efeitos-proporcionais.md), Breno, 2026-11-12, acima
-  da ideia antiga de "aura enorme de boss final"): **uma camada leve**, atrás do corpo, que não passa do peito (65% da
-  altura do lutador), translúcida (alfa até 0,65 contando o surto) e com o corpo sempre legível por cima. Desenho em
-  3x, do Blender, quantizado no estilo arcade, com `scale = 1/3` no `Explod` (`aura.Camada(res=3)`). O
-  `Aura.conferir_discreta()` do `ferramentas/aura.py` falha o gerador fora disso. O boss se vê pela arte nova.
+- A aura é **grande e monstruosa** (Breno, 2026-11-13: "aura monstruosa e grande para mostrar que tem poder"). São
+  várias camadas do Blender (`ferramentas/aura_<lutador>.py`, `sprites/<id>/aura/`), atrás do corpo, sem tingir o corpo
+  e sem tampar o HUD. A "aura discreta" de 2026-11-12 foi um erro de leitura e foi desfeita. Não use
+  `aura_blender/discreta.py` nem `Aura.conferir_discreta()` em lutador de verdade. O endiabrado também mantém os efeitos
+  próprios (rastro, faísca e corte de sombra; ver [regra dos efeitos proporcionais](regra-efeitos-proporcionais.md)).
 - A ficha do lutador diz como é a aura dele (cor, forma, de onde sai) e confere que nenhum outro já usa.
 - Auras de hoje, para não repetir:
 
@@ -591,14 +591,14 @@ Forma base
 [ ] 2 supers (1 e 2 estoques)
 [ ] Despertar com barra cheia + 2 botões (ou comando da ficha)
 [ ] forma despertada com arte própria redesenhada (não só recolorida)
-[ ] aura própria no Despertar, diferente da de todos os outros lutadores (efeito à parte, seção 4), DISCRETA:
-    uma camada leve em 3x, até o peito, translúcida (docs/regra-efeitos-proporcionais.md, Aura.conferir_discreta)
+[ ] aura própria no Despertar, diferente da de todos os outros lutadores (efeito à parte, seção 4), GRANDE e
+    monstruosa, várias camadas (Breno, 2026-11-13; o endiabrado não segue a regra dos efeitos proporcionais)
 
 Forma despertada
 [ ] 2 correntes novas, 6 normais novos, 4 especiais exclusivos, 1 projétil novo, 1 kombo novo, 1 super exclusivo
 [ ] especiais da base que ficam mudam de pose ou função
 [ ] aura e efeitos animados (ferramentas/aura.py), nada estático; fluidez do corpo e dos efeitos conferida em vídeo
-    da sandbox pelos critérios de docs/arcade/bosses_kit.md, seção 2 (aura: medir_aura.py --discreta)
+    da sandbox pelos critérios de docs/arcade/bosses_kit.md, seção 2 (aura: medir_aura.py, sem --discreta)
 
 Produção
 [ ] arte passou pelo processo da seção 6; licenças anotadas

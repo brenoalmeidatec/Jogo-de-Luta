@@ -14,6 +14,8 @@ teste com a asa do Hazak.
 
 ## Aura discreta (regra de 2026-11-12)
 
+> **Desfeito em 2026-11-13 (correção do Breno):** o Despertar volta a ter a aura grande e monstruosa e os efeitos do endiabrado. O que segue sobre a aura discreta ficou só como histórico. Ver [regra dos efeitos proporcionais](../regra-efeitos-proporcionais.md).
+
 A [regra dos efeitos proporcionais](../regra-efeitos-proporcionais.md) vale acima do resto: no jogo a aura é **uma
 camada leve**, baixa (até o peito), translúcida, em **3x**. Os scripts abaixo continuam fazendo a aura grande (é dela
 que sai o rig), e `discreta.py` tira dela a camada do jogo:

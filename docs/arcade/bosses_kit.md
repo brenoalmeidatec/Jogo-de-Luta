@@ -1,11 +1,9 @@
 # Kit dos bosses: golpes, efeitos, aura e folhas da forma despertada
 
-> **Acima deste plano vale a [regra dos efeitos proporcionais](../regra-efeitos-proporcionais.md) (Breno,
-> 2026-11-12).** A aura do Despertar é **uma camada discreta** (baixa, translúcida, atrás do corpo, que fica sempre
-> legível), conferida pelo `aura.conferir_discreta()` e pelo `medir_aura --discreta`: nada de aura gigante, de várias
-> camadas ou de partículas, como as descritas abaixo. Os efeitos que o endiabrado punha em todo golpe (rastro, brasa,
-> corte violeta, faísca própria) saíram ou ficam no mínimo; o boss se vê pela arte nova, não pelo efeito. Onde este
-> documento pedir aura grande, asas enormes ou efeito em todo golpe, siga a regra, não o plano.
+> **Correção do Breno (2026-11-13):** a aura do Despertar é **grande e monstruosa**, como este plano descreve, e o
+> endiabrado mantém os efeitos dele (rastro, faísca própria, corte de sombra). A "aura discreta" de 2026-11-12 foi um erro
+> de leitura e foi desfeita. A [regra dos efeitos proporcionais](../regra-efeitos-proporcionais.md) vale só para os
+> efeitos de combate da forma normal.
 
 Escrito em 2026-11-11 a partir de cinco planos de leitura (um por lutador) e do sistema de aura de
 [`aura_animada.md`](aura_animada.md). **É plano para execução: nada daqui rodou em motor**, fora o sistema de aura, que

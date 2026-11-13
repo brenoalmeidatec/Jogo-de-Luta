@@ -41,6 +41,8 @@ def trocar(lutador):
             continue
         img = novos.pop(n)
         blob = struct.pack("<I", img.width * img.height * 4) + png_rgba(img.width, img.height, img.tobytes())
+        if fmt == 12 and fl == 1 and bytes(b[to + ofs:to + ofs + ln]) == blob:
+            continue   # já é este retrato: rodar de novo não acrescenta outra cópia
         struct.pack_into(NO, b, so + i * 28, g, n, img.width, img.height, 0, 0, 0, 12, 32, tl, len(blob), 0, 1)
         b += blob
         tl += len(blob)
