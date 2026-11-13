@@ -612,8 +612,8 @@ Produção
 [ ] gerador roda limpo e o verificador passa; nada editado à mão em chars/<nome>/
 [ ] corpo em alta resolução (docs/regra-alta-resolucao.md): gêmeos 3x gerados, linha HD: sem "só ampliados" de
     golpe comum, boneco nítido numa foto do jogo; "HD do despertado: 0 ações misturam 3x com 1x ampliado"
-[ ] endiabrado sem efeito a mais em todo golpe (regra dos efeitos proporcionais): faísca da forma normal, nenhum
-    AfterImageTime o Despertar inteiro, nenhum efeito do lutador por cima do HUD
+[ ] endiabrado com aura grande e efeitos próprios (Breno, 2026-11-13: o endiabrado não muda); nenhum efeito do
+    lutador por cima do HUD
 [ ] movelist.dat e README batem com o .cmd
 [ ] testado no treino dos dois lados e no canto; uma luta CPU x CPU sem erro no log
 ```

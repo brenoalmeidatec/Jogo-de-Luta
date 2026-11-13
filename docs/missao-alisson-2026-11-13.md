@@ -22,6 +22,13 @@ regra do 3x, estilo arcade).
 - **Não mexer no endiabrado** (aura grande e efeitos ficam como estão).
 - O Hazak segue com você também (`docs/arcade/pedido-pengaro-hazak-nitidez.md`, branch `hazak`).
 
+## 1b. Personagem novo: Gbzin ("Alien")
+
+Ficha completa em [`docs/fichas/gbzin.md`](fichas/gbzin.md). Ele é lutador de jiu-jitsu pastor de cabras (cajado,
+agarrão, cabra de projétil, corrida de pinguim) e desperta como o **Deus Motoboy**: o chefe manda entregar uma pizza e
+ele vira o motoboy de bag e pizza na mão. As fotos e o áudio estão fora do git, com o Breno. Crie a forma base e o
+Despertar pelas regras de sempre.
+
 ## 2. Mais mapas de Nazaré
 
 - Faça outros cenários de Nazaré, no mesmo método do da Maria Fumaça (`cenarios/maria_fumaca/`,
