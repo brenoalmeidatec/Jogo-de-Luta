@@ -1830,3 +1830,26 @@ uns de pixel art de 2026-11-08 de origem incerta. Refazer folha boss agora pede 
 
 **Próximo:** missão do Breno (Pengaró e Hazak no estilo do CK e do Gutto), efeitos `fx_*` no Blender, pendências acima,
 cenários.
+
+## 2026-11-13, 07:35 — Menu enxuto e Modo Super (Claude, sessão do menu)
+
+**Pedido do Breno:** menu só com Versus, Arcade, Assistir e Opções, mais um modo em que as barras de power ficam
+sempre cheias.
+
+**Entrou:**
+- Menu principal: **ARCADE, VERSUS, MODO SUPER, ASSISTIR, OPÇÕES**. Os itens padrão do motor (team, survival, co-op,
+  treino, sair) saem com nome vazio no `system.def`, feito pelo `gerar_layout.py` (lista `escondidos`). Antes, eles
+  ficavam depois do SAIR, cortados no pé da tabuleta. Para fechar o jogo: Esc no menu ou o X da janela.
+- **Modo Super** (`motif/nazafight/modo_super.lua`, ligado por `[Files] module` no `system.def`; o launcher já leva a
+  pasta do motif inteira para o motor). É o versus 1 contra 1, e a cada quadro de luta o power dos lutadores volta ao
+  máximo (`hook loop#versus` + `setPower(powerMax())`). Vida normal. Nada nos lutadores. O motor roda como `versus`
+  (telas, pausa e placar iguais); a tela de seleção mostra "MODO SUPER". Qualquer outro modo escolhido desliga.
+- O super fica entre Versus e Assistir porque é uma variação do versus (mesma seleção, dois jogadores).
+- `menu.window.margins.y` de 12 para 48: o motor cortava o alto do 1º item (ARCADE) e a tábua ativa ficava vazia.
+  Já acontecia antes desta mudança.
+
+**Conferido no jogo** (cópia do motor nesta máquina, janela capturada por PrintWindow): menu com os 5 itens e o
+ARCADE inteiro; MODO SUPER abre a seleção com o título certo; luta CPU x CPU (só no teste) por 37 s com a barra de power
+dos dois em nível 3 em todos os quadros, inclusive logo depois de um super e do Despertar do Pengaró. A vida caiu normal.
+
+**Não testado:** Modo Super com duas pessoas no teclado (o caminho do power é o mesmo); o launcher novo baixando isso.

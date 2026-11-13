@@ -1771,8 +1771,11 @@ def system_def():
     pmx, pmy = POS["painel_menu"]
     g = POS["grade"]
     lc = "1280,720"
-    itens = [("arcade", "ARCADE"), ("versus", "VERSUS"), ("training", "TREINO"), ("watch", "ASSISTIR"),
-             ("options", "OPÇÕES"), ("exit", "SAIR")]
+    # Menu enxuto (Breno, 2026-11-13). Nome vazio esconde o item padrao do motor. "supermode" e o Modo Super
+    # (modo_super.lua, ligado em [Files] module): versus com as barras de power sempre cheias.
+    itens = [("arcade", "ARCADE"), ("versus", "VERSUS"), ("supermode", "MODO SUPER"), ("watch", "ASSISTIR"),
+             ("options", "OPÇÕES")]
+    escondidos = ["teamarcade", "teamversus", "teamcoop", "survival", "survivalcoop", "training", "exit"]
     t = CABECALHO + f"""
 [Info]
 name = Nazafights
@@ -1791,6 +1794,7 @@ font1 = fonts/naza_menu.def
 font2 = fonts/naza_menu_ativo.def
 font3 = fonts/naza_tab.def
 font4 = fonts/naza_num.def
+module = modo_super.lua     ; item MODO SUPER do menu (versus com power sempre cheio)
 
 [Title Info]
 fadein.time = 20
@@ -1807,7 +1811,7 @@ menu.item.active.bg.spr = 131,0
 menu.item.active.bg.offset = 0,0
 menu.item.active.bg.localcoord = {lc}
 menu.item.active.bg.layerno = 2
-menu.window.margins.y = 12,8
+menu.window.margins.y = 48,8          ; com 12 o motor cortava o alto do 1o item (ARCADE) e da tabua ativa
 menu.window.visibleitems = {len(itens)}
 menu.boxcursor.visible = 0
 menu.boxcursor.localcoord = {lc}
@@ -1815,6 +1819,8 @@ menu.title.uppercase = 0
 """
     for k, v in itens:
         t += f"menu.itemname.{k} = {v}\n"
+    for k in escondidos:
+        t += f"menu.itemname.{k} =\n"
     t += f"""title.font = -1
 loading.font = 3,0,-1
 loading.offset = 1248,700
@@ -2448,7 +2454,7 @@ def previa_titulo(sys_spr, defs, acoes, fontes):
     fundo_bg(tela, defs, "titlebg", sys_spr, acoes, tempo=1150, quadro_fim=True)
     mx, my = nums(t["menu.pos"])
     esp = nums(t["menu.item.spacing"])[1]
-    itens = [v for k, v in t.items() if k.startswith("menu.itemname.")]
+    itens = [v for k, v in t.items() if k.startswith("menu.itemname.") and v]
     for i, item in enumerate(itens):
         y = my + i * esp
         if i == 0:
@@ -2671,7 +2677,7 @@ def verificar():
                     raise SystemExit(f"ERRO: {nome_def} acao {a} usa {q[0]},{q[1]} que nao existe")
         files = secao(secs, "files")
         for k, v in files.items():
-            if k.startswith("font") and not (MOTIF / v).exists():
+            if (k.startswith("font") or k == "module") and not (MOTIF / v).exists():
                 raise SystemExit(f"ERRO: {nome_def} {k} = {v} nao existe")
     obrig = ["lifebar", "simul lifebar", "turns lifebar", "powerbar", "face", "simul face", "turns face", "name",
              "simul name", "turns name", "time", "combo", "round", "winicon"]
