@@ -49,10 +49,13 @@ def montar():
                for q in range(n)]
     camada = aura.Camada("discreta", quadros, tempo=info["tiques_por_quadro"], plano="tras", no_chao=True,
                          eixo=tuple(info["pe"]), res=info["escala"],
-                         prioridade=-6, surto_alfa=0.1, surto_tremor=1.0,
+                         prioridade=-6, cresce=False, surto_alfa=0.1, surto_tremor=1.0,
+                         # entra e sai só pelo alfa, como o CK: a coluna crescendo dos pés cruzava a faixa baixa em
+                         # poucos quadros (ligando 8x e desligando 4,8x a mudança do loop no filme de 2026-11-12);
+                         # entra em 44 tiques, como o CK
                          mov=aura.Movimento(deriva=(1.0, 0.6), deriva_periodo=170, alfa=0.5, respira=0.08))
     assert camada.prioridade < PRIORIDADE_MIN_LUTADOR, "camada da aura na frente de um lutador"
-    a = aura.Aura("pengaro", [camada], ligada=LIGADA, surto=SURTO, base=9600, sai=SAI,
+    a = aura.Aura("pengaro", [camada], ligada=LIGADA, surto=SURTO, base=9600, entra=44, sai=SAI,
                   altura_lutador=ALTURA_LUTADOR, virada_fundo=0.6)
     a.conferir_discreta()
     return a

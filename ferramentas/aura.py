@@ -783,8 +783,12 @@ class Aura:
         py = f"{_n(c.pos[1])}"
         if mv.deriva[1]:
             py += f" + {_seno(mv.deriva[1], mv.deriva_periodo * desvio * 0.83, 2.9 + 1.7 * i, t)}"
-        # o alfa chega antes da altura (a aura aparece baixa e sobe, em vez de surgir inteira e fraca)
-        alfa = (f"({_n(mv.alfa)} * min(1, 1.6 * {f}) * (1 + "
+        # o alfa chega antes da altura (a aura aparece baixa e sobe, em vez de surgir inteira e fraca). Sem altura
+        # (cresce = False) o alfa é a entrada inteira: com o atalho de 1,6x a aura discreta acendia e apagava em
+        # 60% do tempo, todos os pixels de uma vez, e o ligando/desligando passava de 3,8x a mudança do loop calmo
+        # (Pengaró, filme de 2026-11-12)
+        sobe = f"min(1, 1.6 * {f})" if c.cresce else f
+        alfa = (f"({_n(mv.alfa)} * {sobe} * (1 + "
                 f"{_seno(mv.respira, mv.respira_periodo * desvio, 0.4 + 2.3 * i, t)})"
                 f" + {_n(c.surto_alfa)} * {k} * {f})"
                 f" * ({_n(self.virada_fundo)} + {_n(1 - self.virada_fundo)} * "

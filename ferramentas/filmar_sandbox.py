@@ -82,9 +82,11 @@ try {
   if (-not (Test-Path "$jogo\luta_comecou.txt")) { Write-Output "o round nao comecou (motor saiu: $($p.HasExited))" }
   else {
     Write-Output ("round comecou: " + (Get-Date -Format o))
+    # -g 9999: um quadro-chave só, no começo. Com o padrão (250) o x264 refaz a tela inteira nos quadros 250 e 500
+    # e o medir_aura via um salto de ~0,5 por pixel no fundo parado (filme do Pengaró de 2026-11-12)
     & 'C:\ff\ffmpeg.exe' -hide_banner -loglevel warning -y -f gdigrab -framerate @FPS_CAPTURA@ -draw_mouse 0 `
       -t @SEGUNDOS_REAIS@ -i 'title=@TITULO@' -vf 'setpts=(PTS-STARTPTS)/@LENTA@,fps=60' -c:v libx264 -preset ultrafast -threads 2 `
-      -crf 16 -pix_fmt yuv420p 'C:\nf\saida\luta.mp4' 2>&1 | Out-String | Write-Output
+      -crf 16 -g 9999 -pix_fmt yuv420p 'C:\nf\saida\luta.mp4' 2>&1 | Out-String | Write-Output
     Write-Output "ffmpeg saiu com $LASTEXITCODE"
     Set-Content "$jogo\parar.txt" 'parar'
     $limite = (Get-Date).AddSeconds(10)

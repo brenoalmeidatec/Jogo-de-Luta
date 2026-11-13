@@ -8115,7 +8115,7 @@ pos = 0 + 1 * sin((map(au_ck_t) + 0) * 0.0483 + 1.3) + (0 + 0.8 * map(au_ck_k)) 
 scale = (1 + 0.12 * map(au_ck_k)) * 0.3333, (1 + 0.12 * map(au_ck_k)) * 0.3333
 bindtime = 0
 trans = addalpha
-alpha = floor(255 * min(1, max(0, (0.5 * min(1, 1.6 * map(au_ck_e)) * (1 + 0.08 * sin((map(au_ck_t) + 0) * 0.0849 + 0.4)) + 0.1 * map(au_ck_k) * map(au_ck_e)) * (0.6 + 0.4 * ifelse(map(au_ck_v) > 0.6, (map(au_ck_v) - 0.6) / 0.4, (0.6 - map(au_ck_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.5 * min(1, 1.6 * map(au_ck_e)) * (1 + 0.08 * sin((map(au_ck_t) + 0) * 0.0849 + 0.4)) + 0.1 * map(au_ck_k) * map(au_ck_e)) * (0.6 + 0.4 * ifelse(map(au_ck_v) > 0.6, (map(au_ck_v) - 0.6) / 0.4, (0.6 - map(au_ck_v)) / 0.6)))))
+alpha = floor(255 * min(1, max(0, (0.5 * map(au_ck_e) * (1 + 0.08 * sin((map(au_ck_t) + 0) * 0.0849 + 0.4)) + 0.1 * map(au_ck_k) * map(au_ck_e)) * (0.6 + 0.4 * ifelse(map(au_ck_v) > 0.6, (map(au_ck_v) - 0.6) / 0.4, (0.6 - map(au_ck_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.5 * map(au_ck_e) * (1 + 0.08 * sin((map(au_ck_t) + 0) * 0.0849 + 0.4)) + 0.1 * map(au_ck_k) * map(au_ck_e)) * (0.6 + 0.4 * ifelse(map(au_ck_v) > 0.6, (map(au_ck_v) - 0.6) / 0.4, (0.6 - map(au_ck_v)) / 0.6)))))
 ignorehitpause = 1
 
 [State -4, Aura ck discreta: apaga para virar]
@@ -8123,7 +8123,7 @@ type = ModifyExplod
 trigger1 = NumExplod(9600) && map(au_ck_v) > 0.6
 id = 9600
 trans = addalpha
-alpha = floor(255 * min(1, max(0, (0.5 * min(1, 1.6 * map(au_ck_e)) * (1 + 0.08 * sin((map(au_ck_t) + 0) * 0.0849 + 0.4)) + 0.1 * map(au_ck_k) * map(au_ck_e)) * (0.6 + 0.4 * ifelse(map(au_ck_v) > 0.6, (map(au_ck_v) - 0.6) / 0.4, (0.6 - map(au_ck_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.5 * min(1, 1.6 * map(au_ck_e)) * (1 + 0.08 * sin((map(au_ck_t) + 0) * 0.0849 + 0.4)) + 0.1 * map(au_ck_k) * map(au_ck_e)) * (0.6 + 0.4 * ifelse(map(au_ck_v) > 0.6, (map(au_ck_v) - 0.6) / 0.4, (0.6 - map(au_ck_v)) / 0.6)))))
+alpha = floor(255 * min(1, max(0, (0.5 * map(au_ck_e) * (1 + 0.08 * sin((map(au_ck_t) + 0) * 0.0849 + 0.4)) + 0.1 * map(au_ck_k) * map(au_ck_e)) * (0.6 + 0.4 * ifelse(map(au_ck_v) > 0.6, (map(au_ck_v) - 0.6) / 0.4, (0.6 - map(au_ck_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.5 * map(au_ck_e) * (1 + 0.08 * sin((map(au_ck_t) + 0) * 0.0849 + 0.4)) + 0.1 * map(au_ck_k) * map(au_ck_e)) * (0.6 + 0.4 * ifelse(map(au_ck_v) > 0.6, (map(au_ck_v) - 0.6) / 0.4, (0.6 - map(au_ck_v)) / 0.6)))))
 ignorehitpause = 1
 
 [State -4, Aura ck discreta: corre no surto]

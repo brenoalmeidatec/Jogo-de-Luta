@@ -1706,3 +1706,49 @@ O `hd.py` passou a aceitar recorte 1-4 px diferente, porque o gerador limpa a bo
 - O maluco da caixa de som foi feito e tirado a pedido do Breno.
 - Launcher: baixa também `stages/`, copia para o motor sem `/MIR` e põe `stages/maria_fumaca.def` como cenário dos
   cinco lutadores e em `[ExtraStages]`.
+
+## 2026-11-12 — integra-mugen: HD do Despertar e aura discreta do CK e do Pengaró (Claude, construtor do orquestrador)
+
+**O que entrou** (branch `integra-mugen`, ainda NÃO na `mugen`: quem sobe é o orquestrador depois dos céticos):
+
+- **Merge da mugen** (parry, Maria Fumaça, `docs/regra-efeitos-proporcionais.md`): conflito só no LOGBOOK, as duas
+  entradas mantidas na ordem (aura do CK, depois Maria Fumaça). Depois, mais um merge só de docs (método do ChatGPT).
+- **HD do Despertar** (`ferramentas/hd.py`): o `[RemapPreset despertado]` vira corpo e ganha o gêmeo 3x; a paleta sai
+  do desenho de 1x (`paleta_de`), então a forma base fica byte a byte igual (RGBA e paleta conferidos).
+  Linhas `HD:` — CK 461 trocados / 93 só ampliados / 202 efeito em 1x; Pengaró 477 / 113 / 287; Gutto 607 / 570 / 54;
+  Raiclaven 1057 / 118 / 54; Hazak 404 / 0 / 208 (sem RemapPreset, gerador byte-idêntico). Despertado com gêmeo /
+  só ampliado: CK 191/34, Pengaró 215/23, Raiclaven 464/0, **Gutto 32/442** (a forma dele quase não tem desenho 3x
+  próprio: falta folha, não código).
+- **Aura discreta** (regra dos efeitos proporcionais): Pengaró e CK com UMA camada em 3x (`scale` 1/3), alfa 0,5,
+  atrás, no chão, até 65% da altura do lutador. Desenho: `ferramentas/aura_blender/discreta.py` (rig de antes encolhido,
+  2 sub-quadros por quadro do rig, um desenho novo por tique, 192 quadros no Pengaró e 96 no CK). Entra e sai só pelo
+  alfa (`cresce=False`, `entra=44`); sem crescer, o alfa usa a entrada inteira (`aura.py`). `aura.conferir_discreta()`
+  trava no gerador o teto (1 camada, 3x, 65%, alfa 0,65). Baile e Grave do CK voltaram a pôr o paredão do golpe (9250).
+- **Medição**: `medir_aura.py --discreta --lutador X --referencia filme_sem_aura` (faixa baixa fora dos corpos,
+  tamanho máximo, opacidade, corpo ≥ 99%). `filmar_sandbox.py` grava com `-g 9999`: com o quadro-chave padrão do x264
+  (a cada 250) a tela inteira mudava ~0,5 por pixel no quadro 500, nos dois filmes, e isso caía no "desligando".
+
+**Números** (sandbox, um por vez):
+- Robôs: CK 191/0, Pengaró 151/0 (iguais à rodada anterior em estados, vidas e danos), Gutto 143/1, Raiclaven 143/1,
+  Hazak 176/0. Nos roteiros em comum, iguais à mugen (a falha do Gutto e do Raiclaven é a mesma da mugen:
+  `var(37) = 1 (arte endiabrada) no meio do 3100`).
+- `medir_aura` CK (`ck_padrao4`): 61 OK, 0 falha. Loop 0,73/0,33 de mudança por quadro, ligando 1,31x/1,22x,
+  surto 1,42x/1,47x contra os vizinhos, desligando 0,73x, tamanho 41 px (teto 72), alfa mediano 0,49, corpo ≥ 99,5%.
+- `medir_aura` Pengaró (`pengaro_padrao7`, versão final): 58 OK, **1 falha**: 1 quadro "parado" no loop do P1
+  (tique 169, 0,20x a mediana, no limite; o P2 cai para 0,40x no mesmo tique e não há passo dobrado depois). Os
+  desenhos consecutivos mudam todos (menor par 5113 px contra mediana 6353), e o filme anterior da MESMA aura passou
+  o loop (menor 0,40x): leio como captura, sem prova. Resto: ligando 1,66x/2,55x, surto 1,53x/1,67x, desligando
+  1,40x, tamanho 15/10 px, alfa mediano 0,48/0,49, corpo ≥ 99,8%.
+
+**Não verificado / observado**:
+- Ninguém viu em tempo real; só tiras (`t_pengaro_luta4`, `t_ck_cena3`). Os filmes `luta` e `cena` são da versão de
+  antes do alfa novo (só a entrada e a saída mudaram).
+- O rastro azul que aparece atrás do Pengaró despertado no filme de luta NÃO é a aura: é o `AfterImage` aditivo
+  (`[State 2000/3000, Rastro]` + `AfterImageTime` enquanto `var(20) > 0`), que já está na mugen. Pela regra dos
+  efeitos proporcionais ele pode estar grande demais: decisão do Breno.
+
+**Próximos passos**:
+- Efeitos por golpe do endiabrado (Pengaró e outros): não mexi, ficam para a próxima rodada da regra proporcional.
+- Gutto despertado: 442 sprites só ampliados, pede folhas 3x da forma.
+- Breno olhar a aura discreta no jogo (cor e tamanho) e o rastro do Pengaró.
+- Filmes, tiras e medidas: `scratchpad/integra2/` da sessão do construtor (fora do repositório).

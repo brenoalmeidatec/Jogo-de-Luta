@@ -60,6 +60,9 @@ cns += AURA.cns(cabecalho=True)    # [Statedef -4] + controladores (sem cabecalh
   avulsa do gerador (o garanhão do coice, as asas que fecham) tocar no lugar da camada em loop, sem dobrar.
 - `cresce`: `False` numa camada faz a entrada e a saída só pelo alfa (padrão `True`: a camada cresce, escala do
   motor passageira). O paredão do CK achatado a 8% virava elipse azulada (cético de 2026-11-12).
+  Sem crescer, o alfa usa a entrada e a saída inteiras (com crescimento ele chega em 60% do tempo, antes da
+  altura): a aura discreta acendendo em 16 ticks, todos os pixels juntos, mudava 5x a 8x mais por quadro que o
+  loop calmo dela. Pengaró e CK: `cresce=False`, `entra=44`, `sai=34`.
 - `Aura(resta=...)`: expressão com os ticks que faltam para o corpo voltar (ex. `var(20)`); o fade nunca passa de
   `resta / sai`. Sem ela a saída conta pelo relógio do `-4`, que anda em pausa, superpausa e hitpause, enquanto o
   `var(20)` do `-2` para: um hitpause ou uma super do oponente no fim do Despertar apagava a aura antes de o corpo

@@ -16,7 +16,7 @@ fumaça violeta-escura das sombras, à parte do corpo e toda ATRÁS dos lutadore
 violeta-preta baixa, do chão até o peito, saindo de um chão rachado pequeno, que fica no chão no pulo. É a coluna e o
 chão da aura grande do Blender encolhidos em volta do pé (sem chicotes, fiapos, pedras nem elos), em 3x
 (`sprites/pengaro/aura/`, `ferramentas/aura_blender/discreta.py`), ligada no jogo por `ferramentas/aura_pengaro.py`
-(1 Explod, 9600, scale 1/3, alfa 0,5, no `[Statedef -4]`). O boss se vê pela arte nova, não pela aura. Liga com o Despertar
+(1 Explod, 9600, scale 1/3, alfa 0,5, no `[Statedef -4]`; entra em 44 ticks e sai em 34 só pelo alfa, sem crescer). O boss se vê pela arte nova, não pela aura. Liga com o Despertar
 (e na transformação e no super 3100), incha nos supers, apaga junto com a forma endiabrada. Matiz média 281°: nenhum
 outro lutador usa violeta (CK 72°, Gutto 350°, Hazak 30°, Raiclaven 220°). As folhas `fx_aura_*` do Lote 7 não são
 mais usadas.
