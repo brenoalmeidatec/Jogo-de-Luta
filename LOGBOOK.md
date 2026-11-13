@@ -1934,26 +1934,3 @@ foi lida como "aura discreta" (o erro começou no texto que eu escrevi na `regra
   avisos em `aura_animada`, `aura_blender` e nas fichas. **Não use `discreta.py` nem `conferir_discreta()` em
   lutador de verdade.**
 - **Não visto em tempo real:** o filme de aura só roda na sandbox. O robô confere as camadas vivas no Despertar.
-
-## 2026-11-13 — Pengaró redesenhado no padrão novo, nítido como o CK (Claude, sessão do Breno)
-
-**Pedido do Breno:** o Pengaró estava borrado e com estilo diferente dos outros. Ele aprovou a nova
-`referencia_ginga` (rosto do retrato novo, pele bem escura, boneco enchendo o quadro).
-
-- **Folhas:** 34 folhas da forma normal no ChatGPT, em `sprites/pengaro/quadros/folhas_novas/`. Cada uma foi pedida
-  com a referência nova e a folha antiga anexadas, copiando as 8 poses da antiga. A queda foi refeita duas vezes:
-  na 1ª veio com o rosto antigo, na 2ª fora de ordem. **O endiabrado não foi tocado** (pedido do Breno).
-- **Conversão:** `ferramentas/converter_pengaro.py` gera `quadros_arcade/<folha>` em 1x e `quadros_arcade_hd/<folha>`
-  em 3x, os dois direto da folha grande (o 3x tem detalhe próprio, não é o 1x ampliado), com alfa seco.
-  - A escala é folha por folha: a mediana do tamanho contra os desenhos antigos da mesma pose (git `965f8013`).
-  - Com escala única, várias folhas saíam pequenas, e o robô acusou golpes sem alcance.
-- **Gerador:** saíram `REPETE_ARCADE` e `DESLOCA_ARCADE`, que corrigiam defeitos dos desenhos antigos.
-- **Conferido:**
-  - robô 151/0;
-  - luta no jogo: o rosto ficou com o mesmo nível de definição do CK;
-  - retratos regravados com `trocar_retratos.py`.
-- **Por que o Pengaró antigo borrava:** a folha tinha o boneco pequeno (~280 px), que era ampliado. Em cima disso, os
-  quadros do meio do Blender suavizavam a borda.
-- **Pendente:**
-  - o Hazak segue no estilo antigo (a recriação está com o Alisson, branch `hazak`);
-  - as pastas `meio/` antigas em `quadros_arcade/` ficaram no disco, sem uso.
