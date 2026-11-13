@@ -1456,3 +1456,19 @@ Parada rápida. Último commit antes desta entrada: `f3e86b1c`. Arquivos alterad
 - **Não geradas (vão para o Blender, regra-efeitos-proporcionais):** fx_aura_lascas, fx_tubo, fx_choque.
 - **Pendente:** a lista de refazer do Raiclaven (b_agarrao, b_corrente_chicotada, b_rolamento, b_corrente_parado)
   continua de pé; o chat do conceito ainda serve para ela, por isso não foi apagado. Cético das 10 novas; converter.
+
+## 2026-11-12 ~20:50-21:10 — CK boss: corpo do grupo 1 completo (8 folhas, chat do conceito)
+- **Feito:** as 8 folhas de corpo que faltavam do grupo 1 do CK boss (`b_`), no chat do conceito (`6af49f6a-…`),
+  sem abrir chat novo; login OK o tempo todo, sem limite de conta. Commits `a1d2b98c` (b_chute_alto, b_apanha,
+  b_queda, b_levanta), `e8876b6d` (b_defesa, b_agachado, b_pulo), `8a620bea` (b_grave). Todas 2172x724, 8 figuras
+  separadas, fundo magenta, óculos nos olhos, uma garrafa quebrada na mão da frente, nada na boca, sem fumaça.
+- **Aprovadas:** b_queda, b_levanta, b_defesa, b_agachado (todas de primeira).
+- **Com ressalva:** `b_chute_alto` (2ª tentativa; pedido de +10% deu +3%: ~6% menor que a b_ginga q1, 502 contra 536,
+  sola em 626); `b_apanha` (q3 com dois medalhões de caveira, um voando; sola 649); `b_pulo` (caixas das figuras se
+  sobrepõem em x até 21 px, sem encostar); `b_grave` (2ª tentativa, braços em V no q5-q6; ainda ~13% menor que a
+  b_ginga q1, 464 contra 536, sola 633). A b_ginga é larga de propósito (oito figuras de ~255 px); pose larga não cabe
+  em 2172 px nessa escala, por isso o modelo encolhe o corpo.
+- **Não gerada (vai para o Blender, regra-efeitos-proporcionais):** fx_aura_paredao.
+- **Pendente:** CK grupo 2 (15 de corpo + despertar_boss; fx_aura_aneis, fx_grave, fx_cacos vão para o Blender);
+  refazer a `b_soco` (caco na mão de trás no q5); acertar chão (626-649) por script ou no conversor. O chat do conceito
+  do CK continua necessário para o grupo 2, por isso não foi apagado.
