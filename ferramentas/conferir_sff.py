@@ -5,6 +5,13 @@
   python ferramentas/conferir_sff.py comparar base_pengaro.json novo_pengaro.json [--podado]
   python ferramentas/conferir_sff.py religar velho.sff novo.sff   (regrava com links, sem requantizar)
   python ferramentas/conferir_sff.py religar velho.sff novo.sff --podar chars/pengaro   (e poda como o gerador)
+  python ferramentas/conferir_sff.py paleta chars/ck/ck.sff sprites/ck/paleta_sff.act   (a paleta fixa do gerador)
+  python ferramentas/conferir_sff.py transplantar base.sff chars/gutto   (só o despertado vem do gerado)
+
+`transplantar` existe porque os quadros_hd do Gutto e do Raiclaven (hd_blender.py, fora do git) não saem iguais em
+outra máquina: o Blender daqui desenha diferente do Blender do Breno, e regenerar o lutador mudaria a forma base
+inteira. Com a paleta fixa (a mesma do base.sff), ele regrava chars/<l>/<l>.sff com o nó do base.sff em todo sprite que
+existe lá, menos os destinos do [RemapPreset despertado], que vêm do .sff que o gerador acabou de gravar.
 
 `gravar` lê o .sff seguindo os sprites linkados (len = 0: os pixels e o tamanho vêm do sprite `link`, como o
 shareCopy do IKEMEN faz) e grava, para cada (grupo, índice), o sha1 de largura, altura, eixo e pixels, mais o sha1
@@ -99,6 +106,37 @@ def religar(origem, destino, manter=None):
     gp.gravar_sff(Path(destino), pal, itens)
 
 
+def paleta(origem, destino):
+    """Grava a paleta do .sff como .act (768 bytes RGB, o índice 0 é o transparente): a paleta fixa do gerador."""
+    pal, _, _ = ler(origem)
+    Path(destino).write_bytes(b"".join(pal[k:k + 3] for k in range(0, 256 * 4, 4)))
+
+
+def transplantar(base, pasta):
+    """Regrava chars/<l>/<l>.sff (o que o gerador gravou) com o nó de `base` em todo sprite que existe lá, menos o
+    despertado (destinos do [RemapPreset despertado] do .cns). A paleta tem que ser a mesma (paleta_sff.act)."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import gerar_pengaro as gp
+    pasta = Path(pasta)
+    novo = pasta / f"{pasta.name}.sff"
+    pal_b, nos_b, _ = ler(base)
+    pal_n, nos_n, _ = ler(novo)
+    assert pal_b == pal_n, "paleta diferente: grave sprites/<l>/paleta_sff.act da base e gere o lutador de novo"
+    desp = {d for _, d in gp.trocas_do_remap((pasta / f"{pasta.name}.cns").read_text(encoding="utf-8"))}
+    da_base = {(n["g"], n["i"]): n for n in nos_b}
+    itens, trocados = [], 0
+    for n in nos_n:
+        k = (n["g"], n["i"])
+        if k in da_base and k not in desp:
+            trocados += (n["w"], n["h"], n["x"], n["y"], n["px"]) != tuple(da_base[k][c] for c in "whxy") + (da_base[k]["px"],)
+            n = da_base[k]
+        itens.append((n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], n["px"]))
+    gp.gravar_sff(novo, pal_n, itens)
+    print(f"{novo}: {len(itens)} sprites, {sum(k in desp for k in (tuple(i[:2]) for i in itens))} do despertado "
+          f"(do gerador), {sum(1 for i in itens if tuple(i[:2]) in da_base and tuple(i[:2]) not in desp)} da base "
+          f"({trocados} diferiam do gerado), {sum(1 for i in itens if tuple(i[:2]) not in da_base)} novos")
+
+
 def main():
     args = sys.argv[1:]
     if len(args) == 3 and args[0] == "gravar":
@@ -115,6 +153,10 @@ def main():
             manter = gp.sprites_mantidos((pasta / f"{pasta.name}.air").read_text(encoding="utf-8"),
                                          (pasta / f"{pasta.name}.cns").read_text(encoding="utf-8"))
         religar(args[1], args[2], manter)
+    elif len(args) == 3 and args[0] == "paleta":
+        paleta(args[1], args[2])
+    elif len(args) == 3 and args[0] == "transplantar":
+        transplantar(args[1], args[2])
     elif len(args) >= 3 and args[0] == "comparar":
         a = json.loads(Path(args[1]).read_text(encoding="utf-8"))
         b = json.loads(Path(args[2]).read_text(encoding="utf-8"))

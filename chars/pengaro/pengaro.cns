@@ -708,7 +708,7 @@ priority = 4, Hit
 pausetime = 8, 8
 guard.pausetime = 6, 6
 sparkxy = -10, -78
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -754,7 +754,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -78
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -800,7 +800,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -78
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -851,7 +851,7 @@ priority = 4, Hit
 pausetime = 8, 8
 guard.pausetime = 6, 6
 sparkxy = -10, -56
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -897,7 +897,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -79
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -943,7 +943,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -63
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -989,7 +989,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -80
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -1042,7 +1042,7 @@ priority = 4, Hit
 pausetime = 8, 8
 guard.pausetime = 6, 6
 sparkxy = -10, -59
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -1088,7 +1088,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -91
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -1139,7 +1139,7 @@ priority = 4, Hit
 pausetime = 8, 8
 guard.pausetime = 6, 6
 sparkxy = -10, -18
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -1185,7 +1185,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -10
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -1232,7 +1232,7 @@ priority = 4, Hit
 pausetime = 8, 8
 guard.pausetime = 6, 6
 sparkxy = -10, -66
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -1271,7 +1271,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -45
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -1310,7 +1310,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -45
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -1440,7 +1440,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -1706,7 +1706,7 @@ ampl = -4
 [State 831, Capoeira faisca]
 type = Explod
 trigger1 = Time = 26
-anim = ifelse(var(20) > 0, 9231, 9201)
+anim = 9201
 postype = p1
 pos = 62, -80
 removetime = -2
@@ -1739,7 +1739,7 @@ value = -90
 [State 831, Whisky estoura]
 type = Explod
 trigger1 = Time = 66
-anim = ifelse(var(20) > 0, 9231, 9201)
+anim = 9201
 postype = p1
 pos = 38, -60
 removetime = -2
@@ -1842,7 +1842,7 @@ priority = 4, Hit
 pausetime = 8, 8
 guard.pausetime = 6, 6
 sparkxy = -10, -82
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -1892,7 +1892,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -79
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -1942,7 +1942,7 @@ priority = 4, Hit
 pausetime = 16, 16
 guard.pausetime = 10, 10
 sparkxy = -10, -92
-sparkno = S(ifelse(var(20) > 0, 9235, 9205))
+sparkno = S9205
 guard.sparkno = S9202
 sparkscale = 1.3, 1.3
 guard.sparkscale = .9, .9
@@ -2001,7 +2001,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -78
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -2051,7 +2051,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -51
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -2101,7 +2101,7 @@ priority = 4, Hit
 pausetime = 16, 16
 guard.pausetime = 10, 10
 sparkxy = -10, -81
-sparkno = S(ifelse(var(20) > 0, 9235, 9205))
+sparkno = S9205
 guard.sparkno = S9202
 sparkscale = 1.3, 1.3
 guard.sparkscale = .9, .9
@@ -2160,7 +2160,7 @@ priority = 4, Hit
 pausetime = 8, 8
 guard.pausetime = 6, 6
 sparkxy = -10, -52
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -2210,7 +2210,7 @@ priority = 4, Hit
 pausetime = 8, 8
 guard.pausetime = 6, 6
 sparkxy = -10, -18
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -2250,7 +2250,7 @@ priority = 4, Hit
 pausetime = 16, 16
 guard.pausetime = 10, 10
 sparkxy = -10, -85
-sparkno = S(ifelse(var(20) > 0, 9235, 9205))
+sparkno = S9205
 guard.sparkno = S9202
 sparkscale = 1.3, 1.3
 guard.sparkscale = .9, .9
@@ -2309,7 +2309,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -81
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -2359,7 +2359,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -76
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -2409,7 +2409,7 @@ priority = 4, Hit
 pausetime = 16, 16
 guard.pausetime = 10, 10
 sparkxy = -10, -65
-sparkno = S(ifelse(var(20) > 0, 9235, 9205))
+sparkno = S9205
 guard.sparkno = S9202
 sparkscale = 1.3, 1.3
 guard.sparkscale = .9, .9
@@ -2458,7 +2458,7 @@ priority = 4, Hit
 pausetime = 8, 8
 guard.pausetime = 6, 6
 sparkxy = -10, -82
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -2498,7 +2498,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -74
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -2538,7 +2538,7 @@ priority = 4, Hit
 pausetime = 8, 8
 guard.pausetime = 6, 6
 sparkxy = -10, -18
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -2578,7 +2578,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -85
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -2630,7 +2630,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -79
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -2670,7 +2670,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -76
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -2710,7 +2710,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -81
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -2750,7 +2750,7 @@ priority = 4, Hit
 pausetime = 16, 16
 guard.pausetime = 10, 10
 sparkxy = -10, -92
-sparkno = S(ifelse(var(20) > 0, 9235, 9205))
+sparkno = S9205
 guard.sparkno = S9202
 sparkscale = 1.3, 1.3
 guard.sparkscale = .9, .9
@@ -2799,7 +2799,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -65
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -2839,7 +2839,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -12
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -2891,7 +2891,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -79
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -2941,7 +2941,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -52
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -2991,7 +2991,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -92
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -3041,7 +3041,7 @@ priority = 4, Hit
 pausetime = 16, 16
 guard.pausetime = 10, 10
 sparkxy = -10, -67
-sparkno = S(ifelse(var(20) > 0, 9235, 9205))
+sparkno = S9205
 guard.sparkno = S9202
 sparkscale = 1.3, 1.3
 guard.sparkscale = .9, .9
@@ -3100,7 +3100,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -82
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -3150,7 +3150,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -77
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -3200,7 +3200,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -82
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -3250,7 +3250,7 @@ priority = 4, Hit
 pausetime = 16, 16
 guard.pausetime = 10, 10
 sparkxy = -10, -82
-sparkno = S(ifelse(var(20) > 0, 9235, 9205))
+sparkno = S9205
 guard.sparkno = S9202
 sparkscale = 1.3, 1.3
 guard.sparkscale = .9, .9
@@ -3299,7 +3299,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -94
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -3351,7 +3351,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -76
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -3375,7 +3375,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -76
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -3425,7 +3425,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -75
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -3475,7 +3475,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -80
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -3525,7 +3525,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -61
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -3567,7 +3567,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -11
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -3619,7 +3619,7 @@ priority = 4, Hit
 pausetime = 16, 16
 guard.pausetime = 10, 10
 sparkxy = -10, -72
-sparkno = S(ifelse(var(20) > 0, 9235, 9205))
+sparkno = S9205
 guard.sparkno = S9202
 sparkscale = 1.3, 1.3
 guard.sparkscale = .9, .9
@@ -3661,8 +3661,8 @@ type = Projectile
 trigger1 = Time = 23
 projid = 1002
 projanim = 3010
-projhitanim = ifelse(var(20) > 0, 9230, 9200)
-projremanim = ifelse(var(20) > 0, 9230, 9200)
+projhitanim = 9200
+projremanim = 9200
 projhits = 1
 projpriority = 2
 offset = 52, -96
@@ -3676,7 +3676,7 @@ guardflag = MA
 hitflag = MAF
 pausetime = 4, 10
 sparkxy = 0, 0
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = F5,1
@@ -3708,8 +3708,8 @@ type = Projectile
 trigger1 = Time = 23
 projid = 1002
 projanim = 3010
-projhitanim = ifelse(var(20) > 0, 9230, 9200)
-projremanim = ifelse(var(20) > 0, 9230, 9200)
+projhitanim = 9200
+projremanim = 9200
 projhits = 1
 projpriority = 2
 offset = 52, -96
@@ -3723,7 +3723,7 @@ guardflag = MA
 hitflag = MAF
 pausetime = 4, 10
 sparkxy = 0, 0
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = F5,1
@@ -3840,7 +3840,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -81
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -3911,7 +3911,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -45
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -3944,8 +3944,8 @@ type = Projectile
 trigger1 = Time = 25
 projid = 1003
 projanim = 3012
-projhitanim = 9231
-projremanim = 9231
+projhitanim = 9201
+projremanim = 9201
 projhits = 2
 projmisstime = 8
 projpriority = 3
@@ -3959,7 +3959,7 @@ guardflag = MA
 hitflag = MAF
 pausetime = 8, 10
 sparkxy = 0, 0
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 envshake.time = 6
@@ -4020,7 +4020,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -45
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -4038,7 +4038,7 @@ persistent = 0
 [State 3403, Estouro]
 type = Explod
 trigger1 = Pos Y >= 0 && Vel Y > 0
-anim = ifelse(var(20) > 0, 9235, 9205)
+anim = 9205
 postype = p1
 pos = 40, -15
 removetime = -2
@@ -4163,8 +4163,8 @@ type = Projectile
 trigger1 = AnimElem = 2
 projid = 1000
 projanim = 1005
-projhitanim = ifelse(var(20) > 0, 9230, 9200)
-projremanim = ifelse(var(20) > 0, 9230, 9200)
+projhitanim = 9200
+projremanim = 9200
 projhits = 1
 projmisstime = 0
 projpriority = 2
@@ -4177,7 +4177,7 @@ guardflag = MA
 hitflag = MAF
 pausetime = 4, 10
 sparkxy = 0, 0
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = F5,1
@@ -4194,8 +4194,8 @@ trigger1 = AnimElem = 3
 trigger1 = var(20) > 0
 projid = 1001
 projanim = 1005
-projhitanim = ifelse(var(20) > 0, 9230, 9200)
-projremanim = ifelse(var(20) > 0, 9230, 9200)
+projhitanim = 9200
+projremanim = 9200
 offset = 62, -86
 velocity = 4.4, 0
 attr = S, SP
@@ -4204,7 +4204,7 @@ animtype = Med
 guardflag = MA
 hitflag = MAF
 pausetime = 4, 10
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = F5,1
@@ -4242,8 +4242,8 @@ type = Projectile
 trigger1 = AnimElem = 2
 projid = 1000
 projanim = 1005
-projhitanim = ifelse(var(20) > 0, 9230, 9200)
-projremanim = ifelse(var(20) > 0, 9230, 9200)
+projhitanim = 9200
+projremanim = 9200
 projhits = 1
 projmisstime = 0
 projpriority = 2
@@ -4256,7 +4256,7 @@ guardflag = MA
 hitflag = MAF
 pausetime = 4, 10
 sparkxy = 0, 0
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = F5,1
@@ -4273,8 +4273,8 @@ trigger1 = AnimElem = 3
 trigger1 = var(20) > 0
 projid = 1001
 projanim = 1005
-projhitanim = ifelse(var(20) > 0, 9230, 9200)
-projremanim = ifelse(var(20) > 0, 9230, 9200)
+projhitanim = 9200
+projremanim = 9200
 offset = 62, -86
 velocity = 6.6000000000000005, 0
 attr = S, SP
@@ -4283,7 +4283,7 @@ animtype = Med
 guardflag = MA
 hitflag = MAF
 pausetime = 4, 10
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = F5,1
@@ -4338,7 +4338,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -50
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -4404,7 +4404,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -80
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -4478,7 +4478,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -12
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -4631,8 +4631,8 @@ type = Projectile
 trigger1 = AnimElemTime(5) = 0
 projid = 3000
 projanim = 3010
-projhitanim = ifelse(var(20) > 0, 9230, 9200)
-projremanim = ifelse(var(20) > 0, 9230, 9200)
+projhitanim = 9200
+projremanim = 9200
 postype = p2
 offset = -30, -210
 velocity = 0, 7
@@ -4645,7 +4645,7 @@ animtype = Med
 guardflag = H
 hitflag = MAF
 pausetime = 4, 10
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = F5,2
@@ -4661,8 +4661,8 @@ type = Projectile
 trigger1 = AnimElemTime(5) = 6
 projid = 3000
 projanim = 3011
-projhitanim = ifelse(var(20) > 0, 9230, 9200)
-projremanim = ifelse(var(20) > 0, 9230, 9200)
+projhitanim = 9200
+projremanim = 9200
 postype = p2
 offset = 24, -228
 velocity = 0, 8
@@ -4675,7 +4675,7 @@ animtype = Med
 guardflag = H
 hitflag = MAF
 pausetime = 4, 10
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = F5,2
@@ -4691,8 +4691,8 @@ type = Projectile
 trigger1 = AnimElemTime(5) = 12
 projid = 3000
 projanim = 3010
-projhitanim = ifelse(var(20) > 0, 9230, 9200)
-projremanim = ifelse(var(20) > 0, 9230, 9200)
+projhitanim = 9200
+projremanim = 9200
 postype = p2
 offset = -8, -246
 velocity = 0, 7
@@ -4705,7 +4705,7 @@ animtype = Med
 guardflag = H
 hitflag = MAF
 pausetime = 4, 10
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = F5,2
@@ -4721,8 +4721,8 @@ type = Projectile
 trigger1 = AnimElemTime(5) = 18
 projid = 3000
 projanim = 3011
-projhitanim = ifelse(var(20) > 0, 9230, 9200)
-projremanim = ifelse(var(20) > 0, 9230, 9200)
+projhitanim = 9200
+projremanim = 9200
 postype = p2
 offset = 36, -210
 velocity = 0, 8
@@ -4735,7 +4735,7 @@ animtype = Med
 guardflag = H
 hitflag = MAF
 pausetime = 4, 10
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = F5,2
@@ -4751,8 +4751,8 @@ type = Projectile
 trigger1 = AnimElemTime(5) = 24
 projid = 3000
 projanim = 3010
-projhitanim = ifelse(var(20) > 0, 9230, 9200)
-projremanim = ifelse(var(20) > 0, 9230, 9200)
+projhitanim = 9200
+projremanim = 9200
 postype = p2
 offset = -40, -228
 velocity = 0, 7
@@ -4765,7 +4765,7 @@ animtype = Med
 guardflag = H
 hitflag = MAF
 pausetime = 4, 10
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S9200
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = F5,2
@@ -4781,8 +4781,8 @@ type = Projectile
 trigger1 = AnimElemTime(5) = 30
 projid = 3000
 projanim = 3011
-projhitanim = ifelse(var(20) > 0, 9230, 9200)
-projremanim = ifelse(var(20) > 0, 9230, 9200)
+projhitanim = 9200
+projremanim = 9200
 postype = p2
 offset = 6, -246
 velocity = 0, 8
@@ -4795,7 +4795,7 @@ animtype = Heavy
 guardflag = H
 hitflag = MAF
 pausetime = 12, 14
-sparkno = S(ifelse(var(20) > 0, 9235, 9205))
+sparkno = S9205
 guard.sparkno = S9202
 sparkscale = 1.3, 1.3
 hitsound = F5,3
@@ -4899,7 +4899,7 @@ priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
 sparkxy = -10, -60
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -4923,7 +4923,7 @@ priority = 4, Hit
 pausetime = 20, 20
 guard.pausetime = 12, 12
 sparkxy = -10, -60
-sparkno = S(ifelse(var(20) > 0, 9235, 9205))
+sparkno = S9205
 guard.sparkno = S9202
 sparkscale = 1.5, 1.5
 guard.sparkscale = .9, .9
@@ -4999,7 +4999,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -50
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -5065,7 +5065,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -80
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -5139,7 +5139,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -12
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -5197,7 +5197,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -69
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -5243,7 +5243,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -74
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -5299,7 +5299,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -78
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -5355,7 +5355,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -61
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -5400,7 +5400,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -50
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -5439,7 +5439,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -53
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -5489,7 +5489,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -73
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -5545,7 +5545,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -73
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -5601,7 +5601,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -56
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -5617,7 +5617,7 @@ air.velocity = -3,-3.5
 type = Explod
 trigger1 = AnimElem = 3
 trigger1 = var(20) > 0
-anim = ifelse(var(20) > 0, 9235, 9205)
+anim = 9205
 postype = p1
 pos = 30, -15
 removetime = -2
@@ -5668,7 +5668,7 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -56
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
@@ -5686,7 +5686,7 @@ fall.recover = 1
 type = Explod
 trigger1 = AnimElem = 3
 trigger1 = var(20) > 0
-anim = ifelse(var(20) > 0, 9235, 9205)
+anim = 9205
 postype = p1
 pos = 30, -15
 removetime = -2
@@ -5783,7 +5783,7 @@ priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
 sparkxy = -10, -68
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -5807,7 +5807,7 @@ priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
 sparkxy = -10, -68
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S9201
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -5831,7 +5831,7 @@ priority = 4, Hit
 pausetime = 20, 20
 guard.pausetime = 12, 12
 sparkxy = -10, -68
-sparkno = S(ifelse(var(20) > 0, 9235, 9205))
+sparkno = S9205
 guard.sparkno = S9202
 sparkscale = 1.5, 1.5
 guard.sparkscale = .9, .9
@@ -6100,11 +6100,6 @@ type = VarSet
 trigger1 = var(20) <= 0 && stateno != 3100
 var(37) = 0
 
-[State -2, Rastro]
-type = AfterImageTime
-trigger1 = var(20) > 0
-time = 2
-
 [State -2, Ressaca anda devagar]
 type = PosAdd
 trigger1 = stateno = 20
@@ -6258,36 +6253,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 302]
-type = Explod
-trigger1 = Anim = 302 && AnimElem = 4 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 62, -79
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 303]
 type = Explod
 trigger1 = Anim = 303 && AnimElem = 5 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 58, -92
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 303]
-type = Explod
-trigger1 = Anim = 303 && AnimElem = 5 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 58, -92
 bindtime = 3
@@ -6310,36 +6279,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 311]
-type = Explod
-trigger1 = Anim = 311 && AnimElem = 4 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 68, -78
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 312]
 type = Explod
 trigger1 = Anim = 312 && AnimElem = 3 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 58, -51
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 312]
-type = Explod
-trigger1 = Anim = 312 && AnimElem = 3 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 58, -51
 bindtime = 3
@@ -6362,36 +6305,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 313]
-type = Explod
-trigger1 = Anim = 313 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 82, -81
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 323]
 type = Explod
 trigger1 = Anim = 323 && AnimElem = 3 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 66, -85
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 323]
-type = Explod
-trigger1 = Anim = 323 && AnimElem = 3 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 66, -85
 bindtime = 3
@@ -6414,36 +6331,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 331]
-type = Explod
-trigger1 = Anim = 331 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 64, -81
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 332]
 type = Explod
 trigger1 = Anim = 332 && AnimElem = 3 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 70, -76
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 332]
-type = Explod
-trigger1 = Anim = 332 && AnimElem = 3 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 70, -76
 bindtime = 3
@@ -6466,36 +6357,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 333]
-type = Explod
-trigger1 = Anim = 333 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 76, -65
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 341]
 type = Explod
 trigger1 = Anim = 341 && AnimElem = 3 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 62, -74
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 341]
-type = Explod
-trigger1 = Anim = 341 && AnimElem = 3 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 62, -74
 bindtime = 3
@@ -6518,36 +6383,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 343]
-type = Explod
-trigger1 = Anim = 343 && AnimElem = 4 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 64, -85
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 344]
 type = Explod
 trigger1 = Anim = 344 && AnimElem = 4 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 62, -79
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 344]
-type = Explod
-trigger1 = Anim = 344 && AnimElem = 4 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 62, -79
 bindtime = 3
@@ -6570,36 +6409,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 345]
-type = Explod
-trigger1 = Anim = 345 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 72, -76
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 346]
 type = Explod
 trigger1 = Anim = 346 && AnimElem = 3 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 62, -81
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 346]
-type = Explod
-trigger1 = Anim = 346 && AnimElem = 3 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 62, -81
 bindtime = 3
@@ -6622,19 +6435,6 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 347]
-type = Explod
-trigger1 = Anim = 347 && AnimElem = 5 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 40, -92
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 348]
 type = Explod
 trigger1 = Anim = 348 && AnimElem = 3 && var(20) <= 0
@@ -6648,36 +6448,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 348]
-type = Explod
-trigger1 = Anim = 348 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 72, -65
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 349]
 type = Explod
 trigger1 = Anim = 349 && AnimElem = 3 && var(20) <= 0
 anim = 9214
-postype = p1
-pos = 68, 0
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 349]
-type = Explod
-trigger1 = Anim = 349 && AnimElem = 3 && var(20) > 0
-anim = 9215
 postype = p1
 pos = 68, 0
 bindtime = 3
@@ -6882,19 +6656,6 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 1701]
-type = Explod
-trigger1 = Anim = 1701 && AnimElem = 7 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 64, -81
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 3100]
 type = Explod
 trigger1 = Anim = 3100 && AnimElem = 2 && var(20) <= 0
@@ -6934,36 +6695,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 3401]
-type = Explod
-trigger1 = Anim = 3401 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 80, -72
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 3402]
 type = Explod
 trigger1 = Anim = 3402 && AnimElem = 3 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 62, -45
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 3402]
-type = Explod
-trigger1 = Anim = 3402 && AnimElem = 3 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 62, -45
 bindtime = 3
@@ -6986,36 +6721,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 3410]
-type = Explod
-trigger1 = Anim = 3410 && AnimElem = 4 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 70, -79
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 3411]
 type = Explod
 trigger1 = Anim = 3411 && AnimElem = 3 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 64, -52
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 3411]
-type = Explod
-trigger1 = Anim = 3411 && AnimElem = 3 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 64, -52
 bindtime = 3
@@ -7038,36 +6747,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 3412]
-type = Explod
-trigger1 = Anim = 3412 && AnimElem = 5 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 44, -92
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 3413]
 type = Explod
 trigger1 = Anim = 3413 && AnimElem = 3 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 82, -67
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 3413]
-type = Explod
-trigger1 = Anim = 3413 && AnimElem = 3 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 82, -67
 bindtime = 3
@@ -7090,36 +6773,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 3420]
-type = Explod
-trigger1 = Anim = 3420 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 68, -82
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 3421]
 type = Explod
 trigger1 = Anim = 3421 && AnimElem = 3 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 74, -77
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 3421]
-type = Explod
-trigger1 = Anim = 3421 && AnimElem = 3 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 74, -77
 bindtime = 3
@@ -7142,36 +6799,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 3422]
-type = Explod
-trigger1 = Anim = 3422 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 72, -82
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 3423]
 type = Explod
 trigger1 = Anim = 3423 && AnimElem = 3 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 78, -82
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 3423]
-type = Explod
-trigger1 = Anim = 3423 && AnimElem = 3 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 78, -82
 bindtime = 3
@@ -7194,36 +6825,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 3430]
-type = Explod
-trigger1 = Anim = 3430 && AnimElem = 5 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 38, -94
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 3431]
 type = Explod
 trigger1 = Anim = 3431 && AnimElem = 4 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 62, -76
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 3431]
-type = Explod
-trigger1 = Anim = 3431 && AnimElem = 4 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 62, -76
 bindtime = 3
@@ -7246,36 +6851,10 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 3432]
-type = Explod
-trigger1 = Anim = 3432 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 84, -75
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 3433]
 type = Explod
 trigger1 = Anim = 3433 && AnimElem = 4 && var(20) <= 0
 anim = 9213
-postype = p1
-pos = 58, -80
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 3433]
-type = Explod
-trigger1 = Anim = 3433 && AnimElem = 4 && var(20) > 0
-anim = 9212
 postype = p1
 pos = 58, -80
 bindtime = 3
@@ -7298,363 +6877,12 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
-[State -3, Efeito do golpe 3434]
-type = Explod
-trigger1 = Anim = 3434 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 58, -61
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
 [State -3, Efeito do golpe 3435]
 type = Explod
 trigger1 = Anim = 3435 && AnimElem = 3 && var(20) <= 0
 anim = 9214
 postype = p1
 pos = 82, 0
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 3435]
-type = Explod
-trigger1 = Anim = 3435 && AnimElem = 3 && var(20) > 0
-anim = 9215
-postype = p1
-pos = 82, 0
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 10201]
-type = Explod
-trigger1 = Anim = 10201 && AnimElem = 4 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 40, -78
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 10210]
-type = Explod
-trigger1 = Anim = 10210 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 62, -78
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 10215]
-type = Explod
-trigger1 = Anim = 10215 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 50, -78
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 10216]
-type = Explod
-trigger1 = Anim = 10216 && AnimElem = 4 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 48, -69
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 10231]
-type = Explod
-trigger1 = Anim = 10231 && AnimElem = 4 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 46, -61
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 10240]
-type = Explod
-trigger1 = Anim = 10240 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 64, -79
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 10245]
-type = Explod
-trigger1 = Anim = 10245 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 34, -63
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 10246]
-type = Explod
-trigger1 = Anim = 10246 && AnimElem = 4 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 51, -74
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 10260]
-type = Explod
-trigger1 = Anim = 10260 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 59, -80
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 10410]
-type = Explod
-trigger1 = Anim = 10410 && AnimElem = 4 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 26, -91
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 10440]
-type = Explod
-trigger1 = Anim = 10440 && AnimElem = 3 && var(20) > 0
-anim = 9215
-postype = p1
-pos = 62, 0
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 10601]
-type = Explod
-trigger1 = Anim = 10601 && AnimElem = 4 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 40, -50
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 10610]
-type = Explod
-trigger1 = Anim = 10610 && AnimElem = 4 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 46, -45
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 10611]
-type = Explod
-trigger1 = Anim = 10611 && AnimElem = 4 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 52, -53
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 10650]
-type = Explod
-trigger1 = Anim = 10650 && AnimElem = 5 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 54, -45
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 11100]
-type = Explod
-trigger1 = Anim = 11100 && AnimElem = 2 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 74, -50
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 11101]
-type = Explod
-trigger1 = Anim = 11101 && AnimElem = 2 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 74, -50
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 11200]
-type = Explod
-trigger1 = Anim = 11200 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 44, -80
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 11201]
-type = Explod
-trigger1 = Anim = 11201 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 52, -80
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 11300]
-type = Explod
-trigger1 = Anim = 11300 && AnimElem = 3 && var(20) > 0
-anim = 9215
-postype = p1
-pos = 54, 0
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 11301]
-type = Explod
-trigger1 = Anim = 11301 && AnimElem = 3 && var(20) > 0
-anim = 9215
-postype = p1
-pos = 54, 0
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 11400]
-type = Explod
-trigger1 = Anim = 11400 && AnimElem = 4 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 57, -73
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 11401]
-type = Explod
-trigger1 = Anim = 11401 && AnimElem = 4 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 57, -73
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 13100]
-type = Explod
-trigger1 = Anim = 13100 && AnimElem = 2 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 82, -60
-bindtime = 3
-removetime = 8
-sprpriority = 3
-ownpal = 1
-scale = .75, .75
-ignorehitpause = 1
-
-[State -3, Efeito do golpe 13200]
-type = Explod
-trigger1 = Anim = 13200 && AnimElem = 3 && var(20) > 0
-anim = 9212
-postype = p1
-pos = 71, -68
 bindtime = 3
 removetime = 8
 sprpriority = 3

@@ -1112,6 +1112,9 @@ def main():
     # estilo de pose segurada: os fracos são os golpes com hitsound F5,0 (no Pengaró a lista é fixa e conferida)
     gp.FRACOS = {int(n) for n in re.findall(r"\[State (\d+), Golpe\]\n(?:[^\n]+\n)*?hitsound = F5,0\n", cns)}
     del faiscas[9210]  # a fumaça antiga: só pela paleta, fora do .air (a poda a tira do .sff)
+    # o corte de sombra (9212) e a poeira violeta (9215) saíram dos golpes do Ratão (efeitos proporcionais) e a saída
+    # do Ratão usa a fumaça do CK (9253): ações sem uso fora do .air (os desenhos da 9212 seguem na Mão de Sombra)
+    del faiscas[9212], faiscas[9215]
     a = gp.montar_air(s, faiscas, arte_despertada=gp.arte_endiabrada(s))
     preset = gp.preset_despertado(s)
     aura = aura_ck.ligar(s)  # aura do Ratão (Blender, discreta, 3x): grupo e ação 9600, fora da paleta
@@ -1128,11 +1131,8 @@ def main():
     assert k == 1
     cns = cns.replace("anim = 9215\nid = 9215", "anim = 9253\nid = 9215")  # saída do Ratão: fumaça do CK
     # nada da aura pintado no corpo (regras-dos-lutadores, seção 4): sai o PalFX que tingia o Ratão (como no Lote 7 do
-    # Pengaró) e o rastro (AfterImageTime) que mantinha o AfterImage da cena vivo o Despertar inteiro, um halo
-    # branco-azulado em volta do corpo (cético de 2026-11-12). O rastro de 40 tiques de cada super continua.
+    # Pengaró). O rastro do Despertar inteiro (AfterImageTime) já saiu do kit do Pengaró, para todos.
     cns = gp.sem_tinta_do_despertar(cns)
-    cns, k = re.subn(r"\[State -2, Rastro\]\ntype = AfterImageTime\n(?:[^\n]+\n)+\n", "", cns)
-    assert k == 1, "rastro do Despertar não encontrado"
     cns = cns.rstrip() + "\n\n" + gp.efeitos_cns(a.ativos, gp.FRACOS)
     cns = cns.replace("[Data]", preset + "[Quotes]\n" + "".join(
         f'victory{i + 1} = "{v}"\n' for i, v in enumerate(gp.VITORIAS)) + "\n[Data]", 1)

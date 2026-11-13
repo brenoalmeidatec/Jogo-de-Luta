@@ -89,8 +89,17 @@ def _assinatura(rec):
     return pequeno.ravel()
 
 
+PONTINHO = 12  # px: ilha solta deste tamanho ou menor (fiapo de fumaça, cisco) não conta na caixa
+
+
 def _caixa(a):
+    """Caixa da figura, sem os pontinhos soltos: o gerador do CK apaga as ilhas de até 12 px do quadro do Ratão e o
+    quadro de 1x em disco ainda as tem; contando com elas, a caixa do disco saía 3 a 5 px mais alta que a do sprite e
+    o gêmeo HD não era achado (a ginga do despertado piscava entre 3x e 1x ampliado)."""
     m = a[..., 3] >= 128
+    n, rot, info, _ = cv2.connectedComponentsWithStats(m.astype(np.uint8), connectivity=8)
+    if n > 2 and info[1:, cv2.CC_STAT_AREA].max() > PONTINHO:
+        m = np.isin(rot, 1 + np.flatnonzero(info[1:, cv2.CC_STAT_AREA] > PONTINHO))
     ys, xs = np.nonzero(m)
     if not len(xs):
         return None

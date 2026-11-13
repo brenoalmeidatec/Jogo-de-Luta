@@ -62,6 +62,17 @@ pixel do desenho num pixel da tela. O boneco fica do mesmo tamanho na tela, mas 
   se a aura entrar no `.cns` depois, os sprites dela contam como corpo e saem ampliados 3x (gigantes na tela).
 - **Gutto e Raiclaven numa máquina nova:** rode `python ferramentas/hd_blender.py gutto` (e `raiclaven`) antes de mexer
   no gerador. Sem `quadros_hd/`, o gerador avisa com "ATENÇÃO" e o lutador sai em 1x.
+  **O `hd_blender` não reproduz entre máquinas:** o Blender de outra máquina desenha os quadros 3x um pouco diferentes
+  (2026-11-12: 66 e 68 silhuetas mudaram, 0,1% e 0,2% dos pixels da forma base). Quem não tem os `quadros_hd/` do Breno
+  e precisa regravar o `.sff` do Gutto ou do Raiclaven (o despertado, por exemplo) gera o lutador e depois transplanta a
+  forma base da mugen: `git show origin/mugen:chars/gutto/gutto.sff > base.sff` e
+  `python ferramentas/conferir_sff.py transplantar base.sff chars/gutto`. Assim só o despertado vem do gerador. Se só
+  o `.cns` ou o `.air` mudou, devolva o `.sff` com `git checkout chars/<l>/<l>.sff`.
+- **Paleta fixa:** CK, Pengaró, Gutto e Raiclaven têm `sprites/<l>/paleta_sff.act`, a paleta do `.sff` da mugen. O
+  gerador usa essas cores em vez de escolher pelo MEDIANCUT da lista inteira de sprites, que mudava a cor de todo
+  pixel da forma base a cada sprite novo ou trocado (um gêmeo 3x a mais no despertado bastava). Arte nova do lutador
+  pede cores novas: apague o arquivo, gere, e grave de novo com `python ferramentas/conferir_sff.py paleta
+  chars/<l>/<l>.sff sprites/<l>/paleta_sff.act`.
 - **Antes de subir:**
   - olhe a linha `HD:` que o gerador imprime: "só ampliados" alto quer dizer gêmeo faltando;
   - tire uma foto do jogo rodando e confira se o boneco está nítido;
@@ -71,6 +82,6 @@ pixel do desenho num pixel da tela. O boneco fica do mesmo tamanho na tela, mas 
 
 ## Custo
 
-- O `.sff` fica maior: hoje o CK tem 3,9 MB, o Hazak 4,2 MB, o Pengaró 5,6 MB, o Gutto 21 MB e o Raiclaven 22 MB. O
-  launcher baixa uma vez só.
+- O `.sff` fica maior: em 2026-11-12, com o despertado em 3x e a aura do Blender, o CK tem 7,3 MB, o Hazak 4,4 MB, o
+  Pengaró 12,6 MB, o Gutto 30,8 MB e o Raiclaven 23,1 MB. O launcher baixa uma vez só.
 - O gerador demora um pouco mais. O Gutto, o maior, leva ~1,5 min.

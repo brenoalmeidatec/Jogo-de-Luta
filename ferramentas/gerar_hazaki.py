@@ -62,7 +62,6 @@ gp.IMPACTO = {
     "super_final": ((16, 16), (12, 12), (20, 150, -3), (12, 150, -2), 9201, 1.5, "5,4"),
 }
 gp.faiscas = lambda n: (f"sparkno = S{n}", "guard.sparkno = S9216")   # a defesa é sempre o escudo (regra 8.1)
-gp.FAISCA_POR_FORMA = False
 gp.MODO_HAZAKI = False
 
 CORPO = gp.CORPO

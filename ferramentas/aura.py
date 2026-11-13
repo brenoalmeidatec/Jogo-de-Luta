@@ -701,11 +701,22 @@ class Aura:
         return entrou
 
     def altura(self):
-        """Altura da aura em px do jogo acima dos pés: do pé ao pixel opaco mais alto de todos os quadros (a camada
-        mais alta)."""
+        """Altura da aura em px do jogo acima dos pés, no pior tique: do pé ao pixel opaco mais alto de todos os
+        quadros, com o surto inchando a escala em volta do eixo (1 + surto_incha) e a deriva para cima. Sem o surto e a
+        deriva a trava da aura discreta deixava passar ~12% a mais que o teto (cético de 2026-11-12)."""
         def topo(c):
             return min(int(np.argmax(np.asarray(self._img(q))[..., 3].any(axis=1))) for q in c.quadros)
-        return max((self._eixo(c)[1] - topo(c)) / c.res - c.pos[1] for c in self.camadas)
+        return max((self._eixo(c)[1] - topo(c)) / c.res * (1 + c.surto_incha) - c.pos[1] + abs(c.mov.deriva[1])
+                   for c in self.camadas)
+
+    def largura(self):
+        """Largura da aura em px do jogo no pior tique (surto, deriva e tremor para os lados). Só informa: a regra
+        dos efeitos proporcionais não põe teto na largura, quem julga é o Breno (anotado na ficha do lutador)."""
+        def lados(c):
+            cols = [np.flatnonzero(np.asarray(self._img(q))[..., 3].any(axis=0)) for q in c.quadros]
+            return max(x[-1] + 1 - x[0] for x in cols if len(x))
+        return max(lados(c) / c.res * (1 + c.surto_incha)
+                   + 2 * (abs(c.mov.deriva[0]) + c.mov.tremor + c.surto_tremor) for c in self.camadas)
 
     def teto_particula(self, p):
         """Máximo de peças vivas desta partícula: as do regime calmo mais as que um surto inteiro solta a mais."""
@@ -965,7 +976,7 @@ class Aura:
                 f"map = \"{self.m('s')}\"\nvalue = 1\nignorehitpause = 1\n\n")
 
     def resumo(self):
-        linhas = [f"aura {self.nome}: altura {self.altura():.0f} px, explods {self.ids()[0]} a {self.ids()[-1]}, "
+        linhas = [f"aura {self.nome}: altura {self.altura():.0f} px, largura {self.largura():.0f} px, explods {self.ids()[0]} a {self.ids()[-1]}, "
                   f"no máximo {self.pico()} vivos (teto {self.teto_explods}); por tick, {len(self.camadas)} "
                   f"ModifyExplod ({2 * len(self.camadas)} no surto)"]
         for i, c in enumerate(self.camadas):

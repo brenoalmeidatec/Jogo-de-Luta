@@ -2177,6 +2177,15 @@ match.wins = 2
 match.maxdrawgames = 1
 start.waittime = 30
 ctrl.time = 30
+; Fim de round mais rapido (estilo KOF). Padrao do IKEMEN: camera lenta 60 ticks a 1/4, espera 45 + 45 ticks e
+; round acabando 300 ticks depois do KO: ~3 s do KO ate a pose de vitoria.
+slow.time = 24
+slow.fadetime = 16
+slow.speed = 0.5
+over.hittime = 10
+over.waittime = 15
+over.wintime = 10
+over.time = 220
 round.default.font = 4,0,0
 round.default.text = "ROUND %i"
 round.default.displaytime = 60
@@ -2225,9 +2234,10 @@ HUD_POR_CIMA = ("Lifebar", "Powerbar", "Face", "Name", "Time", "Combo", "WinIcon
 def hud_por_cima(t):
     """Todo elemento do HUD (vida, poder, retrato, nome, relogio, acertos, vitorias) ganha `layerno = 1`.
 
-    Sem isso o motor desenha o HUD na camada 0, ATRAS dos lutadores e dos Explods (heranca do MUGEN): a aura do
-    Despertar, que tem mais de 2x a altura do lutador, passava por cima do relogio e das barras. Com layerno = 1 o
-    HUD fica na frente de tudo o que e da luta (lutador que pula alto passa por tras da barra, nao por cima)."""
+    Sem isso o motor desenha o HUD na camada 0, ATRAS dos lutadores e dos Explods (heranca do MUGEN): a aura antiga
+    do Despertar (mais de 2x a altura do lutador, antes da regra da aura discreta) e as faiscas grandes passavam por
+    cima do relogio e das barras. Com layerno = 1 o HUD fica na frente de tudo o que e da luta (lutador que pula alto
+    passa por tras da barra, nao por cima)."""
     saida, secao = [], ""
     for linha in t.split("\n"):
         saida.append(linha)
