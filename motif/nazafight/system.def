@@ -35,6 +35,7 @@ menu.item.active.bg.spr = 131,0
 menu.item.active.bg.offset = 0,0
 menu.item.active.bg.localcoord = 1280,720
 menu.item.active.bg.layerno = 2
+menu.item.active.bg.spacing = 0,40          ; sem isso (0,0) a tabua ficava presa na 1a linha, tapando o ARCADE
 menu.window.margins.y = 48,8          ; com 12 o motor cortava o alto do 1o item (ARCADE) e da tabua ativa
 menu.window.visibleitems = 5
 menu.boxcursor.visible = 0
@@ -72,106 +73,36 @@ footer.overlay.localcoord = 1280,720
 [TitleBGdef]
 bgclearcolor = 20,12,16
 
-[TitleBG Ceu]
+[TitleBG Fundo]
 type = normal
 spriteno = 100,0
 layerno = 0
 start = -640,0
 
-[TitleBG Nuvens]
-type = normal
-spriteno = 100,1
-layerno = 0
-start = -640,48
-tile = 1,0
-velocity = -0.15,0
-
-[TitleBG Cidade]
-type = normal
-spriteno = 100,2
-layerno = 0
-start = -640,0
-
-[TitleBG Rio]
-type = normal
-spriteno = 100,3
-layerno = 0
-start = -640,0
-
-[TitleBG Brilho]
-type = anim
-actionno = 101
-layerno = 0
-start = -640,472
-
-[TitleBG Canoa]
-type = anim
-actionno = 110
-layerno = 0
-start = -880,496
-tile = 1,0
-tilespacing = 1700,0
-velocity = 0.4,0
-
-[TitleBG Painel]
+[TitleBG Faixa]
 type = normal
 spriteno = 130,0
 layerno = 0
-start = -192,432
+start = -200,436
+trans = addalpha
+alpha = 192,64
 
 [TitleBG Logo]
 type = anim
 actionno = 120
 layerno = 0
-start = 0,152
-
-[TitleBG Farinha]
-type = anim
-actionno = 121
-layerno = 0
-start = 0,264
-
-[TitleBG Subtitulo]
-type = normal
-spriteno = 0,1
-layerno = 0
-start = 0,288
-
-[Begin Action 101]
-101,0, 0,0, 10
-101,1, 0,0, 10
-101,2, 0,0, 10
-101,3, 0,0, 10
-
-[Begin Action 110]
-110,0, 0,0, 6
-110,1, 0,0, 6
-110,2, 0,0, 6
-110,3, 0,0, 6
-110,4, 0,0, 6
-110,5, 0,0, 6
-110,6, 0,0, 6
-110,7, 0,0, 6
+start = -194,20
 
 [Begin Action 120]
-0,0, 0,-160, 2
-0,0, 0,-100, 2
-0,0, 0,-48, 2
+0,0, 0,-300, 2
+0,0, 0,-190, 2
+0,0, 0,-90, 2
 0,0, 0,0, 2
-0,0, 0,12, 2
+0,0, 0,14, 2
 0,0, 0,-8, 2
 0,0, 0,4, 2
-0,0, 0,-4, 2
+0,0, 0,-2, 2
 0,0, 0,0, -1
-
-[Begin Action 121]
-0,2, 0,0, 8
-121,1, 0,0, 4
-121,2, 0,0, 4
-121,3, 0,0, 5
-121,4, 0,0, 6
-121,5, 0,0, 8
-0,2, 0,0, -1
 
 [Select Info]
 fadein.time = 10
@@ -187,8 +118,8 @@ cell.spacing = 8,8
 cell.bg.spr = 300,0
 cell.random.spr = 300,1
 portrait.spr = 9000,0
-portrait.offset = 12,12          ; 3 px logicos: o retrato 25x25 fica na grade de 4
-portrait.scale = 1,1
+portrait.offset = 14,14          ; rosto 100x100 em PNG (sprites/retratos, trocar_retratos.py) no meio da celula
+portrait.scale = 0.25,0.25       ; o motor amplia 4x o sprite do lutador: 1/4 desenha 1 por 1, nitido
 p1.cursor.startcell = 0,0
 p1.cursor.active.anim = 310
 p1.cursor.active.offset = -16,-56
@@ -201,14 +132,14 @@ p2.cursor.done.spr = 313,0
 p2.cursor.done.offset = -16,-56
 p2.cursor.blink = 0
 p1.face.spr = 9000,1
-p1.face.offset = 28,66
+p1.face.offset = 24,64
 p1.face.facing = 1
-p1.face.scale = 1,1
+p1.face.scale = 0.25,0.25
 p1.face.window = 24,64,472,280
 p2.face.spr = 9000,1
-p2.face.offset = 1244,66
+p2.face.offset = 1256,64
 p2.face.facing = -1
-p2.face.scale = 1,1
+p2.face.scale = 0.25,0.25
 p2.face.window = 808,64,1256,280
 p1.name.font = 1,0,0
 p1.name.offset = 248,331
@@ -239,12 +170,14 @@ match.font = 1,0,0
 match.offset = 640,48
 match.text = LUTA %i
 p1.spr = 9000,1
-p1.offset = 100,196
+p1.offset = 0,140
 p1.facing = 1
+p1.scale = 0.5,0.5               ; busto 448x216 desenhado 2x (896x432), nitido
 p1.window = 0,44,632,580
 p2.spr = 9000,1
-p2.offset = 1180,196
+p2.offset = 1280,140
 p2.facing = -1
+p2.scale = 0.5,0.5
 p2.window = 648,44,1280,580
 p1.name.font = 1,0,0
 p1.name.offset = 320,674

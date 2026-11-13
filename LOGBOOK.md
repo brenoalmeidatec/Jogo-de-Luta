@@ -1853,3 +1853,53 @@ ARCADE inteiro; MODO SUPER abre a seleção com o título certo; luta CPU x CPU 
 dos dois em nível 3 em todos os quadros, inclusive logo depois de um super e do Despertar do Pengaró. A vida caiu normal.
 
 **Não testado:** Modo Super com duas pessoas no teclado (o caminho do power é o mesmo); o launcher novo baixando isso.
+
+## 2026-11-13, 08:20 — Abertura nova: Nazaré ao pôr do sol (Claude, sessão do menu)
+
+**Pedido do Breno:** "olha ai nazare e monta uma arte legal para ser a abertura e menu do jogo".
+
+**Entrou:**
+- Fundo da abertura gerado no ChatGPT (`sprites/titulo/fundo_chatgpt.png`): o Jaguaripe ao pôr do sol, a ponte, o
+  casario colorido, a Igreja Matriz de N. S. de Nazaré e o Cristo no morro, saveiros, caxixis e farinha na feira. O
+  `gerar_layout.py` (`fundo_titulo`) corta para 16:9 e passa para pixel art de grade 2x (640x360 de desenho, 64 cores,
+  sem pontilhado).
+- Logo NAZAFIGHTS novo com a faixa RECÔNCAVO • BAHIA nas cores da Bahia (`sprites/titulo/logo_chatgpt.png`, fundo verde
+  vira transparente em `logo_titulo`), 640 px, no céu da esquerda para não tapar a Matriz e o Cristo. Continua caindo
+  e quicando ao abrir.
+- Menu numa faixa escura translúcida com borda dourada (`faixa_menu` + `trans = addalpha`, `alpha = 192,64`: o motor
+  não mistura o alfa parcial do PNG). A tábua de destaque agora acompanha o cursor (`menu.item.active.bg.spacing`;
+  antes ficava presa na 1ª linha e tapava o ARCADE).
+- Saiu do gerador o título antigo desenhado por código (céu, nuvens, cidade, rio, brilho, canoa, nuvem de farinha,
+  subtítulo, tabuleta). As letras de barro (`logo()`) ficam, porque o emblema do VS usa.
+- Essa arte fica fora da paleta de 16 cores e da grade 4x do resto do layout (decisão desta tarefa).
+
+**Conferido no jogo** (cópia do motor, PrintWindow): abertura com logo, faixa translúcida e destaque seguindo o cursor
+até MODO SUPER; a seleção e a luta abrem.
+
+**Pendente:** o Breno ver se gosta. Se quiser outro ponto da cidade ou outro logo, é só refazer as duas imagens em
+`sprites/titulo/` e rodar o gerador.
+
+## 2026-11-13 — Retratos novos dos cinco e HUD novo (Claude, sessão do Breno)
+
+**Pedido do Breno:** retratos bonitos de todos para a seleção e um HUD "que condiz com um jogo de luta": o antigo era
+feio, alto (o pote do relógio descia até y = 150) e a barra de poder ficava na linha dos pés (y 668 a 716).
+
+- **Retratos:** busto de cada lutador no ChatGPT (estilo arcade, rosto tirado das referências das fotos:
+  `sprites/<l>-selecao-kof.png` para Pengaró, Hazak e CK, folha-referência para Gutto e Raiclaven). Brutos em
+  `sprites/retratos/brutos/`. `ferramentas/preparar_retratos.py` recorta o busto 448x216 (9000,1) e o rosto 100x100
+  (9000,0). `ferramentas/trocar_retratos.py` grava os dois no `.sff` do lutador como PNG de 32 bits (formato 12, no
+  bloco tdata), sem mexer no corpo nem na paleta.
+  - **Atenção:** o `gerar_<lutador>.py` regrava o `.sff` com os retratos antigos. Depois de gerar qualquer lutador,
+    rode `python ferramentas/trocar_retratos.py <lutador>`.
+  - O motor amplia 4x o sprite do lutador, então o layout usa escala 1/4: grade, seleção e HUD com 0.25, VS com 0.5.
+- **HUD (`gerar_layout.py`, fight.def):**
+  - Em cima: retrato com moldura de ouro, barra de vida fina com a ponta do relógio inclinada, plaquinha do nome e
+    caixa compacta do relógio. Tudo termina em y = 120.
+  - Embaixo: trilho de poder fino com 3 pedrinhas de estoque, de y 688 a 716. Saiu o número do nível.
+  - Peças novas: `moldura_dourada()`, `trilho_vida()`, `relogio()`, `PLACA`/`composto_poder()`.
+- **Conferido no jogo** (1280x720, motor desta máquina): luta com os cinco, seleção e menu novo da outra sessão.
+  As prévias em `docs/previas-layout` também foram refeitas.
+- **Não feito:**
+  - O "?" da escolha aleatória aparece desencaixado sobre a célula vazia da grade.
+  - O sprite de luta do Pengaró continua de pele clara (missão do Alisson em
+    `docs/arcade/pedido-pengaro-hazak-nitidez.md`).
