@@ -1499,3 +1499,38 @@ Parada rápida. Último commit antes desta entrada: `f3e86b1c`. Arquivos alterad
   (caco na mão de trás no q5, de antes) e `b_agarrao` q5 (óculos). Chão e escala variam (sola 600-674; 438-540 px):
   acertar por script ou no conversor. O chat do conceito do CK não foi apagado porque ainda serve para a lista de
   refazer; pode ser apagado depois dela.
+
+## 2026-11-12 ~22:30-23:20 — folhas boss: refeitas do cético 3 (ChatGPT no chat de cada lutador) e retoques por script
+- **Como:** aba própria `tab-4` (aberta e fechada; a `seed` não foi tocada), anexos servidos em 127.0.0.1:8991 e
+  passados por `window.name` (scratchpad `bosses/refaz2/srv`, prompts montados por `bosses/refaz2/mk.py`: o prompt
+  original da folha + um parágrafo "CORRECTION OF THE PREVIOUS RESULT" com a folha atual anexada e os quadros citados).
+  Login ok, sem limite de imagens. **Nenhum chat novo aberto**, então nada a apagar; usados os chats do conceito:
+  Hazak `6af456a7-ff90-83e8-838e-510e94885dc5`, Raiclaven `6af49cb3-cc24-83e9-b4bc-51a93f8afd72`, CK
+  `6af49f6a-eb14-83e9-8c19-90618b2cddf7`. 24 imagens geradas.
+- **Corrigidas no ChatGPT (tentativas):** Hazak `d_estatueta_gigante` (1, boneco dourado sem rosto da obj_estatueta;
+  descola 4-5 5-6 por script), `d_estatueta` (1, idem), `d_sapato_barriga` (1, sapato com polaina no q2, q3, q7),
+  `d_levanta` (1, 2 chifres, chapéu sem chifre, sobretudo e maleta nos 8), `d_maleta_giro` (1, braço esticado, maleta
+  longe do corpo), `d_apanha` (1, q6-q8 caindo reto como a base). Raiclaven `b_agarrao` (1, q6 cabelo verde e óculos;
+  tesoura pendurada no cinto em q3-q6), `b_rolamento` (1, q4-q5 enrolado no jaleco), `b_corrente_parado` (1, corrente
+  pendendo até o chão dentro do quadro; q8 6 px para a esquerda por script), `b_corrente_chicotada` (2, corrente
+  pendendo nas guardas e mais longa no golpe; 351→360 px, **ainda ~9% menor** que a ginga). CK `b_soco` (1, q5),
+  `b_golaco` (1, q5; resto da marca do q8 apagado por script), `b_vitoria` (1, q7-q8 garrafa erguida na mão da frente),
+  `b_agarrao` (2, óculos nos olhos no q5), `b_beck` (1, óculos no q2; marca do q6 apagada por script), `b_apanha` (1,
+  um medalhão só no q3; no q4 não vi o medalhão no zoom), `b_martelo` (3, q2-q4 o braço do caco sobe pela direita sem
+  cruzar o rosto; **o punho vazio continua do lado direito do peito**, q5-q6 não confirmei de que ombro sai o braço).
+- **Ainda com defeito:** CK `b_ar_soco` (q2, q4-q5: o caco desce no braço que cruza o corpo). 3 tentativas: T1 e T2
+  iguais à antiga, T3 pior (q2 com a garrafa do lado esquerdo da cabeça). Mantida a antiga.
+- **Por script** (`ferramentas/retoques_arcade/`): `boss_chao.py` (novo; move a folha ou uma célula por pixel inteiro)
+  pôs o chão da `b_cabecada` do Gutto em 565, tirou da borda a `b_cabecada` (q1) do Raiclaven e a `b_rolamento` (q8) do
+  CK, pôs o chão da `b_corrente_giro` (e abriu vão entre q4 e q5) e da `b_martelo` do Raiclaven em 577;
+  `boss_escala.py` pôs a `d_queda` do Hazak no chão da `d_levanta` (566) e 7% maior (mais que isso as deitadas se
+  encostam: ainda ~9% abaixo da proporção boss/base); `ck_marca_bermuda.py` ganhou pontos para `b_golaco` q8 e `b_beck`
+  q6; `boss_borda.py` (novo) limpou a linha rosa que a `b_soco` refeita trouxe na borda de baixo. Tentei apagar o 2º
+  medalhão da `b_apanha` do CK por script e ficou feio: descartado, refeito no ChatGPT.
+- **Não mexi:** fx_* (Blender), marcas do peito do CK (decisão do dono), chão e escala das outras folhas do CK e as
+  `b_pulo` do Gutto e do Raiclaven (conversor), `b_corrente_mangual` do Raiclaven (8% menor, corrente curta: não
+  tentada), maleta da `d_estatueta` q1-q6, maço de notas da `d_nota_falsa`.
+- **Aprendi:** o `window.name` se perde ao navegar de um chat do chatgpt.com para outro: recarregar o `load.html`
+  antes de cada chat. Na troca de mão do CK, o que funcionou (martelo T3) foi dizer que a regra nova SUBSTITUI a velha
+  ("the bottle arm must NOT pass in front of the face", herdado do prompt original) e descrever o braço pelo lado do
+  ombro na imagem. Folha de contato antes/depois: scratchpad `bosses/refeitas.png`.
