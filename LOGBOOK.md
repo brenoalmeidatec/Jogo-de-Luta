@@ -2177,8 +2177,8 @@ parry em cima (→+c, 760/761, `SA`) e embaixo (↓+c, 764/765, `C`), acertou co
 golpe), oponente aberto 20 ticks. A `9204` saiu do parry, do Contragolpe do CK, da Guarda de Aço do Hazak, do `.air` e
 do `.sff`. Sprites antigos conferidos com `conferir_sff.py` (nenhum mudou).
 
-**Conferido:** robô `--linux` com 6 roteiros novos de parry: Pengaró 173/0, CK 213/0, Gutto 168/0, Raiclaven 168/0,
-Hazak 197/1 (a falha é a fuga da DERROTA, que já falha igual na `mugen` antes do parry: 175/1).
+**Conferido:** robô `--linux` com 6 roteiros novos de parry: Pengaró 190/0, CK 228/0, Gutto 185/0, Raiclaven 185/0,
+Hazak 212/1 (a falha é a fuga da DERROTA, que já falha igual na `mugen` antes do parry).
 
 **Não feito:** folhas `e_parry_alto`/`e_parry_baixo` do endiabrado (precisam do ChatGPT; até lá o endiabrado usa a
 defesa redesenhada); ninguém jogou para sentir a janela e o tempo da piada; o verde do Raiclaven endiabrado sai prata
