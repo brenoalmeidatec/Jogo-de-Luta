@@ -2166,3 +2166,20 @@ Título animado (rio ondulando, sol, aves, brasas, brilho no logo), HUD simples,
 seleção de lutador e de mapa no estilo novo. Tudo por `ferramentas/gerar_layout.py` (as funções antigas da feira e do
 HUD de ouro saíram). Robô na nuvem 151/0; fotos do jogo rodando em `docs/previas-layout/jogo/`. Detalhes, armadilhas
 e sugestões em `docs/layout-novo.md`.
+## 2026-11-14 — Parry em cima e embaixo, sem a "rede de futebol" (Claude, thread do Alisson)
+
+**Pedido do Breno** (missão 2026-11-14, item 4; `docs/parry.md`): tirar a faísca pronta do pixelfx e colocar o parry
+de cada lutador no jogo.
+
+**Feito:** `ferramentas/parry.py` aplica nos 5 lutadores (e os `gerar_*.py` chamam no fim): as 10 folhas da forma base
+cortadas em 3x (`7600`/`7640`), faísca própria na cor de cada um a partir da estrela do `crit-hit` (`7690`/`7691`),
+parry em cima (→+c, 760/761, `SA`) e embaixo (↓+c, 764/765, `C`), acertou com controle (a piada cancela em qualquer
+golpe), oponente aberto 20 ticks. A `9204` saiu do parry, do Contragolpe do CK, da Guarda de Aço do Hazak, do `.air` e
+do `.sff`. Sprites antigos conferidos com `conferir_sff.py` (nenhum mudou).
+
+**Conferido:** robô `--linux` com 6 roteiros novos de parry: Pengaró 173/0, CK 213/0, Gutto 168/0, Raiclaven 168/0,
+Hazak 197/1 (a falha é a fuga da DERROTA, que já falha igual na `mugen` antes do parry: 175/1).
+
+**Não feito:** folhas `e_parry_alto`/`e_parry_baixo` do endiabrado (precisam do ChatGPT; até lá o endiabrado usa a
+defesa redesenhada); ninguém jogou para sentir a janela e o tempo da piada; o verde do Raiclaven endiabrado sai prata
+(a paleta dele não tem verde, issue #38).

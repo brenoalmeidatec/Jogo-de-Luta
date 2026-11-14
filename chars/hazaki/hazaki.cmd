@@ -140,6 +140,12 @@ command = /B, a
 time = 1
 
 [Command]
+name = "parry_baixo"
+command = /$D, c
+time = 1
+buffer.time = 1
+
+[Command]
 name = "parry"
 command = /F, c
 time = 1
@@ -390,6 +396,13 @@ value = 1400
 triggerall = command = "db_a"
 triggerall = statetype != A
 trigger1 = var(1)
+
+[State -1, Parry embaixo]
+type = ChangeState
+value = 764
+triggerall = command = "parry_baixo"
+triggerall = statetype != A
+trigger1 = ctrl
 
 [State -1, Parry]
 type = ChangeState

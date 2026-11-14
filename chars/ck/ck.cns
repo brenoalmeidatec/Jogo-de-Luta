@@ -4895,7 +4895,7 @@ type = ReversalDef
 trigger1 = Time = [4, 27]
 reversal.attr = SA, NA, SA, HA
 pausetime = 0,0
-sparkno = S9204
+sparkno = S(ifelse(var(20) > 0, 7691, 7690))
 p1stateno = 1310
 p2stateno = 762
 
@@ -5559,7 +5559,7 @@ type = ReversalDef
 trigger1 = Time = [4, 33]
 reversal.attr = SCA, NA, SA, HA
 pausetime = 0,0
-sparkno = S9204
+sparkno = S(ifelse(var(20) > 0, 7691, 7690))
 p1stateno = 1310
 p2stateno = 762
 
@@ -6350,6 +6350,7 @@ trigger1 = AnimTime = 0
 value = 0
 ctrl = 1
 
+; parry em cima (docs/parry.md): 760 é a postura (quadros 1-3, janela de 4 ticks), 761 é o acertou (quadros 4-8, com controle: qualquer golpe cancela a piada)
 [Statedef 760]
 type = S
 movetype = A
@@ -6368,9 +6369,9 @@ value = 10760
 [State 760, Desvia]
 type = ReversalDef
 trigger1 = Time < 4
-reversal.attr = SCA, NA, SA, HA
+reversal.attr = SA, NA, SA, HA
 pausetime = 0,0
-sparkno = S9204
+sparkno = S(ifelse(var(20) > 0, 7691, 7690))
 p1stateno = 761
 p2stateno = 762
 
@@ -6384,7 +6385,7 @@ ctrl = 1
 type = S
 movetype = I
 physics = N
-ctrl = 0
+ctrl = 1
 sprpriority = 2
 anim = 761
 velset = 0,0
@@ -6396,6 +6397,58 @@ trigger1 = var(20) > 0
 value = 10761
 
 [State 761, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+; parry embaixo (docs/parry.md): 764 é a postura (quadros 1-3, janela de 4 ticks), 765 é o acertou (quadros 4-8, com controle: qualquer golpe cancela a piada)
+[Statedef 764]
+type = C
+movetype = A
+physics = N
+ctrl = 0
+sprpriority = 2
+anim = 764
+velset = 0,0
+
+[State 764, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10764
+
+[State 764, Desvia]
+type = ReversalDef
+trigger1 = Time < 4
+reversal.attr = C, NA, SA, HA
+pausetime = 0,0
+sparkno = S(ifelse(var(20) > 0, 7691, 7690))
+p1stateno = 765
+p2stateno = 762
+
+[State 764, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[Statedef 765]
+type = S
+movetype = I
+physics = N
+ctrl = 1
+sprpriority = 2
+anim = 765
+velset = 0,0
+
+[State 765, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10765
+
+[State 765, Fim]
 type = ChangeState
 trigger1 = AnimTime = 0
 value = 0
@@ -6435,13 +6488,13 @@ statetype = S
 
 [State 762, Abertura no ar]
 type = SelfState
-trigger1 = Time >= 14 && statetype = A
+trigger1 = Time >= 20 && statetype = A
 value = 50
 ctrl = 1
 
 [State 762, Abertura no chão]
 type = SelfState
-trigger1 = Time >= 14
+trigger1 = Time >= 20
 value = 0
 ctrl = 1
 

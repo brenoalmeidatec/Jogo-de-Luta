@@ -389,6 +389,8 @@ def main():
     (SAIDA / "raiclaven.cmd").write_text(gp.montar_cmd(), encoding="utf-8")
     (SAIDA / "raiclaven.def").write_text(DEF, encoding="utf-8", newline="\n")
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
+    import parry  # parry em cima e embaixo, faísca própria e sem a "rede de futebol" (docs/parry.md)
+    parry.aplicar("raiclaven", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

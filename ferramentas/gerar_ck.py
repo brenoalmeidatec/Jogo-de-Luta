@@ -1169,6 +1169,8 @@ def main():
     (SAIDA / "ck.cmd").write_text(cmd_ck(gp.montar_cmd()), encoding="utf-8")
     (SAIDA / "ck.def").write_text(DEF, encoding="utf-8", newline="\n")
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
+    import parry  # parry em cima e embaixo, faísca própria e sem a "rede de futebol" (docs/parry.md)
+    parry.aplicar("ck", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

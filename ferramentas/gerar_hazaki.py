@@ -48,7 +48,7 @@ gp.FRACOS = {g.n for g in hg.NORMAIS + hg.CORRENTES + hg.KOMBOS if g.classe == "
 gp.BALOES_LIGADOS = False
 # efeitos do pixelfx (assets/efeitos): acerto fraco, crítico, parry, asfalto, soco seco, subida, poeira de pé no chão
 # e defesa. O charge-up entra com o Despertar; o hit-flash não é usado.
-gp.FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9204: "parry", 9205: "ground-slam", 9207: "blunt-hit",
+gp.FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9205: "ground-slam", 9207: "blunt-hit",
               9208: "uppercut", 9209: "heavy-landing", 9216: "shield-block"}
 # classe -> (pausetime, guard.pausetime, envshake, fall.envshake, faísca, sparkscale, hitsound)
 gp.IMPACTO = {
@@ -254,7 +254,7 @@ def montar_sprites():
     return s
 
 
-CENTRADAS = (9200, 9201, 9204, 9207, 9216)  # faíscas de acerto, defesa e parry
+CENTRADAS = (9200, 9201, 9207, 9216)  # faíscas de acerto, defesa e parry
 DESENHOS_DA_POEIRA = 28
 POEIRA = ((0, (14, 12, 10)), (.5, (118, 108, 98)), (1, (244, 236, 222)))  # asfalto: o ground-slam do pixelfx é azul
 
@@ -1282,6 +1282,8 @@ def main():
     gravados = escrever_sff(SAIDA / "hazaki.sff", s, gp.sprites_mantidos(air, cns))
     (SAIDA / "hazaki.def").write_text(DEF, encoding="utf-8", newline="\n")
     (SAIDA / "movelist.dat").write_text(hg.MOVELIST, encoding="utf-8", newline="\n")
+    import parry  # parry em cima e embaixo, faísca própria e sem a "rede de futebol" (docs/parry.md)
+    parry.aplicar("hazaki", SAIDA)
     print(f"{gravados} sprites no .sff (de {len(s.lista)} carregados), {len(a.acoes)} ações em {SAIDA}")
     if "--contato" in sys.argv:
         contato(Path(sys.argv[sys.argv.index("--contato") + 1]), s)
