@@ -33,22 +33,18 @@ Clsn2Default: 1
 [Begin Action 10]
 Clsn2Default: 1
  Clsn2[0] = -84, 0, 84, -240
-365,0, 0,0, 2
+367,0, 0,0, 2
 
 [Begin Action 11]
 Clsn2Default: 1
  Clsn2[0] = -84, 0, 84, -240
-369,0, 0,0, 8
-370,0, 0,0, 8
-371,0, 0,0, 8
-372,0, 0,0, 8
-371,0, 0,0, 8
-370,0, 0,0, 8
+369,0, 0,0, 10
+370,0, 0,0, 10
 
 [Begin Action 12]
 Clsn2Default: 1
  Clsn2[0] = -84, 0, 84, -240
-365,0, 0,0, 2
+367,0, 0,0, 2
 
 [Begin Action 40]
 Clsn2Default: 1

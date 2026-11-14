@@ -28,6 +28,9 @@ SPRITES = af.RAIZ / "sprites/pengaro"
 FOLHAS = SPRITES / "quadros/folhas_novas"
 ALTURA_1X = 111
 ANTES_DO_PADRAO_NOVO = "965f8013"   # o último commit com os desenhos antigos em quadros_arcade/
+# folhas sem desenho antigo para medir a escala: o quadro (folha, i) fica da altura do quadro (modelo, j) já convertido,
+# que tem a mesma pose (parry alto = guarda em pé da defesa; parry baixo = base agachada da rasteirinha)
+MESMA_POSE = {"parry_alto": (0, "defesa", 0), "parry_baixo": (0, "rasteirinha", 0)}
 
 
 def figuras(folha):
@@ -78,6 +81,11 @@ def converter(nome, fator):
         novos = af.por_celula(img, fator, 1)
         razoes = [tamanho(v) / tamanho(n) for v, n in zip(velhos, novos) if tamanho(n)]
         fator *= float(np.median(razoes))
+    elif nome in MESMA_POSE:
+        i, modelo, j = MESMA_POSE[nome]
+        alvo = Image.open(SPRITES / "quadros_arcade" / modelo / f"{j:02d}.png").getchannel("A").getbbox()
+        meu = af.por_celula(img, fator, 1)[i].getchannel("A").getbbox()
+        fator *= (alvo[3] - alvo[1]) / (meu[3] - meu[1])
     for k, pasta in ((1, "quadros_arcade"), (3, "quadros_arcade_hd")):
         destino = SPRITES / pasta / nome
         destino.mkdir(parents=True, exist_ok=True)
