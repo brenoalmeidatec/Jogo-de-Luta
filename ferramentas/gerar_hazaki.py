@@ -13,6 +13,7 @@ sprites/hazaki/quadros_arcade/<folha>/00..07.png (ferramentas/folhas_hazak_arcad
 O Despertar (Diabo Loiro) NÃO entra: as folhas d_* não existem. Não há comando `despertar` nem estado 2000; var(20)
 fica sempre 0. Ficha: docs/fichas/hazaki.md. Especificação e pendências: docs/arcade/hazak_gerador.md.
 """
+import agarrao_mk
 import json
 import re
 import sys
@@ -1273,6 +1274,8 @@ def main():
     if (QUADROS.parent / "quadros_arcade_hd").exists():
         import hd
         air, cns = hd.aplicar(s, air, cns, [(QUADROS, QUADROS.parent / "quadros_arcade_hd")], gp.SPRITES_VITIMA)
+    # agarrão em pé segura-e-bate (ferramentas/agarrao_mk.py): montado dos golpes que ele já tem, depois do HD
+    air, cns = agarrao_mk.aplicar("hazaki", air, cns)
     (SAIDA / "hazaki.cns").write_text(cns.rstrip() + "\n", encoding="utf-8", newline="\n")
     (SAIDA / "hazaki.cmd").write_text(cmd.rstrip() + "\n", encoding="utf-8", newline="\n")
     (SAIDA / "hazaki.air").write_text(air, encoding="utf-8", newline="\n")

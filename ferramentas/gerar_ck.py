@@ -11,6 +11,7 @@ Pêndulo, a Rajada da Esquina, o paredão de som (entrada, Despertar, Baile e Gr
   python ferramentas/gerar_ck.py             monta chars/ck
   python ferramentas/gerar_ck.py --alcance   imprime até onde vai a caixa de cada golpe, sem gravar nada
 """
+import agarrao_mk
 import functools
 import re
 import shutil
@@ -1160,6 +1161,8 @@ def main():
     # usa scale 1/3) pelo Explod dela; antes disso a aura contava como corpo e era ampliada 3x.
     if QUADROS_HD.exists():
         air, cns = hd.aplicar(s, air, cns, [(QUADROS, QUADROS_HD)], gp.SPRITES_VITIMA)
+    # agarrão em pé segura-e-bate (ferramentas/agarrao_mk.py): montado dos golpes que ele já tem, depois do HD
+    air, cns = agarrao_mk.aplicar("ck", air, cns)
     (SAIDA / "ck.air").write_text(air, encoding="utf-8", newline="\n")
     (SAIDA / "ck.cns").write_text(cns, encoding="utf-8", newline="\n")
     gp.escrever_sff(SAIDA / "ck.sff", s, manter=gp.sprites_mantidos(air, cns))

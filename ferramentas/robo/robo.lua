@@ -106,6 +106,39 @@ do
   local function livre() return snap(1).ctrl end
   local function note(fn) acao(function() log("  " .. fn()) end) end
 
+
+  -- Agarrao segura-e-bate (ferramentas/agarrao_mk.py, todos os lutadores): pega, segura, bate varias vezes com o
+  -- oponente reagindo (822/825/826) e arremessa (823 para longe; 824 por cima, segurando para tras).
+  local function agarraoMK(tras)
+    S("agarrao segura-e-bate" .. (tras and " (para tras)" or ""), function()
+      approach(6)
+      acao(function() c.vida0 = lifeP2(); c.ult = lifeP2(); c.golpes = 0; c.reagiu = false; c.voou = nil; c.t0 = clock(); c.x2 = snap(2).x - snap(1).x end)
+      press(1, {tras and "holdback" or "holdfwd", "y"}, 3)
+      need(estadoEm(810), 30, "entrou em 810")
+      add(function()
+        local v, s2 = lifeP2(), snap(2).st
+        if v < c.ult then c.golpes = c.golpes + 1; c.ult = v end
+        if s2 == 822 or s2 == 825 or s2 == 826 then c.reagiu = true end
+        if s2 == 823 or s2 == 824 then c.voou = c.voou or s2 end
+        if st1() ~= 810 then c.dur = clock() - c.t0; return true end
+        return clock() - c.t0 > 400
+      end)
+      note(function() return "pancadas " .. c.golpes .. "; dano " .. (c.vida0 - lifeP2()) .. "; duracao " .. tostring(c.dur) .. " ticks; P2 voou pelo " .. tostring(c.voou) end)
+      need(function() return c.golpes >= 4 end, 1, "o dano saiu em 4 ou mais pancadas", false)
+      need(function() return c.reagiu end, 1, "o P2 reagiu as pancadas preso (822/825/826)", false)
+      need(function() return c.voou == (tras and 824 or 823) end, 1, "o P2 foi arremessado (" .. (tras and 824 or 823) .. ")", false)
+      -- 120 de dano no roteiro; a defesa do Hazak (P2) aumenta um pouco
+      need(function() local d = c.vida0 - lifeP2(); return d >= 110 and d <= 145 end, 1, "dano entre 110 e 145", false)
+      need(function() return c.dur and c.dur >= 60 and c.dur <= 150 end, 1, "duracao entre 60 e 150 ticks", false)
+      need(function() local s = snap(2); return s.ctrl and s.st == 0 end, 300, "o P2 levantou e voltou ao controle", false)
+      need(livre, 60, "o P1 voltou ao controle", false)
+      note(function() return "lado do P2 antes " .. c.x2 .. ", depois " .. (snap(2).x - snap(1).x) end)
+      if tras then
+        need(function() return (snap(2).x - snap(1).x) * c.x2 < 0 end, 1, "o P2 caiu do outro lado", false)
+      end
+    end)
+  end
+
   -- ---------------------------------------------------------------- roteiros
   local function corrente(nome, botao, primeiro, seq, dist, janela)
     S("corrente " .. nome, function()
@@ -211,14 +244,8 @@ do
     wait(25)
     note(function() return "dano: " .. (c.vida0 - lifeP2()) .. "; P2 estado " .. snap(2).st end)
   end)
-  S("agarrao comum em pe", function()
-    approach(6)
-    press(1, {"holdfwd", "y"}, 3)
-    wait(4)
-    note(function() return "estado " .. st1() end)
-    wait(60)
-    note(function() return "dano: " .. (1000 - lifeP2()) .. "; estado " .. st1() end)
-  end)
+  agarraoMK(false)
+  agarraoMK(true)
 
   local function projetil(nome, cmd, dist, esperado)
     S("projetil " .. nome, function()
@@ -546,19 +573,6 @@ do
       press(1, {"garrafa_x"}, 2)
       need(estadoEm(1600), 15, "entrou em 1600 com a nuvem no ar", false)
     end)
-    S("Agarrao em pe: tres socos (dano em 3 vezes, 100 no total)", function()
-      approach(6)
-      acao(function() c.vida0 = lifeP2(); c.golpes = 0; c.ult = lifeP2() end)
-      press(1, {"holdfwd", "y"}, 3)
-      need(estadoEm(810), 30, "entrou em 810")
-      add(function()
-        local v = lifeP2()
-        if v < c.ult then c.golpes = c.golpes + 1; c.ult = v end
-        return st1() ~= 810
-      end)
-      note(function() return "socos " .. c.golpes .. "; dano " .. (c.vida0 - lifeP2()) end)
-      need(function() return c.golpes == 3 end, 1, "o dano saiu em 3 socos", false)
-    end)
     S("Contragolpe (caneta_x) sem apanhar: guarda baixa e volta", function()
       approach(60)
       press(1, {"caneta_x"}, 2)
@@ -673,15 +687,8 @@ do
     note(function() return "dano: " .. (c.vida0 - lifeP2()) .. "; P2 estado " .. snap(2).st end)
     need(function() return c.vida0 - lifeP2() >= 100 end, 1, "dano >= 100", false)
   end)
-  S("agarrao em pe Abraco de Quebrada", function()
-    approach(6)
-    acao(function() c.vida0 = lifeP2() end)
-    press(1, {"holdfwd", "y"}, 3)
-    need(estadoEm(810), 14, "810 pegou")
-    wait(60)
-    note(function() return "dano: " .. (c.vida0 - lifeP2()) .. "; estado " .. st1() .. "; P2 estado " .. snap(2).st end)
-    need(function() return c.vida0 - lifeP2() >= 120 end, 1, "dano >= 120", false)
-  end)
+  agarraoMK(false)
+  agarraoMK(true)
 
   local function projetilH(nome, cmd, dist, esperado)
     S("projetil " .. nome, function()

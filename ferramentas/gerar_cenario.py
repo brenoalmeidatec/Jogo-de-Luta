@@ -205,7 +205,7 @@ class Cenario:
         for c in sorted(self.camadas, key=lambda c: c.frente):  # as de frente por último, na ordem da lista
             q = c.quadro_no_tick(t)
             for (x, y) in c.copias(camx, camy, t, caixa):
-                _colar(tela, q, x + margem, y + margem)  # soma/subtrai entram na previa como sobreposicao simples
+                _colar(tela, q, x + margem, y + margem, c.mistura)
         return tela
 
     def furos(self):
@@ -238,11 +238,12 @@ class Cenario:
         Fica na resolução da janela (640x400 de 1280x720); o portraitscale do .def acerta a escala dos de 320x180."""
         import gerar_layout as gl
         L, A = RETRATO_TELA
-        faixa = gl.nova(L // 3, RETRATO_FAIXA // 3)
+        texto = texto_acentuado(gl, f"MÚSICA: {self.musica_nome}".upper())
+        k = 3 if texto.width * 3 <= L - 12 else 2  # nome comprido cai para a letra em 2x
+        faixa = gl.nova(L // k, RETRATO_FAIXA // k)
         d = ImageDraw.Draw(faixa)
         d.rectangle([0, 0, faixa.width - 1, faixa.height - 1], fill=gl.cor("breu"))
         d.line([0, 0, faixa.width - 1, 0], fill=gl.cor("madeira_cl"))
-        texto = texto_acentuado(gl, f"MÚSICA: {self.musica_nome}".upper())
         faixa.alpha_composite(texto, ((faixa.width - texto.width) // 2, (faixa.height - texto.height) // 2 + 1))
         faixa = faixa.resize((L, RETRATO_FAIXA), Image.NEAREST)
         quadros = []
@@ -391,12 +392,20 @@ def texto_acentuado(gl, texto):
     return gl.com_sombra(img, "barro", 1, 1)
 
 
-def _colar(tela, q, x, y):
-    """alpha_composite com recorte (a cópia pode sair da tela)."""
+def _colar(tela, q, x, y, mistura="normal"):
+    """alpha_composite com recorte (a cópia pode sair da tela); "soma" e "subtrai" como o motor faz."""
     x0, y0 = max(x, 0), max(y, 0)
     x1, y1 = min(x + q.width, tela.width), min(y + q.height, tela.height)
     if x1 > x0 and y1 > y0:
-        tela.alpha_composite(q.crop((x0 - x, y0 - y, x1 - x, y1 - y)), (x0, y0))
+        peca = q.crop((x0 - x, y0 - y, x1 - x, y1 - y))
+        if mistura in ("soma", "subtrai"):
+            base = np.asarray(tela.crop((x0, y0, x1, y1))).astype(int)
+            p = np.asarray(peca).astype(int)
+            rgb = p[..., :3] * (p[..., 3:4] > 0)
+            base[..., :3] = np.clip(base[..., :3] + (rgb if mistura == "soma" else -rgb), 0, 255)
+            tela.paste(Image.fromarray(base.astype(np.uint8)), (x0, y0))
+        else:
+            tela.alpha_composite(peca, (x0, y0))
 
 
 def gerar(desc, base, destino=RAIZ / "stages", previa=None, furo_magenta=False, aceita_furo=False):

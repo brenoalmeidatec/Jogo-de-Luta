@@ -33,6 +33,7 @@ DESTINO = {
     "lobby": "motif/nazafight/musicas/lobby.ogg",
     "selecao": "motif/nazafight/musicas/selecao.ogg",
     "cenario_maria_fumaca": "stages/musicas/maria_fumaca.ogg",
+    "cenario_katiara": "stages/musicas/katiara.ogg",
     "cenario_cristo": "stages/musicas/cristo.ogg",
     "cenario_praca": "stages/musicas/praca.ogg",
     "cenario_passarela": "stages/musicas/passarela.ogg",
