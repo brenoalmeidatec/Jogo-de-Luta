@@ -2007,3 +2007,19 @@ gutto` e `raiclaven` antes de subir; o esperado é 144/0 nos dois. Raiclaven nã
   robô deve dar o mesmo 151/0, mas falta rodar e tirar a foto ao lado do CK.
 - **Ficou:** a cena do Despertar (`despertar_a`, arte antiga) com a pele de antes; quadros do meio e `f_agarrao4/5` em 1x
   ampliado; o rosto parecido com a foto (não mexi no desenho). Detalhes em `docs/arcade/pengaro-nitido.md`.
+## 2026-11-14 — Robô de teste roda no Linux sem tela (Claude, sessão do LightWolfMan)
+
+**Pedido:** rodar o robô (`ferramentas/testar_pengaro.py`) na nuvem Linux, sem depender do PC/notebook do Alisson.
+
+**Feito:** modo `--linux` (padrão quando o sistema é Linux) no `testar_pengaro.py`. Baixa o IKEMEN GO v1.0.0 Linux
+para `~/.cache/nazafight/ikemen` na primeira vez (abre o motor 20 s para nascer o `save/config.ini`), copia o motor
+para uma pasta temporária e roda a luta no Xvfb com Mesa llvmpipe (`xvfb-run`, som `dummy`). Modo Windows/sandbox
+intocado. Requisito: `apt install xvfb libgl1-mesa-dri`.
+
+**Resultados (cada luta ~60 s, 4 núcleos):**
+- branch `claude/project-thread-j4685w`: Gutto 146/0, Raiclaven 146/0 (var(37) = 1 no meio do 3100: falha sumiu).
+- branch `claude/project-thread-xhv5a2`: Pengaró 151/0. `mugen`: Pengaró 151/0 (motor baixado do zero).
+
+No Linux o robô instala o layout `motif/nazafight` (como o `.bat`); sem ele o HUD do motor puro mostrava o retrato HD
+gigante e cortado no print. **Sugestões:** o robô ainda não tira print sozinho; dá para tirar com `import -display :99 -window root` durante a luta.
+Um GitHub Action com esse modo rodaria o robô a cada push.
