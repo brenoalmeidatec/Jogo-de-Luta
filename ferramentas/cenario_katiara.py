@@ -124,15 +124,16 @@ def pipa():
     return quadros
 
 
-def folha(imagem, n):
-    """Corta a folha em n quadros iguais (fundo magenta) e devolve uma folha horizontal com fundo transparente,
+def folha(imagem, n, linhas=True):
+    """linhas=False: a folha não tem linha preta entre os quadros (senão uma fileira escura do desenho some).
+    Corta a folha em n quadros iguais (fundo magenta) e devolve uma folha horizontal com fundo transparente,
     todos com a mesma caixa (alinhados pela base)."""
     img = sem_magenta(Image.open(imagem))
     a = np.array(img)
     escuro = (a[..., 3] > 0) & (a[..., :3].astype(int).sum(axis=2) < 150)
     # linhas pretas que o ChatGPT desenha entre os quadros e a moldura em cima e embaixo (com 2 px de folga,
     # porque a borda da linha é mais clara e sobrava um risco fino no jogo)
-    for eixo in (0, 1):
+    for eixo in ((0, 1) if linhas else ()):
         idx = np.nonzero(escuro.mean(axis=eixo) > 0.6)[0]
         for d in range(-2, 3):
             ok = np.clip(idx + d, 0, a.shape[1 - eixo] - 1)
