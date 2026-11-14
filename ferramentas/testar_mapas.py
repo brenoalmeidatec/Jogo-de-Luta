@@ -126,6 +126,8 @@ def main():
     ap.add_argument("--direita", type=int, default=1, help="quantas vezes trocar de mapa antes de confirmar")
     ap.add_argument("--filmar", type=float, default=0)
     ap.add_argument("--espera-titulo", type=float, default=25)
+    ap.add_argument("--filmar-titulo", type=float, default=0, help="grava S segundos da abertura em titulo.mp4")
+    ap.add_argument("--titulo-quadros", type=int, default=0, help="fotos extras da abertura animada")
     a = ap.parse_args()
     a.saida.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory() as td:
@@ -136,6 +138,12 @@ def main():
             t.tecla("Return")   # pula a abertura / tela de "aperte start"
             time.sleep(3)
             t.foto("1_titulo.png")
+            if a.filmar_titulo:
+                t.filmar(a.filmar_titulo, "titulo.mp4")
+            if a.titulo_quadros:
+                for i in range(a.titulo_quadros):   # o titulo e animado: varias fotos seguidas
+                    time.sleep(0.25)
+                    t.foto(f"1_titulo_{i}.png")
             t.tecla("Down", ITENS_MENU[a.modo])
             t.tecla("Return")
             time.sleep(4)
@@ -152,7 +160,9 @@ def main():
                 t.tecla("Right", pausa=1.0)
                 t.foto(f"4_mapa_{i + 1}.png")
             t.tecla("Return")
-            time.sleep(14)
+            time.sleep(1.2)
+            t.foto("4v_vs.png")   # tela de VS (o motor mostra uns 2,5 s)
+            time.sleep(12.8)
             t.foto("5_luta.png")
             if a.filmar:
                 t.filmar(a.filmar)

@@ -1,0 +1,13 @@
+; Fonte naza_relogio2_alerta do Nazafights, desenhada por codigo (ferramentas/gerar_layout.py)
+[FNT v2]
+fntversion = 2,00
+name = "naza_relogio2_alerta"
+author = "Nazafights"
+
+[Def]
+Type = bitmap
+BankType = palette
+Size = 24,36
+Spacing = 4,0
+Offset = 0,0
+File = naza_relogio2_alerta.sff

@@ -2099,3 +2099,10 @@ no título, na seleção, na Maria Fumaça e no Despertar do Pengaró, CK, Gutto
 **Não feito / não verificado:** ninguém ouviu as emendas (som `dummy` na nuvem). Os `.cns` de Gutto e Raiclaven
 receberam só o bloco da música (o gerador sem `sprites/*/quadros_hd` sairia em 1x); `.sff`/`.cmd` de todos ficaram
 como estavam. Hazak sem Despertar, então sem música de boss ainda. Cristo, praça e passarela esperam os cenários.
+
+## 2026-11-14 — Layout novo "Arena" (issue #39, item 1 da missão de 14/11)
+
+Título animado (rio ondulando, sol, aves, brasas, brilho no logo), HUD simples, VS com os bustos em tamanho natural e
+seleção de lutador e de mapa no estilo novo. Tudo por `ferramentas/gerar_layout.py` (as funções antigas da feira e do
+HUD de ouro saíram). Robô na nuvem 151/0; fotos do jogo rodando em `docs/previas-layout/jogo/`. Detalhes, armadilhas
+e sugestões em `docs/layout-novo.md`.
