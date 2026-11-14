@@ -1,0 +1,11 @@
+{
+ "pivo": [
+  17,
+  17
+ ],
+ "ticks": 2,
+ "quadros": 8,
+ "efeito": "pedra",
+ "lutador": "hazaki",
+ "feito_por": "ferramentas/hazak_poderes_blender.py"
+}

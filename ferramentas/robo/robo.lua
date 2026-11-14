@@ -56,7 +56,10 @@ do
   local steps, c
   local function add(f) steps[#steps + 1] = f end
   local ativo = (LUTADOR ~= "hazaki")  -- os roteiros daqui ate o bloco do Hazak sao dos outros lutadores
-  local function S(name, build) if ativo then scenarios[#scenarios + 1] = {name = name, build = build} end end
+  local FILTRO = "@FILTRO@"  -- so os roteiros com esse texto no nome (filmar_robo.py); vazio = todos
+  local function S(name, build)
+    if ativo and (FILTRO == "" or string.find(name, FILTRO, 1, true)) then scenarios[#scenarios + 1] = {name = name, build = build} end
+  end
   local ABORT = false
   local function wait(n)
     local ate
@@ -615,7 +618,7 @@ do
   -- ================================================================ PARRY (docs/parry.md): todos os lutadores
   -- O P2 (Hazak) bate: jab em pe (x) ou chute agachado (agacha + a); o P1 entra no parry 1 tick depois e pega o golpe
   -- dentro da janela de 4 ticks. Parry certo: o P1 vai para o acertou e o P2 fica aberto (762) por 20 ticks.
-  local function T(name, build) scenarios[#scenarios + 1] = {name = name, build = build} end
+  local function T(name, build) if FILTRO == "" or string.find(name, FILTRO, 1, true) then scenarios[#scenarios + 1] = {name = name, build = build} end end
   local function parry(nome, cmd, postura, acertou, baixo, pega, depois)
     T("PARRY " .. nome, function()
       approach(30)
@@ -749,20 +752,20 @@ do
       need(function() return c.vida0 - lifeP2() > 0 end, 1, "o projetil acertou", false)
     end)
   end
-  projetilH("Punho de Concreto fraco (df_x)", "df_x", 70, 1000)
-  projetilH("Punho de Concreto forte (df_y)", "df_y", 100, 1001)
-  projetilH("Estatueta Dourada fraca (fb_x)", "fb_x", 70, 1600)
-  projetilH("Estatueta Dourada forte (fb_y)", "fb_y", 170, 1601)
+  projetilH("Pedra no soco (df_x)", "df_x", 120, 1000)
+  projetilH("Pedra no chute (df_y)", "df_y", 160, 1001)
+  projetilH("Bola de ki (fb_x)", "fb_x", 120, 1600)
+  projetilH("Bola de ki carregada (fb_y)", "fb_y", 200, 1601)
   S("2o projetil recusado com um na tela", function()
-    approach(170)
-    press(1, {"df_x"}, 2)
-    need(estadoEm(1000), 12, "entrou em 1000")
+    approach(250)  -- a bola de ki (4,5 px por tick) ainda esta no ar quando ele volta ao controle
+    press(1, {"fb_x"}, 2)
+    need(estadoEm(1600), 12, "entrou em 1600")
     need(function() return snap(1).proj > 0 end, 70, "projetil na tela")
     need(function() local s = snap(1); return s.st == 0 and s.ctrl end, 60, "P1 livre com o projetil na tela")
-    add(function() held[1].df_x = clock() + 2; return true end)
+    add(function() held[1].fb_x = clock() + 2; held[1].df_x = clock() + 2; return true end)
     wait(5)
     note(function() local s = snap(1); return "estado " .. s.st .. ", projeteis " .. s.proj end)
-    need(function() local s = snap(1); return s.st ~= 1000 and s.proj > 0 end, 1, "o 2o Punho de Concreto NAO saiu", false)
+    need(function() local s = snap(1); return s.st ~= 1600 and s.st ~= 1000 and s.proj > 0 end, 1, "a 2a bola de ki (e a pedra) NAO sairam", false)
   end)
 
   role("Rolada de Tatame (a)", "bf_a", 1700)
@@ -848,7 +851,7 @@ do
     need(function() return c.vida0 - lifeP2() > 150 end, 1, "o super acertou (dano > 150)", false)
   end)
 
-  S("cancelar o 2o golpe da corrente em especial (Punho de Concreto)", function()
+  S("cancelar o 2o golpe da corrente em especial (Pedra)", function()
     approach(28)
     press(1, {"x"}, 2); need(contatoEm(200), 60, "200 encostou")
     press(1, {"x"}, 2); need(estadoEm(301), 20, "301")
@@ -910,23 +913,23 @@ do
     note(seDefendeu)
     need(function() return c.vida0 == lifeP2() and c.defendeu end, 1, "em pe o por cima foi defendido", false)
   end)
-  S("Punho de Concreto (df_x) contra defesa EM PE: acerta (so defende agachado)", function()
-    approach(70)
+  S("Pedra (df_x) contra defesa EM PE: defende", function()
+    approach(100)
     p2defende(false)
     press(1, {"df_x"}, 2)
     need(estadoEm(1000), 12, "entrou em 1000")
-    espia(140)
+    espia(90)
     note(seDefendeu)
-    need(function() return c.vida0 - lifeP2() > 20 and not c.defendeu end, 1, "a lasca acertou quem defendia em pe", false)
+    need(function() return c.vida0 - lifeP2() <= 10 and c.defendeu end, 1, "a pedra foi defendida (so o dano de raspao)", false)
   end)
-  S("Punho de Concreto (df_x) contra defesa AGACHADA: defende", function()
-    approach(70)
+  S("Bola de ki (fb_x) contra defesa AGACHADA: defende", function()
+    approach(100)
     p2defende(true)
-    press(1, {"df_x"}, 2)
-    need(estadoEm(1000), 12, "entrou em 1000")
-    espia(140)
+    press(1, {"fb_x"}, 2)
+    need(estadoEm(1600), 12, "entrou em 1600")
+    espia(100)
     note(seDefendeu)
-    need(function() return c.vida0 - lifeP2() <= 10 and c.defendeu end, 1, "agachado a lasca foi defendida (so o dano de raspao)", false)
+    need(function() return c.vida0 - lifeP2() <= 10 and c.defendeu end, 1, "agachado a bola de ki foi defendida", false)
   end)
   S("Pega Bolado forte (bd_b) DEFENDIDO: cai no 1503 (erra feio)", function()
     approach(130)
@@ -1054,6 +1057,6 @@ do
     end)
     if not ok then log("ERRO NO ROBO: " .. tostring(err)); ligado = false; LOG:close() end
   end)
-  pcall(function() setAccel(4) end)
+  pcall(function() setAccel(@ACCEL@) end)
   log("robo carregado: " .. #scenarios .. " roteiros")
 end

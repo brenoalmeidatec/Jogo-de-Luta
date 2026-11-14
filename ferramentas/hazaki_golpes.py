@@ -145,12 +145,14 @@ ANIM = {
     831: ("agarrao_cutucao 1/3 2/4 3/6 4/6 3/6 4/6 5/6 6/6 7/12", None, "S"),
     840: ("agarrao_perna 1/3A 2/9", (10, -40, 46, -4), "C"),
     841: ("agarrao_perna 2/4 3/4 4/5 5/5 6/5 7/6", None, "C"),
-    # Punho de Concreto: soca o chão e solta a lasca
-    1000: ("punho_chao 1/4 2/4 3/4 4/4 5/6 6/8 7/6", None, "S"),
-    1001: ("punho_chao 1/3 2/3 3/4 4/4 5/6 6/8 7/6", None, "S"),
-    # Estatueta Dourada
-    1600: ("estatueta_arremesso 1/4 2/4 3/6 4/4 5/6 6/6 7/6", None, "S"),
-    1601: ("estatueta_arremesso 1/4 2/4 3/6 4/4 5/6 6/6 7/6", None, "S"),
+    # Pedra (issue #44): chuta o chão (a pedra pula no tick 8 e sobe), levanta e manda a pedra voando no tick 25:
+    # x dá um soco nela, y chuta de novo. Os ticks da pedra estão em gerar_hazaki.PEDRA.
+    1000: ("chute_canela 1/3 2/3 3/4 4/5 6/3 soco_reto 2/3 3/3 4/8 5/6 6/4 7/4", None, "S"),
+    1001: ("chute_canela 1/3 2/3 3/4 4/5 6/3 chute 2/3 3/3 4/8 5/6 6/4 7/3", None, "S"),
+    # Bola de ki (issue #44): carrega o ki com as mãos abertas (brilho nas duas mãos) e solta a bola vermelha com o
+    # soco; o y carrega mais (bola mais rápida e mais forte). Ticks em gerar_hazaki.KI.
+    1600: ("pose_super 1/3 3/3 4/8 5/8 soco_reto 3/2 4/10 5/6 6/4 7/4", None, "S"),
+    1601: ("pose_super 1/3 3/3 4/12 5/12 soco_reto 3/2 4/10 5/6 6/4 7/4", None, "S"),
     # Ascensão de Faixa: pés no chão
     1200: ("ascensao 0/2 1/2 4/5A 5/5 6/6 7/6", (0, -116, 30, -38), "S"),
     1201: ("ascensao 0/2 1/3 4/5A 5/3A 5/8 6/10 7/10", (0, -116, 30, -38), "S"),
@@ -186,8 +188,8 @@ ANIM = {
 }
 
 MOVELIST = """<#f0f000>:Especiais:</>
-Punho de Concreto <#bebebe>(projétil rasteiro)</>	_D_F^P
-Estatueta Dourada <#bebebe>(projétil em arco)</>	_F_B^P
+Pedra <#bebebe>(x soca, y chuta)</>	_D_F^P
+Bola de ki <#bebebe>(y carrega mais)</>	_F_B^P
 Ascensão de Faixa					_F_D^P
 Guarda de Aço <#bebebe>(contra-ataque)</>		_D_B^P
 Giro de Garagem						_D_F^K

@@ -752,25 +752,54 @@ def cns_agarroes():
     return "".join(c)
 
 
+# Pedra: tick em que ela pula do chão (pé no asfalto, chute_canela 3) e em que sai voando (soco_reto/chute 4), e o
+# ponto de saída do projétil (na frente do punho ou do pé). A subida do Explod (vel -6, accel .18) leva os 17 ticks.
+PEDRA = {"pula": 8, "sai": 25, "x": 58, "y": -80}
+# Bola de ki: a carga começa no tick 3 (pose_super 3, mãos abrindo) nas duas mãos, e a bola sai do punho do soco.
+KI = {"carga": 4, "maos": ((22, -46), (-30, -46)), "x": 52, "y": -80}
+
+
 def cns_especiais():
     c = []
     H = lambda n, k=0, **kw: gp.hitdef(n, f"Time = {acerto(n, k)}", kw.pop("attr", "S, SA"), kw.pop("dano"),
                                        classe=kw.pop("classe", "especial"), **kw)
 
-    # Punho de Concreto (↓ → x/y): soca o chão e solta uma lasca de asfalto rasteira; defende-se agachado
-    for n, t, vel, dano, extra in ((1000, 12, 3.0, 60, ("projremovetime = 73",)), (1001, 10, 6.0, 70, ())):
+    # Pedra (↓ → x/y, issue #44): chuta o chão, a pedra pula do asfalto e sobe na frente dele (Explod que sobe e
+    # desacelera, 7401) e, no tick 25, ele manda a pedra voando: x soca (mais lenta), y chuta de novo (mais rápida e
+    # mais forte). A pedra em voo é o projétil 1005 e quebra em cacos no acerto (7402). Efeitos: diabo_loiro.py.
+    for n, vel, dano in ((1000, 6.0, 65), (1001, 8.0, 80)):
         c.append(ataque(n))
-        c.append(projetil(n, f"Time = {t}", 1000, 1005, "46, 0", f"{vel}, 0", dano, "L", 9205, chao="Low",
-                          extra=extra))
-        c.append(ctl(n, "Asfalto", "Explod", f"trigger1 = Time = {t}", "anim = 9205", "postype = p1",
-                     "pos = 40, 0", "removetime = -2", "sprpriority = 4", "ownpal = 1"))
+        c.append(poeira(n, f"Time = {PEDRA['pula']}", 50))
+        c.append(ctl(n, "Pedra sobe", "Explod", f"trigger1 = Time = {PEDRA['pula']}", "anim = 7401", "id = 7401",
+                     "postype = p1", "pos = 54, -8", "vel = 0.15, -6", "accel = 0, .18", "bindtime = 0",
+                     f"removetime = {PEDRA['sai'] - PEDRA['pula']}", "sprpriority = 4", "ownpal = 1"))
+        c.append(ctl(n, "Pedra sai", "RemoveExplod", f"trigger1 = Time = {PEDRA['sai']}", "id = 7401"))
+        c.append(ctl(n, "Projétil", "Projectile", f"trigger1 = Time = {PEDRA['sai']}", "projid = 1000",
+                     "projanim = 1005", "projhitanim = 7402", "projremanim = 7402", "projcancelanim = 7402",
+                     "projhits = 1", "projpriority = 2", f"offset = {PEDRA['x']}, {PEDRA['y']}",
+                     f"velocity = {vel}, 0", "attr = S, SP", f"damage = {dano}, 5", "animtype = Med",
+                     "guardflag = MA", "hitflag = MAF", "pausetime = 4, 10", "sparkno = -1",
+                     "guard.sparkno = S9216", "hitsound = F5,2", "guardsound = F6,0", "ground.type = High",
+                     "ground.slidetime = 12", "ground.hittime = 18", "ground.velocity = -4",
+                     "air.velocity = -2,-3.5"))
         c.append(gp.fim(n))
 
-    # Estatueta Dourada (→ ← x/y): projétil em arco; x cai perto (~140 px), y cai longe (~240 px)
-    for n, vel, acel, dano in ((1600, "2.5, -6", .35, 70), (1601, "4.5, -6.5", .35, 80)):
+    # Bola de ki (→ ← x/y, issue #44): carrega o ki com as mãos abertas (brilho vermelho nas duas mãos, 7410) e solta
+    # a bola vermelha (1605) com o soco; estoura no acerto (7411). O y carrega mais: sai mais rápida e bate mais.
+    for n, vel, dano in ((1600, 4.5, 70), (1601, 6.5, 90)):
+        solta = duracao(anim(n)[0][:4]) + 2  # fim da carga (4 desenhos de pose_super) + o 1º do soco
         c.append(ataque(n))
-        c.append(projetil(n, "Time = 14", 1001, 1605, "20, -110", vel, dano, "MA", 9207,
-                          extra=(f"accel = 0, {acel}", "projheightbound = -400, 0")))
+        for k, (x, y) in enumerate(KI["maos"]):
+            c.append(ctl(n, f"Carga {k + 1}", "Explod", f"trigger1 = Time = {KI['carga']}", "anim = 7410",
+                         f"id = {7410 + k}", "postype = p1", f"pos = {x}, {y}", f"removetime = {solta - KI['carga']}",
+                         "sprpriority = 4", "ownpal = 1"))
+        c.append(ctl(n, "Projétil", "Projectile", f"trigger1 = Time = {solta}", "projid = 1001",
+                     "projanim = 1605", "projhitanim = 7411", "projremanim = 7411", "projcancelanim = 7411",
+                     "projhits = 1", "projpriority = 2", f"offset = {KI['x']}, {KI['y']}", f"velocity = {vel}, 0",
+                     "attr = S, SP", f"damage = {dano}, 6", "animtype = Med", "guardflag = MA", "hitflag = MAF",
+                     "pausetime = 4, 10", "sparkno = -1", "guard.sparkno = S9216", "hitsound = F5,2",
+                     "guardsound = F6,0", "ground.type = High", "ground.slidetime = 12", "ground.hittime = 18",
+                     "ground.velocity = -4", "air.velocity = -2,-3.5"))
         c.append(gp.fim(n))
 
     # Ascensão de Faixa (→ ↓ x/y): antiaéreo de joelho e ombro, pés no chão
@@ -1065,8 +1094,8 @@ COMANDOS_DE_TOQUE = [  # (nome, comando, estado) na ordem de prioridade do [Stat
     ("fb_y", "~F, B, y", 1601), ("fb_x", "~F, B, x", 1600), ("df_b", "~D, F, b", 1301), ("df_a", "~D, F, a", 1300),
     ("db_y", "~D, B, y", 1101), ("db_x", "~D, B, x", 1100), ("db_b", "~D, B, b", 1401), ("db_a", "~D, B, a", 1400),
 ]
-NOMES_DE_ESPECIAL = {1000: "Punho de Concreto", 1100: "Guarda de Aço", 1200: "Ascensão de Faixa",
-                     1300: "Giro de Garagem", 1400: "Corte de Base", 1500: "Pega Bolado", 1600: "Estatueta Dourada",
+NOMES_DE_ESPECIAL = {1000: "Pedra", 1100: "Guarda de Aço", 1200: "Ascensão de Faixa",
+                     1300: "Giro de Garagem", 1400: "Corte de Base", 1500: "Pega Bolado", 1600: "Bola de ki",
                      1700: "Rolada de Tatame"}
 
 
@@ -1286,10 +1315,13 @@ def main():
     (SAIDA / "movelist.dat").write_text(hg.MOVELIST, encoding="utf-8", newline="\n")
     import parry  # parry em cima e embaixo, faísca própria e sem a "rede de futebol" (docs/parry.md)
     parry.aplicar("hazaki", SAIDA)
-    import legibilidade  # golpes legíveis (#45): caixa no membro, congelamento, tremida, reação e preparo
-    legibilidade.aplicar("hazaki", SAIDA)
+    gerar_sons.ligar("hazaki", SAIDA)  # depois do parry: os estados 761/765 dele também tocam o som (F30)
     import balanceamento  # números do item 7 (attack, defence, velocidade)
     balanceamento.aplicar("hazaki", SAIDA)
+    import diabo_loiro  # issue #44: pedra, bola de ki e o Diabo Loiro (efeitos do Blender em PNG no .sff)
+    diabo_loiro.aplicar(SAIDA)
+    import legibilidade  # golpes legíveis (#45): caixa no membro, congelamento, tremida, reação e preparo
+    legibilidade.aplicar("hazaki", SAIDA)
     print(f"{gravados} sprites no .sff (de {len(s.lista)} carregados), {len(a.acoes)} ações em {SAIDA}")
     if "--contato" in sys.argv:
         contato(Path(sys.argv[sys.argv.index("--contato") + 1]), s)

@@ -98,7 +98,7 @@ def main():
         shutil.rmtree(tmp, ignore_errors=True)
 
 
-def preparar(destino, motor, lutador, saida_lua):
+def preparar(destino, motor, lutador, saida_lua, filtro="", acelera=4):
     """Escreve em destino/ o que substitui o motor: os .cmd injetados e o debug.lua com o robô."""
     for nome in (lutador, "hazaki"):
         arq = destino / "chars" / nome / f"{nome}.cmd"
@@ -109,7 +109,8 @@ def preparar(destino, motor, lutador, saida_lua):
     debug.parent.mkdir(parents=True, exist_ok=True)
     debug.write_text((motor / "external/script/debug.lua").read_text(encoding="utf-8") + "\n" +
                      (RAIZ / "ferramentas/robo/robo.lua").read_text(encoding="utf-8").replace("@SAIDA@", saida_lua)
-                     .replace("@LUTADOR@", lutador),
+                     .replace("@LUTADOR@", lutador)
+                     .replace("@FILTRO@", filtro).replace("@ACCEL@", str(acelera)),
                      encoding="utf-8")
 
 
