@@ -2027,6 +2027,17 @@ Um GitHub Action com esse modo rodaria o robô a cada push.
 - **Mugen final** (revisão geral + Pengaró nítido + robô no Linux, `c5d10f43`): Gutto 146/0, Raiclaven 146/0,
   Pengaró 151/0, rodados na nuvem.
 
+## 2026-11-14 — Pengaró redesenhado do Breno de volta, com correções (Claude, sessão do Alisson)
+
+**Pedido do Breno (#32):** tirar o Pengaró antigo nítido, voltar o redesenho `dc3427b` mantendo a revisão `118326d`,
+conferir as 34 folhas e consertar só o que estiver errado, robô e foto ao lado do CK antes da mugen.
+
+**Feito:** reverts do antigo nítido + reapply do `dc3427b`, sff regerado com o gerador da revisão. Agachado no jogo usa a
+ordem da folha nova (antes subia até um quadro meio em pé no meio do agachado). Riscos soltos apagados nas folhas corre,
+afastar, pulo e rasteira (`ferramentas/limpar_riscos_pengaro.py`). Escala das folhas de parry pela mesma pose.
+Robô 151/0 na nuvem. Plano e lista quadro a quadro: `docs/arcade/pengaro-redesenho-correcoes.md`.
+**Sugestões:** os rastros que sobraram (laranja atrás da garrafa na corrida, mancha em compasso 4/5) pedem retoque à mão
+ou refazer esses quadros no ChatGPT; esperar a lista de erros do Breno na #32.
 ## 2026-11-14 — Trilha sonora ligada no jogo (Claude, thread do Alisson)
 
 **Pedido:** avaliar a trilha que o Breno subiu e ligá-la (Alisson aprovou); depois o Breno pediu na #33 loop sem

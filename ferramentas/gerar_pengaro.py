@@ -1565,14 +1565,13 @@ PASTA_ARCADE = {}
 # desenhos bons: ginga (0), garrafa subindo (1) e garrafa erguida (2), com um segundo brinde (1, 2) e a pose final no 2.
 # bola 2 (retoque 2): os dois braços saem do ombro de trás (um ergue a lata, o outro segura a garrafa) e o ombro da
 # frente fica sem braço; repete o 3 (o braço da lata já armado no alto), que é para onde o 2 ia.
-REPETE_ARCADE = {("golaco", 1): 0, ("vitoria", 3): 2, ("vitoria", 4): 1, ("vitoria", 5): 2, ("vitoria", 6): 2,
-                 ("vitoria", 7): 2, ("bola", 2): 3}
+REPETE_ARCADE = {}  # desenhos do padrão novo (2026-11-13, folhas_novas): os defeitos antigos não existem mais
 # Forma endiabrada das folhas novas que não têm e_<folha>: empresta o desenho endiabrado que a ação já usava
 # (correr = andar endiabrado; recuo = e_defesa 6), para o Despertar não mudar.
 ENDIABRADO_EMPRESTADO = {"corre": lambda i: ("anda_fluida", (0, 1, 2, 2, 3, 4, 5, 5)[i]), "recuo": lambda i: ("pulo", 3) if i >= 2 else ("defesa", 6)}  # Lote 7: no ar, o boss encolhido do pulo
 # Desenho arcade deslocado em x (px). afastar 6: o pé de apoio (o de trás, plantado em x=-41 no 5 e -39 no 7) aparecia
 # em -29: o corpo dava um tranco para a frente e voltava.
-DESLOCA_ARCADE = {("afastar", 6): -10}
+DESLOCA_ARCADE = {}  # padrão novo (2026-11-13)
 
 
 # Golpes de pengaro_extra.py com desenho trocado no Pengaró arcade: estado -> {elemento (de 0): (folha, desenho)}.
@@ -1958,9 +1957,12 @@ def acoes_folhas(Q):
     if desenhado():  # recuo (pulinho para trás): sai do chão (2) e fica encolhido no ar (3); era a defesa inclinada
         Q(105, [(f("recuo", 2), 3), (f("recuo", 3), -1)], NO_AR)
     # em pé <-> agachado: troca seca de 2 ticks com um desenho só (eram 6 e 4; o estado já é C desde o tick 0)
-    Q(10, [(f("agachado", 0 if arcade else 2), 2)], BAIXO)
-    Q(11, [(f("agachado", i), 8) for i in (4, 5, 6, 7, 6, 5)], BAIXO)
-    Q(12, [(f("agachado", 0 if arcade else 2), 2)], BAIXO)
+    # Pengaró redesenhado (folha de 2026-11-13): a folha agachado é a descida inteira (0 em pé, 1-2 descendo, 3-5 no
+    # fundo, 6-7 subindo); a troca usa o 2 (meio da descida) e a base agachada respira só entre 4 e 5, os dois mais
+    # baixos, sem o boneco subir até o 7 (meio em pé) no meio do agachado.
+    Q(10, [(f("agachado", 2), 2)], BAIXO)
+    Q(11, [(f("agachado", i), 10) for i in (4, 5)], BAIXO)
+    Q(12, [(f("agachado", 2), 2)], BAIXO)
     Q(40, [(f("pulo", 0), 4)])
     for n in (41, 42, 43):
         Q(n, [(f("pulo", 1), 3), (f("pulo", 2), 5), (f("pulo", 3), 6), (f("pulo", 4), -1)], NO_AR)
@@ -2110,9 +2112,9 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
     if desenhado():
         # lata: no desenho 1 ele abre a lata com duas mãos sem soltar a garrafa (três mãos); começa do 0, lata na mão
         TROCA_POR_FOLHA.update({"embaixada0": ("lata", 0), "parry": ("defesa", 3)})
-        # agachado arcade: 8 desenhos da base agachada respirando (0 e 7 os mais altos, 3 o mais baixo), sem descida
-        TROCA_POR_FOLHA.update({"agacha0": ("agachado", 0), "agacha1": ("agachado", 3), "agacha2": ("agachado", 4),
-                                "defesa_baixa": ("agachado", 3)})
+        # agachado redesenhado: a folha é a descida (0 em pé, 4 o mais baixo); agachar usa o meio da descida e o fundo
+        TROCA_POR_FOLHA.update({"agacha0": ("agachado", 2), "agacha1": ("agachado", 4), "agacha2": ("agachado", 5),
+                                "defesa_baixa": ("agachado", 4)})
     TROCA_POR_FOLHA.update({f"corre{i}": ("anda_fluida", i if desenhado() else i * 12) for i in range(4)})
 
     # retratos que o IKEMEN usa no menu e nas barras
