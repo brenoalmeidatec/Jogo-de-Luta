@@ -295,7 +295,7 @@ def abrir_quadro(arquivo):
     if QUADROS in arquivo.parents and not _de_cavalo(pasta) and pasta != "despertar_a":
         img = gp.sem_rosa(img)
     caixas = RETOQUES.get((pasta, desenho))
-    return retocar(img, caixas) if caixas else img
+    return gp.marcar_origem(retocar(img, caixas), arquivo) if caixas else gp.marcar_origem(img, arquivo)
 
 
 gp.abrir_quadro = abrir_quadro
@@ -403,7 +403,7 @@ def main():
     a = gp.montar_air(s, faiscas, arte_despertada=gp.arte_endiabrada(s))
     preset = gp.preset_despertado(s)
     (SAIDA / "gutto.air").write_text("\n".join(a.txt), encoding="utf-8", newline="\n")
-    cns = gp.sem_ginga_9203(gp.remapear_animelem(gp.montar_cns(), a.mapas))
+    cns = gp.super_3100_endiabrado(gp.sem_ginga_9203(gp.remapear_animelem(gp.montar_cns(), a.mapas)))
     # a aura do demônio cavalo pulsa em vermelho de brasa, não no violeta do Pengaró
     cns = cns.replace("add = 12, 0, 28", "add = 16, 0, 0").replace("sinadd = 10, 0, 18, 40", "sinadd = 14, 2, 0, 40")
     cns = cns.replace("[Data]", preset + "[Quotes]\n" + "".join(
@@ -412,7 +412,8 @@ def main():
     # corpo em alta resolução (ferramentas/hd.py): os mesmos quadros em 3x, de quadros_hd/ (animar_folha.py com HD=3)
     if (QUADROS.parent / "quadros_hd").exists():
         import hd
-        air, cns = hd.aplicar(s, air, cns, [(QUADROS, QUADROS.parent / "quadros_hd")], gp.SPRITES_VITIMA)
+        air, cns = hd.aplicar(s, air, cns, [(QUADROS, QUADROS.parent / "quadros_hd")], gp.SPRITES_VITIMA,
+                              gemeos=gp.GEMEOS_HD)
         (SAIDA / "gutto.air").write_text(air, encoding="utf-8", newline="\n")
     else:
         print("ATENÇÃO: sem sprites/gutto/quadros_hd (fica fora do git: ~200-340 MB). O lutador sai em 1x, borrado. "

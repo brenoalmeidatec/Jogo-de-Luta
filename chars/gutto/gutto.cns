@@ -6681,23 +6681,23 @@ value = ifelse(var(20) > 0, 1.45, 1)
 
 [State -2, Vira endiabrado]
 type = RemapSprite
-trigger1 = var(20) > 0 && var(37) = 0
+trigger1 = (var(20) > 0 || stateno = 3100) && var(37) = 0
 preset = "despertado"
 
 [State -2, Endiabrado ligado]
 type = VarSet
-trigger1 = var(20) > 0
+trigger1 = var(20) > 0 || stateno = 3100
 var(37) = 1
 
 [State -2, Volta ao normal]
 type = RemapSprite
-trigger1 = var(20) <= 0 && var(37) = 1
+trigger1 = var(20) <= 0 && stateno != 3100 && var(37) = 1
 trigger2 = roundstate < 2
 reset = 1
 
 [State -2, Endiabrado desligado]
 type = VarSet
-trigger1 = var(20) <= 0
+trigger1 = var(20) <= 0 && stateno != 3100
 var(37) = 0
 
 [State -2, Aura]
