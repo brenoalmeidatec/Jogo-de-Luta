@@ -2,6 +2,9 @@
 
 Uso:  python ferramentas/testar_pengaro.py [--lutador gutto]          (roda DENTRO do Windows Sandbox: padrão)
       python ferramentas/testar_pengaro.py --local [CAMINHO_DO_MOTOR]  (abre o motor nesta máquina; só no PC do Breno)
+      python3 ferramentas/testar_pengaro.py --linux [CAMINHO_DO_MOTOR]  (Linux sem tela: Xvfb + Mesa llvmpipe; padrão
+              quando o sistema é Linux. Sem caminho, usa ~/.cache/nazafight/ikemen e baixa o IKEMEN GO Linux se faltar.
+              Precisa de xvfb-run e do Mesa: apt install xvfb libgl1-mesa-dri. Assim o teste roda na nuvem, sem o PC.)
 
 Regra do dono (2026-11-10): no PC de teste o robô roda só na sandbox (ferramentas/sandbox.py), nunca na máquina local.
 
@@ -18,9 +21,13 @@ import subprocess
 import sys
 import tempfile
 import time
+import urllib.request
+import zipfile
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
+IKEMEN_LINUX = "https://github.com/ikemen-engine/Ikemen-GO/releases/download/v1.0.0/Ikemen_GO-v1.0.0-linux.zip"
+INI_LINUX = {"MasterVolume": "0", "PauseMasterVolume": "0", "Fullscreen": "0", "VSync": "0"}  # = sandbox.INI_PADRAO
 CMDS = ["x", "y", "a", "b", "c", "holdfwd", "holdback", "holdup", "holddown", "agarrao_whisky", "garrafa_x",
         "garrafa_y", "role_a", "role_b", "sombra_x", "sombra_y", "sombra_a", "sombra_b", "despertar", "FF", "rolar",
         "afastar", "golaco", "golpe_216", "golpe_246", "golpe_201", "golpe_231", "golpe_1400", "golpe_1401",
@@ -66,12 +73,23 @@ def main():
     local = "--local" in args
     if local:
         args.remove("--local")
-    motor = Path(args[0]) if args else Path(os.environ["USERPROFILE"]) / "JogoDeLuta" / "ikemen"
-    if not (motor / "Ikemen_GO.exe").exists():
-        sys.exit(f"Não achei o Ikemen_GO.exe em {motor}. Abra o jogo uma vez pelo atalho para instalar o motor.")
+    linux = "--linux" in args or (sys.platform.startswith("linux") and not local)
+    if "--linux" in args:
+        args.remove("--linux")
+    if linux:
+        motor = Path(args[0]) if args else motor_linux()
+        if not (motor / "Ikemen_GO_Linux").exists():
+            sys.exit(f"Não achei o Ikemen_GO_Linux em {motor}.")
+    else:
+        motor = Path(args[0]) if args else Path(os.environ["USERPROFILE"]) / "JogoDeLuta" / "ikemen"
+        if not (motor / "Ikemen_GO.exe").exists():
+            sys.exit(f"Não achei o Ikemen_GO.exe em {motor}. Abra o jogo uma vez pelo atalho para instalar o motor.")
     tmp = Path(tempfile.mkdtemp(prefix="teste_pengaro_"))
     try:
-        texto = rodar_local(motor, lutador, tmp) if local else rodar_sandbox(motor, lutador, tmp)
+        if linux:
+            texto = rodar_linux(motor, lutador, tmp)
+        else:
+            texto = rodar_local(motor, lutador, tmp) if local else rodar_sandbox(motor, lutador, tmp)
         print(texto)
         passou, falhou = texto.count("  PASS "), texto.count("  FAIL ")
         print(f"\nRESUMO: {passou} verificações passaram, {falhou} falharam.")
@@ -133,6 +151,79 @@ def rodar_local(motor, lutador, tmp):
     proc.kill()
     if not saida.exists():
         sys.exit("O robô não escreveu resultado: o motor fechou antes de começar.")
+    return saida.read_text(encoding="utf-8")
+
+
+def motor_linux():
+    """IKEMEN GO Linux em ~/.cache/nazafight/ikemen (baixa o v1.0.0 na primeira vez, o mesmo do atalho do Windows)."""
+    motor = Path.home() / ".cache" / "nazafight" / "ikemen"
+    if not (motor / "Ikemen_GO_Linux").exists():
+        print(f"Baixando o IKEMEN GO Linux para {motor}...", flush=True)
+        motor.parent.mkdir(parents=True, exist_ok=True)
+        zipado = motor.parent / "ikemen-linux.zip"
+        urllib.request.urlretrieve(IKEMEN_LINUX, zipado)
+        with zipfile.ZipFile(zipado) as z:
+            z.extractall(motor)
+        zipado.unlink()
+        (motor / "Ikemen_GO_Linux").chmod(0o755)
+    if not (motor / "save" / "config.ini").exists() and shutil.which("xvfb-run"):
+        # o config.ini só nasce na 1ª abertura: abre o motor uns segundos para ele existir (ajustar_ini depende dele)
+        print("Primeira abertura do motor para criar o save/config.ini...", flush=True)
+        subprocess.run(["timeout", "20", "xvfb-run", "-a", "./Ikemen_GO_Linux"], cwd=motor, env=ambiente_linux(motor),
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    return motor
+
+
+def ambiente_linux(motor):
+    return {**os.environ, "LIBGL_ALWAYS_SOFTWARE": "1", "GALLIUM_DRIVER": "llvmpipe", "SDL_AUDIODRIVER": "dummy",
+            "LD_LIBRARY_PATH": f"{motor / 'lib'}:{os.environ.get('LD_LIBRARY_PATH', '')}"}
+
+
+def ajustar_ini(copia):
+    """Som mudo, janela e sem VSync (a luta corre o mais rápido que o llvmpipe deixa). O config.ini nasce na 1ª abertura."""
+    ini = copia / "save" / "config.ini"
+    if not ini.exists():
+        return
+    t = ini.read_text(encoding="utf-8")
+    for k, v in INI_LINUX.items():
+        t = re.sub(rf"(?m)^({re.escape(k)}\s*=\s*)[^\r\n]*", lambda m: m.group(1) + v, t)
+    ini.write_text(t, encoding="utf-8")
+
+
+def rodar_linux(motor, lutador, tmp):
+    """Igual ao --local, mas no Linux sem monitor: tela virtual do Xvfb e OpenGL por software (Mesa llvmpipe)."""
+    if not shutil.which("xvfb-run"):
+        sys.exit("falta o xvfb-run (apt install xvfb libgl1-mesa-dri)")
+    copia = tmp / "motor"
+    shutil.copytree(motor, copia, symlinks=True)
+    for nome in (lutador, "hazaki"):
+        shutil.copytree(RAIZ / "chars" / nome, copia / "chars" / nome, dirs_exist_ok=True)
+    # layout Nazafights como o .bat instala (motif/INSTALAR.md): sem ele o HUD do motor puro mostra o retrato HD gigante
+    if (RAIZ / "motif" / "nazafight" / "system.def").exists():
+        shutil.copytree(RAIZ / "motif" / "nazafight", copia / "data" / "nazafight", dirs_exist_ok=True)
+        INI_LINUX["Motif"] = "data/nazafight/system.def"
+    saida = tmp / "resultado.txt"
+    preparar(copia, motor, lutador, saida.as_posix())
+    ajustar_ini(copia)
+    amb = ambiente_linux(copia)
+    print("Rodando o robô no Linux (Xvfb + llvmpipe; leva alguns minutos)...", flush=True)
+    t0 = time.time()
+    proc = subprocess.Popen(["xvfb-run", "-a", "-s", "-screen 0 1280x720x24", "./Ikemen_GO_Linux"] + argumentos(lutador),
+                            cwd=copia, env=amb, stdout=open(tmp / "motor_log.txt", "w"), stderr=subprocess.STDOUT,
+                            start_new_session=True)
+    limite = time.time() + 2400
+    while time.time() < limite and proc.poll() is None:
+        if saida.exists() and re.search(r"^FIM|ERRO NO ROBO", saida.read_text(encoding="utf-8"), re.M):
+            break
+        time.sleep(2)
+    try:
+        os.killpg(proc.pid, 9)  # leva junto o Xvfb que o xvfb-run abriu
+    except ProcessLookupError:
+        pass
+    print(f"motor parou em {time.time() - t0:.0f} s", flush=True)
+    if not saida.exists():
+        sys.exit("O robô não escreveu resultado: o motor fechou antes de começar.\n" +
+                 (tmp / "motor_log.txt").read_text(errors="replace")[-3000:])
     return saida.read_text(encoding="utf-8")
 
 

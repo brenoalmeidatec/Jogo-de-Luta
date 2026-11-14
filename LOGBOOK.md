@@ -1935,10 +1935,10 @@ foi lida como "aura discreta" (o erro começou no texto que eu escrevi na `regra
   lutador de verdade.**
 - **Não visto em tempo real:** o filme de aura só roda na sandbox. O robô confere as camadas vivas no Despertar.
 
-## 2026-11-13 — Pengaró redesenhado no padrão novo, nítido como o CK (Claude, sessão do Breno)
+## 2026-11-14 — Pengaró de volta ao desenho antigo, nítido e com a pele bem escura (Claude, thread do Alisson)
 
-**Pedido do Breno:** o Pengaró estava borrado e com estilo diferente dos outros. Ele aprovou a nova
-`referencia_ginga` (rosto do retrato novo, pele bem escura, boneco enchendo o quadro).
+**Pedido do Breno** (`docs/missao-alisson-2026-11-13.md`, item 1): o redesenho do `dc3427bf` saiu; o Pengaró volta ao
+desenho de antes, nítido como o CK e o Gutto, com a pele bem escura, e o endiabrado não muda.
 
 - **Folhas:** 34 folhas da forma normal no ChatGPT, em `sprites/pengaro/quadros/folhas_novas/`. Cada uma foi pedida
   com a referência nova e a folha antiga anexadas, copiando as 8 poses da antiga. A queda foi refeita duas vezes:
@@ -1957,3 +1957,72 @@ foi lida como "aura discreta" (o erro começou no texto que eu escrevi na `regra
 - **Pendente:**
   - o Hazak segue no estilo antigo (a recriação está com o Alisson, branch `hazak`);
   - as pastas `meio/` antigas em `quadros_arcade/` ficaram no disco, sem uso.
+
+## 2026-11-14 — Revisão geral: "?" da seleção, robô no 3100 e Gutto despertado em 3x (Claude, sessão do Alisson)
+
+Itens da seção 4 de `docs/missao-alisson-2026-11-13.md`.
+
+**Feito:**
+- **"?" da escolha aleatória encaixado** (`gerar_layout.py`): o IKEMEN desenha `cell.random.spr` somando o
+  `portrait.offset` (14,14), e a célula vazia não (`start.lua`, `updateDrawList`). O sprite 300,1 ganhou eixo 14,14
+  (`RETRATO_NA_CELULA`), a checagem de grade aceita esse caso e a prévia `selecao.png` passou a desenhar o "?" como o
+  motor desenha. O resto do layout continua igual (as outras prévias mudam só na compressão do PNG; não subiram).
+- **Robô do Gutto e do Raiclaven no 3100**: o super zera `var(20)` no tick 0 e o corpo voltava à forma base no meio
+  do golpe. As quatro trocas que o Pengaró e o CK já tinham (`stateno = 3100` segura `var(37) = 1` e o RemapSprite)
+  viraram `gp.super_3100_endiabrado()`, chamada também em `gerar_gutto.py` e `gerar_raiclaven.py`. Os dois `.cns`
+  receberam as mesmas 4 linhas.
+- **Gutto despertado em 3x**: o `colar_endiabrado` reescala a figura pelo `fator_endiabrado`, e o `hd.py` não achava o
+  gêmeo 3x comparando pixels. Agora o gerador monta o gêmeo junto (`gerar_pengaro.GEMEOS_HD`: mesmo recorte, mesma
+  escala, mesmo lugar, em 3x, com o alfa limitado ao corpo do 1x; o `move` leva o gêmeo junto) e o `hd.aplicar(...,
+  gemeos=)` usa ele quando a comparação não acha. Resultado: `HD: 1052 trocados (446 montados), 125 só ampliados`
+  (era 606 / 565) e **0 ações misturando 3x com 1x** (eram 181, 601 e 10601). No `.sff`: dos 472 sprites do
+  despertado usados, **0 só ampliados** (eram 440). Forma base, paleta e retratos iguais à `mugen` byte a byte
+  (`conferir_sff.py transplantar` + `trocar_retratos.py gutto`).
+- `conferir_sff.py ler/transplantar` aceita retrato em PNG (grupo 9000, do `trocar_retratos.py`) na base.
+
+**Como foi gerado:** `quadros_hd/` do Gutto feitos na nuvem com o Blender 4.5.16 como módulo Python (`bpy`, Cycles
+CPU), pelo `hd_blender.py`. Pengaró e CK regerados com o código novo saem iguais aos regerados com o código antigo na
+mesma máquina (o código novo não muda nada neles).
+
+**Não testado:** robô e jogo (o IKEMEN não roda na nuvem). Rodar `python ferramentas/testar_pengaro.py --lutador
+gutto` e `raiclaven` antes de subir; o esperado é 144/0 nos dois. Raiclaven não foi regerado (só o `.cns`).
+
+**Ficou:** parry (`docs/parry.md`), figurantes e HUD novo sem conferência, Pengaró e Hazak (itens 1 da missão).
+
+- **Revert do `dc3427bf`.** O gerador reproduz o `.sff` do `965f8013`.
+- **Causa do borrado, medida:** na folha antiga o Pengaró tem ~275 px; o CK, ~550 px. O 3x (~330 px) ampliava o
+  Pengaró e reduzia o CK.
+- **Nítido sem redesenhar:** `ferramentas/ampliar_folhas.py` passa as 33 folhas antigas no Real-ESRGAN (anime_6B, 4x
+  e reduz para 2x; `quadros/folhas_arcade_sr/`, 62 MB). `ferramentas/nitidez_pengaro.py` tira o 3x dessa folha
+  (reduzida, como no CK) e pinta com as 15 cores do 1x numa vizinhança 5x5. Posição, escala, caixas e `.air`/`.cns`
+  iguais. HD: 504 sprites trocados pelo 3x (antes 501), 86 só ampliados.
+- **Pele bem escura** (paleta de `docs/arcade/pengaro.md`) por troca de cor no 1x, no 3x e nos quadros do meio usados.
+  A garrafa (mesmas cores no vidro e no rótulo) é achada em cada quadro e poupada; conferido quadro a quadro nas 34
+  folhas, 22 quadros corrigidos à mão (`GARRAFA_MAO`). A calça branca e a corda, que usam o creme e o âmbar da pele,
+  ficaram como eram. As 5 cores entraram no `paleta_sff.act` nas linhas de menos uso.
+- **Endiabrado:** nenhum sprite do corpo mudou (conferido sprite a sprite contra o `.sff` anterior). Seis sprites de
+  efeito do endiabrado e 56 de efeito da forma normal tiveram de 1 a 124 pixels trocados por uma cor vizinha quase igual
+  (as linhas da paleta que receberam a pele).
+- **Não testado no motor:** o robô e a luta rodam no Windows (sandbox ou PC do Breno). Só pixels mudaram, então o
+  robô deve dar o mesmo 151/0, mas falta rodar e tirar a foto ao lado do CK.
+- **Ficou:** a cena do Despertar (`despertar_a`, arte antiga) com a pele de antes; quadros do meio e `f_agarrao4/5` em 1x
+  ampliado; o rosto parecido com a foto (não mexi no desenho). Detalhes em `docs/arcade/pengaro-nitido.md`.
+
+## 2026-11-14 — Robô de teste roda no Linux sem tela (Claude, sessão do LightWolfMan)
+
+**Pedido:** rodar o robô (`ferramentas/testar_pengaro.py`) na nuvem Linux, sem depender do PC/notebook do Alisson.
+
+**Feito:** modo `--linux` (padrão quando o sistema é Linux) no `testar_pengaro.py`. Baixa o IKEMEN GO v1.0.0 Linux
+para `~/.cache/nazafight/ikemen` na primeira vez (abre o motor 20 s para nascer o `save/config.ini`), copia o motor
+para uma pasta temporária e roda a luta no Xvfb com Mesa llvmpipe (`xvfb-run`, som `dummy`). Modo Windows/sandbox
+intocado. Requisito: `apt install xvfb libgl1-mesa-dri`.
+
+**Resultados (cada luta ~60 s, 4 núcleos):**
+- branch `claude/project-thread-j4685w`: Gutto 146/0, Raiclaven 146/0 (var(37) = 1 no meio do 3100: falha sumiu).
+- branch `claude/project-thread-xhv5a2`: Pengaró 151/0. `mugen`: Pengaró 151/0 (motor baixado do zero).
+
+No Linux o robô instala o layout `motif/nazafight` (como o `.bat`); sem ele o HUD do motor puro mostrava o retrato HD
+gigante e cortado no print. **Sugestões:** o robô ainda não tira print sozinho; dá para tirar com `import -display :99 -window root` durante a luta.
+Um GitHub Action com esse modo rodaria o robô a cada push.
+- **Mugen final** (revisão geral + Pengaró nítido + robô no Linux, `c5d10f43`): Gutto 146/0, Raiclaven 146/0,
+  Pengaró 151/0, rodados na nuvem.

@@ -31,6 +31,7 @@ RAIZ = Path(__file__).resolve().parent.parent
 MOTIF = RAIZ / "motif" / "nazafight"
 PREVIAS = RAIZ / "docs" / "previas-layout"
 ESCALA = 4  # grade logica -> tela final
+RETRATO_NA_CELULA = 14  # portrait.offset da selecao (rosto 100x100 no meio da celula 128); o "?" compensa no eixo
 
 # ----------------------------------------------------------------------------------------------------------
 # Paleta (16 cores, so estas) e posicoes finais (1280x720)
@@ -1237,7 +1238,10 @@ def sprites_system():
     s = []
     s.append((131, 0, tabua_ativa(), 44, 10))   # eixo: centro x; 10 = 42 px acima da linha de base / 4 (arred.)
     s.append((200, 0, fundo_selecao(), 0, 0))
-    s += [(300, 0, celula(True), 0, 0), (300, 1, celula_aleatoria(), 0, 0)]
+    # O IKEMEN desenha cell.random.spr somando o portrait.offset (start.lua, updateDrawList), a celula
+    # nao. Sem o eixo compensando, o "?" saia 14 px para baixo e para a direita da celula vazia.
+    k = RETRATO_NA_CELULA / ESCALA
+    s += [(300, 0, celula(True), 0, 0), (300, 1, celula_aleatoria(), k, k)]
     for j, g in [(1, 310), (2, 311)]:
         s += [(g, 0, cursor_sel(j, True), 0, 0), (g, 1, cursor_sel(j, False), 0, 0)]
     s += [(312, 0, cursor_sel(1, True), 0, 0), (313, 0, cursor_sel(2, True), 0, 0)]
@@ -1320,7 +1324,7 @@ def finalizar(sprites, nome):
     out = []
     for (g, n, img, ax, ay) in sprites:
         checar_paleta(img, f"{nome} {g},{n}")
-        out.append((g, n, ampliar(img), ax * ESCALA, ay * ESCALA))
+        out.append((g, n, ampliar(img), round(ax * ESCALA), round(ay * ESCALA)))
     return out
 
 
@@ -1456,7 +1460,7 @@ cell.spacing = {ce},{ce}
 cell.bg.spr = 300,0
 cell.random.spr = 300,1
 portrait.spr = 9000,0
-portrait.offset = 14,14          ; rosto 100x100 em PNG (sprites/retratos, trocar_retratos.py) no meio da celula
+portrait.offset = {RETRATO_NA_CELULA},{RETRATO_NA_CELULA}          ; rosto 100x100 em PNG (sprites/retratos, trocar_retratos.py) no meio da celula
 portrait.scale = 0.25,0.25       ; o motor amplia 4x o sprite do lutador: 1/4 desenha 1 por 1, nitido
 p1.cursor.startcell = 0,0
 p1.cursor.active.anim = 310
@@ -2004,6 +2008,8 @@ def previa_selecao(sys_spr, defs, acoes, fontes):
         spr(tela, sys_spr, tuple(int(v) for v in nums(s["cell.bg.spr"])), x, y)
         if i < len(LUTADORES):
             spr(tela, retrato_x4(LUTADORES[i], 9000, 0, nums(s.get("portrait.scale", "1"))[0]), (9000, 0), x + po[0], y + po[1])
+        elif i == len(LUTADORES):   # randomselect: o motor soma o portrait.offset tambem aqui
+            spr(tela, sys_spr, tuple(int(v) for v in nums(s["cell.random.spr"])), x + po[0], y + po[1])
     for j, (cel, chr_) in [(1, (0, LUTADORES[0])), (2, (cols - 1, LUTADORES[cols - 1]))]:
         x, y = celulas[cel]
         q = acoes[int(s[f"p{j}.cursor.active.anim"])][0]
@@ -2163,7 +2169,10 @@ def verificar():
             img.load()
             if img.size != (w, h) or img.mode != "RGBA":
                 raise SystemExit(f"ERRO: {sff.name} {g},{n} PNG {img.size} {img.mode}")
-            if ax % 4 or ay % 4:
+            # 300,1 ("?" da escolha aleatoria): o motor soma portrait.offset na posicao, entao o que tem de cair
+            # na grade e o eixo menos esse deslocamento (a celula desenhada fica no mesmo pixel da vazia).
+            dx = RETRATO_NA_CELULA if (sff.name, g, n) == ("system.sff", 300, 1) else 0
+            if (ax - dx) % 4 or (ay - dx) % 4:
                 raise SystemExit(f"ERRO: {sff.name} {g},{n} eixo fora da grade ({ax},{ay})")
         total += len(dados)
         print(f"  {sff.relative_to(RAIZ)}: {len(dados)} sprites ok")

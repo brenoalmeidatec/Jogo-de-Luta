@@ -116,6 +116,11 @@ def gira(img, graus, cx=0, cy=-55):
 def move(img, dx=0, dy=0):
     tela = Image.new("RGBA", img.size)
     tela.paste(img, (dx, dy))
+    par = GEMEOS_HD.get(id(img))
+    if par is not None and par[0] is img:  # o gêmeo 3x anda junto (GEMEOS_HD, mais abaixo)
+        g = Image.new("RGBA", par[1].size)
+        g.paste(par[1], (dx * HD_E, dy * HD_E))
+        GEMEOS_HD[id(tela)] = (tela, g)
     return tela
 
 
@@ -1177,6 +1182,12 @@ def abrir_quadro(arquivo):
         base = base_figura(img)
         if pasta in PES_NO_CHAO and base is not None and 0 < abs(EIXO_Y - 1 - base) <= 3:
             img = move(img, 0, EIXO_Y - 1 - base)
+    return marcar_origem(img, arquivo)
+
+
+def marcar_origem(img, arquivo):
+    """Guarda no quadro o arquivo de onde ele veio: o colar_endiabrado usa para montar o gêmeo 3x (gemeo_hd)."""
+    img.origem_quadro = Path(arquivo)
     return img
 
 
@@ -1450,7 +1461,45 @@ def colar_endiabrado(normal, endiabrado, fator=1.0, dx=None):
             dx = 0 if a is None else max(-24, min(24, round(a - cx)))
     tela = Image.new("RGBA", endiabrado.size)
     tela.paste(figura, (x0 + (dx or 0), y0 + dy), figura)
+    gemeo = gemeo_endiabrado(endiabrado, caixa, figura.size, (x0 + (dx or 0), y0 + dy), tela)
+    if gemeo is not None:
+        GEMEOS_HD[id(tela)] = (tela, gemeo)
     return tela
+
+
+# Gêmeos 3x montados junto com o desenho de 1x: {id(sprite de 1x): (sprite de 1x, sprite 3x)}. O hd.py acha o gêmeo
+# comparando pixels com o quadro de quadros_hd/, e isso falha quando o colar_endiabrado reescala a figura pelo
+# fator_endiabrado (Gutto: 442 de 474 sprites do despertado ficavam só ampliados e 3 ações piscavam entre 3x e 1x).
+# Aqui o 3x passa pela MESMA conta (recorte, escala, lugar), em 3x; o hd.aplicar usa quando a comparação não acha.
+GEMEOS_HD = {}
+HD_E = 3
+
+
+def gemeo_endiabrado(endiabrado, caixa, tamanho, lugar, tela):
+    origem = getattr(endiabrado, "origem_quadro", None)
+    if origem is None or QUADROS not in origem.parents:
+        return None
+    arq = QUADROS.parent / "quadros_hd" / origem.relative_to(QUADROS)
+    if not arq.exists():
+        return None
+    hd = Image.open(arq).convert("RGBA")
+    if hd.size != (endiabrado.width * HD_E, endiabrado.height * HD_E):
+        return None
+    E = HD_E
+    fig = hd.crop(tuple(v * E for v in caixa))
+    if fig.size != (tamanho[0] * E, tamanho[1] * E):
+        fig = fig.resize((tamanho[0] * E, tamanho[1] * E), Image.Resampling.LANCZOS)
+    g = Image.new("RGBA", (tela.width * E, tela.height * E))
+    g.paste(fig, (lugar[0] * E, lugar[1] * E), fig)
+    # o 3x só fica onde o 1x tem corpo (com 1 pixel de folga): o que o gerador apagou no 1x (retoque, cisco, borda
+    # limpa) some também no 3x; o contorno continua o do desenho 3x, sem degrau
+    a = np.array(g)
+    corpo = np.asarray(tela)[..., 3] >= 128
+    folga = np.zeros_like(corpo)
+    folga[1:-1, 1:-1] = corpo[1:-1, 1:-1] | corpo[:-2, 1:-1] | corpo[2:, 1:-1] | corpo[1:-1, :-2] | corpo[1:-1, 2:]
+    folga |= corpo
+    a[..., 3] = np.where(np.repeat(np.repeat(folga, E, 0), E, 1) & (a[..., 3] >= 128), 255, 0).astype(np.uint8)
+    return Image.fromarray(a)
 
 
 def colar_boss(normal, boss):
@@ -1516,13 +1565,14 @@ PASTA_ARCADE = {}
 # desenhos bons: ginga (0), garrafa subindo (1) e garrafa erguida (2), com um segundo brinde (1, 2) e a pose final no 2.
 # bola 2 (retoque 2): os dois braços saem do ombro de trás (um ergue a lata, o outro segura a garrafa) e o ombro da
 # frente fica sem braço; repete o 3 (o braço da lata já armado no alto), que é para onde o 2 ia.
-REPETE_ARCADE = {}  # desenhos do padrão novo (2026-11-13, folhas_novas): os defeitos antigos não existem mais
+REPETE_ARCADE = {("golaco", 1): 0, ("vitoria", 3): 2, ("vitoria", 4): 1, ("vitoria", 5): 2, ("vitoria", 6): 2,
+                 ("vitoria", 7): 2, ("bola", 2): 3}
 # Forma endiabrada das folhas novas que não têm e_<folha>: empresta o desenho endiabrado que a ação já usava
 # (correr = andar endiabrado; recuo = e_defesa 6), para o Despertar não mudar.
 ENDIABRADO_EMPRESTADO = {"corre": lambda i: ("anda_fluida", (0, 1, 2, 2, 3, 4, 5, 5)[i]), "recuo": lambda i: ("pulo", 3) if i >= 2 else ("defesa", 6)}  # Lote 7: no ar, o boss encolhido do pulo
 # Desenho arcade deslocado em x (px). afastar 6: o pé de apoio (o de trás, plantado em x=-41 no 5 e -39 no 7) aparecia
 # em -29: o corpo dava um tranco para a frente e voltava.
-DESLOCA_ARCADE = {}  # padrão novo (2026-11-13)
+DESLOCA_ARCADE = {("afastar", 6): -10}
 
 
 # Golpes de pengaro_extra.py com desenho trocado no Pengaró arcade: estado -> {elemento (de 0): (folha, desenho)}.
@@ -3845,6 +3895,25 @@ def ajustar_clsn1(blocos, s, preset):
     return saida
 
 
+TROCAS_SUPER_3100 = (
+    ("trigger1 = var(20) > 0 && var(37) = 0", "trigger1 = (var(20) > 0 || stateno = 3100) && var(37) = 0"),
+    ("trigger1 = var(20) > 0\nvar(37) = 1", "trigger1 = var(20) > 0 || stateno = 3100\nvar(37) = 1"),
+    ("trigger1 = var(20) <= 0 && var(37) = 1", "trigger1 = var(20) <= 0 && stateno != 3100 && var(37) = 1"),
+    ("trigger1 = var(20) <= 0\nvar(37) = 0", "trigger1 = var(20) <= 0 && stateno != 3100\nvar(37) = 0"),
+)
+
+
+def super_3100_endiabrado(cns):
+    """O super 3100 zera var(20) no primeiro tick (custo e dano), mas o corpo segue despertado do começo ao fim:
+    var(37) e o RemapSprite olham também o stateno = 3100. Vale para todo lutador do gerador comum (Pengaró, CK,
+    Gutto, Raiclaven); o robô cobra no teste "var(37) = 1 no meio do 3100"."""
+    for velho, novo in TROCAS_SUPER_3100:
+        if cns.count(velho) != 1:
+            raise SystemExit(f"super_3100_endiabrado: {velho!r} aparece {cns.count(velho)} vezes (esperado 1)")
+        cns = cns.replace(velho, novo, 1)
+    return cns
+
+
 def despertar_do_pengaro(cns):
     """Lógica do Despertar que só o Pengaró tem (o Hazaki usa o mesmo bloco `-2` e não pode mudar).
     1. O super 3100 zera var(20) no primeiro tick (custo e dano), mas continua endiabrado do começo ao fim.
@@ -3853,10 +3922,6 @@ def despertar_do_pengaro(cns):
     3. A saída do Despertar (var(20) = 12) solta uma fumaça violeta (a 9215) em volta do corpo.
        Uma só: com ignorehitpause, um hitpause no tick 12 soltaria uma por tick, daí o NumExplod(9215) = 0."""
     trocas = (
-        ("trigger1 = var(20) > 0 && var(37) = 0", "trigger1 = (var(20) > 0 || stateno = 3100) && var(37) = 0"),
-        ("trigger1 = var(20) > 0\nvar(37) = 1", "trigger1 = var(20) > 0 || stateno = 3100\nvar(37) = 1"),
-        ("trigger1 = var(20) <= 0 && var(37) = 1", "trigger1 = var(20) <= 0 && stateno != 3100 && var(37) = 1"),
-        ("trigger1 = var(20) <= 0\nvar(37) = 0", "trigger1 = var(20) <= 0 && stateno != 3100\nvar(37) = 0"),
         ("[State -2, Conta Despertar]\ntype = VarAdd",
          "[State -2, Zera Despertar na intro]\ntype = VarSet\ntrigger1 = roundstate < 2\nvar(20) = 0\n\n"
          "[State -2, Zera ressaca na intro]\ntype = VarSet\ntrigger1 = roundstate < 2\nvar(21) = 0\n\n"
@@ -3873,7 +3938,7 @@ def despertar_do_pengaro(cns):
     for velho, novo in trocas:
         assert cns.count(velho) == 1, velho
         cns = cns.replace(velho, novo, 1)
-    return cns
+    return super_3100_endiabrado(cns)
 
 
 def sem_ginga_9203(cns):

@@ -43,7 +43,8 @@ pixel do desenho num pixel da tela. O boneco fica do mesmo tamanho na tela, mas 
 
    | Arte do lutador | Comando | Pasta | No git? |
    |---|---|---|---|
-   | Arcade (folhas → `quadros_arcade/`): Pengaró, Hazak | `python ferramentas/hd_guiado.py <lutador> [folha ...]` | `quadros_arcade_hd/` | sim (~10 MB) |
+   | Arcade (folhas → `quadros_arcade/`): Hazak | `python ferramentas/hd_guiado.py <lutador> [folha ...]` | `quadros_arcade_hd/` | sim (~10 MB) |
+   | Pengaró (forma normal, desde 2026-11-14) | `ampliar_folhas.py` e `nitidez_pengaro.py` ([pengaro-nitido.md](arcade/pengaro-nitido.md)) | `quadros_arcade_hd/` | sim |
    | Arcade do CK | `HD=3 python ferramentas/converter_ck.py [folha ...]` (ou o `hd_guiado.py`) | `quadros_arcade_hd/` | sim |
    | Antiga, com quadros do meio do Blender: Gutto, Raiclaven | `python ferramentas/hd_blender.py <lutador>` (~20 min) | `quadros_hd/` | **não** (~550 MB, `.gitignore`) |
 
@@ -77,6 +78,8 @@ pixel do desenho num pixel da tela. O boneco fica do mesmo tamanho na tela, mas 
   - olhe a linha `HD:` que o gerador imprime: "só ampliados" alto quer dizer gêmeo faltando;
   - tire uma foto do jogo rodando e confira se o boneco está nítido;
   - rode o robô.
+- Despertado reescalado pelo `fator_endiabrado` (Gutto): o `colar_endiabrado` monta o gêmeo 3x junto
+  (`GEMEOS_HD`) e o `hd.aplicar(..., gemeos=gp.GEMEOS_HD)` usa quando a comparação de pixels não acha. Desde 2026-11-14.
 - Desenho montado por código (rotação, mistura, poses coladas) não tem gêmeo e fica só ampliado. Se aparecer muito na
   luta, troque por uma folha desenhada.
 
