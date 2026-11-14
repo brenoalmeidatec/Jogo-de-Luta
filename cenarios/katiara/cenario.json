@@ -1,0 +1,153 @@
+{
+ "id": "katiara",
+ "nome": "Katiara",
+ "musica_nome": "Cenário Katiara (a escolher)",
+ "tela": [
+  1280,
+  720
+ ],
+ "largura_mundo": 1458,
+ "subida": 160,
+ "chao_y": 660,
+ "camera": {
+  "tensao": 200,
+  "segue_vertical": 0.6,
+  "tensao_chao": 120
+ },
+ "jogadores": {
+  "p1x": -280,
+  "p2x": 280,
+  "margem_tela": 60
+ },
+ "reflexo": 0,
+ "camadas": [
+  {
+   "nome": "ceu",
+   "imagem": "ceu.png",
+   "delta": [
+    0,
+    0
+   ],
+   "x": 0,
+   "y": -200
+  },
+  {
+   "nome": "nuvens",
+   "imagem": "nuvens.png",
+   "delta": [
+    0.1,
+    0.1
+   ],
+   "y": -200,
+   "velocidade": [
+    -0.15,
+    0
+   ],
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    0,
+    0
+   ]
+  },
+  {
+   "nome": "rua",
+   "imagem": "rua.png",
+   "delta": [
+    1,
+    1
+   ],
+   "y": -148
+  },
+  {
+   "nome": "pipa",
+   "folha": {
+    "imagem": "pipa.png",
+    "n": 8
+   },
+   "ticks": 7,
+   "delta": [
+    0.9,
+    0.9
+   ],
+   "x": 900,
+   "y": 20,
+   "seno_x": [
+    40,
+    420,
+    0
+   ],
+   "seno_y": [
+    18,
+    260,
+    0
+   ]
+  },
+  {
+   "nome": "varal",
+   "folha": {
+    "imagem": "varal.png",
+    "n": 8
+   },
+   "ticks": 9,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 286,
+   "y": -48
+  },
+  {
+   "nome": "guardas",
+   "folha": {
+    "imagem": "guardas.png",
+    "n": 8
+   },
+   "ticks": [
+    14,
+    14,
+    12,
+    10,
+    16,
+    16,
+    12,
+    14
+   ],
+   "delta": [
+    1,
+    1
+   ],
+   "x": 400,
+   "y": 248
+  },
+  {
+   "nome": "moto",
+   "imagem": "moto.png",
+   "delta": [
+    1,
+    1
+   ],
+   "x": -2600,
+   "y": 352,
+   "velocidade": [
+    7,
+    0
+   ],
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    9000,
+    0
+   ],
+   "seno_y": [
+    1,
+    6,
+    0
+   ]
+  }
+ ]
+}

@@ -238,11 +238,12 @@ class Cenario:
         Fica na resolução da janela (640x400 de 1280x720); o portraitscale do .def acerta a escala dos de 320x180."""
         import gerar_layout as gl
         L, A = RETRATO_TELA
-        faixa = gl.nova(L // 3, RETRATO_FAIXA // 3)
+        texto = texto_acentuado(gl, f"MÚSICA: {self.musica_nome}".upper())
+        k = 3 if texto.width * 3 <= L - 12 else 2  # nome comprido cai para a letra em 2x
+        faixa = gl.nova(L // k, RETRATO_FAIXA // k)
         d = ImageDraw.Draw(faixa)
         d.rectangle([0, 0, faixa.width - 1, faixa.height - 1], fill=gl.cor("breu"))
         d.line([0, 0, faixa.width - 1, 0], fill=gl.cor("madeira_cl"))
-        texto = texto_acentuado(gl, f"MÚSICA: {self.musica_nome}".upper())
         faixa.alpha_composite(texto, ((faixa.width - texto.width) // 2, (faixa.height - texto.height) // 2 + 1))
         faixa = faixa.resize((L, RETRATO_FAIXA), Image.NEAREST)
         quadros = []
