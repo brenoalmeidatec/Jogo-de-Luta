@@ -316,6 +316,8 @@ def montar_sff(lutador, pasta, air):
         if n["g"] in nossos or k in vistos:
             continue
         vistos.add(k)
+        if n.get("png") and n["g"] != 9000:
+            continue  # efeito do pixelfx (efeitos.py): é refeito no fim do aplicar
         if n.get("png"):
             retratos[k] = n["px"]
             # o trocar_retratos.py põe o PNG de volta. O marcador tem pixels que nenhum sprite tem: um igual viraria link
@@ -361,6 +363,10 @@ def aplicar(lutador, pasta=None):
         mov.write_text(montar_movelist(mov.read_text(encoding="utf-8")), encoding="utf-8", newline="\n")
     print(f"{lutador}: parry em cima e embaixo, {n} sprites novos (1º quadro com {altura} px em 3x)"
           + ("; endiabrado com a defesa redesenhada" if despertado else ""))
+    # os efeitos do pixelfx (PNG no .sff) saíram junto com a regravação do .sff: ferramentas/efeitos.py os põe de
+    # volta, na cor do lutador, e troca a faísca do parry pela dele (issue #38)
+    import efeitos
+    efeitos.aplicar(lutador, pasta)
 
 
 def contato(destino):
