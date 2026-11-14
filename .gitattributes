@@ -13,3 +13,5 @@
 *.ogg binary
 *.ttf binary
 *.sff binary
+*.snd binary
+*.mp3 binary

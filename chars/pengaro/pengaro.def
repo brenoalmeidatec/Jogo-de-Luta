@@ -15,6 +15,8 @@ st = pengaro.cns
 stcommon = common1.cns
 sprite = pengaro.sff
 anim = pengaro.air
+sound = pengaro.snd
+movelist = movelist.dat
 
 [Palette Keymap]
 x = 1

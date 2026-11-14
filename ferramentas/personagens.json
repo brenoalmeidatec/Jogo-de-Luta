@@ -7,7 +7,7 @@
     },
     "pengaro": {
       "nome": "Pengaró",
-      "descricao": "Pengaro, a muscular Brazilian capoeira fighter, short black hair, bare chest, loose white capoeira pants with green and yellow stripes down the sides, yellow cord belt with tassels and a green sash, a worn dark green soccer shin guard on one leg, barefoot",
+      "descricao": "Pengaro, a muscular Brazilian capoeira fighter, short black hair, bare chest, loose white capoeira pants with green and yellow stripes down the sides, yellow cord belt with tassels and a green sash, a worn dark green soccer shin guard on one leg, barefoot, always holding a whisky bottle (amber glass, plain label, no brand) in his back hand",
       "altura": 112
     },
     "yara": {
@@ -17,6 +17,11 @@
     "brutus": {
       "descricao": "Brutus, a huge bald street brawler, thick black beard, red tank top, torn jeans, heavy work boots, steel gauntlets on both fists",
       "altura": 128
+    },
+    "barbeiro": {
+      "nome": "Barbeiro",
+      "descricao": "muscular barber fighter with a psycho grin and wide eyes, short curly black hair with fade and goatee, black short-sleeve shirt with silver trim and a striped barber pole badge, black apron with a comb and shaving brush, loose black pants, black shiny shoes, huge muscular left arm spinning a comb, mechanical right arm with dark steel shoulder plate and a giant pair of scissors instead of a hand",
+      "altura": 120
     }
   },
   "poses": {

@@ -1,0 +1,193 @@
+; Gerado por ferramentas/gerar_cenario.py. Edite a descrição do cenário e gere de novo, não este arquivo.
+[Info]
+name = "Katiara"
+displayname = "Katiara"
+versiondate = 11,11,2026
+mugenversion = 1.1
+ikemenversion = 1.0
+author = "Nazafights"
+
+[Camera]
+startx = 0
+starty = 0
+boundleft = -89
+boundright = 89
+boundhigh = -160
+boundlow = 0
+verticalfollow = 0.6
+floortension = 120
+tension = 200
+zoomin = 1
+zoomout = 1
+startzoom = 1
+
+[PlayerInfo]
+p1startx = -280
+p1starty = 0
+p1facing = 1
+p2startx = 280
+p2starty = 0
+p2facing = -1
+p3startx = -310
+p3starty = 0
+p3facing = 1
+p4startx = 310
+p4starty = 0
+p4facing = -1
+leftbound = -729
+rightbound = 729
+
+[Bound]
+screenleft = 60
+screenright = 60
+
+[StageInfo]
+zoffset = 660
+autoturn = 1
+resetBG = 1
+localcoord = 1280, 720
+xscale = 1
+yscale = 1
+portraitscale = 1
+
+[Shadow]
+intensity = 96
+color = 0,0,0
+yscale = 0.3
+fade.range = 0,0
+
+[Reflection]
+intensity = 0
+
+[Music]
+bgmusic = musicas/katiara.ogg
+bgmvolume = 100
+bgmloop = 1
+bgmloopstart = 1231552
+
+[BGdef]
+spr = katiara.sff
+debugbg = 0
+
+[Begin Action 9000]
+9001,0, 0,0, 8
+9001,1, 0,0, 8
+9001,2, 0,0, 8
+9001,3, 0,0, 8
+9001,4, 0,0, 8
+9001,5, 0,0, 8
+9001,6, 0,0, 8
+9001,7, 0,0, 8
+9001,8, 0,0, 8
+9001,9, 0,0, 8
+9001,10, 0,0, 8
+9001,11, 0,0, 8
+
+[BG ceu]
+type = normal
+spriteno = 0, 0
+id = 100
+layerno = 0
+start = -640, -200
+delta = 0, 0
+mask = 1
+roundpos = 0
+
+[BG nuvens]
+type = normal
+spriteno = 1, 0
+id = 101
+layerno = 0
+start = -768, -200
+delta = 0.1, 0.1
+mask = 1
+tile = 1, 0
+tilespacing = 0, 0
+velocity = -0.15, 0
+roundpos = 0
+
+[BG rua]
+type = normal
+spriteno = 2, 0
+id = 102
+layerno = 0
+start = -730, -148
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG pipa]
+type = anim
+actionno = 1003
+id = 103
+layerno = 0
+start = 260, 20
+delta = 0.9, 0.9
+mask = 1
+sin.x = 40, 420, 0
+sin.y = 18, 260, 0
+roundpos = 0
+
+[BG varal]
+type = anim
+actionno = 1004
+id = 104
+layerno = 0
+start = -354, -48
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG guardas]
+type = anim
+actionno = 1005
+id = 105
+layerno = 0
+start = -236, 248
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG moto]
+type = normal
+spriteno = 6, 0
+id = 106
+layerno = 0
+start = -3240, 352
+delta = 1, 1
+mask = 1
+tile = 1, 0
+tilespacing = 9000, 0
+velocity = 7, 0
+sin.y = 1, 6, 0
+roundpos = 0
+
+[Begin Action 1003]
+3,0, 0,0, 7
+3,1, 0,0, 7
+3,2, 0,0, 7
+3,3, 0,0, 7
+3,4, 0,0, 7
+3,5, 0,0, 7
+3,6, 0,0, 7
+3,7, 0,0, 7
+
+[Begin Action 1004]
+4,0, 0,0, 9
+4,1, 0,0, 9
+4,2, 0,0, 9
+4,3, 0,0, 9
+4,4, 0,0, 9
+4,5, 0,0, 9
+4,6, 0,0, 9
+4,7, 0,0, 9
+
+[Begin Action 1005]
+5,0, 0,0, 14
+5,1, 0,0, 14
+5,2, 0,0, 12
+5,3, 0,0, 10
+5,4, 0,0, 16
+5,5, 0,0, 16
+5,6, 0,0, 12
+5,7, 0,0, 14

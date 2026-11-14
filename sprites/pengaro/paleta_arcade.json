@@ -1,0 +1,278 @@
+{
+ "lutador": "pengaro",
+ "fonte": "quadros/folhas_arcade/soco.png",
+ "nota": "15 cores + transparente. rgb é o que vale; medido é a mediana do papel na folha, antes do ajuste de matiz. Retoque à mão se precisar e rode conferir_arte.py.",
+ "contorno_grupo": {
+  "pele": "pele_contorno",
+  "garrafa": "pele_contorno",
+  "cabelo": "pele_contorno",
+  "calca": "calca_contorno",
+  "faixa": "calca_contorno"
+ },
+ "cores": [
+  {
+   "id": "pele_contorno",
+   "grupo": "pele",
+   "rgb": [
+    76,
+    20,
+    20
+   ],
+   "medido": [
+    68,
+    15,
+    16
+   ],
+   "pixels": 1009,
+   "matiz_alvo": [
+    345,
+    360
+   ]
+  },
+  {
+   "id": "pele_sombra",
+   "grupo": "pele",
+   "rgb": [
+    138,
+    50,
+    28
+   ],
+   "medido": [
+    138,
+    50,
+    28
+   ],
+   "pixels": 2629,
+   "matiz_alvo": [
+    5,
+    15
+   ]
+  },
+  {
+   "id": "pele_medio",
+   "grupo": "pele",
+   "rgb": [
+    223,
+    126,
+    63
+   ],
+   "medido": [
+    223,
+    110,
+    63
+   ],
+   "pixels": 4642,
+   "matiz_alvo": [
+    21,
+    26
+   ]
+  },
+  {
+   "id": "pele_luz",
+   "grupo": "pele",
+   "rgb": [
+    253,
+    195,
+    114
+   ],
+   "medido": [
+    253,
+    175,
+    114
+   ],
+   "pixels": 3811,
+   "matiz_alvo": [
+    30,
+    40
+   ]
+  },
+  {
+   "id": "pele_brilho",
+   "grupo": "pele",
+   "rgb": [
+    253,
+    236,
+    207
+   ],
+   "medido": [
+    253,
+    236,
+    207
+   ],
+   "pixels": 1394,
+   "matiz_alvo": [
+    30,
+    40
+   ]
+  },
+  {
+   "id": "calca_contorno",
+   "grupo": "calca",
+   "rgb": [
+    53,
+    31,
+    92
+   ],
+   "medido": [
+    54,
+    31,
+    93
+   ],
+   "pixels": 633,
+   "matiz_alvo": [
+    245,
+    265
+   ]
+  },
+  {
+   "id": "calca_sombra",
+   "grupo": "calca",
+   "rgb": [
+    148,
+    146,
+    189
+   ],
+   "medido": [
+    150,
+    121,
+    156
+   ],
+   "pixels": 1119,
+   "matiz_alvo": [
+    230,
+    255
+   ]
+  },
+  {
+   "id": "calca_branco",
+   "grupo": "calca",
+   "rgb": [
+    253,
+    250,
+    237
+   ],
+   "medido": [
+    253,
+    250,
+    237
+   ],
+   "pixels": 1611,
+   "matiz_alvo": null
+  },
+  {
+   "id": "faixa_escuro",
+   "grupo": "faixa",
+   "rgb": [
+    20,
+    80,
+    63
+   ],
+   "medido": [
+    7,
+    80,
+    63
+   ],
+   "pixels": 356,
+   "matiz_alvo": null
+  },
+  {
+   "id": "faixa_verde",
+   "grupo": "faixa",
+   "rgb": [
+    20,
+    156,
+    99
+   ],
+   "medido": [
+    20,
+    156,
+    99
+   ],
+   "pixels": 617,
+   "matiz_alvo": null
+  },
+  {
+   "id": "faixa_amarelo",
+   "grupo": "faixa",
+   "rgb": [
+    253,
+    197,
+    20
+   ],
+   "medido": [
+    253,
+    197,
+    10
+   ],
+   "pixels": 295,
+   "matiz_alvo": null
+  },
+  {
+   "id": "cabelo_escuro",
+   "grupo": "cabelo",
+   "rgb": [
+    51,
+    44,
+    32
+   ],
+   "medido": [
+    51,
+    44,
+    32
+   ],
+   "pixels": 323,
+   "matiz_alvo": null
+  },
+  {
+   "id": "cabelo_luz",
+   "grupo": "cabelo",
+   "rgb": [
+    117,
+    108,
+    78
+   ],
+   "medido": [
+    117,
+    108,
+    78
+   ],
+   "pixels": 472,
+   "matiz_alvo": null
+  },
+  {
+   "id": "garrafa_escuro",
+   "grupo": "garrafa",
+   "rgb": [
+    95,
+    26,
+    20
+   ],
+   "medido": [
+    95,
+    22,
+    11
+   ],
+   "pixels": 474,
+   "matiz_alvo": [
+    8,
+    14
+   ]
+  },
+  {
+   "id": "garrafa_ambar",
+   "grupo": "garrafa",
+   "rgb": [
+    223,
+    120,
+    20
+   ],
+   "medido": [
+    223,
+    120,
+    6
+   ],
+   "pixels": 262,
+   "matiz_alvo": null
+  }
+ ]
+}

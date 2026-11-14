@@ -1,0 +1,74 @@
+{
+ "cenario_maria_fumaca": {
+  "arquivo": "stages/musicas/maria_fumaca.ogg",
+  "loopstart": 981316,
+  "loopend": 2356224,
+  "amostras_por_segundo": 44100
+ },
+ "lobby": {
+  "arquivo": "motif/nazafight/musicas/lobby.ogg",
+  "loopstart": 3135648,
+  "loopend": 6904320,
+  "amostras_por_segundo": 44100
+ },
+ "selecao": {
+  "arquivo": "motif/nazafight/musicas/selecao.ogg",
+  "loopstart": 3325817,
+  "loopend": 7090688,
+  "amostras_por_segundo": 44100
+ },
+ "cenario_cristo": {
+  "arquivo": "stages/musicas/cristo.ogg",
+  "loopstart": 1545739,
+  "loopend": 7537152,
+  "amostras_por_segundo": 44100
+ },
+ "cenario_praca": {
+  "arquivo": "stages/musicas/praca.ogg",
+  "loopstart": 1587203,
+  "loopend": 6781440,
+  "amostras_por_segundo": 44100
+ },
+ "cenario_passarela": {
+  "arquivo": "stages/musicas/passarela.ogg",
+  "loopstart": 3687591,
+  "loopend": 8057344,
+  "amostras_por_segundo": 44100
+ },
+ "boss_pengaro_endiabrado": {
+  "arquivo": "chars/pengaro/despertar.ogg",
+  "loopstart": 649079,
+  "loopend": 1772032,
+  "amostras_por_segundo": 44100
+ },
+ "boss_hazak_diabo_loiro": {
+  "arquivo": "chars/hazaki/despertar.ogg",
+  "loopstart": 4171115,
+  "loopend": 8565248,
+  "amostras_por_segundo": 44100
+ },
+ "boss_gutto_garanhao": {
+  "arquivo": "chars/gutto/despertar.ogg",
+  "loopstart": 1871137,
+  "loopend": 8150527,
+  "amostras_por_segundo": 44100
+ },
+ "boss_ck_ratao": {
+  "arquivo": "chars/ck/despertar.ogg",
+  "loopstart": 3188071,
+  "loopend": 7121920,
+  "amostras_por_segundo": 44100
+ },
+ "boss_raiclaven_cientista": {
+  "arquivo": "chars/raiclaven/despertar.ogg",
+  "loopstart": 2391921,
+  "loopend": 7098368,
+  "amostras_por_segundo": 44100
+ },
+ "cenario_katiara": {
+  "arquivo": "stages/musicas/katiara.ogg",
+  "loopstart": 1231552,
+  "loopend": 6069248,
+  "amostras_por_segundo": 44100
+ }
+}

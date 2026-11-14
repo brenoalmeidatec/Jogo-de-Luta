@@ -1,0 +1,164 @@
+{
+ "id": "maria_fumaca",
+ "nome": "Maria Fumaça",
+ "musica_nome": "Cenário Maria Fumaça",
+ "musica": "musicas/maria_fumaca.ogg",
+ "tela": [
+  1280,
+  720
+ ],
+ "largura_mundo": 1672,
+ "subida": 160,
+ "chao_y": 660,
+ "camera": {
+  "tensao": 200,
+  "segue_vertical": 0.6,
+  "tensao_chao": 120
+ },
+ "jogadores": {
+  "p1x": -280,
+  "p2x": 280,
+  "margem_tela": 60
+ },
+ "reflexo": 0,
+ "camadas": [
+  {
+   "nome": "fora",
+   "imagem": "fora.png",
+   "delta": [
+    1,
+    1
+   ],
+   "y": -173
+  },
+  {
+   "nome": "dioquevara",
+   "folha": {
+    "imagem": "dioquevara.png",
+    "n": 24
+   },
+   "ticks": 5,
+   "delta": [
+    1,
+    1
+   ],
+   "x": -900,
+   "y": 267,
+   "velocidade": [
+    1.2,
+    0
+   ],
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    3000,
+    0
+   ]
+  },
+  {
+   "nome": "paredao",
+   "folha": {
+    "imagem": "paredao.png",
+    "n": 4
+   },
+   "ticks": 5,
+   "delta": [
+    1,
+    1
+   ],
+   "x": -1500,
+   "y": 97,
+   "velocidade": [
+    2.5,
+    0
+   ],
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    9800,
+    0
+   ],
+   "seno_y": [
+    2,
+    16,
+    0
+   ]
+  },
+  {
+   "nome": "galera",
+   "folha": {
+    "imagem": "galera.png",
+    "n": 16
+   },
+   "ticks": 4,
+   "delta": [
+    1,
+    1
+   ],
+   "x": -1660,
+   "y": 285,
+   "velocidade": [
+    2.5,
+    0
+   ],
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    10350,
+    0
+   ]
+  },
+  {
+   "nome": "grade",
+   "imagem": "grade.png",
+   "delta": [
+    1,
+    1
+   ],
+   "y": -173
+  },
+  {
+   "nome": "salao",
+   "imagem": "salao.png",
+   "delta": [
+    1,
+    1
+   ],
+   "y": -173
+  },
+  {
+   "nome": "banco",
+   "folha": {
+    "imagem": "banco.png",
+    "n": 32
+   },
+   "ticks": 6,
+   "delta": [
+    1,
+    1
+   ],
+   "x": -118,
+   "y": 324
+  },
+  {
+   "nome": "mesas",
+   "folha": {
+    "imagem": "mesas.png",
+    "n": 32
+   },
+   "ticks": 7,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 1176,
+   "y": 310
+  }
+ ]
+}

@@ -1,0 +1,121 @@
+{
+ "formato": 1,
+ "lutador": "hazaki",
+ "aura": "asas",
+ "tela": [
+  360,
+  200
+ ],
+ "pe": [
+  180,
+  190
+ ],
+ "tiques_por_quadro": 2,
+ "alfa": "0 ou 255",
+ "arquivo": "{nome}_{quadro:02d}.png",
+ "camadas": [
+  {
+   "nome": "chao",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "brasa no chão, de ponta a ponta, com línguas e fagulhas"
+  },
+  {
+   "nome": "asas",
+   "quadros": 48,
+   "plano": "atras",
+   "o_que": "as duas asas batendo (a raiz atrás do corpo é remendo)"
+  },
+  {
+   "nome": "coroa",
+   "quadros": 48,
+   "plano": "atras",
+   "o_que": "coroa de ouro derretido pairando acima da cabeça"
+  },
+  {
+   "nome": "particulas",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "notas queimando que planam e gotas de ouro que pingam"
+  }
+ ],
+ "paleta": [
+  [
+   52,
+   14,
+   10
+  ],
+  [
+   91,
+   18,
+   6
+  ],
+  [
+   132,
+   29,
+   6
+  ],
+  [
+   165,
+   37,
+   6
+  ],
+  [
+   198,
+   47,
+   5
+  ],
+  [
+   227,
+   64,
+   5
+  ],
+  [
+   174,
+   94,
+   18
+  ],
+  [
+   240,
+   94,
+   5
+  ],
+  [
+   243,
+   128,
+   9
+  ],
+  [
+   250,
+   162,
+   12
+  ],
+  [
+   239,
+   161,
+   58
+  ],
+  [
+   253,
+   196,
+   25
+  ],
+  [
+   252,
+   212,
+   70
+  ],
+  [
+   253,
+   226,
+   114
+  ],
+  [
+   253,
+   240,
+   164
+  ]
+ ],
+ "nota": "O pé do lutador fica em `pe`; cada PNG tem o tamanho de `tela`. Cada camada roda no seu laço (quadro = (tique // tiques_por_quadro) % quadros). Todas atrás do corpo, como no vídeo aprovado.",
+ "gerado_por": "ferramentas/aura_blender/hazak_asas.py"
+}

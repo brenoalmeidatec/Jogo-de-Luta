@@ -1,0 +1,292 @@
+; Gerado por ferramentas/gerar_cenario.py. Edite a descrição do cenário e gere de novo, não este arquivo.
+[Info]
+name = "Maria Fumaça"
+displayname = "Maria Fumaça"
+versiondate = 11,11,2026
+mugenversion = 1.1
+ikemenversion = 1.0
+author = "Nazafights"
+
+[Camera]
+startx = 0
+starty = 0
+boundleft = -196
+boundright = 196
+boundhigh = -160
+boundlow = 0
+verticalfollow = 0.6
+floortension = 120
+tension = 200
+zoomin = 1
+zoomout = 1
+startzoom = 1
+
+[PlayerInfo]
+p1startx = -280
+p1starty = 0
+p1facing = 1
+p2startx = 280
+p2starty = 0
+p2facing = -1
+p3startx = -310
+p3starty = 0
+p3facing = 1
+p4startx = 310
+p4starty = 0
+p4facing = -1
+leftbound = -836
+rightbound = 836
+
+[Bound]
+screenleft = 60
+screenright = 60
+
+[StageInfo]
+zoffset = 660
+autoturn = 1
+resetBG = 1
+localcoord = 1280, 720
+portraitscale = 1
+xscale = 1
+yscale = 1
+
+[Shadow]
+intensity = 96
+color = 0,0,0
+yscale = 0.3
+fade.range = 0,0
+
+[Reflection]
+intensity = 0
+
+[Music]
+bgmusic = musicas/maria_fumaca.ogg
+bgmloop = 1
+bgmloopstart = 981316
+bgmvolume = 100
+
+[BGdef]
+spr = maria_fumaca.sff
+debugbg = 0
+
+[Begin Action 9000]
+9001,0, 0,0, 8
+9001,1, 0,0, 8
+9001,2, 0,0, 8
+9001,3, 0,0, 8
+9001,4, 0,0, 8
+9001,5, 0,0, 8
+9001,6, 0,0, 8
+9001,7, 0,0, 8
+9001,8, 0,0, 8
+9001,9, 0,0, 8
+9001,10, 0,0, 8
+9001,11, 0,0, 8
+
+[BG fora]
+type = normal
+spriteno = 0, 0
+id = 100
+layerno = 0
+start = -836, -173
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG dioquevara]
+type = anim
+actionno = 1001
+id = 101
+layerno = 0
+start = -1540, 258
+delta = 1, 1
+mask = 1
+tile = 1, 0
+tilespacing = 3100, 226
+velocity = 1.2, 0
+roundpos = 0
+
+[BG paredao]
+type = anim
+actionno = 1002
+id = 102
+layerno = 0
+start = -2140, 150
+delta = 1, 1
+mask = 1
+tile = 1, 0
+tilespacing = 10500, 332
+velocity = 2.5, 0
+sin.y = 2, 16, 0
+roundpos = 0
+
+[BG galera]
+type = anim
+actionno = 1003
+id = 103
+layerno = 0
+start = -2320, 262
+delta = 1, 1
+mask = 1
+tile = 1, 0
+tilespacing = 10500, 218
+velocity = 2.5, 0
+roundpos = 0
+
+[BG grade]
+type = normal
+spriteno = 4, 0
+id = 104
+layerno = 0
+start = -836, -173
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG salao]
+type = normal
+spriteno = 5, 0
+id = 105
+layerno = 0
+start = -836, -173
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG banco]
+type = anim
+actionno = 1006
+id = 106
+layerno = 0
+start = -758, 324
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG mesas]
+type = anim
+actionno = 1007
+id = 107
+layerno = 0
+start = 536, 310
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[Begin Action 1001]
+1,0, 0,0, 5
+1,1, 0,0, 5
+1,2, 0,0, 5
+1,3, 0,0, 5
+1,4, 0,0, 5
+1,5, 0,0, 5
+1,6, 0,0, 5
+1,7, 0,0, 5
+1,8, 0,0, 5
+1,9, 0,0, 5
+1,10, 0,0, 5
+1,11, 0,0, 5
+1,12, 0,0, 5
+1,13, 0,0, 5
+1,14, 0,0, 5
+1,15, 0,0, 5
+1,16, 0,0, 5
+1,17, 0,0, 5
+1,18, 0,0, 5
+1,19, 0,0, 5
+1,20, 0,0, 5
+1,21, 0,0, 5
+1,22, 0,0, 5
+1,23, 0,0, 5
+
+[Begin Action 1002]
+2,0, 0,0, 5
+2,1, 0,0, 5
+2,2, 0,0, 5
+2,3, 0,0, 5
+
+[Begin Action 1003]
+3,0, 0,0, 4
+3,1, 0,0, 4
+3,2, 0,0, 4
+3,3, 0,0, 4
+3,4, 0,0, 4
+3,5, 0,0, 4
+3,6, 0,0, 4
+3,7, 0,0, 4
+3,8, 0,0, 4
+3,9, 0,0, 4
+3,10, 0,0, 4
+3,11, 0,0, 4
+3,12, 0,0, 4
+3,13, 0,0, 4
+3,14, 0,0, 4
+3,15, 0,0, 4
+
+[Begin Action 1006]
+6,0, 0,0, 6
+6,1, 0,0, 6
+6,2, 0,0, 6
+6,3, 0,0, 6
+6,4, 0,0, 6
+6,5, 0,0, 6
+6,6, 0,0, 6
+6,7, 0,0, 6
+6,8, 0,0, 6
+6,9, 0,0, 6
+6,10, 0,0, 6
+6,11, 0,0, 6
+6,12, 0,0, 6
+6,13, 0,0, 6
+6,14, 0,0, 6
+6,15, 0,0, 6
+6,16, 0,0, 6
+6,17, 0,0, 6
+6,18, 0,0, 6
+6,19, 0,0, 6
+6,20, 0,0, 6
+6,21, 0,0, 6
+6,22, 0,0, 6
+6,23, 0,0, 6
+6,24, 0,0, 6
+6,25, 0,0, 6
+6,26, 0,0, 6
+6,27, 0,0, 6
+6,28, 0,0, 6
+6,29, 0,0, 6
+6,30, 0,0, 6
+6,31, 0,0, 6
+
+[Begin Action 1007]
+7,0, 0,0, 7
+7,1, 0,0, 7
+7,2, 0,0, 7
+7,3, 0,0, 7
+7,4, 0,0, 7
+7,5, 0,0, 7
+7,6, 0,0, 7
+7,7, 0,0, 7
+7,8, 0,0, 7
+7,9, 0,0, 7
+7,10, 0,0, 7
+7,11, 0,0, 7
+7,12, 0,0, 7
+7,13, 0,0, 7
+7,14, 0,0, 7
+7,15, 0,0, 7
+7,16, 0,0, 7
+7,17, 0,0, 7
+7,18, 0,0, 7
+7,19, 0,0, 7
+7,20, 0,0, 7
+7,21, 0,0, 7
+7,22, 0,0, 7
+7,23, 0,0, 7
+7,24, 0,0, 7
+7,25, 0,0, 7
+7,26, 0,0, 7
+7,27, 0,0, 7
+7,28, 0,0, 7
+7,29, 0,0, 7
+7,30, 0,0, 7
+7,31, 0,0, 7
