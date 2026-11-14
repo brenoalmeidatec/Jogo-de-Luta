@@ -128,6 +128,66 @@ REDESENHAR = {
 }
 
 
+# ---------------------------------------------------------------- Despertar com a PARCEIRA (pedido do Breno, issue #38, 2026-11-14)
+# Substitui a Cliente Zero e as cobaias: no Despertar o Cientista Louco (cabelo verde, óculos verdes, jaleco rasgado, tanques
+# verdes nas costas, conceito em folhas_arcade/e_conceito.png) NÃO ataca. Quem ataca é a parceira dele, uma mulher anã, que
+# fica agarrada nas costas e no ombro dele, com navalha e secador. Modelo da dupla: folhas_dupla/dupla_modelo.png (anexado
+# em todo pedido). O humor vem da dupla e da resenha, nunca de zoar a deficiência dela. Cada folha e_<folha> tem os mesmos 8
+# tempos da folha normal, com o contato no mesmo quadro, para as caixas de golpe e o frame data não mudarem.
+CABECA_DUPLA = """Generate ONE image with your image generation tool. Do not write code.
+
+The attached model sheet shows the exact duo and art style to keep. RAICLAVEN, the MAD SCIENTIST barber: muscular man, brown skin, slicked-back bright GREEN hair, round green-glowing goggles, huge grin, torn rusty white lab coat, black barber shirt with the small red-white-blue barber pole badge, black apron with tools and green test tubes, baggy black pants, steel boots, huge riveted dark steel mechanical arm ending in GIANT silver scissors, two glass tanks of green liquid with tesla coils on his back. His PARTNER: a tough adult woman with dwarfism, short black bob hair with a bright green streak, lab goggles on her forehead, cropped white lab coat, black barber apron, black gloves and boots, a big folding straight razor in one hand and a chrome hair-dryer blaster in the other. She rides sitting on his shoulders and back. In this form SHE does all the attacking; he stays big and steady, posing, pointing and giving orders, and his legs move only when the motion says so. Same colors, same proportions and same size as the attached sheet.
+
+Style is a hand-drawn 16-bit SNES / 90s arcade sprite, clean dark outline, flat cel shading, never a 3D render.
+
+Layout: one single row of 8 frames in 8 equal-width cells, wide image, side view, always facing right, the duo at the same scale in every frame, his feet on the same ground line unless the move leaves the ground. Each figure stays inside its own cell and never touches the next one. Flat solid magenta background (#FF00FF) everywhere, with no shadow, no ground, no text, no numbers, no borders and no effects (no sparks, no trails, no energy).
+
+Consecutive frames differ by a small amount, so the motion looks smooth when played in sequence. Anatomy: he always has two arms (steel scissors arm and gloved human arm) and two legs; she always has two arms and two legs and holds on to him with her legs; nothing floats detached; no object is drawn twice.
+
+Animation: """
+
+DUPLA = {
+    "ginga": "idle loop. He breathes heavily with his shoulders, grinning, the scissors opening and closing slowly; she sits on his shoulders spinning the closed razor in her fingers and blowing a strand of hair off her face. Frame 8 flows back into frame 1.",
+    "anda": "walking forward, an 8-frame loop with alternating legs: frame 1 his left leg in front, frame 5 his right leg in front. She rides on his shoulders, pointing forward with the hair dryer like a captain, bobbing with each step. Frame 8 flows back into frame 1.",
+    "agachado": "going down into a crouch. Frames 1 to 4 he squats deep with the scissors forward and she ducks low behind his head, peeking over it. Frames 5 to 8 they hold the crouch, she taps the razor on his head impatiently.",
+    "pulo": "a jump. Frame 1 his knees bent, she holds on tight, frame 2 pushing off, frames 3 to 5 in the air with his knees tucked and her hair and coat flying up, frame 6 falling, frame 7 reaching down, frame 8 landing with knees bent.",
+    "defesa": "blocking. Frame 1 stance, frames 2 and 3 he raises the flat of the giant scissors in front of both of them like a shield while she ducks behind his head, frames 4 and 5 they hold the block, frames 6 and 7 the impact pushes them back a little, frame 8 still blocking.",
+    "apanha": "getting hit in the face. Frame 1 stance, frames 2 and 3 his head snaps back and her goggles bounce, frames 4 and 5 both bend backward, she grabs his hair to hold on, frames 6 to 8 they recover, she shakes her fist forward.",
+    "queda": "being knocked down. Frame 1 hit and bending back, frame 2 feet leaving the ground, frames 3 and 4 flying backward horizontally with her still clinging to his shoulders, frames 5 and 6 falling onto his back, frame 7 bouncing, frame 8 both lying flat, she sits dizzy on his chest.",
+    "levanta": "getting up. Frame 1 he lies flat with her sitting dizzy on his chest, frames 2 and 3 he sits up and she climbs back to his shoulders, frames 4 and 5 he pushes up on the scissors, frames 6 and 7 standing, she adjusts his goggles, frame 8 stance.",
+    "soco": "her quick jab combo (light punch). Frame 1 stance, frame 2 she pulls the closed razor back, frame 3 she leans forward off his shoulder and jabs with the razor handle at face height, frame 4 she pulls back, frame 5 she swings the open razor forward, frame 6 the razor is fully extended in a horizontal slash at neck height in front of his face, frame 7 she recovers, frame 8 stance. He only points forward.",
+    "martelo": "her overhead chop (heavy punch). Frame 1 stance, frame 2 she stands up on his shoulders raising the open razor with both hands, frame 3 the razor high over her head, frames 4 and 5 she chops down hard and forward in front of him at chest height, leaning far out, frames 6 and 7 she climbs back, frame 8 stance. He conducts with the scissors like a maestro.",
+    "chute_baixo": "light kick: he gives a short stomp with the front steel boot at shin height (frames 4 and 5 extended), frames 1 to 3 chamber, frames 6 to 8 back to stance. She holds his hair and points down at the target with the razor.",
+    "chute_alto": "her high kick (heavy kick). Frame 1 stance, frame 2 she grabs his head with both hands, frame 3 she swings both legs forward, frames 4 and 5 she kicks forward at head height with both boots, body stretched horizontally from his shoulders, frames 6 and 7 she swings back, frame 8 stance.",
+    "afastar": "a big launching push. Frame 1 stance, frames 2 and 3 she aims the hair dryer forward with both hands, frames 4 and 5 the dryer recoils hard as she blasts, her hair and his coat blowing back, his front leg braced, frames 6 and 7 recovery, frame 8 stance. The blast itself is not drawn.",
+    # a 1ª versão ("stabs the razor ... hanging from his steel arm") foi recusada pelo filtro do ChatGPT
+    "baixo_soco": "a low poke from the crouch, cartoon arcade action. Frame 1 he is in a deep crouch and she ducks behind his head, frames 2 and 3 she leans down along his steel arm, frames 4 and 5 she reaches far forward and low, poking with the closed razor handle at knee height, frames 6 to 8 she climbs back up to his shoulders, still crouching.",
+    "cabecada": "anti-air from the crouch. Frame 1 deep crouch, frames 2 and 3 he stands up fast and launches her upward, frames 4 and 5 she is stretched straight up above his head slashing the open razor upward, one hand holding his hair, frames 6 to 8 she drops back and he crouches.",
+    "rasteirinha": "a quick low kick from the crouch: frames 1 to 3 he slides the front steel boot out, frames 4 and 5 the boot stretched just above the floor, frames 6 to 8 back to the crouch. She points with the razor.",
+    "rasteira": "a low sweep. Frame 1 deep crouch, frames 2 and 3 she hangs down from his steel arm holding it with her legs, frames 4 and 5 she sweeps the open razor wide along the floor in front of him, frames 6 and 7 she swings back up, frame 8 crouch.",
+    "ar_soco": "air slash, all frames in the air with his knees tucked. Frames 1 to 3 she raises the open razor, frames 4 and 5 she slashes down and forward in a diagonal, leaning out from his shoulders, frames 6 to 8 back to the tucked pose.",
+    "bicicleta": "air kick, all frames in the air. Frame 1 tucked, frames 2 and 3 she grabs his head, frames 4 and 5 she kicks forward with both boots at head height, body stretched out, frames 6 to 8 back to tucked.",
+    "bola": "her hair-dryer shot (projectile). Frame 1 stance, frames 2 and 3 she aims the chrome hair dryer forward with both hands, frame 4 it kicks back, frame 5 the dryer recoils with her arms stretched forward, frames 6 and 7 she blows the smoke off the nozzle, frame 8 stance. Nothing flies out: the shot is not drawn.",
+    "rolamento": "teleport. Frame 1 stance, frame 2 she throws a handful of green powder at his feet, frames 3 and 4 a GREEN smoke cloud covers both of them up to the chest, frame 5 only the green cloud, frame 6 they reappear out of a thin green cloud low and forward, she has the razor out, frame 7 rising, frame 8 stance.",
+    "pente_combo": "her fast flurry. Frame 1 they appear out of a green cloud already lunging, frame 2 razor jab, frame 3 razor slash high, frame 4 razor slash low, frame 5 she spins on his shoulders with a backhand slash, frame 6 dryer shove forward, frame 7 a huge final razor cut stretched forward, frame 8 she poses blowing on the razor, he laughs.",
+    "agarrao": "grab. Frame 1 stance, frame 2 she jumps forward off his shoulders with arms open, frames 3 and 4 she clings to an invisible opponent's head in front of him, scrubbing it with the razor like a barber, frames 5 and 6 he grabs her by the coat and swings both around, frames 7 and 8 she is back on his shoulders, they high-five. No third person is shown.",
+    "compasso": "spinning attack. Frame 1 stance, frames 2 and 3 she stands up on his shoulders, frames 4 to 6 she spins like a top on his shoulders with the razor and dryer stretched out at both sides, frame 7 she sits back down dizzy, frame 8 stance.",
+    "armada": "spinning kick. Frame 1 stance, frames 2 and 3 he spins on one foot, frames 4 and 5 she swings both legs straight out at head height as they spin, frames 6 and 7 he completes the turn, frame 8 stance.",
+    "caneta": "dash. Frame 1 stance, frames 2 and 3 he crouches and she aims the open razor forward like a spear, frames 4 and 5 he lunges low and fast and she stretches far out with the razor, frames 6 and 7 the razor snaps shut, frame 8 stance.",
+    "golaco": "super, a flurry of haircuts. Frame 1 stance, frame 2 she stands on his shoulders and cracks her knuckles, frames 3 to 6 a frenzy: razor slash high, dryer shove, razor slash low, razor slash high, frames 7 and 8 she jumps up and lands back on his shoulders in a victory pose.",
+    "provoca": "taunt. Frames 1 to 3 he takes notes on a clipboard and shakes his head, frames 4 to 6 she points the razor at the opponent and waves them over to the barber chair, frames 7 and 8 both laugh.",
+    "vitoria": "victory. Frame 1 stance, frames 2 and 3 she blows hair off the razor, frames 4 to 6 she combs his green hair with a comb while he grins, frames 7 and 8 she stands on his shoulders with the razor raised and he raises the scissors.",
+    "lata": "warm-up. Frame 1 stance, frames 2 and 3 she sharpens the razor on his steel arm, frames 4 and 5 she checks the edge with her thumb, frames 6 and 7 she spins the dryer like a pistol, frame 8 stance.",
+    "derrota": "defeated. Frames 1 and 2 he drops to sit on the floor, frames 3 to 8 sitting on the floor with both legs stretched forward, goggles cracked, she sits next to him with her arms crossed, scolding him.",
+    "despertar_a": "first half of the transformation, starting from the plain barber (black hair, black shirt, no coat, no tanks, no partner). Frames 1 and 2 he combs his hair back, frames 3 and 4 he puts on green goggles and the hair starts turning bright green, frames 5 and 6 a torn white lab coat flies in and wraps around him, frames 7 and 8 the green tanks clamp onto his back and he laughs.",
+    "despertar_b": "second half of the transformation, now fully the mad scientist from the sheet. Frames 1 and 2 he whistles with two fingers, frames 3 and 4 she leaps in from the left side, frames 5 and 6 she lands on his shoulders, frames 7 and 8 both pose, she points the razor forward and he points the scissors.",
+}
+
+
+def pedido_dupla(nome):
+    return CABECA_DUPLA + DUPLA[nome]
+
+
 def pedido(nome):
     return CABECA + (REDESENHAR[nome] + FIXO if nome in REDESENHAR else FOLHAS_RAICLAVEN[nome][1])
 

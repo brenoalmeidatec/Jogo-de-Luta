@@ -295,20 +295,34 @@ def escrever_sff(destino, sprites, manter=None):
     for i in range(255):
         dados_pal += bytes((pal[i * 3], pal[i * 3 + 1], pal[i * 3 + 2], 255))
 
+    # Paleta própria (Raiclaven, issue #38): os (grupo, índice) de `sprites.paleta_propria` (o despertado redesenhado e a
+    # aura dele) vão numa 3ª paleta do .sff (grupo 2, item 1), escolhida só com eles. A paleta fixa da forma base não
+    # tinha verde nenhum, e o cabelo verde do Cientista Louco saía cinza. A forma base continua idêntica.
+    propria = {k for k in getattr(sprites, "paleta_propria", set())
+               if manter is None or k in manter}
+    extras, q2 = [], None
+    if propria:
+        de = getattr(sprites, "paleta_de", {})
+        q2 = paleta_global([de.get((g, i), img) for g, i, img, _, _ in sprites.lista if (g, i) in propria])
+        p2 = q2.getpalette()[: 255 * 3]
+        p2 += [0] * (255 * 3 - len(p2))
+        extras.append(bytes((0, 0, 0, 0)) + bytes(v for i in range(255) for v in (*p2[i * 3:i * 3 + 3], 255)))
+
     itens = []
     for grupo, indice, img, ex, ey in sprites.lista:
         if manter is not None and grupo != 9000 and (grupo, indice) not in manter:
             continue
         caixa = img.getchannel("A").point(lambda a: 255 if a >= 128 else 0).getbbox() or (0, 0, 1, 1)
         rec = img.crop(caixa)
-        ind = rec.convert("RGB").quantize(palette=q, dither=Image.NONE)
+        sua = (grupo, indice) in propria
+        ind = rec.convert("RGB").quantize(palette=q2 if sua else q, dither=Image.NONE)
         alfa = np.asarray(rec.getchannel("A"))
         px = np.where(alfa < 128, 0, np.asarray(ind).astype(np.uint16) + 1).astype(np.uint8).tobytes()
-        itens.append((grupo, indice, rec.width, rec.height, ex - caixa[0], ey - caixa[1], px))
-    gravar_sff(destino, dados_pal, itens)
+        itens.append((grupo, indice, rec.width, rec.height, ex - caixa[0], ey - caixa[1], px) + ((2,) if sua else ()))
+    gravar_sff(destino, dados_pal, itens, extras)
 
 
-def gravar_sff(destino, dados_pal, itens):
+def gravar_sff(destino, dados_pal, itens, extras=()):
     """Grava o SFF v2.01 de itens (grupo, índice, largura, altura, eixo x, eixo y, pixels já quantizados).
 
     Sprite com a mesma largura, altura e pixels de um anterior vira link (len = 0, link = número do nó do primeiro):
@@ -317,25 +331,32 @@ def gravar_sff(destino, dados_pal, itens):
     ldata = bytearray(dados_pal)
     nos = bytearray()
     vistos = {}
-    for k, (grupo, indice, w, h, ax, ay, px) in enumerate(itens):
-        chave = (w, h, px)
+    ofs_extras = []
+    for e in extras:  # paletas a mais (grupo 2, item 1, 2...): os sprites com índice de paleta 2, 3...
+        ofs_extras.append(len(ldata))
+        ldata += e
+    for k, (grupo, indice, w, h, ax, ay, px, *pi) in enumerate(itens):
+        pi = pi[0] if pi else 0
+        chave = (w, h, px, pi)
         if chave in vistos:
-            nos += struct.pack("<HHHHhhHBBIIHH", grupo, indice, w, h, ax, ay, vistos[chave], 2, 8, 0, 0, 0, 0)
+            nos += struct.pack("<HHHHhhHBBIIHH", grupo, indice, w, h, ax, ay, vistos[chave], 2, 8, 0, 0, pi, 0)
             continue
         vistos[chave] = k
         corpo = struct.pack("<I", len(px)) + rle8(px)
-        nos += struct.pack("<HHHHhhHBBIIHH", grupo, indice, w, h, ax, ay, 0, 2, 8, len(ldata), len(corpo), 0, 0)
+        nos += struct.pack("<HHHHhhHBBIIHH", grupo, indice, w, h, ax, ay, 0, 2, 8, len(ldata), len(corpo), pi, 0)
         ldata += corpo
 
     ofs_pal = 512
-    ofs_spr = ofs_pal + 32  # duas paletas iguais: a 2 é a do Endiabrado na seleção (cópia da 1)
+    npal = 2 + len(extras)
+    ofs_spr = ofs_pal + 16 * npal  # duas paletas iguais: a 2 é a do Endiabrado na seleção (cópia da 1)
     ofs_l = ofs_spr + len(nos)
     cab = bytearray(512)
     cab[0:12] = b"ElecbyteSpr\x00"
     cab[12:16] = bytes((0, 1, 0, 2))
     cab[24:28] = bytes((0, 1, 0, 2))
-    struct.pack_into("<8I", cab, 36, ofs_spr, len(itens), ofs_pal, 2, ofs_l, len(ldata), ofs_l + len(ldata), 0)
+    struct.pack_into("<8I", cab, 36, ofs_spr, len(itens), ofs_pal, npal, ofs_l, len(ldata), ofs_l + len(ldata), 0)
     no_pal = struct.pack("<HHHHII", 1, 1, 256, 0, 0, 1024) + struct.pack("<HHHHII", 1, 2, 256, 0, 0, 1024)
+    no_pal += b"".join(struct.pack("<HHHHII", 2, j + 1, 256, 0, o, 1024) for j, o in enumerate(ofs_extras))
     destino.write_bytes(bytes(cab) + no_pal + bytes(nos) + bytes(ldata))
 
 

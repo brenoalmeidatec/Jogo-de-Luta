@@ -322,7 +322,7 @@ def montar_sff(lutador, pasta, air):
             # para ele (gravar_sff) e passaria a mostrar o retrato (aconteceu com o 9208,0 do Hazak, de 1x1)
             itens.append((n["g"], n["i"], 7, 3, 0, 0, bytes(range(231 + 3 * n["i"], 252 + 3 * n["i"]))))
             continue
-        itens.append((n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], n["px"]))
+        itens.append(cs._item(n))  # com o índice de paleta (a paleta própria do despertado do Raiclaven)
     # altura do 1º quadro do parry (a guarda) = a do 1º desenho da defesa em pé (ação 130)
     prim = re.search(r"^\s*(\d+)\s*,\s*(\d+)\s*,", acao(air, 130) or "", re.M)
     ref = next((n for n in nos if (n["g"], n["i"]) == (int(prim.group(1)), int(prim.group(2)))), None) if prim else None
@@ -335,7 +335,7 @@ def montar_sff(lutador, pasta, air):
     for grupo, rampa in ((G_FAISCA, base), (G_FAISCA_E, endiabrado)):
         for i, (q, ex, ey, _) in enumerate(quadros_faisca(rampa)):
             novos.append((grupo, i, q.width, q.height, ex, ey, quantizar(q, pal)))
-    gp.gravar_sff(sff, pal, itens + novos)
+    gp.gravar_sff(sff, pal, itens + novos, cs.EXTRAS.get(str(sff), []))
     if retratos:
         subprocess.run([sys.executable, str(RAIZ / "ferramentas/trocar_retratos.py"), lutador], check=True,
                        capture_output=True)
