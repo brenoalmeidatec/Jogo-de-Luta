@@ -2,6 +2,8 @@
 do
   local SAIDA = "@SAIDA@"
   local LUTADOR = "@LUTADOR@"  -- quem e o P1: o Hazak tem roteiro proprio (no fim); os outros usam o de sempre
+  -- o Gbzin, no estagio 1 (gerar_gbzin.py), roda sobre o kit do CK: os roteiros do CK valem para ele
+  local KIT = (LUTADOR == "gbzin") and "ck" or LUTADOR
   local LOG = io.open(SAIDA, "w")
   local function log(s) LOG:write(s, "\n"); LOG:flush() end
   local CMDS = {"x","y","a","b","c","holdfwd","holdback","holdup","holddown","agarrao_whisky","garrafa_x","garrafa_y",
@@ -160,7 +162,7 @@ do
   kombo("1 Abertura", {"golpe_216"}, {{de = 216, botoes = {"x"}, para = 340}, {de = 340, botoes = {"b"}, para = 341}})
   kombo("2 Alto e Baixo", {"x"}, {{de = 200, botoes = {"holddown", "a"}, para = 342}, {de = 342, botoes = {"y"}, para = 343}})
   kombo("3 Empurrao", {"golpe_201"}, {{de = 201, botoes = {"y"}, para = 344}, {de = 344, botoes = {"holdfwd", "b"}, para = 345}})
-  if LUTADOR ~= "ck" then
+  if KIT ~= "ck" then
   kombo("4 Lancador", {"a"}, {{de = 230, botoes = {"b"}, para = 346}, {de = 346, botoes = {"holddown", "y"}, para = 347}})
   else  -- CK: Sobe pro Teto (x, y, baixo + y)
   kombo("4 Sobe pro Teto", {"x"}, {{de = 200, botoes = {"y"}, para = 346}, {de = 346, botoes = {"holddown", "y"}, para = 347}})
@@ -275,7 +277,7 @@ do
     wait(3)
     press(1, {"despertar"}, 3)
     need(estadoEm(2000), 12, "entrou em 2000")
-    if LUTADOR == "ck" then
+    if KIT == "ck" then
       -- a caixa preta da cena (Explod 9250) apaga atras da nuvem (tiques 42 a 68) e sai quando o Ratao sai da fumaca
       -- (69); a aura nasce no mesmo trecho (aura_ck.FUMACA): nunca os dois paredoes inteiros, nunca buraco
       local caixa = function() return com(1, function() return numExplod(9250) end) end
@@ -322,7 +324,7 @@ do
       note(function() return "camadas quando o corpo voltou: " .. c.aura_volta .. "; apagou " .. (clock() - c.t_volta) .. " tiques depois" end)
     end)
   end
-  if LUTADOR == "ck" then
+  if KIT == "ck" then
     -- aura do Ratao (ferramentas/aura_ck.py: paredao 9600, chao 9601, fagulhas 9602): liga inteira e ja apagou
     -- quando o corpo volta a forma base (o fade de saida acaba junto com o var(20))
     desperto("aura do Ratao: liga as 3 camadas e apaga junto com a forma do Ratao", function()
@@ -405,7 +407,7 @@ do
   end
   correnteDesp("y", "y", {3410, 3411, 3412, 3413})
   correnteDesp("b", "b", {3420, 3421, 3422, 3423})
-  if LUTADOR ~= "ck" then
+  if KIT ~= "ck" then
   desperto("kombo Possessao (b, a, x)", function()
     approach(28)
     acao(function() c.vida0 = lifeP2() end)
@@ -448,7 +450,7 @@ do
     approach(60)
     acao(function() com(1, function() setPower(1000); return 0 end); c.vida0 = lifeP2() end)
     wait(3)
-    press(1, {LUTADOR == "ck" and "baile" or "golaco"}, 3)  -- no CK o golaco do Ratao e a Rajada (3000)
+    press(1, {KIT == "ck" and "baile" or "golaco"}, 3)  -- no CK o golaco do Ratao e a Rajada (3000)
     need(estadoEm(3100), 14, "entrou em 3100")
     need(function() local s = snap(1); return s.st == 3100 and s.t > 20 and s.v37 == 1 end, 80, "var(37) = 1 (arte endiabrada) no meio do 3100")
     need(function() return st1() == 0 end, 300, "terminou", false)
@@ -496,7 +498,7 @@ do
     need(estadoEm(1600), 15, "cancelou 301 em 1600")
   end)
 
-  if LUTADOR == "ck" then  -- golpes que so o CK tem
+  if KIT == "ck" then  -- golpes que so o CK tem
     desperto("super: Baile da Esquina pelo comando proprio (tras, frente, baixo + x+y)", function()
       approach(60)
       acao(function() com(1, function() setPower(1000); return 0 end); c.vida0 = lifeP2() end)

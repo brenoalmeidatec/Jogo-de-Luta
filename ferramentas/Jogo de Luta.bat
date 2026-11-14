@@ -150,12 +150,12 @@ if (Test-Path (Join-Path $game 'stages\maria_fumaca.def')) {
     robocopy (Join-Path $game 'stages') (Join-Path $motor 'stages') /E /NFL /NDL /NJH /NJS /NP | Out-Null
     if ($LASTEXITCODE -ge 8) { Fechar 'Nao consegui instalar os cenarios.' }
     $cenario = 'stages/maria_fumaca.def'
-    $texto = [regex]::Replace($texto, '(?m)^(\s*(?:pengaro|hazaki|gutto|raiclaven|ck)\s*,\s*)stages/stage0[-\w]*\.def', "`$1$cenario")
+    $texto = [regex]::Replace($texto, '(?m)^(\s*(?:pengaro|hazaki|gutto|raiclaven|ck|gbzin)\s*,\s*)stages/stage0[-\w]*\.def', "`$1$cenario")
     if ($texto -notmatch '(?m)^\s*stages/maria_fumaca\.def') {
         $texto = [regex]::Replace($texto, '(?im)^\[ExtraStages\][^\r\n]*\r?\n', "`$0stages/maria_fumaca.def`r`n")
     }
 }
-foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven', 'ck')) {
+foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven', 'ck', 'gbzin')) {
     $origem = Join-Path $game "chars\$lutador"
     if (-not (Test-Path (Join-Path $origem "$lutador.def"))) { continue }
     robocopy $origem (Join-Path $motor "chars\$lutador") /MIR /NFL /NDL /NJH /NJS /NP | Out-Null

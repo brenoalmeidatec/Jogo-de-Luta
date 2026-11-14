@@ -2026,3 +2026,20 @@ gigante e cortado no print. **Sugestões:** o robô ainda não tira print sozinh
 Um GitHub Action com esse modo rodaria o robô a cada push.
 - **Mugen final** (revisão geral + Pengaró nítido + robô no Linux, `c5d10f43`): Gutto 146/0, Raiclaven 146/0,
   Pengaró 151/0, rodados na nuvem.
+
+## 2026-11-14 — Gbzin entra no jogo (estágio 1) e o conversor arcade dele (Claude, sessão do Alisson)
+
+**Pedido:** criar o Gbzin (ficha `docs/fichas/gbzin.md`) no padrão dos outros, com a arte gerada no ChatGPT do Alisson.
+
+**Feito:**
+- `converter_gbzin.py` (usa o `converter_ck.py`, que agora aceita `LUTADOR`), paleta `PAPEIS_GBZIN`, retoques em
+  `retoques_arcade/gbzin.py`. 34 folhas da base convertidas em 1x e 3x.
+- `gerar_gbzin.py`, estágio 1: a arte do Gbzin sobre o kit do CK (mecânica, efeitos e aura emprestados do CK; o Deus
+  Motoboy usa os desenhos da base). O robô trata o gbzin como o kit do CK (`KIT` no `robo.lua`): **191/0** na nuvem,
+  igual ao CK. Print em `docs/arcade/gbzin-no-jogo-estagio1.png`. Entrou no `Jogo de Luta.bat`.
+- Bug achado e corrigido na montagem das folhas (duas metades trocadas em 30 folhas).
+
+**Pendente:** o Breno reprovou o conceito (issue #30, não parece com o rapaz). Falta a foto chegar para refazer o
+conceito, a ginga e as folhas; depois `converter_gbzin.py` + `gerar_gbzin.py` de novo. Depois disso, os golpes
+próprios da ficha (Gancho do Pastor, Cabra Solta, agarrões), o Deus Motoboy (folhas e_ e fx_), a aura verde-neon e o
+retrato da seleção (o do HUD saiu minúsculo).
