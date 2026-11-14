@@ -25,7 +25,7 @@ O Breno pediu na #43 que o conceito da parceira seja aprovado antes das outras f
 
 1. **17 folhas** restantes: rasteirinha, rasteira, ar_soco, bicicleta, bola, rolamento, pente_combo, agarrao, compasso, armada, caneta, golaco, provoca, vitoria, lata, derrota, despertar_a e despertar_b. Os prompts estão em `ferramentas/folhas_raiclaven.py` (DUPLA).
 2. **Hitboxes nela**: o Clsn1 das ações 1xxxx precisa ir para a navalha e o secador.
-3. **Kit próprio do Cientista Louco** (#43 item 3), seguindo a ficha. Hoje o Surto é o kit do Gutto renomeado. O agarrão e o poder de longe também ficam comigo (combinado com a thread do #47).
+3. **Kit próprio do Cientista Louco** (#43 item 3), seguindo a ficha. Agarrão e poder de longe no padrão novo do Breno (#47, 17:49): grandes e pesados, com brilho, rastro, partículas, tremida e impacto forte, e comparação lado a lado de Blender+pixelfx com efeito direto. Hoje o Surto é o kit do Gutto renomeado. O agarrão e o poder de longe também ficam comigo (combinado com a thread do #47).
 4. **Pose de vitória**: ainda usa o cientista antigo.
 5. **Conferir o tique 56** (CIENTISTA em `aura_raiclaven.py`) contra a ação 2000.
 6. **Juntar na mugen** depois do aval, com o robô e as fotos de novo.
