@@ -196,8 +196,8 @@ Rolada de Tatame					_B_F^K
 Pega Bolado							_B_D^K
 
 <#f0f000>:Correntes (acertando os 3, o 4º derruba):</>
-Jab, Jab duplo, Cutucão Sacana, Tá Achando Ruim?	^X^X^X^X
-Soco reto, Cruzado, Cotovelada, Punho de Concreto curto	^Y^Y^Y^Y
+Jab, Jab duplo, Cutucão, Tá Achando Ruim?	^X^X^X^X
+Soco reto, Cruzado, Cotovelada, Punho curto	^Y^Y^Y^Y
 Chute baixo, Cintura, Alto, Tesoura de Bairro	^A^A^A^A
 Lateral, Giratório, Gancho, Machado de Dojô	^B^B^B^B
 

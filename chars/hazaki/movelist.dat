@@ -1,50 +1,50 @@
 <#f0f000>:Especiais:</>
-Punho de Concreto <#bebebe>(projétil rasteiro)</>	_D_F^P
-Estatueta Dourada <#bebebe>(projétil em arco)</>	_F_B^P
-Ascensão de Faixa					_F_D^P
+Punho de Concreto <#bebebe>(projétil rasteiro)</>		_D_F^P
+Estatueta Dourada <#bebebe>(projétil em arco)</>		_F_B^P
+Ascensão de Faixa		_F_D^P
 Guarda de Aço <#bebebe>(contra-ataque)</>		_D_B^P
-Giro de Garagem						_D_F^K
-Corte de Base						_D_B^K
-Rolada de Tatame					_B_F^K
-Pega Bolado							_B_D^K
+Giro de Garagem		_D_F^K
+Corte de Base		_D_B^K
+Rolada de Tatame		_B_F^K
+Pega Bolado		_B_D^K
 
 <#f0f000>:Correntes (acertando os 3, o 4º derruba):</>
-Jab, Jab duplo, Cutucão Sacana, Tá Achando Ruim?	^X^X^X^X
-Soco reto, Cruzado, Cotovelada, Punho de Concreto curto	^Y^Y^Y^Y
-Chute baixo, Cintura, Alto, Tesoura de Bairro	^A^A^A^A
-Lateral, Giratório, Gancho, Machado de Dojô	^B^B^B^B
+Jab, Jab duplo, Cutucão, Tá Achando Ruim?		^X^X^X^X
+Soco reto, Cruzado, Cotovelada, Punho curto		^Y^Y^Y^Y
+Chute baixo, Cintura, Alto, Tesoura de Bairro		^A^A^A^A
+Lateral, Giratório, Gancho, Machado de Dojô		^B^B^B^B
 
 <#f0f000>:Kombos:</>
-Bom Dia, Vizinho					_F+^B, ^A, ^B
-Rasteira de Calçada					^X, _D+^A, ^B
-Sai Daqui							_B+^X, ^Y, _F+^Y
-Sobe, Mentiroso						^A, ^B, _D+^Y
+Bom Dia, Vizinho		_F+^B, ^A, ^B
+Rasteira de Calçada		^X, _D+^A, ^B
+Sai Daqui		_B+^X, ^Y, _F+^Y
+Sobe, Mentiroso		^A, ^B, _D+^Y
 
 <#f0f000>:Direcionais:</>
-Cotovelo de Faixa					_F+^Y
+Cotovelo de Faixa		_F+^Y
 Machado de Dojô <#bebebe>(por cima)</>		_F+^B
-Cutucão Sacana						_B+^X
-Coice de calcanhar					_B+^A
+Cutucão Sacana		_B+^X
+Coice de calcanhar		_B+^A
 
 <#f0f000>:Supers:</>
 Faixa no Asfalto <#bebebe>(1000)</>		_B_F_D^K
-Rapidinho da Quebrada <#bebebe>(2000)</>	_B_F_D^P
+Rapidinho da Quebrada <#bebebe>(2000)</>		_B_F_D^P
 
 <#f0f000>:Sistema:</>
-Rolamento							^X_+^A
-Golpe de afastar					^Y_+^B
+Rolamento		^X_+^A
+Golpe de afastar		^Y_+^B
 Abraço de Quebrada <#bebebe>(colado)</>		[_B/_F]_+^Y
-Puxa a Perna <#bebebe>(oponente agachado)</>	_D_+^Y
-Cutucão Sacana <#bebebe>(agarrão, colado)</>	_B_F^Y
-Provocação							^C
-Parry em cima						_F_+^C
-Parry embaixo						_D_+^C
-Corrida								_F_F
-Passo para trás						_B_B
+Puxa a Perna <#bebebe>(oponente agachado)</>		_D_+^Y
+Cutucão Sacana <#bebebe>(agarrão, colado)</>		_B_F^Y
+Provocação		^C
+Parry em cima		_F_+^C
+Parry embaixo		_D_+^C
+Corrida		_F_F
+Passo para trás		_B_B
 
 <#f0f000>:No ar:</>
-Soco de martelo						^X
-Cotovelo descendo					^Y
-Joelhada no ar						^A
+Soco de martelo		^X
+Cotovelo descendo		^Y
+Joelhada no ar		^A
 Chute duplo <#bebebe>(pega agachado)</>		^B
-Golpe de afastar no ar				^Y_+^B
+Golpe de afastar no ar		^Y_+^B

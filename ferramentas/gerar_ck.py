@@ -1035,8 +1035,8 @@ Fim de Baile						^X, _F+^Y, ^B
 <#f0f000>:Correntes (acertando os 3, o 4º derruba):</>
 Jab, Jab Duplo, Cruzado, Uno-Dos de Rua		^X^X^X^X
 Direto, Ganchos, Levanta, Comédia			^Y^Y^Y^Y
-Bicuda, Chute Baixo, Joelhada, Bicuda de Pedreiro	^A^A^A^A
-Chute Frontal, Chute Alto, Pisão, Voadora da Esquina	^B^B^B^B
+Bicuda, Chute Baixo, Joelhada, Pedreiro	^A^A^A^A
+Frontal, Alto, Pisão, Voadora da Esquina	^B^B^B^B
 
 <#f0f000>:Kombos:</>
 Bom Dia, Cumpadi					_F+^Y, ^X, ^B

@@ -74,6 +74,7 @@ def montar(tmp):
     t = ini.read_text(encoding="utf-8")
     for k, v in {**INI_LINUX, "Motif": "data/nazafight/system.def"}.items():
         t = re.sub(rf"(?m)^({re.escape(k)}\s*=\s*)[^\r\n]*", lambda m: m.group(1) + v, t)
+    t = t.replace("data/demo.zss", "data/nazafight/demo.zss")   # como o .bat: demo sem o link do motor
     ini.write_text(t, encoding="utf-8")
     return copia
 

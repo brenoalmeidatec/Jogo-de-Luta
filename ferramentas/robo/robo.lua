@@ -985,6 +985,9 @@ do
         ate = ate or (clock() + 10)
         local s = snap(1)
         if s.an == 171 and not c.viu171 then c.viu171 = true; c.x171 = s.x end
+        -- guarda a ultima posicao da fuga: no fim do laco o round seguinte ja pode ter recomecado e o snap volta
+        -- para o ponto de partida (era o FAIL "andou mais de 100 px" do Hazak, que foge rapido e sai da tela antes)
+        if s.an == 171 then c.xfuga = s.x end
         if s.sx < -20 or s.sx > 340 then c.saiu = true end
         return clock() >= ate
       end)
@@ -994,7 +997,7 @@ do
       end)
     end
     need(function() return c.viu171 end, 1, "a animacao da fuga (171) tocou", false)
-    need(function() local s = snap(1); return c.x171 and (s.x - c.x171) * c.fa < -100 end, 1, "depois de levantar ele andou mais de 100 px para TRAS (para longe do oponente)", false)
+    need(function() return c.x171 and c.xfuga and (c.xfuga - c.x171) * c.fa < -100 end, 1, "depois de levantar ele andou mais de 100 px para TRAS (para longe do oponente)", false)
     need(function() return c.saiu end, 1, "saiu da tela (telaX fora de 0..320)", false)
   end)
 

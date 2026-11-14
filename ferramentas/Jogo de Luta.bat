@@ -227,6 +227,10 @@ if (Test-Path $cfg) {
             $t = ([regex]'(?im)^\[Config\][^\r\n]*').Replace($t, ('$0' + $nl + $linha), 1)
         }
     }
+    # Demo da abertura sem o link do motor no pe da tela: o States usa o demo.zss do layout (motif/nazafight).
+    if (Test-Path (Join-Path $motor 'data\nazafight\demo.zss')) {
+        $t = $t.Replace('data/demo.zss', 'data/nazafight/demo.zss')
+    }
     $t = [regex]::Replace($t, '(?im)^(VsScreenLoading\s*=)[^\r\n]*', '${1} 1')
     $t = [regex]::Replace($t, '(?im)^(WindowScaleMode\s*=)[^\r\n]*', '${1} 0')
     [IO.File]::WriteAllText($cfg, $t)

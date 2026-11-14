@@ -3834,8 +3834,8 @@ Mão de Sombra <#bebebe>(projétil)</>	_D_D^X
 Chute da Corrente					_D_D^Y
 Sombra Atravessada					_D_D^A
 Queda Escura						_D_D^B
-Corrente Y: Revolta, Sola de Ferro, Cabeçada, Roda	^Y^Y^Y^Y
-Corrente B: Calcanhar, Afastar, Armada, Chute Partido	^B^B^B^B
+Y: Revolta, Sola de Ferro, Cabeçada, Roda	^Y^Y^Y^Y
+B: Calcanhar, Afastar, Armada, Chute Partido	^B^B^B^B
 Kombo Possessão						^B,^A,^X
 
 <#f0f000>:Correntes (acertando os 3, o 4º derruba):</>

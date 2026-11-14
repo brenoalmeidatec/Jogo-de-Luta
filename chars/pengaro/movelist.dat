@@ -1,46 +1,46 @@
 <#f0f000>:Especiais:</>
-Latada de Sombra					_D_F^K
+Latada de Sombra		_D_F^K
 Meia-lua de Compasso Sombria		_D_B^K
-Armada do Quilombo					_F_D^P
-Caneta								_D_B^P
-Mão de Chimpá / Mão Pesada          _D_F^P
-Sola de Várzea / Pisão de Bar       _B_D^K
-Garrafada em Arco <#bebebe>(projétil em arco)</>	_F_B^P
+Armada do Quilombo		_F_D^P
+Caneta		_D_B^P
+Mão de Chimpá / Mão Pesada		_D_F^P
+Sola de Várzea / Pisão de Bar		_B_D^K
+Garrafada em Arco <#bebebe>(projétil em arco)</>		_F_B^P
 Rolê por Trás / Rolê e Chute		_F_B^K
 
 <#f0f000>:Exclusivos do Despertar:</>
-Mão de Sombra <#bebebe>(projétil)</>	_D_D^X
-Chute da Corrente					_D_D^Y
-Sombra Atravessada					_D_D^A
-Queda Escura						_D_D^B
-Corrente Y: Revolta, Sola de Ferro, Cabeçada, Roda	^Y^Y^Y^Y
-Corrente B: Calcanhar, Afastar, Armada, Chute Partido	^B^B^B^B
-Kombo Possessão						^B,^A,^X
+Mão de Sombra <#bebebe>(projétil)</>		_D_D^X
+Chute da Corrente		_D_D^Y
+Sombra Atravessada		_D_D^A
+Queda Escura		_D_D^B
+Y: Revolta, Sola de Ferro, Cabeçada, Roda		^Y^Y^Y^Y
+B: Calcanhar, Afastar, Armada, Chute Partido		^B^B^B^B
+Kombo Possessão		^B,^A,^X
 
 <#f0f000>:Correntes (acertando os 3, o 4º derruba):</>
-Soco fraco							^X^X^X^X
-Soco forte							^Y^Y^Y^Y
-Chute fraco							^A^A^A^A
-Chute forte							^B^B^B^B
+Soco fraco		^X^X^X^X
+Soco forte		^Y^Y^Y^Y
+Chute fraco		^A^A^A^A
+Chute forte		^B^B^B^B
 
 <#f0f000>:Kombos:</>
-Abertura							_F+^Y, ^X, ^B
-Alto e Baixo						^X, _D+^A, ^Y
-Empurrão							_B+^X, ^Y, _F+^B
-Lançador							^A, ^B, _D+^Y
+Abertura		_F+^Y, ^X, ^B
+Alto e Baixo		^X, _D+^A, ^Y
+Empurrão		_B+^X, ^Y, _F+^B
+Lançador		^A, ^B, _D+^Y
 
 <#f0f000>:Supers:</>
-Chuva de Bebidas <#bebebe>(1000)</>	_B_F_D^K
-Saideira Sombria (no Despertar)	_B_F_D^K
-Bando da Várzea / Apagão da Várzea  _B_F_D^P
+Chuva de Bebidas <#bebebe>(1000)</>		_B_F_D^K
+Saideira Sombria (no Despertar)		_B_F_D^K
+Bando da Várzea / Apagão da Várzea		_B_F_D^P
 
 <#f0f000>:Sistema:</>
-Despertar: Lata Gelada <#bebebe>(barra cheia)</>	^X_+^Y
-Rolamento							^X_+^A
-Golpe de afastar					^Y_+^B
-Agarrão								[_B/_F]_+^Y
-Agarrão agachado <#bebebe>(oponente agachado)</>	_D_+^Y
+Despertar: Lata Gelada <#bebebe>(barra cheia)</>		^X_+^Y
+Rolamento		^X_+^A
+Golpe de afastar		^Y_+^B
+Agarrão		[_B/_F]_+^Y
+Agarrão agachado <#bebebe>(oponente agachado)</>		_D_+^Y
 Martelo e Garrafada <#bebebe>(colado)</>		_B_F^Y
-Provocação							^C
-Parry em cima                      _F^C
-Parry embaixo                      _D^C
+Provocação		^C
+Parry em cima		_F^C
+Parry embaixo		_D^C

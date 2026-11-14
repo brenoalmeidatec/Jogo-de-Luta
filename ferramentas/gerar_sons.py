@@ -848,7 +848,9 @@ def ligar(nome, pasta=None):
                 novo = f"52,{k}"
             else:
                 novo = f"51,{k}"
-            return f"hitsound = {novo} {MARCA}F5,{k}"
+            # "S" na frente: sem prefixo o hitsound toca do common.snd (regra do MUGEN/IKEMEN), que não tem os
+            # grupos 50 a 53, e o acerto ficava mudo (achado na revisão geral, 2026-11-14)
+            return f"hitsound = S{novo} {MARCA}F5,{k}"
         if tem_hit and (200 <= n < 4000 or n >= 10000) and not 750 <= n < 900:
             p = re.sub(r"^hitsound = (F)5,\s*(\d)$", troca, p, flags=re.M)
         # Despertar: a pausa toca a transformação no lugar do som de super

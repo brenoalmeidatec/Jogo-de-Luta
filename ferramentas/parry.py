@@ -281,16 +281,27 @@ def montar_cmd(cmd):
     return cmd.replace("\n", "\r\n") if crlf else cmd
 
 
+def alinhar_movelist(txt):
+    """Comando sempre encostado à direita: o IKEMEN centraliza o pedaço que vem depois de UM tab e só alinha à
+    direita depois de dois ou mais; com espaço ele cola no nome. Nome comprido com um tab só ficava com os botões
+    em cima das letras (revisão geral 2026-11-14). Separador = o primeiro tab ou 2+ espaços depois do nome."""
+    linhas = []
+    for ln in txt.split("\n"):
+        m = re.match(r"^(?!<#)(\S.*?\S|\S)(?:\t+| {2,})(\S.*)$", ln)
+        linhas.append(f"{m.group(1)}\t\t{m.group(2).rstrip()}" if m else ln)
+    return "\n".join(linhas)
+
+
 def montar_movelist(txt):
     if "Parry embaixo" in txt:
-        return txt
+        return alinhar_movelist(txt)
     m = re.search(r"^Parry([ \t]+)(\S+)[ \t]*$", txt, re.M)
     if not m:
         return txt
     esp, cmd = m.group(1), m.group(2)
     esp = esp[:-2] if esp.count("\t") > 2 else esp if "\t" in esp else " " * max(1, len(esp) - 8)  # "em cima " tem 8 letras: a coluna do comando não anda
-    return (txt[:m.start()] + f"Parry em cima{esp}{cmd}\n" + f"Parry embaixo{esp}{cmd.replace('_F', '_D', 1)}"
-            + txt[m.end():])
+    return alinhar_movelist(txt[:m.start()] + f"Parry em cima{esp}{cmd}\n"
+                            + f"Parry embaixo{esp}{cmd.replace('_F', '_D', 1)}" + txt[m.end():])
 
 
 # ---------------------------------------------------------------- .sff

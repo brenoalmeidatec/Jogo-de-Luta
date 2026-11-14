@@ -1,45 +1,45 @@
 <#f0f000>:Especiais:</>
-Beijinho (reto) <#bebebe>(projétil)</>			_D_F^K
-Chute Giratório (coice)				_D_B^K
-Joelhada Voadora					_F_D^P
-Carrinho							_D_B^P
-Cotovelo Giratório / Cotovelada Pesada	_D_F^P
+Beijinho (reto) <#bebebe>(projétil)</>		_D_F^K
+Chute Giratório (coice)		_D_B^K
+Joelhada Voadora		_F_D^P
+Carrinho		_D_B^P
+Cotovelo Giratório / Cotovelada Pesada		_D_F^P
 Chute de Quina / Pisão de Quina		_B_D^K
-Beijinho em Arco <#bebebe>(projétil em arco)</>	_F_B^P
-Teleporte de Ginga (a passa, b passa e chuta)	_F_B^K
+Beijinho em Arco <#bebebe>(projétil em arco)</>		_F_B^P
+Teleporte de Ginga (a passa, b passa e chuta)		_F_B^K
 
 <#f0f000>:Exclusivos do Endiabrado:</>
-Beijo do Cavalo <#bebebe>(projétil)</>	_D_D^X
-Coice da Corrente					_D_D^Y
-Galope Atravessado					_D_D^A
-Queda do Cavalo						_D_D^B
-Corrente Y e B de 4 golpes			^Y^Y^Y^Y / ^B^B^B^B
-Kombo do Cavalo						^B,^A,^X
+Beijo do Cavalo <#bebebe>(projétil)</>		_D_D^X
+Coice da Corrente		_D_D^Y
+Galope Atravessado		_D_D^A
+Queda do Cavalo		_D_D^B
+Corrente Y e B de 4 golpes		^Y^Y^Y^Y / ^B^B^B^B
+Kombo do Cavalo		^B,^A,^X
 
 <#f0f000>:Correntes (acertando os 3, o 4º derruba):</>
-Soco fraco							^X^X^X^X
-Soco forte							^Y^Y^Y^Y
-Chute fraco							^A^A^A^A
-Chute forte							^B^B^B^B
+Soco fraco		^X^X^X^X
+Soco forte		^Y^Y^Y^Y
+Chute fraco		^A^A^A^A
+Chute forte		^B^B^B^B
 
 <#f0f000>:Kombos:</>
-Abertura							_F+^Y, ^X, ^B
-Alto e Baixo						^X, _D+^A, ^Y
-Empurrão							_B+^X, ^Y, _F+^B
-Lançador							^A, ^B, _D+^Y
+Abertura		_F+^Y, ^X, ^B
+Alto e Baixo		^X, _D+^A, ^Y
+Empurrão		_B+^X, ^Y, _F+^B
+Lançador		^A, ^B, _D+^Y
 
 <#f0f000>:Supers:</>
-Chuva de Beijinhos <#bebebe>(1000)</>	_B_F_D^K
-Saideira do Cavalo (no Endiabrado)	_B_F_D^K
-Bando de Chutes / Fúria do Cavalo	_B_F_D^P
+Chuva de Beijinhos <#bebebe>(1000)</>		_B_F_D^K
+Saideira do Cavalo (no Endiabrado)		_B_F_D^K
+Bando de Chutes / Fúria do Cavalo		_B_F_D^P
 
 <#f0f000>:Sistema:</>
-Endiabrado <#bebebe>(barra cheia)</>	^X_+^Y
-Rolamento							^X_+^A
-Golpe de afastar (teep)				^Y_+^B
-Agarrão								[_B/_F]_+^Y
-Agarrão agachado <#bebebe>(oponente agachado)</>	_D_+^Y
+Endiabrado <#bebebe>(barra cheia)</>		^X_+^Y
+Rolamento		^X_+^A
+Golpe de afastar (teep)		^Y_+^B
+Agarrão		[_B/_F]_+^Y
+Agarrão agachado <#bebebe>(oponente agachado)</>		_D_+^Y
 Clinch e Joelhada <#bebebe>(colado)</>		_B_F^Y
-Provocação							^C
-Parry em cima                      _F^C
-Parry embaixo                      _D^C
+Provocação		^C
+Parry em cima		_F^C
+Parry embaixo		_D^C

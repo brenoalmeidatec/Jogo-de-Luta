@@ -29,6 +29,7 @@ from PIL import Image, ImageDraw
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from layout_sff import escrever_sff2, ler_sff2  # noqa: E402
+import textos_ptbr  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parent.parent
 
@@ -1468,6 +1469,7 @@ stage.done.font = 2,0,0
 stage.done.offset = {mn[0] - mp[0]},{mn[1] - mp[1]}
 stage.done.localcoord = 1280,720
 stage.done.layerno = 1
+{textos_ptbr.selecao()}
 
 [Begin Action 310]
 310,0, 0,0, 8
@@ -1538,17 +1540,9 @@ select.bgm.volume = 100
 select.bgm.loop = 1
 select.bgm.loopstart = {loop_da_musica("motif/nazafight/musicas/selecao.ogg")}
 
-; secoes vazias: o .bat (Ajustar-Menus) injeta done.key nelas
-[Victory Screen]
-
-[Option Info]
-
-[Pause Menu]
-
-[Replay Info]
-
-[Continue Screen]
-"""
+; Textos do motor em portugues (ferramentas/textos_ptbr.py; revisao geral 2026-11-14). O .bat (Ajustar-Menus)
+; ainda injeta done.key nessas secoes.
+{textos_ptbr.secoes()}"""
     return t
 
 

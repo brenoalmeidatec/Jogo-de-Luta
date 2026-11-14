@@ -2210,3 +2210,28 @@ idempotente e desfazer volta o `.cns` byte a byte ao original.
 estimado pelos desenhos. `verificar_pengaro.py` já falhava antes ("tamanho do SFF"), sem relação com o som.
 Depois de juntar com os agarrões e o parry: parry que acertou (761/765) toca `F30,0` ou `F30,1` (endiabrado) e o
 agarrão que pegou (810/831/841) toca `F35,0`; as pancadas dos agarrões ficam nos `F5,x` novos.
+## 2026-11-14 — Revisão geral do jogo (missão 2026-11-14, item 6; Claude, thread do Alisson)
+
+**Pedido do Breno:** rodar o jogo inteiro procurando erro e coisa sem sentido, listar numa issue, consertar e rodar o
+robô em todos.
+
+**Feito** (lista completa e fotos em `docs/revisao-geral-2026-11-14.md`):
+- **Golpes mudos:** o `hitsound` dos golpes (grupos 50 a 53 do `.snd` de cada lutador) estava sem o `S`, então o
+  motor procurava no `common.snd` e não tocava nada. `gerar_sons.ligar()` corrigido e rodado nos 5 (só as linhas de
+  `hitsound` mudaram).
+- Textos do motor em português (`ferramentas/textos_ptbr.py`, colado no `system.def` pelo `gerar_layout.py`): opções,
+  pausa, pausa do treino, continuar, títulos da seleção (o "VERSUS MODE"), "Random" e a tela de teclas. Opções sem
+  acento: a tela de teclas herda a fonte do menu e some com qualquer troca (dez variações testadas).
+- Lista de golpes: comando sempre à direita (`parry.alinhar_movelist`), nomes de corrente encurtados.
+- Raiclaven: exclusivos do Surto sem os nomes de cavalo do Gutto (nomes provisórios de barbeiro).
+- Demo da abertura sem o link do motor (`motif/nazafight/demo.zss`, ligado pelo `.bat` e pelo `testar_mapas.py`).
+- Robô: o FAIL antigo do Hazak era do robô (media a fuga depois do round seguinte começar); agora guarda a última
+  posição da fuga.
+
+**Verificado:** robô na nuvem Pengaró 190/0, CK 228/0, Gutto 185/0, Raiclaven 185/0, Hazak 213/0; telas de opções,
+teclas, pausa, lista de golpes, continuar e demo fotografadas no motor.
+**NÃO verificado:** ninguém ouviu os golpes depois do `S` (motor mudo na nuvem); modo Treino não testado (escondido do
+menu); a `.bat` nova não rodou no Windows.
+
+**Sugestões:** acento na fonte `naza_hud` para PENGARÓ; verde na paleta do Raiclaven endiabrado (#38); folhas de parry
+do endiabrado; o risco cortado no alto da tela de continuar.

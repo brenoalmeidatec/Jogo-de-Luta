@@ -354,7 +354,15 @@ GOLPES = (gg.GOLPES
           .replace("Chute de Quina / Pisão de Quina", "Cadeira Giratória").replace("Teleporte de Ginga", "Próximo!")
           .replace("Chuva de Beijinhos", "Próximo, Cliente!").replace("Bando de Chutes / Fúria do Cavalo", "Máquina Explosiva")
           .replace("Endiabrado", "Surto de Tesoura").replace("Agarrão agachado", "Cabeça na Pia")
-          .replace("Clinch e Joelhada", "Toalha Quente"))
+          .replace("Clinch e Joelhada", "Toalha Quente")
+          # exclusivos do Surto: o kit é o do Gutto e os nomes de cavalo ficavam na lista (revisão geral 2026-11-14);
+          # nomes provisórios de barbeiro até o Despertar do Cientista Louco entrar (docs/fichas/barbeiro.md)
+          .replace("Beijo do Cavalo", "Navalha de Sombra")
+          .replace("Coice da Corrente", "Corte da Corrente")
+          .replace("Galope Atravessado", "Cadeira Atravessada")
+          .replace("Queda do Cavalo", "Queda da Cadeira")
+          .replace("Kombo do Cavalo", "Kombo do Salão")
+          .replace("Saideira do Cavalo", "Último Cliente"))
 
 
 def main():
