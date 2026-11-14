@@ -6029,6 +6029,7 @@ air.juggle = 0
 palfx.time = 6
 palfx.add = 140, 50, 0
 palfx.sinadd = 30, 30, 30, 4
+guard.dist = 346
 
 [State 1650, Chama no oponente]
 type = Explod

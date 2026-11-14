@@ -214,7 +214,9 @@ def cns_rajada():
                  "pausetime = 2, 6", "sparkno = -1", "guard.sparkno = S9216", "hitsound = F5,2",
                  "guardsound = F6,0", "ground.type = High", "ground.slidetime = 8", "ground.hittime = 12",
                  "ground.velocity = -1.2", "air.velocity = -1.5,-2", "air.juggle = 0",
-                 "palfx.time = 6", "palfx.add = 140, 50, 0", "palfx.sinadd = 30, 30, 30, 4"))
+                 "palfx.time = 6", "palfx.add = 140, 50, 0", "palfx.sinadd = 30, 30, 30, 4",
+                 # o raio fica parado na boca: sem isto, quem está longe não entra na guarda e não consegue defender
+                 f"guard.dist = {r['comp'] + 60}"))
     c.append(ctl(1650, "Chama no oponente", "Explod", "trigger1 = ProjHitTime(1650) = 0", "anim = 9270",
                  "postype = p2", "pos = -10, -60", "sprpriority = 5", "ownpal = 1", "removetime = -2",
                  "random = 30, 40"))
