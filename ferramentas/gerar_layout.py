@@ -28,6 +28,18 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from layout_sff import escrever_sff2, ler_sff2  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parent.parent
+
+
+def loop_da_musica(arquivo):
+    """loopstart (amostras) da faixa em musicas/loops.json, feito por converter_musicas.py; 0 se não tiver."""
+    import json
+    loops = RAIZ / "musicas" / "loops.json"
+    if not loops.exists():
+        return 0
+    for faixa in json.loads(loops.read_text(encoding="utf-8")).values():
+        if faixa["arquivo"] == arquivo:
+            return int(faixa["loopstart"])
+    return 0
 MOTIF = RAIZ / "motif" / "nazafight"
 PREVIAS = RAIZ / "docs" / "previas-layout"
 ESCALA = 4  # grade logica -> tela final
@@ -1625,6 +1637,19 @@ type = normal
 spriteno = 400,1
 layerno = 0
 start = 0,360
+
+; Trilha (Suno, escolhida pelo Breno; OGG feito por ferramentas/converter_musicas.py). Caminho relativo a esta pasta.
+; Musica e por tela, nunca por lutador. Luta: bgmusic do cenario. Despertar: PlayBGM no lutador.
+; Loop sem emenda (issue #33): o arquivo termina no fim do loop e volta em loopstart (amostras de 44,1 kHz).
+[Music]
+title.bgm = musicas/lobby.ogg
+title.bgm.volume = 100
+title.bgm.loop = 1
+title.bgm.loopstart = {loop_da_musica("motif/nazafight/musicas/lobby.ogg")}
+select.bgm = musicas/selecao.ogg
+select.bgm.volume = 100
+select.bgm.loop = 1
+select.bgm.loopstart = {loop_da_musica("motif/nazafight/musicas/selecao.ogg")}
 
 ; secoes vazias: o .bat (Ajustar-Menus) injeta done.key nelas
 [Victory Screen]

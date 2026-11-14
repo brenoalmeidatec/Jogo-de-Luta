@@ -49,6 +49,17 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from layout_sff import escrever_sff2, escrever_sff2_bruto, ler_sff2  # noqa: E402  (SFF v2 com PNG de 32 bits, o mesmo do layout Nazafights)
 
 RAIZ = Path(__file__).resolve().parent.parent
+
+
+def loop_da_musica(arquivo):
+    """loopstart (amostras) da faixa em musicas/loops.json, feito por converter_musicas.py; 0 se não tiver."""
+    loops = RAIZ / "musicas" / "loops.json"
+    if not loops.exists():
+        return 0
+    for faixa in json.loads(loops.read_text(encoding="utf-8")).values():
+        if faixa["arquivo"] == arquivo:
+            return int(faixa["loopstart"])
+    return 0
 TELA_L, TELA_A = 320, 180
 RETRATO_TELA = (640, 360)   # prévia na tela de escolha de mapa (px da janela 1280x720)
 RETRATO_FAIXA = 42          # faixa da música embaixo da prévia (múltiplo de 3: a letra vai em 3x)
@@ -181,6 +192,7 @@ class Cenario:
         self.reflexo = int(desc.get("reflexo", 0))
         self.musica = desc.get("musica", "")
         self.musica_nome = desc.get("musica_nome", "ainda sem música")  # aparece na prévia da escolha de mapa
+        self.loopstart = loop_da_musica("stages/" + self.musica) if self.musica else 0
         self.suave = bool(desc.get("suave", True))
         self.camadas = [Camada(d, k, base, self.suave) for k, d in enumerate(desc["camadas"])]
         if not self.camadas:
@@ -244,6 +256,9 @@ class Cenario:
             q = q.convert("RGB").quantize(256, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE).convert("RGBA")
             quadros.append(q)
         return quadros
+    def linhas_loop(self):
+        # loop sem emenda (Breno, issue #33): o arquivo termina no fim do loop e volta em bgmloopstart
+        return [f"bgmloop = 1", f"bgmloopstart = {self.loopstart}"] if self.loopstart else []
 
     def texto_def(self):
         L = []
@@ -266,7 +281,7 @@ class Cenario:
               "[Shadow]", f"intensity = {self.sombra[0]}", "color = " + ",".join(str(v) for v in self.sombra[1]),
               f"yscale = {num(self.sombra[2])}", "fade.range = 0,0", "",
               "[Reflection]", f"intensity = {self.reflexo}", "",
-              "[Music]", f"bgmusic = {self.musica}", "bgmvolume = 100", "",
+              "[Music]", f"bgmusic = {self.musica}", "bgmvolume = 100", *self.linhas_loop(), "",
               "[BGdef]", f"spr = {self.id}.sff", "debugbg = 0", "",
               "[Begin Action 9000]"] + [f"9001,{n}, 0,0, {RETRATO_TICKS}" for n in range(RETRATO_QUADROS)] + [""]
         for c in self.camadas:

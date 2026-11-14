@@ -2071,3 +2071,31 @@ geração da arte do primeiro cenário.
 - **Antes de retomar:** responder a lista "Para o Alisson confirmar" no topo de `docs/arcade/cenarios_nazare.md`
   (qual Cristo, como ele está hoje, onde fica a Maria Fumaça, qual passarela). Depois seguir a fila do mesmo arquivo a
   partir da primeira imagem do Cristo que não está em `bruto/`.
+
+## 2026-11-14 — Pengaró redesenhado do Breno de volta, com correções (Claude, sessão do Alisson)
+
+**Pedido do Breno (#32):** tirar o Pengaró antigo nítido, voltar o redesenho `dc3427b` mantendo a revisão `118326d`,
+conferir as 34 folhas e consertar só o que estiver errado, robô e foto ao lado do CK antes da mugen.
+
+**Feito:** reverts do antigo nítido + reapply do `dc3427b`, sff regerado com o gerador da revisão. Agachado no jogo usa a
+ordem da folha nova (antes subia até um quadro meio em pé no meio do agachado). Riscos soltos apagados nas folhas corre,
+afastar, pulo e rasteira (`ferramentas/limpar_riscos_pengaro.py`). Escala das folhas de parry pela mesma pose.
+Robô 151/0 na nuvem. Plano e lista quadro a quadro: `docs/arcade/pengaro-redesenho-correcoes.md`.
+**Sugestões:** os rastros que sobraram (laranja atrás da garrafa na corrida, mancha em compasso 4/5) pedem retoque à mão
+ou refazer esses quadros no ChatGPT; esperar a lista de erros do Breno na #32.
+## 2026-11-14 — Trilha sonora ligada no jogo (Claude, thread do Alisson)
+
+**Pedido:** avaliar a trilha que o Breno subiu e ligá-la (Alisson aprovou); depois o Breno pediu na #33 loop sem
+emenda e a música do cenário baixando até sumir antes da do boss.
+
+**Feito:** as 11 faixas em OGG (-14 LUFS, loop em batida com crossfade de 120 ms assado, `musicas/loops.json`), ligadas
+no título, na seleção, na Maria Fumaça e no Despertar do Pengaró, CK, Gutto e Raiclaven (fade de 45 tiques com
+`ModifyBGM`, depois `PlayBGM`; a do cenário volta no fim). Ferramentas novas: `converter_musicas.py` e
+`testar_musica.py`. Tudo em [`docs/trilha-sonora.md`](docs/trilha-sonora.md).
+
+**Conferido:** `testar_musica.py` (cenário toca, fade 100→0, entra a do boss, volta a do cenário; volta do loop no
+`loopstart`); robô `--linux`: Pengaró 151/0, CK 191/0, Gutto 146/0, Raiclaven 146/0.
+
+**Não feito / não verificado:** ninguém ouviu as emendas (som `dummy` na nuvem). Os `.cns` de Gutto e Raiclaven
+receberam só o bloco da música (o gerador sem `sprites/*/quadros_hd` sairia em 1x); `.sff`/`.cmd` de todos ficaram
+como estavam. Hazak sem Despertar, então sem música de boss ainda. Cristo, praça e passarela esperam os cenários.

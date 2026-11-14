@@ -1565,14 +1565,13 @@ PASTA_ARCADE = {}
 # desenhos bons: ginga (0), garrafa subindo (1) e garrafa erguida (2), com um segundo brinde (1, 2) e a pose final no 2.
 # bola 2 (retoque 2): os dois braços saem do ombro de trás (um ergue a lata, o outro segura a garrafa) e o ombro da
 # frente fica sem braço; repete o 3 (o braço da lata já armado no alto), que é para onde o 2 ia.
-REPETE_ARCADE = {("golaco", 1): 0, ("vitoria", 3): 2, ("vitoria", 4): 1, ("vitoria", 5): 2, ("vitoria", 6): 2,
-                 ("vitoria", 7): 2, ("bola", 2): 3}
+REPETE_ARCADE = {}  # desenhos do padrão novo (2026-11-13, folhas_novas): os defeitos antigos não existem mais
 # Forma endiabrada das folhas novas que não têm e_<folha>: empresta o desenho endiabrado que a ação já usava
 # (correr = andar endiabrado; recuo = e_defesa 6), para o Despertar não mudar.
 ENDIABRADO_EMPRESTADO = {"corre": lambda i: ("anda_fluida", (0, 1, 2, 2, 3, 4, 5, 5)[i]), "recuo": lambda i: ("pulo", 3) if i >= 2 else ("defesa", 6)}  # Lote 7: no ar, o boss encolhido do pulo
 # Desenho arcade deslocado em x (px). afastar 6: o pé de apoio (o de trás, plantado em x=-41 no 5 e -39 no 7) aparecia
 # em -29: o corpo dava um tranco para a frente e voltava.
-DESLOCA_ARCADE = {("afastar", 6): -10}
+DESLOCA_ARCADE = {}  # padrão novo (2026-11-13)
 
 
 # Golpes de pengaro_extra.py com desenho trocado no Pengaró arcade: estado -> {elemento (de 0): (folha, desenho)}.
@@ -1958,9 +1957,12 @@ def acoes_folhas(Q):
     if desenhado():  # recuo (pulinho para trás): sai do chão (2) e fica encolhido no ar (3); era a defesa inclinada
         Q(105, [(f("recuo", 2), 3), (f("recuo", 3), -1)], NO_AR)
     # em pé <-> agachado: troca seca de 2 ticks com um desenho só (eram 6 e 4; o estado já é C desde o tick 0)
-    Q(10, [(f("agachado", 0 if arcade else 2), 2)], BAIXO)
-    Q(11, [(f("agachado", i), 8) for i in (4, 5, 6, 7, 6, 5)], BAIXO)
-    Q(12, [(f("agachado", 0 if arcade else 2), 2)], BAIXO)
+    # Pengaró redesenhado (folha de 2026-11-13): a folha agachado é a descida inteira (0 em pé, 1-2 descendo, 3-5 no
+    # fundo, 6-7 subindo); a troca usa o 2 (meio da descida) e a base agachada respira só entre 4 e 5, os dois mais
+    # baixos, sem o boneco subir até o 7 (meio em pé) no meio do agachado.
+    Q(10, [(f("agachado", 2), 2)], BAIXO)
+    Q(11, [(f("agachado", i), 10) for i in (4, 5)], BAIXO)
+    Q(12, [(f("agachado", 2), 2)], BAIXO)
     Q(40, [(f("pulo", 0), 4)])
     for n in (41, 42, 43):
         Q(n, [(f("pulo", 1), 3), (f("pulo", 2), 5), (f("pulo", 3), 6), (f("pulo", 4), -1)], NO_AR)
@@ -2110,9 +2112,9 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
     if desenhado():
         # lata: no desenho 1 ele abre a lata com duas mãos sem soltar a garrafa (três mãos); começa do 0, lata na mão
         TROCA_POR_FOLHA.update({"embaixada0": ("lata", 0), "parry": ("defesa", 3)})
-        # agachado arcade: 8 desenhos da base agachada respirando (0 e 7 os mais altos, 3 o mais baixo), sem descida
-        TROCA_POR_FOLHA.update({"agacha0": ("agachado", 0), "agacha1": ("agachado", 3), "agacha2": ("agachado", 4),
-                                "defesa_baixa": ("agachado", 3)})
+        # agachado redesenhado: a folha é a descida (0 em pé, 4 o mais baixo); agachar usa o meio da descida e o fundo
+        TROCA_POR_FOLHA.update({"agacha0": ("agachado", 2), "agacha1": ("agachado", 4), "agacha2": ("agachado", 5),
+                                "defesa_baixa": ("agachado", 4)})
     TROCA_POR_FOLHA.update({f"corre{i}": ("anda_fluida", i if desenhado() else i * 12) for i in range(4)})
 
     # retratos que o IKEMEN usa no menu e nas barras
@@ -3184,6 +3186,77 @@ def cns_extra():
     return "".join(cns_novo(m) for m in extra.TODOS) + cns_especiais_extra()
 
 
+
+# Música do Despertar (Breno, issue #33). A faixa do lutador (chars/<lutador>/despertar.ogg, feita por
+# converter_musicas.py) substitui a do cenário enquanto a forma dura: na cena da transformação a música do cenário
+# vai baixando até sumir (ModifyBGM a cada tique) e só então entra a do boss (PlayBGM), em loop sem emenda a partir do
+# loopstart de musicas/loops.json ("stagedef." = prefixo vazio do [Music] do cenário). Quando o Despertar acaba, a do cenário volta (se o oponente não estiver desperto).
+# var(51): 0 sem música própria, 2 baixando a do cenário, 1 a do boss tocando. var(52) conta os tiques do fade.
+# var(50) fica para os filmes (filmar_luta.py).
+FADE_MUSICA = 45  # tiques (0,75 s)
+
+
+def musica_despertar_cns():
+    loops = RAIZ / "musicas" / "loops.json"
+    loopstart = 0
+    if loops.exists():
+        for faixa in json.loads(loops.read_text(encoding="utf-8")).values():
+            if faixa["arquivo"] == f"chars/{SAIDA.name}/despertar.ogg":
+                loopstart = int(faixa["loopstart"])
+    f = FADE_MUSICA
+    return f"""; Musica do Despertar (Breno, issue #33): a do cenario baixa ate sumir, entra a do lutador em loop; volta ao fim.
+[State -2, Zera musica na intro]
+type = VarSet
+trigger1 = roundstate < 2
+var(51) = 0
+
+[State -2, Musica do cenario comeca a baixar]
+type = VarSet
+trigger1 = roundstate = 2 && var(51) = 0 && (var(20) > 0 || stateno = 2000)
+var(52) = 0
+
+[State -2, Marca fade da musica]
+type = VarSet
+trigger1 = roundstate = 2 && var(51) = 0 && (var(20) > 0 || stateno = 2000)
+var(51) = 2
+
+[State -2, Musica do cenario baixando]
+type = ModifyBGM
+trigger1 = var(51) = 2 && var(52) < {f}
+volume = 100 - (var(52) + 1) * 100 / {f}
+
+[State -2, Conta fade da musica]
+type = VarAdd
+trigger1 = var(51) = 2 && var(52) < {f}
+var(52) = 1
+
+[State -2, Musica do Despertar entra]
+type = PlayBGM
+trigger1 = var(51) = 2 && var(52) >= {f}
+bgm = "despertar.ogg"
+volume = 100
+loop = 1
+loopstart = {loopstart}
+
+[State -2, Marca musica do Despertar]
+type = VarSet
+trigger1 = var(51) = 2 && var(52) >= {f}
+var(51) = 1
+
+[State -2, Musica do cenario volta]
+type = PlayBGM
+trigger1 = var(51) != 0 && var(20) <= 0 && stateno != 2000
+trigger1 = NumEnemy = 0 || enemy,var(51) != 1
+source = "stagedef."
+
+[State -2, Desmarca musica do Despertar]
+type = VarSet
+trigger1 = var(51) != 0 && var(20) <= 0 && stateno != 2000
+var(51) = 0
+
+"""
+
+
 def montar_cns(hazaki=False):
     global MODO_HAZAKI
     MODO_HAZAKI = hazaki
@@ -3412,7 +3485,7 @@ type = VarAdd
 trigger1 = var(20) > 0
 var(20) = -1
 
-[State -2, Ressaca começa]
+""" + musica_despertar_cns() + """[State -2, Ressaca começa]
 type = VarSet
 trigger1 = var(20) = 1
 var(21) = 60
