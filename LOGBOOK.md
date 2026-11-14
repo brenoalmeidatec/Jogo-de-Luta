@@ -2136,3 +2136,30 @@ passarela de Nazaré animados como a Maria Fumaça, cada um com o seu movimento.
 - Céu com cúmulos grandes: a cor mais comum da linha pode ser a nuvem (céu saía branco); use a moda só dos pixels azuis.
 
 **Próximo:** layout novo (missão 2026-11-14 item 1) vai redesenhar o painel da escolha de mapa.
+
+## 2026-11-14 — Sons novos do jogo inteiro (missão 2026-11-14, item 2; Claude, sessão do LightWolfMan)
+
+**Pedido do Breno:** sons novos para golpes, defesa, agarrão, queda, especiais, supers, transformação, parry, menu,
+contagem do round e KO; cada lutador com o seu; nada copiado de outro jogo; volume parelho com as músicas.
+
+**Feito:** `ferramentas/gerar_sons.py` sintetiza tudo por código (numpy: osciladores, ruído filtrado, envelope e um
+bitcrush leve para casar com a trilha 8-bit) e monta os `.snd`: `motif/nazafight/common.snd` (troca os sons "F" do motor
+para todo mundo, mais parry `F30`, transformação `F31`, agarrão `F35`, projétil `F36`, vento `F40`),
+`motif/nazafight/fight.snd` (narrador em português e nível da barra), `motif/nazafight/system.snd` (menu e contagem do
+continue) e `chars/<lutador>/<lutador>.snd` (soco 51, chute 52, endiabrado 53 e assinatura 50: garrafa e vidro do
+Pengaró, boné/tragada/grave do paredão do CK, beijinho/joelhada/galope/relincho do Gutto, concreto/estatueta/aço/faixa
+do Hazak, tesoura/borrifada/pente/cadeira do Raiclaven). `gerar_sons.ligar()` põe `sound =` no `.def` e, no `.cns`,
+troca `hitsound` por soco/chute/endiabrado, põe vento no `Time = 0` de cada golpe e as assinaturas nos especiais e no
+Despertar; tudo marcado com `; som:` e reversível. Os cinco `gerar_<lutador>.py` chamam `ligar()` no fim.
+Narrador: Piper TTS, voz pt_BR "cadu" (dados CC0), cada fala escolhida entre até 12 gravações pela que o Whisper
+transcreveu certo depois do tratamento ("ráund" e "No-cáute" escritos assim para sair a pronúncia brasileira).
+Tabela completa em `docs/sons.md`.
+
+**Volume:** músicas em -14 LUFS; golpe forte e narrador -13,5 a -12 LUFS momentâneo, médio -15,5, fraco -17, vento -21
+a -18, menu -20; pico <= -1 dBFS. Medido pelo script e conferido com `ffmpeg -af ebur128` (diferença <= 0,5 dB).
+
+**Verificado:** robô na nuvem (Pengaró, CK, Gutto, Raiclaven contra o Hazak) sem nenhuma falha; `ligar()` é
+idempotente e desfazer volta o `.cns` byte a byte ao original.
+**NÃO verificado:** ninguém ouviu (na nuvem o motor roda mudo). Tempo das assinaturas no Despertar (ticks 9/42/55) é
+estimado pelos desenhos. `verificar_pengaro.py` já falhava antes ("tamanho do SFF"), sem relação com o som.
+Agarrões e parry não foram mexidos (outras frentes): eles devem usar `F35,x` e `F30,x`.

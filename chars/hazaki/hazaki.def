@@ -15,6 +15,7 @@ st = hazaki.cns
 stcommon = common1.cns
 sprite = hazaki.sff
 anim = hazaki.air
+sound = hazaki.snd
 movelist = movelist.dat
 
 [Palette Keymap]

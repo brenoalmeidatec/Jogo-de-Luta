@@ -4065,6 +4065,8 @@ def main():
     escrever_sff(SAIDA / "pengaro.sff", s, manter=sprites_mantidos(air, cns))
     (SAIDA / "pengaro.cmd").write_text(montar_cmd(), encoding="utf-8")
     (SAIDA / "pengaro.def").write_text(DEF, encoding="utf-8", newline="\n")
+    import gerar_sons  # sons próprios: sound = pengaro.snd no .def e PlaySnd/hitsound no .cns (missão 2026-11-14)
+    gerar_sons.ligar("pengaro", SAIDA)
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
     if SEM_FOLHA_BOSS:

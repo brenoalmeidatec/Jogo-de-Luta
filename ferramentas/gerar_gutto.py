@@ -422,6 +422,8 @@ def main():
     gp.escrever_sff(SAIDA / "gutto.sff", s, manter=gp.sprites_mantidos(air, cns))
     (SAIDA / "gutto.cmd").write_text(gp.montar_cmd(), encoding="utf-8")
     (SAIDA / "gutto.def").write_text(DEF, encoding="utf-8", newline="\n")
+    import gerar_sons  # sons próprios: sound = gutto.snd no .def e PlaySnd/hitsound no .cns (missão 2026-11-14)
+    gerar_sons.ligar("gutto", SAIDA)
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 

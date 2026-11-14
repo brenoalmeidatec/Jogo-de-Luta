@@ -1278,6 +1278,8 @@ def main():
     (SAIDA / "hazaki.air").write_text(air, encoding="utf-8", newline="\n")
     gravados = escrever_sff(SAIDA / "hazaki.sff", s, gp.sprites_mantidos(air, cns))
     (SAIDA / "hazaki.def").write_text(DEF, encoding="utf-8", newline="\n")
+    import gerar_sons  # sons próprios: sound = hazaki.snd no .def e PlaySnd/hitsound no .cns (missão 2026-11-14)
+    gerar_sons.ligar("hazaki", SAIDA)
     (SAIDA / "movelist.dat").write_text(hg.MOVELIST, encoding="utf-8", newline="\n")
     print(f"{gravados} sprites no .sff (de {len(s.lista)} carregados), {len(a.acoes)} ações em {SAIDA}")
     if "--contato" in sys.argv:
