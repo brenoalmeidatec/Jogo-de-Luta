@@ -2992,7 +2992,7 @@ var(2) = command = "holdback"
 
 [State 810, Diabo: chama 1]
 type = Explod
-trigger1 = Time = 13
+trigger1 = Time = 22
 trigger1 = var(20) > 0
 trigger1 = NumTarget
 anim = 9270
@@ -3004,7 +3004,7 @@ removetime = -2
 
 [State 810, Diabo: chama 2]
 type = Explod
-trigger1 = Time = 20
+trigger1 = Time = 44
 trigger1 = var(20) > 0
 trigger1 = NumTarget
 anim = 9270
@@ -3016,19 +3016,7 @@ removetime = -2
 
 [State 810, Diabo: chama 3]
 type = Explod
-trigger1 = Time = 31
-trigger1 = var(20) > 0
-trigger1 = NumTarget
-anim = 9270
-postype = p2
-pos = 0, -55
-sprpriority = 6
-ownpal = 1
-removetime = -2
-
-[State 810, Diabo: chama 4]
-type = Explod
-trigger1 = Time = 46
+trigger1 = Time = 68
 trigger1 = var(20) > 0
 trigger1 = NumTarget
 anim = 9270
@@ -3040,7 +3028,7 @@ removetime = -2
 
 [State 810, Diabo: estouro de ouro]
 type = Explod
-trigger1 = Time = 69
+trigger1 = Time = 96
 trigger1 = var(20) > 0
 trigger1 = NumTarget
 anim = 9271
@@ -3052,14 +3040,14 @@ removetime = -2
 
 [State 810, Diabo: dano do fogo]
 type = TargetLifeAdd
-trigger1 = Time = 69
+trigger1 = Time = 96
 trigger1 = var(20) > 0
 trigger1 = NumTarget
 value = -40
 
 [State 810, Diabo: tremida]
 type = EnvShake
-trigger1 = Time = 69
+trigger1 = Time = 96
 trigger1 = var(20) > 0
 time = 14
 ampl = 4
@@ -3109,7 +3097,7 @@ pausemovetime = 99
 [State 810, Pancada 1: som]
 type = PlaySnd
 trigger1 = Time = 22
-value = S51,0
+value = 51,0 ; som:F5,0
 
 [State 810, Pancada 1: tranco]
 type = TargetBind
@@ -3166,7 +3154,7 @@ pausemovetime = 99
 [State 810, Pancada 2: som]
 type = PlaySnd
 trigger1 = Time = 44
-value = S51,0
+value = 51,0 ; som:F5,0
 
 [State 810, Pancada 2: tranco]
 type = TargetBind
@@ -3223,7 +3211,7 @@ pausemovetime = 99
 [State 810, Pancada 3: som]
 type = PlaySnd
 trigger1 = Time = 68
-value = S51,2
+value = 54,2 ; som:F5,2
 
 [State 810, Pancada 3: tranco]
 type = TargetBind
@@ -3280,7 +3268,7 @@ pausemovetime = 99
 [State 810, Final: som]
 type = PlaySnd
 trigger1 = Time = 96
-value = S52,3
+value = 52,3 ; som:F5,3
 
 [State 810, Final: barra]
 type = PowerAdd

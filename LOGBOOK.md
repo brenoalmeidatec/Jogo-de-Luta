@@ -2270,3 +2270,23 @@ torneio para outro (mesmo kit): é sorte da CPU, não número.
 ficaram como estavam (só o multiplicador geral mudou).
 
 **Robô depois do ajuste:** Pengaró 190/0, CK 228/0, Gutto 185/0, Raiclaven 185/0, Hazak 213/0.
+
+## 2026-11-14 — Hazak: pedra, bola de ki e Diabo Loiro (issue #44) (Claude, thread do Alisson)
+
+**Pedido do Breno (#44):** tirar a rede de futebol, pedra (chute e soco) e bola de ki vermelha no lugar dos poderes de
+longe, ligar o Diabo Loiro de ponta a ponta com a Rajadona de Ki das Trevas e um agarrão próprio, efeitos laranja-ouro.
+
+**Feito:** detalhes, GIFs e vídeos em `docs/hazak-44/LEIA-ME.md`.
+- Rede de futebol já tinha saído no #38. Pedra (1000/1001) e bola de ki (1600/1601) com efeitos do Blender + pixelfx
+  (`hazak_poderes_blender.py`), maiores depois do recado do Breno na #47 ("poder de longe fraco").
+- Diabo Loiro: `diabo_arte.py` (arte por código: juba loira, chifres, olho vermelho, gi roxo com debrum em brasa) e
+  `diabo_loiro.py` (pós-passo chamado no fim do `gerar_hazaki.py`): estado 2000 com a cena da patroa, aura de 2 camadas,
+  Rajadona 1650 (preta, vermelha e ouro, fumaça preta, 12 acertos), agarrão 810 em chamas no Diabo.
+- `filmar_robo.py` filma qualquer parte do robô (filtro por nome); `testar_pengaro.py` ganhou filtro e aceleração.
+- Rebase em cima de `f7cd8579` (#45/#48): `legibilidade.py` roda depois do `diabo_loiro.py`.
+
+**Robô:** hazaki 235 PASS / 0 FAIL. Uma rodada com a máquina carregada (filmagem em paralelo) deu 1 FAIL na rajadona
+(só 4 acertos); sozinha passa. Se voltar, olhar o empurrão do raio (`ground.velocity`).
+
+**Sugestões:** folhas desenhadas do Diabo (terno do conceito) para trocar a arte por código; som próprio da patroa e da
+rajadona; comparar Blender vs. pixelfx direto como o Breno pediu na #47.
