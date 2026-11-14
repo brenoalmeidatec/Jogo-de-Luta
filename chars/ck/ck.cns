@@ -9306,7 +9306,7 @@ var(2) = command = "holdback"
 
 [State 4710, Segura]
 type = TargetBind
-trigger1 = Time < 100
+trigger1 = Time < 102
 trigger1 = NumTarget
 pos = 34, 0
 
@@ -9321,7 +9321,7 @@ ctrl = 1
 [State 4710, Perdeu]
 type = ChangeState
 trigger1 = Time > 28
-trigger1 = Time < 100
+trigger1 = Time < 102
 trigger1 = !NumTarget
 value = 0
 ctrl = 1
@@ -9338,7 +9338,7 @@ trigger1 = Time = 28
 trigger1 = NumTarget
 anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 34, -77
+pos = 27, -77
 removetime = -2
 sprpriority = 5
 scale = .75, .75
@@ -9442,13 +9442,13 @@ ampl = -2
 
 [State 4710, Pancada 3: dano]
 type = TargetLifeAdd
-trigger1 = Time = 73
+trigger1 = Time = 75
 trigger1 = NumTarget
 value = -26
 
 [State 4710, Pancada 3: faísca]
 type = Explod
-trigger1 = Time = 73
+trigger1 = Time = 75
 trigger1 = NumTarget
 anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
@@ -9461,37 +9461,37 @@ pausemovetime = 99
 
 [State 4710, Pancada 3: som]
 type = PlaySnd
-trigger1 = Time = 73
+trigger1 = Time = 75
 value = S53,1
 
 [State 4710, Pancada 3: tranco]
 type = TargetBind
-trigger1 = Time = [73, 78]
+trigger1 = Time = [75, 80]
 trigger1 = NumTarget
 pos = 39, 0
 
 [State 4710, Pancada 3: barra]
 type = PowerAdd
-trigger1 = Time = 73
+trigger1 = Time = 75
 trigger1 = NumTarget
 value = 13
 
 [State 4710, Pancada 3: reage]
 type = TargetState
-trigger1 = Time = 73
+trigger1 = Time = 75
 trigger1 = NumTarget
 value = 829
 
 [State 4710, Pancada 3: congela]
 type = Pause
-trigger1 = Time = 73
+trigger1 = Time = 75
 trigger1 = NumTarget
 time = 7
 movetime = 0
 
 [State 4710, Pancada 3: treme]
 type = EnvShake
-trigger1 = Time = 73
+trigger1 = Time = 75
 trigger1 = NumTarget
 time = 6
 freq = 150
@@ -9499,17 +9499,17 @@ ampl = -2
 
 [State 4710, Final: dano]
 type = TargetLifeAdd
-trigger1 = Time = 100
+trigger1 = Time = 102
 trigger1 = NumTarget
 value = -62
 
 [State 4710, Final: faísca]
 type = Explod
-trigger1 = Time = 100
+trigger1 = Time = 102
 trigger1 = NumTarget
 anim = (ifelse(var(20) > 0, 9231, 9201))
 postype = p1
-pos = 34, -98
+pos = 31, -98
 removetime = -2
 sprpriority = 5
 scale = .6, .6
@@ -9518,25 +9518,25 @@ pausemovetime = 99
 
 [State 4710, Final: som]
 type = PlaySnd
-trigger1 = Time = 100
+trigger1 = Time = 102
 value = S53,3
 
 [State 4710, Final: barra]
 type = PowerAdd
-trigger1 = Time = 100
+trigger1 = Time = 102
 trigger1 = NumTarget
 value = 31
 
 [State 4710, Final: congela]
 type = Pause
-trigger1 = Time = 100
+trigger1 = Time = 102
 trigger1 = NumTarget
 time = 14
 movetime = 0
 
 [State 4710, Final: treme]
 type = EnvShake
-trigger1 = Time = 100
+trigger1 = Time = 102
 trigger1 = NumTarget
 time = 16
 freq = 150
@@ -9544,21 +9544,21 @@ ampl = -5
 
 [State 4710, Joga para trás]
 type = TargetState
-trigger1 = Time = 100
+trigger1 = Time = 102
 trigger1 = NumTarget
 trigger1 = var(2)
 value = 824
 
 [State 4710, Joga]
 type = TargetState
-trigger1 = Time = 100
+trigger1 = Time = 102
 trigger1 = NumTarget
 trigger1 = !var(2)
 value = 823
 
 [State 4710, Vira]
 type = Turn
-trigger1 = Time = 110
+trigger1 = Time = 112
 trigger1 = var(2)
 
 [State 4710, Efeito da forma no oponente (despertados_47.py)]
@@ -9577,24 +9577,110 @@ ignorehitpause = 1
 
 [State 4710, Tira o efeito (despertados_47.py)]
 type = RemoveExplod
-trigger1 = Time = 100
+trigger1 = Time = 102
 trigger2 = !NumTarget
 id = 47000
 
 [State 4710, Estouro do final (despertados_47.py)]
 type = Explod
-trigger1 = Time = 100
+trigger1 = Time = 102
 trigger1 = NumTarget
 anim = 47001
 postype = p1
-pos = 34, -98
+pos = 31, -98
 removetime = -2
 sprpriority = 6
 ownpal = 1
+pausemovetime = 12
+
+[State 4710, Fundo escurece na cor da forma (despertados_47.py)]
+type = BGPalFX
+trigger1 = Time = 1
+trigger1 = NumTarget
+time = 122
+mul = 110,130,115
+sinadd = 0,0,0,0
+
+[State 4710, Pancada 1: tremida (despertados_47.py)]
+type = EnvShake
+trigger1 = Time = 28
+trigger1 = NumTarget
+time = 8
+freq = 140
+ampl = -4
+
+[State 4710, Pancada 2: tremida (despertados_47.py)]
+type = EnvShake
+trigger1 = Time = 50
+trigger1 = NumTarget
+time = 8
+freq = 140
+ampl = -4
+
+[State 4710, Pancada 3: tremida (despertados_47.py)]
+type = EnvShake
+trigger1 = Time = 75
+trigger1 = NumTarget
+time = 8
+freq = 140
+ampl = -4
+
+[State 4710, Pancada 1: oponente pisca (despertados_47.py)]
+type = PalFX
+trigger1 = Time = 28
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 40,90,60
+
+[State 4710, Pancada 2: oponente pisca (despertados_47.py)]
+type = PalFX
+trigger1 = Time = 50
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 40,90,60
+
+[State 4710, Pancada 3: oponente pisca (despertados_47.py)]
+type = PalFX
+trigger1 = Time = 75
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 40,90,60
+
+[State 4710, Pancada 4: oponente pisca (despertados_47.py)]
+type = PalFX
+trigger1 = Time = 102
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 40,90,60
+
+[State 4710, Final: congela no impacto (despertados_47.py)]
+type = Pause
+trigger1 = Time = 102
+trigger1 = NumTarget
+time = 12
+movetime = 0
+
+[State 4710, Final: clarão (despertados_47.py)]
+type = BGPalFX
+trigger1 = Time = 102
+time = 6
+add = 120,120,120
+mul = 110,130,115
+
+[State 4710, Final: tremida forte (despertados_47.py)]
+type = EnvShake
+trigger1 = Time = 102
+time = 30
+freq = 90
+ampl = -11
 
 [State 4710, Som do final (despertados_47.py)]
 type = PlaySnd
-trigger1 = Time = 100
+trigger1 = Time = 102
 value = 50,5
 
 [State 4710, Som de pegar (despertados_47.py)]
@@ -9633,9 +9719,31 @@ type = PlaySnd
 trigger1 = Time = 0
 value = 50,2
 
+[State 4750, Carga: tudo para e escurece (despertados_47.py)]
+type = SuperPause
+trigger1 = Time = 0
+time = 22
+movetime = 22
+anim = -1
+darken = 1
+poweradd = 0
+unhittable = 0
+
+[State 4750, Carga: rastro do corpo (despertados_47.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 36
+length = 8
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+paladd = 40,90,60
+palmul = .55,.55,.55
+
 [State 4750, Carga na mão (despertados_47.py)]
 type = Explod
-trigger1 = Time = 6
+trigger1 = Time = 2
 anim = 47003
 postype = p1
 pos = 44, -78
@@ -9643,18 +9751,43 @@ bindtime = -1
 removetime = -2
 sprpriority = 5
 ownpal = 1
+supermovetime = 30
+scale = 1.4, 1.4
+
+[State 4750, Carga: treme de leve (despertados_47.py)]
+type = EnvShake
+trigger1 = Time = 8
+time = 14
+freq = 180
+ampl = -2
 
 [State 4750, Som de soltar (despertados_47.py)]
 type = PlaySnd
 trigger1 = Time = 22
 value = 50,5
 
-[State 4750, Treme (despertados_47.py)]
+[State 4750, Solta: tremida forte (despertados_47.py)]
 type = EnvShake
 trigger1 = Time = 22
-time = 12
-freq = 120
-ampl = -3
+time = 26
+freq = 100
+ampl = -7
+
+[State 4750, Solta: fundo na cor da forma (despertados_47.py)]
+type = BGPalFX
+trigger1 = Time = 22
+time = 70
+mul = 110,130,115
+
+[State 4750, Solta: recuo (despertados_47.py)]
+type = VelSet
+trigger1 = Time = 22
+x = -2.2
+
+[State 4750, Solta: freia (despertados_47.py)]
+type = VelMul
+trigger1 = Time > 22
+x = .8
 
 [State 4750, Paredão no Talo (despertados_47.py)]
 type = Projectile
@@ -9666,7 +9799,7 @@ projremanim = 47001
 projscale = 0.75, 0.75
 projhits = 3
 projmisstime = 7
-projpriority = 4
+projpriority = 5
 projsprpriority = 4
 offset = 50, -78
 velocity = 3.2, 0
@@ -9675,12 +9808,12 @@ damage = 42, 6
 animtype = Heavy
 guardflag = MA
 hitflag = MAFD
-pausetime = 6, 9
+pausetime = 14, 18
 sparkno = -1
 guard.sparkno = S9202
-envshake.time = 8
-envshake.freq = 150
-envshake.ampl = -4
+envshake.time = 24
+envshake.freq = 90
+envshake.ampl = -9
 hitsound = S53,0
 guardsound = F6,0
 ground.type = High
@@ -9693,6 +9826,9 @@ fall.recover = 0
 air.fall = 1
 down.velocity = -3, -4
 down.hittime = 18
+palfx.time = 14
+palfx.add = 40,90,60
+palfx.sinadd = 30,30,30,4
 
 [State 4750, Fim (despertados_47.py)]
 type = ChangeState

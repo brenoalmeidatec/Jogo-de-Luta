@@ -4,3 +4,7 @@ __pycache__/
 # quadros 3x do Gutto e do Raiclaven (~550 MB): gere com python ferramentas/hd_blender.py <lutador>
 sprites/gutto/quadros_hd/
 sprites/raiclaven/quadros_hd/
+
+# comparação dos caminhos dos efeitos da #47 (despertados_47_blender.py --comparar)
+sprites/efeitos_blender/*/d47_*_pixelfx/
+sprites/efeitos_blender/*/d47_*_direto/

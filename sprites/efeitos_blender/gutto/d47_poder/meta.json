@@ -1,11 +1,12 @@
 {
  "pivo": [
-  93,
-  73
+  337,
+  90
  ],
- "ticks": 3,
- "quadros": 8,
+ "ticks": 2,
+ "quadros": 24,
  "laco": 0,
  "efeito": "poder",
- "lutador": "gutto"
+ "lutador": "gutto",
+ "escala": 0.8
 }

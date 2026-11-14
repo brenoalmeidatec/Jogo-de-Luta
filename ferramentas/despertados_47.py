@@ -56,10 +56,14 @@ class Cfg:
         self.som_final = som_final or som_solta
 
 
+# padrão do Breno (#47): tela escurece e tinge na cor da forma enquanto o golpe da forma acontece; clarão no impacto
+TINTA = {"pengaro": ("120,96,150", "70,20,110"), "gutto": ("150,90,90", "120,20,20"),
+         "ck": ("110,130,115", "40,90,60")}   # (BGPalFX mul do fundo, PalFX add no oponente atingido)
+
 G = mk.Golpe
 CFG = {
     "pengaro": Cfg("Algema das Sombras", (G(3433, 26, "palma torta"), G(3410, 26, "revolta de corrente"),
-                                          G(3430, 26, "mão de chão possuída")), G(3413, 62, "roda da possessão"), 4,
+                                          G(3430, 26, "mão de chão possuída")), G(3413, 62, "roda da possessão"), -1,
                    "Maré das Correntes", 25, (60, -52), 3.0, "F40,4", "50,7", "S53,2"),
     "gutto": Cfg("Coice do Garanhão", (G(3433, 26, "palma"), G(3420, 26, "calcanhar"), G(3410, 26, "revolta")),
                  G(3423, 62, "coice final"), 4, "Estouro do Garanhão", 25, (40, -56), 3.6, "50,3", "50,2", "S53,2", "50,5"),
@@ -113,8 +117,15 @@ def clsn_projetil(lutador):
     lutador ([Size] 1/3), então a caixa vai em 3x."""
     ims, meta = desenhos(lutador, "poder")
     w, h = ims[0].size
-    mx, my = round(w * ESCALA * 0.4 * 3), round(h * ESCALA * 0.36 * 3)
+    esc = escala_poder(lutador)
+    mx = round((w - meta["pivo"][0]) * esc * 0.8 * 3)       # o corpo vai do pivô para a frente; o rastro não bate
+    my = round(h * esc * 0.36 * 3)
     return f"-{mx}, -{my}, {mx}, {my}"
+
+
+def escala_poder(lutador):
+    """Escala do projétil na tela: a dos efeitos do Blender, ou a do desenho (o garanhão da aura do Gutto)."""
+    return desenhos(lutador, "poder")[1].get("escala", ESCALA)
 
 
 # ---------------------------------------------------------------------------------------------------------------- .cns
@@ -160,7 +171,20 @@ def estados_agarrao(lutador, air, cns):
               f"id = {GRUPOS['agarrao']}")
         + ctl(4710, "Estouro do final", "Explod", f"trigger1 = Time = {fim}", "trigger1 = NumTarget",
               f"anim = {GRUPOS['final']}", "postype = p1", f"pos = {xf}, {yf}", "removetime = -2",
-              "sprpriority = 6", "ownpal = 1")
+              "sprpriority = 6", "ownpal = 1", "pausemovetime = 12")
+        + ctl(4710, "Fundo escurece na cor da forma", "BGPalFX", "trigger1 = Time = 1", "trigger1 = NumTarget",
+              f"time = {fim + 20}", f"mul = {TINTA[lutador][0]}", "sinadd = 0,0,0,0")
+        + "".join(ctl(4710, f"Pancada {k + 1}: tremida", "EnvShake", f"trigger1 = Time = {t}", "trigger1 = NumTarget",
+                      "time = 8", "freq = 140", "ampl = -4") for k, (t, *_r) in enumerate(contatos[:-1]))
+        + "".join(ctl(4710, f"Pancada {k + 1}: oponente pisca", "PalFX", f"trigger1 = Time = {t}",
+                      "trigger1 = NumTarget", "redirectid = target,id", "time = 6", f"add = {TINTA[lutador][1]}")
+                  for k, (t, *_r) in enumerate(contatos))
+        + ctl(4710, "Final: congela no impacto", "Pause", f"trigger1 = Time = {fim}", "trigger1 = NumTarget",
+              "time = 12", "movetime = 0")
+        + ctl(4710, "Final: clarão", "BGPalFX", f"trigger1 = Time = {fim}", "time = 6", "add = 120,120,120",
+              f"mul = {TINTA[lutador][0]}")
+        + ctl(4710, "Final: tremida forte", "EnvShake", f"trigger1 = Time = {fim}", "time = 30", "freq = 90",
+              "ampl = -11")
         + ctl(4710, "Som do final", "PlaySnd", f"trigger1 = Time = {fim}", f"value = {c.som_final}")
         + ctl(4710, "Som de pegar", "PlaySnd", "trigger1 = Time = 0", "value = F35,0")
         + ctl(4710, "Som da forma", "PlaySnd", f"trigger1 = Time = {max(1, primeiro - 6)}", "trigger1 = NumTarget",
@@ -183,22 +207,37 @@ def estado_poder(lutador):
     t = [f"; Poder de longe do despertado: {c.nome_poder} (issue #47) {MARCA}\n",
          "[Statedef 4750]\ntype = S\nmovetype = A\nphysics = S\nctrl = 0\nsprpriority = 2\nanim = 3400\n"
          "juggle = 4\nvelset = 0,0\npoweradd = 0\n\n"]
+    esc = escala_poder(lutador)
     t.append(ctl(4750, "Som da carga", "PlaySnd", "trigger1 = Time = 0", f"value = {c.som_carga}"))
-    t.append(ctl(4750, "Carga na mão", "Explod", f"trigger1 = Time = {max(0, s - 16)}",
+    # carga: o mundo para e escurece, só ele se mexe (SuperPause), com rastro do corpo e a carga crescendo na mão
+    t.append(ctl(4750, "Carga: tudo para e escurece", "SuperPause", "trigger1 = Time = 0", f"time = {s}",
+                 f"movetime = {s}", "anim = -1", "darken = 1", "poweradd = 0", "unhittable = 0"))
+    t.append(ctl(4750, "Carga: rastro do corpo", "AfterImage", "trigger1 = Time = 0", f"time = {s + 14}",
+                 "length = 8", "timegap = 2", "framegap = 2", "trans = add", f"palcolor = 0",
+                 f"paladd = {TINTA[lutador][1]}", "palmul = .55,.55,.55"))
+    t.append(ctl(4750, "Carga na mão", "Explod", f"trigger1 = Time = {max(0, s - 20)}",
                  f"anim = {GRUPOS['carga']}", "postype = p1", f"pos = {ox - 6}, {oy}", "bindtime = -1",
-                 "removetime = -2", "sprpriority = 5", "ownpal = 1"))
+                 "removetime = -2", "sprpriority = 5", "ownpal = 1", "supermovetime = 30", "scale = 1.4, 1.4"))
+    t.append(ctl(4750, "Carga: treme de leve", "EnvShake", f"trigger1 = Time = {max(0, s - 14)}", "time = 14",
+                 "freq = 180", "ampl = -2"))
     t.append(ctl(4750, "Som de soltar", "PlaySnd", f"trigger1 = Time = {s}", f"value = {c.som_solta}"))
-    t.append(ctl(4750, "Treme", "EnvShake", f"trigger1 = Time = {s}", "time = 12", "freq = 120", "ampl = -3"))
+    t.append(ctl(4750, "Solta: tremida forte", "EnvShake", f"trigger1 = Time = {s}", "time = 26", "freq = 100",
+                 "ampl = -7"))
+    t.append(ctl(4750, "Solta: fundo na cor da forma", "BGPalFX", f"trigger1 = Time = {s}", "time = 70",
+                 f"mul = {TINTA[lutador][0]}"))
+    t.append(ctl(4750, "Solta: recuo", "VelSet", f"trigger1 = Time = {s}", "x = -2.2"))
+    t.append(ctl(4750, "Solta: freia", "VelMul", f"trigger1 = Time > {s}", "x = .8"))
     t.append(ctl(4750, c.nome_poder, "Projectile", f"trigger1 = Time = {s}",
                  "projid = 4750", f"projanim = {GRUPOS['poder']}", f"projhitanim = {GRUPOS['final']}",
-                 f"projremanim = {GRUPOS['final']}", f"projscale = {ESCALA:g}, {ESCALA:g}", "projhits = 3",
-                 "projmisstime = 7", "projpriority = 4", "projsprpriority = 4", f"offset = {ox}, {oy}",
+                 f"projremanim = {GRUPOS['final']}", f"projscale = {esc:g}, {esc:g}", "projhits = 3",
+                 "projmisstime = 7", "projpriority = 5", "projsprpriority = 4", f"offset = {ox}, {oy}",
                  f"velocity = {c.vel}, 0", "attr = S, SP", "damage = 42, 6", "animtype = Heavy",
-                 "guardflag = MA", "hitflag = MAFD", "pausetime = 6, 9", "sparkno = -1", "guard.sparkno = S9202",
-                 "envshake.time = 8", "envshake.freq = 150", "envshake.ampl = -4", f"hitsound = {c.som_acerto}",
+                 "guardflag = MA", "hitflag = MAFD", "pausetime = 14, 18", "sparkno = -1", "guard.sparkno = S9202",
+                 "envshake.time = 24", "envshake.freq = 90", "envshake.ampl = -9", f"hitsound = {c.som_acerto}",
                  "guardsound = F6,0", "ground.type = High", "ground.slidetime = 14", "ground.hittime = 18",
                  "ground.velocity = -3.5, -4", "air.velocity = -3, -4", "fall = 1", "fall.recover = 0",
-                 "air.fall = 1", "down.velocity = -3, -4", "down.hittime = 18"))
+                 "air.fall = 1", "down.velocity = -3, -4", "down.hittime = 18", "palfx.time = 14",
+                 f"palfx.add = {TINTA[lutador][1]}", "palfx.sinadd = 30,30,30,4"))
     t.append(ctl(4750, "Fim", "ChangeState", "trigger1 = AnimTime = 0", "value = 0", "ctrl = 1"))
     return "".join(t)
 
