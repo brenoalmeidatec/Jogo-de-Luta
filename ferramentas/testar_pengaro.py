@@ -140,7 +140,7 @@ def rodar_local(motor, lutador, tmp):
     for nome in (lutador, "hazaki"):
         shutil.copytree(RAIZ / "chars" / nome, copia / "chars" / nome, dirs_exist_ok=True)
     saida = tmp / "resultado.txt"
-    preparar(copia, motor, lutador, saida.as_posix())
+    preparar(copia, motor, lutador, saida.as_posix(), filtro=os.environ.get("NAZA_FILTRO", ""))  # NAZA_FILTRO: só os roteiros com esse texto no nome
     print("Rodando o robô (a janela do jogo abre sozinha)...")
     proc = subprocess.Popen([str(copia / "Ikemen_GO.exe")] + argumentos(lutador), cwd=copia,
                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -204,7 +204,7 @@ def rodar_linux(motor, lutador, tmp):
         shutil.copytree(RAIZ / "motif" / "nazafight", copia / "data" / "nazafight", dirs_exist_ok=True)
         INI_LINUX["Motif"] = "data/nazafight/system.def"
     saida = tmp / "resultado.txt"
-    preparar(copia, motor, lutador, saida.as_posix())
+    preparar(copia, motor, lutador, saida.as_posix(), filtro=os.environ.get("NAZA_FILTRO", ""))  # NAZA_FILTRO: só os roteiros com esse texto no nome
     ajustar_ini(copia)
     amb = ambiente_linux(copia)
     print("Rodando o robô no Linux (Xvfb + llvmpipe; leva alguns minutos)...", flush=True)
