@@ -2099,3 +2099,40 @@ no título, na seleção, na Maria Fumaça e no Despertar do Pengaró, CK, Gutto
 **Não feito / não verificado:** ninguém ouviu as emendas (som `dummy` na nuvem). Os `.cns` de Gutto e Raiclaven
 receberam só o bloco da música (o gerador sem `sprites/*/quadros_hd` sairia em 1x); `.sff`/`.cmd` de todos ficaram
 como estavam. Hazak sem Despertar, então sem música de boss ainda. Cristo, praça e passarela esperam os cenários.
+
+## 2026-11-14 — Issue #35: escolha de mapa e os 5 cenários animados (Claude, thread do Alisson)
+
+**Pedido (Breno, `docs/missao-alisson-cenarios.md`):** tela de escolha de mapa depois da seleção, em todos os modos e
+nunca aleatória; Katiara (boca de fumo, guardas fazendo o 7 sem apontar arma, muro pichado 7 e KT); Cristo, praça e
+passarela de Nazaré animados como a Maria Fumaça, cada um com o seu movimento.
+
+**Feito:**
+- **Escolha de mapa** (já na `mugen`, 69d0b663): painel 210,0 no `system.sff` (`gerar_layout.py`), `stage.*` no
+  `[Select Info]`, módulo `nazafights.lua` liga `main.stageMenu` em todo modo e zera o `stage_randomselect` (a chave com
+  erro de grafia que o `start.lua` v1.0.0 lê). Prévia de cada mapa = ação 9000 do próprio cenário (12 quadros 640x400
+  com a faixa "MÚSICA: ..."), feita pelo `gerar_cenario.py`; `--so-retrato` troca só a prévia (usado na Maria Fumaça,
+  cujo `.sff` aprovado não bate com os PNG da pasta: nunca regerar as camadas dela).
+- **Katiara** (`cenario_katiara.py`): rua, muro 7/KT, guardas (8 poses), moto passando, pipa, varal, nuvens. Música
+  do Breno (`cenario_katiara.m4a`) ligada com loop 27,9 s -> 137,6 s (`converter_musicas.py`).
+- **Cristo** (`cenario_cristo.py`): nuvens em 2 alturas, halo do sol, luzes da cidade, urubus, farol das torres,
+  holofote na estátua, visitantes na escada.
+- **Praça** (`cenario_praca.py`, 4 imagens do ChatGPT): bandeiras da Bahia, do Brasil e do município tremulando
+  (código), sino da Matriz balançando (recortado da arte), pombos voando e ciscando na frente, ambulante acenando,
+  ciclista passando, nuvens.
+- **Passarela** (`cenario_passarela.py`, 3 imagens): água do rio ondulando (linhas deslocadas em seno só nos pixels de
+  água, com inpaint dos obstáculos), reflexo do sol tremendo, sol com halo, garça, canoa a remo cruzando (atrás do
+  guarda-corpo: camada `frente` com tudo que não é água), lampiões tremendo, três faixas de neblina somadas.
+- `ferramentas/testar_mapas.py` abre o jogo de verdade (Xvfb + xdotool), escolhe o mapa N e filma a luta. Ordem da
+  lista: cristo, katiara, maria_fumaca, passarela, praca (`--direita 0..4`). Todos filmados e conferidos quadro a
+  quadro (fotos em `docs/arcade/img/*_luta.png`).
+
+**Lições:**
+- Captura do ChatGPT: a região do `zoom` deve terminar dentro do canvas (1536x1024 -> 940x626; 2172x724 -> 1330x443);
+  1 px a mais traz uma linha/coluna branca da página que estica a caixa da folha (ambulante flutuando).
+- `folha()` apaga fileiras escuras como "linha entre quadros": em folha sem linha use `linhas=False` (a borda dos 8
+  carrinhos alinhados sumia).
+- Chroma key: a buganvília rosa-choque e o reflexo rosa do rio caem no filtro magenta; só o componente grande que
+  encosta em cima é céu.
+- Céu com cúmulos grandes: a cor mais comum da linha pode ser a nuvem (céu saía branco); use a moda só dos pixels azuis.
+
+**Próximo:** layout novo (missão 2026-11-14 item 1) vai redesenhar o painel da escolha de mapa.
