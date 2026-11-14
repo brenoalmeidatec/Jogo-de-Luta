@@ -1934,3 +1934,27 @@ foi lida como "aura discreta" (o erro começou no texto que eu escrevi na `regra
   avisos em `aura_animada`, `aura_blender` e nas fichas. **Não use `discreta.py` nem `conferir_discreta()` em
   lutador de verdade.**
 - **Não visto em tempo real:** o filme de aura só roda na sandbox. O robô confere as camadas vivas no Despertar.
+
+## 2026-11-14 — Pengaró de volta ao desenho antigo, nítido e com a pele bem escura (Claude, thread do Alisson)
+
+**Pedido do Breno** (`docs/missao-alisson-2026-11-13.md`, item 1): o redesenho do `dc3427bf` saiu; o Pengaró volta ao
+desenho de antes, nítido como o CK e o Gutto, com a pele bem escura, e o endiabrado não muda.
+
+- **Revert do `dc3427bf`.** O gerador reproduz o `.sff` do `965f8013`.
+- **Causa do borrado, medida:** na folha antiga o Pengaró tem ~275 px; o CK, ~550 px. O 3x (~330 px) ampliava o
+  Pengaró e reduzia o CK.
+- **Nítido sem redesenhar:** `ferramentas/ampliar_folhas.py` passa as 33 folhas antigas no Real-ESRGAN (anime_6B, 4x
+  e reduz para 2x; `quadros/folhas_arcade_sr/`, 62 MB). `ferramentas/nitidez_pengaro.py` tira o 3x dessa folha
+  (reduzida, como no CK) e pinta com as 15 cores do 1x numa vizinhança 5x5. Posição, escala, caixas e `.air`/`.cns`
+  iguais. HD: 504 sprites trocados pelo 3x (antes 501), 86 só ampliados.
+- **Pele bem escura** (paleta de `docs/arcade/pengaro.md`) por troca de cor no 1x, no 3x e nos quadros do meio usados.
+  A garrafa (mesmas cores no vidro e no rótulo) é achada em cada quadro e poupada; conferido quadro a quadro nas 34
+  folhas, 22 quadros corrigidos à mão (`GARRAFA_MAO`). A calça branca e a corda, que usam o creme e o âmbar da pele,
+  ficaram como eram. As 5 cores entraram no `paleta_sff.act` nas linhas de menos uso.
+- **Endiabrado:** nenhum sprite do corpo mudou (conferido sprite a sprite contra o `.sff` anterior). Seis sprites de
+  efeito do endiabrado e 56 de efeito da forma normal tiveram de 1 a 124 pixels trocados por uma cor vizinha quase igual
+  (as linhas da paleta que receberam a pele).
+- **Não testado no motor:** o robô e a luta rodam no Windows (sandbox ou PC do Breno). Só pixels mudaram, então o
+  robô deve dar o mesmo 151/0, mas falta rodar e tirar a foto ao lado do CK.
+- **Ficou:** a cena do Despertar (`despertar_a`, arte antiga) com a pele de antes; quadros do meio e `f_agarrao4/5` em 1x
+  ampliado; o rosto parecido com a foto (não mexi no desenho). Detalhes em `docs/arcade/pengaro-nitido.md`.

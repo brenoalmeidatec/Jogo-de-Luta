@@ -43,7 +43,8 @@ pixel do desenho num pixel da tela. O boneco fica do mesmo tamanho na tela, mas 
 
    | Arte do lutador | Comando | Pasta | No git? |
    |---|---|---|---|
-   | Arcade (folhas → `quadros_arcade/`): Pengaró, Hazak | `python ferramentas/hd_guiado.py <lutador> [folha ...]` | `quadros_arcade_hd/` | sim (~10 MB) |
+   | Arcade (folhas → `quadros_arcade/`): Hazak | `python ferramentas/hd_guiado.py <lutador> [folha ...]` | `quadros_arcade_hd/` | sim (~10 MB) |
+   | Pengaró (forma normal, desde 2026-11-14) | `ampliar_folhas.py` e `nitidez_pengaro.py` ([pengaro-nitido.md](arcade/pengaro-nitido.md)) | `quadros_arcade_hd/` | sim |
    | Arcade do CK | `HD=3 python ferramentas/converter_ck.py [folha ...]` (ou o `hd_guiado.py`) | `quadros_arcade_hd/` | sim |
    | Antiga, com quadros do meio do Blender: Gutto, Raiclaven | `python ferramentas/hd_blender.py <lutador>` (~20 min) | `quadros_hd/` | **não** (~550 MB, `.gitignore`) |
 
