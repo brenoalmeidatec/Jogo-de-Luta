@@ -1552,7 +1552,8 @@ ARCADE = {"levanta", "soco", "chute_alto", "martelo", "afastar", "apanha", "qued
           "rasteirinha", "rasteira", "ar_soco", "bicicleta", "cabecada",
           # Lote 6 (2026-11-11): o resto da forma normal. Só despertar_a/b (a cena do Despertar) segue na arte antiga.
           "chute_baixo", "defesa", "bola", "compasso", "armada", "caneta", "rolamento", "agarrao", "golaco", "lata",
-          "provoca", "vitoria", "derrota", "corre", "recuo"}
+          "provoca", "vitoria", "derrota", "corre", "recuo",
+          "despertar_a"}  # 2026-11-14 (#42): a cena do Despertar ganhou folha nova; só despertar_b (o Endiabrado) é e_despertar
 # Folha do gerador -> pasta em quadros_arcade/, quando o nome não é o mesmo. rasteira: a folha arcade da rasteira foi
 # reprovada (duas garrafas, joelheira verde no lugar da caneleira); no lugar dela entra o chute rasteiro dado da base
 # agachada (a folha que veio como "chute_baixo" e era outro golpe). O nome "rasteira" fica no gerador para os sprites

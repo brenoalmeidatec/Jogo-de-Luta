@@ -31,6 +31,12 @@ montado com pedaços dos golpes, ficou com 115 ticks em vez de 116 (cada pancada
 gerar no ChatGPT (bebe, vê a garrafa vazia, joga no chão), com a referência anexada, e converter. A segunda metade
 (`e_despertar`, o Endiabrado) já é a nova.
 
+**Conserto (2026-11-14):** folha nova `folhas_novas/despertar_a.png`, gerada no ChatGPT (chat "Pengaró — arcade",
+com a `referencia_ginga.png` anexada para o estilo e a folha antiga só para as poses), convertida pelo
+`converter_pengaro.py` e ligada no `gerar_pengaro.py` (`despertar_a` entrou em `ARCADE`). A captura do ChatGPT saiu
+com 1568 px e foi ampliada para 2172x724 antes de converter. Desenhos: `img/pengaro_despertar_a_novo.png`.
+
 ## Depois do conserto
 
-Todas as outras ações da forma básica usam só desenhos das `folhas_novas/` em 3x. Falta só a `despertar_a`.
+`ferramentas/auditar_origem_pengaro.py` diz **0 ações misturando desenhos**: toda a forma básica usa só as
+`folhas_novas/` em 3x. Robô 190/0, durações de todas as ações iguais.
