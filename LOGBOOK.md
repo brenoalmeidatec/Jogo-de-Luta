@@ -1957,3 +1957,34 @@ foi lida como "aura discreta" (o erro começou no texto que eu escrevi na `regra
 - **Pendente:**
   - o Hazak segue no estilo antigo (a recriação está com o Alisson, branch `hazak`);
   - as pastas `meio/` antigas em `quadros_arcade/` ficaram no disco, sem uso.
+
+## 2026-11-14 — Revisão geral: "?" da seleção, robô no 3100 e Gutto despertado em 3x (Claude, sessão do Alisson)
+
+Itens da seção 4 de `docs/missao-alisson-2026-11-13.md`.
+
+**Feito:**
+- **"?" da escolha aleatória encaixado** (`gerar_layout.py`): o IKEMEN desenha `cell.random.spr` somando o
+  `portrait.offset` (14,14), e a célula vazia não (`start.lua`, `updateDrawList`). O sprite 300,1 ganhou eixo 14,14
+  (`RETRATO_NA_CELULA`), a checagem de grade aceita esse caso e a prévia `selecao.png` passou a desenhar o "?" como o
+  motor desenha. O resto do layout continua igual (as outras prévias mudam só na compressão do PNG; não subiram).
+- **Robô do Gutto e do Raiclaven no 3100**: o super zera `var(20)` no tick 0 e o corpo voltava à forma base no meio
+  do golpe. As quatro trocas que o Pengaró e o CK já tinham (`stateno = 3100` segura `var(37) = 1` e o RemapSprite)
+  viraram `gp.super_3100_endiabrado()`, chamada também em `gerar_gutto.py` e `gerar_raiclaven.py`. Os dois `.cns`
+  receberam as mesmas 4 linhas.
+- **Gutto despertado em 3x**: o `colar_endiabrado` reescala a figura pelo `fator_endiabrado`, e o `hd.py` não achava o
+  gêmeo 3x comparando pixels. Agora o gerador monta o gêmeo junto (`gerar_pengaro.GEMEOS_HD`: mesmo recorte, mesma
+  escala, mesmo lugar, em 3x, com o alfa limitado ao corpo do 1x; o `move` leva o gêmeo junto) e o `hd.aplicar(...,
+  gemeos=)` usa ele quando a comparação não acha. Resultado: `HD: 1052 trocados (446 montados), 125 só ampliados`
+  (era 606 / 565) e **0 ações misturando 3x com 1x** (eram 181, 601 e 10601). No `.sff`: dos 472 sprites do
+  despertado usados, **0 só ampliados** (eram 440). Forma base, paleta e retratos iguais à `mugen` byte a byte
+  (`conferir_sff.py transplantar` + `trocar_retratos.py gutto`).
+- `conferir_sff.py ler/transplantar` aceita retrato em PNG (grupo 9000, do `trocar_retratos.py`) na base.
+
+**Como foi gerado:** `quadros_hd/` do Gutto feitos na nuvem com o Blender 4.5.16 como módulo Python (`bpy`, Cycles
+CPU), pelo `hd_blender.py`. Pengaró e CK regerados com o código novo saem iguais aos regerados com o código antigo na
+mesma máquina (o código novo não muda nada neles).
+
+**Não testado:** robô e jogo (o IKEMEN não roda na nuvem). Rodar `python ferramentas/testar_pengaro.py --lutador
+gutto` e `raiclaven` antes de subir; o esperado é 144/0 nos dois. Raiclaven não foi regerado (só o `.cns`).
+
+**Ficou:** parry (`docs/parry.md`), figurantes e HUD novo sem conferência, Pengaró e Hazak (itens 1 da missão).

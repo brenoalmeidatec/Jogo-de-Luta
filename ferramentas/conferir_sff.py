@@ -54,9 +54,13 @@ def ler(caminho):
             src = nos[link]
             nos.append(dict(g=g, i=i, w=src["w"], h=src["h"], x=x, y=y, link=link, px=src["px"], hw=(w, h)))
             continue
-        assert fmt == 2 and dep == 8, f"{caminho}: formato do sprite {g},{i}"
         base = ofs_l if fl == 0 else ofs_t
         raw = b[base + off:base + off + ln]
+        if fmt in (10, 11, 12) and g == 9000:
+            # retrato em PNG (trocar_retratos.py, fora da paleta): px guarda o PNG cru, png=True
+            nos.append(dict(g=g, i=i, w=w, h=h, x=x, y=y, link=None, px=raw, hw=(w, h), png=True))
+            continue
+        assert fmt == 2 and dep == 8, f"{caminho}: formato do sprite {g},{i}"
         n = struct.unpack_from("<I", raw, 0)[0]
         assert n == w * h, f"{caminho}: tamanho do sprite {g},{i}"
         px = unrle8(raw[4:], n)
@@ -127,14 +131,16 @@ def transplantar(base, pasta):
     itens, trocados = [], 0
     for n in nos_n:
         k = (n["g"], n["i"])
-        if k in da_base and k not in desp:
+        if k in da_base and k not in desp and not da_base[k].get("png"):  # retrato PNG: o trocar_retratos.py repõe
             trocados += (n["w"], n["h"], n["x"], n["y"], n["px"]) != tuple(da_base[k][c] for c in "whxy") + (da_base[k]["px"],)
             n = da_base[k]
         itens.append((n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], n["px"]))
     gp.gravar_sff(novo, pal_n, itens)
     print(f"{novo}: {len(itens)} sprites, {sum(k in desp for k in (tuple(i[:2]) for i in itens))} do despertado "
           f"(do gerador), {sum(1 for i in itens if tuple(i[:2]) in da_base and tuple(i[:2]) not in desp)} da base "
-          f"({trocados} diferiam do gerado), {sum(1 for i in itens if tuple(i[:2]) not in da_base)} novos")
+          f"({trocados} diferiam do gerado), {sum(1 for i in itens if tuple(i[:2]) not in da_base)} novos"
+          + ("; retratos em PNG na base: rode python ferramentas/trocar_retratos.py " + pasta.name
+             if any(n.get("png") for n in nos_b) else ""))
 
 
 def main():

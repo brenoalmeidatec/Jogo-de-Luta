@@ -172,10 +172,13 @@ class Indice:
         return melhor
 
 
-def aplicar(s, air, cns, pares, vitima=frozenset()):
+def aplicar(s, air, cns, pares, vitima=frozenset(), gemeos=None):
     """Troca os sprites do corpo de `s.lista` pelos HD e devolve (air, cns) com as caixas x3 e [Size] em 1/3.
     `pares`: [(pasta de 1x, pasta HD)], cada uma com <folha>/NN.png. `vitima`: sprites que o arremesso de OUTRO
-    lutador desenha com este .sff (e a escala deste lutador): são corpo mesmo fora do .air deste."""
+    lutador desenha com este .sff (e a escala deste lutador): são corpo mesmo fora do .air deste.
+    `gemeos`: {id(sprite de 1x): (sprite de 1x, sprite 3x)} montados pelo gerador (gerar_pengaro.GEMEOS_HD: o
+    despertado reescalado pelo fator_endiabrado). Só entram quando a comparação de pixels não acha o gêmeo."""
+    gemeos = gemeos or {}
     por_acao = acoes(air)
     efeito_n, duvida = acoes_de_efeito(cns)
     corpo_spr = set().union(*(v for k, v in por_acao.items() if k not in efeito_n)) | set(vitima)
@@ -205,7 +208,7 @@ def aplicar(s, air, cns, pares, vitima=frozenset()):
         s.lista.extend((copia[g, i][0], i, img, ex, ey) for g, i, img, ex, ey in list(s.lista) if (g, i) in copia)
         corpo_spr = (corpo_spr - dos_dois) | set(copia.values())
     indice = Indice(pares)
-    nova, hd, ampliado, sem_gemeo = [], 0, 0, []
+    nova, hd, ampliado, sem_gemeo, montados = [], 0, 0, [], 0
     for grupo, numero, img, ex, ey in s.lista:
         if grupo == 9000 or (grupo, numero) not in corpo_spr:
             # retrato (o screenpack desenha sem a escala do lutador), efeito ou sprite fora do .air: fica em 1x
@@ -215,7 +218,12 @@ def aplicar(s, air, cns, pares, vitima=frozenset()):
         cx = _caixa(a)
         achado = indice.achar(a[cx[1]:cx[3], cx[0]:cx[2]]) if cx else None
         tela = Image.new("RGBA", (img.width * E, img.height * E))
-        if achado:
+        pronto = gemeos.get(id(img))
+        if not achado and pronto is not None and pronto[0] is img:
+            tela = pronto[1]
+            hd += 1
+            montados += 1
+        elif achado:
             (fx0, fy0), gemeo, espelho = achado
             g = Image.open(gemeo).convert("RGBA")
             g = g.transpose(Image.FLIP_LEFT_RIGHT) if espelho else g
@@ -233,8 +241,8 @@ def aplicar(s, air, cns, pares, vitima=frozenset()):
     cns, k2 = re.subn(r"(\[Size\][^\[]*?^yscale\s*=\s*)([\d.]+)", lambda m: m.group(1) + f"{float(m.group(2)) / E:.6g}",
                       cns, count=1, flags=re.M | re.I)
     assert k == k2 == 1, "[Size] sem xscale/yscale no .cns"
-    print(f"HD: {hd} sprites trocados pelo desenho 3x, {ampliado} só ampliados, {len(efeito_spr - corpo_spr)} de "
-          f"efeito em 1x" + (f"; {len(dos_dois)} sprites em corpo E efeito (copiados: o efeito fica em 1x)" if dos_dois else "")
+    print(f"HD: {hd} sprites trocados pelo desenho 3x" + (f" ({montados} montados pelo gerador)" if montados else "")
+          + f", {ampliado} só ampliados, {len(efeito_spr - corpo_spr)} de efeito em 1x" + (f"; {len(dos_dois)} sprites em corpo E efeito (copiados: o efeito fica em 1x)" if dos_dois else "")
           + (f"; anim de Explod por expressão: {sorted(set(duvida))}" if duvida else ""))
     # Despertado que mistura desenho 3x com 1x só ampliado na mesma ação pisca de nitidez na tela (a ginga parada do
     # CK, cético de 2026-11-12): conta aqui, em cada geração. Ação inteira ampliada fica só grossa, sem piscar.

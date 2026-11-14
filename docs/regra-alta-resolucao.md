@@ -77,6 +77,8 @@ pixel do desenho num pixel da tela. O boneco fica do mesmo tamanho na tela, mas 
   - olhe a linha `HD:` que o gerador imprime: "só ampliados" alto quer dizer gêmeo faltando;
   - tire uma foto do jogo rodando e confira se o boneco está nítido;
   - rode o robô.
+- Despertado reescalado pelo `fator_endiabrado` (Gutto): o `colar_endiabrado` monta o gêmeo 3x junto
+  (`GEMEOS_HD`) e o `hd.aplicar(..., gemeos=gp.GEMEOS_HD)` usa quando a comparação de pixels não acha. Desde 2026-11-14.
 - Desenho montado por código (rotação, mistura, poses coladas) não tem gêmeo e fica só ampliado. Se aparecer muito na
   luta, troque por uma folha desenhada.
 
