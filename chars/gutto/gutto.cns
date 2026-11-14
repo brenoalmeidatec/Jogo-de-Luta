@@ -8235,6 +8235,7 @@ removetime = -2
 sprpriority = 6
 ownpal = 1
 pausemovetime = 12
+scale = .8, .8
 
 [State 4710, Fundo escurece na cor da forma (despertados_47.py)]
 type = BGPalFX
@@ -8299,6 +8300,45 @@ trigger1 = NumTarget
 redirectid = target,id
 time = 6
 add = 120,20,20
+
+[State 4710, Pancada 1: estouro da forma (despertados_47.py)]
+type = Explod
+trigger1 = Time = 26
+trigger1 = NumTarget
+anim = 47004
+postype = p1
+pos = 34, -80
+removetime = -2
+sprpriority = 6
+ownpal = 1
+scale = 1.5, 1.5
+ignorehitpause = 1
+
+[State 4710, Pancada 2: estouro da forma (despertados_47.py)]
+type = Explod
+trigger1 = Time = 52
+trigger1 = NumTarget
+anim = 47004
+postype = p1
+pos = 34, -82
+removetime = -2
+sprpriority = 6
+ownpal = 1
+scale = 1.5, 1.5
+ignorehitpause = 1
+
+[State 4710, Pancada 3: estouro da forma (despertados_47.py)]
+type = Explod
+trigger1 = Time = 78
+trigger1 = NumTarget
+anim = 47004
+postype = p1
+pos = 34, -79
+removetime = -2
+sprpriority = 6
+ownpal = 1
+scale = 1.5, 1.5
+ignorehitpause = 1
 
 [State 4710, Final: congela no impacto (despertados_47.py)]
 type = Pause
@@ -8395,7 +8435,6 @@ removetime = -2
 sprpriority = 5
 ownpal = 1
 supermovetime = 30
-scale = 1.4, 1.4
 
 [State 4750, Carga: treme de leve (despertados_47.py)]
 type = EnvShake
@@ -8437,14 +8476,16 @@ type = Projectile
 trigger1 = Time = 25
 projid = 4750
 projanim = 47002
-projhitanim = 47001
-projremanim = 47001
-projscale = 0.8, 0.8
+projhitanim = 47004
+projremanim = 47004
+projscale = 1, 1
 projhits = 3
+projremove = 0
+projremovetime = 170
 projmisstime = 7
 projpriority = 5
-projsprpriority = 4
-offset = 40, -56
+projsprpriority = -2
+offset = 0, 0
 velocity = 3.6, 0
 attr = S, SP
 damage = 42, 6
@@ -8681,3 +8722,305 @@ type = SelfState
 trigger1 = Vel Y > 0
 trigger1 = Pos Y >= 0
 value = 5100
+
+[Statedef -4]
+
+; ---- Aura animada 'garanhao' (ferramentas/aura.py): 2 camadas, 0 partículas, explods 9600 a 9601, no máximo 2 vivos
+[State -4, Aura garanhao: zera au_garanhao_f antes do round]
+type = MapSet
+trigger1 = RoundState = 0
+map = "au_garanhao_f"
+value = 0
+ignorehitpause = 1
+
+[State -4, Aura garanhao: zera au_garanhao_e antes do round]
+type = MapSet
+trigger1 = RoundState = 0
+map = "au_garanhao_e"
+value = 0
+ignorehitpause = 1
+
+[State -4, Aura garanhao: zera au_garanhao_s antes do round]
+type = MapSet
+trigger1 = RoundState = 0
+map = "au_garanhao_s"
+value = 0
+ignorehitpause = 1
+
+[State -4, Aura garanhao: zera au_garanhao_k antes do round]
+type = MapSet
+trigger1 = RoundState = 0
+map = "au_garanhao_k"
+value = 0
+ignorehitpause = 1
+
+[State -4, Aura garanhao: zera au_garanhao_t antes do round]
+type = MapSet
+trigger1 = RoundState = 0
+map = "au_garanhao_t"
+value = 0
+ignorehitpause = 1
+
+[State -4, Aura garanhao: zera au_garanhao_c antes do round]
+type = MapSet
+trigger1 = RoundState = 0
+map = "au_garanhao_c"
+value = 0
+ignorehitpause = 1
+
+[State -4, Aura garanhao: zera au_garanhao_r antes do round]
+type = MapSet
+trigger1 = RoundState = 0
+map = "au_garanhao_r"
+value = 0
+ignorehitpause = 1
+
+[State -4, Aura garanhao: zera au_garanhao_v antes do round]
+type = MapSet
+trigger1 = RoundState = 0
+map = "au_garanhao_v"
+value = 0
+ignorehitpause = 1
+
+[State -4, Aura garanhao: zera au_garanhao_h0 antes do round]
+type = MapSet
+trigger1 = RoundState = 0
+map = "au_garanhao_h0"
+value = 0
+ignorehitpause = 1
+
+[State -4, Aura garanhao: limpa 9600 antes do round]
+type = RemoveExplod
+trigger1 = RoundState = 0 && NumExplod(9600)
+id = 9600
+ignorehitpause = 1
+
+[State -4, Aura garanhao: limpa 9601 antes do round]
+type = RemoveExplod
+trigger1 = RoundState = 0 && NumExplod(9601)
+id = 9601
+ignorehitpause = 1
+
+[State -4, Aura garanhao: tempo volta a zero ao ligar]
+type = MapSet
+trigger1 = map(au_garanhao_f) <= 0
+map = "au_garanhao_t"
+value = 0
+ignorehitpause = 1
+
+[State -4, Aura garanhao: fade]
+type = MapSet
+trigger1 = RoundState > 0
+map = "au_garanhao_f"
+value = min(ifelse((var(20) > 0) && Alive && RoundState > 0, min(1, map(au_garanhao_f) + 0.0333), max(0, map(au_garanhao_f) - 0.0294)), max(0, var(20)) / 34)
+ignorehitpause = 1
+
+[State -4, Aura garanhao: fade suave]
+type = MapSet
+trigger1 = 1
+map = "au_garanhao_e"
+value = map(au_garanhao_f) * map(au_garanhao_f) * (3 - 2 * map(au_garanhao_f))
+ignorehitpause = 1
+
+[State -4, Aura garanhao: virada passa]
+type = MapSet
+trigger1 = map(au_garanhao_v) > 0
+map = "au_garanhao_v"
+value = max(0, map(au_garanhao_v) - 0.0833)
+ignorehitpause = 1
+
+[State -4, Aura garanhao: virou]
+type = MapSet
+trigger1 = map(au_garanhao_f) > 0 && map(au_garanhao_l) != Facing && map(au_garanhao_l) != 0 && map(au_garanhao_v) <= 0
+map = "au_garanhao_v"
+value = 1
+ignorehitpause = 1
+
+[State -4, Aura garanhao: guarda o lado]
+type = MapSet
+trigger1 = map(au_garanhao_v) <= 0 || map(au_garanhao_v) = 1 || map(au_garanhao_f) <= 0
+map = "au_garanhao_l"
+value = Facing
+ignorehitpause = 1
+
+[State -4, Aura garanhao: folga do surto anda]
+type = MapSet
+trigger1 = map(au_garanhao_r) > 0
+map = "au_garanhao_r"
+value = map(au_garanhao_r) - 1
+ignorehitpause = 1
+
+[State -4, Aura garanhao: surto dispara]
+type = MapSet
+trigger1 = (((StateNo = 3000 || StateNo = 3100 || StateNo = 3200) && Time = 1) || (StateNo = 4710 && Time = 1)) && map(au_garanhao_f) > 0 && map(au_garanhao_r) <= 0
+map = "au_garanhao_s"
+value = 1
+ignorehitpause = 1
+
+[State -4, Aura garanhao: surto abre a folga]
+type = MapSet
+trigger1 = map(au_garanhao_s) = 1
+map = "au_garanhao_r"
+value = 120
+ignorehitpause = 1
+
+[State -4, Aura garanhao: surto sobe e desce macio]
+type = MapSet
+trigger1 = 1
+map = "au_garanhao_k"
+value = map(au_garanhao_k) + (ifelse(map(au_garanhao_s) > 0, 1, 0) - map(au_garanhao_k)) * 0.14
+ignorehitpause = 1
+
+[State -4, Aura garanhao: surto acaba em zero exato (escala volta a 1)]
+type = MapSet
+trigger1 = map(au_garanhao_s) <= 0 && map(au_garanhao_k) < 0.004
+map = "au_garanhao_k"
+value = 0
+ignorehitpause = 1
+
+[State -4, Aura garanhao: surto conta]
+type = MapSet
+trigger1 = map(au_garanhao_s) > 0
+map = "au_garanhao_s"
+value = max(0, map(au_garanhao_s) - 0.0333)
+ignorehitpause = 1
+
+[State -4, Aura garanhao: tempo anda (mais rápido no surto)]
+type = MapAdd
+trigger1 = map(au_garanhao_f) > 0
+map = "au_garanhao_t"
+value = 1 + 1.6 * map(au_garanhao_k)
+ignorehitpause = 1
+
+[State -4, Aura garanhao: relógio das partículas]
+type = MapAdd
+trigger1 = map(au_garanhao_f) > 0
+map = "au_garanhao_c"
+value = 1
+ignorehitpause = 1
+
+[State -4, Aura garanhao: garanhao apaga enquanto a reação toca]
+type = MapSet
+trigger1 = 1
+map = "au_garanhao_h0"
+value = map(au_garanhao_h0) + (ifelse(NumProjID(4750) > 0 || StateNo = 4750, 1, 0) - map(au_garanhao_h0)) * 0.3
+ignorehitpause = 1
+
+[State -4, Aura garanhao: garanhao volta inteira]
+type = MapSet
+trigger1 = !(NumProjID(4750) > 0 || StateNo = 4750) && map(au_garanhao_h0) < 0.01
+map = "au_garanhao_h0"
+value = 0
+ignorehitpause = 1
+
+[State -4, Aura garanhao garanhao: nasce]
+type = Explod
+trigger1 = map(au_garanhao_f) > 0 && NumExplod(9600) = 0
+anim = 9600
+id = 9600
+animelem = 1
+animelemtime = 1
+postype = p1
+pos = 0, 0
+facing = 1
+bindtime = -1
+removetime = -1
+sprpriority = -6
+ownpal = 1
+scale = 1, 1
+trans = addalpha
+alpha = 0, 255
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+ignorehitpause = 1
+
+[State -4, Aura garanhao crateras: nasce]
+type = Explod
+trigger1 = map(au_garanhao_f) > 0 && NumExplod(9601) = 0
+anim = 9601
+id = 9601
+animelem = 38
+animelemtime = 0
+postype = p1
+pos = 0, 0
+facing = 1
+bindtime = 0
+removetime = -1
+sprpriority = -5
+ownpal = 1
+scale = 1, 1
+trans = addalpha
+alpha = 0, 255
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+ignorehitpause = 1
+
+[State -4, Aura garanhao garanhao: move]
+type = ModifyExplod
+trigger1 = NumExplod(9600) && map(au_garanhao_v) <= 0.6
+id = 9600
+postype = p1
+pos = 0 + 0.6 * sin((map(au_garanhao_t) + 0) * 0.0524 + 1.3) + (0 + 1.5 * map(au_garanhao_k)) * sin((map(au_garanhao_t) + 0) * 1.2566 + 0), 0 + 1.5 * sin((map(au_garanhao_t) + 0) * 0.0631 + 2.9)
+scale = (1 + 0.12 * map(au_garanhao_k)), (1 + 0.12 * map(au_garanhao_k))
+trans = addalpha
+alpha = floor(255 * min(1, max(0, (0.95 * map(au_garanhao_e) * (1 + 0.06 * sin((map(au_garanhao_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_garanhao_k) * map(au_garanhao_e)) * (0.6 + 0.4 * ifelse(map(au_garanhao_v) > 0.6, (map(au_garanhao_v) - 0.6) / 0.4, (0.6 - map(au_garanhao_v)) / 0.6)) * (1 - map(au_garanhao_h0))))), 255 - floor(255 * min(1, max(0, (0.95 * map(au_garanhao_e) * (1 + 0.06 * sin((map(au_garanhao_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_garanhao_k) * map(au_garanhao_e)) * (0.6 + 0.4 * ifelse(map(au_garanhao_v) > 0.6, (map(au_garanhao_v) - 0.6) / 0.4, (0.6 - map(au_garanhao_v)) / 0.6)) * (1 - map(au_garanhao_h0)))))
+ignorehitpause = 1
+
+[State -4, Aura garanhao garanhao: apaga para virar]
+type = ModifyExplod
+trigger1 = NumExplod(9600) && map(au_garanhao_v) > 0.6
+id = 9600
+trans = addalpha
+alpha = floor(255 * min(1, max(0, (0.95 * map(au_garanhao_e) * (1 + 0.06 * sin((map(au_garanhao_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_garanhao_k) * map(au_garanhao_e)) * (0.6 + 0.4 * ifelse(map(au_garanhao_v) > 0.6, (map(au_garanhao_v) - 0.6) / 0.4, (0.6 - map(au_garanhao_v)) / 0.6)) * (1 - map(au_garanhao_h0))))), 255 - floor(255 * min(1, max(0, (0.95 * map(au_garanhao_e) * (1 + 0.06 * sin((map(au_garanhao_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_garanhao_k) * map(au_garanhao_e)) * (0.6 + 0.4 * ifelse(map(au_garanhao_v) > 0.6, (map(au_garanhao_v) - 0.6) / 0.4, (0.6 - map(au_garanhao_v)) / 0.6)) * (1 - map(au_garanhao_h0)))))
+ignorehitpause = 1
+
+[State -4, Aura garanhao crateras: move]
+type = ModifyExplod
+trigger1 = NumExplod(9601) && map(au_garanhao_v) <= 0.6
+id = 9601
+postype = p1
+pos = 0 + 1 * sin((map(au_garanhao_t) + 37.7) * 0.0381 + 2.3) + (0 + 1.5 * map(au_garanhao_k)) * sin((map(au_garanhao_t) + 37.7) * 1.2566 + 2.1), 0 - min(0, Pos Y)
+scale = (1 + 0.12 * map(au_garanhao_k)), (1 + 0.12 * map(au_garanhao_k))
+bindtime = 0
+trans = addalpha
+alpha = floor(255 * min(1, max(0, (0.92 * map(au_garanhao_e) * (1 + 0.06 * sin((map(au_garanhao_t) + 37.7) * 0.0669 + 2.7)) + 0.15 * map(au_garanhao_k) * map(au_garanhao_e)) * (0.6 + 0.4 * ifelse(map(au_garanhao_v) > 0.6, (map(au_garanhao_v) - 0.6) / 0.4, (0.6 - map(au_garanhao_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.92 * map(au_garanhao_e) * (1 + 0.06 * sin((map(au_garanhao_t) + 37.7) * 0.0669 + 2.7)) + 0.15 * map(au_garanhao_k) * map(au_garanhao_e)) * (0.6 + 0.4 * ifelse(map(au_garanhao_v) > 0.6, (map(au_garanhao_v) - 0.6) / 0.4, (0.6 - map(au_garanhao_v)) / 0.6)))))
+ignorehitpause = 1
+
+[State -4, Aura garanhao crateras: apaga para virar]
+type = ModifyExplod
+trigger1 = NumExplod(9601) && map(au_garanhao_v) > 0.6
+id = 9601
+trans = addalpha
+alpha = floor(255 * min(1, max(0, (0.92 * map(au_garanhao_e) * (1 + 0.06 * sin((map(au_garanhao_t) + 37.7) * 0.0669 + 2.7)) + 0.15 * map(au_garanhao_k) * map(au_garanhao_e)) * (0.6 + 0.4 * ifelse(map(au_garanhao_v) > 0.6, (map(au_garanhao_v) - 0.6) / 0.4, (0.6 - map(au_garanhao_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.92 * map(au_garanhao_e) * (1 + 0.06 * sin((map(au_garanhao_t) + 37.7) * 0.0669 + 2.7)) + 0.15 * map(au_garanhao_k) * map(au_garanhao_e)) * (0.6 + 0.4 * ifelse(map(au_garanhao_v) > 0.6, (map(au_garanhao_v) - 0.6) / 0.4, (0.6 - map(au_garanhao_v)) / 0.6)))))
+ignorehitpause = 1
+
+[State -4, Aura garanhao garanhao: corre no surto]
+type = ModifyExplod
+trigger1 = NumExplod(9600) && map(au_garanhao_k) > 0.5
+id = 9600
+animelem = ((ExplodVar(9600, 0, animelem) - 1) % 96) + 1
+animelemtime = 1
+ignorehitpause = 1
+
+[State -4, Aura garanhao garanhao: some]
+type = RemoveExplod
+trigger1 = map(au_garanhao_f) <= 0 && NumExplod(9600)
+id = 9600
+ignorehitpause = 1
+
+[State -4, Aura garanhao crateras: corre no surto]
+type = ModifyExplod
+trigger1 = NumExplod(9601) && map(au_garanhao_k) > 0.5
+id = 9601
+animelem = ((ExplodVar(9601, 0, animelem) - 0) % 96) + 1
+animelemtime = 0
+ignorehitpause = 1
+
+[State -4, Aura garanhao crateras: some]
+type = RemoveExplod
+trigger1 = map(au_garanhao_f) <= 0 && NumExplod(9601)
+id = 9601
+ignorehitpause = 1
+

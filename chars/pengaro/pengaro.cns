@@ -9459,6 +9459,7 @@ removetime = -2
 sprpriority = 6
 ownpal = 1
 pausemovetime = 12
+scale = .8, .8
 
 [State 4710, Fundo escurece na cor da forma (despertados_47.py)]
 type = BGPalFX
@@ -9523,6 +9524,45 @@ trigger1 = NumTarget
 redirectid = target,id
 time = 6
 add = 70,20,110
+
+[State 4710, Pancada 1: estouro da forma (despertados_47.py)]
+type = Explod
+trigger1 = Time = 26
+trigger1 = NumTarget
+anim = 47004
+postype = p1
+pos = 34, -80
+removetime = -2
+sprpriority = 6
+ownpal = 1
+scale = 1.5, 1.5
+ignorehitpause = 1
+
+[State 4710, Pancada 2: estouro da forma (despertados_47.py)]
+type = Explod
+trigger1 = Time = 52
+trigger1 = NumTarget
+anim = 47004
+postype = p1
+pos = 34, -79
+removetime = -2
+sprpriority = 6
+ownpal = 1
+scale = 1.5, 1.5
+ignorehitpause = 1
+
+[State 4710, Pancada 3: estouro da forma (despertados_47.py)]
+type = Explod
+trigger1 = Time = 79
+trigger1 = NumTarget
+anim = 47004
+postype = p1
+pos = 34, -94
+removetime = -2
+sprpriority = 6
+ownpal = 1
+scale = 1.5, 1.5
+ignorehitpause = 1
 
 [State 4710, Final: congela no impacto (despertados_47.py)]
 type = Pause
@@ -9619,7 +9659,6 @@ removetime = -2
 sprpriority = 5
 ownpal = 1
 supermovetime = 30
-scale = 1.4, 1.4
 
 [State 4750, Carga: treme de leve (despertados_47.py)]
 type = EnvShake
@@ -9661,10 +9700,12 @@ type = Projectile
 trigger1 = Time = 25
 projid = 4750
 projanim = 47002
-projhitanim = 47001
-projremanim = 47001
+projhitanim = 47004
+projremanim = 47004
 projscale = 0.75, 0.75
 projhits = 3
+projremove = 0
+projremovetime = 170
 projmisstime = 7
 projpriority = 5
 projsprpriority = 4

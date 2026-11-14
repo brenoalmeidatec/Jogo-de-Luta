@@ -20,8 +20,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from testar_pengaro import RAIZ, INI_LINUX, ambiente_linux, motor_linux, ajustar_ini  # noqa: E402
 
-CICLO = 420
-PEGA = "RoundState = 2 && var(20) > 0 && GameTime % CICLO >= 260 && GameTime % CICLO < 400 && ctrl && stateno = 0 && enemynear,stateno = 0".replace("CICLO", str(CICLO))
+CICLO = 540
+PEGA = "RoundState = 2 && var(20) > 0 && GameTime % CICLO >= 330 && GameTime % CICLO < 470 && ctrl && stateno = 0 && enemynear,stateno = 0".replace("CICLO", str(CICLO))
 ROTEIRO = f"""
 [State -2, demo47 desperta]
 type = ChangeState
@@ -42,30 +42,30 @@ ignorehitpause = 1
 
 [State -2, demo47 longe: P1]
 type = PosSet
-trigger1 = RoundState = 2 && var(20) > 0 && GameTime % {CICLO} = 10
-x = -110
+trigger1 = RoundState = 2 && var(20) > 0 && GameTime % {CICLO} = 150
+x = -150
 y = 0
 
 [State -2, demo47 longe: P2]
 type = PosSet
-trigger1 = RoundState = 2 && var(20) > 0 && GameTime % {CICLO} = 10
+trigger1 = RoundState = 2 && var(20) > 0 && GameTime % {CICLO} = 150
 redirectid = enemynear,id
-x = 60
+x = 140
 y = 0
 
 [State -2, demo47 vida do P2]
 type = LifeSet
-trigger1 = RoundState = 2 && GameTime % {CICLO} = 10
+trigger1 = RoundState = 2 && GameTime % {CICLO} = 150
 redirectid = enemynear,id
 value = 1000
 
 [State -2, demo47 vira]
 type = Turn
-trigger1 = RoundState = 2 && (GameTime % {CICLO} = 12 || GameTime % {CICLO} = 255) && facing = -1
+trigger1 = RoundState = 2 && (GameTime % {CICLO} = 152 || GameTime % {CICLO} = 325) && facing = -1
 
 [State -2, demo47 poder]
 type = ChangeState
-trigger1 = RoundState = 2 && var(20) > 0 && GameTime % {CICLO} = 20
+trigger1 = RoundState = 2 && var(20) > 0 && GameTime % {CICLO} = 160
 value = 4750
 
 [State -2, demo47 colado: P1]

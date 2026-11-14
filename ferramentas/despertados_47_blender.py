@@ -6,15 +6,17 @@
   "$NAZAFX_PY" ferramentas/despertados_47_blender.py gutto --efeitos poder
 
 Mesmo caminho dos efeitos da #38 (ferramentas/efeitos_blender.py, de onde vêm a cena, os materiais e as peças): o
-render sai em cinza, o brilho é a força, e o ferramentas/efeitos_pixel/pixelfx.py passa para pixel art na rampa da
-forma (CORES em ferramentas/efeitos.py). Nada do ChatGPT. O Hazak (Diabo Loiro) e o Raiclaven (Cientista Louco) têm
-os deles nas issues #44 e #43.
+render sai em cinza, o brilho é a força, e o ferramentas/efeitos_pixel/pixelfx.py passa para pixel art nos 8 tons da
+forma (PALETA: do preto ao branco passando pela cor, como a rajadona do Diabo Loiro, a régua que o Breno aprovou na
+#44). Nada do ChatGPT. O Hazak (Diabo Loiro) e o Raiclaven (Cientista Louco) têm os deles nas issues #44 e #43.
 
-Quatro efeitos por lutador, todos com o tema da forma:
-  agarrao   preso no oponente enquanto ele apanha (laço no fim): correntes de sombra subindo e enrolando (Pengaró),
-            raios caindo em cima dele (Gutto), caixas de som estourando nele (CK)
+Cinco efeitos por lutador, todos com o tema da forma:
+  agarrao   preso no oponente enquanto ele apanha (laço): coluna de sombra com correntes subindo (Pengaró), raios
+            vermelhos caindo em cima dele (Gutto), coluna de fumaça com o som pulsando no chão (CK)
+  pancada   estouro em cada pancada do agarrão e em cada acerto do poder
   final     o golpe que solta: estouro com elos voando, ferraduras de raio ou estrondo de som
-  poder     o projétil do poder de longe (laço): maré de sombra com correntes, garanhão de raio galopando, paredão de som
+  poder     a torrente do poder de longe (laço): miolo quente, casca e fumaça preta por fora, com o tema na frente
+            (bola de sombra e correntes, o garanhão da aura do Gutto, os arcos de som do paredão)
   carga     brilho na mão antes de soltar o poder
 
 Saída (vai para o git; é o que ferramentas/despertados_47.py liga no jogo):
@@ -36,24 +38,34 @@ sys.path.insert(0, str(AQUI))
 sys.path.insert(0, str(AQUI / "efeitos_pixel"))
 import efeitos_blender as eb  # noqa: E402
 import pixelfx  # noqa: E402
-from efeitos import CORES, ESCALA_BLENDER  # noqa: E402
+from efeitos import ESCALA_BLENDER  # noqa: E402
 
 SAIDA = eb.SAIDA
 LUTADORES = ("pengaro", "gutto", "ck")
 # rampa de cada lutador: o Gutto despertado é vermelho com miolo branco (aura do garanhão, bosses_kit.md)
-FORMA = {"pengaro": "desperto", "gutto": "base", "ck": "desperto"}
-
-# efeito -> (largura, altura no jogo), quadros, ticks por quadro, pivô no chão?, quadro onde o laço começa (-1 = sem laço)
-EFEITOS = {
-    "pengaro": {"agarrao": ((110, 170), 12, 3, True, 6), "final": ((170, 170), 12, 3, False, -1),
-                "poder": ((150, 120), 12, 2, False, 0), "carga": ((84, 84), 10, 2, False, -1)},
-    "gutto": {"agarrao": ((96, 190), 12, 2, True, 0), "final": ((170, 170), 12, 3, False, -1),
-              "carga": ((84, 84), 10, 2, False, -1)},   # o poder do Gutto é a aura (compor_garanhao)
-    "ck": {"agarrao": ((130, 150), 12, 2, False, 0), "final": ((180, 180), 12, 3, False, -1),
-           "poder": ((120, 190), 12, 2, False, 0), "carga": ((84, 84), 10, 2, False, -1)},
+# Régua do Breno (#44, 2026-11-14: "o Hazak ficou absurdo, quero esse nível nos outros"): como a rajadona do Diabo
+# Loiro, cada efeito sai em 8 tons, do PRETO à cor da forma e ao branco, com miolo quente, casca e fumaça preta.
+PALETA = {
+    "pengaro": "#050208,#12061e,#2a0c4a,#5a1a9a,#8a3ad8,#c080ff,#f0dcff,#ffffff",   # preto, violeta, lilás
+    "gutto": "#080204,#2c0812,#8c0215,#e2051d,#f53c5e,#fb91ac,#fdf2f7,#ffffff",     # as cores do garanhão da aura
+    "ck": "#020603,#0a1a10,#143424,#24583c,#3c8a5c,#70c090,#b8f0c8,#f4fff6",        # preto, verde de vidro, menta
 }
-# padrão novo do Breno (#47, 2026-11-14): poder grande e pesado, com rastro atrás (fantasmas do próprio desenho)
-RASTRO = {"poder": (0.55, 3)}     # efeito -> (largura extra atrás, em fração da largura; quantos fantasmas)
+GAMA = {"poder": 1.35, "rastro": 1.35, "final": 1.3, "agarrao": 1.25, "carga": 1.2, "pancada": 1.2}
+
+# efeito -> (largura, altura no jogo), quadros, ticks por quadro, pivô, quadro onde o laço começa (-1 = sem laço)
+# pivô: "centro", "chao" (meio da base) ou "cabeca" (o projétil: o centro da cabeça, à direita; a cauda fica atrás)
+EFEITOS = {
+    "pengaro": {"agarrao": ((110, 170), 12, 3, "chao", 6), "final": ((190, 190), 12, 3, "centro", -1),
+                "poder": ((300, 130), 12, 2, "cabeca", 0), "carga": ((96, 96), 10, 2, "centro", -1),
+                "pancada": ((90, 90), 8, 2, "centro", -1)},
+    "gutto": {"agarrao": ((96, 190), 12, 2, "chao", 0), "final": ((190, 190), 12, 3, "centro", -1),
+              "rastro": ((300, 120), 12, 2, "cabeca", 0),   # a cauda de raio atrás do garanhão (compor_garanhao)
+              "carga": ((96, 96), 10, 2, "centro", -1), "pancada": ((90, 90), 8, 2, "centro", -1)},
+    "ck": {"agarrao": ((130, 150), 12, 2, "centro", 0), "final": ((200, 200), 12, 3, "centro", -1),
+           "poder": ((270, 190), 12, 2, "cabeca", 0), "carga": ((96, 96), 10, 2, "centro", -1),
+           "pancada": ((90, 90), 8, 2, "centro", -1)},
+}
+CABECA = 0.95   # o centro da cabeça do projétil fica a CABECA x meia altura da borda direita
 
 
 def tau(t):
@@ -524,19 +536,153 @@ class Efeito47(eb.Efeito):
         self.anim.append(f)
 
 
+    # ------------------------------------------------------------------ torrente (a régua da rajadona do Hazak)
+    def _torrente(self, cabeca, quente=1.0, fina=0.2, faiscas=26):
+        """Torrente andando para +x: cauda em três camadas (miolo quente, casca, fumaça preta por fora) que afina para
+        trás, uma cabeça de nuvem girando na frente e faíscas em volta. Cada lutador põe o tema dele por cima."""
+        x_h = self.L - self.A * CABECA
+        x_t = -self.L + self.A * 0.12
+        pecas = []
+        for nome, k_raio, c0, lim, prof, esc in (("miolo", 0.42, 2.0, 0.0, -0.6, 3.0), ("casca", 0.78, 0.75, 0.18, 0.0, 2.2),
+                                                 ("fumaca", 1.22, 0.3, 0.42, 0.6, 1.6)):
+            m, ruido, calor, limiar = eb.mat_nuvem("t_" + nome, esc)
+            bpy.ops.mesh.primitive_cone_add(vertices=32, radius1=fina, radius2=1.0, depth=2.0,
+                                            rotation=(0, math.radians(90), 0))
+            o = bpy.context.active_object
+            bpy.ops.object.transform_apply(rotation=True)
+            o.data.materials.append(m)
+            o.modifiers.new("sub", "SUBSURF").levels = 2
+            tex = bpy.data.textures.new("t_" + nome, type="CLOUDS")
+            tex.noise_scale = 0.45
+            dsp = o.modifiers.new("desloca", "DISPLACE")
+            dsp.texture = tex
+            dsp.texture_coords = "OBJECT"
+            dsp.strength = 0.34
+            pecas.append((o, ruido, calor, limiar, k_raio, c0 * quente, lim, prof))
+        boca = None
+        if cabeca:
+            mb, rb, cb, lb = eb.mat_nuvem("t_boca", 2.4)
+            ob, db = eb.nuvem_deformada(mb, 0.42, 0.4)
+            boca = (ob, rb, cb)
+            lb.outputs[0].default_value = 0.0
+        mf, emis = eb.mat_luz("t_faiscas")
+        cubos = []
+        for k in range(faiscas):
+            bpy.ops.mesh.primitive_cube_add(size=1)
+            o = bpy.context.active_object
+            o.data.materials.append(mf)
+            cubos.append(o)
+        emis.inputs["Strength"].default_value = 2.6
+        import random as _r
+
+        def f(t):
+            i = round(t * 12)
+            pulso = 1 + 0.08 * math.sin(tau(t) * 2)
+            meio, meia = (x_t + x_h) / 2, (x_h - x_t) / 2
+            raio = self.A * 0.62
+            for o, ruido, calor, limiar, k_raio, c0, lim, prof in pecas:
+                o.location = (meio, prof, 0)
+                o.scale = (meia, raio * k_raio * pulso, raio * k_raio * pulso)
+                o.rotation_euler = (tau(t), 0, 0)             # a torrente gira no próprio eixo: parece que corre
+                ruido.inputs["W"].default_value = i * 0.37 + k_raio
+                calor.outputs[0].default_value = c0
+                limiar.outputs[0].default_value = lim
+            if boca:
+                ob, rb, cb = boca
+                sb = self.A * 0.8 * pulso
+                ob.location = (x_h, -0.8, 0)
+                ob.scale = (sb, sb, sb)
+                ob.rotation_euler = (-tau(t), 0, 0)
+                rb.inputs["W"].default_value = i * 0.3
+                cb.outputs[0].default_value = 1.65 * quente
+            r2 = _r.Random(100 + i)
+            for o in cubos:
+                x = r2.uniform(x_t, x_h + self.A * 0.5)
+                z = r2.choice((-1, 1)) * raio * r2.uniform(0.7, 1.45) * (0.35 + 0.65 * (x - x_t) / (x_h - x_t + 1e-6))
+                o.location = (x, -1.4, z)
+                tam = self.A * r2.uniform(0.016, 0.034)
+                o.rotation_euler = (0, r2.uniform(-0.6, 0.6), 0)
+                o.scale = (tam * 4, tam * 0.4, tam * 0.7)
+        self.anim.append(f)
+
+    def p_torrente(self):
+        self._torrente(True)
+
+    def p_torrente_fumaca(self):
+        """CK: a torrente é fumaça de paredão (mais fria e mais grossa atrás), sem bola na frente."""
+        self._torrente(False, quente=1.0, fina=0.25, faiscas=22)
+
+    def p_torrente_raio(self):
+        """Gutto: só a cauda (a cabeça é o garanhão da aura), bem quente, com relâmpagos correndo por ela."""
+        self._torrente(False, quente=1.25, fina=0.12, faiscas=20)
+        mat, emis = eb.mat_luz("t_relampago")
+        emis.inputs["Strength"].default_value = 5.0
+        raios = [eb.curva(eb.zigue(self.rnd, 1.0, 13, 0.07), mat, 0.0035) for _ in range(4)]
+
+        def f(t):
+            i = round(t * 12)
+            for k, o in enumerate(raios):
+                o.hide_render = (i + k) % 3 == 2
+                comp = (self.L * 2 - self.A) * (0.75 + 0.08 * k)
+                o.location = (self.L - self.A * CABECA - comp, -1.5, (k - 1.5) * self.A * 0.3)
+                o.scale = (comp, comp, comp)
+        self.anim.append(f)
+
+    def p_correntes_torrente(self):
+        """Pengaró: três correntes grossas correndo com a torrente, ondulando (a onda corre pelo elo: laço exato)."""
+        mat, emis = eb.mat_luz("t_corrente")
+        emis.inputs["Strength"].default_value = 1.6
+        x_h = self.L - self.A * CABECA
+        cadeias = [[self._elo(mat, 0.3) for _ in range(24)] for _ in range(3)]
+
+        def f(t):
+            for c, elos in enumerate(cadeias):
+                for k, o in enumerate(elos):
+                    h = k / (len(elos) - 1)
+                    x = -self.L * 0.85 + h * (x_h + self.A * 0.75 + self.L * 0.85)
+                    z = (c - 1) * self.A * 0.42 * (0.4 + 0.6 * h) + math.sin(tau(t) + h * 7 + c * 2) * self.A * 0.13
+                    o.location = (x, -1.1, z)
+                    s = self.A * 0.075 * (0.6 + 0.5 * h)
+                    o.scale = (s * 1.7, s, s)
+                    o.rotation_euler = (math.radians(90 if k % 2 else 0), 0, 0)
+        self.anim.append(f)
+
+    def p_paredao_frente(self):
+        """CK: os arcos de som na frente da torrente, altos, um atrás do outro, abrindo (laço pela fase)."""
+        m, ruido, calor, limiar = eb.mat_nuvem("paredao_f", 4.0)
+        limiar.outputs[0].default_value = 0.0
+        calor.outputs[0].default_value = 3.2
+        arcos = [self._anel_som(m, 0.2) for _ in range(4)]
+        x_h = self.L - self.A * CABECA
+
+        def f(t):
+            for i, o in enumerate(arcos):
+                u = (t + i / 4) % 1.0
+                o.location = (x_h - self.A * 0.9 + u * self.A * 1.7, -0.9, 0)
+                alt = self.A * (0.5 + 0.45 * u)
+                o.rotation_euler = (math.radians(90), 0, 0)
+                o.scale = (self.A * (0.06 + 0.1 * u), alt * 0.6, alt)
+                o.hide_render = u > 0.94
+        self.anim.append(f)
+
+
 RECEITAS = {
     "pengaro": {"agarrao": ["coluna_sombra", "sombra_chao", "correntes_sobem"],
                 "final": ["bola", "anel", "anel2", "elos_voando", "fumaca", "raios"],
-                "poder": ["mare", "correntes_chicote", "fluxo"], "carga": ["converge", "anel"]},
+                "poder": ["torrente", "correntes_torrente"], "carga": ["converge", "anel"],
+                "pancada": ["miolo", "fumaca", "raios"]},
     "gutto": {"agarrao": ["brilho_chao", "brasas_sobem", "raios_caindo"],
-              "final": ["bola", "anel", "anel2", "ferraduras", "relampago", "raios"], "carga": ["crepita", "anel"]},
+              "final": ["bola", "anel", "anel2", "ferraduras", "relampago", "raios"],
+              "rastro": ["torrente_raio"], "carga": ["crepita", "anel"], "pancada": ["miolo", "relampago", "raios"]},
     "ck": {"agarrao": ["coluna_sombra", "som_pulsa"], "final": ["bola", "anel", "anel2", "anel3", "fumaca", "raios"],
-           "poder": ["fumaca_laco", "paredao", "fluxo"], "carga": ["converge", "anel"]},
+           "poder": ["torrente_fumaca", "paredao_frente"], "carga": ["converge", "anel"],
+           "pancada": ["miolo", "anel", "anel2"]},
 }
 
 
 def renderizar(lutador, efeito, amostras, dir_render):
-    (larg, alt), n, ticks, chao, laco = EFEITOS[lutador][efeito]
+    (larg, alt), n, ticks, pivo, laco = EFEITOS[lutador][efeito]
+    chao = pivo == "chao"
     sup = 4
     rx, ry = round(larg / ESCALA_BLENDER * sup), round(alt / ESCALA_BLENDER * sup)
     unid = 4.0
@@ -551,73 +697,7 @@ def renderizar(lutador, efeito, amostras, dir_render):
         ef.quadro(t)
         cena.render.filepath = str(dir_render / f"{i:04d}.png")
         bpy.ops.render.render(write_still=True)
-    return [Image.open(dir_render / f"{i:04d}.png").convert("RGBA") for i in range(n)], ticks, chao, laco
-
-
-def com_rastro(quadros, frac, nf, escurece=0.62):
-    """Rastro atrás (à esquerda: o projétil anda para +x): fantasmas dos quadros anteriores do laço, cada vez mais
-    fracos e escuros. Devolve os quadros novos e onde fica o centro do corpo (fração da largura)."""
-    w, h = quadros[0].size
-    pad = round(w * frac)
-    n = len(quadros)
-    out = []
-    for i in range(n):
-        tela = Image.new("RGBA", (w + pad, h), (0, 0, 0, 0))
-        for k in range(nf, 0, -1):
-            g = quadros[(i - k) % n]
-            r, gg, b, a = g.split()
-            luz = escurece ** k
-            fant = Image.merge("RGBA", [c.point(lambda v, l=luz: int(v * l)) for c in (r, gg, b)]
-                               + [a.point(lambda v, k=k: int(v * 0.6 ** k))])
-            camada = Image.new("RGBA", tela.size, (0, 0, 0, 0))
-            camada.paste(fant, (pad - round(k * pad / nf), 0))
-            tela.alpha_composite(camada)
-        tela.alpha_composite(g if False else quadros[i], (pad, 0))
-        out.append(tela)
-    return out, (pad + w / 2) / (w + pad)
-
-
-# "sombrio" (Breno, #47): massa escura com a borda acesa, em vez de bola clara. Só a sombra do Pengaró e a fumaça
-# do CK; o raio do Gutto continua aceso.
-SOMBRIO = {"pengaro": {"agarrao", "final", "poder", "carga"}, "ck": {"agarrao", "poder", "final"}}
-
-
-def sombrio(quadros, borda=0.035, miolo=0.42):
-    """Escurece o miolo e acende a borda (alfa menos alfa erodido) e os pontos mais quentes do render."""
-    import numpy as np
-    from PIL import ImageFilter
-    out = []
-    for q in quadros:
-        a = q.getchannel("A")
-        k = max(3, round(q.width * borda) | 1)
-        er = np.asarray(a.filter(ImageFilter.MinFilter(k)), np.float32) / 255
-        al = np.asarray(a, np.float32) / 255
-        rgb = np.asarray(q.convert("RGB"), np.float32) / 255
-        lum = rgb @ np.array([0.2126, 0.7152, 0.0722], np.float32)
-        aro = np.clip((al - er) * 1.6, 0, 1)
-        quente = np.clip((lum - 0.82) * 4, 0, 1)
-        v = np.clip(lum * miolo + aro * 0.85 + quente * 0.6, 0, 1)
-        img = np.dstack([v, v, v, al]) * 255
-        out.append(Image.fromarray(img.astype(np.uint8), "RGBA"))
-    return out
-
-
-def combinado(pixel, liso, raio=3, forca=0.6, margem=6):
-    """O escolhido: o desenho do pixelfx (pixel seco) por cima de um halo de brilho do caminho direto (desfocado,
-    alfa suave). Fica pixel art, mas acende como energia."""
-    from PIL import ImageFilter
-    out = []
-    for px, li in zip(pixel, liso):
-        w, h = px.size
-        tela = Image.new("RGBA", (w + 2 * margem, h + 2 * margem), (0, 0, 0, 0))
-        halo = Image.new("RGBA", tela.size, (0, 0, 0, 0))
-        halo.paste(li.resize((w, h)), (margem, margem))
-        halo = halo.filter(ImageFilter.GaussianBlur(raio))
-        halo.putalpha(halo.getchannel("A").point(lambda v: int(v * forca)))
-        tela.alpha_composite(halo)
-        tela.alpha_composite(px, (margem, margem))
-        out.append(tela)
-    return out
+    return [Image.open(dir_render / f"{i:04d}.png").convert("RGBA") for i in range(n)], ticks, pivo, laco
 
 
 def direto(quadros, cores, tam):
@@ -639,7 +719,8 @@ def direto(quadros, cores, tam):
     return out
 
 
-def gravar(destino, sprites, centro_x, chao, ticks, laco, lutador, efeito, escala=None):
+def gravar(destino, sprites, centro_x, chao, ticks, laco, lutador, efeito, **extra):
+    """centro_x: fração da largura onde fica o pivô; chao: pivô na base (senão no meio da altura)."""
     destino.mkdir(parents=True, exist_ok=True)
     for velho in destino.glob("*.png"):
         velho.unlink()
@@ -648,8 +729,7 @@ def gravar(destino, sprites, centro_x, chao, ticks, laco, lutador, efeito, escal
     w, h = sprites[0].size
     pivo = (round(w * centro_x), h - 2) if chao else (round(w * centro_x), h // 2)
     meta = {"pivo": pivo, "ticks": ticks, "quadros": len(sprites), "laco": laco, "efeito": efeito, "lutador": lutador}
-    if escala:
-        meta["escala"] = escala
+    meta.update(extra)        # escala, pivo, corpo e clsn próprios (o garanhão do Gutto)
     (destino / "meta.json").write_text(json.dumps(meta, indent=1), encoding="utf-8")
     return w, h
 
@@ -658,52 +738,82 @@ def gravar(destino, sprites, centro_x, chao, ticks, laco, lutador, efeito, escal
 AURA_GUTTO = eb.RAIZ / "sprites/gutto/aura"
 
 
-def compor_garanhao():
-    """Poder do Gutto: o MESMO garanhão de raio vermelho da aura do despertado (sprites/gutto/aura, desenho, raio e cor
-    da aura aprovada), agora avançando pela tela: raios da aura, ferraduras, fantasmas do galope atrás e um rastro de
-    raio. É pixel art já pronto (a aura), então não passa pelo pixelfx; vai no jogo em escala 0,8."""
-    import numpy as np
-    from PIL import ImageDraw
+def pixelar(lutador, efeito, quadros):
+    """Render -> pixel art pelo pixelfx, nos 8 tons da forma (PALETA), com a gama do efeito."""
+    (larg, alt) = EFEITOS[lutador][efeito][0]
+    tam = round(max(larg, alt) / ESCALA_BLENDER)
+    with tempfile.TemporaryDirectory() as td:
+        return pixelfx.processar(quadros, td, pixelfx.ler_paleta(PALETA[lutador]), tam=tam, bloco=1, previa=False,
+                                 gama=GAMA.get(efeito, 1.2)), tam
+
+
+def fumaca_preta(sprites, lutador, semente=700):
+    """Bolhas de fumaça preta nas bordas da torrente (como a rajadona das trevas do Hazak, #44), nos três tons mais
+    escuros da forma: é o que deixa o poder sombrio e pesado, em vez de um raio liso."""
     import random
-    rnd = random.Random(47)
+    from PIL import ImageDraw, ImageFilter
+    tons = [tuple(int(c[i:i + 2], 16) for i in (1, 3, 5)) for c in PALETA[lutador].split(",")[:3]]
+    novos = []
+    for i, im in enumerate(sprites):
+        corpo = im.getchannel("A").point(lambda v: 255 if v > 0 else 0).filter(ImageFilter.MinFilter(5))
+        caixa = corpo.getbbox()
+        base = Image.new("RGBA", im.size, (0, 0, 0, 0))
+        if caixa:
+            r = random.Random(semente + i)
+            pc = corpo.load()
+            bolhas = []
+            for x in range(caixa[0] + 6, caixa[2] - 4, 6):
+                col = [y for y in range(caixa[1], caixa[3]) if pc[x, y]]
+                if not col:
+                    continue
+                for y, lado in ((col[0], -1), (col[-1], 1)):
+                    rr = r.randint(4, 10)
+                    bolhas.append((x + r.randint(-2, 2), y + lado * r.randint(0, rr // 2 + 1), rr))
+            dr = ImageDraw.Draw(base)
+            for x, y, rr in bolhas:
+                dr.ellipse((x - rr - 1, y - rr - 1, x + rr + 1, y + rr + 1), fill=tons[0] + (255,))
+            for x, y, rr in bolhas:
+                dr.ellipse((x - rr, y - rr, x + rr, y + rr), fill=tons[1] + (255,))
+                dr.ellipse((x - rr + 2, y - rr + 1, x + rr // 3, y - rr // 3), fill=tons[2] + (255,))
+        base.alpha_composite(im)
+        novos.append(base)
+    return novos
+
+
+def brasa(sprites, lutador):
+    """Raio fino como o da aura do Gutto: miolo branco, beirada rosa e um fio de brasa vermelha e escura por fora."""
+    from PIL import ImageFilter
+    cores = [tuple(int(c[i:i + 2], 16) for i in (1, 3, 5)) for c in PALETA[lutador].split(",")]
+    novos = []
+    for im in sprites:
+        alfa = im.getchannel("A").point(lambda v: 255 if v > 0 else 0)
+        base = Image.new("RGBA", im.size, (0, 0, 0, 0))
+        for cresce, tom in ((5, 1), (3, 3)):
+            base.paste(Image.new("RGBA", im.size, cores[tom] + (255,)), mask=alfa.filter(ImageFilter.MaxFilter(cresce)))
+        base.paste(Image.new("RGBA", im.size, cores[5] + (255,)), mask=alfa)
+        base.paste(im, mask=alfa.filter(ImageFilter.MinFilter(3)))
+        novos.append(base)
+    return novos
+
+
+def compor_garanhao(rastro):
+    """Poder do Gutto: o MESMO garanhão de raio vermelho da aura do despertado (sprites/gutto/aura: desenho, raio e cor
+    da aura aprovada) investindo pela tela, com os raios e as ferraduras da aura, na ponta de uma torrente de raio
+    (`rastro`, renderizada no Blender nas cores do próprio cavalo). O cavalo é pixel art pronto, não passa pelo
+    pixelfx; vai no jogo em escala 1 e com o pivô no pé da aura: o projétil nasce em cima do cavalo da aura, que some
+    enquanto ele corre (despertados_47.aura_gutto): é o cavalo da aura que sai correndo."""
     n = 24
     ab = lambda nome, k: Image.open(AURA_GUTTO / f"{nome}_{k:02d}.png").convert("RGBA")
     W, H = 360, 200
-    pad = 170
-    # as cores do rastro são as do próprio garanhão (do escuro ao claro), para o raio bater com o cavalo
-    amostra = np.array(ab("garanhao", 0))
-    unicas = np.unique(amostra[amostra[..., 3] > 0][:, :3], axis=0)
-    unicas = unicas[np.argsort(unicas @ np.array([0.2126, 0.7152, 0.0722]))]
-    cores = [tuple(int(v) for v in unicas[round(i * (len(unicas) - 1) / 6)]) for i in range(7)]
+    rw, rh = rastro[0].size
+    hx = rw - round(rh / 2 * CABECA)            # a ponta da torrente fica no peito do cavalo
+    peito = (205, 100)
+    pad = max(0, hx - peito[0])
     quadros = []
     for q in range(n):
         k = 2 * q
         tela = Image.new("RGBA", (W + pad, H), (0, 0, 0, 0))
-        # rastro de raio: zigue-zagues saindo da garupa para trás, piscando
-        d = ImageDraw.Draw(tela)
-        for j in range(4):
-            if (q + j) % 3 == 2:
-                continue
-            y0 = 70 + j * 22 + rnd.randint(-6, 6)
-            x, y = pad + 120, y0
-            pts = [(x, y)]
-            while x > 30 + j * 12:
-                x -= rnd.randint(12, 22)
-                y += rnd.randint(-10, 10)
-                pts.append((x, y))
-            d.line(pts, fill=cores[1] + (255,), width=7)
-            d.line(pts, fill=cores[3] + (255,), width=5)
-            d.line(pts, fill=cores[6] + (255,), width=2)
-        # fantasmas do galope (quadros anteriores), escuros e quadriculados (alfa só 0/255, como o pixelfx)
-        for g, desl in ((3, 150), (2, 100), (1, 50)):
-            img = ab("garanhao", (k - 2 * g) % 48)
-            a = np.array(img)
-            m = a[..., 3] > 0
-            yy, xx = np.mgrid[0:H, 0:W]
-            xadrez = ((xx + yy + q) % (g + 1)) == 0 if g > 1 else ((xx + yy) % 2) == 0
-            a[..., :3] = (a[..., :3] * (0.55 ** g)).astype(np.uint8)
-            a[..., 3] = np.where(m & xadrez, 255, 0)
-            tela.alpha_composite(Image.fromarray(a, "RGBA"), (pad - desl, 0))
+        tela.alpha_composite(rastro[q % len(rastro)], (pad + peito[0] - hx, peito[1] - rh // 2))
         for nome in ("raios", "garanhao", "ferraduras"):
             tela.alpha_composite(ab(nome, k if nome == "garanhao" else (2 * k) % 96), (pad, 0))
         quadros.append(tela)
@@ -713,46 +823,42 @@ def compor_garanhao():
         caixa = b if caixa is None else (min(caixa[0], b[0]), min(caixa[1], b[1]), max(caixa[2], b[2]), max(caixa[3], b[3]))
     quadros = [t.crop(caixa) for t in quadros]
     centro = (pad + 180 - caixa[0]) / (caixa[2] - caixa[0])
-    w, h = gravar(SAIDA / "gutto" / "d47_poder", quadros, centro, False, 2, 0, "gutto", "poder", escala=0.8)
-    print(f"gutto poder (garanhão da aura): {n} quadros {w}x{h}", flush=True)
+    # pivô = o pé da aura (180, 190); corpo = até onde o cavalo vai atrás do pivô (o rastro nasce depois dele);
+    # clsn em px da tela a partir do pivô: do lombo até o focinho, do casco de cima ao de baixo
+    w, h = gravar(SAIDA / "gutto" / "d47_poder", quadros, centro, False, 2, 0, "gutto", "poder", escala=1.0,
+                  pivo=(pad + 180 - caixa[0], 190 - caixa[1]), corpo=150, clsn=(-30, -150, 150, -25))
+    print(f"gutto poder (garanhão da aura + torrente de raio): {n} quadros {w}x{h}", flush=True)
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("lutadores", nargs="*", default=list(LUTADORES))
-    ap.add_argument("--efeitos", nargs="+", default=["agarrao", "final", "poder", "carga"])
+    ap.add_argument("--efeitos", nargs="+", default=["agarrao", "final", "poder", "carga", "pancada"])
     ap.add_argument("--amostras", type=int, default=16)
     ap.add_argument("--comparar", action="store_true",
-                    help="grava também os dois caminhos puros (d47_<efeito>_pixelfx e _direto), fora do git")
+                    help="grava também o caminho sem pixelfx (d47_<efeito>_direto), fora do git")
     a = ap.parse_args()
     for lutador in a.lutadores:
         for efeito in a.efeitos:
-            if lutador == "gutto" and efeito == "poder":
-                compor_garanhao()
-                continue
             t0 = time.time()
+            render = "rastro" if (lutador, efeito) == ("gutto", "poder") else efeito
             with tempfile.TemporaryDirectory() as td:
-                quadros, ticks, chao, laco = renderizar(lutador, efeito, a.amostras, Path(td))
-            (larg, alt) = EFEITOS[lutador][efeito][0]
-            centro = 0.5
-            if efeito in RASTRO:
-                frac, nf = RASTRO[efeito]
-                quadros, centro = com_rastro(quadros, frac, nf)
-                larg = larg * (1 + frac)
-            tam = round(max(larg, alt) / ESCALA_BLENDER)
-            cores = CORES[lutador][FORMA[lutador]]
-            if efeito in SOMBRIO.get(lutador, ()):
-                quadros = sombrio(quadros)
-            with tempfile.TemporaryDirectory() as td:
-                pixel = pixelfx.processar(quadros, td, pixelfx.ler_paleta(",".join(cores)), tam=tam, bloco=1,
-                                          previa=False, gama=1.15)
-            liso = direto(quadros, cores, tam)
-            # no jogo vai o combinado; os dois caminhos puros ficam para a comparação (--comparar)
-            w, h = gravar(SAIDA / lutador / f"d47_{efeito}", combinado(pixel, liso), centro, chao, ticks, laco,
-                          lutador, efeito)
+                quadros, ticks, pivo, laco = renderizar(lutador, render, a.amostras, Path(td))
+            sprites, tam = pixelar(lutador, render, quadros)
+            if render in ("poder", "rastro"):
+                sprites = fumaca_preta(sprites, lutador)
+            if lutador == "gutto" and render in ("agarrao", "carga", "pancada"):
+                sprites = brasa(sprites, lutador)
+            if render == "rastro":
+                compor_garanhao(sprites)
+                continue
+            w, h = sprites[0].size
+            centro = (w - h / 2 * CABECA) / w if pivo == "cabeca" else 0.5
+            gravar(SAIDA / lutador / f"d47_{efeito}", sprites, centro, pivo == "chao", ticks, laco, lutador, efeito)
             if a.comparar:
-                gravar(SAIDA / lutador / f"d47_{efeito}_pixelfx", pixel, centro, chao, ticks, laco, lutador, efeito)
-                gravar(SAIDA / lutador / f"d47_{efeito}_direto", liso, centro, chao, ticks, laco, lutador, efeito)
+                cores = PALETA[lutador].split(",")
+                gravar(SAIDA / lutador / f"d47_{efeito}_direto", direto(quadros, cores, tam), centro, pivo == "chao",
+                       ticks, laco, lutador, efeito)
             print(f"{lutador} {efeito}: {len(quadros)} quadros {w}x{h} ({time.time() - t0:.0f} s)", flush=True)
 
 
