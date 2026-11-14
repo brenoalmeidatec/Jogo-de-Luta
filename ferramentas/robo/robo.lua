@@ -1031,6 +1031,17 @@ do
     need(function() local d = c.vida0 - lifeP2(); return c.defendeu and d > 0 and d < 120 end, 1, "defendeu o raio e tomou so desgaste (0 < dano < 120)", false)
     add(function() held[2] = {}; return true end)
   end)
+  -- vitrine: os golpes na roupa do Diabo, um atrás do outro (ferramentas/filmar_robo.py --filtro "vitrine")
+  diabo("vitrine dos golpes na roupa do conceito", function()
+    approach(34)
+    for _, cmd in ipairs({"x", "y", "a", "b"}) do press(1, {cmd}, 2); wait(36) end
+    press(1, {"fd_y"}, 2); wait(64)
+    approach(34)
+    press(1, {"df_a"}, 2); wait(90)
+    press(1, {"df_y"}, 2); wait(110)  -- sem reposicionar: o P2 ainda está levantando da pedra
+    press(1, {"fb_y"}, 2); wait(96)
+    need(function() return snap(1).v37 == 1 end, 1, "continuou Diabo a vitrine inteira", false)
+  end)
   diabo("sem estoque, fb_x solta a bola de ki", function()
     approach(150)
     acao(function() com(1, function() setPower(0); return 0 end) end)

@@ -2296,3 +2296,15 @@ vermelho e oponente piscando; agarrão do Diabo com fundo escuro, tremida a cada
 
 **Sugestões:** folhas desenhadas do Diabo (terno do conceito) para trocar a arte por código; som próprio da patroa e da
 rajadona; comparar Blender vs. pixelfx direto como o Breno pediu na #47.
+
+## 2026-11-14 — Diabo Loiro na roupa do conceito (issue #44, resposta do Breno) (Claude, thread do Alisson)
+
+**Pedido:** o Diabo não pode ficar de gi; usar a roupa do `d_conceito.png` (branch `bosses`), mais chefão, mesmas asas,
+todos os quadros na roupa nova, golpes/caixas/tempos iguais.
+
+**Feito:** `ferramentas/diabo_terno.py` troca o `diabo_arte.py` (apagado). Recorta as 49 folhas `d_*` da `bosses`, põe
+na escala do corpo 3x, dá o acabamento de chefão (brasa, ouro, sombra, olho aceso, luz do chão), reduz a 48 cores e
+grava em `sprites/hazaki/diabo_terno/`. O `diabo_loiro.py` casa cada desenho do Hazak no .sff com o quadro HD de origem
+(folha, número) e põe no lugar o quadro de mesmo número da folha do terno, alinhado pelo apoio dos pés. 395 desenhos,
+nenhum no gi. 20 folhas sem par usam a mais parecida (lista `PARECIDA`). O .sff foi de 9 para 15 MB.
+Robô hazaki 238 PASS / 0 FAIL (roteiro novo "vitrine" mostra os golpes na roupa). Detalhes em `docs/hazak-44/LEIA-ME.md`.

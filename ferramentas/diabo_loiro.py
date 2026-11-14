@@ -10,7 +10,7 @@ Golpes de longe (os estados estão no gerar_hazaki.py, cns_especiais; os efeitos
   Pedra       7401 a pedra subindo do chão (Explod), 1005 a pedra em voo (projétil), 7402 a pedra quebrando
   Bola de ki  7410 o ki juntando nas mãos (Explod), 1605 a bola vermelha (projétil), 7411 a bola estourando
 Diabo Loiro (o Despertar do Hazak, que até aqui não existia no jogo):
-  arte        cada desenho 3x do corpo ganha o gêmeo do Diabo (diabo_arte.py) no grupo + 20000, e o
+  arte        cada desenho 3x do corpo ganha o gêmeo do Diabo no terno do conceito (diabo_terno.py) no grupo + 20000, e o
               [RemapPreset despertado] troca um pelo outro enquanto o var(20) corre (como no Pengaró e no Gutto)
   cena        estado 2000 (x + y com a barra cheia): bate o pé, olha para trás e pergunta "Ô vida, posso despertar?";
               a patroa (7450-7452) entra, faz que sim e sai; no último desenho ele vira o Diabo num estouro de ouro
@@ -29,7 +29,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import conferir_sff as cs  # noqa: E402
-import diabo_arte  # noqa: E402
+import diabo_terno  # noqa: E402
 import efeitos  # noqa: E402
 import numpy as np  # noqa: E402
 from PIL import Image  # noqa: E402
@@ -88,8 +88,10 @@ def texto_acao(grupo, quadros, ticks, laco, clsn):
 
 
 def sprites_do_diabo(nos):
-    """[(grupo, índice, RGBA, eixo x, eixo y)] do Diabo, um para cada desenho do corpo (índices 1 a 15 da paleta)."""
-    saida, vistos = [], set()
+    """[(grupo, índice, RGBA, eixo x, eixo y)] do Diabo, um para cada desenho do corpo (índices 1 a 15 da paleta):
+    o quadro de mesmo número da folha do terno do conceito (ferramentas/diabo_terno.py), alinhado pelo apoio."""
+    terno = diabo_terno.Terno()
+    saida, vistos, fora = [], set(), []
     for n in nos:
         k = (n["g"], n["i"])
         if k in vistos or n.get("png") or n["g"] == 9000 or n["g"] >= DIABO:
@@ -98,9 +100,14 @@ def sprites_do_diabo(nos):
         ind = np.frombuffer(n["px"], np.uint8).reshape(n["h"], n["w"])
         if ind.max() > 15 or not ind.any():
             continue
-        img, (ex, ey) = diabo_arte.diabo(ind, (n["x"], n["y"]))
-        cx = img.getchannel("A").getbbox()
-        saida.append((n["g"] + DIABO, n["i"], img.crop(cx), ex - cx[0], ey - cx[1]))
+        par = terno.diabo(ind > 0, (n["x"], n["y"]))
+        if par is None:
+            fora.append(k)  # objeto ou efeito na paleta do corpo (não é ele): fica como está
+            continue
+        img, (ex, ey) = par
+        saida.append((n["g"] + DIABO, n["i"], img, ex, ey))
+    if fora:
+        print(f"hazaki: {len(fora)} sprites da paleta do corpo sem quadro do corpo (ficam sem gêmeo do Diabo): {fora}")
     return saida
 
 
