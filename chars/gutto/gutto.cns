@@ -1161,7 +1161,7 @@ victory8 = "Levanta que eu dou mais uma."
 [Data]
 life = 1000
 power = 3000
-attack = 100
+attack = 90
 defence = 100
 fall.defence_up = 50
 liedown.time = 45

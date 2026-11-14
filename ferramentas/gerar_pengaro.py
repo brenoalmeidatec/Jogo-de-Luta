@@ -4075,6 +4075,8 @@ def main():
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
     import parry  # parry em cima e embaixo, faísca própria e sem a "rede de futebol" (docs/parry.md)
     parry.aplicar("pengaro", SAIDA)
+    import balanceamento  # números do item 7 (attack, defence, velocidade)
+    balanceamento.aplicar("pengaro", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
     if SEM_FOLHA_BOSS:
         print("Endiabrado sem folha própria (pose emprestada do boss):", " ".join(sorted(SEM_FOLHA_BOSS)))

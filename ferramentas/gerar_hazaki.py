@@ -1286,6 +1286,8 @@ def main():
     (SAIDA / "movelist.dat").write_text(hg.MOVELIST, encoding="utf-8", newline="\n")
     import parry  # parry em cima e embaixo, faísca própria e sem a "rede de futebol" (docs/parry.md)
     parry.aplicar("hazaki", SAIDA)
+    import balanceamento  # números do item 7 (attack, defence, velocidade)
+    balanceamento.aplicar("hazaki", SAIDA)
     print(f"{gravados} sprites no .sff (de {len(s.lista)} carregados), {len(a.acoes)} ações em {SAIDA}")
     if "--contato" in sys.argv:
         contato(Path(sys.argv[sys.argv.index("--contato") + 1]), s)

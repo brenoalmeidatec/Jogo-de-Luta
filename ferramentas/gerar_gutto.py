@@ -431,6 +431,8 @@ def main():
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
     import parry  # parry em cima e embaixo, faísca própria e sem a "rede de futebol" (docs/parry.md)
     parry.aplicar("gutto", SAIDA)
+    import balanceamento  # números do item 7 (attack, defence, velocidade)
+    balanceamento.aplicar("gutto", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

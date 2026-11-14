@@ -390,8 +390,8 @@ victory8 = "Essa luva aqui não é enfeite."
 [Data]
 life = 1000
 power = 3000
-attack = 100
-defence = 100
+attack = 125
+defence = 105
 fall.defence_up = 50
 liedown.time = 45
 airjuggle = 15
@@ -419,9 +419,9 @@ shadowoffset = 0
 draw.offset = 0,0
 
 [Velocity]
-walk.fwd = 2.7
+walk.fwd = 3.4
 walk.back = -2.2
-run.fwd = 5.6, 0
+run.fwd = 7.0, 0
 run.back = -5.2,-3.4
 jump.neu = 0,-8.4
 jump.back = -2.8

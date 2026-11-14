@@ -2235,3 +2235,38 @@ menu); a `.bat` nova não rodou no Windows.
 
 **Sugestões:** acento na fonte `naza_hud` para PENGARÓ; verde na paleta do Raiclaven endiabrado (#38); folhas de parry
 do endiabrado; o risco cortado no alto da tela de continuar.
+## 2026-11-14 — Balanceamento (missão 2026-11-14, item 7; Claude, thread do Alisson)
+
+**Pedido do Breno:** ver dano, velocidade, alcance, recuperação, barra e transformação de cada lutador para nenhum
+ficar forte ou fraco demais, com luta CPU x CPU e os números do robô.
+
+**Como medi:** `ferramentas/torneio_cpu.py` (novo) põe as duas CPUs no nível 8 em cada par, dos dois lados, numa cópia
+do motor na nuvem; `ferramentas/robo/torneio.lua` anota cada round e reinicia sem deixar a luta acabar.
+
+**O que os números mostraram (antes):**
+- Pengaró, Gutto e Raiclaven usam o mesmo kit, com o mesmo dano em todo golpe; a diferença entre eles vem do
+  alcance do desenho (golpes do Gutto e do Raiclaven vão mais longe).
+- O CK tem o mesmo dano, mas o alcance é bem menor: o jab chega a 117 contra 204 do Pengaró e 222 do Gutto. A caixa
+  bate com a luva do desenho (é o boxe dele), então não estiquei caixa nenhuma.
+- O Hazak é o mais rápido (jab sai no 3º tick e acaba no 13º, contra 4 e 19), mas tem 900 de vida, defence 90 e
+  golpes com 55% a 80% do dano dos outros.
+- Torneio 1 (200 rounds): Raiclaven 79%, Gutto 74%, Pengaró 58%, CK 25%, Hazak 15%.
+
+**Mudou** (`ferramentas/balanceamento.py`, chamado no fim dos 5 geradores):
+| Lutador | Antes | Depois | Por quê |
+|---|---|---|---|
+| CK | attack 100, defence 100, walk 2,7, run 5,6 | attack 125, defence 105, walk 3,4, run 7,0 | alcance curto: chega mais rápido, bate e aguenta mais (boxeador) |
+| Hazak | attack 100, defence 90 | attack 125, defence 100 | segue rápido e com 900 de vida, mas o golpe passa a doer |
+| Gutto | attack 100 | attack 90 | alcance maior que o do Pengaró com o mesmo dano |
+| Raiclaven | attack 100 | attack 90 | idem |
+| Pengaró | — | — | referência |
+
+**Depois:** torneio 2 (128 rounds): Gutto 62, Pengaró 53, Hazak 50, Raiclaven 48, CK 36; torneio 4 (200 rounds):
+Pengaró 65%, CK 49%, Raiclaven 49%, Hazak 48%, Gutto 40%. Entre Pengaró, Gutto e Raiclaven a diferença muda de um
+torneio para outro (mesmo kit): é sorte da CPU, não número.
+
+**Não mexido:** barra e duração da transformação. A CPU do motor nunca usou o Despertar em 700 rounds (a barra chega a
+~1200 de 3000), então não dá para medir por CPU x CPU; precisa de gente jogando. Dano de cada golpe e frame data
+ficaram como estavam (só o multiplicador geral mudou).
+
+**Robô depois do ajuste:** Pengaró 190/0, CK 228/0, Gutto 185/0, Raiclaven 185/0, Hazak 213/0.
