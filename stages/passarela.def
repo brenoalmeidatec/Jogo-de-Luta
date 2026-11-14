@@ -1,0 +1,366 @@
+; Gerado por ferramentas/gerar_cenario.py. Edite a descrição do cenário e gere de novo, não este arquivo.
+[Info]
+name = "Passarela"
+displayname = "Passarela"
+versiondate = 11,11,2026
+mugenversion = 1.1
+ikemenversion = 1.0
+author = "Nazafights"
+
+[Camera]
+startx = 0
+starty = 0
+boundleft = -89
+boundright = 89
+boundhigh = -160
+boundlow = 0
+verticalfollow = 0.6
+floortension = 120
+tension = 200
+zoomin = 1
+zoomout = 1
+startzoom = 1
+
+[PlayerInfo]
+p1startx = -280
+p1starty = 0
+p1facing = 1
+p2startx = 280
+p2starty = 0
+p2facing = -1
+p3startx = -310
+p3starty = 0
+p3facing = 1
+p4startx = 310
+p4starty = 0
+p4facing = -1
+leftbound = -729
+rightbound = 729
+
+[Bound]
+screenleft = 60
+screenright = 60
+
+[StageInfo]
+zoffset = 660
+autoturn = 1
+resetBG = 1
+localcoord = 1280, 720
+xscale = 1
+yscale = 1
+portraitscale = 1
+
+[Shadow]
+intensity = 96
+color = 0,0,0
+yscale = 0.3
+fade.range = 0,0
+
+[Reflection]
+intensity = 0
+
+[Music]
+bgmusic = musicas/passarela.ogg
+bgmvolume = 100
+bgmloop = 1
+bgmloopstart = 3687591
+
+[BGdef]
+spr = passarela.sff
+debugbg = 0
+
+[Begin Action 9000]
+9001,0, 0,0, 8
+9001,1, 0,0, 8
+9001,2, 0,0, 8
+9001,3, 0,0, 8
+9001,4, 0,0, 8
+9001,5, 0,0, 8
+9001,6, 0,0, 8
+9001,7, 0,0, 8
+9001,8, 0,0, 8
+9001,9, 0,0, 8
+9001,10, 0,0, 8
+9001,11, 0,0, 8
+
+[BG ceu]
+type = normal
+spriteno = 0, 0
+id = 100
+layerno = 0
+start = -640, -200
+delta = 0, 0
+mask = 1
+roundpos = 0
+
+[BG nuvens]
+type = normal
+spriteno = 1, 0
+id = 101
+layerno = 0
+start = -768, -200
+delta = 0.05, 0.05
+mask = 1
+tile = 1, 0
+tilespacing = 0, 0
+velocity = -0.1, 0
+roundpos = 0
+
+[BG halo]
+type = anim
+actionno = 1002
+id = 102
+layerno = 0
+start = -608, -54
+delta = 0.02, 0.02
+mask = 1
+trans = add
+roundpos = 0
+
+[BG sol]
+type = normal
+spriteno = 3, 0
+id = 103
+layerno = 0
+start = -528, 26
+delta = 0.02, 0.02
+mask = 1
+roundpos = 0
+
+[BG garca]
+type = anim
+actionno = 1004
+id = 104
+layerno = 0
+start = 860, 30
+delta = 0.3, 0.3
+mask = 1
+tile = 1, 0
+tilespacing = 2672, 32
+velocity = -0.9, 0
+sin.y = 14, 240, 0
+roundpos = 0
+
+[BG rio]
+type = normal
+spriteno = 5, 0
+id = 105
+layerno = 0
+start = -730, -195
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG agua]
+type = anim
+actionno = 1006
+id = 106
+layerno = 0
+start = -729, 314
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG reflexo]
+type = anim
+actionno = 1007
+id = 107
+layerno = 0
+start = -535, 314
+delta = 1, 1
+mask = 1
+trans = add
+roundpos = 0
+
+[BG neblina_longe]
+type = normal
+spriteno = 8, 0
+id = 108
+layerno = 0
+start = -768, 244
+delta = 1, 1
+mask = 1
+trans = add
+tile = 1, 0
+tilespacing = 0, 0
+velocity = 0.12, 0
+roundpos = 0
+
+[BG canoa]
+type = anim
+actionno = 1009
+id = 109
+layerno = 0
+start = -1540, 310
+delta = 1, 1
+mask = 1
+tile = 1, 0
+tilespacing = 3130, 76
+velocity = 0.7, 0
+sin.y = 2, 90, 0
+roundpos = 0
+
+[BG frente]
+type = normal
+spriteno = 10, 0
+id = 110
+layerno = 0
+start = -730, 274
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG lampiao1]
+type = anim
+actionno = 1011
+id = 111
+layerno = 0
+start = -532, 243
+delta = 1, 1
+mask = 1
+trans = add
+roundpos = 0
+
+[BG lampiao2]
+type = anim
+actionno = 1012
+id = 112
+layerno = 0
+start = -439, 243
+delta = 1, 1
+mask = 1
+trans = add
+roundpos = 0
+
+[BG lampiao3]
+type = anim
+actionno = 1013
+id = 113
+layerno = 0
+start = 344, 243
+delta = 1, 1
+mask = 1
+trans = add
+roundpos = 0
+
+[BG lampiao4]
+type = anim
+actionno = 1014
+id = 114
+layerno = 0
+start = 439, 243
+delta = 1, 1
+mask = 1
+trans = add
+roundpos = 0
+
+[BG neblina_perto]
+type = normal
+spriteno = 15, 0
+id = 115
+layerno = 0
+start = -768, 354
+delta = 1, 1
+mask = 1
+trans = add
+tile = 1, 0
+tilespacing = 0, 0
+velocity = -0.2, 0
+sin.y = 4, 300, 0
+roundpos = 0
+
+[BG neblina_rasteira]
+type = normal
+spriteno = 16, 0
+id = 116
+layerno = 1
+start = -768, 640
+delta = 1.2, 1.2
+mask = 1
+trans = add
+tile = 1, 0
+tilespacing = 0, 0
+velocity = 0.3, 0
+roundpos = 0
+
+[Begin Action 1002]
+2,0, 0,0, 10,,A
+2,1, 0,0, 10,,A
+2,2, 0,0, 10,,A
+2,3, 0,0, 10,,A
+2,4, 0,0, 10,,A
+2,5, 0,0, 10,,A
+2,6, 0,0, 10,,A
+2,7, 0,0, 10,,A
+
+[Begin Action 1004]
+4,0, 0,0, 6
+4,1, 0,0, 6
+4,2, 0,0, 6
+4,3, 0,0, 6
+4,4, 0,0, 6
+4,5, 0,0, 6
+4,6, 0,0, 6
+4,7, 0,0, 6
+
+[Begin Action 1006]
+6,0, 0,0, 9
+6,1, 0,0, 9
+6,2, 0,0, 9
+6,3, 0,0, 9
+6,4, 0,0, 9
+6,5, 0,0, 9
+6,6, 0,0, 9
+6,7, 0,0, 9
+
+[Begin Action 1007]
+7,0, 0,0, 6,,A
+7,1, 0,0, 6,,A
+7,2, 0,0, 6,,A
+7,3, 0,0, 6,,A
+7,4, 0,0, 6,,A
+7,5, 0,0, 6,,A
+7,6, 0,0, 6,,A
+7,7, 0,0, 6,,A
+
+[Begin Action 1009]
+9,0, 0,0, 8
+9,1, 0,0, 8
+9,2, 0,0, 8
+9,3, 0,0, 8
+9,4, 0,0, 8
+9,5, 0,0, 8
+9,6, 0,0, 8
+9,7, 0,0, 8
+
+[Begin Action 1011]
+11,0, 0,0, 7,,A
+11,1, 0,0, 5,,A
+11,2, 0,0, 9,,A
+11,3, 0,0, 4,,A
+11,4, 0,0, 8,,A
+11,5, 0,0, 6,,A
+
+[Begin Action 1012]
+12,0, 0,0, 5,,A
+12,1, 0,0, 9,,A
+12,2, 0,0, 4,,A
+12,3, 0,0, 8,,A
+12,4, 0,0, 6,,A
+12,5, 0,0, 7,,A
+
+[Begin Action 1013]
+13,0, 0,0, 9,,A
+13,1, 0,0, 4,,A
+13,2, 0,0, 8,,A
+13,3, 0,0, 6,,A
+13,4, 0,0, 7,,A
+13,5, 0,0, 5,,A
+
+[Begin Action 1014]
+14,0, 0,0, 4,,A
+14,1, 0,0, 8,,A
+14,2, 0,0, 6,,A
+14,3, 0,0, 7,,A
+14,4, 0,0, 5,,A
+14,5, 0,0, 9,,A

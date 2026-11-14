@@ -1,0 +1,351 @@
+{
+ "id": "passarela",
+ "nome": "Passarela",
+ "musica": "musicas/passarela.ogg",
+ "musica_nome": "Cenário Passarela",
+ "tela": [
+  1280,
+  720
+ ],
+ "largura_mundo": 1458,
+ "subida": 160,
+ "chao_y": 660,
+ "camera": {
+  "tensao": 200,
+  "segue_vertical": 0.6,
+  "tensao_chao": 120
+ },
+ "jogadores": {
+  "p1x": -280,
+  "p2x": 280,
+  "margem_tela": 60
+ },
+ "reflexo": 0,
+ "camadas": [
+  {
+   "nome": "ceu",
+   "imagem": "ceu.png",
+   "delta": [
+    0,
+    0
+   ],
+   "x": 0,
+   "y": -200
+  },
+  {
+   "nome": "nuvens",
+   "imagem": "nuvens.png",
+   "delta": [
+    0.05,
+    0.05
+   ],
+   "y": -200,
+   "velocidade": [
+    -0.1,
+    0
+   ],
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    0,
+    0
+   ]
+  },
+  {
+   "nome": "halo",
+   "folha": {
+    "imagem": "halo.png",
+    "n": 8
+   },
+   "ticks": 10,
+   "delta": [
+    0.02,
+    0.02
+   ],
+   "x": 32,
+   "y": -54,
+   "mistura": "soma"
+  },
+  {
+   "nome": "sol",
+   "imagem": "sol.png",
+   "delta": [
+    0.02,
+    0.02
+   ],
+   "x": 112,
+   "y": 26
+  },
+  {
+   "nome": "garca",
+   "folha": {
+    "imagem": "garca.png",
+    "n": 8
+   },
+   "ticks": 6,
+   "delta": [
+    0.3,
+    0.3
+   ],
+   "x": 1500,
+   "y": 30,
+   "velocidade": [
+    -0.9,
+    0
+   ],
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    2600,
+    0
+   ],
+   "seno_y": [
+    14,
+    240,
+    0
+   ]
+  },
+  {
+   "nome": "rio",
+   "imagem": "rio.png",
+   "delta": [
+    1,
+    1
+   ],
+   "y": -195
+  },
+  {
+   "nome": "agua",
+   "folha": {
+    "imagem": "agua.png",
+    "n": 8
+   },
+   "ticks": 9,
+   "delta": [
+    1,
+    1
+   ],
+   "x": -89,
+   "y": 314
+  },
+  {
+   "nome": "reflexo",
+   "folha": {
+    "imagem": "reflexo.png",
+    "n": 8
+   },
+   "ticks": 6,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 105,
+   "y": 314,
+   "mistura": "soma"
+  },
+  {
+   "nome": "neblina_longe",
+   "imagem": "neblina_longe.png",
+   "delta": [
+    1,
+    1
+   ],
+   "y": 244,
+   "velocidade": [
+    0.12,
+    0
+   ],
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    0,
+    0
+   ],
+   "mistura": "soma"
+  },
+  {
+   "nome": "canoa",
+   "folha": {
+    "imagem": "canoa.png",
+    "n": 8
+   },
+   "ticks": 8,
+   "delta": [
+    1,
+    1
+   ],
+   "x": -900,
+   "y": 310,
+   "velocidade": [
+    0.7,
+    0
+   ],
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    3000,
+    0
+   ],
+   "seno_y": [
+    2,
+    90,
+    0
+   ]
+  },
+  {
+   "nome": "frente",
+   "imagem": "frente.png",
+   "delta": [
+    1,
+    1
+   ],
+   "y": 274
+  },
+  {
+   "nome": "lampiao1",
+   "folha": {
+    "imagem": "lampiao.png",
+    "n": 6
+   },
+   "ticks": [
+    7,
+    5,
+    9,
+    4,
+    8,
+    6
+   ],
+   "delta": [
+    1,
+    1
+   ],
+   "x": 108,
+   "y": 243,
+   "mistura": "soma"
+  },
+  {
+   "nome": "lampiao2",
+   "folha": {
+    "imagem": "lampiao.png",
+    "n": 6
+   },
+   "ticks": [
+    5,
+    9,
+    4,
+    8,
+    6,
+    7
+   ],
+   "delta": [
+    1,
+    1
+   ],
+   "x": 201,
+   "y": 243,
+   "mistura": "soma"
+  },
+  {
+   "nome": "lampiao3",
+   "folha": {
+    "imagem": "lampiao.png",
+    "n": 6
+   },
+   "ticks": [
+    9,
+    4,
+    8,
+    6,
+    7,
+    5
+   ],
+   "delta": [
+    1,
+    1
+   ],
+   "x": 984,
+   "y": 243,
+   "mistura": "soma"
+  },
+  {
+   "nome": "lampiao4",
+   "folha": {
+    "imagem": "lampiao.png",
+    "n": 6
+   },
+   "ticks": [
+    4,
+    8,
+    6,
+    7,
+    5,
+    9
+   ],
+   "delta": [
+    1,
+    1
+   ],
+   "x": 1079,
+   "y": 243,
+   "mistura": "soma"
+  },
+  {
+   "nome": "neblina_perto",
+   "imagem": "neblina_perto.png",
+   "delta": [
+    1,
+    1
+   ],
+   "y": 354,
+   "velocidade": [
+    -0.2,
+    0
+   ],
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    0,
+    0
+   ],
+   "seno_y": [
+    4,
+    300,
+    0
+   ],
+   "mistura": "soma"
+  },
+  {
+   "nome": "neblina_rasteira",
+   "imagem": "neblina_rasteira.png",
+   "delta": [
+    1.2,
+    1.2
+   ],
+   "y": 640,
+   "velocidade": [
+    0.3,
+    0
+   ],
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    0,
+    0
+   ],
+   "mistura": "soma",
+   "frente": true
+  }
+ ]
+}
