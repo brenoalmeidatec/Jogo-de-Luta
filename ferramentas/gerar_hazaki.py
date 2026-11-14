@@ -520,9 +520,14 @@ def montar_air(s, faiscas):
         Q(n, F("rolada_tatame 2/3 3/3 4/3 5/3"), AGACHADO)
     Q(5300, F("apanha 1/8 0/8"))
 
-    # projéteis (provisórios)
+    # projéteis: a pedra e a bola de ki. Os desenhos daqui são trocados pelos do Blender no diabo_loiro.py (#44)
     Q(1005, [(f"fx_lasca{i}", 2) for i in range(8)], [(-12, -14, 12, 2)])
     Q(1605, [(f"fx_estatueta{i}", 3) for i in range(8)], [(-9, -20, 9, 0)])
+    # Diabo Loiro (#44, estados e efeitos no diabo_loiro.py): a cena do "Ô vida, posso despertar?" (bate o pé, olha
+    # para trás e pede; a patroa entra, faz que sim e sai) e a pose em que ele vira o Diabo (último desenho), e a
+    # Rajadona de Ki das Trevas (carrega com as mãos abertas e segura o soco enquanto o raio sai)
+    Q(2000, F(f"despertar_pedido 0/6 1/8 2/6 3/12 4/30 5/20 6/40 7/{DESPERTAR_POSE}"))
+    Q(1650, F(f"pose_super 1/3 3/3 4/10 5/10 soco_reto 3/2 4/{RAJADA_SEGURA} 5/8 6/6 7/4"))
 
     # golpes
     for g in hg.NORMAIS + hg.CORRENTES + hg.KOMBOS:
@@ -751,6 +756,10 @@ def cns_agarroes():
     c.append(ctl(846, "Chao", "SelfState", "trigger1 = Vel Y > 0", "trigger1 = Pos Y >= 0", "value = 5100"))
     return "".join(c)
 
+
+# Diabo Loiro: quanto dura a pose da transformação (último desenho da cena) e quanto ele segura o soco da Rajadona
+DESPERTAR_POSE = 40
+RAJADA_SEGURA = 72
 
 # Pedra: tick em que ela pula do chão (pé no asfalto, chute_canela 3) e em que sai voando (soco_reto/chute 4), e o
 # ponto de saída do projétil (na frente do punho ou do pé). A subida do Explod (vel -6, accel .18) leva os 17 ticks.
@@ -1075,7 +1084,7 @@ def montar_cns():
              "; Gerado por ferramentas/gerar_hazaki.py. Edite lá, não aqui."),
             ("; var(20) tempo de Despertar, var(21) ressaca",
              "; var(12) Pega Bolado defendido, var(13)/(14) passagens do Rapidinho,\n"
-             "; var(20) e var(37) reservadas para o Despertar (sempre 0: ele não entra nesta versão)"),
+             "; var(20) tempo do Diabo Loiro (Despertar), var(37) arte do Diabo ligada (diabo_loiro.py)"),
             ("life = 1000", "life = 900"), ("defence = 100", "defence = 90"),
             ("walk.fwd = 2.7", "walk.fwd = 3.4"), ("walk.back = -2.2", "walk.back = -2.8"),
             ("run.fwd = 5.6, 0", "run.fwd = 7.2, 0"), ("run.back = -5.2,-3.4", "run.back = -6.4,-3.6")):

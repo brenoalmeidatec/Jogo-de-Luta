@@ -39,15 +39,16 @@ SAIDA = eb.SAIDA / "hazaki"
 
 PEDRA = "#241c1a,#4a3c34,#6e5c50,#94806e,#b8a48e,#dccab0"
 VERMELHO = "#2a0408,#6a0a10,#b0141a,#e83a26,#ff7a4a,#ffc8a0,#fff4e8"
-TREVAS = "#120408,#2a080c,#4e0c10,#8a1610,#cc3a10,#f08a1c,#ffd250,#fff6c8"
+TREVAS = "#050205,#14060c,#3a0a12,#8a1610,#cc3a10,#f08a1c,#ffd250,#fff6c8"  # preto, vermelho e ouro (#44)
 
+# grandes e pesados (Breno, #47: poder de longe fraco foi reprovado)
 # efeito -> (largura, altura em px de jogo, quadros, ticks, pivô "centro"/"esquerda", paleta)
 EFEITOS = {
-    "pedra": ((26, 26), 8, 2, "centro", PEDRA),
-    "pedra_quebra": ((50, 50), 8, 2, "centro", PEDRA),
-    "ki_carga": ((44, 44), 10, 2, "centro", VERMELHO),
-    "ki_bola": ((40, 28), 6, 2, "bola", VERMELHO),
-    "ki_estouro": ((60, 60), 8, 2, "centro", VERMELHO),
+    "pedra": ((42, 42), 8, 2, "centro", PEDRA),
+    "pedra_quebra": ((84, 84), 8, 2, "centro", PEDRA),
+    "ki_carga": ((64, 64), 10, 2, "centro", VERMELHO),
+    "ki_bola": ((74, 50), 6, 2, "bola", VERMELHO),
+    "ki_estouro": ((104, 104), 8, 2, "centro", VERMELHO),
     "rajada": ((320, 76), 17, 3, "esquerda", TREVAS),
 }
 
@@ -274,6 +275,48 @@ def renderizar(efeito, amostras, pasta):
     return quadros, round(max(larg, alt) / ESCALA_BLENDER), ticks, pivo, cores
 
 
+def fumaca_das_trevas(sprites, destino):
+    """Rajadona das trevas (#44): casca preta, fumaca preta em bolhas nas bordas e no rastro, miolo vermelho/ouro."""
+    from PIL import ImageDraw, ImageFilter
+    escuro = {(58, 10, 18): (16, 5, 12), (20, 6, 12): (6, 2, 6)}
+    novos = []
+    for i, im in enumerate(sprites):
+        im = im.copy()
+        d = im.load()
+        w, h = im.size
+        for y in range(h):
+            for x in range(w):
+                c = d[x, y]
+                if c[3] and c[:3] in escuro:
+                    d[x, y] = escuro[c[:3]] + (c[3],)
+        corpo = im.getchannel("A").point(lambda v: 255 if v > 0 else 0).filter(ImageFilter.MinFilter(5))
+        caixa = corpo.getbbox()
+        base = Image.new("RGBA", im.size, (0, 0, 0, 0))
+        if caixa:
+            r = random.Random(700 + i)
+            pc = corpo.load()
+            bolhas = []
+            for x in range(caixa[0] + 6, caixa[2] - 4, 5):
+                col = [y for y in range(caixa[1], caixa[3]) if pc[x, y]]
+                if not col:
+                    continue
+                for y, lado in ((col[0], -1), (col[-1], 1)):
+                    rr = r.randint(4, 9)
+                    bolhas.append((x + r.randint(-2, 2), y + lado * r.randint(0, rr // 2 + 1), rr))
+            for _ in range(8):  # rastro de fumaca subindo da boca do raio
+                bolhas.append((caixa[0] + r.randint(0, 40), caixa[1] - r.randint(0, 6), r.randint(4, 8)))
+            dr = ImageDraw.Draw(base)
+            for x, y, rr in bolhas:
+                dr.ellipse((x - rr - 1, y - rr - 1, x + rr + 1, y + rr + 1), fill=(4, 1, 4, 255))
+            for x, y, rr in bolhas:
+                dr.ellipse((x - rr, y - rr, x + rr, y + rr), fill=(14, 5, 13, 255))
+                dr.ellipse((x - rr + 2, y - rr + 1, x + rr // 3, y - rr // 3), fill=(42, 14, 38, 255))
+        base.alpha_composite(im)
+        base.save(destino / f"{i:02d}.png")
+        novos.append(base)
+    return novos
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("efeitos", nargs="*", default=list(EFEITOS))
@@ -286,6 +329,8 @@ def main():
             destino = SAIDA / efeito
             sprites = pixelfx.processar(quadros, destino, pixelfx.ler_paleta(cores), tam=tam, bloco=1, previa=False,
                                         gama=GAMA.get(efeito, 1.1))
+            if efeito == "rajada":
+                sprites = fumaca_das_trevas(sprites, destino)
             (destino / "folha.png").unlink(missing_ok=True)
             w, h = sprites[0].size
             px = {"centro": (w // 2, h // 2), "esquerda": (round(h * 0.45), h // 2),

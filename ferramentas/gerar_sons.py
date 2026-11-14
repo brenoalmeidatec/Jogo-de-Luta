@@ -1174,8 +1174,12 @@ ESPECIAIS = {
         3402: (None, [("T0", "50,2")]), 3403: (None, [("T0", "50,4")]),
         2000: (None, [("T20", "50,4"), ("T55", "F31,1"), ("T60", "50,3")])},
     "hazaki": {
-        1000: ("50,9", [("T0", "50,4"), ("proj", "50,5")]), 1001: ("50,9", [("T0", "50,4"), ("proj", "50,5")]),
-        1600: ("50,1", [("proj", "F36,0")]), 1601: ("50,1", [("proj", "F36,0")]),
+        # Pedra (#44): a pedra pula do chão no tick 8 (gerar_hazaki.PEDRA) e sai voando no projétil
+        1000: ("50,9", [("T8", "50,4"), ("proj", "50,5")]), 1001: ("50,9", [("T8", "50,4"), ("proj", "50,5")]),
+        # Bola de ki (#44): carga nas mãos no tick 4 (gerar_hazaki.KI) e a bola saindo
+        1600: ("50,1", [("T4", "50,6"), ("proj", "50,7")]), 1601: ("50,1", [("T4", "50,6"), ("proj", "50,7")]),
+        # Rajadona de Ki das Trevas do Diabo Loiro (#44, diabo_loiro.py): carga e o raio de 2,4 s
+        1650: ("53", [("T4", "50,6"), ("proj", "50,8")]),
         1100: (None, [("T0", "50,2")]), 1101: (None, [("T0", "50,2")]),
         1200: (None, [("T0", "50,3")]), 1201: (None, [("T0", "50,3")]),
         3000: (None, [("T0", "50,3")])},
