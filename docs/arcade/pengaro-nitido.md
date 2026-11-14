@@ -4,9 +4,6 @@ Missão de [`../missao-alisson-2026-11-13.md`](../missao-alisson-2026-11-13.md),
 redesenho de 2026-11-13 (commit `dc3427bf`, 34 folhas novas). Ele quer o Pengaró **com o desenho de antes**, só que
 nítido como o CK e o Gutto, e com a pele bem escura. O endiabrado não muda.
 
-![Rosto antes e depois](img/pengaro_nitido_rosto.png)
-![Comparação com o redesenho e o CK](img/pengaro_nitido_comparacao.png)
-
 ## O que foi feito
 
 1. **Revert do `dc3427bf`** (`git revert`): voltaram `quadros_arcade/`, `quadros_arcade_hd/`, o `.air`, o `.sff` e o
