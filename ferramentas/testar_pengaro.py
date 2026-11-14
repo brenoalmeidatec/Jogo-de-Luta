@@ -198,6 +198,10 @@ def rodar_linux(motor, lutador, tmp):
     shutil.copytree(motor, copia, symlinks=True)
     for nome in (lutador, "hazaki"):
         shutil.copytree(RAIZ / "chars" / nome, copia / "chars" / nome, dirs_exist_ok=True)
+    # layout Nazafights como o .bat instala (motif/INSTALAR.md): sem ele o HUD do motor puro mostra o retrato HD gigante
+    if (RAIZ / "motif" / "nazafight" / "system.def").exists():
+        shutil.copytree(RAIZ / "motif" / "nazafight", copia / "data" / "nazafight", dirs_exist_ok=True)
+        INI_LINUX["Motif"] = "data/nazafight/system.def"
     saida = tmp / "resultado.txt"
     preparar(copia, motor, lutador, saida.as_posix())
     ajustar_ini(copia)

@@ -1971,5 +1971,6 @@ intocado. Requisito: `apt install xvfb libgl1-mesa-dri`.
 - branch `claude/project-thread-j4685w`: Gutto 146/0, Raiclaven 146/0 (var(37) = 1 no meio do 3100: falha sumiu).
 - branch `claude/project-thread-xhv5a2`: Pengaró 151/0. `mugen`: Pengaró 151/0 (motor baixado do zero).
 
-**Sugestões:** o robô ainda não tira print; dá para tirar com `import -display :99 -window root` durante a luta.
+No Linux o robô instala o layout `motif/nazafight` (como o `.bat`); sem ele o HUD do motor puro mostrava o retrato HD
+gigante e cortado no print. **Sugestões:** o robô ainda não tira print sozinho; dá para tirar com `import -display :99 -window root` durante a luta.
 Um GitHub Action com esse modo rodaria o robô a cada push.
