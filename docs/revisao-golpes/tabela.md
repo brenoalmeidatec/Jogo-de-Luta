@@ -1,8 +1,8 @@
 # Revisão de todos os golpes (issues #45 e #48)
 
 Feita em 2026-11-14 sobre a `mugen` com os efeitos (#38), os sons (#46) e os agarrões e poderes dos despertados (#47)
-já dentro. O Hazak novo (#44) ainda não entrou; quando entrar, a revisão roda de novo nele (as ferramentas abaixo são
-pós-passos e refazem tudo sozinhas).
+já dentro. O Hazak novo (#44, mugen 7ef834d6) foi revisado depois que juntou: 61 golpes medidos, nenhum erro de
+caixa, congelamento, tremida ou reação (o `legibilidade.py` já roda no fim do `gerar_hazaki.py`).
 
 - Vídeo dos agarrões no jogo: [`agarroes.mp4`](agarroes.mp4) (cinco básicos e os três despertados da #47).
 - Caixas de golpe antes e depois: [`caixas_antes_depois.png`](caixas_antes_depois.png).
@@ -34,7 +34,7 @@ Golpes do meio de uma rajada (supers de várias passagens, como o Rapidinho do H
 |---|---|---|---|
 | CK, Gutto, Raiclaven | golpes do despertado (Desp: correntes, kombo, Passo de Sombra...) | caixa passa 14 a 36 px do membro: o desenho do despertado é mais curto que o normal no mesmo quadro | encostar a caixa pelo desenho do despertado (a ferramenta hoje usa o maior dos dois) |
 | Gutto | Golpe no ar (610, 611) e Afastar no ar (650) | caixa 30 a 36 px além do pé | idem, caixa por quadro |
-| Hazak | Super (3002, 3003, 3201) | contato sem preparo nas passagens | entra junto com o Hazak novo (#44) |
+| Hazak | Supers Faixa no Asfalto e Rapidinho (passagens 3003 e 3201) | contato sem preparo nas passagens do meio da rajada | de propósito (rajada rápida); só mexer se o Breno achar confuso no jogo |
 
 ## 3. Golpes sem sentido ou sem graça: para o Breno decidir antes de refazer
 
@@ -57,4 +57,7 @@ fica com o Breno.
 | CK | Mão de Chão Possuída (Modo Ratão) | é o uppercut normal, não vai ao chão | folha da mão no chão puxando a sombra |
 | Todos | Agarrões | a mão ainda não segura o oponente de verdade: a pose de agarrar é a mesma da tentativa | folha própria de agarrão (pegada e pancada segurando) por lutador |
 
-O Hazak (Pedra, Bola de ki, Diabo Loiro) está sendo refeito na #44 e entra aqui depois.
+| Hazak | Pega Bolado (← ↓ + chute) | o nome fala em pegar, mas o golpe é uma sola sentada no chão | renomear (ex.: "Sola de Tatame") ou fazer o agarrão de chão |
+| Hazak | Bola de ki (→ ← + soco) | a pose de carga fica de braços baixos; quem mostra a carga é o brilho do efeito | folha de carga com as mãos juntas na cintura, se o Breno quiser mais clara |
+
+Pedra, Bola de ki, Rajadona de Ki das Trevas e o agarrão de fogo do Diabo Loiro vieram da #44 com vídeo próprio lá.
