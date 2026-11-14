@@ -1400,6 +1400,9 @@ type = HitDef
 trigger1 = Time = 7
 attr = S, NA
 damage = 85, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -1449,9 +1452,12 @@ value = 10215
 
 [State 215, Golpe]
 type = HitDef
-trigger1 = Time = 4
+trigger1 = Time = 7
 attr = S, NA
 damage = 80, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -1561,6 +1567,9 @@ type = HitDef
 trigger1 = Time = 9
 attr = S, NA
 damage = 95, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -1610,9 +1619,12 @@ value = 10245
 
 [State 245, Golpe]
 type = HitDef
-trigger1 = Time = 5
+trigger1 = Time = 7
 attr = S, NA
 damage = 85, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -1665,11 +1677,14 @@ type = HitDef
 trigger1 = Time = 12
 attr = S, HA
 damage = 90, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Back
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -1773,10 +1788,13 @@ value = 10410
 
 [State 410, Golpe]
 type = HitDef
-trigger1 = Time = 6
+trigger1 = Time = 7
 attr = C, NA
 damage = 90, 0
-animtype = Up
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
+animtype = Medium
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
@@ -1839,7 +1857,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 8, 8
 guard.pausetime = 6, 6
-sparkxy = -10, -70
+sparkxy = -10, -11
 sparkno = S(ifelse(var(20) > 0, 9230, 9200))
 guard.sparkno = S9202
 sparkscale = 1, 1
@@ -1885,13 +1903,16 @@ type = HitDef
 trigger1 = Time = 10
 attr = C, NA
 damage = 80, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Back
 guardflag = L
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
-sparkxy = -10, -70
+sparkxy = -10, -10
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
@@ -1935,14 +1956,17 @@ value = 10600
 
 [State 600, Golpe]
 type = HitDef
-trigger1 = Time = 5
+trigger1 = Time = 7
 attr = A, NA
 damage = 60, 0
-animtype = Light
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
+animtype = Medium
 guardflag = HA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 8, 8
+pausetime = 11, 11
 guard.pausetime = 6, 6
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9230, 9200))
@@ -1980,9 +2004,12 @@ value = 10610
 
 [State 610, Golpe]
 type = HitDef
-trigger1 = Time = 6
+trigger1 = Time = 7
 attr = A, NA
 damage = 75, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = HA
 hitflag = MAF
@@ -2025,14 +2052,17 @@ value = 10650
 
 [State 650, Golpe]
 type = HitDef
-trigger1 = Time = 7
+trigger1 = Time = 10
 attr = A, HA
 damage = 80, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Back
 guardflag = HA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -2164,11 +2194,14 @@ type = HitDef
 trigger1 = Time = 12
 attr = S, HA
 damage = 0, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Back
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -2271,180 +2304,259 @@ var(2) = command = "holdback"
 
 [State 810, Segura]
 type = TargetBind
-trigger1 = Time < 85
+trigger1 = Time < 111
 trigger1 = NumTarget
 pos = 34, 0
 
 [State 810, Escapou]
 type = ChangeState
 trigger1 = Time > 1
-trigger1 = Time < 22
+trigger1 = Time < 28
 trigger1 = enemynear,stateno != 820
 value = 0
 ctrl = 1
 
 [State 810, Perdeu]
 type = ChangeState
-trigger1 = Time > 22
-trigger1 = Time < 85
+trigger1 = Time > 28
+trigger1 = Time < 111
 trigger1 = !NumTarget
 value = 0
 ctrl = 1
 
 [State 810, Pancada 1: dano]
 type = TargetLifeAdd
-trigger1 = Time = 22
+trigger1 = Time = 28
 trigger1 = NumTarget
 value = -22
 
 [State 810, Pancada 1: faísca]
 type = Explod
-trigger1 = Time = 22
+trigger1 = Time = 28
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9235, 9205))
+anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 30, -92
+pos = 34, -92
 removetime = -2
 sprpriority = 5
-ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
 
 [State 810, Pancada 1: som]
 type = PlaySnd
-trigger1 = Time = 22
-value = 54,3 ; som:F5,3
+trigger1 = Time = 28
+value = S51,3
+
+[State 810, Pancada 1: tranco]
+type = TargetBind
+trigger1 = Time = [28, 33]
+trigger1 = NumTarget
+pos = 39, 0
 
 [State 810, Pancada 1: barra]
 type = PowerAdd
-trigger1 = Time = 22
+trigger1 = Time = 28
 trigger1 = NumTarget
 value = 11
 
 [State 810, Pancada 1: reage]
 type = TargetState
-trigger1 = Time = 22
+trigger1 = Time = 28
 trigger1 = NumTarget
 value = 822
 
+[State 810, Pancada 1: congela]
+type = Pause
+trigger1 = Time = 28
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 810, Pancada 1: treme]
+type = EnvShake
+trigger1 = Time = 28
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
 [State 810, Pancada 2: dano]
 type = TargetLifeAdd
-trigger1 = Time = 44
+trigger1 = Time = 56
 trigger1 = NumTarget
 value = -22
 
 [State 810, Pancada 2: faísca]
 type = Explod
-trigger1 = Time = 44
+trigger1 = Time = 56
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9235, 9205))
+anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 30, -92
+pos = 34, -92
 removetime = -2
 sprpriority = 5
-ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
 
 [State 810, Pancada 2: som]
 type = PlaySnd
-trigger1 = Time = 44
-value = 54,3 ; som:F5,3
+trigger1 = Time = 56
+value = S54,3
+
+[State 810, Pancada 2: tranco]
+type = TargetBind
+trigger1 = Time = [56, 61]
+trigger1 = NumTarget
+pos = 39, 0
 
 [State 810, Pancada 2: barra]
 type = PowerAdd
-trigger1 = Time = 44
+trigger1 = Time = 56
 trigger1 = NumTarget
 value = 11
 
 [State 810, Pancada 2: reage]
 type = TargetState
-trigger1 = Time = 44
+trigger1 = Time = 56
 trigger1 = NumTarget
 value = 825
 
+[State 810, Pancada 2: congela]
+type = Pause
+trigger1 = Time = 56
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 810, Pancada 2: treme]
+type = EnvShake
+trigger1 = Time = 56
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
 [State 810, Pancada 3: dano]
 type = TargetLifeAdd
-trigger1 = Time = 66
+trigger1 = Time = 84
 trigger1 = NumTarget
 value = -22
 
 [State 810, Pancada 3: faísca]
 type = Explod
-trigger1 = Time = 66
+trigger1 = Time = 84
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9235, 9205))
+anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 30, -92
+pos = 34, -92
 removetime = -2
 sprpriority = 5
-ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
 
 [State 810, Pancada 3: som]
 type = PlaySnd
-trigger1 = Time = 66
-value = 54,3 ; som:F5,3
+trigger1 = Time = 84
+value = S51,3
+
+[State 810, Pancada 3: tranco]
+type = TargetBind
+trigger1 = Time = [84, 89]
+trigger1 = NumTarget
+pos = 39, 0
 
 [State 810, Pancada 3: barra]
 type = PowerAdd
-trigger1 = Time = 66
+trigger1 = Time = 84
 trigger1 = NumTarget
 value = 11
 
 [State 810, Pancada 3: reage]
 type = TargetState
-trigger1 = Time = 66
+trigger1 = Time = 84
 trigger1 = NumTarget
 value = 826
 
+[State 810, Pancada 3: congela]
+type = Pause
+trigger1 = Time = 84
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 810, Pancada 3: treme]
+type = EnvShake
+trigger1 = Time = 84
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
 [State 810, Final: dano]
 type = TargetLifeAdd
-trigger1 = Time = 85
+trigger1 = Time = 111
 trigger1 = NumTarget
 value = -54
 
 [State 810, Final: faísca]
 type = Explod
-trigger1 = Time = 85
+trigger1 = Time = 111
 trigger1 = NumTarget
 anim = (ifelse(var(20) > 0, 9231, 9201))
 postype = p1
-pos = 30, -79
+pos = 34, -79
 removetime = -2
 sprpriority = 5
-ownpal = 1
+scale = .6, .6
+ignorehitpause = 1
+pausemovetime = 99
 
 [State 810, Final: som]
 type = PlaySnd
-trigger1 = Time = 85
-value = 52,2 ; som:F5,2
+trigger1 = Time = 111
+value = S52,2
 
 [State 810, Final: barra]
 type = PowerAdd
-trigger1 = Time = 85
+trigger1 = Time = 111
 trigger1 = NumTarget
 value = 27
 
+[State 810, Final: congela]
+type = Pause
+trigger1 = Time = 111
+trigger1 = NumTarget
+time = 14
+movetime = 0
+
 [State 810, Final: treme]
 type = EnvShake
-trigger1 = Time = 85
-time = 10
+trigger1 = Time = 111
+trigger1 = NumTarget
+time = 16
 freq = 150
-ampl = -4
+ampl = -5
 
 [State 810, Joga para trás]
 type = TargetState
-trigger1 = Time = 85
+trigger1 = Time = 111
 trigger1 = NumTarget
 trigger1 = var(2)
 value = 824
 
 [State 810, Joga]
 type = TargetState
-trigger1 = Time = 85
+trigger1 = Time = 111
 trigger1 = NumTarget
 trigger1 = !var(2)
 value = 823
 
 [State 810, Vira]
 type = Turn
-trigger1 = Time = 95
+trigger1 = Time = 121
 trigger1 = var(2)
 
 [State 810, Fim]
@@ -2454,15 +2566,24 @@ value = 0
 ctrl = 1
 
 [Statedef 820]
-type = A
+type = S
 movetype = H
 physics = N
 velset = 0,0
+ctrl = 0
 
 [State 820, Pose]
-type = ChangeAnim2
+type = ChangeAnim
 trigger1 = Time = 0
-value = 5030
+value = 5000
+elem = 1
+
+[State 820, Preso: pose]
+type = ChangeAnim
+trigger1 = Anim != 5000 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
 
 [State 820, Escape]
 type = SelfState
@@ -2474,6 +2595,7 @@ ctrl = 1
 
 [State 820, Solto]
 type = SelfState
+trigger1 = Time > 0
 trigger1 = !gethitvar(isbound)
 value = 5050
 
@@ -2768,7 +2890,7 @@ type = HitDef
 trigger1 = Time = 7
 attr = S, NA
 damage = 45, 0
-animtype = Medium
+animtype = Light
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
@@ -2889,11 +3011,14 @@ type = HitDef
 trigger1 = Time = 9
 attr = S, NA
 damage = 60, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 11, 11
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -2945,11 +3070,14 @@ type = HitDef
 trigger1 = Time = 8
 attr = S, NA
 damage = 70, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 11, 11
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -3128,7 +3256,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 8, 8
 guard.pausetime = 6, 6
-sparkxy = -10, -70
+sparkxy = -10, -12
 sparkno = S(ifelse(var(20) > 0, 9230, 9200))
 guard.sparkno = S9202
 sparkscale = 1, 1
@@ -3165,7 +3293,7 @@ value = F40,3
 
 [State 323, Golpe]
 type = HitDef
-trigger1 = Time = 6
+trigger1 = Time = 10
 attr = S, NA
 damage = 85, 0
 animtype = Heavy
@@ -3233,11 +3361,14 @@ type = HitDef
 trigger1 = Time = 8
 attr = S, NA
 damage = 60, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 11, 11
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -3289,11 +3420,14 @@ type = HitDef
 trigger1 = Time = 8
 attr = S, NA
 damage = 70, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 11, 11
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -3337,12 +3471,12 @@ x = 2.0
 
 [State 333, Freia]
 type = VelSet
-trigger1 = Time = 16
+trigger1 = Time = 18
 x = 0
 
 [State 333, Golpe]
 type = HitDef
-trigger1 = Time = 8
+trigger1 = Time = 10
 attr = S, NA
 damage = 110, 0
 animtype = Heavy
@@ -3446,11 +3580,14 @@ type = HitDef
 trigger1 = Time = 8
 attr = S, NA
 damage = 80, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = HA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 11, 11
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -3498,7 +3635,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 8, 8
 guard.pausetime = 6, 6
-sparkxy = -10, -70
+sparkxy = -10, -12
 sparkno = S(ifelse(var(20) > 0, 9230, 9200))
 guard.sparkno = S9202
 sparkscale = 1, 1
@@ -3535,14 +3672,17 @@ value = F40,0
 
 [State 343, Golpe]
 type = HitDef
-trigger1 = Time = 9
+trigger1 = Time = 10
 attr = S, NA
 damage = 70, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = HA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -3596,7 +3736,7 @@ type = HitDef
 trigger1 = Time = 7
 attr = S, NA
 damage = 55, 0
-animtype = Medium
+animtype = Light
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
@@ -3642,11 +3782,14 @@ type = HitDef
 trigger1 = Time = 8
 attr = S, NA
 damage = 65, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 11, 11
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -3688,7 +3831,7 @@ type = HitDef
 trigger1 = Time = 6
 attr = S, NA
 damage = 55, 0
-animtype = Medium
+animtype = Light
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
@@ -3789,11 +3932,14 @@ type = HitDef
 trigger1 = Time = 8
 attr = S, NA
 damage = 65, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 11, 11
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -3832,16 +3978,19 @@ value = F40,0
 
 [State 349, Golpe]
 type = HitDef
-trigger1 = Time = 8
+trigger1 = Time = 10
 attr = C, NA
 damage = 80, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = L
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
-sparkxy = -10, -70
+sparkxy = -10, -12
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
@@ -3885,19 +4034,22 @@ x = 1.8
 
 [State 3410, Freia]
 type = VelSet
-trigger1 = Time = 15
+trigger1 = Time = 18
 x = 0
 
 [State 3410, Golpe]
 type = HitDef
-trigger1 = Time = 7
+trigger1 = Time = 10
 attr = S, NA
 damage = 55, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -3941,19 +4093,22 @@ x = 1.8
 
 [State 3411, Freia]
 type = VelSet
-trigger1 = Time = 15
+trigger1 = Time = 18
 x = 0
 
 [State 3411, Golpe]
 type = HitDef
-trigger1 = Time = 7
+trigger1 = Time = 10
 attr = S, NA
 damage = 60, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -4005,11 +4160,14 @@ type = HitDef
 trigger1 = Time = 10
 attr = S, NA
 damage = 70, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -4053,12 +4211,12 @@ x = 2.2
 
 [State 3413, Freia]
 type = VelSet
-trigger1 = Time = 16
+trigger1 = Time = 18
 x = 0
 
 [State 3413, Golpe]
 type = HitDef
-trigger1 = Time = 8
+trigger1 = Time = 10
 attr = S, NA
 damage = 120, 0
 animtype = Heavy
@@ -4118,19 +4276,22 @@ x = 1.8
 
 [State 3420, Freia]
 type = VelSet
-trigger1 = Time = 15
+trigger1 = Time = 18
 x = 0
 
 [State 3420, Golpe]
 type = HitDef
-trigger1 = Time = 7
+trigger1 = Time = 10
 attr = S, NA
 damage = 60, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -4174,19 +4335,22 @@ x = 1.8
 
 [State 3421, Freia]
 type = VelSet
-trigger1 = Time = 15
+trigger1 = Time = 18
 x = 0
 
 [State 3421, Golpe]
 type = HitDef
-trigger1 = Time = 7
+trigger1 = Time = 10
 attr = S, NA
 damage = 70, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -4230,19 +4394,22 @@ x = 1.8
 
 [State 3422, Freia]
 type = VelSet
-trigger1 = Time = 20
+trigger1 = Time = 22
 x = 0
 
 [State 3422, Golpe]
 type = HitDef
-trigger1 = Time = 8
+trigger1 = Time = 10
 attr = S, NA
 damage = 75, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = HA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -4349,11 +4516,14 @@ type = HitDef
 trigger1 = Time = 11
 attr = S, NA
 damage = 95, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -4431,11 +4601,14 @@ type = HitDef
 trigger1 = Time = 16 && MoveHit
 attr = S, NA
 damage = 60, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -4487,11 +4660,14 @@ type = HitDef
 trigger1 = Time = 11
 attr = S, NA
 damage = 100, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Heavy
 guardflag = HA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -4535,19 +4711,22 @@ x = -1.0
 
 [State 3433, Freia]
 type = VelSet
-trigger1 = Time = 12
+trigger1 = Time = 17
 x = 0
 
 [State 3433, Golpe]
 type = HitDef
-trigger1 = Time = 5
+trigger1 = Time = 10
 attr = S, NA
 damage = 58, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -4591,19 +4770,22 @@ x = -1.0
 
 [State 3434, Freia]
 type = VelSet
-trigger1 = Time = 15
+trigger1 = Time = 18
 x = 0
 
 [State 3434, Golpe]
 type = HitDef
-trigger1 = Time = 7
+trigger1 = Time = 10
 attr = S, NA
 damage = 70, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -4647,13 +4829,16 @@ type = HitDef
 trigger1 = Time = 11
 attr = C, NA
 damage = 100, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Heavy
 guardflag = L
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
-sparkxy = -10, -70
+sparkxy = -10, -11
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
@@ -4703,12 +4888,12 @@ x = 5.0
 
 [State 3401, Freia]
 type = VelSet
-trigger1 = Time = 19
+trigger1 = Time = 20
 x = 0
 
 [State 3401, Golpe]
 type = HitDef
-trigger1 = Time = 9
+trigger1 = Time = 10
 attr = S, SA
 damage = 115, 0
 animtype = Heavy
@@ -4962,6 +5147,9 @@ type = HitDef
 trigger1 = Time = 18
 attr = S, SA
 damage = 70, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -5011,45 +5199,48 @@ value = 50,2
 
 [State 3402, Invencivel]
 type = NotHitBy
-trigger1 = Time < 18
+trigger1 = Time < 22
 value = SCA, NA, SA, HA, NP, SP, HP
 time = 1
 
 [State 3402, Atravessa]
 type = PlayerPush
-trigger1 = Time < 20
+trigger1 = Time < 24
 value = 0
 
 [State 3402, Atras]
 type = PosAdd
-trigger1 = Time = 14
+trigger1 = Time = 18
 trigger1 = p2dist x > 0
 trigger1 = p2dist x + 36 < frontedgebodydist
 x = p2dist x + 36
 
 [State 3402, Vira]
 type = Turn
-trigger1 = Time = 14
+trigger1 = Time = 18
 trigger1 = p2dist x > 0
 trigger1 = p2dist x + 36 < frontedgebodydist
 
 [State 3402, Canto]
 type = PosAdd
-trigger1 = Time = 14
+trigger1 = Time = 18
 trigger1 = p2dist x > 0
 trigger1 = !(p2dist x + 36 < frontedgebodydist)
 x = max(p2dist x - 28, 0)
 
 [State 3402, Golpe]
 type = HitDef
-trigger1 = Time = 6
+trigger1 = Time = 10
 attr = S, SA
 damage = 75, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -5178,11 +5369,14 @@ type = HitDef
 trigger1 = Time >= 8 && Vel Y > 0
 attr = A, SA
 damage = 105, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -5532,11 +5726,14 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = S, SA
 damage = 110, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9270, 9240))
@@ -5583,32 +5780,35 @@ value = 11200
 
 [State 1200, Invencivel]
 type = NotHitBy
-trigger1 = Time < 5
+trigger1 = Time < 11
 value = SCA
 time = 1
 
 [State 1200, Sobe]
 type = VelSet
-trigger1 = Time = 4
+trigger1 = Time = 10
 x = 2
 y = -7.5
 
 [State 1200, Ar]
 type = StateTypeSet
-trigger1 = Time = 4
+trigger1 = Time = 10
 statetype = A
 physics = A
 
 [State 1200, Golpe]
 type = HitDef
-trigger1 = Time = 4
+trigger1 = Time = 10
 attr = S, SA
 damage = 120, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Up
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9270, 9240))
@@ -5684,13 +5884,16 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = C, SA
 damage = 70, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Back
 guardflag = L
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
-sparkxy = -10, -70
+sparkxy = -10, -12
 sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
@@ -6088,7 +6291,7 @@ value = 50,3
 
 [State 3100, som assinatura]
 type = PlaySnd
-trigger1 = Time = 20
+trigger1 = Time = 23
 value = 50,2
 ; som: fim
 
@@ -6140,18 +6343,18 @@ var(20) = 0
 
 [State 3100, Invencivel]
 type = NotHitBy
-trigger1 = Time < 4
+trigger1 = Time < 7
 value = SCA
 time = 1
 
 [State 3100, Avança]
 type = VelSet
-trigger1 = Time = 4
+trigger1 = Time = 7
 x = 2
 
 [State 3100, Golpe]
 type = HitDef
-trigger1 = (Time >= 4) && (Time <= 32) && (Time % 4 = 0)
+trigger1 = (Time >= 7) && (Time <= 35) && (Time % 4 = 0)
 attr = S, HA
 damage = 47, 0
 animtype = Medium
@@ -6175,7 +6378,7 @@ air.velocity = -1,-3
 
 [State 3100, Golpe]
 type = HitDef
-trigger1 = Time = 36
+trigger1 = Time = 39
 attr = S, HA
 damage = 60, 0
 animtype = Back
@@ -6207,14 +6410,14 @@ fall.envshake.ampl = -2
 
 [State 3100, Clarão]
 type = BGPalFX
-trigger1 = MoveHit = 1 && Time >= 36
+trigger1 = MoveHit = 1 && Time >= 39
 time = 4
 add = 128, 128, 128
 ignorehitpause = 1
 
 [State 3100, Trava]
 type = VelSet
-trigger1 = Time = 36
+trigger1 = Time = 39
 x = 0
 
 [State 3100, Fim]
@@ -6260,11 +6463,14 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = S, SA
 damage = 132, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9270, 9240))
@@ -6311,32 +6517,35 @@ value = 11201
 
 [State 1201, Invencivel]
 type = NotHitBy
-trigger1 = Time < 5
+trigger1 = Time < 11
 value = SCA
 time = 1
 
 [State 1201, Sobe]
 type = VelSet
-trigger1 = Time = 4
+trigger1 = Time = 10
 x = 2
 y = -7.5
 
 [State 1201, Ar]
 type = StateTypeSet
-trigger1 = Time = 4
+trigger1 = Time = 10
 statetype = A
 physics = A
 
 [State 1201, Golpe]
 type = HitDef
-trigger1 = Time = 4
+trigger1 = Time = 10
 attr = S, SA
 damage = 144, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Up
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9270, 9240))
@@ -6412,13 +6621,16 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = C, SA
 damage = 92, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Back
 guardflag = L
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
-sparkxy = -10, -70
+sparkxy = -10, -12
 sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
@@ -6476,6 +6688,9 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = S, NA
 damage = 76, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -6528,6 +6743,9 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = S, NA
 damage = 90, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Heavy
 guardflag = HA
 hitflag = MAF
@@ -6590,7 +6808,7 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = S, NA
 damage = 47, 0
-animtype = Heavy
+animtype = Light
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
@@ -6652,7 +6870,7 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = S, NA
 damage = 57, 0
-animtype = Heavy
+animtype = Light
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
@@ -6703,6 +6921,9 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = A, NA
 damage = 79, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Heavy
 guardflag = HA
 hitflag = MAF
@@ -6748,6 +6969,9 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = A, NA
 damage = 88, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Heavy
 guardflag = HA
 hitflag = MAF
@@ -6804,6 +7028,9 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = S, SA
 damage = 73, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -6866,6 +7093,9 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = S, SA
 damage = 95, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -6928,13 +7158,16 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = S, SA
 damage = 88, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Heavy
 guardflag = L
 hitflag = MAF
 priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
-sparkxy = -10, -70
+sparkxy = -10, -20
 sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
@@ -7001,13 +7234,16 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = S, SA
 damage = 110, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Heavy
 guardflag = L
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
-sparkxy = -10, -70
+sparkxy = -10, -20
 sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
@@ -7625,185 +7861,264 @@ var(2) = command = "holdback"
 
 [State 4710, Segura]
 type = TargetBind
-trigger1 = Time < 72
+trigger1 = Time < 99
 trigger1 = NumTarget
 pos = 34, 0
 
 [State 4710, Escapou]
 type = ChangeState
 trigger1 = Time > 1
-trigger1 = Time < 17
+trigger1 = Time < 23
 trigger1 = enemynear,stateno != 820
 value = 0
 ctrl = 1
 
 [State 4710, Perdeu]
 type = ChangeState
-trigger1 = Time > 17
-trigger1 = Time < 72
+trigger1 = Time > 23
+trigger1 = Time < 99
 trigger1 = !NumTarget
 value = 0
 ctrl = 1
 
 [State 4710, Pancada 1: dano]
 type = TargetLifeAdd
-trigger1 = Time = 17
+trigger1 = Time = 23
 trigger1 = NumTarget
 value = -26
 
 [State 4710, Pancada 1: faísca]
 type = Explod
-trigger1 = Time = 17
+trigger1 = Time = 23
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9231, 9201))
+anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 30, -80
+pos = 34, -80
 removetime = -2
 sprpriority = 5
-ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
 
 [State 4710, Pancada 1: som]
 type = PlaySnd
-trigger1 = Time = 17
-value = S53,1 ; som:F5,1
+trigger1 = Time = 23
+value = S53,1
+
+[State 4710, Pancada 1: tranco]
+type = TargetBind
+trigger1 = Time = [23, 28]
+trigger1 = NumTarget
+pos = 39, 0
 
 [State 4710, Pancada 1: barra]
 type = PowerAdd
-trigger1 = Time = 17
+trigger1 = Time = 23
 trigger1 = NumTarget
 value = 13
 
 [State 4710, Pancada 1: reage]
 type = TargetState
-trigger1 = Time = 17
+trigger1 = Time = 23
 trigger1 = NumTarget
 value = 822
 
+[State 4710, Pancada 1: congela]
+type = Pause
+trigger1 = Time = 23
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 4710, Pancada 1: treme]
+type = EnvShake
+trigger1 = Time = 23
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
 [State 4710, Pancada 2: dano]
 type = TargetLifeAdd
-trigger1 = Time = 34
+trigger1 = Time = 47
 trigger1 = NumTarget
 value = -26
 
 [State 4710, Pancada 2: faísca]
 type = Explod
-trigger1 = Time = 34
+trigger1 = Time = 47
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9231, 9201))
+anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 30, -82
+pos = 34, -82
 removetime = -2
 sprpriority = 5
-ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
 
 [State 4710, Pancada 2: som]
 type = PlaySnd
-trigger1 = Time = 34
-value = S53,1 ; som:F5,1
+trigger1 = Time = 47
+value = S53,1
+
+[State 4710, Pancada 2: tranco]
+type = TargetBind
+trigger1 = Time = [47, 52]
+trigger1 = NumTarget
+pos = 39, 0
 
 [State 4710, Pancada 2: barra]
 type = PowerAdd
-trigger1 = Time = 34
+trigger1 = Time = 47
 trigger1 = NumTarget
 value = 13
 
 [State 4710, Pancada 2: reage]
 type = TargetState
-trigger1 = Time = 34
+trigger1 = Time = 47
 trigger1 = NumTarget
 value = 825
 
+[State 4710, Pancada 2: congela]
+type = Pause
+trigger1 = Time = 47
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 4710, Pancada 2: treme]
+type = EnvShake
+trigger1 = Time = 47
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
 [State 4710, Pancada 3: dano]
 type = TargetLifeAdd
-trigger1 = Time = 52
+trigger1 = Time = 71
 trigger1 = NumTarget
 value = -26
 
 [State 4710, Pancada 3: faísca]
 type = Explod
-trigger1 = Time = 52
+trigger1 = Time = 71
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9231, 9201))
+anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 30, -79
+pos = 34, -79
 removetime = -2
 sprpriority = 5
-ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
 
 [State 4710, Pancada 3: som]
 type = PlaySnd
-trigger1 = Time = 52
-value = S53,1 ; som:F5,1
+trigger1 = Time = 71
+value = S53,1
+
+[State 4710, Pancada 3: tranco]
+type = TargetBind
+trigger1 = Time = [71, 76]
+trigger1 = NumTarget
+pos = 39, 0
 
 [State 4710, Pancada 3: barra]
 type = PowerAdd
-trigger1 = Time = 52
+trigger1 = Time = 71
 trigger1 = NumTarget
 value = 13
 
 [State 4710, Pancada 3: reage]
 type = TargetState
-trigger1 = Time = 52
+trigger1 = Time = 71
 trigger1 = NumTarget
 value = 826
 
+[State 4710, Pancada 3: congela]
+type = Pause
+trigger1 = Time = 71
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 4710, Pancada 3: treme]
+type = EnvShake
+trigger1 = Time = 71
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
 [State 4710, Final: dano]
 type = TargetLifeAdd
-trigger1 = Time = 72
+trigger1 = Time = 99
 trigger1 = NumTarget
 value = -62
 
 [State 4710, Final: faísca]
 type = Explod
-trigger1 = Time = 72
+trigger1 = Time = 99
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9235, 9205))
+anim = (ifelse(var(20) > 0, 9231, 9201))
 postype = p1
-pos = 30, -82
+pos = 34, -82
 removetime = -2
 sprpriority = 5
-ownpal = 1
+scale = .6, .6
+ignorehitpause = 1
+pausemovetime = 99
 
 [State 4710, Final: som]
 type = PlaySnd
-trigger1 = Time = 72
-value = S53,3 ; som:F5,3
+trigger1 = Time = 99
+value = S53,3
 
 [State 4710, Final: barra]
 type = PowerAdd
-trigger1 = Time = 72
+trigger1 = Time = 99
 trigger1 = NumTarget
 value = 31
 
+[State 4710, Final: congela]
+type = Pause
+trigger1 = Time = 99
+trigger1 = NumTarget
+time = 14
+movetime = 0
+
 [State 4710, Final: treme]
 type = EnvShake
-trigger1 = Time = 72
-time = 10
+trigger1 = Time = 99
+trigger1 = NumTarget
+time = 16
 freq = 150
-ampl = -4
+ampl = -5
 
 [State 4710, Joga para trás]
 type = TargetState
-trigger1 = Time = 72
+trigger1 = Time = 99
 trigger1 = NumTarget
 trigger1 = var(2)
 value = 824
 
 [State 4710, Joga]
 type = TargetState
-trigger1 = Time = 72
+trigger1 = Time = 99
 trigger1 = NumTarget
 trigger1 = !var(2)
 value = 823
 
 [State 4710, Vira]
 type = Turn
-trigger1 = Time = 82
+trigger1 = Time = 109
 trigger1 = var(2)
 
 [State 4710, Efeito da forma no oponente (despertados_47.py)]
 type = Explod
-trigger1 = Time = 11
+trigger1 = Time = 17
 trigger1 = NumTarget
 anim = 47000
 id = 47000
@@ -7817,24 +8132,24 @@ ignorehitpause = 1
 
 [State 4710, Tira o efeito (despertados_47.py)]
 type = RemoveExplod
-trigger1 = Time = 72
+trigger1 = Time = 99
 trigger2 = !NumTarget
 id = 47000
 
 [State 4710, Estouro do final (despertados_47.py)]
 type = Explod
-trigger1 = Time = 72
+trigger1 = Time = 99
 trigger1 = NumTarget
 anim = 47001
 postype = p1
-pos = 30, -82
+pos = 34, -82
 removetime = -2
 sprpriority = 6
 ownpal = 1
 
 [State 4710, Som do final (despertados_47.py)]
 type = PlaySnd
-trigger1 = Time = 72
+trigger1 = Time = 99
 value = 50,5
 
 [State 4710, Som de pegar (despertados_47.py)]
@@ -7844,7 +8159,7 @@ value = F35,0
 
 [State 4710, Som da forma (despertados_47.py)]
 type = PlaySnd
-trigger1 = Time = 11
+trigger1 = Time = 17
 trigger1 = NumTarget
 value = 50,2
 channel = 3
@@ -7952,7 +8267,14 @@ ctrl = 0
 [State 822, Apanha]
 type = ChangeAnim
 trigger1 = Time = 0
+value = 5001
+
+[State 822, Preso: pose]
+type = ChangeAnim
+trigger1 = Time > 0 && Anim = 5001 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
 value = 5000
+elem = 1
 
 [State 822, Solto]
 type = SelfState
@@ -7970,7 +8292,14 @@ ctrl = 0
 [State 825, Apanha]
 type = ChangeAnim
 trigger1 = Time = 0
-value = 5001
+value = 5002
+
+[State 825, Preso: pose]
+type = ChangeAnim
+trigger1 = Time > 0 && Anim = 5002 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
 
 [State 825, Solto]
 type = SelfState
@@ -7990,7 +8319,89 @@ type = ChangeAnim
 trigger1 = Time = 0
 value = 5002
 
+[State 826, Preso: pose]
+type = ChangeAnim
+trigger1 = Time > 0 && Anim = 5002 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
 [State 826, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 827]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 827, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 5011
+
+[State 827, Preso: pose]
+type = ChangeAnim
+trigger1 = Time > 0 && Anim = 5011 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 827, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 828]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 828, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 5012
+
+[State 828, Preso: pose]
+type = ChangeAnim
+trigger1 = Time > 0 && Anim = 5012 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 828, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 829]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 829, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 5012
+
+[State 829, Preso: pose]
+type = ChangeAnim
+trigger1 = Time > 0 && Anim = 5012 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 829, Solto]
 type = SelfState
 trigger1 = Time > 0
 trigger1 = !gethitvar(isbound)

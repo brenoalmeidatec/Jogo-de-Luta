@@ -4074,6 +4074,8 @@ def main():
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
     import parry  # parry em cima e embaixo, faísca própria e sem a "rede de futebol" (docs/parry.md)
     parry.aplicar("pengaro", SAIDA)
+    import legibilidade  # golpes legíveis (#45): caixa no membro, congelamento, tremida, reação e preparo
+    legibilidade.aplicar("pengaro", SAIDA)
     import gerar_sons  # sons próprios: sound = pengaro.snd no .def e PlaySnd/hitsound no .cns (missão 2026-11-14)
     gerar_sons.ligar("pengaro", SAIDA)  # depois do parry: os estados 761/765 dele também tocam o som (F30)
     import balanceamento  # números do item 7 (attack, defence, velocidade)

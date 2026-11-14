@@ -141,17 +141,16 @@ def estados_agarrao(lutador, air, cns):
     base = mk.ROTEIROS[lutador]
     mk.ROTEIROS[chave] = mk.Roteiro(c.nome_agarrao, c.golpes, c.final, base.pega, base.bind)
     try:
-        r, quadros, contatos = mk.montar(chave, air, cns)
+        r, quadros, contatos, _ = mk.montar(chave, air, cns)
     finally:
         del mk.ROTEIROS[chave]
     acao = mk.acao_810(quadros, r).replace("[Begin Action 810]", "[Begin Action 4710]")
-    texto = mk.estados(r, contatos, 820)
-    texto = texto[:texto.index("[Statedef 822]")]
+    texto, _ = mk.estados(r, contatos, None, 820)  # só o 810; os estados do oponente são os do agarrão básico
     texto = (texto.replace("[Statedef 810]", "[Statedef 4710]").replace("anim = 810", "anim = 4710")
              .replace("[State 810,", "[State 4710,"))
     fim = contatos[-1][0]
     primeiro = contatos[0][0]
-    _, _, _, _, xf, yf, _ = contatos[-1]
+    xf, yf = contatos[-1][4], contatos[-1][5]
     extra = (
         ctl(4710, "Efeito da forma no oponente", "Explod", f"trigger1 = Time = {max(1, primeiro - 6)}",
             "trigger1 = NumTarget", f"anim = {GRUPOS['agarrao']}", f"id = {GRUPOS['agarrao']}", "postype = p1",

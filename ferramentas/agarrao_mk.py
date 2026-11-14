@@ -68,6 +68,8 @@ ROTEIROS = {
     ), Golpe(333, 54, "chute alto"), bind=30),
 }
 
+VITIMA = (822, 825, 826, 827, 828, 829, 823, 824)  # estados do oponente que ficam no bloco do fim do .cns
+
 RE_ACAO = re.compile(r"^\[Begin Action (\d+)\][^\n]*\n(.*?)(?=^\[Begin Action|\Z)", re.M | re.S | re.I)
 RE_ELEM = re.compile(r"^\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)(.*)$")
 RE_BOX = re.compile(r"=\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)")
@@ -123,7 +125,31 @@ def hitdef(cns, n):
     corpo = m.group(1) if m else ""
     sp = re.search(r"^\s*sparkno\s*=\s*S\s*(.+?)\s*$", corpo, re.M | re.I)
     so = re.search(r"^\s*hitsound\s*=\s*(.+?)\s*$", corpo, re.M | re.I)
-    return (sp.group(1) if sp else "9200"), (so.group(1) if so else "F5,0")
+    som = so.group(1).split(";")[0].strip() if so else "F5,0"
+    return (sp.group(1).split(";")[0].strip() if sp else "9200"), som
+
+
+# Ritmo da sequência (issue #45 do Breno: "os agarrões estão bem confusos"). Cada pancada é lida em três tempos:
+# prepara (os quadros do golpe antes do contato, nunca menos que PREPARO ticks), bate (o quadro de contato segurado
+# CONTATO ticks, com congelamento de CONGELA ticks, faísca no ponto do contato e o oponente reagindo) e volta para a
+# pose de segurar (SEGURA ticks), para dar para ver uma pancada separada da outra. O finalizador prepara mais, congela
+# mais, treme a tela e arremessa.
+PEGA = 16        # ticks mostrando a pegada antes da 1ª pancada (cobre a janela de escape do 820, 7 ticks)
+PREPARO = 6      # mínimo de ticks de preparo de cada pancada
+PREPARO_FINAL = 10
+CONTATO = 5      # ticks do quadro de contato (fora o congelamento)
+SEGURA = 8       # ticks de volta na pose de segurar entre uma pancada e outra
+CONGELA = 7      # hitstop de cada pancada (Pause): regra 8.3, fraco 7-8
+CONGELA_FINAL = 14  # finalizador: 14+
+
+
+def esticar(els, minimo):
+    """Durações do preparo (quadros antes do contato), cada uma entre 2 e 5 ticks, e o último quadro segura o que
+    faltar para chegar no mínimo (a pose de carga, regra 7.2: antecipação)."""
+    durs = [max(2, min(5, e[1] if e[1] > 0 else 5)) for e in els]
+    if durs and sum(durs) < minimo:
+        durs[-1] += minimo - sum(durs)
+    return durs
 
 
 def montar(lutador, air, cns):
@@ -131,41 +157,54 @@ def montar(lutador, air, cns):
     tabela = acoes(air)
     # corpo em alta resolução ([Size] xscale 1/3): Clsn do .air em 3x e Explod em 1x (ferramentas/hd.py)
     escala = 3 if re.search(r"^\s*xscale\s*=\s*0\.33", cns, re.M) else 1
-    if 810 not in tabela:
-        raise SystemExit(f"{lutador}: sem ação 810 no .air")
-    pega = elementos(tabela[810])[0]
-    quadros = [(pega[0], r.pega, pega[2], pega[3])]
-    t = r.pega
-    contatos = []  # (tick, dano, faísca, som, x, y, final)
+    if 800 not in tabela:
+        raise SystemExit(f"{lutador}: sem ação 800 no .air")
+    # pose de segurar: o quadro da tentativa de agarrão (ação 800) em que a mão alcança o oponente (tem Clsn1)
+    pega_els = elementos(tabela[800])
+    pega = next((e for e in pega_els if e[4]), pega_els[0])
+    segurar = (pega[0], pega[2], pega[3])
+    frente = max(pega[4][0], pega[4][2]) // escala if pega[4] else 40
+    quadros = [(pega[0], PEGA, pega[2], pega[3])]
+    t = PEGA
+    contatos = []  # (tick, dano, faísca, som, x, y, final, alto)
     for k, g in enumerate(r.golpes + (r.final,)):
         final = k == len(r.golpes)
         if g.acao not in tabela:
             raise SystemExit(f"{lutador}: ação {g.acao} ({g.nome}) não existe no .air")
         els = elementos(tabela[g.acao])
-        ativos = [j for j, e in enumerate(els) if e[4] and (j == 0 or not els[j - 1][4])]
-        if not ativos:
+        j0 = next((j for j, e in enumerate(els) if e[4]), None)
+        if j0 is None:
             raise SystemExit(f"{lutador}: ação {g.acao} ({g.nome}) não tem caixa de acerto")
-        ultimo_ativo = max(j for j, e in enumerate(els) if e[4])
-        # pancada segurando: corta a recuperação (só um quadro depois do contato); o finalizador vai inteiro
-        fim = len(els) if final else min(len(els), ultimo_ativo + 2)
-        faisca, som = hitdef(cns, g.acao)
-        partes = [g.dano // len(ativos)] * len(ativos)
-        partes[-1] += g.dano - sum(partes)
-        for j, e in enumerate(els[:fim]):
-            dur = e[1]
-            if dur < 0:
-                dur = 10
-            if not final:
-                dur = max(2, min(dur, 5))
-            if j in ativos:
-                c = e[4]
-                x = max(18, min(30, max(c[0], c[2]) // escala - 8))
-                y = (c[1] + c[3]) // 2 // escala
-                contatos.append((t, partes[ativos.index(j)], faisca, som, x, y,
-                                 final and j == ativos[-1]))
+        _, som = hitdef(cns, g.acao)
+        # faísca fixa: leve nas pancadas, média no final. A crítica (9205) estoura do tamanho dos dois corpos
+        # e escondia a pancada (#45)
+        base = 9201 if final else 9200
+        faisca = (f"(ifelse(var(20) > 0, {base + 30}, {base}))" if base + 30 in tabela else str(base))
+        for e, dur in zip(els[:j0], esticar(els[:j0], PREPARO_FINAL if final else PREPARO)):
             quadros.append((e[0], dur, e[2], e[3]))
             t += dur
-    return r, quadros, contatos
+        c = els[j0][4]
+        x = max(18, min(34, max(c[0], c[2]) // escala - 8))
+        y = (c[1] + c[3]) // 2 // escala
+        contatos.append((t, g.dano, faisca, som, x, y, final, y < -60))
+        if final:
+            # o finalizador vai até o fim: contato e o embalo do golpe (recuperação) no tempo dele
+            quadros.append((els[j0][0], CONTATO + 2, els[j0][2], els[j0][3]))
+            t += CONTATO + 2
+            for e in els[j0 + 1:]:
+                dur = max(3, min(8, e[1] if e[1] > 0 else 10))
+                quadros.append((e[0], dur, e[2], e[3]))
+                t += dur
+        else:
+            quadros.append((els[j0][0], CONTATO, els[j0][2], els[j0][3]))
+            t += CONTATO
+            if j0 + 1 < len(els):  # um quadro do embalo, e volta a segurar
+                e = els[j0 + 1]
+                quadros.append((e[0], 3, e[2], e[3]))
+                t += 3
+            quadros.append((segurar[0], SEGURA, segurar[1], segurar[2]))
+            t += SEGURA
+    return r, quadros, contatos, frente
 
 
 def acao_810(quadros, r):
@@ -182,15 +221,26 @@ def ctl(n, nome, tipo, *linhas):
     return f"[State {n}, {nome}]\ntype = {tipo}\n" + "".join(l + "\n" for l in linhas) + "\n"
 
 
-def estados(r, contatos, vitima_preso):
-    """Statedef 810 (quem agarra) e os estados do oponente 822 a 826."""
+# reação do oponente preso a cada pancada: alta (5001/5002) ou baixa (5011/5012); a 5000 é a pose de preso
+REACOES = ((822, 5001), (825, 5002), (826, 5002), (827, 5011), (828, 5012), (829, 5012))
+PRESO = 5000  # ação do oponente (a DELE) segurada no 1º quadro enquanto está preso: o tranco de quem foi agarrado
+
+
+def segura_pose(n):
+    """Controladores que deixam o oponente preso parado na pose de quem foi agarrado (1º quadro do tranco dele)."""
+    return ctl(n, "Preso: pose", "ChangeAnim", f"trigger1 = Anim != {PRESO} && AnimTime = 0",
+               f"trigger2 = Anim = {PRESO} && AnimElemTime(2) >= 0", f"value = {PRESO}", "elem = 1")
+
+
+def estados(r, contatos, frente, vitima_preso):
+    """Statedef 810 (quem agarra), 820 (oponente preso) e os estados do oponente 822 a 829, 823/824."""
     fim = contatos[-1][0]
     primeiro = contatos[0][0]
-    reacoes = (822, 825, 826)
     c = [f"[Statedef 810]\ntype = S\nmovetype = A\nphysics = N\nanim = 810\nvelset = 0,0\nctrl = 0\n"
          f"sprpriority = 2\n\n"]
     c.append(f"; {r.nome}: pega, segura, {len(contatos) - 1} pancadas e arremessa. Escape: y ou b no começo.\n")
     c.append(ctl(810, "Lado", "VarSet", "trigger1 = Time = 0", 'var(2) = command = "holdback"'))
+    # colados: o oponente fica com a frente do corpo encostada na mão da pose de segurar
     c.append(ctl(810, "Segura", "TargetBind", f"trigger1 = Time < {fim}", "trigger1 = NumTarget",
                  f"pos = {r.bind}, 0"))
     c.append(ctl(810, "Escapou", "ChangeState", "trigger1 = Time > 1", f"trigger1 = Time < {primeiro}",
@@ -198,21 +248,29 @@ def estados(r, contatos, vitima_preso):
     # se o oponente sumiu do agarrão por qualquer motivo, quem agarrou não fica preso no meio da sequência
     c.append(ctl(810, "Perdeu", "ChangeState", f"trigger1 = Time > {primeiro}", f"trigger1 = Time < {fim}",
                  "trigger1 = !NumTarget", "value = 0", "ctrl = 1"))
-    for k, (t, dano, faisca, som, x, y, final) in enumerate(contatos):
+    for k, (t, dano, faisca, som, x, y, final, alto) in enumerate(contatos):
         nome = "Final" if final else f"Pancada {k + 1}"
         c.append(ctl(810, f"{nome}: dano", "TargetLifeAdd", f"trigger1 = Time = {t}", "trigger1 = NumTarget",
                      f"value = -{dano}"))
         c.append(ctl(810, f"{nome}: faísca", "Explod", f"trigger1 = Time = {t}", "trigger1 = NumTarget",
                      f"anim = {faisca}", "postype = p1", f"pos = {x}, {y}", "removetime = -2", "sprpriority = 5",
-                     "ownpal = 1"))
+                     # faísca menor que a do HitDef: colada nos dois corpos, a grande escondia a pancada (#45)
+                     f"scale = {'.6, .6' if final else '.75, .75'}", "ignorehitpause = 1", "pausemovetime = 99"))
         c.append(ctl(810, f"{nome}: som", "PlaySnd", f"trigger1 = Time = {t}", f"value = {som}"))
+        if not final:  # o oponente recua um pouco no tranco (no final ele já sai voando)
+            c.append(ctl(810, f"{nome}: tranco", "TargetBind", f"trigger1 = Time = [{t}, {t + 5}]",
+                         "trigger1 = NumTarget", f"pos = {r.bind + 5}, 0"))
         c.append(ctl(810, f"{nome}: barra", "PowerAdd", f"trigger1 = Time = {t}", "trigger1 = NumTarget",
                      f"value = {dano // 2}"))
+        reacao = REACOES[min(k, 2) + (0 if alto else 3)][0]
         if not final:
             c.append(ctl(810, f"{nome}: reage", "TargetState", f"trigger1 = Time = {t}", "trigger1 = NumTarget",
-                         f"value = {reacoes[min(k, 2)]}"))
-    c.append(ctl(810, "Final: treme", "EnvShake", f"trigger1 = Time = {fim}", "time = 10", "freq = 150",
-                 "ampl = -4"))
+                         f"value = {reacao}"))
+        # congelamento no contato (hitstop): os dois param e a faísca estoura; no final, mais longo e com tremida
+        c.append(ctl(810, f"{nome}: congela", "Pause", f"trigger1 = Time = {t}", "trigger1 = NumTarget",
+                     f"time = {CONGELA_FINAL if final else CONGELA}", "movetime = 0"))
+        c.append(ctl(810, f"{nome}: treme", "EnvShake", f"trigger1 = Time = {t}", "trigger1 = NumTarget",
+                     f"time = {16 if final else 6}", "freq = 150", f"ampl = {-5 if final else -2}"))
     c.append(ctl(810, "Joga para trás", "TargetState", f"trigger1 = Time = {fim}", "trigger1 = NumTarget",
                  "trigger1 = var(2)", "value = 824"))
     c.append(ctl(810, "Joga", "TargetState", f"trigger1 = Time = {fim}", "trigger1 = NumTarget",
@@ -220,20 +278,29 @@ def estados(r, contatos, vitima_preso):
     # jogou para trás: o oponente passa por cima (824 sem empurrão) e quem agarrou vira para ele no fim
     c.append(ctl(810, "Vira", "Turn", f"trigger1 = Time = {fim + 10}", "trigger1 = var(2)"))
     c.append(ctl(810, "Fim", "ChangeState", "trigger1 = AnimTime = 0", "value = 0", "ctrl = 1"))
-    # oponente: pancada segurando (a reação de tomar golpe DELE) e arremessado
-    for n, anim in zip(reacoes, (5000, 5001, 5002)):
-        c.append(f"[Statedef {n}]\ntype = S\nmovetype = H\nphysics = N\nvelset = 0,0\nctrl = 0\n\n")
-        c.append(ctl(n, "Apanha", "ChangeAnim", "trigger1 = Time = 0", f"value = {anim}"))
-        c.append(ctl(n, "Solto", "SelfState", "trigger1 = Time > 0", "trigger1 = !gethitvar(isbound)",
+    # 820: o oponente agarrado fica EM PÉ, na pose dele de quem levou o tranco (antes ficava na pose de queda)
+    v = [f"[Statedef {vitima_preso}]\ntype = S\nmovetype = H\nphysics = N\nvelset = 0,0\nctrl = 0\n\n",
+         ctl(vitima_preso, "Pose", "ChangeAnim", "trigger1 = Time = 0", f"value = {PRESO}", "elem = 1"),
+         segura_pose(vitima_preso),
+         ctl(vitima_preso, "Escape", "SelfState", "triggerall = Time <= 7", 'trigger1 = command = "y"',
+             'trigger2 = command = "b"', "value = 0", "ctrl = 1"),
+         ctl(vitima_preso, "Solto", "SelfState", "trigger1 = Time > 0", "trigger1 = !gethitvar(isbound)",
+             "value = 5050")]
+    # oponente: pancada segurando (a reação de tomar golpe DELE, alta ou baixa) e volta para a pose de preso
+    for n, anim in REACOES:
+        v.append(f"[Statedef {n}]\ntype = S\nmovetype = H\nphysics = N\nvelset = 0,0\nctrl = 0\n\n")
+        v.append(ctl(n, "Apanha", "ChangeAnim", "trigger1 = Time = 0", f"value = {anim}"))
+        v.append(segura_pose(n).replace(f"Anim != {PRESO} && AnimTime = 0", f"Time > 0 && Anim = {anim} && AnimTime = 0"))
+        v.append(ctl(n, "Solto", "SelfState", "trigger1 = Time > 0", "trigger1 = !gethitvar(isbound)",
                      "value = 5050"))
     for n, vel in ((823, "-4.2, -5.5"), (824, "4.6, -6.5")):
-        c.append(f"[Statedef {n}]\ntype = A\nmovetype = H\nphysics = N\nvelset = {vel}\nctrl = 0\n\n")
-        c.append(ctl(n, "Pose", "ChangeAnim", "trigger1 = Time = 0", "value = 5030"))
+        v.append(f"[Statedef {n}]\ntype = A\nmovetype = H\nphysics = N\nvelset = {vel}\nctrl = 0\n\n")
+        v.append(ctl(n, "Pose", "ChangeAnim", "trigger1 = Time = 0", "value = 5030"))
         if n == 824:
-            c.append(ctl(n, "Passa por cima", "PlayerPush", "trigger1 = 1", "value = 0"))
-        c.append(ctl(n, "Queda", "VelAdd", "trigger1 = 1", "y = .45"))
-        c.append(ctl(n, "Chão", "SelfState", "trigger1 = Vel Y > 0", "trigger1 = Pos Y >= 0", "value = 5100"))
-    return "".join(c)
+            v.append(ctl(n, "Passa por cima", "PlayerPush", "trigger1 = 1", "value = 0"))
+        v.append(ctl(n, "Queda", "VelAdd", "trigger1 = 1", "y = .45"))
+        v.append(ctl(n, "Chão", "SelfState", "trigger1 = Vel Y > 0", "trigger1 = Pos Y >= 0", "value = 5100"))
+    return "".join(c), "".join(v)
 
 
 def trocar_statedef(cns, n, novo):
@@ -248,23 +315,24 @@ def aplicar(lutador, air, cns):
     # tira o que uma aplicação anterior pôs (estados do oponente no fim do .cns)
     if MARCA in cns:
         cns = cns[:cns.index(MARCA)].rstrip() + "\n"
-        for n in (822, 825, 826, 823, 824):
+        for n in VITIMA:
             assert f"[Statedef {n}]" not in cns, f"{lutador}: Statedef {n} fora do bloco do agarrão"
     else:
-        for n in (822, 825, 826, 823, 824):
+        for n in VITIMA:
             assert f"[Statedef {n}]" not in cns, f"{lutador}: Statedef {n} já existe no .cns (conflito)"
-    r, quadros, contatos = montar(lutador, air, cns)
+    r, quadros, contatos, frente = montar(lutador, air, cns)
     m = re.search(r"^\[Begin Action 810\][^\n]*\n.*?(?=^\[Begin Action|\Z)", air, re.M | re.S)
     air = air[:m.start()] + acao_810(quadros, r) + air[m.end():]
-    texto = estados(r, contatos, 820)
-    corte = texto.index("[Statedef 822]")
-    cns = trocar_statedef(cns, 810, texto[:corte])
-    cns = cns.rstrip() + "\n\n" + MARCA + "\n\n" + texto[corte:].rstrip() + "\n"
+    agarra, vitima = estados(r, contatos, frente, 820)
+    cns = trocar_statedef(cns, 810, agarra)
+    corte = vitima.index("[Statedef 822]")
+    cns = trocar_statedef(cns, 820, vitima[:corte])
+    cns = cns.rstrip() + "\n\n" + MARCA + "\n\n" + vitima[corte:].rstrip() + "\n"
     return air, cns
 
 
 def resumo(lutador, air, cns):
-    r, quadros, contatos = montar(lutador, air, cns)
+    r, quadros, contatos, _ = montar(lutador, air, cns)
     total = sum(q[1] for q in quadros)
     return (f"{lutador}: {r.nome} | {len(contatos) - 1} pancadas + final em {contatos[-1][0]} ticks, "
             f"animação {total} ticks, dano {sum(c[1] for c in contatos)} | contatos "

@@ -118,18 +118,19 @@ do
       add(function()
         local v, s2 = lifeP2(), snap(2).st
         if v < c.ult then c.golpes = c.golpes + 1; c.ult = v end
-        if s2 == 822 or s2 == 825 or s2 == 826 then c.reagiu = true end
+        if s2 >= 822 and s2 <= 829 and s2 ~= 823 and s2 ~= 824 then c.reagiu = true end
         if s2 == 823 or s2 == 824 then c.voou = c.voou or s2 end
         if st1() ~= 810 then c.dur = clock() - c.t0; return true end
         return clock() - c.t0 > 400
       end)
       note(function() return "pancadas " .. c.golpes .. "; dano " .. (c.vida0 - lifeP2()) .. "; duracao " .. tostring(c.dur) .. " ticks; P2 voou pelo " .. tostring(c.voou) end)
       need(function() return c.golpes >= 4 end, 1, "o dano saiu em 4 ou mais pancadas", false)
-      need(function() return c.reagiu end, 1, "o P2 reagiu as pancadas preso (822/825/826)", false)
+      need(function() return c.reagiu end, 1, "o P2 reagiu as pancadas preso (822 a 829)", false)
       need(function() return c.voou == (tras and 824 or 823) end, 1, "o P2 foi arremessado (" .. (tras and 824 or 823) .. ")", false)
       -- 120 de dano no roteiro; a defesa do Hazak (P2) aumenta um pouco
       need(function() local d = c.vida0 - lifeP2(); return d >= 110 and d <= 145 end, 1, "dano entre 110 e 145", false)
-      need(function() return c.dur and c.dur >= 60 and c.dur <= 150 end, 1, "duracao entre 60 e 150 ticks", false)
+      -- #45: cada pancada prepara, congela e volta a segurar; a sequência inteira fica entre 1 e 3,5 s
+      need(function() return c.dur and c.dur >= 60 and c.dur <= 210 end, 1, "duracao entre 60 e 210 ticks", false)
       need(function() local s = snap(2); return s.ctrl and s.st == 0 end, 300, "o P2 levantou e voltou ao controle", false)
       need(livre, 60, "o P1 voltou ao controle", false)
       note(function() return "lado do P2 antes " .. c.x2 .. ", depois " .. (snap(2).x - snap(1).x) end)
