@@ -132,8 +132,31 @@ PAPEIS_CK_RATAO = {
         ("garrafa_verde", "garrafa", (70, 100, .45, .80, .48, .70), None, {}),
     ],
 }
+# Gbzin, forma base (regata e tênis pretos, short branco, faixa marrom, cajado de madeira, relógio dourado). Janelas
+# medidas na referencia_ginga do primeiro conceito; com o conceito novo (pele e cabelo da foto), meça de novo.
+PAPEIS_GBZIN = {
+    "contorno_grupo": {"pele": "pele_contorno", "marrom": "pele_contorno", "ouro": "pele_contorno",
+                       "roupa": "roupa_contorno", "branco": "roupa_contorno"},
+    "cores": [
+        ("pele_contorno", "pele", (310, 340, .50, .85, .18, .36), (320, 345), {"v": .30}),
+        ("pele_sombra", "pele", (350, 6, .55, .75, .78, .92), (352, 8), {}),
+        ("pele_medio", "pele", (6, 18, .45, .65, .85, .96), (8, 18), {}),
+        ("pele_luz", "pele", (18, 30, .35, .52, .95, 1), (18, 30), {}),
+        ("marrom_escuro", "marrom", (330, 350, .60, .80, .30, .48), None, {}),
+        ("marrom", "marrom", (340, 358, .60, .78, .48, .70), None, {}),
+        ("cajado", "marrom", (8, 35, .55, .90, .55, .85), None, {}),
+        ("ouro", "ouro", (30, 55, .50, 1, .80, 1), None, {}),
+        ("roupa_contorno", "roupa", (240, 265, .40, .80, .05, .19), (240, 265), {"v": .14}),
+        ("roupa_preto", "roupa", (240, 262, .35, .60, .19, .30), None, {}),
+        ("roupa_luz", "roupa", (245, 265, .30, .55, .30, .42), None, {}),
+        ("branco_sombra", "branco", (265, 290, .15, .30, .62, .78), (260, 285), {}),
+        ("branco_meio", "branco", (270, 300, .08, .17, .78, .90), None, {}),
+        ("branco", "branco", (0, 360, 0, .07, .92, 1), None, {}),
+        ("listra", "branco", (265, 295, .20, .45, .25, .45), None, {}),
+    ],
+}
 PAPEIS = {"pengaro": PAPEIS_PENGARO, "pengaro_endiabrado": PAPEIS_PENGARO_ENDIABRADO, "ck": PAPEIS_CK,
-          "ck_ratao": PAPEIS_CK_RATAO}
+          "ck_ratao": PAPEIS_CK_RATAO, "gbzin": PAPEIS_GBZIN}
 
 
 def hsv(rgb):

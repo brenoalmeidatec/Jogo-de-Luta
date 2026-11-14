@@ -1,0 +1,272 @@
+{
+ "lutador": "gbzin",
+ "fonte": "quadros/folhas_arcade/referencia_ginga.png",
+ "nota": "15 cores + transparente. rgb é o que vale; medido é a mediana do papel na folha, antes do ajuste de matiz. Retoque à mão se precisar e rode conferir_arte.py.",
+ "contorno_grupo": {
+  "pele": "pele_contorno",
+  "marrom": "pele_contorno",
+  "ouro": "pele_contorno",
+  "roupa": "roupa_contorno",
+  "branco": "roupa_contorno"
+ },
+ "cores": [
+  {
+   "id": "pele_contorno",
+   "grupo": "pele",
+   "rgb": [
+    76,
+    23,
+    53
+   ],
+   "medido": [
+    66,
+    20,
+    46
+   ],
+   "pixels": 1426,
+   "matiz_alvo": [
+    320,
+    345
+   ]
+  },
+  {
+   "id": "pele_sombra",
+   "grupo": "pele",
+   "rgb": [
+    220,
+    82,
+    94
+   ],
+   "medido": [
+    220,
+    82,
+    94
+   ],
+   "pixels": 2864,
+   "matiz_alvo": [
+    352,
+    8
+   ]
+  },
+  {
+   "id": "pele_medio",
+   "grupo": "pele",
+   "rgb": [
+    238,
+    140,
+    120
+   ],
+   "medido": [
+    238,
+    140,
+    120
+   ],
+   "pixels": 878,
+   "matiz_alvo": [
+    8,
+    18
+   ]
+  },
+  {
+   "id": "pele_luz",
+   "grupo": "pele",
+   "rgb": [
+    252,
+    183,
+    140
+   ],
+   "medido": [
+    252,
+    183,
+    140
+   ],
+   "pixels": 7248,
+   "matiz_alvo": [
+    18,
+    30
+   ]
+  },
+  {
+   "id": "marrom_escuro",
+   "grupo": "marrom",
+   "rgb": [
+    101,
+    29,
+    53
+   ],
+   "medido": [
+    101,
+    29,
+    53
+   ],
+   "pixels": 989,
+   "matiz_alvo": null
+  },
+  {
+   "id": "marrom",
+   "grupo": "marrom",
+   "rgb": [
+    149,
+    44,
+    65
+   ],
+   "medido": [
+    149,
+    44,
+    65
+   ],
+   "pixels": 1722,
+   "matiz_alvo": null
+  },
+  {
+   "id": "cajado",
+   "grupo": "marrom",
+   "rgb": [
+    194,
+    88,
+    55
+   ],
+   "medido": [
+    194,
+    88,
+    55
+   ],
+   "pixels": 323,
+   "matiz_alvo": null
+  },
+  {
+   "id": "ouro",
+   "grupo": "ouro",
+   "rgb": [
+    246,
+    171,
+    81
+   ],
+   "medido": [
+    246,
+    171,
+    81
+   ],
+   "pixels": 113,
+   "matiz_alvo": null
+  },
+  {
+   "id": "roupa_contorno",
+   "grupo": "roupa",
+   "rgb": [
+    22,
+    20,
+    36
+   ],
+   "medido": [
+    23,
+    19,
+    37
+   ],
+   "pixels": 888,
+   "matiz_alvo": [
+    240,
+    265
+   ]
+  },
+  {
+   "id": "roupa_preto",
+   "grupo": "roupa",
+   "rgb": [
+    39,
+    33,
+    64
+   ],
+   "medido": [
+    39,
+    33,
+    64
+   ],
+   "pixels": 1408,
+   "matiz_alvo": null
+  },
+  {
+   "id": "roupa_luz",
+   "grupo": "roupa",
+   "rgb": [
+    55,
+    48,
+    88
+   ],
+   "medido": [
+    55,
+    48,
+    88
+   ],
+   "pixels": 1648,
+   "matiz_alvo": null
+  },
+  {
+   "id": "branco_sombra",
+   "grupo": "branco",
+   "rgb": [
+    165,
+    140,
+    188
+   ],
+   "medido": [
+    165,
+    140,
+    188
+   ],
+   "pixels": 211,
+   "matiz_alvo": [
+    260,
+    285
+   ]
+  },
+  {
+   "id": "branco_meio",
+   "grupo": "branco",
+   "rgb": [
+    210,
+    188,
+    217
+   ],
+   "medido": [
+    210,
+    188,
+    217
+   ],
+   "pixels": 296,
+   "matiz_alvo": null
+  },
+  {
+   "id": "branco",
+   "grupo": "branco",
+   "rgb": [
+    241,
+    231,
+    237
+   ],
+   "medido": [
+    241,
+    231,
+    237
+   ],
+   "pixels": 1603,
+   "matiz_alvo": null
+  },
+  {
+   "id": "listra",
+   "grupo": "branco",
+   "rgb": [
+    74,
+    58,
+    84
+   ],
+   "medido": [
+    74,
+    58,
+    84
+   ],
+   "pixels": 274,
+   "matiz_alvo": null
+  }
+ ]
+}

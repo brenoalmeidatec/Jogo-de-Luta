@@ -27,6 +27,7 @@ from PIL import Image
 
 from folhas_gutto import FOLHAS_GUTTO
 from folhas_ck import NOMES as NOMES_CK
+from folhas_gbzin import NOMES as NOMES_GBZIN
 from folhas_raiclaven import FOLHAS_RAICLAVEN
 from gerar_folhas import FOLHAS_PENGARO
 from recortar_quadros import PE_DE_TRAS, PIVO, RAIZ, fatias, ponto_ancora, tira_fundo
@@ -35,8 +36,11 @@ from recortar_quadros import PE_DE_TRAS, PIVO, RAIZ, fatias, ponto_ancora, tira_
 LUTADOR = os.environ.get("LUTADOR", "pengaro")
 FOLHAS_LUTADOR = {"gutto": FOLHAS_GUTTO, "raiclaven": FOLHAS_RAICLAVEN}.get(LUTADOR, FOLHAS_PENGARO)
 FOLHAS_CK = {n: ("pes", "") for n in NOMES_CK if not n.startswith("fx_")}  # base, despertar_a/b e as e_ do Modo Ratão
+FOLHAS_GBZIN = {n: ("pes", "") for n in NOMES_GBZIN if not n.startswith("fx_") and "conceito" not in n}  # base, despertar e e_ do Deus Motoboy
 if LUTADOR == "ck":
     FOLHAS_LUTADOR = FOLHAS_CK
+if LUTADOR == "gbzin":
+    FOLHAS_LUTADOR = FOLHAS_GBZIN
 FOLHAS = RAIZ / "sprites" / LUTADOR / "quadros/folhas"
 QUADROS = RAIZ / "sprites" / LUTADOR / "quadros"
 QUADROS_ARCADE = RAIZ / "sprites" / LUTADOR / "quadros_arcade"  # arte arcade (quantizar_folha.py), fora do jogo por ora
@@ -58,7 +62,7 @@ PASSO = 8  # um vértice a cada 2 pixels do quadro final
 LARG, ALT = 360, 260  # mesma tela dos sprites do jogo, com folga para chute alto e salto
 DESLOCA = (180 - PIVO[0], 220 - PIVO[1])  # do pivô antigo para os pés na tela do jogo
 MEIOS = 6  # quadros do meio entre dois desenhos
-ESCALA_2172 = {"pengaro": 0.40, "gutto": 0.33, "raiclaven": 0.33, "ck": 0.195}[LUTADOR]  # a figura em pé dá ~111 px numa folha de 2172 de largura; a escala segue a largura da folha (o Gutto sai maior na folha, 340 px contra 278)
+ESCALA_2172 = {"pengaro": 0.40, "gutto": 0.33, "raiclaven": 0.33, "ck": 0.195, "gbzin": 0.288}[LUTADOR]  # a figura em pé dá ~111 px numa folha de 2172 de largura; a escala segue a largura da folha (o Gutto sai maior na folha, 340 px contra 278)
 # Ginga: 8 desenhos + 8 x 7 = 64 quadros, um ciclo em cerca de 2 segundos. Andar: 8 + 8 x 5 = 48 quadros.
 LOOPS = {"ginga_fluida": ("ginga", 7), "anda_fluida": ("anda", 5), "ginga_endiabrada": ("ginga_endiabrada", 7),
          "e_anda_fluida": ("e_anda", 5)}
@@ -80,6 +84,11 @@ if LUTADOR == "ck":
               "e_pulo": 1.05, "despertar_b": 1.07}
     # O magenta sai ANTES de quantizar (fundo_ck, na função poses): os quadros arcade já chegam ao Blender na paleta e
     # o sem_magenta apagaria o roxo do boné e da camisa do Ratão. Por isso o ck não entra em LIMPA_MAGENTA.
+if LUTADOR == "gbzin":
+    # Gbzin: mesmo caminho do CK (fundo_ck, sempre por célula). Em pé ele tem ~386 px numa folha de 2172 (o pedido de
+    # folhas_gbzin.py fixa esse tamanho), por isso a escala 0.288 dá os mesmos ~111 px do jogo.
+    POR_CELULA = POR_CELULA | set(FOLHAS_GBZIN)
+    AJUSTE = {}
 
 
 # Pengaró: toda folha (normal e endiabrada) alinhada pelo centro do tronco no eixo do lutador. Alinhar pelo pé de trás
@@ -208,7 +217,7 @@ def poses(folha, ancora, amplia=AMPLIA):
     """Corta a folha e devolve as poses alinhadas no chão, `amplia` vezes maiores que o quadro final (4 para o Blender,
     1 para a escala do jogo, que é o que quantizar_folha.py usa)."""
     img = Image.open(folha)
-    if LUTADOR == "ck":
+    if LUTADOR in ("ck", "gbzin"):
         img = fundo_ck(img)
     fator = ESCALA_2172 * 2172 / img.width * amplia * AJUSTE.get(Path(folha).stem, 1)
     if Path(folha).stem in POR_CELULA or Path(folha).stem.startswith("e_") or LUTADOR in ("gutto", "raiclaven"):  # Gutto e Raiclaven: sempre por célula (golpes que avançam encostam nas figuras vizinhas)

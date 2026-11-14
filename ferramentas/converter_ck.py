@@ -25,7 +25,7 @@ import os
 import sys
 from pathlib import Path
 
-os.environ["LUTADOR"] = "ck"
+os.environ.setdefault("LUTADOR", "ck")  # converter_gbzin.py usa este mesmo arquivo com LUTADOR=gbzin
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent / "retoques_arcade"))
 
@@ -35,9 +35,11 @@ from PIL import Image, ImageDraw  # noqa: E402
 
 import animar_folha as af  # noqa: E402
 import quantizar_folha as qf  # noqa: E402
-import ck as retoques  # noqa: E402
+import importlib  # noqa: E402
 
-SPRITES = af.RAIZ / "sprites/ck"
+retoques = importlib.import_module(af.LUTADOR)  # retoques_arcade/<lutador>.py
+
+SPRITES = af.RAIZ / "sprites" / af.LUTADOR
 ENTRADA = SPRITES / "quadros/folhas_arcade"
 # HD=3: os mesmos desenhos no triplo da resolução, em quadros_arcade_hd/ (tela 1080x780, pés em 540,660). O gerador
 # troca cada sprite do jogo pelo gêmeo HD e desenha o lutador em 1/3 (gerar_pengaro.HD); os efeitos ficam como estão.
@@ -63,8 +65,11 @@ EFEITOS = {"aura": (1.25, None, True), "fumaca": (1.3, None, False), "garrafa": 
 FUMACA_DO_DESPERTAR = {("despertar_a", 6): 0, ("despertar_a", 7): 1, ("despertar_b", 0): 2, ("despertar_b", 1): 3}
 
 
+FORMA_E = {"ck": "ratao", "gbzin": "motoboy"}[af.LUTADOR]  # a forma das folhas e_* e do despertar_b
+
+
 def forma(nome):
-    return "ratao" if nome.startswith("e_") or nome == "despertar_b" else ""
+    return FORMA_E if nome.startswith("e_") or nome == "despertar_b" else ""
 
 
 def paleta(nome):
@@ -320,7 +325,7 @@ def main():
         return contato(args[1])
     if args[:1] == ["--medir"]:
         return medir()
-    nomes = args or [*af.FOLHAS_CK, *((f"fx_{n}" for n in EFEITOS) if HD == 1 else ())]
+    nomes = args or [*af.FOLHAS_LUTADOR, *((f"fx_{n}" for n in EFEITOS) if HD == 1 else ())]
     for nome in nomes:
         if nome.startswith("fx_"):
             efeito(nome.removeprefix("fx_"))
