@@ -11,6 +11,7 @@ Lê sprites/pengaro/pixel/pengaro.png (9 poses) e escreve:
 Para mudar golpe, dano ou fala, edite este arquivo e rode:
   python ferramentas/gerar_pengaro.py
 """
+import agarrao_mk
 import json
 import math
 import random
@@ -4062,6 +4063,10 @@ def main():
         air, cns = hd.aplicar(s, air, cns, [(QUADROS_ARCADE, QUADROS_ARCADE_HD)], SPRITES_VITIMA)
         (SAIDA / "pengaro.air").write_text(air, encoding="utf-8", newline="\n")
         (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8", newline="\n")
+    # agarrão em pé segura-e-bate (ferramentas/agarrao_mk.py): montado dos golpes que ele já tem, depois do HD
+    air, cns = agarrao_mk.aplicar("pengaro", air, cns)
+    (SAIDA / "pengaro.air").write_text(air, encoding="utf-8", newline="\n")
+    (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8", newline="\n")
     escrever_sff(SAIDA / "pengaro.sff", s, manter=sprites_mantidos(air, cns))
     (SAIDA / "pengaro.cmd").write_text(montar_cmd(), encoding="utf-8")
     (SAIDA / "pengaro.def").write_text(DEF, encoding="utf-8", newline="\n")

@@ -2136,3 +2136,26 @@ passarela de Nazaré animados como a Maria Fumaça, cada um com o seu movimento.
 - Céu com cúmulos grandes: a cor mais comum da linha pode ser a nuvem (céu saía branco); use a moda só dos pixels azuis.
 
 **Próximo:** layout novo (missão 2026-11-14 item 1) vai redesenhar o painel da escolha de mapa.
+
+## 2026-11-14 — Agarrões segura-e-bate em todos os lutadores (missão 14/11, item 3; issue #37)
+
+**Pedido do Breno:** agarrão como nos jogos de luta clássicos: pega, segura, bate várias vezes e arremessa.
+
+**Feito:** `ferramentas/agarrao_mk.py` refaz o agarrão em pé (800/810) de CK, Gutto, Hazak, Pengaró e Raiclaven
+(Gbzin fica para a branch dele: é só pôr um roteiro em `ROTEIROS`). Sem desenho novo: a ação 810 é montada com os
+quadros dos golpes que cada um já tem, e cada contato cai no tick da caixa de acerto do golpe emprestado, com dano,
+faísca (a mesma do HitDef do golpe), som e o oponente reagindo com a animação de apanhar DELE (estados 822/825/826,
+`ChangeAnim` 5000/5001/5002). No fim: 823 joga para longe; segurando ← sai o 824, que passa por cima e cai atrás.
+- CK, "Gola na Mão: boxe sujo": jab duplo, gancho no fígado, joelhada na coxa, uppercut.
+- Gutto, "Clinch de Muay Thai": joelhada, joelhada subindo, joelhada, chute alto.
+- Pengaró, "Roda de Capoeira com Garrafa": chute baixo, garrafada, meia-lua, aú.
+- Raiclaven, "Corte de Cabelo à Força": tesourada, tesourada de lado, corte de cima, chute giratório.
+- Hazak, "Abraço de Quebrada": soco, cutucão, joelhada, chute alto.
+- Dano 120 no roteiro (antes 100), 4 ou 5 pancadas, 69 a 85 ticks até o arremesso. Escape igual a antes (y ou b no
+  começo, antes da 1ª pancada). O .sff não muda; o RemapPreset do Despertar troca os desenhos sozinho.
+- Os geradores chamam `agarrao_mk.aplicar` no fim (conferido: gerar_ck/hazaki/pengaro saem iguais ao arquivo
+  aplicado). Robô: cenários "agarrao segura-e-bate" (frente e para trás) no `robo.lua` para todos.
+
+**Sugestões:** folhas próprias de agarrão por lutador no ChatGPT (hoje são quadros emprestados); a faísca segue o
+número do HitDef, então quando o item 4 trocar a "rede de futebol" ela muda junto se a troca for no mesmo número;
+agarrão agachado (840) e o de comando (830) ainda são os antigos.
