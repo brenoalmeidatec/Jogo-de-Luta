@@ -46,6 +46,7 @@ zoffset = 660
 autoturn = 1
 resetBG = 1
 localcoord = 1280, 720
+portraitscale = 1
 xscale = 1
 yscale = 1
 
@@ -67,7 +68,18 @@ spr = maria_fumaca.sff
 debugbg = 0
 
 [Begin Action 9000]
-9000,1, 0,0, -1
+9001,0, 0,0, 8
+9001,1, 0,0, 8
+9001,2, 0,0, 8
+9001,3, 0,0, 8
+9001,4, 0,0, 8
+9001,5, 0,0, 8
+9001,6, 0,0, 8
+9001,7, 0,0, 8
+9001,8, 0,0, 8
+9001,9, 0,0, 8
+9001,10, 0,0, 8
+9001,11, 0,0, 8
 
 [BG fora]
 type = normal

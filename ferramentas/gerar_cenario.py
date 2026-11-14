@@ -36,19 +36,23 @@ Antes de gravar, o gerador simula a câmera nos quatro cantos do curso e recusa 
 desenhado), que no jogo viraria faixa preta. --previa grava a simulação (três posições e um GIF) para olhar sem motor.
 """
 import argparse
+import re
 import json
 import math
 import sys
 from pathlib import Path
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageDraw
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from layout_sff import escrever_sff2  # noqa: E402  (SFF v2 com PNG de 32 bits, o mesmo do layout Nazafights)
+from layout_sff import escrever_sff2, escrever_sff2_bruto, ler_sff2  # noqa: E402  (SFF v2 com PNG de 32 bits, o mesmo do layout Nazafights)
 
 RAIZ = Path(__file__).resolve().parent.parent
 TELA_L, TELA_A = 320, 180
+RETRATO_TELA = (640, 360)   # prévia na tela de escolha de mapa (px da janela 1280x720)
+RETRATO_FAIXA = 42          # faixa da música embaixo da prévia (múltiplo de 3: a letra vai em 3x)
+RETRATO_QUADROS, RETRATO_TICKS = 12, 8
 MISTURAS = {"normal": "none", "soma": "add", "subtrai": "sub"}
 TIPOS_CTRL = {"velset", "veladd", "posset", "posadd", "sinx", "siny", "visible", "enabled", "anim", "null"}
 
@@ -176,6 +180,7 @@ class Cenario:
         self.sombra = (so.get("intensidade", 96), tuple(so.get("cor", (0, 0, 0))), so.get("escala_y", 0.3))
         self.reflexo = int(desc.get("reflexo", 0))
         self.musica = desc.get("musica", "")
+        self.musica_nome = desc.get("musica_nome", "ainda sem música")  # aparece na prévia da escolha de mapa
         self.suave = bool(desc.get("suave", True))
         self.camadas = [Camada(d, k, base, self.suave) for k, d in enumerate(desc["camadas"])]
         if not self.camadas:
@@ -210,9 +215,35 @@ class Cenario:
         for c in self.camadas:
             for n, q in enumerate(c.quadros):
                 itens.append((c.k, n, q, 0, 0))
-        retrato = self.compor().convert("RGB").resize((240, 135), Image.NEAREST).crop((0, 17, 240, 117))
-        itens.append((9000, 1, retrato.convert("RGBA"), 0, 0))
+        quadros = self.retrato()
+        itens.append((9000, 1, quadros[0], 0, 0))
+        itens += [(9001, n, q, 0, 0) for n, q in enumerate(quadros)]
         return itens
+
+    def retrato(self):
+        """Prévia da tela de escolha de mapa: a tela com a câmera em repouso em RETRATO_QUADROS quadros (o cenário
+        animado de verdade, um quadro a cada RETRATO_TICKS ticks) e, embaixo, a faixa com a música do mapa.
+        Fica na resolução da janela (640x400 de 1280x720); o portraitscale do .def acerta a escala dos de 320x180."""
+        import gerar_layout as gl
+        L, A = RETRATO_TELA
+        faixa = gl.nova(L // 3, RETRATO_FAIXA // 3)
+        d = ImageDraw.Draw(faixa)
+        d.rectangle([0, 0, faixa.width - 1, faixa.height - 1], fill=gl.cor("breu"))
+        d.line([0, 0, faixa.width - 1, 0], fill=gl.cor("madeira_cl"))
+        texto = texto_acentuado(gl, f"MÚSICA: {self.musica_nome}".upper())
+        faixa.alpha_composite(texto, ((faixa.width - texto.width) // 2, (faixa.height - texto.height) // 2 + 1))
+        faixa = faixa.resize((L, RETRATO_FAIXA), Image.NEAREST)
+        quadros = []
+        for n in range(RETRATO_QUADROS):
+            tela = self.compor(t=n * RETRATO_TICKS).convert("RGB")
+            filtro = Image.NEAREST if TELA_L <= 320 else Image.LANCZOS
+            q = Image.new("RGBA", (L, A + RETRATO_FAIXA))
+            q.paste(tela.resize((L, A), filtro), (0, 0))
+            q.alpha_composite(faixa, (0, A))
+            # 256 cores por quadro: a prévia fica 3x menor no .sff e não dá para ver a diferença nesse tamanho
+            q = q.convert("RGB").quantize(256, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE).convert("RGBA")
+            quadros.append(q)
+        return quadros
 
     def texto_def(self):
         L = []
@@ -230,13 +261,14 @@ class Cenario:
               f"leftbound = {-self.largura // 2}", f"rightbound = {self.largura // 2}", "",
               "[Bound]", f"screenleft = {self.margem_tela}", f"screenright = {self.margem_tela}", "",
               "[StageInfo]", f"zoffset = {self.chao_y}", "autoturn = 1", "resetBG = 1",
-              f"localcoord = {TELA_L}, {TELA_A}", "xscale = 1", "yscale = 1", "",
+              f"localcoord = {TELA_L}, {TELA_A}", "xscale = 1", "yscale = 1",
+              f"portraitscale = {num(TELA_L / 1280)}", "",
               "[Shadow]", f"intensity = {self.sombra[0]}", "color = " + ",".join(str(v) for v in self.sombra[1]),
               f"yscale = {num(self.sombra[2])}", "fade.range = 0,0", "",
               "[Reflection]", f"intensity = {self.reflexo}", "",
               "[Music]", f"bgmusic = {self.musica}", "bgmvolume = 100", "",
               "[BGdef]", f"spr = {self.id}.sff", "debugbg = 0", "",
-              "[Begin Action 9000]", "9000,1, 0,0, -1", ""]
+              "[Begin Action 9000]"] + [f"9001,{n}, 0,0, {RETRATO_TICKS}" for n in range(RETRATO_QUADROS)] + [""]
         for c in self.camadas:
             L.append(f"[BG {c.nome}]")
             if c.animada:
@@ -288,8 +320,32 @@ class Cenario:
         if furo_magenta:
             txt = txt.replace("debugbg = 0", "debugbg = 1")
         (destino / f"{self.id}.def").write_text(txt, encoding="utf-8", newline="")
-        escrever_sff2(destino / f"{self.id}.sff", self.sprites())
+        escrever_sff2(destino / f"{self.id}.sff", self.sprites(), compactos=(9000, 9001))
         return destino / f"{self.id}.def"
+
+    def gravar_so_retrato(self, destino):
+        """Troca só a prévia da escolha de mapa num cenário já gravado, sem regerar as camadas (para um cenário cujo
+        .sff aprovado não bate mais com os PNG da pasta, como a Maria Fumaça de 2026-11-12)."""
+        destino = Path(destino)
+        sff, arq = destino / f"{self.id}.sff", destino / f"{self.id}.def"
+        velhos = [(g, n, w, h, ax, ay, png) for (g, n), (w, h, ax, ay, _f, png) in ler_sff2(sff).items()
+                  if g not in (9000, 9001)]
+        from layout_sff import png_pil
+        q = self.retrato()
+        novos = [(9000, 1, *q[0].size, 0, 0, png_pil(q[0]))]
+        novos += [(9001, n, *im.size, 0, 0, png_pil(im)) for n, im in enumerate(q)]
+        escrever_sff2_bruto(sff, velhos + novos)
+        txt = arq.read_text(encoding="utf-8")
+        nl = "\r\n" if "\r\n" in txt else "\n"
+        acao = nl.join(["[Begin Action 9000]"] + [f"9001,{n}, 0,0, {RETRATO_TICKS}" for n in range(len(q))]) + nl
+        txt, k = re.subn(r"\[Begin Action 9000\][^\[]*?(?=\r?\n\r?\n|\r?\n\[)", acao.rstrip("\r\n"), txt, count=1)
+        if not k:
+            raise SystemExit(f"{arq}: sem [Begin Action 9000]")
+        if not re.search(r"(?im)^portraitscale\s*=", txt):
+            txt = re.sub(r"(?im)^(localcoord\s*=[^\r\n]*)", lambda m: m.group(1) + nl + f"portraitscale = {num(TELA_L / 1280)}",
+                         txt, count=1)
+        arq.write_text(txt, encoding="utf-8", newline="")
+        return arq
 
     def previa(self, pasta, zoom=2):
         pasta = Path(pasta)
@@ -305,6 +361,19 @@ class Cenario:
             im = self.compor(camx, 0, i * 4, fundo=fundo).convert("RGB")
             quadros.append(im.resize((TELA_L * zoom, TELA_A * zoom), Image.NEAREST))
         quadros[0].save(pasta / f"{self.id}.gif", save_all=True, append_images=quadros[1:], duration=67, loop=0)
+
+
+def texto_acentuado(gl, texto):
+    """Linha na fonte 5x7 do layout Nazafights, com os acentos (o texto_bits do layout não desenha acento)."""
+    gs = [None if ch == " " else gl.de_desenho(gl.glifo_letra(ch, True), {"#": "farinha"}) for ch in texto]
+    w = sum(g.width if g else 3 for g in gs) + len(gs) - 1
+    img = gl.nova(w, 10)
+    x = 0
+    for g in gs:
+        if g:
+            img.alpha_composite(g, (x, 0))
+        x += (g.width if g else 3) + 1
+    return gl.com_sombra(img, "barro", 1, 1)
 
 
 def _colar(tela, q, x, y):
@@ -338,8 +407,13 @@ def main():
     ap.add_argument("--previa", type=Path, help="pasta para a simulação (3 PNG e 1 GIF)")
     ap.add_argument("--furo-magenta", action="store_true", help="debugbg = 1: furo aparece magenta no jogo (só teste)")
     ap.add_argument("--aceita-furo", action="store_true", help="grava mesmo com furo (só para investigar)")
+    ap.add_argument("--so-retrato", action="store_true",
+                    help="troca só a prévia da tela de escolha de mapa no .def/.sff já gravados (não mexe nas camadas)")
     a = ap.parse_args()
     desc = json.loads(a.descricao.read_text(encoding="utf-8"))
+    if a.so_retrato:
+        print(Cenario(desc, a.descricao.parent).gravar_so_retrato(a.destino), "com a prévia nova")
+        return
     gerar(desc, a.descricao.parent, a.destino, a.previa, a.furo_magenta, a.aceita_furo)
 
 

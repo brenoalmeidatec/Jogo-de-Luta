@@ -18,7 +18,7 @@ font1 = fonts/naza_menu.def
 font2 = fonts/naza_menu_ativo.def
 font3 = fonts/naza_tab.def
 font4 = fonts/naza_num.def
-module = modo_super.lua     ; item MODO SUPER do menu (versus com power sempre cheio)
+module = nazafights.lua     ; MODO SUPER no menu (power sempre cheio) e escolha de mapa em todo modo
 
 [Title Info]
 fadein.time = 20
@@ -147,6 +147,40 @@ p2.name.font = 1,0,0
 p2.name.offset = 1032,331
 title.font = 1,0,0
 title.offset = 640,52
+; Escolha de mapa (Breno, issue #35): depois dos lutadores, painel por cima de tudo (layerno 1) com a previa animada
+; do cenario (acao 9000 do .def dele, gerada pelo gerar_cenario.py com a musica embaixo). Nunca aleatorio:
+; randomselect = 0 tira o "Stage: Random" da lista (o modulo nazafights.lua liga a escolha em todos os modos).
+stage.randomselect = 0
+stage.pos = 320,124
+stage.portrait.anim = 9000
+stage.portrait.localcoord = 1280,720
+stage.portrait.layerno = 1
+stage.portrait.window = 320,124,960,524   ; cenario sem previa nossa (Training Room) nao vaza
+stage.portrait.bg.spr = 210,0
+stage.portrait.bg.offset = -320,-124       ; o motor soma o stage.pos: o painel cobre a tela toda
+stage.portrait.bg.localcoord = 1280,720
+stage.portrait.bg.layerno = 1
+stage.text = %s
+stage.font = 1,0,0
+stage.offset = 320,483
+stage.localcoord = 1280,720
+stage.layerno = 1
+stage.active.text = %s
+stage.active.font = 2,0,0
+stage.active.offset = 320,483
+stage.active.localcoord = 1280,720
+stage.active.layerno = 1
+stage.active2.text = %s
+stage.active2.font = 1,0,0
+stage.active2.offset = 320,483
+stage.active2.localcoord = 1280,720
+stage.active2.layerno = 1
+stage.active.switchtime = 20
+stage.done.text = %s
+stage.done.font = 2,0,0
+stage.done.offset = 320,483
+stage.done.localcoord = 1280,720
+stage.done.layerno = 1
 
 [Begin Action 310]
 310,0, 0,0, 8

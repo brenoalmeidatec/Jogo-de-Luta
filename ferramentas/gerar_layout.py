@@ -79,6 +79,10 @@ POS = {
     "retrato_p1": (24, 64), "retrato_p2": (808, 64), "retrato_alto": 216,
     "tabuleta_sel_y": 71,                                     # topo (logico) da tabuleta do nome, sob o retrato
     "nome_sel_p1": (248, 331), "nome_sel_p2": (1032, 331),   # centro x (= centro do retrato), linha de base
+    # Escolha de mapa (Breno, issue #35): painel por cima da selecao depois que os lutadores foram escolhidos.
+    # A previa (640x400, retrato 9001 de cada cenario, feito pelo gerar_cenario.py) fica com o canto em "mapa_previa".
+    "mapa_previa": (320, 124), "mapa_previa_tam": (640, 400),
+    "mapa_nome": (640, 607),          # centro x e linha de base do nome do cenario (dentro da tabuleta)
 }
 
 
@@ -948,6 +952,51 @@ def tabua_ativa(w=88, h=10):
     return img
 
 
+def fundo_mapa():
+    """Tela de escolha de mapa (issue #35): o mesmo tabuleiro de feira da selecao, com a moldura de madeira da
+    previa animada no meio, setas dos dois lados, tabuleta do nome embaixo e a dica dos botoes."""
+    rnd = random.Random(35)
+    img = tabuleiro(320, 180, rnd)
+    for (xa, xb, listras) in [(-6, 160, ("taua", "tabatinga")), (160, 326, ("rio", "tabatinga"))]:
+        x = xa
+        while x < xb:
+            w = min([22, 26, 30][(x // 7) % 3], xb - x)
+            if w > 8:
+                img.alpha_composite(barraca(w, 18, listras, rnd), (x, 167))
+            x += w + 3
+    px, py = POS["mapa_previa"][0] // 4, POS["mapa_previa"][1] // 4
+    pw, ph = POS["mapa_previa_tam"][0] // 4, POS["mapa_previa_tam"][1] // 4
+    d = ImageDraw.Draw(img)
+    d.rectangle([px - 4, py - 4, px + pw + 3, py + ph + 3], fill=cor("madeira"))
+    d.rectangle([px - 4, py - 4, px + pw + 3, py + ph + 3], outline=cor("breu"))
+    d.line([px - 3, py - 3, px + pw + 2, py - 3], fill=cor("madeira_cl"))
+    d.line([px - 3, py + ph + 2, px + pw + 2, py + ph + 2], fill=cor("barro"))
+    d.rectangle([px - 1, py - 1, px + pw, py + ph], fill=cor("breu"))
+    # titulo
+    faixa = nova(152, 13)
+    df = ImageDraw.Draw(faixa)
+    df.rectangle([0, 0, 151, 12], fill=cor("taua_esc"))
+    df.line([0, 0, 151, 0], fill=cor("taua"))
+    df.rectangle([0, 0, 151, 12], outline=cor("breu"))
+    t = texto_bits("ESCOLHA O MAPA", 1, "farinha", "barro", 1)
+    faixa.alpha_composite(t, ((152 - t.width) // 2, 3))
+    img.alpha_composite(faixa, (84, 8))
+    # setas
+    seta = de_desenho(["#.....", "###...", "#####.", "######", "#####.", "###...", "#....."], {"#": "dende"})
+    seta = seta.resize((seta.width * 2, seta.height * 2), Image.NEAREST)
+    larga = nova(seta.width + 2, seta.height + 2)
+    larga.alpha_composite(seta, (1, 1))
+    seta = contorno(larga, "breu")
+    cy = py + ph // 2 - seta.height // 2
+    img.alpha_composite(seta, (px + pw + 8, cy))
+    img.alpha_composite(espelhar(seta), (px - 8 - seta.width, cy))
+    # tabuleta do nome (o motor escreve o nome com a fonte 1 em POS["mapa_nome"])
+    img.alpha_composite(tabuleta(140, 12, "", "tabatinga"), (90, POS["mapa_nome"][1] // 4 - 11))
+    dica = texto_bits("ESQUERDA E DIREITA TROCAM - ENTER CONFIRMA", 1, "tabatinga", "breu", 1)
+    img.alpha_composite(dica, ((320 - dica.width) // 2, 157))
+    return img
+
+
 # ----------------------------------------------------------------------------------------------------------
 # Selecao: a Feira dos Caxixis vista de cima
 # ----------------------------------------------------------------------------------------------------------
@@ -1238,6 +1287,7 @@ def sprites_system():
     s = []
     s.append((131, 0, tabua_ativa(), 44, 10))   # eixo: centro x; 10 = 42 px acima da linha de base / 4 (arred.)
     s.append((200, 0, fundo_selecao(), 0, 0))
+    s.append((210, 0, fundo_mapa(), 0, 0))
     # O IKEMEN desenha cell.random.spr somando o portrait.offset (start.lua, updateDrawList), a celula
     # nao. Sem o eixo compensando, o "?" saia 14 px para baixo e para a direita da celula vazia.
     k = RETRATO_NA_CELULA / ESCALA
@@ -1341,7 +1391,7 @@ def system_def():
     g = POS["grade"]
     lc = "1280,720"
     # Menu enxuto (Breno, 2026-11-13). Nome vazio esconde o item padrao do motor. "supermode" e o Modo Super
-    # (modo_super.lua, ligado em [Files] module): versus com as barras de power sempre cheias.
+    # (nazafights.lua, ligado em [Files] module): versus com as barras de power sempre cheias.
     itens = [("arcade", "ARCADE"), ("versus", "VERSUS"), ("supermode", "MODO SUPER"), ("watch", "ASSISTIR"),
              ("options", "OPÇÕES")]
     escondidos = ["teamarcade", "teamversus", "teamcoop", "survival", "survivalcoop", "training", "exit"]
@@ -1363,7 +1413,7 @@ font1 = fonts/naza_menu.def
 font2 = fonts/naza_menu_ativo.def
 font3 = fonts/naza_tab.def
 font4 = fonts/naza_num.def
-module = modo_super.lua     ; item MODO SUPER do menu (versus com power sempre cheio)
+module = nazafights.lua     ; MODO SUPER no menu (power sempre cheio) e escolha de mapa em todo modo
 
 [Title Info]
 fadein.time = 20
@@ -1446,6 +1496,7 @@ start = {POS['logo'][0] - 640},{POS['logo'][1]}
     cel, ce = POS["celula"], POS["celula_espaco"]
     rp1, rp2 = POS["retrato_p1"], POS["retrato_p2"]
     n1, n2 = POS["nome_sel_p1"], POS["nome_sel_p2"]
+    mp, mn = POS["mapa_previa"], POS["mapa_nome"]
     t += f"""[Select Info]
 fadein.time = 10
 fadeout.time = 10
@@ -1489,6 +1540,40 @@ p2.name.font = 1,0,0
 p2.name.offset = {n2[0]},{n2[1]}
 title.font = 1,0,0
 title.offset = 640,52
+; Escolha de mapa (Breno, issue #35): depois dos lutadores, painel por cima de tudo (layerno 1) com a previa animada
+; do cenario (acao 9000 do .def dele, gerada pelo gerar_cenario.py com a musica embaixo). Nunca aleatorio:
+; randomselect = 0 tira o "Stage: Random" da lista (o modulo nazafights.lua liga a escolha em todos os modos).
+stage.randomselect = 0
+stage.pos = {mp[0]},{mp[1]}
+stage.portrait.anim = 9000
+stage.portrait.localcoord = 1280,720
+stage.portrait.layerno = 1
+stage.portrait.window = {mp[0]},{mp[1]},{mp[0] + POS['mapa_previa_tam'][0]},{mp[1] + POS['mapa_previa_tam'][1]}   ; cenario sem previa nossa (Training Room) nao vaza
+stage.portrait.bg.spr = 210,0
+stage.portrait.bg.offset = {-mp[0]},{-mp[1]}       ; o motor soma o stage.pos: o painel cobre a tela toda
+stage.portrait.bg.localcoord = 1280,720
+stage.portrait.bg.layerno = 1
+stage.text = %s
+stage.font = 1,0,0
+stage.offset = {mn[0] - mp[0]},{mn[1] - mp[1]}
+stage.localcoord = 1280,720
+stage.layerno = 1
+stage.active.text = %s
+stage.active.font = 2,0,0
+stage.active.offset = {mn[0] - mp[0]},{mn[1] - mp[1]}
+stage.active.localcoord = 1280,720
+stage.active.layerno = 1
+stage.active2.text = %s
+stage.active2.font = 1,0,0
+stage.active2.offset = {mn[0] - mp[0]},{mn[1] - mp[1]}
+stage.active2.localcoord = 1280,720
+stage.active2.layerno = 1
+stage.active.switchtime = 20
+stage.done.text = %s
+stage.done.font = 2,0,0
+stage.done.offset = {mn[0] - mp[0]},{mn[1] - mp[1]}
+stage.done.localcoord = 1280,720
+stage.done.layerno = 1
 
 [Begin Action 310]
 310,0, 0,0, 8
@@ -2185,7 +2270,7 @@ def verificar():
                     g, n = (int(x) for x in nums(v)[:2])
                     if g != 9000 and (g, n) not in dados:
                         raise SystemExit(f"ERRO: {nome_def} {k} = {v} nao existe em {sff}")
-                if k.endswith(".anim") or k == "actionno":
+                if (k.endswith(".anim") or k == "actionno") and k != "stage.portrait.anim":  # essa e do .def do cenario
                     if int(nums(v)[0]) not in acoes:
                         raise SystemExit(f"ERRO: {nome_def} {k} = {v}: acao nao definida")
         for a, quadros in acoes.items():
