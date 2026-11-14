@@ -136,8 +136,26 @@ PAPEIS = {
     "poeira":  (("heavy-landing", (3, 5, 7, 9)),),
     "asfalto": (("heavy-landing", (3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23)),),
 }
-ESCALA = {"fraco": .6, "forte": .75, "final": 1.0, "defesa": .55, "rastro": .9, "poeira": .8, "asfalto": 1.25,
+ESCALA = {"fraco": .6, "forte": .85, "final": 1.15, "defesa": .55, "rastro": .9, "poeira": .8, "asfalto": 1.25,
           "parry": .5}
+# Nível do Hazak (Breno, #44): o que bate forte acende. Halo de brilho (raio do desfoque, força, margem) por baixo do
+# pixel seco, o caminho escolhido na #47. O fraco, a defesa e a poeira ficam secos (regra dos efeitos proporcionais).
+HALO = {"forte": (3, .7, 6), "final": (4, .8, 8), "rastro": (3, .6, 6), "parry": (3, .7, 6)}
+
+
+def com_halo(quadro, papel):
+    """(RGBA, ex, ey, ticks) com o brilho desfocado do próprio desenho por baixo (alfa suave: PNG de 32 bits)."""
+    if papel not in HALO:
+        return quadro
+    from PIL import ImageFilter
+    img, ex, ey, ticks = quadro
+    raio, forca, m = HALO[papel]
+    tela = Image.new("RGBA", (img.width + 2 * m, img.height + 2 * m), (0, 0, 0, 0))
+    tela.paste(img, (m, m))
+    halo = tela.filter(ImageFilter.GaussianBlur(raio))
+    halo.putalpha(halo.getchannel("A").point(lambda v: min(255, int(v * forca * 1.6))))
+    halo.alpha_composite(tela)
+    return halo, ex + m, ey + m, ticks
 ESCALA_BLENDER = .75  # escala no .air dos efeitos do Blender (efeitos_blender.py): o mesmo pixel dos do pixelfx
 NO_CHAO = {"poeira", "asfalto"}  # pivô do pixelfx (o chão), não o centro do clarão
 
@@ -167,7 +185,7 @@ def montar_papel(papel, r):
             if not cx:
                 continue
             px = (img.width - 1 - pivo[0]) if papel == "defesa" else pivo[0]
-            saida.append((img.crop(cx), px - cx[0], pivo[1] - cx[1], 2))
+            saida.append(com_halo((img.crop(cx), px - cx[0], pivo[1] - cx[1], 2), papel))
     return saida
 
 
@@ -181,7 +199,7 @@ def montar_parry(r):
         if t and len(saida) == 3:
             img = desfazer(img, 1)
         cx = img.getchannel("A").getbbox()
-        saida.append((img.crop(cx), pivo[0] - cx[0], pivo[1] - cx[1], t))
+        saida.append(com_halo((img.crop(cx), pivo[0] - cx[0], pivo[1] - cx[1], t), "parry"))
     return saida
 
 
@@ -226,20 +244,25 @@ BLENDER = RAIZ / "sprites/efeitos_blender"
 # ação do .air -> (efeito, forma). O Blender renderiza em efeitos_blender.py; aqui só se liga o que já está pronto.
 CORTE = {"especial": 7, "super": 10}  # desenhos usados de cada render
 ACOES_BLENDER = {9240: ("especial", "base"), 9270: ("especial", "desperto"), 9241: ("super", "base"),
-                 9271: ("super", "desperto"), 9272: ("transformacao", "desperto")}
+                 9271: ("super", "desperto"), 9272: ("transformacao", "desperto"),
+                 # a carga: energia do lutador juntando no corpo antes do especial; na super ela é lenta e maior
+                 9243: ("carga", "base"), 9273: ("carga", "desperto"),
+                 9244: ("carga_lenta", "base"), 9274: ("carga_lenta", "desperto")}
 
 
 def efeitos_blender(lutador):
     """{ação: [(RGBA, ex, ey, ticks)]} dos efeitos do Blender que existem para o lutador."""
     acoes = {}
     for acao, (efeito, forma) in ACOES_BLENDER.items():
-        pasta = BLENDER / lutador / f"{efeito}_{forma}"
+        pasta = BLENDER / lutador / f"{efeito.replace('_lenta', '')}_{forma}"
         if not (pasta / "meta.json").exists():
             continue
         meta = json.loads((pasta / "meta.json").read_text(encoding="utf-8"))
+        if efeito == "carga_lenta":
+            meta["ticks"] *= 2
         quadros = []
         # o fim do render é a fumaça escura se desfazendo: no jogo virava borrão marrom em cima dos lutadores
-        for arq in sorted(pasta.glob("[0-9][0-9].png"))[:CORTE.get(efeito)]:
+        for arq in sorted(pasta.glob("[0-9][0-9].png"))[:meta.get("corte", CORTE.get(efeito))]:
             img = Image.open(arq).convert("RGBA")
             cx = img.getchannel("A").getbbox()
             if not cx:
@@ -258,12 +281,102 @@ def blocos(cns):
     return list(re.finditer(r"^\[Statedef (-?\d+)\][^\n]*\n.*?(?=^\[Statedef |\Z)", cns, re.M | re.S))
 
 
-def ligar_cns(cns, acoes, hazak):
-    """Faísca dos especiais (1000-1999) e das supers (3000-3399) trocada pela do Blender; pilar no Despertar (2000)."""
+def tinta(lutador, forma):
+    """(mul do fundo, add no oponente e no rastro) na cor da forma: o fundo escurece puxando para a cor."""
+    r = rampa(lutador, forma)
+    m = max(r[3])
+    return tuple(round(70 + 100 * v / m) for v in r[3]), tuple(round(v * .5) for v in r[4])
+
+
+def por_forma(lutador, qual, k=1.0):
+    """Os três números de uma cor como expressão: a da forma despertada se var(20) > 0, senão a normal."""
+    b, d = (tuple(round(v * k) for v in tinta(lutador, f)[qual]) for f in ("base", "desperto"))
+    return ", ".join(str(x) if x == y else f"ifelse(var(20) > 0, {y}, {x})" for x, y in zip(b, d))
+
+
+def ctl(n, nome, tipo, *linhas):
+    return f"[State {n}, {nome} {MARCA}]\ntype = {tipo}\n" + "\n".join(linhas) + "\n\n"
+
+
+def limpar(cns):
+    """Tira tudo o que este arquivo pôs (controladores e linhas marcadas), para pôr de novo sem duplicar."""
+    cns = re.sub(rf"^\[State -?\d+, [^\]\n]*{re.escape(MARCA)}\]\n(?:[^\n]+\n)+\n?", "", cns, flags=re.M)
+    return re.sub(rf"^[^\n]*; {re.escape(MARCA)}\n", "", cns, flags=re.M)
+
+
+def linhas_marcadas(bloco, depois, linhas):
+    return re.sub(rf"(?m)^({depois} = [^\n]*\n)", lambda m: m.group(1) + "".join(f"{l} ; {MARCA}\n" for l in linhas),
+                  bloco, count=1)
+
+
+RE_BATE = re.compile(r"(?m)^type = (HitDef|Projectile)$")
+
+
+def nivel(bloco, n, lutador):
+    """Nível do Hazak (Breno, #44) nos especiais (1000-1999, 3400-3403) e nas supers (3000-3399): carga no corpo e
+    rastro na cor da forma antes do golpe; no acerto, tela treme, oponente pisca na cor da forma e o fundo acende.
+    Na super o fundo fica escuro na cor da forma enquanto ela dura. Nos normais, só o finalizador faz o oponente piscar."""
+    especial = 1000 <= n <= 1999 or 3400 <= n <= 3403
+    super_ = 3000 <= n <= 3399
+    partes = re.split(r"(?m)^(?=\[State )", bloco)
+    add = por_forma(lutador, 1)
+    if not (especial or super_):
+        for i, c in enumerate(partes):
+            if RE_BATE.search(c) and re.search(r"(?m)^sparkno = [^\n]*9205", c) and "palfx." not in c:
+                partes[i] = linhas_marcadas(c, "damage", ("palfx.time = 8", f"palfx.add = {add}"))
+        return "".join(partes)
+    if not any(RE_BATE.search(c) for c in partes[1:]):
+        return bloco
+    for i, c in enumerate(partes):
+        if i and RE_BATE.search(c):
+            c = re.sub(r"(?m)^(?:envshake\.(?:time|freq|ampl)|palfx\.[a-z]+) = [^\n]*\n", "", c)
+            p = [int(v) for v in re.findall(r"-?\d+", (re.search(r"(?m)^pausetime = ([^\n;]*)", c) or [0, "0"])[1])]
+            pesado = max(p or [0]) >= 10
+            if super_:
+                treme, pisca = ((28, 90, -10), 18) if pesado else ((8, 160, -3), 6)
+                if not pesado:  # rajada da super: estouro de especial em cada acerto; o de super fica para o final
+                    c = re.sub(r"(?m)^(sparkno = [^\n]*)$",
+                               lambda m: m.group(1).replace("9271", "9270").replace("9241", "9240"), c)
+            else:
+                treme, pisca = ((16, 120, -6), 12) if pesado else ((10, 150, -3), 8)
+            # o estouro novo já é grande: a escala da faísca não passa de 1
+            c = re.sub(r"(?m)^sparkscale = ([\d.]+), ([\d.]+)$",
+                       lambda m: f"sparkscale = {min(1.0, float(m.group(1))):g}, {min(1.0, float(m.group(2))):g}", c)
+            partes[i] = linhas_marcadas(c, "damage", (
+                f"envshake.time = {treme[0]}", f"envshake.freq = {treme[1]}", f"envshake.ampl = {treme[2]}",
+                f"palfx.time = {pisca}", f"palfx.add = {add}"))
+        elif i and re.search(r"(?m)^type = AfterImage$", c) and super_:
+            c = re.sub(r"(?m)^paladd = 0,0,0\n", "", c)
+            if "paladd" not in c:
+                partes[i] = linhas_marcadas(c, "palcolor", (f"paladd = {add}",))
+    corpo = "".join(partes[1:])
+    carga, lenta = "ifelse(var(20) > 0, 9273, 9243)", "ifelse(var(20) > 0, 9274, 9244)"
+    novo = ctl(n, "Carga", "Explod", "trigger1 = Time = 0", f"anim = {lenta if super_ else carga}", "id = 9243",
+               "postype = p1", "pos = 8, -60", "bindtime = -1", "removetime = -2", "sprpriority = 3", "ownpal = 1",
+               *(("scale = 1.7, 1.7", "supermovetime = 90") if super_ else ()), "ignorehitpause = 1")
+    if not re.search(r"(?m)^type = AfterImage$", corpo):
+        novo += ctl(n, "Rastro do corpo", "AfterImage", "trigger1 = Time = 0", "time = 18", "length = 6",
+                    "timegap = 2", "framegap = 2", "trans = add", "palcolor = 0", "palbright = 0,0,0",
+                    f"paladd = {por_forma(lutador, 1, 1.5)}", "palmul = .3,.3,.3")
+    if super_:
+        novo += ctl(n, "Fundo na cor da forma", "BGPalFX", "trigger1 = Time >= 1", "time = 2",
+                    f"mul = {por_forma(lutador, 0)}")
+        novo += ctl(n, "Solta: tremida", "EnvShake", "trigger1 = Time = 1", "time = 16", "freq = 170", "ampl = -3")
+    if not re.search(r"(?m)^type = BGPalFX\ntrigger1 = MoveHit", corpo) and re.search(r"(?m)^type = HitDef$", corpo):
+        novo += ctl(n, "Clarão do acerto", "BGPalFX", "trigger1 = MoveHit = 1", "persistent = 0", "time = 5",
+                    f"add = {por_forma(lutador, 1, .7)}", f"mul = {por_forma(lutador, 0)}", "ignorehitpause = 1")
+    return partes[0] + novo + corpo
+
+
+def ligar_cns(cns, acoes, hazak, lutador=None):
+    """Faísca dos especiais (1000-1999) e das supers (3000-3399) trocada pela do Blender; pilar no Despertar (2000);
+    e o nível do Hazak (função nivel) nos lutadores que têm a carga do Blender."""
     def faisca(base, desperto):
         if hazak or desperto not in acoes:
             return f"sparkno = S{base}"
         return f"sparkno = S(ifelse(var(20) > 0, {desperto}, {base}))"
+    cns = limpar(cns)
+    sobe = lutador and not hazak and 9243 in acoes
     trocas = []
     for m in blocos(cns):
         n = int(m.group(1))
@@ -271,20 +384,22 @@ def ligar_cns(cns, acoes, hazak):
         novo = bloco
         if (n == 2000 or 3000 <= n <= 3399) and 9240 in acoes:
             # o clarão da pausa da super era o anim 100 do motor (a faísca azul do fightfx): vira o estouro do lutador
-            alvo = faisca(9240, 9270).split(" = ", 1)[1]
-            novo = re.sub(r"(type = SuperPause\n(?:[^\n]+\n)*?)anim = (?:100|S[^\n]+)\n",
+            # (no Despertar) ou some (na super, onde a carga grande do lutador faz esse papel)
+            alvo = "-1" if sobe and n != 2000 else faisca(9240, 9270).split(" = ", 1)[1]
+            novo = re.sub(r"(type = SuperPause\n(?:[^\n]+\n)*?)anim = (?:100|-1|S[^\n]+)\n",
                           lambda mm: mm.group(1) + f"anim = {alvo}\n", novo)
-        if 1000 <= n <= 1999 and 9240 in acoes:
+        if (1000 <= n <= 1999 or (sobe and 3400 <= n <= 3403)) and 9240 in acoes:
             novo = re.sub(r"^sparkno = (?!-1\b)[^\n]+$", faisca(9240, 9270), novo, flags=re.M)
         elif 3000 <= n <= 3399 and 9241 in acoes:
             novo = re.sub(r"^sparkno = (?!-1\b)[^\n]+$", faisca(9241, 9271), novo, flags=re.M)
         elif n == 2000 and 9272 in acoes:
-            novo = re.sub(rf"\[State 2000, Pilar da transformação {re.escape(MARCA)}\]\n(?:[^\n]+\n)+\n", "", novo)
             pilar = (f"[State 2000, Pilar da transformação {MARCA}]\ntype = Explod\ntrigger1 = AnimTime = 0\n"
                      "anim = 9272\nid = 9272\npostype = p1\npos = 0, 0\nsprpriority = -2\nownpal = 1\n"
                      "removetime = -2\nbindtime = 1\nignorehitpause = 1\n\n")
             assert "[State 2000, Liga]" in novo, "estado 2000 sem o [State 2000, Liga]"
             novo = novo.replace("[State 2000, Liga]", pilar + "[State 2000, Liga]", 1)
+        if sobe and n >= 0:
+            novo = nivel(novo, n, lutador)
         if novo != bloco:
             trocas.append((m.start(), m.end(), novo))
     for a, b, novo in reversed(trocas):
@@ -361,7 +476,7 @@ def aplicar(lutador, pasta=None):
         tem.add(acao)
         escalas[acao] = ESCALA_BLENDER
     acoes.update(blender)
-    cns = ligar_cns(cns, blender, lutador == "hazaki")
+    cns = ligar_cns(cns, blender, lutador == "hazaki", lutador)
     novos = {}
     for acao, quadros in acoes.items():
         if acao not in tem:
@@ -398,7 +513,8 @@ def aplicar(lutador, pasta=None):
 NOMES = {"fraco": "fraco (ventinho)", "forte": "forte (estalo)", "final": "finalizador (impacto)",
          "defesa": "defesa", "rastro": "rastro do golpe", "poeira": "poeira no chão", "asfalto": "asfalto",
          "parry": "parry", "especial": "especial (Blender)", "super": "super (Blender)",
-         "transformacao": "transformação (Blender)"}
+         "transformacao": "transformação (Blender)", "carga": "carga do especial (Blender)",
+         "carga_lenta": "carga da super (Blender)"}
 
 
 def folha(destino, lutadores=LUTADORES):

@@ -48,22 +48,37 @@ SAIDA = RAIZ / "sprites/efeitos_blender"
 
 # efeito -> (largura e altura no jogo, quadros, ticks por quadro, pivô no chão?)
 EFEITOS = {
-    "especial": ((72, 72), 8, 2, False),
-    "super": ((136, 136), 12, 3, False),
+    "especial": ((104, 104), 8, 2, False),
+    "super": ((200, 200), 12, 3, False),
     "transformacao": ((112, 196), 14, 3, True),
+    "carga": ((80, 80), 8, 2, False),
 }
+# Nível do Hazak (pedido do Breno na #44, 2026-11-14): estouros maiores, com halo de brilho por baixo do pixel seco
+# (o caminho escolhido na #47), e a carga: a energia do lutador juntando no corpo antes do especial e da super.
+# O Hazak fica com os efeitos que a conversa dele fez (não entra na lista padrão daqui).
+PADRAO = ("pengaro", "gutto", "raiclaven", "ck")
+HALO = {"especial": (6, .85, 12), "super": (9, .85, 18), "carga": (6, .9, 12), "transformacao": (7, .7, 14)}
+# forma escura com a borda acesa (o "sombrio" da #47): a sombra do Pengaró endiabrado e a fumaça do Ratão do CK
+SOMBRIO = {("pengaro", "desperto"), ("ck", "desperto")}
+CORTE_SOMBRIO = {"especial": 6, "super": 9}
 # o que entra em cada efeito de cada lutador
 RECEITAS = {
-    "pengaro": {"especial": ["miolo", "gotas", "cacos"], "super": ["bola", "anel", "gotas", "cacos", "raios"],
-                "transformacao": ["pilar", "anel_chao", "cacos", "fumaca"]},
+    "pengaro": {"especial": ["bola", "miolo", "anel", "gotas", "cacos"],
+                "super": ["bola", "anel", "anel2", "gotas", "cacos", "raios"],
+                "transformacao": ["pilar", "anel_chao", "cacos", "fumaca"],
+                "carga": ["nucleo", "dentro:gotas", "dentro:anel"]},
     "hazaki": {"especial": ["miolo", "chamas", "brasas"], "super": ["bola", "chamas", "anel", "brasas", "raios"]},
     # o Hazak não se transforma (não tem estado 2000): só especial e super
-    "gutto": {"especial": ["miolo", "anel", "raios", "brasas"], "super": ["bola", "anel", "anel2", "raios", "brasas"],
-              "transformacao": ["pilar", "anel_chao", "brasas"]},
-    "raiclaven": {"especial": ["miolo", "raios", "cacos", "relampago"], "super": ["bola", "anel", "cacos", "relampago", "raios"],
-                  "transformacao": ["pilar", "anel_chao", "relampago", "cacos"]},
-    "ck": {"especial": ["miolo", "anel", "anel2", "fumaca"], "super": ["bola", "anel", "anel2", "anel3", "fumaca"],
-           "transformacao": ["pilar", "anel_chao", "fumaca"]},
+    "gutto": {"especial": ["bola", "miolo", "anel", "raios", "brasas"], "super": ["bola", "anel", "anel2", "raios", "brasas"],
+              "transformacao": ["pilar", "anel_chao", "brasas"],
+              "carga": ["nucleo", "dentro:raios", "dentro:brasas", "dentro:anel"]},
+    "raiclaven": {"especial": ["bola", "miolo", "anel", "raios", "cacos", "relampago"],
+                  "super": ["bola", "anel", "anel2", "cacos", "relampago", "raios"],
+                  "transformacao": ["pilar", "anel_chao", "relampago", "cacos"],
+                  "carga": ["nucleo", "dentro:cacos", "relampago", "dentro:anel"]},
+    "ck": {"especial": ["bola", "miolo", "anel", "anel2", "fumaca"], "super": ["bola", "anel", "anel2", "anel3", "fumaca"],
+           "transformacao": ["pilar", "anel_chao", "fumaca"],
+           "carga": ["nucleo", "dentro:anel", "dentro:anel2", "dentro:anel3"]},
 }
 
 
@@ -220,7 +235,31 @@ class Efeito:
         self.L, self.A = meia_l, meia_a  # meia largura e meia altura do quadro, em unidades do Blender
         self.chao = -meia_a + 0.08 if chao else 0.0
         for p in pecas:
-            getattr(self, "p_" + p)()
+            if p.startswith("dentro:"):
+                self._dentro(p[7:])
+            else:
+                getattr(self, "p_" + p)()
+
+    def _dentro(self, peca):
+        """A peça com o tempo ao contrário: em vez de estourar para fora, a energia vem de longe e junta no miolo."""
+        k = len(self.anim)
+        getattr(self, "p_" + peca)()
+        for i in range(k, len(self.anim)):
+            self.anim[i] = (lambda g: lambda t: g(0.9 * (1 - t) + 0.03))(self.anim[i])
+
+    def p_nucleo(self):
+        """Miolo da carga: nasce pequeno e cresce esquentando (o contrário do estouro)."""
+        m, ruido, calor, limiar = mat_nuvem("nucleo", 3.0)
+        o, d = nuvem_deformada(m, 0.4, 0.3)
+
+        def f(t):
+            s = self.L * (0.1 + 0.24 * t ** 0.8)
+            o.location = (0, 0, self.chao)
+            o.scale = (s, s, s)
+            ruido.inputs["W"].default_value = t * 3
+            calor.outputs[0].default_value = 1.0 + 3.4 * t
+            limiar.outputs[0].default_value = 0.0
+        self.anim.append(f)
 
     def quadro(self, t):
         for f in self.anim:
@@ -246,7 +285,7 @@ class Efeito:
     def p_bola(self):
         m, ruido, calor, limiar = mat_nuvem("bola")
         o, d = nuvem_deformada(m)
-        grande = 0.42 if self.tipo == "super" else 0.3
+        grande = 0.42 if self.tipo == "super" else 0.36
         o.location = (0, 0, self.chao)
 
         def f(t):
@@ -284,13 +323,13 @@ class Efeito:
         self.anim.append(f)
 
     def p_anel(self):
-        self._anel(0.0, 0.8, 0.07)
+        self._anel(0.0, 0.8, 0.11)
 
     def p_anel2(self):
-        self._anel(0.18, 0.7, 0.05)
+        self._anel(0.18, 0.7, 0.08)
 
     def p_anel3(self):
-        self._anel(0.36, 0.6, 0.045)
+        self._anel(0.36, 0.6, 0.06)
 
     def p_anel_chao(self):
         """Anel no chão visto de frente: elipse achatada que abre dos pés."""
@@ -349,16 +388,16 @@ class Efeito:
         self.anim.append(f)
 
     def p_raios(self):
-        self._particulas(12, "raio", (0.75, 1.1), 0.0, 0.07, 4.0)
+        self._particulas(16, "raio", (0.7, 1.1), 0.0, 0.1, 4.0)
 
     def p_gotas(self):
-        self._particulas(14, "gota", (0.4, 0.9), 0.45, 0.085, 2.6)
+        self._particulas(18, "gota", (0.4, 0.95), 0.45, 0.11, 2.6)
 
     def p_cacos(self):
-        self._particulas(9, "caco", (0.45, 0.85), 0.4, 0.11, 1.8, so_cima=self.chao != 0)
+        self._particulas(12, "caco", (0.45, 0.9), 0.4, 0.14, 1.8, so_cima=self.chao != 0)
 
     def p_brasas(self):
-        self._particulas(16, "brasa", (0.3, 0.95), -0.15, 0.05, 3.5, so_cima=self.chao != 0)
+        self._particulas(22, "brasa", (0.3, 0.95), -0.15, 0.065, 3.5, so_cima=self.chao != 0)
 
     def p_fumaca(self):
         pecas = []
@@ -483,6 +522,65 @@ def renderizar(lutador, efeito, amostras, dir_render):
     return [Image.open(dir_render / f"{i:04d}.png").convert("RGBA") for i in range(n)], round(tam), ticks, chao
 
 
+# ---- o pixel seco por cima do halo de brilho (o caminho escolhido na #47; as funções moravam no
+# despertados_47_blender.py e vieram para cá para este arquivo não depender dele)
+def sombrio(quadros, borda=0.035, miolo=0.42):
+    """Escurece o miolo e acende a borda (alfa menos alfa erodido) e os pontos mais quentes do render."""
+    import numpy as np
+    from PIL import ImageFilter
+    out = []
+    for q in quadros:
+        a = q.getchannel("A")
+        k = max(3, round(q.width * borda) | 1)
+        er = np.asarray(a.filter(ImageFilter.MinFilter(k)), np.float32) / 255
+        al = np.asarray(a, np.float32) / 255
+        rgb = np.asarray(q.convert("RGB"), np.float32) / 255
+        lum = rgb @ np.array([0.2126, 0.7152, 0.0722], np.float32)
+        aro = np.clip((al - er) * 1.6, 0, 1)
+        quente = np.clip((lum - 0.82) * 4, 0, 1)
+        v = np.clip(lum * miolo + aro * 0.85 + quente * 0.6, 0, 1)
+        img = np.dstack([v, v, v, al]) * 255
+        out.append(Image.fromarray(img.astype(np.uint8), "RGBA"))
+    return out
+
+
+def combinado(pixel, liso, raio=3, forca=0.6, margem=6):
+    """O escolhido: o desenho do pixelfx (pixel seco) por cima de um halo de brilho do caminho direto (desfocado,
+    alfa suave). Fica pixel art, mas acende como energia."""
+    from PIL import ImageFilter
+    out = []
+    for px, li in zip(pixel, liso):
+        w, h = px.size
+        tela = Image.new("RGBA", (w + 2 * margem, h + 2 * margem), (0, 0, 0, 0))
+        halo = Image.new("RGBA", tela.size, (0, 0, 0, 0))
+        halo.paste(li.resize((w, h)), (margem, margem))
+        halo = halo.filter(ImageFilter.GaussianBlur(raio))
+        halo.putalpha(halo.getchannel("A").point(lambda v: int(v * forca)))
+        tela.alpha_composite(halo)
+        tela.alpha_composite(px, (margem, margem))
+        out.append(tela)
+    return out
+
+
+def direto(quadros, cores, tam):
+    """O caminho "feito direto": o render reduzido sem o pixelfx, cor contínua na rampa e alfa suave (brilho)."""
+    import numpy as np
+    rampa = np.array([[int(c[i:i + 2], 16) for i in (1, 3, 5)] for c in cores[1:]], np.float32)
+    out = []
+    for q in quadros:
+        rgba = pixelfx.reduzir(q, tam)
+        lum = rgba[..., 0] * 0.2126 + rgba[..., 1] * 0.7152 + rgba[..., 2] * 0.0722
+        v = np.clip(lum, 0, 1) ** 1.15 * (len(rampa) - 1)
+        i0 = np.floor(v).astype(int).clip(0, len(rampa) - 2)
+        f = (v - i0)[..., None]
+        cor = rampa[i0] * (1 - f) + rampa[i0 + 1] * f
+        a = rgba[..., 3]
+        a = np.where(a < 0.04, 0, a)
+        img = np.dstack([cor, a * 255]).clip(0, 255).astype(np.uint8)
+        out.append(Image.fromarray(img, "RGBA"))
+    return out
+
+
 def paleta(lutador, forma):
     cores = CORES[lutador][forma]
     # contorno: o tom mais escuro da rampa; o resto, do 2º ao mais claro
@@ -491,7 +589,7 @@ def paleta(lutador, forma):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("lutadores", nargs="*", default=list(RECEITAS))
+    ap.add_argument("lutadores", nargs="*", default=list(PADRAO))
     ap.add_argument("--efeitos", nargs="+", default=list(EFEITOS))
     ap.add_argument("--amostras", type=int, default=16)
     a = ap.parse_args()
@@ -506,15 +604,23 @@ def main():
                 formas = ("desperto",) if efeito == "transformacao" else ("base", "desperto")
                 for forma in formas:
                     destino = SAIDA / lutador / f"{efeito}_{forma}"
-                    sprites = pixelfx.processar(quadros, destino, paleta(lutador, forma), tam=tam, bloco=1,
-                                                previa=False, gama=1.15)
+                    qs = sombrio(quadros) if (lutador, forma) in SOMBRIO and efeito != "transformacao" else quadros
+                    sprites = pixelfx.processar(qs, destino, paleta(lutador, forma), tam=tam, bloco=1,
+                                                previa=False, gama=1.45 if lutador in PADRAO else 1.15)
                     for velho in ("folha.png",):
                         (destino / velho).unlink(missing_ok=True)
+                    if lutador in PADRAO:  # pixel seco por cima do halo de brilho (alfa suave, PNG de 32 bits)
+                        raio, forca, margem = HALO[efeito]
+                        sprites = combinado(sprites, direto(qs, CORES[lutador][forma], tam), raio, forca, margem)
+                        for i, sp in enumerate(sprites):
+                            sp.save(destino / f"{i:02d}.png")
                     w, h = sprites[0].size
                     pivo = (w // 2, h - 2) if chao else (w // 2, h // 2)
-                    (destino / "meta.json").write_text(json.dumps(
-                        {"pivo": pivo, "ticks": ticks, "quadros": len(sprites), "efeito": efeito, "forma": forma,
-                         "lutador": lutador}, indent=1), encoding="utf-8")
+                    meta = {"pivo": pivo, "ticks": ticks, "quadros": len(sprites), "efeito": efeito, "forma": forma,
+                            "lutador": lutador}
+                    if (lutador, forma) in SOMBRIO and efeito in CORTE_SOMBRIO:
+                        meta["corte"] = CORTE_SOMBRIO[efeito]  # o fim do sombrio vira risco claro solto: sai antes
+                    (destino / "meta.json").write_text(json.dumps(meta, indent=1), encoding="utf-8")
             print(f"{lutador} {efeito}: {len(quadros)} quadros, {tam} px ({time.time() - t0:.0f} s)", flush=True)
 
 

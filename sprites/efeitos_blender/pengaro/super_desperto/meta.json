@@ -1,11 +1,12 @@
 {
  "pivo": [
-  90,
-  90
+  151,
+  151
  ],
  "ticks": 3,
  "quadros": 12,
  "efeito": "super",
  "forma": "desperto",
- "lutador": "pengaro"
+ "lutador": "pengaro",
+ "corte": 9
 }

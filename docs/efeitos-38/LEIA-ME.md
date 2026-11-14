@@ -24,6 +24,30 @@ Saiu: as faíscas que o ChatGPT desenhou para o Pengaró (que o Gutto, o Raiclav
 Folhas: `efeitos_<lutador>.png` nesta pasta. Vídeo: `luta_efeitos.mp4` (Pengaró x Hazak e Gutto x CK, CPU contra CPU,
 barra cheia para a CPU soltar super e Despertar).
 
+## Nível do Hazak (pedido do Breno na #44, 2026-11-14)
+
+O Breno aprovou o Hazak e pediu o mesmo nível em todos os efeitos. Nos normais, especiais e supers do Pengaró, do
+Gutto, do CK e do Raiclaven entrou:
+
+| Momento | O que acontece |
+|---|---|
+| Antes do especial | **carga**: a energia do lutador vem de longe e junta no corpo (Blender, tema de cada um), com rastro do corpo na cor da forma |
+| Acerto do especial | estouro maior (104 px, era 72) com miolo escuro e pesado, **halo de brilho** por baixo do pixel seco, tela treme, o oponente pisca na cor da forma e o fundo acende |
+| Super | carga grande e lenta durante a pausa, fundo escuro na cor da forma enquanto a super dura, tremida ao soltar; explosão de 200 px (era 136) no golpe final, com tremida forte; a rajada usa o estouro de especial em cada acerto |
+| Golpe forte e finalizador | a faísca do pixelfx ganhou halo de brilho e cresceu um pouco; no finalizador o oponente pisca na cor da forma |
+| Golpe fraco, defesa, poeira | continuam secos e pequenos (regra dos efeitos proporcionais) |
+
+Endiabrado do Pengaró e Ratão do CK usam a forma **sombria** da #47 (massa escura com a borda acesa). O Hazak ficou
+com os efeitos dele; só as faíscas dos normais ganharam o mesmo halo, para o jogo inteiro bater igual.
+
+No `.cns`, tudo o que o `efeitos.py` põe leva a marca `(efeitos.py)` (controladores e linhas), então rodar de novo
+troca em vez de duplicar. Ações novas: 9243/9273 carga do especial, 9244/9274 carga da super (normal/despertado).
+
+Folhas novas: `efeitos_<lutador>.png`. Destaques: `nivel_hazak_destaques.jpg`. Vídeos (CPU contra CPU, barra cheia):
+`nivel_hazak_gutto_pengaro.mp4`, `nivel_hazak_pengaro_ck.mp4` (com Despertar) e `nivel_hazak_gutto_raiclaven.mp4`.
+
+Testado: robô na nuvem com 0 falhas (ver números no fim).
+
 ## Como refazer
 
 ```bash
@@ -51,3 +75,6 @@ python3 ferramentas/filmar_luta_linux.py saida.mp4 --p1 gutto --p2 ck --barra --
 - Gutto: a aura do Despertar dele ainda não é a do Blender (`aura_blender/gutto_aura.py` existe, mas não está ligada).
 - Hazak: não tem Despertar; se ganhar, o pilar dele já tem cor (laranja-ouro).
 - Efeito próprio por especial (cada golpe com o seu), em vez de um estouro por lutador.
+- Carga no ponto certo de cada golpe (hoje ela nasce no peito; num chute podia nascer na perna).
+- Clarão do fundo no acerto dos projéteis (hoje só o golpe de corpo acende o fundo; o projétil treme e faz piscar).
+- Gbzin: quando entrar, basta pôr a cor dele em `CORES` e a receita em `RECEITAS`.
