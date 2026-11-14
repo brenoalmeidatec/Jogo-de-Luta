@@ -15,6 +15,7 @@ font2 = fonts/naza_relogio2_alerta.def
 font3 = fonts/naza_hud.def
 font4 = fonts/naza_menu.def
 font5 = fonts/naza_relogio2.def
+font6 = fonts/naza_hud_nome.def ; naza_hud com acento (PENGARÓ), so nos nomes
 fightfx.sff = fightfx.sff     ; data/
 fightfx.air = fightfx.air
 common.snd = common.snd
@@ -146,11 +147,11 @@ p2.top.layerno = 2
 [Tag Face]
 
 [Name]
-p1.pos = 140,66
-p1.name.font = 3,0,1
+p1.pos = 140,68
+p1.name.font = 6,0,1
 p1.name.layerno = 2
-p2.pos = 1140,66
-p2.name.font = 3,0,-1
+p2.pos = 1140,68
+p2.name.font = 6,0,-1
 p2.name.layerno = 2
 [Simul Name]
 [Turns Name]

@@ -26,7 +26,7 @@ from testar_pengaro import RAIZ, INI_LINUX, ambiente_linux, motor_linux  # noqa:
 
 LUTADORES = ["pengaro", "hazaki", "gutto", "raiclaven", "ck"]
 EXEMPLOS = r"stages/(?:stage0|stage1|stage3d|stage3d_outline|stageZ|interactivestage|kfm)\.def"
-ITENS_MENU = {"arcade": 0, "versus": 1, "assistir": 3}
+ITENS_MENU = {"arcade": 0, "versus": 1, "treino": 3, "assistir": 4}
 
 
 def cenarios_do_jogo():

@@ -89,9 +89,9 @@ POS = {
     # Titulo
     "logo": (446, 20),                # centro x e topo y do logo: no ceu da esquerda, sem tapar a Matriz e o Cristo
     "logo_larg": 640,                 # largura do logo na tela
-    "menu": (640, 487),               # linha de base do 1o item
-    "menu_espaco": 40,
-    "faixa_menu": (440, 436, 840, 672),   # faixa escura atras do menu (x0, y0, x1, y1), multiplos de 2
+    "menu": (640, 447),               # linha de base do 1o item (7 itens desde 2026-11-14: Treino e Sair voltaram)
+    "menu_espaco": 36,
+    "faixa_menu": (440, 396, 840, 680),   # faixa escura atras do menu (x0, y0, x1, y1), multiplos de 2
     # Selecao
     "grade": (372, 392), "celula": 128, "celula_espaco": 8, "colunas": 4, "linhas": 2,
     "retrato_p1": (24, 64), "retrato_p2": (808, 64), "retrato_alto": 216,
@@ -1183,9 +1183,10 @@ def system_def():
     lc = "1280,720"
     # Menu enxuto (Breno, 2026-11-13). Nome vazio esconde o item padrao do motor. "supermode" e o Modo Super
     # (nazafights.lua, ligado em [Files] module): versus com as barras de power sempre cheias.
-    itens = [("arcade", "ARCADE"), ("versus", "VERSUS"), ("supermode", "MODO SUPER"), ("watch", "ASSISTIR"),
-             ("options", "OPÇÕES")]
-    escondidos = ["teamarcade", "teamversus", "teamcoop", "survival", "survivalcoop", "training", "exit"]
+    # Treino e Sair voltaram (Breno, 2026-11-14, issue #41).
+    itens = [("arcade", "ARCADE"), ("versus", "VERSUS"), ("supermode", "MODO SUPER"), ("training", "TREINO"),
+             ("watch", "ASSISTIR"), ("options", "OPÇÕES"), ("exit", "SAIR")]
+    escondidos = ["teamarcade", "teamversus", "teamcoop", "survival", "survivalcoop"]
     t = CABECALHO + f"""
 [Info]
 name = Nazafights
@@ -1582,6 +1583,7 @@ font2 = fonts/naza_relogio2_alerta.def
 font3 = fonts/naza_hud.def
 font4 = fonts/naza_menu.def
 font5 = fonts/naza_relogio2.def
+font6 = fonts/naza_hud_nome.def ; naza_hud com acento (PENGARÓ), so nos nomes
 fightfx.sff = fightfx.sff     ; data/
 fightfx.air = fightfx.air
 common.snd = common.snd
@@ -1648,10 +1650,10 @@ p2.top.spr = 31,1
 [Tag Face]
 
 [Name]
-p1.pos = {nm1[0]},{nm1[1]}
-p1.name.font = 3,0,1
-p2.pos = {nm2[0]},{nm2[1]}
-p2.name.font = 3,0,-1
+p1.pos = {nm1[0]},{nm1[1] + G2}
+p1.name.font = 6,0,1
+p2.pos = {nm2[0]},{nm2[1] + G2}
+p2.name.font = 6,0,-1
 [Simul Name]
 [Turns Name]
 [Tag Name]
@@ -1976,7 +1978,7 @@ def previa_titulo(sys_spr, defs, acoes, fontes):
 
 
 LUTADORES = ["pengaro", "hazaki", "gutto", "raiclaven"]
-NOMES = {"pengaro": "Pengaro", "hazaki": "Hazaki", "gutto": "Gutto", "raiclaven": "Raiclaven"}
+NOMES = {"pengaro": "Pengaró", "hazaki": "Hazaki", "gutto": "Gutto", "raiclaven": "Raiclaven"}
 
 
 def previa_selecao(sys_spr, defs, acoes, fontes):
@@ -2136,6 +2138,7 @@ def gerar():
         "naza_menu": fonte_texto("naza_menu", True, "tabatinga", "breu"),
         "naza_menu_ativo": fonte_texto("naza_menu_ativo", True, "giz", "noite"),
         "naza_hud": fonte_texto("naza_hud", False, "giz", "noite", k=G2),
+        "naza_hud_nome": fonte_texto("naza_hud_nome", True, "giz", "noite", k=G2),
         "naza_relogio2": fonte_relogio("naza_relogio2", "giz", "giz", "nevoa", False, k=G2),
         "naza_relogio2_alerta": fonte_relogio("naza_relogio2_alerta", "sangue", "fogo_cl", "fogo_esc", True, k=G2),
     }
@@ -2205,7 +2208,7 @@ def previas():
     sdefs, sacoes = ler_def(MOTIF / "system.def")
     fdefs, _facoes = ler_def(MOTIF / "fight.def")
     sf = {i: fonte_do(sdefs, i, MOTIF) for i in range(1, 5)}
-    ff = {i: fonte_do(fdefs, i, MOTIF) for i in range(1, 6)}
+    ff = {i: fonte_do(fdefs, i, MOTIF) for i in range(1, 7)}
     saidas = {
         "titulo.png": previa_titulo(sys_spr, sdefs, sacoes, sf),
         "selecao.png": previa_selecao(sys_spr, sdefs, sacoes, sf),

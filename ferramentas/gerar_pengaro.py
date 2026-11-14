@@ -3798,7 +3798,7 @@ def montar_cmd(hazaki=False):
 DEF = """; Gerado por ferramentas/gerar_pengaro.py. Edite lá, não aqui.
 [Info]
 name = "Pengaro"
-displayname = "Pengaro"
+displayname = "Pengaró"
 versiondate = 11,05,2026
 mugenversion = 1.1
 author = "Breno"
