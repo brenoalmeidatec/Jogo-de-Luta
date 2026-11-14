@@ -1957,3 +1957,19 @@ foi lida como "aura discreta" (o erro começou no texto que eu escrevi na `regra
 - **Pendente:**
   - o Hazak segue no estilo antigo (a recriação está com o Alisson, branch `hazak`);
   - as pastas `meio/` antigas em `quadros_arcade/` ficaram no disco, sem uso.
+
+## 2026-11-14 — Robô de teste roda no Linux sem tela (Claude, sessão do LightWolfMan)
+
+**Pedido:** rodar o robô (`ferramentas/testar_pengaro.py`) na nuvem Linux, sem depender do PC/notebook do Alisson.
+
+**Feito:** modo `--linux` (padrão quando o sistema é Linux) no `testar_pengaro.py`. Baixa o IKEMEN GO v1.0.0 Linux
+para `~/.cache/nazafight/ikemen` na primeira vez (abre o motor 20 s para nascer o `save/config.ini`), copia o motor
+para uma pasta temporária e roda a luta no Xvfb com Mesa llvmpipe (`xvfb-run`, som `dummy`). Modo Windows/sandbox
+intocado. Requisito: `apt install xvfb libgl1-mesa-dri`.
+
+**Resultados (cada luta ~60 s, 4 núcleos):**
+- branch `claude/project-thread-j4685w`: Gutto 146/0, Raiclaven 146/0 (var(37) = 1 no meio do 3100: falha sumiu).
+- branch `claude/project-thread-xhv5a2`: Pengaró 151/0. `mugen`: Pengaró 151/0 (motor baixado do zero).
+
+**Sugestões:** o robô ainda não tira print; dá para tirar com `import -display :99 -window root` durante a luta.
+Um GitHub Action com esse modo rodaria o robô a cada push.
