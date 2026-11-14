@@ -1,7 +1,8 @@
 {
  "id": "katiara",
  "nome": "Katiara",
- "musica_nome": "Cenário Katiara (a escolher)",
+ "musica": "musicas/katiara.ogg",
+ "musica_nome": "Cenário Katiara",
  "tela": [
   1280,
   720

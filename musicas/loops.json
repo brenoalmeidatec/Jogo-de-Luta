@@ -64,5 +64,11 @@
   "loopstart": 2391921,
   "loopend": 7098368,
   "amostras_por_segundo": 44100
+ },
+ "cenario_katiara": {
+  "arquivo": "stages/musicas/katiara.ogg",
+  "loopstart": 1231552,
+  "loopend": 6069248,
+  "amostras_por_segundo": 44100
  }
 }

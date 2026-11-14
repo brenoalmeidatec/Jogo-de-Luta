@@ -230,7 +230,7 @@ def main():
         camadas.append({"nome": "moto", "imagem": "moto.png", "delta": [1, 1], "x": -2600,
                         "y": topo + round(800 * ESCALA) - alto, "velocidade": [7, 0], "repete": [1, 0],
                         "vao": [9000, 0], "seno_y": [1, 6, 0]})
-    desc = {"id": "katiara", "nome": "Katiara", "musica_nome": "Cenário Katiara (a escolher)",
+    desc = {"id": "katiara", "nome": "Katiara", "musica": "musicas/katiara.ogg", "musica_nome": "Cenário Katiara",
             "tela": [1280, 720], "largura_mundo": largura_mundo, "subida": 160, "chao_y": CHAO_Y,
             "camera": {"tensao": 200, "segue_vertical": 0.6, "tensao_chao": 120},
             "jogadores": {"p1x": -280, "p2x": 280, "margem_tela": 60}, "reflexo": 0, "camadas": camadas}

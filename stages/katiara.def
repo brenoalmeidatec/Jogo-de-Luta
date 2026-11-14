@@ -60,8 +60,10 @@ fade.range = 0,0
 intensity = 0
 
 [Music]
-bgmusic = 
+bgmusic = musicas/katiara.ogg
 bgmvolume = 100
+bgmloop = 1
+bgmloopstart = 1231552
 
 [BGdef]
 spr = katiara.sff
