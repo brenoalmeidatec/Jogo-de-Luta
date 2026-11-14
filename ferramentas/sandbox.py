@@ -10,7 +10,8 @@ Regra do dono (2026-11-10): testes, robô e validação do motor rodam só na sa
 Como funciona: monta um .wsb sem rede e sem placa de vídeo (vGPU desligada, OpenGL por software com o opengl32.dll do
 Mesa llvmpipe), mapeia somente leitura o motor (%USERPROFILE%/JogoDeLuta/ikemen), o repositório e o Mesa, e com
 escrita só a pasta de saída (C:/nf/saida lá dentro). Lá dentro copia o motor para C:/jogo, instala os lutadores de
-chars/, aplica a pasta --por-cima (arquivos que substituem os do motor: debug.lua, .cmd injetado, data/nazafight...),
+chars/ e os cenários de stages/ (se a pasta existir no repositório), aplica a pasta --por-cima (arquivos que
+substituem os do motor: debug.lua, .cmd injetado, data/nazafight...),
 zera o volume, aplica os --ini, abre o Ikemen_GO.exe com --args e espera: o motor sair, o --fim-arquivo da saída casar
 com --fim-regex, ou o tempo acabar. Depois copia save/logs para a saída, mata o motor e desliga a sandbox.
 
@@ -45,6 +46,7 @@ try {
   $jogo = 'C:\jogo'
   robocopy 'C:\nf\motor' $jogo /E /NFL /NDL /NJH /NJS /NP | Out-Null
   foreach ($c in @(@LUTADORES@)) { robocopy "C:\nf\repo\chars\$c" "$jogo\chars\$c" /E /NFL /NDL /NJH /NJS /NP | Out-Null }
+  if (Test-Path 'C:\nf\repo\stages') { robocopy 'C:\nf\repo\stages' "$jogo\stages" /E /NFL /NDL /NJH /NJS /NP | Out-Null }
   if (Test-Path 'C:\nf\trabalho\por_cima') { robocopy 'C:\nf\trabalho\por_cima' $jogo /E /NFL /NDL /NJH /NJS /NP | Out-Null }
   Copy-Item 'C:\nf\mesa\opengl32.dll','C:\nf\mesa\libgallium_wgl.dll' $jogo
   $ini = "$jogo\save\config.ini"

@@ -1,0 +1,251 @@
+; Gerado por ferramentas/gerar_cenario.py. Edite a descrição do cenário e gere de novo, não este arquivo.
+[Info]
+name = "Teste de cenario"
+displayname = "Teste de cenario"
+versiondate = 11,11,2026
+mugenversion = 1.1
+ikemenversion = 1.0
+author = "Nazafights"
+
+[Camera]
+startx = 0
+starty = 0
+boundleft = -224
+boundright = 224
+boundhigh = -40
+boundlow = 0
+verticalfollow = 0.6
+floortension = 30
+tension = 60
+zoomin = 1
+zoomout = 1
+startzoom = 1
+
+[PlayerInfo]
+p1startx = -70
+p1starty = 0
+p1facing = 1
+p2startx = 70
+p2starty = 0
+p2facing = -1
+p3startx = -100
+p3starty = 0
+p3facing = 1
+p4startx = 100
+p4starty = 0
+p4facing = -1
+leftbound = -384
+rightbound = 384
+
+[Bound]
+screenleft = 15
+screenright = 15
+
+[StageInfo]
+zoffset = 165
+autoturn = 1
+resetBG = 1
+localcoord = 320, 180
+xscale = 1
+yscale = 1
+
+[Shadow]
+intensity = 96
+color = 0,0,0
+yscale = 0.3
+fade.range = 0,0
+
+[Reflection]
+intensity = 48
+
+[Music]
+bgmusic = 
+bgmvolume = 100
+
+[BGdef]
+spr = teste.sff
+debugbg = 0
+
+[Begin Action 9000]
+9000,1, 0,0, -1
+
+[BG ceu]
+type = normal
+spriteno = 0, 0
+id = 100
+layerno = 0
+start = -160, 0
+delta = 0, 0
+mask = 1
+roundpos = 0
+
+[BG sol]
+type = normal
+spriteno = 1, 0
+id = 101
+layerno = 0
+start = -120, 30
+delta = 0.03, 0.03
+mask = 1
+trans = add
+roundpos = 0
+
+[BG nuvens_longe]
+type = normal
+spriteno = 2, 0
+id = 102
+layerno = 0
+start = -160, 8
+delta = 0.08, 0.05
+mask = 1
+tile = 1, 0
+tilespacing = 0, 0
+velocity = -0.08, 0
+roundpos = 0
+
+[BG nuvens_perto]
+type = normal
+spriteno = 3, 0
+id = 103
+layerno = 0
+start = -120, 34
+delta = 0.18, 0.1
+mask = 1
+tile = 1, 0
+tilespacing = 30, 0
+velocity = -0.3, 0
+roundpos = 1
+
+[BG balao]
+type = normal
+spriteno = 4, 0
+id = 104
+layerno = 0
+start = 50, 40
+delta = 0.25, 0.2
+mask = 1
+sin.x = 3, 330, 0
+sin.y = 7, 200, 0
+roundpos = 0
+
+[BG morro]
+type = normal
+spriteno = 5, 0
+id = 105
+layerno = 0
+start = -239, 92
+delta = 0.35, 0.35
+mask = 1
+roundpos = 0
+
+[BG rio]
+type = anim
+actionno = 1006
+id = 106
+layerno = 0
+start = -160, 126
+delta = 0.7, 0.7
+mask = 1
+tile = 1, 0
+tilespacing = 64, 22
+roundpos = 0
+
+[BG barco]
+type = normal
+spriteno = 7, 0
+id = 107
+layerno = 0
+start = -60, 118
+delta = 0.7, 0.7
+mask = 1
+sin.y = 1.5, 90, 0
+roundpos = 0
+
+[BG chao]
+type = normal
+spriteno = 8, 0
+id = 108
+layerno = 0
+start = -384, 140
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG bandeira]
+type = anim
+actionno = 1009
+id = 109
+layerno = 0
+start = 80, 74
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG mato]
+type = normal
+spriteno = 10, 0
+id = 110
+layerno = 1
+start = -160, 172
+delta = 1.25, 1.25
+mask = 1
+tile = 1, 0
+tilespacing = 9, 0
+roundpos = 0
+
+[BG poste]
+type = normal
+spriteno = 11, 0
+id = 111
+layerno = 1
+start = -310, -8
+delta = 1.25, 1.25
+mask = 1
+roundpos = 0
+
+[BG halo]
+type = anim
+actionno = 1012
+id = 112
+layerno = 1
+start = -318, -17
+delta = 1.25, 1.25
+mask = 1
+trans = add
+roundpos = 0
+
+[Begin Action 1006]
+6,0, 0,0, 8
+6,1, 0,0, 8
+6,2, 0,0, 8
+6,3, 0,0, 8
+
+[Begin Action 1009]
+9,0, 0,0, 5
+9,1, 0,0, 5
+9,2, 0,0, 5
+9,3, 0,0, 5
+9,4, 0,0, 5
+9,5, 0,0, 5
+9,6, 0,0, 5
+9,7, 0,0, 5
+
+[Begin Action 1012]
+12,0, 0,0, 7,,A
+12,1, 0,0, 7,,A
+12,2, 0,0, 7,,A
+12,3, 0,0, 7,,A
+
+[BGCtrlDef barco]
+looptime = 480
+ctrlID = 107
+
+[BGCtrl barco 0]
+type = VelSet
+time = 0
+x = 0.4
+
+[BGCtrl barco 1]
+type = VelSet
+time = 240
+x = -0.4

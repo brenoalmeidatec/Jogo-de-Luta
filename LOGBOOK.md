@@ -2026,3 +2026,48 @@ gigante e cortado no print. **Sugestões:** o robô ainda não tira print sozinh
 Um GitHub Action com esse modo rodaria o robô a cada push.
 - **Mugen final** (revisão geral + Pengaró nítido + robô no Linux, `c5d10f43`): Gutto 146/0, Raiclaven 146/0,
   Pengaró 151/0, rodados na nuvem.
+## 2026-11-11 (cenários animados: base pronta, branch `cenarios`)
+
+- **Feito:** `ferramentas/gerar_cenario.py` (descrição em JSON com camadas PNG → `stages/<id>.def` + `.sff` RGBA, com
+  simulação da câmera, recusa de furo e prévia em GIF), `ferramentas/cenario_teste.py` (cenário de teste por código, em
+  `cenarios/teste/` e `stages/teste.*`), `ferramentas/filmar_cenario.py` + `ferramentas/robo/passeio.lua` (filme do
+  passeio pelas duas pontas, com tiras). `sandbox.py` e `filmar_sandbox.py` copiam `stages/` para o motor da sandbox; o
+  `filmar_sandbox.py` ganhou `--cenario` e `--passeio` (mudanças aditivas). Método e medidas da arte em
+  `docs/arcade/cenarios.md`. Provado em dois filmes de 8 s na sandbox: cenário carrega, pés na linha do chão (y = 165),
+  nenhuma borda preta nas pontas nem com a câmera no alto, paralaxe, nuvens, rio e bandeira em quadros, balão em seno,
+  barco por BGCtrl, camada de frente, luz somada e reflexo.
+- **Pendente:** a arte dos quatro lugares (Cristo, Maria Fumaça, praça da prefeitura, passarela) não existe; o launcher
+  não baixa nem instala `stages/` e o `select.def` não lista cenário (o que falta está na seção 7 do `cenarios.md`); o
+  padrão do jogo continua `stage0-720`. Não provado: tremor de tela, `subtrai`/`alfa`, outros BGCtrl, escolha pelo menu.
+- **Próximo:** referência dos lugares, fila de prompts das camadas, converter a arte para a malha 320x180 e gerar os
+  quatro cenários; depois ligar no launcher.
+
+## 2026-11-11 (cenários de Nazaré: projeto e fila de arte, branch `cenarios`)
+
+- **Feito:** `docs/arcade/cenarios_nazare.md`: projeto dos quatro cenários pedidos pelo Alisson (Cristo ao entardecer,
+  Maria Fumaça de noite dentro do galpão da estação, praça da prefeitura em manhã de sol, passarela ao amanhecer com
+  neblina), cada um com lugar real e fontes, camadas com tamanho e delta, paleta, lista do que se mexe (10 ou 11 por
+  cenário) e a fila de 64 imagens para o ChatGPT com prompt pronto (14 + 14 + 13 + 17 + 6 comuns).
+- **Pendente:** nenhuma imagem gerada; a ferramenta de conversão (recorte pela cor de fundo, redução, quantização, fatia
+  das folhas) e o script de montagem de cada cenário (luzes por código + `cenario.json`) não existem; posições são de
+  prancheta, sem prévia nem motor. O topo do documento tem 11 perguntas para o Alisson (qual Cristo, cor da prefeitura,
+  locomotiva dentro do galpão ou na rua, passarela nova ou antiga, luta na beira ou em cima dela, horas do dia).
+- **Próximo:** respostas do Alisson; gerar o lote piloto (4 primeiras imagens de cada cenário); escrever a conversão;
+  montar e filmar um cenário inteiro (sugestão: a praça) antes de pedir o resto.
+
+## 2026-11-11 (cenários: frente PARADA de propósito às 15h50)
+
+O Alisson pediu para ir parando os trabalhos aos poucos, para mudar o modelo de trabalho com segurança. Esta frente
+(cenários animados de Nazaré: Cristo, Maria Fumaça, praça da prefeitura e passarela) foi interrompida durante a
+geração da arte do primeiro cenário.
+
+- **Feito e no git:** `ferramentas/gerar_cenario.py` (camadas, paralaxe, quadros, velocidade, seno, camada de frente),
+  `filmar_cenario.py`, cenário de teste `stages/teste.def` provado na sandbox, `sandbox.py` levando `stages/` ao motor;
+  método e medidas em `docs/arcade/cenarios.md`; pesquisa dos quatro lugares, projeto e fila de 64 imagens com prompt
+  em `docs/arcade/cenarios_nazare.md`; 9 imagens brutas do Cristo em `sprites/cenarios/cristo/bruto/` (céu, chão,
+  cristo, morro, torres, longe, nuvens longe e perto, cerca).
+- **Não feito:** o resto da arte do Cristo; toda a arte da Maria Fumaça, da praça e da passarela; a montagem dos quatro
+  cenários, o filme na sandbox e a conferência. Nenhum cenário de Nazaré existe no jogo ainda.
+- **Antes de retomar:** responder a lista "Para o Alisson confirmar" no topo de `docs/arcade/cenarios_nazare.md`
+  (qual Cristo, como ele está hoje, onde fica a Maria Fumaça, qual passarela). Depois seguir a fila do mesmo arquivo a
+  partir da primeira imagem do Cristo que não está em `bruto/`.
