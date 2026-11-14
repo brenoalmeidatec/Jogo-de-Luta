@@ -2591,7 +2591,7 @@ ownpal = 1
 [State 810, Pancada 1: som]
 type = PlaySnd
 trigger1 = Time = 13
-value = F5,0
+value = 51,0 ; som:F5,0
 
 [State 810, Pancada 1: barra]
 type = PowerAdd
@@ -2625,7 +2625,7 @@ ownpal = 1
 [State 810, Pancada 2: som]
 type = PlaySnd
 trigger1 = Time = 20
-value = F5,0
+value = 51,0 ; som:F5,0
 
 [State 810, Pancada 2: barra]
 type = PowerAdd
@@ -2659,7 +2659,7 @@ ownpal = 1
 [State 810, Pancada 3: som]
 type = PlaySnd
 trigger1 = Time = 31
-value = F5,0
+value = 54,0 ; som:F5,0
 
 [State 810, Pancada 3: barra]
 type = PowerAdd
@@ -2693,7 +2693,7 @@ ownpal = 1
 [State 810, Pancada 4: som]
 type = PlaySnd
 trigger1 = Time = 46
-value = F5,2
+value = 52,2 ; som:F5,2
 
 [State 810, Pancada 4: barra]
 type = PowerAdd
@@ -2727,7 +2727,7 @@ ownpal = 1
 [State 810, Final: som]
 type = PlaySnd
 trigger1 = Time = 69
-value = F5,3
+value = 52,3 ; som:F5,3
 
 [State 810, Final: barra]
 type = PowerAdd
@@ -2836,7 +2836,7 @@ value = -100
 [State 841, Som 13]
 type = PlaySnd
 trigger1 = Time = 13
-value = F5, 2
+value = 52,2 ; som:F5, 2
 
 [State 841, Derruba]
 type = TargetState
@@ -2929,7 +2929,7 @@ ownpal = 1
 [State 831, Som 13]
 type = PlaySnd
 trigger1 = Time = 13
-value = F5, 0
+value = 51,0 ; som:F5, 0
 
 [State 831, Cutucão 25]
 type = TargetLifeAdd
@@ -2950,7 +2950,7 @@ ownpal = 1
 [State 831, Som 25]
 type = PlaySnd
 trigger1 = Time = 25
-value = F5, 0
+value = 51,0 ; som:F5, 0
 
 [State 831, Cutucão 37]
 type = TargetLifeAdd
@@ -2971,7 +2971,7 @@ ownpal = 1
 [State 831, Som 37]
 type = PlaySnd
 trigger1 = Time = 37
-value = F5, 0
+value = 51,0 ; som:F5, 0
 
 [State 831, Encolhe]
 type = TargetState
@@ -2988,7 +2988,7 @@ value = -50
 [State 831, Som 43]
 type = PlaySnd
 trigger1 = Time = 43
-value = F5, 2
+value = 51,2 ; som:F5, 2
 
 [State 831, Solta]
 type = TargetState
@@ -3120,8 +3120,14 @@ value = F40,4
 
 [State 1000, som assinatura]
 type = PlaySnd
+trigger1 = Time = 0
+value = 50,4
+; som: fim
+
+[State 1000, som assinatura]
+type = PlaySnd
 trigger1 = Time = 12
-value = F36,0
+value = 50,5
 ; som: fim
 
 [State 1000, Projétil]
@@ -3146,7 +3152,7 @@ sparkxy = 0, 0
 sparkno = S9240
 guard.sparkno = S9216
 sparkscale = 1, 1
-hitsound = S50,0 ; som:F5,1
+hitsound = S50,9 ; som:F5,1
 guardsound = F6,0
 ground.type = Low
 ground.slidetime = 12
@@ -3188,8 +3194,14 @@ value = F40,4
 
 [State 1001, som assinatura]
 type = PlaySnd
+trigger1 = Time = 0
+value = 50,4
+; som: fim
+
+[State 1001, som assinatura]
+type = PlaySnd
 trigger1 = Time = 10
-value = F36,0
+value = 50,5
 ; som: fim
 
 [State 1001, Projétil]
@@ -3213,7 +3225,7 @@ sparkxy = 0, 0
 sparkno = S9240
 guard.sparkno = S9216
 sparkscale = 1, 1
-hitsound = S50,0 ; som:F5,1
+hitsound = S50,9 ; som:F5,1
 guardsound = F6,0
 ground.type = Low
 ground.slidetime = 12
@@ -4320,6 +4332,12 @@ sprpriority = 2
 anim = 3000
 juggle = 0
 velset = 0,0
+
+[State 3000, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,3
+; som: fim
 
 [State 3000, Pausa]
 type = SuperPause

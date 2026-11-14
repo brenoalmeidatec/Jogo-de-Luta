@@ -1643,7 +1643,7 @@ ownpal = 1
 [State 810, Pancada 1: som]
 type = PlaySnd
 trigger1 = Time = 12
-value = F5,0
+value = 51,0 ; som:F5,0
 
 [State 810, Pancada 1: barra]
 type = PowerAdd
@@ -1677,7 +1677,7 @@ ownpal = 1
 [State 810, Pancada 2: som]
 type = PlaySnd
 trigger1 = Time = 18
-value = F5,0
+value = 51,0 ; som:F5,0
 
 [State 810, Pancada 2: barra]
 type = PowerAdd
@@ -1711,7 +1711,7 @@ ownpal = 1
 [State 810, Pancada 3: som]
 type = PlaySnd
 trigger1 = Time = 30
-value = F5,1
+value = 51,1 ; som:F5,1
 
 [State 810, Pancada 3: barra]
 type = PowerAdd
@@ -1745,7 +1745,7 @@ ownpal = 1
 [State 810, Pancada 4: som]
 type = PlaySnd
 trigger1 = Time = 47
-value = F5,0
+value = 52,0 ; som:F5,0
 
 [State 810, Pancada 4: barra]
 type = PowerAdd
@@ -1779,7 +1779,7 @@ ownpal = 1
 [State 810, Final: som]
 type = PlaySnd
 trigger1 = Time = 68
-value = F5,3
+value = 51,3 ; som:F5,3
 
 [State 810, Final: barra]
 type = PowerAdd
@@ -1965,7 +1965,7 @@ ownpal = 1
 [State 831, Tapa na nuca: som]
 type = PlaySnd
 trigger1 = Time = 26
-value = F5, 2
+value = 51,2 ; som:F5, 2
 
 [State 831, Bicuda: dano]
 type = TargetLifeAdd
@@ -1993,7 +1993,7 @@ ampl = -5
 [State 831, Bicuda: som]
 type = PlaySnd
 trigger1 = Time = 66
-value = F5, 2
+value = 52,2 ; som:F5, 2
 
 [State 831, Joga]
 type = TargetState
@@ -4379,7 +4379,7 @@ sparkxy = 0, 0
 sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
-hitsound = S51,1 ; som:F5,1
+hitsound = S50,4 ; som:F5,1
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 10
@@ -4412,7 +4412,7 @@ sparkxy = 0, 0
 sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
-hitsound = S51,1 ; som:F5,1
+hitsound = S50,4 ; som:F5,1
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 10
@@ -4481,7 +4481,7 @@ sparkxy = 0, 0
 sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
-hitsound = S51,1 ; som:F5,1
+hitsound = S50,4 ; som:F5,1
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 10
@@ -4514,7 +4514,7 @@ sparkxy = 0, 0
 sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
-hitsound = S51,1 ; som:F5,1
+hitsound = S50,4 ; som:F5,1
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 10
@@ -4976,7 +4976,7 @@ ampl = -4
 [State 841, Som]
 type = PlaySnd
 trigger1 = Time = 20
-value = F5, 2
+value = 52,2 ; som:F5, 2
 
 [State 841, Joga]
 type = TargetState
@@ -5347,6 +5347,18 @@ ctrl = 0
 sprpriority = 2
 anim = 2000
 velset = 0,0
+
+[State 2000, som assinatura]
+type = PlaySnd
+trigger1 = Time = 2
+value = 50,5
+; som: fim
+
+[State 2000, som assinatura]
+type = PlaySnd
+trigger1 = Time = 42
+value = 50,6
+; som: fim
 
 [State 2000, som assinatura]
 type = PlaySnd
@@ -5758,6 +5770,12 @@ anim = 3100
 juggle = 0
 velset = 0,0
 
+[State 3100, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,5
+; som: fim
+
 [State 3100, Arte despertada]
 type = ChangeAnim
 trigger1 = Time = 0
@@ -5833,7 +5851,7 @@ sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,1 ; som:F5,1
+hitsound = S53,2 ; som:F5,1
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 4
@@ -5857,7 +5875,7 @@ sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
 sparkscale = 1.5, 1.5
 guard.sparkscale = .9, .9
-hitsound = S51,4 ; som:F5,4
+hitsound = S53,4 ; som:F5,4
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 5

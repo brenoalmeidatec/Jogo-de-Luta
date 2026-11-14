@@ -52,20 +52,56 @@ O IKEMEN acha este arquivo pelo `common.snd = common.snd` do `fight.def`; ele su
 
 ### `chars/<lutador>/<lutador>.snd`
 
+Issue #46 (Breno, 2026-11-14): **cada golpe soa com o que o lutador usa nele.** O acerto com objeto é o acerto comum
+(que diz o peso: fraco, médio, forte, fim de corrente, fim de super) com a camada do objeto por cima (`acerto_arma`).
+
 | Som | O que é |
 |---|---|
-| `51,0..4` | acerto de **soco** (CK com timbre de luva, Hazak de concreto) |
-| `52,0..4` | acerto de **chute** (canela, mais grave, com chicote de pano) |
-| `53,0..4` | acerto dos golpes **endiabrados** (34xx): grave rasgado com cauda escura |
-| `50,x` | assinatura do lutador (abaixo) |
+| `51,0..4` | acerto da **mão** (timbre do lutador, tabela abaixo) |
+| `52,0..4` | acerto de **chute** |
+| `53,0..4` | acerto dos golpes **endiabrados** (34xx), com o objeto da forma |
+| `54,0..4` | acerto da **arma da mão** (tesoura, garrafa, cotovelo, pedra) |
+| `55,0` `55,1` | "vento" da arma, fraco e forte (só Raiclaven: a tesoura abrindo) |
+| `50,x` | assinaturas do lutador (abaixo) |
 
-| Lutador | `50,0` | `50,1` | `50,2` | `50,3` | `50,4` |
-|---|---|---|---|---|---|
-| Pengaró | garrafa (tim de vidro) | vidro quebrando | gole | possessão das sombras | lata |
-| CK | boné voador | tragada | grave do paredão | garrafa voadora quebrando | |
-| Gutto | beijinho | joelhada | galope | relincho | |
-| Hazak | concreto | estatueta dourada | guarda de aço | faixa | |
-| Raiclaven | tesoura | borrifada | pente voador | cadeira giratória | |
+| Lutador | 51 mão | 52 chute | 53 endiabrado | 54 arma |
+|---|---|---|---|---|
+| Pengaró | soco | chute | sombra com **corrente** | **garrafa** (vidro grosso, sem quebrar) |
+| CK | **luva** | chute | **caco de garrafa** (Modo Ratão) | luva |
+| Gutto | soco | **canela de Muay Thai** (tapa largo) | **casco** de cavalo | **cotovelo e joelho** (osso seco) |
+| Hazak | **concreto** | chute | **brasa das trevas** (Diabo Loiro) | **pedra** que racha |
+| Raiclaven | **pente** de plástico | chute | **serra** (tesoura do Surto) | **tesoura** fechando ("tchac") |
+
+| Lutador | Assinaturas `50,x` |
+|---|---|
+| Pengaró | 0 garrafa (tim) · 1 vidro quebrando · 2 gole · 3 possessão · 4 **latinha voando** · 5 **latinha batendo** · 6 **chimpanzé** · 7 **corrente** · 8 garrafa girando no ar |
+| CK | 0 boné voador · 1 tragada · 2 grave do paredão · 3 garrafa voadora quebrando · 4 **boné acertando** · 5 **paredão tocando** · 6 **garrafa quebrando no chão** |
+| Gutto | 0 beijinho · 1 joelhada · 2 galope · 3 relincho · 4 **bufada** · 5 **coice** |
+| Hazak | 0 concreto · 1 estatueta dourada · 2 guarda de aço · 3 faixa · 4 **pedra levantando do chão** · 5 **pedra voando** · 6 **carga de ki** · 7 **bola de ki** · 8 **rajada de ki das trevas** · 9 **pedra batendo** |
+| Raiclaven | 0 tesoura · 1 borrifada · 2 pente voador · 3 cadeira giratória · 4 **tesoura helicóptero** · 5 **vassoura** · 6 **talco** · 7 **máquina zumbindo** · 8 **máquina explodindo** · 9 **navalha de sombra** · 10 **toalha quente** · 11 **cabeça na pia** |
+
+### Golpe por golpe (o que mudou na #46)
+
+- **Números dos estados:** o Gutto e o Raiclaven usam o molde do Pengaró, então os números são os mesmos e os nomes
+  de verdade estão no `movelist.dat` de cada um (1000 ↓→K, 1100 ↓←K, 1200 →↓P, 1300 ↓←P, 1400 ↓→P, 1500 ←↓K,
+  1600 →←P, 1700 →←K, 3000/3100/3200 supers, 34xx despertado).
+- **Raiclaven:** o **y é a tesoura** (normais, correntes e kombos de y): sai com a tesoura abrindo (`55,x`) e acerta
+  com o corte (`54,k`); o **x é o pente** (`51`). Tesoura Helicóptero roda com cortes no ritmo (`50,4` + `54`),
+  Tesoura Voadora e Tesourão cortam (`54`), Varrida é vassoura, Próximo! some no talco, Próximo, Cliente! são 8 cortes
+  de tesoura, Máquina Explosiva zumbe e explode no último acerto, Navalha de Sombra tem o "shiiing" dela, Toalha
+  Quente estala o pano e Cabeça na Pia faz splash. No Surto, os cortes são de serra (`53`).
+- **Pengaró:** Latada de Sombra é a **latinha** (voa chacoalhando e amassa no acerto); Garrafada em Arco é **vidro**;
+  Chuva de Bebidas alterna lata e garrafa e estoura vidro no fim; Mão de Chimpá e Bando da Várzea têm o grito do
+  chimpanzé; agarrões batem com a garrafa; no endiabrado, as algemas: **corrente** nos golpes (`53`) e nos especiais.
+- **CK:** luva em tudo de mão, Boné Voador acerta com a aba do boné, Despertar com o **paredão tocando** e a garrafa
+  quebrando no chão (tick 42), Modo Ratão corta com o **caco** (`53`), Baile da Esquina com o paredão.
+- **Gutto:** chute é **canela** de Muay Thai, o y é **cotovelo e joelhada** (`54`), Cotovelo Giratório também, clinch
+  do agarrão é de joelhada; endiabrado: **casco**, coice, galope, relincho e a **bufada** no Despertar.
+- **Hazak:** soco de concreto; Punho de Concreto agora é a **pedra**: chuta o chão (`50,4`), a pedra voa (`50,5`) e
+  bate rachando (`50,9`). **Carga de ki, bola de ki e a rajadona de ki das trevas** (`50,6` a `50,8`) e os acertos
+  do Diabo Loiro (`53`) estão prontos no `.snd`, esperando os estados novos da issue #44: quem ligar esses golpes
+  só precisa pôr o estado em `ESPECIAIS["hazaki"]` (ex.: `("T0", "50,6")` na carga, `("proj", "50,7")` na bola).
+- **Agarrões** (`AGARROES`): cada pancada toca o som do que bate, em ordem (`; som:F5,k` guarda o original).
 
 ### `motif/nazafight/fight.snd` (narrador e barra)
 
@@ -85,8 +121,9 @@ O IKEMEN acha este arquivo pelo `common.snd = common.snd` do `fight.def`; ele su
 ## Como os sons entram no lutador (`gerar_sons.ligar`)
 
 - `.def`: `sound = <lutador>.snd`.
-- `.cns`: `hitsound = F5,k` vira `51,k` (soco), `52,k` (chute, pelo comando a/b no `.cmd`) ou `53,k` (endiabrado); os
-  especiais com assinatura usam `50,x`. Cada troca leva o comentário `; som:F5,k` para poder desfazer.
+- `.cns`: `hitsound = F5,k` vira `S51,k` (soco), `S52,k` (chute, pelo comando a/b no `.cmd`), `S53,k` (endiabrado)
+  ou `S54,k` (botão da arma, `BOTAO_ARMA`); os especiais e supers seguem `ESPECIAIS` (um grupo, um som fixo `50,x` ou
+  uma lista, um por acerto). Cada troca leva o comentário `; som:F5,k` para poder desfazer.
 - Todo golpe que bate ganha um `PlaySnd` de vento no `Time = 0` (`F40,x`); projéteis tocam a assinatura junto do
   `Projectile`/`Helper`. Os controladores novos se chamam `[State N, som ...]` e terminam em `; som: fim`.
 - Despertar (2000): a pausa toca `F31,0` no lugar do som de super e `F31,1` no tick 55 (quando vira endiabrado). No
@@ -102,3 +139,10 @@ O IKEMEN acha este arquivo pelo `common.snd = common.snd` do `fight.def`; ele su
   `53,k` com um `hitsound` por expressão, se o motor aceitar.
 - Gbzin ainda não tem pasta em `chars/`: quando entrar, ganha a assinatura do cajado (`50,x`) em `ASSINATURAS`.
 - Falas por lutador (bordões, grito no especial) esperam o áudio do Breno.
+- **#46, o que depende de outras frentes:** a pedra levantando e a bola de ki do Hazak ganham estados novos na #44,
+  e o Diabo Loiro ainda não está ligado: os sons já estão no `.snd` (`50,4` a `50,9`, `53`), falta pôr os estados em
+  `ESPECIAIS["hazaki"]`. O kit próprio do Cientista Louco (#43) e os agarrões e poderes dos despertados (#47) vão
+  mudar estados do 34xx: quem mexer atualiza `ESPECIAIS`/`AGARROES` e roda `gerar_sons.py` (o gerador do lutador já
+  chama `ligar()` no fim).
+- O tick da garrafa quebrando no Despertar do CK (42) foi escolhido pelo momento em que o paredão vira fumaça; se a
+  folha nova mostrar a quebra em outro quadro, é só mudar o `T42` em `ESPECIAIS["ck"][2000]`.

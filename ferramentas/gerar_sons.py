@@ -522,6 +522,336 @@ def possessao(semente=350):
     return reverb(sat(mix(sus, escuro), 2), 0.8, 0.4, 2500)
 
 
+# ---------------------------------------------------------------- sons do objeto de cada lutador (issue #46)
+# Pedido do Breno (2026-11-14): cada golpe soa com o que o lutador usa nele. Os acertos "com arma" saem de
+# acerto_arma(): o corpo do acerto comum (o tum e o estalo, que dizem o peso) mais uma camada do objeto.
+
+def _lamina(d, semente, f=(4200, 6100, 7900), q=0.012):
+    """Lâmina de metal: estalo agudo com parciais que tilintam."""
+    return mix(estalo(d, semente, 3500, 15000, 0.006),
+               sum(tom(d, x) * env(d, 0.0003, q * (1 + 0.4 * i)) for i, x in enumerate(f)) * 0.35)
+
+
+def tesoura_abre(semente=400, forte=False):
+    """Tesoura abrindo: 'shhíng' de metal deslizando no metal (lâmina raspando subindo de tom)."""
+    d = 0.22 if forte else 0.15
+    raspa = filtro(ruido(d, semente), 3000, 13000, ganho_pico=(6500, 4, 2)) * env(d, 0.03, 0.05)
+    canto = tom(d, 3600, 5200) * env(d, 0.02, 0.05) * 0.25
+    return mix(raspa * 0.6, canto, vento(d, semente + 1, 1800, 3500, 0.5, 1.4) * (0.6 if forte else 0.4))
+
+
+def tesoura_corte(semente=410, n=2):
+    """Tesoura fechando: 'tchac' seco das lâminas (n cortes seguidos)."""
+    s = np.zeros(1)
+    for i in range(n):
+        s = mix(s, (_lamina(0.07, semente + i) * (1 - 0.15 * i), 0.075 * i))
+    return s
+
+
+def tesoura_helice(semente=420):
+    """Tesoura Helicóptero: o braço rodando como hélice, com cortes no ritmo da volta."""
+    d = 0.75
+    t = tempo(d)
+    giro = vento(d, semente, 900, 1600, 0.4, 1.6) * (0.5 + 0.5 * np.sin(2 * np.pi * 11 * t))
+    s = giro * 0.8
+    for i in range(4):
+        s = mix(s, (_lamina(0.06, semente + 1 + i) * 0.55, 0.06 + 0.17 * i))
+    return s
+
+
+def pente_acerto(peso, semente):
+    """Pente de plástico batendo: 'tlac' oco e curto em cima do soco."""
+    d = 0.06
+    tlac = filtro(ruido(d, semente), 1200, 6000, ganho_pico=(2400, 5, 3)) * env(d, 0.0003, 0.008)
+    dentes = sum(tom(d, f) * env(d, 0.0003, 0.006) for f in (1900, 2950)) * 0.2
+    return mix(tlac, dentes)
+
+
+def vassourada(semente=430):
+    """Vassoura varrendo: palha arrastando no chão, 'chhh-chhh'."""
+    d = 0.45
+    t = tempo(d)
+    palha = filtro(ruido(d, semente), 2500, 11000) * env(d, 0.05, 0.12) * (0.55 + 0.45 * np.abs(np.sin(2 * np.pi * 4.5 * t)))
+    return mix(palha * 0.8, vento(d, semente + 1, 700, 1500, 0.5, 1.6) * 0.5)
+
+
+def talco(semente=440):
+    """Talco: 'puf' de pó (sopro rosa com estalinho de frasco)."""
+    d = 0.4
+    puf = filtro(ruido(d, semente, 1), 300, 5000) * env(d, 0.004, 0.09)
+    frasco = filtro(ruido(0.02, semente + 1), 1500, 6000) * env(0.02, 0.0003, 0.004)
+    return mix(frasco * 0.6, (puf, 0.01))
+
+
+def maquina_zumbido(semente=450):
+    """Máquina de cortar cabelo: zumbido elétrico que esquenta (sobe) e chia."""
+    d = 1.1
+    z = tom(d, 118, 150, "serra", vibrato=(50, 0.15)) + 0.5 * tom(d, 236, 300, "quadrada")
+    z = filtro(z, 150, 5000) * env(d, 0.05, 0.6, 0.5)
+    chia = filtro(ruido(d, semente), 4000, 12000) * env(d, 0.6, 0.15) * 0.3
+    return sat(mix(z * 0.6, chia), 1.8)
+
+
+def maquina_explode(semente=460):
+    """Máquina Explosiva estourando: faísca, estouro e caquinhos de plástico."""
+    faisca = filtro(ruido(0.12, semente), 5000, 15000) * env(0.12, 0.001, 0.02)
+    boom = mix(acerto(4, semente + 1), corpo(1.0, 80, 30, 0.3, 3))
+    return mix(faisca * 0.6, (boom, 0.08), (vidro_quebra(semente + 2, 0.6) * 0.25, 0.1))
+
+
+def navalha(semente=470):
+    """Navalha de Sombra saindo: 'shiiing' longo de lâmina com sopro escuro."""
+    d = 0.5
+    canto = sum(tom(d, f, f * 1.08) * env(d, 0.005, 0.12) * g for f, g in ((3100, 1), (4700, 0.5), (6900, 0.3)))
+    raspa = filtro(ruido(d, semente), 4000, 13000) * env(d, 0.002, 0.04)
+    escuro = filtro(ruido(d, semente + 1, 2), 40, 400) * env(d, 0.05, 0.2)
+    return mix(canto * 0.4, raspa * 0.6, escuro * 0.6, vento(d, semente + 2, 3500, 1200, 0.3, 1.5) * 0.5)
+
+
+def toalha(semente=480):
+    """Toalha Quente: pano molhado estalando ('flap') e o vapor chiando."""
+    flap = mix(filtro(ruido(0.08, semente, 0.5), 600, 5000) * env(0.08, 0.001, 0.02),
+               corpo(0.08, 200, 120, 0.015) * 0.4)
+    vapor = filtro(ruido(0.5, semente + 1), 5000, 14000) * env(0.5, 0.08, 0.15) * 0.25
+    return mix(flap, (vapor, 0.05))
+
+
+def agua_pia(semente=490):
+    """Cabeça na Pia: 'splash' de água com bolhas."""
+    d = 0.6
+    splash = filtro(ruido(d, semente, 0.5), 400, 9000) * env(d, 0.002, 0.08)
+    s = mix(splash * 0.8, corpo(d, 160, 70, 0.03) * 0.6)
+    r = np.random.default_rng(semente)
+    for i in range(7):
+        t0 = 0.08 + r.uniform(0, 0.35)
+        f = r.uniform(500, 1300)
+        s = mix(s, (tom(0.05, f, f * 1.8) * env(0.05, 0.002, 0.012) * 0.3, t0))
+    return s
+
+
+def garrafa_acerto(peso, semente):
+    """Garrafa batendo (sem quebrar): 'tónc' de vidro grosso."""
+    d = 0.3 + 0.1 * peso
+    vidro = sum(tom(d, f * (1 - 0.04 * peso)) * env(d, 0.0005, q) * g for f, q, g in
+                ((980, 0.12, 1), (2470, 0.07, 0.5), (4210, 0.05, 0.3)))
+    return vidro * 0.6
+
+
+def lata_voando(semente=500):
+    """Latinha arremessada: lata girando no ar (vento com chacoalho do líquido)."""
+    d = 0.4
+    t = tempo(d)
+    giro = vento(d, semente, 1500, 2600, 0.4, 1.5) * (0.6 + 0.4 * np.sin(2 * np.pi * 16 * t))
+    chacoalha = filtro(ruido(d, semente + 1), 800, 4000) * env(d, 0.05, 0.12) * \
+        (0.5 + 0.5 * np.sin(2 * np.pi * 8 * t)) * 0.35
+    return mix(giro, chacoalha)
+
+
+def lata_bate(semente=510):
+    """Latinha batendo: alumínio amassando ('crónc' metálico fino) e quicando."""
+    d = 0.45
+    amassa = filtro(ruido(0.09, semente), 1500, 9000, ganho_pico=(3200, 3, 2)) * env(0.09, 0.0005, 0.025)
+    oco = metal(semente + 1, 0.3, 1450) * 0.35
+    quique = mix(metal(semente + 2, 0.15, 1600) * 0.2, filtro(ruido(0.05, semente + 3), 2000, 8000) *
+                 env(0.05, 0.0005, 0.01) * 0.3)
+    return mix(amassa, oco, acerto(1, semente + 4) * 0.5, (quique, 0.18), (quique * 0.5, 0.29))[:_n(d)]
+
+
+def chimpa(semente=520):
+    """Mão de Chimpá: 'hu-hu-ha-ha' de chimpanzé em chip (pulso com vibrato subindo)."""
+    s = np.zeros(1)
+    for i, (f0, f1, dd) in enumerate(((380, 520, 0.09), (420, 600, 0.09), (650, 980, 0.11), (720, 1100, 0.13))):
+        v = tom(dd, f0, f1, "pulso", vibrato=(30, 0.4)) * env(dd, 0.01, 0.05)
+        v = filtro(v, 250, 4000) + filtro(ruido(dd, semente + i), 1000, 5000) * env(dd, 0.005, 0.03) * 0.3
+        s = mix(s, (v, 0.1 * i + 0.02 * max(0, i - 1)))
+    return crush(s, 7, 2)
+
+
+def corrente(semente=530, d=0.55):
+    """Corrente: elos de ferro chacoalhando (vários clinques inarmônicos)."""
+    r = np.random.default_rng(semente)
+    s = np.zeros(_n(d))
+    for i in range(14):
+        t0 = r.uniform(0, d * 0.6)
+        b = r.uniform(900, 1700)
+        elo = sum(tom(0.08, b * k) * env(0.08, 0.0003, 0.02 / (1 + j)) for j, k in enumerate((1, 2.7, 4.9)))
+        s = mix(s, (elo * r.uniform(0.2, 0.45), t0))
+    return mix(s, estalo(d, semente + 1, 2000, 9000, 0.01) * 0.4)[:_n(d)]
+
+
+def bone_acerto(semente=540):
+    """Boné acertando: aba batendo ('tchap' de pano duro) em cima de um acerto médio leve."""
+    tchap = filtro(ruido(0.05, semente, 0.5), 900, 6000) * env(0.05, 0.0005, 0.01)
+    return mix(acerto(1, semente + 1) * 0.6, tchap)
+
+
+def caco_acerto(peso, semente):
+    """Caco de garrafa cortando (Modo Ratão): raspão de vidro afiado e tilintar."""
+    d = 0.2 + 0.08 * peso
+    risca = filtro(ruido(d, semente), 3000, 14000) * env(d, 0.002, 0.03 + 0.01 * peso)
+    tlin = sum(tom(d, f) * env(d, 0.0005, 0.04) for f in (2950, 4870)) * 0.2
+    return mix(risca * 0.6, tlin)
+
+
+def paredao_batida(semente=550):
+    """Paredão tocando: dois compassos de batida grave (bumbo, palma de chip), som original."""
+    s = np.zeros(1)
+    bpm = 130
+    b = 60 / bpm
+    for i in range(8):
+        if i % 2 == 0:
+            s = mix(s, (sat(tom(0.25, 90, 45) * env(0.25, 0.002, 0.09), 2.5), i * b / 2))
+        else:
+            s = mix(s, (filtro(ruido(0.1, semente + i), 900, 6000) * env(0.1, 0.001, 0.03) * 0.5, i * b / 2))
+        if i in (3, 7):
+            s = mix(s, (crush(chip_nota(0.12, 196 * (1.5 if i == 7 else 1), "pulso", 0.06), 6, 2) * 0.3, i * b / 2))
+    return s
+
+
+def osso_acerto(peso, semente):
+    """Cotovelo e joelho de Muay Thai: estalo seco de osso em cima do acerto."""
+    return estalo(0.06, semente, 1800, 8000, 0.005 + 0.002 * peso) * (0.8 + 0.1 * peso)
+
+
+def canela_acerto(peso, semente):
+    """Canela de Muay Thai: 'tchá' largo de tapa (estalo de pele) com chicote."""
+    d = 0.1
+    tapa = filtro(ruido(d, semente), 700, 7000, ganho_pico=(1800, 2, 1.5)) * env(d, 0.0005, 0.014 + 0.004 * peso)
+    return tapa * 0.9
+
+
+def casco_acerto(peso, semente):
+    """Casco de cavalo: 'clóc' de taco de coco bem pesado."""
+    d = 0.12
+    return filtro(ruido(d, semente), 400, 3000, ganho_pico=(900, 3, 4)) * env(d, 0.0005, 0.015 + 0.004 * peso)
+
+
+def bufada(semente=560):
+    """Bufada de cavalo: sopro forte pelo focinho com vibração dos lábios."""
+    d = 0.6
+    t = tempo(d)
+    sopro = filtro(ruido(d, semente, 1), 200, 4000) * env(d, 0.03, 0.15)
+    labio = 0.5 + 0.5 * np.sign(np.sin(2 * np.pi * 28 * t)) * np.exp(-t / 0.2)
+    return sopro * labio
+
+
+def pedra_sobe(semente=570):
+    """Chute no chão levantando a pedra: raspão de terra, estalo de pedra soltando e cascalho."""
+    d = 0.4
+    raspa = filtro(ruido(0.15, semente, 1), 300, 4000) * env(0.15, 0.005, 0.05)
+    solta = acerto(1, semente + 1, "concreto") * 0.7
+    r = np.random.default_rng(semente)
+    cascalho = np.zeros(_n(d))
+    for i in range(12):
+        t0 = r.uniform(0.05, 0.3)
+        g = filtro(ruido(0.02, semente + 10 + i), 1500, 7000) * env(0.02, 0.0003, 0.004) * r.uniform(0.2, 0.5)
+        cascalho = mix(cascalho, (g, t0))
+    return mix(raspa, (solta, 0.04), cascalho)
+
+
+def pedra_voando(semente=580):
+    """Pedra saindo: 'vuum' grave e pesado (pedra girando no ar)."""
+    d = 0.45
+    t = tempo(d)
+    return mix(vento(d, semente, 500, 1000, 0.3, 1.8) * (0.7 + 0.3 * np.sin(2 * np.pi * 9 * t)),
+               corpo(0.12, 140, 70, 0.03) * 0.4)
+
+
+def pedra_acerto(peso, semente):
+    """Pedra batendo: pancada de rocha que racha, com cascalho espalhando."""
+    d = 0.25
+    racha = estalo(d, semente, 600, 7000, 0.02 + 0.01 * peso)
+    r = np.random.default_rng(semente)
+    s = racha
+    for i in range(6 + 2 * peso):
+        s = mix(s, (filtro(ruido(0.02, semente + 20 + i), 1500, 8000) * env(0.02, 0.0003, 0.004) *
+                    r.uniform(0.15, 0.4), r.uniform(0.02, 0.2)))
+    return s
+
+
+def ki_carga(semente=590):
+    """Carga de ki: zumbido de energia subindo com faíscas de chip (pose de carga, brilho nas mãos)."""
+    d = 1.0
+    zum = sum(tom(d, f, f * 2.2, "serra", vibrato=(9, 0.3)) for f in (110, 165)) / 2
+    zum = filtro(zum, 100, 3000) * env(d, 0.7, 0.15)
+    ar = vento(d, semente, 300, 3500, 0.9, 1.4) * 0.6
+    r = np.random.default_rng(semente)
+    s = mix(zum * 0.6, ar)
+    for i in range(8):
+        t0 = 0.3 + r.uniform(0, 0.6)
+        s = mix(s, (crush(chip_nota(0.04, r.uniform(1500, 3000), "pulso", 0.015), 5, 2) * 0.25, t0))
+    return s
+
+
+def ki_bola(semente=600):
+    """Bola de ki saindo: estouro de energia ('vchuuu') com o zumbido indo embora."""
+    d = 0.55
+    estouro = mix(corpo(d, 180, 60, 0.06, 2), filtro(ruido(d, semente, 0.5), 400, 8000) * env(d, 0.002, 0.06))
+    zum = tom(d, 520, 260, "serra", vibrato=(14, 0.4)) * env(d, 0.01, 0.2)
+    zum = filtro(zum, 200, 4000)
+    return mix(estouro * 0.8, zum * 0.45, vento(d, semente + 1, 3000, 800, 0.2, 1.5) * 0.6)
+
+
+def ki_acerto(peso, semente):
+    """Ki acertando: estalo elétrico e um 'zap' descendo."""
+    d = 0.25
+    zap = crush(tom(d, 2400, 300, "quadrada") * env(d, 0.001, 0.05), 5, 2) * 0.3
+    return mix(estalo(d, semente, 2000, 12000, 0.015) * 0.6, zap)
+
+
+def ki_trevas(semente=610):
+    """Rajadona de ki das trevas (Diabo Loiro): carga curta e um raio contínuo, grave, rasgado e sinistro."""
+    d = 2.4
+    t = tempo(d)
+    carga = ki_carga(semente)[:_n(0.6)] * np.linspace(0.6, 1, _n(0.6))
+    raio = sat(filtro(ruido(d, semente + 1, 1.2), 60, 3500) * (0.8 + 0.2 * np.sin(2 * np.pi * 7 * t)), 2.5)
+    coro = sum(tom(d, f, f * 0.97, "serra", vibrato=(6, 0.25)) for f in (55, 82, 98, 147)) / 4
+    coro = filtro(coro, 40, 1800)
+    crepita = filtro(ruido(d, semente + 2), 3000, 12000) * (np.random.default_rng(semente).random(_n(d)) < 0.02) * 2
+    corpo_raio = mix(raio * 0.6, coro * 0.7, crepita * 0.3) * env(d, 0.05, 0.5, 1.5)
+    s = mix(carga, (corpo_raio, 0.5), (corpo(1.0, 90, 30, 0.3, 3) * 0.8, 0.5))
+    return reverb(s, 0.8, 0.35, 2500)
+
+
+def maleta_acerto(peso, semente):
+    """Maletada do Diabo Loiro: couro duro batendo e o fecho de metal tilintando."""
+    d = 0.2
+    couro = filtro(ruido(d, semente, 0.5), 300, 3000) * env(d, 0.0005, 0.02 + 0.005 * peso)
+    fecho = metal(semente + 1, 0.15, 1900) * 0.25
+    return mix(couro, fecho)
+
+
+def trevas_acerto(peso, semente):
+    """Acerto do Diabo Loiro: brasa estalando (fogo e ouro) por cima do grave escuro."""
+    d = 0.3
+    brasa = filtro(ruido(d, semente), 1500, 9000) * env(d, 0.002, 0.05) * \
+        (np.random.default_rng(semente).random(_n(d)) < 0.15)
+    return brasa * 1.5
+
+
+ARMAS = {  # tipo do acerto com objeto: (acerto base por baixo, camada do objeto, ganho da camada)
+    "tesoura": ("soco", lambda p, s: tesoura_corte(s, 1 + (p >= 2)), 1.0),
+    "pente": ("soco", pente_acerto, 0.8),
+    "garrafa": ("soco", garrafa_acerto, 0.9),
+    "osso": ("soco", osso_acerto, 1.0),
+    "canela": ("chute", canela_acerto, 1.0),
+    "casco": ("sombra", casco_acerto, 1.0),
+    "corrente": ("sombra", lambda p, s: corrente(s, 0.3 + 0.08 * p) * 0.8, 1.0),
+    "caco": ("sombra", caco_acerto, 1.0),
+    "serra": ("sombra", lambda p, s: mix(tesoura_corte(s, 2), filtro(ruido(0.25, s + 5), 2000, 9000) *
+                                          env(0.25, 0.002, 0.06) * 0.4), 1.0),
+    "pedra": ("concreto", pedra_acerto, 0.9),
+    "ki": ("soco", ki_acerto, 1.0),
+    "trevas": ("sombra", trevas_acerto, 1.0),
+    "maleta": ("luva", maleta_acerto, 1.0),
+}
+
+
+def acerto_arma(peso, semente, tipo):
+    base, camada, g = ARMAS[tipo]
+    return mix(acerto(peso, semente, base), camada(peso, semente + 50) * g)
+
+
 # ---------------------------------------------------------------- menu e barra
 
 def chip_nota(d, f, forma="pulso", queda=0.05):
@@ -693,31 +1023,62 @@ def sons_comuns():
 
 
 ASSINATURAS = {
-    # grupo 50 do .snd de cada lutador: (número, nome, função, volume)
+    # grupo 50 do .snd de cada lutador: (número, nome, função, volume). 0 a 3 são da missão de 14/11; de 4 em
+    # diante, os objetos da issue #46 (o que o lutador usa em cada golpe).
     "pengaro": [(0, "garrafa", garrafa_tim, V_FORTE), (1, "vidro quebrando", vidro_quebra, V_FORTE),
                 (2, "gole", gole, V_MEDIO), (3, "possessão", possessao, V_FORTE),
-                (4, "lata", lambda: mix(metal(205, 0.25, 1500) * 0.5, acerto(1, 206)), V_MEDIO)],
+                (4, "latinha voando", lata_voando, V_MEDIO), (5, "latinha batendo", lata_bate, V_FORTE),
+                (6, "chimpanzé", chimpa, V_MEDIO), (7, "corrente", corrente, V_MEDIO),
+                (8, "garrafa girando no ar", lambda: mix(lata_voando(505) * 0.7, garrafa_acerto(0, 506) * 0.15),
+                 V_FRACO)],
     "ck": [(0, "boné voador", bone, V_MEDIO), (1, "tragada", tragada, V_MEDIO),
-           (2, "grave do paredão", grave_paredao, V_ENORME), (3, "garrafa voadora quebrando", vidro_quebra, V_FORTE)],
+           (2, "grave do paredão", grave_paredao, V_ENORME), (3, "garrafa voadora quebrando", vidro_quebra, V_FORTE),
+           (4, "boné acertando", bone_acerto, V_MEDIO), (5, "paredão tocando", paredao_batida, V_FORTE),
+           (6, "garrafa quebrando no chão", lambda: vidro_quebra(215, 1.0), V_FORTE)],
     "gutto": [(0, "beijinho", beijinho, V_MEDIO), (1, "joelhada", joelhada, V_FORTE), (2, "galope", galope, V_MEDIO),
-              (3, "relincho", relincho, V_FORTE)],
+              (3, "relincho", relincho, V_FORTE), (4, "bufada", bufada, V_MEDIO),
+              (5, "coice", lambda: mix(acerto_arma(3, 281, "casco"), galope(282)[:_n(0.12)] * 0.6), V_ENORME)],
     "hazaki": [(0, "concreto", lambda: acerto(3, 301, "concreto"), V_FORTE),
                (1, "estatueta dourada", lambda: metal(302, 0.7, 880), V_FORTE),
-               (2, "guarda de aço", lambda: metal(303, 0.5, 520), V_FORTE), (3, "faixa", faixa, V_MEDIO)],
+               (2, "guarda de aço", lambda: metal(303, 0.5, 520), V_FORTE), (3, "faixa", faixa, V_MEDIO),
+               (4, "pedra levantando do chão", pedra_sobe, V_MEDIO), (5, "pedra voando", pedra_voando, V_MEDIO),
+               (6, "carga de ki", ki_carga, V_MEDIO), (7, "bola de ki", ki_bola, V_FORTE),
+               (8, "rajada de ki das trevas", ki_trevas, V_ENORME),
+               (9, "pedra batendo", lambda: acerto_arma(3, 304, "pedra"), V_FORTE)],
     "raiclaven": [(0, "tesoura", tesoura, V_MEDIO), (1, "borrifada", borrifada, V_MEDIO),
                   (2, "pente voador", lambda: mix(projetil(321), tesoura(322) * 0.4), V_MEDIO),
-                  (3, "cadeira giratória", cadeira, V_MEDIO)],
+                  (3, "cadeira giratória", cadeira, V_MEDIO), (4, "tesoura helicóptero", tesoura_helice, V_MEDIO),
+                  (5, "vassoura", vassourada, V_MEDIO), (6, "talco", talco, V_FRACO),
+                  (7, "máquina zumbindo", maquina_zumbido, V_MEDIO), (8, "máquina explodindo", maquina_explode,
+                                                                        V_ENORME),
+                  (9, "navalha de sombra", navalha, V_FORTE), (10, "toalha quente", toalha, V_MEDIO),
+                  (11, "cabeça na pia", agua_pia, V_FORTE)],
 }
-SOCO = {"ck": "luva", "hazaki": "concreto"}  # quem tem soco com timbre próprio
+
+# Timbre dos acertos por lutador: 51 soco (mão), 52 chute, 53 golpe endiabrado, 54 a arma da mão (quando tem).
+# Os tipos simples são os do acerto(); os com objeto estão em ARMAS (acerto_arma).
+PERFIL = {
+    "pengaro": {51: "soco", 52: "chute", 53: "corrente", 54: "garrafa"},
+    "ck": {51: "luva", 52: "chute", 53: "caco", 54: "luva"},
+    "gutto": {51: "soco", 52: "canela", 53: "casco", 54: "osso"},
+    "hazaki": {51: "concreto", 52: "chute", 53: "trevas", 54: "pedra"},
+    "raiclaven": {51: "pente", 52: "chute", 53: "serra", 54: "tesoura"},
+}
+VENTO_ARMA = {"raiclaven": lambda forte: tesoura_abre(400 + forte, forte)}  # 55,0 e 55,1: o "vento" da arma
 
 
 def sons_lutador(nome, semente):
     s = {}
-    tipo_soco = SOCO.get(nome, "soco")
-    for p, v in zip(range(5), (V_FRACO, V_MEDIO, V_FORTE, V_ENORME, V_ENORME)):
-        s[(51, p)] = nivelar(acerto(p, semente + p, tipo_soco), v)
-        s[(52, p)] = nivelar(acerto(p, semente + 10 + p, "chute"), v)
-        s[(53, p)] = nivelar(acerto(p, semente + 20 + p, "sombra"), v + 0.5)
+    perfil = PERFIL[nome]
+    vols = (V_FRACO, V_MEDIO, V_FORTE, V_ENORME, V_ENORME)
+    for g, tipo in perfil.items():
+        for p, v in zip(range(5), vols):
+            x = acerto_arma(p, semente + 10 * (g - 51) + p, tipo) if tipo in ARMAS else \
+                acerto(p, semente + 10 * (g - 51) + p, tipo)
+            s[(g, p)] = nivelar(x, v + (0.5 if g == 53 else 0))
+    if nome in VENTO_ARMA:
+        s[(55, 0)] = nivelar(VENTO_ARMA[nome](0), V_VENTO + 2)
+        s[(55, 1)] = nivelar(VENTO_ARMA[nome](1), V_VENTO + 4)
     for n, _, f, v in ASSINATURAS[nome]:
         s[(50, n)] = nivelar(f(), v)
     return s
@@ -765,29 +1126,86 @@ def _kicks(cmd):
     return chute - soco, soco
 
 
-# especiais: estado -> (grupo do acerto no .snd do lutador, ou None p/ manter, [(gatilho, som do PlaySnd)])
-# gatilho "proj" = o mesmo gatilho do 1º Projectile/Helper do estado; "T<n>" = Time = n
+def _do_botao(cmd, letra):
+    """Estados (normais e kombos, abaixo de 700) que saem só do botão `letra`, lidos do .cmd."""
+    out = set()
+    for blk in re.split(r"\n(?=\[State -1)", cmd):
+        v = re.search(r"^value\s*=\s*(\d+)\s*$", blk, re.M)
+        if not v or not blk.startswith("[State -1") or int(v.group(1)) >= 700:
+            continue
+        cm = set(re.findall(r'command\s*=\s*"([^"]+)"', blk)) & {"x", "y", "a", "b"}
+        if cm == {letra}:
+            out.add(int(v.group(1)))
+    return out
+
+
+# especiais: estado -> (acerto, [(gatilho, som do PlaySnd)])
+#   acerto: None mantém o de soco/chute; "54" usa o grupo 54 com o peso do golpe; "50,5" fixo; uma lista dá um por
+#   hitsound do estado, na ordem (supers com vários acertos).
+#   gatilho "proj" = o mesmo gatilho do 1º Projectile/Helper; "T<n>" = Time = n; "vento" troca o vento do golpe.
+# Os números de estado são os do molde do Pengaró, que o Gutto e o Raiclaven também usam (nomes no movelist.dat).
 CHUTES_ESPECIAIS = {1100, 1101, 1500, 1501, 1701, 3401, 3420, 3421, 3422, 3423, 3432, 3435}
+_LATA_E_VIDRO = ["50,5", "54,2", "50,5", "54,2", "50,5", "50,1"]  # Chuva de Bebidas: lata, garrafa ... estoura
 ESPECIAIS = {
-    "pengaro": {1600: ("50,0", []), 1601: ("50,0", []), 1000: (None, [("proj", "F36,0")]),
-                1001: (None, [("proj", "F36,0")]), 3400: (None, [("proj", "50,3")]),
-                2000: (None, [("T9", "50,2"), ("T42", "50,1"), ("T55", "50,3"), ("T55", "F31,1")])},
-    "ck": {1600: (None, [("proj", "50,0")]), 1601: (None, [("proj", "50,0")]), 1000: (None, [("proj", "50,1")]),
-           1001: (None, [("proj", "50,1")]), 3400: (None, [("proj", "50,1")]), 3402: ("50,3", [("proj", "F36,0")]),
-           3403: (None, [("T0", "50,2")]), 2000: (None, [("T55", "F31,1")])},
-    "gutto": {1000: (None, [("proj", "50,0")]), 1001: (None, [("proj", "50,0")]),
-              1600: (None, [("proj", "50,0")]), 1601: (None, [("proj", "50,0")]),
-              1200: ("50,1", []), 1201: ("50,1", []), 3402: (None, [("T0", "50,2")]),
-              3400: (None, [("proj", "50,3")]), 2000: (None, [("T55", "F31,1"), ("T60", "50,3")])},
-    "hazaki": {1000: ("50,0", [("proj", "F36,0")]), 1001: ("50,0", [("proj", "F36,0")]),
-               1600: ("50,1", [("proj", "F36,0")]), 1601: ("50,1", [("proj", "F36,0")]),
-               1100: (None, [("T0", "50,2")]), 1101: (None, [("T0", "50,2")]),
-               1200: (None, [("T0", "50,3")]), 1201: (None, [("T0", "50,3")])},
-    "raiclaven": {1000: (None, [("proj", "50,2")]), 1001: (None, [("proj", "50,2")]),
-                  1600: (None, [("proj", "50,1")]), 1601: (None, [("proj", "50,1")]),
-                  1200: ("50,0", []), 1201: ("50,0", []), 1400: ("50,0", []), 1401: ("50,0", []),
-                  1500: (None, [("T0", "50,3")]), 1501: (None, [("T0", "50,3")]),
-                  2000: (None, [("T55", "F31,1")])},
+    "pengaro": {
+        1000: ("50,5", [("proj", "50,4")]), 1001: ("50,5", [("proj", "50,4")]),  # Latada: lata voa e bate
+        1600: ("50,0", [("proj", "50,8")]), 1601: ("50,0", [("proj", "50,8")]),  # Garrafada em Arco: vidro
+        1400: (None, [("T0", "50,6")]), 1401: (None, [("T0", "50,6")]),  # Mão de Chimpá
+        3000: (_LATA_E_VIDRO, [("T0", "50,6")]), 3100: (["53,1", "50,1"], [("T0", "50,3")]),
+        3200: (None, [("T0", "50,6")]),  # Bando da Várzea: o bando de chimpanzé
+        3401: (None, [("T0", "50,7")]), 3400: (None, [("proj", "50,3")]),  # Chute da Corrente, Mão de Sombra
+        3402: (None, [("T0", "50,7")]), 3403: (None, [("T0", "50,7")]),
+        2000: (None, [("T9", "50,2"), ("T42", "50,1"), ("T55", "50,3"), ("T55", "F31,1")])},
+    "ck": {
+        1600: ("50,4", [("proj", "50,0")]), 1601: ("50,4", [("proj", "50,0")]),  # Boné Voador
+        1000: (None, [("proj", "50,1")]), 1001: (None, [("proj", "50,1")]), 3400: (None, [("proj", "50,1")]),
+        3402: ("50,3", [("proj", "F36,0")]), 3403: (None, [("T0", "50,2")]),
+        3100: (["53,2", "53,4"], [("T0", "50,5")]),  # Baile da Esquina: o paredão toca e ele corta com o caco
+        2000: (None, [("T2", "50,5"), ("T42", "50,6"), ("T55", "F31,1")])},
+    "gutto": {
+        1000: (None, [("proj", "50,0")]), 1001: (None, [("proj", "50,0")]),
+        1600: (None, [("proj", "50,0")]), 1601: (None, [("proj", "50,0")]),
+        1200: ("50,1", []), 1201: ("50,1", []),  # Joelhada Voadora
+        1400: ("54", []), 1401: ("54", []),  # Cotovelo Giratório
+        3000: (None, [("T0", "50,0")]),
+        3100: ("53", [("T0", "50,3"), ("T20", "50,2")]),  # Saideira do Cavalo
+        3200: ("52", []),  # Bando de Chutes: canela
+        3400: (None, [("proj", "50,3")]), 3401: ("50,5", [("T0", "50,4")]),  # Beijo e Coice do Cavalo
+        3402: (None, [("T0", "50,2")]), 3403: (None, [("T0", "50,4")]),
+        2000: (None, [("T20", "50,4"), ("T55", "F31,1"), ("T60", "50,3")])},
+    "hazaki": {
+        1000: ("50,9", [("T0", "50,4"), ("proj", "50,5")]), 1001: ("50,9", [("T0", "50,4"), ("proj", "50,5")]),
+        1600: ("50,1", [("proj", "F36,0")]), 1601: ("50,1", [("proj", "F36,0")]),
+        1100: (None, [("T0", "50,2")]), 1101: (None, [("T0", "50,2")]),
+        1200: (None, [("T0", "50,3")]), 1201: (None, [("T0", "50,3")]),
+        3000: (None, [("T0", "50,3")])},
+    "raiclaven": {
+        1000: (None, [("proj", "50,2")]), 1001: (None, [("proj", "50,2")]),  # Pente Voador (acerto de pente)
+        1100: ("54", [("T0", "50,4")]), 1101: ("54", [("T0", "50,4")]),  # Tesoura Helicóptero
+        1200: ("54", [("vento", "55,1"), ("T0", "50,0")]), 1201: ("54", [("vento", "55,1"), ("T0", "50,0")]),
+        1300: (None, [("T0", "50,5")]), 1301: (None, [("T0", "50,5")]),  # Varrida
+        1400: ("54", [("vento", "55,1")]), 1401: ("54", [("vento", "55,1")]),  # Tesourão
+        1500: (None, [("T0", "50,3")]), 1501: (None, [("T0", "50,3")]),  # Cadeira Giratória
+        1600: (None, [("proj", "50,1")]), 1601: (None, [("proj", "50,1")]),  # Borrifada
+        1700: (None, [("T0", "50,6")]), 1701: ("51", [("T0", "50,6")]),  # Próximo!: some no talco
+        3000: ("54", [("T0", "50,6")]),  # Próximo, Cliente!: 8 cortes
+        3100: ("53", [("T0", "50,4")]),  # Último Cliente
+        3200: (["54,1", "54,1", "50,8"], [("T0", "50,7")]),  # Máquina Explosiva: zumbe, esquenta e explode
+        3400: (None, [("proj", "50,9")]), 3401: ("53", [("vento", "55,1")]),  # Navalha, Corte da Corrente
+        3402: (None, [("T0", "50,3")]), 3403: (None, [("T0", "50,3")]),  # Cadeira Atravessada, Queda da Cadeira
+        2000: (None, [("T30", "50,4"), ("T55", "F31,1")])},
+}
+
+# botão da mão que segura a arma: normais (200 a 699) e kombos que saem dele usam o acerto 54 e o vento 55
+BOTAO_ARMA = {"raiclaven": "y", "gutto": "y"}  # Raiclaven: y é a tesoura; Gutto: y é cotovelo e joelhada
+
+# agarrões: estado -> grupo de cada PlaySnd de pancada (os "F5,k" do agarrao_mk e da frente de agarrões), em ordem
+AGARROES = {
+    "pengaro": {810: ["52", "54", "52", "54"], 831: ["51", "54"], 841: ["51"]},  # roda de capoeira com garrafa
+    "ck": {810: ["51", "51", "51", "52", "51"], 831: ["51", "52"], 841: ["52"]},  # boxe sujo de luva
+    "gutto": {810: ["54", "54", "54", "52"], 831: ["54", "50,1"], 841: ["54"]},  # clinch: joelhadas
+    "hazaki": {810: ["51", "51", "54", "52", "52"], 831: ["51", "51", "51", "51"], 841: ["52"]},
+    "raiclaven": {810: ["54", "54", "54", "52"], 831: ["50,10", "51"], 841: ["50,11"]},  # corte à força, toalha, pia
 }
 
 
@@ -802,7 +1220,7 @@ COMUNS = {  # estado -> [(gatilho, som)] para todo lutador
 def _desfazer(cns):
     cns = re.sub(r"^\[State -?\d+, som[^\]]*\]\n(?:(?!\n\[)[^\n]*\n)*?" + re.escape(MARCA) + r" fim\n\n", "", cns,
                  flags=re.M)
-    cns = re.sub(r"^((?:hit|guard)sound|sound) = [^\n;]*" + re.escape(MARCA) + r"(F?\d+,\s*\d+)$", r"\1 = \2", cns,
+    cns = re.sub(r"^((?:hit|guard)sound|sound|value) = [^\n;]*" + re.escape(MARCA) + r"(F?\d+,\s*\d+)$", r"\1 = \2", cns,
                  flags=re.M)
     return cns
 
@@ -812,8 +1230,9 @@ def _playsnd(estado, nome, gatilho, valor):
 
 
 def ligar(nome, pasta=None):
-    """Põe `sound = <nome>.snd` no .def e liga os sons no .cns: chute com acerto de chute, vento no começo de cada
-    golpe, sons de assinatura nos especiais, transformação no Despertar. Pode rodar de novo (desfaz e refaz)."""
+    """Põe `sound = <nome>.snd` no .def e liga os sons no .cns: chute com acerto de chute, a arma no botão dela,
+    vento no começo de cada golpe, os objetos nos especiais, supers e agarrões (issue #46), transformação no
+    Despertar. Pode rodar de novo (desfaz e refaz)."""
     pasta = Path(pasta or RAIZ / "chars" / nome)
     d = pasta / f"{nome}.def"
     txt = d.read_text(encoding="utf-8")
@@ -822,9 +1241,13 @@ def ligar(nome, pasta=None):
         d.write_text(txt, encoding="utf-8", newline="\n")
     c = pasta / f"{nome}.cns"
     cns = _desfazer(c.read_text(encoding="utf-8").replace("\r\n", "\n"))
-    chutes, socos = _kicks((pasta / f"{nome}.cmd").read_text(encoding="utf-8").replace("\r\n", "\n"))
+    cmd = (pasta / f"{nome}.cmd").read_text(encoding="utf-8").replace("\r\n", "\n")
+    chutes, socos = _kicks(cmd)
     chutes |= CHUTES_ESPECIAIS
+    arma = _do_botao(cmd, BOTAO_ARMA[nome]) if nome in BOTAO_ARMA else set()
+    vento_arma = nome in VENTO_ARMA
     esp = ESPECIAIS.get(nome, {})
+    agarroes = AGARROES.get(nome, {})
     partes = re.split(r"(?m)^(?=\[Statedef )", cns)
     out = []
     for p in partes:
@@ -834,14 +1257,18 @@ def ligar(nome, pasta=None):
             continue
         n = int(m.group(1))
         grupo_hit, extras = esp.get(n, (None, []))
+        if n not in esp and n in arma:
+            grupo_hit = "54"
         tem_hit = re.search(r"^hitsound = F5,\s*(\d)", p, re.M)
         endiabrado = 3400 <= n < 3500 or 10000 <= n < 20000
+        conta = [0]
 
         def troca(mm):
             k = int(mm.group(2))
-            if grupo_hit:
-                g, base = grupo_hit.split(",")
-                novo = f"{g},{base}" if g == "50" else f"{g},{k}"
+            g = grupo_hit[min(conta[0], len(grupo_hit) - 1)] if isinstance(grupo_hit, list) else grupo_hit
+            conta[0] += 1
+            if g:
+                novo = g if "," in g else f"{g},{k}"
             elif endiabrado:
                 novo = f"53,{k}"
             elif n in chutes:
@@ -849,24 +1276,44 @@ def ligar(nome, pasta=None):
             else:
                 novo = f"51,{k}"
             # "S" na frente: sem prefixo o hitsound toca do common.snd (regra do MUGEN/IKEMEN), que não tem os
-            # grupos 50 a 53, e o acerto ficava mudo (achado na revisão geral, 2026-11-14)
+            # grupos 50 a 55, e o acerto ficava mudo (achado na revisão geral, 2026-11-14)
             return f"hitsound = S{novo} {MARCA}F5,{k}"
         if tem_hit and (200 <= n < 4000 or n >= 10000) and not 750 <= n < 900:
             p = re.sub(r"^hitsound = (F)5,\s*(\d)$", troca, p, flags=re.M)
+        # agarrão: cada pancada com o som do que bate (joelho, garrafa, tesoura, toalha...)
+        if n in agarroes:
+            lista = agarroes[n]
+            conta[0] = 0
+
+            def troca_ag(mm):
+                g = lista[min(conta[0], len(lista) - 1)]
+                conta[0] += 1
+                novo = g if "," in g else f"{g},{mm.group(3)}"
+                return f"type = PlaySnd\n{mm.group(1)}value = {novo} {MARCA}{mm.group(2)}"
+            p = re.sub(r"type = PlaySnd\n((?:trigger[^\n]*\n)+)value = (F5,\s*(\d))$", troca_ag, p, flags=re.M)
         # Despertar: a pausa toca a transformação no lugar do som de super
         if n == 2000:
             p = re.sub(r"^sound = F20,\s*0$", f"sound = F31,0 {MARCA}F20,0", p, flags=re.M)
         novos = []
+        troca_vento = dict(extras).get("vento")
         # vento: golpe que bate e não é agarrão nem parry
         if tem_hit and not 750 <= n < 900 and not 3000 <= n < 3300:
             forte = int(tem_hit.group(1)) >= 2
-            k = (2 if n in chutes else 0) + (1 if forte else 0)
-            if 1000 <= n < 2000 or 3400 <= n < 3500 or 3430 <= n < 3440:
-                k = 4
-            novos.append(_playsnd(n, "vento", "trigger1 = Time = 0", f"F40,{k}"))
+            if troca_vento:
+                v = troca_vento
+            elif n in arma and vento_arma:
+                v = f"55,{int(forte)}"
+            else:
+                k = (2 if n in chutes else 0) + (1 if forte else 0)
+                if 1000 <= n < 2000 or 3400 <= n < 3500:
+                    k = 4
+                v = f"F40,{k}"
+            novos.append(_playsnd(n, "vento", "trigger1 = Time = 0", v))
         for gat, valor in COMUNS.get(n, []):  # parry e agarrão (estados das frentes de parry e agarrão)
             novos.append(_playsnd(n, "comum", gat, valor))
         for gat, valor in extras:
+            if gat == "vento":
+                continue
             if gat == "proj":
                 pm = re.search(r"^type = (?:Projectile|Helper)\n((?:trigger\w* = [^\n]*\n)+)", p, re.M | re.I)
                 if not pm:
