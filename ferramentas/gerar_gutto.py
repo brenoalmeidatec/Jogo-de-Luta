@@ -435,6 +435,8 @@ def main():
     legibilidade.aplicar("gutto", SAIDA)
     import balanceamento  # números do item 7 (attack, defence, velocidade)
     balanceamento.aplicar("gutto", SAIDA)
+    import cena_transformacao  # issue #49: tudo preto, zoom e clarão no Despertar (sempre por último)
+    cena_transformacao.aplicar("gutto", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

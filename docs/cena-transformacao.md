@@ -36,11 +36,21 @@ Breno aprovar o vídeo.
   tempo, os controladores dele rodam a cada tique, o que a cena precisa.
 - No Xvfb a 1280x720 o llvmpipe só desenha uns 17 quadros por segundo; a 640x360 sobe para uns 26. O filme sai ampliado.
 
-## Para os outros lutadores
+## Os outros lutadores (aprovado pelo Breno em 2026-11-14)
 
-Depois do ok do Breno: pôr o lutador em `LUTADORES` (cor do brilho) e chamar `cena_transformacao.aplicar` no fim do
-`gerar_<lutador>.py`. O estado 2000 precisa de `anim = 2000`, de um `[State 2000, Liga]` e de um `[State 2000, Fim]`.
-O Hazak ganha o Despertar na thread da #44 (ferramentas/diabo_loiro.py) e entra depois.
+A mesma cena vale para CK, Gutto, Raiclaven e Hazak. Cada um tem a cor do brilho e o tique em que ele começa em
+`LUTADORES`, e o `gerar_<lutador>.py` chama `cena_transformacao.aplicar` por último.
+
+| Lutador | Brilho | Auge | Observação |
+|---|---|---|---|
+| Pengaró | violeta | tique 114 | garrafa quebra no 55 |
+| CK | verde do Ratão | tique 114 | o paredão aparece no escuro e vira fumaça |
+| Gutto | brasa | tique 114 | |
+| Raiclaven | verde de laboratório | tique 114 | |
+| Hazak | ouro e fogo | tique 122 | a forma liga em `Time = 122` (diabo_loiro.py); a câmera mira 45 atrás dele para a patroa caber; a música do Despertar dele não estava ligada e a cena liga |
+
+O auge é lido do `[State 2000, Liga]`: se o gatilho for `Time = N`, é N; senão é o fim da animação 2000. A `Pause` e o
+clarão `BGPalFX` próprios do estado saem, porque a cena põe os dela. Gbzin: quando ganhar Despertar, entra na tabela.
 
 ## Sugestões
 

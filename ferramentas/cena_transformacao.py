@@ -29,15 +29,21 @@ APAGA = 14        # tiques para a luz apagar
 VOLTA = 36        # tiques depois do auge até a luta voltar
 ZOOM_FIM = 1.18   # zoom ao fim da animação (1 = câmera da luta)
 ZOOM_AUGE = 1.30  # empurrão da câmera no auge
-BRILHO_DESDE = 55  # quando o brilho violeta começa (garrafa quebra no Pengaró)
 CENTRO_Y = -15    # mira vertical do zoom (negativo sobe a câmera); medido no motor para o corpo inteiro caber
 
 # No IKEMEN v1.0, o tamanho na tela cresce com o quadrado do scale do Zoom e scale 1 mostra os lutadores a 0,65 da
 # câmera da luta (medido no motor, cenários Cristo e Maria Fumaça). Por isso a cena usa ESCALA_MOTOR * raiz(zoom).
 ESCALA_MOTOR = 1.24
 
+# brilho: cor que o lutador ganha no escuro antes do auge (tom do meio da rampa "desperto" do efeitos.py)
+# desde: tique em que o brilho e o primeiro tremor começam
 LUTADORES = {
-    "pengaro": {"brilho": (70, 10, 110)},
+    "pengaro": {"brilho": (70, 10, 110), "desde": 55},     # violeta, garrafa quebra
+    "ck": {"brilho": (20, 70, 40), "desde": 42},           # verde do Ratão, paredão vira fumaça
+    "gutto": {"brilho": (100, 35, 0), "desde": 55},        # brasa
+    "raiclaven": {"brilho": (10, 90, 20), "desde": 55},    # verde de laboratório
+    # dx: a câmera mira um pouco atrás dele, para a patroa caber na cena
+    "hazaki": {"brilho": (90, 50, 0), "desde": 56, "dx": -45},  # ouro e fogo, a patroa faz que sim
 }
 
 PREFIXO = "[State 2000, Cena"
@@ -61,16 +67,16 @@ def bloco(nome, corpo):
     return f"{PREFIXO}: {nome}]\n{corpo.strip()}\n\n"
 
 
-def cena(L, brilho, som="F31,0"):
-    fim = L + VOLTA
+def cena(L, fim, brilho, desde, som="F31,0", dx=0):
+    """L é o auge (o tique em que a forma liga); fim é quando a luta volta."""
     luz = L + 6           # a luz começa a voltar logo depois do clarão
-    sobe = VOLTA - 12     # em quantos tiques ela volta
+    sobe = fim - L - 12   # em quantos tiques ela volta
     br, bg, bb = brilho
     ease = f"(Time / {L}.0) * (Time / {L}.0) * (3 - 2 * Time / {L}.0)"
     # escuro: 256 = normal, 0 = preto. Três fases (apaga, preto, volta) num ifelse só.
     escuro = (f"ifelse(Time < {APAGA}, 256 * ({APAGA} - Time) / {APAGA}, "
               f"ifelse(Time < {luz}, 0, min(256, 256 * (Time - {luz}) / {sobe})))")
-    alvo = f"Pos X, Pos Y - {-CENTRO_Y}"  # Pos X já é em relação ao centro da câmera
+    alvo = f"Pos X + {dx} * Facing, Pos Y - {-CENTRO_Y}"  # Pos X já é em relação ao centro da câmera
     c = []
     c.append(bloco("congela o resto", f"""
 type = Pause
@@ -115,9 +121,9 @@ ignorehitpause = 1
 """))
     c.append(bloco("brilho das sombras", f"""
 type = PalFX
-trigger1 = Time >= {BRILHO_DESDE} && Time < {L}
+trigger1 = Time >= {desde} && Time < {L}
 time = 2
-add = {br} * (Time - {BRILHO_DESDE}) / {L - BRILHO_DESDE}, {bg} * (Time - {BRILHO_DESDE}) / {L - BRILHO_DESDE}, {bb} * (Time - {BRILHO_DESDE}) / {L - BRILHO_DESDE}
+add = {br} * (Time - {desde}) / {L - desde}, {bg} * (Time - {desde}) / {L - desde}, {bb} * (Time - {desde}) / {L - desde}
 ignorehitpause = 1
 """))
     c.append(bloco("câmera fecha", f"""
@@ -144,9 +150,9 @@ camerabound = 0
 stagebound = 0
 ignorehitpause = 1
 """))
-    c.append(bloco("garrafa quebra treme", f"""
+    c.append(bloco("primeiro tremor", f"""
 type = EnvShake
-trigger1 = Time = {BRILHO_DESDE}
+trigger1 = Time = {desde}
 time = 10
 ampl = 2
 freq = 90
@@ -183,6 +189,82 @@ value = 0
 """)
 
 
+def musica_cns(lutador):
+    """Música do Despertar (issue #33), igual à do gerar_pengaro.musica_despertar_cns, para quem não nasceu com ela
+    (o Hazak, cujo Despertar entrou depois pelo diabo_loiro.py)."""
+    import json
+    loopstart = 0
+    loops = RAIZ / "musicas" / "loops.json"
+    if loops.exists():
+        for faixa in json.loads(loops.read_text(encoding="utf-8")).values():
+            if faixa["arquivo"] == f"chars/{lutador}/despertar.ogg":
+                loopstart = int(faixa["loopstart"])
+    f = 45
+    return f"""; Musica do Despertar (Breno, issue #33), posta pelo cena_transformacao.py: a do cenario baixa ate sumir, entra a do lutador.
+[State -2, Zera musica na intro]
+type = VarSet
+trigger1 = roundstate < 2
+var(51) = 0
+
+[State -2, Musica do cenario comeca a baixar]
+type = VarSet
+trigger1 = roundstate = 2 && var(51) = 0 && (var(20) > 0 || stateno = 2000)
+var(52) = 0
+
+[State -2, Marca fade da musica]
+type = VarSet
+trigger1 = roundstate = 2 && var(51) = 0 && (var(20) > 0 || stateno = 2000)
+var(51) = 2
+
+[State -2, Musica do cenario baixando]
+type = ModifyBGM
+trigger1 = var(51) = 2 && var(52) < {f}
+volume = 100 - (var(52) + 1) * 100 / {f}
+
+[State -2, Conta fade da musica]
+type = VarAdd
+trigger1 = var(51) = 2 && var(52) < {f}
+var(52) = 1
+
+[State -2, Musica do Despertar entra]
+type = PlayBGM
+trigger1 = var(51) = 2 && var(52) >= {f}
+bgm = "despertar.ogg"
+volume = 100
+loop = 1
+loopstart = {loopstart}
+
+[State -2, Marca musica do Despertar]
+type = VarSet
+trigger1 = var(51) = 2 && var(52) >= {f}
+var(51) = 1
+
+[State -2, Musica do cenario volta]
+type = PlayBGM
+trigger1 = var(51) != 0 && var(20) <= 0 && stateno != 2000
+trigger1 = NumEnemy = 0 || enemy,var(51) != 1
+source = "stagedef."
+
+[State -2, Desmarca musica do Despertar]
+type = VarSet
+trigger1 = var(51) != 0 && var(20) <= 0 && stateno != 2000
+var(51) = 0
+
+"""
+
+
+def ligar_musica(lutador, txt, pasta):
+    if "[State -2, Musica do Despertar entra]" in txt or not (pasta / "despertar.ogg").exists():
+        return txt
+    if re.search(r"var\(5[12]\)", txt):
+        raise SystemExit(f"{lutador}: var(51)/var(52) já em uso; a música do Despertar precisa de outras variáveis")
+    m = re.search(r"(?m)^\[Statedef -2\][^\n]*\n(?:[^\n\[][^\n]*\n)*\n?", txt)
+    if not m:
+        raise SystemExit(f"{lutador}: sem [Statedef -2] para ligar a música do Despertar")
+    print(f"{lutador}: música do Despertar ligada (despertar.ogg)")
+    return txt[:m.end()] + musica_cns(lutador) + txt[m.end():]
+
+
 def aplicar(lutador, pasta=None):
     pasta = Path(pasta or RAIZ / "chars" / lutador)
     arq = pasta / f"{lutador}.cns"
@@ -191,8 +273,12 @@ def aplicar(lutador, pasta=None):
     if not m:
         print(f"{lutador}: sem Despertar (estado 2000), cena não aplicada")
         return
-    L = duracao_anim(pasta / f"{lutador}.air", 2000)
+    anim = duracao_anim(pasta / f"{lutador}.air", 2000)
     corpo = m.group(1)
+    # auge: o tique em que a forma liga. Quase todos ligam no fim da animação; o Hazak (diabo_loiro.py) liga em Time = N
+    liga = re.search(r"(?ms)^\[State 2000, Liga\][^\[]*?^trigger1\s*=\s*Time\s*=\s*(\d+)\s*$", corpo)
+    L = int(liga.group(1)) if liga else anim
+    fim = max(anim, L + VOLTA)
     cab, resto = re.split(r"(?m)^(?=\[State )", corpo, maxsplit=1) if "[State " in corpo else (corpo, "")
     blocos = re.split(r"(?m)^(?=\[State )", resto)
     novos = []
@@ -211,23 +297,26 @@ def aplicar(lutador, pasta=None):
             if m_som:
                 som = m_som.group(1)
             continue  # a pausa curta dá lugar à cena; o som dela toca no começo da cena
-        if ("Clarão da super" in titulo and tipo == "bgpalfx"):
-            continue  # a pausa curta e o clarão de entrada dão lugar à cena
+        if tipo == "bgpalfx" and "Clarão" in titulo:
+            continue  # o clarão próprio sairia por cima do escuro da cena; o da cena substitui
+        if tipo == "pause":
+            continue  # a cena põe a pausa dela, do tamanho certo
         # a cena segue 36 tiques depois da animação, com a anim 0 em loop: o que disparava no fim da 2000
         # (forma nova, pilar dos efeitos) só pode disparar no fim da 2000
         b = re.sub(r"(?mi)^(trigger\w*\s*=\s*)AnimTime\s*=\s*0\s*$", r"\1Anim = 2000 && AnimTime = 0", b)
         if titulo.startswith("[State 2000, Fim]"):
-            b = re.sub(r"(?m)^trigger1\s*=.*$", f"trigger1 = Time >= {L + VOLTA}", b, count=1)
+            b = re.sub(r"(?m)^trigger1\s*=.*$", f"trigger1 = Time >= {fim}", b, count=1)
         novos.append(b)
+    conf = LUTADORES.get(lutador, LUTADORES["pengaro"])
     cab = cab.replace(COMENTARIO, "")
     if not cab.endswith("\n\n"):
         cab = cab.rstrip("\n") + "\n\n"
-    corpo_novo = (cab + COMENTARIO + cena(L, LUTADORES.get(lutador, LUTADORES["pengaro"])["brilho"], som or "F31,0") + "".join(novos).rstrip("\n")
+    corpo_novo = (cab + COMENTARIO + cena(L, fim, conf["brilho"], conf["desde"], som or "F31,0", conf.get("dx", 0)) + "".join(novos).rstrip("\n")
                   + "\n\n" + PARADA)
-    novo = txt[:m.start(1)] + corpo_novo + txt[m.end(1):]
+    novo = ligar_musica(lutador, txt[:m.start(1)] + corpo_novo + txt[m.end(1):], pasta)
     if novo != txt:
         arq.write_text(novo, encoding="utf-8", newline="\n")
-    print(f"{lutador}: cena da transformação no estado 2000 ({L} + {VOLTA} tiques)")
+    print(f"{lutador}: cena da transformação no estado 2000 (auge no tique {L}, luta volta no {fim})")
 
 
 if __name__ == "__main__":

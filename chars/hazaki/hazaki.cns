@@ -5694,11 +5694,106 @@ sprpriority = 2
 anim = 2000
 velset = 0,0
 
-[State 2000, Pausa]
+; Cena da transformação (issue #49): ferramentas/cena_transformacao.py
+[State 2000, Cena: congela o resto]
 type = Pause
 trigger1 = Time = 0
 time = 162
 movetime = 162
+
+[State 2000, Cena: som de entrada]
+type = PlaySnd
+trigger1 = Time = 0
+value = F31,0
+
+[State 2000, Cena: sem HUD e sem sombra]
+type = AssertSpecial
+trigger1 = Time < 142
+flag = nobardisplay
+flag2 = globalnoshadow
+flag3 = timerfreeze
+ignorehitpause = 1
+
+[State 2000, Cena: cenário no escuro]
+type = BGPalFX
+trigger1 = Time < 162
+time = 2
+mul = ifelse(Time < 14, 256 * (14 - Time) / 14, ifelse(Time < 128, 0, min(256, 256 * (Time - 128) / 28))), ifelse(Time < 14, 256 * (14 - Time) / 14, ifelse(Time < 128, 0, min(256, 256 * (Time - 128) / 28))), ifelse(Time < 14, 256 * (14 - Time) / 14, ifelse(Time < 128, 0, min(256, 256 * (Time - 128) / 28)))
+ignorehitpause = 1
+
+[State 2000, Cena: oponente no escuro]
+type = PalFX
+trigger1 = Time < 162 && NumEnemy > 0
+redirectid = enemynear,id
+time = 2
+mul = ifelse(Time < 14, 256 * (14 - Time) / 14, ifelse(Time < 128, 0, min(256, 256 * (Time - 128) / 28))), ifelse(Time < 14, 256 * (14 - Time) / 14, ifelse(Time < 128, 0, min(256, 256 * (Time - 128) / 28))), ifelse(Time < 14, 256 * (14 - Time) / 14, ifelse(Time < 128, 0, min(256, 256 * (Time - 128) / 28)))
+ignorehitpause = 1
+
+[State 2000, Cena: oponente some]
+type = AssertSpecial
+trigger1 = Time >= 7 && Time < 142 && NumEnemy > 0
+redirectid = enemynear,id
+flag = invisible
+ignorehitpause = 1
+
+[State 2000, Cena: brilho das sombras]
+type = PalFX
+trigger1 = Time >= 56 && Time < 122
+time = 2
+add = 90 * (Time - 56) / 66, 50 * (Time - 56) / 66, 0 * (Time - 56) / 66
+ignorehitpause = 1
+
+[State 2000, Cena: câmera fecha]
+type = Zoom
+trigger1 = Time < 114
+time = 2
+pos = Pos X + -45 * Facing, Pos Y - 15
+scale = 1.24 * (1 + 0.18 * (Time / 122.0) * (Time / 122.0) * (3 - 2 * Time / 122.0)) ** 0.5
+lag = 0
+endlag = 0.9
+camerabound = 0
+stagebound = 0
+ignorehitpause = 1
+
+[State 2000, Cena: câmera empurra]
+type = Zoom
+trigger1 = Time >= 114 && Time < 134
+time = 2
+pos = Pos X + -45 * Facing, Pos Y - 15
+scale = 1.414
+lag = 0.8
+endlag = 0.9
+camerabound = 0
+stagebound = 0
+ignorehitpause = 1
+
+[State 2000, Cena: primeiro tremor]
+type = EnvShake
+trigger1 = Time = 56
+time = 10
+ampl = 2
+freq = 90
+
+[State 2000, Cena: auge: clarão]
+type = EnvColor
+trigger1 = Time = 122
+value = 255, 255, 255
+time = 3
+ignorehitpause = 1
+
+[State 2000, Cena: auge: clarão some]
+type = AllPalFX
+trigger1 = Time >= 125 && Time < 143
+time = 2
+add = 255 * (143 - Time) / 18, 255 * (143 - Time) / 18, 255 * (143 - Time) / 18
+ignorehitpause = 1
+
+[State 2000, Cena: auge: tremor]
+type = EnvShake
+trigger1 = Time = 122
+time = 28
+ampl = 7
+freq = 60
 
 [State 2000, Gasta]
 type = PowerAdd
@@ -5775,13 +5870,6 @@ pausemovetime = 999
 removetime = -2
 ignorehitpause = 1
 
-[State 2000, Clarão]
-type = BGPalFX
-trigger1 = Time = 122
-time = 6
-add = 160, 90, 20
-ignorehitpause = 1
-
 [State 2000, Tremida]
 type = EnvShake
 trigger1 = Time = 122
@@ -5796,9 +5884,14 @@ var(20) = 600
 
 [State 2000, Fim]
 type = ChangeState
-trigger1 = AnimTime = 0
+trigger1 = Time >= 162
 value = 0
 ctrl = 1
+
+[State 2000, Cena: forma nova parada]
+type = ChangeAnim
+trigger1 = Anim = 2000 && AnimTime = 0
+value = 0
 
 [Statedef 1650]
 type = S
@@ -5969,6 +6062,56 @@ value = 0
 ctrl = 1
 
 [Statedef -2]
+
+; Musica do Despertar (Breno, issue #33), posta pelo cena_transformacao.py: a do cenario baixa ate sumir, entra a do lutador.
+[State -2, Zera musica na intro]
+type = VarSet
+trigger1 = roundstate < 2
+var(51) = 0
+
+[State -2, Musica do cenario comeca a baixar]
+type = VarSet
+trigger1 = roundstate = 2 && var(51) = 0 && (var(20) > 0 || stateno = 2000)
+var(52) = 0
+
+[State -2, Marca fade da musica]
+type = VarSet
+trigger1 = roundstate = 2 && var(51) = 0 && (var(20) > 0 || stateno = 2000)
+var(51) = 2
+
+[State -2, Musica do cenario baixando]
+type = ModifyBGM
+trigger1 = var(51) = 2 && var(52) < 45
+volume = 100 - (var(52) + 1) * 100 / 45
+
+[State -2, Conta fade da musica]
+type = VarAdd
+trigger1 = var(51) = 2 && var(52) < 45
+var(52) = 1
+
+[State -2, Musica do Despertar entra]
+type = PlayBGM
+trigger1 = var(51) = 2 && var(52) >= 45
+bgm = "despertar.ogg"
+volume = 100
+loop = 1
+loopstart = 4171115
+
+[State -2, Marca musica do Despertar]
+type = VarSet
+trigger1 = var(51) = 2 && var(52) >= 45
+var(51) = 1
+
+[State -2, Musica do cenario volta]
+type = PlayBGM
+trigger1 = var(51) != 0 && var(20) <= 0 && stateno != 2000
+trigger1 = NumEnemy = 0 || enemy,var(51) != 1
+source = "stagedef."
+
+[State -2, Desmarca musica do Despertar]
+type = VarSet
+trigger1 = var(51) != 0 && var(20) <= 0 && stateno != 2000
+var(51) = 0
 
 [State -2, Conta Diabo Loiro]
 type = VarAdd

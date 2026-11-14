@@ -5169,30 +5169,6 @@ anim = 2000
 velset = 0,0
 
 ; Cena da transformação (issue #49): ferramentas/cena_transformacao.py
-[State 2000, som assinatura]
-type = PlaySnd
-trigger1 = Time = 9
-value = 50,2
-; som: fim
-
-[State 2000, som assinatura]
-type = PlaySnd
-trigger1 = Time = 42
-value = 50,1
-; som: fim
-
-[State 2000, som assinatura]
-type = PlaySnd
-trigger1 = Time = 55
-value = 50,3
-; som: fim
-
-[State 2000, som assinatura]
-type = PlaySnd
-trigger1 = Time = 55
-value = F31,1
-; som: fim
-
 [State 2000, Cena: congela o resto]
 type = Pause
 trigger1 = Time = 0
@@ -5245,7 +5221,7 @@ ignorehitpause = 1
 type = Zoom
 trigger1 = Time < 106
 time = 2
-pos = Pos X, Pos Y - 15
+pos = Pos X + 0 * Facing, Pos Y - 15
 scale = 1.24 * (1 + 0.18 * (Time / 114.0) * (Time / 114.0) * (3 - 2 * Time / 114.0)) ** 0.5
 lag = 0
 endlag = 0.9
@@ -5257,7 +5233,7 @@ ignorehitpause = 1
 type = Zoom
 trigger1 = Time >= 106 && Time < 126
 time = 2
-pos = Pos X, Pos Y - 15
+pos = Pos X + 0 * Facing, Pos Y - 15
 scale = 1.414
 lag = 0.8
 endlag = 0.9
@@ -5265,7 +5241,7 @@ camerabound = 0
 stagebound = 0
 ignorehitpause = 1
 
-[State 2000, Cena: garrafa quebra treme]
+[State 2000, Cena: primeiro tremor]
 type = EnvShake
 trigger1 = Time = 55
 time = 10
@@ -5292,6 +5268,30 @@ trigger1 = Time = 114
 time = 28
 ampl = 7
 freq = 60
+
+[State 2000, som assinatura]
+type = PlaySnd
+trigger1 = Time = 9
+value = 50,2
+; som: fim
+
+[State 2000, som assinatura]
+type = PlaySnd
+trigger1 = Time = 42
+value = 50,1
+; som: fim
+
+[State 2000, som assinatura]
+type = PlaySnd
+trigger1 = Time = 55
+value = 50,3
+; som: fim
+
+[State 2000, som assinatura]
+type = PlaySnd
+trigger1 = Time = 55
+value = F31,1
+; som: fim
 
 [State 2000, Rastro]
 type = AfterImage

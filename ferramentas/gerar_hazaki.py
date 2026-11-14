@@ -1331,6 +1331,8 @@ def main():
     diabo_loiro.aplicar(SAIDA)
     import legibilidade  # golpes legíveis (#45): caixa no membro, congelamento, tremida, reação e preparo
     legibilidade.aplicar("hazaki", SAIDA)
+    import cena_transformacao  # issue #49: tudo preto, zoom e clarão no Despertar (sempre por último)
+    cena_transformacao.aplicar("hazaki", SAIDA)
     print(f"{gravados} sprites no .sff (de {len(s.lista)} carregados), {len(a.acoes)} ações em {SAIDA}")
     if "--contato" in sys.argv:
         contato(Path(sys.argv[sys.argv.index("--contato") + 1]), s)

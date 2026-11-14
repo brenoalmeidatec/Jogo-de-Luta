@@ -5763,6 +5763,107 @@ sprpriority = 2
 anim = 2000
 velset = 0,0
 
+; Cena da transformação (issue #49): ferramentas/cena_transformacao.py
+[State 2000, Cena: congela o resto]
+type = Pause
+trigger1 = Time = 0
+time = 150
+movetime = 150
+
+[State 2000, Cena: som de entrada]
+type = PlaySnd
+trigger1 = Time = 0
+value = F31,0
+
+[State 2000, Cena: sem HUD e sem sombra]
+type = AssertSpecial
+trigger1 = Time < 134
+flag = nobardisplay
+flag2 = globalnoshadow
+flag3 = timerfreeze
+ignorehitpause = 1
+
+[State 2000, Cena: cenário no escuro]
+type = BGPalFX
+trigger1 = Time < 150
+time = 2
+mul = ifelse(Time < 14, 256 * (14 - Time) / 14, ifelse(Time < 120, 0, min(256, 256 * (Time - 120) / 24))), ifelse(Time < 14, 256 * (14 - Time) / 14, ifelse(Time < 120, 0, min(256, 256 * (Time - 120) / 24))), ifelse(Time < 14, 256 * (14 - Time) / 14, ifelse(Time < 120, 0, min(256, 256 * (Time - 120) / 24)))
+ignorehitpause = 1
+
+[State 2000, Cena: oponente no escuro]
+type = PalFX
+trigger1 = Time < 150 && NumEnemy > 0
+redirectid = enemynear,id
+time = 2
+mul = ifelse(Time < 14, 256 * (14 - Time) / 14, ifelse(Time < 120, 0, min(256, 256 * (Time - 120) / 24))), ifelse(Time < 14, 256 * (14 - Time) / 14, ifelse(Time < 120, 0, min(256, 256 * (Time - 120) / 24))), ifelse(Time < 14, 256 * (14 - Time) / 14, ifelse(Time < 120, 0, min(256, 256 * (Time - 120) / 24)))
+ignorehitpause = 1
+
+[State 2000, Cena: oponente some]
+type = AssertSpecial
+trigger1 = Time >= 7 && Time < 132 && NumEnemy > 0
+redirectid = enemynear,id
+flag = invisible
+ignorehitpause = 1
+
+[State 2000, Cena: brilho das sombras]
+type = PalFX
+trigger1 = Time >= 55 && Time < 114
+time = 2
+add = 10 * (Time - 55) / 59, 90 * (Time - 55) / 59, 20 * (Time - 55) / 59
+ignorehitpause = 1
+
+[State 2000, Cena: câmera fecha]
+type = Zoom
+trigger1 = Time < 106
+time = 2
+pos = Pos X + 0 * Facing, Pos Y - 15
+scale = 1.24 * (1 + 0.18 * (Time / 114.0) * (Time / 114.0) * (3 - 2 * Time / 114.0)) ** 0.5
+lag = 0
+endlag = 0.9
+camerabound = 0
+stagebound = 0
+ignorehitpause = 1
+
+[State 2000, Cena: câmera empurra]
+type = Zoom
+trigger1 = Time >= 106 && Time < 126
+time = 2
+pos = Pos X + 0 * Facing, Pos Y - 15
+scale = 1.414
+lag = 0.8
+endlag = 0.9
+camerabound = 0
+stagebound = 0
+ignorehitpause = 1
+
+[State 2000, Cena: primeiro tremor]
+type = EnvShake
+trigger1 = Time = 55
+time = 10
+ampl = 2
+freq = 90
+
+[State 2000, Cena: auge: clarão]
+type = EnvColor
+trigger1 = Time = 114
+value = 255, 255, 255
+time = 3
+ignorehitpause = 1
+
+[State 2000, Cena: auge: clarão some]
+type = AllPalFX
+trigger1 = Time >= 117 && Time < 135
+time = 2
+add = 255 * (135 - Time) / 18, 255 * (135 - Time) / 18, 255 * (135 - Time) / 18
+ignorehitpause = 1
+
+[State 2000, Cena: auge: tremor]
+type = EnvShake
+trigger1 = Time = 114
+time = 28
+ampl = 7
+freq = 60
+
 [State 2000, som assinatura]
 type = PlaySnd
 trigger1 = Time = 30
@@ -5774,24 +5875,6 @@ type = PlaySnd
 trigger1 = Time = 55
 value = F31,1
 ; som: fim
-
-[State 2000, Pausa]
-type = SuperPause
-trigger1 = Time = 0
-time = 30
-anim = S(ifelse(var(20) > 0, 9270, 9240))
-pos = 10, -60
-sound = F31,0 ; som:F20,0
-movetime = 0
-darken = 1
-
-[State 2000, Clarão da super]
-type = BGPalFX
-trigger1 = Time = 0
-time = 4
-add = 255,255,255
-mul = 256,256,256
-ignorehitpause = 1
 
 [State 2000, Rastro]
 type = AfterImage
@@ -5827,7 +5910,7 @@ redirectid = enemynear,id
 
 [State 2000, Pilar da transformação (efeitos.py)]
 type = Explod
-trigger1 = AnimTime = 0
+trigger1 = Anim = 2000 && AnimTime = 0
 anim = 9272
 id = 9272
 postype = p1
@@ -5840,14 +5923,19 @@ ignorehitpause = 1
 
 [State 2000, Liga]
 type = VarSet
-trigger1 = AnimTime = 0
+trigger1 = Anim = 2000 && AnimTime = 0
 var(20) = 600
 
 [State 2000, Fim]
 type = ChangeState
-trigger1 = AnimTime = 0
+trigger1 = Time >= 150
 value = 0
 ctrl = 1
+
+[State 2000, Cena: forma nova parada]
+type = ChangeAnim
+trigger1 = Anim = 2000 && AnimTime = 0
+value = 0
 
 [Statedef 3000]
 type = S
