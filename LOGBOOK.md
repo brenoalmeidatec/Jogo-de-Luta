@@ -2156,6 +2156,9 @@ faísca (a mesma do HitDef do golpe), som e o oponente reagindo com a animação
 - Os geradores chamam `agarrao_mk.aplicar` no fim (conferido: gerar_ck/hazaki/pengaro saem iguais ao arquivo
   aplicado). Robô: cenários "agarrao segura-e-bate" (frente e para trás) no `robo.lua` para todos.
 
+**Depois (#47, padrão grande e pesado):** rajadona com rastro do corpo, tremida forte ao soltar, fundo escurecido em
+vermelho e oponente piscando; agarrão do Diabo com fundo escuro, tremida a cada pancada, congela + clarão no final.
+
 **Sugestões:** folhas próprias de agarrão por lutador no ChatGPT (hoje são quadros emprestados); a faísca segue o
 número do HitDef, então quando o item 4 trocar a "rede de futebol" ela muda junto se a troca for no mesmo número;
 agarrão agachado (840) e o de comando (830) ainda são os antigos.
@@ -2287,6 +2290,9 @@ longe, ligar o Diabo Loiro de ponta a ponta com a Rajadona de Ki das Trevas e um
 
 **Robô:** hazaki 235 PASS / 0 FAIL. Uma rodada com a máquina carregada (filmagem em paralelo) deu 1 FAIL na rajadona
 (só 4 acertos); sozinha passa. Se voltar, olhar o empurrão do raio (`ground.velocity`).
+
+**Depois (#47, padrão grande e pesado):** rajadona com rastro do corpo, tremida forte ao soltar, fundo escurecido em
+vermelho e oponente piscando; agarrão do Diabo com fundo escuro, tremida a cada pancada, congela + clarão no final.
 
 **Sugestões:** folhas desenhadas do Diabo (terno do conceito) para trocar a arte por código; som próprio da patroa e da
 rajadona; comparar Blender vs. pixelfx direto como o Breno pediu na #47.

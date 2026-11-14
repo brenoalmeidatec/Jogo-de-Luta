@@ -191,6 +191,16 @@ def cns_rajada():
     c.append(ctl(1650, "Pausa", "SuperPause", "trigger1 = Time = 0", "time = 25", "anim = S9271", "pos = 10, -60",
                  "movetime = 0", "darken = 1"))
     c.append(ctl(1650, "Gasta", "PowerAdd", "trigger1 = Time = 0", "value = -1000"))
+    # padrão do Breno para os despertados (#47): grande, sombrio e pesado
+    c.append(ctl(1650, "Carga: rastro do corpo", "AfterImage", "trigger1 = Time = 0", f"time = {r['sai'] + 20}",
+                 "length = 8", "timegap = 2", "framegap = 2", "trans = add", "palcolor = 0",
+                 "paladd = 120, 50, 0", "palmul = .55, .55, .55"))
+    c.append(ctl(1650, "Carga: treme de leve", "EnvShake", f"trigger1 = Time = {r['sai'] - 14}", "time = 14",
+                 "freq = 180", "ampl = -2"))
+    c.append(ctl(1650, "Solta: tremida forte", "EnvShake", f"trigger1 = Time = {r['sai']}", "time = 26",
+                 "freq = 100", "ampl = -8"))
+    c.append(ctl(1650, "Solta: fundo escurece em vermelho", "BGPalFX", f"trigger1 = Time = {r['sai'] + 4}",
+                 f"time = {r['dura'] + 10}", "mul = 120, 55, 50"))
     c.append(ctl(1650, "Invencivel na carga", "NotHitBy", f"trigger1 = Time < {r['sai']}", "value = SCA", "time = 1"))
     for k, (x, y) in enumerate(((22, -46), (-30, -46))):
         c.append(ctl(1650, f"Carga {k + 1}", "Explod", "trigger1 = Time = 4", "anim = 7410", f"id = {7412 + k}",
@@ -201,13 +211,14 @@ def cns_rajada():
                  f"projhits = {r['acertos']}", "projmisstime = 5", f"projremovetime = {r['dura']}",
                  "projpriority = 9", f"offset = {r['x']}, {r['y']}", "velocity = 0, 0", "attr = S, HP",
                  f"damage = {r['dano']}, 4", "animtype = Med", "guardflag = MA", "hitflag = MAF",
-                 "pausetime = 1, 3", "sparkno = -1", "guard.sparkno = S9216", "hitsound = F5,2",
+                 "pausetime = 2, 6", "sparkno = -1", "guard.sparkno = S9216", "hitsound = F5,2",
                  "guardsound = F6,0", "ground.type = High", "ground.slidetime = 8", "ground.hittime = 12",
-                 "ground.velocity = -1.2", "air.velocity = -1.5,-2", "air.juggle = 0"))
+                 "ground.velocity = -1.2", "air.velocity = -1.5,-2", "air.juggle = 0",
+                 "palfx.time = 6", "palfx.add = 140, 50, 0", "palfx.sinadd = 30, 30, 30, 4"))
     c.append(ctl(1650, "Chama no oponente", "Explod", "trigger1 = ProjHitTime(1650) = 0", "anim = 9270",
                  "postype = p2", "pos = -10, -60", "sprpriority = 5", "ownpal = 1", "removetime = -2",
                  "random = 30, 40"))
-    c.append(ctl(1650, "Tremida", "EnvShake", f"trigger1 = Time = {r['sai']}", f"time = {r['dura']}", "ampl = 2",
+    c.append(ctl(1650, "Tremida", "EnvShake", f"trigger1 = Time = {r['sai'] + 26}", f"time = {r['dura'] - 26}", "ampl = 3",
                  "freq = 140"))
     c.append(ctl(1650, "Clarão", "BGPalFX", f"trigger1 = Time = {r['sai']}", "time = 4", "add = 120, 40, 0",
                  "ignorehitpause = 1"))
@@ -260,6 +271,11 @@ def agarrao_do_diabo(cns):
         extra.append(ctl(810, f"Diabo: chama {k + 1}", "Explod", f"trigger1 = Time = {t}", "trigger1 = var(20) > 0",
                          "trigger1 = NumTarget", "anim = 9270", "postype = p2", "pos = 0, -55", "sprpriority = 6",
                          "ownpal = 1", "removetime = -2"))
+        extra.append(ctl(810, f"Diabo: tremida {k + 1}", "EnvShake", f"trigger1 = Time = {t}", "trigger1 = var(20) > 0",
+                         "trigger1 = NumTarget", "time = 8", "freq = 140", "ampl = -4"))
+        extra.append(ctl(810, f"Diabo: oponente pisca {k + 1}", "PalFX", f"trigger1 = Time = {t}",
+                         "trigger1 = var(20) > 0", "trigger1 = NumTarget", "redirectid = target,id", "time = 6",
+                         "add = 140, 50, 0"))
     fim = re.search(r"\[State 810, Final: dano\]\ntype = TargetLifeAdd\ntrigger1 = Time = (\d+)", bloco)
     assert fim, "agarrão 810 sem o golpe final"
     t = int(fim.group(1))
@@ -269,7 +285,13 @@ def agarrao_do_diabo(cns):
     extra.append(ctl(810, "Diabo: dano do fogo", "TargetLifeAdd", f"trigger1 = Time = {t}", "trigger1 = var(20) > 0",
                      "trigger1 = NumTarget", "value = -40"))
     extra.append(ctl(810, "Diabo: tremida", "EnvShake", f"trigger1 = Time = {t}", "trigger1 = var(20) > 0",
-                     "time = 14", "ampl = 4", "freq = 100"))
+                     "time = 30", "ampl = -11", "freq = 90"))
+    extra.append(ctl(810, "Diabo: fundo escuro", "BGPalFX", "trigger1 = Time = 1", "trigger1 = var(20) > 0",
+                     "trigger1 = NumTarget", f"time = {t + 20}", "mul = 120, 55, 50", "sinadd = 0,0,0,0"))
+    extra.append(ctl(810, "Diabo: congela no impacto", "Pause", f"trigger1 = Time = {t}", "trigger1 = var(20) > 0",
+                     "trigger1 = NumTarget", "time = 12", "movetime = 0"))
+    extra.append(ctl(810, "Diabo: clarão", "BGPalFX", f"trigger1 = Time = {t}", "trigger1 = var(20) > 0",
+                     "time = 6", "add = 120, 120, 120", "mul = 120, 55, 50"))
     marca = "[State 810, Segura]"
     assert marca in bloco
     novo = bloco.replace(marca, "".join(extra) + marca, 1)
