@@ -199,6 +199,19 @@ spriteno = 400,1
 layerno = 0
 start = 0,360
 
+; Trilha (Suno, escolhida pelo Breno; OGG feito por ferramentas/converter_musicas.py). Caminho relativo a esta pasta.
+; Musica e por tela, nunca por lutador. Luta: bgmusic do cenario. Despertar: PlayBGM no lutador.
+; Loop sem emenda (issue #33): o arquivo termina no fim do loop e volta em loopstart (amostras de 44,1 kHz).
+[Music]
+title.bgm = musicas/lobby.ogg
+title.bgm.volume = 100
+title.bgm.loop = 1
+title.bgm.loopstart = 3135648
+select.bgm = musicas/selecao.ogg
+select.bgm.volume = 100
+select.bgm.loop = 1
+select.bgm.loopstart = 3325817
+
 ; secoes vazias: o .bat (Ajustar-Menus) injeta done.key nelas
 [Victory Screen]
 

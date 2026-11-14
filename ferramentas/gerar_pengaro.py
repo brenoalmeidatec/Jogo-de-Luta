@@ -3184,6 +3184,77 @@ def cns_extra():
     return "".join(cns_novo(m) for m in extra.TODOS) + cns_especiais_extra()
 
 
+
+# Música do Despertar (Breno, issue #33). A faixa do lutador (chars/<lutador>/despertar.ogg, feita por
+# converter_musicas.py) substitui a do cenário enquanto a forma dura: na cena da transformação a música do cenário
+# vai baixando até sumir (ModifyBGM a cada tique) e só então entra a do boss (PlayBGM), em loop sem emenda a partir do
+# loopstart de musicas/loops.json ("stagedef." = prefixo vazio do [Music] do cenário). Quando o Despertar acaba, a do cenário volta (se o oponente não estiver desperto).
+# var(51): 0 sem música própria, 2 baixando a do cenário, 1 a do boss tocando. var(52) conta os tiques do fade.
+# var(50) fica para os filmes (filmar_luta.py).
+FADE_MUSICA = 45  # tiques (0,75 s)
+
+
+def musica_despertar_cns():
+    loops = RAIZ / "musicas" / "loops.json"
+    loopstart = 0
+    if loops.exists():
+        for faixa in json.loads(loops.read_text(encoding="utf-8")).values():
+            if faixa["arquivo"] == f"chars/{SAIDA.name}/despertar.ogg":
+                loopstart = int(faixa["loopstart"])
+    f = FADE_MUSICA
+    return f"""; Musica do Despertar (Breno, issue #33): a do cenario baixa ate sumir, entra a do lutador em loop; volta ao fim.
+[State -2, Zera musica na intro]
+type = VarSet
+trigger1 = roundstate < 2
+var(51) = 0
+
+[State -2, Musica do cenario comeca a baixar]
+type = VarSet
+trigger1 = roundstate = 2 && var(51) = 0 && (var(20) > 0 || stateno = 2000)
+var(52) = 0
+
+[State -2, Marca fade da musica]
+type = VarSet
+trigger1 = roundstate = 2 && var(51) = 0 && (var(20) > 0 || stateno = 2000)
+var(51) = 2
+
+[State -2, Musica do cenario baixando]
+type = ModifyBGM
+trigger1 = var(51) = 2 && var(52) < {f}
+volume = 100 - (var(52) + 1) * 100 / {f}
+
+[State -2, Conta fade da musica]
+type = VarAdd
+trigger1 = var(51) = 2 && var(52) < {f}
+var(52) = 1
+
+[State -2, Musica do Despertar entra]
+type = PlayBGM
+trigger1 = var(51) = 2 && var(52) >= {f}
+bgm = "despertar.ogg"
+volume = 100
+loop = 1
+loopstart = {loopstart}
+
+[State -2, Marca musica do Despertar]
+type = VarSet
+trigger1 = var(51) = 2 && var(52) >= {f}
+var(51) = 1
+
+[State -2, Musica do cenario volta]
+type = PlayBGM
+trigger1 = var(51) != 0 && var(20) <= 0 && stateno != 2000
+trigger1 = NumEnemy = 0 || enemy,var(51) != 1
+source = "stagedef."
+
+[State -2, Desmarca musica do Despertar]
+type = VarSet
+trigger1 = var(51) != 0 && var(20) <= 0 && stateno != 2000
+var(51) = 0
+
+"""
+
+
 def montar_cns(hazaki=False):
     global MODO_HAZAKI
     MODO_HAZAKI = hazaki
@@ -3412,7 +3483,7 @@ type = VarAdd
 trigger1 = var(20) > 0
 var(20) = -1
 
-[State -2, Ressaca começa]
+""" + musica_despertar_cns() + """[State -2, Ressaca começa]
 type = VarSet
 trigger1 = var(20) = 1
 var(21) = 60

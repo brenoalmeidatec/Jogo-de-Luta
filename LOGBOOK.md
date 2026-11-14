@@ -2026,3 +2026,20 @@ gigante e cortado no print. **Sugestões:** o robô ainda não tira print sozinh
 Um GitHub Action com esse modo rodaria o robô a cada push.
 - **Mugen final** (revisão geral + Pengaró nítido + robô no Linux, `c5d10f43`): Gutto 146/0, Raiclaven 146/0,
   Pengaró 151/0, rodados na nuvem.
+
+## 2026-11-14 — Trilha sonora ligada no jogo (Claude, thread do Alisson)
+
+**Pedido:** avaliar a trilha que o Breno subiu e ligá-la (Alisson aprovou); depois o Breno pediu na #33 loop sem
+emenda e a música do cenário baixando até sumir antes da do boss.
+
+**Feito:** as 11 faixas em OGG (-14 LUFS, loop em batida com crossfade de 120 ms assado, `musicas/loops.json`), ligadas
+no título, na seleção, na Maria Fumaça e no Despertar do Pengaró, CK, Gutto e Raiclaven (fade de 45 tiques com
+`ModifyBGM`, depois `PlayBGM`; a do cenário volta no fim). Ferramentas novas: `converter_musicas.py` e
+`testar_musica.py`. Tudo em [`docs/trilha-sonora.md`](docs/trilha-sonora.md).
+
+**Conferido:** `testar_musica.py` (cenário toca, fade 100→0, entra a do boss, volta a do cenário; volta do loop no
+`loopstart`); robô `--linux`: Pengaró 151/0, CK 191/0, Gutto 146/0, Raiclaven 146/0.
+
+**Não feito / não verificado:** ninguém ouviu as emendas (som `dummy` na nuvem). Os `.cns` de Gutto e Raiclaven
+receberam só o bloco da música (o gerador sem `sprites/*/quadros_hd` sairia em 1x); `.sff`/`.cmd` de todos ficaram
+como estavam. Hazak sem Despertar, então sem música de boss ainda. Cristo, praça e passarela esperam os cenários.

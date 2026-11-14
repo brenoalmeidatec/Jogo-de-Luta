@@ -59,7 +59,9 @@ fade.range = 0,0
 intensity = 0
 
 [Music]
-bgmusic = 
+bgmusic = musicas/maria_fumaca.ogg
+bgmloop = 1
+bgmloopstart = 981316
 bgmvolume = 100
 
 [BGdef]

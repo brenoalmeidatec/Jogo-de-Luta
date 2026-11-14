@@ -1,6 +1,7 @@
 {
  "id": "maria_fumaca",
  "nome": "Maria Fumaça",
+ "musica": "musicas/maria_fumaca.ogg",
  "tela": [
   1280,
   720
