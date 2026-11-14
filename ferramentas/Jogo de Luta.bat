@@ -167,6 +167,9 @@ foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven', 'ck')) {
 # Tira da selecao os lutadores de exemplo que vem com o IKEMEN (Kung Fu Man e variacoes): so comenta a linha,
 # os arquivos ficam (o motor ainda pode precisar deles).
 $texto = [regex]::Replace($texto, '(?m)^([ \t]*kfm\w*[ \t]*,)', ';$1')
+# Tira da escolha os cenarios de exemplo do IKEMEN (Breno, issue #34): fica so o Training Room HD azul
+# (stage0-720, cenario de teste) e os de Nazare. So comenta a linha no [ExtraStages], os arquivos ficam.
+$texto = [regex]::Replace($texto, '(?m)^([ \t]*stages/(?:stage0|stage1|stage3d|stage3d_outline|stageZ|interactivestage|kfm)\.def[ \t]*(?:,|\r?$))', ';$1')
 [IO.File]::WriteAllText($select, $texto)
 
 # Layout Nazafights: espelha so a pasta dele em data\nazafight. O /MIR desfaz o que o Ajustar-Menus (passo 5)
