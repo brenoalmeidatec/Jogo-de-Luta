@@ -186,16 +186,20 @@ def anexos(nome):
     return "referencia_ginga.png"
 
 
+# medida da referencia_ginga aprovada (2026-11-14): entra no fim de toda folha de corpo
+TAMANHO = "\n\nSIZE: the image is 2172x724 pixels. Draw the figure at exactly the same pixel size as the attached sheet (standing, about 386 pixels from the soles to the top of the hair, soles at about y=578). Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds."
+
+
 def pedido(nome):
     if nome in CONCEITO:
         return CONCEITO[nome]
     if nome in FOLHAS_FX:
         return CABECA_FX + FOLHAS_FX[nome]
     if nome == "despertar_b":
-        return CABECA_MOTOBOY + DESPERTAR_B
+        return CABECA_MOTOBOY + DESPERTAR_B + TAMANHO
     if nome.startswith("e_"):
-        return CABECA_MOTOBOY + FOLHAS_MOTOBOY[nome[2:]]
-    return CABECA + FOLHAS_GB[nome]
+        return CABECA_MOTOBOY + FOLHAS_MOTOBOY[nome[2:]] + TAMANHO
+    return CABECA + FOLHAS_GB[nome] + TAMANHO
 
 
 def fila_md():
