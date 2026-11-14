@@ -9,6 +9,7 @@ O Despertar (Surto de Tesoura) ainda não tem arte: por enquanto usa as poses no
   python ferramentas/gerar_raiclaven.py --retocar                recorta as folhas arcade e refaz os retoques de anatomia
   python ferramentas/gerar_raiclaven.py                          monta chars/raiclaven
 """
+import agarrao_mk
 import os
 import shutil
 import sys
@@ -380,6 +381,9 @@ def main():
     else:
         print("ATENÇÃO: sem sprites/raiclaven/quadros_hd (fica fora do git: ~200-340 MB). O lutador sai em 1x, borrado. "
               "Gere com: python ferramentas/hd_blender.py raiclaven  (uns 20 min; depois rode este gerador de novo)")
+    # agarrão em pé segura-e-bate (ferramentas/agarrao_mk.py): montado dos golpes que ele já tem, depois do HD
+    air, cns = agarrao_mk.aplicar("raiclaven", air, cns)
+    (SAIDA / "raiclaven.air").write_text(air, encoding="utf-8", newline="\n")
     (SAIDA / "raiclaven.cns").write_text(cns, encoding="utf-8", newline="\n")
     gp.escrever_sff(SAIDA / "raiclaven.sff", s, manter=gp.sprites_mantidos(air, cns))
     (SAIDA / "raiclaven.cmd").write_text(gp.montar_cmd(), encoding="utf-8")
@@ -387,6 +391,8 @@ def main():
     import gerar_sons  # sons próprios: sound = raiclaven.snd no .def e PlaySnd/hitsound no .cns (missão 2026-11-14)
     gerar_sons.ligar("raiclaven", SAIDA)
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
+    import parry  # parry em cima e embaixo, faísca própria e sem a "rede de futebol" (docs/parry.md)
+    parry.aplicar("raiclaven", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

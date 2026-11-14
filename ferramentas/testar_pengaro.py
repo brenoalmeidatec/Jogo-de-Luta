@@ -31,7 +31,7 @@ INI_LINUX = {"MasterVolume": "0", "PauseMasterVolume": "0", "Fullscreen": "0", "
 CMDS = ["x", "y", "a", "b", "c", "holdfwd", "holdback", "holdup", "holddown", "agarrao_whisky", "garrafa_x",
         "garrafa_y", "role_a", "role_b", "sombra_x", "sombra_y", "sombra_a", "sombra_b", "despertar", "FF", "rolar",
         "afastar", "golaco", "golpe_216", "golpe_246", "golpe_201", "golpe_231", "golpe_1400", "golpe_1401",
-        "golpe_1500", "golpe_1501", "golpe_3200", "bola_fraca", "bola_forte", "parry"]
+        "golpe_1500", "golpe_1501", "golpe_3200", "bola_fraca", "bola_forte", "parry", "parry_baixo"]
 # comandos de toque do Hazak (ferramentas/gerar_hazaki.py). Só são injetados no .cmd que os define: os outros não mudam.
 CMDS += ["bfd_a", "bfd_b", "bfd_x", "bfd_y", "df_x", "df_y", "fb_x", "fb_y", "fd_x", "fd_y", "df_a", "df_b", "db_a",
          "db_b", "bf_a", "bf_b", "bd_a", "bd_b", "db_x", "db_y", "bf_y"]

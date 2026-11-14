@@ -7,9 +7,12 @@ Saidas:
   docs/previas-layout/titulo.png selecao.png vs.png hud.png   (1280x720)
 
 Regras (docs/regras-dos-lutadores.md, AGENTS.md e a direcao do layout):
-  * pixel art de arcade: tudo e desenhado numa grade logica (320x180 na tela cheia) e ampliado 4x por vizinho
-    mais proximo; todo eixo e toda posicao no .def e o valor final (multiplo de 4);
-  * so as 16 cores de PALETA; o gerador falha se achar pixel opaco de outra cor;
+  * pixel art: as telas e o HUD do estilo novo (issue #39) sao desenhados numa grade de 2x (640x360 na tela
+    cheia) e as fontes de menu numa de 4x, sempre ampliadas por vizinho mais proximo; todo eixo de sprite e
+    multiplo de 4 e toda posicao no .def e o valor final;
+  * a abertura e a cena de Nazare do ChatGPT (sprites/titulo) com animacao por cima: agua, sol, aves, brasas e
+    brilho no logo;
+  * so as cores de PALETA (Nazare + as 15 do estilo novo ARENA); o gerador falha se achar pixel de outra cor;
   * nada baixado nem copiado: fontes, molduras e cenas sao desenhadas aqui; sem marca; do KOF so a convencao
     (vida no alto, relogio no meio, retrato nas pontas, poder embaixo, estoques);
   * deterministico: rodar duas vezes da o mesmo hash (sem data, sem aleatorio sem semente).
@@ -72,12 +75,14 @@ POS = {
     # fora e a tarja do nome fica colada embaixo do trilho (y 88 a 120): o HUD de cima termina em y = 120.
     # HUD de 2026-11-13 (pedido do Breno: o antigo era alto e o poder ficava na linha dos pes): em cima tudo
     # termina em y = 120 (retrato) e as barras em y = 100; embaixo o poder vai de y = 688 a 716 (pes em 660).
-    "vida_p1": (124, 16), "vida_p2": (724, 16),
-    "relogio": (640, 8),             # centro x, topo y da caixa do relogio
-    "face_p1": (4, 4), "face_p2": (1160, 4),         # canto da moldura 29x29 (logico)
-    "nome_p1": (144, 68), "nome_p2": (1136, 68),     # P1: x da esquerda; P2: x da direita; y = topo do texto
-    "vitoria_p1": (400, 72), "vitoria_p2": (856, 72),
-    "placa_p1": (16, 688),           # canto da barra de poder (P1; a do P2 e o espelho)
+    # HUD novo (issue #39, grade 2x): retrato 104 px nas pontas, vida de 468 px ate o relogio, nome pequeno embaixo
+    # da vida, vitorias (losangos) junto do relogio e o poder fino no rodape (pes em y = 660).
+    "vida_p1": (128, 18), "vida_p2": (684, 18),
+    "relogio": (640, 12),            # centro x, topo y da caixa do relogio (80 x 56)
+    "face_p1": (16, 12), "face_p2": (1160, 12),      # canto da moldura (104 x 104)
+    "nome_p1": (140, 66), "nome_p2": (1140, 66),     # P1: x da esquerda; P2: x da direita; y = linha de base
+    "vitoria_p1": (582, 54), "vitoria_p2": (684, 54),
+    "poder_p1": (16, 688),           # canto da barra de poder (P1; a do P2 e o espelho)
     "round": (640, 300),
     "combo": (40, 300),
     # Titulo
@@ -202,16 +207,6 @@ def faixas_v(img, x0, x1, faixas, y_fim, trans=6):
                     break
         else:
             a[y, x0:x1 + 1] = cor(nome)
-    return de_arr(a)
-
-
-def pontilhar(img, m, nome, nivel=8):
-    """Pinta 'nivel'/16 dos pixels da mascara m com a cor (Bayer)."""
-    a = arr(img)
-    h, w = m.shape
-    yy, xx = np.mgrid[0:h, 0:w]
-    sel = m & (BAYER[yy % 4, xx % 4] < nivel)
-    a[sel] = cor(nome)
     return de_arr(a)
 
 
@@ -351,8 +346,8 @@ def chars_texto():
     return s + [c.lower() for c in s if c.isalpha() and c.lower() != c]
 
 
-def fonte_texto(nome, com_acentos, corpo, sombra, alto_luz=None):
-    """Fonte de letras (tabuleta). Devolve (sprites, def_texto, glifos_logicos)."""
+def fonte_texto(nome, com_acentos, corpo, sombra, alto_luz=None, k=ESCALA):
+    """Fonte de letras (tabuleta). Devolve (sprites, def_texto, glifos_logicos). k = grade (4 ou 2 no HUD novo)."""
     glifos = {}
     for ch in chars_texto():
         if not com_acentos and (ch.upper() in ACENTUADAS or ch == "•"):
@@ -362,8 +357,8 @@ def fonte_texto(nome, com_acentos, corpo, sombra, alto_luz=None):
     for ch, g in list(glifos.items()):
         if g.height != alto:
             raise SystemExit(f"glifo {ch!r} de {nome} com altura {g.height} != {alto}")
-    sprites = [(0, ord(ch), ampliar(g), 0, 0) for ch, g in glifos.items()]
-    d = def_fonte(nome, 16, alto * ESCALA, 4)
+    sprites = [(0, ord(ch), ampliar(g, k), 0, 0) for ch, g in glifos.items()]
+    d = def_fonte(nome, 4 * k, alto * k, k)
     return sprites, d, glifos
 
 
@@ -417,7 +412,7 @@ def digito_grande(ch, corpo, alto_luz, base_esc):
     return contorno(g, "breu", diag=True)
 
 
-def fonte_relogio(nome, corpo, alto_luz, base_esc, zero_na_frente):
+def fonte_relogio(nome, corpo, alto_luz, base_esc, zero_na_frente, k=ESCALA):
     """Relogio de 2 digitos, 48x72 cada. O motor escreve o tempo sem zero a esquerda; a fonte de alerta so e
     usada abaixo de 10 s, entao cada glifo dela ja vem desenhado como '0' + digito (o 8 aparece como 08)."""
     w, h = RELOGIO_GLIFO
@@ -431,8 +426,8 @@ def fonte_relogio(nome, corpo, alto_luz, base_esc, zero_na_frente):
             g = dois
         glifos[ch] = g
     glifos["o"] = glifos["0"]   # tempo infinito
-    sprites = [(0, ord(ch), ampliar(g), 0, 0) for ch, g in glifos.items()]
-    return sprites, def_fonte(nome, w * ESCALA, h * ESCALA, RELOGIO_VAO * ESCALA), glifos
+    sprites = [(0, ord(ch), ampliar(g, k), 0, 0) for ch, g in glifos.items()]
+    return sprites, def_fonte(nome, w * k, h * k, RELOGIO_VAO * k), glifos
 
 
 def def_fonte(nome, larg_espaco, alto, espaco):
@@ -440,313 +435,6 @@ def def_fonte(nome, larg_espaco, alto, espaco):
             f"[FNT v2]\nfntversion = 2,00\nname = \"{nome}\"\nauthor = \"Nazafights\"\n\n"
             f"[Def]\nType = bitmap\nBankType = palette\nSize = {larg_espaco},{alto}\n"
             f"Spacing = {espaco},0\nOffset = 0,0\nFile = {nome}.sff\n")
-
-
-# ----------------------------------------------------------------------------------------------------------
-# Motivos de Maragogipinho: espiral de tabatinga, azulejo (so atras do relogio), caxixi
-# ----------------------------------------------------------------------------------------------------------
-ESPIRAL = [".###.", "#...#", "#.#.#", "#..#.", ".#..."]
-
-
-def friso_espiral(img, x0, y0, x1, nome, passo=6, meia=True, traco=False):
-    """Fileira de espirais pequenas (5x5) de x0 a x1; meia=True pontilha 50% (tinta rala de tabatinga).
-    traco=True espaca as espirais (passo 14) e poe um traco de 4 px entre elas, para nao ler como texto."""
-    px = img.load()
-    if traco:
-        passo = 14
-        for bx in range(x0, x1 - 4, passo):
-            for x in range(bx + 7, min(bx + 11, x1)):
-                if px[x, y0 + 2][3] > 0:
-                    px[x, y0 + 2] = cor(nome)
-    for bx in range(x0, x1 - 4, passo):
-        for yy, s in enumerate(ESPIRAL):
-            for xx, ch in enumerate(s):
-                x, y = bx + xx, y0 + yy
-                if ch == "#" and (not meia or (x + y) % 2 == 0) and px[x, y][3] > 0:
-                    px[x, y] = cor(nome)
-
-
-def azulejo_tile():
-    q = ["AttA", "tAtt", "ttAt", "AttA"]
-    linhas = [s + s[::-1] for s in q]
-    linhas += linhas[::-1]
-    return de_desenho(linhas, {"A": "azulejo", "t": "tabatinga"})
-
-
-def caxixi(w, h, corpo, luz, sombra, borda="breu", friso=None, brilho=None):
-    """Moringa/caxixi visto de lado: boca, pescoco curto, bojo redondo. Devolve imagem w x h (logica)."""
-    img = nova(w, h)
-    d = ImageDraw.Draw(img)
-    cx = (w - 1) / 2
-    boca_w = max(3, w // 2 - (0 if w < 10 else 1))
-    pesc_w = max(2, boca_w - 2)
-    boca_h = max(1, h // 10)
-    pesc_h = max(1, h // 8)
-    bx0 = int(round(cx - (boca_w - 1) / 2))
-    px0 = int(round(cx - (pesc_w - 1) / 2))
-    bojo_y0 = boca_h + pesc_h - 1
-    d.ellipse([0, bojo_y0, w - 1, h - 1], fill=cor(corpo))
-    d.rectangle([px0, boca_h, px0 + pesc_w - 1, bojo_y0 + 1], fill=cor(corpo))
-    d.rectangle([bx0, 0, bx0 + boca_w - 1, boca_h - 1], fill=cor(corpo))
-    a = arr(img)
-    m = a[:, :, 3] > 0
-    yy, xx = np.mgrid[0:h, 0:w]
-    ry = (h - 1 - bojo_y0) / 2
-    cy = bojo_y0 + ry
-    rel = (xx - cx) / max(1, (w - 1) / 2)
-    rely = (yy - cy) / max(1, ry)
-    a[m & (rel > 0.42) & (yy >= bojo_y0)] = cor(sombra)
-    a[m & (rely > 0.6) & (rel > -0.2) & (yy >= bojo_y0)] = cor(sombra)
-    a[m & (rel < -0.45) & (rely < 0.35) & (yy >= bojo_y0)] = cor(luz)
-    img = de_arr(a)
-    if friso:
-        fy = bojo_y0 + max(1, int(ry * 0.45))
-        px = img.load()
-        for x in range(1, w - 1):
-            if px[x, fy][3] and (x % 2 == 0):
-                px[x, fy] = cor(friso)
-    if brilho and w >= 8:
-        px = img.load()
-        bx, by = int(cx - (w - 1) * 0.28), bojo_y0 + max(1, int(ry * 0.35))
-        px[bx, by] = cor(brilho)
-        if w >= 16:
-            px[bx + 1, by] = cor(brilho)
-    m = opaco(img)
-    borda_m = m & ~erodir(m, diag=False)
-    return pintar_mascara(img, borda_m, borda)
-
-
-# ----------------------------------------------------------------------------------------------------------
-# HUD (fight.sff)
-# ----------------------------------------------------------------------------------------------------------
-TRILHO_ORIGEM = (0, 0)   # eixo do sprite da barra de vida: o canto de cima-esquerda (P1)
-TRILHO_W, TRILHO_H = 108, 21
-PRANCHA = (TRILHO_W, 12)  # a barra (moldura) de cima; embaixo dela, colada, a plaquinha do nome
-VIDA_X, VIDA_Y = 4, 3     # onde a vida comeca dentro da barra (P1)
-VIDA_W, VIDA_H = 96, 6    # 384 x 24 px
-TARJA = (4, 13, 60, 8)    # plaquinha do nome (x, y, w, h) no sprite: tela y 68 a 100
-
-
-def anel_hud(img, m):
-    """Contorno do HUD sobre fundo qualquer: 1 px de tabatinga na borda de dentro e 2 px de breu por fora."""
-    a = arr(img)
-    a[m & ~erodir(m, diag=True)] = cor("tabatinga")
-    fora = dilatar(dilatar(m, diag=True), diag=True) & ~m
-    a[fora] = cor("breu")
-    return de_arr(a)
-
-
-def moldura_dourada(m):
-    """Moldura de ouro de 2 px por dentro da mascara m (luz em cima e a esquerda, sombra embaixo e a direita),
-    com 1 px de breu por fora. Devolve (rgba, miolo) onde miolo = o que sobra dentro, para pintar de breu."""
-    h, w = m.shape
-    mp = np.pad(m, 2)            # a borda da imagem conta como fora (o erodir nao come a borda sozinho)
-    anel1 = mp & ~erodir(mp, diag=True)
-    meio = erodir(mp, diag=True)
-    anel2 = meio & ~erodir(meio, diag=True)
-    miolo = erodir(meio, diag=True)
-    luz = anel1 & (deslocar(~mp, 0, 1) | deslocar(~mp, 1, 0))     # borda de cima e da esquerda
-    sombra = anel1 & (deslocar(~mp, 0, -1) | deslocar(~mp, -1, 0))
-    corte = (slice(2, 2 + h), slice(2, 2 + w))
-    anel1, anel2, miolo, luz, sombra = (x[corte] for x in (anel1, anel2, miolo, luz, sombra))
-    a = np.zeros((h, w, 4), np.uint8)
-    a[anel1] = cor("dende")
-    a[anel2] = cor("taua_esc")
-    a[luz] = cor("farinha")
-    a[sombra & ~luz] = cor("taua")
-    a[miolo] = cor("breu")
-    fora = dilatar(m, diag=True) & ~m
-    a[fora] = cor("breu")
-    return de_arr(a), miolo
-
-
-def trilho_vida():
-    """Barra de vida fina, inclinada na ponta do relogio (P1: retrato a esquerda), moldura de ouro e miolo de
-    breu; colada embaixo, a plaquinha do nome. 108x21 (432x84 px)."""
-    W, H = TRILHO_W, TRILHO_H
-    m = np.zeros((H, W), bool)
-    for y in range(PRANCHA[1]):
-        m[y, 0:W - 1 - y // 3] = True       # a ponta de dentro desce em diagonal (estilo arcade)
-    img, _ = moldura_dourada(m)
-    a = arr(img)
-    # brilho de 1 px no miolo, rente a moldura de cima (vidro escuro)
-    a[VIDA_Y - 1, VIDA_X:VIDA_X + VIDA_W] = cor("barro")
-    # plaquinha do nome: breu com friso de ouro embaixo
-    tx, ty, tw, th = TARJA
-    a[ty:ty + th, tx:tx + tw] = cor("breu")
-    a[ty + th - 1, tx + 1:tx + tw - 1] = cor("dende")
-    a[ty, tx + 1:tx + tw - 1] = cor("barro")
-    return de_arr(a)
-
-
-def enchimento_vida(corpo, escuro, luz):
-    """Vida 96x6: 1 fileira de luz, 3 de corpo, 2 de sombra; um risco de brilho a cada 12 px."""
-    img = nova(VIDA_W, VIDA_H)
-    a = arr(img)
-    a[:, :] = cor(corpo)
-    a[0, :] = cor(luz)
-    a[4:, :] = cor(escuro)
-    for x in range(5, VIDA_W, 12):
-        a[1, x:x + 3] = cor(luz)
-    return de_arr(a)
-
-
-def fantasma_vida():
-    """Dano fantasma: farinha lisa (desce com atraso atras da vida)."""
-    img = nova(VIDA_W, VIDA_H)
-    ImageDraw.Draw(img).rectangle([0, 0, VIDA_W - 1, VIDA_H - 1], fill=cor("farinha"))
-    return img
-
-
-GEMA = [   # pedrinha de estoque 5x5 (antes do contorno): C corpo, L brilho, S sombra
-    ".CCC.",
-    "CLCCC",
-    "CCCCS",
-    "CCCSS",
-    ".SSS.",
-]
-ESTOQUE_CORES = {   # apagada = sem estoque; meia = enchendo; cheia = estoque pronto
-    "cru": {"C": "barro", "L": "madeira", "S": "barro"},
-    "quente": {"C": "taua_esc", "L": "taua", "S": "barro"},
-    "cozido": {"C": "dende", "L": "farinha", "S": "taua"},
-}
-
-
-def estoque(estado):
-    """Pedrinha de estoque 7x7 (com contorno breu)."""
-    base = de_desenho(GEMA, ESTOQUE_CORES[estado])
-    g = nova(base.width + 2, base.height + 2)
-    g.alpha_composite(base, (1, 1))
-    return contorno(g, "breu", diag=False)
-
-
-# barra de poder (P1) no canto de baixo: trilho fino de ouro + 3 pedrinhas de estoque. 86x7 logico = 344x28 px,
-# de y 688 a 716: os pes (y 660) e a sombra ficam livres.
-PLACA = {"w": 86, "h": 7, "trilho": (0, 0), "trilho_w": 64, "estoque_x": 66, "estoque_y": 0, "estoque_passo": 7}
-PODER_X, PODER_Y = 3, 2
-PODER_W, PODER_H = PLACA["trilho_w"] - 6, 3   # enchimento: 58x3 -> 232x12 px
-
-
-def trilho_poder():
-    w, h = PLACA["trilho_w"], PLACA["h"]
-    m = np.zeros((h, w), bool)
-    for y in range(h):
-        m[y, 0:w - y // 2] = True
-    img, _ = moldura_dourada(m)
-    return img
-
-
-def composto_poder(nivel_x2):
-    """Trilho de poder com 3 pedrinhas; nivel_x2 = poder/500 (0..6). P1: trilho a esquerda, pedrinhas a direita."""
-    P = PLACA
-    img = nova(P["w"], P["h"])
-    img.alpha_composite(trilho_poder(), P["trilho"])
-    cozidos = nivel_x2 // 2
-    for i in range(3):
-        if i < cozidos:
-            est = "cozido"
-        elif i == cozidos and nivel_x2 % 2 == 1:
-            est = "quente"
-        else:
-            est = "cru"
-        img.alpha_composite(estoque(est), (P["estoque_x"] + P["estoque_passo"] * i, P["estoque_y"]))
-    return img
-
-
-def enchimento_poder(corpo, luz, faisca):
-    img = nova(PODER_W, PODER_H)
-    d = ImageDraw.Draw(img)
-    d.rectangle([0, 0, PODER_W - 1, PODER_H - 1], fill=cor(corpo))
-    d.line([0, 0, PODER_W - 1, 0], fill=cor(luz))
-    px = img.load()
-    for x in range(PODER_W):
-        if x % 7 == 3:
-            px[x, 1] = cor(faisca)
-    return img
-
-
-def cacos(q):
-    """Caxixi de estoque quebrando, 4 quadros. Nao ligado no v1.0.0 (o motor nao avisa o gasto do estoque)."""
-    a = arr(estoque("cozido"))
-    img = nova(26, 26)
-    pedacos = [(0, 0, 5, 6), (5, 0, 11, 6), (0, 6, 5, 12), (5, 6, 11, 12)]
-    desl = [(-1, -1), (1, -1), (-1, 1), (1, 1)]
-    for (x0, y0, x1, y1), (dx, dy) in zip(pedacos, desl):
-        p = de_arr(a[y0:y1, x0:x1].copy())
-        k = q * 2
-        img.alpha_composite(p, (7 + x0 + dx * k, 7 + y0 + dy * k))
-    if q >= 2:
-        img = pontilhar(img, dilatar(opaco(img)) & ~opaco(img), "farinha", 4 + q)
-    return img
-
-
-FACE = 29   # moldura logica: 2 px de anel + 25 px de dentro (o rosto 100x100 em escala 1/4 cabe inteiro)
-
-
-def moldura_face(top=True):
-    """Moldura de ouro 29x29 (top) ou fundo liso escuro (bg), que separa qualquer retrato do cenario."""
-    n = FACE - 1
-    if top:
-        m = np.ones((FACE, FACE), bool)
-        m[2:n - 1, 2:n - 1] = False
-        img, _ = moldura_dourada(np.ones((FACE, FACE), bool))
-        a = arr(img)
-        a[2:n - 1, 2:n - 1] = 0                  # dentro vazio: o retrato aparece
-        for (cx, cy) in [(0, 0), (n, 0), (0, n), (n, n)]:
-            a[cy, cx] = cor("farinha")           # rebite de ouro nas quinas
-        return de_arr(a)
-    img = nova(FACE, FACE)
-    ImageDraw.Draw(img).rectangle([1, 1, n - 1, n - 1], fill=cor("azulejo"))
-    return img
-
-
-def rachaduras_face():
-    img = nova(FACE, FACE)
-    d = ImageDraw.Draw(img)
-    for pts in [[(3, 2), (8, 9), (7, 14), (12, 19), (11, 25)], [(8, 9), (14, 8), (20, 4)],
-                [(12, 19), (18, 18), (24, 23)], [(7, 14), (3, 16)]]:
-        d.line(pts, fill=cor("breu"))
-    return img
-
-
-RELOGIO = {"w": 36, "h": 24, "placa": (4, 2, 31, 21)}
-
-
-def relogio():
-    """Caixa do relogio 36x24 (144x96 px): moldura de ouro com as quinas cortadas e o visor de breu onde cabem
-    os 2 digitos grandes."""
-    R = RELOGIO
-    m = np.ones((R["h"], R["w"]), bool)
-    for k in range(3):                            # quinas cortadas em diagonal
-        m[k, :3 - k] = m[k, R["w"] - 3 + k:] = False
-        m[R["h"] - 1 - k, :3 - k] = m[R["h"] - 1 - k, R["w"] - 3 + k:] = False
-    img, _ = moldura_dourada(m)
-    a = arr(img)
-    x0, y0, x1, y1 = R["placa"]
-    a[y0:y1 + 1, x0:x1 + 1] = cor("breu")
-    a[y1, x0 + 2:x1 - 1] = cor("barro")
-    return de_arr(a)
-
-
-def bolinha(cozida):
-    """Vitoria. Cozida: tauá com aro de tabatinga e brilho de tauá vivo. Crua: barro cru, madeira clara com
-    contorno breu (aparece sobre a tarja de madeira)."""
-    img = nova(6, 6)
-    d = ImageDraw.Draw(img)
-    px = img.load()
-    if cozida:
-        d.ellipse([0, 0, 5, 5], fill=cor("tabatinga"))
-        d.ellipse([1, 1, 4, 4], fill=cor("taua"))
-        px[2, 2] = cor("taua_vivo")
-        px[2, 1] = cor("taua_vivo")
-        px[3, 4] = cor("taua_esc")
-        px[4, 3] = cor("taua_esc")
-    else:
-        d.ellipse([0, 0, 5, 5], fill=cor("breu"))
-        d.ellipse([1, 1, 4, 4], fill=cor("madeira_cl"))
-        px[2, 1] = cor("tabatinga")
-        px[1, 2] = cor("tabatinga")
-    return img
 
 
 def texto_bits(texto, escala, corpo, sombra=None, desloc=1, espaco=1):
@@ -773,485 +461,488 @@ def texto_bits(texto, escala, corpo, sombra=None, desloc=1, espaco=1):
     return img
 
 
-def tabuleta(w, h, texto, cor_letra, escala=2):
-    img = nova(w, h)
-    d = ImageDraw.Draw(img)
-    d.rectangle([0, 0, w - 1, h - 1], fill=cor("madeira"))
-    for y in range(2, h - 2):
-        for x in range(2, w - 2):
-            if (x * 7 + (y // 3) * 13) % 23 == 0:
-                d.line([x, y, min(w - 3, x + 5), y], fill=cor("madeira_cl"))
-    d.line([1, 1, w - 2, 1], fill=cor("madeira_cl"))
-    d.line([1, h - 2, w - 2, h - 2], fill=cor("barro"))
-    d.rectangle([0, 0, w - 1, h - 1], outline=cor("breu"))
-    px = img.load()
-    for (x, y) in [(2, 2), (w - 3, 2), (2, h - 3), (w - 3, h - 3)]:
-        px[x, y] = cor("tabatinga")
-    if texto:
-        t = texto_bits(texto, escala, cor_letra, "barro", 1)
-        img.alpha_composite(t, ((w - t.width) // 2, (h - t.height) // 2))
-    return img
-
-
-def letreiro_ko(q):
-    """'K.O.' de barro rachando, quadro q de 0 a 5."""
-    letras = texto_bits("K.O.", 4, "taua", None, espaco=1)
-    base = nova(letras.width + 6, letras.height + 6)
-    base.alpha_composite(letras, (2, 1))
-    a = arr(base)
-    m = a[:, :, 3] > 0
-    topo = m & ~deslocar(m, 0, 1)
-    a[topo] = cor("taua_vivo")
-    dir_ = m & ~deslocar(m, -1, 0)
-    a[dir_ & ~topo] = cor("taua_esc")
-    base = contorno(de_arr(a), "barro", diag=True)
-    base = com_sombra(base, "breu", 2, 2)
-    w, h = base.size
-    out = nova(w + 8, h + 8)
-    if q < 4:
-        out.alpha_composite(base, (4, 4))
-    else:   # os pedacos se separam
-        meio = w // 2
-        k = 1 if q == 4 else 2
-        out.alpha_composite(base.crop((0, 0, meio, h)), (4 - k, 4 + k - 1))
-        out.alpha_composite(base.crop((meio, 0, w, h)), (4 + meio + k, 4 + k))
-    racha = [[(6, 4), (10, 12), (8, 20), (13, 28)], [(36, 3), (33, 11), (38, 19), (35, 30)],
-             [(50, 6), (56, 14), (52, 24)], [(10, 12), (18, 14)], [(38, 19), (45, 21)]]
-    om = opaco(out)
-    for pts in racha[:[0, 1, 2, 3, 5, 5][q]]:
-        lin = nova(*out.size)
-        ImageDraw.Draw(lin).line([(x + 4, y + 4) for x, y in pts], fill=cor("breu"))
-        out = de_arr(np.where((opaco(lin) & om)[:, :, None], arr(lin), arr(out)))
-    if q >= 3:
-        rnd = random.Random(70 + q)
-        nuvem = nova(*out.size)
-        dp = ImageDraw.Draw(nuvem)
-        for _ in range(10 + 6 * (q - 3)):
-            x, y = rnd.randrange(0, out.width), rnd.randrange(out.height - 14, out.height)
-            r = rnd.randrange(1, 3)
-            dp.ellipse([x - r, y - r, x + r, y + r], fill=cor("farinha"))
-        poeira = pontilhar(nova(*out.size), opaco(nuvem), "farinha", {3: 12, 4: 10, 5: 6}[q])
-        poeira.alpha_composite(out)
-        out = poeira
-    return out
-
-
 # ----------------------------------------------------------------------------------------------------------
-# Letras de barro do emblema do VS (system.sff)
+# ESTILO NOVO "ARENA" (Breno, missao de 2026-11-14, issue #39): mais moderno com cara de jogo de luta.
+# Fundo de noite azulada, paineis inclinados, P1 em laranja (fogo) e P2 em azul (mar), ouro so no destaque.
+# Desenhado numa grade de 2x (640x360 de desenho na tela cheia): a linha fina de 2 px e o que da o ar moderno.
+# Os textos que o motor escreve continuam nas fontes de grade 4x; a fonte do HUD e o relogio sao de grade 2x.
 # ----------------------------------------------------------------------------------------------------------
-LOGO_LETRAS = {
-    "N": ["##..##", "###.##", "######", "######", "##.###", "##..##", "##..##", "##..##"],
-    "A": [".####.", "##..##", "##..##", "##..##", "######", "##..##", "##..##", "##..##"],
-    "Z": ["######", "....##", "...##.", "..##..", ".##...", "##....", "##....", "######"],
-    "F": ["######", "##....", "##....", "#####.", "##....", "##....", "##....", "##...."],
-    "I": ["######", "..##..", "..##..", "..##..", "..##..", "..##..", "..##..", "######"],
-    "G": [".####.", "##..##", "##....", "##....", "##.###", "##..##", "##..##", ".####."],
-    "H": ["##..##", "##..##", "##..##", "######", "##..##", "##..##", "##..##", "##..##"],
-    "T": ["######", "..##..", "..##..", "..##..", "..##..", "..##..", "..##..", "..##.."],
-    "V": ["##..##", "##..##", "##..##", "##..##", "##..##", ".####.", ".####.", "..##.."],
-    "S": [".#####", "##....", "##....", ".####.", "....##", "....##", "....##", "#####."],
+ARENA = {
+    "noite": (0x0D, 0x0E, 0x1A),
+    "noite2": (0x16, 0x18, 0x29),
+    "aco": (0x23, 0x26, 0x3D),
+    "aco2": (0x33, 0x38, 0x5A),
+    "aco3": (0x4C, 0x54, 0x80),
+    "nevoa": (0x88, 0x90, 0xB8),
+    "giz": (0xEE, 0xF0, 0xF8),
+    "fogo_esc": (0x9A, 0x34, 0x12),
+    "fogo": (0xF2, 0x6B, 0x1D),
+    "fogo_cl": (0xFF, 0xB3, 0x47),
+    "mar_esc": (0x0E, 0x5A, 0x78),
+    "mar": (0x1F, 0xB3, 0xD6),
+    "mar_cl": (0x8B, 0xE6, 0xF7),
+    "ouro": (0xFF, 0xD2, 0x3F),
+    "sangue": (0xE0, 0x28, 0x3C),
 }
+PALETA.update(ARENA)
+G2 = 2                                     # grade do estilo novo: 1 px de desenho = 2x2 na tela
+LADO = {1: ("fogo_esc", "fogo", "fogo_cl"), 2: ("mar_esc", "mar", "mar_cl")}
 
 
-LOGO_GAP = 4   # breu entre as letras (logico): cada letra se le sozinha
-# espiral de tabatinga (5x5, 1 px) dentro das hastes largas: (x, y) do canto, por letra
-LOGO_ESPIRAIS = {"N": [(2, 26), (17, 8)], "A": [(2, 28), (17, 28)], "F": [(2, 26)], "I": [(10, 18)],
-                 "G": [(2, 18)], "H": [(2, 26), (17, 26)], "T": [(10, 24)]}
+def paralelo(w, h, incl=2, lado=1):
+    """Mascara de paralelogramo w x h: a borda anda 1 px a cada 'incl' linhas. lado 1 = '/', -1 = '\\'."""
+    m = np.zeros((h, w), bool)
+    d = (h - 1) // incl
+    for y in range(h):
+        s = (h - 1 - y) // incl if lado > 0 else y // incl
+        m[y, s:s + w - d] = True
+    return m
 
 
-def letra_logo(ch, cw=4, chh=5):
-    bits = LOGO_LETRAS[ch]
-    img = nova(len(bits[0]) * cw, len(bits) * chh)
-    d = ImageDraw.Draw(img)
-    w, h = img.size
-    if ch == "V":   # V com ponta (em bloco ele lia "U")
-        d.polygon([(0, 0), (7, 0), (w // 2, h - 12), (w - 8, 0), (w - 1, 0), (w // 2 + 3, h - 1),
-                   (w // 2 - 4, h - 1)], fill=cor("taua"))
-        return img
-    if ch == "N":   # 2 hastes + faixa diagonal franca do topo esquerdo a base direita (le N, nao H/M)
-        d.rectangle([0, 0, 7, h - 1], fill=cor("taua"))
-        d.rectangle([w - 8, 0, w - 1, h - 1], fill=cor("taua"))
-        d.polygon([(0, 0), (9, 0), (w - 1, h - 10), (w - 1, h - 1), (w - 10, h - 1), (0, 9)], fill=cor("taua"))
-    else:
-        for y, s in enumerate(bits):
-            for x, c in enumerate(s):
-                if c == "#":
-                    d.rectangle([x * cw, y * chh, x * cw + cw - 1, y * chh + chh - 1], fill=cor("taua"))
-    # chanfro nos cantos de fora
-    a = arr(img)
-    m = a[:, :, 3] > 0
-    quina = m & ((~deslocar(m, 0, 1) & ~deslocar(m, 1, 0)) | (~deslocar(m, 0, 1) & ~deslocar(m, -1, 0)) |
-                 (~deslocar(m, 0, -1) & ~deslocar(m, 1, 0)) | (~deslocar(m, 0, -1) & ~deslocar(m, -1, 0)))
-    a[quina] = 0
-    img = de_arr(a)
-    if ch == "A":   # furo em boca de moringa: aba de 6 px, gargalo de 4 px e bojo de 8 px de quinas redondas
-        d = ImageDraw.Draw(img)
-        d.rectangle([8, 5, 15, 8], fill=cor("taua"))
-        d.rectangle([9, 5, 14, 5], fill=(0, 0, 0, 0))
-        d.rectangle([10, 6, 13, 8], fill=(0, 0, 0, 0))
-        for (x, y) in [(8, 9), (15, 9), (8, 19), (15, 19)]:
-            d.point((x, y), fill=cor("taua"))
-    return img
+def quinas(w, h, k=2):
+    """Retangulo com as quinas de cima-esquerda e baixo-direita cortadas em diagonal (k px)."""
+    m = np.ones((h, w), bool)
+    for i in range(k):
+        m[i, :k - i] = False
+        m[h - 1 - i, w - k + i:] = False
+    return m
 
 
-def logo(palavra="NAZAFIGHTS", corpo="taua"):
-    """Logo de barro brunido: letras de tauá com espiral de tabatinga nas hastes, sentadas numa contra-forma de
-    breu (2 px em volta e cheia nos vaos e entre as letras, para o ceu nao vazar e cada letra se ler sozinha),
-    anel de tabatinga + breu por fora e sombra breu deslocada (2, 2). Largura ~290 x 56 (logico)."""
-    letras = [(c, letra_logo(c)) for c in palavra]
-    M = 4                                   # 2 de contra-forma + 1 de tabatinga + 1 de breu
-    extra = LOGO_GAP if palavra == "NAZAFIGHTS" else 0   # NAZA | FIGHT
-    larg = sum(l.width for _c, l in letras) + LOGO_GAP * (len(letras) - 1) + extra + 2 * M
-    alto = 40 + 2 * M
-    corpo_img = nova(larg, alto)
-    caixas = np.zeros((alto, larg), bool)
-    vaos = []
-    x = M
-    for i, (c, l) in enumerate(letras):
-        corpo_img.alpha_composite(l, (x, M))
-        caixas[M:M + l.height, x:x + l.width] = True
-        x += l.width
-        if i < len(letras) - 1:
-            g = LOGO_GAP + (extra if i == 3 else 0)
-            vaos.append((x, x + g))
-            x += g
-    a = arr(corpo_img)
-    m = a[:, :, 3] > 0
-    a[m] = cor(corpo)
-    topo = m & ~deslocar(m, 0, 1)
-    esq = m & ~deslocar(m, 1, 0)
-    baixo = m & ~deslocar(m, 0, -1)
-    dirr = m & ~deslocar(m, -1, 0)
-    a[baixo | dirr] = cor("taua_esc")
-    a[topo | esq] = cor("taua_vivo")
-    yy = np.mgrid[0:alto, 0:larg][0]
-    a[m & (yy >= 33 + M) & ~(topo | esq)] = cor("taua_esc")
-    # espiral de tabatinga de 1 px nas hastes largas (o motivo de Maragogipinho)
-    x = M
-    for i, (c, l) in enumerate(letras):
-        for (sx, sy) in LOGO_ESPIRAIS.get(c, []):
-            for ey, linha in enumerate(ESPIRAL):
-                for ex, ch_ in enumerate(linha):
-                    if ch_ == "#" and m[M + sy + ey, x + sx + ex]:
-                        a[M + sy + ey, x + sx + ex] = cor("tabatinga")
-        x += l.width + (LOGO_GAP + (extra if i == 3 else 0) if i < len(letras) - 1 else 0)
-    # contra-forma de breu: as caixas das letras + 2 px; nos vaos entre letras ela recua em cima e embaixo
-    base = dilatar(dilatar(caixas, diag=False), diag=False)
-    for (x0, x1) in vaos:
-        base[:M, x0:x1] = False
-        base[M + 40:, x0:x1] = False
-    a[base & ~m] = cor("breu")
-    anel1 = dilatar(base, diag=False) & ~base
-    a[anel1] = cor("tabatinga")
-    anel2 = dilatar(base | anel1, diag=True) & ~(base | anel1)
-    a[anel2] = cor("breu")
-    img = com_sombra(de_arr(a), "breu", 2, 2)
-    out = nova(img.width + img.width % 2, 56)
-    out.alpha_composite(img, (0, (56 - img.height) // 2))
-    return out
-
-
-def tabua_ativa(w=88, h=10):
-    img = nova(w, h)
-    d = ImageDraw.Draw(img)
-    d.rectangle([0, 0, w - 1, h - 1], fill=cor("barro"))
-    d.rectangle([0, 0, w - 1, h - 1], outline=cor("dende"))
-    d.line([1, 1, w - 2, 1], fill=cor("taua_esc"))
-    for (x, s) in [(2, 1), (w - 6, -1)]:
-        seta = de_desenho(["#...", "##..", "###.", "##..", "#..."] if s > 0 else ["...#", "..##", ".###", "..##",
-                                                                                  "...#"], {"#": "dende"})
-        img.alpha_composite(seta, (x, 2))
-    return img
-
-
-def fundo_mapa():
-    """Tela de escolha de mapa (issue #35): o mesmo tabuleiro de feira da selecao, com a moldura de madeira da
-    previa animada no meio, setas dos dois lados, tabuleta do nome embaixo e a dica dos botoes."""
-    rnd = random.Random(35)
-    img = tabuleiro(320, 180, rnd)
-    for (xa, xb, listras) in [(-6, 160, ("taua", "tabatinga")), (160, 326, ("rio", "tabatinga"))]:
-        x = xa
-        while x < xb:
-            w = min([22, 26, 30][(x // 7) % 3], xb - x)
-            if w > 8:
-                img.alpha_composite(barraca(w, 18, listras, rnd), (x, 167))
-            x += w + 3
-    px, py = POS["mapa_previa"][0] // 4, POS["mapa_previa"][1] // 4
-    pw, ph = POS["mapa_previa_tam"][0] // 4, POS["mapa_previa_tam"][1] // 4
-    d = ImageDraw.Draw(img)
-    d.rectangle([px - 4, py - 4, px + pw + 3, py + ph + 3], fill=cor("madeira"))
-    d.rectangle([px - 4, py - 4, px + pw + 3, py + ph + 3], outline=cor("breu"))
-    d.line([px - 3, py - 3, px + pw + 2, py - 3], fill=cor("madeira_cl"))
-    d.line([px - 3, py + ph + 2, px + pw + 2, py + ph + 2], fill=cor("barro"))
-    d.rectangle([px - 1, py - 1, px + pw, py + ph], fill=cor("breu"))
-    # titulo
-    faixa = nova(152, 13)
-    df = ImageDraw.Draw(faixa)
-    df.rectangle([0, 0, 151, 12], fill=cor("taua_esc"))
-    df.line([0, 0, 151, 0], fill=cor("taua"))
-    df.rectangle([0, 0, 151, 12], outline=cor("breu"))
-    t = texto_bits("ESCOLHA O MAPA", 1, "farinha", "barro", 1)
-    faixa.alpha_composite(t, ((152 - t.width) // 2, 3))
-    img.alpha_composite(faixa, (84, 8))
-    # setas
-    seta = de_desenho(["#.....", "###...", "#####.", "######", "#####.", "###...", "#....."], {"#": "dende"})
-    seta = seta.resize((seta.width * 2, seta.height * 2), Image.NEAREST)
-    larga = nova(seta.width + 2, seta.height + 2)
-    larga.alpha_composite(seta, (1, 1))
-    seta = contorno(larga, "breu")
-    cy = py + ph // 2 - seta.height // 2
-    img.alpha_composite(seta, (px + pw + 8, cy))
-    img.alpha_composite(espelhar(seta), (px - 8 - seta.width, cy))
-    # tabuleta do nome (o motor escreve o nome com a fonte 1 em POS["mapa_nome"])
-    img.alpha_composite(tabuleta(140, 12, "", "tabatinga"), (90, POS["mapa_nome"][1] // 4 - 11))
-    dica = texto_bits("ESQUERDA E DIREITA TROCAM - ENTER CONFIRMA", 1, "tabatinga", "breu", 1)
-    img.alpha_composite(dica, ((320 - dica.width) // 2, 157))
-    return img
-
-
-# ----------------------------------------------------------------------------------------------------------
-# Selecao: a Feira dos Caxixis vista de cima
-# ----------------------------------------------------------------------------------------------------------
-def pano_listrado(w, h, c1, c2, larg=4, diagonal=False):
-    """Pano de feira de 2 cores (P1 tauá/tabatinga, P2 rio/tabatinga), a listra de c2 mais fina."""
-    yy, xx = np.mgrid[0:h, 0:w]
-    k = (xx + (yy if diagonal else 0)) % (larg * 2)
+def pintar_painel(m, fundo, borda, fora="noite", luz=None):
+    """Pinta a mascara m (ja com 1 px de folga em volta): miolo 'fundo', 1 px de 'borda' por dentro, 1 px de 'fora'
+    por fora e, se pedir, a linha de cima em 'luz'. Devolve a imagem."""
+    h, w = m.shape
     a = np.zeros((h, w, 4), np.uint8)
-    a[:, :] = cor(c1)
-    a[k >= larg + larg // 2] = cor(c2)
+    if fundo:
+        a[m] = cor(fundo)
+    anel = m & ~erodir(m, diag=True)
+    if borda:
+        a[anel] = cor(borda)
+    if luz:
+        a[anel & ~deslocar(m, 0, 1)] = cor(luz)
+    if fora:
+        a[dilatar(m, diag=True) & ~m] = cor(fora)
     return de_arr(a)
 
 
-def barraca(w, h, listras, rnd):
-    """Barraca vista de cima: toldo listrado com franja e uma mesa de caxixis aparecendo embaixo."""
-    img = nova(w, h)
-    d = ImageDraw.Draw(img)
-    c1, c2 = listras
-    d.rectangle([0, 0, w - 1, h - 6], fill=cor("madeira"))
-    for x in range(0, w, 3):
-        d.rectangle([x, 0, x + 2, h - 6], fill=cor(c1 if (x // 3) % 2 == 0 else c2))
-    for x in range(0, w, 2):
-        d.point((x, h - 5), fill=cor(c1))
-    d.rectangle([0, 0, w - 1, h - 5], outline=cor("breu"))
-    d.rectangle([1, h - 4, w - 2, h - 1], fill=cor("madeira_cl"))
-    for x in range(2, w - 3, 3):
-        p = caxixi(3, 3, rnd.choice(["taua", "taua_vivo", "madeira_cl", "taua_esc"]), "farinha", "barro")
-        img.alpha_composite(p, (x, h - 4))
-    return img
+def folga(m, k=1):
+    return np.pad(m, k)
 
 
-def tabuleiro(w, h, rnd):
-    """Tabuleiro de barraca visto de cima: tabuas compridas de madeira (6 px), emenda escura, junta so de vez
-    em quando (tabua de feira, nao parede de tijolo)."""
-    img = nova(w, h)
-    d = ImageDraw.Draw(img)
-    d.rectangle([0, 0, w - 1, h - 1], fill=cor("madeira"))
-    for y0 in range(0, h, 6):
-        d.line([0, y0, w - 1, y0], fill=cor("barro"))
-        d.line([0, y0 + 1, w - 1, y0 + 1], fill=cor("madeira_cl"))
-        x = -rnd.randrange(0, 60)
-        while x < w:
-            x += rnd.randrange(54, 96)
-            d.line([x, y0 + 1, x, y0 + 5], fill=cor("barro"))
-        for _ in range(w // 40):   # veio da madeira: tracos curtos, sem pontilhado
-            vx, vy = rnd.randrange(0, w), y0 + rnd.randrange(3, 5)
-            d.line([vx, vy, vx + rnd.randrange(4, 10), vy], fill=cor("madeira_cl" if rnd.random() < 0.5 else "barro"))
-    return img
+def listras(w, h, nome, passo=8, larg=1, lado=1, fase=0):
+    """Riscos diagonais finos (a textura de fundo do estilo novo)."""
+    yy, xx = np.mgrid[0:h, 0:w]
+    sel = ((xx + (yy if lado > 0 else -yy) + fase) % passo) < larg
+    a = np.zeros((h, w, 4), np.uint8)
+    a[sel] = cor(nome)
+    return de_arr(a)
 
 
-def pano_com_caxixis(w, h, listras, rnd, n_linhas=2):
-    """Pano listrado estendido no tabuleiro, com caxixis em fileiras em cima (a mercadoria da feira)."""
-    pano = pano_listrado(w, h, *listras, larg=6)
-    d = ImageDraw.Draw(pano)
-    for x in range(1, w - 1, 2):   # franja
-        d.point((x, h - 1), fill=cor(listras[1]))
-    d.rectangle([0, 0, w - 1, h - 2], outline=cor("breu"))
-    cores = [("taua", "taua_vivo", "taua_esc"), ("taua_esc", "taua", "barro"), ("taua_vivo", "farinha", "taua"),
-             ("madeira_cl", "farinha", "madeira")]
-    for k in range(n_linhas):
-        base = 3 + (k + 1) * (h - 4) // n_linhas - 1
-        x = 3 + (k % 2) * 3
-        while x < w - 8:
-            cw, ch = rnd.choice([(6, 8), (7, 9), (5, 7), (8, 10)])
-            if x + cw > w - 3:
-                break
-            c = rnd.choice(cores)
-            pano.alpha_composite(caxixi(cw, ch, *c, friso="tabatinga" if rnd.random() < 0.4 else None),
-                                 (x, base - ch + 1))
-            x += cw + rnd.randrange(1, 4)
-    return pano
+def recortar(img, m):
+    """Deixa so o que esta dentro da mascara m."""
+    a = arr(img)
+    a[~m] = 0
+    return de_arr(a)
 
 
-def fundo_selecao():
-    """A Feira dos Caxixis vista de cima: tabuleiro de barraca, toldos listrados nas bordas, panos com caxixis
-    espalhados pelo campo, os panos dos retratos (P1 tauá, P2 rio) com o fundo liso de rio e a tabuleta do nome
-    centrada embaixo de cada retrato."""
-    rnd = random.Random(21)
-    img = tabuleiro(320, 180, rnd)
-    # toldos so nas bordas, 2 cores por lado (em sintonia com o VS)
-    for (xa, xb, listras) in [(-6, 160, ("taua", "tabatinga")), (160, 326, ("rio", "tabatinga"))]:
-        for linha_y in (0, 161):
-            x = xa
-            while x < xb:
-                w = [22, 26, 30][(x // 7) % 3]
-                w = min(w, xb - x)
-                if w > 8:
-                    img.alpha_composite(barraca(w, 18, listras, rnd), (x, linha_y + 1))
-                x += w + 3
-    # panos de feira com caxixis espalhados pelo campo: no meio, entre os retratos, e dos dois lados da grade
-    img.alpha_composite(pano_com_caxixis(70, 30, ("farinha", "tabatinga"), rnd), (125, 26))
-    for (x0, listras) in [(4, ("mangue", "folha")), (236, ("mangue", "folha"))]:
-        img.alpha_composite(pano_com_caxixis(80, 34, listras, rnd), (x0, 100))
-        img.alpha_composite(pano_com_caxixis(56, 18, ("farinha", "tabatinga"), rnd, 1), (x0 + 12, 138))
-    # panos dos retratos grandes: borda listrada do lado (P1 tauá, P2 rio) e dentro liso de rio
-    alto = POS["retrato_alto"] // 4
-    for (x0, c) in [(POS["retrato_p1"][0] // 4, ("taua", "tabatinga")),
-                    (POS["retrato_p2"][0] // 4, ("rio", "tabatinga"))]:
-        pano = pano_listrado(112, alto, *c, larg=4, diagonal=True)
-        dp = ImageDraw.Draw(pano)
-        dp.rectangle([4, 4, 107, alto - 1], fill=cor("rio"))
-        dp.rectangle([3, 3, 108, alto], outline=cor("breu"))
-        dp.rectangle([0, 0, 111, alto - 1], outline=cor("breu"))
-        img.alpha_composite(pano, (x0, 16))
-        dd = ImageDraw.Draw(img)   # varal: pau de madeira em cima do pano
-        dd.rectangle([x0 - 2, 14, x0 + 113, 16], fill=cor("madeira"))
-        dd.line([x0 - 2, 14, x0 + 113, 14], fill=cor("madeira_cl"))
-        dd.rectangle([x0 - 2, 14, x0 + 113, 16], outline=cor("breu"))
-        # tabuleta do nome, centrada embaixo do retrato
-        img.alpha_composite(tabuleta(80, 12, "", "tabatinga"), (x0 + 56 - 40, POS["tabuleta_sel_y"]))
-    d = ImageDraw.Draw(img)
-    # tabuleiro de madeira onde fica a grade (com moldura embaixo, dentro da tela)
-    gx, gy = POS["grade"][0] // 4, POS["grade"][1] // 4
-    gw = (POS["colunas"] * (POS["celula"] + POS["celula_espaco"]) - POS["celula_espaco"]) // 4
-    gh = (POS["linhas"] * (POS["celula"] + POS["celula_espaco"]) - POS["celula_espaco"]) // 4
-    assert gy + gh + 4 < 180, "a grade nao cabe com a moldura de baixo"
-    d.rectangle([gx - 4, gy - 4, gx + gw + 3, gy + gh + 3], fill=cor("madeira"))
-    d.rectangle([gx - 4, gy - 4, gx + gw + 3, gy + gh + 3], outline=cor("breu"))
-    d.line([gx - 3, gy - 3, gx + gw + 2, gy - 3], fill=cor("madeira_cl"))
-    d.line([gx - 3, gy + gh + 2, gx + gw + 2, gy + gh + 2], fill=cor("barro"))
-    # faixa do titulo em cima
-    faixa = nova(152, 13)
-    df = ImageDraw.Draw(faixa)
-    df.rectangle([0, 0, 151, 12], fill=cor("taua_esc"))
-    df.line([0, 0, 151, 0], fill=cor("taua"))
-    df.rectangle([0, 0, 151, 12], outline=cor("breu"))
-    friso_espiral(faixa, 3, 4, 149, "taua", meia=False, traco=True)
-    img.alpha_composite(faixa, (84, 1))
-    return img
+def texto2(texto, escala, corpo, sombra="noite", contorno_cor=None):
+    """Texto nas LETRAS 5x7 (grade 2x). Sombra dura de 1 px e, se pedir, contorno."""
+    t = texto_bits(texto, escala, corpo, sombra, 1)
+    if contorno_cor:
+        g = nova(t.width + 2, t.height + 2)
+        g.alpha_composite(t, (1, 1))
+        t = contorno(g, contorno_cor, diag=True)
+    return t
 
 
-def celula(vazia=True):
-    """Barraquinha 32x32: moldura de barro; dentro, um caxixi tampado (slot vazio ou bloqueado)."""
-    img = nova(32, 32)
-    d = ImageDraw.Draw(img)
-    d.rectangle([0, 0, 31, 31], fill=cor("taua"))
-    d.line([1, 1, 30, 1], fill=cor("taua_vivo"))
-    d.line([1, 1, 1, 30], fill=cor("taua_vivo"))
-    d.line([30, 2, 30, 30], fill=cor("taua_esc"))
-    d.line([2, 30, 30, 30], fill=cor("taua_esc"))
-    d.rectangle([3, 3, 28, 28], fill=cor("barro"))
-    d.rectangle([0, 0, 31, 31], outline=cor("breu"))
-    px = img.load()
-    for (x, y) in [(0, 0), (31, 0), (0, 31), (31, 31)]:
-        px[x, y] = (0, 0, 0, 0)
-    for x in range(4, 28, 2):
-        px[x, 2] = cor("tabatinga")
-    if vazia:
-        pote = caxixi(14, 16, "taua_esc", "taua", "barro", friso="madeira_cl")
-        pd = ImageDraw.Draw(pote)
-        pd.rectangle([3, 0, 10, 2], fill=cor("madeira"))     # tampa
-        pd.rectangle([3, 0, 10, 2], outline=cor("breu"))
-        pd.point((6, 0), fill=cor("madeira_cl"))
-        img.alpha_composite(pote, (9, 9))
-    return img
-
-
-def celula_aleatoria():
-    img = celula(vazia=False)
-    t = texto_bits("?", 3, "dende", "breu", 1)
-    img.alpha_composite(t, ((32 - t.width) // 2, (32 - t.height) // 2))
-    return img
-
-
-def cursor_sel(jogador, aceso):
-    """Cantoneiras 40x40 por fora da celula; P1 dende, P2 reflexo (o rio escuro sumia na madeira), as duas com
-    contorno breu. Etiqueta 1P/2P em letra de tabuleta numa tarja de breu, FORA da celula e em espelho: P1 em
-    cima a esquerda, P2 em cima a direita. Sprite 40x50."""
-    c = "dende" if jogador == 1 else "reflexo"
-    luz = "farinha" if jogador == 1 else "tabatinga"
-    img = cantos_cursor(c, luz, aceso)
-    eti = nova(17, 10)
-    de = ImageDraw.Draw(eti)
-    de.rectangle([0, 0, 16, 9], fill=cor("breu"))
-    de.line([1, 9, 15, 9], fill=cor(c))
-    x = 2
-    for ch in f"{jogador}P":
-        g = render_glifo(LETRAS[ch], "tabatinga", "barro")
-        eti.alpha_composite(g, (x, 1))
-        x += g.width + 1
-    out = nova(40, 50)
-    out.alpha_composite(eti, (0 if jogador == 1 else 23, 0))
-    out.alpha_composite(img, (0, 10))
+def inclinar(img, incl=4):
+    """Itálico de pixel: cada 'incl' linhas de cima andam 1 px para a direita."""
+    w, h = img.size
+    d = (h - 1) // incl
+    out = nova(w + d, h)
+    for y in range(h):
+        out.alpha_composite(img.crop((0, y, w, y + 1)), ((h - 1 - y) // incl, y))
     return out
 
 
-def cantos_cursor(c, luz, aceso):
-    img = nova(40, 40)
-    d = ImageDraw.Draw(img)
-    for (x, y, sx, sy) in [(0, 0, 1, 1), (39, 0, -1, 1), (0, 39, 1, -1), (39, 39, -1, -1)]:
-        d.line([x, y, x + sx * 9, y], fill=cor(c), width=1)
-        d.line([x, y + sy, x + sx * 9, y + sy], fill=cor(c))
-        d.line([x, y, x, y + sy * 9], fill=cor(c))
-        d.line([x + sx, y, x + sx, y + sy * 9], fill=cor(c))
-        if aceso:
-            d.point((x + sx, y + sy), fill=cor(luz))
-    return contorno(img, "breu", diag=False)
+# ---------------------------------- HUD (fight.sff, grade 2x) ----------------------------------------------
+HUD2 = {
+    "face": 52,                       # moldura do retrato (2 px de anel + o rosto 100x100 em 1/4)
+    "vida": (234, 14),                # barra de vida P1 (468 x 28 px), inclinada '/'
+    "poder": (150, 10),               # trilho de poder (300 x 20 px)
+    "gema": 8, "gema_passo": 10,      # estoques (losangos)
+    "relogio": (40, 28),              # caixa do relogio (80 x 56 px)
+}
 
 
-# ----------------------------------------------------------------------------------------------------------
-# Tela de VS: pano de feira dividido, emblema de remos cruzados
-# ----------------------------------------------------------------------------------------------------------
-def fundo_vs():
-    img = nova(320, 180)
-    # listra tom sobre tom: o lado continua tauá x rio, mas atras do retrato o pano fica quieto
-    esq = pano_listrado(320, 180, "taua", "taua_esc", larg=6, diagonal=True)
-    dirr = pano_listrado(320, 180, "rio", "mangue", larg=6, diagonal=True)
-    a, b = arr(esq), arr(dirr)
-    yy, xx = np.mgrid[0:180, 0:320]
-    corte = xx > 160 + (yy - 90) * 0.35
-    out = np.where(corte[:, :, None], b, a)
-    img = de_arr(out)
-    d = ImageDraw.Draw(img)
-    for k in range(-3, 4):
-        d.line([(160 + k - 90 * 0.35 * -1 * -1 - 31.5 + 31.5, 0), (160 + k + 31.5, 180)], fill=cor("madeira"))
-    d.line([(160 - 31.5 - 4, 0), (160 + 31.5 - 4, 180)], fill=cor("breu"))
-    d.line([(160 - 31.5 + 4, 0), (160 + 31.5 + 4, 180)], fill=cor("breu"))
-    # faixas escuras em cima e embaixo (onde ficam os nomes)
-    d.rectangle([0, 0, 319, 12], fill=cor("barro"))
-    d.rectangle([0, 146, 319, 179], fill=cor("barro"))
-    d.line([0, 13, 319, 13], fill=cor("breu"))
-    d.line([0, 145, 319, 145], fill=cor("breu"))
-    friso_espiral(img, 4, 172, 318, "taua", meia=False, traco=True)
-    return img
+def barra2(w, h, incl=2):
+    """Trilho inclinado: fundo noite2, anel aco3, brilho de cima nevoa, contorno noite. Devolve (img, miolo)."""
+    m = folga(paralelo(w - 2, h - 2, incl, 1))
+    img = pintar_painel(m, "noite2", "aco3", "noite", luz="nevoa")
+    return img, erodir(m, diag=True)
 
 
-def emblema_vs():
-    img = nova(80, 56)
-    d = ImageDraw.Draw(img)
-    for (a0, a1) in [((8, 50), (72, 6)), ((8, 6), (72, 50))]:   # dois remos cruzados
-        d.line([a0, a1], fill=cor("madeira_cl"), width=3)
-        ex, ey = a1
-        sx = 1 if a1[0] > a0[0] else -1
-        sy = 1 if a1[1] > a0[1] else -1
-        d.polygon([(ex, ey), (ex - sx * 10, ey - sy * 4), (ex - sx * 4, ey - sy * 10)], fill=cor("madeira"))
-    img = contorno(img, "breu", diag=False)
-    vs = logo("VS")
-    a = arr(vs)
+def enchimento2(miolo, corpo, luz, sombra, brilho=None):
+    """Enchimento recortado no miolo do trilho (mesmo tamanho do trilho, o .def usa a caixa do miolo)."""
+    ys, xs = np.nonzero(miolo)
+    y0, y1, x0, x1 = ys.min(), ys.max(), xs.min(), xs.max()
+    h = y1 - y0 + 1
+    a = np.zeros(miolo.shape + (4,), np.uint8)
+    yy = np.arange(miolo.shape[0])[:, None] + np.zeros(miolo.shape, int)
+    a[miolo] = cor(corpo)
+    a[miolo & (yy == y0)] = cor(luz)
+    a[miolo & (yy >= y1 - max(1, h // 4) + 1)] = cor(sombra)
+    if brilho:
+        xx = np.arange(miolo.shape[1])[None, :] + np.zeros(miolo.shape, int)
+        a[miolo & (yy == y0 + 1) & ((xx % 24) < 6)] = cor(brilho)
+    return de_arr(a[y0:y1 + 1, x0:x1 + 1]), (int(x0), int(y0), int(x1 - x0 + 1), int(h))
+
+
+def vida_sprites():
+    w, h = HUD2["vida"]
+    trilho, miolo = barra2(w, h)
+    cores = {"alta": ("ouro", "giz", "fogo_cl", "giz"), "media": ("fogo", "fogo_cl", "fogo_esc", None),
+             "baixa": ("sangue", "fogo_cl", "fogo_esc", None), "fantasma": ("giz", "giz", "nevoa", None)}
+    ench = {k: enchimento2(miolo, *v) for k, v in cores.items()}
+    caixa = ench["alta"][1]
+    return trilho, {k: v[0] for k, v in ench.items()}, caixa
+
+
+def losango(n, corpo, luz, borda="noite"):
+    m = np.zeros((n, n), bool)
+    c = (n - 1) / 2
+    yy, xx = np.mgrid[0:n, 0:n]
+    m[np.abs(xx - c) + np.abs(yy - c) <= c + 0.01] = True
+    a = np.zeros((n, n, 4), np.uint8)
+    a[m] = cor(corpo)
+    a[m & (yy + xx <= c + 1) & ~(erodir(m, diag=True))] = cor(luz)
+    a[m & ~erodir(m, diag=False) & (yy + xx > c + 1)] = cor(borda)
+    return de_arr(a)
+
+
+def gema2(estado):
+    n = HUD2["gema"]
+    return {"vazia": losango(n, "noite2", "aco3", "aco2"), "meia": losango(n, "mar_esc", "mar", "noite"),
+            "cheia": losango(n, "ouro", "giz", "fogo")}[estado]
+
+
+def poder_sprites():
+    w, h = HUD2["poder"]
+    trilho, miolo = barra2(w, h)
+    cheio, caixa = enchimento2(miolo, "mar", "mar_cl", "mar_esc")
+    pronto, _ = enchimento2(miolo, "ouro", "giz", "fogo_cl")
+    compostos = []
+    larg = w + 4 + 3 * HUD2["gema_passo"]
+    for k in range(7):
+        img = nova(larg, max(h, HUD2["gema"]))
+        img.alpha_composite(trilho, (0, 0))
+        for i in range(3):
+            est = "cheia" if i < k // 2 else ("meia" if i == k // 2 and k % 2 else "vazia")
+            img.alpha_composite(gema2(est), (w + 4 + i * HUD2["gema_passo"], (h - HUD2["gema"]) // 2))
+        compostos.append(img)
+    return compostos, cheio, pronto, caixa
+
+
+def face_sprites(jogador):
+    n = HUD2["face"]
+    escuro, base, claro = LADO[jogador]
+    fundo = nova(n, n)
+    ImageDraw.Draw(fundo).rectangle([0, 0, n - 1, n - 1], fill=cor(base))   # o anel fica no fundo: o motor
+    ImageDraw.Draw(fundo).rectangle([1, 1, n - 2, n - 2], fill=cor("noite2"))  # desenha o top antes do rosto
+    fundo.alpha_composite(listras(n - 2, n - 2, "aco", 6, 1, 1), (1, 1))
+    m = np.ones((n, n), bool)
+    top = nova(n, n)
+    a = arr(top)
+    anel = m & ~erodir(m, diag=True)
+    a[anel] = cor(base)
+    a[0, :n // 3] = cor(claro)
+    a[:n // 3, 0] = cor(claro)
+    top = de_arr(a)
+    racha = nova(n, n)
+    d = ImageDraw.Draw(racha)
+    for pts in [[(4, 2), (14, 16), (12, 26), (22, 36), (20, 49)], [(14, 16), (26, 14), (38, 6)],
+                [(22, 36), (34, 34), (46, 44)], [(12, 26), (4, 30)]]:
+        d.line(pts, fill=cor("noite"))
+    return fundo, top, racha
+
+
+def relogio2():
+    w, h = HUD2["relogio"]
+    m = folga(quinas(w - 2, h - 2, 4))
+    m2 = m.copy()
+    m2[:, :] = m
+    img = pintar_painel(m, "noite", "aco3", "noite", luz="nevoa")
+    a = arr(img)
+    a[h - 2, 6:w - 6] = cor("ouro")            # risco de ouro embaixo
+    return de_arr(a)
+
+
+def bolinha2(ganha):
+    return losango(7, "ouro", "giz", "fogo") if ganha else losango(7, "noite2", "aco3", "aco2")
+
+
+def letreiro2(texto, escala, corpo, luz, fundo_faixa=True):
+    """Letreiro de round/luta: letra inclinada com contorno noite e uma faixa escura inclinada atras."""
+    t = texto_bits(texto, escala, corpo, None)
+    a = arr(t)
     m = a[:, :, 3] > 0
-    ys, xs = np.where(m)
-    vs = vs.crop((xs.min(), ys.min(), xs.max() + 1, ys.max() + 1))
-    img.alpha_composite(vs, ((80 - vs.width) // 2, (56 - vs.height) // 2))
+    a[m & ~deslocar(m, 0, 1)] = cor(luz)
+    t = inclinar(de_arr(a), 4)
+    g = nova(t.width + 4, t.height + 4)
+    g.alpha_composite(t, (2, 2))
+    g = contorno(contorno(g, "noite"), "noite")
+    g = com_sombra(g, "noite", 2, 2)
+    if not fundo_faixa:
+        return g
+    fw, fh = g.width + 40, g.height // 2 + 6
+    faixa = pintar_painel(folga(paralelo(fw - 2, fh - 2, 1, 1)), "noite2", "aco3", None)
+    out = nova(fw, g.height + 8)
+    out.alpha_composite(faixa, (0, (out.height - fh) // 2 + 4))
+    out.alpha_composite(g, ((fw - g.width) // 2, 2))
+    return out
+
+
+def ko2(q):
+    """K.O.: clarao branco (q 0), depois vermelho com um brilho correndo da esquerda para a direita."""
+    corpo = "giz" if q == 0 else "sangue"
+    g = letreiro2("K.O.", 7, corpo, "giz" if q == 0 else "fogo_cl", fundo_faixa=False)
+    if q >= 1:
+        a = arr(g)
+        m = (a[:, :, 3] > 0) & np.all(a[:, :, :3] == ARENA["sangue"], axis=2)
+        yy, xx = np.mgrid[0:g.height, 0:g.width]
+        x0 = (q - 1) * g.width // 4 - 10
+        a[m & ((xx + yy // 2) >= x0) & ((xx + yy // 2) < x0 + 8)] = cor("giz")
+        g = de_arr(a)
+    out = nova(g.width + 8, g.height + 8)
+    out.alpha_composite(g, (4, 4))
+    return out
+
+
+# ---------------------------------- telas (system.sff, grade 2x) -------------------------------------------
+def fundo_arena(w=640, h=360, fase=0):
+    img = nova(w, h)
+    ImageDraw.Draw(img).rectangle([0, 0, w - 1, h - 1], fill=cor("noite"))
+    img.alpha_composite(listras(w, h, "noite2", 10, 3, 1, fase))
     return img
+
+
+def aba_titulo(w, h, texto=None, destaque="ouro"):
+    """Aba do alto da tela: trapezio escuro com risco de destaque embaixo."""
+    m = np.zeros((h, w), bool)
+    for y in range(h):
+        k = (h - 1 - y) // 2
+        m[y, k:w - k] = True
+    img = pintar_painel(folga(m), "noite2", "aco3", "noite")
+    a = arr(img)
+    a[h - 1, 4:w - 2] = cor(destaque)
+    a[h, 4:w - 2] = cor(destaque)
+    img = de_arr(a)
+    if texto:
+        t = texto2(texto, 2, "giz")
+        img.alpha_composite(t, ((img.width - t.width) // 2, (img.height - t.height) // 2))
+    return img
+
+
+def painel_lado(w, h, jogador, inclinado=True):
+    """Painel do retrato grande: fundo aco com riscos na cor do jogador, borda da cor e quinas cortadas."""
+    escuro, base, claro = LADO[jogador]
+    m = folga(quinas(w - 2, h - 2, 8))
+    if jogador == 2:
+        m = m[:, ::-1]
+    img = pintar_painel(m, "aco", base, "noite", luz=claro)
+    tex = recortar(listras(w, h, escuro, 7, 2, 1 if jogador == 1 else -1), erodir(m, diag=True))
+    img.alpha_composite(tex)
+    return img
+
+
+def placa_nome(w, h, jogador):
+    """Placa do nome: barra inclinada escura com o bloco da cor do jogador na ponta de fora."""
+    escuro, base, claro = LADO[jogador]
+    m = folga(paralelo(w - 2, h - 2, 2, 1 if jogador == 1 else -1))
+    img = pintar_painel(m, "noite2", "aco3", "noite")
+    a = arr(img)
+    xs = np.nonzero(m.any(axis=0))[0]
+    bloco = np.zeros_like(m)
+    if jogador == 1:
+        bloco[:, :xs.min() + 10] = True
+    else:
+        bloco[:, xs.max() - 9:] = True
+    a[bloco & erodir(m, diag=True)] = cor(base)
+    return de_arr(a)
+
+
+def selecao_arena():
+    """Selecao (200,0): paineis dos dois retratos, placas dos nomes, aba do modo, base da grade e marcas 1P/2P."""
+    img = fundo_arena()
+    rp1, rp2 = POS["retrato_p1"], POS["retrato_p2"]
+    alto = POS["retrato_alto"]
+    for j, (x, y) in [(1, rp1), (2, rp2)]:
+        img.alpha_composite(painel_lado(448 // G2 + 4, alto // G2 + 4, j), (x // G2 - 2, y // G2 - 2))
+    for j, c in [(1, POS["nome_sel_p1"]), (2, POS["nome_sel_p2"])]:
+        pw = 180
+        img.alpha_composite(placa_nome(pw, 24, j), (c[0] // G2 - pw // 2, c[1] // G2 - 22))
+    img.alpha_composite(aba_titulo(220, 26), (210, 0))
+    g = POS["grade"]
+    cel, esp = POS["celula"], POS["celula_espaco"]
+    gw = (POS["colunas"] * cel + (POS["colunas"] - 1) * esp) // G2
+    gh = (POS["linhas"] * cel + (POS["linhas"] - 1) * esp) // G2
+    base = pintar_painel(folga(quinas(gw + 14, gh + 14, 6)), "noite2", "aco2", "noite")
+    img.alpha_composite(base, (g[0] // G2 - 8, g[1] // G2 - 8))
+    for j, x in [(1, 24), (2, 476)]:
+        marca = inclinar(texto_bits(f"{j}P", 10, "aco", None), 4)
+        img.alpha_composite(marca, (x + (140 - marca.width) // 2, 214))
+        escuro, base_c, claro = LADO[j]
+        img.alpha_composite(pintar_painel(folga(paralelo(110, 4, 1, 1 if j == 1 else -1)), base_c, base_c, None),
+                            (x + 14, 300))
+    rodape = nova(640, 12)
+    ImageDraw.Draw(rodape).rectangle([0, 0, 639, 11], fill=cor("noite2"))
+    ImageDraw.Draw(rodape).line([0, 0, 639, 0], fill=cor("aco3"))
+    img.alpha_composite(rodape, (0, 348))
+    return img
+
+
+def celula2(vazia=True):
+    n = POS["celula"] // G2
+    m = folga(quinas(n - 2, n - 2, 6))
+    img = pintar_painel(m, "noite2", "aco3", None, luz="nevoa")
+    if vazia:
+        img.alpha_composite(recortar(listras(n, n, "aco", 6, 1, 1), erodir(m, diag=True)))
+    return img
+
+
+def celula_aleatoria2():
+    img = celula2(vazia=False)
+    t = texto2("?", 5, "ouro", "fogo_esc", "noite")
+    img.alpha_composite(t, ((img.width - t.width) // 2, (img.height - t.height) // 2))
+    return img
+
+
+def cursor2(jogador, aceso):
+    """Cantoneiras por fora da celula (80x100 com a etiqueta), P1 laranja a esquerda e P2 azul a direita."""
+    escuro, base, claro = LADO[jogador]
+    c = claro if aceso else base
+    img = nova(80, 100)
+    d = ImageDraw.Draw(img)
+    x0, y0, x1, y1 = 3, 23, 76, 96
+    for (x, y, sx, sy) in [(x0, y0, 1, 1), (x1, y0, -1, 1), (x0, y1, 1, -1), (x1, y1, -1, -1)]:
+        for k in range(2):
+            d.line([x, y + sy * k, x + sx * 14, y + sy * k], fill=cor(c))
+            d.line([x + sx * k, y, x + sx * k, y + sy * 14], fill=cor(c))
+    img = contorno(img, "noite", diag=False)
+    eti = pintar_painel(folga(paralelo(28, 14, 2, 1 if jogador == 1 else -1)), c, c, "noite")
+    t = texto_bits(f"{jogador}P", 1, "noite", None)
+    eti.alpha_composite(t, ((eti.width - t.width) // 2 + (1 if jogador == 1 else -1), 4))
+    img.alpha_composite(eti, (x0 if jogador == 1 else x1 - eti.width + 1, y0 - eti.height + 1))
+    return img
+
+
+def fundo_vs2():
+    """VS (400,0): metade laranja e metade azul com riscos de velocidade, corte diagonal branco no meio, faixas
+    escuras em cima e embaixo."""
+    w, h = 640, 360
+    a = np.zeros((h, w, 4), np.uint8)
+    yy, xx = np.mgrid[0:h, 0:w]
+    corte = 352 - yy * 64 // 360               # x do corte diagonal em cada linha
+    esq = xx < corte
+    a[esq] = cor("fogo_esc")
+    a[~esq] = cor("mar_esc")
+    risco_e = esq & (((xx + yy * 2) % 22) < 3)
+    risco_d = ~esq & (((xx - yy * 2) % 22) < 3)
+    a[risco_e] = cor("fogo")
+    a[risco_d] = cor("mar")
+    a[np.abs(xx - corte) <= 2] = cor("noite")
+    a[np.abs(xx - corte) <= 1] = cor("giz")
+    img = de_arr(a)
+    d = ImageDraw.Draw(img)
+    d.rectangle([0, 0, w - 1, 31], fill=cor("noite"))
+    d.line([0, 32, w - 1, 32], fill=cor("ouro"))
+    d.rectangle([0, 328, w - 1, h - 1], fill=cor("noite"))
+    d.line([0, 327, w - 1, 327], fill=cor("aco3"))
+    for j, x in [(1, 56), (2, 404)]:
+        img.alpha_composite(placa_nome(180, 24, j), (x, 236))
+    return img
+
+
+def emblema_vs2():
+    """Letras VS desenhadas a mao (a fonte 5x7 ampliada virava um 'LS'), italico, ouro com pe laranja."""
+    w, h = 96, 62
+    img = nova(w, h)
+    d = ImageDraw.Draw(img)
+    d.polygon([(0, 0), (15, 0), (23, 42), (31, 0), (46, 0), (32, 61), (14, 61)], fill=cor("ouro"))
+    sx = 54
+    for (x0, y0, x1, y1) in [(4, 0, 41, 13), (0, 4, 13, 30), (4, 24, 37, 37), (28, 31, 41, 57), (0, 48, 37, 61)]:
+        d.rectangle([sx + x0, y0, sx + x1, y1], fill=cor("ouro"))
+    for (x, y) in [(sx, 0), (sx + 41, 61)]:     # quinas cortadas do S
+        d.polygon([(x, y), (x + (4 if x == sx else -4), y), (x, y + (4 if y == 0 else -4))], fill=(0, 0, 0, 0))
+    a = arr(img)
+    m = a[:, :, 3] > 0
+    yy = np.mgrid[0:h, 0:w][0]
+    a[m & (yy >= h * 2 // 3)] = cor("fogo")
+    a[m & (yy >= h - 6)] = cor("fogo_esc")
+    a[m & ~deslocar(m, 0, 1)] = cor("giz")
+    a[m & ~deslocar(m, 0, 2) & deslocar(m, 0, 1)] = cor("giz")
+    g = inclinar(de_arr(a), 3)
+    big = nova(g.width + 8, g.height + 8)
+    big.alpha_composite(g, (4, 4))
+    big = contorno(contorno(big, "noite"), "noite")
+    big = contorno(big, "giz", diag=False)
+    return com_sombra(big, "noite", 3, 3)
+
+
+def mapa_arena():
+    """Escolha de mapa (210,0), por cima da selecao: aba, moldura da previa com quinas de ouro, setas, placa do
+    nome e a dica dos botoes."""
+    img = fundo_arena(fase=5)
+    px, py = (v // G2 for v in POS["mapa_previa"])
+    pw, ph = (v // G2 for v in POS["mapa_previa_tam"])
+    img.alpha_composite(aba_titulo(220, 26, "ESCOLHA O MAPA"), (210, 0))
+    mold = pintar_painel(folga(np.ones((ph + 6, pw + 6), bool)), "noite", "aco3", "noite", luz="nevoa")
+    img.alpha_composite(mold, (px - 4, py - 4))
+    d = ImageDraw.Draw(img)
+    for (x, y, sx, sy) in [(px - 6, py - 6, 1, 1), (px + pw + 5, py - 6, -1, 1), (px - 6, py + ph + 5, 1, -1),
+                           (px + pw + 5, py + ph + 5, -1, -1)]:
+        for k in range(2):
+            d.line([x, y + sy * k, x + sx * 18, y + sy * k], fill=cor("ouro"))
+            d.line([x + sx * k, y, x + sx * k, y + sy * 18], fill=cor("ouro"))
+    seta = nova(30, 44)
+    ds = ImageDraw.Draw(seta)
+    for k in range(3):
+        ds.line([2 + k * 7, 2, 2 + k * 7 + 18, 22, 2 + k * 7, 42], fill=cor(["fogo_esc", "fogo", "ouro"][k]), width=4)
+    seta = contorno(seta, "noite")
+    cy = py + ph // 2 - seta.height // 2
+    img.alpha_composite(seta, (px + pw + 14, cy))
+    img.alpha_composite(espelhar(seta), (px - 14 - seta.width, cy))
+    ny = POS["mapa_nome"][1] // G2
+    pl = pintar_painel(folga(paralelo(260, 26, 2, 1)), "noite2", "aco3", "noite", luz="nevoa")
+    a = arr(pl)
+    a[pl.height - 3:pl.height - 1, 12:pl.width - 12] = cor("ouro")
+    img.alpha_composite(de_arr(a), (320 - pl.width // 2, ny - 22))
+    dica = texto2("ESQUERDA E DIREITA TROCAM   ENTER CONFIRMA", 1, "nevoa")
+    img.alpha_composite(dica, ((640 - dica.width) // 2, 340))
+    return img
+
+
+def barra_menu2():
+    """Item ativo do menu: barra inclinada laranja com setinhas de ouro (176x20 de desenho)."""
+    w, h = 176, 20
+    m = folga(paralelo(w - 2, h - 2, 2, 1))
+    img = pintar_painel(m, "fogo_esc", "fogo", "noite", luz="fogo_cl")
+    for x, s in [(14, 1), (w - 20, -1)]:
+        sx = de_desenho(["#...", "##..", "###.", "##..", "#..."] if s > 0 else
+                        ["...#", "..##", ".###", "..##", "...#"], {"#": "ouro"})
+        img.alpha_composite(sx, (x, (h - 5) // 2))
+    return img
+
+
+def painel_menu2():
+    """Painel escuro atras do menu (o motor deixa translucido pelo addalpha)."""
+    x0, y0, x1, y1 = (v // G2 for v in POS["faixa_menu"])
+    w, h = x1 - x0, y1 - y0
+    m = folga(quinas(w - 2, h - 2, 8))
+    img = pintar_painel(m, "noite", "aco3", "noite", luz="nevoa")
+    a = arr(img)
+    a[h - 3:h - 1, 10:w - 10] = cor("ouro")
+    return de_arr(a)
 
 
 # ----------------------------------------------------------------------------------------------------------
@@ -1259,57 +950,51 @@ def emblema_vs():
 # Os eixos ficam em pixels logicos aqui e saem multiplicados por 4.
 # ----------------------------------------------------------------------------------------------------------
 def sprites_fight():
+    """HUD do estilo novo (grade 2x): trilhos inclinados, enchimentos, retrato, relogio, vitorias e letreiros."""
     s = []
-    t = trilho_vida()
-    ox, oy = TRILHO_ORIGEM
-    s += [(10, 0, t, ox, oy), (10, 1, espelhar(t), t.width - ox - PRANCHA[0], oy)]
-    for g, args in [(11, ("folha", "mangue", "tabatinga")), (12, ("dende", "taua", "farinha")),
-                    (13, ("taua", "taua_esc", "taua_vivo"))]:
-        e = enchimento_vida(*args)
+    trilho, ench, _ = vida_sprites()
+    s += [(10, 0, trilho, 0, 0), (10, 1, espelhar(trilho), 0, 0)]
+    for g, k in [(11, "alta"), (12, "media"), (13, "baixa"), (14, "fantasma")]:
+        s += [(g, 0, ench[k], 0, 0), (g, 1, espelhar(ench[k]), 0, 0)]
+    compostos, cheio, pronto, _ = poder_sprites()
+    for k, c in enumerate(compostos):
+        s += [(20, k, c, 0, 0), (20, 10 + k, espelhar(c), 0, 0)]
+    for g, e in [(21, cheio), (22, pronto)]:
         s += [(g, 0, e, 0, 0), (g, 1, espelhar(e), 0, 0)]
-    f = fantasma_vida()
-    s += [(14, 0, f, 0, 0), (14, 1, espelhar(f), 0, 0)]
-    tx, ty = PLACA["trilho"]
-    for k in range(7):
-        c = composto_poder(k)
-        s += [(20, k, c, tx, ty), (20, 10 + k, espelhar(c), PLACA["w"] - tx - PLACA["trilho_w"], ty)]
-    for g, args in [(21, ("rio", "tabatinga", "reflexo")), (22, ("dende", "farinha", "tabatinga"))]:
-        e = enchimento_poder(*args)
-        s += [(g, 0, e, 0, 0), (g, 1, espelhar(e), 0, 0)]
-    fundo, anel, racha = moldura_face(False), moldura_face(True), rachaduras_face()
-    s += [(30, 0, fundo, 0, 0), (30, 1, espelhar(fundo), 0, 0), (31, 0, anel, 0, 0), (31, 1, espelhar(anel), 0, 0),
-          (32, 0, racha, 0, 0), (32, 1, espelhar(racha), 0, 0)]
-    s.append((40, 0, relogio(), RELOGIO["w"] // 2, 0))
-    s += [(50, 0, bolinha(False), 0, 0), (50, 1, bolinha(True), 0, 0)]
+    for j in (1, 2):
+        fundo, top, racha = face_sprites(j)
+        if j == 2:
+            fundo, top, racha = espelhar(fundo), espelhar(top), espelhar(racha)
+        s += [(30, j - 1, fundo, 0, 0), (31, j - 1, top, 0, 0), (32, j - 1, racha, 0, 0)]
+    s.append((40, 0, relogio2(), HUD2["relogio"][0] // 2, 0))
+    s += [(50, 0, bolinha2(False), 4, 4), (50, 1, bolinha2(True), 4, 4)]
     for n in range(1, 6):
-        tb = tabuleta(100, 24, f"ROUND {n}", "tabatinga")
-        s.append((60, n, tb, 50, 12))
-    tb = tabuleta(80, 24, "LUTA!", "dende", escala=3)
-    s.append((61, 0, tb, 40, 12))
+        lt = letreiro2(f"ROUND {n}", 4, "giz", "nevoa")
+        s.append((60, n, lt, lt.width // 4 * 2, lt.height // 4 * 2))
+    lt = letreiro2("LUTA!", 6, "ouro", "giz")
+    s.append((61, 0, lt, lt.width // 4 * 2, lt.height // 4 * 2))
     for q in range(6):
-        k = letreiro_ko(q)
-        s.append((62, q, k, k.width // 2, k.height // 2))
-    for q in range(4):
-        s.append((70, q, cacos(q), 13, 13))
-    s.append((71, 0, nova(1, 1), 0, 0))
+        k = ko2(q)
+        s.append((62, q, k, k.width // 4 * 2, k.height // 4 * 2))
     return s
 
 
 def sprites_system():
+    """Telas do estilo novo (grade 2x)."""
     s = []
-    s.append((131, 0, tabua_ativa(), 44, 10))   # eixo: centro x; 10 = 42 px acima da linha de base / 4 (arred.)
-    s.append((200, 0, fundo_selecao(), 0, 0))
-    s.append((210, 0, fundo_mapa(), 0, 0))
+    s.append((131, 0, barra_menu2(), 88, 20))   # eixo: centro x; 20 = 40 px acima da linha de base do texto
+    s.append((200, 0, selecao_arena(), 0, 0))
+    s.append((210, 0, mapa_arena(), 0, 0))
     # O IKEMEN desenha cell.random.spr somando o portrait.offset (start.lua, updateDrawList), a celula
     # nao. Sem o eixo compensando, o "?" saia 14 px para baixo e para a direita da celula vazia.
-    k = RETRATO_NA_CELULA / ESCALA
-    s += [(300, 0, celula(True), 0, 0), (300, 1, celula_aleatoria(), k, k)]
+    k = RETRATO_NA_CELULA / G2
+    s += [(300, 0, celula2(True), 0, 0), (300, 1, celula_aleatoria2(), k, k)]
     for j, g in [(1, 310), (2, 311)]:
-        s += [(g, 0, cursor_sel(j, True), 0, 0), (g, 1, cursor_sel(j, False), 0, 0)]
-    s += [(312, 0, cursor_sel(1, True), 0, 0), (313, 0, cursor_sel(2, True), 0, 0)]
-    s.append((400, 0, fundo_vs(), 0, 0))
-    em = emblema_vs()
-    s.append((400, 1, em, 40, 28))
+        s += [(g, 0, cursor2(j, True), 0, 0), (g, 1, cursor2(j, False), 0, 0)]
+    s += [(312, 0, cursor2(1, True), 0, 0), (313, 0, cursor2(2, True), 0, 0)]
+    s.append((400, 0, fundo_vs2(), 0, 0))
+    em = emblema_vs2()
+    s.append((400, 1, em, em.width // 4 * 2, em.height // 4 * 2))
     return s
 
 
@@ -1355,38 +1040,131 @@ def logo_titulo():
     return arte_pixel(img, POS["logo_larg"] // GRADE_TITULO, 40)
 
 
-def faixa_menu():
-    """Faixa escura atras do menu, com borda dourada em degrau (cantos de pixel). Opaca aqui: a transparencia vem
-    do trans = addalpha da [TitleBG Faixa] (o motor nao mistura o alfa parcial do PNG)."""
-    x0, y0, x1, y1 = (v // GRADE_TITULO for v in POS["faixa_menu"])
-    w, h = x1 - x0, y1 - y0
-    img = nova(w, h)
-    d = ImageDraw.Draw(img)
-    fundo = PALETA["breu"] + (255,)
-    d.rectangle([2, 0, w - 3, h - 1], fill=fundo)
-    d.rectangle([0, 2, w - 1, h - 3], fill=fundo)
-    d.rectangle([1, 1, w - 2, h - 2], fill=fundo)
-    ouro, sombra = PALETA["dende"] + (255,), PALETA["taua_esc"] + (255,)
-    d.line([3, 1, w - 4, 1], fill=ouro)
-    d.line([1, 3, 1, h - 4], fill=ouro)
-    d.line([3, h - 2, w - 4, h - 2], fill=sombra)
-    d.line([w - 2, 3, w - 2, h - 4], fill=sombra)
-    for (x, y) in [(2, 2), (w - 3, 2), (2, h - 3), (w - 3, h - 3)]:
-        d.point((x, y), fill=ouro if x == 2 or y == 2 else sombra)
-    return ampliar(img, GRADE_TITULO)
+# ---------------------------------- abertura animada (Breno, 2026-11-14) -----------------------------------
+# A cena parada ganha movimento de verdade: o rio ondula (8 quadros so da agua), o sol pulsa, aves cruzam o ceu,
+# brasas sobem pela tela e um brilho corre pelo logo de tempos em tempos. Tudo na grade 2x da cena.
+AGUA = [(200, 410), (1130, 410), (1130, 470), (1090, 520), (1010, 580), (1000, 660), (250, 660), (250, 600),
+        (200, 560)]                      # contorno da agua na tela (sem as barracas, os potes e os cestos)
+BARCOS = [(225, 330, 380, 500), (1015, 330, 1145, 462), (940, 500, 1095, 538), (455, 412, 520, 432)]  # nao ondulam
+AGUA_QUADROS, AGUA_TICKS = 8, 7
+SOL = (240, 300)                         # centro do sol na tela
+
+
+def caixa_agua():
+    xs, ys = [x for x, _ in AGUA], [y for _, y in AGUA]
+    return min(xs), min(ys), max(xs), max(ys)
+
+
+def agua_quadros(fundo):
+    """Ondas: cada linha da agua anda ate 2 px de desenho para os lados, em fase com a altura; brilhos piscando no
+    reflexo do sol. Devolve os quadros recortados na caixa da agua (so os pixels de agua)."""
+    cena = np.array(fundo.resize((640, 360), Image.NEAREST).convert("RGBA")).astype(np.uint8)
+    x0, y0, x1, y1 = (v // G2 for v in caixa_agua())
+    masc = Image.new("L", (640, 360), 0)
+    dm = ImageDraw.Draw(masc)
+    dm.polygon([(x // G2, y // G2) for x, y in AGUA], fill=255)
+    for (bx0, by0, bx1, by1) in BARCOS:
+        dm.rectangle([bx0 // G2, by0 // G2, bx1 // G2, by1 // G2], fill=0)
+    m = np.array(masc) > 0
+    rnd = random.Random(39)
+    brilhos = [(rnd.randrange(112, 178), rnd.randrange(244, 322), rnd.randrange(AGUA_QUADROS)) for _ in range(26)]
+    quadros = []
+    for q in range(AGUA_QUADROS):
+        out = np.zeros_like(cena)
+        for y in range(y0, y1 + 1):
+            perto = (y - y0) / max(1, y1 - y0)
+            amp = 1 + round(perto)                  # 1 px la longe, 2 px perto
+            dx = int(round(amp * np.sin(2 * np.pi * (y / 6.0 + q / AGUA_QUADROS))))
+            linha = np.roll(cena[y], dx, axis=0)
+            out[y][m[y]] = linha[m[y]]
+        for (bx, by, fase) in brilhos:
+            k = (q - fase) % AGUA_QUADROS
+            if m[by, bx] and k < 3:
+                out[by, bx] = (255, 244, 214, 255) if k == 1 else (255, 214, 140, 255)
+                if k == 1:
+                    for ddx in (-1, 1):
+                        if m[by, bx + ddx]:
+                            out[by, bx + ddx] = (255, 214, 140, 255)
+        quadros.append(ampliar(Image.fromarray(out[y0:y1 + 1, x0:x1 + 1], "RGBA"), G2))
+    return quadros
+
+
+AVE = [["#.......#", ".#.....#.", "..##.##..", "....#...."],
+       [".........", "###...###", "...###...", "....#...."],
+       [".........", "...###...", ".##...##.", "#.......#"]]
+
+
+def ave(q):
+    img = nova(9, 4)
+    px = img.load()
+    for y, s in enumerate(AVE[q]):
+        for x, ch in enumerate(s):
+            if ch == "#":
+                px[x, y] = (46, 20, 44, 255)
+    return ampliar(img, G2)
+
+
+def brasas(semente, n):
+    """Folha de brasas (320x360 na tela) que se repete em ladrilho subindo; desenhada para soma (trans = add)."""
+    rnd = random.Random(semente)
+    img = nova(160, 180)
+    px = img.load()
+    for _ in range(n):
+        x, y = rnd.randrange(1, 159), rnd.randrange(1, 179)
+        c = rnd.choice([(220, 110, 20), (240, 150, 40), (180, 70, 10)])
+        px[x, y] = c + (255,)
+        if rnd.random() < 0.4:
+            px[x + 1, y] = c + (255,)
+        if rnd.random() < 0.5:
+            px[x, y + 1] = (c[0] // 2, c[1] // 3, c[2] // 3, 255)
+    return ampliar(img, G2)
+
+
+def brilho_sol(forca):
+    """Halo do sol para soma: aneis pontilhados que acendem a volta do sol (3 forcas)."""
+    r = 50
+    img = nova(2 * r, 2 * r)
+    a = arr(img)
+    yy, xx = np.mgrid[0:2 * r, 0:2 * r]
+    dist = np.hypot(xx - r + 0.5, yy - r + 0.5) / r
+    for lim, c, nivel in [(1.0, (40, 18, 6), 8), (0.75, (60, 28, 8), 12), (0.5, (80, 40, 10), 16)]:
+        sel = (dist < lim) & (BAYER[yy % 4, xx % 4] < nivel * (0.6 + 0.2 * forca))
+        a[sel] = c + (255,)
+    return ampliar(de_arr(a), G2)
+
+
+def brilho_logo(lg, q, n=12):
+    """Faixa de luz inclinada correndo pelo logo (quadro q de n), so por cima das letras, para soma."""
+    m = np.array(lg.getchannel("A").resize((lg.width // G2, lg.height // G2), Image.NEAREST)) > 0
+    h, w = m.shape
+    yy, xx = np.mgrid[0:h, 0:w]
+    pos = -30 + q * (w + 60) / (n - 1)
+    d = xx + yy // 2 - pos
+    a = np.zeros((h, w, 4), np.uint8)
+    a[m & (np.abs(d) < 9)] = (70, 70, 60, 255)
+    a[m & (np.abs(d) < 4)] = (140, 140, 120, 255)
+    return ampliar(de_arr(a), G2)
 
 
 def sprites_titulo():
     """Sprites da abertura ja no tamanho da tela (nao passam por finalizar)."""
     lg = logo_titulo()
-    return [(0, 0, lg, lg.width // 2, 0), (100, 0, fundo_titulo(), 0, 0), (130, 0, faixa_menu(), 0, 0)]
+    fundo = fundo_titulo()
+    s = [(0, 0, lg, lg.width // 2, 0), (100, 0, fundo, 0, 0), (130, 0, ampliar(painel_menu2(), G2), 0, 0)]
+    s += [(101, q, img, 0, 0) for q, img in enumerate(agua_quadros(fundo))]
+    s += [(102, q, ave(q), 8, 4) for q in range(3)]
+    s += [(103, 0, brasas(1, 26), 0, 0), (103, 1, brasas(2, 16), 0, 0)]
+    s += [(104, k, brilho_sol(k), 100, 100) for k in range(3)]
+    s += [(105, q, brilho_logo(lg, q), lg.width // 2, 0) for q in range(12)]
+    s.append((105, 99, nova(4, 4), 0, 0))
+    return s
 
 
-def finalizar(sprites, nome):
+def finalizar(sprites, nome, k=ESCALA):
     out = []
     for (g, n, img, ax, ay) in sprites:
         checar_paleta(img, f"{nome} {g},{n}")
-        out.append((g, n, ampliar(img), round(ax * ESCALA), round(ay * ESCALA)))
+        out.append((g, n, ampliar(img, k), round(ax * k), round(ay * k)))
     return out
 
 
@@ -1479,19 +1257,111 @@ spriteno = 100,0
 layerno = 0
 start = -640,0
 
+; Abertura animada (issue #39): rio ondulando, sol pulsando, aves, brasas subindo e brilho no logo.
+[TitleBG Agua]
+type = anim
+actionno = 101
+layerno = 0
+start = {caixa_agua()[0] - 640},{caixa_agua()[1]}
+
+[TitleBG Sol]
+type = anim
+actionno = 104
+layerno = 0
+start = {SOL[0] - 640},{SOL[1]}
+trans = add
+
+[TitleBG Ave1]
+type = anim
+actionno = 102
+layerno = 0
+start = 300,112
+velocity = -0.7,0
+tile = 1,0
+tilespacing = 1500,0
+
+[TitleBG Ave2]
+type = anim
+actionno = 103
+layerno = 0
+start = 520,146
+velocity = -0.55,0
+tile = 1,0
+tilespacing = 1700,0
+
+[TitleBG Ave3]
+type = anim
+actionno = 106
+layerno = 0
+start = 420,92
+velocity = -0.8,0
+tile = 1,0
+tilespacing = 1900,0
+
+[TitleBG Brasas1]
+type = normal
+spriteno = 103,0
+layerno = 0
+start = -640,0
+velocity = 0.25,-0.7
+tile = 1,1
+trans = add
+
+[TitleBG Brasas2]
+type = normal
+spriteno = 103,1
+layerno = 0
+start = -480,90
+velocity = 0.12,-0.4
+tile = 1,1
+trans = add
+
 [TitleBG Faixa]
 type = normal
 spriteno = 130,0
 layerno = 0
 start = {POS['faixa_menu'][0] - 640},{POS['faixa_menu'][1]}
 trans = addalpha
-alpha = 192,64
+alpha = 200,56
 
 [TitleBG Logo]
 type = anim
 actionno = 120
 layerno = 0
 start = {POS['logo'][0] - 640},{POS['logo'][1]}
+
+[TitleBG BrilhoLogo]
+type = anim
+actionno = 121
+layerno = 0
+start = {POS['logo'][0] - 640},{POS['logo'][1]}
+trans = add
+
+[Begin Action 101]
+{''.join(f'101,{q}, 0,0, {AGUA_TICKS}' + chr(10) for q in range(AGUA_QUADROS))}
+[Begin Action 102]
+102,0, 0,0, 6
+102,1, 0,0, 6
+102,2, 0,0, 6
+102,1, 0,0, 6
+
+[Begin Action 103]
+102,1, 0,0, 7
+102,2, 0,0, 7
+102,1, 0,0, 7
+102,0, 0,0, 7
+
+[Begin Action 106]
+102,2, 0,0, 5
+102,1, 0,0, 5
+102,0, 0,0, 5
+102,1, 0,0, 5
+
+[Begin Action 104]
+104,0, 0,0, 24
+104,1, 0,0, 24
+104,2, 0,0, 24
+104,1, 0,0, 24
 
 [Begin Action 120]
 0,0, 0,-300, 2
@@ -1502,7 +1372,19 @@ start = {POS['logo'][0] - 640},{POS['logo'][1]}
 0,0, 0,-8, 2
 0,0, 0,4, 2
 0,0, 0,-2, 2
-0,0, 0,0, -1
+Loopstart
+0,0, 0,0, 28
+0,0, 0,-2, 28
+0,0, 0,-4, 28
+0,0, 0,-2, 28
+
+; brilho no logo: comeca junto do balanco (18 ticks da queda) e roda a cada 224 ticks = 2 balancos, sempre no
+; quarto quadro do balanco (logo 2 px acima)
+[Begin Action 121]
+105,99, 0,0, 18
+Loopstart
+105,99, 0,0, 200
+{''.join(f'105,{q}, 0,-2, 2' + chr(10) for q in range(12))}
 
 """
     cel, ce = POS["celula"], POS["celula_espaco"]
@@ -1551,7 +1433,7 @@ p1.name.offset = {n1[0]},{n1[1]}
 p2.name.font = 1,0,0
 p2.name.offset = {n2[0]},{n2[1]}
 title.font = 1,0,0
-title.offset = 640,52
+title.offset = 640,48
 ; Escolha de mapa (Breno, issue #35): depois dos lutadores, painel por cima de tudo (layerno 1) com a previa animada
 ; do cenario (acao 9000 do .def dele, gerada pelo gerar_cenario.py com a musica embaixo). Nunca aleatorio:
 ; randomselect = 0 tira o "Stage: Random" da lista (o modulo nazafights.lua liga a escolha em todos os modos).
@@ -1606,22 +1488,24 @@ start = -640,0
 
 [VS Screen]
 match.font = 1,0,0
-match.offset = 640,48
+match.offset = 640,54
 match.text = LUTA %i
+; Busto em tamanho natural (1/4 do 4x do motor = 448x216, nitido), em pe sobre a placa do nome, sem corte
+; (Breno, 2026-11-14: os de antes eram grandes demais e saiam cortados).
 p1.spr = 9000,1
-p1.offset = 0,140
+p1.offset = 68,254
 p1.facing = 1
-p1.scale = 0.5,0.5               ; busto 448x216 desenhado 2x (896x432), nitido
-p1.window = 0,44,632,580
+p1.scale = 0.25,0.25
+p1.window = 0,66,640,654
 p2.spr = 9000,1
-p2.offset = 1280,140
+p2.offset = 1212,254
 p2.facing = -1
-p2.scale = 0.5,0.5
-p2.window = 648,44,1280,580
+p2.scale = 0.25,0.25
+p2.window = 640,66,1280,654
 p1.name.font = 1,0,0
-p1.name.offset = 320,674
+p1.name.offset = 292,518
 p2.name.font = 1,0,0
-p2.name.offset = 960,674
+p2.name.offset = 988,518
 
 [VersusBGdef]
 bgclearcolor = 20,12,16
@@ -1633,10 +1517,13 @@ layerno = 0
 start = -640,0
 
 [VersusBG Emblema]
-type = normal
-spriteno = 400,1
+type = anim                      ; anim respeita o alfa do PNG; o tipo normal desenhava uma caixa preta em volta
+actionno = 401
 layerno = 0
 start = 0,360
+
+[Begin Action 401]
+400,1, 0,0, -1
 
 ; Trilha (Suno, escolhida pelo Breno; OGG feito por ferramentas/converter_musicas.py). Caminho relativo a esta pasta.
 ; Musica e por tela, nunca por lutador. Luta: bgmusic do cenario. Despertar: PlayBGM no lutador.
@@ -1667,27 +1554,25 @@ select.bgm.loopstart = {loop_da_musica("motif/nazafight/musicas/selecao.ogg")}
 
 def fight_def():
     v1, v2 = POS["vida_p1"], POS["vida_p2"]
-    # poder: o pos do .def e o canto do trilho; a placa do P2 e o espelho da do P1
-    P = PLACA
-    tx, ty = P["trilho"]
-    qx, qy = POS["placa_p1"]
-    p1 = (qx + tx * ESCALA, qy + ty * ESCALA)
-    p2 = (1280 - qx - P["w"] * ESCALA + (P["w"] - tx - P["trilho_w"]) * ESCALA, qy + ty * ESCALA)
+    k = G2
+    _t, _e, (vx, vy, vw, vh) = vida_sprites()
+    VW = HUD2["vida"][0]
+    vx2 = VW - vx - vw                          # o trilho do P2 e o espelho do P1
+    vida = {1: (vx * k, f"{vx * k},{(vx + vw) * k - 1}"), 2: (vx2 * k, f"{(vx2 + vw) * k - 1},{vx2 * k}")}
+    vy = vy * k
+    compostos, _c, _p, (px, py, pw, ph) = poder_sprites()
+    CW = compostos[0].width
+    px2 = CW - px - pw
+    p1 = POS["poder_p1"]
+    p2 = (1280 - p1[0] - CW * k, p1[1])
+    poder = {1: (p1, 0, px * k, f"{px * k},{(px + pw) * k - 1}"), 2: (p2, 10, px2 * k, f"{(px2 + pw) * k - 1},{px2 * k}")}
+    py0 = py * k
     f1, f2 = POS["face_p1"], POS["face_p2"]
     nm1, nm2 = POS["nome_p1"], POS["nome_p2"]
     w1, w2 = POS["vitoria_p1"], POS["vitoria_p2"]
     rx, ry = POS["relogio"]
-    # relogio: topo do digito 1 px abaixo da boca de breu; o .def quer a linha de base (topo + altura - 1)
-    topo_dig = (ry // ESCALA + RELOGIO["placa"][1] + 1) * ESCALA
-    rel_y = topo_dig + RELOGIO_GLIFO[1] * ESCALA - 1 - ry
-    # vida: P1 cheia a partir da ponta do retrato; P2 e o espelho (a barra nao e simetrica: a ponta inclinada)
-    vx1 = VIDA_X * ESCALA
-    vx2 = (TRILHO_W - VIDA_X - VIDA_W) * ESCALA
-    vy = VIDA_Y * ESCALA
-    vida = {1: (vx1, f"{vx1},{vx1 + VIDA_W * ESCALA - 1}"), 2: (vx2, f"{vx2 + VIDA_W * ESCALA - 1},{vx2}")}
-    px0, py0 = PODER_X * ESCALA, PODER_Y * ESCALA
-    poder_fim = px0 + PODER_W * ESCALA - 1
-    face_dentro = 2 * ESCALA                   # o retrato comeca 2 px logicos dentro da moldura
+    rel_y = (HUD2["relogio"][1] * k - RELOGIO_GLIFO[1] * k) // 2 + RELOGIO_GLIFO[1] * k - 1
+    face_dentro = k                              # o retrato comeca 1 px de desenho dentro da moldura
     t = CABECALHO + """
 [Info]
 name = Nazafights
@@ -1699,10 +1584,10 @@ localcoord = 1280,720
 sff = fight.sff
 snd = fight.snd               ; data/fight.snd
 font1 = fonts/naza_num.def
-font2 = fonts/naza_relogio_alerta.def
-font3 = fonts/naza_tab.def
+font2 = fonts/naza_relogio2_alerta.def
+font3 = fonts/naza_hud.def
 font4 = fonts/naza_menu.def
-font5 = fonts/naza_relogio.def
+font5 = fonts/naza_relogio2.def
 fightfx.sff = fightfx.sff     ; data/
 fightfx.air = fightfx.air
 common.snd = common.snd
@@ -1710,8 +1595,9 @@ common.snd = common.snd
 [FightFx]
 scale = 4
 
-; Vida: prancha de saveiro com alca de moringa. A vida fica presa na ponta de fora (junto do retrato) e o dano
-; abre junto do relogio: o motor prende o enchimento no 1o valor de range.x. folha > 50%, dende 26-50%, taua <= 25%.
+; Vida (estilo novo, issue #39): trilho fino inclinado. A vida fica presa na ponta de fora (junto do retrato) e o dano
+; abre junto do relogio: o motor prende o enchimento no 1o valor de range.x. Ouro > 50%, laranja 26-50%, vermelho <= 25%;
+; o dano que ainda vai cair fica em branco.
 [Lifebar]
 mid.delay = 30
 """
@@ -1731,22 +1617,22 @@ mid.delay = 30
 [Turns Lifebar]
 [Tag Lifebar]
 
-; Poder: trilho de madeira + 3 caxixis de estoque (cru -> quente -> cozido). levelbars = enche de novo a cada estoque.
+; Poder: trilho fino azul + 3 losangos de estoque (vazio -> enchendo -> pronto, em ouro). levelbars = enche de novo
+; a cada estoque; com 3 estoques a barra fica de ouro.
 [Powerbar]
 """
-    for j, (pos, base, faixa) in enumerate([(p1, 0, f"{px0},{poder_fim}"), (p2, 10, f"{poder_fim},{px0}")],
-                                           start=1):
+    for j in (1, 2):
+        pos, base, px0, faixa = poder[j]
         sufixo = j - 1
         t += f"p{j}.pos = {pos[0]},{pos[1]}\n"
         t += f"p{j}.bg0.spr = 20,{base}\n"
-        for k in range(1, 7):
-            t += f"p{j}.bg0{k * 500}.spr = 20,{base + k}\n"
+        for nv in range(1, 7):
+            t += f"p{j}.bg0{nv * 500}.spr = 20,{base + nv}\n"
         t += f"p{j}.front.spr = 21,{sufixo}\np{j}.front.offset = {px0},{py0}\n"
         t += f"p{j}.front3000.spr = 22,{sufixo}\np{j}.front3000.offset = {px0},{py0}\n"
         t += f"p{j}.range.x = {faixa}\np{j}.levelbars = 1\n"
     t += f"""
-; Retrato: fundo liso de rio atras, 9000,0 do lutador (25x25, escala inteira 4), anel de barro por cima.
-; A moldura encosta na alca da ponta de fora do trilho.
+; Retrato pequeno: fundo escuro riscado atras, 9000,0 do lutador (100x100), anel fino na cor do jogador por cima.
 [Face]
 p1.pos = {f1[0]},{f1[1]}
 p1.bg.spr = 30,0
@@ -1758,7 +1644,7 @@ p1.top.spr = 31,0
 p2.pos = {f2[0]},{f2[1]}
 p2.bg.spr = 30,1
 p2.face.spr = 9000,0
-p2.face.offset = {FACE * ESCALA - face_dentro},{face_dentro}
+p2.face.offset = {HUD2['face'] * k - face_dentro},{face_dentro}
 p2.face.facing = -1
 p2.face.scale = 0.25,0.25
 p2.ko.spr = 32,1
@@ -1768,16 +1654,16 @@ p2.top.spr = 31,1
 [Tag Face]
 
 [Name]
-p1.pos = {nm1[0]},{nm1[1] + 31}
+p1.pos = {nm1[0]},{nm1[1]}
 p1.name.font = 3,0,1
-p2.pos = {nm2[0]},{nm2[1] + 31}
+p2.pos = {nm2[0]},{nm2[1]}
 p2.name.font = 3,0,-1
 [Simul Name]
 [Turns Name]
 [Tag Name]
 
-; Relogio: caxixi brunido com a boca cheia de 2 digitos grandes (fonte 5); abaixo de 10 s, fonte 2 em taua
-; vivo, cujos glifos ja trazem o zero na frente (o motor escreve 8, a tela mostra 08).
+; Relogio: caixinha escura de quinas cortadas com 2 digitos (fonte 5, grade 2x); abaixo de 10 s, fonte 2 em vermelho,
+; cujos glifos ja trazem o zero na frente (o motor escreve 8, a tela mostra 08).
 [Time]
 pos = {rx},{ry}
 bg.spr = 40,0
@@ -1830,11 +1716,11 @@ win.text = "%s VENCEU"
 draw.font = 4,0,0
 draw.text = "EMPATE"
 
-; Vitorias: bolinhas de barro; crua = falta ganhar, cozida = round ganho.
+; Vitorias: losangos junto do relogio; escuro = falta ganhar, ouro = round ganho.
 [WinIcon]
 useiconupto = 4
 """
-    for j, (pos, dx) in enumerate([(w1, 28), (w2, -28)], start=1):
+    for j, (pos, dx) in enumerate([(w1, -18), (w2, 18)], start=1):
         t += f"p{j}.pos = {pos[0]},{pos[1]}\np{j}.iconoffset = {dx},0\np{j}.bg0.spr = 50,0\n"
         for tipo in ("n", "s", "h", "c", "t", "throw", "suicide", "teammate", "perfect", "clutch"):
             t += f"p{j}.{tipo}.spr = 50,1\n"
@@ -1849,8 +1735,6 @@ useiconupto = 4
     t += "\n[Begin Action 620]\n"
     for q, tm in enumerate([6, 5, 5, 6, 6, -1]):
         t += f"62,{q}, 0,0, {tm}\n"
-    t += ("\n; Caxixi de estoque quebrando. Pronto, mas sem gatilho no v1.0.0 (o Powerbar nao avisa o gasto).\n"
-          "[Begin Action 700]\n70,0, 0,0, 3\n70,1, 0,0, 3\n70,2, 0,0, 3\n70,3, 0,0, 3\n71,0, 0,0, -1\n")
     return hud_por_cima(t)
 
 
@@ -1902,7 +1786,8 @@ def ler_def(caminho):
                 acao = None
             continue
         if acao is not None:
-            acoes[acao].append([int(v) for v in s.split(",")[:5]])
+            if "," in s:                       # "Loopstart" nao e quadro
+                acoes[acao].append([int(v) for v in s.split(",")[:5]])
         elif atual is not None and "=" in s:
             k, v = s.split("=", 1)
             atual[k.strip().lower()] = v.strip().strip('"')
@@ -2255,15 +2140,18 @@ def gerar():
         "naza_relogio_alerta": fonte_relogio("naza_relogio_alerta", "taua_vivo", "farinha", "taua", True),
         "naza_tab": fonte_texto("naza_tab", False, "tabatinga", "breu"),
         "naza_menu": fonte_texto("naza_menu", True, "tabatinga", "breu"),
-        "naza_menu_ativo": fonte_texto("naza_menu_ativo", True, "dende", "barro"),
+        "naza_menu_ativo": fonte_texto("naza_menu_ativo", True, "giz", "noite"),
+        "naza_hud": fonte_texto("naza_hud", False, "giz", "noite", k=G2),
+        "naza_relogio2": fonte_relogio("naza_relogio2", "giz", "giz", "nevoa", False, k=G2),
+        "naza_relogio2_alerta": fonte_relogio("naza_relogio2_alerta", "sangue", "fogo_cl", "fogo_esc", True, k=G2),
     }
     for nome, (sprites, d, glifos) in fontes_geradas.items():
         for ch, g in glifos.items():
             checar_paleta(g, f"fonte {nome} {ch!r}")
         escrever_sff2(MOTIF / "fonts" / f"{nome}.sff", sprites)
         (MOTIF / "fonts" / f"{nome}.def").write_text(d, encoding="utf-8", newline="\n")
-    escrever_sff2(MOTIF / "fight.sff", finalizar(sprites_fight(), "fight"))
-    escrever_sff2(MOTIF / "system.sff", finalizar(sprites_system(), "system") + sprites_titulo())
+    escrever_sff2(MOTIF / "fight.sff", finalizar(sprites_fight(), "fight", G2))
+    escrever_sff2(MOTIF / "system.sff", finalizar(sprites_system(), "system", G2) + sprites_titulo())
     (MOTIF / "system.def").write_text(system_def(), encoding="utf-8", newline="\n")
     (MOTIF / "fight.def").write_text(fight_def(), encoding="utf-8", newline="\n")
 

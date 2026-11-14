@@ -79,19 +79,119 @@ spriteno = 100,0
 layerno = 0
 start = -640,0
 
+; Abertura animada (issue #39): rio ondulando, sol pulsando, aves, brasas subindo e brilho no logo.
+[TitleBG Agua]
+type = anim
+actionno = 101
+layerno = 0
+start = -440,410
+
+[TitleBG Sol]
+type = anim
+actionno = 104
+layerno = 0
+start = -400,300
+trans = add
+
+[TitleBG Ave1]
+type = anim
+actionno = 102
+layerno = 0
+start = 300,112
+velocity = -0.7,0
+tile = 1,0
+tilespacing = 1500,0
+
+[TitleBG Ave2]
+type = anim
+actionno = 103
+layerno = 0
+start = 520,146
+velocity = -0.55,0
+tile = 1,0
+tilespacing = 1700,0
+
+[TitleBG Ave3]
+type = anim
+actionno = 106
+layerno = 0
+start = 420,92
+velocity = -0.8,0
+tile = 1,0
+tilespacing = 1900,0
+
+[TitleBG Brasas1]
+type = normal
+spriteno = 103,0
+layerno = 0
+start = -640,0
+velocity = 0.25,-0.7
+tile = 1,1
+trans = add
+
+[TitleBG Brasas2]
+type = normal
+spriteno = 103,1
+layerno = 0
+start = -480,90
+velocity = 0.12,-0.4
+tile = 1,1
+trans = add
+
 [TitleBG Faixa]
 type = normal
 spriteno = 130,0
 layerno = 0
 start = -200,436
 trans = addalpha
-alpha = 192,64
+alpha = 200,56
 
 [TitleBG Logo]
 type = anim
 actionno = 120
 layerno = 0
 start = -194,20
+
+[TitleBG BrilhoLogo]
+type = anim
+actionno = 121
+layerno = 0
+start = -194,20
+trans = add
+
+[Begin Action 101]
+101,0, 0,0, 7
+101,1, 0,0, 7
+101,2, 0,0, 7
+101,3, 0,0, 7
+101,4, 0,0, 7
+101,5, 0,0, 7
+101,6, 0,0, 7
+101,7, 0,0, 7
+
+[Begin Action 102]
+102,0, 0,0, 6
+102,1, 0,0, 6
+102,2, 0,0, 6
+102,1, 0,0, 6
+
+[Begin Action 103]
+102,1, 0,0, 7
+102,2, 0,0, 7
+102,1, 0,0, 7
+102,0, 0,0, 7
+
+[Begin Action 106]
+102,2, 0,0, 5
+102,1, 0,0, 5
+102,0, 0,0, 5
+102,1, 0,0, 5
+
+[Begin Action 104]
+104,0, 0,0, 24
+104,1, 0,0, 24
+104,2, 0,0, 24
+104,1, 0,0, 24
 
 [Begin Action 120]
 0,0, 0,-300, 2
@@ -102,7 +202,31 @@ start = -194,20
 0,0, 0,-8, 2
 0,0, 0,4, 2
 0,0, 0,-2, 2
-0,0, 0,0, -1
+Loopstart
+0,0, 0,0, 28
+0,0, 0,-2, 28
+0,0, 0,-4, 28
+0,0, 0,-2, 28
+
+; brilho no logo: comeca junto do balanco (18 ticks da queda) e roda a cada 224 ticks = 2 balancos, sempre no
+; quarto quadro do balanco (logo 2 px acima)
+[Begin Action 121]
+105,99, 0,0, 18
+Loopstart
+105,99, 0,0, 200
+105,0, 0,-2, 2
+105,1, 0,-2, 2
+105,2, 0,-2, 2
+105,3, 0,-2, 2
+105,4, 0,-2, 2
+105,5, 0,-2, 2
+105,6, 0,-2, 2
+105,7, 0,-2, 2
+105,8, 0,-2, 2
+105,9, 0,-2, 2
+105,10, 0,-2, 2
+105,11, 0,-2, 2
+
 
 [Select Info]
 fadein.time = 10
@@ -146,7 +270,7 @@ p1.name.offset = 248,331
 p2.name.font = 1,0,0
 p2.name.offset = 1032,331
 title.font = 1,0,0
-title.offset = 640,52
+title.offset = 640,48
 ; Escolha de mapa (Breno, issue #35): depois dos lutadores, painel por cima de tudo (layerno 1) com a previa animada
 ; do cenario (acao 9000 do .def dele, gerada pelo gerar_cenario.py com a musica embaixo). Nunca aleatorio:
 ; randomselect = 0 tira o "Stage: Random" da lista (o modulo nazafights.lua liga a escolha em todos os modos).
@@ -201,22 +325,24 @@ start = -640,0
 
 [VS Screen]
 match.font = 1,0,0
-match.offset = 640,48
+match.offset = 640,54
 match.text = LUTA %i
+; Busto em tamanho natural (1/4 do 4x do motor = 448x216, nitido), em pe sobre a placa do nome, sem corte
+; (Breno, 2026-11-14: os de antes eram grandes demais e saiam cortados).
 p1.spr = 9000,1
-p1.offset = 0,140
+p1.offset = 68,254
 p1.facing = 1
-p1.scale = 0.5,0.5               ; busto 448x216 desenhado 2x (896x432), nitido
-p1.window = 0,44,632,580
+p1.scale = 0.25,0.25
+p1.window = 0,66,640,654
 p2.spr = 9000,1
-p2.offset = 1280,140
+p2.offset = 1212,254
 p2.facing = -1
-p2.scale = 0.5,0.5
-p2.window = 648,44,1280,580
+p2.scale = 0.25,0.25
+p2.window = 640,66,1280,654
 p1.name.font = 1,0,0
-p1.name.offset = 320,674
+p1.name.offset = 292,518
 p2.name.font = 1,0,0
-p2.name.offset = 960,674
+p2.name.offset = 988,518
 
 [VersusBGdef]
 bgclearcolor = 20,12,16
@@ -228,10 +354,13 @@ layerno = 0
 start = -640,0
 
 [VersusBG Emblema]
-type = normal
-spriteno = 400,1
+type = anim                      ; anim respeita o alfa do PNG; o tipo normal desenhava uma caixa preta em volta
+actionno = 401
 layerno = 0
 start = 0,360
+
+[Begin Action 401]
+400,1, 0,0, -1
 
 ; Trilha (Suno, escolhida pelo Breno; OGG feito por ferramentas/converter_musicas.py). Caminho relativo a esta pasta.
 ; Musica e por tela, nunca por lutador. Luta: bgmusic do cenario. Despertar: PlayBGM no lutador.

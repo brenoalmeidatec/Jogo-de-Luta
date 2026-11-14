@@ -11,6 +11,7 @@ Lê sprites/pengaro/pixel/pengaro.png (9 poses) e escreve:
 Para mudar golpe, dano ou fala, edite este arquivo e rode:
   python ferramentas/gerar_pengaro.py
 """
+import agarrao_mk
 import json
 import math
 import random
@@ -50,7 +51,7 @@ def tempos_agarrao_whisky():
         inicio.append(t)
         t += round(n * RITMO)
     return inicio[5], inicio[10]  # 5 = compasso 4 (chute no contato); 10 = bola 4 (solta a garrafa)
-FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9202: "hit-flash", 9204: "parry",
+FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9202: "hit-flash",  # 9204 ("parry") saiu: parecia rede de futebol
            9205: "ground-slam", 9206: "fireball"}
 
 # Tela de trabalho de cada sprite: pés em (EIXO_X, EIXO_Y).
@@ -668,7 +669,7 @@ FAISCA_FINAL = [("F", 2, 1), ("F", 2, 1.25), (4, 2, 1), (8, 2, 1), (13, 2, 1), (
 FAISCA_DEFESA = [(3, 2, 1), (9, 2, 1), (15, 2, 1)]
 FX_PENGARO = {
     9200: ("whisky_acerto", "sombra_acerto", FAISCA_FRACA), 9201: ("whisky_forte", "sombra_forte", FAISCA_FORTE),
-    9202: ("defesa", "defesa", FAISCA_DEFESA), 9204: ("defesa", "defesa", FAISCA_DEFESA),
+    9202: ("defesa", "defesa", FAISCA_DEFESA),
     9205: ("whisky_forte", "sombra_forte", FAISCA_FINAL),
     9210: (None, "sombra_aura", 2), 9211: (None, "sombra_chao", 2), 9212: (None, "sombra_rastro", 1),
     9213: ("whisky_rastro", None, 1), 9214: ("poeira", None, 1), 9215: (None, "sombra_chao", 1),
@@ -2981,7 +2982,7 @@ value = 5100
 
 def reversao(numero, sucesso, atributos, gatilho):
     return (f"[State {numero}, Desvia]\ntype = ReversalDef\ntrigger1 = {gatilho}\n"
-            f"reversal.attr = {atributos}\npausetime = 0,0\nsparkno = S9204\n"
+            f"reversal.attr = {atributos}\npausetime = 0,0\nsparkno = S(ifelse(var(20) > 0, 7691, 7690))\n"  # faísca do parry.py
             f"p1stateno = {sucesso}\np2stateno = 762\n\n")
 
 
@@ -4062,12 +4063,18 @@ def main():
         air, cns = hd.aplicar(s, air, cns, [(QUADROS_ARCADE, QUADROS_ARCADE_HD)], SPRITES_VITIMA)
         (SAIDA / "pengaro.air").write_text(air, encoding="utf-8", newline="\n")
         (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8", newline="\n")
+    # agarrão em pé segura-e-bate (ferramentas/agarrao_mk.py): montado dos golpes que ele já tem, depois do HD
+    air, cns = agarrao_mk.aplicar("pengaro", air, cns)
+    (SAIDA / "pengaro.air").write_text(air, encoding="utf-8", newline="\n")
+    (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8", newline="\n")
     escrever_sff(SAIDA / "pengaro.sff", s, manter=sprites_mantidos(air, cns))
     (SAIDA / "pengaro.cmd").write_text(montar_cmd(), encoding="utf-8")
     (SAIDA / "pengaro.def").write_text(DEF, encoding="utf-8", newline="\n")
     import gerar_sons  # sons próprios: sound = pengaro.snd no .def e PlaySnd/hitsound no .cns (missão 2026-11-14)
     gerar_sons.ligar("pengaro", SAIDA)
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
+    import parry  # parry em cima e embaixo, faísca própria e sem a "rede de futebol" (docs/parry.md)
+    parry.aplicar("pengaro", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
     if SEM_FOLHA_BOSS:
         print("Endiabrado sem folha própria (pose emprestada do boss):", " ".join(sorted(SEM_FOLHA_BOSS)))

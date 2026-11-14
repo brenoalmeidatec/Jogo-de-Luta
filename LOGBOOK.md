@@ -2137,6 +2137,52 @@ passarela de Nazaré animados como a Maria Fumaça, cada um com o seu movimento.
 
 **Próximo:** layout novo (missão 2026-11-14 item 1) vai redesenhar o painel da escolha de mapa.
 
+## 2026-11-14 — Agarrões segura-e-bate em todos os lutadores (missão 14/11, item 3; issue #37)
+
+**Pedido do Breno:** agarrão como nos jogos de luta clássicos: pega, segura, bate várias vezes e arremessa.
+
+**Feito:** `ferramentas/agarrao_mk.py` refaz o agarrão em pé (800/810) de CK, Gutto, Hazak, Pengaró e Raiclaven
+(Gbzin fica para a branch dele: é só pôr um roteiro em `ROTEIROS`). Sem desenho novo: a ação 810 é montada com os
+quadros dos golpes que cada um já tem, e cada contato cai no tick da caixa de acerto do golpe emprestado, com dano,
+faísca (a mesma do HitDef do golpe), som e o oponente reagindo com a animação de apanhar DELE (estados 822/825/826,
+`ChangeAnim` 5000/5001/5002). No fim: 823 joga para longe; segurando ← sai o 824, que passa por cima e cai atrás.
+- CK, "Gola na Mão: boxe sujo": jab duplo, gancho no fígado, joelhada na coxa, uppercut.
+- Gutto, "Clinch de Muay Thai": joelhada, joelhada subindo, joelhada, chute alto.
+- Pengaró, "Roda de Capoeira com Garrafa": chute baixo, garrafada, meia-lua, aú.
+- Raiclaven, "Corte de Cabelo à Força": tesourada, tesourada de lado, corte de cima, chute giratório.
+- Hazak, "Abraço de Quebrada": soco, cutucão, joelhada, chute alto.
+- Dano 120 no roteiro (antes 100), 4 ou 5 pancadas, 69 a 85 ticks até o arremesso. Escape igual a antes (y ou b no
+  começo, antes da 1ª pancada). O .sff não muda; o RemapPreset do Despertar troca os desenhos sozinho.
+- Os geradores chamam `agarrao_mk.aplicar` no fim (conferido: gerar_ck/hazaki/pengaro saem iguais ao arquivo
+  aplicado). Robô: cenários "agarrao segura-e-bate" (frente e para trás) no `robo.lua` para todos.
+
+**Sugestões:** folhas próprias de agarrão por lutador no ChatGPT (hoje são quadros emprestados); a faísca segue o
+número do HitDef, então quando o item 4 trocar a "rede de futebol" ela muda junto se a troca for no mesmo número;
+agarrão agachado (840) e o de comando (830) ainda são os antigos.
+
+## 2026-11-14 — Layout novo "Arena" (issue #39, item 1 da missão de 14/11)
+
+Título animado (rio ondulando, sol, aves, brasas, brilho no logo), HUD simples, VS com os bustos em tamanho natural e
+seleção de lutador e de mapa no estilo novo. Tudo por `ferramentas/gerar_layout.py` (as funções antigas da feira e do
+HUD de ouro saíram). Robô na nuvem 151/0; fotos do jogo rodando em `docs/previas-layout/jogo/`. Detalhes, armadilhas
+e sugestões em `docs/layout-novo.md`.
+## 2026-11-14 — Parry em cima e embaixo, sem a "rede de futebol" (Claude, thread do Alisson)
+
+**Pedido do Breno** (missão 2026-11-14, item 4; `docs/parry.md`): tirar a faísca pronta do pixelfx e colocar o parry
+de cada lutador no jogo.
+
+**Feito:** `ferramentas/parry.py` aplica nos 5 lutadores (e os `gerar_*.py` chamam no fim): as 10 folhas da forma base
+cortadas em 3x (`7600`/`7640`), faísca própria na cor de cada um a partir da estrela do `crit-hit` (`7690`/`7691`),
+parry em cima (→+c, 760/761, `SA`) e embaixo (↓+c, 764/765, `C`), acertou com controle (a piada cancela em qualquer
+golpe), oponente aberto 20 ticks. A `9204` saiu do parry, do Contragolpe do CK, da Guarda de Aço do Hazak, do `.air` e
+do `.sff`. Sprites antigos conferidos com `conferir_sff.py` (nenhum mudou).
+
+**Conferido:** robô `--linux` com 6 roteiros novos de parry: Pengaró 190/0, CK 228/0, Gutto 185/0, Raiclaven 185/0,
+Hazak 212/1 (a falha é a fuga da DERROTA, que já falha igual na `mugen` antes do parry).
+
+**Não feito:** folhas `e_parry_alto`/`e_parry_baixo` do endiabrado (precisam do ChatGPT; até lá o endiabrado usa a
+defesa redesenhada); ninguém jogou para sentir a janela e o tempo da piada; o verde do Raiclaven endiabrado sai prata
+(a paleta dele não tem verde, issue #38).
 ## 2026-11-14 — Sons novos do jogo inteiro (missão 2026-11-14, item 2; Claude, sessão do LightWolfMan)
 
 **Pedido do Breno:** sons novos para golpes, defesa, agarrão, queda, especiais, supers, transformação, parry, menu,
@@ -2158,8 +2204,9 @@ Tabela completa em `docs/sons.md`.
 **Volume:** músicas em -14 LUFS; golpe forte e narrador -13,5 a -12 LUFS momentâneo, médio -15,5, fraco -17, vento -21
 a -18, menu -20; pico <= -1 dBFS. Medido pelo script e conferido com `ffmpeg -af ebur128` (diferença <= 0,5 dB).
 
-**Verificado:** robô na nuvem (Pengaró, CK, Gutto, Raiclaven contra o Hazak) sem nenhuma falha; `ligar()` é
+**Verificado:** robô na nuvem depois de juntar com layout, agarrões e parry: Pengaró 190, CK 228, Gutto 185, Raiclaven 185 verificações (contra o Hazak), nenhuma falha; `ligar()` é
 idempotente e desfazer volta o `.cns` byte a byte ao original.
 **NÃO verificado:** ninguém ouviu (na nuvem o motor roda mudo). Tempo das assinaturas no Despertar (ticks 9/42/55) é
 estimado pelos desenhos. `verificar_pengaro.py` já falhava antes ("tamanho do SFF"), sem relação com o som.
-Agarrões e parry não foram mexidos (outras frentes): eles devem usar `F35,x` e `F30,x`.
+Depois de juntar com os agarrões e o parry: parry que acertou (761/765) toca `F30,0` ou `F30,1` (endiabrado) e o
+agarrão que pegou (810/831/841) toca `F35,0`; as pancadas dos agarrões ficam nos `F5,x` novos.

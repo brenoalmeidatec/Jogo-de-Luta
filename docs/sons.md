@@ -91,8 +91,9 @@ O IKEMEN acha este arquivo pelo `common.snd = common.snd` do `fight.def`; ele su
   `Projectile`/`Helper`. Os controladores novos se chamam `[State N, som ...]` e terminam em `; som: fim`.
 - Despertar (2000): a pausa toca `F31,0` no lugar do som de super e `F31,1` no tick 55 (quando vira endiabrado). No
   Pengaró: gole no tick 9, garrafa quebrando no 42 (desenho 6 do `despertar_a`) e possessão no 55.
-- **Agarrões e parry não são mexidos aqui** (outras frentes estão refazendo): use `F35,x` e `F30,x` direto no
-  gerador.
+- Parry que acertou (761 em cima, 765 embaixo): `F30,0` na forma base e `F30,1` no endiabrado. Agarrão que pegou
+  (810, 831, 841): `F35,0` no `Time = 0`; as pancadas e o final seguem com os `F5,x` que a frente dos agarrões pôs.
+  `F35,1` (arremesso) e `F35,2` (escape) estão prontos para quem quiser usar.
 
 ## Falta e ideias
 

@@ -1614,6 +1614,14 @@ physics = N
 anim = 810
 velset = 0,0
 ctrl = 0
+sprpriority = 2
+
+; Roda de Capoeira com Garrafa: pega, segura, 3 pancadas e arremessa. Escape: y ou b no começo.
+[State 810, som comum]
+type = PlaySnd
+trigger1 = Time = 0
+value = F35,0
+; som: fim
 
 [State 810, Lado]
 type = VarSet
@@ -1622,43 +1630,181 @@ var(2) = command = "holdback"
 
 [State 810, Segura]
 type = TargetBind
-trigger1 = Time < 14
+trigger1 = Time < 81
+trigger1 = NumTarget
 pos = 34, 0
 
 [State 810, Escapou]
 type = ChangeState
 trigger1 = Time > 1
-trigger1 = Time < 14
+trigger1 = Time < 15
 trigger1 = enemynear,stateno != 820
 value = 0
 ctrl = 1
 
+[State 810, Perdeu]
+type = ChangeState
+trigger1 = Time > 15
+trigger1 = Time < 81
+trigger1 = !NumTarget
+value = 0
+ctrl = 1
+
+[State 810, Pancada 1: dano]
+type = TargetLifeAdd
+trigger1 = Time = 15
+trigger1 = NumTarget
+value = -20
+
+[State 810, Pancada 1: faísca]
+type = Explod
+trigger1 = Time = 15
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 30, -52
+removetime = -2
+sprpriority = 5
+ownpal = 1
+
+[State 810, Pancada 1: som]
+type = PlaySnd
+trigger1 = Time = 15
+value = F5,0
+
+[State 810, Pancada 1: barra]
+type = PowerAdd
+trigger1 = Time = 15
+trigger1 = NumTarget
+value = 10
+
+[State 810, Pancada 1: reage]
+type = TargetState
+trigger1 = Time = 15
+trigger1 = NumTarget
+value = 822
+
+[State 810, Pancada 2: dano]
+type = TargetLifeAdd
+trigger1 = Time = 36
+trigger1 = NumTarget
+value = -24
+
+[State 810, Pancada 2: faísca]
+type = Explod
+trigger1 = Time = 36
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9235, 9205))
+postype = p1
+pos = 30, -92
+removetime = -2
+sprpriority = 5
+ownpal = 1
+
+[State 810, Pancada 2: som]
+type = PlaySnd
+trigger1 = Time = 36
+value = F5,3
+
+[State 810, Pancada 2: barra]
+type = PowerAdd
+trigger1 = Time = 36
+trigger1 = NumTarget
+value = 12
+
+[State 810, Pancada 2: reage]
+type = TargetState
+trigger1 = Time = 36
+trigger1 = NumTarget
+value = 825
+
+[State 810, Pancada 3: dano]
+type = TargetLifeAdd
+trigger1 = Time = 56
+trigger1 = NumTarget
+value = -22
+
+[State 810, Pancada 3: faísca]
+type = Explod
+trigger1 = Time = 56
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9235, 9205))
+postype = p1
+pos = 30, -81
+removetime = -2
+sprpriority = 5
+ownpal = 1
+
+[State 810, Pancada 3: som]
+type = PlaySnd
+trigger1 = Time = 56
+value = F5,3
+
+[State 810, Pancada 3: barra]
+type = PowerAdd
+trigger1 = Time = 56
+trigger1 = NumTarget
+value = 11
+
+[State 810, Pancada 3: reage]
+type = TargetState
+trigger1 = Time = 56
+trigger1 = NumTarget
+value = 826
+
+[State 810, Final: dano]
+type = TargetLifeAdd
+trigger1 = Time = 81
+trigger1 = NumTarget
+value = -54
+
+[State 810, Final: faísca]
+type = Explod
+trigger1 = Time = 81
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9235, 9205))
+postype = p1
+pos = 30, -65
+removetime = -2
+sprpriority = 5
+ownpal = 1
+
+[State 810, Final: som]
+type = PlaySnd
+trigger1 = Time = 81
+value = F5,3
+
+[State 810, Final: barra]
+type = PowerAdd
+trigger1 = Time = 81
+trigger1 = NumTarget
+value = 27
+
+[State 810, Final: treme]
+type = EnvShake
+trigger1 = Time = 81
+time = 10
+freq = 150
+ampl = -4
+
+[State 810, Joga para trás]
+type = TargetState
+trigger1 = Time = 81
+trigger1 = NumTarget
+trigger1 = var(2)
+value = 824
+
+[State 810, Joga]
+type = TargetState
+trigger1 = Time = 81
+trigger1 = NumTarget
+trigger1 = !var(2)
+value = 823
+
 [State 810, Vira]
 type = Turn
-trigger1 = Time = 14
+trigger1 = Time = 91
 trigger1 = var(2)
-
-[State 810, Dano]
-type = TargetLifeAdd
-trigger1 = Time = 14
-value = -100
-
-[State 810, Treme]
-type = EnvShake
-trigger1 = Time = 14
-time = 8
-freq = 150
-ampl = -3
-
-[State 810, Som]
-type = PlaySnd
-trigger1 = Time = 14
-value = F5, 2
-
-[State 810, Solta]
-type = TargetState
-trigger1 = Time = 14
-value = 821
 
 [State 810, Fim]
 type = ChangeState
@@ -1754,6 +1900,12 @@ sprpriority = 2
 anim = 831
 juggle = 0
 velset = 0,0
+
+[State 831, som comum]
+type = PlaySnd
+trigger1 = Time = 0
+value = F35,0
+; som: fim
 
 [State 831, Arte despertada]
 type = ChangeAnim
@@ -4453,6 +4605,12 @@ anim = 841
 juggle = 0
 velset = 0,0
 
+[State 841, som comum]
+type = PlaySnd
+trigger1 = Time = 0
+value = F35,0
+; som: fim
+
 [State 841, Segura]
 type = TargetBind
 trigger1 = Time < 20
@@ -6362,6 +6520,7 @@ trigger1 = AnimTime = 0
 value = 0
 ctrl = 1
 
+; parry em cima (docs/parry.md): 760 é a postura (quadros 1-3, janela de 4 ticks), 761 é o acertou (quadros 4-8, com controle: qualquer golpe cancela a piada)
 [Statedef 760]
 type = S
 movetype = A
@@ -6380,9 +6539,9 @@ value = 10760
 [State 760, Desvia]
 type = ReversalDef
 trigger1 = Time < 4
-reversal.attr = SCA, NA, SA, HA
+reversal.attr = SA, NA, SA, HA
 pausetime = 0,0
-sparkno = S9204
+sparkno = S(ifelse(var(20) > 0, 7691, 7690))
 p1stateno = 761
 p2stateno = 762
 
@@ -6396,10 +6555,24 @@ ctrl = 1
 type = S
 movetype = I
 physics = N
-ctrl = 0
+ctrl = 1
 sprpriority = 2
 anim = 761
 velset = 0,0
+
+[State 761, som comum]
+type = PlaySnd
+trigger1 = Time = 0
+trigger1 = var(20) <= 0
+value = F30,0
+; som: fim
+
+[State 761, som comum]
+type = PlaySnd
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = F30,1
+; som: fim
 
 [State 761, Arte despertada]
 type = ChangeAnim
@@ -6408,6 +6581,72 @@ trigger1 = var(20) > 0
 value = 10761
 
 [State 761, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+; parry embaixo (docs/parry.md): 764 é a postura (quadros 1-3, janela de 4 ticks), 765 é o acertou (quadros 4-8, com controle: qualquer golpe cancela a piada)
+[Statedef 764]
+type = C
+movetype = A
+physics = N
+ctrl = 0
+sprpriority = 2
+anim = 764
+velset = 0,0
+
+[State 764, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10764
+
+[State 764, Desvia]
+type = ReversalDef
+trigger1 = Time < 4
+reversal.attr = C, NA, SA, HA
+pausetime = 0,0
+sparkno = S(ifelse(var(20) > 0, 7691, 7690))
+p1stateno = 765
+p2stateno = 762
+
+[State 764, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[Statedef 765]
+type = S
+movetype = I
+physics = N
+ctrl = 1
+sprpriority = 2
+anim = 765
+velset = 0,0
+
+[State 765, som comum]
+type = PlaySnd
+trigger1 = Time = 0
+trigger1 = var(20) <= 0
+value = F30,0
+; som: fim
+
+[State 765, som comum]
+type = PlaySnd
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = F30,1
+; som: fim
+
+[State 765, Arte despertada]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = 10765
+
+[State 765, Fim]
 type = ChangeState
 trigger1 = AnimTime = 0
 value = 0
@@ -6447,13 +6686,13 @@ statetype = S
 
 [State 762, Abertura no ar]
 type = SelfState
-trigger1 = Time >= 14 && statetype = A
+trigger1 = Time >= 20 && statetype = A
 value = 50
 ctrl = 1
 
 [State 762, Abertura no chão]
 type = SelfState
-trigger1 = Time >= 14
+trigger1 = Time >= 20
 value = 0
 ctrl = 1
 
@@ -8614,3 +8853,109 @@ trigger1 = map(au_pengaro_f) <= 0 && NumExplod(9603)
 id = 9603
 ignorehitpause = 1
 
+; ---- agarrão segura-e-bate (ferramentas/agarrao_mk.py) ----
+
+[Statedef 822]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 822, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 5000
+
+[State 822, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 825]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 825, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 5001
+
+[State 825, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 826]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 826, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 5002
+
+[State 826, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 823]
+type = A
+movetype = H
+physics = N
+velset = -4.2, -5.5
+ctrl = 0
+
+[State 823, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 5030
+
+[State 823, Queda]
+type = VelAdd
+trigger1 = 1
+y = .45
+
+[State 823, Chão]
+type = SelfState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 5100
+
+[Statedef 824]
+type = A
+movetype = H
+physics = N
+velset = 4.6, -6.5
+ctrl = 0
+
+[State 824, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 5030
+
+[State 824, Passa por cima]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 824, Queda]
+type = VelAdd
+trigger1 = 1
+y = .45
+
+[State 824, Chão]
+type = SelfState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 5100

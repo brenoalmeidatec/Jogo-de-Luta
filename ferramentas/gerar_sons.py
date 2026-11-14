@@ -791,6 +791,14 @@ ESPECIAIS = {
 }
 
 
+_PARRY = [("trigger1 = Time = 0\ntrigger1 = var(20) <= 0", "F30,0"), ("trigger1 = Time = 0\ntrigger1 = var(20) > 0", "F30,1")]
+COMUNS = {  # estado -> [(gatilho, som)] para todo lutador
+    761: _PARRY, 765: _PARRY,  # parry em cima / embaixo acertou (docs/parry.md): base brilhante, endiabrado rasgado
+    810: [("trigger1 = Time = 0", "F35,0")], 831: [("trigger1 = Time = 0", "F35,0")],  # agarrão pegou
+    841: [("trigger1 = Time = 0", "F35,0")],
+}
+
+
 def _desfazer(cns):
     cns = re.sub(r"^\[State -?\d+, som[^\]]*\]\n(?:(?!\n\[)[^\n]*\n)*?" + re.escape(MARCA) + r" fim\n\n", "", cns,
                  flags=re.M)
@@ -854,6 +862,8 @@ def ligar(nome, pasta=None):
             if 1000 <= n < 2000 or 3400 <= n < 3500 or 3430 <= n < 3440:
                 k = 4
             novos.append(_playsnd(n, "vento", "trigger1 = Time = 0", f"F40,{k}"))
+        for gat, valor in COMUNS.get(n, []):  # parry e agarrão (estados das frentes de parry e agarrão)
+            novos.append(_playsnd(n, "comum", gat, valor))
         for gat, valor in extras:
             if gat == "proj":
                 pm = re.search(r"^type = (?:Projectile|Helper)\n((?:trigger\w* = [^\n]*\n)+)", p, re.M | re.I)

@@ -83,3 +83,30 @@ Mesmos comandos e estados (`e_parry_alto` e `e_parry_baixo`). O desenho é na fo
 
 Antes de desenhar, confira com a ficha do lutador (`docs/fichas/<lutador>.md`) se a forma endiabrada dele mudou.
 Siga as regras de conteúdo do jogo: nada de deficiência, de gente real nem de marca nova sem pedido do Breno.
+
+## No jogo (2026-11-14, Claude na thread do Alisson)
+
+Tudo montado por [`ferramentas/parry.py`](../ferramentas/parry.py), em cima do que já estava em `chars/<lutador>/`, sem
+regerar o lutador (os outros sprites, a paleta e as caixas foram conferidos com `conferir_sff.py`: nenhum mudou). Os
+`gerar_<lutador>.py` chamam o `parry.aplicar` no fim, então o parry não se perde quando alguém regerar.
+
+| O quê | Como ficou |
+|---|---|
+| Sprites | `7600,0..7` (parry_alto) e `7640,0..7` (parry_baixo), cortados direto da folha em 3x, com a altura da defesa em pé (ação 130) e na paleta do `.sff`. O Pengaró usa os quadros que o `converter_pengaro.py` já tinha cortado. |
+| Faísca | `7690` (base) e `7691` (endiabrado): a estrela dos 2 primeiros quadros do `crit-hit` do pixelfx, sem o halo, pintada na cor do lutador (issue #38). 8 ticks. A `9204` (rede de futebol) saiu do parry, do Contragolpe do CK (1300/1301) e da Guarda de Aço do Hazak (1100/1101), do `.air` e do `.sff`. |
+| Em cima | `→ + c`, estados 760/761, `reversal.attr = SA, NA, SA, HA`. |
+| Embaixo | `↓ + c` (vale também ↙ e ↘), estados 764/765, `reversal.attr = C, NA, SA, HA`; a entrada vem antes da provocação no `.cmd`, então `↓ + c` não provoca mais. A caixa que apara cobre só a metade de baixo do corpo. |
+| Postura | quadros 1-3 (3 + 3 + 30 ticks, os mesmos 36 de antes); janela de 4 ticks como antes. |
+| Acertou | quadros 4-8 (5 + 5 + 6 + 8 + 12 = 36 ticks), **com controle desde o 1º tick**: qualquer golpe, especial ou super cancela a piada. |
+| Oponente | estado 762 por **20 ticks** (eram 14). |
+| Endiabrado | ainda sem folha própria: usa a defesa redesenhada de hoje (ações 10760/10761, e 10764/10765 no parry de baixo) e a faísca da forma. |
+
+Folhas de contato (quadros e faíscas como estão no `.sff`): [`docs/arcade/parry/`](arcade/parry/).
+
+Robô (`ferramentas/robo/robo.lua`, bloco PARRY, roda para todos os lutadores contra o Hazak): parry em cima pega o jab,
+parry embaixo pega o chute agachado, cada um seguido de soco tem que acertar, sem apertar nada ninguém fica travado, e o
+parry do lado errado não pega.
+
+**Falta:** as folhas `e_parry_alto` e `e_parry_baixo` da forma endiabrada (tabela acima), que precisam do ChatGPT; e
+alguém jogar para sentir a janela e o tempo da piada. A faísca verde do Raiclaven endiabrado sai cinza-prata, porque a
+paleta dele não tem verde (o mesmo problema do cabelo da issue #38).

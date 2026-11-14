@@ -8,6 +8,7 @@ coração), o agarrão de comando, os textos e os nomes dos arquivos. Tudo o mai
   python ferramentas/animar_folha.py ... (com LUTADOR=gutto)   corta as folhas e faz os quadros do meio
   python ferramentas/gerar_gutto.py                            monta chars/gutto
 """
+import agarrao_mk
 import re
 import shutil
 from pathlib import Path
@@ -418,6 +419,9 @@ def main():
     else:
         print("ATENÇÃO: sem sprites/gutto/quadros_hd (fica fora do git: ~200-340 MB). O lutador sai em 1x, borrado. "
               "Gere com: python ferramentas/hd_blender.py gutto  (uns 20 min; depois rode este gerador de novo)")
+    # agarrão em pé segura-e-bate (ferramentas/agarrao_mk.py): montado dos golpes que ele já tem, depois do HD
+    air, cns = agarrao_mk.aplicar("gutto", air, cns)
+    (SAIDA / "gutto.air").write_text(air, encoding="utf-8", newline="\n")
     (SAIDA / "gutto.cns").write_text(cns, encoding="utf-8", newline="\n")
     gp.escrever_sff(SAIDA / "gutto.sff", s, manter=gp.sprites_mantidos(air, cns))
     (SAIDA / "gutto.cmd").write_text(gp.montar_cmd(), encoding="utf-8")
@@ -425,6 +429,8 @@ def main():
     import gerar_sons  # sons próprios: sound = gutto.snd no .def e PlaySnd/hitsound no .cns (missão 2026-11-14)
     gerar_sons.ligar("gutto", SAIDA)
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
+    import parry  # parry em cima e embaixo, faísca própria e sem a "rede de futebol" (docs/parry.md)
+    parry.aplicar("gutto", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

@@ -6,7 +6,7 @@ do
   local function log(s) LOG:write(s, "\n"); LOG:flush() end
   local CMDS = {"x","y","a","b","c","holdfwd","holdback","holdup","holddown","agarrao_whisky","garrafa_x","garrafa_y",
     "role_a","role_b","sombra_x","sombra_y","sombra_a","sombra_b","despertar","FF","rolar","afastar","golaco",
-    "golpe_216","golpe_246","golpe_201","golpe_231","golpe_1400","golpe_1401","golpe_1500","golpe_1501","golpe_3200","bola_fraca","bola_forte","parry","desperto","agacha","v10","fimdesp"}
+    "golpe_216","golpe_246","golpe_201","golpe_231","golpe_1400","golpe_1401","golpe_1500","golpe_1501","golpe_3200","bola_fraca","bola_forte","parry","parry_baixo","desperto","agacha","v10","fimdesp"}
   for _, nome in ipairs({"bfd_a","bfd_b","bfd_x","bfd_y","df_x","df_y","fb_x","fb_y","fd_x","fd_y","df_a","df_b","db_a",
     "db_b","bf_a","bf_b","bd_a","bd_b","db_x","db_y","bf_y"}) do CMDS[#CMDS + 1] = nome end  -- toques do Hazak
   CMDS[#CMDS + 1] = "defende"  -- so o .cmd do Hazak tem o controlador (testar_pengaro.py); nos outros o mapa nao faz nada
@@ -105,6 +105,39 @@ do
   local function estadoEm(est) return function() return st1() == est end end
   local function livre() return snap(1).ctrl end
   local function note(fn) acao(function() log("  " .. fn()) end) end
+
+
+  -- Agarrao segura-e-bate (ferramentas/agarrao_mk.py, todos os lutadores): pega, segura, bate varias vezes com o
+  -- oponente reagindo (822/825/826) e arremessa (823 para longe; 824 por cima, segurando para tras).
+  local function agarraoMK(tras)
+    S("agarrao segura-e-bate" .. (tras and " (para tras)" or ""), function()
+      approach(6)
+      acao(function() c.vida0 = lifeP2(); c.ult = lifeP2(); c.golpes = 0; c.reagiu = false; c.voou = nil; c.t0 = clock(); c.x2 = snap(2).x - snap(1).x end)
+      press(1, {tras and "holdback" or "holdfwd", "y"}, 3)
+      need(estadoEm(810), 30, "entrou em 810")
+      add(function()
+        local v, s2 = lifeP2(), snap(2).st
+        if v < c.ult then c.golpes = c.golpes + 1; c.ult = v end
+        if s2 == 822 or s2 == 825 or s2 == 826 then c.reagiu = true end
+        if s2 == 823 or s2 == 824 then c.voou = c.voou or s2 end
+        if st1() ~= 810 then c.dur = clock() - c.t0; return true end
+        return clock() - c.t0 > 400
+      end)
+      note(function() return "pancadas " .. c.golpes .. "; dano " .. (c.vida0 - lifeP2()) .. "; duracao " .. tostring(c.dur) .. " ticks; P2 voou pelo " .. tostring(c.voou) end)
+      need(function() return c.golpes >= 4 end, 1, "o dano saiu em 4 ou mais pancadas", false)
+      need(function() return c.reagiu end, 1, "o P2 reagiu as pancadas preso (822/825/826)", false)
+      need(function() return c.voou == (tras and 824 or 823) end, 1, "o P2 foi arremessado (" .. (tras and 824 or 823) .. ")", false)
+      -- 120 de dano no roteiro; a defesa do Hazak (P2) aumenta um pouco
+      need(function() local d = c.vida0 - lifeP2(); return d >= 110 and d <= 145 end, 1, "dano entre 110 e 145", false)
+      need(function() return c.dur and c.dur >= 60 and c.dur <= 150 end, 1, "duracao entre 60 e 150 ticks", false)
+      need(function() local s = snap(2); return s.ctrl and s.st == 0 end, 300, "o P2 levantou e voltou ao controle", false)
+      need(livre, 60, "o P1 voltou ao controle", false)
+      note(function() return "lado do P2 antes " .. c.x2 .. ", depois " .. (snap(2).x - snap(1).x) end)
+      if tras then
+        need(function() return (snap(2).x - snap(1).x) * c.x2 < 0 end, 1, "o P2 caiu do outro lado", false)
+      end
+    end)
+  end
 
   -- ---------------------------------------------------------------- roteiros
   local function corrente(nome, botao, primeiro, seq, dist, janela)
@@ -211,14 +244,8 @@ do
     wait(25)
     note(function() return "dano: " .. (c.vida0 - lifeP2()) .. "; P2 estado " .. snap(2).st end)
   end)
-  S("agarrao comum em pe", function()
-    approach(6)
-    press(1, {"holdfwd", "y"}, 3)
-    wait(4)
-    note(function() return "estado " .. st1() end)
-    wait(60)
-    note(function() return "dano: " .. (1000 - lifeP2()) .. "; estado " .. st1() end)
-  end)
+  agarraoMK(false)
+  agarraoMK(true)
 
   local function projetil(nome, cmd, dist, esperado)
     S("projetil " .. nome, function()
@@ -546,19 +573,6 @@ do
       press(1, {"garrafa_x"}, 2)
       need(estadoEm(1600), 15, "entrou em 1600 com a nuvem no ar", false)
     end)
-    S("Agarrao em pe: tres socos (dano em 3 vezes, 100 no total)", function()
-      approach(6)
-      acao(function() c.vida0 = lifeP2(); c.golpes = 0; c.ult = lifeP2() end)
-      press(1, {"holdfwd", "y"}, 3)
-      need(estadoEm(810), 30, "entrou em 810")
-      add(function()
-        local v = lifeP2()
-        if v < c.ult then c.golpes = c.golpes + 1; c.ult = v end
-        return st1() ~= 810
-      end)
-      note(function() return "socos " .. c.golpes .. "; dano " .. (c.vida0 - lifeP2()) end)
-      need(function() return c.golpes == 3 end, 1, "o dano saiu em 3 socos", false)
-    end)
     S("Contragolpe (caneta_x) sem apanhar: guarda baixa e volta", function()
       approach(60)
       press(1, {"caneta_x"}, 2)
@@ -596,6 +610,52 @@ do
       need(function() return c.vida0 - lifeP2() > 0 end, 1, "o direto acertou", false)
     end)
   end
+
+  -- ================================================================ PARRY (docs/parry.md): todos os lutadores
+  -- O P2 (Hazak) bate: jab em pe (x) ou chute agachado (agacha + a); o P1 entra no parry 1 tick depois e pega o golpe
+  -- dentro da janela de 4 ticks. Parry certo: o P1 vai para o acertou e o P2 fica aberto (762) por 20 ticks.
+  local function T(name, build) scenarios[#scenarios + 1] = {name = name, build = build} end
+  local function parry(nome, cmd, postura, acertou, baixo, pega, depois)
+    T("PARRY " .. nome, function()
+      approach(30)
+      if baixo then press(2, {"holddown", "agacha"}, 600); wait(12) end
+      acao(function() c.vida0 = lifeP2(); c.vida1 = snap(1).life; c.ok = false; c.aberto = 0; c.t762 = nil end)
+      press(2, {baixo and "a" or "x"}, 3)
+      press(1, {cmd}, 2)
+      need(function() local s = st1(); return s == postura or s == acertou end, 4, "entrou no parry (" .. postura .. ")")
+      if depois == "x" then
+        need(estadoEm(acertou), 12, "acertou o parry (" .. acertou .. ")")
+        need(function() return snap(2).st == 762 end, 6, "P2 aberto (762)")
+        -- quem foi aparado embaixo fica aberto agachado (762 mantem o tipo): o castigo e o soco agachado
+        press(1, baixo and {"holddown", "x"} or {"x"}, 2)
+        need(function() return c.vida0 - lifeP2() > 0 end, 30, "o soco" .. (baixo and " agachado" or "") .. " depois do parry acertou o P2 aberto")
+        need(function() return snap(1).life == c.vida1 end, 1, "o P1 nao levou dano", false)
+        return
+      end
+      local ate
+      add(function()
+        ate = ate or (clock() + 60)
+        local a, b = snap(1), snap(2)
+        if a.st == acertou then c.ok = true end
+        if b.st == 762 then c.aberto = c.aberto + 1 end
+        return clock() >= ate
+      end)
+      note(function() return "acertou: " .. tostring(c.ok) .. "; P2 aberto por " .. c.aberto .. " ticks; dano no P1 " .. (c.vida1 - snap(1).life) .. "; P1 estado " .. st1() .. ", P2 estado " .. snap(2).st end)
+      if pega then
+        need(function() return c.ok and snap(1).life == c.vida1 end, 1, "pegou o golpe sem levar dano", false)
+        need(function() return c.aberto >= 18 and c.aberto <= 23 end, 1, "P2 ficou aberto uns 20 ticks", false)
+        need(function() return snap(2).ctrl and snap(1).ctrl end, 90, "sem apertar nada, ninguem fica travado", false)
+      else
+        need(function() return (not c.ok) and snap(1).life < c.vida1 end, 1, "o parry errado nao pega: o P1 levou o golpe", false)
+      end
+    end)
+  end
+  parry("em cima (F + c) pega o jab em pe", "parry", 760, 761, false, true)
+  parry("em cima, depois soco: pune", "parry", 760, 761, false, true, "x")
+  parry("embaixo (D + c) pega o chute agachado", "parry_baixo", 764, 765, true, true)
+  parry("embaixo, depois soco: pune", "parry_baixo", 764, 765, true, true, "x")
+  parry("em cima NAO pega o chute agachado", "parry", 760, 761, true, false)
+  parry("embaixo NAO pega o jab em pe", "parry_baixo", 764, 765, false, false)
 
   -- ================================================================ HAZAK (so quando o P1 e o hazaki)
   -- Os roteiros acima ficam desligados para ele (S() nao registra) e os de baixo so entram para ele: a lista dos
@@ -673,15 +733,8 @@ do
     note(function() return "dano: " .. (c.vida0 - lifeP2()) .. "; P2 estado " .. snap(2).st end)
     need(function() return c.vida0 - lifeP2() >= 100 end, 1, "dano >= 100", false)
   end)
-  S("agarrao em pe Abraco de Quebrada", function()
-    approach(6)
-    acao(function() c.vida0 = lifeP2() end)
-    press(1, {"holdfwd", "y"}, 3)
-    need(estadoEm(810), 14, "810 pegou")
-    wait(60)
-    note(function() return "dano: " .. (c.vida0 - lifeP2()) .. "; estado " .. st1() .. "; P2 estado " .. snap(2).st end)
-    need(function() return c.vida0 - lifeP2() >= 120 end, 1, "dano >= 120", false)
-  end)
+  agarraoMK(false)
+  agarraoMK(true)
 
   local function projetilH(nome, cmd, dist, esperado)
     S("projetil " .. nome, function()
