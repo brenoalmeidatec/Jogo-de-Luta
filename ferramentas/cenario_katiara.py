@@ -130,8 +130,16 @@ def folha(imagem, n):
     img = sem_magenta(Image.open(imagem))
     a = np.array(img)
     escuro = (a[..., 3] > 0) & (a[..., :3].astype(int).sum(axis=2) < 150)
-    a[:, escuro.mean(axis=0) > 0.6, 3] = 0  # linhas pretas que o ChatGPT desenha entre os quadros
-    a[escuro.mean(axis=1) > 0.6, :, 3] = 0  # e a moldura em cima e embaixo
+    # linhas pretas que o ChatGPT desenha entre os quadros e a moldura em cima e embaixo (com 2 px de folga,
+    # porque a borda da linha é mais clara e sobrava um risco fino no jogo)
+    for eixo in (0, 1):
+        idx = np.nonzero(escuro.mean(axis=eixo) > 0.6)[0]
+        for d in range(-2, 3):
+            ok = np.clip(idx + d, 0, a.shape[1 - eixo] - 1)
+            if eixo == 0:
+                a[:, ok, 3] = 0
+            else:
+                a[ok, :, 3] = 0
     import cv2
     n_, rot, dados, _ = cv2.connectedComponentsWithStats((a[..., 3] > 0).astype(np.uint8), connectivity=8)
     for i in range(1, n_):
