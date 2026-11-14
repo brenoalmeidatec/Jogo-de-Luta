@@ -40,7 +40,7 @@ def montar_select(texto, cenarios):
     for lut in LUTADORES:
         if (RAIZ / "chars" / lut / f"{lut}.def").exists() and not re.search(rf"(?m)^\s*{lut}\s*(,|$)", texto):
             texto = re.sub(r"(?m)^randomselect", f"{lut}, {fixo}\nrandomselect", texto, count=1)
-    for c in cenarios:
+    for c in reversed(cenarios):  # cada um entra logo abaixo do [ExtraStages]: de trás para frente
         if not re.search(rf"(?m)^\s*stages/{re.escape(c)}", texto):
             texto = re.sub(r"(?im)^\[ExtraStages\][^\r\n]*\r?\n", lambda m: m.group(0) + f"stages/{c}\n", texto, count=1)
     texto = re.sub(r"(?m)^([ \t]*kfm\w*[ \t]*,)", r";\1", texto)

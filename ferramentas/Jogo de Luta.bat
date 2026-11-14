@@ -151,8 +151,13 @@ if (Test-Path (Join-Path $game 'stages\maria_fumaca.def')) {
     if ($LASTEXITCODE -ge 8) { Fechar 'Nao consegui instalar os cenarios.' }
     $cenario = 'stages/maria_fumaca.def'
     $texto = [regex]::Replace($texto, '(?m)^(\s*(?:pengaro|hazaki|gutto|raiclaven|ck)\s*,\s*)stages/stage0[-\w]*\.def', "`$1$cenario")
-    if ($texto -notmatch '(?m)^\s*stages/maria_fumaca\.def') {
-        $texto = [regex]::Replace($texto, '(?im)^\[ExtraStages\][^\r\n]*\r?\n', "`$0stages/maria_fumaca.def`r`n")
+    # Todo cenario Nazafights (menos o de teste da branch cenarios) entra na tela de escolha de mapa (issue #35).
+    foreach ($def in @(Get-ChildItem (Join-Path $game 'stages') -Filter '*.def' | Where-Object { $_.BaseName -ne 'teste' } | Sort-Object Name -Descending)) {
+        $linha = "stages/$($def.Name)"
+        if ($texto -notmatch ('(?m)^\s*' + [regex]::Escape($linha))) {
+            # cada um entra logo abaixo do [ExtraStages]: por isso a volta e de tras para frente (fica em ordem alfabetica)
+            $texto = [regex]::Replace($texto, '(?im)^\[ExtraStages\][^\r\n]*\r?\n', "`$0$linha`r`n")
+        }
     }
 }
 foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven', 'ck')) {
