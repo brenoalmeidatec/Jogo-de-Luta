@@ -221,6 +221,77 @@ def efeitos_do(lutador):
     return acoes, escalas
 
 
+# ---------------------------------------------------------------- especial, super e transformação (Blender)
+BLENDER = RAIZ / "sprites/efeitos_blender"
+# ação do .air -> (efeito, forma). O Blender renderiza em efeitos_blender.py; aqui só se liga o que já está pronto.
+CORTE = {"especial": 7, "super": 10}  # desenhos usados de cada render
+ACOES_BLENDER = {9240: ("especial", "base"), 9270: ("especial", "desperto"), 9241: ("super", "base"),
+                 9271: ("super", "desperto"), 9272: ("transformacao", "desperto")}
+
+
+def efeitos_blender(lutador):
+    """{ação: [(RGBA, ex, ey, ticks)]} dos efeitos do Blender que existem para o lutador."""
+    acoes = {}
+    for acao, (efeito, forma) in ACOES_BLENDER.items():
+        pasta = BLENDER / lutador / f"{efeito}_{forma}"
+        if not (pasta / "meta.json").exists():
+            continue
+        meta = json.loads((pasta / "meta.json").read_text(encoding="utf-8"))
+        quadros = []
+        # o fim do render é a fumaça escura se desfazendo: no jogo virava borrão marrom em cima dos lutadores
+        for arq in sorted(pasta.glob("[0-9][0-9].png"))[:CORTE.get(efeito)]:
+            img = Image.open(arq).convert("RGBA")
+            cx = img.getchannel("A").getbbox()
+            if not cx:
+                continue
+            quadros.append((img.crop(cx), meta["pivo"][0] - cx[0], meta["pivo"][1] - cx[1], meta["ticks"]))
+        if quadros:
+            acoes[acao] = quadros
+    return acoes
+
+
+# ---------------------------------------------------------------- .cns: especial, super e transformação
+MARCA = "(efeitos.py)"
+
+
+def blocos(cns):
+    return list(re.finditer(r"^\[Statedef (-?\d+)\][^\n]*\n.*?(?=^\[Statedef |\Z)", cns, re.M | re.S))
+
+
+def ligar_cns(cns, acoes, hazak):
+    """Faísca dos especiais (1000-1999) e das supers (3000-3399) trocada pela do Blender; pilar no Despertar (2000)."""
+    def faisca(base, desperto):
+        if hazak or desperto not in acoes:
+            return f"sparkno = S{base}"
+        return f"sparkno = S(ifelse(var(20) > 0, {desperto}, {base}))"
+    trocas = []
+    for m in blocos(cns):
+        n = int(m.group(1))
+        bloco = m.group(0)
+        novo = bloco
+        if (n == 2000 or 3000 <= n <= 3399) and 9240 in acoes:
+            # o clarão da pausa da super era o anim 100 do motor (a faísca azul do fightfx): vira o estouro do lutador
+            alvo = faisca(9240, 9270).split(" = ", 1)[1]
+            novo = re.sub(r"(type = SuperPause\n(?:[^\n]+\n)*?)anim = (?:100|S[^\n]+)\n",
+                          lambda mm: mm.group(1) + f"anim = {alvo}\n", novo)
+        if 1000 <= n <= 1999 and 9240 in acoes:
+            novo = re.sub(r"^sparkno = (?!-1\b)[^\n]+$", faisca(9240, 9270), novo, flags=re.M)
+        elif 3000 <= n <= 3399 and 9241 in acoes:
+            novo = re.sub(r"^sparkno = (?!-1\b)[^\n]+$", faisca(9241, 9271), novo, flags=re.M)
+        elif n == 2000 and 9272 in acoes:
+            novo = re.sub(rf"\[State 2000, Pilar da transformação {re.escape(MARCA)}\]\n(?:[^\n]+\n)+\n", "", novo)
+            pilar = (f"[State 2000, Pilar da transformação {MARCA}]\ntype = Explod\ntrigger1 = AnimTime = 0\n"
+                     "anim = 9272\nid = 9272\npostype = p1\npos = 0, 0\nsprpriority = -2\nownpal = 1\n"
+                     "removetime = -2\nbindtime = 1\nignorehitpause = 1\n\n")
+            assert "[State 2000, Liga]" in novo, "estado 2000 sem o [State 2000, Liga]"
+            novo = novo.replace("[State 2000, Liga]", pilar + "[State 2000, Liga]", 1)
+        if novo != bloco:
+            trocas.append((m.start(), m.end(), novo))
+    for a, b, novo in reversed(trocas):
+        cns = cns[:a] + novo + cns[b:]
+    return cns
+
+
 # ---------------------------------------------------------------- .sff com PNG no tdata
 NO = "<HHHHhhHBBIIHH"
 
@@ -285,6 +356,12 @@ def aplicar(lutador, pasta=None):
     cns = arq_cns.read_text(encoding="utf-8")
     acoes, escalas = efeitos_do(lutador)
     tem = set(int(n) for n in re.findall(r"^\[Begin Action (\d+)\]", air, re.M))
+    blender = efeitos_blender(lutador)
+    for acao in blender:
+        tem.add(acao)
+        escalas[acao] = ESCALA_BLENDER
+    acoes.update(blender)
+    cns = ligar_cns(cns, blender, lutador == "hazaki")
     novos = {}
     for acao, quadros in acoes.items():
         if acao not in tem:
@@ -312,14 +389,16 @@ def aplicar(lutador, pasta=None):
             png.append((g, i, img.width, img.height, int(ex), int(ey), blob_png(img)))
     gravar(sff, pal, rle, png)
     arq_air.write_text(air, encoding="utf-8", newline="\n")
-    print(f"{lutador}: {len(novos)} efeitos pixelfx, {sum(len(q) for q in novos.values())} desenhos; "
+    arq_cns.write_text(cns, encoding="utf-8", newline="\n")
+    print(f"{lutador}: {len(blender)} efeitos do Blender; {len(novos) - len(blender)} efeitos pixelfx, {sum(len(q) for q in novos.values())} desenhos; "
           f"{len(rle) + len(png)} sprites no .sff")
 
 
 # ---------------------------------------------------------------- folha para o Breno
 NOMES = {"fraco": "fraco (ventinho)", "forte": "forte (estalo)", "final": "finalizador (impacto)",
          "defesa": "defesa", "rastro": "rastro do golpe", "poeira": "poeira no chão", "asfalto": "asfalto",
-         "parry": "parry"}
+         "parry": "parry", "especial": "especial (Blender)", "super": "super (Blender)",
+         "transformacao": "transformação (Blender)"}
 
 
 def folha(destino, lutadores=LUTADORES):
@@ -329,7 +408,11 @@ def folha(destino, lutadores=LUTADORES):
     z = 3
     for lutador in lutadores:
         acoes, escalas = efeitos_do(lutador)
-        mapa = HAZAK if lutador == "hazaki" else KIT
+        mapa = dict(HAZAK if lutador == "hazaki" else KIT)
+        for acao, quadros in efeitos_blender(lutador).items():
+            acoes[acao] = quadros
+            escalas[acao] = ESCALA_BLENDER
+            mapa[acao] = ACOES_BLENDER[acao]
         linhas = []
         for acao, quadros in acoes.items():
             if acao == 9234:
@@ -351,8 +434,8 @@ def folha(destino, lutadores=LUTADORES):
             linhas.append(tira)
         w = max(t.width for t in linhas)
         img = Image.new("RGBA", (w, sum(t.height + 2 for t in linhas) + 34), (20, 22, 30, 255))
-        ImageDraw.Draw(img).text((8, 10), f"{lutador}: efeitos pixelfx dos golpes normais (cruz vermelha = ponto do "
-                                 "golpe; 3x o tamanho do jogo)", fill=(255, 255, 255))
+        ImageDraw.Draw(img).text((8, 10), f"{lutador}: golpes normais (pixelfx) e especial, super e "
+                                 "transformação (Blender); cruz vermelha = ponto do golpe; 3x o tamanho do jogo", fill=(255, 255, 255))
         y = 34
         for t in linhas:
             img.alpha_composite(t, (0, y))

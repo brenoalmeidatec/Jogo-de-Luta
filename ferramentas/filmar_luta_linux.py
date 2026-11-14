@@ -5,12 +5,13 @@
                                            [--barra] [--fotos PASTA]
 
 Usa a mesma cópia do IKEMEN GO v1.0.0 Linux do robô (~/.cache/nazafight/ikemen), com o HUD Nazafights. As duas CPUs
-lutam no nível --ia. Com --barra, a barra de super dos dois fica cheia o tempo todo (um script Lua no motor), para a
+lutam no nível --ia. Com --barra, a barra de super dos dois fica cheia o tempo todo (um PowerSet no [Statedef -2] da cópia), para a
 CPU soltar especial, super e Despertar no vídeo. --fotos tira um quadro por segundo numa pasta (para olhar sem vídeo).
 Precisa de Xvfb e ffmpeg (x11grab). O jogo instalado não é tocado.
 """
 import argparse
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -21,18 +22,25 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from testar_pengaro import RAIZ, INI_LINUX, ambiente_linux, motor_linux, ajustar_ini  # noqa: E402
 
-BARRA = """
--- barra cheia para a CPU usar super e Despertar (só na cópia de filmagem: ferramentas/filmar_luta_linux.py)
-hook.add("loop", "barra_cheia", function()
-  pcall(function()
-    for p = 1, 2 do
-      local old = id()
-      if player(p) then setPower(powermax()) end
-      playerId(old)
-    end
-  end)
-end)
-"""
+BARRA = ("[State -2, Barra cheia (filmar_luta_linux.py)]\ntype = PowerSet\ntrigger1 = 1\nvalue = PowerMax\n"
+         "ignorehitpause = 1\n\n")
+
+
+DESPERTAR = ("[State -2, Despertar para filmar (filmar_luta_linux.py)]\ntype = ChangeState\ntrigger1 = RoundState = 2\n"
+             "trigger1 = ctrl && statetype = S && var(20) <= 0\ntrigger1 = GameTime % 240 < 90\nvalue = 2000\n\n")
+
+
+def barra_cheia(cns, despertar=False):
+    """Só na cópia de filmagem: barra de super sempre cheia, para a CPU soltar super e Despertar."""
+    txt = cns.read_text(encoding="utf-8")
+    extra = BARRA + (DESPERTAR if despertar and "[Statedef 2000]" in txt else "")
+    if "[Statedef -2]" in txt:
+        txt = re.sub(r"^\[Statedef -2\][^\n]*\n(?:[^\n\[][^\n]*\n)*\n?", lambda m: m.group(0) + extra, txt, count=1,
+                     flags=re.M)
+    else:
+        txt = txt.rstrip() + "\n\n[Statedef -2]\n\n" + extra
+    cns.write_text(txt, encoding="utf-8", newline="\n")
+
 
 
 def main():
@@ -45,6 +53,7 @@ def main():
     ap.add_argument("--espera", type=int, default=12, help="segundos até a luta começar (intro)")
     ap.add_argument("--barra", action="store_true")
     ap.add_argument("--fotos", type=Path)
+    ap.add_argument("--despertar", action="store_true", help="com --barra: entra no Despertar sempre que pode")
     ap.add_argument("--cenario", default="stages/stage0-720.def")
     a = ap.parse_args()
     motor = motor_linux()
@@ -60,8 +69,8 @@ def main():
         INI_LINUX["VSync"] = "1"
         ajustar_ini(copia)
         if a.barra:
-            debug = copia / "external/script/debug.lua"
-            debug.write_text(debug.read_text(encoding="utf-8") + BARRA, encoding="utf-8")
+            for nome in {a.p1, a.p2}:
+                barra_cheia(copia / "chars" / nome / f"{nome}.cns", a.despertar)
         disp = f":{90 + os.getpid() % 9}"
         xvfb = subprocess.Popen(["Xvfb", disp, "-screen", "0", "1280x720x24"], stdout=subprocess.DEVNULL,
                                 stderr=subprocess.DEVNULL)
