@@ -194,10 +194,93 @@ def contato(saida, nomes):
         tela.save(saida / f"{nome}.png")
 
 
+def _costura(cheio, x0, x1):
+    """Costura vertical (pode andar 1 px por linha) com menos tinta entre as colunas x0 e x1: separa soco e capa que se
+    encostam em alturas diferentes, o que um corte reto não faz."""
+    custo = cheio[:, x0:x1].astype(float) + 1e-3
+    h, w = custo.shape
+    acum = custo.copy()
+    for y in range(1, h):
+        ant = acum[y - 1]
+        viz = np.minimum(ant, np.minimum(np.r_[np.inf, ant[:-1]], np.r_[ant[1:], np.inf]))
+        acum[y] += viz
+    x = int(np.argmin(acum[-1]))
+    seam = [0] * h
+    for y in range(h - 1, -1, -1):
+        seam[y] = x0 + x
+        if y:
+            c = [(acum[y - 1][j], j) for j in (x - 1, x, x + 1) if 0 <= j < w]
+            x = min(c)[1]
+    return np.array(seam)
+
+
+def fileira(arq, n=4):
+    """As n figuras de uma imagem de uma fileira só (#44, Gemini). Separa por costuras de pouca tinta perto de cada
+    1/n da largura (±12%), e cada figura fica só com o bloco maior e o que encosta nele."""
+    a = np.array(ch.fundo_magenta(Image.open(arq).convert("RGB")))
+    limpa = ch.fh.limpa_franja(np.array(ch.tira_fundo(Image.fromarray(a))))
+    cheio = limpa[..., 3] > 0
+    h, w = cheio.shape
+    r = round(w * 0.12)
+    costuras = [np.zeros(h, int)] + [_costura(cheio, round(w * k / n) - r, round(w * k / n) + r)
+                                     for k in range(1, n)] + [np.full(h, w)]
+    xs = np.arange(w)[None, :]
+    saida = []
+    for c0, c1 in zip(costuras, costuras[1:]):
+        dentro = (xs >= c0[:, None]) & (xs < c1[:, None])
+        pedaco = np.where(dentro[..., None], limpa, 0).astype(np.uint8)
+        m, rot, dados, _ = ch.cv2.connectedComponentsWithStats((pedaco[..., 3] > 0).astype(np.uint8), connectivity=8)
+        if m > 1:
+            grande = 1 + int(np.argmax(dados[1:, ch.cv2.CC_STAT_AREA]))
+            g = dados[grande]
+            for i in range(1, m):
+                d = dados[i]
+                fora = (d[0] > g[0] + g[2] + 6 or d[0] + d[2] < g[0] - 6 or d[1] > g[1] + g[3] + 6
+                        or d[1] + d[3] < g[1] - 6)
+                if i != grande and (fora or d[ch.cv2.CC_STAT_AREA] < 30):
+                    pedaco[rot == i] = 0
+        fig = Image.fromarray(pedaco)
+        saida.append(fig.crop(fig.getchannel("A").getbbox()))
+    return saida
+
+
+def juntar(nome, linhas, ordem=None):
+    """Folha do Gemini (#44): ele desenha melhor 4 quadros por imagem 16:9, então cada folha vem em 2 imagens de uma
+    fileira. Junta as fileiras numa folha larga de 8 (formato que o ch.figuras já lê) em folhas_diabo/d_<nome>.png.
+    As fileiras são igualadas pela figura mais alta. `ordem` (ex.: "a0 a1 a2 a3 a1 a2 a0 a3") escolhe de qual fileira
+    (a, b, ...) e qual quadro vai em cada uma das 8 posições; sem ela, a fileira a dá 0-3 e a b dá 4-7."""
+    figs = {}
+    for letra, arq in zip("abcdefgh", linhas):
+        achadas = fileira(arq)
+        assert len(achadas) == 4, f"{arq}: achei {len(achadas)} figuras, esperava 4"
+        figs[letra] = achadas
+    alto = max(q.height for q in figs["a"])
+    for letra, qs in figs.items():
+        k = alto / max(q.height for q in qs)
+        figs[letra] = [q.resize((round(q.width * k), round(q.height * k)), Image.LANCZOS) if k != 1 else q for q in qs]
+    ordem = ordem.split() if ordem else [f"{l}{i}" for l in "ab" for i in range(4)]
+    assert len(ordem) == 8
+    cel = max(q.width for qs in figs.values() for q in qs) + 40
+    alt = max(q.height for qs in figs.values() for q in qs) + 40
+    folha = Image.new("RGB", (cel * 8, alt), (255, 0, 255))
+    for i, ref in enumerate(ordem):
+        q = figs[ref[0]][int(ref[1])]
+        folha.paste(q, (i * cel + (cel - q.width) // 2, alt - 20 - q.height), q)
+    FOLHAS_DIABO.mkdir(parents=True, exist_ok=True)
+    folha.save(FOLHAS_DIABO / f"d_{nome}.png", optimize=True)
+    print(f"d_{nome}: folha larga {folha.size} de {len(linhas)} fileira(s), ordem {' '.join(ordem)}")
+
+
 if __name__ == "__main__":
     args = sys.argv[1:]
     if "--fila" in args:
         fila()
+    elif "--juntar" in args:
+        # --juntar NOME linha_a.png linha_b.png [--ordem "a0 a1 ..."]
+        k = args.index("--juntar")
+        ordem = args[args.index("--ordem") + 1] if "--ordem" in args else None
+        arqs = [a for a in args[k + 2:] if not a.startswith("--") and a != ordem]
+        juntar(args[k + 1], arqs, ordem)
     elif "--contato" in args:
         k = args.index("--contato")
         resto = [a for a in args[:k] + args[k + 2:] if not a.startswith("--")]
