@@ -24,11 +24,11 @@ Transcrição automática local (Whisper medium), com várias vozes. Vale como p
 | "corre parecendo um pinguim" | A corrida dele é engraçada: passinho curto, braços abertos balançando |
 | "é empresário", "anda sobre as notas" | No Despertar, notas de dinheiro no chão por onde ele passa |
 | "quando desperta bota um tapa-olho" | O Despertar usa tapa-olho (ver o aviso abaixo) |
-| Breno, por mensagem: "a versão endiabrada dele, ele fica tipo um deus motoboy" | O Despertar é o **Deus Motoboy** |
+| Breno, na issue #30 (2026-11-15): o Deus Motoboy "ficou fraco", quer um despertar que pareça poderoso demais | O Despertar é o **Grão-Pastor** (o Deus Motoboy saiu) |
 
 > **Regra de conteúdo:** o áudio comenta um traço dos olhos dele. O jogo não faz piada com o corpo de ninguém
-> (nada de deficiência), então isso não entra no desenho. O tapa-olho entra só como peça de roupa estilosa do Deus
-> Motoboy.
+> (nada de deficiência), então isso não entra no desenho. O tapa-olho entra só como peça de roupa estilosa do
+> Grão-Pastor.
 
 ## Aparência (das fotos)
 
@@ -87,57 +87,64 @@ desligados): "Vem cá, cabrito!", "Bateu no chão, bateu três vezes".
 2. **Mata-Leão do Sertão** (2 estoques): corre de pinguim até o oponente; se pegar, encaixa mata-leão, troca para
   chave de braço e termina com a Raspagem; o oponente bate três vezes no chão.
 
-## Despertar: o Deus Motoboy
+## Despertar: o Grão-Pastor
 
-**Ativação:** barra cheia + c + b (como os outros). **Cena (pedido do Breno):** o celular toca e a voz do **chefe**
-manda ele entregar uma pizza ("Gbzin, tem entrega!"). Ele atende, a caixa de pizza cai do céu na mão dele, chega uma moto de
-entrega brilhando por trás, ele monta, dá um grau e desce transformado no Deus Motoboy, com a **bag de entrega nas
-costas e a pizza na mão**. O chefe é só voz (ou uma silhueta no celular), não aparece como lutador.
-**Aparência:** mesmo rosto e corpo. Capacete aberto dourado com asas pequenas (de deus mensageiro), **tapa-olho preto
-com uma estrela dourada**, jaqueta de motoboy preta e verde-neon com faixas refletivas, **bag térmica quadrada** nas
-costas com uma auréola de luz em cima, **caixa de pizza na mão da frente** (luta com ela: bate, defende e arremessa, e
-ela nunca troca de mão), luvas de motoqueiro, calça de couro, botas. O cajado vira um **guidão** de moto com a ponta
-curvada (mesmo gancho), na mão de trás. Relógio de ouro maior. Por onde ele pisa, ficam **notas de dinheiro** no chão
-("anda sobre as notas"), que somem em poucos quadros.
-**Ganha:** é muito mais rápido a pé (o motoboy que corre), os agarrões puxam de mais longe, e as cabras viram entregas.
-**Perde:** a defesa fica um pouco menor (vida igual).
+Pedido do Breno na issue #30 (2026-11-15). O Deus Motoboy saiu: capacete, jaqueta, bag, caixa de pizza, moto, guidão,
+chefe no celular e giroflex não existem mais. O Grão-Pastor junta o pastor, o jiu-jitsu e o empresário.
+Conceito: `sprites/gbzin/quadros/folhas_arcade/e_conceito.png` (aguardando o aval do Breno).
+
+**Ativação:** barra cheia + c + b (como os outros).
+**Cena:** ele finca o cajado no chão três vezes ("bateu três vezes"). A cada batida o chão racha e notas de dinheiro
+sobem do chão. Na terceira, tudo fica preto, os chifres crescem, a faixa pega fogo e a sombra do bode abre os olhos
+atrás dele. Segue a cena da transformação da issue #49.
+**Aparência:** mesmo rosto, corpo e altura da forma base (regra das transformações).
+- **Chifres enormes de bode**, enrolados em espiral, saindo da testa. Olhos acesos em verde, sem pupila.
+- **Manto de lã preta rasgado** por cima da regata, com a barra em farrapos.
+- **Faixa vermelha em chamas** no lugar da marrom (no jiu-jitsu, a vermelha é a do grão-mestre). O fogo é verde.
+- Tapa-olho preto com uma **estrela verde acesa**.
+- O cajado vira um **cajado de osso com o mesmo gancho**, com uma chama verde na ponta, sempre na mão de trás.
+- Relógio de ouro maior no pulso.
+
+**Ganha:** alcance nos agarrões e força. **Perde:** um pouco de defesa (vida igual).
 
 ### Aura própria (regra da aura grande)
 
-**Giroflex e escapamento verde-neon**, matiz ~140°, que nenhum outro usa (CK 72°, Hazak 30°, Gutto 350°, Raiclaven
-220°, Pengaró 281°):
-- **Atrás dele:** um halo grande de luz verde girando como giroflex.
-- **No chão:** um rastro de fumaça de escapamento que sobe em labaredas.
-- **Partículas:** notas de dinheiro voando para cima.
-- **Nos supers:** um anel de faróis em volta.
+Verde, matiz ~140°, que nenhum outro usa (CK 72°, Hazak 30°, Gutto 350°, Raiclaven 220°, Pengaró 281°):
+- **Atrás dele:** a sombra de um bode gigante de olhos verdes.
+- **Das costas:** duas **mãos gigantes de energia verde**, que agarram de longe.
+- **No chão:** **notas de dinheiro** que ele pisa ("anda sobre as notas") e somem em poucos quadros, mais um anel de
+  fumaça verde.
 
-Como as outras: GRANDE, de várias camadas, monstruosa, feita no Blender e ligada por `ferramentas/aura.py`. Sem
-tingir o corpo e sem tampar o HUD.
+Como as outras: GRANDE, de várias camadas, feita no Blender e ligada por `ferramentas/aura.py`. Sem tingir o corpo e
+sem tampar o HUD.
 
-### Correntes novas (2)
-- x: guidão reto → guidão girando → "Grau": empina e passa por cima do oponente.
-- b: chute de bota → joelhada → "Entrega Expressa": cabeçada com o capacete.
+### O que muda nos golpes (definido pelo Breno)
+- **Cabra Solta e Cabra Saltadora:** viram cabras-fantasma em chamas verdes.
+- **Gancho do Pastor:** quem puxa são as mãos gigantes, de mais longe.
+- **Finalização:** quando um agarrão dele termina, o chão bate três vezes sozinho e a tela treme.
+- **Super Rebanho Desgovernado:** vira um estouro de rebanho do inferno atravessando a tela.
 
-### Normais novos (6)
-Guidão de cima, guidão rasteiro, cotovelada de capacete, chute de bota, joelhada no ar e o soco de luva no ar.
+### Exclusivos do Grão-Pastor (PROPOSTA do Claude, aguardando o Breno)
 
-### Especiais exclusivos (4)
+Os exclusivos antigos eram todos de motoboy e saíram junto. Abaixo vai uma proposta no tema novo, nos mesmos
+espaços do kit. Nada disto vira arte antes do aval do Breno.
+
+- **Correntes novas (2):** x: cajado de osso reto → cajado girando → "Chifrada" (investida de cabeça baixa).
+  b: chute frontal → joelhada → "Tosquia" (as mãos gigantes batem palma no oponente).
+- **Normais novos (6):** cajado de osso de cima, cajado rasteiro, chifrada curta, chute de sola, joelhada no ar e
+  cajadada no ar.
+- **Especiais exclusivos (4):**
+
 | Especial | Comando | Papel |
 |---|---|---|
-| **Corrida de Entrega** | → → + x/y | Atravessa a tela de moto (fantasma de luz) e atropela |
-| **Pedido Errado** | ↓ → + a/b | Joga a mochila térmica, que explode em pizza e marmita |
-| **Buzina Divina** | ↓ ↑ + a/b | Buzinaço que empurra o oponente para longe (antiaéreo) |
-| **Gancho de Guidão** | ← → + a/b | Versão do Gancho do Pastor: puxa com o guidão e joga para cima da moto |
+| **Estouro** | → → + x/y | Investida de chifres que atravessa a tela e atropela |
+| **Mão do Pastor** | ↓ → + a/b | Uma das mãos gigantes sai voando reta e empurra (projétil) |
+| **Berro** | ↓ ↑ + a/b | Berro de bode que empurra o oponente para longe (antiaéreo) |
+| **Puxão das Mãos** | ← → + a/b | Versão do Gancho do Pastor: as duas mãos puxam de qualquer distância |
 
-### Projétil novo
-**Pedido Voador:** a caixa de entrega sai voando reta e quebra no oponente.
-
-### Kombo novo
-Corrida de Entrega → guidão girando → Buzina Divina → Pedido Voador.
-
-### Super exclusivo
-**Rush de Feriado** (2 estoques): uma fila de motoboys de luz verde atravessa a tela, e o último é ele, que pula da
-moto e encaixa o mata-leão.
+- **Kombo novo:** Estouro → cajado girando → Berro → Mão do Pastor.
+- **Super exclusivo:** **Juízo do Rebanho** (2 estoques): a sombra do bode desce sobre o oponente, as mãos gigantes
+  o seguram e ele encaixa o mata-leão; o chão bate três vezes.
 
 ## Para o Alisson criar
 
