@@ -32,6 +32,7 @@ PARADO = {
 }
 PALETA_JSON = {
     ("hazaki", ""): "hazaki/paleta_nitida.json",  # forma base nítida (#36, 40 cores)
+    ("diabo", ""): "hazaki/diabo_terno/paleta.json",  # paleta única do Diabo (#51, cor entre os quadros)
     ("ck", ""): "ck/paleta_arcade.json", ("ck", "e_"): "ck/paleta_arcade_ratao.json",
     ("pengaro", ""): "pengaro/paleta_arcade.json", ("pengaro", "e_"): "pengaro/paleta_arcade_endiabrado.json",
 }
@@ -55,6 +56,8 @@ class Endereco:
 
     @property
     def forma(self):
+        if PARADO.get((self.lutador, "e_")) == self.acao:  # gutto/ginga_endiabrada é o parado da forma e_
+            return "e_"
         return "e_" if self.acao.startswith("e_") and self.lutador != "diabo" else ""
 
     @property

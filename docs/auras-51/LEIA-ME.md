@@ -152,3 +152,41 @@ Vídeos: `hazaki_v4_antes_agora.mp4`, `gutto_v4_antes_agora.mp4`, `pengaro_v4_an
 `ck_v4_antes_agora.mp4`. É o mesmo roteiro dos outros: parado, agachado, pulo, andar, correr, golpes (soco e chute),
 derrubado, agarrado, defesa e vitória. À esquerda fica a versão anterior e à direita a de agora. A folha
 `v4_<lutador>_quadros.jpg` tem um quadro a cada 1,3 s do lado "agora".
+
+## Quinta volta (Breno, 2026-11-15 03:51Z, item 2): luz e brilho do KIKIU
+
+O pedido foi trazer a base de luz do KIKIU para as auras e os poderes. O repositório do KIKIU não foi tocado. A ideia
+foi lida dos trechos citados por ele e adaptada para o IKEMEN em `ferramentas/luz.py`. Piloto no Hazak.
+
+- **Curva de luz do KIKIU:** `GRAD_OFF = [0, 0.22, 0.55, 1]` e `GRAD_VAL = [1, 0.5, 0.1, 0]`. O miolo é forte e a luz
+  cai rápido. Os desenhos de luz saem em degraus com pontilhado 4x4 e grão de 2 pixels do jogo, para casar com o
+  pixel da aura.
+- **Mundo escurece.** Um Explod preto bem grande fica por trás do lutador e na frente do cenário. Com `addalpha
+  (0, 256 - k)`, o cenário perde cerca de 16% no Despertar e chega a 31% com poder no ar (medido no canto do cenário:
+  173, depois 146, depois 120). Não usei o BGPalFX porque ele é um só para a luta e apagaria os clarões das supers.
+- **Halo e poça.** Em volta do corpo do despertado fica um brilho na cor da forma, e no chão embaixo dele uma poça de
+  luz achatada, que some conforme ele sobe no pulo. Os dois seguem o centro do corpo pelos maps do `aura_no_corpo.py`.
+- **Poderes.** A bola de ki (projid 1001) e a rajadona (1650) ganham um orbe somado no miolo, um halo e uma poça que
+  correm com o projétil (mesma posição e velocidade) e somem quando ele some. A pedra não acende, porque é pedra.
+- **Oponente perto clareia** na cor da luz, de leve e pela distância (PalFX com `redirectid`). Não clareia quando ele
+  está apanhando, preso num estado do Hazak ou despertado (o Gutto e o Raiclaven têm tom próprio na forma).
+- **Tremor** de 2,2 Hz com 1,3 Hz por cima, sem passar de 2,5 Hz.
+
+**O que mudou do primeiro filme.** Primeiro a luz era somada pura e pequena, e sumia atrás da aura grande. No fundo
+azul, a soma do laranja também puxava para o rosa. Agora o halo e a poça são brilho por alfa de pixel (`addalpha`):
+a curva do KIKIU vai no alfa e a cor fica cheia. Os raios cresceram (halo 170, poça 120, halo do poder 115). O orbe
+continua somado, porque ali o branco quente é o que se quer.
+
+**Conserto de passagem:** o `aura_silhueta.py` só tirava as ações que começavam com "30000" e "40000". Ao rodar de
+novo, ele duplicava as outras ações espelho. Agora tira a faixa toda, e o `aura_no_corpo.py` não mede mais as ações
+de luz (9720 a 9739). Rodar duas vezes dá o mesmo arquivo.
+
+Robôs depois da mudança: `testar_pengaro.py --linux --lutador hazaki` com 238 verificações e nenhuma falha.
+`aura_no_corpo.py --robo hazaki` também passou ("a aura segue o corpo em todos").
+
+Vídeo: `hazaki_luz_antes_agora.mp4` (20 s). É o roteiro de sempre com a bola de ki no começo e a rajadona no fim. À
+esquerda fica a mugen de antes e à direita a de agora. A folha `hazaki_luz_quadros.jpg` mostra três momentos: parado
+despertado, carregando o ki e a rajadona.
+
+**Próximos passos:** a luz nos outros despertados (Gutto, Pengaró e CK precisam dos projids em `PODERES`) e a aura
+juntando na mão antes do especial.
