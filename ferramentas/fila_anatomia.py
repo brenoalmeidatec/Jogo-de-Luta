@@ -93,7 +93,7 @@ def main():
     fila = []
     for (nome, desp), ref in REF.items():
         assert existe(ref), ref
-        reduzir(abrir(ref), SAIDA / f"{nome}_{'e_' if desp else ''}ref.png")
+        reduzir(abrir(ref), SAIDA / f"{nome}_{'e_' if desp else ''}ref.jpg")
     for nome, folhas in ra.FIX.items():
         for folha, fix in folhas.items():
             desp = folha.startswith("e_") and (nome, True) in REF and folha != "e_despertar"
@@ -109,7 +109,7 @@ def main():
                 f"fixing anatomy. {TRAVA} FIX: {fix}. "
                 "Consecutive frames differ by a small amount, so the motion looks smooth in sequence."
             )
-            fila.append(dict(lutador=nome, folha=folha, origem=origem, ref=f"{nome}_{'e_' if desp else ''}ref.png",
+            fila.append(dict(lutador=nome, folha=folha, origem=origem, ref=f"{nome}_{'e_' if desp else ''}ref.jpg",
                              anexo=f"{nome}_{folha}.jpg", prompt=prompt))
     (RAIZ / "docs/anatomia-51/fila.json").write_text(json.dumps(fila, ensure_ascii=False, indent=1), encoding="utf-8")
     print(len(fila), "folhas na fila")
