@@ -5,6 +5,10 @@
 > não cumpre tudo ganha missão em `docs/missoes-codex.md` até cumprir.
 >
 > Se uma ficha de personagem ou outro documento disser o contrário, vale este arquivo. Só o Breno muda estas regras.
+>
+> **Receita completa, do conceito até a `mugen`:** [`receita-de-lutador.md`](receita-de-lutador.md) junta tudo o que
+> já foi aprendido criando os lutadores (conceito pelas fotos, folhas nítidas, agarrões com animação própria, aura
+> estilo anime, despertado) e vale para todo lutador novo (Breno, 2026-11-15).
 
 ## Sumário
 
@@ -617,6 +621,10 @@ Produção
 [ ] endiabrado com aura grande e efeitos próprios (Breno, 2026-11-13: o endiabrado não muda); nenhum efeito do
     lutador por cima do HUD
 [ ] movelist.dat e README batem com o .cmd
+[ ] receita de lutador (docs/receita-de-lutador.md) seguida: conceitos da base e do despertado aprovados na issue,
+    boneco grande na folha e 3x direto da folha, despertado sem nada da roupa base
+[ ] agarrões (em pé, agachado e comando) com folhas próprias, e reações próprias de quem é agarrado
+[ ] aura estilo anime colada na silhueta: sai pelo braço e pela perna no golpe, com física, sem cara de adesivo
 [ ] testado no treino dos dois lados e no canto; uma luta CPU x CPU sem erro no log
 ```
 
