@@ -55,9 +55,9 @@ QUEM = {
     "ck": ("CK, the cheeky street boxer: young Black man, slim athletic build, short black hair, thin mustache and goatee, white polo shirt with green collar, black cap, black-and-white wavy basketball shorts, white sneakers, red boxing gloves with white wraps.",
            "CK in RATAO MODE (awakened): same young Black man, short bleached platinum hair, mirrored sunglasses pushed up on the head, a lit joint between the lips, thick gold chain, patterned navy-and-white open shirt over a white tank top, board shorts, white socks with dark slides, white hand wraps, a broken green glass bottle always held by the neck in the near (front) hand."),
     "gutto": ("Gutto, the Muay Thai fighter: deep dark brown skin, thick mustache, short curly black hair, strong muscular build, shirtless, black satin Muay Thai trunks with a white waistband, white hand wraps, rope armbands on both biceps, barefoot.",
-              "Gutto in his AWAKENED horse form: the same muscular Muay Thai fighter body and trunks, but with a black horse head, long snout, flowing dark mane and glowing red eyes, red glowing veins on the arms."),
-    "pengaro": ("Pengaró, the drunk capoeirista: same man, face, hair and muscles, white capoeira pants with green and yellow side stripes, yellow cord belt, teal sash, dark green shin guard, barefoot. In EVERY frame he holds a whisky bottle (amber glass, black cap, plain cream label without text) by the neck in his back hand and never lets go.",
-                "Pengaró in his AWAKENED shadow form: the same capoeirista body, outfit and whisky bottle in the back hand, recolored with the dark violet shadow colors of the attached sheet."),
+              "Gutto in his AWAKENED horse-beast form: a huge hunched horse-man, reddish-brown muscular body with dark stripe markings, a horse head with a long snout, small horns, glowing eyes and a wild long black mane down the back, a black horse tail, black satin Muay Thai trunks with a white waistband, rope armbands, dark furry hands and legs ending in black hooves."),
+    "pengaro": ("Pengaró, the drunk capoeirista: young Black man with dark brown skin, short black high-top fade haircut with a shaved line, very muscular and shirtless, white capoeira pants with green and yellow side stripes, yellow cord belt, teal sash, dark green shin guard, barefoot. In EVERY frame he holds a whisky bottle (amber glass, black cap, plain cream label without text) by the neck in his back hand and never lets go.",
+                "Pengaró in his ENDIABRADO (awakened demon) form: dark violet-brown skin, long wild black dreadlocks standing up like flames, glowing eyes, muscular and shirtless with a dark open vest, gold bands on the forearms and biceps, torn black-and-purple baggy pants with a gold-and-purple rope belt and hanging gold tassels, broken iron shackles with chain links on wrists and ankles, barefoot, both hands free (no bottle)."),
 }
 
 # nome -> movimento, por lutador. Formato das folhas de agarrão: ver o docstring.
@@ -89,7 +89,29 @@ NOMES = ("agarrao_pe", "agarrao_baixo", "agarrao_comando", "vitima")
 
 
 def referencia(lutador, desperto):
+    # Pengaró: a folhas_arcade/agarrao.png é o desenho ANTIGO (o Breno barrou na #45); a referência é a faixa da arte
+    # atual (quadros_arcade_hd), montada em docs/agarroes-45/ref/
+    if lutador == "pengaro":
+        return f"docs/agarroes-45/ref/pengaro{'_e' if desperto else ''}.png"
     return f"sprites/{lutador}/quadros/folhas_arcade/{'e_' if desperto else ''}agarrao.png"
+
+
+SEM_GARRAFA = (  # o Pengaró endiabrado não leva a garrafa: as pancadas de garrafa viram pancadas de mão
+    ("the whisky bottle is raised behind his head", "the back fist is raised behind his head"),
+    ("the whisky bottle raised behind his head", "the back fist raised behind his head"),
+    ("the whisky bottle raised high", "the back fist raised high"),
+    ("the bottle bonks down on the head at head height (the bottle does not break)", "a hammer fist smashes down on the head at head height"),
+    ("the bottle bonks the head at waist height (the bottle does not break)", "a hammer fist smashes the head at waist height"),
+    ("the bottle smashes on the head at head height", "a clawed hammer fist smashes on the head at head height"),
+    (", the bottle still in the back hand", ""),
+)
+
+
+def sem_garrafa(texto):
+    for a, b in SEM_GARRAFA:
+        texto = texto.replace(a, b)
+    assert "bottle" not in texto, texto
+    return texto
 
 
 def pedido(lutador, nome):
@@ -123,11 +145,12 @@ def pedido_gemini(lutador, nome):
     desperto = nome.startswith("e_")
     base = nome[2:] if desperto else nome
     quem = QUEM[lutador][desperto]
+    sem = lutador == "pengaro" and desperto
     if base == "vitima":
-        mov = VITIMA.split("Frames: ", 1)[1].split(" {extra}")[0] + " " + EXTRA_VITIMA[lutador]
+        mov = VITIMA.split("Frames: ", 1)[1].split(" {extra}")[0] + " " + ("" if sem else EXTRA_VITIMA[lutador])
         return GEMINI.format(quem=quem, papel=PAPEL_VITIMA, movimento=mov.strip())
     mov = MOVIMENTOS[lutador][base]
-    return GEMINI.format(quem=quem, papel=PAPEL_AGARRA, movimento=mov)
+    return GEMINI.format(quem=quem, papel=PAPEL_AGARRA, movimento=sem_garrafa(mov) if sem else mov)
 
 
 def destino(lutador, nome):
