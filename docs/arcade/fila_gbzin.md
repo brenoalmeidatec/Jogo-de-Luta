@@ -47,54 +47,55 @@ Cada folha vai salva em `sprites/gbzin/quadros/folhas_arcade/<nome>.png`. **Rean
 | 39 | `montada` | referencia_ginga.png |
 | 40 | `ordenha` | referencia_ginga.png |
 | 41 | `e_conceito` | conceito_v3.png + e_conceito_v1.png |
-| 42 | `despertar_b` | e_referencia_ginga.png + despertar_a.png |
-| 43 | `e_referencia_ginga` | e_conceito.png + referencia_ginga.png |
-| 44 | `e_anda` | e_referencia_ginga.png + anda.png |
-| 45 | `e_soco` | e_referencia_ginga.png + soco.png |
-| 46 | `e_martelo` | e_referencia_ginga.png + martelo.png |
-| 47 | `e_chute_baixo` | e_referencia_ginga.png + chute_baixo.png |
-| 48 | `e_chute_alto` | e_referencia_ginga.png + chute_alto.png |
-| 49 | `e_tosquia` | e_referencia_ginga.png |
-| 50 | `e_estouro` | e_referencia_ginga.png |
-| 51 | `e_agachado` | e_referencia_ginga.png + agachado.png |
-| 52 | `e_baixo_soco` | e_referencia_ginga.png + baixo_soco.png |
-| 53 | `e_cabecada` | e_referencia_ginga.png + cabecada.png |
-| 54 | `e_rasteira` | e_referencia_ginga.png + rasteira.png |
-| 55 | `e_pulo` | e_referencia_ginga.png + pulo.png |
-| 56 | `e_ar_soco` | e_referencia_ginga.png + ar_soco.png |
-| 57 | `e_bicicleta` | e_referencia_ginga.png + bicicleta.png |
-| 58 | `e_defesa` | e_referencia_ginga.png + defesa.png |
-| 59 | `e_apanha` | e_referencia_ginga.png + apanha.png |
-| 60 | `e_queda` | e_referencia_ginga.png + queda.png |
-| 61 | `e_levanta` | e_referencia_ginga.png + levanta.png |
-| 62 | `e_rolamento` | e_referencia_ginga.png + rolamento.png |
-| 63 | `e_agarrao` | e_referencia_ginga.png + agarrao.png |
-| 64 | `e_montada` | e_referencia_ginga.png + montada.png |
-| 65 | `e_ordenha` | e_referencia_ginga.png + ordenha.png |
-| 66 | `e_bola` | e_referencia_ginga.png + bola.png |
-| 67 | `e_compasso` | e_referencia_ginga.png + compasso.png |
-| 68 | `e_mao_pastor` | e_referencia_ginga.png |
-| 69 | `e_berro` | e_referencia_ginga.png |
-| 70 | `e_armada` | e_referencia_ginga.png + armada.png |
-| 71 | `e_caneta` | e_referencia_ginga.png + caneta.png |
-| 72 | `e_cajado_chao` | e_referencia_ginga.png + cajado_chao.png |
-| 73 | `e_rolo_feno` | e_referencia_ginga.png + rolo_feno.png |
-| 74 | `e_golaco` | e_referencia_ginga.png + golaco.png |
-| 75 | `e_juizo` | e_referencia_ginga.png |
-| 76 | `e_provoca` | e_referencia_ginga.png + provoca.png |
-| 77 | `e_vitoria` | e_referencia_ginga.png + vitoria.png |
-| 78 | `e_derrota` | e_referencia_ginga.png + derrota.png |
-| 79 | `e_parry_alto` | e_referencia_ginga.png + parry_alto.png |
-| 80 | `e_parry_baixo` | e_referencia_ginga.png + parry_baixo.png |
-| 81 | `e_vitima_agarrado` | e_referencia_ginga.png + vitima_agarrado.png |
-| 82 | `e_vitima_arremessado` | e_referencia_ginga.png + vitima_arremessado.png |
-| 83 | `fx_cabra` | nenhum |
-| 84 | `fx_cabra_salto` | nenhum |
-| 85 | `fx_feno` | nenhum |
-| 86 | `fx_cabra_fantasma` | nenhum |
-| 87 | `fx_cabra_fantasma_salto` | nenhum |
-| 88 | `fx_mao` | nenhum |
-| 89 | `fx_notas` | nenhum |
+| 42 | `e_aura` | e_conceito.png |
+| 43 | `despertar_b` | e_referencia_ginga.png + despertar_a.png |
+| 44 | `e_referencia_ginga` | e_conceito.png + referencia_ginga.png |
+| 45 | `e_anda` | e_referencia_ginga.png + anda.png |
+| 46 | `e_soco` | e_referencia_ginga.png + soco.png |
+| 47 | `e_martelo` | e_referencia_ginga.png + martelo.png |
+| 48 | `e_chute_baixo` | e_referencia_ginga.png + chute_baixo.png |
+| 49 | `e_chute_alto` | e_referencia_ginga.png + chute_alto.png |
+| 50 | `e_tosquia` | e_referencia_ginga.png |
+| 51 | `e_estouro` | e_referencia_ginga.png |
+| 52 | `e_agachado` | e_referencia_ginga.png + agachado.png |
+| 53 | `e_baixo_soco` | e_referencia_ginga.png + baixo_soco.png |
+| 54 | `e_cabecada` | e_referencia_ginga.png + cabecada.png |
+| 55 | `e_rasteira` | e_referencia_ginga.png + rasteira.png |
+| 56 | `e_pulo` | e_referencia_ginga.png + pulo.png |
+| 57 | `e_ar_soco` | e_referencia_ginga.png + ar_soco.png |
+| 58 | `e_bicicleta` | e_referencia_ginga.png + bicicleta.png |
+| 59 | `e_defesa` | e_referencia_ginga.png + defesa.png |
+| 60 | `e_apanha` | e_referencia_ginga.png + apanha.png |
+| 61 | `e_queda` | e_referencia_ginga.png + queda.png |
+| 62 | `e_levanta` | e_referencia_ginga.png + levanta.png |
+| 63 | `e_rolamento` | e_referencia_ginga.png + rolamento.png |
+| 64 | `e_agarrao` | e_referencia_ginga.png + agarrao.png |
+| 65 | `e_montada` | e_referencia_ginga.png + montada.png |
+| 66 | `e_ordenha` | e_referencia_ginga.png + ordenha.png |
+| 67 | `e_bola` | e_referencia_ginga.png + bola.png |
+| 68 | `e_compasso` | e_referencia_ginga.png + compasso.png |
+| 69 | `e_mao_pastor` | e_referencia_ginga.png |
+| 70 | `e_berro` | e_referencia_ginga.png |
+| 71 | `e_armada` | e_referencia_ginga.png + armada.png |
+| 72 | `e_caneta` | e_referencia_ginga.png + caneta.png |
+| 73 | `e_cajado_chao` | e_referencia_ginga.png + cajado_chao.png |
+| 74 | `e_rolo_feno` | e_referencia_ginga.png + rolo_feno.png |
+| 75 | `e_golaco` | e_referencia_ginga.png + golaco.png |
+| 76 | `e_juizo` | e_referencia_ginga.png |
+| 77 | `e_provoca` | e_referencia_ginga.png + provoca.png |
+| 78 | `e_vitoria` | e_referencia_ginga.png + vitoria.png |
+| 79 | `e_derrota` | e_referencia_ginga.png + derrota.png |
+| 80 | `e_parry_alto` | e_referencia_ginga.png + parry_alto.png |
+| 81 | `e_parry_baixo` | e_referencia_ginga.png + parry_baixo.png |
+| 82 | `e_vitima_agarrado` | e_referencia_ginga.png + vitima_agarrado.png |
+| 83 | `e_vitima_arremessado` | e_referencia_ginga.png + vitima_arremessado.png |
+| 84 | `fx_cabra` | nenhum |
+| 85 | `fx_cabra_salto` | nenhum |
+| 86 | `fx_feno` | nenhum |
+| 87 | `fx_cabra_fantasma` | nenhum |
+| 88 | `fx_cabra_fantasma_salto` | nenhum |
+| 89 | `fx_mao` | nenhum |
+| 90 | `fx_notas` | nenhum |
 
 ## `conceito`
 
@@ -1058,6 +1059,22 @@ Generate ONE image with your image generation tool. Do not write code and do not
 The first attached sheet shows Gbzin in his base form and the second one his first awakened design. Create the NEW concept sheet of his awakened form in the same art style, keeping the exact same face, hair, body and height, with a much more powerful outfit: Gbzin awakened as the GRAND SHEPHERD (Grao-Pastor), the Lord of the Herd, an overwhelmingly powerful dark shepherd warlord: exact same face, same hair, same heavy stocky body and same height as the base form. Nothing of the base outfit remains (no tank top, no white shorts, no sneakers). KEEP from the first awakened sheet: two ENORMOUS goat horns curled in a spiral growing from his forehead; eye glowing solid green with no pupil; a black eyepatch over the LEFT eye with a small glowing green star; a bigger gold wristwatch on the left wrist; a RED jiu-jitsu belt (the grand master's belt) tied at the waist over the pants, burning with GREEN flames at its two hanging ends; in the BACK hand a short shepherd's crook made of BONE with a curved hook and a small green flame at the tip. NEW OUTFIT: a CHEST PLATE MADE OF A GOAT SKULL, yellowed cracked bone, covering the chest, with the skull's eye sockets glowing green; SHOULDER GUARDS made of curved goat horns on both shoulders; BONE BRACERS on both forearms; two iron CHAINS crossed over the chest, fastened to the skull; bare muscular arms and bare belly sides; ripped BLACK LEATHER PANTS with green embers glowing inside the rips; GOAT HOOVES instead of feet, black and cracked, with green ember light in the cracks; a CAPE OF BLACK FUR with a tall thick fur collar around the neck, its hem in tatters. The skull chest plate and the hooves must read clearly in the side view. No motorcycle items of any kind. No text, no logos.
 
 Sheet layout, flat solid magenta background (#FF00FF), no text: 1) full body front view, standing, bone crook in the back hand, 2) full body side view facing right in his low grappler fighting stance (the goat-skull chest plate and the hooves clearly visible in profile), 3) full body back view showing the black fur cape, 4) a big bust portrait of the face with the spiral goat horns, the glowing green eye, the green-star eyepatch and the tall fur collar. Same scale for the three full bodies. No aura, no giant shadow and no giant hands drawn (the aura is a separate effect); only the green flames on the belt ends and crook tip and the green embers of the outfit.
+
+Art style: hand-pixeled 1990s arcade fighting game sprite. Heroic anatomy: broad shoulders, thick strong torso, big hands and feet; he is the heavy grappler of the cast, stocky and solid but not fat. Shading in 2-3 large hard-edged flat planes per form, no gradients, no dithering, no noise, no texture. Shadows shift hue: skin shadows toward wine red, highlights toward warm cream; white clothes get cool lilac shadows; black clothes get blue-grey highlights. 1-pixel colored outline (dark wine on skin, dark blue-purple on clothes), never pure black, lighter on the lit side. Small hard 1-3 pixel highlights. Limited palette look.
+
+
+```
+
+## `e_aura`
+
+Anexar: e_conceito.png
+
+```text
+Generate ONE image with your image generation tool. Do not write code and do not edit any file.
+
+The attached sheet is the approved awakened form of Gbzin, the Goat Shepherd Lord. Create the concept of his AURA, in the same art style, keeping him exactly as he is.
+
+Sheet layout, flat solid magenta background (#FF00FF), no text, one wide image: 1) on the left, narrow: the full body side view facing right in his low grappler fighting stance, bone crook in the back hand, with NO aura at all; 2) on the right, taking most of the image: the SAME pose at the SAME size and on the same ground line, with his huge aura around him. The aura is drawn only in greens (hue about 140, from almost black dark green through emerald to bright mint, flat hard-edged pixel-art cel shading, never yellow, never blue): a GIANT goat shadow behind and above him (dark green translucent silhouette of a goat head with big spiral horns and glowing bright green eyes, about twice his height, its horns spreading to both sides); two GIANT open hands of green energy coming out of his back, one on each side, reaching forward with the fingers spread, as big as his torso; on the floor around his hooves a ring of green smoke and a few generic paper money bills (no text, no faces) lying flat. The aura stays BEHIND him: it never covers his face, chest or hands. The body itself keeps its normal colors, it is not tinted green.
 
 Art style: hand-pixeled 1990s arcade fighting game sprite. Heroic anatomy: broad shoulders, thick strong torso, big hands and feet; he is the heavy grappler of the cast, stocky and solid but not fat. Shading in 2-3 large hard-edged flat planes per form, no gradients, no dithering, no noise, no texture. Shadows shift hue: skin shadows toward wine red, highlights toward warm cream; white clothes get cool lilac shadows; black clothes get blue-grey highlights. 1-pixel colored outline (dark wine on skin, dark blue-purple on clothes), never pure black, lighter on the lit side. Small hard 1-3 pixel highlights. Limited palette look.
 

@@ -169,7 +169,10 @@ faz a mesma coisa, com o comando da ficha:
 | Cajado no Chão | ↓ ↓ + x/y | golpe baixo (1500/1501) | finca o cajado quase parado; se a ponta não pegou, sai uma onda de poeira rasteira (projétil 1505); o forte vai mais longe e derruba |
 
 No Grão-Pastor entram os exclusivos (Estouro, Mão do Pastor, Berro, Puxão das Mãos e o super Juízo do Rebanho) nos
-espaços do Modo Ratão do CK.
+espaços do Modo Ratão do CK. Como estão no gerador: **Puxão das Mãos** (3400) é uma mão
+gigante reta que puxa de qualquer distância (no robô, de 170 para 29 px); **Estouro** (3401) avança mais rápido e
+atravessa o oponente sem empurrão de corpo; **Mão do Pastor** (3402) é uma mão gigante reta que empurra para longe;
+**Berro** (3403) é o grito que empurra, invencível no começo. As mãos usam um desenho provisório até a folha `fx_mao`.
 
 ## Para o Alisson criar
 

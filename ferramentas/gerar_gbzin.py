@@ -328,7 +328,7 @@ gp.extra.DESPERTO_NORMAIS = (
 )
 gp.extra.DESPERTO_ESPECIAL = (
     N(3401, "Passinho Ratão", "caneta 1/5 2/4 3/3A 4/4A 3/2 4/4A 5/6 6/8 7/8", _e("caneta", 4), (45, 70),
-      attr="S, SA", queda=True, avanco=5.0, final=True, vel="-6,-4", ar="-5,-5"),
+      attr="S, SA", queda=True, avanco=8.0, final=True, vel="-6,-4", ar="-5,-5"),
 )
 RATAO_SO = {m.estado for m in gp.extra.DESPERTO_KOMBO + gp.extra.DESPERTO_CORRENTES + gp.extra.DESPERTO_NORMAIS
             + gp.extra.DESPERTO_ESPECIAL} | {3436}
@@ -834,29 +834,29 @@ def cns_ck(cns):
     # ---- Ratão: ↓ ↑ pode pegar o lutador no começo do pulo; o golpe sai do chão
     chao = lambda n: (f"[State {n}, No chão]\ntype = PosSet\ntrigger1 = Time = 0\ny = 0\n\n"
                       f"[State {n}, Parado]\ntype = VelSet\ntrigger1 = Time = 0\nx = 0\ny = 0\n\n")
-    # Tragada de Beck (↓ ↑ + x/y): nuvem grande e lenta, tonteia mais
+    # Exclusivos do Grão-Pastor (ficha do Gbzin, aprovados na #30). As mãos gigantes usam o desenho 1608 até a folha
+    # fx_mao chegar.
+    def mao(n, nome, gatilho, id_, vel, dura, dano, puxa, escorre):
+        """Mão gigante reta: puxa (puxa > 0, na direção do Gbzin) ou empurra (puxa < 0). Na defesa só empurra um pouco."""
+        return (f"[State {n}, {nome}]\ntype = Projectile\ntrigger1 = {gatilho}\nprojid = {id_}\nprojanim = 1608\n"
+                "projhitanim = -1\nprojremanim = -1\nprojhits = 1\nprojpriority = 2\n"
+                f"projremovetime = {dura}\nprojscale = 2.2, 2.2\noffset = 40, -84\nvelocity = {vel}, 0\n"
+                f"attr = S, SP\ndamage = {dano}, 5\nanimtype = Heavy\nguardflag = MA\nhitflag = MAF\n"
+                f"pausetime = 4, 12\nsparkxy = 0, 0\n{FAISCA(gp.faiscas(9201))}\nsparkscale = 1.2, 1.2\n"
+                f"hitsound = F5,2\nguardsound = F6,0\nground.type = High\nground.slidetime = {escorre}\n"
+                f"ground.hittime = {escorre + 12}\nground.velocity = {puxa}\nguard.velocity = -3\n"
+                f"air.velocity = {round(puxa * .6, 1)},-3\n\n")
+    # Puxão das Mãos (← → + a/b): as duas mãos puxam de qualquer distância (id 1004: trava só a si mesma)
     i = ini(3400)
     cns = trocar_estado(cns, 3400, E(3400, "S", "A", "S", anim=3400, juggle=4) + chao(3400)
-                        + ritmo(nuvem(3400, f"Time = {i[3]}", 1004, 1.6, .985, 200, 1.4, 44, dano=30, ofs="50, -84"))
-                        + fim(3400))
-    # Garrafa Voadora (↓ → + x/y): arco; estilhaça no chão e os cacos ficam um tempo (pegam por baixo)
+                        + ritmo(mao(3400, "Mãos puxam", f"Time = {i[3]}", 1004, 10, 64, 40, 22, 28)) + fim(3400))
+    # Mão do Pastor (↓ → + a/b): uma mão gigante sai voando reta e empurra para longe
     i = ini(3402)
-    voo = 46
-    garrafa = (f"[State 3402, Garrafa]\ntype = Projectile\ntrigger1 = Time = {i[3]}\nprojid = 1002\nprojanim = 3010\n"
-               "projhitanim = 3013\nprojremanim = 3013\nprojhits = 1\nprojpriority = 2\noffset = 40, -100\n"
-               "velocity = 3.6, -2.6\naccel = 0, .2\nprojheightbound = -400, 0\nattr = S, SP\ndamage = 75, 5\n"
-               "animtype = Med\nguardflag = MA\nhitflag = MAF\npausetime = 4, 10\nsparkxy = 0, 0\n"
-               f"{FAISCA(gp.faiscas(9200))}\nsparkscale = 1, 1\nhitsound = F5,1\nguardsound = F6,0\n"
-               "ground.type = High\nground.slidetime = 12\nground.hittime = 18\nground.velocity = -4\n"
-               "air.velocity = -2,-3.5\n\n"
-               f"[State 3402, Cacos]\ntype = Projectile\ntrigger1 = Time = {i[3] + voo}\n"
-               "trigger1 = NumProjID(1002) > 0\nprojid = 1003\nprojanim = 3014\nprojhitanim = 3014\n"
-               "projremanim = -1\nprojhits = 1\nprojpriority = 1\nprojremovetime = 120\n"
-               f"postype = p1\noffset = {40 + round(3.6 * voo)}, 0\nvelocity = 0, 0\nattr = S, SP\ndamage = 20, 2\n"
-               "animtype = Light\nguardflag = L\nhitflag = MF\npausetime = 0, 6\nsparkno = -1\nguard.sparkno = -1\n"
-               "hitsound = F5,0\nguardsound = F6,0\nground.type = Low\nground.slidetime = 6\nground.hittime = 14\n"
-               "ground.velocity = -2\nair.velocity = -1,-2\n\n")
-    cns = trocar_estado(cns, 3402, E(3402, "S", "A", "S", anim=3402, juggle=4) + ritmo(garrafa) + fim(3402))
+    cns = trocar_estado(cns, 3402, E(3402, "S", "A", "S", anim=3402, juggle=4)
+                        + ritmo(mao(3402, "Mão do Pastor", f"Time = {i[3]}", 1002, 7, 90, 55, -10, 16)) + fim(3402))
+    # Estouro (→ → + x/y): investida de chifres que atravessa o oponente (sem empurrão de corpo) e atropela
+    cns = no_estado(cns, 3401, lambda b: antes_de(b, "[State 3401, Fim]",
+                    "[State 3401, Atravessa]\ntype = PlayerPush\ntrigger1 = 1\nvalue = 0\n\n"))
     # Grave do Paredão (↓ ↑ + a/b): bate o pé, o paredão da aura incha no grave (surto) e o grave empurra para longe
     i = ini(3403)
     assert aura_ck.GRAVE == i[2], f"o surto do Grave (aura_ck.GRAVE = {aura_ck.GRAVE}) fora do grave (tique {i[2]})"

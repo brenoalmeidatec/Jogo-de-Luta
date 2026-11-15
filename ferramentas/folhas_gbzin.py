@@ -72,6 +72,15 @@ The first attached sheet shows Gbzin in his base form and the second one his fir
 Sheet layout, flat solid magenta background (#FF00FF), no text: 1) full body front view, standing, bone crook in the back hand, 2) full body side view facing right in his low grappler fighting stance (the goat-skull chest plate and the hooves clearly visible in profile), 3) full body back view showing the black fur cape, 4) a big bust portrait of the face with the spiral goat horns, the glowing green eye, the green-star eyepatch and the tall fur collar. Same scale for the three full bodies. No aura, no giant shadow and no giant hands drawn (the aura is a separate effect); only the green flames on the belt ends and crook tip and the green embers of the outfit.
 
 """ + ESTILO.split("Layout:")[0],
+    # receita, seção 6: a aura grande sai do Blender (docs/arcade/aura_blender.md), que precisa de um conceito com uma
+    # vista só do corpo e outra com corpo + aura, na mesma pose e escala (como o e_conceito do CK)
+    "e_aura": """Generate ONE image with your image generation tool. Do not write code and do not edit any file.
+
+The attached sheet is the approved awakened form of Gbzin, the Goat Shepherd Lord. Create the concept of his AURA, in the same art style, keeping him exactly as he is.
+
+Sheet layout, flat solid magenta background (#FF00FF), no text, one wide image: 1) on the left, narrow: the full body side view facing right in his low grappler fighting stance, bone crook in the back hand, with NO aura at all; 2) on the right, taking most of the image: the SAME pose at the SAME size and on the same ground line, with his huge aura around him. The aura is drawn only in greens (hue about 140, from almost black dark green through emerald to bright mint, flat hard-edged pixel-art cel shading, never yellow, never blue): a GIANT goat shadow behind and above him (dark green translucent silhouette of a goat head with big spiral horns and glowing bright green eyes, about twice his height, its horns spreading to both sides); two GIANT open hands of green energy coming out of his back, one on each side, reaching forward with the fingers spread, as big as his torso; on the floor around his hooves a ring of green smoke and a few generic paper money bills (no text, no faces) lying flat. The aura stays BEHIND him: it never covers his face, chest or hands. The body itself keeps its normal colors, it is not tinted green.
+
+""" + ESTILO.split("Layout:")[0],
 }
 
 # espaço do kit -> movimento do Gbzin (forma base). Agarrões com folha própria e cada pancada com preparo e contato
@@ -182,7 +191,7 @@ FOLHAS_FX = {
 }
 
 # ordem da fila: base, transformação, Grão-Pastor, objetos
-NOMES = [*CONCEITO.keys()][:1] + list(FOLHAS_GB) + ["e_conceito", "despertar_b"] + \
+NOMES = [*CONCEITO.keys()][:1] + list(FOLHAS_GB) + ["e_conceito", "e_aura", "despertar_b"] + \
     ["e_" + n for n in FOLHAS_GP] + list(FOLHAS_FX)
 
 
@@ -195,6 +204,8 @@ def anexos(nome):
         return "conceito_v3.png + e_conceito_v1.png"
     if nome == "e_referencia_ginga":
         return "e_conceito.png + referencia_ginga.png"
+    if nome == "e_aura":
+        return "e_conceito.png"
     if nome == "despertar_b":
         return "e_referencia_ginga.png + despertar_a.png"
     if nome.startswith("e_"):

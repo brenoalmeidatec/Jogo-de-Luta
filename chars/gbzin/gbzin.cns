@@ -4444,7 +4444,7 @@ value = 50,4
 [State 3401, Avanço]
 type = VelSet
 trigger1 = Time = 6
-x = 5.0
+x = 8.0
 
 [State 3401, Freia]
 type = VelSet
@@ -4514,6 +4514,11 @@ fall.envshake.time = 8
 fall.envshake.freq = 150
 fall.envshake.ampl = -2
 fall.recovertime = 30
+
+[State 3401, Atravessa]
+type = PlayerPush
+trigger1 = 1
+value = 0
 
 [State 3401, Fim]
 type = ChangeState
@@ -5005,76 +5010,42 @@ trigger1 = Time = 23
 value = 50,8
 ; som: fim
 
-[State 3402, Garrafa]
+[State 3402, Mão do Pastor]
 type = Projectile
 trigger1 = Time = 23
 projid = 1002
-projanim = 3010
-projhitanim = 3013
-projremanim = 3013
+projanim = 1608
+projhitanim = -1
+projremanim = -1
 projhits = 1
 projpriority = 2
-offset = 40, -100
-velocity = 3.6, -2.6
-accel = 0, .2
-projheightbound = -400, 0
+projremovetime = 90
+projscale = 2.2, 2.2
+offset = 40, -84
+velocity = 7, 0
 attr = S, SP
-damage = 75, 5
+damage = 55, 5
 envshake.time = 16 ; (efeitos.py)
 envshake.freq = 120 ; (efeitos.py)
 envshake.ampl = -6 ; (efeitos.py)
 palfx.time = 12 ; (efeitos.py)
 palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
-animtype = Med
+animtype = Heavy
 guardflag = MA
 hitflag = MAF
-pausetime = 4, 10
+pausetime = 4, 12
 sparkxy = 0, 0
 sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
-hitsound = S53,1 ; som:F5,1
+hitsound = S53,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
-ground.slidetime = 12
-ground.hittime = 27
-ground.velocity = -4
-air.velocity = -2,-3.5
-
-[State 3402, Cacos]
-type = Projectile
-trigger1 = Time = 69
-trigger1 = NumProjID(1002) > 0
-projid = 1003
-projanim = 3014
-projhitanim = 3014
-projremanim = -1
-projhits = 1
-projpriority = 1
-projremovetime = 120
-postype = p1
-offset = 206, 0
-velocity = 0, 0
-attr = S, SP
-damage = 20, 2
-envshake.time = 10 ; (efeitos.py)
-envshake.freq = 150 ; (efeitos.py)
-envshake.ampl = -3 ; (efeitos.py)
-palfx.time = 8 ; (efeitos.py)
-palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
-animtype = Light
-guardflag = L
-hitflag = MF
-pausetime = 0, 6
-sparkno = -1
-guard.sparkno = -1
-hitsound = S53,0 ; som:F5,0
-guardsound = F6,0
-ground.type = Low
-ground.slidetime = 6
-ground.hittime = 21
-ground.velocity = -2
-air.velocity = -1,-2
+ground.slidetime = 16
+ground.hittime = 42
+ground.velocity = -10
+guard.velocity = -3
+air.velocity = -6.0,-3
 
 [State 3402, Fim]
 type = ChangeState
@@ -5141,41 +5112,42 @@ trigger1 = Time = 0
 x = 0
 y = 0
 
-[State 3400, Nuvem]
+[State 3400, Mãos puxam]
 type = Projectile
 trigger1 = Time = 22
 projid = 1004
-projanim = 1005
-projhitanim = 1006
-projremanim = 1006
-projcancelanim = 1006
+projanim = 1608
+projhitanim = -1
+projremanim = -1
 projhits = 1
-projpriority = 1
-projremovetime = 200
-projscale = 1.4, 1.4
-offset = 50, -84
-velocity = 1.6, 0
-velmul = 0.985, 1
+projpriority = 2
+projremovetime = 64
+projscale = 2.2, 2.2
+offset = 40, -84
+velocity = 10, 0
 attr = S, SP
-damage = 30, 2
-envshake.time = 10 ; (efeitos.py)
-envshake.freq = 150 ; (efeitos.py)
-envshake.ampl = -3 ; (efeitos.py)
-palfx.time = 8 ; (efeitos.py)
+damage = 40, 5
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
 palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
-animtype = Light
+animtype = Heavy
 guardflag = MA
 hitflag = MAF
-pausetime = 0, 6
-sparkno = -1
-guard.sparkno = -1
-hitsound = S53,0 ; som:F5,0
+pausetime = 4, 12
+sparkxy = 0, 0
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
+guard.sparkno = S9202
+sparkscale = 1, 1
+hitsound = S53,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
-ground.slidetime = 10
-ground.hittime = 66
-ground.velocity = 0
-air.velocity = -1,-2
+ground.slidetime = 28
+ground.hittime = 60
+ground.velocity = 22
+guard.velocity = -3
+air.velocity = 13.2,-3
 
 [State 3400, Fim]
 type = ChangeState
@@ -10265,7 +10237,7 @@ map = "au_ck_c"
 value = 1
 ignorehitpause = 1
 
-; >>> aura_no_corpo.py: a aura segue o corpo (issue #51). Tabelas medidas nos desenhos do .air: 187 + 96 valores, 1649 trechos. Pivô nas costas em -2, -78. Não edite: rode python3 ferramentas/aura_no_corpo.py
+; >>> aura_no_corpo.py: a aura segue o corpo (issue #51). Tabelas medidas nos desenhos do .air: 187 + 96 valores, 1651 trechos. Pivô nas costas em -2, -78. Não edite: rode python3 ferramentas/aura_no_corpo.py
 [State -4, Aura ck no corpo: costas de quem está em pé]
 type = MapSet
 trigger1 = 1
@@ -11787,6 +11759,13 @@ map = "au_ck_p"
 value = 12357
 ignorehitpause = 1
 
+[State -4, Aura ck no corpo: costas -8 +66]
+type = MapSet
+trigger1 = Anim = 3013 && AnimElemNo(0) = 1
+map = "au_ck_p"
+value = 12476
+ignorehitpause = 1
+
 [State -4, Aura ck no corpo: costas +8 +66]
 type = MapSet
 trigger1 = Anim = 5100 && AnimElemNo(0) = 3
@@ -11874,6 +11853,21 @@ type = MapSet
 trigger1 = Anim = 9126
 map = "au_ck_p"
 value = 12517
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: costas -10 +68]
+type = MapSet
+trigger1 = Anim = 3013 && AnimElemNo(0) = 2
+trigger2 = Anim = 3014
+map = "au_ck_p"
+value = 12603
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: costas +4 +68]
+type = MapSet
+trigger1 = Anim = 3010 && AnimElemNo(0) = 6
+map = "au_ck_p"
+value = 12610
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas +12 +68]
@@ -11976,7 +11970,8 @@ ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas -4 +74]
 type = MapSet
-trigger1 = Anim = 3011 && AnimElemNo(0) = 4
+trigger1 = Anim = 3010 && AnimElemNo(0) = 5
+trigger2 = Anim = 3011 && AnimElemNo(0) = 4
 map = "au_ck_p"
 value = 12990
 ignorehitpause = 1
@@ -12062,28 +12057,12 @@ map = "au_ck_p"
 value = 13371
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: costas -2 +80]
-type = MapSet
-trigger1 = Anim = 3013 && AnimElemNo(0) = 1
-trigger2 = Anim = 3013 && AnimElemNo(0) = 2
-trigger3 = Anim = 3014
-map = "au_ck_p"
-value = 13375
-ignorehitpause = 1
-
 [State -4, Aura ck no corpo: costas +2 +80]
 type = MapSet
 trigger1 = Anim = 9205 && AnimElemNo(0) = 4
 trigger2 = Anim = 9235 && AnimElemNo(0) = 4
 map = "au_ck_p"
 value = 13377
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: costas +4 +80]
-type = MapSet
-trigger1 = Anim = 3010 && AnimElemNo(0) = 6
-map = "au_ck_p"
-value = 13378
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas +16 +80]
@@ -12098,7 +12077,8 @@ ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas -10 +82]
 type = MapSet
-trigger1 = Anim = 3011 && AnimElemNo(0) = 3
+trigger1 = Anim = 3010 && AnimElemNo(0) = 4
+trigger2 = Anim = 3011 && AnimElemNo(0) = 3
 map = "au_ck_p"
 value = 13499
 ignorehitpause = 1
@@ -12113,13 +12093,12 @@ ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas +0 +82]
 type = MapSet
-trigger1 = Anim = 3010 && AnimElemNo(0) = 5
-trigger2 = Anim = 9201 && AnimElemNo(0) = 5
-trigger3 = Anim = 9205 && AnimElemNo(0) = 5
-trigger4 = Anim = 9212
-trigger5 = Anim = 9213
-trigger6 = Anim = 9231 && AnimElemNo(0) = 5
-trigger7 = Anim = 9235 && AnimElemNo(0) = 5
+trigger1 = Anim = 9201 && AnimElemNo(0) = 5
+trigger2 = Anim = 9205 && AnimElemNo(0) = 5
+trigger3 = Anim = 9212
+trigger4 = Anim = 9213
+trigger5 = Anim = 9231 && AnimElemNo(0) = 5
+trigger6 = Anim = 9235 && AnimElemNo(0) = 5
 map = "au_ck_p"
 value = 13504
 ignorehitpause = 1
@@ -12141,11 +12120,10 @@ ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas -2 +84]
 type = MapSet
-trigger1 = Anim = 3010 && AnimElemNo(0) = 4
-trigger2 = Anim = 9201 && AnimElemNo(0) = 6
-trigger3 = Anim = 9205 && AnimElemNo(0) = 6
-trigger4 = Anim = 9231 && AnimElemNo(0) = 6
-trigger5 = Anim = 9235 && AnimElemNo(0) = 6
+trigger1 = Anim = 9201 && AnimElemNo(0) = 6
+trigger2 = Anim = 9205 && AnimElemNo(0) = 6
+trigger3 = Anim = 9231 && AnimElemNo(0) = 6
+trigger4 = Anim = 9235 && AnimElemNo(0) = 6
 map = "au_ck_p"
 value = 13631
 ignorehitpause = 1
@@ -12184,10 +12162,11 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = Anim = 1606 && AnimElemNo(0) = 2
 trigger2 = Anim = 1608 && AnimElemNo(0) = 2
-trigger3 = Anim = 9200 && AnimElemNo(0) = [1, 3]
-trigger4 = Anim = 9202
-trigger5 = Anim = 9230 && AnimElemNo(0) = [1, 3]
-trigger6 = Anim = 9232
+trigger3 = Anim = 3010 && AnimElemNo(0) = 1
+trigger4 = Anim = 9200 && AnimElemNo(0) = [1, 3]
+trigger5 = Anim = 9202
+trigger6 = Anim = 9230 && AnimElemNo(0) = [1, 3]
+trigger7 = Anim = 9232
 map = "au_ck_p"
 value = 13761
 ignorehitpause = 1
@@ -12222,16 +12201,10 @@ ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas -6 +88]
 type = MapSet
-trigger1 = Anim = 3011 && AnimElemNo(0) = [1, 2]
+trigger1 = Anim = 3010 && AnimElemNo(0) = [2, 3]
+trigger2 = Anim = 3011 && AnimElemNo(0) = [1, 2]
 map = "au_ck_p"
 value = 13885
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: costas +0 +88]
-type = MapSet
-trigger1 = Anim = 3010 && AnimElemNo(0) = [1, 3]
-map = "au_ck_p"
-value = 13888
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas +6 +88]
@@ -12259,16 +12232,10 @@ ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +0, tronco -112 graus]
 type = MapSet
-trigger1 = Anim = 3011 && AnimElemNo(0) = [1, 2]
+trigger1 = Anim = 3010 && AnimElemNo(0) = [2, 3]
+trigger2 = Anim = 3011 && AnimElemNo(0) = [1, 2]
 map = "au_ck_q"
 value = 775
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco -112 graus]
-type = MapSet
-trigger1 = Anim = 3010 && AnimElemNo(0) = [1, 3]
-map = "au_ck_q"
-value = 783
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro -4, tronco -90 graus]
@@ -12316,6 +12283,13 @@ trigger1 = Anim = 3013 && AnimElemNo(0) = 2
 trigger2 = Anim = 3014
 map = "au_ck_q"
 value = 2823
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: recolhe 5 de 7, centro +4, tronco -82 graus]
+type = MapSet
+trigger1 = Anim = 3010 && AnimElemNo(0) = 1
+map = "au_ck_q"
+value = 2829
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 6 de 7, centro +4, tronco -82 graus]
@@ -12442,7 +12416,8 @@ ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +0, tronco -38 graus]
 type = MapSet
-trigger1 = Anim = 3011 && AnimElemNo(0) = 4
+trigger1 = Anim = 3010 && AnimElemNo(0) = 5
+trigger2 = Anim = 3011 && AnimElemNo(0) = 4
 map = "au_ck_q"
 value = 5895
 ignorehitpause = 1
@@ -12459,7 +12434,6 @@ ignorehitpause = 1
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco -38 graus]
 type = MapSet
 trigger1 = Anim = 1006 && AnimElemNo(0) = [2, 3]
-trigger2 = Anim = 3010 && AnimElemNo(0) = 5
 map = "au_ck_q"
 value = 5903
 ignorehitpause = 1
@@ -13330,11 +13304,11 @@ map = "au_ck_q"
 value = 8992
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco +15 graus]
+[State -4, Aura ck no corpo: recolhe 6 de 7, centro +4, tronco +15 graus]
 type = MapSet
 trigger1 = Anim = 3010 && AnimElemNo(0) = 6
 map = "au_ck_q"
-value = 9487
+value = 9486
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 0 de 7, centro +8, tronco +15 graus]
