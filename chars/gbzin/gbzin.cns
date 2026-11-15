@@ -2324,6 +2324,8 @@ type = HitDef
 trigger1 = Time = 13 && MoveHit
 attr = S, NA
 damage = 55, 0
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -2525,6 +2527,8 @@ type = HitDef
 trigger1 = Time = 11
 attr = S, NA
 damage = 110, 0
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -2714,6 +2718,8 @@ type = HitDef
 trigger1 = Time = 10
 attr = S, NA
 damage = 85, 0
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -2915,6 +2921,8 @@ type = HitDef
 trigger1 = Time = 10
 attr = S, NA
 damage = 110, 0
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -3431,6 +3439,8 @@ type = HitDef
 trigger1 = Time = 11
 attr = S, NA
 damage = 70, 0
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -3734,6 +3744,8 @@ type = HitDef
 trigger1 = Time = 11 + var(40)
 attr = S, NA
 damage = 120, 0
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -3976,6 +3988,8 @@ type = HitDef
 trigger1 = Time = 10 + var(40)
 attr = S, NA
 damage = 125, 0
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -4380,6 +4394,41 @@ anim = 3401
 juggle = 3
 velset = 0,0
 
+[State 3401, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 3401, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 33, 150), ifelse(var(20) > 0, 150, 116), ifelse(var(20) > 0, 90, 57)
+palmul = .3,.3,.3
+
+[State 3401, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 15, 70), ifelse(var(20) > 0, 70, 54), ifelse(var(20) > 0, 42, 27)
+mul = ifelse(var(20) > 0, 86, 170), ifelse(var(20) > 0, 170, 136), ifelse(var(20) > 0, 126, 101)
+ignorehitpause = 1
+
 [State 3401, som vento]
 type = PlaySnd
 trigger1 = Time = 0
@@ -4401,6 +4450,11 @@ type = HitDef
 trigger1 = Time = 9
 attr = S, SA
 damage = 45, 0
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -4408,7 +4462,7 @@ priority = 4, Hit
 pausetime = 10, 10
 guard.pausetime = 8, 8
 sparkxy = -10, -16
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -4425,6 +4479,11 @@ type = HitDef
 trigger1 = Time = 22 && MoveHit
 attr = S, SA
 damage = 70, 0
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -4432,9 +4491,9 @@ priority = 4, Hit
 pausetime = 16, 16
 guard.pausetime = 10, 10
 sparkxy = -10, -16
-sparkno = S(ifelse(var(20) > 0, 9235, 9205))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.3, 1.3
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S53,3 ; som:F5,3
 guardsound = F6,0
@@ -4443,9 +4502,6 @@ ground.slidetime = 8
 ground.hittime = 32
 ground.velocity = -6,-4
 air.velocity = -5,-5
-envshake.time = 12
-envshake.freq = 150
-envshake.ampl = -3
 fall = 1
 fall.recover = 1
 fall.envshake.time = 8
@@ -4469,6 +4525,32 @@ anim = 1600
 juggle = 4
 velset = 0,0
 
+[State 1600, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1600, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 33, 150), ifelse(var(20) > 0, 150, 116), ifelse(var(20) > 0, 90, 57)
+palmul = .3,.3,.3
+
 [State 1600, som vento]
 type = PlaySnd
 trigger1 = Time = 0
@@ -4482,7 +4564,7 @@ trigger1 = var(20) = 0
 value = 50,0
 ; som: fim
 
-[State 1600, Boné]
+[State 1600, Gancho]
 type = Projectile
 trigger1 = Time = 23
 trigger1 = var(20) = 0
@@ -4498,24 +4580,30 @@ offset = 30, -84
 velocity = 6.5, 0
 accel = -0.36, 0
 attr = S, SP
-damage = 45, 3
+damage = 40, 3
+envshake.time = 10 ; (efeitos.py)
+envshake.freq = 150 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Med
 guardflag = MA
 hitflag = MAF
 pausetime = 4, 8
 sparkxy = 0, 0
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S50,4 ; som:F5,1
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 10
-ground.hittime = 24
-ground.velocity = -3
-air.velocity = -2,-3
+ground.hittime = 33
+ground.velocity = 8
+guard.velocity = -2
+air.velocity = 4.8,-2
 
-[State 1600, Óculos]
+[State 1600, Mãos gigantes]
 type = Projectile
 trigger1 = Time = 23
 trigger1 = var(20) > 0
@@ -4526,27 +4614,33 @@ projremanim = -1
 projhits = 2
 projmisstime = 20
 projpriority = 2
-projremovetime = 36
+projremovetime = 48
 offset = 30, -84
 velocity = 6.5, 0
-accel = -0.36, 0
+accel = -0.27, 0
 attr = S, SP
-damage = 45, 3
+damage = 40, 3
+envshake.time = 10 ; (efeitos.py)
+envshake.freq = 150 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Med
 guardflag = MA
 hitflag = MAF
 pausetime = 4, 8
 sparkxy = 0, 0
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S50,4 ; som:F5,1
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 10
-ground.hittime = 24
-ground.velocity = -3
-air.velocity = -2,-3
+ground.hittime = 33
+ground.velocity = 8
+guard.velocity = -2
+air.velocity = 4.8,-2
 
 [State 1600, Pega de volta]
 type = ChangeAnim
@@ -4571,6 +4665,32 @@ anim = 1601
 juggle = 4
 velset = 0,0
 
+[State 1601, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1601, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 33, 150), ifelse(var(20) > 0, 150, 116), ifelse(var(20) > 0, 90, 57)
+palmul = .3,.3,.3
+
 [State 1601, som vento]
 type = PlaySnd
 trigger1 = Time = 0
@@ -4584,7 +4704,7 @@ trigger1 = var(20) = 0
 value = 50,0
 ; som: fim
 
-[State 1601, Boné]
+[State 1601, Gancho]
 type = Projectile
 trigger1 = Time = 23
 trigger1 = var(20) = 0
@@ -4600,24 +4720,30 @@ offset = 30, -84
 velocity = 12, 0
 accel = -0.26, 0
 attr = S, SP
-damage = 45, 3
+damage = 40, 3
+envshake.time = 10 ; (efeitos.py)
+envshake.freq = 150 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Med
 guardflag = MA
 hitflag = MAF
 pausetime = 4, 8
 sparkxy = 0, 0
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S50,4 ; som:F5,1
 guardsound = F6,0
 ground.type = High
-ground.slidetime = 10
-ground.hittime = 24
-ground.velocity = -3
-air.velocity = -2,-3
+ground.slidetime = 22
+ground.hittime = 51
+ground.velocity = 16
+guard.velocity = -2
+air.velocity = 9.6,-2
 
-[State 1601, Óculos]
+[State 1601, Mãos gigantes]
 type = Projectile
 trigger1 = Time = 23
 trigger1 = var(20) > 0
@@ -4628,27 +4754,33 @@ projremanim = -1
 projhits = 2
 projmisstime = 20
 projpriority = 2
-projremovetime = 92
+projremovetime = 123
 offset = 30, -84
 velocity = 12, 0
-accel = -0.26, 0
+accel = -0.195, 0
 attr = S, SP
-damage = 45, 3
+damage = 40, 3
+envshake.time = 10 ; (efeitos.py)
+envshake.freq = 150 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Med
 guardflag = MA
 hitflag = MAF
 pausetime = 4, 8
 sparkxy = 0, 0
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S50,4 ; som:F5,1
 guardsound = F6,0
 ground.type = High
-ground.slidetime = 10
-ground.hittime = 24
-ground.velocity = -3
-air.velocity = -2,-3
+ground.slidetime = 22
+ground.hittime = 51
+ground.velocity = 16
+guard.velocity = -2
+air.velocity = 9.6,-2
 
 [State 1601, Pega de volta]
 type = ChangeAnim
@@ -4720,6 +4852,41 @@ anim = 1701
 juggle = 0
 velset = 0,0
 
+[State 1701, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1701, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 33, 150), ifelse(var(20) > 0, 150, 116), ifelse(var(20) > 0, 90, 57)
+palmul = .3,.3,.3
+
+[State 1701, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 15, 70), ifelse(var(20) > 0, 70, 54), ifelse(var(20) > 0, 42, 27)
+mul = ifelse(var(20) > 0, 86, 170), ifelse(var(20) > 0, 170, 136), ifelse(var(20) > 0, 126, 101)
+ignorehitpause = 1
+
 [State 1701, som vento]
 type = PlaySnd
 trigger1 = Time = 0
@@ -4768,9 +4935,11 @@ type = HitDef
 trigger1 = Time = 18
 attr = S, SA
 damage = 70, 0
-envshake.time = 6
-envshake.freq = 150
-envshake.ampl = -2
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -4778,9 +4947,9 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -86
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S52,2 ; som:F5,2
 guardsound = F6,0
@@ -4805,6 +4974,32 @@ sprpriority = 2
 anim = 3402
 juggle = 4
 velset = 0,0
+
+[State 3402, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 3402, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 33, 150), ifelse(var(20) > 0, 150, 116), ifelse(var(20) > 0, 90, 57)
+palmul = .3,.3,.3
 
 [State 3402, som vento]
 type = PlaySnd
@@ -4833,12 +5028,17 @@ accel = 0, .2
 projheightbound = -400, 0
 attr = S, SP
 damage = 75, 5
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Med
 guardflag = MA
 hitflag = MAF
 pausetime = 4, 10
 sparkxy = 0, 0
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S50,3 ; som:F5,1
@@ -4865,6 +5065,11 @@ offset = 206, 0
 velocity = 0, 0
 attr = S, SP
 damage = 20, 2
+envshake.time = 10 ; (efeitos.py)
+envshake.freq = 150 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Light
 guardflag = L
 hitflag = MF
@@ -4894,6 +5099,32 @@ sprpriority = 2
 anim = 3400
 juggle = 4
 velset = 0,0
+
+[State 3400, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 3400, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 33, 150), ifelse(var(20) > 0, 150, 116), ifelse(var(20) > 0, 90, 57)
+palmul = .3,.3,.3
 
 [State 3400, som vento]
 type = PlaySnd
@@ -4935,6 +5166,11 @@ velocity = 1.6, 0
 velmul = 0.985, 1
 attr = S, SP
 damage = 30, 2
+envshake.time = 10 ; (efeitos.py)
+envshake.freq = 150 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Light
 guardflag = MA
 hitflag = MAF
@@ -4964,6 +5200,41 @@ sprpriority = 2
 anim = 3403
 juggle = 4
 velset = 0,0
+
+[State 3403, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 3403, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 33, 150), ifelse(var(20) > 0, 150, 116), ifelse(var(20) > 0, 90, 57)
+palmul = .3,.3,.3
+
+[State 3403, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 15, 70), ifelse(var(20) > 0, 70, 54), ifelse(var(20) > 0, 42, 27)
+mul = ifelse(var(20) > 0, 86, 170), ifelse(var(20) > 0, 170, 136), ifelse(var(20) > 0, 126, 101)
+ignorehitpause = 1
 
 [State 3403, som vento]
 type = PlaySnd
@@ -5006,9 +5277,11 @@ type = HitDef
 trigger1 = Time = 10
 attr = S, SA
 damage = 30, 0
-envshake.time = 12
-envshake.freq = 150
-envshake.ampl = -4
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -5016,9 +5289,9 @@ priority = 4, Hit
 pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -55
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S53,2 ; som:F5,2
 guardsound = F6,0
@@ -5134,6 +5407,32 @@ anim = 1000
 juggle = 4
 velset = 0,0
 
+[State 1000, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1000, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 33, 150), ifelse(var(20) > 0, 150, 116), ifelse(var(20) > 0, 90, 57)
+palmul = .3,.3,.3
+
 [State 1000, som vento]
 type = PlaySnd
 trigger1 = Time = 0
@@ -5182,6 +5481,11 @@ velocity = 3.0, 0
 velmul = 0.9, 1
 attr = S, SP
 damage = 25, 2
+envshake.time = 10 ; (efeitos.py)
+envshake.freq = 150 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Light
 guardflag = MA
 hitflag = MAF
@@ -5211,6 +5515,32 @@ sprpriority = 2
 anim = 1001
 juggle = 4
 velset = 0,0
+
+[State 1001, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1001, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 33, 150), ifelse(var(20) > 0, 150, 116), ifelse(var(20) > 0, 90, 57)
+palmul = .3,.3,.3
 
 [State 1001, som vento]
 type = PlaySnd
@@ -5260,6 +5590,11 @@ velocity = 9, 0
 velmul = 0.93, 1
 attr = S, SP
 damage = 25, 2
+envshake.time = 10 ; (efeitos.py)
+envshake.freq = 150 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Light
 guardflag = MA
 hitflag = MAF
@@ -5282,12 +5617,53 @@ ctrl = 1
 
 [Statedef 1100]
 type = S
-movetype = I
+movetype = A
 physics = N
 ctrl = 0
 sprpriority = 2
 anim = 1100
 velset = 0,0
+
+[State 1100, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1100, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 33, 150), ifelse(var(20) > 0, 150, 116), ifelse(var(20) > 0, 90, 57)
+palmul = .3,.3,.3
+
+[State 1100, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 15, 70), ifelse(var(20) > 0, 70, 54), ifelse(var(20) > 0, 42, 27)
+mul = ifelse(var(20) > 0, 86, 170), ifelse(var(20) > 0, 170, 136), ifelse(var(20) > 0, 126, 101)
+ignorehitpause = 1
+
+[State 1100, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
 
 [State 1100, Arte despertada]
 type = ChangeAnim
@@ -5295,19 +5671,53 @@ trigger1 = Time = 0
 trigger1 = var(20) > 0
 value = 11100
 
-[State 1100, Esquiva]
+[State 1100, Rola]
+type = VelSet
+trigger1 = Time = 4
+x = 4.5
+
+[State 1100, Para]
+type = VelSet
+trigger1 = Time = 34
+trigger2 = MoveContact
+x = 0
+
+[State 1100, Por baixo]
 type = NotHitBy
-trigger1 = Time >= ifelse(var(20) > 0, 6, 3) && Time < 38
-value = SA, NA, SA, HA
+trigger1 = Time >= 4 && Time < 34
+value = SA, AA, AP
 time = 1
 
-[State 1100, Sai com o direto]
-type = ChangeState
-triggerall = Time >= 6
-triggerall = Time < 38
-trigger1 = command = "x"
-trigger2 = command = "y"
-value = 1110
+[State 1100, Golpe]
+type = HitDef
+trigger1 = Time = 10
+attr = S, SA
+damage = 55, 0
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
+animtype = Hard
+guardflag = L
+hitflag = MAF
+priority = 4, Hit
+pausetime = 14, 14
+guard.pausetime = 9, 9
+sparkxy = -10, -17
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = S52,2 ; som:F5,2
+guardsound = F6,0
+ground.type = Trip
+ground.slidetime = 5
+ground.hittime = 12
+ground.velocity = -2
+air.velocity = -2,-4
+fall = 1
+fall.recover = 1
 
 [State 1100, Fim]
 type = ChangeState
@@ -5324,6 +5734,41 @@ sprpriority = 2
 anim = 1110
 juggle = 3
 velset = 0,0
+
+[State 1110, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1110, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 33, 150), ifelse(var(20) > 0, 150, 116), ifelse(var(20) > 0, 90, 57)
+palmul = .3,.3,.3
+
+[State 1110, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 15, 70), ifelse(var(20) > 0, 70, 54), ifelse(var(20) > 0, 42, 27)
+mul = ifelse(var(20) > 0, 86, 170), ifelse(var(20) > 0, 170, 136), ifelse(var(20) > 0, 126, 101)
+ignorehitpause = 1
 
 [State 1110, som vento]
 type = PlaySnd
@@ -5346,9 +5791,11 @@ type = HitDef
 trigger1 = Time = 7
 attr = S, SA
 damage = 80, 0
-envshake.time = 6
-envshake.freq = 150
-envshake.ampl = -2
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -5356,7 +5803,7 @@ priority = 4, Hit
 pausetime = 11, 11
 guard.pausetime = 8, 8
 sparkxy = -10, -88
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
@@ -5383,6 +5830,41 @@ sprpriority = 2
 anim = 1200
 juggle = 4
 velset = 0,0
+
+[State 1200, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1200, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 33, 150), ifelse(var(20) > 0, 150, 116), ifelse(var(20) > 0, 90, 57)
+palmul = .3,.3,.3
+
+[State 1200, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 15, 70), ifelse(var(20) > 0, 70, 54), ifelse(var(20) > 0, 42, 27)
+mul = ifelse(var(20) > 0, 86, 170), ifelse(var(20) > 0, 170, 136), ifelse(var(20) > 0, 126, 101)
+ignorehitpause = 1
 
 [State 1200, som vento]
 type = PlaySnd
@@ -5419,9 +5901,11 @@ type = HitDef
 trigger1 = Time = 10
 attr = S, SA
 damage = 120, 0
-envshake.time = 12
-envshake.freq = 150
-envshake.ampl = -4
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Up
 guardflag = MA
 hitflag = MAF
@@ -5429,9 +5913,9 @@ priority = 4, Hit
 pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -87
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S51,2 ; som:F5,2
 guardsound = F6,0
@@ -5469,7 +5953,7 @@ type = ReversalDef
 trigger1 = Time = [4, 27]
 reversal.attr = SA, NA, SA, HA
 pausetime = 0,0
-sparkno = S(ifelse(var(20) > 0, 7691, 7690))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 p1stateno = 1310
 p2stateno = 762
 
@@ -5669,6 +6153,19 @@ trigger1 = NumExplod(9250)
 id = 9250
 ignorehitpause = 1
 
+[State 2000, Pilar da transformação (efeitos.py)]
+type = Explod
+trigger1 = AnimTime = 0
+anim = 9272
+id = 9272
+postype = p1
+pos = 0, 0
+sprpriority = -2
+ownpal = 1
+removetime = -2
+bindtime = 1
+ignorehitpause = 1
+
 [State 2000, Liga]
 type = VarSet
 trigger1 = Anim = 2000 && AnimTime = 0
@@ -5695,6 +6192,43 @@ anim = 3000
 juggle = 0
 velset = 0,0
 
+[State 3000, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9274, 9244)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+scale = 1.5, 1.5
+supermovetime = 90
+ignorehitpause = 1
+
+[State 3000, Fundo na cor da forma (efeitos.py)]
+type = BGPalFX
+trigger1 = Time >= 1
+time = 2
+mul = ifelse(var(20) > 0, 86, 170), ifelse(var(20) > 0, 170, 136), ifelse(var(20) > 0, 126, 101)
+
+[State 3000, Solta: tremida (efeitos.py)]
+type = EnvShake
+trigger1 = Time = 1
+time = 16
+freq = 170
+ampl = -3
+
+[State 3000, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 15, 70), ifelse(var(20) > 0, 70, 54), ifelse(var(20) > 0, 42, 27)
+mul = ifelse(var(20) > 0, 86, 170), ifelse(var(20) > 0, 170, 136), ifelse(var(20) > 0, 126, 101)
+ignorehitpause = 1
+
 [State 3000, Arte despertada]
 type = ChangeAnim
 trigger1 = Time = 0
@@ -5705,7 +6239,7 @@ value = 13000
 type = SuperPause
 trigger1 = Time = 0
 time = 30
-anim = 100
+anim = -1
 pos = 10, -60
 sound = F20,0
 movetime = 0
@@ -5726,8 +6260,8 @@ time = 40
 length = 6
 trans = add
 palcolor = 0
+paladd = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 palbright = 40,40,40
-paladd = 0,0,0
 palmul = .6,.6,.6
 timegap = 2
 framegap = 2
@@ -5760,6 +6294,11 @@ type = HitDef
 trigger1 = Time = 7
 attr = S, HA
 damage = 22, 0
+envshake.time = 8 ; (efeitos.py)
+envshake.freq = 160 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 6 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -5767,7 +6306,7 @@ priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
 sparkxy = -10, -80
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -5785,6 +6324,11 @@ type = HitDef
 trigger1 = Time = 11
 attr = S, HA
 damage = 22, 0
+envshake.time = 8 ; (efeitos.py)
+envshake.freq = 160 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 6 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -5792,7 +6336,7 @@ priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
 sparkxy = -10, -80
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -5810,6 +6354,11 @@ type = HitDef
 trigger1 = Time = 15
 attr = S, HA
 damage = 22, 0
+envshake.time = 8 ; (efeitos.py)
+envshake.freq = 160 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 6 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -5817,7 +6366,7 @@ priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
 sparkxy = -10, -80
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -5835,6 +6384,11 @@ type = HitDef
 trigger1 = Time = 19
 attr = S, HA
 damage = 22, 0
+envshake.time = 8 ; (efeitos.py)
+envshake.freq = 160 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 6 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -5842,7 +6396,7 @@ priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
 sparkxy = -10, -80
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -5860,6 +6414,11 @@ type = HitDef
 trigger1 = Time = 23
 attr = S, HA
 damage = 22, 0
+envshake.time = 8 ; (efeitos.py)
+envshake.freq = 160 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 6 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -5867,7 +6426,7 @@ priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
 sparkxy = -10, -80
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -5885,6 +6444,11 @@ type = HitDef
 trigger1 = Time = 27
 attr = S, HA
 damage = 22, 0
+envshake.time = 8 ; (efeitos.py)
+envshake.freq = 160 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 6 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -5892,7 +6456,7 @@ priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
 sparkxy = -10, -80
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -5910,6 +6474,11 @@ type = HitDef
 trigger1 = Time = 31
 attr = S, HA
 damage = 22, 0
+envshake.time = 8 ; (efeitos.py)
+envshake.freq = 160 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 6 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -5917,7 +6486,7 @@ priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
 sparkxy = -10, -80
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -5935,6 +6504,11 @@ type = HitDef
 trigger1 = Time = 41
 attr = S, HA
 damage = 70, 0
+envshake.time = 28 ; (efeitos.py)
+envshake.freq = 90 ; (efeitos.py)
+envshake.ampl = -10 ; (efeitos.py)
+palfx.time = 18 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Back
 guardflag = MA
 hitflag = MAF
@@ -5942,9 +6516,9 @@ priority = 4, Hit
 pausetime = 20, 20
 guard.pausetime = 12, 12
 sparkxy = -10, -80
-sparkno = S(ifelse(var(20) > 0, 9235, 9205))
+sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
-sparkscale = 1.5, 1.5
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S51,4 ; som:F5,4
 guardsound = F6,0
@@ -5953,9 +6527,6 @@ ground.slidetime = 5
 ground.hittime = 18
 ground.velocity = -7,-6
 air.velocity = -7,-6
-envshake.time = 20
-envshake.freq = 150
-envshake.ampl = -3
 fall = 1
 fall.recover = 0
 fall.envshake.time = 12
@@ -5986,6 +6557,34 @@ anim = 3100
 juggle = 0
 velset = 0,0
 
+[State 3100, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9274, 9244)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+scale = 1.5, 1.5
+supermovetime = 90
+ignorehitpause = 1
+
+[State 3100, Fundo na cor da forma (efeitos.py)]
+type = BGPalFX
+trigger1 = Time >= 1
+time = 2
+mul = ifelse(var(20) > 0, 86, 170), ifelse(var(20) > 0, 170, 136), ifelse(var(20) > 0, 126, 101)
+
+[State 3100, Solta: tremida (efeitos.py)]
+type = EnvShake
+trigger1 = Time = 1
+time = 16
+freq = 170
+ampl = -3
+
 [State 3100, som assinatura]
 type = PlaySnd
 trigger1 = Time = 0
@@ -6001,7 +6600,7 @@ value = 13100
 type = SuperPause
 trigger1 = Time = 0
 time = 30
-anim = 100
+anim = -1
 pos = 10, -60
 sound = F20,0
 movetime = 0
@@ -6022,8 +6621,8 @@ time = 40
 length = 6
 trans = add
 palcolor = 0
+paladd = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 palbright = 40,40,40
-paladd = 0,0,0
 palmul = .6,.6,.6
 timegap = 2
 framegap = 2
@@ -6056,6 +6655,11 @@ type = HitDef
 trigger1 = (Time >= 7) && (Time <= 35) && (Time % 4 = 0)
 attr = S, HA
 damage = 47, 0
+envshake.time = 8 ; (efeitos.py)
+envshake.freq = 160 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 6 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -6063,7 +6667,7 @@ priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
 sparkxy = -10, -61
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -6080,6 +6684,11 @@ type = HitDef
 trigger1 = Time = 39
 attr = S, HA
 damage = 60, 0
+envshake.time = 28 ; (efeitos.py)
+envshake.freq = 90 ; (efeitos.py)
+envshake.ampl = -10 ; (efeitos.py)
+palfx.time = 18 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Back
 guardflag = MA
 hitflag = MAF
@@ -6087,9 +6696,9 @@ priority = 4, Hit
 pausetime = 20, 20
 guard.pausetime = 12, 12
 sparkxy = -10, -61
-sparkno = S(ifelse(var(20) > 0, 9235, 9205))
+sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
-sparkscale = 1.5, 1.5
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S53,4 ; som:F5,4
 guardsound = F6,0
@@ -6098,9 +6707,6 @@ ground.slidetime = 5
 ground.hittime = 18
 ground.velocity = -7,-6
 air.velocity = -7,-6
-envshake.time = 20
-envshake.freq = 150
-envshake.ampl = -3
 fall = 1
 fall.recover = 0
 fall.envshake.time = 12
@@ -6127,12 +6733,53 @@ ctrl = 1
 
 [Statedef 1101]
 type = S
-movetype = I
+movetype = A
 physics = N
 ctrl = 0
 sprpriority = 2
 anim = 1101
 velset = 0,0
+
+[State 1101, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1101, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 33, 150), ifelse(var(20) > 0, 150, 116), ifelse(var(20) > 0, 90, 57)
+palmul = .3,.3,.3
+
+[State 1101, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 15, 70), ifelse(var(20) > 0, 70, 54), ifelse(var(20) > 0, 42, 27)
+mul = ifelse(var(20) > 0, 86, 170), ifelse(var(20) > 0, 170, 136), ifelse(var(20) > 0, 126, 101)
+ignorehitpause = 1
+
+[State 1101, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
 
 [State 1101, Arte despertada]
 type = ChangeAnim
@@ -6140,19 +6787,53 @@ trigger1 = Time = 0
 trigger1 = var(20) > 0
 value = 11101
 
-[State 1101, Esquiva]
+[State 1101, Rola]
+type = VelSet
+trigger1 = Time = 4
+x = 6.5
+
+[State 1101, Para]
+type = VelSet
+trigger1 = Time = 46
+trigger2 = MoveContact
+x = 0
+
+[State 1101, Por baixo]
 type = NotHitBy
-trigger1 = Time >= ifelse(var(20) > 0, 6, 3) && Time < 54
-value = SA, NA, SA, HA
+trigger1 = Time >= 4 && Time < 46
+value = SA, AA, AP
 time = 1
 
-[State 1101, Sai com o direto]
-type = ChangeState
-triggerall = Time >= 6
-triggerall = Time < 54
-trigger1 = command = "x"
-trigger2 = command = "y"
-value = 1110
+[State 1101, Golpe]
+type = HitDef
+trigger1 = Time = 10
+attr = S, SA
+damage = 75, 0
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
+animtype = Hard
+guardflag = L
+hitflag = MAF
+priority = 4, Hit
+pausetime = 14, 14
+guard.pausetime = 9, 9
+sparkxy = -10, -17
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = S52,2 ; som:F5,2
+guardsound = F6,0
+ground.type = Trip
+ground.slidetime = 5
+ground.hittime = 12
+ground.velocity = -2
+air.velocity = -2,-4
+fall = 1
+fall.recover = 1
 
 [State 1101, Fim]
 type = ChangeState
@@ -6169,6 +6850,41 @@ sprpriority = 2
 anim = 1201
 juggle = 4
 velset = 0,0
+
+[State 1201, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1201, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 33, 150), ifelse(var(20) > 0, 150, 116), ifelse(var(20) > 0, 90, 57)
+palmul = .3,.3,.3
+
+[State 1201, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 15, 70), ifelse(var(20) > 0, 70, 54), ifelse(var(20) > 0, 42, 27)
+mul = ifelse(var(20) > 0, 86, 170), ifelse(var(20) > 0, 170, 136), ifelse(var(20) > 0, 126, 101)
+ignorehitpause = 1
 
 [State 1201, som vento]
 type = PlaySnd
@@ -6205,9 +6921,11 @@ type = HitDef
 trigger1 = Time = 10
 attr = S, SA
 damage = 144, 0
-envshake.time = 12
-envshake.freq = 150
-envshake.ampl = -4
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Up
 guardflag = MA
 hitflag = MAF
@@ -6215,9 +6933,9 @@ priority = 4, Hit
 pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -87
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S51,2 ; som:F5,2
 guardsound = F6,0
@@ -6255,7 +6973,7 @@ type = ReversalDef
 trigger1 = Time = [4, 33]
 reversal.attr = SCA, NA, SA, HA
 pausetime = 0,0
-sparkno = S(ifelse(var(20) > 0, 7691, 7690))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 p1stateno = 1310
 p2stateno = 762
 
@@ -6625,6 +7343,41 @@ anim = 1310
 juggle = 3
 velset = 0,0
 
+[State 1310, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1310, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 33, 150), ifelse(var(20) > 0, 150, 116), ifelse(var(20) > 0, 90, 57)
+palmul = .3,.3,.3
+
+[State 1310, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 15, 70), ifelse(var(20) > 0, 70, 54), ifelse(var(20) > 0, 42, 27)
+mul = ifelse(var(20) > 0, 86, 170), ifelse(var(20) > 0, 170, 136), ifelse(var(20) > 0, 126, 101)
+ignorehitpause = 1
+
 [State 1310, som vento]
 type = PlaySnd
 trigger1 = Time = 0
@@ -6652,9 +7405,11 @@ type = HitDef
 trigger1 = Time = 10
 attr = S, SA
 damage = 110, 0
-envshake.time = 12
-envshake.freq = 150
-envshake.ampl = -4
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -6662,9 +7417,9 @@ priority = 4, Hit
 pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -21
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S51,2 ; som:F5,2
 guardsound = F6,0
@@ -6691,6 +7446,41 @@ sprpriority = 2
 anim = 1400
 juggle = 5
 velset = 0,0
+
+[State 1400, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1400, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 33, 150), ifelse(var(20) > 0, 150, 116), ifelse(var(20) > 0, 90, 57)
+palmul = .3,.3,.3
+
+[State 1400, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 15, 70), ifelse(var(20) > 0, 70, 54), ifelse(var(20) > 0, 42, 27)
+mul = ifelse(var(20) > 0, 86, 170), ifelse(var(20) > 0, 170, 136), ifelse(var(20) > 0, 126, 101)
+ignorehitpause = 1
 
 [State 1400, som vento]
 type = PlaySnd
@@ -6719,9 +7509,11 @@ type = HitDef
 trigger1 = AnimElem = 3
 attr = S, SA
 damage = 73, 0
-envshake.time = 6
-envshake.freq = 150
-envshake.ampl = -2
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -6729,9 +7521,9 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -10
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S51,2 ; som:F5,2
 guardsound = F6,0
@@ -6756,6 +7548,41 @@ sprpriority = 2
 anim = 1401
 juggle = 5
 velset = 0,0
+
+[State 1401, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1401, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 33, 150), ifelse(var(20) > 0, 150, 116), ifelse(var(20) > 0, 90, 57)
+palmul = .3,.3,.3
+
+[State 1401, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 15, 70), ifelse(var(20) > 0, 70, 54), ifelse(var(20) > 0, 42, 27)
+mul = ifelse(var(20) > 0, 86, 170), ifelse(var(20) > 0, 170, 136), ifelse(var(20) > 0, 126, 101)
+ignorehitpause = 1
 
 [State 1401, som vento]
 type = PlaySnd
@@ -6784,9 +7611,11 @@ type = HitDef
 trigger1 = AnimElem = 3
 attr = S, SA
 damage = 95, 0
-envshake.time = 12
-envshake.freq = 150
-envshake.ampl = -4
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -6794,9 +7623,9 @@ priority = 4, Hit
 pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -10
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S51,2 ; som:F5,2
 guardsound = F6,0
@@ -6824,6 +7653,41 @@ anim = 1500
 juggle = 5
 velset = 0,0
 
+[State 1500, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1500, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 33, 150), ifelse(var(20) > 0, 150, 116), ifelse(var(20) > 0, 90, 57)
+palmul = .3,.3,.3
+
+[State 1500, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 15, 70), ifelse(var(20) > 0, 70, 54), ifelse(var(20) > 0, 42, 27)
+mul = ifelse(var(20) > 0, 86, 170), ifelse(var(20) > 0, 170, 136), ifelse(var(20) > 0, 126, 101)
+ignorehitpause = 1
+
 [State 1500, som vento]
 type = PlaySnd
 trigger1 = Time = 0
@@ -6839,7 +7703,7 @@ value = 11500
 [State 1500, Avanço]
 type = VelSet
 trigger1 = AnimElem = 3
-x = 5.5 * ifelse(var(20) > 0, 1.22, 1)
+x = 1.5 * ifelse(var(20) > 0, 1.22, 1)
 
 [State 1500, Freia]
 type = VelSet
@@ -6851,9 +7715,11 @@ type = HitDef
 trigger1 = AnimElem = 3
 attr = S, SA
 damage = 70, 0
-envshake.time = 6
-envshake.freq = 150
-envshake.ampl = -2
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Heavy
 guardflag = L
 hitflag = MAF
@@ -6861,9 +7727,9 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -10
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S52,2 ; som:F5,2
 guardsound = F6,0
@@ -6884,6 +7750,43 @@ removetime = -2
 sprpriority = 4
 ownpal = 1
 
+[State 1500, Onda]
+type = Projectile
+trigger1 = AnimElem = 4
+trigger1 = !MoveContact
+projid = 1503
+projanim = 1505
+projhitanim = 1006
+projremanim = 1006
+projcancelanim = 1006
+projhits = 1
+projpriority = 1
+projremovetime = 16
+projscale = .55, .4
+offset = 36, -8
+velocity = 5, 0
+attr = S, SP
+damage = 35, 3
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
+animtype = Medium
+guardflag = L
+hitflag = MAF
+pausetime = 0, 10
+sparkxy = 0, -6
+sparkno = -1
+guard.sparkno = -1
+hitsound = S52,1 ; som:F5,1
+guardsound = F6,0
+ground.type = Low
+ground.slidetime = 6
+ground.hittime = 18
+ground.velocity = -3
+air.velocity = -2,-3
+
 [State 1500, Fim]
 type = ChangeState
 trigger1 = AnimTime = 0
@@ -6900,6 +7803,41 @@ anim = 1501
 juggle = 5
 velset = 0,0
 
+[State 1501, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1501, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 33, 150), ifelse(var(20) > 0, 150, 116), ifelse(var(20) > 0, 90, 57)
+palmul = .3,.3,.3
+
+[State 1501, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 15, 70), ifelse(var(20) > 0, 70, 54), ifelse(var(20) > 0, 42, 27)
+mul = ifelse(var(20) > 0, 86, 170), ifelse(var(20) > 0, 170, 136), ifelse(var(20) > 0, 126, 101)
+ignorehitpause = 1
+
 [State 1501, som vento]
 type = PlaySnd
 trigger1 = Time = 0
@@ -6915,7 +7853,7 @@ value = 11501
 [State 1501, Avanço]
 type = VelSet
 trigger1 = AnimElem = 3
-x = 7.425000000000001 * ifelse(var(20) > 0, 1.22, 1)
+x = 2.0250000000000004 * ifelse(var(20) > 0, 1.22, 1)
 
 [State 1501, Freia]
 type = VelSet
@@ -6927,9 +7865,11 @@ type = HitDef
 trigger1 = AnimElem = 3
 attr = S, SA
 damage = 92, 0
-envshake.time = 12
-envshake.freq = 150
-envshake.ampl = -4
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Heavy
 guardflag = L
 hitflag = MAF
@@ -6937,9 +7877,9 @@ priority = 4, Hit
 pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -10
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S52,2 ; som:F5,2
 guardsound = F6,0
@@ -6972,6 +7912,45 @@ type = VarSet
 trigger1 = MoveHit = 1 && NumTarget > 0 && var(20) > 0
 var(24) = 1
 
+[State 1501, Onda]
+type = Projectile
+trigger1 = AnimElem = 4
+trigger1 = !MoveContact
+projid = 1503
+projanim = 1505
+projhitanim = 1006
+projremanim = 1006
+projcancelanim = 1006
+projhits = 1
+projpriority = 1
+projremovetime = 26
+projscale = .55, .4
+offset = 36, -8
+velocity = 6.5, 0
+attr = S, SP
+damage = 50, 3
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
+animtype = Medium
+guardflag = L
+hitflag = MAF
+pausetime = 0, 10
+sparkxy = 0, -6
+sparkno = -1
+guard.sparkno = -1
+hitsound = S52,1 ; som:F5,1
+guardsound = F6,0
+ground.type = Trip
+ground.slidetime = 6
+ground.hittime = 18
+ground.velocity = -3
+air.velocity = -2,-3
+fall = 1
+fall.recover = 1
+
 [State 1501, Fim]
 type = ChangeState
 trigger1 = AnimTime = 0
@@ -6988,6 +7967,43 @@ anim = 3200
 juggle = 5
 velset = 0,0
 
+[State 3200, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9274, 9244)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+scale = 1.5, 1.5
+supermovetime = 90
+ignorehitpause = 1
+
+[State 3200, Fundo na cor da forma (efeitos.py)]
+type = BGPalFX
+trigger1 = Time >= 1
+time = 2
+mul = ifelse(var(20) > 0, 86, 170), ifelse(var(20) > 0, 170, 136), ifelse(var(20) > 0, 126, 101)
+
+[State 3200, Solta: tremida (efeitos.py)]
+type = EnvShake
+trigger1 = Time = 1
+time = 16
+freq = 170
+ampl = -3
+
+[State 3200, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 15, 70), ifelse(var(20) > 0, 70, 54), ifelse(var(20) > 0, 42, 27)
+mul = ifelse(var(20) > 0, 86, 170), ifelse(var(20) > 0, 170, 136), ifelse(var(20) > 0, 126, 101)
+ignorehitpause = 1
+
 [State 3200, Arte despertada]
 type = ChangeAnim
 trigger1 = Time = 0
@@ -6998,7 +8014,7 @@ value = 13200
 type = SuperPause
 trigger1 = Time = 0
 time = 30
-anim = 100
+anim = -1
 pos = 10, -60
 sound = F20,0
 movetime = 0
@@ -7019,8 +8035,8 @@ time = 40
 length = 6
 trans = add
 palcolor = 0
+paladd = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 palbright = 40,40,40
-paladd = 0,0,0
 palmul = .6,.6,.6
 timegap = 2
 framegap = 2
@@ -7051,6 +8067,11 @@ type = HitDef
 trigger1 = AnimElem = 2
 attr = S, HA
 damage = 115, 0
+envshake.time = 8 ; (efeitos.py)
+envshake.freq = 160 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 6 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -7058,7 +8079,7 @@ priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
 sparkxy = -10, -80
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -7075,6 +8096,11 @@ type = HitDef
 trigger1 = AnimElem = 3 && MoveHit
 attr = S, HA
 damage = 115, 0
+envshake.time = 8 ; (efeitos.py)
+envshake.freq = 160 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 6 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -7082,7 +8108,7 @@ priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
 sparkxy = -10, -80
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
@@ -7099,6 +8125,11 @@ type = HitDef
 trigger1 = AnimElem = 4 && MoveHit
 attr = S, HA
 damage = 115, 0
+envshake.time = 28 ; (efeitos.py)
+envshake.freq = 90 ; (efeitos.py)
+envshake.ampl = -10 ; (efeitos.py)
+palfx.time = 18 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 22, 100), ifelse(var(20) > 0, 100, 77), ifelse(var(20) > 0, 60, 38) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -7106,9 +8137,9 @@ priority = 4, Hit
 pausetime = 20, 20
 guard.pausetime = 12, 12
 sparkxy = -10, -80
-sparkno = S(ifelse(var(20) > 0, 9235, 9205))
+sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
-sparkscale = 1.5, 1.5
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S51,4 ; som:F5,4
 guardsound = F6,0
@@ -7117,9 +8148,6 @@ ground.slidetime = 5
 ground.hittime = 28
 ground.velocity = -2,-3
 air.velocity = -2,-3
-envshake.time = 20
-envshake.freq = 150
-envshake.ampl = -3
 fall = 1
 fall.recover = 1
 fall.envshake.time = 12
@@ -7954,6 +8982,32 @@ trigger1 = Anim = 650 && AnimElem = 3 && var(20) <= 0
 anim = 9213
 postype = p1
 pos = 26, -43
+bindtime = 3
+removetime = 8
+sprpriority = 3
+ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+
+[State -3, Efeito do golpe 1100]
+type = Explod
+trigger1 = Anim = 1100 && AnimElem = 3 && var(20) <= 0
+anim = 9213
+postype = p1
+pos = 32, -17
+bindtime = 3
+removetime = 8
+sprpriority = 3
+ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+
+[State -3, Efeito do golpe 1101]
+type = Explod
+trigger1 = Anim = 1101 && AnimElem = 3 && var(20) <= 0
+anim = 9213
+postype = p1
+pos = 32, -17
 bindtime = 3
 removetime = 8
 sprpriority = 3
@@ -8871,6 +9925,32 @@ ownpal = 1
 scale = .75, .75
 ignorehitpause = 1
 
+[State -3, Efeito do golpe 11100]
+type = Explod
+trigger1 = Anim = 11100 && AnimElem = 3 && var(20) > 0
+anim = 9212
+postype = p1
+pos = 24, -17
+bindtime = 3
+removetime = 8
+sprpriority = 3
+ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+
+[State -3, Efeito do golpe 11101]
+type = Explod
+trigger1 = Anim = 11101 && AnimElem = 3 && var(20) > 0
+anim = 9212
+postype = p1
+pos = 24, -17
+bindtime = 3
+removetime = 8
+sprpriority = 3
+ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+
 [State -3, Efeito do golpe 11200]
 type = Explod
 trigger1 = Anim = 11200 && AnimElem = 3 && var(20) > 0
@@ -9137,7 +10217,7 @@ map = "au_ck_c"
 value = 1
 ignorehitpause = 1
 
-; >>> aura_no_corpo.py: a aura segue o corpo (issue #51). Tabelas medidas nos desenhos do .air: 189 + 92 valores, 1567 trechos. Pivô nas costas em -2, -78. Não edite: rode python3 ferramentas/aura_no_corpo.py
+; >>> aura_no_corpo.py: a aura segue o corpo (issue #51). Tabelas medidas nos desenhos do .air: 187 + 96 valores, 1649 trechos. Pivô nas costas em -2, -78. Não edite: rode python3 ferramentas/aura_no_corpo.py
 [State -4, Aura ck no corpo: costas de quem está em pé]
 type = MapSet
 trigger1 = 1
@@ -9447,10 +10527,14 @@ trigger4 = Anim = 200
 trigger5 = Anim = 301
 trigger6 = Anim = 303 && AnimElemNo(0) = [1, 3]
 trigger7 = Anim = 810 && AnimElemNo(0) = [2, 4]
-trigger8 = Anim = 9203 && AnimElemNo(0) = [1, 2]
-trigger9 = Anim = 10200
-trigger10 = Anim = 10301
-trigger11 = Anim = 10303 && AnimElemNo(0) = [1, 3]
+trigger8 = Anim = 1100 && AnimElemNo(0) = [4, 8]
+trigger9 = Anim = 1101 && AnimElemNo(0) = [4, 10]
+trigger10 = Anim = 9203 && AnimElemNo(0) = [1, 2]
+trigger11 = Anim = 10200
+trigger12 = Anim = 10301
+trigger13 = Anim = 10303 && AnimElemNo(0) = [1, 3]
+trigger14 = Anim = 11100 && AnimElemNo(0) = [4, 8]
+trigger15 = Anim = 11101 && AnimElemNo(0) = [4, 10]
 map = "au_ck_p"
 value = 8129
 ignorehitpause = 1
@@ -9465,8 +10549,8 @@ trigger5 = Anim = 344 && AnimElemNo(0) = 1
 trigger6 = Anim = 346 && AnimElemNo(0) = 1
 trigger7 = Anim = 700 && AnimElemNo(0) = [2, 4]
 trigger8 = Anim = 705 && AnimElemNo(0) = [1, 6]
-trigger9 = Anim = 1100 && AnimElemNo(0) = [1, 5]
-trigger10 = Anim = 1101 && AnimElemNo(0) = [1, 7]
+trigger9 = Anim = 1100 && AnimElemNo(0) = [1, 3]
+trigger10 = Anim = 1101 && AnimElemNo(0) = [1, 3]
 trigger11 = Anim = 1700 && AnimElemNo(0) = [1, 6]
 trigger12 = Anim = 3411 && AnimElemNo(0) = [1, 4]
 trigger13 = Anim = 3411 && AnimElemNo(0) = 6
@@ -9478,8 +10562,8 @@ trigger18 = Anim = 10215 && AnimElemNo(0) = 1
 trigger19 = Anim = 10302 && AnimElemNo(0) = 1
 trigger20 = Anim = 10344 && AnimElemNo(0) = 1
 trigger21 = Anim = 10346 && AnimElemNo(0) = 1
-trigger22 = Anim = 11100 && AnimElemNo(0) = [1, 5]
-trigger23 = Anim = 11101 && AnimElemNo(0) = [1, 7]
+trigger22 = Anim = 11100 && AnimElemNo(0) = [1, 3]
+trigger23 = Anim = 11101 && AnimElemNo(0) = [1, 3]
 map = "au_ck_p"
 value = 8130
 ignorehitpause = 1
@@ -9575,20 +10659,16 @@ trigger4 = Anim = 700 && AnimElemNo(0) = 1
 trigger5 = Anim = 705 && AnimElemNo(0) = 7
 trigger6 = Anim = 830 && AnimElemNo(0) = 5
 trigger7 = Anim = 831 && AnimElemNo(0) = 7
-trigger8 = Anim = 1100 && AnimElemNo(0) = 6
-trigger9 = Anim = 1101 && AnimElemNo(0) = 8
-trigger10 = Anim = 1602 && AnimElemNo(0) = 1
-trigger11 = Anim = 1602 && AnimElemNo(0) = 3
-trigger12 = Anim = 3431 && AnimElemNo(0) = 6
-trigger13 = Anim = 5200 && AnimElemNo(0) = 1
-trigger14 = Anim = 5210 && AnimElemNo(0) = 1
-trigger15 = Anim = 10311 && AnimElemNo(0) = 7
-trigger16 = Anim = 10312 && AnimElemNo(0) = 7
-trigger17 = Anim = 10343 && AnimElemNo(0) = 6
-trigger18 = Anim = 10830 && AnimElemNo(0) = 5
-trigger19 = Anim = 10831 && AnimElemNo(0) = 7
-trigger20 = Anim = 11100 && AnimElemNo(0) = 6
-trigger21 = Anim = 11101 && AnimElemNo(0) = 8
+trigger8 = Anim = 1602 && AnimElemNo(0) = 1
+trigger9 = Anim = 1602 && AnimElemNo(0) = 3
+trigger10 = Anim = 3431 && AnimElemNo(0) = 6
+trigger11 = Anim = 5200 && AnimElemNo(0) = 1
+trigger12 = Anim = 5210 && AnimElemNo(0) = 1
+trigger13 = Anim = 10311 && AnimElemNo(0) = 7
+trigger14 = Anim = 10312 && AnimElemNo(0) = 7
+trigger15 = Anim = 10343 && AnimElemNo(0) = 6
+trigger16 = Anim = 10830 && AnimElemNo(0) = 5
+trigger17 = Anim = 10831 && AnimElemNo(0) = 7
 map = "au_ck_p"
 value = 8135
 ignorehitpause = 1
@@ -9910,6 +10990,13 @@ map = "au_ck_p"
 value = 8769
 ignorehitpause = 1
 
+[State -4, Aura ck no corpo: costas +4 +8]
+type = MapSet
+trigger1 = Anim = 9272 && AnimElemNo(0) = [8, 14]
+map = "au_ck_p"
+value = 8770
+ignorehitpause = 1
+
 [State -4, Aura ck no corpo: costas +10 +8]
 type = MapSet
 trigger1 = Anim = 1400 && AnimElemNo(0) = 2
@@ -10051,6 +11138,13 @@ trigger5 = Anim = 11701 && AnimElemNo(0) = [6, 9]
 trigger6 = Anim = 13100 && AnimElemNo(0) = 6
 map = "au_ck_p"
 value = 9409
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: costas +4 +18]
+type = MapSet
+trigger1 = Anim = 9272 && AnimElemNo(0) = 7
+map = "au_ck_p"
+value = 9410
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas +6 +18]
@@ -10249,10 +11343,11 @@ trigger3 = Anim = 345 && AnimElemNo(0) = 1
 trigger4 = Anim = 440 && AnimElemNo(0) = 6
 trigger5 = Anim = 3422 && AnimElemNo(0) = 6
 trigger6 = Anim = 3435 && AnimElemNo(0) = 6
-trigger7 = Anim = 10260 && AnimElemNo(0) = [1, 2]
-trigger8 = Anim = 10331 && AnimElemNo(0) = 1
-trigger9 = Anim = 10345 && AnimElemNo(0) = 1
-trigger10 = Anim = 10440 && AnimElemNo(0) = 6
+trigger7 = Anim = 9272 && AnimElemNo(0) = 6
+trigger8 = Anim = 10260 && AnimElemNo(0) = [1, 2]
+trigger9 = Anim = 10331 && AnimElemNo(0) = 1
+trigger10 = Anim = 10345 && AnimElemNo(0) = 1
+trigger11 = Anim = 10440 && AnimElemNo(0) = 6
 map = "au_ck_p"
 value = 10178
 ignorehitpause = 1
@@ -10531,6 +11626,13 @@ map = "au_ck_p"
 value = 11587
 ignorehitpause = 1
 
+[State -4, Aura ck no corpo: costas +2 +54]
+type = MapSet
+trigger1 = Anim = 9272 && AnimElemNo(0) = 5
+map = "au_ck_p"
+value = 11713
+ignorehitpause = 1
+
 [State -4, Aura ck no corpo: costas +26 +56]
 type = MapSet
 trigger1 = Anim = 9123
@@ -10602,6 +11704,39 @@ type = MapSet
 trigger1 = Anim = 9127
 map = "au_ck_p"
 value = 11994
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: costas +2 +60]
+type = MapSet
+trigger1 = Anim = 9241 && AnimElemNo(0) = [3, 8]
+trigger2 = Anim = 9271 && AnimElemNo(0) = [3, 8]
+map = "au_ck_p"
+value = 12097
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: costas +8 +60]
+type = MapSet
+trigger1 = Anim = 9272 && AnimElemNo(0) = 4
+map = "au_ck_p"
+value = 12100
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: costas +4 +62]
+type = MapSet
+trigger1 = Anim = 9241 && AnimElemNo(0) = [9, 10]
+trigger2 = Anim = 9271 && AnimElemNo(0) = [9, 10]
+map = "au_ck_p"
+value = 12226
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: costas +10 +64]
+type = MapSet
+trigger1 = Anim = 9243 && AnimElemNo(0) = 1
+trigger2 = Anim = 9244 && AnimElemNo(0) = 1
+trigger3 = Anim = 9273 && AnimElemNo(0) = 1
+trigger4 = Anim = 9274 && AnimElemNo(0) = 1
+map = "au_ck_p"
+value = 12357
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas +8 +66]
@@ -10693,6 +11828,14 @@ map = "au_ck_p"
 value = 12517
 ignorehitpause = 1
 
+[State -4, Aura ck no corpo: costas +12 +68]
+type = MapSet
+trigger1 = Anim = 9241 && AnimElemNo(0) = 11
+trigger2 = Anim = 9271 && AnimElemNo(0) = 11
+map = "au_ck_p"
+value = 12614
+ignorehitpause = 1
+
 [State -4, Aura ck no corpo: costas +20 +68]
 type = MapSet
 trigger1 = Anim = 9112
@@ -10738,6 +11881,41 @@ map = "au_ck_p"
 value = 12630
 ignorehitpause = 1
 
+[State -4, Aura ck no corpo: costas -4 +70]
+type = MapSet
+trigger1 = Anim = 9240 && AnimElemNo(0) = [5, 6]
+trigger2 = Anim = 9270 && AnimElemNo(0) = [5, 6]
+map = "au_ck_p"
+value = 12734
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: costas +0 +70]
+type = MapSet
+trigger1 = Anim = 1006 && AnimElemNo(0) = [2, 3]
+map = "au_ck_p"
+value = 12736
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: costas -10 +72]
+type = MapSet
+trigger1 = Anim = 9243 && AnimElemNo(0) = 2
+trigger2 = Anim = 9244 && AnimElemNo(0) = 2
+trigger3 = Anim = 9273 && AnimElemNo(0) = 2
+trigger4 = Anim = 9274 && AnimElemNo(0) = 2
+map = "au_ck_p"
+value = 12859
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: costas -8 +72]
+type = MapSet
+trigger1 = Anim = 9243 && AnimElemNo(0) = 3
+trigger2 = Anim = 9244 && AnimElemNo(0) = 3
+trigger3 = Anim = 9273 && AnimElemNo(0) = 3
+trigger4 = Anim = 9274 && AnimElemNo(0) = 3
+map = "au_ck_p"
+value = 12860
+ignorehitpause = 1
+
 [State -4, Aura ck no corpo: costas +16 +72]
 type = MapSet
 trigger1 = Anim = 5110
@@ -10755,63 +11933,85 @@ map = "au_ck_p"
 value = 12990
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: costas -6 +76]
+[State -4, Aura ck no corpo: costas +10 +74]
 type = MapSet
-trigger1 = Anim = 9214 && AnimElemNo(0) = 4
+trigger1 = Anim = 9240 && AnimElemNo(0) = 4
+trigger2 = Anim = 9270 && AnimElemNo(0) = 4
 map = "au_ck_p"
-value = 13117
+value = 12997
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: costas +12 +74]
+type = MapSet
+trigger1 = Anim = 9241 && AnimElemNo(0) = 2
+trigger2 = Anim = 9271 && AnimElemNo(0) = 2
+trigger3 = Anim = 9272 && AnimElemNo(0) = 3
+map = "au_ck_p"
+value = 12998
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: costas -16 +76]
+type = MapSet
+trigger1 = Anim = 9243 && AnimElemNo(0) = 4
+trigger2 = Anim = 9244 && AnimElemNo(0) = 4
+trigger3 = Anim = 9273 && AnimElemNo(0) = 4
+trigger4 = Anim = 9274 && AnimElemNo(0) = 4
+map = "au_ck_p"
+value = 13112
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: costas -8 +76]
+type = MapSet
+trigger1 = Anim = 9272 && AnimElemNo(0) = [1, 2]
+map = "au_ck_p"
+value = 13116
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas +6 +76]
 type = MapSet
-trigger1 = Anim = 9232 && AnimElemNo(0) = 3
+trigger1 = Anim = 1006 && AnimElemNo(0) = 1
 map = "au_ck_p"
 value = 13123
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: costas +8 +76]
+[State -4, Aura ck no corpo: costas -8 +78]
 type = MapSet
-trigger1 = Anim = 9214 && AnimElemNo(0) = [5, 8]
+trigger1 = Anim = 9243 && AnimElemNo(0) = 5
+trigger2 = Anim = 9244 && AnimElemNo(0) = 5
+trigger3 = Anim = 9273 && AnimElemNo(0) = 5
+trigger4 = Anim = 9274 && AnimElemNo(0) = 5
 map = "au_ck_p"
-value = 13124
+value = 13244
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: costas -4 +78]
+[State -4, Aura ck no corpo: costas +10 +78]
 type = MapSet
-trigger1 = Anim = 9215 && AnimElemNo(0) = [6, 10]
+trigger1 = Anim = 9243 && AnimElemNo(0) = 6
+trigger2 = Anim = 9244 && AnimElemNo(0) = 6
+trigger3 = Anim = 9273 && AnimElemNo(0) = 6
+trigger4 = Anim = 9274 && AnimElemNo(0) = 6
 map = "au_ck_p"
-value = 13246
+value = 13253
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: costas +0 +78]
+[State -4, Aura ck no corpo: costas +12 +78]
 type = MapSet
-trigger1 = Anim = 9212 && AnimElemNo(0) = [6, 7]
-trigger2 = Anim = 9213 && AnimElemNo(0) = 4
+trigger1 = Anim = 9243 && AnimElemNo(0) = 8
+trigger2 = Anim = 9244 && AnimElemNo(0) = 8
+trigger3 = Anim = 9273 && AnimElemNo(0) = 8
+trigger4 = Anim = 9274 && AnimElemNo(0) = 8
 map = "au_ck_p"
-value = 13248
+value = 13254
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: costas +2 +78]
+[State -4, Aura ck no corpo: costas -10 +80]
 type = MapSet
-trigger1 = Anim = 9213 && AnimElemNo(0) = [5, 6]
-trigger2 = Anim = 9213 && AnimElemNo(0) = [9, 10]
-trigger3 = Anim = 9213 && AnimElemNo(0) = 11
+trigger1 = Anim = 9240 && AnimElemNo(0) = [1, 3]
+trigger2 = Anim = 9241 && AnimElemNo(0) = 1
+trigger3 = Anim = 9270 && AnimElemNo(0) = [1, 3]
+trigger4 = Anim = 9271 && AnimElemNo(0) = 1
 map = "au_ck_p"
-value = 13249
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: costas +4 +78]
-type = MapSet
-trigger1 = Anim = 9213 && AnimElemNo(0) = [7, 8]
-map = "au_ck_p"
-value = 13250
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: costas -8 +80]
-type = MapSet
-trigger1 = Anim = 9232 && AnimElemNo(0) = 2
-map = "au_ck_p"
-value = 13372
+value = 13371
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas -2 +80]
@@ -10819,39 +12019,33 @@ type = MapSet
 trigger1 = Anim = 3013 && AnimElemNo(0) = 1
 trigger2 = Anim = 3013 && AnimElemNo(0) = 2
 trigger3 = Anim = 3014
-trigger4 = Anim = 9212 && AnimElemNo(0) = [4, 5]
 map = "au_ck_p"
 value = 13375
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: costas +0 +80]
+[State -4, Aura ck no corpo: costas +2 +80]
 type = MapSet
-trigger1 = Anim = 9213 && AnimElemNo(0) = 3
+trigger1 = Anim = 9205 && AnimElemNo(0) = 4
+trigger2 = Anim = 9235 && AnimElemNo(0) = 4
 map = "au_ck_p"
-value = 13376
+value = 13377
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas +4 +80]
 type = MapSet
 trigger1 = Anim = 3010 && AnimElemNo(0) = 6
-trigger2 = Anim = 9212 && AnimElemNo(0) = 8
-trigger3 = Anim = 9212 && AnimElemNo(0) = 9
 map = "au_ck_p"
 value = 13378
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: costas +8 +80]
+[State -4, Aura ck no corpo: costas +16 +80]
 type = MapSet
-trigger1 = Anim = 9214 && AnimElemNo(0) = [9, 10]
+trigger1 = Anim = 9243 && AnimElemNo(0) = 7
+trigger2 = Anim = 9244 && AnimElemNo(0) = 7
+trigger3 = Anim = 9273 && AnimElemNo(0) = 7
+trigger4 = Anim = 9274 && AnimElemNo(0) = 7
 map = "au_ck_p"
-value = 13380
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: costas +10 +80]
-type = MapSet
-trigger1 = Anim = 9215 && AnimElemNo(0) = [1, 5]
-map = "au_ck_p"
-value = 13381
+value = 13384
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas -10 +82]
@@ -10863,7 +12057,8 @@ ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas -6 +82]
 type = MapSet
-trigger1 = Anim = 9214 && AnimElemNo(0) = [1, 3]
+trigger1 = Anim = 9240 && AnimElemNo(0) = 7
+trigger2 = Anim = 9270 && AnimElemNo(0) = 7
 map = "au_ck_p"
 value = 13501
 ignorehitpause = 1
@@ -10871,116 +12066,80 @@ ignorehitpause = 1
 [State -4, Aura ck no corpo: costas +0 +82]
 type = MapSet
 trigger1 = Anim = 3010 && AnimElemNo(0) = 5
-trigger2 = Anim = 9213 && AnimElemNo(0) = 2
+trigger2 = Anim = 9201 && AnimElemNo(0) = 5
+trigger3 = Anim = 9205 && AnimElemNo(0) = 5
+trigger4 = Anim = 9212
+trigger5 = Anim = 9213
+trigger6 = Anim = 9231 && AnimElemNo(0) = 5
+trigger7 = Anim = 9235 && AnimElemNo(0) = 5
 map = "au_ck_p"
 value = 13504
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: costas +2 +82]
-type = MapSet
-trigger1 = Anim = 9200 && AnimElemNo(0) = 2
-map = "au_ck_p"
-value = 13505
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: costas +4 +82]
-type = MapSet
-trigger1 = Anim = 9202 && AnimElemNo(0) = 3
-map = "au_ck_p"
-value = 13506
-ignorehitpause = 1
-
 [State -4, Aura ck no corpo: costas +6 +82]
 type = MapSet
-trigger1 = Anim = 1006 && AnimElemNo(0) = 1
-trigger2 = Anim = 9253 && AnimElemNo(0) = [3, 4]
+trigger1 = Anim = 9253 && AnimElemNo(0) = [3, 4]
 map = "au_ck_p"
 value = 13507
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: costas +8 +82]
+[State -4, Aura ck no corpo: costas -4 +84]
 type = MapSet
-trigger1 = Anim = 9215 && AnimElemNo(0) = [11, 12]
+trigger1 = Anim = 9214
+trigger2 = Anim = 9215
 map = "au_ck_p"
-value = 13508
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: costas -10 +84]
-type = MapSet
-trigger1 = Anim = 9232 && AnimElemNo(0) = 1
-map = "au_ck_p"
-value = 13627
+value = 13630
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas -2 +84]
 type = MapSet
 trigger1 = Anim = 3010 && AnimElemNo(0) = 4
-trigger2 = Anim = 9214 && AnimElemNo(0) = 11
+trigger2 = Anim = 9201 && AnimElemNo(0) = 6
+trigger3 = Anim = 9205 && AnimElemNo(0) = 6
+trigger4 = Anim = 9231 && AnimElemNo(0) = 6
+trigger5 = Anim = 9235 && AnimElemNo(0) = 6
 map = "au_ck_p"
 value = 13631
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas +2 +84]
 type = MapSet
-trigger1 = Anim = 9251
-trigger2 = Anim = 9253 && AnimElemNo(0) = [1, 2]
+trigger1 = Anim = 1005 && AnimElemNo(0) = 2
+trigger2 = Anim = 1005 && AnimElemNo(0) = [4, 5]
+trigger3 = Anim = 1505 && AnimElemNo(0) = 2
+trigger4 = Anim = 1505 && AnimElemNo(0) = 4
+trigger5 = Anim = 9251
+trigger6 = Anim = 9253 && AnimElemNo(0) = [1, 2]
 map = "au_ck_p"
 value = 13633
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: costas +4 +84]
-type = MapSet
-trigger1 = Anim = 9200 && AnimElemNo(0) = 3
-trigger2 = Anim = 9200 && AnimElemNo(0) = 4
-map = "au_ck_p"
-value = 13634
-ignorehitpause = 1
-
 [State -4, Aura ck no corpo: costas +6 +84]
 type = MapSet
-trigger1 = Anim = 1005 && AnimElemNo(0) = 5
-trigger2 = Anim = 9212 && AnimElemNo(0) = 3
+trigger1 = Anim = 9201 && AnimElemNo(0) = [2, 4]
+trigger2 = Anim = 9205 && AnimElemNo(0) = 3
+trigger3 = Anim = 9231 && AnimElemNo(0) = [2, 4]
+trigger4 = Anim = 9235 && AnimElemNo(0) = 3
 map = "au_ck_p"
 value = 13635
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: costas +8 +84]
-type = MapSet
-trigger1 = Anim = 9212 && AnimElemNo(0) = 10
-map = "au_ck_p"
-value = 13636
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: costas -4 +86]
-type = MapSet
-trigger1 = Anim = 9205 && AnimElemNo(0) = 6
-map = "au_ck_p"
-value = 13758
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: costas -2 +86]
-type = MapSet
-trigger1 = Anim = 9202 && AnimElemNo(0) = 1
-map = "au_ck_p"
-value = 13759
-ignorehitpause = 1
-
 [State -4, Aura ck no corpo: costas +0 +86]
 type = MapSet
-trigger1 = Anim = 9200 && AnimElemNo(0) = 1
-trigger2 = Anim = 9201 && AnimElemNo(0) = 1
-trigger3 = Anim = 9201 && AnimElemNo(0) = 4
-trigger4 = Anim = 9230 && AnimElemNo(0) = 1
-trigger5 = Anim = 9231 && AnimElemNo(0) = 1
+trigger1 = Anim = 9201 && AnimElemNo(0) = 1
+trigger2 = Anim = 9231 && AnimElemNo(0) = 1
 map = "au_ck_p"
 value = 13760
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas +2 +86]
 type = MapSet
-trigger1 = Anim = 1005 && AnimElemNo(0) = [1, 4]
-trigger2 = Anim = 1606 && AnimElemNo(0) = 2
-trigger3 = Anim = 1608 && AnimElemNo(0) = 2
+trigger1 = Anim = 1606 && AnimElemNo(0) = 2
+trigger2 = Anim = 1608 && AnimElemNo(0) = 2
+trigger3 = Anim = 9200 && AnimElemNo(0) = [1, 3]
+trigger4 = Anim = 9202
+trigger5 = Anim = 9230 && AnimElemNo(0) = [1, 3]
+trigger6 = Anim = 9232
 map = "au_ck_p"
 value = 13761
 ignorehitpause = 1
@@ -10993,12 +12152,24 @@ map = "au_ck_p"
 value = 13762
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: costas +8 +86]
+[State -4, Aura ck no corpo: costas +6 +86]
 type = MapSet
-trigger1 = Anim = 9212 && AnimElemNo(0) = 11
-trigger2 = Anim = 9213 && AnimElemNo(0) = 1
+trigger1 = Anim = 1005 && AnimElemNo(0) = 3
+trigger2 = Anim = 1505 && AnimElemNo(0) = 3
+trigger3 = Anim = 9200 && AnimElemNo(0) = 4
+trigger4 = Anim = 9230 && AnimElemNo(0) = 4
 map = "au_ck_p"
-value = 13764
+value = 13763
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: costas +10 +86]
+type = MapSet
+trigger1 = Anim = 9205 && AnimElemNo(0) = [1, 2]
+trigger2 = Anim = 9235 && AnimElemNo(0) = [1, 2]
+trigger3 = Anim = 9240 && AnimElemNo(0) = 8
+trigger4 = Anim = 9270 && AnimElemNo(0) = 8
+map = "au_ck_p"
+value = 13765
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas -6 +88]
@@ -11008,109 +12179,39 @@ map = "au_ck_p"
 value = 13885
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: costas -4 +88]
-type = MapSet
-trigger1 = Anim = 9205 && AnimElemNo(0) = 3
-map = "au_ck_p"
-value = 13886
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: costas -2 +88]
-type = MapSet
-trigger1 = Anim = 9202 && AnimElemNo(0) = 2
-map = "au_ck_p"
-value = 13887
-ignorehitpause = 1
-
 [State -4, Aura ck no corpo: costas +0 +88]
 type = MapSet
 trigger1 = Anim = 3010 && AnimElemNo(0) = [1, 3]
-trigger2 = Anim = 9201 && AnimElemNo(0) = [2, 3]
-trigger3 = Anim = 9230 && AnimElemNo(0) = 2
-trigger4 = Anim = 9230 && AnimElemNo(0) = [3, 4]
 map = "au_ck_p"
 value = 13888
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: costas +2 +88]
-type = MapSet
-trigger1 = Anim = 9231 && AnimElemNo(0) = 2
-trigger2 = Anim = 9231 && AnimElemNo(0) = 3
-trigger3 = Anim = 9231 && AnimElemNo(0) = 4
-map = "au_ck_p"
-value = 13889
-ignorehitpause = 1
-
 [State -4, Aura ck no corpo: costas +6 +88]
 type = MapSet
-trigger1 = Anim = 1006 && AnimElemNo(0) = [2, 3]
-trigger2 = Anim = 9253 && AnimElemNo(0) = [5, 6]
+trigger1 = Anim = 9253 && AnimElemNo(0) = [5, 6]
 map = "au_ck_p"
 value = 13891
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: costas +8 +88]
 type = MapSet
-trigger1 = Anim = 9205 && AnimElemNo(0) = 5
+trigger1 = Anim = 9205 && AnimElemNo(0) = [7, 9]
+trigger2 = Anim = 9235 && AnimElemNo(0) = [7, 9]
 map = "au_ck_p"
 value = 13892
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: costas -2 +90]
-type = MapSet
-trigger1 = Anim = 9235 && AnimElemNo(0) = [2, 3]
-map = "au_ck_p"
-value = 14015
-ignorehitpause = 1
-
 [State -4, Aura ck no corpo: costas +6 +90]
 type = MapSet
-trigger1 = Anim = 9212 && AnimElemNo(0) = [1, 2]
+trigger1 = Anim = 1005 && AnimElemNo(0) = 1
+trigger2 = Anim = 1505 && AnimElemNo(0) = 1
 map = "au_ck_p"
 value = 14019
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: costas -2 +92]
-type = MapSet
-trigger1 = Anim = 9205 && AnimElemNo(0) = [1, 2]
-trigger2 = Anim = 9205 && AnimElemNo(0) = 4
-map = "au_ck_p"
-value = 14143
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: costas +0 +92]
-type = MapSet
-trigger1 = Anim = 9235 && AnimElemNo(0) = 1
-trigger2 = Anim = 9235 && AnimElemNo(0) = 4
-map = "au_ck_p"
-value = 14144
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: costas +2 +92]
-type = MapSet
-trigger1 = Anim = 9235 && AnimElemNo(0) = 5
-map = "au_ck_p"
-value = 14145
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: costas +0 +94]
-type = MapSet
-trigger1 = Anim = 9235 && AnimElemNo(0) = 6
-map = "au_ck_p"
-value = 14272
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +0, tronco -112 graus]
 type = MapSet
 trigger1 = Anim = 3011 && AnimElemNo(0) = [1, 2]
-trigger2 = Anim = 9201 && AnimElemNo(0) = [2, 3]
-trigger3 = Anim = 9202 && AnimElemNo(0) = 2
-trigger4 = Anim = 9205 && AnimElemNo(0) = [1, 2]
-trigger5 = Anim = 9205 && AnimElemNo(0) = 4
-trigger6 = Anim = 9230 && AnimElemNo(0) = [3, 4]
-trigger7 = Anim = 9231 && AnimElemNo(0) = 2
-trigger8 = Anim = 9235 && AnimElemNo(0) = 1
-trigger9 = Anim = 9235 && AnimElemNo(0) = 4
 map = "au_ck_q"
 value = 775
 ignorehitpause = 1
@@ -11118,35 +12219,24 @@ ignorehitpause = 1
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco -112 graus]
 type = MapSet
 trigger1 = Anim = 3010 && AnimElemNo(0) = [1, 3]
-trigger2 = Anim = 9231 && AnimElemNo(0) = 4
-trigger3 = Anim = 9235 && AnimElemNo(0) = 6
 map = "au_ck_q"
 value = 783
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: recolhe 7 de 7, centro +0, tronco -98 graus]
+[State -4, Aura ck no corpo: recolhe 7 de 7, centro -4, tronco -90 graus]
 type = MapSet
-trigger1 = Anim = 9205 && AnimElemNo(0) = 3
+trigger1 = Anim = 9243 && AnimElemNo(0) = 4
+trigger2 = Anim = 9244 && AnimElemNo(0) = 4
+trigger3 = Anim = 9273 && AnimElemNo(0) = 4
+trigger4 = Anim = 9274 && AnimElemNo(0) = 4
 map = "au_ck_q"
-value = 1799
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco -98 graus]
-type = MapSet
-trigger1 = Anim = 9201 && AnimElemNo(0) = 1
-map = "au_ck_q"
-value = 1807
+value = 2303
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +0, tronco -90 graus]
 type = MapSet
 trigger1 = Anim = 3010 && AnimElemNo(0) = 4
 trigger2 = Anim = 3011 && AnimElemNo(0) = 3
-trigger3 = Anim = 9214 && AnimElemNo(0) = [1, 3]
-trigger4 = Anim = 9214 && AnimElemNo(0) = 4
-trigger5 = Anim = 9214 && AnimElemNo(0) = 11
-trigger6 = Anim = 9230 && AnimElemNo(0) = 1
-trigger7 = Anim = 9235 && AnimElemNo(0) = [2, 3]
 map = "au_ck_q"
 value = 2311
 ignorehitpause = 1
@@ -11154,7 +12244,11 @@ ignorehitpause = 1
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco -90 graus]
 type = MapSet
 trigger1 = Anim = 1608 && AnimElemNo(0) = 2
-trigger2 = Anim = 9215 && AnimElemNo(0) = [6, 10]
+trigger2 = Anim = 9201 && AnimElemNo(0) = 1
+trigger3 = Anim = 9214
+trigger4 = Anim = 9215
+trigger5 = Anim = 9231 && AnimElemNo(0) = 1
+trigger6 = Anim = 9272 && AnimElemNo(0) = [1, 2]
 map = "au_ck_q"
 value = 2319
 ignorehitpause = 1
@@ -11172,47 +12266,68 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = Anim = 3013 && AnimElemNo(0) = 2
 trigger2 = Anim = 3014
-trigger3 = Anim = 9200 && AnimElemNo(0) = 1
 map = "au_ck_q"
 value = 2823
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: recolhe 6 de 7, centro +4, tronco -82 graus]
+type = MapSet
+trigger1 = Anim = 9240 && AnimElemNo(0) = [1, 3]
+trigger2 = Anim = 9270 && AnimElemNo(0) = [1, 3]
+map = "au_ck_q"
+value = 2830
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco -82 graus]
 type = MapSet
 trigger1 = Anim = 1606 && AnimElemNo(0) = 2
-trigger2 = Anim = 9231 && AnimElemNo(0) = 1
 map = "au_ck_q"
 value = 2831
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: recolhe 7 de 7, centro -4, tronco -75 graus]
+[State -4, Aura ck no corpo: recolhe 6 de 7, centro +0, tronco -75 graus]
 type = MapSet
-trigger1 = Anim = 9232 && AnimElemNo(0) = 1
+trigger1 = Anim = 9241 && AnimElemNo(0) = 1
+trigger2 = Anim = 9271 && AnimElemNo(0) = 1
 map = "au_ck_q"
-value = 3327
+value = 3334
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +0, tronco -75 graus]
 type = MapSet
 trigger1 = Anim = 3013 && AnimElemNo(0) = 1
-trigger2 = Anim = 9202 && AnimElemNo(0) = 1
-trigger3 = Anim = 9205 && AnimElemNo(0) = 6
 map = "au_ck_q"
 value = 3335
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco -75 graus]
 type = MapSet
-trigger1 = Anim = 9201 && AnimElemNo(0) = 4
+trigger1 = Anim = 9200 && AnimElemNo(0) = [1, 3]
+trigger2 = Anim = 9230 && AnimElemNo(0) = [1, 3]
+trigger3 = Anim = 9243 && AnimElemNo(0) = 5
+trigger4 = Anim = 9244 && AnimElemNo(0) = 5
+trigger5 = Anim = 9273 && AnimElemNo(0) = 5
+trigger6 = Anim = 9274 && AnimElemNo(0) = 5
 map = "au_ck_q"
 value = 3343
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco -68 graus]
+[State -4, Aura ck no corpo: recolhe 7 de 7, centro +0, tronco -68 graus]
 type = MapSet
-trigger1 = Anim = 9213 && AnimElemNo(0) = 2
+trigger1 = Anim = 9240 && AnimElemNo(0) = 7
+trigger2 = Anim = 9270 && AnimElemNo(0) = 7
 map = "au_ck_q"
-value = 3855
+value = 3847
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: recolhe 6 de 7, centro +4, tronco -68 graus]
+type = MapSet
+trigger1 = Anim = 9243 && AnimElemNo(0) = 3
+trigger2 = Anim = 9244 && AnimElemNo(0) = 3
+trigger3 = Anim = 9273 && AnimElemNo(0) = 3
+trigger4 = Anim = 9274 && AnimElemNo(0) = 3
+map = "au_ck_q"
+value = 3854
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 4 de 7, centro -4, tronco -60 graus]
@@ -11224,18 +12339,20 @@ map = "au_ck_q"
 value = 4348
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco -60 graus]
+[State -4, Aura ck no corpo: recolhe 7 de 7, centro +0, tronco -60 graus]
 type = MapSet
-trigger1 = Anim = 9212 && AnimElemNo(0) = [4, 5]
+trigger1 = Anim = 9205 && AnimElemNo(0) = 6
+trigger2 = Anim = 9235 && AnimElemNo(0) = 6
 map = "au_ck_q"
-value = 4367
+value = 4359
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: recolhe 3 de 7, centro -4, tronco -52 graus]
+[State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco -60 graus]
 type = MapSet
-trigger1 = Anim = 9232 && AnimElemNo(0) = 2
+trigger1 = Anim = 9201 && AnimElemNo(0) = 6
+trigger2 = Anim = 9231 && AnimElemNo(0) = 6
 map = "au_ck_q"
-value = 4859
+value = 4367
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 4 de 7, centro +0, tronco -52 graus]
@@ -11258,12 +12375,14 @@ map = "au_ck_q"
 value = 5362
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco -45 graus]
+[State -4, Aura ck no corpo: recolhe 4 de 7, centro -4, tronco -45 graus]
 type = MapSet
-trigger1 = Anim = 9212 && AnimElemNo(0) = [6, 7]
-trigger2 = Anim = 9213 && AnimElemNo(0) = 3
+trigger1 = Anim = 9243 && AnimElemNo(0) = 2
+trigger2 = Anim = 9244 && AnimElemNo(0) = 2
+trigger3 = Anim = 9273 && AnimElemNo(0) = 2
+trigger4 = Anim = 9274 && AnimElemNo(0) = 2
 map = "au_ck_q"
-value = 5391
+value = 5372
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 4 de 7, centro +8, tronco -45 graus]
@@ -11280,18 +12399,21 @@ map = "au_ck_q"
 value = 5895
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco -38 graus]
+[State -4, Aura ck no corpo: recolhe 3 de 7, centro +4, tronco -38 graus]
 type = MapSet
-trigger1 = Anim = 3010 && AnimElemNo(0) = 5
+trigger1 = Anim = 9240 && AnimElemNo(0) = [5, 6]
+trigger2 = Anim = 9270 && AnimElemNo(0) = [5, 6]
+trigger3 = Anim = 9272 && AnimElemNo(0) = 5
 map = "au_ck_q"
-value = 5903
+value = 5899
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: recolhe 7 de 7, centro +8, tronco -38 graus]
+[State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco -38 graus]
 type = MapSet
-trigger1 = Anim = 9213 && AnimElemNo(0) = [9, 10]
+trigger1 = Anim = 1006 && AnimElemNo(0) = [2, 3]
+trigger2 = Anim = 3010 && AnimElemNo(0) = 5
 map = "au_ck_q"
-value = 5911
+value = 5903
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 1 de 7, centro +12, tronco -38 graus]
@@ -11324,11 +12446,12 @@ map = "au_ck_q"
 value = 6403
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: recolhe 7 de 7, centro +8, tronco -30 graus]
+[State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco -30 graus]
 type = MapSet
-trigger1 = Anim = 9212 && AnimElemNo(0) = 9
+trigger1 = Anim = 9201 && AnimElemNo(0) = 5
+trigger2 = Anim = 9231 && AnimElemNo(0) = 5
 map = "au_ck_q"
-value = 6423
+value = 6415
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 0 de 7, centro -12, tronco -22 graus]
@@ -11360,6 +12483,14 @@ map = "au_ck_q"
 value = 6912
 ignorehitpause = 1
 
+[State -4, Aura ck no corpo: recolhe 7 de 7, centro +0, tronco -22 graus]
+type = MapSet
+trigger1 = Anim = 9205 && AnimElemNo(0) = 5
+trigger2 = Anim = 9235 && AnimElemNo(0) = 5
+map = "au_ck_q"
+value = 6919
+ignorehitpause = 1
+
 [State -4, Aura ck no corpo: recolhe 0 de 7, centro +4, tronco -22 graus]
 type = MapSet
 trigger1 = Anim = 3012 && AnimElemNo(0) = [1, 2]
@@ -11376,7 +12507,8 @@ ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco -22 graus]
 type = MapSet
-trigger1 = Anim = 9213 && AnimElemNo(0) = 4
+trigger1 = Anim = 9212
+trigger2 = Anim = 9213
 map = "au_ck_q"
 value = 6927
 ignorehitpause = 1
@@ -11396,13 +12528,6 @@ trigger3 = Anim = 13000 && AnimElemNo(0) = 8
 trigger4 = Anim = 13100 && AnimElemNo(0) = 8
 map = "au_ck_q"
 value = 6929
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: recolhe 7 de 7, centro +8, tronco -22 graus]
-type = MapSet
-trigger1 = Anim = 9213 && AnimElemNo(0) = [7, 8]
-map = "au_ck_q"
-value = 6935
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 0 de 7, centro +12, tronco -22 graus]
@@ -11473,14 +12598,6 @@ trigger7 = Anim = 10331 && AnimElemNo(0) = 6
 trigger8 = Anim = 10345 && AnimElemNo(0) = 6
 map = "au_ck_q"
 value = 7441
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: recolhe 7 de 7, centro +8, tronco -15 graus]
-type = MapSet
-trigger1 = Anim = 9212 && AnimElemNo(0) = 8
-trigger2 = Anim = 9213 && AnimElemNo(0) = 11
-map = "au_ck_q"
-value = 7447
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 0 de 7, centro +12, tronco -15 graus]
@@ -11582,6 +12699,14 @@ map = "au_ck_q"
 value = 7936
 ignorehitpause = 1
 
+[State -4, Aura ck no corpo: recolhe 7 de 7, centro +0, tronco -8 graus]
+type = MapSet
+trigger1 = Anim = 9205 && AnimElemNo(0) = 4
+trigger2 = Anim = 9235 && AnimElemNo(0) = 4
+map = "au_ck_q"
+value = 7943
+ignorehitpause = 1
+
 [State -4, Aura ck no corpo: recolhe 0 de 7, centro +4, tronco -8 graus]
 type = MapSet
 trigger1 = Anim = 105
@@ -11589,18 +12714,16 @@ trigger2 = Anim = 150
 trigger3 = Anim = 152
 trigger4 = Anim = 311 && AnimElemNo(0) = [2, 5]
 trigger5 = Anim = 440 && AnimElemNo(0) = 6
-trigger6 = Anim = 1100 && AnimElemNo(0) = [1, 5]
-trigger7 = Anim = 1101 && AnimElemNo(0) = [1, 7]
-trigger8 = Anim = 1701 && AnimElemNo(0) = [6, 9]
-trigger9 = Anim = 3100 && AnimElemNo(0) = 6
-trigger10 = Anim = 3422 && AnimElemNo(0) = 6
-trigger11 = Anim = 3435 && AnimElemNo(0) = 6
+trigger6 = Anim = 1701 && AnimElemNo(0) = [6, 9]
+trigger7 = Anim = 3100 && AnimElemNo(0) = 6
+trigger8 = Anim = 3422 && AnimElemNo(0) = 6
+trigger9 = Anim = 3435 && AnimElemNo(0) = 6
+trigger10 = Anim = 9241 && AnimElemNo(0) = [3, 8]
+trigger11 = Anim = 9271 && AnimElemNo(0) = [3, 8]
 trigger12 = Anim = 10311 && AnimElemNo(0) = [2, 5]
 trigger13 = Anim = 10440 && AnimElemNo(0) = 6
-trigger14 = Anim = 11100 && AnimElemNo(0) = [1, 5]
-trigger15 = Anim = 11101 && AnimElemNo(0) = [1, 7]
-trigger16 = Anim = 11701 && AnimElemNo(0) = [6, 9]
-trigger17 = Anim = 13100 && AnimElemNo(0) = 6
+trigger14 = Anim = 11701 && AnimElemNo(0) = [6, 9]
+trigger15 = Anim = 13100 && AnimElemNo(0) = 6
 map = "au_ck_q"
 value = 7944
 ignorehitpause = 1
@@ -11613,13 +12736,6 @@ trigger3 = Anim = 10342 && AnimElemNo(0) = [3, 5]
 trigger4 = Anim = 10430 && AnimElemNo(0) = [3, 5]
 map = "au_ck_q"
 value = 7945
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco -8 graus]
-type = MapSet
-trigger1 = Anim = 9213 && AnimElemNo(0) = [5, 6]
-map = "au_ck_q"
-value = 7951
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 0 de 7, centro +8, tronco -8 graus]
@@ -11732,62 +12848,73 @@ trigger47 = Anim = 810 && AnimElemNo(0) = [2, 4]
 trigger48 = Anim = 810 && AnimElemNo(0) = 6
 trigger49 = Anim = 831 && AnimElemNo(0) = 3
 trigger50 = Anim = 831 && AnimElemNo(0) = [8, 9]
-trigger51 = Anim = 1110 && AnimElemNo(0) = [4, 5]
-trigger52 = Anim = 1700 && AnimElemNo(0) = [1, 6]
-trigger53 = Anim = 1701 && AnimElemNo(0) = [1, 5]
-trigger54 = Anim = 1701 && AnimElemNo(0) = 10
-trigger55 = Anim = 2000 && AnimElemNo(0) = [9, 10]
-trigger56 = Anim = 3000 && AnimElemNo(0) = 1
-trigger57 = Anim = 3100 && AnimElemNo(0) = 1
-trigger58 = Anim = 3410
-trigger59 = Anim = 3411 && AnimElemNo(0) = [1, 4]
-trigger60 = Anim = 3411 && AnimElemNo(0) = 6
-trigger61 = Anim = 3412 && AnimElemNo(0) = 1
-trigger62 = Anim = 3412 && AnimElemNo(0) = [6, 7]
-trigger63 = Anim = 3431 && AnimElemNo(0) = 1
-trigger64 = Anim = 3431 && AnimElemNo(0) = [7, 8]
-trigger65 = Anim = 3436 && AnimElemNo(0) = 1
-trigger66 = Anim = 3436 && AnimElemNo(0) = [3, 4]
-trigger67 = Anim = 5200 && AnimElemNo(0) = [2, 4]
-trigger68 = Anim = 5210 && AnimElemNo(0) = [2, 4]
-trigger69 = Anim = 10200
-trigger70 = Anim = 10210 && AnimElemNo(0) = 1
-trigger71 = Anim = 10210 && AnimElemNo(0) = [6, 8]
-trigger72 = Anim = 10215 && AnimElemNo(0) = 1
-trigger73 = Anim = 10215 && AnimElemNo(0) = [6, 8]
-trigger74 = Anim = 10216 && AnimElemNo(0) = [5, 6]
-trigger75 = Anim = 10246 && AnimElemNo(0) = 5
-trigger76 = Anim = 10260 && AnimElemNo(0) = 8
-trigger77 = Anim = 10301
-trigger78 = Anim = 10302 && AnimElemNo(0) = 1
-trigger79 = Anim = 10302 && AnimElemNo(0) = [6, 7]
-trigger80 = Anim = 10303 && AnimElemNo(0) = [1, 3]
-trigger81 = Anim = 10303 && AnimElemNo(0) = [8, 9]
-trigger82 = Anim = 10311 && AnimElemNo(0) = 1
-trigger83 = Anim = 10311 && AnimElemNo(0) = 6
-trigger84 = Anim = 10312 && AnimElemNo(0) = 1
-trigger85 = Anim = 10312 && AnimElemNo(0) = 6
-trigger86 = Anim = 10331 && AnimElemNo(0) = 7
-trigger87 = Anim = 10333 && AnimElemNo(0) = 6
-trigger88 = Anim = 10340
-trigger89 = Anim = 10343 && AnimElemNo(0) = 1
-trigger90 = Anim = 10343 && AnimElemNo(0) = [7, 8]
-trigger91 = Anim = 10344 && AnimElemNo(0) = 1
-trigger92 = Anim = 10344 && AnimElemNo(0) = [6, 7]
-trigger93 = Anim = 10345 && AnimElemNo(0) = 7
-trigger94 = Anim = 10346 && AnimElemNo(0) = 1
-trigger95 = Anim = 10346 && AnimElemNo(0) = [6, 7]
-trigger96 = Anim = 10600 && AnimElemNo(0) = [3, 4]
-trigger97 = Anim = 10601 && AnimElemNo(0) = [1, 2]
-trigger98 = Anim = 10601 && AnimElemNo(0) = [4, 5]
-trigger99 = Anim = 10760
-trigger100 = Anim = 10761
-trigger101 = Anim = 10831 && AnimElemNo(0) = 3
-trigger102 = Anim = 10831 && AnimElemNo(0) = [8, 9]
-trigger103 = Anim = 11701 && AnimElemNo(0) = [1, 5]
-trigger104 = Anim = 11701 && AnimElemNo(0) = 10
-trigger105 = Anim = 13000 && AnimElemNo(0) = 1
-trigger106 = Anim = 13100 && AnimElemNo(0) = 1
+trigger51 = Anim = 1100 && AnimElemNo(0) = [1, 3]
+trigger52 = Anim = 1100 && AnimElemNo(0) = [4, 8]
+trigger53 = Anim = 1101 && AnimElemNo(0) = [1, 3]
+trigger54 = Anim = 1101 && AnimElemNo(0) = [4, 10]
+trigger55 = Anim = 1110 && AnimElemNo(0) = [4, 5]
+trigger56 = Anim = 1700 && AnimElemNo(0) = [1, 6]
+trigger57 = Anim = 1701 && AnimElemNo(0) = [1, 5]
+trigger58 = Anim = 1701 && AnimElemNo(0) = 10
+trigger59 = Anim = 2000 && AnimElemNo(0) = [9, 10]
+trigger60 = Anim = 3000 && AnimElemNo(0) = 1
+trigger61 = Anim = 3100 && AnimElemNo(0) = 1
+trigger62 = Anim = 3410
+trigger63 = Anim = 3411 && AnimElemNo(0) = [1, 4]
+trigger64 = Anim = 3411 && AnimElemNo(0) = 6
+trigger65 = Anim = 3412 && AnimElemNo(0) = 1
+trigger66 = Anim = 3412 && AnimElemNo(0) = [6, 7]
+trigger67 = Anim = 3431 && AnimElemNo(0) = 1
+trigger68 = Anim = 3431 && AnimElemNo(0) = [7, 8]
+trigger69 = Anim = 3436 && AnimElemNo(0) = 1
+trigger70 = Anim = 3436 && AnimElemNo(0) = [3, 4]
+trigger71 = Anim = 5200 && AnimElemNo(0) = [2, 4]
+trigger72 = Anim = 5210 && AnimElemNo(0) = [2, 4]
+trigger73 = Anim = 9272 && AnimElemNo(0) = 6
+trigger74 = Anim = 9272 && AnimElemNo(0) = 7
+trigger75 = Anim = 9272 && AnimElemNo(0) = [8, 14]
+trigger76 = Anim = 10200
+trigger77 = Anim = 10210 && AnimElemNo(0) = 1
+trigger78 = Anim = 10210 && AnimElemNo(0) = [6, 8]
+trigger79 = Anim = 10215 && AnimElemNo(0) = 1
+trigger80 = Anim = 10215 && AnimElemNo(0) = [6, 8]
+trigger81 = Anim = 10216 && AnimElemNo(0) = [5, 6]
+trigger82 = Anim = 10246 && AnimElemNo(0) = 5
+trigger83 = Anim = 10260 && AnimElemNo(0) = 8
+trigger84 = Anim = 10301
+trigger85 = Anim = 10302 && AnimElemNo(0) = 1
+trigger86 = Anim = 10302 && AnimElemNo(0) = [6, 7]
+trigger87 = Anim = 10303 && AnimElemNo(0) = [1, 3]
+trigger88 = Anim = 10303 && AnimElemNo(0) = [8, 9]
+trigger89 = Anim = 10311 && AnimElemNo(0) = 1
+trigger90 = Anim = 10311 && AnimElemNo(0) = 6
+trigger91 = Anim = 10312 && AnimElemNo(0) = 1
+trigger92 = Anim = 10312 && AnimElemNo(0) = 6
+trigger93 = Anim = 10331 && AnimElemNo(0) = 7
+trigger94 = Anim = 10333 && AnimElemNo(0) = 6
+trigger95 = Anim = 10340
+trigger96 = Anim = 10343 && AnimElemNo(0) = 1
+trigger97 = Anim = 10343 && AnimElemNo(0) = [7, 8]
+trigger98 = Anim = 10344 && AnimElemNo(0) = 1
+trigger99 = Anim = 10344 && AnimElemNo(0) = [6, 7]
+trigger100 = Anim = 10345 && AnimElemNo(0) = 7
+trigger101 = Anim = 10346 && AnimElemNo(0) = 1
+trigger102 = Anim = 10346 && AnimElemNo(0) = [6, 7]
+trigger103 = Anim = 10600 && AnimElemNo(0) = [3, 4]
+trigger104 = Anim = 10601 && AnimElemNo(0) = [1, 2]
+trigger105 = Anim = 10601 && AnimElemNo(0) = [4, 5]
+trigger106 = Anim = 10760
+trigger107 = Anim = 10761
+trigger108 = Anim = 10831 && AnimElemNo(0) = 3
+trigger109 = Anim = 10831 && AnimElemNo(0) = [8, 9]
+trigger110 = Anim = 11100 && AnimElemNo(0) = [1, 3]
+trigger111 = Anim = 11100 && AnimElemNo(0) = [4, 8]
+trigger112 = Anim = 11101 && AnimElemNo(0) = [1, 3]
+trigger113 = Anim = 11101 && AnimElemNo(0) = [4, 10]
+trigger114 = Anim = 11701 && AnimElemNo(0) = [1, 5]
+trigger115 = Anim = 11701 && AnimElemNo(0) = 10
+trigger116 = Anim = 13000 && AnimElemNo(0) = 1
+trigger117 = Anim = 13100 && AnimElemNo(0) = 1
 map = "au_ck_q"
 value = 8456
 ignorehitpause = 1
@@ -11867,70 +12994,66 @@ trigger30 = Anim = 1000 && AnimElemNo(0) = 5
 trigger31 = Anim = 1000 && AnimElemNo(0) = 6
 trigger32 = Anim = 1001 && AnimElemNo(0) = 5
 trigger33 = Anim = 1001 && AnimElemNo(0) = 6
-trigger34 = Anim = 1100 && AnimElemNo(0) = 6
-trigger35 = Anim = 1101 && AnimElemNo(0) = 8
-trigger36 = Anim = 1200 && AnimElemNo(0) = 2
-trigger37 = Anim = 1201 && AnimElemNo(0) = 2
-trigger38 = Anim = 1300 && AnimElemNo(0) = 4
-trigger39 = Anim = 1301 && AnimElemNo(0) = 4
-trigger40 = Anim = 1310 && AnimElemNo(0) = 6
-trigger41 = Anim = 1600 && AnimElemNo(0) = [5, 6]
-trigger42 = Anim = 1601 && AnimElemNo(0) = [5, 6]
-trigger43 = Anim = 1602 && AnimElemNo(0) = 3
-trigger44 = Anim = 1700 && AnimElemNo(0) = 7
-trigger45 = Anim = 1701 && AnimElemNo(0) = 11
-trigger46 = Anim = 3100 && AnimElemNo(0) = [9, 11]
-trigger47 = Anim = 3200 && AnimElemNo(0) = 7
-trigger48 = Anim = 3402 && AnimElemNo(0) = 5
-trigger49 = Anim = 3402 && AnimElemNo(0) = 6
-trigger50 = Anim = 3403 && AnimElemNo(0) = 7
-trigger51 = Anim = 3413 && AnimElemNo(0) = 3
-trigger52 = Anim = 3420 && AnimElemNo(0) = 8
-trigger53 = Anim = 3421 && AnimElemNo(0) = 8
-trigger54 = Anim = 3422 && AnimElemNo(0) = 8
-trigger55 = Anim = 3430 && AnimElemNo(0) = 3
-trigger56 = Anim = 3432 && AnimElemNo(0) = 8
-trigger57 = Anim = 3434 && AnimElemNo(0) = 8
-trigger58 = Anim = 3435 && AnimElemNo(0) = 8
-trigger59 = Anim = 5200 && AnimElemNo(0) = 1
-trigger60 = Anim = 5200 && AnimElemNo(0) = [7, 8]
-trigger61 = Anim = 5210 && AnimElemNo(0) = 1
-trigger62 = Anim = 5210 && AnimElemNo(0) = [7, 8]
-trigger63 = Anim = 10201 && AnimElemNo(0) = [5, 6]
-trigger64 = Anim = 10230 && AnimElemNo(0) = 8
-trigger65 = Anim = 10231 && AnimElemNo(0) = 6
-trigger66 = Anim = 10240 && AnimElemNo(0) = 7
-trigger67 = Anim = 10245 && AnimElemNo(0) = 8
-trigger68 = Anim = 10246 && AnimElemNo(0) = 6
-trigger69 = Anim = 10260 && AnimElemNo(0) = 9
-trigger70 = Anim = 10311 && AnimElemNo(0) = 7
-trigger71 = Anim = 10312 && AnimElemNo(0) = 7
-trigger72 = Anim = 10313 && AnimElemNo(0) = 3
-trigger73 = Anim = 10321 && AnimElemNo(0) = 8
-trigger74 = Anim = 10323 && AnimElemNo(0) = 8
-trigger75 = Anim = 10331 && AnimElemNo(0) = 8
-trigger76 = Anim = 10332 && AnimElemNo(0) = 8
-trigger77 = Anim = 10341 && AnimElemNo(0) = 8
-trigger78 = Anim = 10345 && AnimElemNo(0) = 8
-trigger79 = Anim = 10347 && AnimElemNo(0) = 3
-trigger80 = Anim = 10410 && AnimElemNo(0) = [3, 5]
-trigger81 = Anim = 10440 && AnimElemNo(0) = 8
-trigger82 = Anim = 10830 && AnimElemNo(0) = 5
-trigger83 = Anim = 10831 && AnimElemNo(0) = 14
-trigger84 = Anim = 11000 && AnimElemNo(0) = 5
-trigger85 = Anim = 11000 && AnimElemNo(0) = 6
-trigger86 = Anim = 11001 && AnimElemNo(0) = 5
-trigger87 = Anim = 11001 && AnimElemNo(0) = 6
-trigger88 = Anim = 11100 && AnimElemNo(0) = 6
-trigger89 = Anim = 11101 && AnimElemNo(0) = 8
-trigger90 = Anim = 11200 && AnimElemNo(0) = 2
-trigger91 = Anim = 11201 && AnimElemNo(0) = 2
-trigger92 = Anim = 11300 && AnimElemNo(0) = 4
-trigger93 = Anim = 11301 && AnimElemNo(0) = 4
-trigger94 = Anim = 11701 && AnimElemNo(0) = 11
-trigger95 = Anim = 13000 && AnimElemNo(0) = 14
-trigger96 = Anim = 13100 && AnimElemNo(0) = [9, 11]
-trigger97 = Anim = 13200 && AnimElemNo(0) = 7
+trigger34 = Anim = 1200 && AnimElemNo(0) = 2
+trigger35 = Anim = 1201 && AnimElemNo(0) = 2
+trigger36 = Anim = 1300 && AnimElemNo(0) = 4
+trigger37 = Anim = 1301 && AnimElemNo(0) = 4
+trigger38 = Anim = 1310 && AnimElemNo(0) = 6
+trigger39 = Anim = 1600 && AnimElemNo(0) = [5, 6]
+trigger40 = Anim = 1601 && AnimElemNo(0) = [5, 6]
+trigger41 = Anim = 1602 && AnimElemNo(0) = 3
+trigger42 = Anim = 1700 && AnimElemNo(0) = 7
+trigger43 = Anim = 1701 && AnimElemNo(0) = 11
+trigger44 = Anim = 3100 && AnimElemNo(0) = [9, 11]
+trigger45 = Anim = 3200 && AnimElemNo(0) = 7
+trigger46 = Anim = 3402 && AnimElemNo(0) = 5
+trigger47 = Anim = 3402 && AnimElemNo(0) = 6
+trigger48 = Anim = 3403 && AnimElemNo(0) = 7
+trigger49 = Anim = 3413 && AnimElemNo(0) = 3
+trigger50 = Anim = 3420 && AnimElemNo(0) = 8
+trigger51 = Anim = 3421 && AnimElemNo(0) = 8
+trigger52 = Anim = 3422 && AnimElemNo(0) = 8
+trigger53 = Anim = 3430 && AnimElemNo(0) = 3
+trigger54 = Anim = 3432 && AnimElemNo(0) = 8
+trigger55 = Anim = 3434 && AnimElemNo(0) = 8
+trigger56 = Anim = 3435 && AnimElemNo(0) = 8
+trigger57 = Anim = 5200 && AnimElemNo(0) = 1
+trigger58 = Anim = 5200 && AnimElemNo(0) = [7, 8]
+trigger59 = Anim = 5210 && AnimElemNo(0) = 1
+trigger60 = Anim = 5210 && AnimElemNo(0) = [7, 8]
+trigger61 = Anim = 10201 && AnimElemNo(0) = [5, 6]
+trigger62 = Anim = 10230 && AnimElemNo(0) = 8
+trigger63 = Anim = 10231 && AnimElemNo(0) = 6
+trigger64 = Anim = 10240 && AnimElemNo(0) = 7
+trigger65 = Anim = 10245 && AnimElemNo(0) = 8
+trigger66 = Anim = 10246 && AnimElemNo(0) = 6
+trigger67 = Anim = 10260 && AnimElemNo(0) = 9
+trigger68 = Anim = 10311 && AnimElemNo(0) = 7
+trigger69 = Anim = 10312 && AnimElemNo(0) = 7
+trigger70 = Anim = 10313 && AnimElemNo(0) = 3
+trigger71 = Anim = 10321 && AnimElemNo(0) = 8
+trigger72 = Anim = 10323 && AnimElemNo(0) = 8
+trigger73 = Anim = 10331 && AnimElemNo(0) = 8
+trigger74 = Anim = 10332 && AnimElemNo(0) = 8
+trigger75 = Anim = 10341 && AnimElemNo(0) = 8
+trigger76 = Anim = 10345 && AnimElemNo(0) = 8
+trigger77 = Anim = 10347 && AnimElemNo(0) = 3
+trigger78 = Anim = 10410 && AnimElemNo(0) = [3, 5]
+trigger79 = Anim = 10440 && AnimElemNo(0) = 8
+trigger80 = Anim = 10830 && AnimElemNo(0) = 5
+trigger81 = Anim = 10831 && AnimElemNo(0) = 14
+trigger82 = Anim = 11000 && AnimElemNo(0) = 5
+trigger83 = Anim = 11000 && AnimElemNo(0) = 6
+trigger84 = Anim = 11001 && AnimElemNo(0) = 5
+trigger85 = Anim = 11001 && AnimElemNo(0) = 6
+trigger86 = Anim = 11200 && AnimElemNo(0) = 2
+trigger87 = Anim = 11201 && AnimElemNo(0) = 2
+trigger88 = Anim = 11300 && AnimElemNo(0) = 4
+trigger89 = Anim = 11301 && AnimElemNo(0) = 4
+trigger90 = Anim = 11701 && AnimElemNo(0) = 11
+trigger91 = Anim = 13000 && AnimElemNo(0) = 14
+trigger92 = Anim = 13100 && AnimElemNo(0) = [9, 11]
+trigger93 = Anim = 13200 && AnimElemNo(0) = 7
 map = "au_ck_q"
 value = 8472
 ignorehitpause = 1
@@ -12015,13 +13138,6 @@ map = "au_ck_q"
 value = 8960
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: recolhe 7 de 7, centro +0, tronco +8 graus]
-type = MapSet
-trigger1 = Anim = 9200 && AnimElemNo(0) = 2
-map = "au_ck_q"
-value = 8967
-ignorehitpause = 1
-
 [State -4, Aura ck no corpo: recolhe 0 de 7, centro +4, tronco +8 graus]
 type = MapSet
 trigger1 = Anim = 100
@@ -12032,10 +13148,12 @@ trigger5 = Anim = 1401 && AnimElemNo(0) = 1
 trigger6 = Anim = 3401 && AnimElemNo(0) = 2
 trigger7 = Anim = 3423 && AnimElemNo(0) = 2
 trigger8 = Anim = 5120 && AnimElemNo(0) = 3
-trigger9 = Anim = 10342 && AnimElemNo(0) = [6, 7]
-trigger10 = Anim = 10430 && AnimElemNo(0) = [6, 7]
-trigger11 = Anim = 11400 && AnimElemNo(0) = 1
-trigger12 = Anim = 11401 && AnimElemNo(0) = 1
+trigger9 = Anim = 9241 && AnimElemNo(0) = [9, 10]
+trigger10 = Anim = 9271 && AnimElemNo(0) = [9, 10]
+trigger11 = Anim = 10342 && AnimElemNo(0) = [6, 7]
+trigger12 = Anim = 10430 && AnimElemNo(0) = [6, 7]
+trigger13 = Anim = 11400 && AnimElemNo(0) = 1
+trigger14 = Anim = 11401 && AnimElemNo(0) = 1
 map = "au_ck_q"
 value = 8968
 ignorehitpause = 1
@@ -12207,6 +13325,14 @@ map = "au_ck_q"
 value = 9985
 ignorehitpause = 1
 
+[State -4, Aura ck no corpo: recolhe 0 de 7, centro +8, tronco +22 graus]
+type = MapSet
+trigger1 = Anim = 9241 && AnimElemNo(0) = 11
+trigger2 = Anim = 9271 && AnimElemNo(0) = 11
+map = "au_ck_q"
+value = 10000
+ignorehitpause = 1
+
 [State -4, Aura ck no corpo: recolhe 1 de 7, centro +8, tronco +22 graus]
 type = MapSet
 trigger1 = Anim = 246 && AnimElemNo(0) = [1, 2]
@@ -12229,33 +13355,18 @@ map = "au_ck_q"
 value = 10016
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: recolhe 6 de 7, centro +0, tronco +30 graus]
+[State -4, Aura ck no corpo: recolhe 6 de 7, centro +4, tronco +30 graus]
 type = MapSet
-trigger1 = Anim = 9232 && AnimElemNo(0) = 3
+trigger1 = Anim = 9272 && AnimElemNo(0) = 4
 map = "au_ck_q"
-value = 10502
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco +30 graus]
-type = MapSet
-trigger1 = Anim = 9200 && AnimElemNo(0) = 3
-trigger2 = Anim = 9212 && AnimElemNo(0) = 3
-map = "au_ck_q"
-value = 10511
+value = 10510
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +0, tronco +38 graus]
 type = MapSet
-trigger1 = Anim = 9202 && AnimElemNo(0) = 3
+trigger1 = Anim = 1006 && AnimElemNo(0) = 1
 map = "au_ck_q"
 value = 11015
-ignorehitpause = 1
-
-[State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco +45 graus]
-type = MapSet
-trigger1 = Anim = 9200 && AnimElemNo(0) = 4
-map = "au_ck_q"
-value = 11535
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 4 de 7, centro +8, tronco +45 graus]
@@ -12273,35 +13384,92 @@ map = "au_ck_q"
 value = 12020
 ignorehitpause = 1
 
+[State -4, Aura ck no corpo: recolhe 7 de 7, centro +0, tronco +52 graus]
+type = MapSet
+trigger1 = Anim = 1005 && AnimElemNo(0) = 2
+trigger2 = Anim = 1005 && AnimElemNo(0) = [4, 5]
+trigger3 = Anim = 1505 && AnimElemNo(0) = 2
+trigger4 = Anim = 1505 && AnimElemNo(0) = 4
+map = "au_ck_q"
+value = 12039
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: recolhe 4 de 7, centro +4, tronco +52 graus]
+type = MapSet
+trigger1 = Anim = 9240 && AnimElemNo(0) = 4
+trigger2 = Anim = 9270 && AnimElemNo(0) = 4
+map = "au_ck_q"
+value = 12044
+ignorehitpause = 1
+
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco +52 graus]
 type = MapSet
-trigger1 = Anim = 1005 && AnimElemNo(0) = 5
-trigger2 = Anim = 1006 && AnimElemNo(0) = 1
-trigger3 = Anim = 9212 && AnimElemNo(0) = [1, 2]
-trigger4 = Anim = 9212 && AnimElemNo(0) = 10
-trigger5 = Anim = 9253 && AnimElemNo(0) = [3, 4]
+trigger1 = Anim = 9253 && AnimElemNo(0) = [3, 4]
 map = "au_ck_q"
 value = 12047
 ignorehitpause = 1
 
+[State -4, Aura ck no corpo: recolhe 5 de 7, centro -4, tronco +60 graus]
+type = MapSet
+trigger1 = Anim = 9243 && AnimElemNo(0) = 1
+trigger2 = Anim = 9244 && AnimElemNo(0) = 1
+trigger3 = Anim = 9273 && AnimElemNo(0) = 1
+trigger4 = Anim = 9274 && AnimElemNo(0) = 1
+map = "au_ck_q"
+value = 12541
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: recolhe 4 de 7, centro +4, tronco +60 graus]
+type = MapSet
+trigger1 = Anim = 9243 && AnimElemNo(0) = 6
+trigger2 = Anim = 9244 && AnimElemNo(0) = 6
+trigger3 = Anim = 9273 && AnimElemNo(0) = 6
+trigger4 = Anim = 9274 && AnimElemNo(0) = 6
+map = "au_ck_q"
+value = 12556
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: recolhe 5 de 7, centro +4, tronco +60 graus]
+type = MapSet
+trigger1 = Anim = 9241 && AnimElemNo(0) = 2
+trigger2 = Anim = 9271 && AnimElemNo(0) = 2
+map = "au_ck_q"
+value = 12557
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: recolhe 6 de 7, centro +4, tronco +60 graus]
+type = MapSet
+trigger1 = Anim = 9243 && AnimElemNo(0) = 8
+trigger2 = Anim = 9244 && AnimElemNo(0) = 8
+trigger3 = Anim = 9273 && AnimElemNo(0) = 8
+trigger4 = Anim = 9274 && AnimElemNo(0) = 8
+map = "au_ck_q"
+value = 12558
+ignorehitpause = 1
+
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +0, tronco +68 graus]
 type = MapSet
-trigger1 = Anim = 9253 && AnimElemNo(0) = [1, 2]
+trigger1 = Anim = 1005 && AnimElemNo(0) = 3
+trigger2 = Anim = 1505 && AnimElemNo(0) = 3
+trigger3 = Anim = 9205 && AnimElemNo(0) = 3
+trigger4 = Anim = 9235 && AnimElemNo(0) = 3
+trigger5 = Anim = 9253 && AnimElemNo(0) = [1, 2]
 map = "au_ck_q"
 value = 13063
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco +68 graus]
 type = MapSet
-trigger1 = Anim = 9212 && AnimElemNo(0) = 11
+trigger1 = Anim = 9201 && AnimElemNo(0) = [2, 4]
+trigger2 = Anim = 9231 && AnimElemNo(0) = [2, 4]
 map = "au_ck_q"
 value = 13071
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +0, tronco +75 graus]
 type = MapSet
-trigger1 = Anim = 1005 && AnimElemNo(0) = [1, 4]
-trigger2 = Anim = 9214 && AnimElemNo(0) = [5, 8]
+trigger1 = Anim = 9202
+trigger2 = Anim = 9232
 map = "au_ck_q"
 value = 13575
 ignorehitpause = 1
@@ -12324,7 +13492,10 @@ ignorehitpause = 1
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco +75 graus]
 type = MapSet
 trigger1 = Anim = 1606 && AnimElemNo(0) = 1
-trigger2 = Anim = 9214 && AnimElemNo(0) = [9, 10]
+trigger2 = Anim = 9243 && AnimElemNo(0) = 7
+trigger3 = Anim = 9244 && AnimElemNo(0) = 7
+trigger4 = Anim = 9273 && AnimElemNo(0) = 7
+trigger5 = Anim = 9274 && AnimElemNo(0) = 7
 map = "au_ck_q"
 value = 13583
 ignorehitpause = 1
@@ -12341,18 +13512,24 @@ ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +0, tronco +82 graus]
 type = MapSet
-trigger1 = Anim = 5110
-trigger2 = Anim = 5150
-trigger3 = Anim = 5160 && AnimElemNo(0) = 2
-trigger4 = Anim = 5170 && AnimElemNo(0) = 2
+trigger1 = Anim = 1005 && AnimElemNo(0) = 1
+trigger2 = Anim = 1505 && AnimElemNo(0) = 1
+trigger3 = Anim = 5110
+trigger4 = Anim = 5150
+trigger5 = Anim = 5160 && AnimElemNo(0) = 2
+trigger6 = Anim = 5170 && AnimElemNo(0) = 2
+trigger7 = Anim = 9205 && AnimElemNo(0) = [7, 9]
+trigger8 = Anim = 9235 && AnimElemNo(0) = [7, 9]
+trigger9 = Anim = 9240 && AnimElemNo(0) = 8
+trigger10 = Anim = 9270 && AnimElemNo(0) = 8
 map = "au_ck_q"
 value = 14087
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco +82 graus]
 type = MapSet
-trigger1 = Anim = 9205 && AnimElemNo(0) = 5
-trigger2 = Anim = 9213 && AnimElemNo(0) = 1
+trigger1 = Anim = 9205 && AnimElemNo(0) = [1, 2]
+trigger2 = Anim = 9235 && AnimElemNo(0) = [1, 2]
 map = "au_ck_q"
 value = 14095
 ignorehitpause = 1
@@ -12382,27 +13559,24 @@ trigger20 = Anim = 9120
 trigger21 = Anim = 9126
 trigger22 = Anim = 9129
 trigger23 = Anim = 9130
-trigger24 = Anim = 9215 && AnimElemNo(0) = [1, 5]
-trigger25 = Anim = 9215 && AnimElemNo(0) = [11, 12]
+trigger24 = Anim = 9272 && AnimElemNo(0) = 3
 map = "au_ck_q"
 value = 14607
 ignorehitpause = 1
 
-[State -4, Aura ck no corpo: recolhe 7 de 7, centro +0, tronco +112 graus]
-type = MapSet
-trigger1 = Anim = 9230 && AnimElemNo(0) = 2
-map = "au_ck_q"
-value = 16135
-ignorehitpause = 1
-
 [State -4, Aura ck no corpo: recolhe 7 de 7, centro +4, tronco +112 graus]
 type = MapSet
-trigger1 = Anim = 1006 && AnimElemNo(0) = [2, 3]
-trigger2 = Anim = 9231 && AnimElemNo(0) = 3
-trigger3 = Anim = 9235 && AnimElemNo(0) = 5
-trigger4 = Anim = 9253 && AnimElemNo(0) = [5, 6]
+trigger1 = Anim = 9253 && AnimElemNo(0) = [5, 6]
 map = "au_ck_q"
 value = 16143
+ignorehitpause = 1
+
+[State -4, Aura ck no corpo: recolhe 7 de 7, centro +8, tronco +112 graus]
+type = MapSet
+trigger1 = Anim = 9200 && AnimElemNo(0) = 4
+trigger2 = Anim = 9230 && AnimElemNo(0) = 4
+map = "au_ck_q"
+value = 16151
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: ax zera antes do round]

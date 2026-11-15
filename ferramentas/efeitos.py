@@ -219,6 +219,7 @@ TEMA = {  # a camada que dá o jeito de cada lutador ao estouro
     "gutto": ("blunt-hit", (None, None, 0, 1, 2, 3, 4, 5), 1, (26, -22)),  # segunda pancada (o chute dobrado)
     "raiclaven": ("zap-hit", (2, 3, 4, 5, 6, 7, 8), 2, None),        # relâmpago
     "ck": ("heavy-landing", (2, 3, 5, 7, 9, 11), 2, None),           # onda baixa de poeira (o grave do paredão)
+    "gbzin": ("ground-slam", (20, 26, 32, 38, 44, 50), 1, None),      # terra e palha do cajado no chão
 }
 
 
@@ -329,6 +330,10 @@ PROJETEIS = {
     "ck": {1005: ("ground-slam", (20, 26, 32, 38, 44), 1, "fumaca", 1.0, 70),
            1006: ("ground-slam", (50, 56, 62), 1, "fumaca", 1.0, 50),
            9253: ("ground-slam", (26, 32, 38, 44, 50, 56), 1, "fumaca", 1.0, 60)},
+    # Gbzin: a poeira da Cabra Solta (até a folha fx_cabra) e a onda rasteira do Cajado no Chão (1505)
+    "gbzin": {1005: ("ground-slam", (20, 26, 32, 38, 44), 1, "fumaca", 1.0, 70),
+              1006: ("ground-slam", (50, 56, 62), 1, "fumaca", 1.0, 50),
+              1505: ("ground-slam", (14, 20, 26, 20), 1, "fumaca", 1.0, 70)},
 }
 
 

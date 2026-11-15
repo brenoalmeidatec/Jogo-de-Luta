@@ -159,14 +159,14 @@ faz a mesma coisa, com o comando da ficha:
 
 | Especial da ficha | Comando | Espaço do kit (estado) | Por quê |
 |---|---|---|---|
-| Gancho do Pastor | ← → + x/y | projétil que vai e volta (1600/1601) | o gancho sai, prende e puxa até ele |
+| Gancho do Pastor | ← → + x/y | projétil que vai e volta (1600/1601) | o gancho sai, prende e **puxa** (no robô: de 170 para 69 px no forte); na defesa não puxa |
 | Cabra Solta | ↓ → + x/y | projétil reto (1000/1001) | a cabra corre pelo chão |
 | Cabra Saltadora | ↓ ↑ + x/y | antiaéreo | a cabra salta em arco |
 | Passinho de Pinguim | → → + a/b | passa por trás (1700/1701) | o Gingado do CK já passa e chega virado |
 | Guarda Fechada | ↓ ← + a/b | contragolpe (1300/1310) | deita na guarda e prende o golpe |
 | Arm-lock Voador | ↑ ↓ + a/b | avanço (Bote) | pula, agarra o braço e cai na chave |
-| Rolo de Feno | ← ↓ + x/y | esquiva (1100) | rola pelo chão e derruba |
-| Cajado no Chão | ↓ ↓ + x/y | golpe baixo | onda curta que pega rasteiro |
+| Rolo de Feno | ← ↓ + x/y | esquiva (1100/1101) | rola para a frente rente ao chão, passa por baixo de golpe em pé e no ar e derruba (Trip, defende agachado) |
+| Cajado no Chão | ↓ ↓ + x/y | golpe baixo (1500/1501) | finca o cajado quase parado; se a ponta não pegou, sai uma onda de poeira rasteira (projétil 1505); o forte vai mais longe e derruba |
 
 No Grão-Pastor entram os exclusivos (Estouro, Mão do Pastor, Berro, Puxão das Mãos e o super Juízo do Rebanho) nos
 espaços do Modo Ratão do CK.

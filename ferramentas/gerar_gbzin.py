@@ -392,6 +392,7 @@ gp.extra.TODOS = (gp.extra.CORRENTES + gp.extra.KOMBOS + gp.extra.DESPERTO_KOMBO
 CX_RAJADA = (6, -100, 44, -60)    # Rajada e Nocaute: a luva dos ganchos (do ombro ao fígado), não o corpo todo
 CX_GUARDA = (-8, -105, 30, -12)   # Contragolpe: o corpo inteiro é a caixa que apara (como o parry 760)
 CX_GRAVE = (-10, -110, 110, 0)    # Grave do Paredão: a onda do grave, não um membro
+CX_ROLO = (-6, -34, 40, 0)        # Rolo de Feno: o corpo rolando rente ao chão
 M = {m.estado: m for m in (
     N(1000, "Tragada (perto)", "bola 1/3 2/5 3/4 4/5 5/5 7/10", (0, 0, 0, 0), []),
     N(1001, "Tragada (longe)", "bola 1/3 2/5 3/4 4/5 5/5 7/13", (0, 0, 0, 0), []),
@@ -407,8 +408,9 @@ M = {m.estado: m for m in (
     N(1301, "Contragolpe (pega baixo)", "armada 1/4 2/20A 0/6", CX_GUARDA, []),
     N(1310, "Contragolpe: cruzado", "armada 3/3 4/2 5/6A 6/8 7/8", _c("armada", 5), [110], attr="S, SA", queda=True,
       vel="-6,-5", ar="-5,-5"),
-    N(1100, "Pêndulo", "rolamento 1/4 2/5 1/5 2/5 1/5 0/6", (0, 0, 0, 0), []),
-    N(1101, "Pêndulo longo", "rolamento 1/4 2/5 1/5 2/5 1/5 2/5 1/5 0/6", (0, 0, 0, 0), []),
+    N(1100, "Rolo de Feno", "rolamento 1/4 2/4 3/4A 4/4A 3/4A 4/4A 2/6", CX_ROLO, [55], area="BAIXO"),
+    N(1101, "Rolo de Feno longe", "rolamento 1/4 2/4 3/4A 4/4A 3/4A 4/4A 3/4A 4/4A 2/6", CX_ROLO, [75],
+      area="BAIXO"),
     N(1110, "Pêndulo: direto", "soco 4/3 5/4A 6/6 7/6", SOCO_C, [80], attr="S, SA"),
     N(3000, "Rajada da Esquina",
       "golaco 1/6 2/3A 3/3A 4/3A 5/3A 2/3A 3/3A 6/4A bicicleta 2/3 3/4A 4/5 pulo 6/4 7/6", CX_RAJADA, []),
@@ -493,7 +495,7 @@ CX_BOTE = (10, _c("caneta", 4)[1] + 8, _c("caneta", 4)[2], _c("caneta", 4)[1] + 
 FAMILIAS_CK = (
     # ficha do Gbzin: Arm-lock Voador (↑ ↓ + a/b) e Cajado no Chão (↓ ↓ + x/y, pega rasteiro)
     (1400, "Arm-lock Voador", "Arm-lock Voador", "~U, D", "ab", CX_BOTE, 73, 8.0, "MA", True),
-    (1500, "Cajado no Chao", "Cajado no Chao", "~D, D", "xy", _c("rasteirinha", 4), 70, 5.5, "L", True),
+    (1500, "Cajado no Chao", "Cajado no Chao", "~D, D", "xy", _c("rasteirinha", 4), 70, 1.5, "L", True),
 )
 
 
@@ -602,6 +604,7 @@ def acoes_ck(Q):
     Q(1005, [(f"ck_fumaca{i}", 3) for i in range(3)] + [("ck_fumaca3", 6), ("ck_fumaca4", 6)],
       [(-26, -20, 26, 20)], loop=3)
     Q(1006, [(f"ck_fumaca{i}", 4) for i in (5, 6, 7)], [])
+    Q(1505, [(f"ck_fumaca{i}", 2) for i in (2, 3, 4, 3)], [(-30, -24, 30, 24)], loop=0)
     Q(1606, [("ck_bone", 3), ("ck_bone", 3, None, "H")], [(-10, -6, 10, 6)])
     Q(1608, [("ck_juliet", 3), ("ck_juliet", 3, None, "H")], [(-10, -6, 10, 6)])
     Q(3010, [(f"ck_garrafa{i}", 3) for i in range(6)], [(-12, -12, 12, 12)])
@@ -614,7 +617,7 @@ def acoes_ck(Q):
 
 
 gp.acoes_folhas = acoes_ck
-gp.PROJETEIS = gp.PROJETEIS | {1606, 1608, 3013, 3014}
+gp.PROJETEIS = gp.PROJETEIS | {1505, 1606, 1608, 3013, 3014}
 
 
 def efeitos_ck(s):
@@ -734,19 +737,22 @@ def cns_ck(cns):
                               f"removetime = {i[3] - i[0] - 2}\nsprpriority = 3\nownpal = 1\n\n"
                             + ritmo(nuvem(n, f"Time = {i[3]}", 1000, vel, mul, dura, escala, 30,
                                           ofs="40, -90" if n == 1000 else "46, -90")) + fim(n))
-    # ---- Boné Voador (→ ← + x/y): sai da mão, vai e volta para a cabeça. No Ratão é o óculos (mesma lógica)
-    for n, vel, freio in ((1600, 6.5, .36), (1601, 12, .26)):
+    # ---- Gancho do Pastor (← → + x/y, ficha do Gbzin): o gancho do cajado sai, prende e PUXA o oponente até ele
+    # (ground.velocity positivo = na direção do Gbzin), e volta para a mão. Fraco: médio alcance e puxão curto; forte:
+    # longe e puxão longo. No Grão-Pastor quem puxa são as mãos gigantes, de mais longe (freio menor).
+    for n, vel, freio, puxa, escorre in ((1600, 6.5, .36, 8, 10), (1601, 12, .26, 16, 22)):
         i = ini(n)
-        solta, volta = i[3], round(2 * vel / freio)
+        solta = i[3]
         proj = "".join(
             f"[State {n}, {nome}]\ntype = Projectile\ntrigger1 = Time = {solta}\ntrigger1 = {forma}\nprojid = 1002\n"
             f"projanim = {anim}\nprojhitanim = -1\nprojremanim = -1\nprojhits = 2\nprojmisstime = 20\n"
-            f"projpriority = 2\nprojremovetime = {volta}\noffset = 30, -84\nvelocity = {vel}, 0\naccel = -{freio}, 0\n"
-            "attr = S, SP\ndamage = 45, 3\nanimtype = Med\nguardflag = MA\nhitflag = MAF\npausetime = 4, 8\n"
+            f"projpriority = 2\nprojremovetime = {round(2 * vel / (freio * k))}\noffset = 30, -84\n"
+            f"velocity = {vel}, 0\naccel = -{round(freio * k, 3)}, 0\n"
+            "attr = S, SP\ndamage = 40, 3\nanimtype = Med\nguardflag = MA\nhitflag = MAF\npausetime = 4, 8\n"
             f"sparkxy = 0, 0\n{FAISCA(gp.faiscas(9200))}\nsparkscale = 1, 1\nhitsound = F5,1\nguardsound = F6,0\n"
-            "ground.type = High\nground.slidetime = 10\nground.hittime = 16\nground.velocity = -3\n"
-            "air.velocity = -2,-3\n\n"
-            for nome, forma, anim in (("Boné", "var(20) = 0", 1606), ("Óculos", "var(20) > 0", 1608)))
+            f"ground.type = High\nground.slidetime = {escorre}\nground.hittime = {escorre + 12}\n"
+            f"ground.velocity = {puxa}\nguard.velocity = -2\nair.velocity = {round(puxa * .6, 1)},-2\n\n"
+            for nome, forma, anim, k in (("Gancho", "var(20) = 0", 1606, 1), ("Mãos gigantes", "var(20) > 0", 1608, .75)))
         cns = trocar_estado(cns, n, E(n, "S", "A", "S", anim=n, juggle=4) + ritmo(proj)
                             + f"[State {n}, Pega de volta]\ntype = ChangeAnim\ntrigger1 = Time > {solta + 4}\n"
                               "trigger1 = NumProjID(1002) = 0\ntrigger1 = Anim != 1602\nvalue = 1602\n\n"
@@ -765,17 +771,20 @@ def cns_ck(cns):
                        f"[State 1310, Esquiva]\ntype = NotHitBy\ntrigger1 = Time < {ini(1310)[2] + 4}\n"
                        "value = SCA\ntime = 1\n\n")
     cns = antes_de(cns, "[Statedef 1400]", ritmo(cruzado))
-    # ---- Pêndulo (← ↓ + a/b): balança o tronco, invencível a golpe em pé e no ar (não a agachado, agarrão ou
-    # projétil); x ou y no meio sai com o direto (1110). No Ratão a esquiva liga 3 ticks mais tarde.
-    for n in (1100, 1101):
-        balanca = ini(n)[-1]
-        cns = trocar_estado(cns, n, E(n, "S", "I", "N", anim=n)
-                            + f"[State {n}, Esquiva]\ntype = NotHitBy\n"
-                              f"trigger1 = Time >= ifelse(var(20) > 0, 6, 3) && Time < {balanca}\n"
-                              "value = SA, NA, SA, HA\ntime = 1\n\n"
-                            + f"[State {n}, Sai com o direto]\ntype = ChangeState\ntriggerall = Time >= 6\n"
-                              f"triggerall = Time < {balanca}\ntrigger1 = command = \"x\"\ntrigger2 = command = \"y\"\n"
-                              "value = 1110\n\n" + fim(n))
+    # ---- Rolo de Feno (← ↓ + x/y, ficha do Gbzin): rola pelo chão como fardo de feno e derruba quem está de pé
+    # (guarda baixa, ground.type Trip). Golpe em pé e no ar passa por cima enquanto ele rola. x rola curto, y longe.
+    for n, vel, dano in ((1100, 4.5, 55), (1101, 6.5, 75)):
+        i, ativo = ini(n), next(k for k, q in enumerate(M[n].quadros) if q[3])
+        rola, para = i[ativo - 1], i[-1]
+        cns = trocar_estado(cns, n, E(n, "S", "A", "N", anim=n)
+                            + f"[State {n}, Rola]\ntype = VelSet\ntrigger1 = Time = {rola}\nx = {vel}\n\n"
+                            + f"[State {n}, Para]\ntype = VelSet\ntrigger1 = Time = {para}\ntrigger2 = MoveContact\n"
+                              "x = 0\n\n"
+                            + f"[State {n}, Por baixo]\ntype = NotHitBy\ntrigger1 = Time >= {rola} && Time < {para}\n"
+                              "value = SA, AA, AP\ntime = 1\n\n"
+                            + hitdef(n, f"Time = {i[ativo]}", "S, SA", dano, tipo="Medium", guarda="L", chao="Trip",
+                                     queda=True, vel="-2", ar="-2,-4", classe="especial")
+                            + fim(n))
     cns = antes_de(cns, "[Statedef 1200]", ritmo(gp.cns_novo(M[1110])))
     # ---- Rajada da Esquina (← → ↓ + a/b, 1 estoque): entra de pêndulo, 7 socos e fecha com a voadora
     i = ini(3000)
@@ -893,6 +902,21 @@ def cns_ck(cns):
     cns, k = re.subn(r"(\[State (34[1-3]\d), Golpe\]\ntype = HitDef\ntrigger1 = Time = )(\d+)",
                      lambda m: f"{m[1]}{m[3]} + var(40)", cns)
     assert k >= 14, k
+    # ---- Cajado no Chão (↓ ↓ + x/y, ficha do Gbzin): finca o cajado (quase sem avanço) e, se a ponta não pegou de
+    # perto, sai uma onda curta de poeira rente ao chão que tem de ser defendida agachado. x vai curto, y vai mais
+    # longe e derruba (Trip).
+    for n, vel, dura, dano, tipo in ((1500, 5, 16, 35, "Low"), (1501, 6.5, 26, 50, "Trip")):
+        onda = (f"[State {n}, Onda]\ntype = Projectile\ntrigger1 = AnimElem = 4\ntrigger1 = !MoveContact\n"
+                f"projid = 1503\nprojanim = 1505\nprojhitanim = 1006\nprojremanim = 1006\nprojcancelanim = 1006\n"
+                f"projhits = 1\nprojpriority = 1\nprojremovetime = {dura}\nprojscale = .55, .4\noffset = 36, -8\n"
+                f"velocity = {vel}, 0\nattr = S, SP\ndamage = {dano}, 3\nanimtype = Medium\nguardflag = L\n"
+                "hitflag = MAF\npausetime = 0, 10\nsparkxy = 0, -6\nsparkno = -1\nguard.sparkno = -1\n"
+                f"hitsound = F5,1\nguardsound = F6,0\nground.type = {tipo}\nground.slidetime = 6\n"
+                "ground.hittime = 18\nground.velocity = -3\nair.velocity = -2,-3\n"
+                + ("fall = 1\nfall.recover = 1\n" if tipo == "Trip" else "") + "\n")
+        cns = no_estado(cns, n, lambda b: antes_de(
+            b.replace("trigger1 = AnimElem = 3\ntrigger1 = var(20) > 0\nanim = ifelse",
+                      "trigger1 = AnimElem = 3\nanim = ifelse"), f"[State {n}, Fim]", onda))
     return cns
 
 
@@ -1198,6 +1222,8 @@ def main():
     import forma_permanente  # missão dos cenários 4.1: endiabrado até o fim da luta
     como_o_ck(forma_permanente)
     forma_permanente.aplicar("gbzin", SAIDA)
+    import efeitos  # issue #38: pixelfx e Blender na cor do Gbzin (poeira e palha) e do Grão-Pastor (fogo verde)
+    efeitos.aplicar("gbzin", SAIDA)
     import aura_no_corpo  # a aura segue o corpo (issue #51): depois de tudo que regrava o .air, o .sff e o -4
     como_o_ck(aura_no_corpo)
     aura_no_corpo.aplicar("gbzin", SAIDA)
