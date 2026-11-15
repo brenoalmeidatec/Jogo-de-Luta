@@ -9,10 +9,10 @@ abaixo. É a linha de chegada: o que entra na 1.0, como saber que cada coisa est
 
 | Parte | O que entra na 1.0 | Como está hoje (mugen `73c5427f`) |
 |---|---|---|
-| Lutadores | **6**, cada um com forma base e despertada: Pengaró (Endiabrado), Hazak (Diabo Loiro), CK (Ratão do Paredão), Gutto (Senhor da Guerra Garanhão), Raiclaven (Cientista Louco) e Gbzin (Deus Motoboy) | 5 no jogo. Raiclaven despertado esperando aval do conceito (#43). Gbzin parado esperando a foto (#30) |
+| Lutadores | **6**, cada um com forma base e despertada: Pengaró (Endiabrado), Hazak (Diabo Loiro), CK (Ratão do Paredão), Gutto (Senhor da Guerra Garanhão), Raiclaven (Cientista Louco) e Gbzin (Grão-Pastor) | 5 no jogo. Raiclaven despertado esperando aval do conceito (#43). Gbzin com as fotos entregues em 15/11, esperando o conceito novo (#30) |
 | Cenários | **5** de Nazaré: Cristo, Maria Fumaça, praça, passarela e Katiara, com tela de escolha de mapa | Os 5 no jogo (#34, #35), esperando aval |
 | Modos | Arcade, Versus, Modo Super, Treino, Assistir e Opções, tudo em português | No jogo (#41) |
-| Trilha | 12 músicas ligadas com loop limpo, mais **2 novas**: Deus Motoboy e vitória | 12 ligadas; ninguém ouviu as voltas do loop no PC ainda (#33). Faltam as 2 novas |
+| Trilha | 12 músicas ligadas com loop limpo, mais **2 novas**: Grão-Pastor e vitória | 12 ligadas; ninguém ouviu as voltas do loop no PC ainda (#33). Faltam as 2 novas |
 | Telas e sons | Título animado, HUD simples, VS, seleção; sons próprios de cada lutador | No jogo (#39, #40, #46), esperando aval |
 | Golpes | Kit completo das regras em todo lutador: agarrão de segurar e bater, parry, cena da transformação, agarrão e poder de longe do despertado | No jogo nos 5 (#44, #45, #47, #48, #49), esperando aval. Falta no Gbzin |
 
@@ -43,6 +43,8 @@ Alisson: **a data de 20/12 fica, e a 1.0 é o Nazafights Arcade.**
   **cenário destruído em dois níveis** (#35, seção 4.2 da missão dos cenários), a **proporção** dos lutadores e as
   **asas fechando e inclinando com o corpo**, além das três correções da #51.
 - **As cinco regras estão aceitas.** Na regra 4, o Breno é avisado no item antes de ele contar como aprovado.
+- **Gbzin (2026-11-15, #30):** o Breno trocou a forma despertada. Sai o Deus Motoboy e entra o **Grão-Pastor**. As fotos
+  chegaram no mesmo dia, então o Gbzin segue dentro da 1.0.
 - Se o redesenho da anatomia ameaçar o 06/12, avisar na #50 com antecedência quais quadros ficam para depois.
 
 ## 2. Checklist com critério de pronto
@@ -54,9 +56,9 @@ Um item só conta como pronto quando cumpre as três coisas: **está na `mugen`*
 - [ ] **Hazak** (#36, #44): nitidez conferida, roupa do Diabo Loiro aprovada, issues fechadas.
 - [ ] **CK e Gutto** (#47): agarrão e poder do despertado aprovados.
 - [ ] **Raiclaven** (#43): conceito da parceira aprovado, kit do Cientista Louco na mugen, robô 0 falha.
-- [ ] **Gbzin** (#30): foto entregue, conceito aprovado, base e Deus Motoboy na mugen com kit completo, robô 0 falha.
+- [ ] **Gbzin** (#30): conceito da base e do Grão-Pastor aprovados, base e Grão-Pastor na mugen com kit completo, robô 0 falha.
 - [ ] **Cenários** (#34, #35): os 5 jogados, cada um com a sua música; issues fechadas.
-- [ ] **Trilha** (#33): Breno ouviu três voltas de cada loop sem estalo; Deus Motoboy e vitória ligadas.
+- [ ] **Trilha** (#33): Breno ouviu três voltas de cada loop sem estalo; Grão-Pastor e vitória ligadas.
 - [ ] **Telas e sons** (#39, #40, #46): aprovados e issues fechadas.
 - [ ] **Golpes e efeitos** (#38, #45, #48, #49): aprovados e issues fechadas.
 - [ ] **Correções da #51**: auras, asas, garanhão, correntes e paredão seguem o corpo em todo estado (robô confere); todo efeito de acerto feito no pixelfx, com a lista do que foi trocado; anatomia revisada nos 6 lutadores e nas duas formas, com folha de contato antes e depois.
@@ -79,12 +81,12 @@ Um item só conta como pronto quando cumpre as três coisas: **está na `mugen`*
 
 | Até | O que acontece |
 |---|---|
-| dom 22/11 | Breno manda a foto do Gbzin e responde os avais pendentes (escopo e data já aprovados em 15/11) |
+| dom 22/11 | Breno responde os avais pendentes (escopo e data já aprovados em 15/11) |
 | dom 06/12 | Conteúdo completo: tudo do escopo está na `mugen`. A partir daqui não entra nada novo |
 | dom 13/12 | Semana de jogar e corrigir erro |
 | dom 20/12 | Versão 1.0 marcada |
 
-Se a foto do Gbzin não chegar até 22/11, a 1.0 sai com 5 lutadores e o Gbzin virar a primeira novidade da 1.1.
+Se o Gbzin não estiver completo na `mugen` em 06/12, a 1.0 sai com 5 lutadores e ele vira a primeira novidade da 1.1.
 
 ## 5. Regras para o jogo não ficar infinito
 
