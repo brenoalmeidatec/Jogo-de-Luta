@@ -130,9 +130,11 @@ def quadros_fumaca(larg=160, alto=420, n=8, seed=1):
     return quadros
 
 
-def rachaduras(larg, alto, pontos, seed=2, cor=(26, 20, 24, 255), borda=(96, 86, 84, 255), grosso=7):
+def rachaduras(larg, alto, pontos, seed=2, cor=(26, 20, 24, 255), borda=(96, 86, 84, 255), grosso=7, achata=1.0,
+               torto=0.9):
     """Imagem transparente com rachaduras saindo de cada ponto (x, y, comprimento, ângulo em graus): racha grossa
-    no começo que afina e se divide, com a beirada lascada mais clara de um lado."""
+    no começo que afina e se divide, com a beirada lascada mais clara de um lado. achata < 1 deita as rachas (piso
+    visto de longe) e torto é quanto cada passo vira."""
     rnd = random.Random(seed)
     P = 3
     esc = Image.new("L", (larg, alto))
@@ -142,8 +144,8 @@ def rachaduras(larg, alto, pontos, seed=2, cor=(26, 20, 24, 255), borda=(96, 86,
         total = comp
         while comp > 0:
             passo = rnd.uniform(10, 26)
-            ang += rnd.uniform(-0.9, 0.9)
-            nx, ny = x + passo * math.cos(ang), y + passo * math.sin(ang)
+            ang += rnd.uniform(-torto, torto)
+            nx, ny = x + passo * math.cos(ang), y + passo * math.sin(ang) * achata
             d.line([x, y, nx, ny], fill=255, width=max(P, round(g * (0.35 + 0.65 * comp / total))))
             if rnd.random() < 0.35 and comp > 50:
                 risco(nx, ny, comp * 0.45, ang + rnd.choice((-1, 1)) * rnd.uniform(0.6, 1.3), max(P, g - 2))
@@ -249,9 +251,9 @@ class Destruicao:
             c["frente"] = True
         self.camadas.append(c)
 
-    def rachaduras(self, x, y, larg, alto, pontos, nivel, delta=1, seed=2):
+    def rachaduras(self, x, y, larg, alto, pontos, nivel, delta=1, seed=2, **jeito):
         arq = f"d_rachaduras_{seed}.png"
-        rachaduras(larg, alto, pontos, seed).save(self.saida / arq)
+        rachaduras(larg, alto, pontos, seed, **jeito).save(self.saida / arq)
         self.camadas.append({"nome": self._nome("rachaduras"), "imagem": arq, "delta": [delta, delta], "x": x, "y": y,
                              "nivel": str(nivel)})
 
