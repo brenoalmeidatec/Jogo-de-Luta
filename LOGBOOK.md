@@ -2308,3 +2308,27 @@ grava em `sprites/hazaki/diabo_terno/`. O `diabo_loiro.py` casa cada desenho do 
 (folha, número) e põe no lugar o quadro de mesmo número da folha do terno, alinhado pelo apoio dos pés. 395 desenhos,
 nenhum no gi. 20 folhas sem par usam a mais parecida (lista `PARECIDA`). O .sff foi de 9 para 15 MB.
 Robô hazaki 238 PASS / 0 FAIL (roteiro novo "vitrine" mostra os golpes na roupa). Detalhes em `docs/hazak-44/LEIA-ME.md`.
+
+## 2026-11-15 — Auras e asas seguem o corpo (issue #51, item 1) (Claude, thread do Alisson)
+
+**Pedido:** o Hazak endiabrado agachava ou caía e as asas ficavam no ar. Toda aura acompanha o lutador em todo estado.
+
+**Causa:** as camadas do `aura.py` nascem presas ao eixo (os pés) numa posição fixa; agachado, apanhando ou no chão o
+eixo não se mexe, só o desenho.
+
+**Feito:** `ferramentas/aura_no_corpo.py` (pós-passo, idempotente, chamado no fim do `diabo_loiro.py`, do
+`despertados_47.py`, do `gerar_pengaro.py` e do `gerar_ck.py`). Mede o peito, o centro e a altura do corpo em cada
+desenho do `.air` e escreve no `[Statedef -4]` uma tabela por ação/elemento; quatro maps (`au_<nome>_ax/ay/g/bx`)
+correm atrás do alvo com atraso curto. Camada do corpo (asas, garanhão, elos) segue o peito e recolhe com ele deitado;
+camada do chão anda em x com o corpo e não afunda mais na queda; coluna do Pengaró e paredão do CK baixam com ele caído.
+`ferramentas/filmar_aura_corpo.py` filma o roteiro de 30 estados e grava o log tique a tique.
+
+**Robô:** `aura_no_corpo.py --robo` passa nos 4 (asas do Hazak: de 31,5 px para 7,2 px em 95% dos tiques; solta por
+100 tiques seguidos antes, 1 agora). `testar_pengaro.py --linux`: hazaki 238, gutto 185, pengaro 190, ck 228, nenhuma falha (o hazaki deu 1 FAIL na
+rajadona com a máquina filmando em paralelo, o mesmo caso já anotado; sozinho passa).
+
+**Armadilha:** título de controlador no `.cns` não pode ter `;` (começa comentário e o controlador some sem erro).
+
+**Não feito / sugestões:** asa não gira com o corpo no ar; paredão e coluna não sobem no pulo (nascem do chão);
+desenho próprio de paredão baixo. Detalhes e vídeos em `docs/auras-51/LEIA-ME.md`.
+

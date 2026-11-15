@@ -1179,6 +1179,8 @@ def main():
     balanceamento.aplicar("ck", SAIDA)
     import cena_transformacao  # issue #49: tudo preto, zoom e clarão no Despertar (sempre por último)
     cena_transformacao.aplicar("ck", SAIDA)
+    import aura_no_corpo  # a aura segue o corpo (issue #51): depois de tudo que regrava o .air, o .sff e o -4
+    aura_no_corpo.aplicar("ck", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

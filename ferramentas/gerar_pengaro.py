@@ -4082,6 +4082,8 @@ def main():
     balanceamento.aplicar("pengaro", SAIDA)
     import cena_transformacao  # issue #49: tudo preto, zoom e clarão no Despertar (depois dos sons: usa o som da pausa)
     cena_transformacao.aplicar("pengaro", SAIDA)
+    import aura_no_corpo  # a aura segue o corpo (issue #51): depois de tudo que regrava o .air, o .sff e o -4
+    aura_no_corpo.aplicar("pengaro", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
     if SEM_FOLHA_BOSS:
         print("Endiabrado sem folha própria (pose emprestada do boss):", " ".join(sorted(SEM_FOLHA_BOSS)))
