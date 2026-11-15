@@ -407,6 +407,8 @@ def main():
     balanceamento.aplicar("raiclaven", SAIDA)
     import cena_transformacao  # issue #49: tudo preto, zoom e clarão no Despertar (sempre por último)
     cena_transformacao.aplicar("raiclaven", SAIDA)
+    import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
+    destruicao.aplicar("raiclaven", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

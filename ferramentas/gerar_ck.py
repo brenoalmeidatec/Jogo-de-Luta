@@ -1179,6 +1179,8 @@ def main():
     balanceamento.aplicar("ck", SAIDA)
     import cena_transformacao  # issue #49: tudo preto, zoom e clarão no Despertar (sempre por último)
     cena_transformacao.aplicar("ck", SAIDA)
+    import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
+    destruicao.aplicar("ck", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

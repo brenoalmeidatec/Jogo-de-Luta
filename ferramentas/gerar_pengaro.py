@@ -4082,6 +4082,8 @@ def main():
     balanceamento.aplicar("pengaro", SAIDA)
     import cena_transformacao  # issue #49: tudo preto, zoom e clarão no Despertar (depois dos sons: usa o som da pausa)
     cena_transformacao.aplicar("pengaro", SAIDA)
+    import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
+    destruicao.aplicar("pengaro", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
     if SEM_FOLHA_BOSS:
         print("Endiabrado sem folha própria (pose emprestada do boss):", " ".join(sorted(SEM_FOLHA_BOSS)))
