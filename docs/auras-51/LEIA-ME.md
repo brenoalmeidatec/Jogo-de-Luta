@@ -62,3 +62,38 @@ Vídeos lado a lado (antes e depois, o mesmo roteiro): `hazaki_antes_depois.mp4`
   subam junto, é trocar uma linha (`presa_ao_chao`) e filmar de novo.
 - O paredão baixando é o desenho achatado pelo motor. Um desenho próprio de "paredão baixo" ficaria melhor.
 - Lutador novo ou golpe novo: nada a fazer à mão, a tabela é medida de novo a cada geração.
+
+## Segunda volta (Breno, 2026-11-15): grudada nas costas, girando e fechando
+
+O Breno viu a primeira versão e pediu mais: deitado, a asa continuava em pé e aberta; ela tem de ficar grudada nas
+costas, inclinar no ângulo do corpo e fechar quando ele cai, reabrindo ao levantar. Feito:
+
+- **Âncora nas costas, não no peito.** O ponto é o centro da metade do corpo que tem a cabeça. Deitado, essa metade é
+  a ponta mais pesada do eixo comprido do desenho (a cabeça e o tronco pesam mais que as pernas).
+- **Ângulo do tronco em cada quadro de cada ação**, guardado numa segunda tabela no `[Statedef -4]` (`au_<nome>_th`, em
+  degraus de 7,5 graus). A camada gira nesse ângulo com o `angle` do Explod, em volta das costas (o motor gira em volta
+  dos pés da camada, e a posição compensa). Em pé o tronco inclina no máximo 50 graus; deitado chega a 85.
+- **Asas fechando do Hazak:** dois desenhos novos, `asas_meio` e `asas_fechada` (camadas 9602 e 9603), feitos dobrando
+  os 48 quadros das asas como um leque em volta da raiz (`aura.dobrar_asas`; o pixel continua o do desenho). O alfa troca
+  aberta → meio → fechada conforme o corpo deita, e volta ao levantar.
+- **Garanhão do Gutto e elos do Pengaró** giram e grudam do mesmo jeito; como não têm desenho fechado, recolhem
+  (encolhem pela metade em volta das costas) deitados.
+- `python3 ferramentas/diabo_loiro.py --aura` refaz só a aura do Hazak em cima do `chars/hazaki` pronto.
+
+Robô da aura (`aura_no_corpo.py --robo`), agora também com o ângulo:
+
+| Camada | Distância às costas (95% dos tiques) | Ângulo contra o tronco (95%) | Maior tempo solta |
+|---|---|---|---|
+| asas do Hazak (aberta, meio, fechada) | 6,5 a 7,1 px | 6 graus | 2 tiques |
+| garanhão do Gutto | 7,5 px | 12 graus | 2 tiques |
+| elos do Pengaró | 11,0 px | 11 graus | 2 tiques |
+
+O pior tique de todas é o pouso de quem foi arremessado (60 px por 2 tiques): o desenho passa de em pé para deitado num
+tique só, e o `-4` vê a ação nova um tique depois.
+
+Vídeos (o mesmo roteiro, a versão de antes desta volta contra a de agora): `hazaki_v2_antes_agora.mp4`,
+`gutto_v2_antes_agora.mp4`, `pengaro_v2_antes_agora.mp4`, `ck_v2_antes_agora.mp4`. Quadro a quadro do Hazak:
+`v2_hazak_queda_quadro_a_quadro.jpg` e `v2_hazak_golpes_quadro_a_quadro.jpg`.
+
+**Ainda não feito:** a coroa vai junto com as asas (é o mesmo desenho), então deitado ela também deita; uma asa fechada
+desenhada à mão ficaria melhor que a dobrada por código; no pouso brusco há o tranco de 2 tiques descrito acima.
