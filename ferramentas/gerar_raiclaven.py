@@ -527,6 +527,10 @@ def main():
     destruicao.aplicar("raiclaven", SAIDA)
     import despertados_47  # #43/#47: Cadeira Elétrica (agarrão) e Secador de Raio (poder), efeitos do Blender
     despertados_47.aplicar("raiclaven", SAIDA)
+    import aura_no_corpo  # a aura grande (lâminas e raios) presa ao corpo da dupla (#51), depois de tudo que regrava o -4
+    aura_no_corpo.aplicar("raiclaven", SAIDA)
+    import aura_silhueta  # aura de anime colada na silhueta dos dois, em verde (#43/#51); sempre por último
+    aura_silhueta.aplicar("raiclaven", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

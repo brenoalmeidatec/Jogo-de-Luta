@@ -63,6 +63,9 @@ PERIODO = 72                   # período vertical do ruído (laço exato em QUA
 MARCA = "; >>> aura_silhueta.py"
 FIM = "; <<< aura_silhueta.py"
 PRIORIDADE = {"chama": -4, "pele": -3}
+# tons fixos (fora, meio, claro, miolo) quando a cor da aura grande não serve: a do Raiclaven é aço (cinza) com raio,
+# e a silhueta dele é o verde dos tanques e do cabelo do despertado (#43)
+TONS = {"raiclaven": [(28, 120, 22), (64, 205, 40), (165, 255, 110), (232, 255, 214)]}
 
 
 # ---------------------------------------------------------------- .air com as caixas de golpe
@@ -314,7 +317,7 @@ def gerar(pasta, lutador, so=None):
         por_chave.setdefault((n["g"], n["i"]), n)
     nome, ids = anc.aura_do_cns(cns)
     base = ids[0]
-    des = Desenhista(tons_da_aura(nos, set(ids), _paleta(pasta / f"{lutador}.sff")))
+    des = Desenhista(TONS.get(lutador) or tons_da_aura(nos, set(ids), _paleta(pasta / f"{lutador}.sff")))
     corpo = acoes_do_corpo(acoes, remap)
     if so:
         corpo = [a for a in corpo if a in so]
