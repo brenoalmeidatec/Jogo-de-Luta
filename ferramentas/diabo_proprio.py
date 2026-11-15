@@ -168,6 +168,10 @@ def converter(nome):
         tres = ch.seco(q.resize((max(1, round(q.width * e)), max(1, round(q.height * e))), Image.LANCZOS))
         red = np.array(tres)
         Image.fromarray(dt.quantizar(dt.chefao(red))).save(destino / f"{i:02d}.png", optimize=True)
+    # paleta única do Diabo (#51, sprites/hazaki/diabo_terno/paleta.json): puxa o tom ao do d_parado e pinta nela
+    import subprocess
+    subprocess.run([sys.executable, str(RAIZ / "ferramentas/pixel/cores.py"), "diabo", f"d_{nome}", "--consertar"],
+                   cwd=RAIZ, check=True, capture_output=True)
     print(f"d_{nome}: escala {e:.4f} (acerto do Diabo {k:.3f}), figura {max(q.height for q in figs)} px na folha")
 
 
