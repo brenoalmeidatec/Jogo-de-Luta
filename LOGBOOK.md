@@ -2507,3 +2507,64 @@ depois do lutador e por isso não atrasa na troca de ação. A chama é um Explo
 **Armadilhas:** a chama somada fica rosa no cenário azul, então ela usa `addalpha` (A, 255 - A) com alfa por pixel. A
 pele somada continua. O `ChangeAnim` com `elem` só funciona com elemento de tempo 1; com -1 o helper fica parado no
 último. O sinal do `xshear` no IKEMEN é ao contrário do que parece: com valor positivo a chama vai para a frente.
+
+## 2026-11-15 — Luz e brilho do KIKIU nas auras e nos poderes (issue #51, item 2) (Claude, thread do Alisson)
+
+**Pedido do Breno:** trazer a base de luz do KIKIU (curva GRAD, orbe somado no poder, tremor leve, mundo escurecendo,
+poça de luz e oponente clareando) sem mexer no repositório do KIKIU. Piloto no Hazak.
+
+**Feito:** criei `ferramentas/luz.py`, encadeado no fim do `aura_silhueta.py` para quem está em `LIGADOS` (por ora só
+o Hazak). Ele faz o escuro (Explod preto com addalpha), o halo e a poça do despertado, a luz dos poderes (orbe, halo e
+poça que andam com cada Projectile de `PODERES` e somem com ele) e o PalFX leve no oponente perto. Grupos 9720 a 9722
+no .sff, ações 9720 a 9722 e 9730+, Explods 9620 a 9635. Regra anotada na seção 6 da `docs/receita-de-lutador.md`.
+
+**Armadilhas:** luz laranja somada no fundo azul fica rosa e, fraca, some atrás da aura grande. Por isso o halo usa
+a curva no alfa do pixel (`addalpha`). O `aura_silhueta.tirar_air` duplicava as ações espelho ao rodar de novo; foi
+consertado. O BGPalFX não serve para escurecer, porque é global e briga com as supers.
+
+**Robôs:** Hazak 238/0 e aura segue o corpo. Vídeo `docs/auras-51/hazaki_luz_antes_agora.mp4`.
+
+## 2026-11-15 — Cor mudando entre os quadros (issue #51, comentário de 03:51Z, item 1) (Claude, thread do Alisson)
+
+**Pedido do Breno:** os lutadores mudam de cor entre os quadros (pele, roupa e detalhe pulando no meio do golpe e na
+troca entre golpes). Achar com a ferramenta de pixel e pintar na paleta, sem mudar pose, caixa nem tempo, nos lutadores
+todos e nas duas formas, olhando também a troca parado -> golpe -> parado.
+
+**Feito:** `ferramentas/pixel/cores.py`, régua de cor contra o parado de cada forma (deriva de cada grupo de cor, salto
+entre quadros, entrada e saída do golpe) e o conserto (`--tom` puxa o tom de cada grupo ao do parado; `--consertar`
+faz isso e pinta numa paleta única). `ferramentas/pixel/remendar_sff.py` troca no .sff do jogo só os sprites dos
+quadros consertados.
+- **Diabo:** os 352 quadros tinham cores próprias (k-means quadro a quadro), e o terno ficava mais claro e mais
+  vermelho em ar_soco, corrida, agarrao_cutucao e ar_joelho. Agora há uma paleta única de 80 cores
+  (`sprites/hazaki/diabo_terno/paleta.json`, também usada pelo `pixel.py`) e o tom de cada quadro foi puxado ao do
+  d_parado. Pior ação: deriva de 7,5 para 3,9. `gerar_hazaki.py` mudou só os sprites do Diabo (grupos 20000+).
+- **Pengaró:** queda, compasso, parry_baixo e afastar (1x e 3x). **Gutto:** armada, derrota, lata, levanta, queda,
+  rolamento, e_baixo_soco, e_bicicleta, e_bola, e_caneta e e_queda (desenhos e quadros do meio). Todos abaixo de 2,6.
+  No .sff do jogo pelo `remendar_sff.py`: 33 sprites no Pengaró, 200 no Gutto (HD do Blender consertado no próprio
+  sprite). .air, .cns, caixas e tempo iguais.
+- **CK:** paleta indexada, deriva zero fora da transformação. **Hazak base:** limpo (só objeto e a patroa fogem).
+  **Raiclaven:** defesa, cabecada, armada e pente_combo um pouco acima de 4; passado para a thread do Raiclaven.
+
+**Armadilhas:** `ginga_endiabrada` do Gutto não começa com `e_`, então `quadros.py` precisava saber que ela é o parado
+da forma e_ (antes a régua comparava o endiabrado com a ginga normal). Rodar só o `gerar_gutto.py`/`gerar_pengaro.py`
+desfaz pós-passos e, no Gutto, troca o HD do Blender pelo 1x: use o `remendar_sff.py`. Se outra thread regravar o
+.sff, rode o remendo de novo em cima do novo.
+
+**Saída:** `docs/anatomia-51/cor/` (folhas antes/depois e vídeos da troca parado -> golpe -> parado).
+
+## 2026-11-15 — Diabo Loiro #44, 2ª rodada: Cobrança do Diabo e folhas próprias (Claude, thread do Hazak)
+
+**Pedido do Breno na #44:** tirar o Chapéu Bumerangue, especial novo que não seja projétil nem repita golpe de outro
+lutador, desenho próprio para os golpes do Diabo que usavam a folha "mais parecida", efeitos por nossa conta; robô +
+vídeo conferido antes de juntar.
+
+**Feito (etapa 1):**
+- **Cobrança do Diabo** (1660 fraca / 1661 forte, `↘ + chute` na forma): investida de ombro em brasa que atravessa
+  projétil e tira 150 de barra de quem apanha (vai para o Diabo). `diabo_loiro.py`, 2 roteiros no robô.
+- `ferramentas/diabo_proprio.py` (fila de pedidos, juntar fileiras do Gemini, conversão na escala e na paleta única do
+  Diabo, `harmonizar` com o parado, folha de contato) e `ferramentas/gemini_diabo.js`.
+- Folhas próprias: provoca e cobranca. As outras 20 seguem quando os limites de imagem voltarem
+  (docs/diabo-44/LEIA-ME.md tem a tabela).
+- Conferência do vídeo quadro a quadro (8 revisores + 1 cético): o desenho novo destoava do parado (risca branca,
+  manchas magenta, munhequeira verde-água) → `harmonizar`; o estouro da Cobrança parecia preso → acompanha o P2 e
+  ficou menor. Robô 249/0. Vídeos em docs/diabo-44/video/.

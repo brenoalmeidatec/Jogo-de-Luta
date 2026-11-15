@@ -18,6 +18,9 @@ Diabo Loiro (o Despertar do Hazak, que até aqui não existia no jogo):
               aprovadas), ligadas pelo ferramentas/aura.py (Explods 9600-9601, [Statedef -4])
   rajadona    Rajadona de Ki das Trevas (1650): com o Diabo e 1 estoque, → ← x/y vira o raio enorme e contínuo, preto,
               vermelho e ouro (7420 o raio, 7421 o raio se desfazendo), 12 acertos
+  cobrança    Cobrança do Diabo (1660/1661, #44, no lugar do Chapéu Bumerangue): com o Diabo, ↓ → a/b (no lugar do Giro
+              de Garagem) abre o sobretudo, desliza num rastro de brasa atravessando projétil e bate com o ombro; se
+              acerta, cobra a dívida: tira 150 de barra do oponente e põe na dele. Desenho próprio d_cobranca (8 quadros)
   agarrão     o Abraço de Quebrada (810) do Diabo pega fogo: cada pancada solta chama laranja-ouro no oponente e o fim
               explode em ouro, com mais dano
 Grupos e ações 7400-7499: fora dos do efeitos.py (8200-8291, 9200-9272) e do parry (7690/7691, 8290/8291).
@@ -71,6 +74,10 @@ DIABO = 20000       # grupo do desenho do Diabo = grupo do Hazak + DIABO
 LIGA = 122          # tick da cena (estado 2000) em que ele vira o Diabo: início do último desenho (gerar_hazaki)
 TEMPO = 600         # ticks de Diabo Loiro (10 s), como os outros despertados
 RAJADA = {"sai": 28, "dura": 66, "acertos": 12, "dano": 16, "x": 52, "y": -80, "comp": 286}
+# Cobrança do Diabo: ticks por desenho; desenhos com caixa de golpe; a (curta) e b (longa)
+COBRANCA = {"pasta": "d_cobranca", "grupo": 21660, "ticks": [4, 6, 3, 3, 3, 6, 8, 10], "ativos": (3, 4, 5),
+            "sai": 10, 1660: {"vel": 6.5, "dura": 12, "dano": 60, "cai": False},
+            1661: {"vel": 8.5, "dura": 14, "dano": 80, "cai": True}, "barra": 150}
 PATROA = RAIZ / "sprites/hazaki/quadros_arcade_hd"
 EIXO_HD = (540, 660)  # pé do lutador nos desenhos 3x (o EIXO 180, 220 do gerar_pengaro vezes 3)
 
@@ -251,6 +258,73 @@ def cns_rajada():
     return "".join(c)
 
 
+def acao_cobranca():
+    """(desenhos [(RGBA, eixo x, eixo y)], texto da ação 1660) do Diabo na Cobrança, ou (None, None) sem a folha.
+    Eixo nos pés (âncora do diabo_terno); caixas medidas no desenho, em px 3x como o resto do corpo."""
+    pasta = diabo_terno.SAIDA / COBRANCA["pasta"]
+    if not (pasta / "00.png").exists():
+        return None, None
+    quadros, linhas = [], []
+    for i, t in enumerate(COBRANCA["ticks"]):
+        img = Image.open(pasta / f"{i:02d}.png").convert("RGBA")
+        m = np.array(img)[..., 3] > 0
+        ax, ay = diabo_terno.ancora(m)
+        ex, ey = round(ax), int(ay)
+        quadros.append((img, ex, ey))
+        ys, xs = np.nonzero(m)
+        x0, x1, y0, y1 = xs.min() - ex, xs.max() - ex, ys.min() - ey, ys.max() - ey
+        topo = y0 + round(0.18 * (y1 - y0))  # sem a copa do chapéu
+        tronco = (max(x0, -75), 0, min(x1, 75), topo)
+        linhas.append(f"Clsn2: 1\n Clsn2[0] = {tronco[0]}, {tronco[1]}, {tronco[2]}, {tronco[3]}")
+        if i in COBRANCA["ativos"]:
+            ombro = (x1 - 70, topo + round(0.10 * (y1 - y0)), x1 + 6, topo + round(0.50 * (y1 - y0)))
+            linhas.append(f"Clsn1: 1\n Clsn1[0] = {ombro[0]}, {ombro[1]}, {ombro[2]}, {ombro[3]}")
+        linhas.append(f"{COBRANCA['grupo']},{i}, 0,0, {t}")
+    return quadros, "\n".join(linhas)
+
+
+def cns_cobranca(n):
+    c, k = COBRANCA, COBRANCA[n]
+    sai, fim = c["sai"], c["sai"] + k["dura"]
+    e = [f"[Statedef {n}]\ntype = S\nmovetype = A\nphysics = N\nctrl = 0\nsprpriority = 2\nanim = 1660\n"
+         "juggle = 4\nvelset = 0,0\n\n"]
+    e.append(ctl(n, "Zera", "VarSet", "trigger1 = Time = 0", "var(12) = 0"))
+    e.append(ctl(n, "Rastro do corpo em brasa", "AfterImage", "trigger1 = Time = 0", f"time = {fim + 4}",
+                 "length = 6", "timegap = 2", "framegap = 2", "trans = add", "palcolor = 0", "paladd = 120, 50, 0",
+                 "palmul = .55, .55, .55"))
+    e.append(ctl(n, "Abre o sobretudo: brasa nos pés", "Explod", "trigger1 = Time = 2", "anim = 9270",
+                 "postype = p1", "pos = 0, 0", "scale = .8, .8", "sprpriority = 3", "ownpal = 1", "removetime = -2"))
+    e.append(ctl(n, "Som do arranque", "PlaySnd", f"trigger1 = Time = {sai}", "value = F40,4"))
+    e.append(ctl(n, "Desliza", "VelSet", f"trigger1 = Time = {sai}", f"x = {k['vel']}"))
+    e.append(ctl(n, "Para", "VelSet", f"trigger1 = Time = {fim}", "trigger2 = MoveContact = 1", "x = 0"))
+    e.append(ctl(n, "Rastro de brasa no chão", "Explod", f"trigger1 = Time >= {sai} && Time < {fim}",
+                 f"trigger1 = (Time - {sai}) % 3 = 0", "anim = 9270", "postype = p1", "pos = -18, 0",
+                 "bindtime = 1", "scale = .55, .55", "sprpriority = 1", "ownpal = 1", "removetime = -2"))
+    e.append(ctl(n, "Atravessa projétil", "NotHitBy", f"trigger1 = Time >= {sai - 2} && Time < {fim}",
+                 "value = SCA, NP, SP, HP", "time = 1"))
+    queda = ["fall = 1", "fall.recover = 0", "ground.velocity = -6, -3.5", "air.velocity = -6, -3.5"] if k["cai"] \
+        else ["ground.velocity = -6", "air.velocity = -5, -3"]
+    e.append(ctl(n, "Ombrada", "HitDef", f"trigger1 = Time = {sai}", "attr = S, SA", f"damage = {k['dano']}, 8",
+                 "animtype = Heavy", "guardflag = MA", "hitflag = MAF", "priority = 5, Hit", "pausetime = 14, 14",
+                 "guard.pausetime = 10, 10", "sparkxy = -6, -40", "sparkno = S9240", "guard.sparkno = S9216",
+                 "sparkscale = 1.2, 1.2", "hitsound = S52,2", "guardsound = F6,0", "ground.type = High",
+                 "ground.slidetime = 10", "ground.hittime = 20", "envshake.time = 10", "envshake.freq = 120",
+                 "envshake.ampl = -5", "palfx.time = 8", "palfx.add = 140, 50, 0", *queda))
+    e.append(ctl(n, "Cobra a dívida: tira barra", "TargetPowerAdd", "trigger1 = MoveHit = 1",
+                 f"value = -{c['barra']}"))
+    e.append(ctl(n, "Cobra a dívida: põe na dele", "PowerAdd", "trigger1 = MoveHit = 1", f"value = {c['barra']}"))
+    # o estouro acompanha o P2 no começo do voo e é menor que o da Rajadona (conferência do vídeo: parecia preso)
+    e.append(ctl(n, "Estouro de ouro", "Explod", "trigger1 = MoveHit = 1", "anim = 9271", "postype = p2",
+                 "pos = 0, -50", "bindtime = 14", "scale = .75, .75", "sprpriority = 6", "ownpal = 1",
+                 "removetime = -2", "ignorehitpause = 1"))
+    e.append(ctl(n, "Fundo escurece", "BGPalFX", "trigger1 = MoveHit = 1", "time = 24", "mul = 120, 55, 50",
+                 "ignorehitpause = 1"))
+    e.append(ctl(n, "Defendido", "VarSet", "trigger1 = MoveGuarded = 1", "var(12) = 1"))
+    e.append(ctl(n, "Freia", "VelMul", f"trigger1 = Time > {fim}", "x = .8"))
+    e.append(ctl(n, "Fim", "ChangeState", "trigger1 = AnimTime = 0", "value = 0", "ctrl = 1"))
+    return "".join(e)
+
+
 MENOS_2 = """[State -2, Conta Diabo Loiro]
 type = VarAdd
 trigger1 = var(20) > 0
@@ -323,7 +397,7 @@ def agarrao_do_diabo(cns):
     return cns.replace(bloco, novo, 1)
 
 
-def ligar_cns(cns, diabo, aura_cns):
+def ligar_cns(cns, diabo, aura_cns, cobranca=False):
     assert "[Statedef 2000]" not in cns, "o Hazak já tem estado 2000: rode o gerar_hazaki.py antes"
     preset = "[RemapPreset despertado]\n" + "".join(f"{g - DIABO},{i} = {g},{i}\n" for g, i, *_ in diabo) + "\n"
     assert cns.count("[Data]") == 1
@@ -332,11 +406,12 @@ def ligar_cns(cns, diabo, aura_cns):
     assert cns.count(cab) == 1
     cns = cns.replace(cab, cab + MENOS_2, 1)
     cns = agarrao_do_diabo(cns)
-    cns = cns.replace(cab, cns_despertar() + cns_rajada() + cab, 1)
+    extra = cns_cobranca(1660) + cns_cobranca(1661) if cobranca else ""
+    cns = cns.replace(cab, cns_despertar() + cns_rajada() + extra + cab, 1)
     return cns.rstrip() + "\n\n" + aura_cns
 
 
-def ligar_cmd(cmd):
+def ligar_cmd(cmd, cobranca=False):
     comando = '[Command]\nname = "despertar"\ncommand = x+y\ntime = 3\n\n'
     cab = "[Statedef -1]\n\n"
     assert cmd.count(cab) == 1 and 'name = "despertar"' not in cmd
@@ -347,6 +422,10 @@ def ligar_cmd(cmd):
                 'triggerall = command = "fb_x" || command = "fb_y"\ntriggerall = var(20) > 0\n'
                 'triggerall = power >= 1000\ntriggerall = statetype != A\ntriggerall = numproj = 0\n'
                 'trigger1 = ctrl || var(1)\n\n')
+    if cobranca:
+        entradas += ('[State -1, Cobrança do Diabo]\ntype = ChangeState\nvalue = ifelse(command = "df_b", 1661, 1660)\n'
+                     'triggerall = command = "df_a" || command = "df_b"\ntriggerall = var(20) > 0\n'
+                     'triggerall = statetype != A\ntrigger1 = ctrl || var(1)\n\n')
     return cmd.replace(cab, comando + cab + entradas, 1)
 
 
@@ -385,6 +464,10 @@ def aplicar(pasta=SAIDA):
     air = efeitos.por_acao(air, 7420, raio)
     air = efeitos.por_acao(air, 7421, some)
     novos[7420] = quadros
+    cob, texto = acao_cobranca()
+    if cob:
+        air = efeitos.por_acao(air, 1660, texto)
+        novos[COBRANCA["grupo"]] = cob
     for acao, quadros in patroa().items():
         air = efeitos.por_acao(air, acao, "\n".join(f"{acao},{i}, 0,0, {t}, , , 0.3333, 0.3333"
                                                       for i, (*_, t) in enumerate(quadros)))
@@ -413,8 +496,8 @@ def aplicar(pasta=SAIDA):
         png.append((g, i, img.width, img.height, int(ex), int(ey), efeitos.blob_png(img)))
     efeitos.gravar(sff, pal, rle, png)
     arq_air.write_text(air, encoding="utf-8", newline="\n")
-    arq_cns.write_text(ligar_cns(cns, diabo, a.cns(cabecalho=True)), encoding="utf-8", newline="\n")
-    arq_cmd.write_text(ligar_cmd(cmd), encoding="utf-8", newline="\n")
+    arq_cns.write_text(ligar_cns(cns, diabo, a.cns(cabecalho=True), bool(cob)), encoding="utf-8", newline="\n")
+    arq_cmd.write_text(ligar_cmd(cmd, bool(cob)), encoding="utf-8", newline="\n")
     import gerar_sons  # sons da pedra, do ki e da rajadona (ESPECIAIS["hazaki"]): depois dos estados novos
     gerar_sons.ligar("hazaki", pasta)
     import aura_no_corpo  # as asas seguem o corpo (issue #51): mede os desenhos e refaz a tabela no [Statedef -4]
