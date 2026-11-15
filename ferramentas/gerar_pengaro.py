@@ -4076,6 +4076,8 @@ def main():
     parry.aplicar("pengaro", SAIDA)
     import legibilidade  # golpes legíveis (#45): caixa no membro, congelamento, tremida, reação e preparo
     legibilidade.aplicar("pengaro", SAIDA)
+    import agarrao_folhas  # agarrões com folha própria e reação de agarrado (#45, 2026-11-15)
+    agarrao_folhas.aplicar("pengaro", SAIDA)
     import gerar_sons  # sons próprios: sound = pengaro.snd no .def e PlaySnd/hitsound no .cns (missão 2026-11-14)
     gerar_sons.ligar("pengaro", SAIDA)  # depois do parry: os estados 761/765 dele também tocam o som (F30)
     import balanceamento  # números do item 7 (attack, defence, velocidade)

@@ -2985,8 +2985,9 @@ anim = 810
 velset = 0,0
 ctrl = 0
 sprpriority = 2
+; desenhos do agarrão pe = 1008,0 1009,0 1010,0 1011,0 1012,0 1013,0 1014,0 1015,0 1289,0 1290,0 1292,0 1293,0 1202,0 1205,0 1186,0 1189,0 1450,0 1452,0
 
-; Abraço de Quebrada: pega, segura, 3 pancadas e arremessa. Escape: y ou b no começo.
+; Abraço de Quebrada: pega, segura, 5 pancadas e arremessa. Escape: y ou b no começo.
 [State 810, som comum]
 type = PlaySnd
 trigger1 = Time = 0
@@ -2998,17 +2999,54 @@ type = VarSet
 trigger1 = Time = 0
 var(2) = command = "holdback"
 
-[State 810, Diabo: chama 1]
+[State 810, Diabo: o fogo toma conta]
+type = Explod
+trigger1 = Time = 14
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+anim = 7470
+id = 7470
+postype = p1
+pos = 30, 0
+bindtime = -1
+removetime = -1
+sprpriority = 6
+ownpal = 1
+trans = addalpha
+alpha = 170, 256
+scale = .85, .85
+ignorehitpause = 1
+
+[State 810, Diabo: o fogo apaga]
+type = RemoveExplod
+trigger1 = Time = 111
+trigger2 = !NumTarget
+id = 7470
+
+[State 810, Diabo: oponente queimando]
+type = PalFX
+trigger1 = Time = [14, 111]
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+redirectid = target,id
+time = 2
+add = 90, 25, 0
+mul = 256, 200, 160
+sinadd = 60, 40, 0, 10
+
+[State 810, Diabo: estouro de fogo 1]
 type = Explod
 trigger1 = Time = 22
 trigger1 = var(20) > 0
 trigger1 = NumTarget
-anim = 9270
+anim = 7472
 postype = p2
-pos = 0, -55
-sprpriority = 6
+pos = 0, -60
+sprpriority = 7
 ownpal = 1
 removetime = -2
+scale = .85, .85
+ignorehitpause = 1
 
 [State 810, Diabo: tremida 1]
 type = EnvShake
@@ -3028,21 +3066,23 @@ redirectid = target,id
 time = 6
 add = 140, 50, 0
 
-[State 810, Diabo: chama 2]
+[State 810, Diabo: estouro de fogo 2]
 type = Explod
-trigger1 = Time = 44
+trigger1 = Time = 39
 trigger1 = var(20) > 0
 trigger1 = NumTarget
-anim = 9270
+anim = 7472
 postype = p2
-pos = 0, -55
-sprpriority = 6
+pos = 0, -60
+sprpriority = 7
 ownpal = 1
 removetime = -2
+scale = .85, .85
+ignorehitpause = 1
 
 [State 810, Diabo: tremida 2]
 type = EnvShake
-trigger1 = Time = 44
+trigger1 = Time = 39
 trigger1 = var(20) > 0
 trigger1 = NumTarget
 time = 8
@@ -3051,28 +3091,30 @@ ampl = -4
 
 [State 810, Diabo: oponente pisca 2]
 type = PalFX
-trigger1 = Time = 44
+trigger1 = Time = 39
 trigger1 = var(20) > 0
 trigger1 = NumTarget
 redirectid = target,id
 time = 6
 add = 140, 50, 0
 
-[State 810, Diabo: chama 3]
+[State 810, Diabo: estouro de fogo 3]
 type = Explod
-trigger1 = Time = 68
+trigger1 = Time = 56
 trigger1 = var(20) > 0
 trigger1 = NumTarget
-anim = 9270
+anim = 7472
 postype = p2
-pos = 0, -55
-sprpriority = 6
+pos = 0, -60
+sprpriority = 7
 ownpal = 1
 removetime = -2
+scale = .85, .85
+ignorehitpause = 1
 
 [State 810, Diabo: tremida 3]
 type = EnvShake
-trigger1 = Time = 68
+trigger1 = Time = 56
 trigger1 = var(20) > 0
 trigger1 = NumTarget
 time = 8
@@ -3081,16 +3123,95 @@ ampl = -4
 
 [State 810, Diabo: oponente pisca 3]
 type = PalFX
-trigger1 = Time = 68
+trigger1 = Time = 56
 trigger1 = var(20) > 0
 trigger1 = NumTarget
 redirectid = target,id
 time = 6
 add = 140, 50, 0
 
+[State 810, Diabo: estouro de fogo 4]
+type = Explod
+trigger1 = Time = 73
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+anim = 7472
+postype = p2
+pos = 0, -60
+sprpriority = 7
+ownpal = 1
+removetime = -2
+scale = .85, .85
+ignorehitpause = 1
+
+[State 810, Diabo: tremida 4]
+type = EnvShake
+trigger1 = Time = 73
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+time = 8
+freq = 140
+ampl = -4
+
+[State 810, Diabo: oponente pisca 4]
+type = PalFX
+trigger1 = Time = 73
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 140, 50, 0
+
+[State 810, Diabo: estouro de fogo 5]
+type = Explod
+trigger1 = Time = 90
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+anim = 7472
+postype = p2
+pos = 0, -60
+sprpriority = 7
+ownpal = 1
+removetime = -2
+scale = .85, .85
+ignorehitpause = 1
+
+[State 810, Diabo: tremida 5]
+type = EnvShake
+trigger1 = Time = 90
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+time = 8
+freq = 140
+ampl = -4
+
+[State 810, Diabo: oponente pisca 5]
+type = PalFX
+trigger1 = Time = 90
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 140, 50, 0
+
+[State 810, Diabo: explosão de fogo]
+type = Explod
+trigger1 = Time = 111
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+anim = 7471
+postype = p2
+pos = 0, -60
+sprpriority = 7
+ownpal = 1
+removetime = -2
+pausemovetime = 14
+ignorehitpause = 1
+scale = .95, .95
+
 [State 810, Diabo: estouro de ouro]
 type = Explod
-trigger1 = Time = 96
+trigger1 = Time = 111
 trigger1 = var(20) > 0
 trigger1 = NumTarget
 anim = 9271
@@ -3102,14 +3223,14 @@ removetime = -2
 
 [State 810, Diabo: dano do fogo]
 type = TargetLifeAdd
-trigger1 = Time = 96
+trigger1 = Time = 111
 trigger1 = var(20) > 0
 trigger1 = NumTarget
 value = -40
 
 [State 810, Diabo: tremida]
 type = EnvShake
-trigger1 = Time = 96
+trigger1 = Time = 111
 trigger1 = var(20) > 0
 time = 30
 ampl = -11
@@ -3120,29 +3241,29 @@ type = BGPalFX
 trigger1 = Time = 1
 trigger1 = var(20) > 0
 trigger1 = NumTarget
-time = 116
+time = 131
 mul = 120, 55, 50
 sinadd = 0,0,0,0
 
 [State 810, Diabo: congela no impacto]
 type = Pause
-trigger1 = Time = 96
+trigger1 = Time = 111
 trigger1 = var(20) > 0
 trigger1 = NumTarget
-time = 12
+time = 14
 movetime = 0
 
 [State 810, Diabo: clarão]
 type = BGPalFX
-trigger1 = Time = 96
+trigger1 = Time = 111
 trigger1 = var(20) > 0
-time = 6
-add = 120, 120, 120
+time = 8
+add = 140, 110, 60
 mul = 120, 55, 50
 
 [State 810, Segura]
 type = TargetBind
-trigger1 = Time < 96
+trigger1 = Time < 111
 trigger1 = NumTarget
 pos = 30, 0
 
@@ -3157,7 +3278,7 @@ ctrl = 1
 [State 810, Perdeu]
 type = ChangeState
 trigger1 = Time > 22
-trigger1 = Time < 96
+trigger1 = Time < 111
 trigger1 = !NumTarget
 value = 0
 ctrl = 1
@@ -3166,15 +3287,15 @@ ctrl = 1
 type = TargetLifeAdd
 trigger1 = Time = 22
 trigger1 = NumTarget
-value = -22
+value = -14
 
 [State 810, Pancada 1: faísca]
 type = Explod
 trigger1 = Time = 22
 trigger1 = NumTarget
-anim = 9200
+anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 34, -87
+pos = 22, -74
 removetime = -2
 sprpriority = 5
 scale = .75, .75
@@ -3196,7 +3317,7 @@ pos = 35, 0
 type = PowerAdd
 trigger1 = Time = 22
 trigger1 = NumTarget
-value = 11
+value = 7
 
 [State 810, Pancada 1: reage]
 type = TargetState
@@ -3221,17 +3342,17 @@ ampl = -2
 
 [State 810, Pancada 2: dano]
 type = TargetLifeAdd
-trigger1 = Time = 44
+trigger1 = Time = 39
 trigger1 = NumTarget
-value = -22
+value = -14
 
 [State 810, Pancada 2: faísca]
 type = Explod
-trigger1 = Time = 44
+trigger1 = Time = 39
 trigger1 = NumTarget
-anim = 9200
+anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 34, -62
+pos = 22, -74
 removetime = -2
 sprpriority = 5
 scale = .75, .75
@@ -3240,37 +3361,37 @@ pausemovetime = 99
 
 [State 810, Pancada 2: som]
 type = PlaySnd
-trigger1 = Time = 44
+trigger1 = Time = 39
 value = 51,0 ; som:F5,0
 
 [State 810, Pancada 2: tranco]
 type = TargetBind
-trigger1 = Time = [44, 49]
+trigger1 = Time = [39, 44]
 trigger1 = NumTarget
 pos = 35, 0
 
 [State 810, Pancada 2: barra]
 type = PowerAdd
-trigger1 = Time = 44
+trigger1 = Time = 39
 trigger1 = NumTarget
-value = 11
+value = 7
 
 [State 810, Pancada 2: reage]
 type = TargetState
-trigger1 = Time = 44
+trigger1 = Time = 39
 trigger1 = NumTarget
 value = 825
 
 [State 810, Pancada 2: congela]
 type = Pause
-trigger1 = Time = 44
+trigger1 = Time = 39
 trigger1 = NumTarget
 time = 7
 movetime = 0
 
 [State 810, Pancada 2: treme]
 type = EnvShake
-trigger1 = Time = 44
+trigger1 = Time = 39
 trigger1 = NumTarget
 time = 6
 freq = 150
@@ -3278,17 +3399,17 @@ ampl = -2
 
 [State 810, Pancada 3: dano]
 type = TargetLifeAdd
-trigger1 = Time = 68
+trigger1 = Time = 56
 trigger1 = NumTarget
-value = -22
+value = -18
 
 [State 810, Pancada 3: faísca]
 type = Explod
-trigger1 = Time = 68
+trigger1 = Time = 56
 trigger1 = NumTarget
-anim = 9200
+anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 18, -69
+pos = 22, -74
 removetime = -2
 sprpriority = 5
 scale = .75, .75
@@ -3297,37 +3418,151 @@ pausemovetime = 99
 
 [State 810, Pancada 3: som]
 type = PlaySnd
-trigger1 = Time = 68
-value = 54,2 ; som:F5,2
+trigger1 = Time = 56
+value = 54,0 ; som:F5,0
 
 [State 810, Pancada 3: tranco]
 type = TargetBind
-trigger1 = Time = [68, 73]
+trigger1 = Time = [56, 61]
 trigger1 = NumTarget
 pos = 35, 0
 
 [State 810, Pancada 3: barra]
 type = PowerAdd
-trigger1 = Time = 68
+trigger1 = Time = 56
 trigger1 = NumTarget
-value = 11
+value = 9
 
 [State 810, Pancada 3: reage]
 type = TargetState
-trigger1 = Time = 68
+trigger1 = Time = 56
 trigger1 = NumTarget
 value = 826
 
 [State 810, Pancada 3: congela]
 type = Pause
-trigger1 = Time = 68
+trigger1 = Time = 56
 trigger1 = NumTarget
 time = 7
 movetime = 0
 
 [State 810, Pancada 3: treme]
 type = EnvShake
-trigger1 = Time = 68
+trigger1 = Time = 56
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 810, Pancada 4: dano]
+type = TargetLifeAdd
+trigger1 = Time = 73
+trigger1 = NumTarget
+value = -18
+
+[State 810, Pancada 4: faísca]
+type = Explod
+trigger1 = Time = 73
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 22, -74
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 810, Pancada 4: som]
+type = PlaySnd
+trigger1 = Time = 73
+value = 52,0 ; som:F5,0
+
+[State 810, Pancada 4: tranco]
+type = TargetBind
+trigger1 = Time = [73, 78]
+trigger1 = NumTarget
+pos = 35, 0
+
+[State 810, Pancada 4: barra]
+type = PowerAdd
+trigger1 = Time = 73
+trigger1 = NumTarget
+value = 9
+
+[State 810, Pancada 4: reage]
+type = TargetState
+trigger1 = Time = 73
+trigger1 = NumTarget
+value = 822
+
+[State 810, Pancada 4: congela]
+type = Pause
+trigger1 = Time = 73
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 810, Pancada 4: treme]
+type = EnvShake
+trigger1 = Time = 73
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 810, Pancada 5: dano]
+type = TargetLifeAdd
+trigger1 = Time = 90
+trigger1 = NumTarget
+value = -18
+
+[State 810, Pancada 5: faísca]
+type = Explod
+trigger1 = Time = 90
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 22, -44
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 810, Pancada 5: som]
+type = PlaySnd
+trigger1 = Time = 90
+value = 52,0 ; som:F5,0
+
+[State 810, Pancada 5: tranco]
+type = TargetBind
+trigger1 = Time = [90, 95]
+trigger1 = NumTarget
+pos = 35, 0
+
+[State 810, Pancada 5: barra]
+type = PowerAdd
+trigger1 = Time = 90
+trigger1 = NumTarget
+value = 9
+
+[State 810, Pancada 5: reage]
+type = TargetState
+trigger1 = Time = 90
+trigger1 = NumTarget
+value = 828
+
+[State 810, Pancada 5: congela]
+type = Pause
+trigger1 = Time = 90
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 810, Pancada 5: treme]
+type = EnvShake
+trigger1 = Time = 90
 trigger1 = NumTarget
 time = 6
 freq = 150
@@ -3335,17 +3570,17 @@ ampl = -2
 
 [State 810, Final: dano]
 type = TargetLifeAdd
-trigger1 = Time = 96
+trigger1 = Time = 111
 trigger1 = NumTarget
-value = -54
+value = -50
 
 [State 810, Final: faísca]
 type = Explod
-trigger1 = Time = 96
+trigger1 = Time = 111
 trigger1 = NumTarget
-anim = 9201
+anim = (ifelse(var(20) > 0, 9231, 9201))
 postype = p1
-pos = 34, -85
+pos = 22, -74
 removetime = -2
 sprpriority = 5
 scale = .6, .6
@@ -3354,48 +3589,52 @@ pausemovetime = 99
 
 [State 810, Final: som]
 type = PlaySnd
-trigger1 = Time = 96
-value = 52,3 ; som:F5,3
+trigger1 = Time = 111
+value = 52,0 ; som:F5,0
 
 [State 810, Final: barra]
 type = PowerAdd
-trigger1 = Time = 96
+trigger1 = Time = 111
 trigger1 = NumTarget
-value = 27
+value = 25
 
 [State 810, Final: congela]
 type = Pause
-trigger1 = Time = 96
+trigger1 = Time = 111
 trigger1 = NumTarget
 time = 14
 movetime = 0
 
 [State 810, Final: treme]
 type = EnvShake
-trigger1 = Time = 96
+trigger1 = Time = 111
 trigger1 = NumTarget
 time = 16
 freq = 150
 ampl = -5
 
-[State 810, Joga para trás]
-type = TargetState
-trigger1 = Time = 96
-trigger1 = NumTarget
-trigger1 = var(2)
-value = 824
+[State 810, Vira antes]
+type = Turn
+trigger1 = Time = 111
+trigger1 = !var(2)
 
-[State 810, Joga]
+[State 810, Joga para a frente]
 type = TargetState
-trigger1 = Time = 96
+trigger1 = Time = 111
 trigger1 = NumTarget
 trigger1 = !var(2)
 value = 823
 
+[State 810, Joga por cima]
+type = TargetState
+trigger1 = Time = 111
+trigger1 = NumTarget
+trigger1 = var(2)
+value = 824
+
 [State 810, Vira]
 type = Turn
-trigger1 = Time = 106
-trigger1 = var(2)
+trigger1 = Time = 121
 
 [State 810, Fim]
 type = ChangeState
@@ -3438,47 +3677,554 @@ ctrl = 1
 type = S
 movetype = A
 physics = N
+anim = 841
+velset = 0,0
 ctrl = 0
 sprpriority = 2
-anim = 841
-juggle = 0
-velset = 0,0
+; desenhos do agarrão baixo = 1024,0 1025,0 1026,0 1027,0 1028,0 1029,0 1030,0 1031,0 1098,0 1099,0 1100,0 1186,0 1189,0
 
+; Puxa a Perna: pega, segura, 4 pancadas e arremessa. Escape: y ou b no começo.
 [State 841, som comum]
 type = PlaySnd
 trigger1 = Time = 0
 value = F35,0
 ; som: fim
 
+[State 841, Lado]
+type = VarSet
+trigger1 = Time = 0
+var(2) = command = "holdback"
+
+[State 841, Diabo: o fogo toma conta]
+type = Explod
+trigger1 = Time = 14
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+anim = 7470
+id = 7470
+postype = p1
+pos = 34, 0
+bindtime = -1
+removetime = -1
+sprpriority = 6
+ownpal = 1
+trans = addalpha
+alpha = 170, 256
+scale = .85, .85
+ignorehitpause = 1
+
+[State 841, Diabo: o fogo apaga]
+type = RemoveExplod
+trigger1 = Time = 94
+trigger2 = !NumTarget
+id = 7470
+
+[State 841, Diabo: oponente queimando]
+type = PalFX
+trigger1 = Time = [14, 94]
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+redirectid = target,id
+time = 2
+add = 90, 25, 0
+mul = 256, 200, 160
+sinadd = 60, 40, 0, 10
+
+[State 841, Diabo: estouro de fogo 1]
+type = Explod
+trigger1 = Time = 22
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+anim = 7472
+postype = p2
+pos = 0, -60
+sprpriority = 7
+ownpal = 1
+removetime = -2
+scale = .85, .85
+ignorehitpause = 1
+
+[State 841, Diabo: tremida 1]
+type = EnvShake
+trigger1 = Time = 22
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+time = 8
+freq = 140
+ampl = -4
+
+[State 841, Diabo: oponente pisca 1]
+type = PalFX
+trigger1 = Time = 22
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 140, 50, 0
+
+[State 841, Diabo: estouro de fogo 2]
+type = Explod
+trigger1 = Time = 39
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+anim = 7472
+postype = p2
+pos = 0, -60
+sprpriority = 7
+ownpal = 1
+removetime = -2
+scale = .85, .85
+ignorehitpause = 1
+
+[State 841, Diabo: tremida 2]
+type = EnvShake
+trigger1 = Time = 39
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+time = 8
+freq = 140
+ampl = -4
+
+[State 841, Diabo: oponente pisca 2]
+type = PalFX
+trigger1 = Time = 39
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 140, 50, 0
+
+[State 841, Diabo: estouro de fogo 3]
+type = Explod
+trigger1 = Time = 56
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+anim = 7472
+postype = p2
+pos = 0, -60
+sprpriority = 7
+ownpal = 1
+removetime = -2
+scale = .85, .85
+ignorehitpause = 1
+
+[State 841, Diabo: tremida 3]
+type = EnvShake
+trigger1 = Time = 56
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+time = 8
+freq = 140
+ampl = -4
+
+[State 841, Diabo: oponente pisca 3]
+type = PalFX
+trigger1 = Time = 56
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 140, 50, 0
+
+[State 841, Diabo: estouro de fogo 4]
+type = Explod
+trigger1 = Time = 73
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+anim = 7472
+postype = p2
+pos = 0, -60
+sprpriority = 7
+ownpal = 1
+removetime = -2
+scale = .85, .85
+ignorehitpause = 1
+
+[State 841, Diabo: tremida 4]
+type = EnvShake
+trigger1 = Time = 73
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+time = 8
+freq = 140
+ampl = -4
+
+[State 841, Diabo: oponente pisca 4]
+type = PalFX
+trigger1 = Time = 73
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 140, 50, 0
+
+[State 841, Diabo: explosão de fogo]
+type = Explod
+trigger1 = Time = 94
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+anim = 7471
+postype = p2
+pos = 0, -60
+sprpriority = 7
+ownpal = 1
+removetime = -2
+pausemovetime = 14
+ignorehitpause = 1
+scale = .95, .95
+
+[State 841, Diabo: estouro de ouro]
+type = Explod
+trigger1 = Time = 94
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+anim = 9271
+postype = p2
+pos = 0, -50
+sprpriority = 6
+ownpal = 1
+removetime = -2
+
+[State 841, Diabo: dano do fogo]
+type = TargetLifeAdd
+trigger1 = Time = 94
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+value = -40
+
+[State 841, Diabo: tremida]
+type = EnvShake
+trigger1 = Time = 94
+trigger1 = var(20) > 0
+time = 30
+ampl = -11
+freq = 90
+
+[State 841, Diabo: fundo escuro]
+type = BGPalFX
+trigger1 = Time = 1
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+time = 114
+mul = 120, 55, 50
+sinadd = 0,0,0,0
+
+[State 841, Diabo: congela no impacto]
+type = Pause
+trigger1 = Time = 94
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+time = 14
+movetime = 0
+
+[State 841, Diabo: clarão]
+type = BGPalFX
+trigger1 = Time = 94
+trigger1 = var(20) > 0
+time = 8
+add = 140, 110, 60
+mul = 120, 55, 50
+
 [State 841, Segura]
 type = TargetBind
-trigger1 = Time < 13
+trigger1 = Time < 94
+trigger1 = NumTarget
 pos = 34, 0
 
 [State 841, Escapou]
 type = ChangeState
 trigger1 = Time > 1
-trigger1 = Time < 13
+trigger1 = Time < 22
 trigger1 = enemynear,stateno != 820
 value = 0
 ctrl = 1
 
-[State 841, Dano]
-type = TargetLifeAdd
-trigger1 = Time = 13
-trigger1 = NumTarget
-value = -100
+[State 841, Perdeu]
+type = ChangeState
+trigger1 = Time > 22
+trigger1 = Time < 94
+trigger1 = !NumTarget
+value = 0
+ctrl = 1
 
-[State 841, Som 13]
+[State 841, Pancada 1: dano]
+type = TargetLifeAdd
+trigger1 = Time = 22
+trigger1 = NumTarget
+value = -16
+
+[State 841, Pancada 1: faísca]
+type = Explod
+trigger1 = Time = 22
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 26, -44
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 841, Pancada 1: som]
 type = PlaySnd
-trigger1 = Time = 13
-value = 52,2 ; som:F5, 2
+trigger1 = Time = 22
+value = 52,0 ; som:F5,0
+
+[State 841, Pancada 1: tranco]
+type = TargetBind
+trigger1 = Time = [22, 27]
+trigger1 = NumTarget
+pos = 39, 0
+
+[State 841, Pancada 1: barra]
+type = PowerAdd
+trigger1 = Time = 22
+trigger1 = NumTarget
+value = 8
+
+[State 841, Pancada 1: reage]
+type = TargetState
+trigger1 = Time = 22
+trigger1 = NumTarget
+value = 827
+
+[State 841, Pancada 1: congela]
+type = Pause
+trigger1 = Time = 22
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 841, Pancada 1: treme]
+type = EnvShake
+trigger1 = Time = 22
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 841, Pancada 2: dano]
+type = TargetLifeAdd
+trigger1 = Time = 39
+trigger1 = NumTarget
+value = -16
+
+[State 841, Pancada 2: faísca]
+type = Explod
+trigger1 = Time = 39
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 26, -44
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 841, Pancada 2: som]
+type = PlaySnd
+trigger1 = Time = 39
+value = 52,0 ; som:F5,0
+
+[State 841, Pancada 2: tranco]
+type = TargetBind
+trigger1 = Time = [39, 44]
+trigger1 = NumTarget
+pos = 39, 0
+
+[State 841, Pancada 2: barra]
+type = PowerAdd
+trigger1 = Time = 39
+trigger1 = NumTarget
+value = 8
+
+[State 841, Pancada 2: reage]
+type = TargetState
+trigger1 = Time = 39
+trigger1 = NumTarget
+value = 828
+
+[State 841, Pancada 2: congela]
+type = Pause
+trigger1 = Time = 39
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 841, Pancada 2: treme]
+type = EnvShake
+trigger1 = Time = 39
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 841, Pancada 3: dano]
+type = TargetLifeAdd
+trigger1 = Time = 56
+trigger1 = NumTarget
+value = -18
+
+[State 841, Pancada 3: faísca]
+type = Explod
+trigger1 = Time = 56
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 26, -74
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 841, Pancada 3: som]
+type = PlaySnd
+trigger1 = Time = 56
+value = 52,0 ; som:F5,0
+
+[State 841, Pancada 3: tranco]
+type = TargetBind
+trigger1 = Time = [56, 61]
+trigger1 = NumTarget
+pos = 39, 0
+
+[State 841, Pancada 3: barra]
+type = PowerAdd
+trigger1 = Time = 56
+trigger1 = NumTarget
+value = 9
+
+[State 841, Pancada 3: reage]
+type = TargetState
+trigger1 = Time = 56
+trigger1 = NumTarget
+value = 826
+
+[State 841, Pancada 3: congela]
+type = Pause
+trigger1 = Time = 56
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 841, Pancada 3: treme]
+type = EnvShake
+trigger1 = Time = 56
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 841, Pancada 4: dano]
+type = TargetLifeAdd
+trigger1 = Time = 73
+trigger1 = NumTarget
+value = -20
+
+[State 841, Pancada 4: faísca]
+type = Explod
+trigger1 = Time = 73
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 26, -44
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 841, Pancada 4: som]
+type = PlaySnd
+trigger1 = Time = 73
+value = 52,0 ; som:F5,0
+
+[State 841, Pancada 4: tranco]
+type = TargetBind
+trigger1 = Time = [73, 78]
+trigger1 = NumTarget
+pos = 39, 0
+
+[State 841, Pancada 4: barra]
+type = PowerAdd
+trigger1 = Time = 73
+trigger1 = NumTarget
+value = 10
+
+[State 841, Pancada 4: reage]
+type = TargetState
+trigger1 = Time = 73
+trigger1 = NumTarget
+value = 827
+
+[State 841, Pancada 4: congela]
+type = Pause
+trigger1 = Time = 73
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 841, Pancada 4: treme]
+type = EnvShake
+trigger1 = Time = 73
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 841, Final: dano]
+type = TargetLifeAdd
+trigger1 = Time = 94
+trigger1 = NumTarget
+value = -60
+
+[State 841, Final: faísca]
+type = Explod
+trigger1 = Time = 94
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9231, 9201))
+postype = p1
+pos = 26, -44
+removetime = -2
+sprpriority = 5
+scale = .6, .6
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 841, Final: som]
+type = PlaySnd
+trigger1 = Time = 94
+value = 52,0 ; som:F5,0
+
+[State 841, Final: barra]
+type = PowerAdd
+trigger1 = Time = 94
+trigger1 = NumTarget
+value = 30
+
+[State 841, Final: congela]
+type = Pause
+trigger1 = Time = 94
+trigger1 = NumTarget
+time = 14
+movetime = 0
+
+[State 841, Final: treme]
+type = EnvShake
+trigger1 = Time = 94
+trigger1 = NumTarget
+time = 16
+freq = 150
+ampl = -5
 
 [State 841, Derruba]
 type = TargetState
-trigger1 = Time = 13
+trigger1 = Time = 94
 trigger1 = NumTarget
-value = 846
+value = 835
 
 [State 841, Fim]
 type = ChangeState
@@ -3507,7 +4253,7 @@ p1sprpriority = 1
 p1facing = 1
 p2facing = 1
 p1stateno = 831
-p2stateno = 832
+p2stateno = 820
 guard.dist = 0
 fall = 1
 
@@ -3521,116 +4267,643 @@ ctrl = 1
 type = S
 movetype = A
 physics = N
+anim = 831
+velset = 0,0
 ctrl = 0
 sprpriority = 2
-anim = 831
-juggle = 0
-velset = 0,0
+; desenhos do agarrão comando = 1016,0 1017,0 1018,0 1019,0 1020,0 1021,0 1022,0 1023,0 1459,0 1461,0 1289,0 1290,0 1202,0 1205,0
 
+; Cutucão Sacana: pega, segura, 5 pancadas e arremessa. Escape: y ou b no começo.
 [State 831, som comum]
 type = PlaySnd
 trigger1 = Time = 0
 value = F35,0
 ; som: fim
 
+[State 831, Lado]
+type = VarSet
+trigger1 = Time = 0
+var(2) = command = "holdback"
+
+[State 831, Diabo: o fogo toma conta]
+type = Explod
+trigger1 = Time = 14
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+anim = 7470
+id = 7470
+postype = p1
+pos = 30, 0
+bindtime = -1
+removetime = -1
+sprpriority = 6
+ownpal = 1
+trans = addalpha
+alpha = 170, 256
+scale = .85, .85
+ignorehitpause = 1
+
+[State 831, Diabo: o fogo apaga]
+type = RemoveExplod
+trigger1 = Time = 111
+trigger2 = !NumTarget
+id = 7470
+
+[State 831, Diabo: oponente queimando]
+type = PalFX
+trigger1 = Time = [14, 111]
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+redirectid = target,id
+time = 2
+add = 90, 25, 0
+mul = 256, 200, 160
+sinadd = 60, 40, 0, 10
+
+[State 831, Diabo: estouro de fogo 1]
+type = Explod
+trigger1 = Time = 22
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+anim = 7472
+postype = p2
+pos = 0, -60
+sprpriority = 7
+ownpal = 1
+removetime = -2
+scale = .85, .85
+ignorehitpause = 1
+
+[State 831, Diabo: tremida 1]
+type = EnvShake
+trigger1 = Time = 22
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+time = 8
+freq = 140
+ampl = -4
+
+[State 831, Diabo: oponente pisca 1]
+type = PalFX
+trigger1 = Time = 22
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 140, 50, 0
+
+[State 831, Diabo: estouro de fogo 2]
+type = Explod
+trigger1 = Time = 39
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+anim = 7472
+postype = p2
+pos = 0, -60
+sprpriority = 7
+ownpal = 1
+removetime = -2
+scale = .85, .85
+ignorehitpause = 1
+
+[State 831, Diabo: tremida 2]
+type = EnvShake
+trigger1 = Time = 39
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+time = 8
+freq = 140
+ampl = -4
+
+[State 831, Diabo: oponente pisca 2]
+type = PalFX
+trigger1 = Time = 39
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 140, 50, 0
+
+[State 831, Diabo: estouro de fogo 3]
+type = Explod
+trigger1 = Time = 56
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+anim = 7472
+postype = p2
+pos = 0, -60
+sprpriority = 7
+ownpal = 1
+removetime = -2
+scale = .85, .85
+ignorehitpause = 1
+
+[State 831, Diabo: tremida 3]
+type = EnvShake
+trigger1 = Time = 56
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+time = 8
+freq = 140
+ampl = -4
+
+[State 831, Diabo: oponente pisca 3]
+type = PalFX
+trigger1 = Time = 56
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 140, 50, 0
+
+[State 831, Diabo: estouro de fogo 4]
+type = Explod
+trigger1 = Time = 73
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+anim = 7472
+postype = p2
+pos = 0, -60
+sprpriority = 7
+ownpal = 1
+removetime = -2
+scale = .85, .85
+ignorehitpause = 1
+
+[State 831, Diabo: tremida 4]
+type = EnvShake
+trigger1 = Time = 73
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+time = 8
+freq = 140
+ampl = -4
+
+[State 831, Diabo: oponente pisca 4]
+type = PalFX
+trigger1 = Time = 73
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 140, 50, 0
+
+[State 831, Diabo: estouro de fogo 5]
+type = Explod
+trigger1 = Time = 90
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+anim = 7472
+postype = p2
+pos = 0, -60
+sprpriority = 7
+ownpal = 1
+removetime = -2
+scale = .85, .85
+ignorehitpause = 1
+
+[State 831, Diabo: tremida 5]
+type = EnvShake
+trigger1 = Time = 90
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+time = 8
+freq = 140
+ampl = -4
+
+[State 831, Diabo: oponente pisca 5]
+type = PalFX
+trigger1 = Time = 90
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 140, 50, 0
+
+[State 831, Diabo: explosão de fogo]
+type = Explod
+trigger1 = Time = 111
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+anim = 7471
+postype = p2
+pos = 0, -60
+sprpriority = 7
+ownpal = 1
+removetime = -2
+pausemovetime = 14
+ignorehitpause = 1
+scale = .95, .95
+
+[State 831, Diabo: estouro de ouro]
+type = Explod
+trigger1 = Time = 111
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+anim = 9271
+postype = p2
+pos = 0, -50
+sprpriority = 6
+ownpal = 1
+removetime = -2
+
+[State 831, Diabo: dano do fogo]
+type = TargetLifeAdd
+trigger1 = Time = 111
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+value = -40
+
+[State 831, Diabo: tremida]
+type = EnvShake
+trigger1 = Time = 111
+trigger1 = var(20) > 0
+time = 30
+ampl = -11
+freq = 90
+
+[State 831, Diabo: fundo escuro]
+type = BGPalFX
+trigger1 = Time = 1
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+time = 131
+mul = 120, 55, 50
+sinadd = 0,0,0,0
+
+[State 831, Diabo: congela no impacto]
+type = Pause
+trigger1 = Time = 111
+trigger1 = var(20) > 0
+trigger1 = NumTarget
+time = 14
+movetime = 0
+
+[State 831, Diabo: clarão]
+type = BGPalFX
+trigger1 = Time = 111
+trigger1 = var(20) > 0
+time = 8
+add = 140, 110, 60
+mul = 120, 55, 50
+
 [State 831, Segura]
 type = TargetBind
-trigger1 = Time < 43
+trigger1 = Time < 111
+trigger1 = NumTarget
 pos = 30, 0
 
 [State 831, Escapou]
 type = ChangeState
 trigger1 = Time > 1
-trigger1 = Time < 13
-trigger1 = enemynear,stateno != 832
+trigger1 = Time < 22
+trigger1 = enemynear,stateno != 820
 value = 0
 ctrl = 1
 
-[State 831, Cutucão 13]
+[State 831, Perdeu]
+type = ChangeState
+trigger1 = Time > 22
+trigger1 = Time < 111
+trigger1 = !NumTarget
+value = 0
+ctrl = 1
+
+[State 831, Pancada 1: dano]
 type = TargetLifeAdd
-trigger1 = Time = 13
+trigger1 = Time = 22
 trigger1 = NumTarget
-value = -30
+value = -14
 
-[State 831, Faísca 13]
+[State 831, Pancada 1: faísca]
 type = Explod
-trigger1 = Time = 13
-anim = 9200
-postype = p1
-pos = 40, -62
-removetime = -2
-sprpriority = 4
-ownpal = 1
-
-[State 831, Som 13]
-type = PlaySnd
-trigger1 = Time = 13
-value = 51,0 ; som:F5, 0
-
-[State 831, Cutucão 25]
-type = TargetLifeAdd
-trigger1 = Time = 25
+trigger1 = Time = 22
 trigger1 = NumTarget
-value = -30
-
-[State 831, Faísca 25]
-type = Explod
-trigger1 = Time = 25
-anim = 9200
+anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 40, -62
+pos = 22, -44
 removetime = -2
-sprpriority = 4
-ownpal = 1
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
 
-[State 831, Som 25]
+[State 831, Pancada 1: som]
 type = PlaySnd
-trigger1 = Time = 25
-value = 51,0 ; som:F5, 0
+trigger1 = Time = 22
+value = 51,0 ; som:F5,0
 
-[State 831, Cutucão 37]
-type = TargetLifeAdd
-trigger1 = Time = 37
+[State 831, Pancada 1: tranco]
+type = TargetBind
+trigger1 = Time = [22, 27]
 trigger1 = NumTarget
-value = -30
+pos = 35, 0
 
-[State 831, Faísca 37]
-type = Explod
-trigger1 = Time = 37
-anim = 9200
-postype = p1
-pos = 40, -62
-removetime = -2
-sprpriority = 4
-ownpal = 1
+[State 831, Pancada 1: barra]
+type = PowerAdd
+trigger1 = Time = 22
+trigger1 = NumTarget
+value = 7
 
-[State 831, Som 37]
-type = PlaySnd
-trigger1 = Time = 37
-value = 51,0 ; som:F5, 0
-
-[State 831, Encolhe]
+[State 831, Pancada 1: reage]
 type = TargetState
-trigger1 = Time = 13
+trigger1 = Time = 22
 trigger1 = NumTarget
-value = 833
+value = 827
 
-[State 831, Dano final]
+[State 831, Pancada 1: congela]
+type = Pause
+trigger1 = Time = 22
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 831, Pancada 1: treme]
+type = EnvShake
+trigger1 = Time = 22
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 831, Pancada 2: dano]
 type = TargetLifeAdd
-trigger1 = Time = 43
+trigger1 = Time = 39
 trigger1 = NumTarget
-value = -50
+value = -14
 
-[State 831, Som 43]
+[State 831, Pancada 2: faísca]
+type = Explod
+trigger1 = Time = 39
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 22, -44
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 831, Pancada 2: som]
 type = PlaySnd
-trigger1 = Time = 43
-value = 51,2 ; som:F5, 2
+trigger1 = Time = 39
+value = 51,0 ; som:F5,0
 
-[State 831, Solta]
-type = TargetState
-trigger1 = Time = 43
+[State 831, Pancada 2: tranco]
+type = TargetBind
+trigger1 = Time = [39, 44]
 trigger1 = NumTarget
-value = 846
+pos = 35, 0
+
+[State 831, Pancada 2: barra]
+type = PowerAdd
+trigger1 = Time = 39
+trigger1 = NumTarget
+value = 7
+
+[State 831, Pancada 2: reage]
+type = TargetState
+trigger1 = Time = 39
+trigger1 = NumTarget
+value = 828
+
+[State 831, Pancada 2: congela]
+type = Pause
+trigger1 = Time = 39
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 831, Pancada 2: treme]
+type = EnvShake
+trigger1 = Time = 39
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 831, Pancada 3: dano]
+type = TargetLifeAdd
+trigger1 = Time = 56
+trigger1 = NumTarget
+value = -18
+
+[State 831, Pancada 3: faísca]
+type = Explod
+trigger1 = Time = 56
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 22, -74
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 831, Pancada 3: som]
+type = PlaySnd
+trigger1 = Time = 56
+value = 51,0 ; som:F5,0
+
+[State 831, Pancada 3: tranco]
+type = TargetBind
+trigger1 = Time = [56, 61]
+trigger1 = NumTarget
+pos = 35, 0
+
+[State 831, Pancada 3: barra]
+type = PowerAdd
+trigger1 = Time = 56
+trigger1 = NumTarget
+value = 9
+
+[State 831, Pancada 3: reage]
+type = TargetState
+trigger1 = Time = 56
+trigger1 = NumTarget
+value = 826
+
+[State 831, Pancada 3: congela]
+type = Pause
+trigger1 = Time = 56
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 831, Pancada 3: treme]
+type = EnvShake
+trigger1 = Time = 56
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 831, Pancada 4: dano]
+type = TargetLifeAdd
+trigger1 = Time = 73
+trigger1 = NumTarget
+value = -18
+
+[State 831, Pancada 4: faísca]
+type = Explod
+trigger1 = Time = 73
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 22, -74
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 831, Pancada 4: som]
+type = PlaySnd
+trigger1 = Time = 73
+value = 51,0 ; som:F5,0
+
+[State 831, Pancada 4: tranco]
+type = TargetBind
+trigger1 = Time = [73, 78]
+trigger1 = NumTarget
+pos = 35, 0
+
+[State 831, Pancada 4: barra]
+type = PowerAdd
+trigger1 = Time = 73
+trigger1 = NumTarget
+value = 9
+
+[State 831, Pancada 4: reage]
+type = TargetState
+trigger1 = Time = 73
+trigger1 = NumTarget
+value = 822
+
+[State 831, Pancada 4: congela]
+type = Pause
+trigger1 = Time = 73
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 831, Pancada 4: treme]
+type = EnvShake
+trigger1 = Time = 73
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 831, Pancada 5: dano]
+type = TargetLifeAdd
+trigger1 = Time = 90
+trigger1 = NumTarget
+value = -20
+
+[State 831, Pancada 5: faísca]
+type = Explod
+trigger1 = Time = 90
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 22, -74
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 831, Pancada 5: som]
+type = PlaySnd
+trigger1 = Time = 90
+value = 51,0 ; som:F5,0
+
+[State 831, Pancada 5: tranco]
+type = TargetBind
+trigger1 = Time = [90, 95]
+trigger1 = NumTarget
+pos = 35, 0
+
+[State 831, Pancada 5: barra]
+type = PowerAdd
+trigger1 = Time = 90
+trigger1 = NumTarget
+value = 10
+
+[State 831, Pancada 5: reage]
+type = TargetState
+trigger1 = Time = 90
+trigger1 = NumTarget
+value = 825
+
+[State 831, Pancada 5: congela]
+type = Pause
+trigger1 = Time = 90
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 831, Pancada 5: treme]
+type = EnvShake
+trigger1 = Time = 90
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 831, Final: dano]
+type = TargetLifeAdd
+trigger1 = Time = 111
+trigger1 = NumTarget
+value = -64
+
+[State 831, Final: faísca]
+type = Explod
+trigger1 = Time = 111
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9231, 9201))
+postype = p1
+pos = 22, -74
+removetime = -2
+sprpriority = 5
+scale = .6, .6
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 831, Final: som]
+type = PlaySnd
+trigger1 = Time = 111
+value = 51,0 ; som:F5,0
+
+[State 831, Final: barra]
+type = PowerAdd
+trigger1 = Time = 111
+trigger1 = NumTarget
+value = 32
+
+[State 831, Final: congela]
+type = Pause
+trigger1 = Time = 111
+trigger1 = NumTarget
+time = 14
+movetime = 0
+
+[State 831, Final: treme]
+type = EnvShake
+trigger1 = Time = 111
+trigger1 = NumTarget
+time = 16
+freq = 150
+ampl = -5
+
+[State 831, Derruba]
+type = TargetState
+trigger1 = Time = 111
+trigger1 = NumTarget
+value = 835
 
 [State 831, Fim]
 type = ChangeState
@@ -3648,15 +4921,29 @@ ctrl = 0
 [State 820, Pose]
 type = ChangeAnim
 trigger1 = Time = 0
+trigger1 = SelfAnimExist(5940)
+value = 5940
+
+[State 820, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5940)
 value = 5000
 elem = 1
 
 [State 820, Preso: pose]
 type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
 trigger1 = Anim != 5000 && AnimTime = 0
 trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
 value = 5000
 elem = 1
+
+[State 820, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
 
 [State 820, Escape]
 type = SelfState
@@ -6215,6 +7502,302 @@ trigger1 = AnimTime = 0
 value = 0
 ctrl = 1
 
+[Statedef 1660]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+sprpriority = 2
+anim = 1660
+juggle = 4
+velset = 0,0
+
+[State 1660, Zera]
+type = VarSet
+trigger1 = Time = 0
+var(12) = 0
+
+[State 1660, Rastro do corpo em brasa]
+type = AfterImage
+trigger1 = Time = 0
+time = 26
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+paladd = 120, 50, 0
+palmul = .55, .55, .55
+
+[State 1660, Abre o sobretudo: brasa nos pés]
+type = Explod
+trigger1 = Time = 2
+anim = 9270
+postype = p1
+pos = 0, 0
+scale = .8, .8
+sprpriority = 3
+ownpal = 1
+removetime = -2
+
+[State 1660, Som do arranque]
+type = PlaySnd
+trigger1 = Time = 10
+value = F40,4
+
+[State 1660, Desliza]
+type = VelSet
+trigger1 = Time = 10
+x = 6.5
+
+[State 1660, Para]
+type = VelSet
+trigger1 = Time = 22
+trigger2 = MoveContact = 1
+x = 0
+
+[State 1660, Rastro de brasa no chão]
+type = Explod
+trigger1 = Time >= 10 && Time < 22
+trigger1 = (Time - 10) % 3 = 0
+anim = 9270
+postype = p1
+pos = -18, 0
+bindtime = 1
+scale = .55, .55
+sprpriority = 1
+ownpal = 1
+removetime = -2
+
+[State 1660, Atravessa projétil]
+type = NotHitBy
+trigger1 = Time >= 8 && Time < 22
+value = SCA, NP, SP, HP
+time = 1
+
+[State 1660, Ombrada]
+type = HitDef
+trigger1 = Time = 10
+attr = S, SA
+damage = 60, 8
+animtype = Heavy
+guardflag = MA
+hitflag = MAF
+priority = 5, Hit
+pausetime = 14, 14
+guard.pausetime = 10, 10
+sparkxy = -6, -40
+sparkno = S9240
+guard.sparkno = S9216
+sparkscale = 1.2, 1.2
+hitsound = S52,2
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 20
+envshake.time = 10
+envshake.freq = 120
+envshake.ampl = -5
+palfx.time = 8
+palfx.add = 140, 50, 0
+ground.velocity = -6
+air.velocity = -5, -3
+
+[State 1660, Cobra a dívida: tira barra]
+type = TargetPowerAdd
+trigger1 = MoveHit = 1
+value = -150
+
+[State 1660, Cobra a dívida: põe na dele]
+type = PowerAdd
+trigger1 = MoveHit = 1
+value = 150
+
+[State 1660, Estouro de ouro]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9271
+postype = p2
+pos = 0, -50
+bindtime = 14
+scale = .75, .75
+sprpriority = 6
+ownpal = 1
+removetime = -2
+ignorehitpause = 1
+
+[State 1660, Fundo escurece]
+type = BGPalFX
+trigger1 = MoveHit = 1
+time = 24
+mul = 120, 55, 50
+ignorehitpause = 1
+
+[State 1660, Defendido]
+type = VarSet
+trigger1 = MoveGuarded = 1
+var(12) = 1
+
+[State 1660, Freia]
+type = VelMul
+trigger1 = Time > 22
+x = .8
+
+[State 1660, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 1661]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+sprpriority = 2
+anim = 1660
+juggle = 4
+velset = 0,0
+
+[State 1661, Zera]
+type = VarSet
+trigger1 = Time = 0
+var(12) = 0
+
+[State 1661, Rastro do corpo em brasa]
+type = AfterImage
+trigger1 = Time = 0
+time = 28
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+paladd = 120, 50, 0
+palmul = .55, .55, .55
+
+[State 1661, Abre o sobretudo: brasa nos pés]
+type = Explod
+trigger1 = Time = 2
+anim = 9270
+postype = p1
+pos = 0, 0
+scale = .8, .8
+sprpriority = 3
+ownpal = 1
+removetime = -2
+
+[State 1661, Som do arranque]
+type = PlaySnd
+trigger1 = Time = 10
+value = F40,4
+
+[State 1661, Desliza]
+type = VelSet
+trigger1 = Time = 10
+x = 8.5
+
+[State 1661, Para]
+type = VelSet
+trigger1 = Time = 24
+trigger2 = MoveContact = 1
+x = 0
+
+[State 1661, Rastro de brasa no chão]
+type = Explod
+trigger1 = Time >= 10 && Time < 24
+trigger1 = (Time - 10) % 3 = 0
+anim = 9270
+postype = p1
+pos = -18, 0
+bindtime = 1
+scale = .55, .55
+sprpriority = 1
+ownpal = 1
+removetime = -2
+
+[State 1661, Atravessa projétil]
+type = NotHitBy
+trigger1 = Time >= 8 && Time < 24
+value = SCA, NP, SP, HP
+time = 1
+
+[State 1661, Ombrada]
+type = HitDef
+trigger1 = Time = 10
+attr = S, SA
+damage = 80, 8
+animtype = Heavy
+guardflag = MA
+hitflag = MAF
+priority = 5, Hit
+pausetime = 14, 14
+guard.pausetime = 10, 10
+sparkxy = -6, -40
+sparkno = S9240
+guard.sparkno = S9216
+sparkscale = 1.2, 1.2
+hitsound = S52,2
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 20
+envshake.time = 10
+envshake.freq = 120
+envshake.ampl = -5
+palfx.time = 8
+palfx.add = 140, 50, 0
+fall = 1
+fall.recover = 0
+ground.velocity = -6, -3.5
+air.velocity = -6, -3.5
+
+[State 1661, Cobra a dívida: tira barra]
+type = TargetPowerAdd
+trigger1 = MoveHit = 1
+value = -150
+
+[State 1661, Cobra a dívida: põe na dele]
+type = PowerAdd
+trigger1 = MoveHit = 1
+value = 150
+
+[State 1661, Estouro de ouro]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9271
+postype = p2
+pos = 0, -50
+bindtime = 14
+scale = .75, .75
+sprpriority = 6
+ownpal = 1
+removetime = -2
+ignorehitpause = 1
+
+[State 1661, Fundo escurece]
+type = BGPalFX
+trigger1 = MoveHit = 1
+time = 24
+mul = 120, 55, 50
+ignorehitpause = 1
+
+[State 1661, Defendido]
+type = VarSet
+trigger1 = MoveGuarded = 1
+var(12) = 1
+
+[State 1661, Freia]
+type = VelMul
+trigger1 = Time > 24
+x = .8
+
+[State 1661, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
 [Statedef -2]
 
 ; --- destruição do cenário (ferramentas/destruicao.py) ---
@@ -6447,209 +8030,6 @@ trigger2 = stateno = 170 && AnimElemNo(0) >= 3
 value = 0
 movecamera = 0,0
 
-; ---- agarrão segura-e-bate (ferramentas/agarrao_mk.py) ----
-
-[Statedef 822]
-type = S
-movetype = H
-physics = N
-velset = 0,0
-ctrl = 0
-
-[State 822, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-value = 5001
-
-[State 822, Preso: pose]
-type = ChangeAnim
-trigger1 = Time > 0 && Anim = 5001 && AnimTime = 0
-trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
-value = 5000
-elem = 1
-
-[State 822, Solto]
-type = SelfState
-trigger1 = Time > 0
-trigger1 = !gethitvar(isbound)
-value = 5050
-
-[Statedef 825]
-type = S
-movetype = H
-physics = N
-velset = 0,0
-ctrl = 0
-
-[State 825, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-value = 5002
-
-[State 825, Preso: pose]
-type = ChangeAnim
-trigger1 = Time > 0 && Anim = 5002 && AnimTime = 0
-trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
-value = 5000
-elem = 1
-
-[State 825, Solto]
-type = SelfState
-trigger1 = Time > 0
-trigger1 = !gethitvar(isbound)
-value = 5050
-
-[Statedef 826]
-type = S
-movetype = H
-physics = N
-velset = 0,0
-ctrl = 0
-
-[State 826, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-value = 5002
-
-[State 826, Preso: pose]
-type = ChangeAnim
-trigger1 = Time > 0 && Anim = 5002 && AnimTime = 0
-trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
-value = 5000
-elem = 1
-
-[State 826, Solto]
-type = SelfState
-trigger1 = Time > 0
-trigger1 = !gethitvar(isbound)
-value = 5050
-
-[Statedef 827]
-type = S
-movetype = H
-physics = N
-velset = 0,0
-ctrl = 0
-
-[State 827, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-value = 5011
-
-[State 827, Preso: pose]
-type = ChangeAnim
-trigger1 = Time > 0 && Anim = 5011 && AnimTime = 0
-trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
-value = 5000
-elem = 1
-
-[State 827, Solto]
-type = SelfState
-trigger1 = Time > 0
-trigger1 = !gethitvar(isbound)
-value = 5050
-
-[Statedef 828]
-type = S
-movetype = H
-physics = N
-velset = 0,0
-ctrl = 0
-
-[State 828, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-value = 5012
-
-[State 828, Preso: pose]
-type = ChangeAnim
-trigger1 = Time > 0 && Anim = 5012 && AnimTime = 0
-trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
-value = 5000
-elem = 1
-
-[State 828, Solto]
-type = SelfState
-trigger1 = Time > 0
-trigger1 = !gethitvar(isbound)
-value = 5050
-
-[Statedef 829]
-type = S
-movetype = H
-physics = N
-velset = 0,0
-ctrl = 0
-
-[State 829, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-value = 5012
-
-[State 829, Preso: pose]
-type = ChangeAnim
-trigger1 = Time > 0 && Anim = 5012 && AnimTime = 0
-trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
-value = 5000
-elem = 1
-
-[State 829, Solto]
-type = SelfState
-trigger1 = Time > 0
-trigger1 = !gethitvar(isbound)
-value = 5050
-
-[Statedef 823]
-type = A
-movetype = H
-physics = N
-velset = -4.2, -5.5
-ctrl = 0
-
-[State 823, Pose]
-type = ChangeAnim
-trigger1 = Time = 0
-value = 5030
-
-[State 823, Queda]
-type = VelAdd
-trigger1 = 1
-y = .45
-
-[State 823, Chão]
-type = SelfState
-trigger1 = Vel Y > 0
-trigger1 = Pos Y >= 0
-value = 5100
-
-[Statedef 824]
-type = A
-movetype = H
-physics = N
-velset = 4.6, -6.5
-ctrl = 0
-
-[State 824, Pose]
-type = ChangeAnim
-trigger1 = Time = 0
-value = 5030
-
-[State 824, Passa por cima]
-type = PlayerPush
-trigger1 = 1
-value = 0
-
-[State 824, Queda]
-type = VelAdd
-trigger1 = 1
-y = .45
-
-[State 824, Chão]
-type = SelfState
-trigger1 = Vel Y > 0
-trigger1 = Pos Y >= 0
-value = 5100
-
 [Statedef -4]
 
 ; ---- Aura animada 'diabo' (ferramentas/aura.py): 4 camadas, 0 partículas, explods 9600 a 9603, no máximo 4 vivos
@@ -6831,7 +8211,7 @@ map = "au_diabo_c"
 value = 1
 ignorehitpause = 1
 
-; >>> aura_no_corpo.py: a aura segue o corpo (issue #51). Tabelas medidas nos desenhos do .air: 182 + 92 valores, 981 trechos. Pivô nas costas em 1, -90. Não edite: rode python3 ferramentas/aura_no_corpo.py
+; >>> aura_no_corpo.py: a aura segue o corpo (issue #51). Tabelas medidas nos desenhos do .air: 185 + 92 valores, 994 trechos. Pivô nas costas em 1, -90. Não edite: rode python3 ferramentas/aura_no_corpo.py
 [State -4, Aura diabo no corpo: costas de quem está em pé]
 type = MapSet
 trigger1 = 1
@@ -6993,7 +8373,8 @@ ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -8 -10]
 type = MapSet
-trigger1 = Anim = 1701 && AnimElemNo(0) = 6
+trigger1 = Anim = 1660 && AnimElemNo(0) = [7, 8]
+trigger2 = Anim = 1701 && AnimElemNo(0) = 6
 map = "au_diabo_p"
 value = 7612
 ignorehitpause = 1
@@ -7128,6 +8509,13 @@ trigger1 = Anim = 1300 && AnimElemNo(0) = 4
 trigger2 = Anim = 1301 && AnimElemNo(0) = 4
 map = "au_diabo_p"
 value = 7867
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -8 -6]
+type = MapSet
+trigger1 = Anim = 1660 && AnimElemNo(0) = 1
+map = "au_diabo_p"
+value = 7868
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -6 -6]
@@ -7271,14 +8659,13 @@ ignorehitpause = 1
 [State -4, Aura diabo no corpo: costas -2 -4]
 type = MapSet
 trigger1 = Anim = 100 && AnimElemNo(0) = 4
-trigger2 = Anim = 195 && AnimElemNo(0) = [10, 11]
-trigger3 = Anim = 313 && AnimElemNo(0) = 7
-trigger4 = Anim = 331 && AnimElemNo(0) = [1, 3]
-trigger5 = Anim = 331 && AnimElemNo(0) = 7
-trigger6 = Anim = 333 && AnimElemNo(0) = [6, 7]
-trigger7 = Anim = 810 && AnimElemNo(0) = [21, 22]
-trigger8 = Anim = 1501 && AnimElemNo(0) = 4
-trigger9 = Anim = 3003 && AnimElemNo(0) = [3, 4]
+trigger2 = Anim = 313 && AnimElemNo(0) = 7
+trigger3 = Anim = 331 && AnimElemNo(0) = [1, 3]
+trigger4 = Anim = 331 && AnimElemNo(0) = 7
+trigger5 = Anim = 333 && AnimElemNo(0) = [6, 7]
+trigger6 = Anim = 810 && AnimElemNo(0) = [21, 22]
+trigger7 = Anim = 1501 && AnimElemNo(0) = 4
+trigger8 = Anim = 3003 && AnimElemNo(0) = [3, 4]
 map = "au_diabo_p"
 value = 7999
 ignorehitpause = 1
@@ -7291,12 +8678,11 @@ trigger3 = Anim = 42 && AnimElemNo(0) = [1, 2]
 trigger4 = Anim = 43 && AnimElemNo(0) = [1, 2]
 trigger5 = Anim = 47 && AnimElemNo(0) = 2
 trigger6 = Anim = 100 && AnimElemNo(0) = 8
-trigger7 = Anim = 195 && AnimElemNo(0) = [1, 2]
-trigger8 = Anim = 201
-trigger9 = Anim = 216 && AnimElemNo(0) = 7
-trigger10 = Anim = 313 && AnimElemNo(0) = 1
-trigger11 = Anim = 345 && AnimElemNo(0) = 7
-trigger12 = Anim = 2000 && AnimElemNo(0) = 1
+trigger7 = Anim = 201
+trigger8 = Anim = 216 && AnimElemNo(0) = 7
+trigger9 = Anim = 313 && AnimElemNo(0) = 1
+trigger10 = Anim = 345 && AnimElemNo(0) = 7
+trigger11 = Anim = 2000 && AnimElemNo(0) = 1
 map = "au_diabo_p"
 value = 8000
 ignorehitpause = 1
@@ -7328,8 +8714,7 @@ ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas +8 -4]
 type = MapSet
-trigger1 = Anim = 195 && AnimElemNo(0) = [3, 9]
-trigger2 = Anim = 800
+trigger1 = Anim = 800
 map = "au_diabo_p"
 value = 8004
 ignorehitpause = 1
@@ -7371,7 +8756,8 @@ ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -4 -2]
 type = MapSet
-trigger1 = Anim = 831 && AnimElemNo(0) = 9
+trigger1 = Anim = 195 && AnimElemNo(0) = [10, 11]
+trigger2 = Anim = 831 && AnimElemNo(0) = 9
 map = "au_diabo_p"
 value = 8126
 ignorehitpause = 1
@@ -7488,20 +8874,21 @@ ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -4 +0]
 type = MapSet
-trigger1 = Anim = 5000 && AnimElemNo(0) = 1
-trigger2 = Anim = 5001 && AnimElemNo(0) = [1, 2]
-trigger3 = Anim = 5002 && AnimElemNo(0) = [1, 3]
-trigger4 = Anim = 5005 && AnimElemNo(0) = 1
-trigger5 = Anim = 5006 && AnimElemNo(0) = 1
-trigger6 = Anim = 5007 && AnimElemNo(0) = 1
-trigger7 = Anim = 5010 && AnimElemNo(0) = 1
-trigger8 = Anim = 5011 && AnimElemNo(0) = [1, 2]
-trigger9 = Anim = 5012 && AnimElemNo(0) = [1, 3]
-trigger10 = Anim = 5015 && AnimElemNo(0) = 1
-trigger11 = Anim = 5016 && AnimElemNo(0) = 1
-trigger12 = Anim = 5017 && AnimElemNo(0) = 1
-trigger13 = Anim = 5030 && AnimElemNo(0) = 1
-trigger14 = Anim = 5300 && AnimElemNo(0) = 1
+trigger1 = Anim = 195 && AnimElemNo(0) = [1, 2]
+trigger2 = Anim = 5000 && AnimElemNo(0) = 1
+trigger3 = Anim = 5001 && AnimElemNo(0) = [1, 2]
+trigger4 = Anim = 5002 && AnimElemNo(0) = [1, 3]
+trigger5 = Anim = 5005 && AnimElemNo(0) = 1
+trigger6 = Anim = 5006 && AnimElemNo(0) = 1
+trigger7 = Anim = 5007 && AnimElemNo(0) = 1
+trigger8 = Anim = 5010 && AnimElemNo(0) = 1
+trigger9 = Anim = 5011 && AnimElemNo(0) = [1, 2]
+trigger10 = Anim = 5012 && AnimElemNo(0) = [1, 3]
+trigger11 = Anim = 5015 && AnimElemNo(0) = 1
+trigger12 = Anim = 5016 && AnimElemNo(0) = 1
+trigger13 = Anim = 5017 && AnimElemNo(0) = 1
+trigger14 = Anim = 5030 && AnimElemNo(0) = 1
+trigger15 = Anim = 5300 && AnimElemNo(0) = 1
 map = "au_diabo_p"
 value = 8254
 ignorehitpause = 1
@@ -7531,9 +8918,17 @@ map = "au_diabo_p"
 value = 8258
 ignorehitpause = 1
 
+[State -4, Aura diabo no corpo: costas +6 +0]
+type = MapSet
+trigger1 = Anim = 195 && AnimElemNo(0) = [3, 5]
+map = "au_diabo_p"
+value = 8259
+ignorehitpause = 1
+
 [State -4, Aura diabo no corpo: costas +8 +0]
 type = MapSet
-trigger1 = Anim = 3002 && AnimElemNo(0) = 3
+trigger1 = Anim = 195 && AnimElemNo(0) = [6, 9]
+trigger2 = Anim = 3002 && AnimElemNo(0) = 3
 map = "au_diabo_p"
 value = 8260
 ignorehitpause = 1
@@ -7598,7 +8993,9 @@ type = MapSet
 trigger1 = Anim = 216 && AnimElemNo(0) = [1, 2]
 trigger2 = Anim = 246 && AnimElemNo(0) = 5
 trigger3 = Anim = 345 && AnimElemNo(0) = [1, 2]
-trigger4 = Anim = 7452 && AnimElemNo(0) = 5
+trigger4 = Anim = 1660 && AnimElemNo(0) = [2, 3]
+trigger5 = Anim = 1660 && AnimElemNo(0) = 6
+trigger6 = Anim = 7452 && AnimElemNo(0) = 5
 map = "au_diabo_p"
 value = 8385
 ignorehitpause = 1
@@ -7726,6 +9123,13 @@ type = MapSet
 trigger1 = Anim = 100 && AnimElemNo(0) = 7
 map = "au_diabo_p"
 value = 8644
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +10 +6]
+type = MapSet
+trigger1 = Anim = 1660 && AnimElemNo(0) = [4, 5]
+map = "au_diabo_p"
+value = 8645
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -16 +8]
@@ -8911,7 +10315,9 @@ trigger11 = Anim = 1200 && AnimElemNo(0) = 5
 trigger12 = Anim = 1201 && AnimElemNo(0) = 6
 trigger13 = Anim = 1300 && AnimElemNo(0) = 1
 trigger14 = Anim = 1301 && AnimElemNo(0) = 1
-trigger15 = Anim = 3002 && AnimElemNo(0) = [4, 5]
+trigger15 = Anim = 1660 && AnimElemNo(0) = 1
+trigger16 = Anim = 1660 && AnimElemNo(0) = [7, 8]
+trigger17 = Anim = 3002 && AnimElemNo(0) = [4, 5]
 map = "au_diabo_q"
 value = 8432
 ignorehitpause = 1
@@ -8920,22 +10326,23 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = Anim = 20 && AnimElemNo(0) = 3
 trigger2 = Anim = 21 && AnimElemNo(0) = 6
-trigger3 = Anim = 195 && AnimElemNo(0) = [10, 11]
-trigger4 = Anim = 200
-trigger5 = Anim = 230 && AnimElemNo(0) = [1, 2]
-trigger6 = Anim = 311 && AnimElemNo(0) = 1
-trigger7 = Anim = 311 && AnimElemNo(0) = [6, 7]
-trigger8 = Anim = 322 && AnimElemNo(0) = [2, 4]
-trigger9 = Anim = 323 && AnimElemNo(0) = 1
-trigger10 = Anim = 332 && AnimElemNo(0) = [1, 2]
-trigger11 = Anim = 340 && AnimElemNo(0) = [1, 2]
-trigger12 = Anim = 831 && AnimElemNo(0) = 9
-trigger13 = Anim = 1102 && AnimElemNo(0) = 4
-trigger14 = Anim = 1103 && AnimElemNo(0) = 4
-trigger15 = Anim = 1500 && AnimElemNo(0) = 3
-trigger16 = Anim = 1501 && AnimElemNo(0) = 6
-trigger17 = Anim = 3000 && AnimElemNo(0) = [1, 2]
-trigger18 = Anim = 3200 && AnimElemNo(0) = [1, 2]
+trigger3 = Anim = 195 && AnimElemNo(0) = [1, 2]
+trigger4 = Anim = 195 && AnimElemNo(0) = [10, 11]
+trigger5 = Anim = 200
+trigger6 = Anim = 230 && AnimElemNo(0) = [1, 2]
+trigger7 = Anim = 311 && AnimElemNo(0) = 1
+trigger8 = Anim = 311 && AnimElemNo(0) = [6, 7]
+trigger9 = Anim = 322 && AnimElemNo(0) = [2, 4]
+trigger10 = Anim = 323 && AnimElemNo(0) = 1
+trigger11 = Anim = 332 && AnimElemNo(0) = [1, 2]
+trigger12 = Anim = 340 && AnimElemNo(0) = [1, 2]
+trigger13 = Anim = 831 && AnimElemNo(0) = 9
+trigger14 = Anim = 1102 && AnimElemNo(0) = 4
+trigger15 = Anim = 1103 && AnimElemNo(0) = 4
+trigger16 = Anim = 1500 && AnimElemNo(0) = 3
+trigger17 = Anim = 1501 && AnimElemNo(0) = 6
+trigger18 = Anim = 3000 && AnimElemNo(0) = [1, 2]
+trigger19 = Anim = 3200 && AnimElemNo(0) = [1, 2]
 map = "au_diabo_q"
 value = 8440
 ignorehitpause = 1
@@ -9001,17 +10408,16 @@ ignorehitpause = 1
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro +8, tronco +0 graus]
 type = MapSet
 trigger1 = Anim = 6
-trigger2 = Anim = 195 && AnimElemNo(0) = [3, 9]
-trigger3 = Anim = 246 && AnimElemNo(0) = 6
-trigger4 = Anim = 400 && AnimElemNo(0) = [1, 3]
-trigger5 = Anim = 810 && AnimElemNo(0) = 1
-trigger6 = Anim = 810 && AnimElemNo(0) = 5
-trigger7 = Anim = 810 && AnimElemNo(0) = 10
-trigger8 = Anim = 810 && AnimElemNo(0) = 15
-trigger9 = Anim = 1300 && AnimElemNo(0) = 6
-trigger10 = Anim = 1301 && AnimElemNo(0) = 6
-trigger11 = Anim = 1400 && AnimElemNo(0) = 3
-trigger12 = Anim = 1401 && AnimElemNo(0) = 3
+trigger2 = Anim = 246 && AnimElemNo(0) = 6
+trigger3 = Anim = 400 && AnimElemNo(0) = [1, 3]
+trigger4 = Anim = 810 && AnimElemNo(0) = 1
+trigger5 = Anim = 810 && AnimElemNo(0) = 5
+trigger6 = Anim = 810 && AnimElemNo(0) = 10
+trigger7 = Anim = 810 && AnimElemNo(0) = 15
+trigger8 = Anim = 1300 && AnimElemNo(0) = 6
+trigger9 = Anim = 1301 && AnimElemNo(0) = 6
+trigger10 = Anim = 1400 && AnimElemNo(0) = 3
+trigger11 = Anim = 1401 && AnimElemNo(0) = 3
 map = "au_diabo_q"
 value = 8464
 ignorehitpause = 1
@@ -9126,11 +10532,12 @@ trigger22 = Anim = 1201 && AnimElemNo(0) = 7
 trigger23 = Anim = 1500 && AnimElemNo(0) = 2
 trigger24 = Anim = 1501 && AnimElemNo(0) = 2
 trigger25 = Anim = 1501 && AnimElemNo(0) = 3
-trigger26 = Anim = 1700 && AnimElemNo(0) = 1
-trigger27 = Anim = 1701 && AnimElemNo(0) = 1
-trigger28 = Anim = 3201 && AnimElemNo(0) = 2
-trigger29 = Anim = 3201 && AnimElemNo(0) = 3
-trigger30 = Anim = 5120 && AnimElemNo(0) = 5
+trigger26 = Anim = 1660 && AnimElemNo(0) = 6
+trigger27 = Anim = 1700 && AnimElemNo(0) = 1
+trigger28 = Anim = 1701 && AnimElemNo(0) = 1
+trigger29 = Anim = 3201 && AnimElemNo(0) = 2
+trigger30 = Anim = 3201 && AnimElemNo(0) = 3
+trigger31 = Anim = 5120 && AnimElemNo(0) = 5
 map = "au_diabo_q"
 value = 8960
 ignorehitpause = 1
@@ -9146,40 +10553,42 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = Anim = 21 && AnimElemNo(0) = 5
 trigger2 = Anim = 141
-trigger3 = Anim = 210 && AnimElemNo(0) = 3
-trigger4 = Anim = 332 && AnimElemNo(0) = [3, 5]
-trigger5 = Anim = 333 && AnimElemNo(0) = 2
-trigger6 = Anim = 342
-trigger7 = Anim = 344 && AnimElemNo(0) = 3
-trigger8 = Anim = 430
-trigger9 = Anim = 440 && AnimElemNo(0) = 6
-trigger10 = Anim = 601 && AnimElemNo(0) = 1
-trigger11 = Anim = 601 && AnimElemNo(0) = 4
-trigger12 = Anim = 700 && AnimElemNo(0) = 2
-trigger13 = Anim = 700 && AnimElemNo(0) = 6
-trigger14 = Anim = 705 && AnimElemNo(0) = 1
-trigger15 = Anim = 705 && AnimElemNo(0) = 5
-trigger16 = Anim = 765 && AnimElemNo(0) = 5
-trigger17 = Anim = 810 && AnimElemNo(0) = 17
-trigger18 = Anim = 830
-trigger19 = Anim = 831 && AnimElemNo(0) = [1, 2]
-trigger20 = Anim = 1000 && AnimElemNo(0) = [1, 5]
-trigger21 = Anim = 1000 && AnimElemNo(0) = 7
-trigger22 = Anim = 1001 && AnimElemNo(0) = [1, 5]
-trigger23 = Anim = 1400 && AnimElemNo(0) = 1
-trigger24 = Anim = 1401 && AnimElemNo(0) = 1
-trigger25 = Anim = 1600 && AnimElemNo(0) = 5
-trigger26 = Anim = 1601 && AnimElemNo(0) = 5
-trigger27 = Anim = 1650 && AnimElemNo(0) = 5
-trigger28 = Anim = 1700 && AnimElemNo(0) = 2
-trigger29 = Anim = 1700 && AnimElemNo(0) = 6
-trigger30 = Anim = 1701 && AnimElemNo(0) = 2
-trigger31 = Anim = 3201 && AnimElemNo(0) = 6
-trigger32 = Anim = 3203 && AnimElemNo(0) = 2
-trigger33 = Anim = 5120 && AnimElemNo(0) = 3
-trigger34 = Anim = 5120 && AnimElemNo(0) = 4
-trigger35 = Anim = 5200 && AnimElemNo(0) = 1
-trigger36 = Anim = 5210 && AnimElemNo(0) = 1
+trigger3 = Anim = 195 && AnimElemNo(0) = [3, 5]
+trigger4 = Anim = 195 && AnimElemNo(0) = [6, 9]
+trigger5 = Anim = 210 && AnimElemNo(0) = 3
+trigger6 = Anim = 332 && AnimElemNo(0) = [3, 5]
+trigger7 = Anim = 333 && AnimElemNo(0) = 2
+trigger8 = Anim = 342
+trigger9 = Anim = 344 && AnimElemNo(0) = 3
+trigger10 = Anim = 430
+trigger11 = Anim = 440 && AnimElemNo(0) = 6
+trigger12 = Anim = 601 && AnimElemNo(0) = 1
+trigger13 = Anim = 601 && AnimElemNo(0) = 4
+trigger14 = Anim = 700 && AnimElemNo(0) = 2
+trigger15 = Anim = 700 && AnimElemNo(0) = 6
+trigger16 = Anim = 705 && AnimElemNo(0) = 1
+trigger17 = Anim = 705 && AnimElemNo(0) = 5
+trigger18 = Anim = 765 && AnimElemNo(0) = 5
+trigger19 = Anim = 810 && AnimElemNo(0) = 17
+trigger20 = Anim = 830
+trigger21 = Anim = 831 && AnimElemNo(0) = [1, 2]
+trigger22 = Anim = 1000 && AnimElemNo(0) = [1, 5]
+trigger23 = Anim = 1000 && AnimElemNo(0) = 7
+trigger24 = Anim = 1001 && AnimElemNo(0) = [1, 5]
+trigger25 = Anim = 1400 && AnimElemNo(0) = 1
+trigger26 = Anim = 1401 && AnimElemNo(0) = 1
+trigger27 = Anim = 1600 && AnimElemNo(0) = 5
+trigger28 = Anim = 1601 && AnimElemNo(0) = 5
+trigger29 = Anim = 1650 && AnimElemNo(0) = 5
+trigger30 = Anim = 1700 && AnimElemNo(0) = 2
+trigger31 = Anim = 1700 && AnimElemNo(0) = 6
+trigger32 = Anim = 1701 && AnimElemNo(0) = 2
+trigger33 = Anim = 3201 && AnimElemNo(0) = 6
+trigger34 = Anim = 3203 && AnimElemNo(0) = 2
+trigger35 = Anim = 5120 && AnimElemNo(0) = 3
+trigger36 = Anim = 5120 && AnimElemNo(0) = 4
+trigger37 = Anim = 5200 && AnimElemNo(0) = 1
+trigger38 = Anim = 5210 && AnimElemNo(0) = 1
 map = "au_diabo_q"
 value = 8968
 ignorehitpause = 1
@@ -9267,8 +10676,9 @@ trigger3 = Anim = 323 && AnimElemNo(0) = 7
 trigger4 = Anim = 440 && AnimElemNo(0) = 1
 trigger5 = Anim = 1502 && AnimElemNo(0) = 2
 trigger6 = Anim = 1503 && AnimElemNo(0) = 2
-trigger7 = Anim = 3201 && AnimElemNo(0) = 4
-trigger8 = Anim = 3202 && AnimElemNo(0) = 4
+trigger7 = Anim = 1660 && AnimElemNo(0) = [2, 3]
+trigger8 = Anim = 3201 && AnimElemNo(0) = 4
+trigger9 = Anim = 3202 && AnimElemNo(0) = 4
 map = "au_diabo_q"
 value = 9472
 ignorehitpause = 1
@@ -9371,6 +10781,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = Anim = 311 && AnimElemNo(0) = [4, 5]
 trigger2 = Anim = 313 && AnimElemNo(0) = [3, 5]
+trigger3 = Anim = 1660 && AnimElemNo(0) = [4, 5]
 map = "au_diabo_q"
 value = 9984
 ignorehitpause = 1
@@ -10064,3 +11475,355 @@ xshear = -0.02 * max(-5, min(5, root,map(au_sil_x)))
 ignorehitpause = 1
 
 ; <<< aura_silhueta.py
+
+; ---- agarrão segura-e-bate (ferramentas/agarrao_mk.py) ----
+
+[Statedef 822]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 822, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5941)
+value = 5941
+
+[State 822, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5941)
+value = 5001
+
+[State 822, Preso: pose]
+type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
+trigger1 = Time > 0 && Anim = 5001 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 822, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
+
+[State 822, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 825]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 825, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5941)
+value = 5941
+
+[State 825, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5941)
+value = 5002
+
+[State 825, Preso: pose]
+type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
+trigger1 = Time > 0 && Anim = 5002 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 825, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
+
+[State 825, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 826]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 826, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5941)
+value = 5941
+
+[State 826, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5941)
+value = 5002
+
+[State 826, Preso: pose]
+type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
+trigger1 = Time > 0 && Anim = 5002 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 826, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
+
+[State 826, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 827]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 827, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5942)
+value = 5942
+
+[State 827, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5942)
+value = 5011
+
+[State 827, Preso: pose]
+type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
+trigger1 = Time > 0 && Anim = 5011 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 827, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
+
+[State 827, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 828]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 828, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5942)
+value = 5942
+
+[State 828, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5942)
+value = 5012
+
+[State 828, Preso: pose]
+type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
+trigger1 = Time > 0 && Anim = 5012 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 828, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
+
+[State 828, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 829]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 829, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5942)
+value = 5942
+
+[State 829, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5942)
+value = 5012
+
+[State 829, Preso: pose]
+type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
+trigger1 = Time > 0 && Anim = 5012 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 829, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
+
+[State 829, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 823]
+type = A
+movetype = H
+physics = N
+velset = -4.2, -5.5
+ctrl = 0
+
+[State 823, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5943)
+value = 5943
+
+[State 823, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5943)
+value = 5030
+
+[State 823, Caindo]
+type = ChangeAnim
+trigger1 = Vel Y > 0
+trigger1 = Anim = 5943
+trigger1 = SelfAnimExist(5944)
+value = 5944
+
+[State 823, Queda]
+type = VelAdd
+trigger1 = 1
+y = .45
+
+[State 823, Chão]
+type = SelfState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 5100
+
+[Statedef 824]
+type = A
+movetype = H
+physics = N
+velset = 4.6, -6.5
+ctrl = 0
+
+[State 824, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5943)
+value = 5943
+
+[State 824, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5943)
+value = 5030
+
+[State 824, Caindo]
+type = ChangeAnim
+trigger1 = Vel Y > 0
+trigger1 = Anim = 5943
+trigger1 = SelfAnimExist(5944)
+value = 5944
+
+[State 824, Passa por cima]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 824, Queda]
+type = VelAdd
+trigger1 = 1
+y = .45
+
+[State 824, Chão]
+type = SelfState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 5100
+
+[Statedef 835]
+type = A
+movetype = H
+physics = N
+velset = -1.6, -4
+ctrl = 0
+
+[State 835, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5943)
+value = 5943
+
+[State 835, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5943)
+value = 5030
+
+[State 835, Caindo]
+type = ChangeAnim
+trigger1 = Vel Y > 0
+trigger1 = Anim = 5943
+trigger1 = SelfAnimExist(5944)
+value = 5944
+
+[State 835, Queda]
+type = VelAdd
+trigger1 = 1
+y = .45
+
+[State 835, Chão]
+type = SelfState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 5100

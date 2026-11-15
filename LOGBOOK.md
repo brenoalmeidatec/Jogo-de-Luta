@@ -2588,3 +2588,19 @@ sprite, e o `pixel.py sincroniza L/A/NN` refaz só aquele quadro do 1x.
 
 **Robôs:** Pengaró 189/0, Gutto 186/0, CK 226/0, Hazak 238/0. **Saída:** `docs/anatomia-51/membros/` (antes/depois de
 cada lutador, o jab no jogo e o vídeo das correntes do Pengaró).
+## 2026-11-15 — Diabo Loiro #44, 2ª rodada: Cobrança do Diabo e folhas próprias (Claude, thread do Hazak)
+
+**Pedido do Breno na #44:** tirar o Chapéu Bumerangue, especial novo que não seja projétil nem repita golpe de outro
+lutador, desenho próprio para os golpes do Diabo que usavam a folha "mais parecida", efeitos por nossa conta; robô +
+vídeo conferido antes de juntar.
+
+**Feito (etapa 1):**
+- **Cobrança do Diabo** (1660 fraca / 1661 forte, `↘ + chute` na forma): investida de ombro em brasa que atravessa
+  projétil e tira 150 de barra de quem apanha (vai para o Diabo). `diabo_loiro.py`, 2 roteiros no robô.
+- `ferramentas/diabo_proprio.py` (fila de pedidos, juntar fileiras do Gemini, conversão na escala e na paleta única do
+  Diabo, `harmonizar` com o parado, folha de contato) e `ferramentas/gemini_diabo.js`.
+- Folhas próprias: provoca e cobranca. As outras 20 seguem quando os limites de imagem voltarem
+  (docs/diabo-44/LEIA-ME.md tem a tabela).
+- Conferência do vídeo quadro a quadro (8 revisores + 1 cético): o desenho novo destoava do parado (risca branca,
+  manchas magenta, munhequeira verde-água) → `harmonizar`; o estouro da Cobrança parecia preso → acompanha o P2 e
+  ficou menor. Robô 249/0. Vídeos em docs/diabo-44/video/.

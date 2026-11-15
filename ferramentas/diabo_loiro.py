@@ -18,6 +18,9 @@ Diabo Loiro (o Despertar do Hazak, que até aqui não existia no jogo):
               aprovadas), ligadas pelo ferramentas/aura.py (Explods 9600-9601, [Statedef -4])
   rajadona    Rajadona de Ki das Trevas (1650): com o Diabo e 1 estoque, → ← x/y vira o raio enorme e contínuo, preto,
               vermelho e ouro (7420 o raio, 7421 o raio se desfazendo), 12 acertos
+  cobrança    Cobrança do Diabo (1660/1661, #44, no lugar do Chapéu Bumerangue): com o Diabo, ↓ → a/b (no lugar do Giro
+              de Garagem) abre o sobretudo, desliza num rastro de brasa atravessando projétil e bate com o ombro; se
+              acerta, cobra a dívida: tira 150 de barra do oponente e põe na dele. Desenho próprio d_cobranca (8 quadros)
   agarrão     o Abraço de Quebrada (810) do Diabo pega fogo: cada pancada solta chama laranja-ouro no oponente e o fim
               explode em ouro, com mais dano
 Grupos e ações 7400-7499: fora dos do efeitos.py (8200-8291, 9200-9272) e do parry (7690/7691, 8290/8291).
@@ -71,6 +74,10 @@ DIABO = 20000       # grupo do desenho do Diabo = grupo do Hazak + DIABO
 LIGA = 122          # tick da cena (estado 2000) em que ele vira o Diabo: início do último desenho (gerar_hazaki)
 TEMPO = 600         # ticks de Diabo Loiro (10 s), como os outros despertados
 RAJADA = {"sai": 28, "dura": 66, "acertos": 12, "dano": 16, "x": 52, "y": -80, "comp": 286}
+# Cobrança do Diabo: ticks por desenho; desenhos com caixa de golpe; a (curta) e b (longa)
+COBRANCA = {"pasta": "d_cobranca", "grupo": 21660, "ticks": [4, 6, 3, 3, 3, 6, 8, 10], "ativos": (3, 4, 5),
+            "sai": 10, 1660: {"vel": 6.5, "dura": 12, "dano": 60, "cai": False},
+            1661: {"vel": 8.5, "dura": 14, "dano": 80, "cai": True}, "barra": 150}
 PATROA = RAIZ / "sprites/hazaki/quadros_arcade_hd"
 EIXO_HD = (540, 660)  # pé do lutador nos desenhos 3x (o EIXO 180, 220 do gerar_pengaro vezes 3)
 
@@ -251,6 +258,73 @@ def cns_rajada():
     return "".join(c)
 
 
+def acao_cobranca():
+    """(desenhos [(RGBA, eixo x, eixo y)], texto da ação 1660) do Diabo na Cobrança, ou (None, None) sem a folha.
+    Eixo nos pés (âncora do diabo_terno); caixas medidas no desenho, em px 3x como o resto do corpo."""
+    pasta = diabo_terno.SAIDA / COBRANCA["pasta"]
+    if not (pasta / "00.png").exists():
+        return None, None
+    quadros, linhas = [], []
+    for i, t in enumerate(COBRANCA["ticks"]):
+        img = Image.open(pasta / f"{i:02d}.png").convert("RGBA")
+        m = np.array(img)[..., 3] > 0
+        ax, ay = diabo_terno.ancora(m)
+        ex, ey = round(ax), int(ay)
+        quadros.append((img, ex, ey))
+        ys, xs = np.nonzero(m)
+        x0, x1, y0, y1 = xs.min() - ex, xs.max() - ex, ys.min() - ey, ys.max() - ey
+        topo = y0 + round(0.18 * (y1 - y0))  # sem a copa do chapéu
+        tronco = (max(x0, -75), 0, min(x1, 75), topo)
+        linhas.append(f"Clsn2: 1\n Clsn2[0] = {tronco[0]}, {tronco[1]}, {tronco[2]}, {tronco[3]}")
+        if i in COBRANCA["ativos"]:
+            ombro = (x1 - 70, topo + round(0.10 * (y1 - y0)), x1 + 6, topo + round(0.50 * (y1 - y0)))
+            linhas.append(f"Clsn1: 1\n Clsn1[0] = {ombro[0]}, {ombro[1]}, {ombro[2]}, {ombro[3]}")
+        linhas.append(f"{COBRANCA['grupo']},{i}, 0,0, {t}")
+    return quadros, "\n".join(linhas)
+
+
+def cns_cobranca(n):
+    c, k = COBRANCA, COBRANCA[n]
+    sai, fim = c["sai"], c["sai"] + k["dura"]
+    e = [f"[Statedef {n}]\ntype = S\nmovetype = A\nphysics = N\nctrl = 0\nsprpriority = 2\nanim = 1660\n"
+         "juggle = 4\nvelset = 0,0\n\n"]
+    e.append(ctl(n, "Zera", "VarSet", "trigger1 = Time = 0", "var(12) = 0"))
+    e.append(ctl(n, "Rastro do corpo em brasa", "AfterImage", "trigger1 = Time = 0", f"time = {fim + 4}",
+                 "length = 6", "timegap = 2", "framegap = 2", "trans = add", "palcolor = 0", "paladd = 120, 50, 0",
+                 "palmul = .55, .55, .55"))
+    e.append(ctl(n, "Abre o sobretudo: brasa nos pés", "Explod", "trigger1 = Time = 2", "anim = 9270",
+                 "postype = p1", "pos = 0, 0", "scale = .8, .8", "sprpriority = 3", "ownpal = 1", "removetime = -2"))
+    e.append(ctl(n, "Som do arranque", "PlaySnd", f"trigger1 = Time = {sai}", "value = F40,4"))
+    e.append(ctl(n, "Desliza", "VelSet", f"trigger1 = Time = {sai}", f"x = {k['vel']}"))
+    e.append(ctl(n, "Para", "VelSet", f"trigger1 = Time = {fim}", "trigger2 = MoveContact = 1", "x = 0"))
+    e.append(ctl(n, "Rastro de brasa no chão", "Explod", f"trigger1 = Time >= {sai} && Time < {fim}",
+                 f"trigger1 = (Time - {sai}) % 3 = 0", "anim = 9270", "postype = p1", "pos = -18, 0",
+                 "bindtime = 1", "scale = .55, .55", "sprpriority = 1", "ownpal = 1", "removetime = -2"))
+    e.append(ctl(n, "Atravessa projétil", "NotHitBy", f"trigger1 = Time >= {sai - 2} && Time < {fim}",
+                 "value = SCA, NP, SP, HP", "time = 1"))
+    queda = ["fall = 1", "fall.recover = 0", "ground.velocity = -6, -3.5", "air.velocity = -6, -3.5"] if k["cai"] \
+        else ["ground.velocity = -6", "air.velocity = -5, -3"]
+    e.append(ctl(n, "Ombrada", "HitDef", f"trigger1 = Time = {sai}", "attr = S, SA", f"damage = {k['dano']}, 8",
+                 "animtype = Heavy", "guardflag = MA", "hitflag = MAF", "priority = 5, Hit", "pausetime = 14, 14",
+                 "guard.pausetime = 10, 10", "sparkxy = -6, -40", "sparkno = S9240", "guard.sparkno = S9216",
+                 "sparkscale = 1.2, 1.2", "hitsound = S52,2", "guardsound = F6,0", "ground.type = High",
+                 "ground.slidetime = 10", "ground.hittime = 20", "envshake.time = 10", "envshake.freq = 120",
+                 "envshake.ampl = -5", "palfx.time = 8", "palfx.add = 140, 50, 0", *queda))
+    e.append(ctl(n, "Cobra a dívida: tira barra", "TargetPowerAdd", "trigger1 = MoveHit = 1",
+                 f"value = -{c['barra']}"))
+    e.append(ctl(n, "Cobra a dívida: põe na dele", "PowerAdd", "trigger1 = MoveHit = 1", f"value = {c['barra']}"))
+    # o estouro acompanha o P2 no começo do voo e é menor que o da Rajadona (conferência do vídeo: parecia preso)
+    e.append(ctl(n, "Estouro de ouro", "Explod", "trigger1 = MoveHit = 1", "anim = 9271", "postype = p2",
+                 "pos = 0, -50", "bindtime = 14", "scale = .75, .75", "sprpriority = 6", "ownpal = 1",
+                 "removetime = -2", "ignorehitpause = 1"))
+    e.append(ctl(n, "Fundo escurece", "BGPalFX", "trigger1 = MoveHit = 1", "time = 24", "mul = 120, 55, 50",
+                 "ignorehitpause = 1"))
+    e.append(ctl(n, "Defendido", "VarSet", "trigger1 = MoveGuarded = 1", "var(12) = 1"))
+    e.append(ctl(n, "Freia", "VelMul", f"trigger1 = Time > {fim}", "x = .8"))
+    e.append(ctl(n, "Fim", "ChangeState", "trigger1 = AnimTime = 0", "value = 0", "ctrl = 1"))
+    return "".join(e)
+
+
 MENOS_2 = """[State -2, Conta Diabo Loiro]
 type = VarAdd
 trigger1 = var(20) > 0
@@ -285,45 +359,99 @@ value = ifelse(var(20) > 0, 1.25, 1)
 """
 
 
-def agarrao_do_diabo(cns):
-    """No Diabo o Abraço de Quebrada (810) pega fogo: chama laranja-ouro em cada pancada e o fim explode em ouro."""
-    m = re.search(r"^\[Statedef 810\][^\n]*\n.*?(?=^\[Statedef )", cns, re.M | re.S)
-    assert m, "sem o estado 810 (agarrão em pé)"
-    bloco = m.group(0)
-    extra = []
-    for k, t in enumerate(int(x) for x in re.findall(r"\[State 810, Pancada \d+: dano\]\ntype = TargetLifeAdd\n"
-                                                      r"trigger1 = Time = (\d+)", bloco)):
-        extra.append(ctl(810, f"Diabo: chama {k + 1}", "Explod", f"trigger1 = Time = {t}", "trigger1 = var(20) > 0",
-                         "trigger1 = NumTarget", "anim = 9270", "postype = p2", "pos = 0, -55", "sprpriority = 6",
+# Fogo do agarrão do Diabo (#45, 2026-11-15): o Breno pediu que no Diabo Loiro o agarrão vire um poder que queima
+# o inimigo: ele segura, o fogo das trevas (vermelho e ouro) toma conta, o oponente fica queimando nas mãos dele até
+# o final explodir em fogo, no padrão grande e pesado da #47. Desenhos do ferramentas/despertados_47_blender.py hazaki.
+FOGO = {"agarrao": 7470, "final": 7471, "pancada": 7472}   # ação = grupo dos sprites
+
+
+def acoes_do_fogo():
+    """{ação: (quadros, texto da ação)} dos três efeitos do fogo do agarrão (sprites/efeitos_blender/hazaki/d47_*)."""
+    out = {}
+    for ef, g in FOGO.items():
+        pasta = BLENDER / f"d47_{ef}"
+        if not pasta.exists():
+            continue
+        quadros, ticks = render(f"d47_{ef}")
+        laco = json.loads((pasta / "meta.json").read_text(encoding="utf-8"))["laco"]
+        out[g] = (quadros, texto_acao(g, quadros, ticks, laco if laco >= 0 else None, None))
+    return out
+
+
+def agarrao_do_diabo(cns, fogo=True):
+    """No Diabo os três agarrões (810, 841, 831) queimam o oponente: o fogo das trevas toma conta dele na primeira
+    pancada e fica até o final, ele pisca vermelho e ouro, cada pancada estoura em fogo e o final explode."""
+    for n in (810, 841, 831):
+        m = re.search(rf"^\[Statedef {n}\][^\n]*\n.*?(?=^\[Statedef )", cns, re.M | re.S)
+        if not m:
+            assert n != 810, "sem o estado 810 (agarrão em pé)"
+            continue
+        bloco = m.group(0)
+        d = "trigger1 = var(20) > 0"
+        tempos = [int(x) for x in re.findall(rf"\[State {n}, Pancada \d+: dano\]\ntype = TargetLifeAdd\n"
+                                             r"trigger1 = Time = (\d+)", bloco)]
+        fim = re.search(rf"\[State {n}, Final: dano\]\ntype = TargetLifeAdd\ntrigger1 = Time = (\d+)", bloco)
+        assert fim, f"agarrão {n} sem o golpe final"
+        t = int(fim.group(1))
+        bind = re.search(rf"\[State {n}, Segura\]\ntype = TargetBind\n(?:[^\n]+\n)*?pos = (-?\d+)", bloco)
+        x = int(bind.group(1)) if bind else 30
+        acende = max(2, (tempos[0] if tempos else t) - 8)
+        extra = []
+        if fogo:
+            extra.append(ctl(n, "Diabo: o fogo toma conta", "Explod", f"trigger1 = Time = {acende}", d,
+                             "trigger1 = NumTarget", f"anim = {FOGO['agarrao']}", f"id = {FOGO['agarrao']}",
+                             "postype = p1", f"pos = {x}, 0", "bindtime = -1", "removetime = -1", "sprpriority = 6",
+                             "ownpal = 1", "trans = addalpha", "alpha = 170, 256", "scale = .85, .85",
+                             "ignorehitpause = 1"))  # somado: o oponente aparece queimando dentro do fogo
+            extra.append(ctl(n, "Diabo: o fogo apaga", "RemoveExplod", f"trigger1 = Time = {t}",
+                             "trigger2 = !NumTarget", f"id = {FOGO['agarrao']}"))
+            extra.append(ctl(n, "Diabo: oponente queimando", "PalFX", f"trigger1 = Time = [{acende}, {t}]", d,
+                             "trigger1 = NumTarget", "redirectid = target,id", "time = 2", "add = 90, 25, 0",
+                             "mul = 256, 200, 160", "sinadd = 60, 40, 0, 10"))
+        for k, tk in enumerate(tempos):
+            if fogo:
+                extra.append(ctl(n, f"Diabo: estouro de fogo {k + 1}", "Explod", f"trigger1 = Time = {tk}", d,
+                                 "trigger1 = NumTarget", f"anim = {FOGO['pancada']}", "postype = p2", "pos = 0, -60",
+                                 "sprpriority = 7", "ownpal = 1", "removetime = -2", "scale = .85, .85",
+                                 "ignorehitpause = 1"))
+            if not fogo:  # sem o fogo novo, a chama antiga em cada pancada
+                extra.append(ctl(n, f"Diabo: chama {k + 1}", "Explod", f"trigger1 = Time = {tk}", d,
+                                 "trigger1 = NumTarget", "anim = 9270", "postype = p2", "pos = 0, -55",
+                                 "sprpriority = 6", "ownpal = 1", "removetime = -2"))
+            extra.append(ctl(n, f"Diabo: tremida {k + 1}", "EnvShake", f"trigger1 = Time = {tk}", d,
+                             "trigger1 = NumTarget", "time = 8", "freq = 140", "ampl = -4"))
+            extra.append(ctl(n, f"Diabo: oponente pisca {k + 1}", "PalFX", f"trigger1 = Time = {tk}", d,
+                             "trigger1 = NumTarget", "redirectid = target,id", "time = 6", "add = 140, 50, 0"))
+        if fogo:
+            extra.append(ctl(n, "Diabo: explosão de fogo", "Explod", f"trigger1 = Time = {t}", d,
+                             "trigger1 = NumTarget", f"anim = {FOGO['final']}", "postype = p2", "pos = 0, -60",
+                             "sprpriority = 7", "ownpal = 1", "removetime = -2",
+                             "pausemovetime = 14", "ignorehitpause = 1", "scale = .95, .95"))
+        extra.append(ctl(n, "Diabo: estouro de ouro", "Explod", f"trigger1 = Time = {t}", d,
+                         "trigger1 = NumTarget", "anim = 9271", "postype = p2", "pos = 0, -50", "sprpriority = 6",
                          "ownpal = 1", "removetime = -2"))
-        extra.append(ctl(810, f"Diabo: tremida {k + 1}", "EnvShake", f"trigger1 = Time = {t}", "trigger1 = var(20) > 0",
-                         "trigger1 = NumTarget", "time = 8", "freq = 140", "ampl = -4"))
-        extra.append(ctl(810, f"Diabo: oponente pisca {k + 1}", "PalFX", f"trigger1 = Time = {t}",
-                         "trigger1 = var(20) > 0", "trigger1 = NumTarget", "redirectid = target,id", "time = 6",
-                         "add = 140, 50, 0"))
-    fim = re.search(r"\[State 810, Final: dano\]\ntype = TargetLifeAdd\ntrigger1 = Time = (\d+)", bloco)
-    assert fim, "agarrão 810 sem o golpe final"
-    t = int(fim.group(1))
-    extra.append(ctl(810, "Diabo: estouro de ouro", "Explod", f"trigger1 = Time = {t}", "trigger1 = var(20) > 0",
-                     "trigger1 = NumTarget", "anim = 9271", "postype = p2", "pos = 0, -50", "sprpriority = 6",
-                     "ownpal = 1", "removetime = -2"))
-    extra.append(ctl(810, "Diabo: dano do fogo", "TargetLifeAdd", f"trigger1 = Time = {t}", "trigger1 = var(20) > 0",
-                     "trigger1 = NumTarget", "value = -40"))
-    extra.append(ctl(810, "Diabo: tremida", "EnvShake", f"trigger1 = Time = {t}", "trigger1 = var(20) > 0",
-                     "time = 30", "ampl = -11", "freq = 90"))
-    extra.append(ctl(810, "Diabo: fundo escuro", "BGPalFX", "trigger1 = Time = 1", "trigger1 = var(20) > 0",
-                     "trigger1 = NumTarget", f"time = {t + 20}", "mul = 120, 55, 50", "sinadd = 0,0,0,0"))
-    extra.append(ctl(810, "Diabo: congela no impacto", "Pause", f"trigger1 = Time = {t}", "trigger1 = var(20) > 0",
-                     "trigger1 = NumTarget", "time = 12", "movetime = 0"))
-    extra.append(ctl(810, "Diabo: clarão", "BGPalFX", f"trigger1 = Time = {t}", "trigger1 = var(20) > 0",
-                     "time = 6", "add = 120, 120, 120", "mul = 120, 55, 50"))
-    marca = "[State 810, Segura]"
-    assert marca in bloco
-    novo = bloco.replace(marca, "".join(extra) + marca, 1)
-    return cns.replace(bloco, novo, 1)
+        extra.append(ctl(n, "Diabo: dano do fogo", "TargetLifeAdd", f"trigger1 = Time = {t}", d,
+                         "trigger1 = NumTarget", "value = -40"))
+        extra.append(ctl(n, "Diabo: tremida", "EnvShake", f"trigger1 = Time = {t}", d,
+                         "time = 30", "ampl = -11", "freq = 90"))
+        extra.append(ctl(n, "Diabo: fundo escuro", "BGPalFX", "trigger1 = Time = 1", d,
+                         "trigger1 = NumTarget", f"time = {t + 20}", "mul = 120, 55, 50", "sinadd = 0,0,0,0"))
+        extra.append(ctl(n, "Diabo: congela no impacto", "Pause", f"trigger1 = Time = {t}", d,
+                         "trigger1 = NumTarget", "time = 14", "movetime = 0"))
+        extra.append(ctl(n, "Diabo: clarão", "BGPalFX", f"trigger1 = Time = {t}", d,
+                         "time = 8", "add = 140, 110, 60", "mul = 120, 55, 50"))
+        marca = f"[State {n}, Segura]"
+        assert marca in bloco
+        cns = cns.replace(bloco, bloco.replace(marca, "".join(extra) + marca, 1), 1)
+    return cns
 
 
-def ligar_cns(cns, diabo, aura_cns):
+def tirar_agarrao_do_diabo(cns):
+    """Tira o que o agarrao_do_diabo pôs (para pôr de novo com os tempos de agora)."""
+    return re.sub(r"\[State 8[134]\d, Diabo[^\]]*\]\n(?:[^\n]+\n)+\n", "", cns)
+
+
+def ligar_cns(cns, diabo, aura_cns, cobranca=False):
     assert "[Statedef 2000]" not in cns, "o Hazak já tem estado 2000: rode o gerar_hazaki.py antes"
     preset = "[RemapPreset despertado]\n" + "".join(f"{g - DIABO},{i} = {g},{i}\n" for g, i, *_ in diabo) + "\n"
     assert cns.count("[Data]") == 1
@@ -332,11 +460,12 @@ def ligar_cns(cns, diabo, aura_cns):
     assert cns.count(cab) == 1
     cns = cns.replace(cab, cab + MENOS_2, 1)
     cns = agarrao_do_diabo(cns)
-    cns = cns.replace(cab, cns_despertar() + cns_rajada() + cab, 1)
+    extra = cns_cobranca(1660) + cns_cobranca(1661) if cobranca else ""
+    cns = cns.replace(cab, cns_despertar() + cns_rajada() + extra + cab, 1)
     return cns.rstrip() + "\n\n" + aura_cns
 
 
-def ligar_cmd(cmd):
+def ligar_cmd(cmd, cobranca=False):
     comando = '[Command]\nname = "despertar"\ncommand = x+y\ntime = 3\n\n'
     cab = "[Statedef -1]\n\n"
     assert cmd.count(cab) == 1 and 'name = "despertar"' not in cmd
@@ -347,6 +476,10 @@ def ligar_cmd(cmd):
                 'triggerall = command = "fb_x" || command = "fb_y"\ntriggerall = var(20) > 0\n'
                 'triggerall = power >= 1000\ntriggerall = statetype != A\ntriggerall = numproj = 0\n'
                 'trigger1 = ctrl || var(1)\n\n')
+    if cobranca:
+        entradas += ('[State -1, Cobrança do Diabo]\ntype = ChangeState\nvalue = ifelse(command = "df_b", 1661, 1660)\n'
+                     'triggerall = command = "df_a" || command = "df_b"\ntriggerall = var(20) > 0\n'
+                     'triggerall = statetype != A\ntrigger1 = ctrl || var(1)\n\n')
     return cmd.replace(cab, comando + cab + entradas, 1)
 
 
@@ -385,6 +518,13 @@ def aplicar(pasta=SAIDA):
     air = efeitos.por_acao(air, 7420, raio)
     air = efeitos.por_acao(air, 7421, some)
     novos[7420] = quadros
+    for g, (quadros, texto) in acoes_do_fogo().items():  # o fogo do agarrão do Diabo (#45)
+        air = efeitos.por_acao(air, g, texto)
+        novos[g] = quadros
+    cob, texto = acao_cobranca()
+    if cob:
+        air = efeitos.por_acao(air, 1660, texto)
+        novos[COBRANCA["grupo"]] = cob
     for acao, quadros in patroa().items():
         air = efeitos.por_acao(air, acao, "\n".join(f"{acao},{i}, 0,0, {t}, , , 0.3333, 0.3333"
                                                       for i, (*_, t) in enumerate(quadros)))
@@ -413,8 +553,8 @@ def aplicar(pasta=SAIDA):
         png.append((g, i, img.width, img.height, int(ex), int(ey), efeitos.blob_png(img)))
     efeitos.gravar(sff, pal, rle, png)
     arq_air.write_text(air, encoding="utf-8", newline="\n")
-    arq_cns.write_text(ligar_cns(cns, diabo, a.cns(cabecalho=True)), encoding="utf-8", newline="\n")
-    arq_cmd.write_text(ligar_cmd(cmd), encoding="utf-8", newline="\n")
+    arq_cns.write_text(ligar_cns(cns, diabo, a.cns(cabecalho=True), bool(cob)), encoding="utf-8", newline="\n")
+    arq_cmd.write_text(ligar_cmd(cmd, bool(cob)), encoding="utf-8", newline="\n")
     import gerar_sons  # sons da pedra, do ki e da rajadona (ESPECIAIS["hazaki"]): depois dos estados novos
     gerar_sons.ligar("hazaki", pasta)
     import aura_no_corpo  # as asas seguem o corpo (issue #51): mede os desenhos e refaz a tabela no [Statedef -4]

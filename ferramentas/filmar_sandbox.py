@@ -169,6 +169,7 @@ def preparar_cmd(origem, destino, nomes_golpes, despertar):
         for c in sorted(set(nomes_golpes)):
             b += f'[State -1, F_{c}]\ntype = AssertCommand\ntrigger1 = map(t_{c}) = 1\nname = "{c}"\nbuffer.time = 1\n\n'
         b += '[State -1, F_pos]\ntype = PosSet\ntrigger1 = map(t_pos) = 1\nx = map(t_posx) - 1000\n\n'
+        b += '[State -1, F_add]\ntype = PosAdd\ntrigger1 = map(t_add) = 1\nx = map(t_dx) - 1000\n\n'
     if despertar is not None:
         # var(50) não é usada pelo Pengaró: marca que a ativação do filme já aconteceu, para não religar.
         quando = (f"triggerall = roundstate = 2 && var(50) = 0 && var(20) = 0\n"
