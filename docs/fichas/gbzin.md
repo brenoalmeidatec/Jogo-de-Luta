@@ -131,6 +131,12 @@ sem tampar o HUD.
 - **Finalização:** quando um agarrão dele termina, o chão bate três vezes sozinho e a tela treme.
 - **Super Rebanho Desgovernado:** vira um estouro de rebanho do inferno atravessando a tela.
 
+### Golpes próprios do Grão-Pastor (regra nova da #47, 2026-11-15)
+
+O despertado tem **todos** os golpes próprios (16 normais, 4 correntes, especiais, super e agarrões) e nada da base
+entra nele. A lista completa foi proposta na #30 (comentário 6898246465) e **espera o ok do Breno**; as folhas `e_` só
+saem depois disso. Os pedidos `e_` do `folhas_gbzin.py` ainda são os antigos e serão reescritos pela lista aprovada.
+
 ### Exclusivos do Grão-Pastor (aprovados pelo Breno na #30, 2026-11-15)
 
 Os exclusivos antigos eram todos de motoboy e saíram junto. Os de baixo, no tema novo, foram aprovados pelo Breno.
