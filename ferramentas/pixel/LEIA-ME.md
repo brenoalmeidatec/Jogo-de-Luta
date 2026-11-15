@@ -56,7 +56,10 @@ pixel.py apaga Q x0 y0 x1 y1 [--so COR]
 # pedaços e proporção
 pixel.py copia Q x0 y0 x1 y1            # vai para a prancheta (~/.nazafight/pixel/prancheta.png)
 pixel.py cola Q2 x y [--espelha] [--gira 15] [--escala 0.8] [--por-baixo]
-pixel.py move Q x0 y0 x1 y1 DX DY [--gira G] [--espelha]
+pixel.py move Q x0 y0 x1 y1 DX DY [--gira G] [--espelha] [--escala F]   (ou --poli "x,y x,y ..." no lugar da caixa)
+pixel.py estica Q x0 y0 x1 y1 X1 Y1 --empurra   # alonga o pedaço (canela) e leva junto o que vem depois (sapato)
+pixel.py remenda Q x0 y0 x1 y1         # tapa os buracos com as cores em volta, na paleta
+pixel.py recolore Q --matiz 160 210 --para pele   # troca uma família de cor por outra, claro vira claro
 pixel.py escala Q 1.20                  # figura inteira em volta do eixo (pés do parado); cresce com Scale2x, sem borrar
 pixel.py sincroniza hazaki/rasteira     # 1x a partir do 3x
 
@@ -86,7 +89,14 @@ sobe para uns 4 a 5%, então trate aviso entre 3% e 6% como "olhar o quadro", n�
 - **Rasteira do Hazak:** a cabeça estava a 82% em todos os 8 quadros (o golpe inteiro 18% menor). `escala ... 1.20`
   levou para ~98%. O teste não foi gravado no Hazak base porque a #36 vai refazer a forma base inteira; o defeito vai no
   pedido das folhas novas.
-- **Diabo:** ver `docs/anatomia-51/`.
+- **Diabo:** o "braço a mais" era o antebraço do Hazak (faixa e munhequeira verde-água) que sobrou entre a manga e o
+  punho. `recolore --matiz 160 210 --para pele` tirou a munhequeira dos 337 quadros; no parado o antebraço nu virou manga
+  (`recolore --matiz 0 45 --regiao ... --para matiz:250-320`). Rasteira (`d_rasteira_arco`): `estica ... --empurra` na
+  canela, `move --poli ... --escala 0.78` na mão de apoio, `remenda` nos buracos e `escala 1.07` no golpe inteiro.
+  Antes/depois e vídeo em `docs/anatomia-51/teste1/`.
+- **Blender (recorte com malha), mesmo quadro:** dá o mesmo resultado na perna, mas a mão velha continua embaixo da nova:
+  no recorte cada pedaço precisa virar camada e o que fica atrás precisa ser pintado. Para consertar quadro existente a
+  ferramenta de pixel ganha; o Blender serve para animação nova montada de peças (asas, cabelo, casaco).
 
 ## Ideias para depois
 

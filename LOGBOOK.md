@@ -2385,3 +2385,30 @@ pengaro 189, ck 226, 0 falhas (o hazaki rodado em fila com outros deu de novo o 
 
 **Armadilha:** o `-4` roda antes da troca de ação; no pouso brusco (5030 para 5100) a camada fica 2 tiques fora.
 
+
+## 2026-11-15 — Ferramenta de pixel e teste 1 da anatomia no Diabo Loiro (issue #51, item 3) (Claude, thread do Alisson)
+
+**Pedido do Breno:** parar de regenerar quadro no ChatGPT; ferramenta nossa de desenho em pixel que o Claude usa por
+comando, com réguas de anatomia contra o parado; primeiro teste no Diabo com braço a mais, na rasteira do Diabo e no
+agachar do Hazak; comparar com Blender.
+
+**Feito:** `ferramentas/pixel/` (`pixel.py`, `reguas.py`, `quadros.py`, `LEIA-ME.md`): ver ampliado com grade e papel
+vegetal, tira com régua, antes/depois pelo git, GIF/MP4, pintar só com a paleta, copiar/colar, polígono, mover/girar/
+espelhar/escalar pedaço, esticar, remendar buraco (inpaint levado para a paleta), recolorir família de cor, escala da
+figura inteira sem borrar (Scale2x na grade do 1x), desfazer e histórico. Régua medida em todos os 2.872 quadros dos 6
+lutadores em `docs/anatomia-51/reguas/`.
+
+**Diabo:** o "braço a mais" era o antebraço do Hazak (faixa laranja e munhequeira verde-água) que sobrou entre a manga do
+terno e o punho. Munhequeira tirada dos 337 quadros (`recolore --matiz 160 210 --para pele`), antebraço nu coberto no
+parado. Rasteira: mão de apoio 22% menor, canela esticada, golpe inteiro 7% maior (cabeça de 0,90-0,94 para 0,96-0,99).
+Agachar do Hazak passou na régua (0,98). A rasteira do Hazak base está 18% menor, mas a forma base vai ser refeita na #36.
+
+**Blender (recorte com malha):** faz a mesma conta (esticar e encolher pedaço), mas precisa separar cada pedaço em camada
+e pintar o que fica escondido atrás; a ferramenta de pixel resolve isso no próprio quadro. Blender fica para animação nova
+montada de peças (asas, cabelo, casaco).
+
+**Robô:** hazaki 238 PASS / 0 FAIL; vitrine do Diabo filmada em `docs/anatomia-51/teste1/`.
+
+**Armadilha:** a régua da cabeça tem incerteza de uns 4 a 5% em quadro redesenhado ou reamostrado (a curva do casamento
+é achatada); só é firme quando o desenho é o mesmo em outro tamanho. O Pengaró tem 22 ações 7 a 26% maiores que a ginga:
+conferir se a ginga é que está pequena antes de mexer.
