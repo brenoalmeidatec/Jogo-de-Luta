@@ -95,6 +95,18 @@ do
             linha[#linha + 1] = e .. " fora"
           end
         end
+        if helper(9610) then
+          linha[#linha + 1] = string.format("9610 sil anim=%d el=%d", anim(), animElemNo(0))
+          if numExplod(9611) > 0 then
+            linha[#linha + 1] = string.format("9611 chama anim=%s el=%s", v(explodVar(9611, 0, "anim")), v(explodVar(9611, 0, "animelem")))
+          end
+          player(1)
+        end
+        for _, e in ipairs({9610, 9611}) do
+          if numExplod(e) > 0 then
+            linha[#linha + 1] = string.format("%d sil anim=%s el=%s", e, v(explodVar(e, 0, "anim")), v(explodVar(e, 0, "animelem")))
+          end
+        end
         log:write(table.concat(linha, " | "), "\\n")
         log:flush()
       end)
@@ -246,7 +258,7 @@ def injetar(pasta, nome):
     cns.write_text(txt[:i] + GOLPES + txt[i:], encoding="utf-8", newline="\n")
 
 
-def filmar(lutador, saida, filme=True, p2=None, cenario="stages/stage0-720.def", chars=None, espera=11):
+def filmar(lutador, saida, filme=True, p2=None, cenario="stages/stage0-720.def", chars=None, espera=11, fps=30):
     """Roda o roteiro e devolve o caminho do aura_log.txt. `chars` troca a pasta de onde o lutador vem (o antes)."""
     p2 = p2 or ("pengaro" if lutador == "hazaki" else "hazaki")
     saida.mkdir(parents=True, exist_ok=True)
@@ -289,7 +301,7 @@ def filmar(lutador, saida, filme=True, p2=None, cenario="stages/stage0-720.def",
             while time.time() < limite and not log_aura.exists() and jogo.poll() is None:
                 time.sleep(0.05)   # o log nasce no primeiro tique de luta: o filme começa aí
             if filme:
-                grava = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "x11grab", "-framerate", "30",
+                grava = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "x11grab", "-framerate", str(fps),
                                           "-video_size", "1280x720", "-i", disp, "-c:v", "libx264", "-pix_fmt",
                                           "yuv420p", "-crf", "20", str(saida / "luta.mp4")], env=amb,
                                          stdin=subprocess.PIPE)

@@ -31,7 +31,7 @@ PARADO = {
     ("raiclaven", ""): "ginga",
 }
 PALETA_JSON = {
-    ("hazaki", ""): "hazaki/paleta_arcade.json",
+    ("hazaki", ""): "hazaki/paleta_nitida.json",  # forma base nítida (#36, 40 cores)
     ("ck", ""): "ck/paleta_arcade.json", ("ck", "e_"): "ck/paleta_arcade_ratao.json",
     ("pengaro", ""): "pengaro/paleta_arcade.json", ("pengaro", "e_"): "pengaro/paleta_arcade_endiabrado.json",
 }
