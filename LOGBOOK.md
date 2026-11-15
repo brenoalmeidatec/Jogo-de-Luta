@@ -2446,3 +2446,17 @@ montada de peças (asas, cabelo, casaco).
 **Armadilha:** a régua da cabeça tem incerteza de uns 4 a 5% em quadro redesenhado ou reamostrado (a curva do casamento
 é achatada); só é firme quando o desenho é o mesmo em outro tamanho. O Pengaró tem 22 ações 7 a 26% maiores que a ginga:
 conferir se a ginga é que está pequena antes de mexer.
+
+## 2026-11-15 — Hazak base nítido, issue #36 (Claude, thread do Alisson)
+
+**Pedido do Breno:** refazer a forma base do Hazak, que continuava borrada, sem mudar desenho, cor, pose, caixas,
+`.air` ou `.cns`; Diabo Loiro como está; robô e antes/depois ao lado do CK na #36 antes de juntar.
+
+**Feito:** 64 folhas novas no ChatGPT do Alisson (plano GO, ~1 h, sem bater no limite; 11 com o conserto de anatomia
+da #51), conversão direta em 1x e 3x (`converter_hazaki.py`, paleta de 40 cores), parry do Hazak pelos quadros
+convertidos (`parry.py`), caixas presas às de antes (`manter_caixas.py` + `sprites/hazaki/caixas_base.air`).
+Detalhes e como refazer uma pose em `docs/hazak-36/LEIA-ME.md`.
+
+**Armadilha:** o gerador mede a caixa de dano no desenho. Trocar o desenho muda ~1900 caixas sem ninguém pedir; por
+isso o pós-passo de caixas. Sprites 1513..1527 (sem uso no `.air`) caem na paleta do corpo e o `diabo_loiro` avisa;
+é inofensivo.

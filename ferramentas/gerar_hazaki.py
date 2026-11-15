@@ -1341,6 +1341,10 @@ def main():
     forma_permanente.aplicar("hazaki", SAIDA)
     import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
     destruicao.aplicar("hazaki", SAIDA)
+    # #36: desenho nítido novo, caixas de antes (sprites/hazaki/caixas_base.air): o jogo não muda
+    import manter_caixas
+    n, dif = manter_caixas.aplicar("hazaki", SAIDA)
+    print(f"hazaki: caixas de antes em {n} ações" + (f"; quadros diferentes em {dif}" if dif else ""))
     # retratos em PNG (seleção, VS e HUD): os pós-passos regravam o .sff e deixariam os retratos antigos, pequenos
     import trocar_retratos
     assert trocar_retratos.trocar("hazaki"), "faltam os retratos do Hazak em sprites/retratos"
