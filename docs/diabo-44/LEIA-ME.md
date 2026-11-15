@@ -1,5 +1,12 @@
 # Diabo Loiro: desenhos próprios e especial novo (issue #44)
 
+> **Mudou em 15/11 às 16:58Z (Breno, #47):** o despertado tem todos os golpes próprios e o Diabo Loiro vira um
+> demônio descontrolado, **sem maleta** (garras, investidas, voo, fogo das trevas; as asas ficam). As folhas "na roupa do
+> sobretudo batendo com o Hazak" desta página **pararam**. Design e lista de golpes novos esperando aprovação na #47
+> (comentário 6898251397). A Cobrança (1660/1661) fica no jogo até o jogo novo de golpes entrar; a ideia dela (investida
+> que atravessa projétil e rouba barra) continua como "Cobrança das Garras". As ferramentas daqui (`--juntar`,
+> `harmonizar`, contato) servem para as folhas novas.
+
 Pedido do Breno na #44 (comentários de 15/11):
 
 1. **Sai o Chapéu Bumerangue** (3400/3401, `fx_chapeu`). No lugar entra um especial que não é projétil e não repete
