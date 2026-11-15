@@ -71,7 +71,19 @@ Regra do Breno (2026-11-15): **todo agarrão tem animação própria, e quem é 
   - tem física: arrasta para trás quando ele anda, passa do ponto quando ele para e assenta, e as labaredas sobem;
   - parece parte do corpo, nunca um adesivo nem um contorno contínuo;
   - não tinge o corpo e não tampa o HUD.
-  A ferramenta é a `ferramentas/aura_silhueta.py` (branch `claude/project-thread-cgrwa2` até entrar na `mugen`).
+  A ferramenta é a `ferramentas/aura_silhueta.py`.
+- **Luz e brilho na base do KIKIU** (Breno, 2026-11-15, #51 item 2). Aura e poder iluminam o mundo:
+  - a luz cai com a curva do KIKIU: `GRAD_OFF = [0, 0.22, 0.55, 1]`, `GRAD_VAL = [1, 0.5, 0.1, 0]` (miolo forte, longe
+    escuro), em degraus de pixel com pontilhado, nunca um degradê liso;
+  - o cenário escurece um pouco no Despertar e mais um pouco com poder no ar (Explod preto por trás dele, não BGPalFX,
+    que é um só para a luta e apagaria os clarões das supers);
+  - halo na cor da forma em volta do corpo e poça de luz no chão embaixo, que some quando ele pula;
+  - todo poder de energia ganha um orbe somado no miolo, um halo e uma poça que correm com ele e somem junto;
+  - o oponente perto clareia de leve na cor da luz (PalFX), menos quando apanha, está agarrado ou despertado;
+  - tremor leve da luz, no máximo 2 a 3 Hz, sem piscar;
+  - no fundo azul, a luz quente vai por alfa de pixel (`addalpha`); somada pura ela fica rosa.
+  A ferramenta é a `ferramentas/luz.py`. Ela roda sozinha no fim do `aura_silhueta.py` para quem está em `LIGADOS`. Os
+  poderes de energia de cada um ficam em `PODERES` (projid do Projectile; pedra e objeto não acendem).
 
 ## 7. Efeitos, parry e sons
 

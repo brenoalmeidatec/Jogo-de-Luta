@@ -68,6 +68,7 @@ do
         if t == 398 then mapSet("f_estado", 230) end
         if t == 422 then mapSet("f_estado", 240) end
         if t == 446 then mapSet("f_estado", 210) end
+        @EXTRA@
         if t == 346 or t == 396 or t == 466 or t == 651 or t == 901 then mapSet("f_posx", -30); mapSet("f_pos", 1) end
       end)
       com(2, function()
@@ -258,7 +259,9 @@ def injetar(pasta, nome):
     cns.write_text(txt[:i] + GOLPES + txt[i:], encoding="utf-8", newline="\n")
 
 
-def filmar(lutador, saida, filme=True, p2=None, cenario="stages/stage0-720.def", chars=None, espera=11, fps=30):
+def filmar(lutador, saida, filme=True, p2=None, cenario="stages/stage0-720.def", chars=None, espera=11, fps=30,
+           extra=()):
+    """`extra`: [(tique, estado)] a mais para o P1 (um poder no meio do roteiro, por exemplo)."""
     """Roda o roteiro e devolve o caminho do aura_log.txt. `chars` troca a pasta de onde o lutador vem (o antes)."""
     p2 = p2 or ("pengaro" if lutador == "hazaki" else "hazaki")
     saida.mkdir(parents=True, exist_ok=True)
@@ -278,6 +281,7 @@ def filmar(lutador, saida, filme=True, p2=None, cenario="stages/stage0-720.def",
         nome_aura, camadas = aura_do_cns((copia / "chars" / lutador / f"{lutador}.cns").read_text(encoding="utf-8"))
         lua = (LUA.replace("@SAIDA@", log_aura.as_posix()).replace("@CAMADAS@", ", ".join(map(str, camadas)))
                .replace("@NOME@", nome_aura or "x").replace("@FIM@", str(FIM))
+               .replace("@EXTRA@", " ".join(f'if t == {t} then mapSet("f_estado", {e}) end' for t, e in extra))
                .replace("@FASES@", ", ".join(f'{{{a}, {b}, "{n}"}}' for a, b, n in FASES)))
         dbg = copia / "external/script/debug.lua"
         dbg.write_text(dbg.read_text(encoding="utf-8") + "\n" + lua, encoding="utf-8")

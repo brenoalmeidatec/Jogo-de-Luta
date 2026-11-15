@@ -49,6 +49,39 @@ def indices_de(a, pal):
     return np.where(a[..., 3] < 128, 0, ind).astype(np.uint8).tobytes()
 
 
+def compactar(b):
+    """Regrava ldata e tdata só com o que os nós (paletas e sprites) ainda apontam: o remendo deixa o dado velho para
+    trás. Mesmo conteúdo, mesmos nós; só os deslocamentos mudam."""
+    ofs_spr, nspr, ofs_pal, npal, ofs_l, len_l, ofs_t, len_t = struct.unpack_from("<8I", b, 36)
+    b = bytearray(b)
+    ld, td = bytearray(), bytearray()
+    vistos = {}
+    for k in range(npal):
+        g, n, c, link, off, ln = struct.unpack_from("<HHHHII", b, ofs_pal + 16 * k)
+        if ln:
+            chave = (0, off, ln)
+            if chave not in vistos:
+                vistos[chave] = len(ld)
+                ld += b[ofs_l + off:ofs_l + off + ln]
+            struct.pack_into("<HHHHII", b, ofs_pal + 16 * k, g, n, c, link, vistos[chave], ln)
+    for k in range(nspr):
+        campos = list(struct.unpack_from("<HHHHhhHBBIIHH", b, ofs_spr + 28 * k))
+        off, ln, fl = campos[9], campos[10], campos[12]
+        if not ln:
+            continue
+        t = fl & 1
+        chave = (1 + t, off, ln)
+        if chave not in vistos:
+            dest = td if t else ld
+            vistos[chave] = len(dest)
+            dest += b[(ofs_t if t else ofs_l) + off:(ofs_t if t else ofs_l) + off + ln]
+        campos[9] = vistos[chave]
+        struct.pack_into("<HHHHhhHBBIIHH", b, ofs_spr + 28 * k, *campos)
+    cab = bytearray(b[:ofs_l])
+    struct.pack_into("<8I", cab, 36, ofs_spr, nspr, ofs_pal, npal, ofs_l, len(ld), ofs_l + len(ld), len(td))
+    return bytes(cab) + bytes(ld) + bytes(td)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("lutador")
@@ -64,7 +97,7 @@ def main():
     assert pa == pb == pc, "paleta diferente entre A, B e o .sff do jogo (paleta_sff.act mudou?)"
     dA = {(n["g"], n["i"]): n for n in A}
     dB = {(n["g"], n["i"]): n for n in B}
-    mud = {k for k in dA if k in dB and not dA[k].get("png") and not dB[k].get("png") and dA[k]["px"] != dB[k]["px"]}
+    mud = {k for k in dA if k in dB and bool(dA[k].get("png")) == bool(dB[k].get("png")) and dA[k]["px"] != dB[k]["px"]}
     refs = {f: RefCor(Endereco(f"{ar.lutador}/{acao}/0")) for (l, f), acao in PARADO.items() if l == ar.lutador}
 
     b = bytearray(alvo.read_bytes())
@@ -75,9 +108,14 @@ def main():
     trocados = set()
     for k, n in enumerate(C):
         chave = (n["g"], n["i"])
-        if chave not in mud or n["link"] is not None or n.get("png"):
+        if chave not in mud or n["link"] is not None:
             continue
-        if (n["w"], n["h"], n["px"]) == (dA[chave]["w"], dA[chave]["h"], dA[chave]["px"]):
+        if n.get("png"):  # PNG de 32 bits (o Diabo, os efeitos): só troca se o do jogo é igual ao de antes
+            if n["px"] != dA[chave]["px"] or (n["w"], n["h"]) != (dB[chave]["w"], dB[chave]["h"]):
+                continue
+            corpo = dB[chave]["px"]  # já vem com o tamanho descomprimido na frente
+            exatos += 1
+        elif (n["w"], n["h"], n["px"]) == (dA[chave]["w"], dA[chave]["h"], dA[chave]["px"]):
             px = dB[chave]["px"]
             exatos += 1
         else:
@@ -86,7 +124,8 @@ def main():
             f = min(med, key=med.get)
             px = indices_de(refs[f].corrigir(a, ar.forca), pc)
             tom += 1
-        corpo = struct.pack("<I", len(px)) + rle8(px)
+        if not n.get("png"):
+            corpo = struct.pack("<I", len(px)) + rle8(px)
         g, i, w, h, x, y, link, fmt, dep, off, ln, pi, fl = struct.unpack_from("<HHHHhhHBBIIHH", b, ofs_spr + 28 * k)
         struct.pack_into("<HHHHhhHBBIIHH", b, ofs_spr + 28 * k, g, i, w, h, x, y, link, fmt, dep,
                          len_t + len(novos), len(corpo), pi, fl | 1)
@@ -96,7 +135,7 @@ def main():
     estranhos = [(n["g"], n["i"]) for n in C if n["link"] in trocados and (n["g"], n["i"]) not in mud]
     struct.pack_into("<I", b, 36 + 28, len_t + len(novos))
     saida = ar.saida or alvo
-    saida.write_bytes(bytes(b) + bytes(novos))
+    saida.write_bytes(compactar(bytes(b) + bytes(novos)))
     print(f"{saida}: {exatos} sprites trocados pelo gerado (iguais ao de antes), {tom} consertados no próprio sprite, "
           f"{len(mud) - exatos - tom} de {len(mud)} são link (seguem o nó trocado) ou não estão no jogo; +{len(novos) / 1e6:.2f} MB"
           + (f"; ATENÇÃO, links para sprites trocados fora da lista: {estranhos[:10]}" if estranhos else ""))

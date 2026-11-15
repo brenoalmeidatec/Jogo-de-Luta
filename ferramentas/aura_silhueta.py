@@ -430,8 +430,11 @@ def tirar_cns(cns):
 
 
 def tirar_air(air):
-    return re.sub(rf"\[Begin Action ({BASE_PELE}|{BASE_CHAMA})\d*\].*?(?=\[Begin Action|\Z)", "",
-                  air, flags=re.S | re.I).rstrip() + "\n"
+    # as ações 30000 + anim e 40000 + anim (antes só tirava as que começavam com "30000" e duplicava o resto)
+    def fora(m):
+        n = int(m.group(1))
+        return "" if BASE_PELE <= n < BASE_PELE + 10000 or BASE_CHAMA <= n < BASE_CHAMA + 10000 else m.group(0)
+    return re.sub(r"\[Begin Action (\d+)\].*?(?=\[Begin Action|\Z)", fora, air, flags=re.S | re.I).rstrip() + "\n"
 
 
 def _lugar_no_cns(cns, bloco):
@@ -470,6 +473,9 @@ def aplicar(lutador, pasta=None):
     arq_cns.write_text(novo, encoding="utf-8", newline="\n")
     print(f"{lutador}: aura de silhueta ligada; {info['acoes']} ações, {info['desenhos']} desenhos do corpo, "
           f"{info['sprites']} sprites da aura")
+    import luz  # a luz do KIKIU (#51 item 2) vem por cima da aura; refeita junto para não ficar velha
+    if lutador in luz.LIGADOS:
+        luz.aplicar(lutador, pasta)
 
 
 def tirar(lutador, pasta=None):
