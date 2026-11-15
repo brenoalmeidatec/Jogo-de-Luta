@@ -217,6 +217,7 @@ Coice de calcanhar					_B+^A
 
 <#f0f000>:Exclusivos do Diabo Loiro:</>
 Rajadona de Ki das Trevas <#bebebe>(1000) (#44)</>	_F_B^P
+Cobrança do Diabo <#bebebe>(investida, rouba barra) (#44)</>	_D_F^K
 Abraço de Quebrada em chamas <#bebebe>(agarrão da forma) (#44)</>	[_B/_F]_+^Y
 
 <#f0f000>:Supers:</>

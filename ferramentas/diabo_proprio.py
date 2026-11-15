@@ -88,6 +88,17 @@ PEDIDO = (
     "sparks, no speed lines).")
 
 
+# golpe novo do Diabo (no lugar do Chapéu Bumerangue): não tem folha do Hazak; a da corrida dá o tamanho e a grade
+NOVOS = {"cobranca": ("corrida",
+    "MOTION (new poses, the first image only gives the figure size and the grid layout): a heavy shoulder-charge "
+    "special move. 1 standing guard holding the briefcase in the rear hand; 2 he sinks a little and the front hand "
+    "pulls the overcoat open, the ember lining showing; 3 he drives forward low, front shoulder first, body leaning "
+    "forward, briefcase pulled back behind the hip, coat and tail streaming behind; 4 the same low charge, the other "
+    "foot gliding; 5 the charge at full speed, shoulder and front elbow leading; 6 contact: the front shoulder and "
+    "elbow slam forward, the shoulder drawn 15% larger, feet planted; 7 he straightens up, briefcase back at his side; "
+    "8 he adjusts his tie with two fingers of the front hand, grinning. ")}
+
+
 def fila():
     anexos = DOCS / "anexos"
     anexos.mkdir(parents=True, exist_ok=True)
@@ -97,6 +108,13 @@ def fila():
     Image.open(conceito).convert("RGB").save(anexos / "conceito.jpg", quality=92)
     pedidos = [{"folha": f"d_{n}", "anexo": f"{n}.jpg",
                 "prompt": PEDIDO.format(quem=QUEM, nota=(NOTA[n] + " ") if n in NOTA else "")} for n in ACOES]
+    for n, (base, motion) in NOVOS.items():
+        Image.open(FOLHAS_HAZAK / f"{base}.png").convert("RGB").save(anexos / f"{n}.jpg", quality=92)
+        texto = PEDIDO.format(quem=QUEM, nota=motion).replace(
+            "in the same pose, with the same limb positions, the same body silhouette and the same facing (right) as in "
+            "the first image: only the outfit, the hair, the horns, the hat, the tail and the briefcase change.",
+            "and with the same facing (right) as in the first image, but in the new poses of the MOTION below.")
+        pedidos.append({"folha": f"d_{n}", "anexo": f"{n}.jpg", "prompt": texto})
     (DOCS / "fila.json").write_text(json.dumps(pedidos, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"{len(pedidos)} pedidos em {(DOCS / 'fila.json').relative_to(RAIZ)}")
 
@@ -118,7 +136,7 @@ def converter(nome):
     folha = FOLHAS_DIABO / f"d_{nome}.png"
     figs = ch.figuras(folha)
     assert all(q is not None for q in figs), f"d_{nome}: figura faltando na folha"
-    e = escala_3x(nome)
+    e = escala_3x(NOVOS[nome][0] if nome in NOVOS else nome)
     destino = dt.SAIDA / f"d_{nome}"
     destino.mkdir(parents=True, exist_ok=True)
     for k, q in enumerate(figs):
@@ -155,6 +173,6 @@ if __name__ == "__main__":
         resto = [a for a in args[:k] + args[k + 2:] if not a.startswith("--")]
         contato(args[k + 1], resto or [n for n in ACOES if (dt.SAIDA / f"d_{n}").exists()])
     else:
-        for n in [a for a in args if not a.startswith("--")] or [n for n in ACOES
+        for n in [a for a in args if not a.startswith("--")] or [n for n in ACOES + list(NOVOS)
                                                                   if (FOLHAS_DIABO / f"d_{n}.png").exists()]:
             converter(n)
