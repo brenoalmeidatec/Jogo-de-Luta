@@ -83,6 +83,7 @@ type = Pause
 trigger1 = Time = 0
 time = {fim}
 movetime = {fim}
+pausebg = 0
 """))
     c.append(bloco("som de entrada", f"""
 type = PlaySnd

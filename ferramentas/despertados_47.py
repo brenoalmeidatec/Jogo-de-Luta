@@ -420,6 +420,9 @@ def aplicar(lutador, pasta=None):
     mv = pasta / "movelist.dat"
     if mv.exists():
         mv.write_text(ligar_movelist(lutador, mv.read_text(encoding="utf-8")), encoding="utf-8", newline="\n")
+    if aura:
+        import aura_no_corpo  # o garanhão segue o corpo (issue #51): refaz a tabela no [Statedef -4] que a aura regravou
+        aura_no_corpo.aplicar(lutador, pasta)
     print(f"{lutador}: {r.nome} ({len(contatos) - 1} pancadas + final, dano {sum(x[1] for x in contatos)}, "
           f"solta no tick {contatos[-1][0]}); {CFG[lutador].nome_poder} (3 x 42)")
 

@@ -4082,6 +4082,10 @@ def main():
     balanceamento.aplicar("pengaro", SAIDA)
     import cena_transformacao  # issue #49: tudo preto, zoom e clarão no Despertar (depois dos sons: usa o som da pausa)
     cena_transformacao.aplicar("pengaro", SAIDA)
+    import forma_permanente  # missão dos cenários 4.1: endiabrado até o fim da luta
+    forma_permanente.aplicar("pengaro", SAIDA)
+    import aura_no_corpo  # a aura segue o corpo (issue #51): depois de tudo que regrava o .air, o .sff e o -4
+    aura_no_corpo.aplicar("pengaro", SAIDA)
     import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
     destruicao.aplicar("pengaro", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")

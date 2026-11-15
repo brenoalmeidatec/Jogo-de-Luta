@@ -328,7 +328,7 @@ trigger1 = var(1)
 type = ChangeState
 value = 3100
 triggerall = command = "golaco"
-triggerall = power >= 1000
+triggerall = power >= 2000
 triggerall = ((var(20) > 0) || (life <= 200 && power >= 2000))
 triggerall = statetype != A
 trigger1 = var(1)
