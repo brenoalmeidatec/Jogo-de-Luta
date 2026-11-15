@@ -15,15 +15,15 @@
    "grupo": "pele",
    "rgb": [
     76,
-    23,
-    53
+    26,
+    51
    ],
    "medido": [
-    66,
+    60,
     20,
-    46
+    40
    ],
-   "pixels": 1426,
+   "pixels": 625,
    "matiz_alvo": [
     320,
     345
@@ -33,16 +33,16 @@
    "id": "pele_sombra",
    "grupo": "pele",
    "rgb": [
-    220,
-    82,
-    94
+    212,
+    83,
+    72
    ],
    "medido": [
-    220,
-    82,
-    94
+    212,
+    83,
+    72
    ],
-   "pixels": 2864,
+   "pixels": 1066,
    "matiz_alvo": [
     352,
     8
@@ -52,16 +52,16 @@
    "id": "pele_medio",
    "grupo": "pele",
    "rgb": [
-    238,
-    140,
-    120
+    231,
+    119,
+    87
    ],
    "medido": [
-    238,
-    140,
-    120
+    231,
+    119,
+    87
    ],
-   "pixels": 878,
+   "pixels": 1072,
    "matiz_alvo": [
     8,
     18
@@ -72,15 +72,15 @@
    "grupo": "pele",
    "rgb": [
     252,
-    183,
-    140
+    186,
+    135
    ],
    "medido": [
     252,
-    183,
-    140
+    186,
+    135
    ],
-   "pixels": 7248,
+   "pixels": 437,
    "matiz_alvo": [
     18,
     30
@@ -90,64 +90,64 @@
    "id": "marrom_escuro",
    "grupo": "marrom",
    "rgb": [
-    101,
-    29,
-    53
+    90,
+    28,
+    43
    ],
    "medido": [
-    101,
-    29,
-    53
+    90,
+    28,
+    43
    ],
-   "pixels": 989,
+   "pixels": 419,
    "matiz_alvo": null
   },
   {
    "id": "marrom",
    "grupo": "marrom",
    "rgb": [
-    149,
-    44,
-    65
+    144,
+    43,
+    54
    ],
    "medido": [
-    149,
-    44,
-    65
+    144,
+    43,
+    54
    ],
-   "pixels": 1722,
+   "pixels": 488,
    "matiz_alvo": null
   },
   {
    "id": "cajado",
    "grupo": "marrom",
    "rgb": [
-    194,
+    191,
     88,
     55
    ],
    "medido": [
-    194,
+    191,
     88,
     55
    ],
-   "pixels": 323,
+   "pixels": 1212,
    "matiz_alvo": null
   },
   {
    "id": "ouro",
    "grupo": "ouro",
    "rgb": [
-    246,
-    171,
-    81
+    240,
+    168,
+    77
    ],
    "medido": [
-    246,
-    171,
-    81
+    240,
+    168,
+    76
    ],
-   "pixels": 113,
+   "pixels": 112,
    "matiz_alvo": null
   },
   {
@@ -159,11 +159,11 @@
     36
    ],
    "medido": [
-    23,
-    19,
-    37
+    28,
+    21,
+    45
    ],
-   "pixels": 888,
+   "pixels": 800,
    "matiz_alvo": [
     240,
     265
@@ -173,48 +173,48 @@
    "id": "roupa_preto",
    "grupo": "roupa",
    "rgb": [
-    39,
-    33,
-    64
+    36,
+    28,
+    58
    ],
    "medido": [
-    39,
-    33,
-    64
+    36,
+    28,
+    58
    ],
-   "pixels": 1408,
+   "pixels": 2017,
    "matiz_alvo": null
   },
   {
    "id": "roupa_luz",
    "grupo": "roupa",
    "rgb": [
-    55,
-    48,
-    88
+    57,
+    47,
+    95
    ],
    "medido": [
-    55,
-    48,
-    88
+    57,
+    47,
+    95
    ],
-   "pixels": 1648,
+   "pixels": 1705,
    "matiz_alvo": null
   },
   {
    "id": "branco_sombra",
    "grupo": "branco",
    "rgb": [
-    165,
-    140,
-    188
+    164,
+    139,
+    185
    ],
    "medido": [
-    165,
-    140,
-    188
+    164,
+    139,
+    185
    ],
-   "pixels": 211,
+   "pixels": 65,
    "matiz_alvo": [
     260,
     285
@@ -224,48 +224,48 @@
    "id": "branco_meio",
    "grupo": "branco",
    "rgb": [
-    210,
-    188,
-    217
+    216,
+    190,
+    221
    ],
    "medido": [
-    210,
-    188,
-    217
+    216,
+    190,
+    221
    ],
-   "pixels": 296,
+   "pixels": 107,
    "matiz_alvo": null
   },
   {
    "id": "branco",
    "grupo": "branco",
    "rgb": [
+    253,
     241,
-    231,
-    237
+    252
    ],
    "medido": [
+    253,
     241,
-    231,
-    237
+    252
    ],
-   "pixels": 1603,
+   "pixels": 233,
    "matiz_alvo": null
   },
   {
    "id": "listra",
    "grupo": "branco",
    "rgb": [
-    74,
-    58,
-    84
+    75,
+    56,
+    86
    ],
    "medido": [
-    74,
-    58,
-    84
+    75,
+    56,
+    86
    ],
-   "pixels": 274,
+   "pixels": 308,
    "matiz_alvo": null
   }
  ]
