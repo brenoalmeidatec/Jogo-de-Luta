@@ -59,7 +59,11 @@ Regra do Breno (2026-11-15): **todo agarrão tem animação própria, e quem é 
   ([`cena-transformacao.md`](cena-transformacao.md), #49).
 - **Agarrão da forma e poder de longe** no padrão do Diabo Loiro do Hazak: grande, sombrio e pesado. Carga com o mundo
   parado, tremida forte ao soltar, fundo tingido na cor da forma e impacto que congela (#44, #47).
-- Os golpes novos da seção 4 das regras, no tema da forma.
+- **Luta totalmente diferente do normal** (Breno, 2026-11-15): nada do modo normal é reaproveitado no despertado,
+  nem golpe, nem folha, nem movimento com a roupa nova por cima. Todos os golpes (normais, correntes, especiais, super e
+  agarrões) são novos e no estilo da forma: o Diabo Loiro luta como demônio descontrolado e sem maleta, o Garanhão
+  como minotauro, o Pengaró endiabrado com os poderes sombrios, o Cientista Louco com a criatura dele. Tabela e mínimos
+  na seção 4 das regras. Lista de golpes e conceito vão para o Breno aprovar antes de desenhar (#47).
 
 ## 6. Aura
 

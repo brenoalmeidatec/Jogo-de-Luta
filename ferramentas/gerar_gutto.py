@@ -433,6 +433,8 @@ def main():
     parry.aplicar("gutto", SAIDA)
     import legibilidade  # golpes legíveis (#45): caixa no membro, congelamento, tremida, reação e preparo
     legibilidade.aplicar("gutto", SAIDA)
+    import agarrao_folhas  # agarrões com folha própria e reação de agarrado (#45, 2026-11-15)
+    agarrao_folhas.aplicar("gutto", SAIDA)
     import balanceamento  # números do item 7 (attack, defence, velocidade)
     balanceamento.aplicar("gutto", SAIDA)
     import cena_transformacao  # issue #49: tudo preto, zoom e clarão no Despertar (sempre por último)
