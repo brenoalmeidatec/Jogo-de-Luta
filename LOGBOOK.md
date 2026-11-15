@@ -2460,3 +2460,17 @@ Detalhes e como refazer uma pose em `docs/hazak-36/LEIA-ME.md`.
 **Armadilha:** o gerador mede a caixa de dano no desenho. Trocar o desenho muda ~1900 caixas sem ninguém pedir; por
 isso o pós-passo de caixas. Sprites 1513..1527 (sem uso no `.air`) caem na paleta do corpo e o `diabo_loiro` avisa;
 é inofensivo.
+
+## 2026-11-15 — Anatomia do Diabo, lote 2 (issue #51, item 3) (Claude, thread do Alisson)
+
+**Feito com `ferramentas/pixel/`:** escala do golpe inteiro em 7 ações que a régua mediu 6 a 10% menores que o
+`d_parado` (conferido também pela aba do chapéu): `d_agarrao_perna` 1,075, `d_ar_joelho` 1,065, `d_baixo_soco` 1,065,
+`d_bico_sapato` 1,11, `d_corrida` 1,09, `d_punho_anel` 1,07, `d_sapato_barriga` 1,07; todas voltaram para 0,98-1,02.
+Antebraço nu do Hazak coberto pela manga em `d_anda`, `d_agachado` e `d_defesa`; verde-água claro que sobrou em 11
+quadros virou pele. Antes/depois em `docs/anatomia-51/lote2/`.
+
+**Não mexi:** `d_vira` (+5 a 9%) e `d_chuva_abre` (+6%) têm a mesma altura do parado; a régua erra de frente para a
+câmera. `d_chapeu_arremesso` fica sem chapéu, então a régua não vale.
+
+**Hazak base novo (#36, 40f04bbe):** a régua mede 46 ações com mais de 6% (rasteira 0,80, agachado 0,88); avisado na
+thread da #36 (o conversor escala pela mediana do desenho antigo e herda o tamanho errado).
