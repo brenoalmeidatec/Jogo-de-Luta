@@ -1325,9 +1325,7 @@ def main():
         air, cns = hd.aplicar(s, air, cns, [(QUADROS, QUADROS.parent / "quadros_arcade_hd")], gp.SPRITES_VITIMA)
     # agarrão em pé segura-e-bate (ferramentas/agarrao_mk.py): montado dos golpes que ele já tem, depois do HD
     # os três agarrões com as folhas próprias dele (#45): abraço em pé, perna agachado e cutucão de comando
-    # depois dos 8 da folha do agarrão, os golpes dele que entram na porrada (agarrao_mk.HAZAK_EXTRAS, #45)
     proprios = {tipo: ["%d,%d" % s.codigos[f"f_{folha}{i}"] for i in range(8)]
-                + ["%d,%d" % s.codigos[f"f_{f}{i}"] for f, i in agarrao_mk.HAZAK_EXTRAS[tipo]]
                 for tipo, folha in (("pe", "agarrao_abraco"), ("baixo", "agarrao_perna"), ("comando", "agarrao_cutucao"))}
     air, cns = agarrao_mk.aplicar("hazaki", air, cns, proprios)
     (SAIDA / "hazaki.cns").write_text(cns.rstrip() + "\n", encoding="utf-8", newline="\n")
