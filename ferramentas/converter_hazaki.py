@@ -112,9 +112,7 @@ def fazer_paleta(pasta):
     for folha in sorted(pasta.glob("*.png")):
         if folha.stem.startswith(("patroa_", "obj_")) or folha.stem in NAO_CORPO:
             continue
-        for q in figuras(folha):
-            if q is None:
-                continue
+        for q in acertar_cor(figuras(folha), antigos(folha.stem)):
             a = np.asarray(seco(q.resize((max(1, q.width // 2), max(1, q.height // 2)), Image.LANCZOS)))
             amostra.append(a[a[..., 3] > 0][:, :3])
     px = np.concatenate(amostra)
@@ -149,6 +147,45 @@ def pintar(q, pal):
     d = np.linalg.norm(lab(a[op][:, :3])[:, None] - lab(pal)[None], axis=2)
     a[op, :3] = pal[d.argmin(axis=1)]
     return Image.fromarray(a)
+
+
+GRUPOS = sorted({g for _, g, _ in fh.CORES})
+
+
+def grupo_de(px_lab):
+    """Grupo (pele, roupa, debrum, faixa, atadura, pulseira) da cor do Hazak mais próxima de cada pixel."""
+    d = np.linalg.norm(px_lab[:, None] - lab(base15())[None], axis=2).argmin(axis=1)
+    return np.array([GRUPOS.index(g) for _, g, _ in fh.CORES])[d]
+
+
+def acertar_cor(figs, velhos):
+    """O ChatGPT devolve a mesma roupa um pouco mais viva (o gi puxa para o roxo). Aqui cada grupo de cor da folha
+    nova (pele, roupa, debrum...) é levado para a média do mesmo grupo nos desenhos de antes, e o claro-escuro para a
+    mesma abertura: a cor do jogo não muda e não varia de folha para folha."""
+    def pixels(imgs):
+        return np.concatenate([np.asarray(q)[np.asarray(q)[..., 3] >= 128][:, :3] for q in imgs])
+    novo, velho = lab(pixels(figs)), lab(pixels(velhos))
+    gn, gv = grupo_de(novo[:: max(1, len(novo) // 200000)]), grupo_de(velho[:: max(1, len(velho) // 200000)])
+    novo, velho = novo[:: max(1, len(novo) // 200000)], velho[:: max(1, len(velho) // 200000)]
+    ajuste = {}
+    for g in range(len(GRUPOS)):
+        a, b = novo[gn == g], velho[gv == g]
+        if len(a) < 200 or len(b) < 200:
+            continue
+        escala = np.array([np.clip(b[:, 0].std() / max(1e-3, a[:, 0].std()), 0.8, 1.25), 1, 1], np.float32)
+        ajuste[g] = (a.mean(axis=0), escala, b.mean(axis=0))
+    saida = []
+    for q in figs:
+        a = np.array(q)
+        op = a[..., 3] > 0
+        px = lab(a[op][:, :3])
+        gs = grupo_de(px)
+        for g, (ma, escala, mb) in ajuste.items():
+            m = gs == g
+            px[m] = (px[m] - ma) * escala + mb
+        a[op, :3] = cv2.cvtColor(px.clip(0, 255).astype(np.uint8).reshape(1, -1, 3), cv2.COLOR_LAB2RGB).reshape(-1, 3)
+        saida.append(Image.fromarray(a))
+    return saida
 
 
 def seco(q):
@@ -189,6 +226,7 @@ def converter(nome, pal, pasta=FOLHAS):
     velhos = antigos(nome)
     assert all(q is not None for q in figs), f"{nome}: figura faltando na folha"
     assert all(velhos), f"{nome}: sem os desenhos de antes em {ANTES}"
+    figs = acertar_cor(figs, velhos)
     excecao = fh.fatores(nome)
     razoes = [lado(v) / max(q.size) / f for v, q, f in zip(velhos, figs, excecao)]
     fator = float(np.median(razoes))
