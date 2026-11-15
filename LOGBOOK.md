@@ -2507,3 +2507,19 @@ depois do lutador e por isso não atrasa na troca de ação. A chama é um Explo
 **Armadilhas:** a chama somada fica rosa no cenário azul, então ela usa `addalpha` (A, 255 - A) com alfa por pixel. A
 pele somada continua. O `ChangeAnim` com `elem` só funciona com elemento de tempo 1; com -1 o helper fica parado no
 último. O sinal do `xshear` no IKEMEN é ao contrário do que parece: com valor positivo a chama vai para a frente.
+
+## 2026-11-15 — Luz e brilho do KIKIU nas auras e nos poderes (issue #51, item 2) (Claude, thread do Alisson)
+
+**Pedido do Breno:** trazer a base de luz do KIKIU (curva GRAD, orbe somado no poder, tremor leve, mundo escurecendo,
+poça de luz e oponente clareando) sem mexer no repositório do KIKIU. Piloto no Hazak.
+
+**Feito:** criei `ferramentas/luz.py`, encadeado no fim do `aura_silhueta.py` para quem está em `LIGADOS` (por ora só
+o Hazak). Ele faz o escuro (Explod preto com addalpha), o halo e a poça do despertado, a luz dos poderes (orbe, halo e
+poça que andam com cada Projectile de `PODERES` e somem com ele) e o PalFX leve no oponente perto. Grupos 9720 a 9722
+no .sff, ações 9720 a 9722 e 9730+, Explods 9620 a 9635. Regra anotada na seção 6 da `docs/receita-de-lutador.md`.
+
+**Armadilhas:** luz laranja somada no fundo azul fica rosa e, fraca, some atrás da aura grande. Por isso o halo usa
+a curva no alfa do pixel (`addalpha`). O `aura_silhueta.tirar_air` duplicava as ações espelho ao rodar de novo; foi
+consertado. O BGPalFX não serve para escurecer, porque é global e briga com as supers.
+
+**Robôs:** Hazak 238/0 e aura segue o corpo. Vídeo `docs/auras-51/hazaki_luz_antes_agora.mp4`.
