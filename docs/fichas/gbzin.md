@@ -91,7 +91,7 @@ desligados): "Vem cá, cabrito!", "Bateu no chão, bateu três vezes".
 
 Pedido do Breno na issue #30 (2026-11-15). O Deus Motoboy saiu: capacete, jaqueta, bag, caixa de pizza, moto, guidão,
 chefe no celular e giroflex não existem mais. O Grão-Pastor junta o pastor, o jiu-jitsu e o empresário.
-Conceito: `sprites/gbzin/quadros/folhas_arcade/e_conceito.png` (roupa "Senhor do Rebanho", aguardando o aval do Breno).
+Conceito: `sprites/gbzin/quadros/folhas_arcade/e_conceito.png` (roupa "Senhor do Rebanho", aprovada pelo Breno).
 
 **Ativação:** barra cheia + c + b (como os outros).
 **Cena:** ele finca o cajado no chão três vezes ("bateu três vezes"). A cada batida o chão racha e notas de dinheiro
@@ -131,10 +131,9 @@ sem tampar o HUD.
 - **Finalização:** quando um agarrão dele termina, o chão bate três vezes sozinho e a tela treme.
 - **Super Rebanho Desgovernado:** vira um estouro de rebanho do inferno atravessando a tela.
 
-### Exclusivos do Grão-Pastor (PROPOSTA do Claude, aguardando o Breno)
+### Exclusivos do Grão-Pastor (aprovados pelo Breno na #30, 2026-11-15)
 
-Os exclusivos antigos eram todos de motoboy e saíram junto. Abaixo vai uma proposta no tema novo, nos mesmos
-espaços do kit. Nada disto vira arte antes do aval do Breno.
+Os exclusivos antigos eram todos de motoboy e saíram junto. Os de baixo, no tema novo, foram aprovados pelo Breno.
 
 - **Correntes novas (2):** x: cajado de osso reto → cajado girando → "Chifrada" (investida de cabeça baixa).
   b: chute frontal → joelhada → "Tosquia" (as mãos gigantes batem palma no oponente).
@@ -152,6 +151,25 @@ espaços do kit. Nada disto vira arte antes do aval do Breno.
 - **Kombo novo:** Estouro → cajado girando → Berro → Mão do Pastor.
 - **Super exclusivo:** **Juízo do Rebanho** (2 estoques): a sombra do bode desce sobre o oponente, as mãos gigantes
   o seguram e ele encaixa o mata-leão; o chão bate três vezes.
+
+## Como os especiais entram no kit (gerador)
+
+O `gerar_gbzin.py` nasce do kit do CK, que tem 8 especiais na base. Cada especial da ficha ocupa o espaço do kit que já
+faz a mesma coisa, com o comando da ficha:
+
+| Especial da ficha | Comando | Espaço do kit (estado) | Por quê |
+|---|---|---|---|
+| Gancho do Pastor | ← → + x/y | projétil que vai e volta (1600/1601) | o gancho sai, prende e puxa até ele |
+| Cabra Solta | ↓ → + x/y | projétil reto (1000/1001) | a cabra corre pelo chão |
+| Cabra Saltadora | ↓ ↑ + x/y | antiaéreo | a cabra salta em arco |
+| Passinho de Pinguim | → → + a/b | passa por trás (1700/1701) | o Gingado do CK já passa e chega virado |
+| Guarda Fechada | ↓ ← + a/b | contragolpe (1300/1310) | deita na guarda e prende o golpe |
+| Arm-lock Voador | ↑ ↓ + a/b | avanço (Bote) | pula, agarra o braço e cai na chave |
+| Rolo de Feno | ← ↓ + x/y | esquiva (1100) | rola pelo chão e derruba |
+| Cajado no Chão | ↓ ↓ + x/y | golpe baixo | onda curta que pega rasteiro |
+
+No Grão-Pastor entram os exclusivos (Estouro, Mão do Pastor, Berro, Puxão das Mãos e o super Juízo do Rebanho) nos
+espaços do Modo Ratão do CK.
 
 ## Para o Alisson criar
 
