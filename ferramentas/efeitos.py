@@ -228,18 +228,21 @@ def camadas(lutador, efeito):
                 ("crit-hit", _seq(0, 1, 1, n=n), 2, (0, 0))]
     elif efeito == "super":
         n = 11
-        base = [("blunt-hit", _seq(0, 1, 1, 1, 2, 3, 4, 5, 6, 7, 8, n=n), 3, (0, 0)),
-                ("crit-hit", _seq(0, 1, 1, 1, n=n), 3, (0, 0)),
-                ("blunt-hit", _seq(None, None, 0, 1, 2, 3, 4, 5, 6, n=n), 2, (-58, -40)),
-                ("blunt-hit", _seq(None, None, None, 0, 1, 2, 3, 4, 5, 6, n=n), 2, (54, 34)),
-                ("blunt-hit", _seq(None, None, None, None, None, 0, 1, 2, 3, 4, 5, n=n), 2, (46, -52)),
-                ("blunt-hit", _seq(None, None, None, None, None, None, 0, 1, 2, 3, 4, n=n), 2, (-50, 44))]
+        base = [("blunt-hit", _seq(0, 1, 1, 1, 2, 3, 4, 5, 6, 7, 8, n=n), 2, (0, 0)),
+                ("crit-hit", _seq(0, 1, 1, 1, n=n), 2, (0, 0)),
+                ("blunt-hit", _seq(None, 0, 1, 1, 2, 3, 4, 5, 6, 7, n=n), 2, (4, -66)),
+                ("blunt-hit", _seq(None, None, 0, 1, 1, 2, 3, 4, 5, 6, 7, n=n), 2, (-6, 62)),
+                ("blunt-hit", _seq(None, None, 0, 1, 1, 2, 3, 4, 5, 6, n=n), 2, (-72, -34)),
+                ("blunt-hit", _seq(None, None, None, 0, 1, 1, 2, 3, 4, 5, 6, n=n), 2, (70, 30)),
+                ("blunt-hit", _seq(None, None, None, None, 0, 1, 1, 2, 3, 4, 5, n=n), 2, (62, -50)),
+                ("blunt-hit", _seq(None, None, None, None, None, 0, 1, 1, 2, 3, 4, n=n), 2, (-64, 46))]
     else:  # carga: as faíscas vêm de longe, juntam e acendem
         n = 8
-        return [("charge-up", [10, 16, 22, 28, 34, 40, 46, 46], 2, (0, 0)),
-                ("crit-hit", _seq(None, None, None, None, None, None, None, 0, n=n), 2, (0, 0))], n
+        # só os quadros do começo do charge-up: depois dele abre um círculo pontilhado em volta, que o Breno não quer
+        return [("charge-up", [2, 4, 6, 8, 10, 12, 14, 14], 2, (0, 0)),
+                ("crit-hit", _seq(None, None, None, None, None, None, 1, 0, n=n), 2, (0, 0))], n
     fonte, quadros, zoom, onde = tema
-    z = zoom + (1 if efeito == "super" else 0)
+    z = zoom
     if onde == "espelho":
         base += [(fonte, _seq(*quadros, n=n), z, (0, 0)), (fonte, _seq(*quadros, n=n), -z, (0, 0))]
     else:
@@ -254,7 +257,7 @@ def centro_fx(fonte):
     """O ponto do efeito no desenho do pixelfx: o miolo do clarão (na carga, o do quadro em que ela acende)."""
     if fonte not in _CENTRO:
         lista = quadros_fx(fonte)
-        ref = {"charge-up": 50, "zap-hit": 4, "heavy-landing": None, "energy-disc": None, "fireball": None,
+        ref = {"charge-up": 10, "zap-hit": 4, "heavy-landing": None, "energy-disc": None, "fireball": None,
                "ground-slam": None}
         k = ref.get(fonte, 0)
         _CENTRO[fonte] = lista[0][1] if k is None else centro_do_clarao(lista[k][0])
@@ -503,7 +506,7 @@ def nivel(bloco, n, lutador):
     carga, lenta = "ifelse(var(20) > 0, 9273, 9243)", "ifelse(var(20) > 0, 9274, 9244)"
     novo = ctl(n, "Carga", "Explod", "trigger1 = Time = 0", f"anim = {lenta if super_ else carga}", "id = 9243",
                "postype = p1", "pos = 8, -60", "bindtime = -1", "removetime = -2", "sprpriority = 3", "ownpal = 1",
-               *(("scale = 1.7, 1.7", "supermovetime = 90") if super_ else ()), "ignorehitpause = 1")
+               *(("scale = 1.5, 1.5", "supermovetime = 90") if super_ else ()), "ignorehitpause = 1")
     if not re.search(r"(?m)^type = AfterImage$", corpo):
         novo += ctl(n, "Rastro do corpo", "AfterImage", "trigger1 = Time = 0", "time = 18", "length = 6",
                     "timegap = 2", "framegap = 2", "trans = add", "palcolor = 0", "palbright = 0,0,0",
@@ -672,11 +675,12 @@ def aplicar(lutador, pasta=None):
 
 
 # ---------------------------------------------------------------- folha para o Breno
-NOMES = {"fraco": "fraco (ventinho)", "forte": "forte (estalo)", "final": "finalizador (impacto)",
+NOMES = {"projetil": "projétil de energia / nuvem",
+         "fraco": "fraco (ventinho)", "forte": "forte (estalo)", "final": "finalizador (impacto)",
          "defesa": "defesa", "rastro": "rastro do golpe", "poeira": "poeira no chão", "asfalto": "asfalto",
-         "parry": "parry", "especial": "especial (Blender)", "super": "super (Blender)",
-         "transformacao": "transformação (Blender)", "carga": "carga do especial (Blender)",
-         "carga_lenta": "carga da super (Blender)"}
+         "parry": "parry", "especial": "estouro de especial", "super": "explosão de super",
+         "transformacao": "transformação (Blender)", "carga": "carga do especial",
+         "carga_lenta": "carga da super"}
 
 
 def folha(destino, lutadores=LUTADORES):
@@ -688,9 +692,21 @@ def folha(destino, lutadores=LUTADORES):
         acoes, escalas = efeitos_do(lutador)
         mapa = dict(HAZAK if lutador == "hazaki" else KIT)
         for acao, quadros in efeitos_blender(lutador).items():
+            if lutador != "hazaki" and acao in GRANDES:
+                continue
             acoes[acao] = quadros
             escalas[acao] = ESCALA_BLENDER
             mapa[acao] = ACOES_BLENDER[acao]
+        if lutador != "hazaki":
+            grandes, esc = efeitos_grandes(lutador)
+            for acao, quadros in grandes.items():
+                efeito, forma, ticks = GRANDES[acao][:3]
+                acoes[acao], escalas[acao] = quadros, esc[acao]
+                mapa[acao] = ("carga_lenta" if efeito == "carga" and ticks == 4 else efeito, forma)
+        proj, esc = efeitos_projeteis(lutador)
+        for acao, quadros in proj.items():
+            acoes[acao], escalas[acao] = quadros, esc[acao]
+            mapa[acao] = ("projetil", PROJETEIS[lutador][acao][3])
         linhas = []
         for acao, quadros in acoes.items():
             if acao == 9234:
@@ -703,7 +719,8 @@ def folha(destino, lutadores=LUTADORES):
             tira = Image.new("RGBA", (200 + cel_w * len(quadros), max(56, cima + baixo + 16)), (34, 38, 52, 255))
             d = ImageDraw.Draw(tira)
             d.text((6, 8), f"{acao}  {NOMES[papel]}", fill=(235, 235, 235))
-            d.text((6, 24), "forma despertada" if forma == "desperto" else "forma normal", fill=(170, 170, 190))
+            d.text((6, 24), {"desperto": "forma despertada", "fumaca": "fumaça"}.get(forma, "forma normal"),
+                   fill=(170, 170, 190))
             for k, (img, ex, ey, t) in enumerate(quadros):
                 q = img.resize((max(1, round(img.width * e)), max(1, round(img.height * e))), Image.NEAREST)
                 cx, cy = 200 + k * cel_w + cel_w // 2, 8 + cima
@@ -712,8 +729,8 @@ def folha(destino, lutadores=LUTADORES):
             linhas.append(tira)
         w = max(t.width for t in linhas)
         img = Image.new("RGBA", (w, sum(t.height + 2 for t in linhas) + 34), (20, 22, 30, 255))
-        ImageDraw.Draw(img).text((8, 10), f"{lutador}: golpes normais (pixelfx) e especial, super e "
-                                 "transformação (Blender); cruz vermelha = ponto do golpe; 3x o tamanho do jogo", fill=(255, 255, 255))
+        ImageDraw.Draw(img).text((8, 10), f"{lutador}: todos os efeitos de acerto no pixelfx; só a "
+                                 "transformação é do Blender; cruz vermelha = ponto do golpe; 3x o tamanho do jogo", fill=(255, 255, 255))
         y = 34
         for t in linhas:
             img.alpha_composite(t, (0, y))

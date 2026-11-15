@@ -6406,7 +6406,7 @@ bindtime = -1
 removetime = -2
 sprpriority = 3
 ownpal = 1
-scale = 1.7, 1.7
+scale = 1.5, 1.5
 supermovetime = 90
 ignorehitpause = 1
 
@@ -6719,7 +6719,7 @@ bindtime = -1
 removetime = -2
 sprpriority = 3
 ownpal = 1
-scale = 1.7, 1.7
+scale = 1.5, 1.5
 supermovetime = 90
 ignorehitpause = 1
 
@@ -8049,7 +8049,7 @@ bindtime = -1
 removetime = -2
 sprpriority = 3
 ownpal = 1
-scale = 1.7, 1.7
+scale = 1.5, 1.5
 supermovetime = 90
 ignorehitpause = 1
 
