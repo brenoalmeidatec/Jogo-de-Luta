@@ -2483,3 +2483,64 @@ e o Despertar virou o **Grão-Pastor**.
 
 **Pendente:** aval do Breno nos dois conceitos e em três decisões (cabelo, lado do tapa-olho, exclusivos do
 Grão-Pastor). Depois: ginga, folhas da base (com parry_alto e parry_baixo), paleta medida de novo, folhas e_ e aura.
+
+## 2026-11-15 — Hazak base nítido, issue #36 (Claude, thread do Alisson)
+
+**Pedido do Breno:** refazer a forma base do Hazak, que continuava borrada, sem mudar desenho, cor, pose, caixas,
+`.air` ou `.cns`; Diabo Loiro como está; robô e antes/depois ao lado do CK na #36 antes de juntar.
+
+**Feito:** 64 folhas novas no ChatGPT do Alisson (plano GO, ~1 h, sem bater no limite; 11 com o conserto de anatomia
+da #51), conversão direta em 1x e 3x (`converter_hazaki.py`, paleta de 40 cores), parry do Hazak pelos quadros
+convertidos (`parry.py`), caixas presas às de antes (`manter_caixas.py` + `sprites/hazaki/caixas_base.air`).
+Detalhes e como refazer uma pose em `docs/hazak-36/LEIA-ME.md`.
+
+**Armadilha:** o gerador mede a caixa de dano no desenho. Trocar o desenho muda ~1900 caixas sem ninguém pedir; por
+isso o pós-passo de caixas. Sprites 1513..1527 (sem uso no `.air`) caem na paleta do corpo e o `diabo_loiro` avisa;
+é inofensivo.
+
+**Proporção (depois, mesma data):** a régua da anatomia achou cabeças de tamanhos diferentes entre as folhas (o parado
+9% maior; rasteira, agachado e vítimas herdavam o tamanho errado dos desenhos de antes). Parado gerado de novo e
+`converter_hazaki.py --cabeca` corrige a escala de cada folha pela cabeça (26 folhas). Cabeça de lado/deitada engana a
+régua: vira, derrota e vítimas foram escolhidas no olho (`CABECA_FIXA`). Caixas continuam presas. Ver
+`docs/hazak-36/proporcao.png`.
+
+## 2026-11-15 — Anatomia do Diabo, lote 2 (issue #51, item 3) (Claude, thread do Alisson)
+
+**Feito com `ferramentas/pixel/`:** escala do golpe inteiro em 7 ações que a régua mediu 6 a 10% menores que o
+`d_parado` (conferido também pela aba do chapéu): `d_agarrao_perna` 1,075, `d_ar_joelho` 1,065, `d_baixo_soco` 1,065,
+`d_bico_sapato` 1,11, `d_corrida` 1,09, `d_punho_anel` 1,07, `d_sapato_barriga` 1,07; todas voltaram para 0,98-1,02.
+Antebraço nu do Hazak coberto pela manga em `d_anda`, `d_agachado` e `d_defesa`; verde-água claro que sobrou em 11
+quadros virou pele. Antes/depois em `docs/anatomia-51/lote2/`.
+
+**Não mexi:** `d_vira` (+5 a 9%) e `d_chuva_abre` (+6%) têm a mesma altura do parado; a régua erra de frente para a
+câmera. `d_chapeu_arremesso` fica sem chapéu, então a régua não vale.
+
+**Hazak base novo (#36, 40f04bbe):** a régua mede 46 ações com mais de 6% (rasteira 0,80, agachado 0,88); avisado na
+thread da #36 (o conversor escala pela mediana do desenho antigo e herda o tamanho errado).
+
+## 2026-11-15 — Asas: pouso sem tranco e fechadas no quique do chão (issue #51, item 1, terceira volta) (Claude, thread do Alisson)
+
+**Contexto:** o Breno liberou decidir e juntar sozinho na #51. Os três pontos em aberto foram decididos.
+
+**Feito:** em `aura_no_corpo.py`, o `SALTO` (agora também para o deitado `g`) faz a camada pular junto quando o alvo
+salta demais, então o pouso fica 1 tique solto em vez de 2. O `_pesos` acende a asa fechada a partir de 0,5 deitado, e a
+asa não abre mais no quique do chão. A coroa segue com as asas e a asa fechada continua dobrada por código, até haver
+desenho à mão. Antes e depois em `docs/auras-51/v3_pouso_quadro_a_quadro.jpg`.
+
+**Robô:** aura nos 4 passa; `testar_pengaro.py --linux` hazaki 238, gutto 186, pengaro 189, ck 226, 0 falhas.
+
+## 2026-11-15 — Aura como nos animes, colada na silhueta (issue #51, item 1, quarta volta) (Claude, thread do Alisson)
+
+**Pedido do Breno (02:07Z):** aura com o formato do corpo em todo quadro, correndo pelo braço ou pela perna no golpe e
+saindo pelo punho ou pé, com inércia e labaredas vivas. A aura grande continua no endiabrado. Piloto no Hazak e depois
+os outros despertados.
+
+**Feito:** criei `ferramentas/aura_silhueta.py`. Ele gera duas camadas de cada desenho do despertado a partir do alfa:
+a pele (brilho somado quebrado) e a chama (línguas subindo em 6 fases). Reforça o membro dentro da Clsn1 e solta um
+estouro na ponta. Grava os grupos 9710/9711 e as ações 30000+N e 40000+N. A pele é um helper (estado 9610), que roda
+depois do lutador e por isso não atrasa na troca de ação. A chama é um Explod de um tique solto pelo helper, com
+`xshear` pela mola de velocidade. Aplicado no Hazak, no Gutto, no Pengaró e no CK.
+
+**Armadilhas:** a chama somada fica rosa no cenário azul, então ela usa `addalpha` (A, 255 - A) com alfa por pixel. A
+pele somada continua. O `ChangeAnim` com `elem` só funciona com elemento de tempo 1; com -1 o helper fica parado no
+último. O sinal do `xshear` no IKEMEN é ao contrário do que parece: com valor positivo a chama vai para a frente.

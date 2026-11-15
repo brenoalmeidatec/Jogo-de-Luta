@@ -55,6 +55,7 @@ LUTADORES = ("hazaki", "gutto", "pengaro", "ck")
 INICIO, FIM = "; >>> aura_no_corpo.py", "; <<< aura_no_corpo.py"
 ORIG = "; aura_no_corpo.py, antes: "
 PASSO, PASSO_B, NIVEIS, PASSO_T = 2, 4, 8, 7.5  # px por degrau das costas e do centro, degraus do recolher, graus
+SALTO = {"ax": 24, "ay": 24, "th": 40, "g": 0.45}  # acima disto (px, graus, recolher) a camada não corre atrás: pula junto com o corpo
 ATRASO = 0.6                     # fração do caminho que a camada anda por tique
 RECOLHE = 0.5                     # deitado, a camada do corpo sem desenho fechado fica com (1 - RECOLHE) do tamanho
 ALTA, BAIXA = 120, 0.45           # camada de chão com desenho de ALTA px ou mais perde BAIXA da altura com ele deitado
@@ -204,7 +205,7 @@ def tabela(corpo, ids_da_aura):
     dos outros. O que dá igual ao parado não entra (é o valor de partida)."""
     tp, tq = {}, {}
     for acao, els in sorted(corpo.acoes.items()):
-        if acao in ids_da_aura or acao < 0:
+        if acao in ids_da_aura or acao < 0 or acao >= 30000:  # 30000+: as ações espelho do aura_silhueta.py
             continue
         alvos, ultimo = [], None
         for e in range(1, len(els) + 1):
@@ -275,8 +276,11 @@ def camadas_do_cns(cns):
 
 def _pesos(g):
     """Quanto cada desenho da asa aparece conforme o corpo deita: aberta, meio, fechada (somam 1 ou mais)."""
-    return {"": f"min(1, max(0, 2 - 3 * {g}))", "_meio": f"min(1, max(0, 2 - abs(6 * {g} - 3)))",
-            "_fechada": f"min(1, max(0, 3 * {g} - 1))"}
+    # fecha cedo: no quique do chão (5100, 5160) o desenho fica meio levantado (g perto de 0,6) e a asa tem de
+    # continuar fechada; a meio só aparece na passagem (g de 0,15 a 0,5), caindo ou levantando
+    return {"": f"min(1, max(0, (0.3 - {g}) / 0.15))",
+            "_meio": f"min(1, max(0, min(({g} - 0.15) / 0.15, (0.5 - {g}) / 0.15)))",
+            "_fechada": f"min(1, max(0, ({g} - 0.35) / 0.15))"}
 
 
 def ligar(cns, corpo):
@@ -320,8 +324,10 @@ def ligar(cns, corpo):
              "th": f"(floor({q} / 512) - 16) * {PASSO_T}"}
     for letra, alvo in alvos.items():
         bloco.append(mapa(f"{letra} zera antes do round", letra, "0", ("RoundState = 0",)))
+        # salto grande (o corpo bate no chão de uma vez, o pouso de um arremesso): a camada vai direto, sem atraso
+        passo = f"ifelse(abs(({alvo}) - {m(letra)}) > {SALTO[letra]}, 1, {ATRASO})" if letra in SALTO else str(ATRASO)
         bloco.append(mapa(f"{letra} corre atrás do corpo", letra,
-                          f"{m(letra)} + (({alvo}) - {m(letra)}) * {ATRASO}", ("RoundState > 0",)))
+                          f"{m(letra)} + (({alvo}) - {m(letra)}) * {passo}", ("RoundState > 0",)))
     bloco.append(FIM + "\n\n")
     marco = re.search(rf"^\[State -4, Aura {nome} \w+: nasce\]", cns, re.M)
     cns = cns[:marco.start()] + "".join(bloco) + cns[marco.start():]
@@ -385,6 +391,8 @@ def aplicar(lutador, pasta=None):
     tp, tq = tabela(corpo, set(ids))
     print(f"{lutador}: aura '{nome}' presa ao corpo; {len(corpo.acoes)} ações medidas, {len(tp)} + {len(tq)} valores, "
           f"{sum(len(g) for g in tp.values()) + sum(len(g) for g in tq.values())} trechos nas tabelas")
+    import aura_silhueta  # a aura colada na silhueta (issue #51, quarta volta) vem logo depois deste bloco
+    aura_silhueta.aplicar(lutador, pasta)
 
 
 # ---------------------------------------------------------------------------------------------------------- conferir

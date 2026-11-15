@@ -1,0 +1,326 @@
+{
+ "lutador": "hazaki",
+ "nota": "Hazak nítido (#36): as 15 cores de paleta_arcade.json e os tons do meio das folhas grandes. Escrito por ferramentas/converter_hazaki.py --paleta; o gerar_hazaki.py põe o corpo nestes índices do .sff.",
+ "cores": [
+  {
+   "id": "roupa_contorno",
+   "rgb": [
+    28,
+    24,
+    50
+   ]
+  },
+  {
+   "id": "pele_contorno",
+   "rgb": [
+    122,
+    46,
+    38
+   ]
+  },
+  {
+   "id": "pele_sombra",
+   "rgb": [
+    176,
+    79,
+    48
+   ]
+  },
+  {
+   "id": "pele_medio",
+   "rgb": [
+    222,
+    132,
+    72
+   ]
+  },
+  {
+   "id": "pele_luz",
+   "rgb": [
+    246,
+    180,
+    104
+   ]
+  },
+  {
+   "id": "pele_brilho",
+   "rgb": [
+    252,
+    217,
+    160
+   ]
+  },
+  {
+   "id": "gi_escuro",
+   "rgb": [
+    43,
+    38,
+    80
+   ]
+  },
+  {
+   "id": "gi_medio",
+   "rgb": [
+    71,
+    67,
+    106
+   ]
+  },
+  {
+   "id": "gi_luz",
+   "rgb": [
+    108,
+    110,
+    156
+   ]
+  },
+  {
+   "id": "debrum_laranja",
+   "rgb": [
+    216,
+    102,
+    28
+   ]
+  },
+  {
+   "id": "debrum_sombra",
+   "rgb": [
+    142,
+    58,
+    26
+   ]
+  },
+  {
+   "id": "faixa_cabelo",
+   "rgb": [
+    58,
+    42,
+    48
+   ]
+  },
+  {
+   "id": "atadura_branca",
+   "rgb": [
+    244,
+    241,
+    234
+   ]
+  },
+  {
+   "id": "atadura_sombra",
+   "rgb": [
+    169,
+    166,
+    204
+   ]
+  },
+  {
+   "id": "pulseira",
+   "rgb": [
+    42,
+    157,
+    154
+   ]
+  },
+  {
+   "id": "meio_01",
+   "rgb": [
+    50,
+    56,
+    96
+   ]
+  },
+  {
+   "id": "meio_02",
+   "rgb": [
+    73,
+    76,
+    125
+   ]
+  },
+  {
+   "id": "meio_03",
+   "rgb": [
+    32,
+    36,
+    58
+   ]
+  },
+  {
+   "id": "meio_04",
+   "rgb": [
+    19,
+    16,
+    29
+   ]
+  },
+  {
+   "id": "meio_05",
+   "rgb": [
+    237,
+    168,
+    107
+   ]
+  },
+  {
+   "id": "meio_06",
+   "rgb": [
+    231,
+    150,
+    91
+   ]
+  },
+  {
+   "id": "meio_07",
+   "rgb": [
+    74,
+    50,
+    49
+   ]
+  },
+  {
+   "id": "meio_08",
+   "rgb": [
+    46,
+    49,
+    73
+   ]
+  },
+  {
+   "id": "meio_09",
+   "rgb": [
+    235,
+    122,
+    8
+   ]
+  },
+  {
+   "id": "meio_10",
+   "rgb": [
+    51,
+    24,
+    28
+   ]
+  },
+  {
+   "id": "meio_11",
+   "rgb": [
+    205,
+    116,
+    68
+   ]
+  },
+  {
+   "id": "meio_12",
+   "rgb": [
+    185,
+    97,
+    54
+   ]
+  },
+  {
+   "id": "meio_13",
+   "rgb": [
+    159,
+    65,
+    33
+   ]
+  },
+  {
+   "id": "meio_14",
+   "rgb": [
+    83,
+    91,
+    136
+   ]
+  },
+  {
+   "id": "meio_15",
+   "rgb": [
+    85,
+    29,
+    25
+   ]
+  },
+  {
+   "id": "meio_16",
+   "rgb": [
+    241,
+    190,
+    133
+   ]
+  },
+  {
+   "id": "meio_17",
+   "rgb": [
+    96,
+    65,
+    69
+   ]
+  },
+  {
+   "id": "meio_18",
+   "rgb": [
+    118,
+    45,
+    26
+   ]
+  },
+  {
+   "id": "meio_19",
+   "rgb": [
+    37,
+    11,
+    51
+   ]
+  },
+  {
+   "id": "meio_20",
+   "rgb": [
+    137,
+    86,
+    67
+   ]
+  },
+  {
+   "id": "meio_21",
+   "rgb": [
+    207,
+    79,
+    7
+   ]
+  },
+  {
+   "id": "meio_22",
+   "rgb": [
+    62,
+    12,
+    77
+   ]
+  },
+  {
+   "id": "meio_23",
+   "rgb": [
+    241,
+    241,
+    241
+   ]
+  },
+  {
+   "id": "meio_24",
+   "rgb": [
+    188,
+    192,
+    199
+   ]
+  },
+  {
+   "id": "meio_25",
+   "rgb": [
+    112,
+    148,
+    150
+   ]
+  }
+ ]
+}
