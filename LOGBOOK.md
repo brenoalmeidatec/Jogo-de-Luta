@@ -2457,3 +2457,19 @@ asa não abre mais no quique do chão. A coroa segue com as asas e a asa fechada
 desenho à mão. Antes e depois em `docs/auras-51/v3_pouso_quadro_a_quadro.jpg`.
 
 **Robô:** aura nos 4 passa; `testar_pengaro.py --linux` hazaki 238, gutto 186, pengaro 189, ck 226, 0 falhas.
+
+## 2026-11-15 — Aura como nos animes, colada na silhueta (issue #51, item 1, quarta volta) (Claude, thread do Alisson)
+
+**Pedido do Breno (02:07Z):** aura com o formato do corpo em todo quadro, correndo pelo braço ou pela perna no golpe e
+saindo pelo punho ou pé, com inércia e labaredas vivas. A aura grande continua no endiabrado. Piloto no Hazak e depois
+os outros despertados.
+
+**Feito:** criei `ferramentas/aura_silhueta.py`. Ele gera duas camadas de cada desenho do despertado a partir do alfa:
+a pele (brilho somado quebrado) e a chama (línguas subindo em 6 fases). Reforça o membro dentro da Clsn1 e solta um
+estouro na ponta. Grava os grupos 9710/9711 e as ações 30000+N e 40000+N. A pele é um helper (estado 9610), que roda
+depois do lutador e por isso não atrasa na troca de ação. A chama é um Explod de um tique solto pelo helper, com
+`xshear` pela mola de velocidade. Aplicado no Hazak, no Gutto, no Pengaró e no CK.
+
+**Armadilhas:** a chama somada fica rosa no cenário azul, então ela usa `addalpha` (A, 255 - A) com alfa por pixel. A
+pele somada continua. O `ChangeAnim` com `elem` só funciona com elemento de tempo 1; com -1 o helper fica parado no
+último. O sinal do `xshear` no IKEMEN é ao contrário do que parece: com valor positivo a chama vai para a frente.

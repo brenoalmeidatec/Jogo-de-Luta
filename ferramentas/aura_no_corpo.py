@@ -205,7 +205,7 @@ def tabela(corpo, ids_da_aura):
     dos outros. O que dá igual ao parado não entra (é o valor de partida)."""
     tp, tq = {}, {}
     for acao, els in sorted(corpo.acoes.items()):
-        if acao in ids_da_aura or acao < 0:
+        if acao in ids_da_aura or acao < 0 or acao >= 30000:  # 30000+: as ações espelho do aura_silhueta.py
             continue
         alvos, ultimo = [], None
         for e in range(1, len(els) + 1):
@@ -391,6 +391,8 @@ def aplicar(lutador, pasta=None):
     tp, tq = tabela(corpo, set(ids))
     print(f"{lutador}: aura '{nome}' presa ao corpo; {len(corpo.acoes)} ações medidas, {len(tp)} + {len(tq)} valores, "
           f"{sum(len(g) for g in tp.values()) + sum(len(g) for g in tq.values())} trechos nas tabelas")
+    import aura_silhueta  # a aura colada na silhueta (issue #51, quarta volta) vem logo depois deste bloco
+    aura_silhueta.aplicar(lutador, pasta)
 
 
 # ---------------------------------------------------------------------------------------------------------- conferir

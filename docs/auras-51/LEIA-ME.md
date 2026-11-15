@@ -115,3 +115,40 @@ Decidido assim:
 
 Robôs: aura nos 4 passa (asas 6,3 a 6,8 px e 6 graus em 95% dos tiques, garanhão 6,6 px, elos 8,0 px, no máximo 1 tique
 solto); `testar_pengaro.py --linux` hazaki 238, gutto 186, pengaro 189, ck 226, 0 falhas.
+
+## Quarta volta (Breno, 2026-11-15 02:07Z): aura como nos animes, colada na silhueta
+
+O Breno pediu o passo seguinte: a aura com o formato do corpo em todo quadro, correndo pelo braço no soco e pela perna
+no chute, com inércia e labaredas vivas, sem cara de adesivo. A aura grande de cada um (asas, garanhão, elos, paredão)
+continua; esta é uma camada a mais, colada no corpo. Ferramenta: `ferramentas/aura_silhueta.py` (pós-passo idempotente,
+roda depois do `aura_no_corpo.py`).
+
+- **Silhueta de cada quadro.** Para cada desenho que o despertado mostra, a ferramenta tira o contorno do alfa, reduz
+  pela metade (o pixel da aura fica com o grão do pixelfx) e gera duas camadas:
+  - a **pele**, um brilho somado colado no corpo, quebrado pelo ruído para não virar contorno;
+  - a **chama**, labaredas em línguas que sobem. A distância "sobe mais barato que desce", e a borda é cortada por um
+    ruído que corre para cima em 6 fases (laço de 12 tiques). Ela fica por trás do corpo também, então não sobra fresta.
+- **Membro que bate.** Nos quadros com caixa de golpe, o pedaço do corpo dentro da caixa ganha labareda maior e mais
+  clara, e a ponta (punho ou pé) solta um estouro pequeno, do tamanho do golpe.
+- **Cor de cada um,** tirada da aura grande dele numa rampa de energia: brasa laranja-ouro no Hazak, vermelho no Gutto,
+  violeta no Pengaró e fumaça cinza-esverdeada no CK, que é pouco saturada como a dele.
+- **Inércia.** Uma mola segue a velocidade (maps `au_sil_x`, `au_sil_v`). A chama inclina com `xshear` em volta dos pés,
+  então a parte de cima arrasta mais que a de baixo. Quando ele para, ela passa um pouco do ponto e assenta. Na queda,
+  a chama estica.
+- **Sincronia.** Um Explod nascido no `[Statedef -4]` vê a ação nova um tique atrasado. Por isso a pele é um helper
+  (estado 9610), que roda depois do lutador no mesmo tique e mostra o mesmo elemento do corpo (`ChangeAnim` com `elem`).
+  O helper também solta a chama (Explod 9611 de um tique). No roteiro de 1.120 tiques, 99,6% batem exatos; os 5 que
+  escapam são da câmera lenta do KO.
+- Grupos do .sff: 9710 (pele) e 9711 (chama). Ações espelho: 30000 + N (pele) e 40000 + N (chama).
+  `--previa PASTA lutador --acoes 0,240` faz uma folha sem o motor, e `--tirar` desfaz.
+
+**Custo:** o .sff cresce de 5 a 16 MB por lutador (3.363 desenhos da aura no Hazak). O Raiclaven ainda não tem aura em
+camadas na `mugen` (a da dupla está na #43); quando tiver, é só rodar a ferramenta nele.
+
+Robôs depois da mudança: `testar_pengaro.py --linux` com Hazak 238, Gutto 186, Pengaró 189 e CK 226, sem nenhuma falha.
+`aura_no_corpo.py --robo` nos 4 também passou ("a aura segue o corpo em todos").
+
+Vídeos: `hazaki_v4_antes_agora.mp4`, `gutto_v4_antes_agora.mp4`, `pengaro_v4_antes_agora.mp4` e
+`ck_v4_antes_agora.mp4`. É o mesmo roteiro dos outros: parado, agachado, pulo, andar, correr, golpes (soco e chute),
+derrubado, agarrado, defesa e vitória. À esquerda fica a versão anterior e à direita a de agora. A folha
+`v4_<lutador>_quadros.jpg` tem um quadro a cada 1,3 s do lado "agora".
