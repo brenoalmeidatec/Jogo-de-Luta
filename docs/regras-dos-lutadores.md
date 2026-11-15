@@ -212,7 +212,8 @@ Ver a próxima seção.
 - **Padrão: x + y** (os dois socos juntos). A ficha do lutador pode trocar por outro par de botões livre
   (a + b, x + b, y + a) ou por um comando (exemplo: `↓ ↓` + x + y), desde que não bata com outro golpe dele.
 - A ativação tem animação de transformação, com invencibilidade, e empurra o oponente para longe.
-- O Despertar dura até a barra (que vai drenando) acabar, ou até o fim do round. Ao acabar, volta à forma base.
+- **O Despertar dura até o fim da luta** (Breno, 2026-11-14): quem desperta não volta à forma base por tempo nem no
+  fim do round, e a música da forma toca até a luta acabar. Feito pelo `ferramentas/forma_permanente.py`.
 
 ### Todo lutador tem a forma transformada, com arte própria
 

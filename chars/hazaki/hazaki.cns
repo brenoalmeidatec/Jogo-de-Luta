@@ -413,7 +413,7 @@ sparkno = 2
 guard.sparkno = 40
 KO.echo = 0
 volume = 0
-IntPersistIndex = 60
+IntPersistIndex = 58
 FloatPersistIndex = 40
 
 [Size]
@@ -5692,6 +5692,7 @@ type = Pause
 trigger1 = Time = 0
 time = 162
 movetime = 162
+pausebg = 0
 
 [State 2000, Cena: som de entrada]
 type = PlaySnd
@@ -6062,6 +6063,35 @@ type = VarSet
 trigger1 = roundstate < 2
 var(51) = 0
 
+; Forma até o fim da luta (forma_permanente.py)
+[State -2, Forma fica: marca que despertou]
+type = VarSet
+trigger1 = var(20) > 0
+var(58) = 1
+
+[State -2, Forma fica: volta no round seguinte]
+type = VarSet
+trigger1 = var(58) = 1 && var(20) <= 0
+var(20) = 600
+
+[State -2, Forma fica: marca a musica]
+type = VarSet
+trigger1 = var(51) = 1
+var(59) = 1
+
+[State -2, Forma fica: musica volta no round seguinte]
+type = PlayBGM
+trigger1 = var(59) = 1 && var(51) = 0 && roundstate >= 1
+bgm = "despertar.ogg"
+volume = 100
+loop = 1
+loopstart = 4171115
+
+[State -2, Forma fica: musica marcada no round seguinte]
+type = VarSet
+trigger1 = var(59) = 1 && var(51) = 0 && roundstate >= 1
+var(51) = 1
+
 [State -2, Musica do cenario comeca a baixar]
 type = VarSet
 trigger1 = roundstate = 2 && var(51) = 0 && (var(20) > 0 || stateno = 2000)
@@ -6105,11 +6135,6 @@ source = "stagedef."
 type = VarSet
 trigger1 = var(51) != 0 && var(20) <= 0 && stateno != 2000
 var(51) = 0
-
-[State -2, Conta Diabo Loiro]
-type = VarAdd
-trigger1 = var(20) > 0
-var(20) = -1
 
 [State -2, Vira o Diabo]
 type = RemapSprite

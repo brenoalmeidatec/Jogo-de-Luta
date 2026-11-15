@@ -342,35 +342,25 @@ do
   end
   if LUTADOR == "pengaro" then
     -- a aura liga inteira e ja apagou quando o corpo volta a forma base (o fade de saida acaba junto com o var(20))
-    desperto("aura do endiabrado: liga as 4 camadas e apaga junto com a forma endiabrada", function()
+    desperto("aura do endiabrado: liga as 4 camadas e nao apaga por tempo", function()
       wait(70)
       need(function() return auraN(1) == 4 end, 10, "as 4 camadas da aura (9600 a 9603) vivas no Despertar")
-      add(function() held[1].fimdesp = clock() + 2; return true end)
-      need(function() local v = snap(1).v20; return v > 0 and v <= 40 end, 10, "Despertar no fim (var20 <= 40)")
-      need(function() return snap(1).v37 == 0 end, 60, "o corpo voltou a forma base (var37 = 0)")
-      acao(function() c.aura_volta = auraN(1); c.t_volta = clock() end)
-      need(function() return auraN(1) == 0 end, 2, "a aura apaga no maximo 2 tiques depois do corpo voltar", false)
-      note(function() return "camadas quando o corpo voltou: " .. c.aura_volta .. "; apagou " .. (clock() - c.t_volta) .. " tiques depois" end)
+      -- forma ate o fim da luta (forma_permanente.py): passa do tempo antigo (600 tiques) e nada apaga
+      wait(660)
+      need(function() local v = snap(1); return v.v20 > 0 and v.v37 == 1 end, 2, "660 tiques depois continua na forma (var20 > 0, var37 = 1)")
+      need(function() return auraN(1) == 4 end, 2, "a aura continua inteira", false)
     end)
   end
   if LUTADOR == "ck" then
     -- aura do Ratao (ferramentas/aura_ck.py: paredao 9600, chao 9601, fagulhas 9602): liga inteira e ja apagou
     -- quando o corpo volta a forma base (o fade de saida acaba junto com o var(20))
-    desperto("aura do Ratao: liga as 3 camadas e apaga junto com a forma do Ratao", function()
+    desperto("aura do Ratao: liga as 3 camadas e nao apaga por tempo", function()
       wait(70)
       need(function() return auraN(1) == 3 end, 10, "as 3 camadas da aura (9600 a 9602) vivas no Despertar")
-      add(function() held[1].fimdesp = clock() + 2; return true end)
-      need(function() local v = snap(1).v20; return v > 0 and v <= 40 end, 10, "Despertar no fim (var20 <= 40)")
-      -- a saida anda com o var(20) (aura_ck.RESTA), nao com o relogio do -4: o fade e var(20)/34 no fim
-      need(function() local v = snap(1).v20; return v > 0 and v <= 8 end, 40, "var20 <= 8")
-      acao(function() c.v20 = snap(1).v20; c.f = com(1, function() return map("au_ck_f") end) end)
-      note(function() return string.format("var20 %d: fade %.3f (var20/34 = %.3f), camadas %d", c.v20, c.f, c.v20 / 34, auraN(1)) end)
-      need(function() return math.abs(c.f - c.v20 / 34) < 0.035 and auraN(1) == 3 end, 1,
-        "no fim a aura segue o var(20): fade = var20/34 e as 3 camadas vivas", false)
-      need(function() return snap(1).v37 == 0 end, 60, "o corpo voltou a forma base (var37 = 0)")
-      acao(function() c.aura_volta = auraN(1); c.t_volta = clock() end)
-      need(function() return auraN(1) == 0 end, 2, "a aura apaga no maximo 2 tiques depois do corpo voltar", false)
-      note(function() return "camadas quando o corpo voltou: " .. c.aura_volta .. "; apagou " .. (clock() - c.t_volta) .. " tiques depois" end)
+      -- forma ate o fim da luta (forma_permanente.py): passa do tempo antigo (600 tiques) e nada apaga
+      wait(660)
+      need(function() local v = snap(1); return v.v20 > 0 and v.v37 == 1 end, 2, "660 tiques depois continua na forma (var20 > 0, var37 = 1)")
+      need(function() return auraN(1) == 3 end, 2, "a aura continua inteira", false)
     end)
     -- no Grave do Paredao o paredao e o da aura: sem caixa preta (9250), e ele incha (surto) no grave
     desperto("aura do Ratao: o Grave (3403) faz o paredao da aura inchar, sem caixa preta", function()
@@ -477,15 +467,14 @@ do
 
   desperto("super: Saideira Sombria (3100) fica endiabrado do comeco ao fim", function()
     approach(60)
-    acao(function() com(1, function() setPower(1000); return 0 end); c.vida0 = lifeP2() end)
+    acao(function() com(1, function() setPower(2000); return 0 end); c.vida0 = lifeP2() end)
     wait(3)
     press(1, {LUTADOR == "ck" and "baile" or "golaco"}, 3)  -- no CK o golaco do Ratao e a Rajada (3000)
     need(estadoEm(3100), 14, "entrou em 3100")
     need(function() local s = snap(1); return s.st == 3100 and s.t > 20 and s.v37 == 1 end, 80, "var(37) = 1 (arte endiabrada) no meio do 3100")
     need(function() return st1() == 0 end, 300, "terminou", false)
-    if LUTADOR == "pengaro" then  -- o 3100 zera o var(20): a aura apaga antes de ele acabar, pelo AnimTime
-      need(function() return auraN(1) == 0 end, 2, "a aura ja apagou quando o 3100 acabou (forma base)", false)
-    end
+    -- forma ate o fim da luta (forma_permanente.py): o super nao encerra mais a forma
+    need(function() local v = snap(1); return v.v20 > 0 and v.v37 == 1 end, 2, "continua na forma depois do super (var20 > 0, var37 = 1)", false)
     note(function() local s = snap(1); return "dano " .. (c.vida0 - lifeP2()) .. "; var20=" .. s.v20 .. " var37=" .. s.v37 end)
     need(function() return c.vida0 - lifeP2() > 150 end, 1, "o super acertou (dano > 150)", false)
   end)
@@ -530,7 +519,7 @@ do
   if LUTADOR == "ck" then  -- golpes que so o CK tem
     desperto("super: Baile da Esquina pelo comando proprio (tras, frente, baixo + x+y)", function()
       approach(60)
-      acao(function() com(1, function() setPower(1000); return 0 end); c.vida0 = lifeP2() end)
+      acao(function() com(1, function() setPower(2000); return 0 end); c.vida0 = lifeP2() end)
       wait(3)
       press(1, {"baile"}, 3)
       need(estadoEm(3100), 14, "entrou em 3100")
@@ -540,7 +529,7 @@ do
     end)
     desperto("Baile da Esquina nao encerra o Ratao (var(20) continua ligado)", function()
       approach(60)
-      acao(function() com(1, function() setPower(1000); return 0 end) end)
+      acao(function() com(1, function() setPower(2000); return 0 end) end)
       wait(3)
       press(1, {"baile"}, 3)
       need(estadoEm(3100), 14, "entrou em 3100")
@@ -1059,12 +1048,12 @@ do
     note(function() return "dano " .. (c.vida0 - lifeP2()) end)
     need(function() return c.vida0 - lifeP2() >= 150 end, 1, "dano do Diabo maior que o do agarrao normal (>= 150; o normal fica em 110 a 145)", false)
   end)
-  diabo("acaba sozinho: volta ao normal e a aura apaga", function()
+  diabo("nao acaba por tempo: continua o Diabo e a aura fica", function()
     wait(60)
     need(function() return auraN(1) == 2 end, 10, "aura viva no Diabo")
-    add(function() held[1].fimdesp = clock() + 2; return true end)
-    need(function() return snap(1).v37 == 0 end, 80, "o corpo voltou ao Hazak (var37 = 0)")
-    need(function() return auraN(1) == 0 end, 3, "a aura apagou junto", false)
+    wait(660)
+    need(function() local v = snap(1); return v.v20 > 0 and v.v37 == 1 end, 2, "660 tiques depois continua o Diabo (var20 > 0, var37 = 1)")
+    need(function() return auraN(1) == 2 end, 2, "a aura continua viva", false)
   end)
 
   -- fica por ultimo: o nocaute acaba com o round

@@ -407,6 +407,8 @@ def main():
     balanceamento.aplicar("raiclaven", SAIDA)
     import cena_transformacao  # issue #49: tudo preto, zoom e clarão no Despertar (sempre por último)
     cena_transformacao.aplicar("raiclaven", SAIDA)
+    import forma_permanente  # missão dos cenários 4.1: endiabrado até o fim da luta
+    forma_permanente.aplicar("raiclaven", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

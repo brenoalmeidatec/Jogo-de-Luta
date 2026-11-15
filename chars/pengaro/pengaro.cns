@@ -403,7 +403,7 @@ sparkno = 2
 guard.sparkno = 40
 KO.echo = 0
 volume = 0
-IntPersistIndex = 60
+IntPersistIndex = 58
 FloatPersistIndex = 40
 
 [Size]
@@ -5609,6 +5609,7 @@ type = Pause
 trigger1 = Time = 0
 time = 150
 movetime = 150
+pausebg = 0
 
 [State 2000, Cena: som de entrada]
 type = PlaySnd
@@ -5762,7 +5763,7 @@ redirectid = enemynear,id
 
 [State 2000, Pilar da transformação (efeitos.py)]
 type = Explod
-trigger1 = AnimTime = 0
+trigger1 = Anim = 2000 && AnimTime = 0
 anim = 9272
 id = 9272
 postype = p1
@@ -6185,12 +6186,7 @@ framegap = 2
 [State 3100, Gasta]
 type = PowerAdd
 trigger1 = Time = 0
-value = ifelse(var(20) > 0, -1000, -2000)
-
-[State 3100, Fim Despertar]
-type = VarSet
-trigger1 = Time = 0
-var(20) = 0
+value = -2000
 
 [State 3100, Invencivel]
 type = NotHitBy
@@ -7881,16 +7877,40 @@ type = VarSet
 trigger1 = roundstate < 2
 var(21) = 0
 
-[State -2, Conta Despertar]
-type = VarAdd
-trigger1 = var(20) > 0
-var(20) = -1
-
 ; Musica do Despertar (Breno, issue #33): a do cenario baixa ate sumir, entra a do lutador em loop; volta ao fim.
 [State -2, Zera musica na intro]
 type = VarSet
 trigger1 = roundstate < 2
 var(51) = 0
+
+; Forma até o fim da luta (forma_permanente.py)
+[State -2, Forma fica: marca que despertou]
+type = VarSet
+trigger1 = var(20) > 0
+var(58) = 1
+
+[State -2, Forma fica: volta no round seguinte]
+type = VarSet
+trigger1 = var(58) = 1 && var(20) <= 0
+var(20) = 600
+
+[State -2, Forma fica: marca a musica]
+type = VarSet
+trigger1 = var(51) = 1
+var(59) = 1
+
+[State -2, Forma fica: musica volta no round seguinte]
+type = PlayBGM
+trigger1 = var(59) = 1 && var(51) = 0 && roundstate >= 1
+bgm = "despertar.ogg"
+volume = 100
+loop = 1
+loopstart = 649079
+
+[State -2, Forma fica: musica marcada no round seguinte]
+type = VarSet
+trigger1 = var(59) = 1 && var(51) = 0 && roundstate >= 1
+var(51) = 1
 
 [State -2, Musica do cenario comeca a baixar]
 type = VarSet

@@ -2332,3 +2332,31 @@ rajadona com a máquina filmando em paralelo, o mesmo caso já anotado; sozinho 
 **Não feito / sugestões:** asa não gira com o corpo no ar; paredão e coluna não sobem no pulo (nascem do chão);
 desenho próprio de paredão baixo. Detalhes e vídeos em `docs/auras-51/LEIA-ME.md`.
 
+## 2026-11-15 — Endiabrado até o fim da luta (missão dos cenários, seção 4.1) (Claude, sessão do LightWolfMan)
+
+**Pedido do Breno:** quem desperta fica na forma até a luta acabar, com a música da forma, nos 5 lutadores; rever o
+balanceamento.
+
+**Feito:** pós-passo `ferramentas/forma_permanente.py`, chamado por último nos `gerar_<lutador>.py` (depois do
+`cena_transformacao.py`).
+- O contador do `var(20)` saiu: ele fica em 600 enquanto a forma durar. `var(20) > 0` continua sendo o sinal de
+  "está na forma" para tudo (arte, aura, golpes, e o cenário destruído da thread dos cenários).
+- `IntPersistIndex = 58`: o `var(58)` (já despertou) e o `var(59)` (música da forma tocando) atravessam os rounds. No
+  round seguinte a forma volta já na apresentação.
+- Música: o motor recomeça a música do cenário a cada round (medido com `testar_musica.py --rounds`), então a da forma
+  entra de novo na apresentação do round seguinte, direto.
+- A `Pause` da cena da transformação ganhou `pausebg = 0`, para o cenário poder trocar para o destruído no clarão.
+
+**Balanceamento da forma permanente:**
+- Custo para despertar: continua a barra inteira (3 estoques) nos 5.
+- Super da forma (estado 3100: Saideira Sombria, Baile da Esquina e os do Gutto e do Raiclaven): antes custava 1
+  estoque e acabava com a forma (no CK só valia nos 10 s). Agora **não acaba com a forma e custa 2 estoques**, igual ao
+  super fora da forma. É o único número mexido.
+- Dano e defesa da forma: não mexi. A forma já não tinha multiplicador de ataque nem de defesa; o que ela dá são golpes
+  melhores (agarrão e poder de longe do #47, especiais maiores). Como agora dura a luta toda, vale o Breno jogar e dizer
+  se ficou forte demais. Botões prontos para apertar, se ficar: defesa menor na forma (`DefenceMulSet`), barra enchendo
+  mais devagar na forma, ou despertar só com vida baixa.
+- A ressaca e a fumaça de saída do Despertar não acontecem mais (não há saída).
+
+**Robô:** os roteiros "a forma acaba" viraram "660 tiques depois continua na forma e a aura fica", e o do super confere
+que a forma continua depois dele.
