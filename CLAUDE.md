@@ -6,4 +6,5 @@ acima do resto (sem Codex, sem PR, direto na `mugen`). Ele diz também em que p�
 Leia e siga [`AGENTS.md`](AGENTS.md) no que não contrariar esse arquivo.
 
 **Obrigatório:** todo trabalho em lutador segue [`docs/regras-dos-lutadores.md`](docs/regras-dos-lutadores.md).
+Lutador novo segue também a [`docs/receita-de-lutador.md`](docs/receita-de-lutador.md), do conceito até a `mugen`.
 Ao escrever missões em `docs/missoes-codex.md` ou revisar PR do Codex, confira contra o checklist da seção 9 de lá.
