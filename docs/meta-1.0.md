@@ -1,9 +1,9 @@
-# Meta da versão 1.0 do Nazafights (proposta de 2026-11-14)
+# Meta da versão 1.0 do Nazafights (aprovada pelo Breno em 2026-11-15)
 
-Proposta do Alisson para o Breno aprovar ou ajustar. A ideia é ter uma linha de chegada: o que entra na 1.0, como
-saber que cada coisa está pronta, em que ordem e até quando. Enquanto o Breno não aprovar, isto é só proposta.
+Proposta do Alisson (2026-11-14), **aprovada pelo Breno na issue #50 em 2026-11-15**, com os ajustes dele já incluídos
+abaixo. É a linha de chegada: o que entra na 1.0, como saber que cada coisa está pronta, em que ordem e até quando.
 
-**Data-alvo sugerida: domingo, 20/12/2026.**
+**Data combinada: domingo, 20/12/2026. A 1.0 é o Nazafights Arcade.**
 
 ## 1. Escopo fechado da 1.0
 
@@ -18,7 +18,6 @@ saber que cada coisa está pronta, em que ordem e até quando. Enquanto o Breno 
 
 **Fica para depois da 1.0** (a não ser que troque por algo de dentro):
 
-- cenário destruído depois da transformação;
 - falas e balões gravados pelo Breno;
 - abertura animada antes do menu (o título já é animado);
 - folhas próprias para os 20 golpes do Diabo Loiro que hoje usam a folha mais parecida;
@@ -36,6 +35,16 @@ Alisson: **a data de 20/12 fica, e a 1.0 é o Nazafights Arcade.**
 - **Nazafights Moderno** (estilo Melty Blood): começa depois da 1.0 do Arcade, pelo piloto do Hazak. Ele reaproveita
   lutadores, cenários, músicas e telas do Arcade pronto. A data dele se combina depois do piloto aprovado.
 
+### Fechamento do Breno (issue #50, 2026-11-15)
+
+- **Fechado:** 1.0 é o Nazafights Arcade em 20/12, o premium vai na 1.1 e o Moderno vem depois. Nada do premium troca
+  de lugar agora.
+- **Entram na 1.0 a pedido dele**, por já estarem em andamento: endiabrado até o fim da luta (feito, mugen `0d4f3b06`),
+  **cenário destruído em dois níveis** (#35, seção 4.2 da missão dos cenários), a **proporção** dos lutadores e as
+  **asas fechando e inclinando com o corpo**, além das três correções da #51.
+- **As cinco regras estão aceitas.** Na regra 4, o Breno é avisado no item antes de ele contar como aprovado.
+- Se o redesenho da anatomia ameaçar o 06/12, avisar na #50 com antecedência quais quadros ficam para depois.
+
 ## 2. Checklist com critério de pronto
 
 Um item só conta como pronto quando cumpre as três coisas: **está na `mugen`**, **o robô passa com 0 falha** e
@@ -51,6 +60,7 @@ Um item só conta como pronto quando cumpre as três coisas: **está na `mugen`*
 - [ ] **Telas e sons** (#39, #40, #46): aprovados e issues fechadas.
 - [ ] **Golpes e efeitos** (#38, #45, #48, #49): aprovados e issues fechadas.
 - [ ] **Correções da #51**: auras, asas, garanhão, correntes e paredão seguem o corpo em todo estado (robô confere); todo efeito de acerto feito no pixelfx, com a lista do que foi trocado; anatomia revisada nos 6 lutadores e nas duas formas, com folha de contato antes e depois.
+- [ ] **Pedidos do fechamento**: endiabrado até o fim da luta (na mugen); cenário destruído em dois níveis nos 5 cenários (#35); proporção dos lutadores conferida lado a lado; asas fechando e inclinando com o corpo.
 - [ ] **Revisão final** (#41): uma pessoa joga o Arcade inteiro com cada um dos 6 lutadores sem travar, sem texto em inglês e sem som faltando.
 - [ ] **Balanceamento**: torneio CPU x CPU sem lutador acima de 60% nem abaixo de 40% de vitórias, e a duração da transformação conferida com gente jogando.
 - [ ] **Fechamento**: tag `v1.0` na `mugen` e o atalho baixando essa versão.
@@ -60,7 +70,7 @@ Um item só conta como pronto quando cumpre as três coisas: **está na `mugen`*
 1. **Fechar o que já está no jogo esperando aval.** São 15 issues abertas com trabalho entregue. Aqui é o Breno jogar e dizer "ok" ou listar os ajustes.
 2. **Raiclaven despertado** (#43), que só depende do aval do conceito.
 3. **Gbzin** (#30), que só depende da foto.
-4. **Correções da #51** (auras, pixelfx, anatomia).
+4. **Correções da #51** (auras, pixelfx, anatomia) e os pedidos do fechamento (cenário destruído, proporção, asas).
 5. **Trilha**: ouvir os loops e gerar as 2 músicas que faltam.
 6. **Revisão final e balanceamento** com gente jogando.
 7. **Tag `v1.0`.** Depois dela: 1.1 premium e Nazafights Moderno.
@@ -69,24 +79,21 @@ Um item só conta como pronto quando cumpre as três coisas: **está na `mugen`*
 
 | Até | O que acontece |
 |---|---|
-| dom 22/11 | Breno aprova ou ajusta este escopo e a data, manda a foto do Gbzin e responde os avais pendentes |
+| dom 22/11 | Breno manda a foto do Gbzin e responde os avais pendentes (escopo e data já aprovados em 15/11) |
 | dom 06/12 | Conteúdo completo: tudo do escopo está na `mugen`. A partir daqui não entra nada novo |
 | dom 13/12 | Semana de jogar e corrigir erro |
 | dom 20/12 | Versão 1.0 marcada |
 
-Se a foto do Gbzin não chegar até 22/11, a proposta é a 1.0 sair com 5 lutadores e o Gbzin virar a primeira novidade da 1.1.
+Se a foto do Gbzin não chegar até 22/11, a 1.0 sai com 5 lutadores e o Gbzin virar a primeira novidade da 1.1.
 
 ## 5. Regras para o jogo não ficar infinito
 
 1. **Ideia nova vai para a lista "Depois da 1.0"** (uma issue só para isso). Nenhuma ideia se perde, só espera a vez.
 2. **Para entrar na 1.0, troca.** A ideia nova entra se sair do escopo um item de tamanho parecido, escolhido pelo Breno.
 3. **Até duas rodadas de ajuste por item.** Depois da segunda, o item fica como está e o que sobrar vai para a lista.
-4. **Aval em até 3 dias.** Item entregue que passar 3 dias sem resposta conta como aprovado do jeito que está.
+4. **Aval em até 3 dias.** Item entregue que passar 3 dias sem resposta conta como aprovado do jeito que está. Antes de contar, o Breno recebe um aviso no próprio item.
 5. **Depois de 06/12, só correção de erro.**
 
-## 6. O que o Breno precisa responder
+## 6. Lista "Depois da 1.0"
 
-1. O escopo da seção 1 está certo? O que tira, o que troca?
-2. A data de 20/12 serve?
-3. Aceita as cinco regras da seção 5?
-4. O cenário destruído pode ficar para depois da 1.0?
+As ideias que esperam a vez ficam na issue #52.
