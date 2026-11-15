@@ -3,6 +3,7 @@
 
   python3 ferramentas/filmar_golpes_linux.py SAIDA.mp4 --p1 ck --p2 gutto --golpes "holdfwd+y,x" [--distancia 4]
                                              [--segundos 12] [--lenta 2] [--despertar] [--fotos PASTA]
+                                             [--p2-agachado]
 
 É o modo --golpes do filmar_sandbox.py (Windows) para a nuvem: o P1 fica sem IA, se posiciona a --distancia px do
 P2 (que fica parado) e solta, em volta, os comandos do .cmd ("+" junta comandos no mesmo tick: holdfwd+y é o
@@ -52,6 +53,7 @@ def preparar_cmd(origem, destino, nomes, despertar):
     for c in sorted(set(nomes)):
         b += f'[State -1, F_{c}]\ntype = AssertCommand\ntrigger1 = map(t_{c}) = 1\nname = "{c}"\nbuffer.time = 1\n\n'
     b += '[State -1, F_pos]\ntype = PosSet\ntrigger1 = map(t_pos) = 1\nx = map(t_posx) - 1000\n\n'
+    b += '[State -1, F_add]\ntype = PosAdd\ntrigger1 = map(t_add) = 1\nx = map(t_dx) - 1000\n\n'
     if despertar:
         quando = "triggerall = roundstate = 2 && var(20) = 0 && map(t_desp) = 0\ntrigger1 = statetype = S && ctrl\n"
         b += (f"[State -1, Filme enche a barra]\ntype = PowerSet\n{quando}value = powermax\n\n"
@@ -70,6 +72,7 @@ def main():
     ap.add_argument("--segundos", type=float, default=12, help="segundos de jogo filmados (em 60 ticks/s)")
     ap.add_argument("--lenta", type=int, default=2)
     ap.add_argument("--despertar", action="store_true")
+    ap.add_argument("--p2-agachado", action="store_true", help="o P2 fica agachado (para filmar o agarrão agachado)")
     ap.add_argument("--fotos", type=Path, help="pasta para um quadro a cada 4 ticks (folha de contato)")
     ap.add_argument("--cenario", default="stages/stage0-720.def")
     a = ap.parse_args()
@@ -89,6 +92,16 @@ def main():
         ajustar_ini(copia)
         preparar_cmd(RAIZ / "chars" / a.p1 / f"{a.p1}.cmd", copia / "chars" / a.p1 / f"{a.p1}.cmd", nomes,
                      a.despertar)
+        if a.p2_agachado:  # o agachar do motor lê o controle e não os comandos; um estado agachado próprio resolve
+            assert a.p1 != a.p2, "--p2-agachado precisa de dois lutadores diferentes"
+            c2 = copia / "chars" / a.p2 / f"{a.p2}.cmd"
+            t2 = c2.read_text(encoding="utf-8").replace("\r\n", "\n")
+            assert "[Statedef -1]\n\n" in t2, f"sem [Statedef -1] em {c2}"
+            t2 = t2.replace("[Statedef -1]\n\n", "[Statedef -1]\n\n[State -1, Filme agacha]\ntype = ChangeState\n"
+                            "trigger1 = roundstate = 2 && stateno = 0\nvalue = 9911\n\n", 1)
+            t2 += ("\n[Statedef 9911]\ntype = C\nphysics = C\nmovetype = I\nanim = 11\nctrl = 0\nvelset = 0,0\n\n"
+                   "[State 9911, fica]\ntype = Null\ntrigger1 = 1\n")
+            c2.write_text(t2, encoding="utf-8", newline="\n")
         lista = ", ".join("{" + ", ".join(f'"{n}"' for n in g) + "}" for g in golpes)
         lua = ((motor / "external/script/debug.lua").read_text(encoding="utf-8") + "\n"
                + LUA.replace("@LENTA@", str(a.lenta)).replace("@PASTA@", td.as_posix()) + "\n"
