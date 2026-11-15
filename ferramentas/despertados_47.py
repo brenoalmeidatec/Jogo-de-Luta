@@ -4,7 +4,8 @@
   python ferramentas/despertados_47.py [lutador ...]      (sem nome: os três) reescreve chars/<l>/ .sff .air .cns .cmd
                                                           e o movelist.dat. Roda de novo sem duplicar nada.
 
-O Hazak (Diabo Loiro, #44) e o Raiclaven (Cientista Louco, #43) ganham os deles nas threads dessas issues.
+O Hazak (Diabo Loiro, #44) tem o dele no diabo_loiro.py. O Raiclaven (Cientista Louco, #43) entrou aqui depois
+(Cadeira Elétrica e Secador de Raio); o gerar_raiclaven.py chama `aplicar` no fim.
 
 Agarrão da forma (estado 4700 -> 4710), no lugar do agarrão da forma básica enquanto var(20) > 0 (o Despertar):
   mesmo comando (y ou b com → ou ← colado), mesma pega e mesmo escape do agarrão segura-e-bate
@@ -42,7 +43,7 @@ import agarrao_mk as mk  # noqa: E402
 import conferir_sff as cs  # noqa: E402
 import efeitos  # noqa: E402
 
-LUTADORES = ("pengaro", "gutto", "ck")
+LUTADORES = ("pengaro", "gutto", "ck", "raiclaven")
 GRUPOS = {"agarrao": 47000, "final": 47001, "poder": 47002, "carga": 47003, "pancada": 47004}
 NASCE = 5        # quadros em que o rastro do poder cresce atrás dele ao sair da mão (sprites 100+ do grupo do poder)
 AURA_GUTTO = "garanhao"   # nome da aura do Gutto no aura.py (Explods e grupos 9600 e 9601)
@@ -67,7 +68,7 @@ class Cfg:
 
 # padrão do Breno (#47): tela escurece e tinge na cor da forma enquanto o golpe da forma acontece; clarão no impacto
 TINTA = {"pengaro": ("120,96,150", "70,20,110"), "gutto": ("150,90,90", "120,20,20"),
-         "ck": ("110,130,115", "40,90,60")}   # (BGPalFX mul do fundo, PalFX add no oponente atingido)
+         "ck": ("110,130,115", "40,90,60"), "raiclaven": ("95,125,100", "40,120,20")}   # (BGPalFX mul do fundo, PalFX add no oponente atingido)
 
 G = mk.Golpe
 CFG = {
@@ -78,6 +79,12 @@ CFG = {
                  G(3423, 62, "coice final"), 4, "Estouro do Garanhão", 25, (0, 0), 3.6, "50,3", "50,2", "S53,2", "50,5", mao=(40, -56), prio_poder=-2),
     "ck": Cfg("Paredão na Cara", (G(3433, 26, "palma"), G(3410, 26, "revolta"), G(3421, 26, "afastar pesado")),
               G(3413, 62, "roda"), -1, "Paredão no Talo", 22, (50, -78), 3.2, "50,2", "50,5", "S53,0"),
+    # Cientista Louco (#43): ele segura, ela corta; raio verde dos tanques no agarrado, lascas de aço no final.
+    # O poder sai do secador dela, lá no alto das costas dele. Sons do .snd dele: 50,7 máquina zumbindo,
+    # 50,8 máquina explodindo, 50,9 navalha (gerar_sons.ESPECIAIS)
+    "raiclaven": Cfg("Cadeira Elétrica", (G(3433, 26, "navalhada"), G(3420, 26, "secador na cara"),
+                                          G(3410, 26, "tesourada")), G(3423, 62, "corte final"), 4,
+                     "Secador de Raio", 25, (45, -92), 3.4, "50,7", "50,9", "S53,2", "50,8"),
 }
 
 

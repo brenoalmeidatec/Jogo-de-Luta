@@ -347,15 +347,18 @@ _par_endiabrado = gp.par_endiabrado
 # folha que falta (ou sprite antigo) -> folha da dupla emprestada, só até a folha própria ser gerada
 EMPRESTADA_DUPLA = {
     "ar_soco": "pulo", "bicicleta": "pulo", "ar_chute": "pulo", "ar_cotovelo": "pulo", "mortal": "pulo",
-    "bola": "afastar soco", "caneta": "soco", "pente_combo": "soco", "golaco": "martelo soco",
-    "agarrao": "martelo soco", "agarra": "martelo soco", "joga": "afastar soco", "especial": "afastar soco",
-    "kick_alto": "chute_alto soco", "compasso": "chute_alto soco", "armada": "chute_alto soco",
-    "gira": "chute_alto soco", "juliet": "chute_alto soco", "embaixada": "chute_baixo soco",
+    # o kit da forma (#43): raio do secador, choque da tesoura no chão, pião e agarra entram no lugar do Surto
+    "bola": "raio afastar soco", "caneta": "soco", "pente_combo": "soco", "golaco": "choque martelo soco",
+    "agarrao": "agarra_forma martelo soco", "agarra": "agarra_forma martelo soco", "joga": "piao afastar soco",
+    "especial": "raio afastar soco",
+    "kick_alto": "chute_alto chute_baixo soco", "compasso": "chute_alto chute_baixo soco",
+    "armada": "chute_alto chute_baixo soco", "gira": "piao chute_alto soco", "juliet": "chute_alto chute_baixo soco",
+    "embaixada": "chute_baixo soco",
     "rasteira": "baixo_soco agachado", "rasteirinha": "baixo_soco agachado", "rolamento": "agachado",
     "rola": "agachado", "provoca": "ginga", "vitoria": "ginga", "derrota": "levanta", "parado": "ginga",
     "anda": "anda", "corre": "anda",
     # folhas de golpe que ainda não saíram (o limite de imagens do ChatGPT, 2026-11-15): o golpe mais parecido que já há
-    "martelo": "soco", "chute_baixo": "soco", "chute_alto": "soco", "afastar": "soco", "baixo_soco": "agachado",
+    "chute_alto": "chute_baixo soco", "afastar": "soco", "baixo_soco": "agachado",
     "cabecada": "agachado",
 }
 
@@ -391,6 +394,18 @@ def par_endiabrado_dupla(nome):
 
 
 gp.par_endiabrado = par_endiabrado_dupla
+_dx_chave = gp.dx_chave
+
+
+def dx_chave_dupla(pasta, n):
+    """Folha só da dupla (raio, choque, piao, agarra_forma...: o kit da forma, sem folha da forma base): não há tronco
+    da base para alinhar, fica no lugar."""
+    if pasta not in gp.LOOPS and not (QUADROS / pasta).exists():
+        return 0
+    return _dx_chave(pasta, n)
+
+
+gp.dx_chave = dx_chave_dupla
 gp.fator_endiabrado = lambda pasta: 1.0
 
 
@@ -510,6 +525,8 @@ def main():
     forma_permanente.aplicar("raiclaven", SAIDA)
     import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
     destruicao.aplicar("raiclaven", SAIDA)
+    import despertados_47  # #43/#47: Cadeira Elétrica (agarrão) e Secador de Raio (poder), efeitos do Blender
+    despertados_47.aplicar("raiclaven", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 
