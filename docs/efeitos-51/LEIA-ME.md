@@ -59,7 +59,7 @@ Onde mexer no `efeitos.py`: `camadas` e `TEMA` (estouros e carga), `PROJETEIS` (
 
 ## Testado
 
-Robô na nuvem nos 5 lutadores, 0 falhas (números no comentário da #51).
+Robô na nuvem nos 5 lutadores, 0 falhas: Pengaró 190, Gutto 185, CK 228, Raiclaven 185, Hazak 238.
 
 ## Sugestões para depois
 
