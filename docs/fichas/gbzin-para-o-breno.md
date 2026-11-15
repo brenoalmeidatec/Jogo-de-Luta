@@ -42,7 +42,7 @@ sem esperar. Se algo não agradar, responda na issue ou edite este arquivo, que 
 ![Forma base, cabelo ondulado](../../sprites/gbzin/quadros/folhas_arcade/conceito_v3.png)
 
 - Mesmo conceito do item 2, mudando só o cabelo: ondulado e bagunçado, com a franja caindo na testa e degradê nas
-  laterais, como nas fotos que o Alisson mandou (antes estava cacheado demais).
+  laterais, como nas fotos do Gbzin que o Alisson repassou (antes estava cacheado demais).
 
 ## 5. Grão-Pastor com a roupa "Senhor do Rebanho" (2026-11-15) — aguardando o Breno
 
