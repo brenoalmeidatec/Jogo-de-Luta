@@ -411,8 +411,10 @@ def disponiveis():
 
 
 def _caixas(m, ex, ey, ponta, ativo):
-    """Caixas em px 3x em relação ao eixo: corpo (colunas com tinta >= 35% da mais cheia) e, nos quadros ativos, a
-    ponta do golpe (a faixa de 75 px da frente ou de cima)."""
+    """Caixas em px 3x em relação ao eixo: corpo (colunas com tinta >= 35% da mais cheia), a ponta do golpe nos quadros
+    ativos (só a parte ligada ao pixel mais à frente, ou mais alto, na faixa de 75 px) e a caixa de dano do membro, do
+    fim do corpo até a ponta (quem bate também pode apanhar no braço esticado). -> (corpo, golpe, membro)."""
+    import cv2
     import numpy as np
     ys, xs = np.nonzero(m)
     x0, x1, y0, y1 = xs.min(), xs.max(), ys.min(), ys.max()
@@ -420,16 +422,25 @@ def _caixas(m, ex, ey, ponta, ativo):
     cheias = np.flatnonzero(col >= 0.35 * col.max())
     topo = y0 + round(0.06 * (y1 - y0))
     corpo = (int(cheias.min()) - ex, topo - ey, int(cheias.max()) - ex, 0)
-    golpe = None
-    if ativo:
-        if ponta == "cima":
-            # antiaéreo: da garra lá em cima até o peito (pega também quem está colado em pé)
-            faixa = np.nonzero(m[y0:y0 + 150])[1]
-            golpe = (int(faixa.min()) - 6 - ex, y0 - 6 - ey, int(faixa.max()) + 6 - ex, y0 + 150 - ey)
-        else:
-            faixa = np.nonzero(m[:, max(0, x1 - 75):x1 + 1])[0]
-            golpe = (x1 - 75 - ex, int(faixa.min()) - 6 - ey, x1 + 6 - ex, int(faixa.max()) + 6 - ey)
-    return corpo, golpe
+    if not ativo:
+        return corpo, None, None
+    if ponta == "cima":
+        # antiaéreo: da garra lá em cima até o peito (pega também quem está colado em pé)
+        a, b = y0, y0 + 150
+        faixa = m[a:b].astype(np.uint8)
+        _, rot = cv2.connectedComponents(faixa, connectivity=8)
+        alvo = rot[0, int(np.flatnonzero(faixa[0])[0])]
+        fy, fx = np.nonzero(rot == alvo)
+        golpe = (int(fx.min()) - 6 - ex, a - 6 - ey, int(fx.max()) + 6 - ex, a + int(fy.max()) + 6 - ey)
+        return corpo, golpe, golpe
+    a = max(0, x1 - 75)
+    faixa = m[:, a:x1 + 1].astype(np.uint8)
+    _, rot = cv2.connectedComponents(faixa, connectivity=8)
+    alvo = rot[int(np.flatnonzero(faixa[:, -1])[0]), faixa.shape[1] - 1]
+    fy, fx = np.nonzero(rot == alvo)
+    golpe = (a + int(fx.min()) - 6 - ex, int(fy.min()) - 6 - ey, x1 + 6 - ex, int(fy.max()) + 6 - ey)
+    membro = (min(corpo[2], golpe[0]), golpe[1], golpe[2], golpe[3])
+    return corpo, golpe, membro
 
 
 def acao(n, g):
@@ -441,17 +452,18 @@ def acao(n, g):
     for j, (k, t) in enumerate(zip(g["q"], g["t"])):
         img = Image.open(SAIDA / f"m_{g['folha']}" / f"{k:02d}.png").convert("RGBA")
         m = np.array(img)[..., 3] > 0
-        ax, ay = dt.ancora(m)
+        ax, ay = dt.ancora_demonio(m)
         ex, ey = round(ax), int(ay)
         quadros.append((img, ex, ey))
-        corpo, golpe = _caixas(m, ex, ey, g.get("ponta", "frente"), j in g["ativo"])
-        cx2 = [corpo] + ([golpe] if golpe else [])
+        corpo, golpe, membro = _caixas(m, ex, ey, g.get("ponta", "frente"), j in g["ativo"])
+        cx2 = [corpo] + ([membro] if membro else [])
         linhas.append(f"Clsn2: {len(cx2)}")
         linhas += [f" Clsn2[{i}] = {a}, {b}, {c}, {d}" for i, (a, b, c, d) in enumerate(cx2)]
         if golpe:
             linhas += ["Clsn1: 1", f" Clsn1[0] = {golpe[0]}, {golpe[1]}, {golpe[2]}, {golpe[3]}"]
             if faisca is None:
-                faisca = (round(golpe[2] / 3) - 18, round((golpe[1] + golpe[3]) / 6))
+                # x da faísca conta da frente do P2 (negativo entra nele), como os -10 do resto do Hazak
+                faisca = (-10, max(-95, min(-10, round((golpe[1] + golpe[3]) / 6))))
         linhas.append(f"{GRUPO + n},{j}, 0,0, {t}")
     return quadros, "\n".join(linhas), faisca
 
@@ -464,6 +476,8 @@ def cns(n, g, faisca):
     tipo = g.get("tipo", "S")
     fis = {"S": "S", "C": "C", "A": "A"}[tipo]
     pausa, spark, som, desl, atord, emp = PESO[g["peso"]]
+    if ROTAS.get(n, ("",))[0] in ("a", "b"):
+        som = som.replace("S51,", "S52,")  # chute: o som de acerto dos chutes do Hazak
     sai = sum(g["t"][:g["ativo"][0]])
     c = [f"[Statedef {n}]\ntype = {tipo}\nmovetype = A\nphysics = {fis}\nctrl = 0\nsprpriority = 2\n"
          f"anim = {n}\njuggle = {3 if g['peso'] == 'Light' else 4}\n" + ("velset = 0,0\n" if tipo != "A" else "") +
@@ -475,12 +489,15 @@ def cns(n, g, faisca):
     for k, (tick, vx) in enumerate(g.get("avanca", [])):
         c.append(_ctl(n, f"Avanço {k + 1}", "VelSet", f"trigger1 = Time = {tick}", f"x = {vx}"))
     if g.get("sobe"):
+        fim = sum(g["t"][:g["ativo"][-1] + 1])
+        c.append(_ctl(n, "Antiaéreo: ganha de quem vem do ar", "NotHitBy", f"trigger1 = Time = [2,{fim}]", "value = A",
+                      "time = 1"))
         c.append(_ctl(n, "Sobe: muda para em pé", "StateTypeSet", f"trigger1 = Time = {sai}", "statetype = S",
                       "physics = S"))
     queda = ["fall = 1", "fall.recover = 0", "ground.velocity = -4, -4", "air.velocity = -3, -4"] if g.get("cai") \
         else [f"ground.velocity = {emp}", "air.velocity = -2, -4" if g.get("sobe") else "air.velocity = -1.4, -3"]
     fx, fy = faisca or (-10, -70)
-    c.append(_ctl(n, g["nome"], "HitDef", f"trigger1 = Time = {sai}", f"attr = {tipo}, NA",
+    c.append(_ctl(n, g["nome"], "HitDef", f"trigger1 = Time = {sai}", f"attr = {'S' if g.get('sobe') else tipo}, NA",
                   f"damage = {g['dano']}, 0", f"animtype = {g['peso']}", f"guardflag = {g.get('guarda', 'MA')}",
                   "hitflag = MAF", f"priority = {5 if g.get('sobe') else 4}, Hit", f"pausetime = {pausa}, {pausa}",
                   f"guard.pausetime = {pausa - 1}, {pausa - 1}", f"sparkxy = {fx}, {fy}", f"sparkno = {spark}",
@@ -505,7 +522,7 @@ def rotas(n_ok):
         r.append(f"[State -1, Demônio: {GOLPES[n]['nome']}]\ntype = ChangeState\nvalue = {n}\n"
                  f"triggerall = var(20) > 0\ntriggerall = command = \"{botao}\"\n"
                  f"triggerall = command {'=' if baixo else '!='} \"holddown\"\n"
-                 f"triggerall = statetype {'!= A' if tipo == 'C' else '= S'}\ntrigger1 = ctrl\n")
+                 f"trigger1 = ctrl\ntrigger1 = statetype {'!= A' if tipo == 'C' else '= S'}\n")
         de = [d for d in de if d in n_ok]
         if de:
             r.append("trigger2 = (" + " || ".join(f"stateno = {d}" for d in de) + ") && movecontact && var(5) < 4\n")
@@ -524,18 +541,23 @@ var(10) = 1
 
 
 def bloquear_base(cmd):
-    """Na forma do demônio nenhum golpe do Hazak sai (normais, correntes, kombos, especiais e supers); ficam o
-    movimento, a defesa, os agarrões (800-899, thread dos agarrões) e os especiais do Diabo (1650, 1660, 1661)."""
+    """Na forma do demônio nenhum golpe do Hazak sai (normais, correntes, kombos, Afastar 260/650/720, especiais e
+    supers); ficam o movimento, a defesa, os agarrões (800-899, thread dos agarrões) e os especiais do Diabo (1650,
+    1660, 1661)."""
     import re
 
     def golpe(v):
-        return (200 <= v <= 249 or 300 <= v <= 349 or 400 <= v <= 449 or 600 <= v <= 649
+        return (200 <= v <= 249 or 260 <= v <= 349 or 400 <= v <= 449 or 600 <= v <= 699 or v == 720
                 or (1000 <= v <= 1999 and v not in (1650, 1660, 1661)) or 3000 <= v <= 3999)
 
     def troca(m):
         bloco = m.group(0)
+        if "var(20)" in bloco:
+            return bloco
+        if bloco.startswith("[State -1, Gasta afastar de defesa]"):  # o 720 não sai: a barra também não some
+            return re.sub(r"^(type = \w+\n)", r"\1triggerall = var(20) <= 0\n", bloco, count=1, flags=re.M)
         v = re.search(r"^value = \D*?(\d+)", bloco, re.M)
-        if "type = ChangeState" not in bloco or not v or not golpe(int(v.group(1))) or "var(20)" in bloco:
+        if "type = ChangeState" not in bloco or not v or not golpe(int(v.group(1))):
             return bloco
         return bloco.replace("type = ChangeState\n", "type = ChangeState\ntriggerall = var(20) <= 0\n", 1)
 
@@ -574,5 +596,6 @@ if __name__ == "__main__":
         contato(args[i + 1], args[i + 2:])
     else:
         e = escala()
-        for nome in args or sorted(p.stem for p in FOLHAS.glob("*.png")):
+        # o m_parado primeiro: ele é a referência de cor (e a paleta) da forma m_ no cores.py
+        for nome in args or sorted((p.stem for p in FOLHAS.glob("*.png")), key=lambda n: (n != "parado", n)):
             converter(nome, e)

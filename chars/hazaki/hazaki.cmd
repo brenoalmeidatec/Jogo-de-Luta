@@ -495,6 +495,7 @@ trigger1 = stateno = 150 || stateno = 152
 
 [State -1, Gasta afastar de defesa]
 type = PowerAdd
+triggerall = var(20) <= 0
 triggerall = command = "afastar"
 triggerall = power >= 1000
 triggerall = time > 3
@@ -503,6 +504,7 @@ value = -1000
 
 [State -1, Afastar de defesa]
 type = ChangeState
+triggerall = var(20) <= 0
 value = 720
 triggerall = command = "afastar"
 triggerall = power >= 1000
@@ -526,6 +528,7 @@ trigger1 = ctrl
 
 [State -1, Afastar no ar]
 type = ChangeState
+triggerall = var(20) <= 0
 value = 650
 triggerall = command = "afastar"
 triggerall = statetype = A
@@ -533,6 +536,7 @@ trigger1 = ctrl
 
 [State -1, Afastar]
 type = ChangeState
+triggerall = var(20) <= 0
 value = 260
 triggerall = command = "afastar"
 triggerall = statetype = S
@@ -929,8 +933,8 @@ value = 4400
 triggerall = var(20) > 0
 triggerall = command = "x"
 triggerall = command = "holddown"
-triggerall = statetype != A
 trigger1 = ctrl
+trigger1 = statetype != A
 trigger2 = (stateno = 4200 || stateno = 4202 || stateno = 4400) && movecontact && var(5) < 4
 
 [State -1, Demônio: Garra Subindo]
@@ -939,8 +943,8 @@ value = 4401
 triggerall = var(20) > 0
 triggerall = command = "y"
 triggerall = command = "holddown"
-triggerall = statetype != A
 trigger1 = ctrl
+trigger1 = statetype != A
 
 [State -1, Demônio: Arranhão]
 type = ChangeState
@@ -948,8 +952,8 @@ value = 4200
 triggerall = var(20) > 0
 triggerall = command = "x"
 triggerall = command != "holddown"
-triggerall = statetype = S
 trigger1 = ctrl
+trigger1 = statetype = S
 trigger2 = (stateno = 4200 || stateno = 4202 || stateno = 4400) && movecontact && var(5) < 4
 
 [State -1, Demônio: Garra Cruzada]
@@ -958,8 +962,8 @@ value = 4201
 triggerall = var(20) > 0
 triggerall = command = "y"
 triggerall = command != "holddown"
-triggerall = statetype = S
 trigger1 = ctrl
+trigger1 = statetype = S
 
 [State -1, Demônio: Joelhada Selvagem]
 type = ChangeState
@@ -967,8 +971,8 @@ value = 4202
 triggerall = var(20) > 0
 triggerall = command = "a"
 triggerall = command != "holddown"
-triggerall = statetype = S
 trigger1 = ctrl
+trigger1 = statetype = S
 
 [State -1, Demônio: Coice com Garra]
 type = ChangeState
@@ -976,6 +980,6 @@ value = 4203
 triggerall = var(20) > 0
 triggerall = command = "b"
 triggerall = command != "holddown"
-triggerall = statetype = S
 trigger1 = ctrl
+trigger1 = statetype = S
 

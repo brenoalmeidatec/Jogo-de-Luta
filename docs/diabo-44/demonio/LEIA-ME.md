@@ -31,7 +31,7 @@ python3 ferramentas/gerar_hazaki.py                         # liga tudo no jogo 
 Os golpes que ainda não têm folha não saem na forma (o botão não faz nada): o jogo só vai para a `mugen` com as 34
 folhas prontas, o robô passando e o vídeo na #47.
 
-## Situação (15/11, 20:30Z)
+## Situação (15/11, 20:35Z)
 
 - Folhas prontas (Gemini): parado, anda, pe_maos, pe_pes, cobranca_garras, agachado_maos.
 - Ligados no jogo: Arranhão (x), Garra Cruzada (y), Joelhada Selvagem (a), Coice com Garra (b), Arranhão Baixo
@@ -46,3 +46,10 @@ folhas prontas, o robô passando e o vídeo na #47.
 - O Gemini repete a mesma pose se o pedido não insistir: o `SEGUINTE` pede poses "clearly DIFFERENT".
 - O auditor de golpes (`auditar_golpes.forca`) tratava todo estado 3000+ como super e esticava o preparo do Arranhão
   para 10 ticks; a faixa 4200-4649 agora conta como golpe normal.
+- Revisão independente do código (15/11): faísca nascia fora do corpo do P2 (x agora -10), eixo do golpe pulava para
+  o pé de apoio (agora `diabo_terno.ancora_demonio`, mediana do tronco), o `cores.py` pintava o demônio com a paleta
+  do terno (agora forma própria `m_` com `paleta_demonio.json`, nascida do `m_parado`), o Afastar do Hazak
+  (260/650/720) escapava do bloqueio, o antiaéreo não tinha `NotHitBy A`, a Cobrança das Garras perdia a caixa no
+  meio do deslize (ticks próprios `COBRANCA_GARRAS`). Tudo consertado; robô dos cenários do Diabo 100% PASS.
+- Progresso para o Breno: `folhas_prontas.png` e `video/demonio-1.mp4` (vitrine; agachado e provocação ainda aparecem
+  de sobretudo porque essas folhas ainda não existem).

@@ -212,6 +212,16 @@ def ancora(m):
     return float(np.median(xs)), h - 1
 
 
+def ancora_demonio(m):
+    """(x, y) do demônio (pastas m_*, #47): x é a mediana das colunas do tronco (25% a 60% da altura), que não puxa
+    para o pé de apoio, o rabo no chão nem a garra esticada; y é a base."""
+    h = m.shape[0]
+    xs = np.nonzero(m[int(h * 0.25):max(int(h * 0.25) + 1, int(h * 0.6))])[1]
+    if not len(xs):
+        xs = np.nonzero(m)[1]
+    return float(np.median(xs)), h - 1
+
+
 class Terno:
     def __init__(self):
         assert SAIDA.exists(), f"faltam os quadros do terno em {SAIDA}: rode ferramentas/diabo_terno.py --montar"
@@ -256,7 +266,7 @@ class Terno:
         ax, ay = ancora(m)
         if esp:
             ax = m.shape[1] - 1 - ax
-        dx, dy = ancora(fig[..., 3] > 0)
+        dx, dy = (ancora_demonio if FOLHA[folha].startswith("m_") else ancora)(fig[..., 3] > 0)
         if esp:
             pass  # a figura já está espelhada: a âncora dela foi medida espelhada
         # eixo do Hazak em relação à âncora dele; o Diabo põe a âncora dele no mesmo lugar

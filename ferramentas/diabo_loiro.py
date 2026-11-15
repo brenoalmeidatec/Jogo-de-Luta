@@ -78,6 +78,7 @@ RAJADA = {"sai": 28, "dura": 66, "acertos": 12, "dano": 16, "x": 52, "y": -80, "
 COBRANCA = {"pasta": "d_cobranca", "grupo": 21660, "ticks": [4, 6, 3, 3, 3, 6, 8, 10], "ativos": (3, 4, 5),
             "sai": 10, 1660: {"vel": 6.5, "dura": 12, "dano": 60, "cai": False},
             1661: {"vel": 8.5, "dura": 14, "dano": 80, "cai": True}, "barra": 150}
+COBRANCA_GARRAS = [4, 6, 3, 3, 9, 4, 6, 8]  # Cobrança das Garras do demônio (#47): quadros 2-4 nos tiques 10-24
 PATROA = RAIZ / "sprites/hazaki/quadros_arcade_hd"
 EIXO_HD = (540, 660)  # pé do lutador nos desenhos 3x (o EIXO 180, 220 do gerar_pengaro vezes 3)
 
@@ -268,16 +269,18 @@ def acao_cobranca():
         return None, None
     quadros, linhas = [], []
     demonio = pasta.name.startswith("m_")
-    for i, t in enumerate(COBRANCA["ticks"]):
+    # demônio: as garras (quadros 2 a 4) ficam na frente o deslize inteiro (até o tique 24 da forte), mesmo total
+    ticks = COBRANCA_GARRAS if demonio else COBRANCA["ticks"]
+    for i, t in enumerate(ticks):
         img = Image.open(pasta / f"{i:02d}.png").convert("RGBA")
         m = np.array(img)[..., 3] > 0
-        ax, ay = diabo_terno.ancora(m)
+        ax, ay = (diabo_terno.ancora_demonio if demonio else diabo_terno.ancora)(m)
         ex, ey = round(ax), int(ay)
         quadros.append((img, ex, ey))
         if demonio:  # garras na frente: quadros 2 a 4 (investida e rasgo); caixas como nos golpes do demônio
             import diabo_demonio
-            corpo, golpe = diabo_demonio._caixas(m, ex, ey, "frente", i in (2, 3, 4))
-            cx2 = [corpo] + ([golpe] if golpe else [])
+            corpo, golpe, membro = diabo_demonio._caixas(m, ex, ey, "frente", i in (2, 3, 4))
+            cx2 = [corpo] + ([membro] if membro else [])
             linhas.append(f"Clsn2: {len(cx2)}")
             linhas += [f" Clsn2[{j}] = {a}, {b}, {c}, {d}" for j, (a, b, c, d) in enumerate(cx2)]
             if golpe:
@@ -319,7 +322,7 @@ def cns_cobranca(n):
         else ["ground.velocity = -6", "air.velocity = -5, -3"]
     e.append(ctl(n, "Ombrada", "HitDef", f"trigger1 = Time = {sai}", "attr = S, SA", f"damage = {k['dano']}, 8",
                  "animtype = Heavy", "guardflag = MA", "hitflag = MAF", "priority = 5, Hit", "pausetime = 14, 14",
-                 "guard.pausetime = 10, 10", "sparkxy = -6, -40", "sparkno = S9240", "guard.sparkno = S9216",
+                 "guard.pausetime = 10, 10", "sparkxy = -6, " + ("-67" if (diabo_terno.SAIDA / "m_cobranca_garras/07.png").exists() else "-40"), "sparkno = S9240", "guard.sparkno = S9216",
                  "sparkscale = 1.2, 1.2", "hitsound = S52,2", "guardsound = F6,0", "ground.type = High",
                  "ground.slidetime = 10", "ground.hittime = 20", "envshake.time = 10", "envshake.freq = 120",
                  "envshake.ampl = -5", "palfx.time = 8", "palfx.add = 140, 50, 0", *queda))
