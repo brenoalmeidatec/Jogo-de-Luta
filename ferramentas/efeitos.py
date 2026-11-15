@@ -54,6 +54,8 @@ CORES = {
                   "desperto": ["#021404", "#06380e", "#0e6a1c", "#1aa030", "#3cd84c", "#8cff7c", "#e4ffd8"]},  # verde
     "ck": {"base": ["#0e120e", "#222a22", "#3a463a", "#58665a", "#7e8e7e", "#aebcaa", "#e2ecdc"],        # cinza-esverdeado
            "desperto": ["#061008", "#10261a", "#1e4430", "#2e6a48", "#4c9466", "#86c898", "#d4f4dc"]},     # Ratão
+    "gbzin": {"base": ["#1c1008", "#3e2412", "#6a3f1c", "#9a6630", "#c89a4c", "#e8c878", "#fff0c0"],     # poeira e palha
+              "desperto": ["#04140c", "#0a301c", "#0f5a32", "#179050", "#2cc878", "#84f4b0", "#dcfff0"]},  # Grão-Pastor
 }
 
 
