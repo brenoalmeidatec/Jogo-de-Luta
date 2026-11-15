@@ -51,51 +51,56 @@ Cada folha vai salva em `sprites/gbzin/quadros/folhas_arcade/<nome>.png`. **Rean
 | 43 | `despertar_b` | e_referencia_ginga.png + despertar_a.png |
 | 44 | `e_referencia_ginga` | e_conceito.png + referencia_ginga.png |
 | 45 | `e_anda` | e_referencia_ginga.png + anda.png |
-| 46 | `e_soco` | e_referencia_ginga.png + soco.png |
-| 47 | `e_martelo` | e_referencia_ginga.png + martelo.png |
-| 48 | `e_chute_baixo` | e_referencia_ginga.png + chute_baixo.png |
-| 49 | `e_chute_alto` | e_referencia_ginga.png + chute_alto.png |
+| 46 | `e_chifrada` | e_referencia_ginga.png |
+| 47 | `e_marrada` | e_referencia_ginga.png |
+| 48 | `e_arco_osso` | e_referencia_ginga.png |
+| 49 | `e_martelada` | e_referencia_ginga.png |
 | 50 | `e_tosquia` | e_referencia_ginga.png |
-| 51 | `e_estouro` | e_referencia_ginga.png |
-| 52 | `e_agachado` | e_referencia_ginga.png + agachado.png |
-| 53 | `e_baixo_soco` | e_referencia_ginga.png + baixo_soco.png |
-| 54 | `e_cabecada` | e_referencia_ginga.png + cabecada.png |
-| 55 | `e_rasteira` | e_referencia_ginga.png + rasteira.png |
-| 56 | `e_pulo` | e_referencia_ginga.png + pulo.png |
-| 57 | `e_ar_soco` | e_referencia_ginga.png + ar_soco.png |
-| 58 | `e_bicicleta` | e_referencia_ginga.png + bicicleta.png |
-| 59 | `e_defesa` | e_referencia_ginga.png + defesa.png |
-| 60 | `e_apanha` | e_referencia_ginga.png + apanha.png |
-| 61 | `e_queda` | e_referencia_ginga.png + queda.png |
-| 62 | `e_levanta` | e_referencia_ginga.png + levanta.png |
-| 63 | `e_rolamento` | e_referencia_ginga.png + rolamento.png |
-| 64 | `e_agarrao` | e_referencia_ginga.png + agarrao.png |
-| 65 | `e_montada` | e_referencia_ginga.png + montada.png |
-| 66 | `e_ordenha` | e_referencia_ginga.png + ordenha.png |
-| 67 | `e_bola` | e_referencia_ginga.png + bola.png |
-| 68 | `e_compasso` | e_referencia_ginga.png + compasso.png |
-| 69 | `e_mao_pastor` | e_referencia_ginga.png |
-| 70 | `e_berro` | e_referencia_ginga.png |
-| 71 | `e_armada` | e_referencia_ginga.png + armada.png |
-| 72 | `e_caneta` | e_referencia_ginga.png + caneta.png |
-| 73 | `e_cajado_chao` | e_referencia_ginga.png + cajado_chao.png |
-| 74 | `e_rolo_feno` | e_referencia_ginga.png + rolo_feno.png |
-| 75 | `e_golaco` | e_referencia_ginga.png + golaco.png |
-| 76 | `e_juizo` | e_referencia_ginga.png |
-| 77 | `e_provoca` | e_referencia_ginga.png + provoca.png |
-| 78 | `e_vitoria` | e_referencia_ginga.png + vitoria.png |
-| 79 | `e_derrota` | e_referencia_ginga.png + derrota.png |
-| 80 | `e_parry_alto` | e_referencia_ginga.png + parry_alto.png |
-| 81 | `e_parry_baixo` | e_referencia_ginga.png + parry_baixo.png |
-| 82 | `e_vitima_agarrado` | e_referencia_ginga.png + vitima_agarrado.png |
-| 83 | `e_vitima_arremessado` | e_referencia_ginga.png + vitima_arremessado.png |
-| 84 | `fx_cabra` | nenhum |
-| 85 | `fx_cabra_salto` | nenhum |
-| 86 | `fx_feno` | nenhum |
-| 87 | `fx_cabra_fantasma` | nenhum |
-| 88 | `fx_cabra_fantasma_salto` | nenhum |
-| 89 | `fx_mao` | nenhum |
-| 90 | `fx_notas` | nenhum |
+| 51 | `e_casco` | e_referencia_ginga.png |
+| 52 | `e_estampido` | e_referencia_ginga.png |
+| 53 | `e_giro_manto` | e_referencia_ginga.png |
+| 54 | `e_maos` | e_referencia_ginga.png |
+| 55 | `e_agachado` | e_referencia_ginga.png + agachado.png |
+| 56 | `e_baixo` | e_referencia_ginga.png |
+| 57 | `e_cabecada` | e_referencia_ginga.png |
+| 58 | `e_varrida` | e_referencia_ginga.png |
+| 59 | `e_pulo` | e_referencia_ginga.png + pulo.png |
+| 60 | `e_ar_chifre` | e_referencia_ginga.png |
+| 61 | `e_ar_soco` | e_referencia_ginga.png |
+| 62 | `e_manto_asa` | e_referencia_ginga.png |
+| 63 | `e_dir_tras` | e_referencia_ginga.png |
+| 64 | `e_juizo_cima` | e_referencia_ginga.png |
+| 65 | `e_defesa` | e_referencia_ginga.png + defesa.png |
+| 66 | `e_apanha` | e_referencia_ginga.png + apanha.png |
+| 67 | `e_queda` | e_referencia_ginga.png + queda.png |
+| 68 | `e_levanta` | e_referencia_ginga.png + levanta.png |
+| 69 | `e_rolamento` | e_referencia_ginga.png |
+| 70 | `e_estouro` | e_referencia_ginga.png |
+| 71 | `e_mao_pastor` | e_referencia_ginga.png |
+| 72 | `e_berro` | e_referencia_ginga.png |
+| 73 | `e_compasso` | e_referencia_ginga.png |
+| 74 | `e_rebanho_fantasma` | e_referencia_ginga.png |
+| 75 | `e_chuva_notas` | e_referencia_ginga.png |
+| 76 | `e_sombra_bode` | e_referencia_ginga.png |
+| 77 | `e_queda_bode` | e_referencia_ginga.png |
+| 78 | `e_golaco` | e_referencia_ginga.png |
+| 79 | `e_juizo` | e_referencia_ginga.png |
+| 80 | `e_agarrao` | e_referencia_ginga.png |
+| 81 | `e_montada` | e_referencia_ginga.png |
+| 82 | `e_ordenha` | e_referencia_ginga.png |
+| 83 | `e_provoca` | e_referencia_ginga.png |
+| 84 | `e_vitoria` | e_referencia_ginga.png |
+| 85 | `e_derrota` | e_referencia_ginga.png |
+| 86 | `e_parry_alto` | e_referencia_ginga.png |
+| 87 | `e_parry_baixo` | e_referencia_ginga.png |
+| 88 | `e_vitima_agarrado` | e_referencia_ginga.png + vitima_agarrado.png |
+| 89 | `e_vitima_arremessado` | e_referencia_ginga.png + vitima_arremessado.png |
+| 90 | `fx_cabra` | nenhum |
+| 91 | `fx_cabra_salto` | nenhum |
+| 92 | `fx_feno` | nenhum |
+| 93 | `fx_cabra_fantasma` | nenhum |
+| 94 | `fx_mao` | nenhum |
+| 95 | `fx_notas` | nenhum |
 
 ## `conceito`
 
@@ -1153,9 +1158,9 @@ MOTION: slow heavy walk forward of a boss, an 8-frame loop: each hoof lands heav
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
 
-## `e_soco`
+## `e_chifrada`
 
-Anexar: e_referencia_ginga.png + soco.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1172,14 +1177,14 @@ Anatomy check for every frame: exactly two arms and two legs, both hands always 
 
 Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
 
-MOTION: x chain with the bone crook: 1 stance, 2 the crook pulls back, 3 a straight thrust with the bone crook forward at chest height, fully extended, 4 it comes back, 5 he spins the crook in a full circle in front of him, 6 a spinning crook strike at face height, 7 recovering, 8 stance.
+MOTION: x, short horn jabs (standing light attacks): 1 stance, 2 he pulls the head back, 3 a short fast head jab forward, the spiral horns hitting at face height, 4 back to stance, 5 he pulls the head back again, 6 a first horn swing to the front-left at face height, 7 a second horn swing back to the front-right at face height (a double horn hook), 8 stance.
 
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
 
-## `e_martelo`
+## `e_marrada`
 
-Anexar: e_referencia_ginga.png + martelo.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1196,14 +1201,14 @@ Anatomy check for every frame: exactly two arms and two legs, both hands always 
 
 Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
 
-MOTION: overhead bone crook smash: 1 stance, 2 and 3 he raises the bone crook high over his head with both hands, 4 and 5 he smashes it down and forward at head height, body bending forward, 6 and 7 he straightens, 8 stance.
+MOTION: x chain, rising head butt then the Ram finisher: 1 he dips the head low, 2 he drives the horns up and forward at chin height (rising head butt), 3 he lands back low, 4 he lowers the horns at belly height and charges one step, 5 the horns dig in at belly height as if goring an invisible opponent, 6 he lifts the head and rises, lifting upward, 7 he throws the head back and over his shoulder (the throw, clearly backward over the head), 8 stance.
 
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
 
-## `e_chute_baixo`
+## `e_arco_osso`
 
-Anexar: e_referencia_ginga.png + chute_baixo.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1220,14 +1225,14 @@ Anatomy check for every frame: exactly two arms and two legs, both hands always 
 
 Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
 
-MOTION: a hoof stomp kick to the shin: 1 stance, 2 the front hoof lifts, 3 chambers low, 4 and 5 the hoof sole stomps forward at shin height, 6 and 7 back, 8 stance.
+MOTION: y, the bone crook arcs: 1 stance, 2 the bone crook swings back behind him, 3 a wide horizontal arc of the bone crook forward at chest height, arm fully extended, 4 follow-through, 5 he raises the crook and starts to spin it, 6 and 7 the crook spins in a full circle in front of him at chest height, green flame on the hook tip, 8 stance.
 
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
 
-## `e_chute_alto`
+## `e_martelada`
 
-Anexar: e_referencia_ginga.png + chute_alto.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1244,7 +1249,7 @@ Anatomy check for every frame: exactly two arms and two legs, both hands always 
 
 Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
 
-MOTION: b chain, front kick then knee: 1 stance, 2 the back knee rises, 3 and 4 a front hoof kick at chest height, 5 he steps in, 6 a knee strike at belly height, 7 recovering, 8 stance.
+MOTION: y chain hammer: 1 stance, 2 and 3 he lifts the bone crook high over his head with both hands, 4 and 5 he hammers it down hard in front of him at head height, body bending forward, 6 the hook touches the ground, 7 he straightens, 8 stance.
 
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
@@ -1273,7 +1278,7 @@ MOTION: the Shearing finisher: 1 stance, 2 and 3 he opens both arms wide to the 
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
 
-## `e_estouro`
+## `e_casco`
 
 Anexar: e_referencia_ginga.png
 
@@ -1292,7 +1297,79 @@ Anatomy check for every frame: exactly two arms and two legs, both hands always 
 
 Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
 
-MOTION: the Stampede horn charge, an 8-frame loop for a charge across the screen: he runs forward heavily with the head lowered and the spiral horns pointing forward like a ram, the bone crook held back, the cape flying behind, hooves pounding; frame 8 flows back into frame 1.
+MOTION: a, hooves: 1 stance, 2 the front hoof lifts low, 3 a quick hoof kick forward at shin height, 4 back, 5 the front knee rises high, 6 a heavy hoof stomp forward and down at knee height, 7 the hoof lands heavily, 8 stance.
+
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+```
+
+## `e_estampido`
+
+Anexar: e_referencia_ginga.png
+
+```text
+Generate ONE image with your image generation tool. Do not write code and do not edit any file.
+
+The attached sprite sheet shows the exact character to keep: Gbzin awakened as the GRAND SHEPHERD (Grao-Pastor), the Lord of the Herd, an overwhelmingly powerful dark shepherd warlord: exact same face, same hair, same heavy stocky body and same height as the base form. Nothing of the base outfit remains (no tank top, no white shorts, no sneakers). KEEP from the first awakened sheet: two ENORMOUS goat horns curled in a spiral growing from his forehead; eye glowing solid green with no pupil; a black eyepatch over the LEFT eye with a small glowing green star; a bigger gold wristwatch on the left wrist; a RED jiu-jitsu belt (the grand master's belt) tied at the waist over the pants, burning with GREEN flames at its two hanging ends; in the BACK hand a short shepherd's crook made of BONE with a curved hook and a small green flame at the tip. NEW OUTFIT: a CHEST PLATE MADE OF A GOAT SKULL, yellowed cracked bone, covering the chest, with the skull's eye sockets glowing green; SHOULDER GUARDS made of curved goat horns on both shoulders; BONE BRACERS on both forearms; two iron CHAINS crossed over the chest, fastened to the skull; bare muscular arms and bare belly sides; ripped BLACK LEATHER PANTS with green embers glowing inside the rips; GOAT HOOVES instead of feet, black and cracked, with green ember light in the cracks; a CAPE OF BLACK FUR with a tall thick fur collar around the neck, its hem in tatters. The skull chest plate and the hooves must read clearly in the side view. No motorcycle items of any kind. No text, no logos. Same face, same colors and same size as the attached sheet. He is the final boss version of the jiu-jitsu shepherd: slow, heavy and overwhelming, every move must look far too powerful; he grabs, lifts and slams. CROOK RULE: the bone crook is always in the same hand (the back hand, the arm drawn behind the torso) in all 8 frames unless the motion says otherwise; it never changes hands and never disappears. The goat-skull chest plate and the hooves stay visible in every frame; the fur cape follows the motion and never hides the chest plate. Do NOT draw the aura, the goat shadow or the giant green hands: they are separate effects.
+
+Art style: hand-pixeled 1990s arcade fighting game sprite. Heroic anatomy: broad shoulders, thick strong torso, big hands and feet; he is the heavy grappler of the cast, stocky and solid but not fat. Shading in 2-3 large hard-edged flat planes per form, no gradients, no dithering, no noise, no texture. Shadows shift hue: skin shadows toward wine red, highlights toward warm cream; white clothes get cool lilac shadows; black clothes get blue-grey highlights. 1-pixel colored outline (dark wine on skin, dark blue-purple on clothes), never pure black, lighter on the lit side. Small hard 1-3 pixel highlights. Limited palette look.
+
+Layout: one single row of 8 frames in 8 equal-width cells, wide image, side view, always facing right, same size and scale as the attached sheet, feet on the same ground line unless the move leaves the ground. The figure FILLS its cell (big and sharp, never a small figure). Each figure stays inside its own cell and never touches the next one. Flat solid magenta background (#FF00FF) everywhere, no shadow, no ground, no text, no numbers, no borders, no effects unless the motion asks for them.
+
+Consecutive frames differ by a small amount, so the motion looks smooth in sequence.
+
+Anatomy check for every frame: exactly two arms and two legs, both hands always visible, elbows and knees bend the natural way, no extra or missing limbs, the body never twists into an impossible pose.
+
+Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
+
+MOTION: a chain, hoof scrape then the Stamp finisher: 1 stance, 2 the front hoof scrapes back along the floor like an angry goat, 3 it scrapes again, 4 he raises the front hoof high, 5 first stomp straight down, 6 he raises it again, 7 second and third stomps, the body dropping with weight, 8 stance. (The cracks and the eruption under the opponent are a separate effect.)
+
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+```
+
+## `e_giro_manto`
+
+Anexar: e_referencia_ginga.png
+
+```text
+Generate ONE image with your image generation tool. Do not write code and do not edit any file.
+
+The attached sprite sheet shows the exact character to keep: Gbzin awakened as the GRAND SHEPHERD (Grao-Pastor), the Lord of the Herd, an overwhelmingly powerful dark shepherd warlord: exact same face, same hair, same heavy stocky body and same height as the base form. Nothing of the base outfit remains (no tank top, no white shorts, no sneakers). KEEP from the first awakened sheet: two ENORMOUS goat horns curled in a spiral growing from his forehead; eye glowing solid green with no pupil; a black eyepatch over the LEFT eye with a small glowing green star; a bigger gold wristwatch on the left wrist; a RED jiu-jitsu belt (the grand master's belt) tied at the waist over the pants, burning with GREEN flames at its two hanging ends; in the BACK hand a short shepherd's crook made of BONE with a curved hook and a small green flame at the tip. NEW OUTFIT: a CHEST PLATE MADE OF A GOAT SKULL, yellowed cracked bone, covering the chest, with the skull's eye sockets glowing green; SHOULDER GUARDS made of curved goat horns on both shoulders; BONE BRACERS on both forearms; two iron CHAINS crossed over the chest, fastened to the skull; bare muscular arms and bare belly sides; ripped BLACK LEATHER PANTS with green embers glowing inside the rips; GOAT HOOVES instead of feet, black and cracked, with green ember light in the cracks; a CAPE OF BLACK FUR with a tall thick fur collar around the neck, its hem in tatters. The skull chest plate and the hooves must read clearly in the side view. No motorcycle items of any kind. No text, no logos. Same face, same colors and same size as the attached sheet. He is the final boss version of the jiu-jitsu shepherd: slow, heavy and overwhelming, every move must look far too powerful; he grabs, lifts and slams. CROOK RULE: the bone crook is always in the same hand (the back hand, the arm drawn behind the torso) in all 8 frames unless the motion says otherwise; it never changes hands and never disappears. The goat-skull chest plate and the hooves stay visible in every frame; the fur cape follows the motion and never hides the chest plate. Do NOT draw the aura, the goat shadow or the giant green hands: they are separate effects.
+
+Art style: hand-pixeled 1990s arcade fighting game sprite. Heroic anatomy: broad shoulders, thick strong torso, big hands and feet; he is the heavy grappler of the cast, stocky and solid but not fat. Shading in 2-3 large hard-edged flat planes per form, no gradients, no dithering, no noise, no texture. Shadows shift hue: skin shadows toward wine red, highlights toward warm cream; white clothes get cool lilac shadows; black clothes get blue-grey highlights. 1-pixel colored outline (dark wine on skin, dark blue-purple on clothes), never pure black, lighter on the lit side. Small hard 1-3 pixel highlights. Limited palette look.
+
+Layout: one single row of 8 frames in 8 equal-width cells, wide image, side view, always facing right, same size and scale as the attached sheet, feet on the same ground line unless the move leaves the ground. The figure FILLS its cell (big and sharp, never a small figure). Each figure stays inside its own cell and never touches the next one. Flat solid magenta background (#FF00FF) everywhere, no shadow, no ground, no text, no numbers, no borders, no effects unless the motion asks for them.
+
+Consecutive frames differ by a small amount, so the motion looks smooth in sequence.
+
+Anatomy check for every frame: exactly two arms and two legs, both hands always visible, elbows and knees bend the natural way, no extra or missing limbs, the body never twists into an impossible pose.
+
+Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
+
+MOTION: b, Cape Spin: 1 stance, 2 he turns his back starting a spin, 3 back to the viewer, the black fur cape flaring out wide, 4 he completes the spin and the cape whips forward at chest height like a heavy blade, 5 the cape wraps forward fully extended, 6 the cape falls back, 7 recovering, 8 stance.
+
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+```
+
+## `e_maos`
+
+Anexar: e_referencia_ginga.png
+
+```text
+Generate ONE image with your image generation tool. Do not write code and do not edit any file.
+
+The attached sprite sheet shows the exact character to keep: Gbzin awakened as the GRAND SHEPHERD (Grao-Pastor), the Lord of the Herd, an overwhelmingly powerful dark shepherd warlord: exact same face, same hair, same heavy stocky body and same height as the base form. Nothing of the base outfit remains (no tank top, no white shorts, no sneakers). KEEP from the first awakened sheet: two ENORMOUS goat horns curled in a spiral growing from his forehead; eye glowing solid green with no pupil; a black eyepatch over the LEFT eye with a small glowing green star; a bigger gold wristwatch on the left wrist; a RED jiu-jitsu belt (the grand master's belt) tied at the waist over the pants, burning with GREEN flames at its two hanging ends; in the BACK hand a short shepherd's crook made of BONE with a curved hook and a small green flame at the tip. NEW OUTFIT: a CHEST PLATE MADE OF A GOAT SKULL, yellowed cracked bone, covering the chest, with the skull's eye sockets glowing green; SHOULDER GUARDS made of curved goat horns on both shoulders; BONE BRACERS on both forearms; two iron CHAINS crossed over the chest, fastened to the skull; bare muscular arms and bare belly sides; ripped BLACK LEATHER PANTS with green embers glowing inside the rips; GOAT HOOVES instead of feet, black and cracked, with green ember light in the cracks; a CAPE OF BLACK FUR with a tall thick fur collar around the neck, its hem in tatters. The skull chest plate and the hooves must read clearly in the side view. No motorcycle items of any kind. No text, no logos. Same face, same colors and same size as the attached sheet. He is the final boss version of the jiu-jitsu shepherd: slow, heavy and overwhelming, every move must look far too powerful; he grabs, lifts and slams. CROOK RULE: the bone crook is always in the same hand (the back hand, the arm drawn behind the torso) in all 8 frames unless the motion says otherwise; it never changes hands and never disappears. The goat-skull chest plate and the hooves stay visible in every frame; the fur cape follows the motion and never hides the chest plate. Do NOT draw the aura, the goat shadow or the giant green hands: they are separate effects.
+
+Art style: hand-pixeled 1990s arcade fighting game sprite. Heroic anatomy: broad shoulders, thick strong torso, big hands and feet; he is the heavy grappler of the cast, stocky and solid but not fat. Shading in 2-3 large hard-edged flat planes per form, no gradients, no dithering, no noise, no texture. Shadows shift hue: skin shadows toward wine red, highlights toward warm cream; white clothes get cool lilac shadows; black clothes get blue-grey highlights. 1-pixel colored outline (dark wine on skin, dark blue-purple on clothes), never pure black, lighter on the lit side. Small hard 1-3 pixel highlights. Limited palette look.
+
+Layout: one single row of 8 frames in 8 equal-width cells, wide image, side view, always facing right, same size and scale as the attached sheet, feet on the same ground line unless the move leaves the ground. The figure FILLS its cell (big and sharp, never a small figure). Each figure stays inside its own cell and never touches the next one. Flat solid magenta background (#FF00FF) everywhere, no shadow, no ground, no text, no numbers, no borders, no effects unless the motion asks for them.
+
+Consecutive frames differ by a small amount, so the motion looks smooth in sequence.
+
+Anatomy check for every frame: exactly two arms and two legs, both hands always visible, elbows and knees bend the natural way, no extra or missing limbs, the body never twists into an impossible pose.
+
+Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
+
+MOTION: b chain, the giant hands (the giant green hands are a separate effect, here only his gestures): 1 stance, 2 he pushes the front open palm forward at chest height, 3 he holds it, 4 he closes the fist slowly squeezing, 5 he raises the closed fist up to head height, lifting, 6 holding it up, 7 he slams the fist down to waist height, 8 stance.
 
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
@@ -1321,9 +1398,9 @@ MOTION: going down into a low crouch: he only bends the knees and lowers the hip
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
 
-## `e_baixo_soco`
+## `e_baixo`
 
-Anexar: e_referencia_ginga.png + baixo_soco.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1340,14 +1417,14 @@ Anatomy check for every frame: exactly two arms and two legs, both hands always 
 
 Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
 
-MOTION: a low bone crook sweep from the crouch: 1 deep crouch, 2 and 3 he loads the crook back, 4 and 5 the crook sweeps forward along the floor at ankle height, 6 to 8 back to the crouch.
+MOTION: two low attacks from the crouch: 1 deep crouch, 2 he dips the head, 3 a short horn poke forward at shin height, 4 back to the crouch, 5 deep crouch, 6 the front hoof scrapes forward along the floor at ankle height, fully extended, 7 it pulls back, 8 crouch.
 
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
 
 ## `e_cabecada`
 
-Anexar: e_referencia_ginga.png + cabecada.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1364,14 +1441,14 @@ Anatomy check for every frame: exactly two arms and two legs, both hands always 
 
 Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
 
-MOTION: rising horn butt anti-air from the crouch: 1 deep crouch, 2 and 3 he dips lower, 4 and 5 he springs up driving the spiral horns straight up above him, 6 to 8 he settles back into the crouch.
+MOTION: Horns Up anti-air from the crouch: 1 deep crouch, 2 and 3 he dips lower, 4 and 5 he springs up driving the spiral horns straight up above him, 6 to 8 he settles back into the crouch.
 
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
 
-## `e_rasteira`
+## `e_varrida`
 
-Anexar: e_referencia_ginga.png + rasteira.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1388,7 +1465,7 @@ Anatomy check for every frame: exactly two arms and two legs, both hands always 
 
 Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
 
-MOTION: a low sweep: 1 stance, 2 he drops low, 3 one hand on the floor, 4 and 5 the front leg and hoof sweep wide along the floor, fully extended, 6 and 7 he rises, 8 stance.
+MOTION: low bone crook sweep that trips: 1 deep crouch, 2 and 3 he loads the bone crook far back along the floor, 4 and 5 the crook sweeps forward flat along the floor at ankle height, the hook leading, fully extended, 6 follow-through, 7 and 8 back to the crouch.
 
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
@@ -1417,9 +1494,9 @@ MOTION: a heavy jump. 1 knees bent, 2 pushing off with the hooves, 3 rising tuck
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
 
-## `e_ar_soco`
+## `e_ar_chifre`
 
-Anexar: e_referencia_ginga.png + ar_soco.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1436,14 +1513,14 @@ Anatomy check for every frame: exactly two arms and two legs, both hands always 
 
 Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
 
-MOTION: a bone crook smash in mid air: all frames in the air. 1 to 3 the crook winds up over the head, 4 and 5 it smashes down and forward diagonally, 6 to 8 back to the tucked pose.
+MOTION: two air attacks, all frames in the air: 1 tucked, 2 he pulls the head back, 3 a horn butt diagonally forward and down, 4 back to tucked, 5 tucked, 6 both hooves pull up, 7 both hooves stomp down together below him, 8 back to tucked.
 
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
 
-## `e_bicicleta`
+## `e_ar_soco`
 
-Anexar: e_referencia_ginga.png + bicicleta.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1460,7 +1537,79 @@ Anatomy check for every frame: exactly two arms and two legs, both hands always 
 
 Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
 
-MOTION: a flying knee in mid air: all frames in the air. 1 tucked, 2 and 3 he pulls the arms back, 4 and 5 the front knee drives forward at head height, 6 to 8 back to tucked.
+MOTION: Bone Hammer in mid air, all frames in the air: 1 to 3 the bone crook winds up over the head, 4 and 5 it smashes down and forward diagonally, 6 to 8 back to the tucked pose.
+
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+```
+
+## `e_manto_asa`
+
+Anexar: e_referencia_ginga.png
+
+```text
+Generate ONE image with your image generation tool. Do not write code and do not edit any file.
+
+The attached sprite sheet shows the exact character to keep: Gbzin awakened as the GRAND SHEPHERD (Grao-Pastor), the Lord of the Herd, an overwhelmingly powerful dark shepherd warlord: exact same face, same hair, same heavy stocky body and same height as the base form. Nothing of the base outfit remains (no tank top, no white shorts, no sneakers). KEEP from the first awakened sheet: two ENORMOUS goat horns curled in a spiral growing from his forehead; eye glowing solid green with no pupil; a black eyepatch over the LEFT eye with a small glowing green star; a bigger gold wristwatch on the left wrist; a RED jiu-jitsu belt (the grand master's belt) tied at the waist over the pants, burning with GREEN flames at its two hanging ends; in the BACK hand a short shepherd's crook made of BONE with a curved hook and a small green flame at the tip. NEW OUTFIT: a CHEST PLATE MADE OF A GOAT SKULL, yellowed cracked bone, covering the chest, with the skull's eye sockets glowing green; SHOULDER GUARDS made of curved goat horns on both shoulders; BONE BRACERS on both forearms; two iron CHAINS crossed over the chest, fastened to the skull; bare muscular arms and bare belly sides; ripped BLACK LEATHER PANTS with green embers glowing inside the rips; GOAT HOOVES instead of feet, black and cracked, with green ember light in the cracks; a CAPE OF BLACK FUR with a tall thick fur collar around the neck, its hem in tatters. The skull chest plate and the hooves must read clearly in the side view. No motorcycle items of any kind. No text, no logos. Same face, same colors and same size as the attached sheet. He is the final boss version of the jiu-jitsu shepherd: slow, heavy and overwhelming, every move must look far too powerful; he grabs, lifts and slams. CROOK RULE: the bone crook is always in the same hand (the back hand, the arm drawn behind the torso) in all 8 frames unless the motion says otherwise; it never changes hands and never disappears. The goat-skull chest plate and the hooves stay visible in every frame; the fur cape follows the motion and never hides the chest plate. Do NOT draw the aura, the goat shadow or the giant green hands: they are separate effects.
+
+Art style: hand-pixeled 1990s arcade fighting game sprite. Heroic anatomy: broad shoulders, thick strong torso, big hands and feet; he is the heavy grappler of the cast, stocky and solid but not fat. Shading in 2-3 large hard-edged flat planes per form, no gradients, no dithering, no noise, no texture. Shadows shift hue: skin shadows toward wine red, highlights toward warm cream; white clothes get cool lilac shadows; black clothes get blue-grey highlights. 1-pixel colored outline (dark wine on skin, dark blue-purple on clothes), never pure black, lighter on the lit side. Small hard 1-3 pixel highlights. Limited palette look.
+
+Layout: one single row of 8 frames in 8 equal-width cells, wide image, side view, always facing right, same size and scale as the attached sheet, feet on the same ground line unless the move leaves the ground. The figure FILLS its cell (big and sharp, never a small figure). Each figure stays inside its own cell and never touches the next one. Flat solid magenta background (#FF00FF) everywhere, no shadow, no ground, no text, no numbers, no borders, no effects unless the motion asks for them.
+
+Consecutive frames differ by a small amount, so the motion looks smooth in sequence.
+
+Anatomy check for every frame: exactly two arms and two legs, both hands always visible, elbows and knees bend the natural way, no extra or missing limbs, the body never twists into an impossible pose.
+
+Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
+
+MOTION: Cape Wings in the air, all frames in the air: 1 tucked, 2 he opens the black fur cape wide like wings, 3 and 4 he spins horizontally once with the cape spread, hitting both sides, 5 the spin ends, 6 the cape closes, 7 and 8 back to tucked.
+
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+```
+
+## `e_dir_tras`
+
+Anexar: e_referencia_ginga.png
+
+```text
+Generate ONE image with your image generation tool. Do not write code and do not edit any file.
+
+The attached sprite sheet shows the exact character to keep: Gbzin awakened as the GRAND SHEPHERD (Grao-Pastor), the Lord of the Herd, an overwhelmingly powerful dark shepherd warlord: exact same face, same hair, same heavy stocky body and same height as the base form. Nothing of the base outfit remains (no tank top, no white shorts, no sneakers). KEEP from the first awakened sheet: two ENORMOUS goat horns curled in a spiral growing from his forehead; eye glowing solid green with no pupil; a black eyepatch over the LEFT eye with a small glowing green star; a bigger gold wristwatch on the left wrist; a RED jiu-jitsu belt (the grand master's belt) tied at the waist over the pants, burning with GREEN flames at its two hanging ends; in the BACK hand a short shepherd's crook made of BONE with a curved hook and a small green flame at the tip. NEW OUTFIT: a CHEST PLATE MADE OF A GOAT SKULL, yellowed cracked bone, covering the chest, with the skull's eye sockets glowing green; SHOULDER GUARDS made of curved goat horns on both shoulders; BONE BRACERS on both forearms; two iron CHAINS crossed over the chest, fastened to the skull; bare muscular arms and bare belly sides; ripped BLACK LEATHER PANTS with green embers glowing inside the rips; GOAT HOOVES instead of feet, black and cracked, with green ember light in the cracks; a CAPE OF BLACK FUR with a tall thick fur collar around the neck, its hem in tatters. The skull chest plate and the hooves must read clearly in the side view. No motorcycle items of any kind. No text, no logos. Same face, same colors and same size as the attached sheet. He is the final boss version of the jiu-jitsu shepherd: slow, heavy and overwhelming, every move must look far too powerful; he grabs, lifts and slams. CROOK RULE: the bone crook is always in the same hand (the back hand, the arm drawn behind the torso) in all 8 frames unless the motion says otherwise; it never changes hands and never disappears. The goat-skull chest plate and the hooves stay visible in every frame; the fur cape follows the motion and never hides the chest plate. Do NOT draw the aura, the goat shadow or the giant green hands: they are separate effects.
+
+Art style: hand-pixeled 1990s arcade fighting game sprite. Heroic anatomy: broad shoulders, thick strong torso, big hands and feet; he is the heavy grappler of the cast, stocky and solid but not fat. Shading in 2-3 large hard-edged flat planes per form, no gradients, no dithering, no noise, no texture. Shadows shift hue: skin shadows toward wine red, highlights toward warm cream; white clothes get cool lilac shadows; black clothes get blue-grey highlights. 1-pixel colored outline (dark wine on skin, dark blue-purple on clothes), never pure black, lighter on the lit side. Small hard 1-3 pixel highlights. Limited palette look.
+
+Layout: one single row of 8 frames in 8 equal-width cells, wide image, side view, always facing right, same size and scale as the attached sheet, feet on the same ground line unless the move leaves the ground. The figure FILLS its cell (big and sharp, never a small figure). Each figure stays inside its own cell and never touches the next one. Flat solid magenta background (#FF00FF) everywhere, no shadow, no ground, no text, no numbers, no borders, no effects unless the motion asks for them.
+
+Consecutive frames differ by a small amount, so the motion looks smooth in sequence.
+
+Anatomy check for every frame: exactly two arms and two legs, both hands always visible, elbows and knees bend the natural way, no extra or missing limbs, the body never twists into an impossible pose.
+
+Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
+
+MOTION: two direction attacks: 1 stance, 2 he raises the back open hand behind him, 3 he swats forward and upward with the open hand at head height (the giant green hand that copies it is a separate effect), 4 back to stance, 5 he turns slightly, 6 a back kick with the hoof straight behind him at belly height, 7 he turns back, 8 stance.
+
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+```
+
+## `e_juizo_cima`
+
+Anexar: e_referencia_ginga.png
+
+```text
+Generate ONE image with your image generation tool. Do not write code and do not edit any file.
+
+The attached sprite sheet shows the exact character to keep: Gbzin awakened as the GRAND SHEPHERD (Grao-Pastor), the Lord of the Herd, an overwhelmingly powerful dark shepherd warlord: exact same face, same hair, same heavy stocky body and same height as the base form. Nothing of the base outfit remains (no tank top, no white shorts, no sneakers). KEEP from the first awakened sheet: two ENORMOUS goat horns curled in a spiral growing from his forehead; eye glowing solid green with no pupil; a black eyepatch over the LEFT eye with a small glowing green star; a bigger gold wristwatch on the left wrist; a RED jiu-jitsu belt (the grand master's belt) tied at the waist over the pants, burning with GREEN flames at its two hanging ends; in the BACK hand a short shepherd's crook made of BONE with a curved hook and a small green flame at the tip. NEW OUTFIT: a CHEST PLATE MADE OF A GOAT SKULL, yellowed cracked bone, covering the chest, with the skull's eye sockets glowing green; SHOULDER GUARDS made of curved goat horns on both shoulders; BONE BRACERS on both forearms; two iron CHAINS crossed over the chest, fastened to the skull; bare muscular arms and bare belly sides; ripped BLACK LEATHER PANTS with green embers glowing inside the rips; GOAT HOOVES instead of feet, black and cracked, with green ember light in the cracks; a CAPE OF BLACK FUR with a tall thick fur collar around the neck, its hem in tatters. The skull chest plate and the hooves must read clearly in the side view. No motorcycle items of any kind. No text, no logos. Same face, same colors and same size as the attached sheet. He is the final boss version of the jiu-jitsu shepherd: slow, heavy and overwhelming, every move must look far too powerful; he grabs, lifts and slams. CROOK RULE: the bone crook is always in the same hand (the back hand, the arm drawn behind the torso) in all 8 frames unless the motion says otherwise; it never changes hands and never disappears. The goat-skull chest plate and the hooves stay visible in every frame; the fur cape follows the motion and never hides the chest plate. Do NOT draw the aura, the goat shadow or the giant green hands: they are separate effects.
+
+Art style: hand-pixeled 1990s arcade fighting game sprite. Heroic anatomy: broad shoulders, thick strong torso, big hands and feet; he is the heavy grappler of the cast, stocky and solid but not fat. Shading in 2-3 large hard-edged flat planes per form, no gradients, no dithering, no noise, no texture. Shadows shift hue: skin shadows toward wine red, highlights toward warm cream; white clothes get cool lilac shadows; black clothes get blue-grey highlights. 1-pixel colored outline (dark wine on skin, dark blue-purple on clothes), never pure black, lighter on the lit side. Small hard 1-3 pixel highlights. Limited palette look.
+
+Layout: one single row of 8 frames in 8 equal-width cells, wide image, side view, always facing right, same size and scale as the attached sheet, feet on the same ground line unless the move leaves the ground. The figure FILLS its cell (big and sharp, never a small figure). Each figure stays inside its own cell and never touches the next one. Flat solid magenta background (#FF00FF) everywhere, no shadow, no ground, no text, no numbers, no borders, no effects unless the motion asks for them.
+
+Consecutive frames differ by a small amount, so the motion looks smooth in sequence.
+
+Anatomy check for every frame: exactly two arms and two legs, both hands always visible, elbows and knees bend the natural way, no extra or missing limbs, the body never twists into an impossible pose.
+
+Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
+
+MOTION: two direction attacks: 1 stance, 2 a small hop forward lifting the bone crook over the head, 3 he comes down smashing the crook from above at head height (overhead), 4 landing, 5 he raises the front knee very high, 6 a huge stomp forward and down that shakes the ground, knees bent, 7 he stays low after the stomp, 8 stance. (Cracks and fire are a separate effect.)
 
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
@@ -1563,7 +1712,7 @@ SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure 
 
 ## `e_rolamento`
 
-Anexar: e_referencia_ginga.png + rolamento.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1585,33 +1734,9 @@ MOTION: a heavy dash that passes behind the opponent: 1 stance, 2 he lowers the 
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
 
-## `e_agarrao`
+## `e_estouro`
 
-Anexar: e_referencia_ginga.png + agarrao.png
-
-```text
-Generate ONE image with your image generation tool. Do not write code and do not edit any file.
-
-The attached sprite sheet shows the exact character to keep: Gbzin awakened as the GRAND SHEPHERD (Grao-Pastor), the Lord of the Herd, an overwhelmingly powerful dark shepherd warlord: exact same face, same hair, same heavy stocky body and same height as the base form. Nothing of the base outfit remains (no tank top, no white shorts, no sneakers). KEEP from the first awakened sheet: two ENORMOUS goat horns curled in a spiral growing from his forehead; eye glowing solid green with no pupil; a black eyepatch over the LEFT eye with a small glowing green star; a bigger gold wristwatch on the left wrist; a RED jiu-jitsu belt (the grand master's belt) tied at the waist over the pants, burning with GREEN flames at its two hanging ends; in the BACK hand a short shepherd's crook made of BONE with a curved hook and a small green flame at the tip. NEW OUTFIT: a CHEST PLATE MADE OF A GOAT SKULL, yellowed cracked bone, covering the chest, with the skull's eye sockets glowing green; SHOULDER GUARDS made of curved goat horns on both shoulders; BONE BRACERS on both forearms; two iron CHAINS crossed over the chest, fastened to the skull; bare muscular arms and bare belly sides; ripped BLACK LEATHER PANTS with green embers glowing inside the rips; GOAT HOOVES instead of feet, black and cracked, with green ember light in the cracks; a CAPE OF BLACK FUR with a tall thick fur collar around the neck, its hem in tatters. The skull chest plate and the hooves must read clearly in the side view. No motorcycle items of any kind. No text, no logos. Same face, same colors and same size as the attached sheet. He is the final boss version of the jiu-jitsu shepherd: slow, heavy and overwhelming, every move must look far too powerful; he grabs, lifts and slams. CROOK RULE: the bone crook is always in the same hand (the back hand, the arm drawn behind the torso) in all 8 frames unless the motion says otherwise; it never changes hands and never disappears. The goat-skull chest plate and the hooves stay visible in every frame; the fur cape follows the motion and never hides the chest plate. Do NOT draw the aura, the goat shadow or the giant green hands: they are separate effects.
-
-Art style: hand-pixeled 1990s arcade fighting game sprite. Heroic anatomy: broad shoulders, thick strong torso, big hands and feet; he is the heavy grappler of the cast, stocky and solid but not fat. Shading in 2-3 large hard-edged flat planes per form, no gradients, no dithering, no noise, no texture. Shadows shift hue: skin shadows toward wine red, highlights toward warm cream; white clothes get cool lilac shadows; black clothes get blue-grey highlights. 1-pixel colored outline (dark wine on skin, dark blue-purple on clothes), never pure black, lighter on the lit side. Small hard 1-3 pixel highlights. Limited palette look.
-
-Layout: one single row of 8 frames in 8 equal-width cells, wide image, side view, always facing right, same size and scale as the attached sheet, feet on the same ground line unless the move leaves the ground. The figure FILLS its cell (big and sharp, never a small figure). Each figure stays inside its own cell and never touches the next one. Flat solid magenta background (#FF00FF) everywhere, no shadow, no ground, no text, no numbers, no borders, no effects unless the motion asks for them.
-
-Consecutive frames differ by a small amount, so the motion looks smooth in sequence.
-
-Anatomy check for every frame: exactly two arms and two legs, both hands always visible, elbows and knees bend the natural way, no extra or missing limbs, the body never twists into an impossible pose.
-
-Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
-
-MOTION: the awakened standing grab, always facing right, each blow with a wind-up and a clear contact, huge and brutal: 1 the front hand grabs an invisible opponent by the throat at head height (the grab), 2 he lifts him high off the ground with one arm, 3 wind-up: the crook rises behind, 4 contact: a crook blow at chest height, 5 wind-up again, 6 contact: a horn butt at face height, 7 he slams the invisible opponent down to the floor in front of him (the throw, straight down), 8 he stands over him, stance. No second person is shown.
-
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
-```
-
-## `e_montada`
-
-Anexar: e_referencia_ginga.png + montada.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1628,79 +1753,7 @@ Anatomy check for every frame: exactly two arms and two legs, both hands always 
 
 Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
 
-MOTION: the awakened crouch grab, always facing right, each blow with a wind-up and a clear contact: 1 he dives low and pins an invisible opponent to the floor with one hoof (the grab), 2 he stands on him, 3 wind-up: he raises the bone crook high, 4 contact: the crook smashes down to floor level, 5 wind-up again, 6 contact: a second smash, 7 he stomps the hoof down hard, 8 stance. No second person is shown.
-
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
-```
-
-## `e_ordenha`
-
-Anexar: e_referencia_ginga.png + ordenha.png
-
-```text
-Generate ONE image with your image generation tool. Do not write code and do not edit any file.
-
-The attached sprite sheet shows the exact character to keep: Gbzin awakened as the GRAND SHEPHERD (Grao-Pastor), the Lord of the Herd, an overwhelmingly powerful dark shepherd warlord: exact same face, same hair, same heavy stocky body and same height as the base form. Nothing of the base outfit remains (no tank top, no white shorts, no sneakers). KEEP from the first awakened sheet: two ENORMOUS goat horns curled in a spiral growing from his forehead; eye glowing solid green with no pupil; a black eyepatch over the LEFT eye with a small glowing green star; a bigger gold wristwatch on the left wrist; a RED jiu-jitsu belt (the grand master's belt) tied at the waist over the pants, burning with GREEN flames at its two hanging ends; in the BACK hand a short shepherd's crook made of BONE with a curved hook and a small green flame at the tip. NEW OUTFIT: a CHEST PLATE MADE OF A GOAT SKULL, yellowed cracked bone, covering the chest, with the skull's eye sockets glowing green; SHOULDER GUARDS made of curved goat horns on both shoulders; BONE BRACERS on both forearms; two iron CHAINS crossed over the chest, fastened to the skull; bare muscular arms and bare belly sides; ripped BLACK LEATHER PANTS with green embers glowing inside the rips; GOAT HOOVES instead of feet, black and cracked, with green ember light in the cracks; a CAPE OF BLACK FUR with a tall thick fur collar around the neck, its hem in tatters. The skull chest plate and the hooves must read clearly in the side view. No motorcycle items of any kind. No text, no logos. Same face, same colors and same size as the attached sheet. He is the final boss version of the jiu-jitsu shepherd: slow, heavy and overwhelming, every move must look far too powerful; he grabs, lifts and slams. CROOK RULE: the bone crook is always in the same hand (the back hand, the arm drawn behind the torso) in all 8 frames unless the motion says otherwise; it never changes hands and never disappears. The goat-skull chest plate and the hooves stay visible in every frame; the fur cape follows the motion and never hides the chest plate. Do NOT draw the aura, the goat shadow or the giant green hands: they are separate effects.
-
-Art style: hand-pixeled 1990s arcade fighting game sprite. Heroic anatomy: broad shoulders, thick strong torso, big hands and feet; he is the heavy grappler of the cast, stocky and solid but not fat. Shading in 2-3 large hard-edged flat planes per form, no gradients, no dithering, no noise, no texture. Shadows shift hue: skin shadows toward wine red, highlights toward warm cream; white clothes get cool lilac shadows; black clothes get blue-grey highlights. 1-pixel colored outline (dark wine on skin, dark blue-purple on clothes), never pure black, lighter on the lit side. Small hard 1-3 pixel highlights. Limited palette look.
-
-Layout: one single row of 8 frames in 8 equal-width cells, wide image, side view, always facing right, same size and scale as the attached sheet, feet on the same ground line unless the move leaves the ground. The figure FILLS its cell (big and sharp, never a small figure). Each figure stays inside its own cell and never touches the next one. Flat solid magenta background (#FF00FF) everywhere, no shadow, no ground, no text, no numbers, no borders, no effects unless the motion asks for them.
-
-Consecutive frames differ by a small amount, so the motion looks smooth in sequence.
-
-Anatomy check for every frame: exactly two arms and two legs, both hands always visible, elbows and knees bend the natural way, no extra or missing limbs, the body never twists into an impossible pose.
-
-Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
-
-MOTION: the awakened command grab, always facing right, each blow with a wind-up and a clear contact: 1 both hands grab forward at chest height (the grab), 2 and 3 he spins around in place holding an invisible opponent, the cape swirling, 4 a full turn back to facing right, 5 wind-up: the bone crook swings far back, 6 contact: a huge crook swing at belly height, 7 follow-through sending the opponent far forward (the throw, a clear forward direction), 8 stance. No second person is shown.
-
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
-```
-
-## `e_bola`
-
-Anexar: e_referencia_ginga.png + bola.png
-
-```text
-Generate ONE image with your image generation tool. Do not write code and do not edit any file.
-
-The attached sprite sheet shows the exact character to keep: Gbzin awakened as the GRAND SHEPHERD (Grao-Pastor), the Lord of the Herd, an overwhelmingly powerful dark shepherd warlord: exact same face, same hair, same heavy stocky body and same height as the base form. Nothing of the base outfit remains (no tank top, no white shorts, no sneakers). KEEP from the first awakened sheet: two ENORMOUS goat horns curled in a spiral growing from his forehead; eye glowing solid green with no pupil; a black eyepatch over the LEFT eye with a small glowing green star; a bigger gold wristwatch on the left wrist; a RED jiu-jitsu belt (the grand master's belt) tied at the waist over the pants, burning with GREEN flames at its two hanging ends; in the BACK hand a short shepherd's crook made of BONE with a curved hook and a small green flame at the tip. NEW OUTFIT: a CHEST PLATE MADE OF A GOAT SKULL, yellowed cracked bone, covering the chest, with the skull's eye sockets glowing green; SHOULDER GUARDS made of curved goat horns on both shoulders; BONE BRACERS on both forearms; two iron CHAINS crossed over the chest, fastened to the skull; bare muscular arms and bare belly sides; ripped BLACK LEATHER PANTS with green embers glowing inside the rips; GOAT HOOVES instead of feet, black and cracked, with green ember light in the cracks; a CAPE OF BLACK FUR with a tall thick fur collar around the neck, its hem in tatters. The skull chest plate and the hooves must read clearly in the side view. No motorcycle items of any kind. No text, no logos. Same face, same colors and same size as the attached sheet. He is the final boss version of the jiu-jitsu shepherd: slow, heavy and overwhelming, every move must look far too powerful; he grabs, lifts and slams. CROOK RULE: the bone crook is always in the same hand (the back hand, the arm drawn behind the torso) in all 8 frames unless the motion says otherwise; it never changes hands and never disappears. The goat-skull chest plate and the hooves stay visible in every frame; the fur cape follows the motion and never hides the chest plate. Do NOT draw the aura, the goat shadow or the giant green hands: they are separate effects.
-
-Art style: hand-pixeled 1990s arcade fighting game sprite. Heroic anatomy: broad shoulders, thick strong torso, big hands and feet; he is the heavy grappler of the cast, stocky and solid but not fat. Shading in 2-3 large hard-edged flat planes per form, no gradients, no dithering, no noise, no texture. Shadows shift hue: skin shadows toward wine red, highlights toward warm cream; white clothes get cool lilac shadows; black clothes get blue-grey highlights. 1-pixel colored outline (dark wine on skin, dark blue-purple on clothes), never pure black, lighter on the lit side. Small hard 1-3 pixel highlights. Limited palette look.
-
-Layout: one single row of 8 frames in 8 equal-width cells, wide image, side view, always facing right, same size and scale as the attached sheet, feet on the same ground line unless the move leaves the ground. The figure FILLS its cell (big and sharp, never a small figure). Each figure stays inside its own cell and never touches the next one. Flat solid magenta background (#FF00FF) everywhere, no shadow, no ground, no text, no numbers, no borders, no effects unless the motion asks for them.
-
-Consecutive frames differ by a small amount, so the motion looks smooth in sequence.
-
-Anatomy check for every frame: exactly two arms and two legs, both hands always visible, elbows and knees bend the natural way, no extra or missing limbs, the body never twists into an impossible pose.
-
-Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
-
-MOTION: Ghost Goat throw pose (the burning goat is a separate effect): 1 stance, 2 he raises the bone crook, 3 and 4 he points the crook forward commanding, 5 and 6 he sweeps the crook forward low like herding, 7 he laughs coldly, 8 stance. Nothing comes out of the crook.
-
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
-```
-
-## `e_compasso`
-
-Anexar: e_referencia_ginga.png + compasso.png
-
-```text
-Generate ONE image with your image generation tool. Do not write code and do not edit any file.
-
-The attached sprite sheet shows the exact character to keep: Gbzin awakened as the GRAND SHEPHERD (Grao-Pastor), the Lord of the Herd, an overwhelmingly powerful dark shepherd warlord: exact same face, same hair, same heavy stocky body and same height as the base form. Nothing of the base outfit remains (no tank top, no white shorts, no sneakers). KEEP from the first awakened sheet: two ENORMOUS goat horns curled in a spiral growing from his forehead; eye glowing solid green with no pupil; a black eyepatch over the LEFT eye with a small glowing green star; a bigger gold wristwatch on the left wrist; a RED jiu-jitsu belt (the grand master's belt) tied at the waist over the pants, burning with GREEN flames at its two hanging ends; in the BACK hand a short shepherd's crook made of BONE with a curved hook and a small green flame at the tip. NEW OUTFIT: a CHEST PLATE MADE OF A GOAT SKULL, yellowed cracked bone, covering the chest, with the skull's eye sockets glowing green; SHOULDER GUARDS made of curved goat horns on both shoulders; BONE BRACERS on both forearms; two iron CHAINS crossed over the chest, fastened to the skull; bare muscular arms and bare belly sides; ripped BLACK LEATHER PANTS with green embers glowing inside the rips; GOAT HOOVES instead of feet, black and cracked, with green ember light in the cracks; a CAPE OF BLACK FUR with a tall thick fur collar around the neck, its hem in tatters. The skull chest plate and the hooves must read clearly in the side view. No motorcycle items of any kind. No text, no logos. Same face, same colors and same size as the attached sheet. He is the final boss version of the jiu-jitsu shepherd: slow, heavy and overwhelming, every move must look far too powerful; he grabs, lifts and slams. CROOK RULE: the bone crook is always in the same hand (the back hand, the arm drawn behind the torso) in all 8 frames unless the motion says otherwise; it never changes hands and never disappears. The goat-skull chest plate and the hooves stay visible in every frame; the fur cape follows the motion and never hides the chest plate. Do NOT draw the aura, the goat shadow or the giant green hands: they are separate effects.
-
-Art style: hand-pixeled 1990s arcade fighting game sprite. Heroic anatomy: broad shoulders, thick strong torso, big hands and feet; he is the heavy grappler of the cast, stocky and solid but not fat. Shading in 2-3 large hard-edged flat planes per form, no gradients, no dithering, no noise, no texture. Shadows shift hue: skin shadows toward wine red, highlights toward warm cream; white clothes get cool lilac shadows; black clothes get blue-grey highlights. 1-pixel colored outline (dark wine on skin, dark blue-purple on clothes), never pure black, lighter on the lit side. Small hard 1-3 pixel highlights. Limited palette look.
-
-Layout: one single row of 8 frames in 8 equal-width cells, wide image, side view, always facing right, same size and scale as the attached sheet, feet on the same ground line unless the move leaves the ground. The figure FILLS its cell (big and sharp, never a small figure). Each figure stays inside its own cell and never touches the next one. Flat solid magenta background (#FF00FF) everywhere, no shadow, no ground, no text, no numbers, no borders, no effects unless the motion asks for them.
-
-Consecutive frames differ by a small amount, so the motion looks smooth in sequence.
-
-Anatomy check for every frame: exactly two arms and two legs, both hands always visible, elbows and knees bend the natural way, no extra or missing limbs, the body never twists into an impossible pose.
-
-Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
-
-MOTION: Shepherd's Pull (the giant hands that pull are a separate effect): 1 stance, 2 and 3 he reaches both open hands far forward, 4 and 5 he closes both fists as if catching something far away, 6 and 7 he pulls both fists back to his chest strongly, leaning back, 8 stance.
+MOTION: the Stampede horn charge, an 8-frame loop for a charge across the screen: he runs forward heavily with the head lowered and the spiral horns pointing forward like a ram, the bone crook held back, the cape flying behind, hooves pounding; frame 8 flows back into frame 1.
 
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
@@ -1753,9 +1806,9 @@ MOTION: the Goat Scream anti-air (the scream rings are a separate effect): 1 sta
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
 
-## `e_armada`
+## `e_compasso`
 
-Anexar: e_referencia_ginga.png + armada.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1772,14 +1825,14 @@ Anatomy check for every frame: exactly two arms and two legs, both hands always 
 
 Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
 
-MOTION: awakened guard counter: 1 stance, 2 and 3 he drops on his back on the cape, hooves up in a jiu-jitsu guard, 4 waiting, 5 and 6 the legs close and twist as if trapping an attack, 7 he sweeps with the hooves, 8 he springs up into stance.
+MOTION: Shepherd's Pull (the giant hands that pull are a separate effect): 1 stance, 2 and 3 he reaches both open hands far forward, 4 and 5 he closes both fists as if catching something far away, 6 and 7 he pulls both fists back to his chest strongly, leaning back, 8 stance.
 
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
 
-## `e_caneta`
+## `e_rebanho_fantasma`
 
-Anexar: e_referencia_ginga.png + caneta.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1796,14 +1849,14 @@ Anatomy check for every frame: exactly two arms and two legs, both hands always 
 
 Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
 
-MOTION: awakened Flying Arm-lock: 1 stance, 2 he crouches, 3 and 4 he jumps forward and up, arms reaching, the cape flying, 5 and 6 in the air his legs wrap and his body twists sideways catching an arm, 7 and 8 he falls to the ground sitting in an arm-lock, arms pulling.
+MOTION: Ghost Herd pose (the three burning ghost goats are a separate effect): 1 stance, 2 he raises the bone crook, 3 and 4 he whistles with two fingers in the mouth, 5 and 6 he sweeps the crook forward low along the floor like sending a herd, 7 he points forward with the crook, 8 stance. Nothing comes out of the crook.
 
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
 
-## `e_cajado_chao`
+## `e_chuva_notas`
 
-Anexar: e_referencia_ginga.png + cajado_chao.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1820,14 +1873,14 @@ Anatomy check for every frame: exactly two arms and two legs, both hands always 
 
 Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
 
-MOTION: awakened Staff Strike: 1 stance, 2 and 3 he raises the bone crook high with both hands, 4 and 5 he slams the crook tip into the ground in front of him, crouching, 6 and 7 he pulls it out, 8 stance.
+MOTION: Money Rain pose (the column of money and green fire is a separate effect): 1 stance, 2 and 3 he raises the bone crook high with both hands, 4 he slams the crook tip into the ground in front of him, 5 and 6 holding the crook planted, looking up with a cold grin, 7 he pulls the crook out, 8 stance.
 
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
 
-## `e_rolo_feno`
+## `e_sombra_bode`
 
-Anexar: e_referencia_ginga.png + rolo_feno.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1844,14 +1897,38 @@ Anatomy check for every frame: exactly two arms and two legs, both hands always 
 
 Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
 
-MOTION: awakened roll: 1 stance, 2 he tucks into a ball wrapped in the fur cape, horns out, 3 to 6 he rolls forward along the ground (each frame rotated about 90 degrees more), 7 he unrolls, 8 he stands in stance.
+MOTION: Goat Shadow counter: 1 stance, 2 he raises the front arm in a guard, 3 and 4 his whole body turns into a flat dark green shadow silhouette of himself (same pose, no details, only the glowing eye), 5 he reappears in full color already lowered, 6 he lunges forward with a horn butt at chest height, 7 recovering, 8 stance.
+
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+```
+
+## `e_queda_bode`
+
+Anexar: e_referencia_ginga.png
+
+```text
+Generate ONE image with your image generation tool. Do not write code and do not edit any file.
+
+The attached sprite sheet shows the exact character to keep: Gbzin awakened as the GRAND SHEPHERD (Grao-Pastor), the Lord of the Herd, an overwhelmingly powerful dark shepherd warlord: exact same face, same hair, same heavy stocky body and same height as the base form. Nothing of the base outfit remains (no tank top, no white shorts, no sneakers). KEEP from the first awakened sheet: two ENORMOUS goat horns curled in a spiral growing from his forehead; eye glowing solid green with no pupil; a black eyepatch over the LEFT eye with a small glowing green star; a bigger gold wristwatch on the left wrist; a RED jiu-jitsu belt (the grand master's belt) tied at the waist over the pants, burning with GREEN flames at its two hanging ends; in the BACK hand a short shepherd's crook made of BONE with a curved hook and a small green flame at the tip. NEW OUTFIT: a CHEST PLATE MADE OF A GOAT SKULL, yellowed cracked bone, covering the chest, with the skull's eye sockets glowing green; SHOULDER GUARDS made of curved goat horns on both shoulders; BONE BRACERS on both forearms; two iron CHAINS crossed over the chest, fastened to the skull; bare muscular arms and bare belly sides; ripped BLACK LEATHER PANTS with green embers glowing inside the rips; GOAT HOOVES instead of feet, black and cracked, with green ember light in the cracks; a CAPE OF BLACK FUR with a tall thick fur collar around the neck, its hem in tatters. The skull chest plate and the hooves must read clearly in the side view. No motorcycle items of any kind. No text, no logos. Same face, same colors and same size as the attached sheet. He is the final boss version of the jiu-jitsu shepherd: slow, heavy and overwhelming, every move must look far too powerful; he grabs, lifts and slams. CROOK RULE: the bone crook is always in the same hand (the back hand, the arm drawn behind the torso) in all 8 frames unless the motion says otherwise; it never changes hands and never disappears. The goat-skull chest plate and the hooves stay visible in every frame; the fur cape follows the motion and never hides the chest plate. Do NOT draw the aura, the goat shadow or the giant green hands: they are separate effects.
+
+Art style: hand-pixeled 1990s arcade fighting game sprite. Heroic anatomy: broad shoulders, thick strong torso, big hands and feet; he is the heavy grappler of the cast, stocky and solid but not fat. Shading in 2-3 large hard-edged flat planes per form, no gradients, no dithering, no noise, no texture. Shadows shift hue: skin shadows toward wine red, highlights toward warm cream; white clothes get cool lilac shadows; black clothes get blue-grey highlights. 1-pixel colored outline (dark wine on skin, dark blue-purple on clothes), never pure black, lighter on the lit side. Small hard 1-3 pixel highlights. Limited palette look.
+
+Layout: one single row of 8 frames in 8 equal-width cells, wide image, side view, always facing right, same size and scale as the attached sheet, feet on the same ground line unless the move leaves the ground. The figure FILLS its cell (big and sharp, never a small figure). Each figure stays inside its own cell and never touches the next one. Flat solid magenta background (#FF00FF) everywhere, no shadow, no ground, no text, no numbers, no borders, no effects unless the motion asks for them.
+
+Consecutive frames differ by a small amount, so the motion looks smooth in sequence.
+
+Anatomy check for every frame: exactly two arms and two legs, both hands always visible, elbows and knees bend the natural way, no extra or missing limbs, the body never twists into an impossible pose.
+
+Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
+
+MOTION: Goat Fall: 1 deep crouch, 2 he jumps very high and forward, 3 and 4 at the top of the jump, knees tucked, the cape spread, 5 he falls hooves first, 6 the hooves hit the ground hard, crouched low, 7 he rises, 8 stance. (The cracks are a separate effect.)
 
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
 
 ## `e_golaco`
 
-Anexar: e_referencia_ginga.png + golaco.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1868,7 +1945,7 @@ Anatomy check for every frame: exactly two arms and two legs, both hands always 
 
 Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
 
-MOTION: super move Herd Stampede pose: 1 stance, 2 and 3 he raises the bone crook high over his head, 4 and 5 he slams the crook down and points forward commanding the herd, 6 and 7 he holds the pose, the cape blown back, 8 stance.
+MOTION: super move Hell Herd pose: 1 stance, 2 and 3 he raises the bone crook high over his head, his eye blazing, 4 and 5 he slams the crook down and points forward commanding a stampede, 6 and 7 he holds the pose with the cape blown back as if a huge herd runs past him, 8 stance. (The giant shadow goat and the herd are separate effects.)
 
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
@@ -1897,9 +1974,81 @@ MOTION: super move Judgment of the Herd: 1 stance, 2 he leaps forward, 3 he land
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
 
+## `e_agarrao`
+
+Anexar: e_referencia_ginga.png
+
+```text
+Generate ONE image with your image generation tool. Do not write code and do not edit any file.
+
+The attached sprite sheet shows the exact character to keep: Gbzin awakened as the GRAND SHEPHERD (Grao-Pastor), the Lord of the Herd, an overwhelmingly powerful dark shepherd warlord: exact same face, same hair, same heavy stocky body and same height as the base form. Nothing of the base outfit remains (no tank top, no white shorts, no sneakers). KEEP from the first awakened sheet: two ENORMOUS goat horns curled in a spiral growing from his forehead; eye glowing solid green with no pupil; a black eyepatch over the LEFT eye with a small glowing green star; a bigger gold wristwatch on the left wrist; a RED jiu-jitsu belt (the grand master's belt) tied at the waist over the pants, burning with GREEN flames at its two hanging ends; in the BACK hand a short shepherd's crook made of BONE with a curved hook and a small green flame at the tip. NEW OUTFIT: a CHEST PLATE MADE OF A GOAT SKULL, yellowed cracked bone, covering the chest, with the skull's eye sockets glowing green; SHOULDER GUARDS made of curved goat horns on both shoulders; BONE BRACERS on both forearms; two iron CHAINS crossed over the chest, fastened to the skull; bare muscular arms and bare belly sides; ripped BLACK LEATHER PANTS with green embers glowing inside the rips; GOAT HOOVES instead of feet, black and cracked, with green ember light in the cracks; a CAPE OF BLACK FUR with a tall thick fur collar around the neck, its hem in tatters. The skull chest plate and the hooves must read clearly in the side view. No motorcycle items of any kind. No text, no logos. Same face, same colors and same size as the attached sheet. He is the final boss version of the jiu-jitsu shepherd: slow, heavy and overwhelming, every move must look far too powerful; he grabs, lifts and slams. CROOK RULE: the bone crook is always in the same hand (the back hand, the arm drawn behind the torso) in all 8 frames unless the motion says otherwise; it never changes hands and never disappears. The goat-skull chest plate and the hooves stay visible in every frame; the fur cape follows the motion and never hides the chest plate. Do NOT draw the aura, the goat shadow or the giant green hands: they are separate effects.
+
+Art style: hand-pixeled 1990s arcade fighting game sprite. Heroic anatomy: broad shoulders, thick strong torso, big hands and feet; he is the heavy grappler of the cast, stocky and solid but not fat. Shading in 2-3 large hard-edged flat planes per form, no gradients, no dithering, no noise, no texture. Shadows shift hue: skin shadows toward wine red, highlights toward warm cream; white clothes get cool lilac shadows; black clothes get blue-grey highlights. 1-pixel colored outline (dark wine on skin, dark blue-purple on clothes), never pure black, lighter on the lit side. Small hard 1-3 pixel highlights. Limited palette look.
+
+Layout: one single row of 8 frames in 8 equal-width cells, wide image, side view, always facing right, same size and scale as the attached sheet, feet on the same ground line unless the move leaves the ground. The figure FILLS its cell (big and sharp, never a small figure). Each figure stays inside its own cell and never touches the next one. Flat solid magenta background (#FF00FF) everywhere, no shadow, no ground, no text, no numbers, no borders, no effects unless the motion asks for them.
+
+Consecutive frames differ by a small amount, so the motion looks smooth in sequence.
+
+Anatomy check for every frame: exactly two arms and two legs, both hands always visible, elbows and knees bend the natural way, no extra or missing limbs, the body never twists into an impossible pose.
+
+Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
+
+MOTION: the awakened standing grab, always facing right, each blow with a wind-up and a clear contact, huge and brutal: 1 the front hand grabs an invisible opponent by the throat at head height (the grab), 2 he lifts him high off the ground with one arm, 3 wind-up: the crook rises behind, 4 contact: a crook blow at chest height, 5 wind-up again, 6 contact: a horn butt at face height, 7 he slams the invisible opponent down to the floor in front of him (the throw, straight down), 8 he stands over him, stance. No second person is shown.
+
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+```
+
+## `e_montada`
+
+Anexar: e_referencia_ginga.png
+
+```text
+Generate ONE image with your image generation tool. Do not write code and do not edit any file.
+
+The attached sprite sheet shows the exact character to keep: Gbzin awakened as the GRAND SHEPHERD (Grao-Pastor), the Lord of the Herd, an overwhelmingly powerful dark shepherd warlord: exact same face, same hair, same heavy stocky body and same height as the base form. Nothing of the base outfit remains (no tank top, no white shorts, no sneakers). KEEP from the first awakened sheet: two ENORMOUS goat horns curled in a spiral growing from his forehead; eye glowing solid green with no pupil; a black eyepatch over the LEFT eye with a small glowing green star; a bigger gold wristwatch on the left wrist; a RED jiu-jitsu belt (the grand master's belt) tied at the waist over the pants, burning with GREEN flames at its two hanging ends; in the BACK hand a short shepherd's crook made of BONE with a curved hook and a small green flame at the tip. NEW OUTFIT: a CHEST PLATE MADE OF A GOAT SKULL, yellowed cracked bone, covering the chest, with the skull's eye sockets glowing green; SHOULDER GUARDS made of curved goat horns on both shoulders; BONE BRACERS on both forearms; two iron CHAINS crossed over the chest, fastened to the skull; bare muscular arms and bare belly sides; ripped BLACK LEATHER PANTS with green embers glowing inside the rips; GOAT HOOVES instead of feet, black and cracked, with green ember light in the cracks; a CAPE OF BLACK FUR with a tall thick fur collar around the neck, its hem in tatters. The skull chest plate and the hooves must read clearly in the side view. No motorcycle items of any kind. No text, no logos. Same face, same colors and same size as the attached sheet. He is the final boss version of the jiu-jitsu shepherd: slow, heavy and overwhelming, every move must look far too powerful; he grabs, lifts and slams. CROOK RULE: the bone crook is always in the same hand (the back hand, the arm drawn behind the torso) in all 8 frames unless the motion says otherwise; it never changes hands and never disappears. The goat-skull chest plate and the hooves stay visible in every frame; the fur cape follows the motion and never hides the chest plate. Do NOT draw the aura, the goat shadow or the giant green hands: they are separate effects.
+
+Art style: hand-pixeled 1990s arcade fighting game sprite. Heroic anatomy: broad shoulders, thick strong torso, big hands and feet; he is the heavy grappler of the cast, stocky and solid but not fat. Shading in 2-3 large hard-edged flat planes per form, no gradients, no dithering, no noise, no texture. Shadows shift hue: skin shadows toward wine red, highlights toward warm cream; white clothes get cool lilac shadows; black clothes get blue-grey highlights. 1-pixel colored outline (dark wine on skin, dark blue-purple on clothes), never pure black, lighter on the lit side. Small hard 1-3 pixel highlights. Limited palette look.
+
+Layout: one single row of 8 frames in 8 equal-width cells, wide image, side view, always facing right, same size and scale as the attached sheet, feet on the same ground line unless the move leaves the ground. The figure FILLS its cell (big and sharp, never a small figure). Each figure stays inside its own cell and never touches the next one. Flat solid magenta background (#FF00FF) everywhere, no shadow, no ground, no text, no numbers, no borders, no effects unless the motion asks for them.
+
+Consecutive frames differ by a small amount, so the motion looks smooth in sequence.
+
+Anatomy check for every frame: exactly two arms and two legs, both hands always visible, elbows and knees bend the natural way, no extra or missing limbs, the body never twists into an impossible pose.
+
+Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
+
+MOTION: the awakened crouch grab, always facing right, each blow with a wind-up and a clear contact: 1 he dives low and pins an invisible opponent to the floor with one hoof (the grab), 2 he stands on him, 3 wind-up: he raises the bone crook high, 4 contact: the crook smashes down to floor level, 5 wind-up again, 6 contact: a second smash, 7 he stomps the hoof down hard, 8 stance. No second person is shown.
+
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+```
+
+## `e_ordenha`
+
+Anexar: e_referencia_ginga.png
+
+```text
+Generate ONE image with your image generation tool. Do not write code and do not edit any file.
+
+The attached sprite sheet shows the exact character to keep: Gbzin awakened as the GRAND SHEPHERD (Grao-Pastor), the Lord of the Herd, an overwhelmingly powerful dark shepherd warlord: exact same face, same hair, same heavy stocky body and same height as the base form. Nothing of the base outfit remains (no tank top, no white shorts, no sneakers). KEEP from the first awakened sheet: two ENORMOUS goat horns curled in a spiral growing from his forehead; eye glowing solid green with no pupil; a black eyepatch over the LEFT eye with a small glowing green star; a bigger gold wristwatch on the left wrist; a RED jiu-jitsu belt (the grand master's belt) tied at the waist over the pants, burning with GREEN flames at its two hanging ends; in the BACK hand a short shepherd's crook made of BONE with a curved hook and a small green flame at the tip. NEW OUTFIT: a CHEST PLATE MADE OF A GOAT SKULL, yellowed cracked bone, covering the chest, with the skull's eye sockets glowing green; SHOULDER GUARDS made of curved goat horns on both shoulders; BONE BRACERS on both forearms; two iron CHAINS crossed over the chest, fastened to the skull; bare muscular arms and bare belly sides; ripped BLACK LEATHER PANTS with green embers glowing inside the rips; GOAT HOOVES instead of feet, black and cracked, with green ember light in the cracks; a CAPE OF BLACK FUR with a tall thick fur collar around the neck, its hem in tatters. The skull chest plate and the hooves must read clearly in the side view. No motorcycle items of any kind. No text, no logos. Same face, same colors and same size as the attached sheet. He is the final boss version of the jiu-jitsu shepherd: slow, heavy and overwhelming, every move must look far too powerful; he grabs, lifts and slams. CROOK RULE: the bone crook is always in the same hand (the back hand, the arm drawn behind the torso) in all 8 frames unless the motion says otherwise; it never changes hands and never disappears. The goat-skull chest plate and the hooves stay visible in every frame; the fur cape follows the motion and never hides the chest plate. Do NOT draw the aura, the goat shadow or the giant green hands: they are separate effects.
+
+Art style: hand-pixeled 1990s arcade fighting game sprite. Heroic anatomy: broad shoulders, thick strong torso, big hands and feet; he is the heavy grappler of the cast, stocky and solid but not fat. Shading in 2-3 large hard-edged flat planes per form, no gradients, no dithering, no noise, no texture. Shadows shift hue: skin shadows toward wine red, highlights toward warm cream; white clothes get cool lilac shadows; black clothes get blue-grey highlights. 1-pixel colored outline (dark wine on skin, dark blue-purple on clothes), never pure black, lighter on the lit side. Small hard 1-3 pixel highlights. Limited palette look.
+
+Layout: one single row of 8 frames in 8 equal-width cells, wide image, side view, always facing right, same size and scale as the attached sheet, feet on the same ground line unless the move leaves the ground. The figure FILLS its cell (big and sharp, never a small figure). Each figure stays inside its own cell and never touches the next one. Flat solid magenta background (#FF00FF) everywhere, no shadow, no ground, no text, no numbers, no borders, no effects unless the motion asks for them.
+
+Consecutive frames differ by a small amount, so the motion looks smooth in sequence.
+
+Anatomy check for every frame: exactly two arms and two legs, both hands always visible, elbows and knees bend the natural way, no extra or missing limbs, the body never twists into an impossible pose.
+
+Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
+
+MOTION: the awakened command grab Embrace of the Hands, always facing right (the giant green hands are a separate effect, here only his gestures): 1 he reaches both open hands far forward, 2 he closes both fists as if catching someone far away, 3 he pulls both fists to his chest, 4 he squeezes both fists together in front of his chest, trembling, 5 wind-up: he lowers his head with the horns forward, 6 contact: a horn butt forward at chest height, 7 he throws both arms forward and open (the throw, a clear forward direction), 8 stance. No second person is shown.
+
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+```
+
 ## `e_provoca`
 
-Anexar: e_referencia_ginga.png + provoca.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1923,7 +2072,7 @@ SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure 
 
 ## `e_vitoria`
 
-Anexar: e_referencia_ginga.png + vitoria.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1947,7 +2096,7 @@ SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure 
 
 ## `e_derrota`
 
-Anexar: e_referencia_ginga.png + derrota.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1971,7 +2120,7 @@ SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure 
 
 ## `e_parry_alto`
 
-Anexar: e_referencia_ginga.png + parry_alto.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1995,7 +2144,7 @@ SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure 
 
 ## `e_parry_baixo`
 
-Anexar: e_referencia_ginga.png + parry_baixo.png
+Anexar: e_referencia_ginga.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -2110,19 +2259,7 @@ Generate ONE image with your image generation tool. Do not write code and do not
 
 A visual effect for a 1990s arcade fighting game, hand-pixeled, hard-edged flat shading in 2-3 tones, no gradients, no dithering, 1-pixel colored outline. One single row of 8 frames in 8 equal-width cells, wide image. Flat solid pure green background (#00FF00) everywhere (if the effect itself is green, use magenta #FF00FF instead). No fighter, no text, no ground.
 
-MOTION: (use magenta #FF00FF background) a GHOST GOAT made of green flames (dark green body, bright green fire, glowing eyes, big curved horns) running forward to the right along the ground: frames 1 to 6 a fast gallop cycle with the flames trailing back, frames 7 and 8 it lowers its head and headbutts forward.
-```
-
-## `fx_cabra_fantasma_salto`
-
-Anexar: nenhum
-
-```text
-Generate ONE image with your image generation tool. Do not write code and do not edit any file.
-
-A visual effect for a 1990s arcade fighting game, hand-pixeled, hard-edged flat shading in 2-3 tones, no gradients, no dithering, 1-pixel colored outline. One single row of 8 frames in 8 equal-width cells, wide image. Flat solid pure green background (#00FF00) everywhere (if the effect itself is green, use magenta #FF00FF instead). No fighter, no text, no ground.
-
-MOTION: (use magenta #FF00FF background) a GHOST GOAT made of green flames (glowing eyes, big curved horns) leaping in a high arc to the right: 1 crouching, 2 to 4 jumping up and forward with the horns forward, 5 and 6 at the top of the arc, 7 and 8 coming down, flames trailing.
+MOTION: (use magenta #FF00FF background) Ghost Herd: a GHOST GOAT made of green flames (dark green body, bright green fire, glowing eyes, big curved horns) running forward to the right along the ground: frames 1 to 6 a fast gallop cycle with the flames trailing back, frames 7 and 8 it lowers its head and headbutts forward.
 ```
 
 ## `fx_mao`

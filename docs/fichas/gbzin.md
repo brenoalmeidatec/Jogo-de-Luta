@@ -134,8 +134,8 @@ sem tampar o HUD.
 ### Golpes próprios do Grão-Pastor (regra nova da #47, 2026-11-15)
 
 O despertado tem **todos** os golpes próprios (16 normais, 4 correntes, especiais, super e agarrões) e nada da base
-entra nele. A lista completa foi proposta na #30 (comentário 6898246465) e **espera o ok do Breno**; as folhas `e_` só
-saem depois disso. Os pedidos `e_` do `folhas_gbzin.py` ainda são os antigos e serão reescritos pela lista aprovada.
+entra nele. A lista completa da #30 (comentário 6898246465) foi **aprovada pelo Breno** (19:23Z de 2026-11-15). Os pedidos `e_`
+do `folhas_gbzin.py` já seguem a lista (46 folhas do Grão-Pastor, nenhuma com golpe da base).
 
 ### Exclusivos do Grão-Pastor (aprovados pelo Breno na #30, 2026-11-15)
 
