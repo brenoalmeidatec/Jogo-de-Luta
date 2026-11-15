@@ -1179,6 +1179,8 @@ def main():
     import gerar_sons  # sons próprios: sound = ck.snd no .def e PlaySnd/hitsound no .cns (missão 2026-11-14)
     como_o_ck(gerar_sons)
     gerar_sons.ligar("gbzin", SAIDA)
+    # o .snd do Gbzin: por ora os sons do CK (mesma semente dele, 1000 + 100 * a posição do ck na lista)
+    gerar_sons.gravar_snd(SAIDA / "gbzin.snd", gerar_sons.sons_lutador("gbzin", 1100))
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
     # parry próprio (ferramentas/parry.py): precisa das folhas parry_alto e parry_baixo do Gbzin, que ainda não
     # existem (a arte está parada até o Breno aprovar o conceito, issue #30). Até lá fica o parry do kit.
