@@ -5,7 +5,7 @@
 
 No despertado a parceira vai no arnês, nas costas dele, e bate com a navalha e o secador; ele bate com a tesoura de
 aço e as botas. As caixas das ações 1xxxx vinham da forma base (punho e pé do cientista sozinho) e ficavam no ar.
-Aqui cada Clsn1 de quadro das ações >= 10000 é refeita em cima do desenho endiabrado que o RemapPreset põe no
+Aqui cada Clsn1 de quadro das ações 10000 a 12999 (os supers 13xxx ficam com a caixa grande, de propósito) é refeita em cima do desenho endiabrado que o RemapPreset põe no
 lugar: pega a ponta mais à frente do desenho (navalha, secador, tesoura ou bota), e a caixa cobre essa ponta,
 `FUNDO` px para trás e só a altura do que está nessa faixa. Quando a faixa junta pedaços muito separados na
 vertical (a navalha lá em cima e a tesoura embaixo, por exemplo), fica o pedaço mais perto da caixa antiga, que
@@ -77,7 +77,7 @@ def refazer(air, pontos, pares, e, log):
     saida = []
     for bloco in re.split(r"(?m)^(?=\[Begin Action )", air):
         m = re.match(r"\[Begin Action (\d+)\]", bloco)
-        if not m or int(m.group(1)) < 10000 or not re.search(r"(?mi)^\s*clsn1\s*:", bloco):
+        if not m or not 10000 <= int(m.group(1)) < 13000 or not re.search(r"(?mi)^\s*clsn1\s*:", bloco):
             saida.append(bloco)
             continue
         acao = int(m.group(1))
