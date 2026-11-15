@@ -36,7 +36,7 @@ from recortar_quadros import PE_DE_TRAS, PIVO, RAIZ, fatias, ponto_ancora, tira_
 LUTADOR = os.environ.get("LUTADOR", "pengaro")
 FOLHAS_LUTADOR = {"gutto": FOLHAS_GUTTO, "raiclaven": FOLHAS_RAICLAVEN}.get(LUTADOR, FOLHAS_PENGARO)
 FOLHAS_CK = {n: ("pes", "") for n in NOMES_CK if not n.startswith("fx_")}  # base, despertar_a/b e as e_ do Modo Ratão
-FOLHAS_GBZIN = {n: ("pes", "") for n in NOMES_GBZIN if not n.startswith("fx_") and "conceito" not in n}  # base, despertar e e_ do Deus Motoboy
+FOLHAS_GBZIN = {n: ("pes", "") for n in NOMES_GBZIN if not n.startswith("fx_") and "conceito" not in n}  # base, despertar e e_ do Grão-Pastor
 if LUTADOR == "ck":
     FOLHAS_LUTADOR = FOLHAS_CK
 if LUTADOR == "gbzin":
