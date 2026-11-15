@@ -204,7 +204,10 @@ def fim_ativo(n):
 
 # ---------------------------------------------------------------- sprites
 def carregar_paleta():
-    return [tuple(c["rgb"]) for c in json.loads(PALETA.read_text(encoding="utf-8"))["cores"]]
+    """Cores do corpo, na ordem dos índices do .sff (1, 2, ...). Com o Hazak nítido (#36, converter_hazaki.py) são as
+    15 de paleta_arcade.json mais os tons do meio de paleta_nitida.json; sem ela, só as 15."""
+    nitida = PALETA.with_name("paleta_nitida.json")
+    return [tuple(c["rgb"]) for c in json.loads((nitida if nitida.exists() else PALETA).read_text(encoding="utf-8"))["cores"]]
 
 
 def montar_sprites():
@@ -300,7 +303,8 @@ def escrever_sff(destino, s, manter):
     paleta (240 cores) é escolhido dos sprites que não são corpo (faíscas do pixelfx, retratos). Poda como o
     gp.escrever_sff: só ficam os sprites de `manter` e o grupo 9000."""
     fixas = carregar_paleta()
-    assert len(fixas) == 15
+    n_fixas = len(fixas)
+    assert 15 <= n_fixas <= 64
     indice_fixo = {c: k + 1 for k, c in enumerate(fixas)}
     usados = [(g, i, img, ex, ey) for g, i, img, ex, ey in s.lista if g == 9000 or (g, i) in manter]
 
@@ -318,7 +322,7 @@ def escrever_sff(destino, s, manter):
         amostra = np.concatenate(livres)
         passo = max(1, len(amostra) // gp.LIMITE_AMOSTRA_PALETA)
         tira = Image.fromarray(np.ascontiguousarray(amostra[::passo])[None, :, :], "RGB")
-        q = tira.quantize(colors=240, method=Image.MEDIANCUT).getpalette()[:240 * 3]
+        q = tira.quantize(colors=255 - n_fixas, method=Image.MEDIANCUT).getpalette()[:(255 - n_fixas) * 3]
         resto = [tuple(q[k:k + 3]) for k in range(0, len(q), 3)]
     pal = fixas + resto
     pal += [(0, 0, 0)] * (255 - len(pal))
@@ -342,7 +346,7 @@ def escrever_sff(destino, s, manter):
         else:
             ind = np.asarray(rec.convert("RGB").quantize(palette=molde, dither=Image.NONE)).astype(np.int32)
             ind[ind >= len(resto)] = len(resto) - 1
-            px = np.where(opaco, ind + 16, 0).astype(np.uint8)
+            px = np.where(opaco, ind + n_fixas + 1, 0).astype(np.uint8)
         itens.append((grupo, indice, rec.width, rec.height, ex - caixa[0], ey - caixa[1], px.tobytes()))
     gp.gravar_sff(destino, dados_pal, itens)
     return len(itens)
@@ -1337,6 +1341,10 @@ def main():
     forma_permanente.aplicar("hazaki", SAIDA)
     import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
     destruicao.aplicar("hazaki", SAIDA)
+    # #36: desenho nítido novo, caixas de antes (sprites/hazaki/caixas_base.air): o jogo não muda
+    import manter_caixas
+    n, dif = manter_caixas.aplicar("hazaki", SAIDA)
+    print(f"hazaki: caixas de antes em {n} ações" + (f"; quadros diferentes em {dif}" if dif else ""))
     # retratos em PNG (seleção, VS e HUD): os pós-passos regravam o .sff e deixariam os retratos antigos, pequenos
     import trocar_retratos
     assert trocar_retratos.trocar("hazaki"), "faltam os retratos do Hazak em sprites/retratos"

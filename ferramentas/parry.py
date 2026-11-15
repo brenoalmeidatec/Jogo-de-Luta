@@ -109,8 +109,9 @@ def sem_halo(q):
 def quadros_parry(lutador, nome, altura):
     """[(imagem 3x RGBA cortada, eixo x, eixo y)] dos 8 quadros, com o 1º quadro da altura `altura` (px no 3x)."""
     hd = RAIZ / f"sprites/{lutador}/quadros_arcade_hd/{nome}"
-    if lutador == "pengaro" and hd.exists():
-        # o Pengaró já tem os quadros convertidos (converter_ck/converter_pengaro: tela 1080x780, pés em 540,660)
+    if lutador in ("pengaro", "hazaki") and hd.exists():
+        # o Pengaró e o Hazak já têm os quadros convertidos (converter_pengaro/converter_hazaki: tela 1080x780, pés em
+        # 540,660)
         saida = []
         for i in range(8):
             q = sem_halo(Image.open(hd / f"{i:02d}.png").convert("RGBA"))

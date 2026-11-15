@@ -90,6 +90,8 @@ def texto_acao(grupo, quadros, ticks, laco, clsn):
 def sprites_do_diabo(nos):
     """[(grupo, índice, RGBA, eixo x, eixo y)] do Diabo, um para cada desenho do corpo (índices 1 a 15 da paleta):
     o quadro de mesmo número da folha do terno do conceito (ferramentas/diabo_terno.py), alinhado pelo apoio."""
+    nitida = RAIZ / "sprites/hazaki/paleta_nitida.json"  # Hazak nítido (#36): o corpo usa mais que as 15 cores
+    n_corpo = len(json.loads(nitida.read_text(encoding="utf-8"))["cores"]) if nitida.exists() else 15
     terno = diabo_terno.Terno()
     saida, vistos, fora = [], set(), []
     for n in nos:
@@ -98,7 +100,7 @@ def sprites_do_diabo(nos):
             continue
         vistos.add(k)
         ind = np.frombuffer(n["px"], np.uint8).reshape(n["h"], n["w"])
-        if ind.max() > 15 or not ind.any():
+        if ind.max() > n_corpo or not ind.any():
             continue
         par = terno.diabo(ind > 0, (n["x"], n["y"]))
         if par is None:
