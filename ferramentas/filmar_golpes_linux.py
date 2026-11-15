@@ -72,6 +72,7 @@ def main():
     ap.add_argument("--segundos", type=float, default=12, help="segundos de jogo filmados (em 60 ticks/s)")
     ap.add_argument("--lenta", type=int, default=2)
     ap.add_argument("--despertar", action="store_true")
+    ap.add_argument("--p2-despertar", action="store_true", help="o P2 vira despertado (para filmar a reação da vítima)")
     ap.add_argument("--p2-agachado", action="store_true", help="o P2 fica agachado (para filmar o agarrão agachado)")
     ap.add_argument("--fotos", type=Path, help="pasta para um quadro a cada 4 ticks (folha de contato)")
     ap.add_argument("--cenario", default="stages/stage0-720.def")
@@ -92,6 +93,16 @@ def main():
         ajustar_ini(copia)
         preparar_cmd(RAIZ / "chars" / a.p1 / f"{a.p1}.cmd", copia / "chars" / a.p1 / f"{a.p1}.cmd", nomes,
                      a.despertar)
+        if a.p2_despertar:  # o P2 enche a barra e desperta sozinho no começo da luta
+            assert a.p1 != a.p2, "--p2-despertar precisa de dois lutadores diferentes"
+            c2 = copia / "chars" / a.p2 / f"{a.p2}.cmd"
+            t2 = c2.read_text(encoding="utf-8").replace("\r\n", "\n")
+            q = "triggerall = roundstate = 2 && var(20) = 0 && map(t_desp) = 0\ntrigger1 = statetype = S && ctrl\n"
+            t2 = t2.replace("[Statedef -1]\n\n", "[Statedef -1]\n\n"
+                            f"[State -1, Filme P2 barra]\ntype = PowerSet\n{q}value = powermax\n\n"
+                            "[State -1, Filme P2 marca]\ntype = MapSet\ntrigger1 = stateno = 2000\nmap = \"t_desp\"\nvalue = 1\n\n"
+                            f"[State -1, Filme P2 desperta]\ntype = ChangeState\n{q}value = 2000\n\n", 1)
+            c2.write_text(t2, encoding="utf-8", newline="\n")
         if a.p2_agachado:  # o agachar do motor lê o controle e não os comandos; um estado agachado próprio resolve
             assert a.p1 != a.p2, "--p2-agachado precisa de dois lutadores diferentes"
             c2 = copia / "chars" / a.p2 / f"{a.p2}.cmd"
