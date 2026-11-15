@@ -505,6 +505,13 @@ def montar_air(s, faiscas):
     # grupos de gp.SPRITES_VITIMA, que todo lutador tem. Ficam fora das ações 5001/5030, que são ele apanhando.
     Q(VITIMA_PRESA, [("vit49", -1)], NO_AR)
     Q(VITIMA_ENCOLHE, [("vit49", 5), ("vit50", 5), ("vit48", 6)])
+    # Reação própria do Hazak quando ELE é agarrado (#45): preso, apanhando alto e baixo preso, arremessado e caindo.
+    # Os estados do oponente do agarrao_mk.py usam estas ações quando o lutador agarrado tem (SelfAnimExist).
+    Q(agarrao_mk.V_PRESO, F("vitima_agarrado 1/-1"))
+    Q(agarrao_mk.V_ALTO, F("apanha 1/5 0/5 vitima_agarrado 1/-1"))
+    Q(agarrao_mk.V_BAIXO, F("vitima_agarrado 0/10 1/-1"))
+    Q(agarrao_mk.V_SOBE, F("vitima_agarrado 2/-1"), NO_AR)
+    Q(agarrao_mk.V_CAI, F("vitima_agarrado 3/6 vitima_arremessado 0/-1"), NO_AR)
     Q(5040, F("apanha 4/-1"), NO_AR)
     Q(5050, F("apanha 4/5 5/5 6/-1"), NO_AR)
     for n in (5051, 5061, 5070):
@@ -1317,7 +1324,10 @@ def main():
         import hd
         air, cns = hd.aplicar(s, air, cns, [(QUADROS, QUADROS.parent / "quadros_arcade_hd")], gp.SPRITES_VITIMA)
     # agarrão em pé segura-e-bate (ferramentas/agarrao_mk.py): montado dos golpes que ele já tem, depois do HD
-    air, cns = agarrao_mk.aplicar("hazaki", air, cns)
+    # os três agarrões com as folhas próprias dele (#45): abraço em pé, perna agachado e cutucão de comando
+    proprios = {tipo: ["%d,%d" % s.codigos[f"f_{folha}{i}"] for i in range(8)]
+                for tipo, folha in (("pe", "agarrao_abraco"), ("baixo", "agarrao_perna"), ("comando", "agarrao_cutucao"))}
+    air, cns = agarrao_mk.aplicar("hazaki", air, cns, proprios)
     (SAIDA / "hazaki.cns").write_text(cns.rstrip() + "\n", encoding="utf-8", newline="\n")
     (SAIDA / "hazaki.cmd").write_text(cmd.rstrip() + "\n", encoding="utf-8", newline="\n")
     (SAIDA / "hazaki.air").write_text(air, encoding="utf-8", newline="\n")

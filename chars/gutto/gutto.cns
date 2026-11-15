@@ -2289,6 +2289,7 @@ anim = 810
 velset = 0,0
 ctrl = 0
 sprpriority = 2
+; desenhos do agarrão pe = 7800,0 7800,1 7800,2 7800,3 7800,4 7800,5 7800,6 7800,7
 
 ; Clinch de Muay Thai: pega, segura, 3 pancadas e arremessa. Escape: y ou b no começo.
 [State 810, som comum]
@@ -2304,39 +2305,39 @@ var(2) = command = "holdback"
 
 [State 810, Segura]
 type = TargetBind
-trigger1 = Time < 111
+trigger1 = Time < 86
 trigger1 = NumTarget
 pos = 34, 0
 
 [State 810, Escapou]
 type = ChangeState
 trigger1 = Time > 1
-trigger1 = Time < 28
+trigger1 = Time < 22
 trigger1 = enemynear,stateno != 820
 value = 0
 ctrl = 1
 
 [State 810, Perdeu]
 type = ChangeState
-trigger1 = Time > 28
-trigger1 = Time < 111
+trigger1 = Time > 22
+trigger1 = Time < 86
 trigger1 = !NumTarget
 value = 0
 ctrl = 1
 
 [State 810, Pancada 1: dano]
 type = TargetLifeAdd
-trigger1 = Time = 28
+trigger1 = Time = 22
 trigger1 = NumTarget
 value = -22
 
 [State 810, Pancada 1: faísca]
 type = Explod
-trigger1 = Time = 28
+trigger1 = Time = 22
 trigger1 = NumTarget
 anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 34, -92
+pos = 26, -44
 removetime = -2
 sprpriority = 5
 scale = .75, .75
@@ -2345,37 +2346,37 @@ pausemovetime = 99
 
 [State 810, Pancada 1: som]
 type = PlaySnd
-trigger1 = Time = 28
-value = S51,3
+trigger1 = Time = 22
+value = 54,0 ; som:F5,0
 
 [State 810, Pancada 1: tranco]
 type = TargetBind
-trigger1 = Time = [28, 33]
+trigger1 = Time = [22, 27]
 trigger1 = NumTarget
 pos = 39, 0
 
 [State 810, Pancada 1: barra]
 type = PowerAdd
-trigger1 = Time = 28
+trigger1 = Time = 22
 trigger1 = NumTarget
 value = 11
 
 [State 810, Pancada 1: reage]
 type = TargetState
-trigger1 = Time = 28
+trigger1 = Time = 22
 trigger1 = NumTarget
-value = 822
+value = 827
 
 [State 810, Pancada 1: congela]
 type = Pause
-trigger1 = Time = 28
+trigger1 = Time = 22
 trigger1 = NumTarget
 time = 7
 movetime = 0
 
 [State 810, Pancada 1: treme]
 type = EnvShake
-trigger1 = Time = 28
+trigger1 = Time = 22
 trigger1 = NumTarget
 time = 6
 freq = 150
@@ -2383,17 +2384,17 @@ ampl = -2
 
 [State 810, Pancada 2: dano]
 type = TargetLifeAdd
-trigger1 = Time = 56
+trigger1 = Time = 42
 trigger1 = NumTarget
 value = -22
 
 [State 810, Pancada 2: faísca]
 type = Explod
-trigger1 = Time = 56
+trigger1 = Time = 42
 trigger1 = NumTarget
 anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 34, -92
+pos = 26, -74
 removetime = -2
 sprpriority = 5
 scale = .75, .75
@@ -2402,37 +2403,37 @@ pausemovetime = 99
 
 [State 810, Pancada 2: som]
 type = PlaySnd
-trigger1 = Time = 56
-value = S54,3
+trigger1 = Time = 42
+value = 54,0 ; som:F5,0
 
 [State 810, Pancada 2: tranco]
 type = TargetBind
-trigger1 = Time = [56, 61]
+trigger1 = Time = [42, 47]
 trigger1 = NumTarget
 pos = 39, 0
 
 [State 810, Pancada 2: barra]
 type = PowerAdd
-trigger1 = Time = 56
+trigger1 = Time = 42
 trigger1 = NumTarget
 value = 11
 
 [State 810, Pancada 2: reage]
 type = TargetState
-trigger1 = Time = 56
+trigger1 = Time = 42
 trigger1 = NumTarget
 value = 825
 
 [State 810, Pancada 2: congela]
 type = Pause
-trigger1 = Time = 56
+trigger1 = Time = 42
 trigger1 = NumTarget
 time = 7
 movetime = 0
 
 [State 810, Pancada 2: treme]
 type = EnvShake
-trigger1 = Time = 56
+trigger1 = Time = 42
 trigger1 = NumTarget
 time = 6
 freq = 150
@@ -2440,17 +2441,17 @@ ampl = -2
 
 [State 810, Pancada 3: dano]
 type = TargetLifeAdd
-trigger1 = Time = 84
+trigger1 = Time = 62
 trigger1 = NumTarget
 value = -22
 
 [State 810, Pancada 3: faísca]
 type = Explod
-trigger1 = Time = 84
+trigger1 = Time = 62
 trigger1 = NumTarget
 anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 34, -92
+pos = 26, -44
 removetime = -2
 sprpriority = 5
 scale = .75, .75
@@ -2459,37 +2460,37 @@ pausemovetime = 99
 
 [State 810, Pancada 3: som]
 type = PlaySnd
-trigger1 = Time = 84
-value = S51,3
+trigger1 = Time = 62
+value = 54,0 ; som:F5,0
 
 [State 810, Pancada 3: tranco]
 type = TargetBind
-trigger1 = Time = [84, 89]
+trigger1 = Time = [62, 67]
 trigger1 = NumTarget
 pos = 39, 0
 
 [State 810, Pancada 3: barra]
 type = PowerAdd
-trigger1 = Time = 84
+trigger1 = Time = 62
 trigger1 = NumTarget
 value = 11
 
 [State 810, Pancada 3: reage]
 type = TargetState
-trigger1 = Time = 84
+trigger1 = Time = 62
 trigger1 = NumTarget
-value = 826
+value = 829
 
 [State 810, Pancada 3: congela]
 type = Pause
-trigger1 = Time = 84
+trigger1 = Time = 62
 trigger1 = NumTarget
 time = 7
 movetime = 0
 
 [State 810, Pancada 3: treme]
 type = EnvShake
-trigger1 = Time = 84
+trigger1 = Time = 62
 trigger1 = NumTarget
 time = 6
 freq = 150
@@ -2497,17 +2498,17 @@ ampl = -2
 
 [State 810, Final: dano]
 type = TargetLifeAdd
-trigger1 = Time = 111
+trigger1 = Time = 86
 trigger1 = NumTarget
 value = -54
 
 [State 810, Final: faísca]
 type = Explod
-trigger1 = Time = 111
+trigger1 = Time = 86
 trigger1 = NumTarget
 anim = (ifelse(var(20) > 0, 9231, 9201))
 postype = p1
-pos = 34, -79
+pos = 26, -74
 removetime = -2
 sprpriority = 5
 scale = .6, .6
@@ -2516,25 +2517,25 @@ pausemovetime = 99
 
 [State 810, Final: som]
 type = PlaySnd
-trigger1 = Time = 111
-value = S52,2
+trigger1 = Time = 86
+value = 52,0 ; som:F5,0
 
 [State 810, Final: barra]
 type = PowerAdd
-trigger1 = Time = 111
+trigger1 = Time = 86
 trigger1 = NumTarget
 value = 27
 
 [State 810, Final: congela]
 type = Pause
-trigger1 = Time = 111
+trigger1 = Time = 86
 trigger1 = NumTarget
 time = 14
 movetime = 0
 
 [State 810, Final: treme]
 type = EnvShake
-trigger1 = Time = 111
+trigger1 = Time = 86
 trigger1 = NumTarget
 time = 16
 freq = 150
@@ -2542,21 +2543,21 @@ ampl = -5
 
 [State 810, Joga para trás]
 type = TargetState
-trigger1 = Time = 111
+trigger1 = Time = 86
 trigger1 = NumTarget
 trigger1 = var(2)
 value = 824
 
 [State 810, Joga]
 type = TargetState
-trigger1 = Time = 111
+trigger1 = Time = 86
 trigger1 = NumTarget
 trigger1 = !var(2)
 value = 823
 
 [State 810, Vira]
 type = Turn
-trigger1 = Time = 121
+trigger1 = Time = 96
 trigger1 = var(2)
 
 [State 810, Fim]
@@ -2575,15 +2576,29 @@ ctrl = 0
 [State 820, Pose]
 type = ChangeAnim
 trigger1 = Time = 0
+trigger1 = SelfAnimExist(5940)
+value = 5940
+
+[State 820, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5940)
 value = 5000
 elem = 1
 
 [State 820, Preso: pose]
 type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
 trigger1 = Anim != 5000 && AnimTime = 0
 trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
 value = 5000
 elem = 1
+
+[State 820, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
 
 [State 820, Escape]
 type = SelfState
@@ -2627,12 +2642,6 @@ anim = 830
 juggle = 0
 velset = 0,0
 
-[State 830, Arte despertada]
-type = ChangeAnim
-trigger1 = Time = 0
-trigger1 = var(20) > 0
-value = 10830
-
 [State 830, Agarra]
 type = HitDef
 trigger1 = Time = 0
@@ -2644,7 +2653,7 @@ p1sprpriority = 1
 p1facing = 1
 p2facing = 1
 p1stateno = 831
-p2stateno = 832
+p2stateno = 820
 guard.dist = 0
 fall = 1
 
@@ -2658,104 +2667,280 @@ ctrl = 1
 type = S
 movetype = A
 physics = N
+anim = 831
+velset = 0,0
 ctrl = 0
 sprpriority = 2
-anim = 831
-juggle = 0
-velset = 0,0
+; desenhos do agarrão comando = 7820,0 7820,1 7820,2 7820,3 7820,4 7820,5 7820,6 7820,7
 
+; Clinch e Joelhada: pega, segura, 3 pancadas e arremessa. Escape: y ou b no começo.
 [State 831, som comum]
 type = PlaySnd
 trigger1 = Time = 0
 value = F35,0
 ; som: fim
 
-[State 831, Arte despertada]
-type = ChangeAnim
+[State 831, Lado]
+type = VarSet
 trigger1 = Time = 0
-trigger1 = var(20) > 0
-value = 10831
+var(2) = command = "holdback"
 
 [State 831, Segura]
 type = TargetBind
-trigger1 = Time < 66
+trigger1 = Time < 86
+trigger1 = NumTarget
 pos = 34, 0
 
 [State 831, Escapou]
 type = ChangeState
 trigger1 = Time > 1
-trigger1 = Time < 26
-trigger1 = enemynear,stateno != 832
+trigger1 = Time < 22
+trigger1 = enemynear,stateno != 820
 value = 0
 ctrl = 1
 
-[State 831, Capoeira dano]
+[State 831, Perdeu]
+type = ChangeState
+trigger1 = Time > 22
+trigger1 = Time < 86
+trigger1 = !NumTarget
+value = 0
+ctrl = 1
+
+[State 831, Pancada 1: dano]
 type = TargetLifeAdd
-trigger1 = Time = 26
+trigger1 = Time = 22
+trigger1 = NumTarget
+value = -30
+
+[State 831, Pancada 1: faísca]
+type = Explod
+trigger1 = Time = 22
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 26, -44
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 831, Pancada 1: som]
+type = PlaySnd
+trigger1 = Time = 22
+value = 54,0 ; som:F5,0
+
+[State 831, Pancada 1: tranco]
+type = TargetBind
+trigger1 = Time = [22, 27]
+trigger1 = NumTarget
+pos = 39, 0
+
+[State 831, Pancada 1: barra]
+type = PowerAdd
+trigger1 = Time = 22
+trigger1 = NumTarget
+value = 15
+
+[State 831, Pancada 1: reage]
+type = TargetState
+trigger1 = Time = 22
+trigger1 = NumTarget
+value = 827
+
+[State 831, Pancada 1: congela]
+type = Pause
+trigger1 = Time = 22
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 831, Pancada 1: treme]
+type = EnvShake
+trigger1 = Time = 22
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 831, Pancada 2: dano]
+type = TargetLifeAdd
+trigger1 = Time = 42
+trigger1 = NumTarget
+value = -30
+
+[State 831, Pancada 2: faísca]
+type = Explod
+trigger1 = Time = 42
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 26, -44
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 831, Pancada 2: som]
+type = PlaySnd
+trigger1 = Time = 42
+value = 50,1 ; som:F5,0
+
+[State 831, Pancada 2: tranco]
+type = TargetBind
+trigger1 = Time = [42, 47]
+trigger1 = NumTarget
+pos = 39, 0
+
+[State 831, Pancada 2: barra]
+type = PowerAdd
+trigger1 = Time = 42
+trigger1 = NumTarget
+value = 15
+
+[State 831, Pancada 2: reage]
+type = TargetState
+trigger1 = Time = 42
+trigger1 = NumTarget
+value = 828
+
+[State 831, Pancada 2: congela]
+type = Pause
+trigger1 = Time = 42
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 831, Pancada 2: treme]
+type = EnvShake
+trigger1 = Time = 42
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 831, Pancada 3: dano]
+type = TargetLifeAdd
+trigger1 = Time = 62
+trigger1 = NumTarget
+value = -30
+
+[State 831, Pancada 3: faísca]
+type = Explod
+trigger1 = Time = 62
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 26, -44
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 831, Pancada 3: som]
+type = PlaySnd
+trigger1 = Time = 62
+value = 50,1 ; som:F5,0
+
+[State 831, Pancada 3: tranco]
+type = TargetBind
+trigger1 = Time = [62, 67]
+trigger1 = NumTarget
+pos = 39, 0
+
+[State 831, Pancada 3: barra]
+type = PowerAdd
+trigger1 = Time = 62
+trigger1 = NumTarget
+value = 15
+
+[State 831, Pancada 3: reage]
+type = TargetState
+trigger1 = Time = 62
+trigger1 = NumTarget
+value = 829
+
+[State 831, Pancada 3: congela]
+type = Pause
+trigger1 = Time = 62
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 831, Pancada 3: treme]
+type = EnvShake
+trigger1 = Time = 62
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 831, Final: dano]
+type = TargetLifeAdd
+trigger1 = Time = 86
 trigger1 = NumTarget
 value = -60
 
-[State 831, Capoeira acerta]
-type = TargetState
-trigger1 = Time = 26
-trigger1 = NumTarget
-value = 833
-
-[State 831, Capoeira treme]
-type = EnvShake
-trigger1 = Time = 26
-time = 8
-freq = 60
-ampl = -4
-
-[State 831, Capoeira faisca]
+[State 831, Final: faísca]
 type = Explod
-trigger1 = Time = 26
-anim = ifelse(var(20) > 0, 9231, 9201)
-postype = p1
-pos = 62, -80
-removetime = -2
-sprpriority = 4
-ownpal = 1
-
-[State 831, Capoeira som]
-type = PlaySnd
-trigger1 = Time = 26
-value = 54,2 ; som:F5, 2
-
-[State 831, Whisky dano]
-type = TargetLifeAdd
-trigger1 = Time = 66
+trigger1 = Time = 86
 trigger1 = NumTarget
-value = -90
-
-[State 831, Whisky estoura]
-type = Explod
-trigger1 = Time = 66
-anim = ifelse(var(20) > 0, 9231, 9201)
+anim = (ifelse(var(20) > 0, 9231, 9201))
 postype = p1
-pos = 38, -60
+pos = 26, -74
 removetime = -2
 sprpriority = 5
-ownpal = 1
+scale = .6, .6
+ignorehitpause = 1
+pausemovetime = 99
 
-[State 831, Whisky treme]
+[State 831, Final: som]
+type = PlaySnd
+trigger1 = Time = 86
+value = 50,1 ; som:F5,0
+
+[State 831, Final: barra]
+type = PowerAdd
+trigger1 = Time = 86
+trigger1 = NumTarget
+value = 30
+
+[State 831, Final: congela]
+type = Pause
+trigger1 = Time = 86
+trigger1 = NumTarget
+time = 14
+movetime = 0
+
+[State 831, Final: treme]
 type = EnvShake
-trigger1 = Time = 66
-time = 12
-freq = 60
+trigger1 = Time = 86
+trigger1 = NumTarget
+time = 16
+freq = 150
 ampl = -5
 
-[State 831, Whisky som]
-type = PlaySnd
-trigger1 = Time = 66
-value = 50,1 ; som:F5, 2
+[State 831, Joga para trás]
+type = TargetState
+trigger1 = Time = 86
+trigger1 = NumTarget
+trigger1 = var(2)
+value = 824
 
 [State 831, Joga]
 type = TargetState
-trigger1 = Time = 66
+trigger1 = Time = 86
 trigger1 = NumTarget
-value = 821
+trigger1 = !var(2)
+value = 823
+
+[State 831, Vira]
+type = Turn
+trigger1 = Time = 96
+trigger1 = var(2)
 
 [State 831, Fim]
 type = ChangeState
@@ -4883,6 +5068,18 @@ anim = 3401
 juggle = 3
 velset = 0,0
 
+[State 3401, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
+
+[State 3401, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,4
+; som: fim
+
 [State 3401, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -4917,18 +5114,6 @@ time = 5
 add = ifelse(var(20) > 0, 90, 85), ifelse(var(20) > 0, 37, 28), ifelse(var(20) > 0, 6, 15)
 mul = 170, ifelse(var(20) > 0, 93, 88), ifelse(var(20) > 0, 74, 86)
 ignorehitpause = 1
-
-[State 3401, som vento]
-type = PlaySnd
-trigger1 = Time = 0
-value = F40,4
-; som: fim
-
-[State 3401, som assinatura]
-type = PlaySnd
-trigger1 = Time = 0
-value = 50,4
-; som: fim
 
 [State 3401, Avanço]
 type = VelSet
@@ -4991,6 +5176,18 @@ anim = 1600
 juggle = 4
 velset = 0,0
 
+[State 1600, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
+
+[State 1600, som assinatura]
+type = PlaySnd
+trigger1 = Time = 23
+value = 50,0
+; som: fim
+
 [State 1600, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -5016,18 +5213,6 @@ palcolor = 0
 palbright = 0,0,0
 paladd = ifelse(var(20) > 0, 192, 182), ifelse(var(20) > 0, 80, 60), ifelse(var(20) > 0, 12, 32)
 palmul = .3,.3,.3
-
-[State 1600, som vento]
-type = PlaySnd
-trigger1 = Time = 0
-value = F40,4
-; som: fim
-
-[State 1600, som assinatura]
-type = PlaySnd
-trigger1 = Time = 23
-value = 50,0
-; som: fim
 
 [State 1600, Garrafa]
 type = Projectile
@@ -5081,6 +5266,18 @@ anim = 1601
 juggle = 4
 velset = 0,0
 
+[State 1601, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
+
+[State 1601, som assinatura]
+type = PlaySnd
+trigger1 = Time = 23
+value = 50,0
+; som: fim
+
 [State 1601, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -5106,18 +5303,6 @@ palcolor = 0
 palbright = 0,0,0
 paladd = ifelse(var(20) > 0, 192, 182), ifelse(var(20) > 0, 80, 60), ifelse(var(20) > 0, 12, 32)
 palmul = .3,.3,.3
-
-[State 1601, som vento]
-type = PlaySnd
-trigger1 = Time = 0
-value = F40,4
-; som: fim
-
-[State 1601, som assinatura]
-type = PlaySnd
-trigger1 = Time = 23
-value = 50,0
-; som: fim
 
 [State 1601, Garrafa]
 type = Projectile
@@ -5218,6 +5403,12 @@ anim = 1701
 juggle = 0
 velset = 0,0
 
+[State 1701, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
+
 [State 1701, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -5252,12 +5443,6 @@ time = 5
 add = ifelse(var(20) > 0, 90, 85), ifelse(var(20) > 0, 37, 28), ifelse(var(20) > 0, 6, 15)
 mul = 170, ifelse(var(20) > 0, 93, 88), ifelse(var(20) > 0, 74, 86)
 ignorehitpause = 1
-
-[State 1701, som vento]
-type = PlaySnd
-trigger1 = Time = 0
-value = F40,4
-; som: fim
 
 [State 1701, Invencivel]
 type = NotHitBy
@@ -5335,6 +5520,18 @@ anim = 3402
 juggle = 0
 velset = 0,0
 
+[State 3402, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
+
+[State 3402, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,2
+; som: fim
+
 [State 3402, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -5369,18 +5566,6 @@ time = 5
 add = ifelse(var(20) > 0, 90, 85), ifelse(var(20) > 0, 37, 28), ifelse(var(20) > 0, 6, 15)
 mul = 170, ifelse(var(20) > 0, 93, 88), ifelse(var(20) > 0, 74, 86)
 ignorehitpause = 1
-
-[State 3402, som vento]
-type = PlaySnd
-trigger1 = Time = 0
-value = F40,4
-; som: fim
-
-[State 3402, som assinatura]
-type = PlaySnd
-trigger1 = Time = 0
-value = 50,2
-; som: fim
 
 [State 3402, Invencivel]
 type = NotHitBy
@@ -5458,6 +5643,18 @@ anim = 3400
 juggle = 4
 velset = 0,0
 
+[State 3400, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
+
+[State 3400, som assinatura]
+type = PlaySnd
+trigger1 = Time = 25
+value = 50,3
+; som: fim
+
 [State 3400, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -5483,18 +5680,6 @@ palcolor = 0
 palbright = 0,0,0
 paladd = ifelse(var(20) > 0, 192, 182), ifelse(var(20) > 0, 80, 60), ifelse(var(20) > 0, 12, 32)
 palmul = .3,.3,.3
-
-[State 3400, som vento]
-type = PlaySnd
-trigger1 = Time = 0
-value = F40,4
-; som: fim
-
-[State 3400, som assinatura]
-type = PlaySnd
-trigger1 = Time = 25
-value = 50,3
-; som: fim
 
 [State 3400, Mão]
 type = Projectile
@@ -5548,6 +5733,18 @@ anim = 3403
 juggle = 4
 velset = 0,0
 
+[State 3403, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
+
+[State 3403, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,4
+; som: fim
+
 [State 3403, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -5582,18 +5779,6 @@ time = 5
 add = ifelse(var(20) > 0, 90, 85), ifelse(var(20) > 0, 37, 28), ifelse(var(20) > 0, 6, 15)
 mul = 170, ifelse(var(20) > 0, 93, 88), ifelse(var(20) > 0, 74, 86)
 ignorehitpause = 1
-
-[State 3403, som vento]
-type = PlaySnd
-trigger1 = Time = 0
-value = F40,4
-; som: fim
-
-[State 3403, som assinatura]
-type = PlaySnd
-trigger1 = Time = 0
-value = 50,4
-; som: fim
 
 [State 3403, Sobe]
 type = VelSet
@@ -5704,54 +5889,280 @@ ctrl = 1
 type = S
 movetype = A
 physics = N
+anim = 841
+velset = 0,0
 ctrl = 0
 sprpriority = 2
-anim = 841
-juggle = 0
-velset = 0,0
+; desenhos do agarrão baixo = 7810,0 7810,1 7810,2 7810,3 7810,4 7810,5 7810,6 7810,7
 
+; Agarrão agachado: pega, segura, 3 pancadas e arremessa. Escape: y ou b no começo.
 [State 841, som comum]
 type = PlaySnd
 trigger1 = Time = 0
 value = F35,0
 ; som: fim
 
+[State 841, Lado]
+type = VarSet
+trigger1 = Time = 0
+var(2) = command = "holdback"
+
 [State 841, Segura]
 type = TargetBind
-trigger1 = Time < 20
+trigger1 = Time < 86
+trigger1 = NumTarget
 pos = 34, 0
 
 [State 841, Escapou]
 type = ChangeState
 trigger1 = Time > 1
-trigger1 = Time < 20
+trigger1 = Time < 22
 trigger1 = enemynear,stateno != 820
 value = 0
 ctrl = 1
 
-[State 841, Dano]
+[State 841, Perdeu]
+type = ChangeState
+trigger1 = Time > 22
+trigger1 = Time < 86
+trigger1 = !NumTarget
+value = 0
+ctrl = 1
+
+[State 841, Pancada 1: dano]
 type = TargetLifeAdd
-trigger1 = Time = 20
+trigger1 = Time = 22
 trigger1 = NumTarget
-value = -110
+value = -22
 
-[State 841, Treme]
-type = EnvShake
-trigger1 = Time = 20
-time = 10
-freq = 60
-ampl = -4
+[State 841, Pancada 1: faísca]
+type = Explod
+trigger1 = Time = 22
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 26, -44
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
 
-[State 841, Som]
+[State 841, Pancada 1: som]
 type = PlaySnd
-trigger1 = Time = 20
-value = 54,2 ; som:F5, 2
+trigger1 = Time = 22
+value = 54,0 ; som:F5,0
+
+[State 841, Pancada 1: tranco]
+type = TargetBind
+trigger1 = Time = [22, 27]
+trigger1 = NumTarget
+pos = 39, 0
+
+[State 841, Pancada 1: barra]
+type = PowerAdd
+trigger1 = Time = 22
+trigger1 = NumTarget
+value = 11
+
+[State 841, Pancada 1: reage]
+type = TargetState
+trigger1 = Time = 22
+trigger1 = NumTarget
+value = 827
+
+[State 841, Pancada 1: congela]
+type = Pause
+trigger1 = Time = 22
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 841, Pancada 1: treme]
+type = EnvShake
+trigger1 = Time = 22
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 841, Pancada 2: dano]
+type = TargetLifeAdd
+trigger1 = Time = 42
+trigger1 = NumTarget
+value = -22
+
+[State 841, Pancada 2: faísca]
+type = Explod
+trigger1 = Time = 42
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 26, -44
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 841, Pancada 2: som]
+type = PlaySnd
+trigger1 = Time = 42
+value = 54,0 ; som:F5,0
+
+[State 841, Pancada 2: tranco]
+type = TargetBind
+trigger1 = Time = [42, 47]
+trigger1 = NumTarget
+pos = 39, 0
+
+[State 841, Pancada 2: barra]
+type = PowerAdd
+trigger1 = Time = 42
+trigger1 = NumTarget
+value = 11
+
+[State 841, Pancada 2: reage]
+type = TargetState
+trigger1 = Time = 42
+trigger1 = NumTarget
+value = 828
+
+[State 841, Pancada 2: congela]
+type = Pause
+trigger1 = Time = 42
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 841, Pancada 2: treme]
+type = EnvShake
+trigger1 = Time = 42
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 841, Pancada 3: dano]
+type = TargetLifeAdd
+trigger1 = Time = 62
+trigger1 = NumTarget
+value = -22
+
+[State 841, Pancada 3: faísca]
+type = Explod
+trigger1 = Time = 62
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 26, -44
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 841, Pancada 3: som]
+type = PlaySnd
+trigger1 = Time = 62
+value = 54,0 ; som:F5,0
+
+[State 841, Pancada 3: tranco]
+type = TargetBind
+trigger1 = Time = [62, 67]
+trigger1 = NumTarget
+pos = 39, 0
+
+[State 841, Pancada 3: barra]
+type = PowerAdd
+trigger1 = Time = 62
+trigger1 = NumTarget
+value = 11
+
+[State 841, Pancada 3: reage]
+type = TargetState
+trigger1 = Time = 62
+trigger1 = NumTarget
+value = 829
+
+[State 841, Pancada 3: congela]
+type = Pause
+trigger1 = Time = 62
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 841, Pancada 3: treme]
+type = EnvShake
+trigger1 = Time = 62
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 841, Final: dano]
+type = TargetLifeAdd
+trigger1 = Time = 86
+trigger1 = NumTarget
+value = -54
+
+[State 841, Final: faísca]
+type = Explod
+trigger1 = Time = 86
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9231, 9201))
+postype = p1
+pos = 26, -74
+removetime = -2
+sprpriority = 5
+scale = .6, .6
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 841, Final: som]
+type = PlaySnd
+trigger1 = Time = 86
+value = 54,0 ; som:F5,0
+
+[State 841, Final: barra]
+type = PowerAdd
+trigger1 = Time = 86
+trigger1 = NumTarget
+value = 27
+
+[State 841, Final: congela]
+type = Pause
+trigger1 = Time = 86
+trigger1 = NumTarget
+time = 14
+movetime = 0
+
+[State 841, Final: treme]
+type = EnvShake
+trigger1 = Time = 86
+trigger1 = NumTarget
+time = 16
+freq = 150
+ampl = -5
+
+[State 841, Joga para trás]
+type = TargetState
+trigger1 = Time = 86
+trigger1 = NumTarget
+trigger1 = var(2)
+value = 824
 
 [State 841, Joga]
 type = TargetState
-trigger1 = Time = 20
+trigger1 = Time = 86
 trigger1 = NumTarget
-value = 821
+trigger1 = !var(2)
+value = 823
+
+[State 841, Vira]
+type = Turn
+trigger1 = Time = 96
+trigger1 = var(2)
 
 [State 841, Fim]
 type = ChangeState
@@ -5768,6 +6179,18 @@ sprpriority = 2
 anim = 1000
 juggle = 4
 velset = 0,0
+
+[State 1000, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
+
+[State 1000, som assinatura]
+type = PlaySnd
+trigger1 = AnimElem = 2
+value = 50,0
+; som: fim
 
 [State 1000, Carga (efeitos.py)]
 type = Explod
@@ -5794,18 +6217,6 @@ palcolor = 0
 palbright = 0,0,0
 paladd = ifelse(var(20) > 0, 192, 182), ifelse(var(20) > 0, 80, 60), ifelse(var(20) > 0, 12, 32)
 palmul = .3,.3,.3
-
-[State 1000, som vento]
-type = PlaySnd
-trigger1 = Time = 0
-value = F40,4
-; som: fim
-
-[State 1000, som assinatura]
-type = PlaySnd
-trigger1 = AnimElem = 2
-value = 50,0
-; som: fim
 
 [State 1000, Arte despertada]
 type = ChangeAnim
@@ -5896,6 +6307,18 @@ anim = 1001
 juggle = 4
 velset = 0,0
 
+[State 1001, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
+
+[State 1001, som assinatura]
+type = PlaySnd
+trigger1 = AnimElem = 2
+value = 50,0
+; som: fim
+
 [State 1001, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -5921,18 +6344,6 @@ palcolor = 0
 palbright = 0,0,0
 paladd = ifelse(var(20) > 0, 192, 182), ifelse(var(20) > 0, 80, 60), ifelse(var(20) > 0, 12, 32)
 palmul = .3,.3,.3
-
-[State 1001, som vento]
-type = PlaySnd
-trigger1 = Time = 0
-value = F40,4
-; som: fim
-
-[State 1001, som assinatura]
-type = PlaySnd
-trigger1 = AnimElem = 2
-value = 50,0
-; som: fim
 
 [State 1001, Arte despertada]
 type = ChangeAnim
@@ -6023,6 +6434,12 @@ anim = 1100
 juggle = 4
 velset = 0,0
 
+[State 1100, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
+
 [State 1100, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -6057,12 +6474,6 @@ time = 5
 add = ifelse(var(20) > 0, 90, 85), ifelse(var(20) > 0, 37, 28), ifelse(var(20) > 0, 6, 15)
 mul = 170, ifelse(var(20) > 0, 93, 88), ifelse(var(20) > 0, 74, 86)
 ignorehitpause = 1
-
-[State 1100, som vento]
-type = PlaySnd
-trigger1 = Time = 0
-value = F40,4
-; som: fim
 
 [State 1100, Arte despertada]
 type = ChangeAnim
@@ -6127,6 +6538,12 @@ anim = 1200
 juggle = 4
 velset = 0,0
 
+[State 1200, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
+
 [State 1200, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -6161,12 +6578,6 @@ time = 5
 add = ifelse(var(20) > 0, 90, 85), ifelse(var(20) > 0, 37, 28), ifelse(var(20) > 0, 6, 15)
 mul = 170, ifelse(var(20) > 0, 93, 88), ifelse(var(20) > 0, 74, 86)
 ignorehitpause = 1
-
-[State 1200, som vento]
-type = PlaySnd
-trigger1 = Time = 0
-value = F40,4
-; som: fim
 
 [State 1200, Arte despertada]
 type = ChangeAnim
@@ -6239,6 +6650,12 @@ anim = 1300
 juggle = 4
 velset = 0,0
 
+[State 1300, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
+
 [State 1300, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -6273,12 +6690,6 @@ time = 5
 add = ifelse(var(20) > 0, 90, 85), ifelse(var(20) > 0, 37, 28), ifelse(var(20) > 0, 6, 15)
 mul = 170, ifelse(var(20) > 0, 93, 88), ifelse(var(20) > 0, 74, 86)
 ignorehitpause = 1
-
-[State 1300, som vento]
-type = PlaySnd
-trigger1 = Time = 0
-value = F40,4
-; som: fim
 
 [State 1300, Arte despertada]
 type = ChangeAnim
@@ -6359,6 +6770,24 @@ anim = 2000
 velset = 0,0
 
 ; Cena da transformação (issue #49): ferramentas/cena_transformacao.py
+[State 2000, som assinatura]
+type = PlaySnd
+trigger1 = Time = 20
+value = 50,4
+; som: fim
+
+[State 2000, som assinatura]
+type = PlaySnd
+trigger1 = Time = 55
+value = F31,1
+; som: fim
+
+[State 2000, som assinatura]
+type = PlaySnd
+trigger1 = Time = 60
+value = 50,3
+; som: fim
+
 [State 2000, Cena: congela o resto]
 type = Pause
 trigger1 = Time = 0
@@ -6460,24 +6889,6 @@ time = 28
 ampl = 7
 freq = 60
 
-[State 2000, som assinatura]
-type = PlaySnd
-trigger1 = Time = 20
-value = 50,4
-; som: fim
-
-[State 2000, som assinatura]
-type = PlaySnd
-trigger1 = Time = 55
-value = F31,1
-; som: fim
-
-[State 2000, som assinatura]
-type = PlaySnd
-trigger1 = Time = 60
-value = 50,3
-; som: fim
-
 [State 2000, Rastro]
 type = AfterImage
 trigger1 = Time = 0
@@ -6549,6 +6960,12 @@ anim = 3000
 juggle = 0
 velset = 0,0
 
+[State 3000, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,0
+; som: fim
+
 [State 3000, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -6576,12 +6993,6 @@ trigger1 = Time = 1
 time = 16
 freq = 170
 ampl = -3
-
-[State 3000, som assinatura]
-type = PlaySnd
-trigger1 = Time = 0
-value = 50,0
-; som: fim
 
 [State 3000, Arte despertada]
 type = ChangeAnim
@@ -6862,6 +7273,18 @@ anim = 3100
 juggle = 0
 velset = 0,0
 
+[State 3100, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,3
+; som: fim
+
+[State 3100, som assinatura]
+type = PlaySnd
+trigger1 = Time = 20
+value = 50,2
+; som: fim
+
 [State 3100, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -6889,18 +7312,6 @@ trigger1 = Time = 1
 time = 16
 freq = 170
 ampl = -3
-
-[State 3100, som assinatura]
-type = PlaySnd
-trigger1 = Time = 0
-value = 50,3
-; som: fim
-
-[State 3100, som assinatura]
-type = PlaySnd
-trigger1 = Time = 23
-value = 50,2
-; som: fim
 
 [State 3100, Arte despertada]
 type = ChangeAnim
@@ -7045,6 +7456,12 @@ anim = 1101
 juggle = 4
 velset = 0,0
 
+[State 1101, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
+
 [State 1101, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -7079,12 +7496,6 @@ time = 5
 add = ifelse(var(20) > 0, 90, 85), ifelse(var(20) > 0, 37, 28), ifelse(var(20) > 0, 6, 15)
 mul = 170, ifelse(var(20) > 0, 93, 88), ifelse(var(20) > 0, 74, 86)
 ignorehitpause = 1
-
-[State 1101, som vento]
-type = PlaySnd
-trigger1 = Time = 0
-value = F40,4
-; som: fim
 
 [State 1101, Arte despertada]
 type = ChangeAnim
@@ -7149,6 +7560,12 @@ anim = 1201
 juggle = 4
 velset = 0,0
 
+[State 1201, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
+
 [State 1201, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -7183,12 +7600,6 @@ time = 5
 add = ifelse(var(20) > 0, 90, 85), ifelse(var(20) > 0, 37, 28), ifelse(var(20) > 0, 6, 15)
 mul = 170, ifelse(var(20) > 0, 93, 88), ifelse(var(20) > 0, 74, 86)
 ignorehitpause = 1
-
-[State 1201, som vento]
-type = PlaySnd
-trigger1 = Time = 0
-value = F40,4
-; som: fim
 
 [State 1201, Arte despertada]
 type = ChangeAnim
@@ -7261,6 +7672,12 @@ anim = 1301
 juggle = 4
 velset = 0,0
 
+[State 1301, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
+
 [State 1301, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -7295,12 +7712,6 @@ time = 5
 add = ifelse(var(20) > 0, 90, 85), ifelse(var(20) > 0, 37, 28), ifelse(var(20) > 0, 6, 15)
 mul = 170, ifelse(var(20) > 0, 93, 88), ifelse(var(20) > 0, 74, 86)
 ignorehitpause = 1
-
-[State 1301, som vento]
-type = PlaySnd
-trigger1 = Time = 0
-value = F40,4
-; som: fim
 
 [State 1301, Arte despertada]
 type = ChangeAnim
@@ -7721,6 +8132,12 @@ anim = 1400
 juggle = 5
 velset = 0,0
 
+[State 1400, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
+
 [State 1400, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -7755,12 +8172,6 @@ time = 5
 add = ifelse(var(20) > 0, 90, 85), ifelse(var(20) > 0, 37, 28), ifelse(var(20) > 0, 6, 15)
 mul = 170, ifelse(var(20) > 0, 93, 88), ifelse(var(20) > 0, 74, 86)
 ignorehitpause = 1
-
-[State 1400, som vento]
-type = PlaySnd
-trigger1 = Time = 0
-value = F40,4
-; som: fim
 
 [State 1400, Arte despertada]
 type = ChangeAnim
@@ -7823,6 +8234,12 @@ anim = 1401
 juggle = 5
 velset = 0,0
 
+[State 1401, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
+
 [State 1401, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -7857,12 +8274,6 @@ time = 5
 add = ifelse(var(20) > 0, 90, 85), ifelse(var(20) > 0, 37, 28), ifelse(var(20) > 0, 6, 15)
 mul = 170, ifelse(var(20) > 0, 93, 88), ifelse(var(20) > 0, 74, 86)
 ignorehitpause = 1
-
-[State 1401, som vento]
-type = PlaySnd
-trigger1 = Time = 0
-value = F40,4
-; som: fim
 
 [State 1401, Arte despertada]
 type = ChangeAnim
@@ -7925,6 +8336,12 @@ anim = 1500
 juggle = 5
 velset = 0,0
 
+[State 1500, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
+
 [State 1500, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -7959,12 +8376,6 @@ time = 5
 add = ifelse(var(20) > 0, 90, 85), ifelse(var(20) > 0, 37, 28), ifelse(var(20) > 0, 6, 15)
 mul = 170, ifelse(var(20) > 0, 93, 88), ifelse(var(20) > 0, 74, 86)
 ignorehitpause = 1
-
-[State 1500, som vento]
-type = PlaySnd
-trigger1 = Time = 0
-value = F40,4
-; som: fim
 
 [State 1500, Arte despertada]
 type = ChangeAnim
@@ -8038,6 +8449,12 @@ anim = 1501
 juggle = 5
 velset = 0,0
 
+[State 1501, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,4
+; som: fim
+
 [State 1501, Carga (efeitos.py)]
 type = Explod
 trigger1 = Time = 0
@@ -8072,12 +8489,6 @@ time = 5
 add = ifelse(var(20) > 0, 90, 85), ifelse(var(20) > 0, 37, 28), ifelse(var(20) > 0, 6, 15)
 mul = 170, ifelse(var(20) > 0, 93, 88), ifelse(var(20) > 0, 74, 86)
 ignorehitpause = 1
-
-[State 1501, som vento]
-type = PlaySnd
-trigger1 = Time = 0
-value = F40,4
-; som: fim
 
 [State 1501, Arte despertada]
 type = ChangeAnim
@@ -9410,209 +9821,6 @@ type = ChangeState
 trigger1 = AnimTime = 0
 value = 0
 ctrl = 1
-
-; ---- agarrão segura-e-bate (ferramentas/agarrao_mk.py) ----
-
-[Statedef 822]
-type = S
-movetype = H
-physics = N
-velset = 0,0
-ctrl = 0
-
-[State 822, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-value = 5001
-
-[State 822, Preso: pose]
-type = ChangeAnim
-trigger1 = Time > 0 && Anim = 5001 && AnimTime = 0
-trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
-value = 5000
-elem = 1
-
-[State 822, Solto]
-type = SelfState
-trigger1 = Time > 0
-trigger1 = !gethitvar(isbound)
-value = 5050
-
-[Statedef 825]
-type = S
-movetype = H
-physics = N
-velset = 0,0
-ctrl = 0
-
-[State 825, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-value = 5002
-
-[State 825, Preso: pose]
-type = ChangeAnim
-trigger1 = Time > 0 && Anim = 5002 && AnimTime = 0
-trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
-value = 5000
-elem = 1
-
-[State 825, Solto]
-type = SelfState
-trigger1 = Time > 0
-trigger1 = !gethitvar(isbound)
-value = 5050
-
-[Statedef 826]
-type = S
-movetype = H
-physics = N
-velset = 0,0
-ctrl = 0
-
-[State 826, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-value = 5002
-
-[State 826, Preso: pose]
-type = ChangeAnim
-trigger1 = Time > 0 && Anim = 5002 && AnimTime = 0
-trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
-value = 5000
-elem = 1
-
-[State 826, Solto]
-type = SelfState
-trigger1 = Time > 0
-trigger1 = !gethitvar(isbound)
-value = 5050
-
-[Statedef 827]
-type = S
-movetype = H
-physics = N
-velset = 0,0
-ctrl = 0
-
-[State 827, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-value = 5011
-
-[State 827, Preso: pose]
-type = ChangeAnim
-trigger1 = Time > 0 && Anim = 5011 && AnimTime = 0
-trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
-value = 5000
-elem = 1
-
-[State 827, Solto]
-type = SelfState
-trigger1 = Time > 0
-trigger1 = !gethitvar(isbound)
-value = 5050
-
-[Statedef 828]
-type = S
-movetype = H
-physics = N
-velset = 0,0
-ctrl = 0
-
-[State 828, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-value = 5012
-
-[State 828, Preso: pose]
-type = ChangeAnim
-trigger1 = Time > 0 && Anim = 5012 && AnimTime = 0
-trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
-value = 5000
-elem = 1
-
-[State 828, Solto]
-type = SelfState
-trigger1 = Time > 0
-trigger1 = !gethitvar(isbound)
-value = 5050
-
-[Statedef 829]
-type = S
-movetype = H
-physics = N
-velset = 0,0
-ctrl = 0
-
-[State 829, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-value = 5012
-
-[State 829, Preso: pose]
-type = ChangeAnim
-trigger1 = Time > 0 && Anim = 5012 && AnimTime = 0
-trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
-value = 5000
-elem = 1
-
-[State 829, Solto]
-type = SelfState
-trigger1 = Time > 0
-trigger1 = !gethitvar(isbound)
-value = 5050
-
-[Statedef 823]
-type = A
-movetype = H
-physics = N
-velset = -4.2, -5.5
-ctrl = 0
-
-[State 823, Pose]
-type = ChangeAnim
-trigger1 = Time = 0
-value = 5030
-
-[State 823, Queda]
-type = VelAdd
-trigger1 = 1
-y = .45
-
-[State 823, Chão]
-type = SelfState
-trigger1 = Vel Y > 0
-trigger1 = Pos Y >= 0
-value = 5100
-
-[Statedef 824]
-type = A
-movetype = H
-physics = N
-velset = 4.6, -6.5
-ctrl = 0
-
-[State 824, Pose]
-type = ChangeAnim
-trigger1 = Time = 0
-value = 5030
-
-[State 824, Passa por cima]
-type = PlayerPush
-trigger1 = 1
-value = 0
-
-[State 824, Queda]
-type = VelAdd
-trigger1 = 1
-y = .45
-
-[State 824, Chão]
-type = SelfState
-trigger1 = Vel Y > 0
-trigger1 = Pos Y >= 0
-value = 5100
 
 [Statedef -4]
 
@@ -14718,3 +14926,355 @@ xshear = -0.02 * max(-5, min(5, root,map(au_sil_x)))
 ignorehitpause = 1
 
 ; <<< aura_silhueta.py
+
+; ---- agarrão segura-e-bate (ferramentas/agarrao_mk.py) ----
+
+[Statedef 822]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 822, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5941)
+value = 5941
+
+[State 822, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5941)
+value = 5001
+
+[State 822, Preso: pose]
+type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
+trigger1 = Time > 0 && Anim = 5001 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 822, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
+
+[State 822, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 825]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 825, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5941)
+value = 5941
+
+[State 825, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5941)
+value = 5002
+
+[State 825, Preso: pose]
+type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
+trigger1 = Time > 0 && Anim = 5002 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 825, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
+
+[State 825, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 826]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 826, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5941)
+value = 5941
+
+[State 826, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5941)
+value = 5002
+
+[State 826, Preso: pose]
+type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
+trigger1 = Time > 0 && Anim = 5002 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 826, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
+
+[State 826, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 827]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 827, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5942)
+value = 5942
+
+[State 827, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5942)
+value = 5011
+
+[State 827, Preso: pose]
+type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
+trigger1 = Time > 0 && Anim = 5011 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 827, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
+
+[State 827, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 828]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 828, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5942)
+value = 5942
+
+[State 828, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5942)
+value = 5012
+
+[State 828, Preso: pose]
+type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
+trigger1 = Time > 0 && Anim = 5012 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 828, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
+
+[State 828, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 829]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 829, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5942)
+value = 5942
+
+[State 829, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5942)
+value = 5012
+
+[State 829, Preso: pose]
+type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
+trigger1 = Time > 0 && Anim = 5012 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 829, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
+
+[State 829, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 823]
+type = A
+movetype = H
+physics = N
+velset = -4.2, -5.5
+ctrl = 0
+
+[State 823, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5943)
+value = 5943
+
+[State 823, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5943)
+value = 5030
+
+[State 823, Caindo]
+type = ChangeAnim
+trigger1 = Vel Y > 0
+trigger1 = Anim = 5943
+trigger1 = SelfAnimExist(5944)
+value = 5944
+
+[State 823, Queda]
+type = VelAdd
+trigger1 = 1
+y = .45
+
+[State 823, Chão]
+type = SelfState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 5100
+
+[Statedef 824]
+type = A
+movetype = H
+physics = N
+velset = 4.6, -6.5
+ctrl = 0
+
+[State 824, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5943)
+value = 5943
+
+[State 824, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5943)
+value = 5030
+
+[State 824, Caindo]
+type = ChangeAnim
+trigger1 = Vel Y > 0
+trigger1 = Anim = 5943
+trigger1 = SelfAnimExist(5944)
+value = 5944
+
+[State 824, Passa por cima]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 824, Queda]
+type = VelAdd
+trigger1 = 1
+y = .45
+
+[State 824, Chão]
+type = SelfState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 5100
+
+[Statedef 835]
+type = A
+movetype = H
+physics = N
+velset = -1.6, -4
+ctrl = 0
+
+[State 835, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5943)
+value = 5943
+
+[State 835, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5943)
+value = 5030
+
+[State 835, Caindo]
+type = ChangeAnim
+trigger1 = Vel Y > 0
+trigger1 = Anim = 5943
+trigger1 = SelfAnimExist(5944)
+value = 5944
+
+[State 835, Queda]
+type = VelAdd
+trigger1 = 1
+y = .45
+
+[State 835, Chão]
+type = SelfState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 5100
