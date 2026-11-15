@@ -2360,3 +2360,37 @@ balanceamento.
 
 **Robô:** os roteiros "a forma acaba" viraram "660 tiques depois continua na forma e a aura fica", e o do super confere
 que a forma continua depois dele.
+
+## 2026-11-15 — Cenário destruído em dois níveis nos 5 mapas (issue #35, missão dos cenários 4.2) (Claude, thread dos cenários)
+
+**Pedido do Breno** (`docs/missao-alisson-cenarios.md` seção 4.2): cada mapa ganha duas versões destruídas, animadas.
+O nível 1 liga no clarão da transformação do primeiro lutador que desperta (rachaduras, fogo, fumaça, coisas quebradas,
+gente fugindo). O nível 2 liga quando o segundo desperta (estruturas desabadas, crateras, fogo grande, gente correndo e
+gente caída, estilo arcade, sem sangue). Nada volta atrás no fim do round.
+
+**Como funciona:**
+- Campo `nivel` nas camadas do `gerar_cenario.py`: `"0"`, `"<2"`, `">=1"`, `"2"` e `"1"` viram os grupos de BG
+  909, 910, 911, 912 e 913. Cada grupo tem um `BGCtrl type=Visible` que os lutadores ligam e desligam com
+  `ModifyBGCtrl` (`ferramentas/destruicao.py`, aplicado no `[Statedef -2]` dos 5 lutadores, por último no
+  `gerar_<lutador>.py`).
+- O nível é `(var(20) > 0) + (NumEnemy > 0 && enemy, var(20) > 0)`. O `var(20)` é o endiabrado, que agora fica até o
+  fim da luta (4.1, `forma_permanente.py`). A forma `cond(..., (enemy, var(20)) > 0, 0)` NÃO funciona no IKEMEN.
+- `ferramentas/cenario_destruicao.py`: peças em comum (fogo, fumaça em bolas, rachaduras, fagulhas, clarão do fogo,
+  céu esfumaçado, gente correndo, caídos, entulho, carrinho, carro). A arte vem do ChatGPT em
+  `sprites/cenarios/comum/bruto/` (fogo, correndo, destroços).
+- Ruína de cada mapa (ChatGPT, chat "Pixel Art Background Request", conta do Alisson):
+  `sprites/cenarios/<mapa>/bruto/cena_destruida.png`. O Cristo usa `cena_destruida_larga.png` (3:1), porque o mundo
+  dele tem 1800 de largura e a ruína 3:2 não cabia com o Cristo inteiro na tela.
+- Maria Fumaça: o .sff aprovado não bate com os PNG, então ela NÃO passa pelo `gerar_cenario.py`. O
+  `cenario_maria_fumaca_destruicao.py` monta só as camadas novas e enxerta no def/sff aprovado (grupos +100, ações
+  +600, entre marcas de comentário; rodar de novo troca o enxerto). O povo do banco e das mesas e o desfile lá fora
+  passam para o grupo 909 (somem no nível 1).
+- Robô novo: `python3 ferramentas/testar_destruicao.py` põe cinco marcadores (um por grupo) na beira da tela de uma
+  cópia de cada cenário, filma a luta com os dois despertando e o P2 nocauteado, e confere nível 0 → 1 → 2 e o
+  round 2 começando no nível 2.
+- Filmagem: `python3 ferramentas/filmar_destruicao.py PASTA --cenario <mapa> --primeiro 360 --segundo 800`.
+
+**Pendente / sugestões:**
+- "A destruição com a cara de quem transformou" (pedido "se der") não foi feita. Um caminho barato é tingir o
+  `clarao_do_fogo` e as fagulhas com a cor da aura de quem despertou primeiro (um grupo de BG por lutador).
+- Teste no Windows pelo atalho do launcher (4.3) depende do PC do Alisson.
