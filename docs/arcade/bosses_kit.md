@@ -824,7 +824,7 @@ rápido na canela (7), empurra segurando na barriga (10) e o coice de costas gir
 
 | Nº | Nome | Comando (como o gerador resolveu) | Folha | Tempos | Dano | Alcance | Propriedade |
 |---|---|---|---|---|---|---|---|
-| 3400/3401 | Chapéu Bumerangue | ↓ → + a / b | `d_chapeu_arremesso` + **falta** `_b` | solta no 14 / total 34 + espera sem chapéu | 50 / 60 | vai ~82 / ~128 px e volta | projétil novo |
+| 1660/1661 | Cobrança do Diabo (no lugar do Chapéu Bumerangue, que saiu a pedido do Breno: o CK já arremessa e o Diabo já tem a Rajadona) | ↓ → + a / b (no lugar do Giro de Garagem, só no Diabo) | `d_cobranca` | sai no 10 / total 43 | 60 / 80 (x1,25 do Diabo) | desliza ~78 / ~120 px | investida em brasa, atravessa projétil, b derruba; acertando tira 150 de barra do oponente e põe na dele |
 | 3402/3403 | Maleta Giratória | → ← + a / b | `d_maleta_giro` + **falta** `_b` | 10 / 3 batidas / 44 e 12 / 4 batidas / 52 | 3x25 / 4x25 | anda ~90 / ~150 px | avanço; b derruba na última |
 | 3404/3405 | Nota Falsa | ↓ ← + x / y (ficha: ↓ ↑) | `d_nota_falsa` | maço no 16 / total 34 | 70 / 80 | maço a 40 / 90 px, 120 ticks | armadilha |
 | 3406/3407 → 3408 | Suborno | ↓ ← + a / b (ficha: ↓ ↑) | `d_suborno` + **falta** `_b` e vítima | 8 / pega 6 / erro 38 | 110 | 30 / 45 px | agarrão de comando |
@@ -867,7 +867,7 @@ projéteis.
 | Fumaça de brasa (`fx_fumaca_brasa`) | Rolada, rolamento, fim do Despertar | 8 desenhos implodindo + 8 explodindo |
 | Chuva de notas (`fx_notas`) | Chuva de Dinheiro, transformação | 3 camadas com queda a 1,2 / 1,8 / 2,6 px por tick e deriva lateral diferente (paralaxe); a nota gira em 12 desenhos |
 | Pilar e onda de brasa | transformação; onda no Pisão de Chefe e na maletada de cima | sobe em 8 desenhos e pulsa; a onda corre 40 px |
-| Chapéu em voo e na volta | Chapéu Bumerangue | gira em 8 desenhos a 2 ticks, inclina na volta |
+| Rastro de brasa no chão | Cobrança do Diabo | brasa (9270) deixada no chão a cada 3 ticks do deslize |
 | Maço parado e estouro | Nota Falsa | o maço "respira" com um brilho passando |
 | Lasca em brasa; estatueta em voo, pousada, quebrando | 11000, 11600 | a estatueta pousada solta fagulha e treme antes de sumir |
 
@@ -955,7 +955,7 @@ depois `VelMul x = 0.75` por tick.
 - **Maletadas:** maleta atrás do quadril, quadril gira; maleta passa do alvo, puxa o ombro e volta. Passo de 3 px.
 - **Negócio Fechado e Pisão de Chefe:** dois gestos cada (abrir e fechar; pisão e gravata): pedem `_b`.
 - **Chapelada:** antecipação longa (tira o chapéu e ergue), que avisa o golpe por cima; a juba solta sem o chapéu.
-- **Chapéu Bumerangue:** fica sem chapéu esperando, pega e recoloca: pede `_b`.
+- **Cobrança do Diabo:** abre o sobretudo com a mão da frente, desliza baixo de ombro e ajeita a gravata no fim (`d_cobranca`).
 - **Maleta Giratória:** duas voltas = 16 desenhos; o sobretudo vira disco e o rabo enrola. Curva com v 3,5 / 5.
 - **Rolada:** não teleporta em 1 tick: 6 ticks invisível com um rastro de brasa viajando a cerca de 12 px por tick
   até atrás do oponente; o sobretudo é o último a sumir e o primeiro a aparecer.
@@ -967,7 +967,7 @@ Na fila (`fila_bosses.md`, 55): `d_parado`, `d_anda`, `d_tapa_anel`, `d_sapato_c
 `d_levanta`, `d_defesa`, `d_agachado`, `d_pulo`, `d_maleta_giro`, `despertar_virada`, `d_vira`, `d_corrida`,
 `d_defesa_baixa`, `d_vitoria`, `d_maletada_lado`, `d_maletada_volta`, `d_maletada_cima`, `d_negocio_fechado`,
 `d_sapato_barriga`, `d_coice_costas`, `d_pisao_chefe`, `d_maleta_sobe`, `d_chapelada`, `d_dedo`, `d_pisao_ar`,
-`d_bico_sapato`, `d_chapeu_arremesso`, `d_nota_falsa`, `d_suborno`, `d_estatueta`, `d_voadora_sapato`,
+`d_bico_sapato`, `d_cobranca`, `d_nota_falsa`, `d_suborno`, `d_estatueta`, `d_voadora_sapato`,
 `d_punho_anel`, `d_fumaca`, `d_chuva_abre`, `d_estatueta_gigante`, `d_recuo`, `d_agarrao_abraco`,
 `d_agarrao_perna`, `d_agarrao_cutucao`, `d_chute_baixo`, `d_chute_lateral`, `d_baixo_soco`, `d_rasteira_arco`,
 `d_ar_soco`, `d_ar_cotovelo`, `d_ar_joelho`, `d_cotovelo_faixa`, `d_coice`, `fx_aura_asas`, `fx_aura_coroa`,
@@ -991,7 +991,6 @@ Nomes do plano que mudam para bater com a fila: `fx_asas_a` → `fx_aura_asas`; 
 | 2 | `d_corrida_b` | frames 9-16 of the heavy run continuing `d_corrida`: the opposite leg drives, one hand on the hat, overcoat streaming, last frame flows into frame 1 of `d_corrida` |
 | 2 | `d_negocio_fechado_b` | second gesture of the finisher: 1-2 he snaps the briefcase shut on the unseen opponent, 3-4 locks the clasp with a thumb, 5-6 shakes it once, 7-8 swings it back to his side |
 | 2 | `d_pisao_chefe_b` | after the boss stomp: 1-2 the sole grinds down, 3-4 he steps off, 5-6 straightens his tie with two fingers, 7-8 returns to the guard |
-| 2 | `d_chapeu_arremesso_b` | waiting for the hat, bare-headed with the horns showing: 1-4 he stands with the hand out, mane loose, 5-6 catches the returning hat, 7-8 sets it back on his head |
 | 2 | `d_maleta_giro_b` | second turn of the spinning briefcase: 1-5 one more full spin with the briefcase at arm's length, overcoat flat like a disc, 6 he brakes, 7-8 staggers half a step and recovers |
 | 2 | `d_suborno_b` | bribe grab, second half, only him drawn: 1-2 he yanks the offered cash away, 3-5 smashes the briefcase across the unseen opponent, 6-8 dusts his hand on the lapel |
 | 2 | `d_suborno_vitima` | the victim of the bribe grab, generic fighter silhouette, eight frames matched to `d_suborno`: reaches for the cash, freezes, is struck sideways |
