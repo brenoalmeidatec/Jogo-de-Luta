@@ -313,8 +313,10 @@ def cns_cobranca(n):
     e.append(ctl(n, "Cobra a dívida: tira barra", "TargetPowerAdd", "trigger1 = MoveHit = 1",
                  f"value = -{c['barra']}"))
     e.append(ctl(n, "Cobra a dívida: põe na dele", "PowerAdd", "trigger1 = MoveHit = 1", f"value = {c['barra']}"))
+    # o estouro acompanha o P2 no começo do voo e é menor que o da Rajadona (conferência do vídeo: parecia preso)
     e.append(ctl(n, "Estouro de ouro", "Explod", "trigger1 = MoveHit = 1", "anim = 9271", "postype = p2",
-                 "pos = 0, -50", "sprpriority = 6", "ownpal = 1", "removetime = -2", "ignorehitpause = 1"))
+                 "pos = 0, -50", "bindtime = 14", "scale = .75, .75", "sprpriority = 6", "ownpal = 1",
+                 "removetime = -2", "ignorehitpause = 1"))
     e.append(ctl(n, "Fundo escurece", "BGPalFX", "trigger1 = MoveHit = 1", "time = 24", "mul = 120, 55, 50",
                  "ignorehitpause = 1"))
     e.append(ctl(n, "Defendido", "VarSet", "trigger1 = MoveGuarded = 1", "var(12) = 1"))

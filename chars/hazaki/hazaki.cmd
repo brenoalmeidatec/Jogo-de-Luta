@@ -262,6 +262,14 @@ triggerall = statetype != A
 triggerall = numproj = 0
 trigger1 = ctrl || var(1)
 
+[State -1, Cobrança do Diabo]
+type = ChangeState
+value = ifelse(command = "df_b", 1661, 1660)
+triggerall = command = "df_a" || command = "df_b"
+triggerall = var(20) > 0
+triggerall = statetype != A
+trigger1 = ctrl || var(1)
+
 [State -1, Pode cancelar]
 type = VarSet
 trigger1 = 1

@@ -1051,6 +1051,7 @@ do
   end)
   -- vitrine: os golpes na roupa do Diabo, um atrás do outro (ferramentas/filmar_robo.py --filtro "vitrine")
   diabo("vitrine dos golpes na roupa do conceito", function()
+    press(1, {"c"}, 2); wait(110)  -- provocação (folha própria do Diabo, #44)
     approach(34)
     for _, cmd in ipairs({"x", "y", "a", "b"}) do press(1, {cmd}, 2); wait(36) end
     press(1, {"fd_y"}, 2); wait(64)

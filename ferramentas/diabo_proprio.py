@@ -119,6 +119,24 @@ def fila():
     print(f"{len(pedidos)} pedidos em {(DOCS / 'fila.json').relative_to(RAIZ)}")
 
 
+def pedido_fileira(nome):
+    """Prompt do Gemini para UMA fileira de 4 quadros (anexo: a fileira do Hazak + a figura do conceito à direita)."""
+    t = ("Generate ONE image with your image generation tool. The attached picture shows, on the LEFT, 4 frames in one "
+         "row of my own original fighting game character in his normal karate gi on a flat magenta background, read "
+         "left to right; on the RIGHT it shows the approved concept of his awakened form. Draw a NEW 16:9 landscape "
+         "image with ONE single row of exactly 4 frames, in the same order, the same poses, the same limb positions, "
+         "the same body silhouette, the same size and the same facing (right) as the 4 frames on the left, with the "
+         f"character changed into {QUEM}. Only the outfit, the hair, the horns, the hat, the tail and the briefcase "
+         "change. Do not add or remove frames, do not reorder them. In EVERY one of the 4 frames he wears the overcoat "
+         "as a cape and the long-sleeved suit jacket (never bare arms, never a vest), and the briefcase stays in the "
+         "REAR hand; where the left frame has the rear fist up at the chest, he holds the briefcase low at the hip "
+         "instead. Leave a wide gap of magenta between the figures. ")
+    if nome in NOTA:
+        t += NOTA[nome] + " "
+    resto = PEDIDO[PEDIDO.index("MODEL LOCK"):].replace("8 frames", "4 frames").replace("grid cell", "space")
+    return t + resto
+
+
 def escala_3x(nome):
     """Razão tamanho no 3x / tamanho na folha nítida do Hazak, mediana dos 8 quadros (mesma grade e mesmo tamanho
     de boneco na folha do Diabo)."""
@@ -155,6 +173,53 @@ def acerto_diabo(nome, figs, e):
     return DIABO_LADO / float(np.median([max(q.size) * e / max(h, w) for q, (h, w) in zip(figs, hz)]))
 
 
+# Harmonia com o parado (#44, conferência do vídeo 15/11): o desenho novo vinha com risca de giz branca e grossa, manchas
+# magenta na calça (o fundo do gerador tinge o roxo) e a munhequeira verde-água que o Diabo antigo não usa. Tudo
+# volta para cores da própria paleta, como no d_parado.
+TERNO = [(80, 47, 96), (93, 54, 108), (69, 39, 79), (59, 32, 66), (48, 24, 54)]
+RISCA = (105, 65, 124)
+PUNHO_CLARO, PUNHO_ESCURO = (249, 249, 237), (204, 178, 163)
+
+
+def harmonizar(arq):
+    import cv2
+    a = np.array(Image.open(arq).convert("RGBA"))
+    rgb = a[..., :3].astype(float) / 255
+    hsv = cv2.cvtColor((rgb * 255).astype(np.uint8), cv2.COLOR_RGB2HSV_FULL).astype(float)
+    h, s, v = hsv[..., 0] * 360 / 256, hsv[..., 1] / 255, hsv[..., 2] / 255
+    tinta = a[..., 3] > 0
+    terno = tinta & (h >= 265) & (h <= 345) & (v < 0.5) & (v > 0.04) & (s > 0.3) & (s < 0.7)
+    zona = cv2.dilate(terno.astype(np.uint8), np.ones((5, 5), np.uint8)).astype(bool) & tinta
+    mudou = 0
+    # manchas magenta/rosa no terno -> roxo do terno no mesmo valor
+    mancha = zona & (h >= 295) & (h <= 345) & (s > 0.7) & (v > 0.25)
+    tv = np.array([colorsys_v(c) for c in TERNO])
+    for y, x in zip(*np.nonzero(mancha)):
+        a[y, x, :3] = RISCA if v[y, x] > 0.6 else TERNO[int(np.argmin(np.abs(tv - v[y, x])))]
+        mudou += 1
+    # risca branca fina (com terno dos dois lados) -> risca do parado
+    claro = zona & (v > 0.8) & (s < 0.3)
+    viz = np.zeros_like(claro)
+    for d in (2, 3):
+        esq = np.roll(terno, d, axis=1)
+        dir_ = np.roll(terno, -d, axis=1)
+        viz |= esq & dir_
+    risca = claro & viz
+    a[risca, :3] = RISCA
+    mudou += int(risca.sum())
+    # munhequeira verde-água -> punho da camisa
+    verde = tinta & (h >= 100) & (h <= 200) & (s > 0.08) & (s < 0.6)
+    a[verde & (v >= 0.6), :3] = PUNHO_CLARO
+    a[verde & (v < 0.6), :3] = PUNHO_ESCURO
+    mudou += int(verde.sum())
+    Image.fromarray(a).save(arq, optimize=True)
+    return mudou
+
+
+def colorsys_v(c):
+    return max(c) / 255
+
+
 def converter(nome):
     folha = FOLHAS_DIABO / f"d_{nome}.png"
     figs = ch.figuras(folha)
@@ -172,7 +237,9 @@ def converter(nome):
     import subprocess
     subprocess.run([sys.executable, str(RAIZ / "ferramentas/pixel/cores.py"), "diabo", f"d_{nome}", "--consertar"],
                    cwd=RAIZ, check=True, capture_output=True)
-    print(f"d_{nome}: escala {e:.4f} (acerto do Diabo {k:.3f}), figura {max(q.height for q in figs)} px na folha")
+    mudou = sum(harmonizar(p) for p in sorted(destino.glob("*.png")))
+    print(f"d_{nome}: escala {e:.4f} (acerto do Diabo {k:.3f}), figura {max(q.height for q in figs)} px na folha, "
+          f"{mudou} px harmonizados com o parado")
 
 
 def contato(saida, nomes):
@@ -275,6 +342,8 @@ if __name__ == "__main__":
     args = sys.argv[1:]
     if "--fila" in args:
         fila()
+    elif "--fileira" in args:
+        print(pedido_fileira(args[args.index("--fileira") + 1]))
     elif "--juntar" in args:
         # --juntar NOME linha_a.png linha_b.png [--ordem "a0 a1 ..."]
         k = args.index("--juntar")
