@@ -91,19 +91,26 @@ desligados): "Vem cá, cabrito!", "Bateu no chão, bateu três vezes".
 
 Pedido do Breno na issue #30 (2026-11-15). O Deus Motoboy saiu: capacete, jaqueta, bag, caixa de pizza, moto, guidão,
 chefe no celular e giroflex não existem mais. O Grão-Pastor junta o pastor, o jiu-jitsu e o empresário.
-Conceito: `sprites/gbzin/quadros/folhas_arcade/e_conceito.png` (aguardando o aval do Breno).
+Conceito: `sprites/gbzin/quadros/folhas_arcade/e_conceito.png` (roupa "Senhor do Rebanho", aguardando o aval do Breno).
 
 **Ativação:** barra cheia + c + b (como os outros).
 **Cena:** ele finca o cajado no chão três vezes ("bateu três vezes"). A cada batida o chão racha e notas de dinheiro
 sobem do chão. Na terceira, tudo fica preto, os chifres crescem, a faixa pega fogo e a sombra do bode abre os olhos
 atrás dele. Segue a cena da transformação da issue #49.
-**Aparência:** mesmo rosto, corpo e altura da forma base (regra das transformações).
+**Aparência ("Senhor do Rebanho", escolhida pelo Breno):** mesmo rosto, corpo e altura da forma base (regra das
+transformações). Nada da roupa da base fica (sem regata, short branco e tênis).
 - **Chifres enormes de bode**, enrolados em espiral, saindo da testa. Olhos acesos em verde, sem pupila.
-- **Manto de lã preta rasgado** por cima da regata, com a barra em farrapos.
-- **Faixa vermelha em chamas** no lugar da marrom (no jiu-jitsu, a vermelha é a do grão-mestre). O fogo é verde.
 - Tapa-olho preto com uma **estrela verde acesa**.
-- O cajado vira um **cajado de osso com o mesmo gancho**, com uma chama verde na ponta, sempre na mão de trás.
+- **Peitoral feito de um crânio de bode**, osso amarelado e rachado, com os olhos do crânio brilhando em verde.
+- **Ombreiras de chifre** nos dois ombros e **braçadeiras de osso** nos antebraços.
+- **Correntes cruzadas no peito**, presas no crânio.
+- **Calça de couro preta rasgada**, com brasas verdes saindo dos rasgos. A **faixa vermelha em chamas** (a do
+  grão-mestre, fogo verde) fica amarrada na cintura, por cima.
+- **Cascos de bode** no lugar dos pés, pretos e rachados, com brasa verde nas rachaduras.
+- **Capa de pele preta com gola alta e cheia**, com a barra em farrapos.
+- **Cajado de osso com o mesmo gancho**, com uma chama verde na ponta, sempre na mão de trás.
 - Relógio de ouro maior no pulso.
+- **Silhueta na luta:** o crânio do peito e os cascos precisam aparecer bem de perfil.
 
 **Ganha:** alcance nos agarrões e força. **Perde:** um pouco de defesa (vida igual).
 

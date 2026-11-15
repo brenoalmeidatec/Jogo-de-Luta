@@ -33,7 +33,7 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: """
 
-PERSONAGEM = """Gbzin, the jiu-jitsu goat shepherd: a young man with light tanned skin (warm golden-tan, not pink), dark-brown WAVY hair that is thick and voluminous on top with a messy wavy fringe falling over the forehead and a short fade on the sides, big round full face with full cheeks, thick dark eyebrows, heavy-lidded calm brown eyes, a thin sparse moustache and a small sparse goatee on the chin only (clean cheeks, no full beard), serious relaxed expression. Big heavy stocky build: wide soft-strong torso, thick arms, thick legs, heavy like a grappler (strong and bulky, not lean, not a bodybuilder with defined abs). Outfit: black sleeveless tank top, white gym shorts with a thin black side stripe, a brown jiu-jitsu belt tied around the waist over the shorts with the two ends hanging, black sneakers, a gold wristwatch on the left wrist. He carries a SHORT wooden shepherd's crook (about as long as his arm, with a curved hook at the top) in the BACK hand."""
+PERSONAGEM = """Gbzin, the jiu-jitsu goat shepherd: a young man with light tanned skin (warm golden-tan, not pink), dark-brown WAVY MESSY hair (loose tousled waves, NOT curly, no ringlets) that is thick and voluminous on top with a heavy messy fringe falling over the forehead to near the eyebrows and a short fade on the sides, big round full face with full cheeks, thick dark eyebrows, heavy-lidded calm brown eyes, a thin sparse moustache and a small sparse goatee on the chin only (clean cheeks, no full beard), serious relaxed expression. Big heavy stocky build: wide soft-strong torso, thick arms, thick legs, heavy like a grappler (strong and bulky, not lean, not a bodybuilder with defined abs). Outfit: black sleeveless tank top, white gym shorts with a thin black side stripe, a brown jiu-jitsu belt tied around the waist over the shorts with the two ends hanging, black sneakers, a gold wristwatch on the left wrist. He carries a SHORT wooden shepherd's crook (about as long as his arm, with a curved hook at the top) in the BACK hand."""
 
 CABECA = """Generate ONE image with your image generation tool. Do not write code and do not edit any file.
 
@@ -44,7 +44,7 @@ The attached sprite sheet shows the exact character to keep: """ + PERSONAGEM + 
 # Forma despertada: o Grão-Pastor (pedido do Breno na issue #30, 2026-11-15; o Deus Motoboy saiu). O nome da
 # constante ficou DEUS_MOTOBOY para não mexer no resto do arquivo; as folhas e_ e fx_ abaixo ainda descrevem o motoboy
 # e serão reescritas quando o conceito do Grão-Pastor for aprovado.
-DEUS_MOTOBOY = """Gbzin awakened as the GRAND SHEPHERD (Grao-Pastor), an overwhelmingly powerful dark shepherd: exact same face, same hair, same heavy stocky body and same height as the base form. Two ENORMOUS goat horns curled in a spiral growing from his forehead. Eyes glowing solid green with no pupils. A black eyepatch over the LEFT eye with a small glowing green star on it (a stylish costume piece). A ragged BLACK WOOL CLOAK over the black tank top, its hem in tatters. Instead of the brown belt, a RED jiu-jitsu belt (the grand master's belt) that burns with GREEN flames at its two hanging ends. White gym shorts with the thin black side stripe and black sneakers as in the base form. A bigger gold wristwatch on the left wrist. In the BACK hand, a short shepherd's crook made of BONE with the same curved hook, with a small green flame burning at the tip. No motorcycle items of any kind. No text, no logos."""
+DEUS_MOTOBOY = """Gbzin awakened as the GRAND SHEPHERD (Grao-Pastor), the Lord of the Herd, an overwhelmingly powerful dark shepherd warlord: exact same face, same hair, same heavy stocky body and same height as the base form. Nothing of the base outfit remains (no tank top, no white shorts, no sneakers). KEEP from the first awakened sheet: two ENORMOUS goat horns curled in a spiral growing from his forehead; eye glowing solid green with no pupil; a black eyepatch over the LEFT eye with a small glowing green star; a bigger gold wristwatch on the left wrist; a RED jiu-jitsu belt (the grand master's belt) tied at the waist over the pants, burning with GREEN flames at its two hanging ends; in the BACK hand a short shepherd's crook made of BONE with a curved hook and a small green flame at the tip. NEW OUTFIT: a CHEST PLATE MADE OF A GOAT SKULL, yellowed cracked bone, covering the chest, with the skull's eye sockets glowing green; SHOULDER GUARDS made of curved goat horns on both shoulders; BONE BRACERS on both forearms; two iron CHAINS crossed over the chest, fastened to the skull; bare muscular arms and bare belly sides; ripped BLACK LEATHER PANTS with green embers glowing inside the rips; GOAT HOOVES instead of feet, black and cracked, with green ember light in the cracks; a CAPE OF BLACK FUR with a tall thick fur collar around the neck, its hem in tatters. The skull chest plate and the hooves must read clearly in the side view. No motorcycle items of any kind. No text, no logos."""
 
 CABECA_MOTOBOY = """Generate ONE image with your image generation tool. Do not write code and do not edit any file.
 
@@ -69,9 +69,9 @@ Sheet layout, flat solid magenta background (#FF00FF), no text: 1) full body fro
 """ + ESTILO.split("Layout:")[0],
     "e_conceito": """Generate ONE image with your image generation tool. Do not write code and do not edit any file.
 
-The attached concept sheet shows Gbzin in his base form. Create the concept sheet of his awakened form in the same art style, keeping the exact same face, hair, body and height: """ + DEUS_MOTOBOY + """
+The first attached sheet shows Gbzin in his base form and the second one his first awakened design. Create the NEW concept sheet of his awakened form in the same art style, keeping the exact same face, hair, body and height, with a much more powerful outfit: """ + DEUS_MOTOBOY + """
 
-Sheet layout, flat solid magenta background (#FF00FF), no text: 1) full body front view, standing, bone crook in the back hand, 2) full body side view facing right in his low grappler fighting stance, 3) full body back view showing the ragged black wool cloak, 4) a big bust portrait of the face with the spiral goat horns, the glowing green eye and the green-star eyepatch. Same scale for the three full bodies. No aura, no giant shadow and no giant hands drawn (the aura is a separate effect); only the green flames on the belt ends and on the crook tip.
+Sheet layout, flat solid magenta background (#FF00FF), no text: 1) full body front view, standing, bone crook in the back hand, 2) full body side view facing right in his low grappler fighting stance (the goat-skull chest plate and the hooves clearly visible in profile), 3) full body back view showing the black fur cape, 4) a big bust portrait of the face with the spiral goat horns, the glowing green eye, the green-star eyepatch and the tall fur collar. Same scale for the three full bodies. No aura, no giant shadow and no giant hands drawn (the aura is a separate effect); only the green flames on the belt ends and crook tip and the green embers of the outfit.
 
 """ + ESTILO.split("Layout:")[0],
 }
@@ -174,9 +174,9 @@ def anexos(nome):
     if nome == "conceito":
         return "as 6 fotos do Gbzin (branch gbzin-fotos, fora da mugen)"
     if nome == "referencia_ginga":
-        return "conceito_v2.png"
+        return "conceito_v3.png"
     if nome == "e_conceito":
-        return "conceito_v2.png"
+        return "conceito_v3.png + e_conceito_v1.png"
     if nome == "e_referencia_ginga":
         return "e_conceito.png + referencia_ginga.png"
     if nome == "despertar_b":

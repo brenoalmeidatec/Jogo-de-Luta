@@ -13,7 +13,7 @@ sem esperar. Se algo não agradar, responda na issue ou edite este arquivo, que 
   mão de trás, como na ficha.
 - **Seguindo sem esperar:** a referência da ginga e as folhas da base saem em cima deste conceito.
 
-## 2. Conceito novo da forma base, pelas fotos (2026-11-15) — aguardando o Breno
+## 2. Conceito novo da forma base, pelas fotos (2026-11-15) — cabelo refeito no item 4
 
 ![Conceito novo do Gbzin](../../sprites/gbzin/quadros/folhas_arcade/conceito_v2.png)
 
@@ -23,9 +23,9 @@ sem esperar. Se algo não agradar, responda na issue ou edite este arquivo, que 
 - **Para decidir:** o cabelo saiu mais cacheado que nas fotos (lá é ondulado, de franja caída). Refaço se quiser.
 - A ginga e as folhas da base só são refeitas depois do aval.
 
-## 3. Conceito do Grão-Pastor, o Despertar novo (2026-11-15) — aguardando o Breno
+## 3. Conceito do Grão-Pastor, o Despertar novo (2026-11-15) — roupa trocada pelo Breno (item 5)
 
-![Conceito do Grão-Pastor](../../sprites/gbzin/quadros/folhas_arcade/e_conceito.png)
+![Conceito do Grão-Pastor](../../sprites/gbzin/quadros/folhas_arcade/e_conceito_v1.png)
 
 - Segue o pedido da issue #30: chifres em espiral, olho verde aceso, tapa-olho de estrela verde, manto de lã preta
   em farrapos, faixa vermelha com fogo verde, cajado de osso com chama na ponta e relógio maior.
@@ -36,3 +36,22 @@ sem esperar. Se algo não agradar, responda na issue ou edite este arquivo, que 
   (`docs/fichas/gbzin.md`, "Exclusivos do Grão-Pastor"): Estouro, Mão do Pastor, Berro, Puxão das Mãos e o super
   Juízo do Rebanho.
 - As folhas `e_<golpe>` e os efeitos só saem depois do aval.
+
+## 4. Forma base com o cabelo das fotos (2026-11-15) — aguardando o Breno
+
+![Forma base, cabelo ondulado](../../sprites/gbzin/quadros/folhas_arcade/conceito_v3.png)
+
+- Mesmo conceito do item 2, mudando só o cabelo: ondulado e bagunçado, com a franja caindo na testa e degradê nas
+  laterais, como nas fotos que o Alisson mandou (antes estava cacheado demais).
+
+## 5. Grão-Pastor com a roupa "Senhor do Rebanho" (2026-11-15) — aguardando o Breno
+
+![Grão-Pastor, Senhor do Rebanho](../../sprites/gbzin/quadros/folhas_arcade/e_conceito.png)
+
+- Pedido do Breno na #30: sai regata, short e tênis. Entram peitoral de crânio de bode com os olhos verdes, ombreiras
+  de chifre, braçadeiras de osso, correntes cruzadas presas no crânio, calça de couro preta rasgada com brasas verdes,
+  cascos de bode e capa de pele preta de gola alta com a barra em farrapos.
+- Ficam os chifres em espiral, o olho verde, o tapa-olho de estrela, o cajado de osso com chama, o relógio maior e a
+  faixa vermelha com fogo verde, agora amarrada por cima da calça.
+- De perfil (2º desenho), o crânio do peito e os cascos aparecem bem, como ele pediu.
+- **Ainda em aberto:** lado do tapa-olho e os golpes exclusivos propostos na ficha.
