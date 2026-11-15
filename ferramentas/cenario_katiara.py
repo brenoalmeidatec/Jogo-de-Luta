@@ -171,6 +171,66 @@ def emendar(quadros):
     return out
 
 
+def destruir(camadas, topo, largura_mundo):
+    """Destruição em dois níveis (issue #35, 4.2). Nível 1: a rua de sempre rachada, fogo nas janelas e no bar, os
+    guardas e a moto somem, o povo foge. Nível 2: a rua em ruínas (cena_destruida.png: poste partido, casas sem
+    telhado, muro do 7 e KT furado e caído, crateras no asfalto), fogo grande, carro virado e caídos."""
+    from cenario_destruicao import Destruicao
+    from cenario_passarela import com_1024 as _1024, largura_1536
+    margem = (largura_mundo - 1280) // 2
+    for c in camadas:
+        if c["nome"] in ("guardas", "moto", "pipa"):
+            c["nivel"] = "0"          # a vida da rua: some quando a destruição começa
+        elif c["nome"] in ("rua", "varal"):
+            c["nivel"] = "<2"         # a rua inteira dá lugar às ruínas no nível 2
+    d = Destruicao(SAIDA)
+    T = lambda x, y: (round(x * ESCALA) - margem, topo + round(y * ESCALA))
+    ceus = [d.ceu(1, (16, 34, 50)), d.ceu(2, (40, 80, 110))]
+
+    # ---- nível 1: por cima da rua de sempre ----
+    d.rachaduras(-margem, 0, largura_mundo, 720, [(x + margem, y, c, a) for (x, y), c, a in
+                 [(T(330, 600), 130, 80), (T(930, 560), 110, 100), (T(1340, 610), 100, 60)]], 1, seed=2,
+                 torto=0.55, grosso=5)
+    d.rachaduras(-margem, 0, largura_mundo, 720, [(x + margem, y, c, a) for (x, y), c, a in
+                 [(T(400, 900), 260, 5), (T(1050, 880), 240, 175)]], 1, seed=3, achata=0.4, torto=0.45, grosso=6)
+    d.fogo_com_fumaca(*T(540, 360), 90, 1, seed=1)                  # janela da casa rosa
+    d.fogo_com_fumaca(*T(1010, 340), 100, 1, seed=2, fase=3)        # janela da casa de tijolo
+    d.fogo_com_fumaca(*T(1310, 400), 90, 1, seed=3, fase=5)         # telhado do bar
+    d.peca("entulho_m", *T(140, 0)[:1], T(0, 720)[1], 100, 1)
+    d.peca("entulho_p", *T(1110, 0)[:1], T(0, 716)[1], 64, 1)
+    d.correndo(0, T(0, 752)[1], 250, 1, 6.5, -900, 2300)
+    d.correndo(1, T(0, 758)[1], 250, 1, -5.5, 2400, 3100)
+    d.fagulhas(80, 1, seed=5, quantas=30)
+    d.clarao_do_fogo(1, (26, 9, 0))
+    nivel1 = d.camadas
+    d.camadas = []
+
+    # ---- nível 2: a rua em ruínas ----
+    ruina = _1024(largura_1536(sem_magenta(Image.open(BRUTO / "cena_destruida.png"))))
+    escala(alfa_duro(ruina)).save(SAIDA / "rua_ruina.png")
+    base2 = {"nome": "rua_ruina", "imagem": "rua_ruina.png", "delta": [1, 1], "y": topo, "nivel": "2"}
+    d.fogo_com_fumaca(*T(300, 330), 120, 2, seed=11)                # telhado da casa azul-piscina
+    d.fogo_com_fumaca(*T(700, 470), 110, 2, seed=12, fase=4)        # a casa rosa aberta
+    d.fogo_com_fumaca(*T(900, 300), 130, 2, seed=13, fase=2)        # a casa de tijolo destelhada
+    d.fogo_com_fumaca(*T(1080, 440), 90, 2, seed=14, fase=6)        # janela da casa amarela
+    d.fogo_com_fumaca(*T(1290, 470), 120, 2, seed=15, fase=1)       # o toldo do bar
+    d.peca("carro", *T(1150, 0)[:1], T(0, 880)[1], 170, 2)
+    d.fogo(T(1260, 0)[0], T(0, 810)[1], 110, 2, fase=3)             # o carro virado pegando fogo
+    d.peca("caido_velho", *T(560, 0)[:1], T(0, 846)[1], 64, 2)
+    d.peca("caida_amarela", *T(880, 0)[:1], T(0, 840)[1], 60, 2, espelha=True)
+    d.correndo(0, T(0, 760)[1], 250, 2, 7.5, -700, 1700)
+    d.correndo(1, T(0, 766)[1], 250, 2, -6, 2200, 2300)
+    d.correndo(0, T(0, 756)[1], 250, 2, -8, 3600, 2900)
+    d.fagulhas(40, 2, seed=6, quantas=70, alto=520)
+    d.clarao_do_fogo(2, (44, 14, 0))
+    d.peca("caida_sacola", 40, 718, 80, 2, frente=True)             # na frente dos lutadores, rente à tela
+    nivel2 = d.camadas
+    fundo = [c for c in camadas if c["nome"] in ("ceu", "nuvens")]
+    resto = [c for c in camadas if c["nome"] not in ("ceu", "nuvens")]
+    return (fundo + ceus + resto + nivel1 + [base2] + [c for c in nivel2 if not c.get("frente")] +
+            [c for c in nivel2 if c.get("frente")])
+
+
 def main():
     SAIDA.mkdir(parents=True, exist_ok=True)
     cena = sem_magenta(Image.open(BRUTO / "cena.png"))
@@ -230,6 +290,7 @@ def main():
         camadas.append({"nome": "moto", "imagem": "moto.png", "delta": [1, 1], "x": -2600,
                         "y": topo + round(800 * ESCALA) - alto, "velocidade": [7, 0], "repete": [1, 0],
                         "vao": [9000, 0], "seno_y": [1, 6, 0]})
+    camadas = destruir(camadas, topo, largura_mundo)
     desc = {"id": "katiara", "nome": "Katiara", "musica": "musicas/katiara.ogg", "musica_nome": "Cenário Katiara",
             "tela": [1280, 720], "largura_mundo": largura_mundo, "subida": 160, "chao_y": CHAO_Y,
             "camera": {"tensao": 200, "segue_vertical": 0.6, "tensao_chao": 120},

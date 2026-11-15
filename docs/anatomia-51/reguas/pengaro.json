@@ -1,0 +1,5985 @@
+{
+ "afastar/00": {
+  "medidas": {
+   "cabeca": 1.1326530612244898,
+   "nota": 0.7728947997093201,
+   "corpo": 1.1047817890043343,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça +13%",
+   "membro sobrando? 22 manchas de pele (parado 19)"
+  ]
+ },
+ "afastar/01": {
+  "medidas": {
+   "cabeca": 1.1326530612244898,
+   "nota": 0.8005650043487549,
+   "corpo": 1.0408116008785673,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça +13%",
+   "membro sobrando? 21 manchas de pele (parado 19)"
+  ]
+ },
+ "afastar/02": {
+  "medidas": {
+   "cabeca": 1.1326530612244898,
+   "nota": 0.7811151742935181,
+   "corpo": 1.0022388222258616,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça +13%"
+  ]
+ },
+ "afastar/03": {
+  "medidas": {
+   "cabeca": 1.1326530612244898,
+   "nota": 0.7865719199180603,
+   "corpo": 1.0327672328766453,
+   "pele": 14
+  },
+  "avisos": [
+   "cabeça +13%"
+  ]
+ },
+ "afastar/04": {
+  "medidas": {
+   "cabeca": 1.1122448979591837,
+   "nota": 0.793833315372467,
+   "corpo": 1.04130048547884,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça +11%"
+  ]
+ },
+ "afastar/05": {
+  "medidas": {
+   "cabeca": 1.1326530612244898,
+   "nota": 0.7794015407562256,
+   "corpo": 1.0347524550983962,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça +13%"
+  ]
+ },
+ "afastar/06": {
+  "medidas": {
+   "cabeca": 1.1326530612244898,
+   "nota": 0.798526406288147,
+   "corpo": 1.0444962356891057,
+   "pele": 27
+  },
+  "avisos": [
+   "cabeça +13%",
+   "membro sobrando? 27 manchas de pele (parado 19)"
+  ]
+ },
+ "afastar/07": {
+  "medidas": {
+   "cabeca": 1.1122448979591837,
+   "nota": 0.8187978863716125,
+   "corpo": 1.0845947149792847,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça +11%"
+  ]
+ },
+ "agachado/00": {
+  "medidas": {
+   "cabeca": 0.9897959183673469,
+   "nota": 0.8188586235046387,
+   "corpo": 0.9928741291699884,
+   "pele": 26
+  },
+  "avisos": [
+   "membro sobrando? 26 manchas de pele (parado 19)"
+  ]
+ },
+ "agachado/01": {
+  "medidas": {
+   "cabeca": 0.9693877551020408,
+   "nota": 0.7673278450965881,
+   "corpo": 0.9445548787855581,
+   "pele": 30
+  },
+  "avisos": [
+   "cabeça -3%",
+   "membro sobrando? 30 manchas de pele (parado 19)"
+  ]
+ },
+ "agachado/02": {
+  "medidas": {
+   "cabeca": 0.9795918367346939,
+   "nota": 0.7607077360153198,
+   "corpo": 0.9137565134413773,
+   "pele": 34
+  },
+  "avisos": [
+   "membro sobrando? 34 manchas de pele (parado 19)"
+  ]
+ },
+ "agachado/03": {
+  "medidas": {
+   "cabeca": 0.9897959183673469,
+   "nota": 0.7530546188354492,
+   "corpo": 0.8994136658846824,
+   "pele": 35
+  },
+  "avisos": [
+   "membro sobrando? 35 manchas de pele (parado 19)"
+  ]
+ },
+ "agachado/04": {
+  "medidas": {
+   "cabeca": 0.9693877551020408,
+   "nota": 0.7440665364265442,
+   "corpo": 0.8740291411731114,
+   "pele": 46
+  },
+  "avisos": [
+   "cabeça -3%",
+   "membro sobrando? 46 manchas de pele (parado 19)"
+  ]
+ },
+ "agachado/05": {
+  "medidas": {
+   "cabeca": 0.9795918367346939,
+   "nota": 0.737056314945221,
+   "corpo": 0.8785631591245644,
+   "pele": 39
+  },
+  "avisos": [
+   "membro sobrando? 39 manchas de pele (parado 19)"
+  ]
+ },
+ "agachado/06": {
+  "medidas": {
+   "cabeca": 0.9897959183673469,
+   "nota": 0.767612099647522,
+   "corpo": 0.8832783843684666,
+   "pele": 27
+  },
+  "avisos": [
+   "membro sobrando? 27 manchas de pele (parado 19)"
+  ]
+ },
+ "agachado/07": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.783123791217804,
+   "corpo": 0.9089826486111682,
+   "pele": 28
+  },
+  "avisos": [
+   "membro sobrando? 28 manchas de pele (parado 19)"
+  ]
+ },
+ "agarrao/00": {
+  "medidas": {
+   "cabeca": 1.1122448979591837,
+   "nota": 0.7428151369094849,
+   "corpo": 1.1292830588436908,
+   "pele": 14
+  },
+  "avisos": [
+   "cabeça +11%"
+  ]
+ },
+ "agarrao/01": {
+  "medidas": {
+   "cabeca": 1.1020408163265307,
+   "nota": 0.7506051063537598,
+   "corpo": 1.1186784042511855,
+   "pele": 13
+  },
+  "avisos": [
+   "cabeça +10%"
+  ]
+ },
+ "agarrao/02": {
+  "medidas": {
+   "cabeca": 1.0816326530612246,
+   "nota": 0.7525832056999207,
+   "corpo": 1.1076017425405666,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça +8%"
+  ]
+ },
+ "agarrao/03": {
+  "medidas": {
+   "cabeca": 1.1122448979591837,
+   "nota": 0.7574415802955627,
+   "corpo": 1.117988410222249,
+   "pele": 13
+  },
+  "avisos": [
+   "cabeça +11%"
+  ]
+ },
+ "agarrao/04": {
+  "medidas": {
+   "cabeca": 1.1020408163265307,
+   "nota": 0.5842258930206299,
+   "corpo": 1.146424555828246,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça +10%"
+  ]
+ },
+ "agarrao/05": {
+  "medidas": {
+   "cabeca": 1.1326530612244898,
+   "nota": 0.5444304943084717,
+   "corpo": 1.1231603420419036,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo +12%"
+  ]
+ },
+ "agarrao/06": {
+  "medidas": {
+   "cabeca": 1.0816326530612246,
+   "nota": 0.6583565473556519,
+   "corpo": 1.139861071045891,
+   "pele": 14
+  },
+  "avisos": [
+   "cabeça +8%"
+  ]
+ },
+ "agarrao/07": {
+  "medidas": {
+   "cabeca": 1.0714285714285714,
+   "nota": 0.6606608629226685,
+   "corpo": 1.1130579782001289,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça +7%",
+   "membro sobrando? 21 manchas de pele (parado 19)"
+  ]
+ },
+ "anda/00": {
+  "medidas": {
+   "cabeca": 1.0612244897959184,
+   "nota": 0.8297871351242065,
+   "corpo": 1.0126037140409687,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça +6%"
+  ]
+ },
+ "anda/01": {
+  "medidas": {
+   "cabeca": 1.0510204081632653,
+   "nota": 0.834074079990387,
+   "corpo": 0.9293627945770673,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça +5%"
+  ]
+ },
+ "anda/02": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.8421117663383484,
+   "corpo": 0.9477477103488647,
+   "pele": 18
+  },
+  "avisos": []
+ },
+ "anda/03": {
+  "medidas": {
+   "cabeca": 1.0510204081632653,
+   "nota": 0.8008838891983032,
+   "corpo": 0.9640131267899021,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça +5%"
+  ]
+ },
+ "anda/04": {
+  "medidas": {
+   "cabeca": 1.0510204081632653,
+   "nota": 0.8292150497436523,
+   "corpo": 0.9915669423720552,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça +5%",
+   "membro sobrando? 21 manchas de pele (parado 19)"
+  ]
+ },
+ "anda/05": {
+  "medidas": {
+   "cabeca": 1.0612244897959184,
+   "nota": 0.8287740349769592,
+   "corpo": 0.9250600429727469,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça +6%"
+  ]
+ },
+ "anda/06": {
+  "medidas": {
+   "cabeca": 1.0510204081632653,
+   "nota": 0.8436535596847534,
+   "corpo": 0.908223732441851,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça +5%"
+  ]
+ },
+ "anda/07": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.8307587504386902,
+   "corpo": 0.9795897087910209,
+   "pele": 20
+  },
+  "avisos": []
+ },
+ "apanha/00": {
+  "medidas": {
+   "cabeca": 1.1020408163265307,
+   "nota": 0.8548943996429443,
+   "corpo": 1.1126153810675659,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça +10%"
+  ]
+ },
+ "apanha/01": {
+  "medidas": {
+   "cabeca": 1.0612244897959184,
+   "nota": 0.7278746962547302,
+   "corpo": 1.0814111887867435,
+   "pele": 14
+  },
+  "avisos": [
+   "cabeça +6%"
+  ]
+ },
+ "apanha/02": {
+  "medidas": {
+   "cabeca": 0.9897959183673469,
+   "nota": 0.617442786693573,
+   "corpo": 1.0810771340159526,
+   "pele": 16
+  },
+  "avisos": []
+ },
+ "apanha/03": {
+  "medidas": {
+   "cabeca": 1.0612244897959184,
+   "nota": 0.5907085537910461,
+   "corpo": 1.1186784042511855,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça +6%"
+  ]
+ },
+ "apanha/04": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.5921791195869446,
+   "corpo": 1.1116262778815826,
+   "pele": 25
+  },
+  "avisos": [
+   "membro sobrando? 25 manchas de pele (parado 19)"
+  ]
+ },
+ "apanha/05": {
+  "medidas": {
+   "cabeca": 1.0612244897959184,
+   "nota": 0.6803796887397766,
+   "corpo": 1.0726307321785742,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça +6%"
+  ]
+ },
+ "apanha/06": {
+  "medidas": {
+   "cabeca": 1.0714285714285714,
+   "nota": 0.7789681553840637,
+   "corpo": 1.0547571896157664,
+   "pele": 13
+  },
+  "avisos": [
+   "cabeça +7%"
+  ]
+ },
+ "apanha/07": {
+  "medidas": {
+   "cabeca": 1.0714285714285714,
+   "nota": 0.8278743028640747,
+   "corpo": 1.0871801288875502,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça +7%"
+  ]
+ },
+ "ar_soco/00": {
+  "medidas": {
+   "cabeca": 1.1836734693877553,
+   "nota": 0.7015058994293213,
+   "corpo": 1.0690430719894493,
+   "pele": 28
+  },
+  "avisos": [
+   "cabeça +18%",
+   "membro sobrando? 28 manchas de pele (parado 19)"
+  ]
+ },
+ "ar_soco/01": {
+  "medidas": {
+   "cabeca": 1.1836734693877553,
+   "nota": 0.690982460975647,
+   "corpo": 1.0567321736613684,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça +18%",
+   "membro sobrando? 23 manchas de pele (parado 19)"
+  ]
+ },
+ "ar_soco/02": {
+  "medidas": {
+   "cabeca": 1.2040816326530615,
+   "nota": 0.6805073022842407,
+   "corpo": 1.0188107099795525,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça +20%"
+  ]
+ },
+ "ar_soco/03": {
+  "medidas": {
+   "cabeca": 1.1836734693877553,
+   "nota": 0.679178774356842,
+   "corpo": 1.070961052418394,
+   "pele": 24
+  },
+  "avisos": [
+   "cabeça +18%",
+   "membro sobrando? 24 manchas de pele (parado 19)"
+  ]
+ },
+ "ar_soco/04": {
+  "medidas": {
+   "cabeca": 1.2244897959183676,
+   "nota": 0.6869654655456543,
+   "corpo": 1.106845513059199,
+   "pele": 26
+  },
+  "avisos": [
+   "cabeça +22%",
+   "membro sobrando? 26 manchas de pele (parado 19)"
+  ]
+ },
+ "ar_soco/05": {
+  "medidas": {
+   "cabeca": 1.1836734693877553,
+   "nota": 0.691687822341919,
+   "corpo": 1.058393276098944,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça +18%",
+   "membro sobrando? 22 manchas de pele (parado 19)"
+  ]
+ },
+ "ar_soco/06": {
+  "medidas": {
+   "cabeca": 1.1632653061224492,
+   "nota": 0.6985307931900024,
+   "corpo": 1.0710990144665264,
+   "pele": 26
+  },
+  "avisos": [
+   "cabeça +16%",
+   "membro sobrando? 26 manchas de pele (parado 19)"
+  ]
+ },
+ "ar_soco/07": {
+  "medidas": {
+   "cabeca": 1.1632653061224492,
+   "nota": 0.7090405821800232,
+   "corpo": 1.0553174029752144,
+   "pele": 26
+  },
+  "avisos": [
+   "cabeça +16%",
+   "membro sobrando? 26 manchas de pele (parado 19)"
+  ]
+ },
+ "armada/00": {
+  "medidas": {
+   "cabeca": 1.153061224489796,
+   "nota": 0.7214055061340332,
+   "corpo": 1.1718628407211842,
+   "pele": 12
+  },
+  "avisos": [
+   "cabeça +15%"
+  ]
+ },
+ "armada/01": {
+  "medidas": {
+   "cabeca": 1.1836734693877553,
+   "nota": 0.7320234775543213,
+   "corpo": 1.0961436137804754,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça +18%"
+  ]
+ },
+ "armada/02": {
+  "medidas": {
+   "cabeca": 1.153061224489796,
+   "nota": 0.7085953950881958,
+   "corpo": 1.028513964488018,
+   "pele": 14
+  },
+  "avisos": [
+   "cabeça +15%"
+  ]
+ },
+ "armada/03": {
+  "medidas": {
+   "cabeca": 1.153061224489796,
+   "nota": 0.7162395119667053,
+   "corpo": 1.0257646915212466,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça +15%"
+  ]
+ },
+ "armada/04": {
+  "medidas": {
+   "cabeca": 1.2040816326530615,
+   "nota": 0.7287650108337402,
+   "corpo": 1.0386166761898934,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça +20%"
+  ]
+ },
+ "armada/05": {
+  "medidas": {
+   "cabeca": 1.153061224489796,
+   "nota": 0.7248919010162354,
+   "corpo": 1.0418364177058763,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça +15%"
+  ]
+ },
+ "armada/06": {
+  "medidas": {
+   "cabeca": 1.1632653061224492,
+   "nota": 0.7138183116912842,
+   "corpo": 1.0497174558654199,
+   "pele": 11
+  },
+  "avisos": [
+   "cabeça +16%"
+  ]
+ },
+ "armada/07": {
+  "medidas": {
+   "cabeca": 1.1632653061224492,
+   "nota": 0.727751612663269,
+   "corpo": 1.1716947071675239,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça +16%"
+  ]
+ },
+ "baixo_soco/00": {
+  "medidas": {
+   "cabeca": 0.9897959183673469,
+   "nota": 0.7560356259346008,
+   "corpo": 1.018311028239397,
+   "pele": 19
+  },
+  "avisos": []
+ },
+ "baixo_soco/01": {
+  "medidas": {
+   "cabeca": 0.9897959183673469,
+   "nota": 0.7461029291152954,
+   "corpo": 0.9950049577547085,
+   "pele": 17
+  },
+  "avisos": []
+ },
+ "baixo_soco/02": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.7393425703048706,
+   "corpo": 0.9914344729225649,
+   "pele": 13
+  },
+  "avisos": []
+ },
+ "baixo_soco/03": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.7364547848701477,
+   "corpo": 0.9871860648899613,
+   "pele": 18
+  },
+  "avisos": []
+ },
+ "baixo_soco/04": {
+  "medidas": {
+   "cabeca": 0.9897959183673469,
+   "nota": 0.732255220413208,
+   "corpo": 0.9868866605263374,
+   "pele": 22
+  },
+  "avisos": [
+   "membro sobrando? 22 manchas de pele (parado 19)"
+  ]
+ },
+ "baixo_soco/05": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.740432620048523,
+   "corpo": 0.9814148508078058,
+   "pele": 18
+  },
+  "avisos": []
+ },
+ "baixo_soco/06": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.7284085750579834,
+   "corpo": 0.9797237797844348,
+   "pele": 14
+  },
+  "avisos": []
+ },
+ "baixo_soco/07": {
+  "medidas": {
+   "cabeca": 0.9897959183673469,
+   "nota": 0.7647390365600586,
+   "corpo": 1.0082328241811438,
+   "pele": 15
+  },
+  "avisos": []
+ },
+ "bicicleta/00": {
+  "medidas": {
+   "cabeca": 1.1224489795918369,
+   "nota": 0.7734576463699341,
+   "corpo": 1.019422888953204,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça +12%",
+   "membro sobrando? 21 manchas de pele (parado 19)"
+  ]
+ },
+ "bicicleta/01": {
+  "medidas": {
+   "cabeca": 1.1224489795918369,
+   "nota": 0.7552343606948853,
+   "corpo": 1.0346413833375134,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça +12%"
+  ]
+ },
+ "bicicleta/02": {
+  "medidas": {
+   "cabeca": 1.153061224489796,
+   "nota": 0.6682202219963074,
+   "corpo": 0.9984146908071838,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça +15%"
+  ]
+ },
+ "bicicleta/03": {
+  "medidas": {
+   "cabeca": 1.1224489795918369,
+   "nota": 0.6710515022277832,
+   "corpo": 1.0277953882833921,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça +12%",
+   "membro sobrando? 21 manchas de pele (parado 19)"
+  ]
+ },
+ "bicicleta/04": {
+  "medidas": {
+   "cabeca": 1.142857142857143,
+   "nota": 0.6378758549690247,
+   "corpo": 1.0459099465581223,
+   "pele": 12
+  },
+  "avisos": [
+   "cabeça +14%"
+  ]
+ },
+ "bicicleta/05": {
+  "medidas": {
+   "cabeca": 1.1326530612244898,
+   "nota": 0.6632230877876282,
+   "corpo": 1.0150328393326662,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça +13%",
+   "membro sobrando? 21 manchas de pele (parado 19)"
+  ]
+ },
+ "bicicleta/06": {
+  "medidas": {
+   "cabeca": 1.1224489795918369,
+   "nota": 0.7862313985824585,
+   "corpo": 1.0255726067485151,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça +12%",
+   "membro sobrando? 23 manchas de pele (parado 19)"
+  ]
+ },
+ "bicicleta/07": {
+  "medidas": {
+   "cabeca": 1.1224489795918369,
+   "nota": 0.7779086828231812,
+   "corpo": 1.021401899730814,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça +12%"
+  ]
+ },
+ "bola/00": {
+  "medidas": {
+   "cabeca": 1.0714285714285714,
+   "nota": 0.7464351058006287,
+   "corpo": 1.0622024079220942,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça +7%"
+  ]
+ },
+ "bola/01": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.7488059401512146,
+   "corpo": 1.0659209184824148,
+   "pele": 11
+  },
+  "avisos": []
+ },
+ "bola/02": {
+  "medidas": {
+   "cabeca": 1.0510204081632653,
+   "nota": 0.7372861504554749,
+   "corpo": 1.0522169354581867,
+   "pele": 11
+  },
+  "avisos": [
+   "cabeça +5%"
+  ]
+ },
+ "bola/03": {
+  "medidas": {
+   "cabeca": 1.0714285714285714,
+   "nota": 0.6277306079864502,
+   "corpo": 1.0316060960769151,
+   "pele": 12
+  },
+  "avisos": [
+   "cabeça +7%"
+  ]
+ },
+ "bola/04": {
+  "medidas": {
+   "cabeca": 1.0612244897959184,
+   "nota": 0.7425803542137146,
+   "corpo": 1.0697799831757804,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça +6%"
+  ]
+ },
+ "bola/05": {
+  "medidas": {
+   "cabeca": 1.0714285714285714,
+   "nota": 0.7412452101707458,
+   "corpo": 1.0460355172818159,
+   "pele": 6
+  },
+  "avisos": [
+   "cabeça +7%"
+  ]
+ },
+ "bola/06": {
+  "medidas": {
+   "cabeca": 1.0816326530612246,
+   "nota": 0.729287326335907,
+   "corpo": 1.0509835603352804,
+   "pele": 11
+  },
+  "avisos": [
+   "cabeça +8%"
+  ]
+ },
+ "bola/07": {
+  "medidas": {
+   "cabeca": 1.0714285714285714,
+   "nota": 0.7352427244186401,
+   "corpo": 1.0643178435423806,
+   "pele": 12
+  },
+  "avisos": [
+   "cabeça +7%"
+  ]
+ },
+ "cabecada/00": {
+  "medidas": {
+   "cabeca": 1.2142857142857144,
+   "nota": 0.7210970520973206,
+   "corpo": 1.1659214968181875,
+   "pele": 33
+  },
+  "avisos": [
+   "cabeça +21%",
+   "membro sobrando? 33 manchas de pele (parado 19)"
+  ]
+ },
+ "cabecada/01": {
+  "medidas": {
+   "cabeca": 1.2448979591836737,
+   "nota": 0.7523625493049622,
+   "corpo": 1.1844325597705427,
+   "pele": 28
+  },
+  "avisos": [
+   "cabeça +24%",
+   "membro sobrando? 28 manchas de pele (parado 19)"
+  ]
+ },
+ "cabecada/02": {
+  "medidas": {
+   "cabeca": 1.2448979591836737,
+   "nota": 0.7123120427131653,
+   "corpo": 1.210537079081155,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça +24%"
+  ]
+ },
+ "cabecada/03": {
+  "medidas": {
+   "cabeca": 1.2040816326530615,
+   "nota": 0.6747849583625793,
+   "corpo": 1.1695067713531428,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça +20%"
+  ]
+ },
+ "cabecada/04": {
+  "medidas": {
+   "cabeca": 1.2448979591836737,
+   "nota": 0.699012041091919,
+   "corpo": 1.178902797150781,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça +24%"
+  ]
+ },
+ "cabecada/05": {
+  "medidas": {
+   "cabeca": 1.2142857142857144,
+   "nota": 0.7101371884346008,
+   "corpo": 1.179376201781976,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça +21%"
+  ]
+ },
+ "cabecada/06": {
+  "medidas": {
+   "cabeca": 1.2448979591836737,
+   "nota": 0.7628136873245239,
+   "corpo": 1.195058208866835,
+   "pele": 30
+  },
+  "avisos": [
+   "cabeça +24%",
+   "membro sobrando? 30 manchas de pele (parado 19)"
+  ]
+ },
+ "cabecada/07": {
+  "medidas": {
+   "cabeca": 1.2346938775510206,
+   "nota": 0.6981806755065918,
+   "corpo": 1.1880448878186618,
+   "pele": 37
+  },
+  "avisos": [
+   "cabeça +23%",
+   "membro sobrando? 37 manchas de pele (parado 19)"
+  ]
+ },
+ "caneta/00": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.7476766705513,
+   "corpo": 1.269262456752202,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 23 manchas de pele (parado 19)"
+  ]
+ },
+ "caneta/01": {
+  "medidas": {
+   "cabeca": 1.2551020408163267,
+   "nota": 0.6884216070175171,
+   "corpo": 1.1876025880103018,
+   "pele": 29
+  },
+  "avisos": [
+   "cabeça +26%",
+   "membro sobrando? 29 manchas de pele (parado 19)"
+  ]
+ },
+ "caneta/02": {
+  "medidas": {
+   "cabeca": 1.2244897959183676,
+   "nota": 0.675358235836029,
+   "corpo": 1.147912973435566,
+   "pele": 40
+  },
+  "avisos": [
+   "cabeça +22%",
+   "membro sobrando? 40 manchas de pele (parado 19)"
+  ]
+ },
+ "caneta/03": {
+  "medidas": {
+   "cabeca": 1.2346938775510206,
+   "nota": 0.6695132255554199,
+   "corpo": 1.1686922634824104,
+   "pele": 25
+  },
+  "avisos": [
+   "cabeça +23%",
+   "membro sobrando? 25 manchas de pele (parado 19)"
+  ]
+ },
+ "caneta/04": {
+  "medidas": {
+   "cabeca": 1.2551020408163267,
+   "nota": 0.686659574508667,
+   "corpo": 1.1601337089186592,
+   "pele": 36
+  },
+  "avisos": [
+   "cabeça +26%",
+   "membro sobrando? 36 manchas de pele (parado 19)"
+  ]
+ },
+ "caneta/05": {
+  "medidas": {
+   "cabeca": 1.2551020408163267,
+   "nota": 0.6887591481208801,
+   "corpo": 1.1308666317511509,
+   "pele": 33
+  },
+  "avisos": [
+   "cabeça +26%",
+   "membro sobrando? 33 manchas de pele (parado 19)"
+  ]
+ },
+ "caneta/06": {
+  "medidas": {
+   "cabeca": 1.2551020408163267,
+   "nota": 0.6898646950721741,
+   "corpo": 1.1476411951064471,
+   "pele": 39
+  },
+  "avisos": [
+   "cabeça +26%",
+   "membro sobrando? 39 manchas de pele (parado 19)"
+  ]
+ },
+ "caneta/07": {
+  "medidas": {
+   "cabeca": 1.2346938775510206,
+   "nota": 0.7451416850090027,
+   "corpo": 1.2707878733020377,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça +23%"
+  ]
+ },
+ "chute_alto/00": {
+  "medidas": {
+   "cabeca": 1.1224489795918369,
+   "nota": 0.8438659906387329,
+   "corpo": 1.1084315178754423,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça +12%"
+  ]
+ },
+ "chute_alto/01": {
+  "medidas": {
+   "cabeca": 1.1224489795918369,
+   "nota": 0.8449199199676514,
+   "corpo": 1.0613055516100356,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça +12%"
+  ]
+ },
+ "chute_alto/02": {
+  "medidas": {
+   "cabeca": 1.1326530612244898,
+   "nota": 0.8159806132316589,
+   "corpo": 1.020340468741038,
+   "pele": 14
+  },
+  "avisos": [
+   "cabeça +13%"
+  ]
+ },
+ "chute_alto/03": {
+  "medidas": {
+   "cabeca": 1.1224489795918369,
+   "nota": 0.8245612382888794,
+   "corpo": 1.0262447461587865,
+   "pele": 13
+  },
+  "avisos": [
+   "cabeça +12%"
+  ]
+ },
+ "chute_alto/04": {
+  "medidas": {
+   "cabeca": 1.1224489795918369,
+   "nota": 0.8561083078384399,
+   "corpo": 1.0534332814881,
+   "pele": 12
+  },
+  "avisos": [
+   "cabeça +12%"
+  ]
+ },
+ "chute_alto/05": {
+  "medidas": {
+   "cabeca": 1.1020408163265307,
+   "nota": 0.8187012076377869,
+   "corpo": 1.0508429573922886,
+   "pele": 12
+  },
+  "avisos": [
+   "cabeça +10%"
+  ]
+ },
+ "chute_alto/06": {
+  "medidas": {
+   "cabeca": 1.1224489795918369,
+   "nota": 0.8136345148086548,
+   "corpo": 1.0270123668454272,
+   "pele": 13
+  },
+  "avisos": [
+   "cabeça +12%"
+  ]
+ },
+ "chute_alto/07": {
+  "medidas": {
+   "cabeca": 1.142857142857143,
+   "nota": 0.8043378591537476,
+   "corpo": 1.1046926205901126,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça +14%"
+  ]
+ },
+ "chute_baixo/00": {
+  "medidas": {
+   "cabeca": 1.1122448979591837,
+   "nota": 0.803435206413269,
+   "corpo": 1.1167688689555977,
+   "pele": 8
+  },
+  "avisos": [
+   "cabeça +11%"
+  ]
+ },
+ "chute_baixo/01": {
+  "medidas": {
+   "cabeca": 1.1122448979591837,
+   "nota": 0.7981695532798767,
+   "corpo": 1.0858201521004518,
+   "pele": 7
+  },
+  "avisos": [
+   "cabeça +11%"
+  ]
+ },
+ "chute_baixo/02": {
+  "medidas": {
+   "cabeca": 1.1122448979591837,
+   "nota": 0.7854965329170227,
+   "corpo": 0.9738577717940115,
+   "pele": 6
+  },
+  "avisos": [
+   "cabeça +11%"
+  ]
+ },
+ "chute_baixo/03": {
+  "medidas": {
+   "cabeca": 1.1122448979591837,
+   "nota": 0.7933268547058105,
+   "corpo": 1.0302843096641556,
+   "pele": 10
+  },
+  "avisos": [
+   "cabeça +11%"
+  ]
+ },
+ "chute_baixo/04": {
+  "medidas": {
+   "cabeca": 1.1122448979591837,
+   "nota": 0.7673766016960144,
+   "corpo": 1.0369397262655118,
+   "pele": 11
+  },
+  "avisos": [
+   "cabeça +11%"
+  ]
+ },
+ "chute_baixo/05": {
+  "medidas": {
+   "cabeca": 1.1122448979591837,
+   "nota": 0.7844473123550415,
+   "corpo": 0.9666662853264207,
+   "pele": 7
+  },
+  "avisos": [
+   "cabeça +11%"
+  ]
+ },
+ "chute_baixo/06": {
+  "medidas": {
+   "cabeca": 1.1020408163265307,
+   "nota": 0.7933821082115173,
+   "corpo": 1.0280509395882353,
+   "pele": 9
+  },
+  "avisos": [
+   "cabeça +10%"
+  ]
+ },
+ "chute_baixo/07": {
+  "medidas": {
+   "cabeca": 1.1224489795918369,
+   "nota": 0.7935323119163513,
+   "corpo": 1.1255259072223036,
+   "pele": 5
+  },
+  "avisos": [
+   "cabeça +12%"
+  ]
+ },
+ "compasso/00": {
+  "medidas": {
+   "cabeca": 1.2653061224489797,
+   "nota": 0.6517810225486755,
+   "corpo": 1.2437702224238183,
+   "pele": 31
+  },
+  "avisos": [
+   "cabeça +27%",
+   "membro sobrando? 31 manchas de pele (parado 19)"
+  ]
+ },
+ "compasso/01": {
+  "medidas": {
+   "cabeca": 1.1020408163265307,
+   "nota": 0.4930083453655243,
+   "corpo": 1.1782341373831438,
+   "pele": 45
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo +18%",
+   "membro sobrando? 45 manchas de pele (parado 19)"
+  ]
+ },
+ "compasso/02": {
+  "medidas": {
+   "cabeca": 0.9183673469387754,
+   "nota": 0.49752458930015564,
+   "corpo": 1.1461524245621362,
+   "pele": 37
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo +15%",
+   "membro sobrando? 37 manchas de pele (parado 19)"
+  ]
+ },
+ "compasso/03": {
+  "medidas": {
+   "cabeca": 0.8163265306122448,
+   "nota": 0.4787651300430298,
+   "corpo": 1.0912799797695878,
+   "pele": 32
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 32 manchas de pele (parado 19)"
+  ]
+ },
+ "compasso/04": {
+  "medidas": {
+   "cabeca": 0.8163265306122448,
+   "nota": 0.45538774132728577,
+   "corpo": 1.1451492776724426,
+   "pele": 31
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo +15%",
+   "membro sobrando? 31 manchas de pele (parado 19)"
+  ]
+ },
+ "compasso/05": {
+  "medidas": {
+   "cabeca": 1.1734693877551021,
+   "nota": 0.5652043223381042,
+   "corpo": 1.1631017836359818,
+   "pele": 39
+  },
+  "avisos": [
+   "cabeça +17%",
+   "membro sobrando? 39 manchas de pele (parado 19)"
+  ]
+ },
+ "compasso/06": {
+  "medidas": {
+   "cabeca": 1.1836734693877553,
+   "nota": 0.5859646201133728,
+   "corpo": 1.1864546044100717,
+   "pele": 32
+  },
+  "avisos": [
+   "cabeça +18%",
+   "membro sobrando? 32 manchas de pele (parado 19)"
+  ]
+ },
+ "compasso/07": {
+  "medidas": {
+   "cabeca": 1.2653061224489797,
+   "nota": 0.6578448414802551,
+   "corpo": 1.2288169741843937,
+   "pele": 28
+  },
+  "avisos": [
+   "cabeça +27%",
+   "membro sobrando? 28 manchas de pele (parado 19)"
+  ]
+ },
+ "corre/00": {
+  "medidas": {
+   "cabeca": 1.1020408163265307,
+   "nota": 0.6048609614372253,
+   "corpo": 1.133621699497445,
+   "pele": 24
+  },
+  "avisos": [
+   "cabeça +10%",
+   "membro sobrando? 24 manchas de pele (parado 19)"
+  ]
+ },
+ "corre/01": {
+  "medidas": {
+   "cabeca": 1.1020408163265307,
+   "nota": 0.5905239582061768,
+   "corpo": 1.05313712149485,
+   "pele": 26
+  },
+  "avisos": [
+   "cabeça +10%",
+   "membro sobrando? 26 manchas de pele (parado 19)"
+  ]
+ },
+ "corre/02": {
+  "medidas": {
+   "cabeca": 1.1020408163265307,
+   "nota": 0.5931951999664307,
+   "corpo": 1.0665060563405402,
+   "pele": 27
+  },
+  "avisos": [
+   "cabeça +10%",
+   "membro sobrando? 27 manchas de pele (parado 19)"
+  ]
+ },
+ "corre/03": {
+  "medidas": {
+   "cabeca": 1.1020408163265307,
+   "nota": 0.5960124135017395,
+   "corpo": 1.1137068024920123,
+   "pele": 32
+  },
+  "avisos": [
+   "cabeça +10%",
+   "membro sobrando? 32 manchas de pele (parado 19)"
+  ]
+ },
+ "corre/04": {
+  "medidas": {
+   "cabeca": 1.1020408163265307,
+   "nota": 0.5957701206207275,
+   "corpo": 1.0759318005669083,
+   "pele": 29
+  },
+  "avisos": [
+   "cabeça +10%",
+   "membro sobrando? 29 manchas de pele (parado 19)"
+  ]
+ },
+ "corre/05": {
+  "medidas": {
+   "cabeca": 1.0816326530612246,
+   "nota": 0.5988127589225769,
+   "corpo": 1.0468513598419225,
+   "pele": 25
+  },
+  "avisos": [
+   "cabeça +8%",
+   "membro sobrando? 25 manchas de pele (parado 19)"
+  ]
+ },
+ "corre/06": {
+  "medidas": {
+   "cabeca": 1.0816326530612246,
+   "nota": 0.5859639048576355,
+   "corpo": 1.0352124825806364,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça +8%",
+   "membro sobrando? 22 manchas de pele (parado 19)"
+  ]
+ },
+ "corre/07": {
+  "medidas": {
+   "cabeca": 1.0816326530612246,
+   "nota": 0.6058939099311829,
+   "corpo": 1.0888400159587304,
+   "pele": 28
+  },
+  "avisos": [
+   "cabeça +8%",
+   "membro sobrando? 28 manchas de pele (parado 19)"
+  ]
+ },
+ "defesa/00": {
+  "medidas": {
+   "cabeca": 0.9897959183673469,
+   "nota": 0.7954836487770081,
+   "corpo": 1.014515113983249,
+   "pele": 10
+  },
+  "avisos": []
+ },
+ "defesa/01": {
+  "medidas": {
+   "cabeca": 1.0510204081632653,
+   "nota": 0.7623714208602905,
+   "corpo": 1.000238310810424,
+   "pele": 9
+  },
+  "avisos": [
+   "cabeça +5%"
+  ]
+ },
+ "defesa/02": {
+  "medidas": {
+   "cabeca": 1.0612244897959184,
+   "nota": 0.682076096534729,
+   "corpo": 1.0101850000587127,
+   "pele": 11
+  },
+  "avisos": [
+   "cabeça +6%"
+  ]
+ },
+ "defesa/03": {
+  "medidas": {
+   "cabeca": 1.0714285714285714,
+   "nota": 0.660252571105957,
+   "corpo": 0.9997457685662171,
+   "pele": 7
+  },
+  "avisos": [
+   "cabeça +7%"
+  ]
+ },
+ "defesa/04": {
+  "medidas": {
+   "cabeca": 1.0714285714285714,
+   "nota": 0.6837608814239502,
+   "corpo": 1.0098436417044163,
+   "pele": 13
+  },
+  "avisos": [
+   "cabeça +7%"
+  ]
+ },
+ "defesa/05": {
+  "medidas": {
+   "cabeca": 1.0510204081632653,
+   "nota": 0.6558169722557068,
+   "corpo": 1.0001562372808317,
+   "pele": 9
+  },
+  "avisos": [
+   "cabeça +5%"
+  ]
+ },
+ "defesa/06": {
+  "medidas": {
+   "cabeca": 0.9897959183673469,
+   "nota": 0.7449612021446228,
+   "corpo": 0.9943282126838752,
+   "pele": 10
+  },
+  "avisos": []
+ },
+ "defesa/07": {
+  "medidas": {
+   "cabeca": 0.9897959183673469,
+   "nota": 0.7787962555885315,
+   "corpo": 1.0162452246091094,
+   "pele": 10
+  },
+  "avisos": []
+ },
+ "derrota/00": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.7228599786758423,
+   "corpo": 1.2995443060289624,
+   "pele": 32
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 32 manchas de pele (parado 19)"
+  ]
+ },
+ "derrota/01": {
+  "medidas": {
+   "cabeca": 1.2142857142857144,
+   "nota": 0.821747899055481,
+   "corpo": 1.187961969148293,
+   "pele": 29
+  },
+  "avisos": [
+   "cabeça +21%",
+   "membro sobrando? 29 manchas de pele (parado 19)"
+  ]
+ },
+ "derrota/02": {
+  "medidas": {
+   "cabeca": 1.2448979591836737,
+   "nota": 0.758030891418457,
+   "corpo": 1.1172539062271754,
+   "pele": 35
+  },
+  "avisos": [
+   "cabeça +24%",
+   "membro sobrando? 35 manchas de pele (parado 19)"
+  ]
+ },
+ "derrota/03": {
+  "medidas": {
+   "cabeca": 1.2142857142857144,
+   "nota": 0.737625241279602,
+   "corpo": 1.1418901530033465,
+   "pele": 44
+  },
+  "avisos": [
+   "cabeça +21%",
+   "membro sobrando? 44 manchas de pele (parado 19)"
+  ]
+ },
+ "derrota/04": {
+  "medidas": {
+   "cabeca": 1.2448979591836737,
+   "nota": 0.6830438375473022,
+   "corpo": 1.1508269703913592,
+   "pele": 45
+  },
+  "avisos": [
+   "cabeça +24%",
+   "membro sobrando? 45 manchas de pele (parado 19)"
+  ]
+ },
+ "derrota/05": {
+  "medidas": {
+   "cabeca": 1.2448979591836737,
+   "nota": 0.696574866771698,
+   "corpo": 1.1376263440209955,
+   "pele": 35
+  },
+  "avisos": [
+   "cabeça +24%",
+   "membro sobrando? 35 manchas de pele (parado 19)"
+  ]
+ },
+ "derrota/06": {
+  "medidas": {
+   "cabeca": 1.142857142857143,
+   "nota": 0.5694351196289062,
+   "corpo": 1.1433126757193581,
+   "pele": 42
+  },
+  "avisos": [
+   "cabeça +14%",
+   "membro sobrando? 42 manchas de pele (parado 19)"
+  ]
+ },
+ "derrota/07": {
+  "medidas": {
+   "cabeca": 0.8571428571428571,
+   "nota": 0.4966617524623871,
+   "corpo": 1.1160776943930284,
+   "pele": 46
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 46 manchas de pele (parado 19)"
+  ]
+ },
+ "despertar_a/00": {
+  "medidas": {
+   "cabeca": 0.8163265306122448,
+   "nota": 0.6455613970756531,
+   "corpo": 0.759924184548925,
+   "pele": 6
+  },
+  "avisos": [
+   "cabeça -18%"
+  ]
+ },
+ "despertar_a/01": {
+  "medidas": {
+   "cabeca": 0.8265306122448979,
+   "nota": 0.4898533225059509,
+   "corpo": 0.7477715831931803,
+   "pele": 5
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -25%"
+  ]
+ },
+ "despertar_a/02": {
+  "medidas": {
+   "cabeca": 0.8163265306122448,
+   "nota": 0.461978018283844,
+   "corpo": 0.7547212419745957,
+   "pele": 7
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -25%"
+  ]
+ },
+ "despertar_a/03": {
+  "medidas": {
+   "cabeca": 0.8163265306122448,
+   "nota": 0.6157374382019043,
+   "corpo": 0.730759912863821,
+   "pele": 6
+  },
+  "avisos": [
+   "cabeça -18%"
+  ]
+ },
+ "despertar_a/04": {
+  "medidas": {
+   "cabeca": 0.8163265306122448,
+   "nota": 0.5707695484161377,
+   "corpo": 0.7259812958640499,
+   "pele": 8
+  },
+  "avisos": [
+   "cabeça -18%"
+  ]
+ },
+ "despertar_a/05": {
+  "medidas": {
+   "cabeca": 0.8163265306122448,
+   "nota": 0.45853182673454285,
+   "corpo": 0.7511451706683048,
+   "pele": 5
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -25%"
+  ]
+ },
+ "despertar_a/06": {
+  "medidas": {
+   "cabeca": 0.8163265306122448,
+   "nota": 0.4649316370487213,
+   "corpo": 0.7469587758148415,
+   "pele": 11
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -25%"
+  ]
+ },
+ "despertar_a/07": {
+  "medidas": {
+   "cabeca": 0.8163265306122448,
+   "nota": 0.48071402311325073,
+   "corpo": 0.7781137082923265,
+   "pele": 8
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -22%"
+  ]
+ },
+ "e_afastar/00": {
+  "medidas": {
+   "cabeca": 0.9175257731958762,
+   "nota": 0.610554575920105,
+   "corpo": 1.0181379806381519,
+   "pele": 24
+  },
+  "avisos": [
+   "cabeça -8%"
+  ]
+ },
+ "e_afastar/01": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.5717467069625854,
+   "corpo": 0.9541472988442514,
+   "pele": 24
+  },
+  "avisos": [
+   "cabeça -5%"
+  ]
+ },
+ "e_afastar/02": {
+  "medidas": {
+   "cabeca": 1.1030927835051547,
+   "nota": 0.4196234941482544,
+   "corpo": 0.9207345645428787,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_afastar/03": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.3836786448955536,
+   "corpo": 0.958966729421532,
+   "pele": 27
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 27 manchas de pele (parado 23)"
+  ]
+ },
+ "e_afastar/04": {
+  "medidas": {
+   "cabeca": 0.9690721649484536,
+   "nota": 0.4227936267852783,
+   "corpo": 0.9997025333126249,
+   "pele": 24
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_afastar/05": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.5606898665428162,
+   "corpo": 0.9407718722949584,
+   "pele": 24
+  },
+  "avisos": [
+   "cabeça -5%"
+  ]
+ },
+ "e_afastar/06": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.5878928899765015,
+   "corpo": 0.9708387043994234,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça -5%"
+  ]
+ },
+ "e_afastar/07": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.5465965270996094,
+   "corpo": 1.0209078166968109,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_agachado/00": {
+  "medidas": {
+   "cabeca": 1.041237113402062,
+   "nota": 0.64947509765625,
+   "corpo": 0.9326010505762721,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça +4%"
+  ]
+ },
+ "e_agachado/01": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.6346889734268188,
+   "corpo": 0.9304157659935242,
+   "pele": 22
+  },
+  "avisos": []
+ },
+ "e_agachado/02": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.48417115211486816,
+   "corpo": 0.9130621415504793,
+   "pele": 29
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 29 manchas de pele (parado 23)"
+  ]
+ },
+ "e_agachado/03": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.6001507043838501,
+   "corpo": 0.8993642217523851,
+   "pele": 25
+  },
+  "avisos": [
+   "membro sobrando? 25 manchas de pele (parado 23)"
+  ]
+ },
+ "e_agachado/04": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.6091699600219727,
+   "corpo": 0.9142962386276058,
+   "pele": 25
+  },
+  "avisos": [
+   "membro sobrando? 25 manchas de pele (parado 23)"
+  ]
+ },
+ "e_agachado/05": {
+  "medidas": {
+   "cabeca": 1.0103092783505154,
+   "nota": 0.6372628211975098,
+   "corpo": 0.9262344391083507,
+   "pele": 24
+  },
+  "avisos": []
+ },
+ "e_agachado/06": {
+  "medidas": {
+   "cabeca": 1.041237113402062,
+   "nota": 0.6658841371536255,
+   "corpo": 0.9333817966741477,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça +4%"
+  ]
+ },
+ "e_agachado/07": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.6660199761390686,
+   "corpo": 0.9340443835904361,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça +5%"
+  ]
+ },
+ "e_agarrao/00": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.5243872404098511,
+   "corpo": 1.0112838075281072,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_agarrao/01": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.5190871953964233,
+   "corpo": 0.9923088788693349,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_agarrao/02": {
+  "medidas": {
+   "cabeca": 1.1237113402061856,
+   "nota": 0.4288840889930725,
+   "corpo": 0.9916349096706888,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_agarrao/03": {
+  "medidas": {
+   "cabeca": 1.2474226804123714,
+   "nota": 0.36886122822761536,
+   "corpo": 0.9776906479264982,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_agarrao/04": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.37383851408958435,
+   "corpo": 1.0211325969275042,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_agarrao/05": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.48031315207481384,
+   "corpo": 0.9807884185656219,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_agarrao/06": {
+  "medidas": {
+   "cabeca": 1.0927835051546393,
+   "nota": 0.3648470938205719,
+   "corpo": 0.9695530767737093,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_agarrao/07": {
+  "medidas": {
+   "cabeca": 0.8969072164948453,
+   "nota": 0.3486815392971039,
+   "corpo": 0.9455117335939353,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_anda/00": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.48263177275657654,
+   "corpo": 0.9929321443266376,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_anda/01": {
+  "medidas": {
+   "cabeca": 0.979381443298969,
+   "nota": 0.4638417363166809,
+   "corpo": 0.9841603711328627,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_anda/02": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.4732825458049774,
+   "corpo": 0.9366261246154614,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_anda/03": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.47306424379348755,
+   "corpo": 0.9753710938924867,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_anda/04": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.4699174761772156,
+   "corpo": 0.9771087225789673,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_anda/05": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.48335468769073486,
+   "corpo": 0.9755040806752163,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_anda/06": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.46047380566596985,
+   "corpo": 0.9322264883481711,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_anda/07": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.4823594093322754,
+   "corpo": 0.9795769712152491,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_apanha/00": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.5549003481864929,
+   "corpo": 1.0001815283650546,
+   "pele": 21
+  },
+  "avisos": []
+ },
+ "e_apanha/01": {
+  "medidas": {
+   "cabeca": 0.9587628865979381,
+   "nota": 0.398866206407547,
+   "corpo": 0.9832474300946804,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_apanha/02": {
+  "medidas": {
+   "cabeca": 1.2783505154639176,
+   "nota": 0.3256496489048004,
+   "corpo": 0.9908597818914577,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_apanha/03": {
+  "medidas": {
+   "cabeca": 0.824742268041237,
+   "nota": 0.3508443236351013,
+   "corpo": 1.0065166067772173,
+   "pele": 14
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_apanha/04": {
+  "medidas": {
+   "cabeca": 1.0721649484536082,
+   "nota": 0.33863770961761475,
+   "corpo": 1.033622970053388,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_apanha/05": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.42453768849372864,
+   "corpo": 1.0081510699325054,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_apanha/06": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.3661523163318634,
+   "corpo": 0.9746444612856475,
+   "pele": 24
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_apanha/07": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.6034860610961914,
+   "corpo": 0.9979242528423565,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça -5%"
+  ]
+ },
+ "e_ar_soco/00": {
+  "medidas": {
+   "cabeca": 1.1443298969072166,
+   "nota": 0.5656111836433411,
+   "corpo": 0.9626121153858886,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça +14%"
+  ]
+ },
+ "e_ar_soco/01": {
+  "medidas": {
+   "cabeca": 1.1443298969072166,
+   "nota": 0.53226238489151,
+   "corpo": 0.9424144768024345,
+   "pele": 30
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 30 manchas de pele (parado 23)"
+  ]
+ },
+ "e_ar_soco/02": {
+  "medidas": {
+   "cabeca": 1.1443298969072166,
+   "nota": 0.4656018018722534,
+   "corpo": 0.9689559661863397,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_ar_soco/03": {
+  "medidas": {
+   "cabeca": 1.195876288659794,
+   "nota": 0.5503345727920532,
+   "corpo": 0.9633374655870615,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça +20%"
+  ]
+ },
+ "e_ar_soco/04": {
+  "medidas": {
+   "cabeca": 1.1649484536082475,
+   "nota": 0.5274451971054077,
+   "corpo": 0.9328257157211998,
+   "pele": 13
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_ar_soco/05": {
+  "medidas": {
+   "cabeca": 1.1443298969072166,
+   "nota": 0.5289667248725891,
+   "corpo": 0.9625913830630514,
+   "pele": 26
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 26 manchas de pele (parado 23)"
+  ]
+ },
+ "e_ar_soco/06": {
+  "medidas": {
+   "cabeca": 1.1443298969072166,
+   "nota": 0.5245399475097656,
+   "corpo": 0.9459865231725553,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_ar_soco/07": {
+  "medidas": {
+   "cabeca": 1.175257731958763,
+   "nota": 0.5280797481536865,
+   "corpo": 0.9517494006877095,
+   "pele": 30
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 30 manchas de pele (parado 23)"
+  ]
+ },
+ "e_armada/00": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.6051908135414124,
+   "corpo": 1.018598510316347,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça +6%"
+  ]
+ },
+ "e_armada/01": {
+  "medidas": {
+   "cabeca": 1.1237113402061856,
+   "nota": 0.5239666700363159,
+   "corpo": 0.9804119104203052,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_armada/02": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.37579217553138733,
+   "corpo": 0.9737430937031937,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_armada/03": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.47014424204826355,
+   "corpo": 0.897809571978523,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_armada/04": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.4613346755504608,
+   "corpo": 0.9927311337076726,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_armada/05": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.4852292239665985,
+   "corpo": 0.9158991683543573,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_armada/06": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.42084822058677673,
+   "corpo": 0.886017709143126,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_armada/07": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.619138777256012,
+   "corpo": 1.0061993125971644,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça +6%"
+  ]
+ },
+ "e_baixo_soco/00": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.5403845906257629,
+   "corpo": 0.8873681408201866,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_baixo_soco/01": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.5463199019432068,
+   "corpo": 0.8863667677616993,
+   "pele": 26
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 26 manchas de pele (parado 23)"
+  ]
+ },
+ "e_baixo_soco/02": {
+  "medidas": {
+   "cabeca": 0.8969072164948453,
+   "nota": 0.4898499846458435,
+   "corpo": 0.8833445414848256,
+   "pele": 27
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 27 manchas de pele (parado 23)"
+  ]
+ },
+ "e_baixo_soco/03": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.5991033911705017,
+   "corpo": 0.889961952819051,
+   "pele": 30
+  },
+  "avisos": [
+   "cabeça -5%",
+   "membro sobrando? 30 manchas de pele (parado 23)"
+  ]
+ },
+ "e_baixo_soco/04": {
+  "medidas": {
+   "cabeca": 0.8969072164948453,
+   "nota": 0.48161599040031433,
+   "corpo": 0.89204499546157,
+   "pele": 26
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 26 manchas de pele (parado 23)"
+  ]
+ },
+ "e_baixo_soco/05": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.5570773482322693,
+   "corpo": 0.8978318002146705,
+   "pele": 25
+  },
+  "avisos": [
+   "cabeça -5%",
+   "membro sobrando? 25 manchas de pele (parado 23)"
+  ]
+ },
+ "e_baixo_soco/06": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.5576196908950806,
+   "corpo": 0.8798584159628209,
+   "pele": 28
+  },
+  "avisos": [
+   "cabeça -5%",
+   "membro sobrando? 28 manchas de pele (parado 23)"
+  ]
+ },
+ "e_baixo_soco/07": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.5631405115127563,
+   "corpo": 0.8800171758118167,
+   "pele": 26
+  },
+  "avisos": [
+   "cabeça -5%",
+   "membro sobrando? 26 manchas de pele (parado 23)"
+  ]
+ },
+ "e_bicicleta/00": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.6109675168991089,
+   "corpo": 0.8718721213631628,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça -5%"
+  ]
+ },
+ "e_bicicleta/01": {
+  "medidas": {
+   "cabeca": 0.9072164948453607,
+   "nota": 0.4409022331237793,
+   "corpo": 0.8904775674299819,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_bicicleta/02": {
+  "medidas": {
+   "cabeca": 0.8350515463917525,
+   "nota": 0.4100302755832672,
+   "corpo": 0.8909928836565065,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_bicicleta/03": {
+  "medidas": {
+   "cabeca": 0.8865979381443299,
+   "nota": 0.3973020911216736,
+   "corpo": 0.9279565460876653,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_bicicleta/04": {
+  "medidas": {
+   "cabeca": 0.9278350515463917,
+   "nota": 0.3844568133354187,
+   "corpo": 0.9648175575446395,
+   "pele": 13
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_bicicleta/05": {
+  "medidas": {
+   "cabeca": 0.9072164948453607,
+   "nota": 0.4504634439945221,
+   "corpo": 0.94306013661418,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_bicicleta/06": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.43319278955459595,
+   "corpo": 0.902642380212652,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_bicicleta/07": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.6089048385620117,
+   "corpo": 0.8436855202895316,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça -5%"
+  ]
+ },
+ "e_bola/00": {
+  "medidas": {
+   "cabeca": 0.9381443298969072,
+   "nota": 0.5968680381774902,
+   "corpo": 1.0111949993134302,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça -6%"
+  ]
+ },
+ "e_bola/01": {
+  "medidas": {
+   "cabeca": 0.9690721649484536,
+   "nota": 0.616125226020813,
+   "corpo": 1.0227339456698463,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça -3%"
+  ]
+ },
+ "e_bola/02": {
+  "medidas": {
+   "cabeca": 0.9381443298969072,
+   "nota": 0.5062000155448914,
+   "corpo": 1.0008098614657348,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_bola/03": {
+  "medidas": {
+   "cabeca": 0.9587628865979381,
+   "nota": 0.3534857928752899,
+   "corpo": 0.9929019953280427,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_bola/04": {
+  "medidas": {
+   "cabeca": 0.9690721649484536,
+   "nota": 0.5906816124916077,
+   "corpo": 1.0324831823012923,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça -3%"
+  ]
+ },
+ "e_bola/05": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.6133406162261963,
+   "corpo": 1.0225387935041086,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça -5%"
+  ]
+ },
+ "e_bola/06": {
+  "medidas": {
+   "cabeca": 0.9690721649484536,
+   "nota": 0.6250427961349487,
+   "corpo": 1.0111160521298523,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça -3%"
+  ]
+ },
+ "e_bola/07": {
+  "medidas": {
+   "cabeca": 0.9587628865979381,
+   "nota": 0.633248507976532,
+   "corpo": 1.0070518140148859,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça -4%"
+  ]
+ },
+ "e_cabecada/00": {
+  "medidas": {
+   "cabeca": 0.8762886597938143,
+   "nota": 0.5240114331245422,
+   "corpo": 0.8835704376990045,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_cabecada/01": {
+  "medidas": {
+   "cabeca": 1.0927835051546393,
+   "nota": 0.37833815813064575,
+   "corpo": 0.9177820233812408,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_cabecada/02": {
+  "medidas": {
+   "cabeca": 0.9278350515463917,
+   "nota": 0.38191306591033936,
+   "corpo": 0.955829555987153,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_cabecada/03": {
+  "medidas": {
+   "cabeca": 0.9175257731958762,
+   "nota": 0.35883480310440063,
+   "corpo": 0.9342687016547434,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_cabecada/04": {
+  "medidas": {
+   "cabeca": 1.175257731958763,
+   "nota": 0.33676445484161377,
+   "corpo": 0.9485252404913695,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_cabecada/05": {
+  "medidas": {
+   "cabeca": 0.8453608247422679,
+   "nota": 0.3991197943687439,
+   "corpo": 0.9587690053934185,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_cabecada/06": {
+  "medidas": {
+   "cabeca": 1.1134020618556701,
+   "nota": 0.3690798580646515,
+   "corpo": 0.9332428074995741,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_cabecada/07": {
+  "medidas": {
+   "cabeca": 0.8762886597938143,
+   "nota": 0.5396810173988342,
+   "corpo": 0.8897376793532604,
+   "pele": 24
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_caneta/00": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.4614604115486145,
+   "corpo": 0.9520114736520412,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_caneta/01": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.4864954352378845,
+   "corpo": 0.8709560484846568,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -13%"
+  ]
+ },
+ "e_caneta/02": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.4260083734989166,
+   "corpo": 0.7930346794537386,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -21%"
+  ]
+ },
+ "e_caneta/03": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.4482994079589844,
+   "corpo": 0.7593397025356518,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -24%"
+  ]
+ },
+ "e_caneta/04": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.48712196946144104,
+   "corpo": 0.7581166042342464,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -24%"
+  ]
+ },
+ "e_caneta/05": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.4632550776004791,
+   "corpo": 0.7608756464519594,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -24%"
+  ]
+ },
+ "e_caneta/06": {
+  "medidas": {
+   "cabeca": 1.0824742268041239,
+   "nota": 0.4567677974700928,
+   "corpo": 0.7628272005688838,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -24%"
+  ]
+ },
+ "e_caneta/07": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.5304870009422302,
+   "corpo": 0.951057181074998,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_chute_alto/00": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.5688546299934387,
+   "corpo": 0.9817341392779007,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça -5%"
+  ]
+ },
+ "e_chute_alto/01": {
+  "medidas": {
+   "cabeca": 0.9690721649484536,
+   "nota": 0.4873466491699219,
+   "corpo": 0.954994022222288,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_chute_alto/02": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.5354783535003662,
+   "corpo": 0.9169444670939219,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_chute_alto/03": {
+  "medidas": {
+   "cabeca": 0.8762886597938143,
+   "nota": 0.44340935349464417,
+   "corpo": 0.9610351841701409,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_chute_alto/04": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.4846545159816742,
+   "corpo": 0.9755040806752163,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_chute_alto/05": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.4796588122844696,
+   "corpo": 0.9856395658463397,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_chute_alto/06": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.4994388818740845,
+   "corpo": 0.930190518783391,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_chute_alto/07": {
+  "medidas": {
+   "cabeca": 0.9587628865979381,
+   "nota": 0.4924437999725342,
+   "corpo": 1.0065860015467751,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_chute_baixo/00": {
+  "medidas": {
+   "cabeca": 1.041237113402062,
+   "nota": 0.7010713815689087,
+   "corpo": 1.016441041953921,
+   "pele": 24
+  },
+  "avisos": [
+   "cabeça +4%"
+  ]
+ },
+ "e_chute_baixo/01": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.6451297998428345,
+   "corpo": 0.9708900940946377,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça +6%"
+  ]
+ },
+ "e_chute_baixo/02": {
+  "medidas": {
+   "cabeca": 1.0824742268041239,
+   "nota": 0.4248035252094269,
+   "corpo": 0.9663470137275987,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_chute_baixo/03": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.496821790933609,
+   "corpo": 0.9827500278537713,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_chute_baixo/04": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.6036816835403442,
+   "corpo": 0.9822422149017799,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça +6%"
+  ]
+ },
+ "e_chute_baixo/05": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.535671591758728,
+   "corpo": 0.9516445512937735,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_chute_baixo/06": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.645370364189148,
+   "corpo": 0.9515082298089463,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça +5%"
+  ]
+ },
+ "e_chute_baixo/07": {
+  "medidas": {
+   "cabeca": 1.041237113402062,
+   "nota": 0.6886470913887024,
+   "corpo": 0.9996326606909557,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça +4%"
+  ]
+ },
+ "e_compasso/00": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.6546209454536438,
+   "corpo": 1.0092590155513435,
+   "pele": 19
+  },
+  "avisos": []
+ },
+ "e_compasso/01": {
+  "medidas": {
+   "cabeca": 0.8556701030927834,
+   "nota": 0.3100767433643341,
+   "corpo": 0.9580610271415569,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_compasso/02": {
+  "medidas": {
+   "cabeca": 0.8453608247422679,
+   "nota": 0.3375488221645355,
+   "corpo": 0.9102272348394769,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_compasso/03": {
+  "medidas": {
+   "cabeca": 0.9690721649484536,
+   "nota": 0.31348544359207153,
+   "corpo": 0.9208104241023585,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_compasso/04": {
+  "medidas": {
+   "cabeca": 0.9381443298969072,
+   "nota": 0.5599532127380371,
+   "corpo": 0.9095911800200444,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça -6%"
+  ]
+ },
+ "e_compasso/05": {
+  "medidas": {
+   "cabeca": 1.0103092783505154,
+   "nota": 0.32424578070640564,
+   "corpo": 0.9388713532909758,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_compasso/06": {
+  "medidas": {
+   "cabeca": 0.9278350515463917,
+   "nota": 0.6296911835670471,
+   "corpo": 0.9668218923725129,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça -7%"
+  ]
+ },
+ "e_compasso/07": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.6720130443572998,
+   "corpo": 1.0095358119641276,
+   "pele": 17
+  },
+  "avisos": []
+ },
+ "e_defesa/00": {
+  "medidas": {
+   "cabeca": 0.979381443298969,
+   "nota": 0.6435365676879883,
+   "corpo": 1.0086359458928977,
+   "pele": 19
+  },
+  "avisos": []
+ },
+ "e_defesa/01": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.6305358409881592,
+   "corpo": 0.9971840344761109,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça -5%"
+  ]
+ },
+ "e_defesa/02": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.5663192868232727,
+   "corpo": 1.0052369027044443,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça -5%"
+  ]
+ },
+ "e_defesa/03": {
+  "medidas": {
+   "cabeca": 0.979381443298969,
+   "nota": 0.5391625165939331,
+   "corpo": 1.003209852738785,
+   "pele": 13
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_defesa/04": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.5365427136421204,
+   "corpo": 0.9897816484232868,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_defesa/05": {
+  "medidas": {
+   "cabeca": 0.979381443298969,
+   "nota": 0.5409570932388306,
+   "corpo": 0.9799232518534379,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_defesa/06": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.5321303606033325,
+   "corpo": 0.965479241330977,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_defesa/07": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.5852268934249878,
+   "corpo": 0.9850522064786708,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça -5%"
+  ]
+ },
+ "e_derrota/00": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.6249196529388428,
+   "corpo": 1.0147412655050605,
+   "pele": 18
+  },
+  "avisos": []
+ },
+ "e_derrota/01": {
+  "medidas": {
+   "cabeca": 0.8762886597938143,
+   "nota": 0.40373921394348145,
+   "corpo": 0.9522734744918857,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_derrota/02": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.6419832110404968,
+   "corpo": 0.8606757931695465,
+   "pele": 18
+  },
+  "avisos": []
+ },
+ "e_derrota/03": {
+  "medidas": {
+   "cabeca": 0.8865979381443299,
+   "nota": 0.5047520995140076,
+   "corpo": 0.8425967101082105,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -16%"
+  ]
+ },
+ "e_derrota/04": {
+  "medidas": {
+   "cabeca": 0.8865979381443299,
+   "nota": 0.3382148742675781,
+   "corpo": 0.8635578188720014,
+   "pele": 12
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -14%"
+  ]
+ },
+ "e_derrota/05": {
+  "medidas": {
+   "cabeca": 0.8659793814432989,
+   "nota": 0.40473678708076477,
+   "corpo": 0.8404860945812697,
+   "pele": 12
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -16%"
+  ]
+ },
+ "e_derrota/06": {
+  "medidas": {
+   "cabeca": 0.824742268041237,
+   "nota": 0.30440694093704224,
+   "corpo": 0.8540651391188727,
+   "pele": 10
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -15%"
+  ]
+ },
+ "e_derrota/07": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.36385849118232727,
+   "corpo": 0.8409371201541556,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -16%"
+  ]
+ },
+ "e_despertar/00": {
+  "medidas": {
+   "cabeca": 0.9278350515463917,
+   "nota": 0.28465530276298523,
+   "corpo": 0.8805952732132215,
+   "pele": 0
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_despertar/01": {
+  "medidas": {
+   "cabeca": 1.041237113402062,
+   "nota": 0.2914580702781677,
+   "corpo": 0.8035718565996874,
+   "pele": 1
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -20%"
+  ]
+ },
+ "e_despertar/02": {
+  "medidas": {
+   "cabeca": 0.824742268041237,
+   "nota": 0.28329452872276306,
+   "corpo": 0.793726424014516,
+   "pele": 25
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -21%",
+   "membro sobrando? 25 manchas de pele (parado 23)"
+  ]
+ },
+ "e_despertar/03": {
+  "medidas": {
+   "cabeca": 0.824742268041237,
+   "nota": 0.3123120665550232,
+   "corpo": 0.8847667247471788,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_despertar/04": {
+  "medidas": {
+   "cabeca": 0.824742268041237,
+   "nota": 0.33867454528808594,
+   "corpo": 0.8630839303078194,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -14%"
+  ]
+ },
+ "e_despertar/05": {
+  "medidas": {
+   "cabeca": 0.979381443298969,
+   "nota": 0.46164920926094055,
+   "corpo": 0.8836381953022302,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_despertar/06": {
+  "medidas": {
+   "cabeca": 0.8556701030927834,
+   "nota": 0.43588390946388245,
+   "corpo": 0.8867944586323326,
+   "pele": 14
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_despertar/07": {
+  "medidas": {
+   "cabeca": 1.041237113402062,
+   "nota": 0.5614484548568726,
+   "corpo": 0.9892875315166534,
+   "pele": 14
+  },
+  "avisos": [
+   "cabeça +4%"
+  ]
+ },
+ "e_ginga/00": {
+  "medidas": {
+   "cabeca": 1.0206185567010309,
+   "nota": 1.0,
+   "corpo": 1.0284548712120887,
+   "pele": 23
+  },
+  "avisos": []
+ },
+ "e_ginga/01": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.634131669998169,
+   "corpo": 1.0028019609338619,
+   "pele": 17
+  },
+  "avisos": []
+ },
+ "e_ginga/02": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.578793466091156,
+   "corpo": 0.9977542512648533,
+   "pele": 18
+  },
+  "avisos": []
+ },
+ "e_ginga/03": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.6307997107505798,
+   "corpo": 0.9980342384324753,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça +6%"
+  ]
+ },
+ "e_ginga/04": {
+  "medidas": {
+   "cabeca": 1.0103092783505154,
+   "nota": 0.8179425597190857,
+   "corpo": 1.0268818787683558,
+   "pele": 20
+  },
+  "avisos": []
+ },
+ "e_ginga/05": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.6352577209472656,
+   "corpo": 0.9739377777707421,
+   "pele": 18
+  },
+  "avisos": []
+ },
+ "e_ginga/06": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.6001812219619751,
+   "corpo": 1.0019657615675246,
+   "pele": 18
+  },
+  "avisos": []
+ },
+ "e_ginga/07": {
+  "medidas": {
+   "cabeca": 1.0309278350515465,
+   "nota": 0.7721912264823914,
+   "corpo": 0.988429804055339,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça +3%"
+  ]
+ },
+ "e_golaco/00": {
+  "medidas": {
+   "cabeca": 0.9587628865979381,
+   "nota": 0.5018150210380554,
+   "corpo": 0.9629644965809854,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_golaco/01": {
+  "medidas": {
+   "cabeca": 0.9278350515463917,
+   "nota": 0.3324415981769562,
+   "corpo": 0.9561531290414141,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_golaco/02": {
+  "medidas": {
+   "cabeca": 0.9072164948453607,
+   "nota": 0.4115608334541321,
+   "corpo": 0.9452161886031184,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_golaco/03": {
+  "medidas": {
+   "cabeca": 0.9278350515463917,
+   "nota": 0.33957338333129883,
+   "corpo": 0.9434092438005375,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_golaco/04": {
+  "medidas": {
+   "cabeca": 0.9072164948453607,
+   "nota": 0.31627127528190613,
+   "corpo": 0.992861795239143,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_golaco/05": {
+  "medidas": {
+   "cabeca": 0.8556701030927834,
+   "nota": 0.2949019968509674,
+   "corpo": 0.9893177906643544,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_golaco/06": {
+  "medidas": {
+   "cabeca": 0.824742268041237,
+   "nota": 0.318256676197052,
+   "corpo": 0.9824758414589205,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_golaco/07": {
+  "medidas": {
+   "cabeca": 0.824742268041237,
+   "nota": 0.3182291090488434,
+   "corpo": 0.987419759029567,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_lata/00": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.4778097867965698,
+   "corpo": 1.0600081781830577,
+   "pele": 27
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 27 manchas de pele (parado 23)"
+  ]
+ },
+ "e_lata/01": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.4955381453037262,
+   "corpo": 1.05963156757706,
+   "pele": 24
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_lata/02": {
+  "medidas": {
+   "cabeca": 1.1030927835051547,
+   "nota": 0.4593299329280853,
+   "corpo": 1.0643952475052476,
+   "pele": 27
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 27 manchas de pele (parado 23)"
+  ]
+ },
+ "e_lata/03": {
+  "medidas": {
+   "cabeca": 1.0103092783505154,
+   "nota": 0.3484835922718048,
+   "corpo": 1.0475847425745284,
+   "pele": 26
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 26 manchas de pele (parado 23)"
+  ]
+ },
+ "e_lata/04": {
+  "medidas": {
+   "cabeca": 0.9072164948453607,
+   "nota": 0.32732832431793213,
+   "corpo": 1.062734613711853,
+   "pele": 28
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 28 manchas de pele (parado 23)"
+  ]
+ },
+ "e_lata/05": {
+  "medidas": {
+   "cabeca": 1.1030927835051547,
+   "nota": 0.44276320934295654,
+   "corpo": 1.0595844818393076,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_lata/06": {
+  "medidas": {
+   "cabeca": 1.1237113402061856,
+   "nota": 0.3487587571144104,
+   "corpo": 1.0650606498214048,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_lata/07": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.5019587278366089,
+   "corpo": 1.0586988802077664,
+   "pele": 26
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 26 manchas de pele (parado 23)"
+  ]
+ },
+ "e_levanta/00": {
+  "medidas": {
+   "cabeca": 1.0721649484536082,
+   "nota": 0.3568347990512848,
+   "corpo": 0.7301305285689788,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -27%"
+  ]
+ },
+ "e_levanta/01": {
+  "medidas": {
+   "cabeca": 0.8865979381443299,
+   "nota": 0.4024675488471985,
+   "corpo": 0.7466979538265619,
+   "pele": 12
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -25%"
+  ]
+ },
+ "e_levanta/02": {
+  "medidas": {
+   "cabeca": 0.8659793814432989,
+   "nota": 0.39319926500320435,
+   "corpo": 0.7963370429575883,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -20%"
+  ]
+ },
+ "e_levanta/03": {
+  "medidas": {
+   "cabeca": 0.8865979381443299,
+   "nota": 0.35486724972724915,
+   "corpo": 0.8787349384700516,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -12%"
+  ]
+ },
+ "e_levanta/04": {
+  "medidas": {
+   "cabeca": 0.8969072164948453,
+   "nota": 0.5521296858787537,
+   "corpo": 0.9044645745653576,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça -10%"
+  ]
+ },
+ "e_levanta/05": {
+  "medidas": {
+   "cabeca": 0.8865979381443299,
+   "nota": 0.4740414321422577,
+   "corpo": 0.9162041703455656,
+   "pele": 25
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 25 manchas de pele (parado 23)"
+  ]
+ },
+ "e_levanta/06": {
+  "medidas": {
+   "cabeca": 0.8969072164948453,
+   "nota": 0.6858580112457275,
+   "corpo": 0.9472198623027572,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça -10%"
+  ]
+ },
+ "e_levanta/07": {
+  "medidas": {
+   "cabeca": 0.9278350515463917,
+   "nota": 0.6692306399345398,
+   "corpo": 0.9654172277412844,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça -7%"
+  ]
+ },
+ "e_martelo/00": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.6230619549751282,
+   "corpo": 1.0461835968181328,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça +5%"
+  ]
+ },
+ "e_martelo/01": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.5768842697143555,
+   "corpo": 1.0059414373834397,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça +5%"
+  ]
+ },
+ "e_martelo/02": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.5156775116920471,
+   "corpo": 1.004402730511828,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_martelo/03": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.4598976969718933,
+   "corpo": 1.0054751105046373,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_martelo/04": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.4658690094947815,
+   "corpo": 1.0211325969275042,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_martelo/05": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.5562119483947754,
+   "corpo": 1.01891194333269,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça +5%"
+  ]
+ },
+ "e_martelo/06": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.5464450120925903,
+   "corpo": 1.0033490948893986,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_martelo/07": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.614007294178009,
+   "corpo": 1.0439015290565827,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça +6%"
+  ]
+ },
+ "e_provoca/00": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.5476922988891602,
+   "corpo": 1.0149182535470174,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_provoca/01": {
+  "medidas": {
+   "cabeca": 0.9587628865979381,
+   "nota": 0.40334171056747437,
+   "corpo": 0.9812461391785162,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_provoca/02": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.45207664370536804,
+   "corpo": 0.9801574311498514,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_provoca/03": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.3488936126232147,
+   "corpo": 0.9904367292363417,
+   "pele": 14
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_provoca/04": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.4150691330432892,
+   "corpo": 0.9681729879885741,
+   "pele": 14
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_provoca/05": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.532098114490509,
+   "corpo": 0.9873894417155382,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_provoca/06": {
+  "medidas": {
+   "cabeca": 0.979381443298969,
+   "nota": 0.5514822602272034,
+   "corpo": 0.9623321913411819,
+   "pele": 15
+  },
+  "avisos": []
+ },
+ "e_provoca/07": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.6093435883522034,
+   "corpo": 0.9927813901779506,
+   "pele": 19
+  },
+  "avisos": []
+ },
+ "e_pulo/00": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.6522498726844788,
+   "corpo": 0.9652518386908197,
+   "pele": 19
+  },
+  "avisos": []
+ },
+ "e_pulo/01": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.5458780527114868,
+   "corpo": 0.9542414163218024,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_pulo/02": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.5344926118850708,
+   "corpo": 0.9426579742420185,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_pulo/03": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.5004228949546814,
+   "corpo": 0.8850711809883002,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_pulo/04": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.5185100436210632,
+   "corpo": 0.8722154006420444,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -13%"
+  ]
+ },
+ "e_pulo/05": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.5733581185340881,
+   "corpo": 0.956966796630648,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça -5%"
+  ]
+ },
+ "e_pulo/06": {
+  "medidas": {
+   "cabeca": 0.9690721649484536,
+   "nota": 0.5637058615684509,
+   "corpo": 0.9660371844982922,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça -3%"
+  ]
+ },
+ "e_pulo/07": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.5825836658477783,
+   "corpo": 0.9712394719114691,
+   "pele": 21
+  },
+  "avisos": []
+ },
+ "e_queda/00": {
+  "medidas": {
+   "cabeca": 0.979381443298969,
+   "nota": 0.3499816954135895,
+   "corpo": 1.0289689701550742,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_queda/01": {
+  "medidas": {
+   "cabeca": 0.9690721649484536,
+   "nota": 0.3523994982242584,
+   "corpo": 1.0105237516560102,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_queda/02": {
+  "medidas": {
+   "cabeca": 0.9690721649484536,
+   "nota": 0.3665832579135895,
+   "corpo": 0.9220990817654998,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_queda/03": {
+  "medidas": {
+   "cabeca": 0.824742268041237,
+   "nota": 0.35913005471229553,
+   "corpo": 0.8065094733871792,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -19%"
+  ]
+ },
+ "e_queda/04": {
+  "medidas": {
+   "cabeca": 0.824742268041237,
+   "nota": 0.3466879427433014,
+   "corpo": 0.7519181914134113,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -25%"
+  ]
+ },
+ "e_queda/05": {
+  "medidas": {
+   "cabeca": 1.0103092783505154,
+   "nota": 0.3505670726299286,
+   "corpo": 0.6887794249802374,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -31%"
+  ]
+ },
+ "e_queda/06": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.34073835611343384,
+   "corpo": 0.6644607229694004,
+   "pele": 13
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -34%"
+  ]
+ },
+ "e_queda/07": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.3370873034000397,
+   "corpo": 0.7118338809765279,
+   "pele": 14
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -29%"
+  ]
+ },
+ "e_rasteira/00": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.627191424369812,
+   "corpo": 0.8382630385217473,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça +5%"
+  ]
+ },
+ "e_rasteira/01": {
+  "medidas": {
+   "cabeca": 1.041237113402062,
+   "nota": 0.5510073900222778,
+   "corpo": 0.8504824683485042,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça +4%"
+  ]
+ },
+ "e_rasteira/02": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.44538500905036926,
+   "corpo": 0.8339547083020517,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -17%"
+  ]
+ },
+ "e_rasteira/03": {
+  "medidas": {
+   "cabeca": 0.9484536082474226,
+   "nota": 0.45169422030448914,
+   "corpo": 0.8239394736683642,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -18%"
+  ]
+ },
+ "e_rasteira/04": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.48531946539878845,
+   "corpo": 0.8447965508616341,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -16%"
+  ]
+ },
+ "e_rasteira/05": {
+  "medidas": {
+   "cabeca": 1.0206185567010309,
+   "nota": 0.49200305342674255,
+   "corpo": 0.8370479740065007,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -16%"
+  ]
+ },
+ "e_rasteira/06": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.5497714281082153,
+   "corpo": 0.8197019419637194,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -18%"
+  ]
+ },
+ "e_rasteira/07": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.5922062397003174,
+   "corpo": 0.832157983777635,
+   "pele": 13
+  },
+  "avisos": [
+   "cabeça +5%"
+  ]
+ },
+ "e_rasteirinha/00": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.47894448041915894,
+   "corpo": 0.9375418906650752,
+   "pele": 27
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 27 manchas de pele (parado 23)"
+  ]
+ },
+ "e_rasteirinha/01": {
+  "medidas": {
+   "cabeca": 1.154639175257732,
+   "nota": 0.39002764225006104,
+   "corpo": 0.9126030251884677,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_rasteirinha/02": {
+  "medidas": {
+   "cabeca": 1.175257731958763,
+   "nota": 0.3941797614097595,
+   "corpo": 0.903515283326202,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_rasteirinha/03": {
+  "medidas": {
+   "cabeca": 1.1030927835051547,
+   "nota": 0.4238649010658264,
+   "corpo": 0.9045417986114817,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_rasteirinha/04": {
+  "medidas": {
+   "cabeca": 1.1237113402061856,
+   "nota": 0.4150024950504303,
+   "corpo": 0.9117716555397867,
+   "pele": 24
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_rasteirinha/05": {
+  "medidas": {
+   "cabeca": 1.1237113402061856,
+   "nota": 0.40689000487327576,
+   "corpo": 0.8961965559257078,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_rasteirinha/06": {
+  "medidas": {
+   "cabeca": 1.0206185567010309,
+   "nota": 0.4315456748008728,
+   "corpo": 0.9021669007651126,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_rasteirinha/07": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.49822163581848145,
+   "corpo": 0.9325903508860349,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_rolamento/00": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.5231792330741882,
+   "corpo": 1.0230461117040275,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_rolamento/01": {
+  "medidas": {
+   "cabeca": 0.9587628865979381,
+   "nota": 0.41158631443977356,
+   "corpo": 0.8987648897102762,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_rolamento/02": {
+  "medidas": {
+   "cabeca": 0.824742268041237,
+   "nota": 0.2604514956474304,
+   "corpo": 0.8770072021444331,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -12%"
+  ]
+ },
+ "e_rolamento/03": {
+  "medidas": {
+   "cabeca": 1.2783505154639176,
+   "nota": 0.31296035647392273,
+   "corpo": 0.894413300223399,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_rolamento/04": {
+  "medidas": {
+   "cabeca": 0.8453608247422679,
+   "nota": 0.3378993570804596,
+   "corpo": 0.8486149130800169,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -15%"
+  ]
+ },
+ "e_rolamento/05": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.38234540820121765,
+   "corpo": 0.832385783395658,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -17%"
+  ]
+ },
+ "e_rolamento/06": {
+  "medidas": {
+   "cabeca": 0.979381443298969,
+   "nota": 0.46062615513801575,
+   "corpo": 0.8668332516002791,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -13%"
+  ]
+ },
+ "e_rolamento/07": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.5316420793533325,
+   "corpo": 1.020927364768477,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_soco/00": {
+  "medidas": {
+   "cabeca": 0.9690721649484536,
+   "nota": 0.6712040901184082,
+   "corpo": 0.9843225831159382,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça -3%"
+  ]
+ },
+ "e_soco/01": {
+  "medidas": {
+   "cabeca": 0.9690721649484536,
+   "nota": 0.6667289733886719,
+   "corpo": 0.9727177984964596,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça -3%"
+  ]
+ },
+ "e_soco/02": {
+  "medidas": {
+   "cabeca": 0.9690721649484536,
+   "nota": 0.5261769890785217,
+   "corpo": 0.9628712317560497,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_soco/03": {
+  "medidas": {
+   "cabeca": 0.9690721649484536,
+   "nota": 0.5806405544281006,
+   "corpo": 0.9658305764619456,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça -3%"
+  ]
+ },
+ "e_soco/04": {
+  "medidas": {
+   "cabeca": 0.979381443298969,
+   "nota": 0.641136109828949,
+   "corpo": 0.9780988098612956,
+   "pele": 20
+  },
+  "avisos": []
+ },
+ "e_soco/05": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.6278221011161804,
+   "corpo": 0.9824758414589205,
+   "pele": 19
+  },
+  "avisos": []
+ },
+ "e_soco/06": {
+  "medidas": {
+   "cabeca": 0.9896907216494846,
+   "nota": 0.6459526419639587,
+   "corpo": 0.972799861879939,
+   "pele": 26
+  },
+  "avisos": [
+   "membro sobrando? 26 manchas de pele (parado 23)"
+  ]
+ },
+ "e_soco/07": {
+  "medidas": {
+   "cabeca": 0.9690721649484536,
+   "nota": 0.6601894497871399,
+   "corpo": 0.9824250578030217,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça -3%"
+  ]
+ },
+ "e_vitoria/00": {
+  "medidas": {
+   "cabeca": 0.9690721649484536,
+   "nota": 0.5765916109085083,
+   "corpo": 0.9768635976708381,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça -3%"
+  ]
+ },
+ "e_vitoria/01": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.5155928134918213,
+   "corpo": 0.9860950346807612,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_vitoria/02": {
+  "medidas": {
+   "cabeca": 0.9690721649484536,
+   "nota": 0.4076692759990692,
+   "corpo": 0.9748594371957386,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_vitoria/03": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.4110678732395172,
+   "corpo": 0.97599495182351,
+   "pele": 14
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_vitoria/04": {
+  "medidas": {
+   "cabeca": 0.8350515463917525,
+   "nota": 0.37787482142448425,
+   "corpo": 0.9955415890341048,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_vitoria/05": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.35343319177627563,
+   "corpo": 0.9868637936206957,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_vitoria/06": {
+  "medidas": {
+   "cabeca": 1.0618556701030928,
+   "nota": 0.49730128049850464,
+   "corpo": 0.961273964865478,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "e_vitoria/07": {
+  "medidas": {
+   "cabeca": 1.0515463917525774,
+   "nota": 0.5823473334312439,
+   "corpo": 0.9873591234706024,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça +5%"
+  ]
+ },
+ "ginga/00": {
+  "medidas": {
+   "cabeca": 1.010204081632653,
+   "nota": 1.0,
+   "corpo": 1.0332440340744857,
+   "pele": 18
+  },
+  "avisos": []
+ },
+ "ginga/01": {
+  "medidas": {
+   "cabeca": 1.030612244897959,
+   "nota": 0.9328710436820984,
+   "corpo": 0.9922290243357017,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça +3%"
+  ]
+ },
+ "ginga/02": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.9521040916442871,
+   "corpo": 0.9992529835428174,
+   "pele": 18
+  },
+  "avisos": []
+ },
+ "ginga/03": {
+  "medidas": {
+   "cabeca": 1.010204081632653,
+   "nota": 0.9284915328025818,
+   "corpo": 0.9861544005087658,
+   "pele": 16
+  },
+  "avisos": []
+ },
+ "ginga/04": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.9612125158309937,
+   "corpo": 1.0323379235122248,
+   "pele": 18
+  },
+  "avisos": []
+ },
+ "ginga/05": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.9066272974014282,
+   "corpo": 0.9440332845778089,
+   "pele": 15
+  },
+  "avisos": []
+ },
+ "ginga/06": {
+  "medidas": {
+   "cabeca": 0.9897959183673469,
+   "nota": 0.9234038591384888,
+   "corpo": 1.0007470164571826,
+   "pele": 19
+  },
+  "avisos": []
+ },
+ "ginga/07": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.9466769695281982,
+   "corpo": 1.024691757486326,
+   "pele": 15
+  },
+  "avisos": []
+ },
+ "golaco/00": {
+  "medidas": {
+   "cabeca": 1.1632653061224492,
+   "nota": 0.7195582389831543,
+   "corpo": 1.1838502360260916,
+   "pele": 10
+  },
+  "avisos": [
+   "cabeça +16%"
+  ]
+ },
+ "golaco/01": {
+  "medidas": {
+   "cabeca": 1.0918367346938775,
+   "nota": 0.6150311827659607,
+   "corpo": 1.13556072783185,
+   "pele": 11
+  },
+  "avisos": [
+   "cabeça +9%"
+  ]
+ },
+ "golaco/02": {
+  "medidas": {
+   "cabeca": 1.2142857142857144,
+   "nota": 0.7228379249572754,
+   "corpo": 1.1098525465527054,
+   "pele": 11
+  },
+  "avisos": [
+   "cabeça +21%"
+  ]
+ },
+ "golaco/03": {
+  "medidas": {
+   "cabeca": 1.1734693877551021,
+   "nota": 0.6863124370574951,
+   "corpo": 1.1185756661578081,
+   "pele": 10
+  },
+  "avisos": [
+   "cabeça +17%"
+  ]
+ },
+ "golaco/04": {
+  "medidas": {
+   "cabeca": 0.9081632653061223,
+   "nota": 0.6173292398452759,
+   "corpo": 1.1144289122416666,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça -9%"
+  ]
+ },
+ "golaco/05": {
+  "medidas": {
+   "cabeca": 0.836734693877551,
+   "nota": 0.41624605655670166,
+   "corpo": 1.1097933733522716,
+   "pele": 13
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "golaco/06": {
+  "medidas": {
+   "cabeca": 0.8979591836734693,
+   "nota": 0.417432963848114,
+   "corpo": 1.1083278299321289,
+   "pele": 12
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "golaco/07": {
+  "medidas": {
+   "cabeca": 0.8979591836734693,
+   "nota": 0.41252127289772034,
+   "corpo": 1.1090978517650767,
+   "pele": 12
+  },
+  "avisos": [
+   "cabeça não medida"
+  ]
+ },
+ "lata/00": {
+  "medidas": {
+   "cabeca": 1.030612244897959,
+   "nota": 0.8473650217056274,
+   "corpo": 1.0236658151046347,
+   "pele": 29
+  },
+  "avisos": [
+   "cabeça +3%",
+   "membro sobrando? 29 manchas de pele (parado 19)"
+  ]
+ },
+ "lata/01": {
+  "medidas": {
+   "cabeca": 1.030612244897959,
+   "nota": 0.8606387972831726,
+   "corpo": 1.016455224339853,
+   "pele": 24
+  },
+  "avisos": [
+   "cabeça +3%",
+   "membro sobrando? 24 manchas de pele (parado 19)"
+  ]
+ },
+ "lata/02": {
+  "medidas": {
+   "cabeca": 1.010204081632653,
+   "nota": 0.8274571299552917,
+   "corpo": 1.0310489228814899,
+   "pele": 23
+  },
+  "avisos": [
+   "membro sobrando? 23 manchas de pele (parado 19)"
+  ]
+ },
+ "lata/03": {
+  "medidas": {
+   "cabeca": 1.0510204081632653,
+   "nota": 0.8215463757514954,
+   "corpo": 1.0290565559514235,
+   "pele": 28
+  },
+  "avisos": [
+   "cabeça +5%",
+   "membro sobrando? 28 manchas de pele (parado 19)"
+  ]
+ },
+ "lata/04": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.603325366973877,
+   "corpo": 1.0571515765647002,
+   "pele": 30
+  },
+  "avisos": [
+   "membro sobrando? 30 manchas de pele (parado 19)"
+  ]
+ },
+ "lata/05": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.844403862953186,
+   "corpo": 0.9707000816858922,
+   "pele": 21
+  },
+  "avisos": [
+   "membro sobrando? 21 manchas de pele (parado 19)"
+  ]
+ },
+ "lata/06": {
+  "medidas": {
+   "cabeca": 1.0510204081632653,
+   "nota": 0.808842658996582,
+   "corpo": 1.0264527001111514,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça +5%",
+   "membro sobrando? 22 manchas de pele (parado 19)"
+  ]
+ },
+ "lata/07": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.8366448879241943,
+   "corpo": 1.031462851715467,
+   "pele": 27
+  },
+  "avisos": [
+   "membro sobrando? 27 manchas de pele (parado 19)"
+  ]
+ },
+ "levanta/00": {
+  "medidas": {
+   "cabeca": 1.1020408163265307,
+   "nota": 0.5967046022415161,
+   "corpo": 0.8364610608737258,
+   "pele": 30
+  },
+  "avisos": [
+   "cabeça +10%",
+   "membro sobrando? 30 manchas de pele (parado 19)"
+  ]
+ },
+ "levanta/01": {
+  "medidas": {
+   "cabeca": 1.1326530612244898,
+   "nota": 0.6563224196434021,
+   "corpo": 0.8853948246689372,
+   "pele": 36
+  },
+  "avisos": [
+   "cabeça +13%",
+   "membro sobrando? 36 manchas de pele (parado 19)"
+  ]
+ },
+ "levanta/02": {
+  "medidas": {
+   "cabeca": 1.1020408163265307,
+   "nota": 0.6587143540382385,
+   "corpo": 0.972440612619846,
+   "pele": 41
+  },
+  "avisos": [
+   "cabeça +10%",
+   "membro sobrando? 41 manchas de pele (parado 19)"
+  ]
+ },
+ "levanta/03": {
+  "medidas": {
+   "cabeca": 1.1020408163265307,
+   "nota": 0.6095922589302063,
+   "corpo": 1.0315742657155607,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça +10%",
+   "membro sobrando? 21 manchas de pele (parado 19)"
+  ]
+ },
+ "levanta/04": {
+  "medidas": {
+   "cabeca": 1.1836734693877553,
+   "nota": 0.6683056950569153,
+   "corpo": 1.1116262778815826,
+   "pele": 24
+  },
+  "avisos": [
+   "cabeça +18%",
+   "membro sobrando? 24 manchas de pele (parado 19)"
+  ]
+ },
+ "levanta/05": {
+  "medidas": {
+   "cabeca": 1.1632653061224492,
+   "nota": 0.6804710030555725,
+   "corpo": 1.13195495953915,
+   "pele": 30
+  },
+  "avisos": [
+   "cabeça +16%",
+   "membro sobrando? 30 manchas de pele (parado 19)"
+  ]
+ },
+ "levanta/06": {
+  "medidas": {
+   "cabeca": 1.1734693877551021,
+   "nota": 0.7200877070426941,
+   "corpo": 1.183350873309701,
+   "pele": 24
+  },
+  "avisos": [
+   "cabeça +17%",
+   "membro sobrando? 24 manchas de pele (parado 19)"
+  ]
+ },
+ "levanta/07": {
+  "medidas": {
+   "cabeca": 1.2244897959183676,
+   "nota": 0.7770283222198486,
+   "corpo": 1.1830733585024538,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça +22%",
+   "membro sobrando? 21 manchas de pele (parado 19)"
+  ]
+ },
+ "martelo/00": {
+  "medidas": {
+   "cabeca": 1.0816326530612246,
+   "nota": 0.8089725971221924,
+   "corpo": 1.0662751192293827,
+   "pele": 8
+  },
+  "avisos": [
+   "cabeça +8%"
+  ]
+ },
+ "martelo/01": {
+  "medidas": {
+   "cabeca": 1.1122448979591837,
+   "nota": 0.7625759840011597,
+   "corpo": 1.045564549307312,
+   "pele": 9
+  },
+  "avisos": [
+   "cabeça +11%"
+  ]
+ },
+ "martelo/02": {
+  "medidas": {
+   "cabeca": 1.1122448979591837,
+   "nota": 0.7746677398681641,
+   "corpo": 0.9966865738815214,
+   "pele": 4
+  },
+  "avisos": [
+   "cabeça +11%"
+  ]
+ },
+ "martelo/03": {
+  "medidas": {
+   "cabeca": 1.1122448979591837,
+   "nota": 0.7919213771820068,
+   "corpo": 0.9754580303966122,
+   "pele": 8
+  },
+  "avisos": [
+   "cabeça +11%"
+  ]
+ },
+ "martelo/04": {
+  "medidas": {
+   "cabeca": 1.0816326530612246,
+   "nota": 0.7857033014297485,
+   "corpo": 0.9997129237884247,
+   "pele": 11
+  },
+  "avisos": [
+   "cabeça +8%"
+  ]
+ },
+ "martelo/05": {
+  "medidas": {
+   "cabeca": 1.0816326530612246,
+   "nota": 0.7787618637084961,
+   "corpo": 0.9633657378537953,
+   "pele": 12
+  },
+  "avisos": [
+   "cabeça +8%"
+  ]
+ },
+ "martelo/06": {
+  "medidas": {
+   "cabeca": 1.0918367346938775,
+   "nota": 0.8006499409675598,
+   "corpo": 1.0104775011506797,
+   "pele": 8
+  },
+  "avisos": [
+   "cabeça +9%"
+  ]
+ },
+ "martelo/07": {
+  "medidas": {
+   "cabeca": 1.0816326530612246,
+   "nota": 0.8034540414810181,
+   "corpo": 1.0579588470356855,
+   "pele": 6
+  },
+  "avisos": [
+   "cabeça +8%"
+  ]
+ },
+ "parado/00": {
+  "medidas": {
+   "cabeca": 1.0714285714285714,
+   "nota": 0.8968005180358887,
+   "corpo": 1.037857638322717,
+   "pele": 11
+  },
+  "avisos": [
+   "cabeça +7%"
+  ]
+ },
+ "parado/01": {
+  "medidas": {
+   "cabeca": 1.0510204081632653,
+   "nota": 0.846921980381012,
+   "corpo": 1.0008946567656372,
+   "pele": 20
+  },
+  "avisos": [
+   "cabeça +5%"
+  ]
+ },
+ "parado/02": {
+  "medidas": {
+   "cabeca": 1.0612244897959184,
+   "nota": 0.8351956009864807,
+   "corpo": 0.9881501951779089,
+   "pele": 25
+  },
+  "avisos": [
+   "cabeça +6%",
+   "membro sobrando? 25 manchas de pele (parado 19)"
+  ]
+ },
+ "parado/03": {
+  "medidas": {
+   "cabeca": 1.0816326530612246,
+   "nota": 0.8142300844192505,
+   "corpo": 0.9746666518961913,
+   "pele": 24
+  },
+  "avisos": [
+   "cabeça +8%",
+   "membro sobrando? 24 manchas de pele (parado 19)"
+  ]
+ },
+ "parado/04": {
+  "medidas": {
+   "cabeca": 1.0510204081632653,
+   "nota": 0.8496368527412415,
+   "corpo": 1.0082491079314244,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça +5%"
+  ]
+ },
+ "parado/05": {
+  "medidas": {
+   "cabeca": 1.0714285714285714,
+   "nota": 0.8253967761993408,
+   "corpo": 1.008802599047137,
+   "pele": 14
+  },
+  "avisos": [
+   "cabeça +7%"
+  ]
+ },
+ "parado/06": {
+  "medidas": {
+   "cabeca": 1.0510204081632653,
+   "nota": 0.8495683073997498,
+   "corpo": 1.015049013994872,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça +5%"
+  ]
+ },
+ "parado/07": {
+  "medidas": {
+   "cabeca": 1.0714285714285714,
+   "nota": 0.8705710768699646,
+   "corpo": 1.0310966923813516,
+   "pele": 10
+  },
+  "avisos": [
+   "cabeça +7%"
+  ]
+ },
+ "parry_alto/00": {
+  "medidas": {
+   "cabeca": 1.030612244897959,
+   "nota": 0.8391849398612976,
+   "corpo": 1.065412511728146,
+   "pele": 12
+  },
+  "avisos": [
+   "cabeça +3%"
+  ]
+ },
+ "parry_alto/01": {
+  "medidas": {
+   "cabeca": 0.9387755102040816,
+   "nota": 0.5901980400085449,
+   "corpo": 1.017827231698555,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça -6%"
+  ]
+ },
+ "parry_alto/02": {
+  "medidas": {
+   "cabeca": 0.9183673469387754,
+   "nota": 0.5847465991973877,
+   "corpo": 1.023216641842507,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça -8%"
+  ]
+ },
+ "parry_alto/03": {
+  "medidas": {
+   "cabeca": 0.9387755102040816,
+   "nota": 0.5845363736152649,
+   "corpo": 1.0533709389355088,
+   "pele": 12
+  },
+  "avisos": [
+   "cabeça -6%"
+  ]
+ },
+ "parry_alto/04": {
+  "medidas": {
+   "cabeca": 0.9387755102040816,
+   "nota": 0.5912021994590759,
+   "corpo": 1.0224782859723616,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça -6%"
+  ]
+ },
+ "parry_alto/05": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.7766061425209045,
+   "corpo": 0.9962087561335118,
+   "pele": 16
+  },
+  "avisos": []
+ },
+ "parry_alto/06": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.775981605052948,
+   "corpo": 1.0501240261238158,
+   "pele": 12
+  },
+  "avisos": []
+ },
+ "parry_alto/07": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.8109900951385498,
+   "corpo": 1.0651042683147605,
+   "pele": 13
+  },
+  "avisos": []
+ },
+ "parry_baixo/00": {
+  "medidas": {
+   "cabeca": 1.1938775510204083,
+   "nota": 0.7549703121185303,
+   "corpo": 1.0736098846697173,
+   "pele": 33
+  },
+  "avisos": [
+   "cabeça +19%",
+   "membro sobrando? 33 manchas de pele (parado 19)"
+  ]
+ },
+ "parry_baixo/01": {
+  "medidas": {
+   "cabeca": 0.9591836734693877,
+   "nota": 0.484306275844574,
+   "corpo": 0.8771604944101448,
+   "pele": 36
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -12%",
+   "membro sobrando? 36 manchas de pele (parado 19)"
+  ]
+ },
+ "parry_baixo/02": {
+  "medidas": {
+   "cabeca": 0.9795918367346939,
+   "nota": 0.5211365818977356,
+   "corpo": 0.8736533762627204,
+   "pele": 39
+  },
+  "avisos": [
+   "cabeça não medida",
+   "corpo -13%",
+   "membro sobrando? 39 manchas de pele (parado 19)"
+  ]
+ },
+ "parry_baixo/03": {
+  "medidas": {
+   "cabeca": 0.9795918367346939,
+   "nota": 0.47780466079711914,
+   "corpo": 0.9209511349274282,
+   "pele": 32
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 32 manchas de pele (parado 19)"
+  ]
+ },
+ "parry_baixo/04": {
+  "medidas": {
+   "cabeca": 0.9795918367346939,
+   "nota": 0.541048526763916,
+   "corpo": 0.989013788790624,
+   "pele": 42
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 42 manchas de pele (parado 19)"
+  ]
+ },
+ "parry_baixo/05": {
+  "medidas": {
+   "cabeca": 1.0816326530612246,
+   "nota": 0.685333251953125,
+   "corpo": 1.0258287117860316,
+   "pele": 35
+  },
+  "avisos": [
+   "cabeça +8%",
+   "membro sobrando? 35 manchas de pele (parado 19)"
+  ]
+ },
+ "parry_baixo/06": {
+  "medidas": {
+   "cabeca": 0.9897959183673469,
+   "nota": 0.5924813151359558,
+   "corpo": 1.0647959356692553,
+   "pele": 22
+  },
+  "avisos": [
+   "membro sobrando? 22 manchas de pele (parado 19)"
+  ]
+ },
+ "parry_baixo/07": {
+  "medidas": {
+   "cabeca": 1.0816326530612246,
+   "nota": 0.6877619624137878,
+   "corpo": 1.0522013321493136,
+   "pele": 29
+  },
+  "avisos": [
+   "cabeça +8%",
+   "membro sobrando? 29 manchas de pele (parado 19)"
+  ]
+ },
+ "provoca/00": {
+  "medidas": {
+   "cabeca": 1.0714285714285714,
+   "nota": 0.9172531366348267,
+   "corpo": 1.0759470597382463,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça +7%"
+  ]
+ },
+ "provoca/01": {
+  "medidas": {
+   "cabeca": 1.1020408163265307,
+   "nota": 0.7564719319343567,
+   "corpo": 1.036401261919267,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça +10%"
+  ]
+ },
+ "provoca/02": {
+  "medidas": {
+   "cabeca": 1.0816326530612246,
+   "nota": 0.7414221167564392,
+   "corpo": 1.0321947807112193,
+   "pele": 26
+  },
+  "avisos": [
+   "cabeça +8%",
+   "membro sobrando? 26 manchas de pele (parado 19)"
+  ]
+ },
+ "provoca/03": {
+  "medidas": {
+   "cabeca": 1.0,
+   "nota": 0.8044763803482056,
+   "corpo": 1.036195304544895,
+   "pele": 21
+  },
+  "avisos": [
+   "membro sobrando? 21 manchas de pele (parado 19)"
+  ]
+ },
+ "provoca/04": {
+  "medidas": {
+   "cabeca": 1.0510204081632653,
+   "nota": 0.8111874461174011,
+   "corpo": 1.0581760838614083,
+   "pele": 19
+  },
+  "avisos": [
+   "cabeça +5%"
+  ]
+ },
+ "provoca/05": {
+  "medidas": {
+   "cabeca": 1.0510204081632653,
+   "nota": 0.8339487910270691,
+   "corpo": 1.0418836926081994,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça +5%",
+   "membro sobrando? 23 manchas de pele (parado 19)"
+  ]
+ },
+ "provoca/06": {
+  "medidas": {
+   "cabeca": 0.9897959183673469,
+   "nota": 0.7850306630134583,
+   "corpo": 1.0527940953146757,
+   "pele": 21
+  },
+  "avisos": [
+   "membro sobrando? 21 manchas de pele (parado 19)"
+  ]
+ },
+ "provoca/07": {
+  "medidas": {
+   "cabeca": 1.0612244897959184,
+   "nota": 0.8618658185005188,
+   "corpo": 1.062511493189627,
+   "pele": 21
+  },
+  "avisos": [
+   "cabeça +6%",
+   "membro sobrando? 21 manchas de pele (parado 19)"
+  ]
+ },
+ "pulo/00": {
+  "medidas": {
+   "cabeca": 1.1632653061224492,
+   "nota": 0.7506762742996216,
+   "corpo": 1.0742825343188573,
+   "pele": 26
+  },
+  "avisos": [
+   "cabeça +16%",
+   "membro sobrando? 26 manchas de pele (parado 19)"
+  ]
+ },
+ "pulo/01": {
+  "medidas": {
+   "cabeca": 1.2040816326530615,
+   "nota": 0.7521533370018005,
+   "corpo": 1.1417751242780616,
+   "pele": 13
+  },
+  "avisos": [
+   "cabeça +20%"
+  ]
+ },
+ "pulo/02": {
+  "medidas": {
+   "cabeca": 1.2244897959183676,
+   "nota": 0.7426437139511108,
+   "corpo": 1.1067120071568897,
+   "pele": 11
+  },
+  "avisos": [
+   "cabeça +22%"
+  ]
+ },
+ "pulo/03": {
+  "medidas": {
+   "cabeca": 1.2040816326530615,
+   "nota": 0.7695876955986023,
+   "corpo": 1.1133087051374526,
+   "pele": 25
+  },
+  "avisos": [
+   "cabeça +20%",
+   "membro sobrando? 25 manchas de pele (parado 19)"
+  ]
+ },
+ "pulo/04": {
+  "medidas": {
+   "cabeca": 1.1836734693877553,
+   "nota": 0.7699919939041138,
+   "corpo": 1.0911596157941743,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça +18%"
+  ]
+ },
+ "pulo/05": {
+  "medidas": {
+   "cabeca": 1.2142857142857144,
+   "nota": 0.7568026781082153,
+   "corpo": 1.1359943852153649,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça +21%"
+  ]
+ },
+ "pulo/06": {
+  "medidas": {
+   "cabeca": 1.2040816326530615,
+   "nota": 0.7540477514266968,
+   "corpo": 1.14527830292369,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça +20%"
+  ]
+ },
+ "pulo/07": {
+  "medidas": {
+   "cabeca": 1.1836734693877553,
+   "nota": 0.7408766746520996,
+   "corpo": 1.0634845246257238,
+   "pele": 27
+  },
+  "avisos": [
+   "cabeça +18%",
+   "membro sobrando? 27 manchas de pele (parado 19)"
+  ]
+ },
+ "queda/00": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.771844208240509,
+   "corpo": 1.2523602521642678,
+   "pele": 27
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 27 manchas de pele (parado 19)"
+  ]
+ },
+ "queda/01": {
+  "medidas": {
+   "cabeca": 1.2448979591836737,
+   "nota": 0.562274694442749,
+   "corpo": 1.188998036903247,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça +24%",
+   "membro sobrando? 23 manchas de pele (parado 19)"
+  ]
+ },
+ "queda/02": {
+  "medidas": {
+   "cabeca": 1.1632653061224492,
+   "nota": 0.5487480163574219,
+   "corpo": 1.0708690678452464,
+   "pele": 30
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 30 manchas de pele (parado 19)"
+  ]
+ },
+ "queda/03": {
+  "medidas": {
+   "cabeca": 1.2448979591836737,
+   "nota": 0.5518115162849426,
+   "corpo": 1.1656116622622439,
+   "pele": 36
+  },
+  "avisos": [
+   "cabeça +24%",
+   "membro sobrando? 36 manchas de pele (parado 19)"
+  ]
+ },
+ "queda/04": {
+  "medidas": {
+   "cabeca": 1.1632653061224492,
+   "nota": 0.5505455732345581,
+   "corpo": 1.058036436736569,
+   "pele": 52
+  },
+  "avisos": [
+   "cabeça +16%",
+   "membro sobrando? 52 manchas de pele (parado 19)"
+  ]
+ },
+ "queda/05": {
+  "medidas": {
+   "cabeca": 1.2653061224489797,
+   "nota": 0.5538027286529541,
+   "corpo": 1.0178433619547615,
+   "pele": 46
+  },
+  "avisos": [
+   "cabeça +27%",
+   "membro sobrando? 46 manchas de pele (parado 19)"
+  ]
+ },
+ "queda/06": {
+  "medidas": {
+   "cabeca": 1.1632653061224492,
+   "nota": 0.543769121170044,
+   "corpo": 0.978684249186108,
+   "pele": 53
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 53 manchas de pele (parado 19)"
+  ]
+ },
+ "queda/07": {
+  "medidas": {
+   "cabeca": 0.8163265306122448,
+   "nota": 0.5514543652534485,
+   "corpo": 0.9671586984282297,
+   "pele": 50
+  },
+  "avisos": [
+   "cabeça -18%",
+   "membro sobrando? 50 manchas de pele (parado 19)"
+  ]
+ },
+ "rasteira/00": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.6963177919387817,
+   "corpo": 1.1482704784968467,
+   "pele": 28
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 28 manchas de pele (parado 19)"
+  ]
+ },
+ "rasteira/01": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.6715825200080872,
+   "corpo": 1.2223869803357463,
+   "pele": 24
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 24 manchas de pele (parado 19)"
+  ]
+ },
+ "rasteira/02": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.6619317531585693,
+   "corpo": 1.1461237754070053,
+   "pele": 29
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 29 manchas de pele (parado 19)"
+  ]
+ },
+ "rasteira/03": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.6781251430511475,
+   "corpo": 1.1458802286684828,
+   "pele": 30
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 30 manchas de pele (parado 19)"
+  ]
+ },
+ "rasteira/04": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.6640385389328003,
+   "corpo": 1.1285995482210047,
+   "pele": 29
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 29 manchas de pele (parado 19)"
+  ]
+ },
+ "rasteira/05": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.6837367415428162,
+   "corpo": 1.1537620676530675,
+   "pele": 24
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 24 manchas de pele (parado 19)"
+  ]
+ },
+ "rasteira/06": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.6741294860839844,
+   "corpo": 1.156207023646831,
+   "pele": 27
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 27 manchas de pele (parado 19)"
+  ]
+ },
+ "rasteira/07": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.6949101090431213,
+   "corpo": 1.145249631901845,
+   "pele": 24
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 24 manchas de pele (parado 19)"
+  ]
+ },
+ "rasteirinha/00": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.7223522067070007,
+   "corpo": 1.1646675674588387,
+   "pele": 39
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 39 manchas de pele (parado 19)"
+  ]
+ },
+ "rasteirinha/01": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.7136721014976501,
+   "corpo": 1.1566471346375804,
+   "pele": 37
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 37 manchas de pele (parado 19)"
+  ]
+ },
+ "rasteirinha/02": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.7245623469352722,
+   "corpo": 1.1722690639190858,
+   "pele": 37
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 37 manchas de pele (parado 19)"
+  ]
+ },
+ "rasteirinha/03": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.7160632610321045,
+   "corpo": 1.1735428513908042,
+   "pele": 39
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 39 manchas de pele (parado 19)"
+  ]
+ },
+ "rasteirinha/04": {
+  "medidas": {
+   "cabeca": 1.2653061224489797,
+   "nota": 0.7508651614189148,
+   "corpo": 1.1518821864709132,
+   "pele": 32
+  },
+  "avisos": [
+   "cabeça +27%",
+   "membro sobrando? 32 manchas de pele (parado 19)"
+  ]
+ },
+ "rasteirinha/05": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.718324601650238,
+   "corpo": 1.1212877241112236,
+   "pele": 32
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 32 manchas de pele (parado 19)"
+  ]
+ },
+ "rasteirinha/06": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.737241804599762,
+   "corpo": 1.1384053920176582,
+   "pele": 31
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 31 manchas de pele (parado 19)"
+  ]
+ },
+ "rasteirinha/07": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.7201696634292603,
+   "corpo": 1.1587176678322395,
+   "pele": 38
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 38 manchas de pele (parado 19)"
+  ]
+ },
+ "recuo/00": {
+  "medidas": {
+   "cabeca": 1.0408163265306123,
+   "nota": 0.7904351353645325,
+   "corpo": 1.0870442077734925,
+   "pele": 12
+  },
+  "avisos": [
+   "cabeça +4%"
+  ]
+ },
+ "recuo/01": {
+  "medidas": {
+   "cabeca": 1.0714285714285714,
+   "nota": 0.773408055305481,
+   "corpo": 1.0623724159474401,
+   "pele": 10
+  },
+  "avisos": [
+   "cabeça +7%"
+  ]
+ },
+ "recuo/02": {
+  "medidas": {
+   "cabeca": 1.0816326530612246,
+   "nota": 0.7555368542671204,
+   "corpo": 1.0367655478154592,
+   "pele": 13
+  },
+  "avisos": [
+   "cabeça +8%"
+  ]
+ },
+ "recuo/03": {
+  "medidas": {
+   "cabeca": 1.0714285714285714,
+   "nota": 0.7620425224304199,
+   "corpo": 1.0449991075556004,
+   "pele": 14
+  },
+  "avisos": [
+   "cabeça +7%"
+  ]
+ },
+ "recuo/04": {
+  "medidas": {
+   "cabeca": 1.0816326530612246,
+   "nota": 0.7476319670677185,
+   "corpo": 1.0716353647016026,
+   "pele": 9
+  },
+  "avisos": [
+   "cabeça +8%"
+  ]
+ },
+ "recuo/05": {
+  "medidas": {
+   "cabeca": 1.0204081632653061,
+   "nota": 0.7357075214385986,
+   "corpo": 1.0799071285525463,
+   "pele": 12
+  },
+  "avisos": []
+ },
+ "recuo/06": {
+  "medidas": {
+   "cabeca": 1.1020408163265307,
+   "nota": 0.7499938607215881,
+   "corpo": 1.0822762146800338,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça +10%"
+  ]
+ },
+ "recuo/07": {
+  "medidas": {
+   "cabeca": 1.0714285714285714,
+   "nota": 0.765763521194458,
+   "corpo": 1.1024461741345255,
+   "pele": 11
+  },
+  "avisos": [
+   "cabeça +7%"
+  ]
+ },
+ "rolamento/00": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.671597421169281,
+   "corpo": 1.201224488712463,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 22 manchas de pele (parado 19)"
+  ]
+ },
+ "rolamento/01": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.6342002749443054,
+   "corpo": 1.0917161879373771,
+   "pele": 39
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 39 manchas de pele (parado 19)"
+  ]
+ },
+ "rolamento/02": {
+  "medidas": {
+   "cabeca": 0.8571428571428571,
+   "nota": 0.46068137884140015,
+   "corpo": 0.9986613205401625,
+   "pele": 45
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 45 manchas de pele (parado 19)"
+  ]
+ },
+ "rolamento/03": {
+  "medidas": {
+   "cabeca": 1.0204081632653061,
+   "nota": 0.5014305114746094,
+   "corpo": 1.058253657634787,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça não medida",
+   "membro sobrando? 23 manchas de pele (parado 19)"
+  ]
+ },
+ "rolamento/04": {
+  "medidas": {
+   "cabeca": 1.2653061224489797,
+   "nota": 0.6390701532363892,
+   "corpo": 1.0394225465898648,
+   "pele": 46
+  },
+  "avisos": [
+   "cabeça +27%",
+   "membro sobrando? 46 manchas de pele (parado 19)"
+  ]
+ },
+ "rolamento/05": {
+  "medidas": {
+   "cabeca": 1.2653061224489797,
+   "nota": 0.6094407439231873,
+   "corpo": 1.0094208476135782,
+   "pele": 44
+  },
+  "avisos": [
+   "cabeça +27%",
+   "membro sobrando? 44 manchas de pele (parado 19)"
+  ]
+ },
+ "rolamento/06": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.6400920748710632,
+   "corpo": 1.1049006690293204,
+   "pele": 34
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 34 manchas de pele (parado 19)"
+  ]
+ },
+ "rolamento/07": {
+  "medidas": {
+   "cabeca": 1.2755102040816328,
+   "nota": 0.6707470417022705,
+   "corpo": 1.1938486354709967,
+   "pele": 23
+  },
+  "avisos": [
+   "cabeça +28%",
+   "membro sobrando? 23 manchas de pele (parado 19)"
+  ]
+ },
+ "soco/00": {
+  "medidas": {
+   "cabeca": 1.1020408163265307,
+   "nota": 0.8337502479553223,
+   "corpo": 1.0640247131558436,
+   "pele": 14
+  },
+  "avisos": [
+   "cabeça +10%"
+  ]
+ },
+ "soco/01": {
+  "medidas": {
+   "cabeca": 1.0918367346938775,
+   "nota": 0.8138460516929626,
+   "corpo": 1.0482149072965432,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça +9%"
+  ]
+ },
+ "soco/02": {
+  "medidas": {
+   "cabeca": 1.1122448979591837,
+   "nota": 0.7856841683387756,
+   "corpo": 1.0490603556721616,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça +11%"
+  ]
+ },
+ "soco/03": {
+  "medidas": {
+   "cabeca": 1.0918367346938775,
+   "nota": 0.8223885297775269,
+   "corpo": 1.0286895401030214,
+   "pele": 13
+  },
+  "avisos": [
+   "cabeça +9%"
+  ]
+ },
+ "soco/04": {
+  "medidas": {
+   "cabeca": 1.0918367346938775,
+   "nota": 0.805770993232727,
+   "corpo": 1.047055221155906,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça +9%"
+  ]
+ },
+ "soco/05": {
+  "medidas": {
+   "cabeca": 1.0918367346938775,
+   "nota": 0.7948703765869141,
+   "corpo": 1.0030248149530583,
+   "pele": 22
+  },
+  "avisos": [
+   "cabeça +9%",
+   "membro sobrando? 22 manchas de pele (parado 19)"
+  ]
+ },
+ "soco/06": {
+  "medidas": {
+   "cabeca": 1.1122448979591837,
+   "nota": 0.7793982625007629,
+   "corpo": 1.027587706052212,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça +11%"
+  ]
+ },
+ "soco/07": {
+  "medidas": {
+   "cabeca": 1.1020408163265307,
+   "nota": 0.8232494592666626,
+   "corpo": 1.0621869512977773,
+   "pele": 18
+  },
+  "avisos": [
+   "cabeça +10%"
+  ]
+ },
+ "vitoria/00": {
+  "medidas": {
+   "cabeca": 1.142857142857143,
+   "nota": 0.8158446550369263,
+   "corpo": 1.1802668012683655,
+   "pele": 16
+  },
+  "avisos": [
+   "cabeça +14%"
+  ]
+ },
+ "vitoria/01": {
+  "medidas": {
+   "cabeca": 1.1224489795918369,
+   "nota": 0.8151898980140686,
+   "corpo": 1.125803024380783,
+   "pele": 15
+  },
+  "avisos": [
+   "cabeça +12%"
+  ]
+ },
+ "vitoria/02": {
+  "medidas": {
+   "cabeca": 1.142857142857143,
+   "nota": 0.7343504428863525,
+   "corpo": 1.1297045931348464,
+   "pele": 14
+  },
+  "avisos": [
+   "cabeça +14%"
+  ]
+ },
+ "vitoria/03": {
+  "medidas": {
+   "cabeca": 1.1632653061224492,
+   "nota": 0.7213099598884583,
+   "corpo": 1.1576545003279255,
+   "pele": 14
+  },
+  "avisos": [
+   "cabeça +16%"
+  ]
+ },
+ "vitoria/04": {
+  "medidas": {
+   "cabeca": 1.2142857142857144,
+   "nota": 0.6522413492202759,
+   "corpo": 1.1554399783484914,
+   "pele": 13
+  },
+  "avisos": [
+   "cabeça +21%"
+  ]
+ },
+ "vitoria/05": {
+  "medidas": {
+   "cabeca": 1.1632653061224492,
+   "nota": 0.6274547576904297,
+   "corpo": 1.1576545003279255,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça +16%"
+  ]
+ },
+ "vitoria/06": {
+  "medidas": {
+   "cabeca": 1.1020408163265307,
+   "nota": 0.7293345928192139,
+   "corpo": 1.0863643471154827,
+   "pele": 17
+  },
+  "avisos": [
+   "cabeça +10%"
+  ]
+ },
+ "vitoria/07": {
+  "medidas": {
+   "cabeca": 1.1326530612244898,
+   "nota": 0.7583342790603638,
+   "corpo": 1.1062965524283501,
+   "pele": 13
+  },
+  "avisos": [
+   "cabeça +13%"
+  ]
+ }
+}
