@@ -79,6 +79,20 @@ MOVIMENTOS = {
     },
 }
 
+# Despertados pela regra de 2026-11-15 (#47, 1ccb9fd3): nada do normal no despertado, os agarrões são novos e no
+# estilo da forma. Conceitos da lista da #47 (comentário 6898286969). Mesmo formato de 8 desenhos do `padrao` (o jogo
+# troca os desenhos pelo [RemapPreset despertado]). O em pé dos despertados é o agarrão da forma da #47 (4700).
+MOVIMENTOS_E = {
+    "gutto": {
+        "agarrao_baixo": "Pisoteio (Stampede), a minotaur stomp on a CROUCHING opponent: he knocks him down and tramples him with his hooves. 1 hunched forward like a bull, one clawed hand reaching down to waist height. 2 the clawed hand slams down at waist height, pinning the invisible crouching opponent to the ground, the other arm up for balance. 3 still pinning him, he rears up and lifts one hoof high, knee to the chest. 4 the hoof stomps straight down at ground level in front of him, the whole leg driving down. 5 still pinning him, he lifts the other hoof high. 6 the other hoof stomps straight down at ground level. 7 he rears up on his hind legs, both clawed arms raised above his head, mane flying, snorting. 8 he crashes down with both front hooves (fists) together onto the ground in front of him at ground level, body bent low, a heavy final stomp.",
+        "agarrao_comando": "Mordida do Garanhao (Stallion Bite), a beast bite grab at close range. 1 hunched forward like a bull, both clawed hands reaching forward at chest height. 2 both clawed hands grab the invisible opponent's shoulders at chest height and yank him close. 3 still holding, his horse head draws back and the long jaws open wide, teeth bared. 4 he bites down hard on the shoulder at chest height, jaws clamped, eyes glowing. 5 still biting, he wrenches his head to one side, shaking the prey. 6 still biting, he wrenches his head to the other side, shaking harder. 7 he lets go and spins around, his back toward the right, crouching on his front hands like a horse about to kick. 8 a double back-kick (coice): both hind hooves blast straight out to the RIGHT at chest height, legs fully extended, body low and facing away.",
+    },
+    "pengaro": {
+        "agarrao_baixo": "Enterro (Burial), a dark shadow-magic grab on a CROUCHING opponent: no punches, the shadows do the work. 1 floating slightly, hunched, one clawed hand stretched down toward the ground in front of him, dark violet smoke curling from the fingers. 2 the hand presses down at waist height, palm open, fingers spread, as if pushing the invisible opponent down into the ground; his eyes glow. 3 still pressing down, the other hand rises, fingers curling, chains on the wrist rattling. 4 both hands push down hard at waist height, the body leaning over them. 5 he twists both hands as if turning a key in the ground, grinning. 6 he pulls both hands down to the ground at ground level, almost kneeling, dragging the opponent under. 7 he rises and lifts both arms high above his head, palms up, summoning. 8 he swings both arms down in front of him, palms down at waist height, dropping the opponent from above.",
+        "agarrao_comando": "Mao no Peito (Hand in the Chest), a soul-ripping grab at close range: no punches. 1 floating slightly, hunched, the front clawed hand reaching forward at chest height. 2 the open palm presses flat on the invisible opponent's chest at chest height, fingers spread. 3 the fingers sink into the chest, his arm tense, dark violet smoke around the wrist. 4 he pushes the hand deeper, leaning in, eyes glowing, grinning. 5 he grips inside and starts to pull back, the arm bending. 6 he rips the hand back out toward himself, holding a glowing pale violet ghostly soul-shape in his fist. 7 he holds the glowing soul up at face height, admiring it, the chains on his wrist swinging. 8 he slams the open palm forward at chest height, shoving the soul back into the opponent with a jolt, the arm fully extended.",
+    },
+}
+
 EXTRA_VITIMA = {
     "pengaro": "The whisky bottle stays in his back hand in all 8 frames.",
     "ck": "His red gloves stay on in all 8 frames." ,
@@ -114,6 +128,12 @@ def sem_garrafa(texto):
     return texto
 
 
+def movimento(lutador, base, desperto):
+    if desperto and base in MOVIMENTOS_E.get(lutador, {}):
+        return MOVIMENTOS_E[lutador][base]
+    return MOVIMENTOS[lutador][base]
+
+
 def pedido(lutador, nome):
     desperto = nome.startswith("e_")
     base = nome[2:] if desperto else nome
@@ -123,7 +143,7 @@ def pedido(lutador, nome):
     if base == "vitima":
         texto = VITIMA.format(quem=quem, extra=EXTRA_VITIMA[lutador])
     else:
-        texto = CABECA.format(quem=quem) + MOVIMENTOS[lutador][base]
+        texto = CABECA.format(quem=quem) + movimento(lutador, base, desperto)
     return texto.replace("’", "'")
 
 
@@ -149,7 +169,7 @@ def pedido_gemini(lutador, nome):
     if base == "vitima":
         mov = VITIMA.split("Frames: ", 1)[1].split(" {extra}")[0] + " " + ("" if sem else EXTRA_VITIMA[lutador])
         return GEMINI.format(quem=quem, papel=PAPEL_VITIMA, movimento=mov.strip())
-    mov = MOVIMENTOS[lutador][base]
+    mov = movimento(lutador, base, desperto)
     return GEMINI.format(quem=quem, papel=PAPEL_AGARRA, movimento=sem_garrafa(mov) if sem else mov)
 
 
