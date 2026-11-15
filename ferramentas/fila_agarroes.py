@@ -55,7 +55,7 @@ QUEM = {
     "ck": ("CK, the cheeky street boxer: young Black man, slim athletic build, short black hair, thin mustache and goatee, white polo shirt with green collar, black cap, black-and-white wavy basketball shorts, white sneakers, red boxing gloves with white wraps.",
            "CK in RATAO MODE (awakened): same young Black man, short bleached platinum hair, mirrored sunglasses pushed up on the head, a lit joint between the lips, thick gold chain, patterned navy-and-white open shirt over a white tank top, board shorts, white socks with dark slides, white hand wraps, a broken green glass bottle always held by the neck in the near (front) hand."),
     "gutto": ("Gutto, the Muay Thai fighter: deep dark brown skin, thick mustache, short curly black hair, strong muscular build, shirtless, black satin Muay Thai trunks with a white waistband, white hand wraps, rope armbands on both biceps, barefoot.",
-              "Gutto in his AWAKENED form, the Garanhao, a horse-headed minotaur: huge muscular body with dark reddish-brown hide, a horse head with big curved black-and-red bull horns, a red rope headband, glowing red eyes, white steam snorting from the nostrils, a long wild black-and-red mane, a spiked iron pauldron on the shoulder, an iron chain collar, a glowing red crack on the chest, iron-banded forearms with fists, a black loincloth over trunks with a white-and-red waistband, a black horse tail, legs ending in hooves with iron bands."),
+              "Gutto in his AWAKENED form, the Garanhao: a huge hunched horse-man with a horse head and long snout, short curved black horns, glowing orange-red eyes, a thick black mustache, a long wild black mane down the back, a dark reddish-brown muscular body with darker burnt stripe markings, rope armbands on the biceps, a white waistband over torn black trunks, a black horse tail, furry dark legs ending in black hooves, clawed hands. No armor, no chains, no headband."),
     "pengaro": ("Pengaró, the drunk capoeirista: young Black man with dark brown skin, short black high-top fade haircut with a shaved line, very muscular and shirtless, white capoeira pants with green and yellow side stripes, yellow cord belt, teal sash, dark green shin guard, barefoot. In EVERY frame he holds a whisky bottle (amber glass, black cap, plain cream label without text) by the neck in his back hand and never lets go.",
                 "Pengaró in his ENDIABRADO (awakened demon) form: dark violet-brown skin, long wild black dreadlocks standing up like flames, glowing eyes, muscular and shirtless with a dark open vest, gold bands on the forearms and biceps, torn black-and-purple baggy pants with a gold-and-purple rope belt and hanging gold tassels, broken iron shackles with chain links on wrists and ankles, barefoot, both hands free (no bottle)."),
 }
@@ -107,8 +107,8 @@ def referencia(lutador, desperto):
     # atual (quadros_arcade_hd), montada em docs/agarroes-45/ref/
     if lutador == "pengaro":
         return f"docs/agarroes-45/ref/pengaro{'_e' if desperto else ''}.png"
-    if lutador == "gutto" and desperto:  # o Garanhão (minotauro) só tem o conceito; a e_agarrao não existe
-        return "sprites/gutto/quadros/folhas_arcade/e_conceito.png"
+    if lutador == "gutto" and desperto:  # o Garanhão como está no jogo (desenhos do .sff); o e_conceito.png é um
+        return "docs/agarroes-45/ref/gutto_e.png"  # minotauro de armadura que NÃO é o do jogo (deu folha errada)
     return f"sprites/{lutador}/quadros/folhas_arcade/{'e_' if desperto else ''}agarrao.png"
 
 
