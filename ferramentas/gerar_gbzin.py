@@ -491,8 +491,9 @@ NORMAIS_CK = (
 # só a faixa do braço esticado
 CX_BOTE = (10, _c("caneta", 4)[1] + 8, _c("caneta", 4)[2], _c("caneta", 4)[1] + 44)
 FAMILIAS_CK = (
-    (1400, "Bote", "Bote de Garrafa", "~D, F", "ab", CX_BOTE, 73, 8.0, "MA", True),
-    (1500, "Bicuda Baixa", "Chinelada Rasteira", "~D, B", "ab", _c("rasteirinha", 4), 70, 5.5, "L", True),
+    # ficha do Gbzin: Arm-lock Voador (↑ ↓ + a/b) e Cajado no Chão (↓ ↓ + x/y, pega rasteiro)
+    (1400, "Arm-lock Voador", "Arm-lock Voador", "~U, D", "ab", CX_BOTE, 73, 8.0, "MA", True),
+    (1500, "Cajado no Chao", "Cajado no Chao", "~D, D", "xy", _c("rasteirinha", 4), 70, 5.5, "L", True),
 )
 
 
@@ -911,31 +912,36 @@ def cmd_ck(cmd):
         cmd = velho.sub(lambda m: funcao(m[0]), cmd, count=1)
 
     com = lambda cond: lambda b: b.replace("triggerall", f"triggerall = {cond}\ntriggerall", 1)
-    # movimentos da ficha nos nomes de comando do kit
-    comando("bola_fraca", "~D, F, x")          # Tragada
+    # movimentos da ficha do Gbzin nos nomes de comando do kit (docs/fichas/gbzin.md, "Como os especiais entram")
+    comando("bola_fraca", "~D, F, x")          # Cabra Solta
     comando("bola_forte", "~D, F, y")
-    for b in "ab":
-        comando(f"compasso_{b}", f"~B, D, {b}")  # Pêndulo
-        comando(f"role_{b}", f"~B, F, {b}")      # Gingado de Esquiva
-    comando("sombra_x", "~D, U, x", "~D, U, y")  # Tragada de Beck
-    comando("sombra_y", "~F, B, a", "~F, B, b")  # Passinho Ratão
-    comando("sombra_a", "~D, F, x", "~D, F, y")  # Garrafa Voadora
-    comando("sombra_b", "~D, U, a", "~D, U, b")  # Grave do Paredão
+    for b, p in (("a", "x"), ("b", "y")):
+        comando(f"compasso_{b}", f"~B, D, {p}")  # Rolo de Feno
+        comando(f"role_{b}", f"~F, F, {b}")      # Passinho de Pinguim
+        comando(f"armada_{p}", f"~D, U, {p}")    # Cabra Saltadora
+        comando(f"caneta_{p}", f"~D, B, {b}")    # Guarda Fechada
+        comando(f"garrafa_{p}", f"~B, F, {p}")   # Gancho do Pastor
+    comando("agarrao_whisky", "~F, B, F, c")   # Ordenha do Bode (agarrão de comando)
+    comando("sombra_x", "~B, F, a", "~B, F, b")  # Grão-Pastor: Puxão das Mãos
+    comando("sombra_y", "~F, F, x", "~F, F, y")  # Grão-Pastor: Estouro
+    comando("sombra_a", "~D, F, a", "~D, F, b")  # Grão-Pastor: Mão do Pastor
+    comando("sombra_b", "~D, U, a", "~D, U, b")  # Grão-Pastor: Berro
     cmd = antes_de(cmd, '[Command]\nname = "parry"', gp.comando("baile", "~B, F, D, x+y", 24))
-    # Tragada e Contragolpe só na base; Boné Voador vale nas duas formas (no Ratão é o óculos)
-    na_entrada("Bola forte", 1001, com("var(20) = 0"))
-    na_entrada("Bola fraca", 1000, com("var(20) = 0"))
-    na_entrada("caneta", 1300, com("var(20) = 0"))
-    na_entrada("caneta", 1301, com("var(20) = 0"))
+    # Cabra Solta e Guarda Fechada valem nas duas formas (no Grão-Pastor a cabra é a fantasma)
     sem = lambda b: b.replace("triggerall = var(20) = 0\n", "")
+    for titulo, n in (("Bola forte", 1001), ("Bola fraca", 1000), ("caneta", 1300), ("caneta", 1301)):
+        na_entrada(titulo, n, sem)
     na_entrada("Garrafada forte", 1601, sem)
     na_entrada("Garrafada fraca", 1600, sem)
     # ↓ ↑: o ↑ faz pular; a entrada vale também no pré-pulo e nos 7 primeiros ticks do pulo
     pulo = lambda b: b.replace("triggerall = statetype != A\n",
                                "triggerall = statetype != A || (stateno = 50 && Time < 8)\n").rstrip("\n") + \
         "\ntrigger2 = stateno = 40\n\n"
-    na_entrada("Mao de Sombra", 3400, pulo)
-    na_entrada("Queda Escura", 3403, pulo)
+    na_entrada("Queda Escura", 3403, pulo)       # Berro
+    na_entrada("armada", 1200, pulo)             # Cabra Saltadora
+    na_entrada("armada", 1201, pulo)
+    na_entrada("Arm-lock Voador", 1400, pulo)               # Arm-lock Voador (↑ ↓: o ↑ já começou o pulo)
+    na_entrada("Arm-lock Voador", 1401, pulo)
     na_entrada("Sombra Atravessada", 3402, lambda b: b.replace("triggerall = p2dist x > 0\n", ""))
     # Baile da Esquina: só no Ratão, com ← → ↓ + x+y (e com o comando do super da base, que no Ratão vira o Baile)
     velho = "triggerall = ((var(20) > 0) || (life <= 200 && power >= 2000))"
@@ -968,24 +974,25 @@ def cmd_ck(cmd):
     i = cmd.index("[State -1, Golpe no ar]")
     cmd = cmd[:i] + gp.entrada("Desp: Corte descendo", 3436, ['command = "x"', "statetype = A", "var(20) > 0"],
                                ("ctrl",)) + cmd[i:]
-    for velho, novo in (("Chuva de Bebidas", "Rajada da Esquina"), ("Mao de Sombra", "Tragada de Beck"),
-                        ("Queda Escura", "Grave do Paredao"), ("Sombra Atravessada", "Garrafa Voadora"),
-                        ("Garrafada f", "Bone Voador f"), ("Role por tras", "Gingado de Esquiva")):
+    for velho, novo in (("Chuva de Bebidas", "Rebanho Desgovernado"), ("Mao de Sombra", "Puxao das Maos"),
+                        ("Queda Escura", "Berro"), ("Sombra Atravessada", "Mao do Pastor"),
+                        ("Garrafada f", "Gancho do Pastor f"), ("Role por tras", "Passinho de Pinguim"),
+                        ("Bola f", "Cabra Solta f"), ("Chute da Corrente", "Estouro")):
         assert f"[State -1, {velho}" in cmd, velho
         cmd = cmd.replace(f"[State -1, {velho}", f"[State -1, {novo}")  # rótulos do kit do Pengaró (só comentário)
-    return cmd.replace("gerar_pengaro.py", "gerar_gbzin.py").replace("[State -1, Agarrao whisky]", "[State -1, Saideira]")
+    return cmd.replace("gerar_pengaro.py", "gerar_gbzin.py").replace("[State -1, Agarrao whisky]", "[State -1, Ordenha do Bode]")
 
 
 # ================================================================ textos
 gp.VITORIAS = [
-    "Tá achando que é quem, parça?",
-    "Errou o soco, tomou o troco.",
-    "Ajeita o boné que a aula acabou.",
-    "Vem de novo, eu deixo.",
-    "Nem suei a camisa.",
-    "Na esquina é assim: piscou, dormiu.",
-    "Avisa lá que o CK passou.",
-    "Essa luva aqui não é enfeite.",
+    "Volta pro curral, cabrito.",
+    "Bateu três vezes, acabou.",
+    "Raspagem limpa, nem suei.",
+    "O cajado avisou, você não ouviu.",
+    "Pastor não corre, o rebanho que vem.",
+    "Faixa marrom, mão pesada.",
+    "Fica deitado aí, que dá menos trabalho.",
+    "Tchau, cabrito!",
 ]
 
 DEF = """; Gerado por ferramentas/gerar_gbzin.py. Edite lá, não aqui.
@@ -1012,48 +1019,39 @@ x = 1
 """
 
 GOLPES = """<#f0f000>:Especiais:</>
-Tragada <#bebebe>(nuvem que fica parada e tonteia)</>	_D_F^P
-Boné Voador <#bebebe>(vai e volta)</>			_F_B^P
-Levanta, Comédia <#bebebe>(antiaéreo)</>		_F_D^P
-Bote <#bebebe>(avanço)</>					_D_F^K
-Bicuda Baixa <#bebebe>(golpe baixo)</>			_D_B^K
-Gingado de Esquiva <#bebebe>(a passa, b passa e bate)</>	_B_F^K
-Contragolpe <#bebebe>(apanhou na guarda baixa, responde)</>	_D_B^P
-Pêndulo <#bebebe>(esquiva; x ou y sai com soco)</>	_B_D^K
+Cabra Solta <#bebebe>(a cabra corre pelo chão)</>	_D_F^P
+Cabra Saltadora <#bebebe>(antiaéreo)</>		_D_U^P
+Gancho do Pastor <#bebebe>(prende e puxa)</>		_B_F^P
+Passinho de Pinguim <#bebebe>(passa por trás)</>	_F_F^K
+Guarda Fechada <#bebebe>(contragolpe)</>		_D_B^K
+Arm-lock Voador						_U_D^K
+Rolo de Feno <#bebebe>(rola e derruba)</>		_B_D^P
+Cajado no Chão <#bebebe>(pega rasteiro)</>		_D_D^P
 
-<#f0f000>:Só no Modo Ratão:</>
-Garrafa Voadora <#bebebe>(arco, deixa caco no chão)</>	_D_F^P
-Tragada de Beck <#bebebe>(nuvem grande)</>		_D_U^P
-Óculos Voador <#bebebe>(vai e volta)</>			_F_B^P
-Passinho Ratão <#bebebe>(avanço)</>				_F_B^K
-Grave do Paredão <#bebebe>(empurra para longe)</>	_D_U^K
-Corrente Y e B de 4 golpes			^Y^Y^Y^Y / ^B^B^B^B
-Fim de Baile						^X, _F+^Y, ^B
+<#f0f000>:Só no Grão-Pastor:</>
+Estouro <#bebebe>(investida de chifres)</>		_F_F^P
+Mão do Pastor <#bebebe>(a mão gigante voa)</>	_D_F^K
+Berro <#bebebe>(empurra para longe)</>			_D_U^K
+Puxão das Mãos <#bebebe>(puxa de qualquer distância)</>	_B_F^K
 
 <#f0f000>:Correntes (acertando os 3, o 4º derruba):</>
-Jab, Jab Duplo, Cruzado, Uno-Dos de Rua		^X^X^X^X
-Direto, Ganchos, Levanta, Comédia			^Y^Y^Y^Y
-Bicuda, Chute Baixo, Joelhada, Pedreiro	^A^A^A^A
-Frontal, Alto, Pisão, Voadora da Esquina	^B^B^B^B
-
-<#f0f000>:Kombos:</>
-Bom Dia, Cumpadi					_F+^Y, ^X, ^B
-Sobe e Desce						^X, _D+^A, ^Y
-Encosta na Parede					_B+^X, ^Y, _F+^B
-Sobe pro Teto						^X, ^Y, _D+^Y
+Tapa, Cotovelada, Cutucada, Gancho no Pescoço	^X^X^X^X
+Cajado Reto, Girando, De Cima, Pastoreio		^Y^Y^Y^Y
+Chute Baixo, Canela, Rasteira, Raspagem		^A^A^A^A
+Chute no Peito, Joelhada, Chute de Base, Coice	^B^B^B^B
 
 <#f0f000>:Supers:</>
-Rajada da Esquina <#bebebe>(1000)</>		_B_F_D^K
-Nocaute de Rua <#bebebe>(2000)</>			_B_F_D^P
-Baile da Esquina <#bebebe>(1000, no Modo Ratão)</>	_B_F_D^X_+^Y
+Rebanho Desgovernado <#bebebe>(1000)</>		_B_F_D^K
+Mata-Leão do Sertão <#bebebe>(2000)</>		_B_F_D^P
+Juízo do Rebanho <#bebebe>(no Grão-Pastor)</>	_B_F_D^X_+^Y
 
 <#f0f000>:Sistema:</>
-Modo Ratão <#bebebe>(barra cheia)</>		^X_+^Y
+Grão-Pastor <#bebebe>(barra cheia)</>		^X_+^Y
 Rolamento							^X_+^A
 Golpe de afastar					^Y_+^B
-Gola na Mão <#bebebe>(agarrão)</>			[_B/_F]_+^Y
-Abaixa Aí <#bebebe>(oponente agachado)</>	_D_+^Y
-Saideira <#bebebe>(colado)</>				_B_F^Y
+Tchau Cabrito <#bebebe>(agarrão)</>		[_B/_F]_+^Y
+Montada <#bebebe>(oponente agachado)</>	_D_+^Y
+Ordenha do Bode <#bebebe>(agarrão de comando)</>	_F_B_F^C
 Provocação							^C
 Parry                              _F^C
 """

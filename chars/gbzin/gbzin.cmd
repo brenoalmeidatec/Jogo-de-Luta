@@ -26,7 +26,7 @@ time = 18
 
 [Command]
 name = "compasso_a"
-command = ~B, D, a
+command = ~B, D, x
 time = 18
 
 [Command]
@@ -41,82 +41,82 @@ time = 18
 
 [Command]
 name = "compasso_b"
-command = ~B, D, b
+command = ~B, D, y
 time = 18
 
 [Command]
 name = "armada_x"
-command = ~F, D, x
-time = 18
-
-[Command]
-name = "caneta_x"
-command = ~D, B, x
-time = 18
-
-[Command]
-name = "armada_y"
-command = ~F, D, y
-time = 18
-
-[Command]
-name = "caneta_y"
-command = ~D, B, y
-time = 18
-
-[Command]
-name = "agarrao_whisky"
-command = ~B, F, y
-time = 18
-
-[Command]
-name = "garrafa_x"
-command = ~F, B, x
-time = 18
-
-[Command]
-name = "garrafa_y"
-command = ~F, B, y
-time = 18
-
-[Command]
-name = "role_a"
-command = ~B, F, a
-time = 18
-
-[Command]
-name = "role_b"
-command = ~B, F, b
-time = 18
-
-[Command]
-name = "sombra_x"
 command = ~D, U, x
 time = 18
 
 [Command]
-name = "sombra_x"
+name = "caneta_x"
+command = ~D, B, a
+time = 18
+
+[Command]
+name = "armada_y"
 command = ~D, U, y
 time = 18
 
 [Command]
-name = "sombra_y"
-command = ~F, B, a
+name = "caneta_y"
+command = ~D, B, b
+time = 18
+
+[Command]
+name = "agarrao_whisky"
+command = ~F, B, F, c
+time = 18
+
+[Command]
+name = "garrafa_x"
+command = ~B, F, x
+time = 18
+
+[Command]
+name = "garrafa_y"
+command = ~B, F, y
+time = 18
+
+[Command]
+name = "role_a"
+command = ~F, F, a
+time = 18
+
+[Command]
+name = "role_b"
+command = ~F, F, b
+time = 18
+
+[Command]
+name = "sombra_x"
+command = ~B, F, a
+time = 18
+
+[Command]
+name = "sombra_x"
+command = ~B, F, b
 time = 18
 
 [Command]
 name = "sombra_y"
-command = ~F, B, b
+command = ~F, F, x
+time = 18
+
+[Command]
+name = "sombra_y"
+command = ~F, F, y
 time = 18
 
 [Command]
 name = "sombra_a"
-command = ~D, F, x
+command = ~D, F, a
 time = 18
 
 [Command]
 name = "sombra_a"
-command = ~D, F, y
+command = ~D, F, b
 time = 18
 
 [Command]
@@ -151,22 +151,22 @@ time = 18
 
 [Command]
 name = "golpe_1400"
-command = ~D, F, a
+command = ~U, D, a
 time = 18
 
 [Command]
 name = "golpe_1401"
-command = ~D, F, b
+command = ~U, D, b
 time = 18
 
 [Command]
 name = "golpe_1500"
-command = ~D, B, a
+command = ~D, D, x
 time = 18
 
 [Command]
 name = "golpe_1501"
-command = ~D, B, b
+command = ~D, D, y
 time = 18
 
 [Command]
@@ -306,35 +306,37 @@ triggerall = power >= 2000
 trigger1 = var(1)
 trigger2 = (stateno = [1000,1501]) && movehit && movehit <= 8
 
-[State -1, Bote]
+[State -1, Arm-lock Voador]
 type = ChangeState
 value = 1400
 triggerall = command = "golpe_1400"
-triggerall = statetype != A
+triggerall = statetype != A || (stateno = 50 && Time < 8)
 trigger1 = var(1)
+trigger2 = stateno = 40
 
-[State -1, Bote]
+[State -1, Arm-lock Voador]
 type = ChangeState
 value = 1401
 triggerall = command = "golpe_1401"
-triggerall = statetype != A
+triggerall = statetype != A || (stateno = 50 && Time < 8)
 trigger1 = var(1)
+trigger2 = stateno = 40
 
-[State -1, Bicuda Baixa]
+[State -1, Cajado no Chao]
 type = ChangeState
 value = 1500
 triggerall = command = "golpe_1500"
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Bicuda Baixa]
+[State -1, Cajado no Chao]
 type = ChangeState
 value = 1501
 triggerall = command = "golpe_1501"
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Rajada da Esquina]
+[State -1, Rebanho Desgovernado]
 type = ChangeState
 value = 3000
 triggerall = command = "golaco"
@@ -356,20 +358,21 @@ trigger1 = ctrl
 type = ChangeState
 value = 1200
 triggerall = command = "armada_x"
-triggerall = statetype != A
+triggerall = statetype != A || (stateno = 50 && Time < 8)
 trigger1 = var(1)
+trigger2 = stateno = 40
 
 [State -1, armada]
 type = ChangeState
 value = 1201
 triggerall = command = "armada_y"
-triggerall = statetype != A
+triggerall = statetype != A || (stateno = 50 && Time < 8)
 trigger1 = var(1)
+trigger2 = stateno = 40
 
 [State -1, caneta]
 type = ChangeState
 value = 1300
-triggerall = var(20) = 0
 triggerall = command = "caneta_x"
 triggerall = statetype != A
 trigger1 = var(1)
@@ -377,7 +380,6 @@ trigger1 = var(1)
 [State -1, caneta]
 type = ChangeState
 value = 1301
-triggerall = var(20) = 0
 triggerall = command = "caneta_y"
 triggerall = statetype != A
 trigger1 = var(1)
@@ -396,25 +398,23 @@ triggerall = command = "compasso_b"
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Bola forte]
+[State -1, Cabra Solta forte]
 type = ChangeState
 value = 1001
-triggerall = var(20) = 0
 triggerall = command = "bola_forte"
 triggerall = numprojid(1000) = 0
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Bola fraca]
+[State -1, Cabra Solta fraca]
 type = ChangeState
 value = 1000
-triggerall = var(20) = 0
 triggerall = command = "bola_fraca"
 triggerall = numprojid(1000) = 0
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Bone Voador forte]
+[State -1, Gancho do Pastor forte]
 type = ChangeState
 value = 1601
 triggerall = command = "garrafa_y"
@@ -422,7 +422,7 @@ triggerall = numprojid(1002) = 0
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Bone Voador fraca]
+[State -1, Gancho do Pastor fraca]
 type = ChangeState
 value = 1600
 triggerall = command = "garrafa_x"
@@ -430,7 +430,7 @@ triggerall = numprojid(1002) = 0
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Gingado de Esquiva e chute]
+[State -1, Passinho de Pinguim e chute]
 type = ChangeState
 value = 1701
 triggerall = stateno != 344
@@ -439,7 +439,7 @@ triggerall = p2dist x > 0
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Gingado de Esquiva]
+[State -1, Passinho de Pinguim]
 type = ChangeState
 value = 1700
 triggerall = command = "role_a"
@@ -447,17 +447,16 @@ triggerall = p2dist x > 0
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Tragada de Beck]
+[State -1, Puxao das Maos]
 type = ChangeState
 value = 3400
 triggerall = command = "sombra_x"
 triggerall = numprojid(1004) = 0
 triggerall = var(20) > 0
-triggerall = statetype != A || (stateno = 50 && Time < 8)
+triggerall = statetype != A
 trigger1 = var(1)
-trigger2 = stateno = 40
 
-[State -1, Chute da Corrente]
+[State -1, Estouro]
 type = ChangeState
 value = 3401
 triggerall = command = "sombra_y"
@@ -465,7 +464,7 @@ triggerall = var(20) > 0
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Garrafa Voadora]
+[State -1, Mao do Pastor]
 type = ChangeState
 value = 3402
 triggerall = command = "sombra_a"
@@ -473,7 +472,7 @@ triggerall = var(20) > 0
 triggerall = statetype != A
 trigger1 = var(1)
 
-[State -1, Grave do Paredao]
+[State -1, Berro]
 type = ChangeState
 value = 3403
 triggerall = command = "sombra_b"
@@ -563,7 +562,7 @@ triggerall = command = "afastar"
 triggerall = statetype = S
 trigger1 = var(1)
 
-[State -1, Saideira]
+[State -1, Ordenha do Bode]
 type = ChangeState
 value = 830
 triggerall = command = "agarrao_whisky"

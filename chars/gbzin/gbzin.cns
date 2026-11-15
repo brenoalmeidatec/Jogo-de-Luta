@@ -370,14 +370,14 @@
 588,0 = 992,0
 
 [Quotes]
-victory1 = "Tá achando que é quem, parça?"
-victory2 = "Errou o soco, tomou o troco."
-victory3 = "Ajeita o boné que a aula acabou."
-victory4 = "Vem de novo, eu deixo."
-victory5 = "Nem suei a camisa."
-victory6 = "Na esquina é assim: piscou, dormiu."
-victory7 = "Avisa lá que o CK passou."
-victory8 = "Essa luva aqui não é enfeite."
+victory1 = "Volta pro curral, cabrito."
+victory2 = "Bateu três vezes, acabou."
+victory3 = "Raspagem limpa, nem suei."
+victory4 = "O cajado avisou, você não ouviu."
+victory5 = "Pastor não corre, o rebanho que vem."
+victory6 = "Faixa marrom, mão pesada."
+victory7 = "Fica deitado aí, que dá menos trabalho."
+victory8 = "Tchau, cabrito!"
 
 [Data]
 life = 1000
