@@ -24,6 +24,18 @@ saber que cada coisa está pronta, em que ordem e até quando. Enquanto o Breno 
 - folhas próprias para os 20 golpes do Diabo Loiro que hoje usam a folha mais parecida;
 - qualquer lutador, cenário ou modo além dos listados acima.
 
+### Atualização de 2026-11-15: os dois jogos da issue #51
+
+O Breno pediu na #51 dois jogos (Nazafights Arcade e Nazafights Moderno), os dois com acabamento premium. Resposta do
+Alisson: **a data de 20/12 fica, e a 1.0 é o Nazafights Arcade.**
+
+- **Entram na 1.0** as três correções da #51, porque são erros: auras e asas seguindo o corpo, efeitos de acerto
+  refeitos no pixelfx e revisão de anatomia.
+- **Versão 1.1 (Arcade premium):** abertura animada, transições, vitória com pose e fala, continue, créditos, final de
+  cada lutador, Treino completo, lista de golpes no pause e instalador completo. Começa logo depois da 1.0.
+- **Nazafights Moderno** (estilo Melty Blood): começa depois da 1.0 do Arcade, pelo piloto do Hazak. Ele reaproveita
+  lutadores, cenários, músicas e telas do Arcade pronto. A data dele se combina depois do piloto aprovado.
+
 ## 2. Checklist com critério de pronto
 
 Um item só conta como pronto quando cumpre as três coisas: **está na `mugen`**, **o robô passa com 0 falha** e
@@ -38,6 +50,7 @@ Um item só conta como pronto quando cumpre as três coisas: **está na `mugen`*
 - [ ] **Trilha** (#33): Breno ouviu três voltas de cada loop sem estalo; Deus Motoboy e vitória ligadas.
 - [ ] **Telas e sons** (#39, #40, #46): aprovados e issues fechadas.
 - [ ] **Golpes e efeitos** (#38, #45, #48, #49): aprovados e issues fechadas.
+- [ ] **Correções da #51**: auras, asas, garanhão, correntes e paredão seguem o corpo em todo estado (robô confere); todo efeito de acerto feito no pixelfx, com a lista do que foi trocado; anatomia revisada nos 6 lutadores e nas duas formas, com folha de contato antes e depois.
 - [ ] **Revisão final** (#41): uma pessoa joga o Arcade inteiro com cada um dos 6 lutadores sem travar, sem texto em inglês e sem som faltando.
 - [ ] **Balanceamento**: torneio CPU x CPU sem lutador acima de 60% nem abaixo de 40% de vitórias, e a duração da transformação conferida com gente jogando.
 - [ ] **Fechamento**: tag `v1.0` na `mugen` e o atalho baixando essa versão.
@@ -47,9 +60,10 @@ Um item só conta como pronto quando cumpre as três coisas: **está na `mugen`*
 1. **Fechar o que já está no jogo esperando aval.** São 15 issues abertas com trabalho entregue. Aqui é o Breno jogar e dizer "ok" ou listar os ajustes.
 2. **Raiclaven despertado** (#43), que só depende do aval do conceito.
 3. **Gbzin** (#30), que só depende da foto.
-4. **Trilha**: ouvir os loops e gerar as 2 músicas que faltam.
-5. **Revisão final e balanceamento** com gente jogando.
-6. **Tag `v1.0`.**
+4. **Correções da #51** (auras, pixelfx, anatomia).
+5. **Trilha**: ouvir os loops e gerar as 2 músicas que faltam.
+6. **Revisão final e balanceamento** com gente jogando.
+7. **Tag `v1.0`.** Depois dela: 1.1 premium e Nazafights Moderno.
 
 ## 4. Datas
 

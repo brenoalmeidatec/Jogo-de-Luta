@@ -401,6 +401,8 @@ def aplicar(pasta=SAIDA):
     arq_cmd.write_text(ligar_cmd(cmd), encoding="utf-8", newline="\n")
     import gerar_sons  # sons da pedra, do ki e da rajadona (ESPECIAIS["hazaki"]): depois dos estados novos
     gerar_sons.ligar("hazaki", pasta)
+    import aura_no_corpo  # as asas seguem o corpo (issue #51): mede os desenhos e refaz a tabela no [Statedef -4]
+    aura_no_corpo.aplicar("hazaki", pasta)
     print(f"hazaki: pedra, bola de ki e Diabo Loiro ({len(diabo)} desenhos do Diabo, aura de {len(a.camadas)} "
           f"camadas); {len(rle) + len(png)} sprites no .sff")
 

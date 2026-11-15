@@ -1,6 +1,9 @@
 """Confere a trilha no motor de verdade (Linux sem tela, como o testar_pengaro.py --linux).
 
-    python3 ferramentas/testar_musica.py [--lutador pengaro] [--volta]
+    python3 ferramentas/testar_musica.py [--lutador pengaro] [--volta | --rounds]
+
+--rounds: forma até o fim da luta (forma_permanente.py). O P1 desperta no round 1, nocauteia o P2 e o registro segue
+no round 2: a forma (var20, var58) e a música da forma têm de continuar, sem a faixa recomeçar.
 
 --volta: em vez do Despertar, espera a música do cenário chegar ao fim e confere para onde o loop volta.
 
@@ -30,10 +33,25 @@ do
   local function com(n, fn) local old = id(); player(n); local a = fn(); playerId(old); return a end
   local t, ultimo, fase, t_fase = 0, "", "cenario", 0
   local VOLTA, pos_antes = @VOLTA@, -1
+  local ROUNDS, rodada, t2, matou = @ROUNDS@, 1, 0, false
   local function marca(nome) fase = nome; t_fase = t; log(string.format("[%5d] FASE %s", t, nome)) end
   local function mapa(nome, v) com(1, function() mapSet("t_" .. nome, v); return 0 end) end
   hook.add("loop", "musica", function()
     local ok, err = pcall(function()
+      if ROUNDS then
+        local rs = roundState()
+        if matou and rs < 2 and rodada == 1 then rodada = 2; log("ROUND 2 (apresentacao)") end
+        if rodada == 2 then
+          t2 = t2 + 1
+          if t2 % 20 == 0 then
+            log(string.format("[r2 %4d] rs=%d %s vol %s pos %s  %s", t2, rs, tostring(bgmVar("filename")), tostring(bgmVar("volume")),
+              tostring(bgmVar("position")), com(1, function() return string.format("var20=%d var51=%d var58=%d var59=%d st=%d", var(20), var(51), var(58), var(59), stateNo()) end)))
+          end
+          if t2 >= 500 then log("FIM"); rodada = 3 end
+          return
+        end
+        if rodada == 3 then return end
+      end
       if roundState() ~= 2 then return end
       t = t + 1
       local f = bgmVar("filename") or "(nada)"
@@ -56,6 +74,11 @@ do
       if fase == "cenario" and t >= 120 then com(1, function() setPower(3000); return 0 end); marca("aperta_despertar") end
       if fase == "aperta_despertar" and t - t_fase < 20 then mapa("despertar", 1) end
       if fase == "aperta_despertar" and t - t_fase >= 20 then marca("desperto") end
+      if ROUNDS and fase == "desperto" and t - t_fase >= 300 then
+        log(string.format("[%5d] nocauteia o P2: %s pos %d", t, f, pos))
+        com(2, function() setLife(0); return 0 end); matou = true; marca("nocaute"); return
+      end
+      if fase == "nocaute" then return end
       if fase == "desperto" and t - t_fase >= 300 then marca("acaba_despertar") end
       if fase == "acaba_despertar" then mapa("fimdesp", 1) end
       if fase == "acaba_despertar" and t - t_fase >= 200 then log("FIM"); fase = "fim" end
@@ -86,10 +109,12 @@ def main():
         debug = copia / "external/script/debug.lua"
         debug.write_text((motor / "external/script/debug.lua").read_text(encoding="utf-8") + "\n" +
                          LUA.replace("@SAIDA@", saida.as_posix())
-                         .replace("@VOLTA@", "true" if "--volta" in args else "false"), encoding="utf-8")
+                         .replace("@VOLTA@", "true" if "--volta" in args else "false")
+                         .replace("@ROUNDS@", "true" if "--rounds" in args else "false"), encoding="utf-8")
         tp.ajustar_ini(copia)
         proc = subprocess.Popen(["xvfb-run", "-a", "-s", "-screen 0 1280x720x24", "./Ikemen_GO_Linux",
-                                 "-p1", lutador, "-p2", "hazaki", "-s", "stages/maria_fumaca.def", "-rounds", "1"],
+                                 "-p1", lutador, "-p2", "hazaki", "-s", "stages/maria_fumaca.def", "-rounds",
+                                 "2" if "--rounds" in args else "1"],
                                 cwd=copia, env=tp.ambiente_linux(copia), stdout=open(tmp / "motor_log.txt", "w"),
                                 stderr=subprocess.STDOUT, start_new_session=True)
         limite = time.time() + 1500

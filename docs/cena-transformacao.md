@@ -52,6 +52,12 @@ A mesma cena vale para CK, Gutto, Raiclaven e Hazak. Cada um tem a cor do brilho
 O auge é lido do `[State 2000, Liga]`: se o gatilho for `Time = N`, é N; senão é o fim da animação 2000. A `Pause` e o
 clarão `BGPalFX` próprios do estado saem, porque a cena põe os dela. Gbzin: quando ganhar Despertar, entra na tabela.
 
+## Forma até o fim da luta (2026-11-15)
+
+Pedido do Breno na missão dos cenários (seção 4.1): `ferramentas/forma_permanente.py`. A forma e a música ficam até a
+luta acabar; detalhes e balanceamento no `LOGBOOK.md`. O cenário destruído (seção 4.2) é do `ferramentas/destruicao.py`
+da thread dos cenários, que lê o mesmo `var(20) > 0` e troca as camadas no clarão (por isso `pausebg = 0` na `Pause`).
+
 ## Sugestões
 
 - A arte do Despertar do Pengaró muda de tamanho: os quadros de joelhos (596 a 599) são bem maiores que os de pé, e com

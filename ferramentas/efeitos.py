@@ -81,11 +81,11 @@ def quadros_fx(nome):
     return _CACHE[nome]
 
 
-def pintar(img, r, corte=190, luz_min=0.0):
+def pintar(img, r, corte=190, luz_min=0.0, gama=1.8):
     """Pinta em degraus: o brilho do pixel escolhe o tom da rampa, sem mistura. Pixel com alfa < corte sai (halo)."""
     a = np.asarray(img).astype(np.float32)
     luz = (0.30 * a[..., 0] + 0.59 * a[..., 1] + 0.11 * a[..., 2]) / 255
-    luz = np.clip(luz * 1.08, 0, 1) ** 1.8  # gamma: o meio-tom desce na rampa e só o miolo fica quase branco
+    luz = np.clip(luz * 1.08, 0, 1) ** gama  # gamma: o meio-tom desce na rampa e só o miolo fica quase branco
     idx = np.clip((luz * len(r)).astype(int), 0, len(r) - 1)
     cores = np.array(r, np.uint8)[idx]
     vivo = (a[..., 3] >= corte) & (luz >= luz_min)
@@ -140,7 +140,7 @@ ESCALA = {"fraco": .6, "forte": .85, "final": 1.15, "defesa": .55, "rastro": .9,
           "parry": .5}
 # Nível do Hazak (Breno, #44): o que bate forte acende. Halo de brilho (raio do desfoque, força, margem) por baixo do
 # pixel seco, o caminho escolhido na #47. O fraco, a defesa e a poeira ficam secos (regra dos efeitos proporcionais).
-HALO = {"forte": (3, .7, 6), "final": (4, .8, 8), "rastro": (3, .6, 6), "parry": (3, .7, 6)}
+HALO = {"forte": (3, .7, 6), "final": (4, .8, 8), "rastro": (3, .6, 6), "parry": (3, .7, 6), "super": (6, .8, 12)}
 
 
 def com_halo(quadro, papel):
@@ -203,6 +203,159 @@ def montar_parry(r):
     return saida
 
 
+# ---------------------------------------------------------------- estouros, carga e projéteis de energia (pixelfx)
+# Pedido do Breno na #51 (2026-11-14): todo efeito de acerto sai do pixelfx, sem imagem do ChatGPT e sem a faísca
+# pronta de círculo com raios. O estouro de especial, a explosão de super e a carga, que eram do Blender (anel com
+# miolo), viraram composição de desenhos do pixelfx: cada camada é (fonte, quadro por desenho, zoom inteiro, desvio).
+# O zoom é inteiro e por vizinho mais próximo, para o pixel continuar seco; o tamanho e o halo são os do nível do Hazak.
+def _seq(*q, n):
+    return (list(q) + [None] * n)[:n]
+
+
+TEMA = {  # a camada que dá o jeito de cada lutador ao estouro
+    "pengaro": ("hit-spark", (0, 1, 2, 3, 4, 5), 2, "espelho"),      # respingo para os dois lados
+    "gutto": ("blunt-hit", (None, None, 0, 1, 2, 3, 4, 5), 1, (26, -22)),  # segunda pancada (o chute dobrado)
+    "raiclaven": ("zap-hit", (2, 3, 4, 5, 6, 7, 8), 2, None),        # relâmpago
+    "ck": ("heavy-landing", (2, 3, 5, 7, 9, 11), 2, None),           # onda baixa de poeira (o grave do paredão)
+}
+
+
+def camadas(lutador, efeito):
+    tema = TEMA[lutador]
+    if efeito == "especial":
+        n = 8
+        base = [("blunt-hit", _seq(0, 1, 1, 2, 3, 4, 5, 6, n=n), 2, (0, 0)),
+                ("crit-hit", _seq(0, 1, 1, n=n), 2, (0, 0))]
+    elif efeito == "super":
+        n = 11
+        base = [("blunt-hit", _seq(0, 1, 1, 1, 2, 3, 4, 5, 6, 7, 8, n=n), 2, (0, 0)),
+                ("crit-hit", _seq(0, 1, 1, 1, n=n), 2, (0, 0)),
+                ("blunt-hit", _seq(None, 0, 1, 1, 2, 3, 4, 5, 6, 7, n=n), 2, (4, -66)),
+                ("blunt-hit", _seq(None, None, 0, 1, 1, 2, 3, 4, 5, 6, 7, n=n), 2, (-6, 62)),
+                ("blunt-hit", _seq(None, None, 0, 1, 1, 2, 3, 4, 5, 6, n=n), 2, (-72, -34)),
+                ("blunt-hit", _seq(None, None, None, 0, 1, 1, 2, 3, 4, 5, 6, n=n), 2, (70, 30)),
+                ("blunt-hit", _seq(None, None, None, None, 0, 1, 1, 2, 3, 4, 5, n=n), 2, (62, -50)),
+                ("blunt-hit", _seq(None, None, None, None, None, 0, 1, 1, 2, 3, 4, n=n), 2, (-64, 46))]
+    else:  # carga: as faíscas vêm de longe, juntam e acendem
+        n = 8
+        # só os quadros do começo do charge-up: depois dele abre um círculo pontilhado em volta, que o Breno não quer
+        return [("charge-up", [2, 4, 6, 8, 10, 12, 14, 14], 2, (0, 0)),
+                ("crit-hit", _seq(None, None, None, None, None, None, 1, 0, n=n), 2, (0, 0))], n
+    fonte, quadros, zoom, onde = tema
+    z = zoom
+    if onde == "espelho":
+        base += [(fonte, _seq(*quadros, n=n), z, (0, 0)), (fonte, _seq(*quadros, n=n), -z, (0, 0))]
+    else:
+        base.append((fonte, _seq(*quadros, n=n), z, onde or (0, 0)))
+    return base, n
+
+
+_CENTRO = {}
+
+
+def centro_fx(fonte):
+    """O ponto do efeito no desenho do pixelfx: o miolo do clarão (na carga, o do quadro em que ela acende)."""
+    if fonte not in _CENTRO:
+        lista = quadros_fx(fonte)
+        ref = {"charge-up": 10, "zap-hit": 4, "heavy-landing": None, "energy-disc": None, "fireball": None,
+               "ground-slam": None}
+        k = ref.get(fonte, 0)
+        _CENTRO[fonte] = lista[0][1] if k is None else centro_do_clarao(lista[k][0])
+    return _CENTRO[fonte]
+
+
+def compor(lista, n, r, papel, ticks, corte=190, gama=1.8, so_fumaca=False):
+    """Junta as camadas (o mais claro ganha), pinta na rampa e põe o halo: [(RGBA, ex, ey, ticks)]."""
+    lado = 1000
+    c = lado // 2
+    saida = []
+    for k in range(n):
+        tela = np.zeros((lado, lado, 4), np.uint8)
+        for fonte, quadros, zoom, (dx, dy) in lista:
+            if quadros[k] is None:
+                continue
+            img = quadros_fx(fonte)[quadros[k]][0]
+            px, py = centro_fx(fonte)
+            if so_fumaca:  # só a fumaça que sobe: o chão, o anel e os estilhaços do desenho ficam de fora
+                a = np.array(img)
+                a[py - 18:] = 0
+                img = Image.fromarray(a, "RGBA")
+                py -= 44
+            z = abs(zoom)
+            if zoom < 0:
+                img = img.transpose(Image.FLIP_LEFT_RIGHT)
+                px = img.width - 1 - px
+            a = np.asarray(img.resize((img.width * z, img.height * z), Image.NEAREST))
+            x0, y0 = c + dx - px * z, c + dy - py * z
+            alvo = tela[y0:y0 + a.shape[0], x0:x0 + a.shape[1]]
+            ganha = a[..., 3:4].astype(int) * a[..., :3].max(axis=2, keepdims=True) \
+                > alvo[..., 3:4].astype(int) * alvo[..., :3].max(axis=2, keepdims=True)
+            alvo[...] = np.where(ganha, a, alvo)
+        img = pintar(Image.fromarray(tela, "RGBA"), r, corte=corte, gama=gama)
+        if so_fumaca:
+            img = so_maior(img)
+        cx = img.getchannel("A").getbbox()
+        if cx:
+            saida.append(com_halo((img.crop(cx), c - cx[0], c - cx[1], ticks), papel))
+    return saida
+
+
+# ação do .air -> (efeito, forma, ticks por desenho, papel do halo, escala no .air)
+GRANDES = {9240: ("especial", "base", 2, "final", .85), 9270: ("especial", "desperto", 2, "final", .85),
+           9241: ("super", "base", 3, "super", .8), 9271: ("super", "desperto", 3, "super", .8),
+           9243: ("carga", "base", 2, "forte", .85), 9273: ("carga", "desperto", 2, "forte", .85),
+           9244: ("carga", "base", 4, "forte", .85), 9274: ("carga", "desperto", 4, "forte", .85)}
+
+
+def efeitos_grandes(lutador):
+    """{ação: desenhos} e {ação: escala} do estouro de especial, da explosão de super e da carga, no pixelfx."""
+    acoes, escalas = {}, {}
+    for acao, (efeito, forma, ticks, papel, escala) in GRANDES.items():
+        lista, n = camadas(lutador, efeito)
+        acoes[acao] = compor(lista, n, rampa(lutador, forma), papel, ticks)
+        escalas[acao] = escala
+    return acoes, escalas
+
+
+# Efeitos que ainda eram imagem do ChatGPT dentro de ações de projétil (lista na #51): o corte roxo do especial da
+# forma (ação 3012, grupo 9212) e a nuvem do CK (grupo 9300). Só o desenho troca: caixas e tempos da ação ficam.
+# lutador -> {ação: (fonte, quadros, zoom, forma, escala no .air, alfa mínimo)}
+PROJETEIS = {
+    "pengaro": {3012: ("energy-disc", (0, 2, 4, 6, 8, 10, 12, 14), 2, "desperto", .8, 190)},
+    "raiclaven": {3012: ("energy-disc", (0, 2, 4, 6, 8, 10, 12, 14), 2, "desperto", .8, 190)},
+    "gutto": {3012: ("fireball", (0, 4, 8, 12, 16, 20, 24, 28), 2, "desperto", .8, 190)},
+    "ck": {1005: ("ground-slam", (20, 26, 32, 38, 44), 1, "fumaca", 1.0, 70),
+           1006: ("ground-slam", (50, 56, 62), 1, "fumaca", 1.0, 50),
+           9253: ("ground-slam", (26, 32, 38, 44, 50, 56), 1, "fumaca", 1.0, 60)},
+}
+
+
+def efeitos_projeteis(lutador):
+    acoes, escalas = {}, {}
+    for acao, (fonte, quadros, zoom, forma, escala, corte) in PROJETEIS.get(lutador, {}).items():
+        fumaca = forma == "fumaca"  # a nuvem do CK: rampa clara e gama baixa, para a fumaça não virar carvão
+        r = clarear(rampa(lutador, "base"), .75) if fumaca else rampa(lutador, forma)
+        acoes[acao] = compor([(fonte, list(quadros), zoom, (0, 0))], len(quadros), r, "rastro", 2, corte,
+                             .6 if fumaca else 1.8, fumaca)
+        escalas[acao] = escala
+    return acoes, escalas
+
+
+def trocar_desenhos(air, acao, grupo, n, escala):
+    """Na ação (de projétil), troca só o sprite de cada elemento, na ordem: caixas, tempos e Loopstart ficam."""
+    m = re.search(rf"(?ms)^\[Begin Action {acao}\][^\n]*\n.*?(?=^\[Begin Action|\Z)", air)
+    if not m:
+        return air
+    k = [0]
+
+    def el(mm):
+        i = k[0] % n
+        k[0] += 1
+        return f"{grupo},{i}, 0,0, {mm.group(1)}, , , {escala:g}, {escala:g}"
+    novo = re.sub(r"(?m)^\s*\d+\s*,\s*\d+\s*,\s*-?\d+\s*,\s*-?\d+\s*,\s*(-?\d+)[^\n]*$", el, m.group(0))
+    return air[:m.start()] + novo + air[m.end():]
+
+
 # ---------------------------------------------------------------- o que cada lutador usa
 # ação do .air -> (papel, forma). O kit do Pengaró (Pengaró, Gutto, Raiclaven, CK): 9200 fraco, 9201 forte,
 # 9202 defesa, 9205 finalizador; +30 na forma despertada; 9213/9212 rastro e 9214/9215 poeira (normal/despertado).
@@ -217,7 +370,7 @@ HAZAK = {9200: ("fraco", "base"), 9207: ("forte", "base"), 9201: ("final", "base
          9208: ("rastro", "base"), 9209: ("poeira", "base"), 9205: ("asfalto", "base"),
          7690: ("parry", "base"), 7691: ("parry", "desperto")}
 # grupos antigos dos efeitos: saem do .sff se nenhum .air os usa mais
-VELHOS = {9200, 9201, 9202, 9205, 9207, 9208, 9209, 9212, 9213, 9214, 9215, 9216, 9230, 9231, 9232, 9234, 9235,
+VELHOS = {9300, 9200, 9201, 9202, 9205, 9207, 9208, 9209, 9212, 9213, 9214, 9215, 9216, 9230, 9231, 9232, 9234, 9235,
           29212, 7690, 7691}
 
 
@@ -353,7 +506,7 @@ def nivel(bloco, n, lutador):
     carga, lenta = "ifelse(var(20) > 0, 9273, 9243)", "ifelse(var(20) > 0, 9274, 9244)"
     novo = ctl(n, "Carga", "Explod", "trigger1 = Time = 0", f"anim = {lenta if super_ else carga}", "id = 9243",
                "postype = p1", "pos = 8, -60", "bindtime = -1", "removetime = -2", "sprpriority = 3", "ownpal = 1",
-               *(("scale = 1.7, 1.7", "supermovetime = 90") if super_ else ()), "ignorehitpause = 1")
+               *(("scale = 1.5, 1.5", "supermovetime = 90") if super_ else ()), "ignorehitpause = 1")
     if not re.search(r"(?m)^type = AfterImage$", corpo):
         novo += ctl(n, "Rastro do corpo", "AfterImage", "trigger1 = Time = 0", "time = 18", "length = 6",
                     "timegap = 2", "framegap = 2", "trans = add", "palcolor = 0", "palbright = 0,0,0",
@@ -472,17 +625,29 @@ def aplicar(lutador, pasta=None):
     acoes, escalas = efeitos_do(lutador)
     tem = set(int(n) for n in re.findall(r"^\[Begin Action (\d+)\]", air, re.M))
     blender = efeitos_blender(lutador)
+    if lutador != "hazaki":  # o Hazak fica com o estouro de chamas dele (Blender, conversa da #44)
+        blender = {a: q for a, q in blender.items() if a not in GRANDES}
     for acao in blender:
         tem.add(acao)
         escalas[acao] = ESCALA_BLENDER
     acoes.update(blender)
-    cns = ligar_cns(cns, blender, lutador == "hazaki", lutador)
+    if lutador != "hazaki":
+        grandes, esc = efeitos_grandes(lutador)
+        acoes.update(grandes)
+        escalas.update(esc)
+        tem.update(grandes)
+    proj, esc_proj = efeitos_projeteis(lutador)
+    cns = ligar_cns(cns, set(blender) | set(acoes), lutador == "hazaki", lutador)
     novos = {}
     for acao, quadros in acoes.items():
         if acao not in tem:
             continue  # o lutador não tem esse efeito (ex.: 9234 só em alguns)
         g = grupo_novo(acao)
         air = por_acao(air, acao, texto_acao(g, quadros, escalas[acao]))
+        novos[g] = quadros
+    for acao, quadros in proj.items():  # projéteis: grupo 83xx, só o desenho troca
+        g = 8300 + acao % 100
+        air = trocar_desenhos(air, acao, g, len(quadros), esc_proj[acao])
         novos[g] = quadros
     air = re.sub(r"\n{3,}", "\n\n", air)
     # o que fica: todo sprite que algum .air usa (e os destinos do remap), menos os grupos antigos dos efeitos
@@ -510,11 +675,12 @@ def aplicar(lutador, pasta=None):
 
 
 # ---------------------------------------------------------------- folha para o Breno
-NOMES = {"fraco": "fraco (ventinho)", "forte": "forte (estalo)", "final": "finalizador (impacto)",
+NOMES = {"projetil": "projétil de energia / nuvem",
+         "fraco": "fraco (ventinho)", "forte": "forte (estalo)", "final": "finalizador (impacto)",
          "defesa": "defesa", "rastro": "rastro do golpe", "poeira": "poeira no chão", "asfalto": "asfalto",
-         "parry": "parry", "especial": "especial (Blender)", "super": "super (Blender)",
-         "transformacao": "transformação (Blender)", "carga": "carga do especial (Blender)",
-         "carga_lenta": "carga da super (Blender)"}
+         "parry": "parry", "especial": "estouro de especial", "super": "explosão de super",
+         "transformacao": "transformação (Blender)", "carga": "carga do especial",
+         "carga_lenta": "carga da super"}
 
 
 def folha(destino, lutadores=LUTADORES):
@@ -526,9 +692,21 @@ def folha(destino, lutadores=LUTADORES):
         acoes, escalas = efeitos_do(lutador)
         mapa = dict(HAZAK if lutador == "hazaki" else KIT)
         for acao, quadros in efeitos_blender(lutador).items():
+            if lutador != "hazaki" and acao in GRANDES:
+                continue
             acoes[acao] = quadros
             escalas[acao] = ESCALA_BLENDER
             mapa[acao] = ACOES_BLENDER[acao]
+        if lutador != "hazaki":
+            grandes, esc = efeitos_grandes(lutador)
+            for acao, quadros in grandes.items():
+                efeito, forma, ticks = GRANDES[acao][:3]
+                acoes[acao], escalas[acao] = quadros, esc[acao]
+                mapa[acao] = ("carga_lenta" if efeito == "carga" and ticks == 4 else efeito, forma)
+        proj, esc = efeitos_projeteis(lutador)
+        for acao, quadros in proj.items():
+            acoes[acao], escalas[acao] = quadros, esc[acao]
+            mapa[acao] = ("projetil", PROJETEIS[lutador][acao][3])
         linhas = []
         for acao, quadros in acoes.items():
             if acao == 9234:
@@ -541,7 +719,8 @@ def folha(destino, lutadores=LUTADORES):
             tira = Image.new("RGBA", (200 + cel_w * len(quadros), max(56, cima + baixo + 16)), (34, 38, 52, 255))
             d = ImageDraw.Draw(tira)
             d.text((6, 8), f"{acao}  {NOMES[papel]}", fill=(235, 235, 235))
-            d.text((6, 24), "forma despertada" if forma == "desperto" else "forma normal", fill=(170, 170, 190))
+            d.text((6, 24), {"desperto": "forma despertada", "fumaca": "fumaça"}.get(forma, "forma normal"),
+                   fill=(170, 170, 190))
             for k, (img, ex, ey, t) in enumerate(quadros):
                 q = img.resize((max(1, round(img.width * e)), max(1, round(img.height * e))), Image.NEAREST)
                 cx, cy = 200 + k * cel_w + cel_w // 2, 8 + cima
@@ -550,8 +729,8 @@ def folha(destino, lutadores=LUTADORES):
             linhas.append(tira)
         w = max(t.width for t in linhas)
         img = Image.new("RGBA", (w, sum(t.height + 2 for t in linhas) + 34), (20, 22, 30, 255))
-        ImageDraw.Draw(img).text((8, 10), f"{lutador}: golpes normais (pixelfx) e especial, super e "
-                                 "transformação (Blender); cruz vermelha = ponto do golpe; 3x o tamanho do jogo", fill=(255, 255, 255))
+        ImageDraw.Draw(img).text((8, 10), f"{lutador}: todos os efeitos de acerto no pixelfx; só a "
+                                 "transformação é do Blender; cruz vermelha = ponto do golpe; 3x o tamanho do jogo", fill=(255, 255, 255))
         y = 34
         for t in linhas:
             img.alpha_composite(t, (0, y))

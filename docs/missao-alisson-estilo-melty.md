@@ -37,7 +37,45 @@ do golpe). Revise **todos os quadros de todos os lutadores, nas duas formas**, c
 `regras-dos-lutadores.md`, e redesenhe os que estiverem errados. Atenção especial aos quadros novos do Diabo Loiro e aos
 20 golpes que usam folha aproximada. Poste uma folha de contato antes e depois.
 
-## 4. Animação no estilo do Melty Blood
+**Proporção fora de controle (pedido do Breno, junto com este item):** em vários momentos o lutador **fica gigante ou
+pequeno demais** de um quadro para outro, **principalmente ao agachar**. Cada lutador tem de manter a mesma escala em
+toda ação (mesma altura de cabeça, largura de ombro e tamanho de mão e pé; agachado só fica mais baixo, nunca encolhe
+nem cresce). Meça a altura da cabeça e dos ombros em todos os quadros de cada ação, nas duas formas, compare com o
+parado e corrija o que passar de uns 3%. Ponha essa medida no robô para não voltar.
+
+## Atualização do Breno: são DOIS jogos
+
+Depois de ler esta missão, o Breno decidiu: ele quer **dois jogos**, com os mesmos lutadores, cenários e músicas:
+
+| Jogo | Estilo | O que é |
+|---|---|---|
+| **Nazafights Arcade** | arcade igual KOF | o jogo de hoje (`chars/`, `motif/nazafight/`), polido: sprites, ritmo e mecânicas de arcade anos 90 |
+| **Nazafights Moderno** | Melty Blood, mais moderno | jogo novo com a animação fluida e as mecânicas dos itens 4 e 5 |
+
+- Os itens 1, 2 e 3 (auras, efeitos em pixelfx, anatomia) valem para **os dois**.
+- Os itens 4 e 5 (animação e mecânicas do Melty Blood) são do **Moderno**. O Arcade fica no estilo KOF, com o parry
+  de `docs/parry.md`.
+- **Estrutura sugerida** (decida e explique na issue): tudo na `mugen`, o Moderno em pastas próprias
+  (`moderno/chars/`, `moderno/motif/`) reaproveitando cenários e músicas; o launcher instala os dois e cria dois
+  atalhos ("Nazafights Arcade" e "Nazafights Moderno"), ou um menu de escolha na abertura. O robô roda nos dois.
+- Os desenhos do Moderno são novos, feitos para a animação fluida, mas são os nossos lutadores com a mesma cara.
+
+## Os dois com qualidade de jogo premium (de R$ 300)
+
+O Breno quer que **os dois** pareçam um jogo que se compra por R$ 300. Isso quer dizer, no mínimo:
+
+- **Zero erro visível:** nada piscando, cortado, fora do lugar, travando ou em inglês; música e som sem cortes secos.
+- **Acabamento em toda tela:** abertura animada, título, menus com animação e som, transições entre telas, seleção,
+  VS, tela de mapa, vitória com pose e fala, tela de continue, créditos.
+- **Modos completos:** Arcade com chefe e final de cada lutador (imagem e texto curto), Versus, Treino com opções
+  (mostrar caixas de golpe, dano, barra infinita, gravar o boneco), Assistir, Opções (controle de cada botão, volume
+  de música e efeitos, dificuldade, tempo, tela cheia) e lista de golpes no pause.
+- **Controle:** teclado e controle (joystick) configuráveis, resposta imediata, 60 quadros por segundo sem cair.
+- **Mistura de som** equilibrada entre música, golpes e narrador.
+- **Instalador e atualização** limpos (padrão do Breno: instala, atualiza, desinstala e preserva os dados).
+- Antes de cada entrega, jogue como cliente: do título até zerar o Arcade com um lutador, e anote o que achou.
+
+## 4. Animação no estilo do Melty Blood (Nazafights Moderno)
 
 O Breno pediu para você **pesquisar o jogo Melty Blood** (French-Bread; principalmente *Melty Blood: Type Lumina* e
 *Actress Again Current Code*): ele acha a estética, o jeito de lutar e a animação incríveis, e quer o Nazafights nesse
@@ -59,7 +97,7 @@ lutadores, de Nazaré. Não suba no git vídeo, imagem nem quadro do jogo deles.
 Comece pelo **Hazak** (base e Diabo Loiro) como piloto: parado, andar, os três normais, um especial e o parry. Poste o
 vídeo; com o OK do Breno, leve para os outros.
 
-## 5. Mecânicas: o que o Breno aprovou para entrar
+## 5. Mecânicas: o que o Breno aprovou para entrar (Nazafights Moderno)
 
 Destas ideias do Melty Blood, o Breno mandou eu escolher o melhor para o jogo e aprovar. **Aprovado:**
 
