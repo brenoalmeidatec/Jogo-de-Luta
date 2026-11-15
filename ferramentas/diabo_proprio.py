@@ -132,18 +132,43 @@ def escala_3x(nome):
     return float(np.median(r))
 
 
+# O Diabo das 44 folhas antigas tem 1,15 vez a altura do Hazak em pé (chapéu e chifres). Na folha nova o ChatGPT põe o
+# Diabo inteiro (com chapéu) no tamanho do Hazak, então o corpo vem menor: a escala volta para esses 1,15 medidos nos
+# quadros em pé; folha sem quadro em pé usa o lado maior (1,10). Golpe novo (sem Hazak): o 1º quadro (guarda) com a
+# altura do d_parado.
+DIABO_EM_PE, DIABO_LADO = 1.15, 1.10
+
+
+def _tam(img):
+    b = img.getbbox()
+    return b[3] - b[1], b[2] - b[0]
+
+
+def acerto_diabo(nome, figs, e):
+    if nome in NOVOS:
+        alvo = _tam(Image.open(dt.SAIDA / "d_parado/00.png"))[0]
+        return alvo / (figs[0].height * e)
+    hz = [_tam(Image.open(SPRITES / "quadros_arcade_hd" / nome / f"{i:02d}.png")) for i in range(8)]
+    em_pe = [(q.height * e) / h for q, (h, w) in zip(figs, hz) if h > 1.1 * w]
+    if len(em_pe) >= 3:
+        return DIABO_EM_PE / float(np.median(em_pe))
+    return DIABO_LADO / float(np.median([max(q.size) * e / max(h, w) for q, (h, w) in zip(figs, hz)]))
+
+
 def converter(nome):
     folha = FOLHAS_DIABO / f"d_{nome}.png"
     figs = ch.figuras(folha)
     assert all(q is not None for q in figs), f"d_{nome}: figura faltando na folha"
     e = escala_3x(NOVOS[nome][0] if nome in NOVOS else nome)
+    k = acerto_diabo(nome, figs, e)
+    e *= k
     destino = dt.SAIDA / f"d_{nome}"
     destino.mkdir(parents=True, exist_ok=True)
-    for k, q in enumerate(figs):
+    for i, q in enumerate(figs):
         tres = ch.seco(q.resize((max(1, round(q.width * e)), max(1, round(q.height * e))), Image.LANCZOS))
         red = np.array(tres)
-        Image.fromarray(dt.quantizar(dt.chefao(red))).save(destino / f"{k:02d}.png", optimize=True)
-    print(f"d_{nome}: escala {e:.4f}, figura {max(q.height for q in figs)} px na folha")
+        Image.fromarray(dt.quantizar(dt.chefao(red))).save(destino / f"{i:02d}.png", optimize=True)
+    print(f"d_{nome}: escala {e:.4f} (acerto do Diabo {k:.3f}), figura {max(q.height for q in figs)} px na folha")
 
 
 def contato(saida, nomes):
@@ -153,7 +178,8 @@ def contato(saida, nomes):
         w, h = 300, 420
         tela = Image.new("RGB", (w * 8, h * 2), (110, 112, 118))
         for i in range(8):
-            hz = Image.open(SPRITES / "quadros_arcade_hd" / nome / f"{i:02d}.png").convert("RGBA")
+            base = NOVOS[nome][0] if nome in NOVOS else nome
+            hz = Image.open(SPRITES / "quadros_arcade_hd" / base / f"{i:02d}.png").convert("RGBA")
             c = hz.getbbox()
             hz = hz.crop(c)
             tela.paste(hz, (i * w + (w - hz.width) // 2, h - hz.height), hz)

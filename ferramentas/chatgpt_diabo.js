@@ -1,6 +1,8 @@
 // Ajudantes das folhas próprias do Diabo Loiro (#44) para a aba do ChatGPT (cópia do chatgpt_grade.js do #36 com DOIS
 // anexos: a folha nítida do Hazak e o conceito). Somem se a aba recarregar: cole de novo.
-// O pedido de cada folha vem do docs/diabo-44/fila.json: __fila() carrega, __anexa(nome) anexa, __envia(nome) envia.
+// O pedido de cada folha vem do docs/diabo-44/fila.json: __fila() carrega (ou ponha window.__pedidos à mão, o fetch pode ser
+// barrado), __anexa(nome) anexa, __envia(nome) envia, __pronta() espera. Captura em 4 quartos de 768x512 (__cap4(0..3) e
+// zoom de 768/dpr x 512/dpr px no canto), que cabem em tela baixa.
 // Uma folha por lote: __pronta(), __cap2(0), zoom [0,0,490,637] salvo em disco, __cap2(1), zoom, __cap2(-1),
 // __anexa(proxima), espera 5 s, __envia(conserto). Depois: python ferramentas/montar_grade.py <folha> ESQ.png DIR.png
 (() => {
@@ -82,6 +84,27 @@
     const im = document.createElement('img');
     im.src = u.src;
     im.style.cssText = `position:absolute;left:${-n * u.naturalWidth / 2 / dpr}px;top:0;width:${u.naturalWidth / dpr}px;height:${u.naturalHeight / dpr}px;max-width:none;image-rendering:pixelated`;
+    c.appendChild(im);
+    d.appendChild(c);
+    document.body.appendChild(d);
+    return [u.naturalWidth, u.naturalHeight, n].join(' ');
+  };
+  // Quarto n (0 e 1 em cima, 2 e 3 embaixo) da imagem nova, 1 pixel da imagem = 1 pixel da tela: cabe em tela baixa.
+  window.__cap4 = n => {
+    document.getElementById('__cap')?.remove();
+    if (n < 0) return 'limpo';
+    const u = window.__ult();
+    if (!u || u.src === window.__src0 || document.querySelector('[data-testid=stop-button]')) throw new Error('imagem nova ainda nao chegou');
+    if (u.naturalWidth !== 1536 || u.naturalHeight !== 1024) throw new Error('tamanho ' + u.naturalWidth + 'x' + u.naturalHeight);
+    const dpr = devicePixelRatio, cx = n % 2, cy = Math.floor(n / 2);
+    const d = document.createElement('div');
+    d.id = '__cap';
+    d.style.cssText = 'position:fixed;left:0;top:0;width:100vw;height:100vh;background:#000;z-index:2147483647';
+    const c = document.createElement('div');
+    c.style.cssText = `position:absolute;left:0;top:0;overflow:hidden;width:${768 / dpr}px;height:${512 / dpr}px`;
+    const im = document.createElement('img');
+    im.src = u.src;
+    im.style.cssText = `position:absolute;left:${-cx * 768 / dpr}px;top:${-cy * 512 / dpr}px;width:${1536 / dpr}px;height:${1024 / dpr}px;max-width:none;image-rendering:pixelated`;
     c.appendChild(im);
     d.appendChild(c);
     document.body.appendChild(d);
