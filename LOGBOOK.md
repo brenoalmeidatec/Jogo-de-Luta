@@ -2446,3 +2446,14 @@ montada de peças (asas, cabelo, casaco).
 **Armadilha:** a régua da cabeça tem incerteza de uns 4 a 5% em quadro redesenhado ou reamostrado (a curva do casamento
 é achatada); só é firme quando o desenho é o mesmo em outro tamanho. O Pengaró tem 22 ações 7 a 26% maiores que a ginga:
 conferir se a ginga é que está pequena antes de mexer.
+
+## 2026-11-15 — Asas: pouso sem tranco e fechadas no quique do chão (issue #51, item 1, terceira volta) (Claude, thread do Alisson)
+
+**Contexto:** o Breno liberou decidir e juntar sozinho na #51. Os três pontos em aberto foram decididos.
+
+**Feito:** em `aura_no_corpo.py`, o `SALTO` (agora também para o deitado `g`) faz a camada pular junto quando o alvo
+salta demais, então o pouso fica 1 tique solto em vez de 2. O `_pesos` acende a asa fechada a partir de 0,5 deitado, e a
+asa não abre mais no quique do chão. A coroa segue com as asas e a asa fechada continua dobrada por código, até haver
+desenho à mão. Antes e depois em `docs/auras-51/v3_pouso_quadro_a_quadro.jpg`.
+
+**Robô:** aura nos 4 passa; `testar_pengaro.py --linux` hazaki 238, gutto 186, pengaro 189, ck 226, 0 falhas.

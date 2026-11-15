@@ -14418,7 +14418,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = RoundState > 0
 map = "au_garanhao_ax"
-value = map(au_garanhao_ax) + ((((floor(map(au_garanhao_p)) % 128) - 64) * 2) - map(au_garanhao_ax)) * 0.6
+value = map(au_garanhao_ax) + ((((floor(map(au_garanhao_p)) % 128) - 64) * 2) - map(au_garanhao_ax)) * ifelse(abs((((floor(map(au_garanhao_p)) % 128) - 64) * 2) - map(au_garanhao_ax)) > 24, 1, 0.6)
 ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: ay zera antes do round]
@@ -14432,7 +14432,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = RoundState > 0
 map = "au_garanhao_ay"
-value = map(au_garanhao_ay) + (((floor(map(au_garanhao_p) / 128) - 64) * 2) - map(au_garanhao_ay)) * 0.6
+value = map(au_garanhao_ay) + (((floor(map(au_garanhao_p) / 128) - 64) * 2) - map(au_garanhao_ay)) * ifelse(abs(((floor(map(au_garanhao_p) / 128) - 64) * 2) - map(au_garanhao_ay)) > 24, 1, 0.6)
 ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: g zera antes do round]
@@ -14446,7 +14446,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = RoundState > 0
 map = "au_garanhao_g"
-value = map(au_garanhao_g) + (((floor(map(au_garanhao_q)) % 8) / 7.0) - map(au_garanhao_g)) * 0.6
+value = map(au_garanhao_g) + (((floor(map(au_garanhao_q)) % 8) / 7.0) - map(au_garanhao_g)) * ifelse(abs(((floor(map(au_garanhao_q)) % 8) / 7.0) - map(au_garanhao_g)) > 0.45, 1, 0.6)
 ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: bx zera antes do round]
@@ -14474,7 +14474,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = RoundState > 0
 map = "au_garanhao_th"
-value = map(au_garanhao_th) + (((floor(map(au_garanhao_q) / 512) - 16) * 7.5) - map(au_garanhao_th)) * 0.6
+value = map(au_garanhao_th) + (((floor(map(au_garanhao_q) / 512) - 16) * 7.5) - map(au_garanhao_th)) * ifelse(abs(((floor(map(au_garanhao_q) / 512) - 16) * 7.5) - map(au_garanhao_th)) > 40, 1, 0.6)
 ignorehitpause = 1
 
 ; <<< aura_no_corpo.py

@@ -13532,7 +13532,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = RoundState > 0
 map = "au_ck_ax"
-value = map(au_ck_ax) + ((((floor(map(au_ck_p)) % 128) - 64) * 2) - map(au_ck_ax)) * 0.6
+value = map(au_ck_ax) + ((((floor(map(au_ck_p)) % 128) - 64) * 2) - map(au_ck_ax)) * ifelse(abs((((floor(map(au_ck_p)) % 128) - 64) * 2) - map(au_ck_ax)) > 24, 1, 0.6)
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: ay zera antes do round]
@@ -13546,7 +13546,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = RoundState > 0
 map = "au_ck_ay"
-value = map(au_ck_ay) + (((floor(map(au_ck_p) / 128) - 64) * 2) - map(au_ck_ay)) * 0.6
+value = map(au_ck_ay) + (((floor(map(au_ck_p) / 128) - 64) * 2) - map(au_ck_ay)) * ifelse(abs(((floor(map(au_ck_p) / 128) - 64) * 2) - map(au_ck_ay)) > 24, 1, 0.6)
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: g zera antes do round]
@@ -13560,7 +13560,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = RoundState > 0
 map = "au_ck_g"
-value = map(au_ck_g) + (((floor(map(au_ck_q)) % 8) / 7.0) - map(au_ck_g)) * 0.6
+value = map(au_ck_g) + (((floor(map(au_ck_q)) % 8) / 7.0) - map(au_ck_g)) * ifelse(abs(((floor(map(au_ck_q)) % 8) / 7.0) - map(au_ck_g)) > 0.45, 1, 0.6)
 ignorehitpause = 1
 
 [State -4, Aura ck no corpo: bx zera antes do round]
@@ -13588,7 +13588,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = RoundState > 0
 map = "au_ck_th"
-value = map(au_ck_th) + (((floor(map(au_ck_q) / 512) - 16) * 7.5) - map(au_ck_th)) * 0.6
+value = map(au_ck_th) + (((floor(map(au_ck_q) / 512) - 16) * 7.5) - map(au_ck_th)) * ifelse(abs(((floor(map(au_ck_q) / 512) - 16) * 7.5) - map(au_ck_th)) > 40, 1, 0.6)
 ignorehitpause = 1
 
 ; <<< aura_no_corpo.py

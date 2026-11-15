@@ -97,3 +97,21 @@ Vídeos (o mesmo roteiro, a versão de antes desta volta contra a de agora): `ha
 
 **Ainda não feito:** a coroa vai junto com as asas (é o mesmo desenho), então deitado ela também deita; uma asa fechada
 desenhada à mão ficaria melhor que a dobrada por código; no pouso brusco há o tranco de 2 tiques descrito acima.
+
+## Terceira volta (2026-11-15): os três pontos que ficaram em aberto
+
+O Breno liberou na #51 (01:37Z) decidir e juntar sem esperar aval, com robô passando e antes/depois quadro a quadro.
+Decidido assim:
+
+- **Pouso brusco: de 2 tiques soltos para 1.** Quando o alvo pula mais que um limite (24 px, 40 graus ou meia deitada),
+  a camada não corre atrás: pula junto com o corpo no mesmo tique. Sobra 1 tique, que é o atraso do próprio motor (o
+  `-4` vê a ação nova um tique depois) e não dá para tirar sem mexer no motor.
+- **No quique do chão a asa continua fechada.** Antes o corpo meio levantado no quique (deitado 0,6) acendia a asa meio
+  aberta por uns quadros; agora a fechada vale de 0,5 para cima e a meio só aparece entre 0,15 e 0,5, que é o levantar
+  de verdade. Quadro a quadro: `v3_pouso_quadro_a_quadro.jpg` (em cima antes, embaixo agora).
+- **A coroa fica com as asas.** O Breno pôs a coroa na lista do que gruda no corpo, então ela deita e gira junto.
+- **Asa fechada continua a dobrada por código.** Uma desenhada à mão entra quando a ferramenta de pixel da anatomia
+  (#51 item 3) estiver pronta; é só trocar o desenho da camada 9603.
+
+Robôs: aura nos 4 passa (asas 6,3 a 6,8 px e 6 graus em 95% dos tiques, garanhão 6,6 px, elos 8,0 px, no máximo 1 tique
+solto); `testar_pengaro.py --linux` hazaki 238, gutto 186, pengaro 189, ck 226, 0 falhas.

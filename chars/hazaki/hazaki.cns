@@ -9310,7 +9310,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = RoundState > 0
 map = "au_diabo_ax"
-value = map(au_diabo_ax) + ((((floor(map(au_diabo_p)) % 128) - 64) * 2) - map(au_diabo_ax)) * 0.6
+value = map(au_diabo_ax) + ((((floor(map(au_diabo_p)) % 128) - 64) * 2) - map(au_diabo_ax)) * ifelse(abs((((floor(map(au_diabo_p)) % 128) - 64) * 2) - map(au_diabo_ax)) > 24, 1, 0.6)
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: ay zera antes do round]
@@ -9324,7 +9324,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = RoundState > 0
 map = "au_diabo_ay"
-value = map(au_diabo_ay) + (((floor(map(au_diabo_p) / 128) - 64) * 2) - map(au_diabo_ay)) * 0.6
+value = map(au_diabo_ay) + (((floor(map(au_diabo_p) / 128) - 64) * 2) - map(au_diabo_ay)) * ifelse(abs(((floor(map(au_diabo_p) / 128) - 64) * 2) - map(au_diabo_ay)) > 24, 1, 0.6)
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: g zera antes do round]
@@ -9338,7 +9338,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = RoundState > 0
 map = "au_diabo_g"
-value = map(au_diabo_g) + (((floor(map(au_diabo_q)) % 8) / 7.0) - map(au_diabo_g)) * 0.6
+value = map(au_diabo_g) + (((floor(map(au_diabo_q)) % 8) / 7.0) - map(au_diabo_g)) * ifelse(abs(((floor(map(au_diabo_q)) % 8) / 7.0) - map(au_diabo_g)) > 0.45, 1, 0.6)
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: bx zera antes do round]
@@ -9366,7 +9366,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = RoundState > 0
 map = "au_diabo_th"
-value = map(au_diabo_th) + (((floor(map(au_diabo_q) / 512) - 16) * 7.5) - map(au_diabo_th)) * 0.6
+value = map(au_diabo_th) + (((floor(map(au_diabo_q) / 512) - 16) * 7.5) - map(au_diabo_th)) * ifelse(abs(((floor(map(au_diabo_q) / 512) - 16) * 7.5) - map(au_diabo_th)) > 40, 1, 0.6)
 ignorehitpause = 1
 
 ; <<< aura_no_corpo.py
@@ -9471,7 +9471,7 @@ scale = (1 + 0.12 * map(au_diabo_k)), (1 + 0.12 * map(au_diabo_k))
 angle = -1 * map(au_diabo_th)
 trans = addalpha
 ; aura_no_corpo.py, antes: alpha = floor(255 * min(1, max(0, (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6)))))
-alpha = floor(255 * min(1, max(0, min(1, max(0, 2 - 3 * map(au_diabo_g))) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, min(1, max(0, 2 - 3 * map(au_diabo_g))) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6)))))
+alpha = floor(255 * min(1, max(0, min(1, max(0, (0.3 - map(au_diabo_g)) / 0.15)) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, min(1, max(0, (0.3 - map(au_diabo_g)) / 0.15)) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6)))))
 ignorehitpause = 1
 
 [State -4, Aura diabo asas: apaga para virar]
@@ -9480,7 +9480,7 @@ trigger1 = NumExplod(9600) && map(au_diabo_v) > 0.6
 id = 9600
 trans = addalpha
 ; aura_no_corpo.py, antes: alpha = floor(255 * min(1, max(0, (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6)))))
-alpha = floor(255 * min(1, max(0, min(1, max(0, 2 - 3 * map(au_diabo_g))) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, min(1, max(0, 2 - 3 * map(au_diabo_g))) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6)))))
+alpha = floor(255 * min(1, max(0, min(1, max(0, (0.3 - map(au_diabo_g)) / 0.15)) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, min(1, max(0, (0.3 - map(au_diabo_g)) / 0.15)) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6)))))
 ignorehitpause = 1
 
 [State -4, Aura diabo chao: move]
@@ -9517,7 +9517,7 @@ scale = (1 + 0.12 * map(au_diabo_k)), (1 + 0.12 * map(au_diabo_k))
 angle = -1 * map(au_diabo_th)
 trans = addalpha
 ; aura_no_corpo.py, antes: alpha = floor(255 * min(1, max(0, (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 75.4) * 0.1075 + 5)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 75.4) * 0.1075 + 5)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6)))))
-alpha = floor(255 * min(1, max(0, min(1, max(0, 2 - abs(6 * map(au_diabo_g) - 3))) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 75.4) * 0.1075 + 5)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, min(1, max(0, 2 - abs(6 * map(au_diabo_g) - 3))) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 75.4) * 0.1075 + 5)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6)))))
+alpha = floor(255 * min(1, max(0, min(1, max(0, min((map(au_diabo_g) - 0.15) / 0.15, (0.5 - map(au_diabo_g)) / 0.15))) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 75.4) * 0.1075 + 5)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, min(1, max(0, min((map(au_diabo_g) - 0.15) / 0.15, (0.5 - map(au_diabo_g)) / 0.15))) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 75.4) * 0.1075 + 5)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6)))))
 ignorehitpause = 1
 
 [State -4, Aura diabo asas_meio: apaga para virar]
@@ -9526,7 +9526,7 @@ trigger1 = NumExplod(9602) && map(au_diabo_v) > 0.6
 id = 9602
 trans = addalpha
 ; aura_no_corpo.py, antes: alpha = floor(255 * min(1, max(0, (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 75.4) * 0.1075 + 5)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 75.4) * 0.1075 + 5)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6)))))
-alpha = floor(255 * min(1, max(0, min(1, max(0, 2 - abs(6 * map(au_diabo_g) - 3))) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 75.4) * 0.1075 + 5)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, min(1, max(0, 2 - abs(6 * map(au_diabo_g) - 3))) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 75.4) * 0.1075 + 5)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6)))))
+alpha = floor(255 * min(1, max(0, min(1, max(0, min((map(au_diabo_g) - 0.15) / 0.15, (0.5 - map(au_diabo_g)) / 0.15))) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 75.4) * 0.1075 + 5)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, min(1, max(0, min((map(au_diabo_g) - 0.15) / 0.15, (0.5 - map(au_diabo_g)) / 0.15))) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 75.4) * 0.1075 + 5)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6)))))
 ignorehitpause = 1
 
 [State -4, Aura diabo asas_fechada: move]
@@ -9541,7 +9541,7 @@ scale = (1 + 0.12 * map(au_diabo_k)), (1 + 0.12 * map(au_diabo_k))
 angle = -1 * map(au_diabo_th)
 trans = addalpha
 ; aura_no_corpo.py, antes: alpha = floor(255 * min(1, max(0, (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 113.1) * 0.057 + 7.3)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 113.1) * 0.057 + 7.3)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6)))))
-alpha = floor(255 * min(1, max(0, min(1, max(0, 3 * map(au_diabo_g) - 1)) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 113.1) * 0.057 + 7.3)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, min(1, max(0, 3 * map(au_diabo_g) - 1)) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 113.1) * 0.057 + 7.3)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6)))))
+alpha = floor(255 * min(1, max(0, min(1, max(0, (map(au_diabo_g) - 0.35) / 0.15)) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 113.1) * 0.057 + 7.3)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, min(1, max(0, (map(au_diabo_g) - 0.35) / 0.15)) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 113.1) * 0.057 + 7.3)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6)))))
 ignorehitpause = 1
 
 [State -4, Aura diabo asas_fechada: apaga para virar]
@@ -9550,7 +9550,7 @@ trigger1 = NumExplod(9603) && map(au_diabo_v) > 0.6
 id = 9603
 trans = addalpha
 ; aura_no_corpo.py, antes: alpha = floor(255 * min(1, max(0, (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 113.1) * 0.057 + 7.3)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 113.1) * 0.057 + 7.3)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6)))))
-alpha = floor(255 * min(1, max(0, min(1, max(0, 3 * map(au_diabo_g) - 1)) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 113.1) * 0.057 + 7.3)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, min(1, max(0, 3 * map(au_diabo_g) - 1)) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 113.1) * 0.057 + 7.3)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6)))))
+alpha = floor(255 * min(1, max(0, min(1, max(0, (map(au_diabo_g) - 0.35) / 0.15)) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 113.1) * 0.057 + 7.3)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, min(1, max(0, (map(au_diabo_g) - 0.35) / 0.15)) * (0.95 * map(au_diabo_e) * (1 + 0.06 * sin((map(au_diabo_t) + 113.1) * 0.057 + 7.3)) + 0.15 * map(au_diabo_k) * map(au_diabo_e)) * (0.6 + 0.4 * ifelse(map(au_diabo_v) > 0.6, (map(au_diabo_v) - 0.6) / 0.4, (0.6 - map(au_diabo_v)) / 0.6)))))
 ignorehitpause = 1
 
 [State -4, Aura diabo asas: corre no surto]
