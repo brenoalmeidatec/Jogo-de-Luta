@@ -2460,3 +2460,9 @@ Detalhes e como refazer uma pose em `docs/hazak-36/LEIA-ME.md`.
 **Armadilha:** o gerador mede a caixa de dano no desenho. Trocar o desenho muda ~1900 caixas sem ninguém pedir; por
 isso o pós-passo de caixas. Sprites 1513..1527 (sem uso no `.air`) caem na paleta do corpo e o `diabo_loiro` avisa;
 é inofensivo.
+
+**Proporção (depois, mesma data):** a régua da anatomia achou cabeças de tamanhos diferentes entre as folhas (o parado
+9% maior; rasteira, agachado e vítimas herdavam o tamanho errado dos desenhos de antes). Parado gerado de novo e
+`converter_hazaki.py --cabeca` corrige a escala de cada folha pela cabeça (26 folhas). Cabeça de lado/deitada engana a
+régua: vira, derrota e vítimas foram escolhidas no olho (`CABECA_FIXA`). Caixas continuam presas. Ver
+`docs/hazak-36/proporcao.png`.

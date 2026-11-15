@@ -21,6 +21,14 @@ golpes, efeitos, caixas, `.air` ou `.cns`. O Diabo Loiro fica como está.
    da mugen antes desta troca). No `.air` só mudam os números dos sprites; no `.cns` só o que é visual e medido no
    desenho (aura presa ao corpo, ponto da faísca, tabela de gêmeos do Diabo).
 
+4. **Proporção pela cabeça** (pedido da régua da anatomia, #51): a escala pelos desenhos de antes herdava a
+   proporção errada deles (rasteira, agachado, vítimas pequenas; soco e voadora grandes). O parado foi gerado de novo
+   com a cabeça do tamanho do anexo, e `converter_hazaki.py --cabeca` mede a cabeça de cada folha contra a do parado
+   (`ferramentas/pixel/reguas.py`) e corrige a escala de quem passa de 6% (26 folhas). As correções ficam em
+   `sprites/hazaki/escala_cabeca.json`. Onde a cabeça engana (de lado, curvada, deitada) o valor foi escolhido no
+   olho e fica em `CABECA_FIXA` no conversor. Resultado em `proporcao.png`. As caixas continuam as de antes, então
+   nas folhas corrigidas o desenho pode ficar alguns pixels maior ou menor que a caixa.
+
 ## Conferência
 
 - `python3 ferramentas/converter_hazaki.py --contato PASTA`: antes (em cima) e depois (embaixo) de cada folha.

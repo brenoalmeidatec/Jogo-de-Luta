@@ -5,6 +5,7 @@ com ~500 px, ChatGPT) direto nos desenhos do jogo, em 1x e em 3x, como o convert
   python ferramentas/converter_hazaki.py                 todas as folhas novas
   python ferramentas/converter_hazaki.py soco chute      só essas
   python ferramentas/converter_hazaki.py --paleta        refaz sprites/hazaki/paleta_nitida.json com as folhas que há
+  python ferramentas/converter_hazaki.py --cabeca         escala de cada folha pela cabeça contra o parado (escala_cabeca.json)
   python ferramentas/converter_hazaki.py --contato DIR   antes e depois de cada folha convertida (3x, lado a lado)
   python ferramentas/converter_hazaki.py --de PASTA ...  lê as folhas de outra pasta (teste)
 
@@ -40,6 +41,8 @@ SPRITES = fh.SPRITES
 FOLHAS = SPRITES / "quadros/folhas_novas"
 PALETA = SPRITES / "paleta_nitida.json"
 ANTES = "6e7ff73a"   # último commit da mugen com os desenhos de antes (hd_guiado) em quadros_arcade/
+CABECA = SPRITES / "escala_cabeca.json"   # correção de escala por folha, medida pela cabeça (--cabeca)
+LIMITE_CABECA = 0.06  # a régua tem 4 a 5% de ruído em desenho novo: só corrige acima disso
 EXTRAS = 25          # tons do meio além das 15 cores do Hazak (40 no total)
 NAO_CORPO = ("d_conceito",)
 E = 3
@@ -246,7 +249,7 @@ def converter(nome, pal, pasta=FOLHAS):
     figs = acertar_cor(figs, velhos)
     excecao = fh.fatores(nome)
     razoes = [lado(v) / max(q.size) / f for v, q, f in zip(velhos, figs, excecao)]
-    fator = float(np.median(razoes))
+    fator = float(np.median(razoes)) * correcoes().get(nome, 1.0)
     notas = []
     for i, (q, v, f) in enumerate(zip(figs, velhos, excecao)):
         e = fator * f
@@ -265,6 +268,64 @@ def converter(nome, pal, pasta=FOLHAS):
     print(f"{nome}: escala {fator:.4f} (figura {max(q.height for q in figs)} px); tamanho por quadro "
           f"{min(desvio):.2f} a {max(desvio):.2f}; silhueta cobre {np.mean(notas):.0%}{aviso}")
     return min(notas)
+
+
+# ---------------------------------------------------------------- proporção
+def correcoes():
+    return json.loads(CABECA.read_text(encoding="utf-8")) if CABECA.exists() else {}
+
+
+_BASE_CABECA = {}
+# Folhas em que a régua da cabeça engana (cabeça de lado, curvada ou deitada): a correção pela cabeça deixava o boneco
+# maior que o parado (vira mais alta; derrota e vítimas com 1.25 ficavam enormes). Escolhidas no olho, lado a lado com o
+# parado na mesma escala (docs/hazak-36/proporcao.png).
+CABECA_FIXA = {"vira": 1.0, "derrota_sirene": 1.1, "vitima_agarrado": 1.1, "vitima_arremessado": 1.1}
+
+
+def medir_cabeca(nome):
+    """Mediana da escala da cabeça dos 8 quadros 3x da folha contra a cabeça do parado (régua da #51), ou None."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent / "pixel"))
+    import reguas
+
+    def quadros(acao):
+        return [np.array(Image.open(SPRITES / "quadros_arcade_hd" / acao / f"{i:02d}.png").convert("RGBA"))
+                for i in range(8)]
+    if "parado" not in _BASE_CABECA:
+        par = quadros("parado")
+        tmpl, _ = reguas.cabeca_do_parado(par[0])
+        _BASE_CABECA["parado"] = (tmpl, np.median([c[0] for c in (reguas.escala_cabeca(q, tmpl) for q in par)
+                                                   if c and c[1] >= 0.55] or [1.0]))
+    tmpl, base = _BASE_CABECA["parado"]
+    vals = [c[0] for c in (reguas.escala_cabeca(q, tmpl) for q in quadros(nome)) if c and c[1] >= 0.55]
+    return float(np.median(vals) / base) if len(vals) >= 3 else None
+
+
+def acertar_cabecas(nomes, pal, pasta):
+    """Folha a folha: converte sem correção, mede a cabeça contra o parado e, se passar de LIMITE_CABECA, corrige a
+    escala da folha (até 2 voltas). A escala pelos desenhos de antes herdava a proporção errada deles (#51: rasteira,
+    agachado...). Grava sprites/hazaki/escala_cabeca.json, que o converter() usa sempre."""
+    corr = correcoes()
+    for nome in nomes:
+        if nome == "parado":
+            continue
+        if nome in CABECA_FIXA:
+            corr[nome] = CABECA_FIXA[nome]
+            converter(nome, pal, pasta)
+            print(f"  {nome}: correção fixa {corr[nome]:.3f}")
+            continue
+        corr[nome] = 1.0
+        CABECA.write_text(json.dumps(corr, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+        converter(nome, pal, pasta)
+        for _ in range(2):
+            r = medir_cabeca(nome)
+            if r is None or abs(r - 1) <= LIMITE_CABECA:
+                break
+            corr[nome] = round(float(np.clip(corr[nome] / r, 0.8, 1.25)), 4)
+            CABECA.write_text(json.dumps(corr, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+            converter(nome, pal, pasta)
+        print(f"  {nome}: cabeça {medir_cabeca(nome) or 0:.2f} do parado, correção {corr[nome]:.3f}")
+    corr = {k: v for k, v in corr.items() if v != 1.0}
+    CABECA.write_text(json.dumps(corr, indent=1, sort_keys=True) + "\n", encoding="utf-8")
 
 
 def contato(destino, nomes):
@@ -305,7 +366,11 @@ def main():
     if not PALETA.exists():
         fazer_paleta(pasta)
     pal = paleta()
-    for nome in [a for a in args if not a.startswith("--")] or todas:
+    nomes = [a for a in args if not a.startswith("--")] or todas
+    if "--cabeca" in args:
+        acertar_cabecas(nomes, pal, pasta)
+        return
+    for nome in nomes:
         converter(nome, pal, pasta)
 
 
