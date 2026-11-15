@@ -71,7 +71,7 @@ Um item só conta como pronto quando cumpre as três coisas: **está na `mugen`*
 
 1. **Fechar o que já está no jogo esperando aval.** São 15 issues abertas com trabalho entregue. Aqui é o Breno jogar e dizer "ok" ou listar os ajustes.
 2. **Raiclaven despertado** (#43), que só depende do aval do conceito.
-3. **Gbzin** (#30), que só depende da foto.
+3. **Gbzin** (#30), começando pelo conceito novo em cima das fotos.
 4. **Correções da #51** (auras, pixelfx, anatomia) e os pedidos do fechamento (cenário destruído, proporção, asas).
 5. **Trilha**: ouvir os loops e gerar as 2 músicas que faltam.
 6. **Revisão final e balanceamento** com gente jogando.
