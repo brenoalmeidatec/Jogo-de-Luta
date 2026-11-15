@@ -62,7 +62,7 @@ PASSO = 8  # um vértice a cada 2 pixels do quadro final
 LARG, ALT = 360, 260  # mesma tela dos sprites do jogo, com folga para chute alto e salto
 DESLOCA = (180 - PIVO[0], 220 - PIVO[1])  # do pivô antigo para os pés na tela do jogo
 MEIOS = 6  # quadros do meio entre dois desenhos
-ESCALA_2172 = {"pengaro": 0.40, "gutto": 0.33, "raiclaven": 0.33, "ck": 0.195, "gbzin": 0.288}[LUTADOR]  # a figura em pé dá ~111 px numa folha de 2172 de largura; a escala segue a largura da folha (o Gutto sai maior na folha, 340 px contra 278)
+ESCALA_2172 = {"pengaro": 0.40, "gutto": 0.33, "raiclaven": 0.33, "ck": 0.195, "gbzin": 0.236}[LUTADOR]  # a figura em pé dá ~111 px numa folha de 2172 de largura; a escala segue a largura da folha (o Gutto sai maior na folha, 340 px contra 278)
 # Ginga: 8 desenhos + 8 x 7 = 64 quadros, um ciclo em cerca de 2 segundos. Andar: 8 + 8 x 5 = 48 quadros.
 LOOPS = {"ginga_fluida": ("ginga", 7), "anda_fluida": ("anda", 5), "ginga_endiabrada": ("ginga_endiabrada", 7),
          "e_anda_fluida": ("e_anda", 5)}
@@ -85,8 +85,8 @@ if LUTADOR == "ck":
     # O magenta sai ANTES de quantizar (fundo_ck, na função poses): os quadros arcade já chegam ao Blender na paleta e
     # o sem_magenta apagaria o roxo do boné e da camisa do Ratão. Por isso o ck não entra em LIMPA_MAGENTA.
 if LUTADOR == "gbzin":
-    # Gbzin: mesmo caminho do CK (fundo_ck, sempre por célula). Em pé ele tem ~386 px numa folha de 2172 (o pedido de
-    # folhas_gbzin.py fixa esse tamanho), por isso a escala 0.288 dá os mesmos ~111 px do jogo.
+    # Gbzin: mesmo caminho do CK (fundo_ck, sempre por célula). Na ginga nova (boneco grande, receita seção 3) ele tem
+    # ~470 px numa folha de 2172, por isso a escala 0.236 dá os mesmos ~111 px do jogo da ginga antiga (386 x 0.288).
     POR_CELULA = POR_CELULA | set(FOLHAS_GBZIN)
     AJUSTE = {}
 
