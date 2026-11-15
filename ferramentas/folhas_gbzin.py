@@ -41,7 +41,10 @@ The attached sprite sheet shows the exact character to keep: """ + PERSONAGEM + 
 
 """ + ESTILO
 
-DEUS_MOTOBOY = """Gbzin awakened as the DELIVERY GOD (Deus Motoboy): same face and same stocky body as the base form, same short dark-brown hair with fringe and thin beard. An open-face GOLD motorcycle helmet with two small white wings on the sides (like a messenger god), a black eyepatch with a small gold star over the LEFT eye (a stylish costume piece), a black and neon-green motorcycle jacket with silver reflective stripes, black biker gloves, black leather pants, black boots, a bigger gold wristwatch. A square neon-green thermal delivery backpack on his back with a small ring of light above it like a halo. In the FRONT hand he always holds a closed square PIZZA BOX (he hits, blocks and throws with it); in the BACK hand a short motorbike HANDLEBAR with a curved hooked end (it replaced the shepherd's crook). No brand names, no text, no logos."""
+# Forma despertada: o Grão-Pastor (pedido do Breno na issue #30, 2026-11-15; o Deus Motoboy saiu). O nome da
+# constante ficou DEUS_MOTOBOY para não mexer no resto do arquivo; as folhas e_ e fx_ abaixo ainda descrevem o motoboy
+# e serão reescritas quando o conceito do Grão-Pastor for aprovado.
+DEUS_MOTOBOY = """Gbzin awakened as the GRAND SHEPHERD (Grao-Pastor), an overwhelmingly powerful dark shepherd: exact same face, same hair, same heavy stocky body and same height as the base form. Two ENORMOUS goat horns curled in a spiral growing from his forehead. Eyes glowing solid green with no pupils. A black eyepatch over the LEFT eye with a small glowing green star on it (a stylish costume piece). A ragged BLACK WOOL CLOAK over the black tank top, its hem in tatters. Instead of the brown belt, a RED jiu-jitsu belt (the grand master's belt) that burns with GREEN flames at its two hanging ends. White gym shorts with the thin black side stripe and black sneakers as in the base form. A bigger gold wristwatch on the left wrist. In the BACK hand, a short shepherd's crook made of BONE with the same curved hook, with a small green flame burning at the tip. No motorcycle items of any kind. No text, no logos."""
 
 CABECA_MOTOBOY = """Generate ONE image with your image generation tool. Do not write code and do not edit any file.
 
@@ -66,9 +69,9 @@ Sheet layout, flat solid magenta background (#FF00FF), no text: 1) full body fro
 """ + ESTILO.split("Layout:")[0],
     "e_conceito": """Generate ONE image with your image generation tool. Do not write code and do not edit any file.
 
-The attached sprite sheet shows Gbzin in his base form. Create the concept sheet of his awakened form, keeping the exact same face, body and height: """ + DEUS_MOTOBOY + """
+The attached concept sheet shows Gbzin in his base form. Create the concept sheet of his awakened form in the same art style, keeping the exact same face, hair, body and height: """ + DEUS_MOTOBOY + """
 
-Sheet layout, flat solid magenta background (#FF00FF), no text: 1) full body front view, standing, pizza box in the front hand, 2) full body side view facing right in his fighting stance, 3) full body back view showing the delivery backpack with its light halo, 4) a big bust portrait of the face with the winged gold helmet and the star eyepatch. Same scale for the three full bodies. No aura drawn (the aura is a separate effect).
+Sheet layout, flat solid magenta background (#FF00FF), no text: 1) full body front view, standing, bone crook in the back hand, 2) full body side view facing right in his low grappler fighting stance, 3) full body back view showing the ragged black wool cloak, 4) a big bust portrait of the face with the spiral goat horns, the glowing green eye and the green-star eyepatch. Same scale for the three full bodies. No aura, no giant shadow and no giant hands drawn (the aura is a separate effect); only the green flames on the belt ends and on the crook tip.
 
 """ + ESTILO.split("Layout:")[0],
 }
@@ -173,7 +176,7 @@ def anexos(nome):
     if nome == "referencia_ginga":
         return "conceito_v2.png"
     if nome == "e_conceito":
-        return "referencia_ginga.png"
+        return "conceito_v2.png"
     if nome == "e_referencia_ginga":
         return "e_conceito.png + referencia_ginga.png"
     if nome == "despertar_b":
