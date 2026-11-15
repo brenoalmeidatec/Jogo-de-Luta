@@ -2346,15 +2346,29 @@ ctrl = 0
 [State 820, Pose]
 type = ChangeAnim
 trigger1 = Time = 0
+trigger1 = SelfAnimExist(5940)
+value = 5940
+
+[State 820, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5940)
 value = 5000
 elem = 1
 
 [State 820, Preso: pose]
 type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
 trigger1 = Anim != 5000 && AnimTime = 0
 trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
 value = 5000
 elem = 1
+
+[State 820, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
 
 [State 820, Escape]
 type = SelfState
@@ -12723,14 +12737,28 @@ ctrl = 0
 [State 822, Apanha]
 type = ChangeAnim
 trigger1 = Time = 0
+trigger1 = SelfAnimExist(5941)
+value = 5941
+
+[State 822, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5941)
 value = 5001
 
 [State 822, Preso: pose]
 type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
 trigger1 = Time > 0 && Anim = 5001 && AnimTime = 0
 trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
 value = 5000
 elem = 1
+
+[State 822, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
 
 [State 822, Solto]
 type = SelfState
@@ -12748,14 +12776,28 @@ ctrl = 0
 [State 825, Apanha]
 type = ChangeAnim
 trigger1 = Time = 0
+trigger1 = SelfAnimExist(5941)
+value = 5941
+
+[State 825, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5941)
 value = 5002
 
 [State 825, Preso: pose]
 type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
 trigger1 = Time > 0 && Anim = 5002 && AnimTime = 0
 trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
 value = 5000
 elem = 1
+
+[State 825, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
 
 [State 825, Solto]
 type = SelfState
@@ -12773,14 +12815,28 @@ ctrl = 0
 [State 826, Apanha]
 type = ChangeAnim
 trigger1 = Time = 0
+trigger1 = SelfAnimExist(5941)
+value = 5941
+
+[State 826, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5941)
 value = 5002
 
 [State 826, Preso: pose]
 type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
 trigger1 = Time > 0 && Anim = 5002 && AnimTime = 0
 trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
 value = 5000
 elem = 1
+
+[State 826, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
 
 [State 826, Solto]
 type = SelfState
@@ -12798,14 +12854,28 @@ ctrl = 0
 [State 827, Apanha]
 type = ChangeAnim
 trigger1 = Time = 0
+trigger1 = SelfAnimExist(5942)
+value = 5942
+
+[State 827, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5942)
 value = 5011
 
 [State 827, Preso: pose]
 type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
 trigger1 = Time > 0 && Anim = 5011 && AnimTime = 0
 trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
 value = 5000
 elem = 1
+
+[State 827, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
 
 [State 827, Solto]
 type = SelfState
@@ -12823,14 +12893,28 @@ ctrl = 0
 [State 828, Apanha]
 type = ChangeAnim
 trigger1 = Time = 0
+trigger1 = SelfAnimExist(5942)
+value = 5942
+
+[State 828, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5942)
 value = 5012
 
 [State 828, Preso: pose]
 type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
 trigger1 = Time > 0 && Anim = 5012 && AnimTime = 0
 trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
 value = 5000
 elem = 1
+
+[State 828, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
 
 [State 828, Solto]
 type = SelfState
@@ -12848,14 +12932,28 @@ ctrl = 0
 [State 829, Apanha]
 type = ChangeAnim
 trigger1 = Time = 0
+trigger1 = SelfAnimExist(5942)
+value = 5942
+
+[State 829, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5942)
 value = 5012
 
 [State 829, Preso: pose]
 type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
 trigger1 = Time > 0 && Anim = 5012 && AnimTime = 0
 trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
 value = 5000
 elem = 1
+
+[State 829, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
 
 [State 829, Solto]
 type = SelfState
@@ -12873,7 +12971,21 @@ ctrl = 0
 [State 823, Pose]
 type = ChangeAnim
 trigger1 = Time = 0
+trigger1 = SelfAnimExist(5943)
+value = 5943
+
+[State 823, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5943)
 value = 5030
+
+[State 823, Caindo]
+type = ChangeAnim
+trigger1 = Vel Y > 0
+trigger1 = Anim = 5943
+trigger1 = SelfAnimExist(5944)
+value = 5944
 
 [State 823, Queda]
 type = VelAdd
@@ -12896,7 +13008,21 @@ ctrl = 0
 [State 824, Pose]
 type = ChangeAnim
 trigger1 = Time = 0
+trigger1 = SelfAnimExist(5943)
+value = 5943
+
+[State 824, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5943)
 value = 5030
+
+[State 824, Caindo]
+type = ChangeAnim
+trigger1 = Vel Y > 0
+trigger1 = Anim = 5943
+trigger1 = SelfAnimExist(5944)
+value = 5944
 
 [State 824, Passa por cima]
 type = PlayerPush
@@ -12909,6 +13035,43 @@ trigger1 = 1
 y = .45
 
 [State 824, Chão]
+type = SelfState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 5100
+
+[Statedef 835]
+type = A
+movetype = H
+physics = N
+velset = -1.6, -4
+ctrl = 0
+
+[State 835, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5943)
+value = 5943
+
+[State 835, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5943)
+value = 5030
+
+[State 835, Caindo]
+type = ChangeAnim
+trigger1 = Vel Y > 0
+trigger1 = Anim = 5943
+trigger1 = SelfAnimExist(5944)
+value = 5944
+
+[State 835, Queda]
+type = VelAdd
+trigger1 = 1
+y = .45
+
+[State 835, Chão]
 type = SelfState
 trigger1 = Vel Y > 0
 trigger1 = Pos Y >= 0
