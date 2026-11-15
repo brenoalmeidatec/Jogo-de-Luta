@@ -23,13 +23,17 @@ PINTAR (COR = nome da paleta, #índice, hex rrggbb ou 'transparente')
   ret Q COR x0 y0 x1 y1 [--vazio]
   balde Q COR x y                        preenche a mancha de mesma cor (4 vizinhos)
   troca Q COR_DE COR_PARA [--regiao x0 y0 x1 y1]
-  apaga Q x0 y0 x1 y1 [--so COR]
+  apaga Q x0 y0 x1 y1 [--so COR]         (ou --poli "x,y x,y ..." no lugar do retângulo, também em copia e move)
+  remenda Q x0 y0 x1 y1 [--raio 3]       tapa os buracos da região com as cores em volta (depois de apagar/mover)
 
 MEXER EM PEDAÇOS
   copia Q x0 y0 x1 y1 [--so COR,COR]   guarda o pedaço na prancheta (com a origem)
   cola Q x y [--espelha] [--gira G] [--escala F] [--por-baixo]   (x, y = canto de cima à esquerda)
   move Q x0 y0 x1 y1 DX DY [--gira G] [--espelha] [--por-baixo]   recorta o pedaço e põe de volta deslocado/girado
+  estica Q x0 y0 x1 y1 X1 Y1 [--empurra]   estica o pedaço até (X1, Y1) (alongar canela, braço...); --empurra leva
+                                         junto o que vem depois (o sapato anda com a canela)
   escala Q F [--pivo eixo|pes|px,py] [--suave] [--grade N]  a figura inteira em volta do eixo (corrige proporção)
+  recolore Q --matiz H0 H1 --para pele|COR,COR [--regiao ...]   troca uma família de cor por outra (claro vira claro)
   quantiza Q                             leva toda cor para a cor mais próxima da paleta
 
 HISTÓRICO
@@ -94,8 +98,8 @@ def recortar(arr):
 
 
 def folga(arr, n):
-    """Tela maior em cima e dos lados (nunca embaixo: o fundo é o chão do quadro recortado)."""
-    return np.pad(arr, ((n, 0), (n, n), (0, 0)))
+    """Tela maior em volta. Ao gravar o quadro é recortado de novo e o pixel mais baixo vira o chão, como no original."""
+    return np.pad(arr, ((n, n), (n, n), (0, 0)))
 
 
 def gravar(end, arr, comando):
@@ -115,6 +119,8 @@ def desfaz(alvo=None):
     linhas = log()
     for i in range(len(linhas) - 1, -1, -1):
         e = linhas[i]
+        if alvo and "/" in alvo and alvo.count("/") == 2:
+            alvo = Endereco(alvo).texto()
         if e.get("desfeito") or (alvo and e["quadro"] != alvo):
             continue
         destino = RAIZ / e["arquivo"]
@@ -597,14 +603,25 @@ def main(argv=None):
     p = s("ret", "q", "cor"); p.add_argument("c", type=int, nargs=4); p.add_argument("--vazio", action="store_true")
     p = s("balde", "q", "cor"); p.add_argument("x", type=int); p.add_argument("y", type=int)
     p = s("troca", "q", "de", "para"); p.add_argument("--regiao", type=int, nargs=4)
-    p = s("apaga", "q"); p.add_argument("c", type=int, nargs=4); p.add_argument("--so")
-    p = s("copia", "q"); p.add_argument("c", type=int, nargs=4); p.add_argument("--so")
+    p = s("apaga", "q"); p.add_argument("c", type=int, nargs="*"); p.add_argument("--so"); p.add_argument("--poli")
+    p = s("copia", "q"); p.add_argument("c", type=int, nargs="*"); p.add_argument("--so"); p.add_argument("--poli")
+    p = s("remenda", "q"); p.add_argument("c", type=int, nargs="*"); p.add_argument("--poli")
+    p.add_argument("--raio", type=int, default=3)
     p = s("cola", "q"); p.add_argument("x", type=int); p.add_argument("y", type=int)
     p.add_argument("--espelha", action="store_true"); p.add_argument("--gira", type=float, default=0)
     p.add_argument("--escala", type=float, default=1); p.add_argument("--por-baixo", action="store_true")
-    p = s("move", "q"); p.add_argument("c", type=int, nargs=4); p.add_argument("dx", type=int)
+    p = s("move", "q"); p.add_argument("c", type=int, nargs="*"); p.add_argument("dx", type=int)
+    p.add_argument("--poli"); p.add_argument("--escala", type=float, default=1,
+                                           help="encolhe/cresce o pedaço em volta do meio da base dele (mão no chão)")
     p.add_argument("dy", type=int); p.add_argument("--gira", type=float, default=0)
     p.add_argument("--espelha", action="store_true"); p.add_argument("--por-baixo", action="store_true")
+    p = s("recolore", "q"); p.add_argument("--matiz", type=int, nargs=2, required=True,
+                                           help="faixa de matiz em graus (0-360) dos pixels a trocar, ex.: 160 210 = verde-água")
+    p.add_argument("--sat", type=float, default=0.25, help="saturação mínima (0-1) para entrar na troca")
+    p.add_argument("--para", required=True, help="cores de destino (vírgula), 'pele' ou 'matiz:H0-H1' (cores vizinhas nessa faixa)")
+    p.add_argument("--regiao", type=int, nargs=4)
+    p = s("estica", "q"); p.add_argument("c", type=int, nargs=4); p.add_argument("para", type=int, nargs=2)
+    p.add_argument("--empurra", action="store_true")
     p = s("escala", "q"); p.add_argument("f", type=float); p.add_argument("--pivo", default="eixo")
     p.add_argument("--suave", action="store_true")
     p.add_argument("--grade", type=int, help="tamanho do pixel do desenho (padrão: 3 no desenho grande do Hazak/CK/Pengaró)")
@@ -659,6 +676,33 @@ def main(argv=None):
                 setattr(a, nome, getattr(a, nome) + margem)
         if getattr(a, "pontos", None):
             a.pontos = [f"{xy(t)[0] + margem},{xy(t)[1] + margem}" for t in a.pontos]
+        if getattr(a, "poli", None):
+            a.poli = " ".join(f"{xy(t)[0] + margem},{xy(t)[1] + margem}" for t in a.poli.split())
+
+    def selecao(caixa_ok=True):
+        """Máscara do quadro todo: o polígono (--poli "x,y x,y ...") ou o retângulo, filtrada pelas cores de --so."""
+        sel = np.zeros(arr.shape[:2], bool)
+        if getattr(a, "poli", None):
+            pts = np.array([xy(t) for t in a.poli.split()], np.int32)
+            m = np.zeros(arr.shape[:2], np.uint8)
+            cv2.fillPoly(m, [pts], 1)
+            cv2.polylines(m, [pts], True, 1)
+            sel = m.astype(bool)
+        elif a.c:
+            x0, y0, x1, y1 = a.c[:4]
+            sel[y0:y1 + 1, x0:x1 + 1] = True
+        else:
+            sys.exit("diga a região: x0 y0 x1 y1 ou --poli \"x,y x,y ...\"")
+        if getattr(a, "so", None):
+            cores = np.zeros_like(sel)
+            for t in a.so.split(","):
+                cores |= (arr == np.array(cor(t, pal), np.uint8)).all(-1)
+            sel &= cores
+        return sel
+
+    def caixa_de(sel):
+        ys, xs = np.nonzero(sel)
+        return int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max())
 
     def c_ok(t):
         c = cor(t, pal)
@@ -695,26 +739,30 @@ def main(argv=None):
         arr[sel] = para
         print(f"{int(sel.sum())} pixels trocados")
     elif a.cmd == "apaga":
-        x0, y0, x1, y1 = a.c
-        bloco = arr[y0:y1 + 1, x0:x1 + 1]
-        sel = np.ones(bloco.shape[:2], bool)
-        if a.so:
-            sel = np.zeros_like(sel)
-            for t in a.so.split(","):
-                sel |= (bloco == np.array(cor(t, pal), np.uint8)).all(-1)
-        bloco[sel] = 0
+        sel = selecao()
+        arr[sel] = 0
+        print(f"{int(sel.sum())} pixels apagados")
+    elif a.cmd == "remenda":
+        # tapa os buracos (pixels vazios) da região com as cores de volta (inpaint) e leva para a paleta
+        sel = selecao() & (arr[..., 3] == 0)
+        rgb = np.ascontiguousarray(arr[..., :3])
+        tapado = cv2.inpaint(rgb, sel.astype(np.uint8), a.raio, cv2.INPAINT_TELEA)
+        novo = arr.copy()
+        novo[sel, :3] = tapado[sel]
+        novo[sel, 3] = 255
+        q = mais_proxima(novo, pal)
+        arr[sel] = q[sel]
+        print(f"{int(sel.sum())} pixels remendados")
     elif a.cmd == "copia":
-        x0, y0, x1, y1 = a.c
+        sel = selecao()
+        x0, y0, x1, y1 = caixa_de(sel)
         ped = arr[y0:y1 + 1, x0:x1 + 1].copy()
-        if a.so:
-            sel = np.zeros(ped.shape[:2], bool)
-            for t in a.so.split(","):
-                sel |= (ped == np.array(cor(t, pal), np.uint8)).all(-1)
-            ped[~sel] = 0
+        ped[~sel[y0:y1 + 1, x0:x1 + 1]] = 0
         CASA.mkdir(parents=True, exist_ok=True)
         Image.fromarray(ped).save(PRANCHETA)
-        (CASA / "prancheta.json").write_text(json.dumps({"de": end.texto(), "caixa": a.c}), encoding="utf-8")
-        print(f"prancheta: {ped.shape[1]}x{ped.shape[0]} de {end.texto()} {a.c}")
+        caixa = [x0 - margem, y0 - margem, x1 - margem, y1 - margem]
+        (CASA / "prancheta.json").write_text(json.dumps({"de": end.texto(), "caixa": caixa}), encoding="utf-8")
+        print(f"prancheta: {ped.shape[1]}x{ped.shape[0]} de {end.texto()} {caixa}")
         return
     elif a.cmd == "cola":
         ped = np.array(Image.open(PRANCHETA).convert("RGBA"))
@@ -724,11 +772,75 @@ def main(argv=None):
         ped, (dx, dy) = girar(ped, a.gira, a.espelha)
         colar(arr, ped, a.x - dx, a.y - dy, a.por_baixo)
     elif a.cmd == "move":
-        x0, y0, x1, y1 = a.c
+        sel = selecao()
+        x0, y0, x1, y1 = caixa_de(sel)
         ped = arr[y0:y1 + 1, x0:x1 + 1].copy()
-        arr[y0:y1 + 1, x0:x1 + 1] = 0
+        ped[~sel[y0:y1 + 1, x0:x1 + 1]] = 0
+        arr[sel] = 0
+        if a.escala != 1:
+            h, w = ped.shape[:2]
+            nw, nh = max(1, round(w * a.escala)), max(1, round(h * a.escala))
+            grande = scale2x(scale2x(scale2x(ped))) if a.escala > 1 else ped
+            ped = cv2.resize(grande, (nw, nh), interpolation=cv2.INTER_NEAREST)
+            x0 += (w - nw) // 2
+            y0 += h - nh
         ped, (dx, dy) = girar(ped, a.gira, a.espelha)
         colar(arr, ped, x0 + a.dx - dx, y0 + a.dy - dy, a.por_baixo)
+    elif a.cmd == "recolore":
+        # troca uma cor errada (ex.: a munhequeira verde-água do Hazak que sobrou no Diabo) por outra família de cores,
+        # mantendo o claro/escuro: o pixel mais claro vai para a cor de destino mais clara
+        hsv = cv2.cvtColor(np.ascontiguousarray(arr[..., :3]), cv2.COLOR_RGB2HSV)
+        h, sat = hsv[..., 0].astype(int) * 2, hsv[..., 1] / 255
+        sel = (arr[..., 3] > 0) & (h >= a.matiz[0]) & (h <= a.matiz[1]) & (sat >= a.sat)
+        if a.regiao:
+            x0, y0, x1, y1 = a.regiao
+            caixa = np.zeros_like(sel)
+            caixa[y0:y1 + 1, x0:x1 + 1] = True
+            sel &= caixa
+        if a.para == "pele" or a.para.startswith("matiz:"):
+            # as cores vizinhas (até 8 px da mancha) na faixa pedida: 'pele' é a mão/o braço logo ao lado;
+            # 'matiz:250-300' pega, por exemplo, o roxo do terno em volta
+            h0, h1, smin, vmin = (10, 45, 0.35, 0.45) if a.para == "pele" else (
+                *map(int, a.para[6:].split("-")), 0.15, 0.05)
+            perto = cv2.dilate(sel.astype(np.uint8), np.ones((17, 17), np.uint8)).astype(bool) & ~sel
+            v = hsv[..., 2] / 255
+            mp = perto & (arr[..., 3] > 0) & (h >= h0) & (h <= h1) & (sat > smin) & (v > vmin)
+            if mp.sum() < 10:
+                sys.exit("não achei pele perto da mancha: passe --para COR,COR")
+            cont = Counter(map(tuple, arr[mp][:, :3].tolist()))
+            alvos = [np.array(c) for c, _ in cont.most_common(4)]
+        else:
+            alvos = [c_ok(t)[:3].astype(int) for t in a.para.split(",")]
+        alvos.sort(key=lambda c: int(c.sum()))
+        if sel.any():
+            lum = arr[sel][:, :3].astype(int).sum(-1)
+            ordem = np.argsort(np.argsort(lum, kind="stable"), kind="stable") / max(1, len(lum) - 1)
+            # quantis do claro/escuro da cor errada viram as cores de destino na mesma ordem
+            idx = np.minimum((ordem * len(alvos)).astype(int), len(alvos) - 1)
+            novo = arr[sel].copy()
+            novo[:, :3] = np.array(alvos)[idx]
+            arr[sel] = novo
+        print(f"{int(sel.sum())} pixels recoloridos")
+    elif a.cmd == "estica":
+        x0, y0, x1, y1 = a.c
+        nx1, ny1 = a.para[0] + margem, a.para[1] + margem
+        ped = arr[y0:y1 + 1, x0:x1 + 1].copy()
+        w, h = nx1 - x0 + 1, ny1 - y0 + 1
+        f = max(w / ped.shape[1], h / ped.shape[0])
+        if f > 1:  # cresce pelo Scale2x para não fazer degrau
+            ped = scale2x(scale2x(scale2x(ped)))
+        ped = cv2.resize(ped, (w, h), interpolation=cv2.INTER_NEAREST)
+        if a.empurra:  # o que estava à direita/abaixo do pedaço anda junto (ex.: o sapato depois da canela)
+            dx, dy = nx1 - x1, ny1 - y1
+            if dx:
+                resto = arr[y0:y1 + 1, x1 + 1:].copy()
+                arr[y0:y1 + 1, x1 + 1:] = 0
+                colar(arr, resto[:, :max(0, arr.shape[1] - x1 - 1 - dx)], x1 + 1 + dx, y0)
+            if dy:
+                resto = arr[y1 + 1:, x0:x1 + 1].copy()
+                arr[y1 + 1:, x0:x1 + 1] = 0
+                colar(arr, resto[:max(0, arr.shape[0] - y1 - 1 - dy)], x0, y1 + 1 + dy)
+        arr[y0:y0 + h, x0:x0 + w][ped[..., 3] > 0] = ped[ped[..., 3] > 0]
     elif a.cmd == "escala":
         if a.pivo == "pes" or (a.pivo == "eixo" and margem):
             pivo = pes(arr)
