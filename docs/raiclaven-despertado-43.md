@@ -1,43 +1,62 @@
-# Raiclaven despertado (issues #38 e #43): progresso
+# Raiclaven despertado (issues #38, #43 e #47): progresso
 
-Atualizado em 2026-11-14. Branch de trabalho `claude/project-thread-f6tbq9`, que ainda **não** foi juntada na `mugen`.
-O Breno pediu na #43 que o conceito da parceira seja aprovado antes das outras folhas.
+Atualizado em 2026-11-15. Branch de trabalho `claude/project-thread-f6tbq9`, que ainda **não** foi juntada na `mugen`.
+Condição do Breno na #43: postar o **vídeo** lá antes de juntar.
+
+## O que o Breno pediu (fase 2)
+
+A parceira vai **amarrada nas costas dele**, num arnês de barbeiro com uma cadeirinha vermelha entre os tanques, e não sai
+do assento. Ele usa o corpo todo para levar a parceira até o alvo, e ela ataca com a navalha e o secador. Ela é adulta,
+a dupla é mandona, e o humor vem da dupla, nunca da deficiência dela. O cabelo continua verde. O Breno quer o despertado
+louco, caótico e rápido, com raio verde e aço estourando.
 
 ## Pronto
 
-- **Cabelo verde** (#43 item 1). O despertado ganhou uma paleta própria no .sff, a 3ª paleta (grupo 2, item 1).
-  - Por que precisou: a paleta fixa da forma base (`sprites/raiclaven/paleta_sff.act`) não tem verde nenhum, então o cabelo saía cinza.
-  - Como funciona: `gerar_pengaro.escrever_sff` lê `sprites.paleta_propria` e `gravar_sff` grava as paletas extras. `conferir_sff.py` e `parry.py` preservam a paleta e o índice de cada sprite. Antes o `parry.py` regravava o .sff e apagava essa paleta.
-  - A forma base continua idêntica, byte a byte, na paleta fixa.
-- **Aura** (#43 item 2), em `ferramentas/aura_raiclaven.py`, com as camadas do Blender em `sprites/raiclaven/aura/`.
-  - Explod 9600: leque de lâminas, foices e raios.
-  - Explod 9601: lascas e limalha.
-  - Cor aço com raio branco-prata. Fica atrás do lutador e no chão durante o pulo. O surto acontece nos supers e no Despertar.
-- **Dupla** (#43 item 4).
-  - Conceito em `sprites/raiclaven/quadros/folhas_dupla/dupla_modelo.png`, com a prévia em `docs/previas/raiclaven-dupla/`.
-  - 16 de 33 folhas estão prontas: ginga, anda, agachado, pulo, defesa, apanha, queda, levanta, soco, martelo, chute_baixo, chute_alto, afastar, baixo_soco e cabecada.
-  - Para cortar: `python ferramentas/gerar_raiclaven.py --dupla [e_nome ...]`. Os quadros saem em 1x e 3x, com fator 1,16.
-  - Golpe sem folha ainda empresta a folha da dupla mais parecida (`EMPRESTADA_DUPLA` em `gerar_raiclaven.py`), para o cientista sem a parceira não aparecer no meio da luta.
-- **Robô na nuvem**: `testar_pengaro.py --lutador raiclaven --linux` deu 185 ok e 0 falhas.
-- **Fotos e vídeo do despertado**: `python3 ferramentas/fotos_despertado.py raiclaven SAIDA --segundos 30 --video`.
+- **Conceito do arnês**: `docs/previas/raiclaven-dupla/conceito-arnes.jpg`, também em `folhas_dupla/dupla_modelo.png`.
+- **Folhas da dupla**: 16 de 40, em `sprites/raiclaven/quadros/folhas_dupla/`.
+  - Do ChatGPT: ginga, anda, agachado, pulo, defesa, apanha, queda, levanta e soco.
+  - Do Gemini: martelo, chute_baixo, raio, choque, piao, agarra_forma e vitoria (a vitória é a pose de comemoração do agarra).
+  - Golpe sem folha empresta a folha mais parecida (`EMPRESTADA_DUPLA`). O kit da forma (raio, choque, pião e agarra)
+    entra no lugar dos especiais do Surto.
+- **Gemini**: cada imagem dá 4 quadros. `ferramentas/compor_gemini_raiclaven.py NOME A.jpg - [ordem]` monta a folha
+  3136x560 e escala pela lente verde do braço. Depois roda `gerar_raiclaven.py --dupla e_NOME`.
+- **Caixa de golpe na arma** (`ferramentas/caixas_dupla.py`): nas ações 10000 a 12999, a Clsn1 vai para a ponta que
+  chega na frente: navalha, secador, tesoura ou bota. Os supers ficam com a caixa grande. Prévia em
+  `docs/previas/raiclaven-dupla/caixas-dupla.png`.
+- **Kit da forma** (`despertados_47.py` e `despertados_47_blender.py`, CFG raiclaven), no padrão do Diabo Loiro:
+  - **Cadeira Elétrica** (agarrão 4700/4710).
+  - **Secador de Raio** (poder 4750, ↓→↓→+soco).
+  - Efeitos do Blender + pixelfx em aço e verde. Prévia em `docs/previas/raiclaven-dupla/agarrao-e-poder.jpg`.
+- **Aura**:
+  - A aura grande (lâminas e raios) agora fica presa ao corpo (`aura_no_corpo.py`).
+  - A aura de anime colada na silhueta dos dois sai em verde (`aura_silhueta.py`, TONS). Prévia em
+    `docs/previas/raiclaven-dupla/aura-silhueta.jpg`.
+- **Conserto do .sff**: o transplante regravava os efeitos PNG como pixel indexado (o .sff da mugen sai torto no
+  8200,0) e o `efeitos.gravar` perdia a 3ª paleta. Agora os dois preservam PNG, o índice de paleta e as paletas extras.
+- **Robô**: 186 ok, 0 falhas.
 
-## Falta (depois do aval do Breno na #43)
+## Falta
 
-1. **17 folhas** restantes: rasteirinha, rasteira, ar_soco, bicicleta, bola, rolamento, pente_combo, agarrao, compasso, armada, caneta, golaco, provoca, vitoria, lata, derrota, despertar_a e despertar_b. Os prompts estão em `ferramentas/folhas_raiclaven.py` (DUPLA).
-2. **Hitboxes nela**: o Clsn1 das ações 1xxxx precisa ir para a navalha e o secador.
-3. **Kit próprio do Cientista Louco** (#43 item 3), seguindo a ficha. Agarrão e poder de longe no padrão novo do Breno (#47, 17:49): grandes e pesados, com brilho, rastro, partículas, tremida e impacto forte, e comparação lado a lado de Blender+pixelfx com efeito direto. Hoje o Surto é o kit do Gutto renomeado. O agarrão e o poder de longe também ficam comigo (combinado com a thread do #47).
-4. **Pose de vitória**: ainda usa o cientista antigo.
-5. **Conferir o tique 56** (CIENTISTA em `aura_raiclaven.py`) contra a ação 2000.
-6. **Juntar na mugen** depois do aval, com o robô e as fotos de novo.
+1. **24 folhas**: chute_alto, afastar, baixo_soco, cabecada, rasteirinha, rasteira, ar_soco, bicicleta, bola,
+   rolamento, pente_combo, agarrao, compasso, armada, caneta, golaco, provoca, lata, derrota, despertar_a,
+   despertar_b, mergulho, atravessa e joga_forma.
+   - Prompts em `ferramentas/folhas_raiclaven.py` (DUPLA).
+   - O Gemini Pro segura umas 35 imagens por ciclo somando todas as threads (contador em
+     `/mnt/project-files/imagens/contador-gemini.md`). O ChatGPT Go volta às 23:26.
+2. **Vídeo na #43**. Depois do aval, juntar na mugen e mandar o hash para a #47.
 
 ## Como rodar tudo
 
 ```
-python3 ferramentas/gerar_raiclaven.py
+python3 ferramentas/gerar_raiclaven.py          # já chama caixas_dupla, despertados_47, aura_no_corpo e aura_silhueta
 python3 ferramentas/conferir_sff.py transplantar <raiclaven.sff da mugen> chars/raiclaven
 python3 ferramentas/trocar_retratos.py raiclaven
-git checkout chars/raiclaven/raiclaven.cmd
+git checkout chars/raiclaven/raiclaven.cmd      # o .cmd do git já tem o 4700/4750 (despertados_47.ligar_cmd)
 python3 ferramentas/testar_pengaro.py --lutador raiclaven --linux
+python3 ferramentas/filmar_47.py SAIDA.mp4 --p1 raiclaven --p2 gutto          # agarrão e poder no motor
+python3 ferramentas/fotos_despertado.py raiclaven SAIDA --segundos 30 --video
 ```
 
-O HD 3x precisa de `sprites/raiclaven/quadros_hd`, que fica fora do git e é gerado com `ferramentas/hd_blender.py raiclaven`.
+Os efeitos da #47 se refazem com `"$NAZAFX_PY" ferramentas/despertados_47_blender.py raiclaven`, depois de
+`bash ferramentas/efeitos_pixel/preparar_nuvem.sh`. O HD 3x precisa de `sprites/raiclaven/quadros_hd`, que fica fora do
+git e é gerado com `ferramentas/hd_blender.py raiclaven`.

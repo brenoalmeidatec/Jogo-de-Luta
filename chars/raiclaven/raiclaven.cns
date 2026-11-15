@@ -8797,7 +8797,7 @@ map = "au_raiclaven_c"
 value = 1
 ignorehitpause = 1
 
-; >>> aura_no_corpo.py: a aura segue o corpo (issue #51). Tabelas medidas nos desenhos do .air: 180 + 73 valores, 1512 trechos. Pivô nas costas em -4, -110. Não edite: rode python3 ferramentas/aura_no_corpo.py
+; >>> aura_no_corpo.py: a aura segue o corpo (issue #51). Tabelas medidas nos desenhos do .air: 180 + 73 valores, 1514 trechos. Pivô nas costas em -4, -110. Não edite: rode python3 ferramentas/aura_no_corpo.py
 [State -4, Aura raiclaven no corpo: costas de quem está em pé]
 type = MapSet
 trigger1 = 1
@@ -8961,10 +8961,9 @@ ignorehitpause = 1
 
 [State -4, Aura raiclaven no corpo: costas -4 +0]
 type = MapSet
-trigger1 = Anim = 181
-trigger2 = Anim = 343 && AnimElemNo(0) = [5, 9]
-trigger3 = Anim = 3200 && AnimElemNo(0) = [6, 9]
-trigger4 = Anim = 13200 && AnimElemNo(0) = [6, 9]
+trigger1 = Anim = 343 && AnimElemNo(0) = [5, 9]
+trigger2 = Anim = 3200 && AnimElemNo(0) = [6, 9]
+trigger3 = Anim = 13200 && AnimElemNo(0) = [6, 9]
 map = "au_raiclaven_p"
 value = 8254
 ignorehitpause = 1
@@ -8998,11 +8997,12 @@ ignorehitpause = 1
 
 [State -4, Aura raiclaven no corpo: costas +8 +0]
 type = MapSet
-trigger1 = Anim = 830 && AnimElemNo(0) = [3, 5]
-trigger2 = Anim = 831 && AnimElemNo(0) = [4, 10]
-trigger3 = Anim = 840 && AnimElemNo(0) = [3, 5]
-trigger4 = Anim = 10830 && AnimElemNo(0) = [3, 5]
-trigger5 = Anim = 10831 && AnimElemNo(0) = [4, 10]
+trigger1 = Anim = 181 && AnimElemNo(0) = [26, 28]
+trigger2 = Anim = 830 && AnimElemNo(0) = [3, 5]
+trigger3 = Anim = 831 && AnimElemNo(0) = [4, 10]
+trigger4 = Anim = 840 && AnimElemNo(0) = [3, 5]
+trigger5 = Anim = 10830 && AnimElemNo(0) = [3, 5]
+trigger6 = Anim = 10831 && AnimElemNo(0) = [4, 10]
 map = "au_raiclaven_p"
 value = 8260
 ignorehitpause = 1
@@ -9222,17 +9222,18 @@ trigger1 = Anim = 44 && AnimElemNo(0) = [11, 13]
 trigger2 = Anim = 45 && AnimElemNo(0) = [11, 13]
 trigger3 = Anim = 46 && AnimElemNo(0) = [11, 13]
 trigger4 = Anim = 47 && AnimElemNo(0) = [1, 2]
-trigger5 = Anim = 600 && AnimElemNo(0) = 5
-trigger6 = Anim = 601 && AnimElemNo(0) = 4
-trigger7 = Anim = 610 && AnimElemNo(0) = 4
-trigger8 = Anim = 611 && AnimElemNo(0) = 4
-trigger9 = Anim = 650 && AnimElemNo(0) = 5
-trigger10 = Anim = 3403 && AnimElemNo(0) = 7
-trigger11 = Anim = 10600 && AnimElemNo(0) = 5
-trigger12 = Anim = 10601 && AnimElemNo(0) = 4
-trigger13 = Anim = 10610 && AnimElemNo(0) = 4
-trigger14 = Anim = 10611 && AnimElemNo(0) = 4
-trigger15 = Anim = 10650 && AnimElemNo(0) = 5
+trigger5 = Anim = 181 && AnimElemNo(0) = [1, 2]
+trigger6 = Anim = 600 && AnimElemNo(0) = 5
+trigger7 = Anim = 601 && AnimElemNo(0) = 4
+trigger8 = Anim = 610 && AnimElemNo(0) = 4
+trigger9 = Anim = 611 && AnimElemNo(0) = 4
+trigger10 = Anim = 650 && AnimElemNo(0) = 5
+trigger11 = Anim = 3403 && AnimElemNo(0) = 7
+trigger12 = Anim = 10600 && AnimElemNo(0) = 5
+trigger13 = Anim = 10601 && AnimElemNo(0) = 4
+trigger14 = Anim = 10610 && AnimElemNo(0) = 4
+trigger15 = Anim = 10611 && AnimElemNo(0) = 4
+trigger16 = Anim = 10650 && AnimElemNo(0) = 5
 map = "au_raiclaven_p"
 value = 8509
 ignorehitpause = 1
@@ -11140,7 +11141,7 @@ trigger11 = Anim = 151
 trigger12 = Anim = 152
 trigger13 = Anim = 170 && AnimElemNo(0) = [25, 30]
 trigger14 = Anim = 170 && AnimElemNo(0) = 43
-trigger15 = Anim = 181
+trigger15 = Anim = 181 && AnimElemNo(0) = [1, 2]
 trigger16 = Anim = 190 && AnimElemNo(0) = 15
 trigger17 = Anim = 190 && AnimElemNo(0) = [16, 21]
 trigger18 = Anim = 190 && AnimElemNo(0) = 43
@@ -11311,26 +11312,27 @@ type = MapSet
 trigger1 = Anim = 21 && AnimElemNo(0) = 8
 trigger2 = Anim = 105
 trigger3 = Anim = 150 && AnimElemNo(0) = 2
-trigger4 = Anim = 761 && AnimElemNo(0) = 3
-trigger5 = Anim = 765 && AnimElemNo(0) = [2, 3]
-trigger6 = Anim = 830 && AnimElemNo(0) = [3, 5]
-trigger7 = Anim = 831 && AnimElemNo(0) = [4, 10]
-trigger8 = Anim = 840 && AnimElemNo(0) = [3, 5]
-trigger9 = Anim = 1000
-trigger10 = Anim = 1001
-trigger11 = Anim = 1600 && AnimElemNo(0) = [2, 6]
-trigger12 = Anim = 1601 && AnimElemNo(0) = [2, 6]
-trigger13 = Anim = 3000 && AnimElemNo(0) = 1
-trigger14 = Anim = 3100 && AnimElemNo(0) = 7
-trigger15 = Anim = 9210 && AnimElemNo(0) = [19, 20]
-trigger16 = Anim = 10760 && AnimElemNo(0) = 5
-trigger17 = Anim = 10764 && AnimElemNo(0) = 5
-trigger18 = Anim = 10830 && AnimElemNo(0) = [3, 5]
-trigger19 = Anim = 10831 && AnimElemNo(0) = [4, 10]
-trigger20 = Anim = 11000
-trigger21 = Anim = 11001
-trigger22 = Anim = 13000 && AnimElemNo(0) = 1
-trigger23 = Anim = 13100 && AnimElemNo(0) = 7
+trigger4 = Anim = 181 && AnimElemNo(0) = [26, 28]
+trigger5 = Anim = 761 && AnimElemNo(0) = 3
+trigger6 = Anim = 765 && AnimElemNo(0) = [2, 3]
+trigger7 = Anim = 830 && AnimElemNo(0) = [3, 5]
+trigger8 = Anim = 831 && AnimElemNo(0) = [4, 10]
+trigger9 = Anim = 840 && AnimElemNo(0) = [3, 5]
+trigger10 = Anim = 1000
+trigger11 = Anim = 1001
+trigger12 = Anim = 1600 && AnimElemNo(0) = [2, 6]
+trigger13 = Anim = 1601 && AnimElemNo(0) = [2, 6]
+trigger14 = Anim = 3000 && AnimElemNo(0) = 1
+trigger15 = Anim = 3100 && AnimElemNo(0) = 7
+trigger16 = Anim = 9210 && AnimElemNo(0) = [19, 20]
+trigger17 = Anim = 10760 && AnimElemNo(0) = 5
+trigger18 = Anim = 10764 && AnimElemNo(0) = 5
+trigger19 = Anim = 10830 && AnimElemNo(0) = [3, 5]
+trigger20 = Anim = 10831 && AnimElemNo(0) = [4, 10]
+trigger21 = Anim = 11000
+trigger22 = Anim = 11001
+trigger23 = Anim = 13000 && AnimElemNo(0) = 1
+trigger24 = Anim = 13100 && AnimElemNo(0) = 7
 map = "au_raiclaven_q"
 value = 8456
 ignorehitpause = 1
