@@ -67,6 +67,11 @@ FOLHA = {
     "parry_alto": "d_defesa", "parry_baixo": "d_defesa_baixa",
     "vitima_agarrado": "d_apanha", "vitima_arremessado": "d_queda",
 }
+# desenho próprio (#44, Breno 2026-11-15): ferramentas/diabo_proprio.py grava diabo_terno/d_<ação>; onde a pasta já
+# existe, a ação usa ela no lugar da mais parecida (ou, na estatueta_arremesso, no lugar do chapéu, que saiu)
+PROPRIAS = {acao for acao in FOLHA if (SAIDA / f"d_{acao}").is_dir() and FOLHA[acao] != f"d_{acao}"}
+FOLHA.update({acao: f"d_{acao}" for acao in PROPRIAS})
+
 PARECIDA = {"ar_chute", "ascensao", "chute_alto_rajada", "chute_gancho", "cutucao", "jab_duplo", "guarda_aco",
             "passagem_rapida", "provoca", "rasteira", "sobe_chutando", "tapa_costas", "tesoura", "derrota_sirene",
             "intro", "despertar_pedido", "parry_alto", "parry_baixo", "vitima_agarrado", "vitima_arremessado"}
@@ -161,7 +166,7 @@ def fator_da_folha(folha_d):
 
 
 def montar(pasta=None):
-    for folha_d in sorted(set(FOLHA.values())):
+    for folha_d in sorted(set(FOLHA.values()) - {f"d_{a}" for a in PROPRIAS}):
         figs = hd_guiado.figuras(abrir_folha(folha_d, pasta))
         assert len(figs) == 8, f"{folha_d}: {len(figs)} figuras (esperava 8)"
         fat = fator_da_folha(folha_d)
