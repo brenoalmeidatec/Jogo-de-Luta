@@ -203,3 +203,25 @@ def pedido(nome):
 
 if __name__ == "__main__":
     print(pedido(sys.argv[1]) if len(sys.argv) > 1 else "\n".join(FOLHAS_RAICLAVEN))
+
+
+# Breno na #43 (2026-11-15 15:41Z): a parceira deixa de ser pessoa e vira uma CRIATURA DE TERROR, experimento do
+# Cientista Louco que deu errado, presa no arnês nas costas dele. Conceito para o Breno aprovar ANTES de refazer as
+# folhas da dupla (a CABECA_DUPLA e as DUPLA acima ainda descrevem a parceira antiga).
+CONCEITO_CRIATURA = (
+    "Please create the image now with your image generation tool. Do not write code. "
+    "Character model sheet for a 90s arcade fighting game (16-bit SNES pixel-art style, clean dark outline, flat cel "
+    "shading, flat magenta #FF00FF background, no text): three views (front three-quarter, side attacking, back) of the "
+    "SAME duo. The attached image shows the mad scientist barber RAICLAVEN and his harness: keep him exactly (huge "
+    "muscular man, brown skin, slicked-back bright green hair, green-glowing round goggles, manic grin, torn rusty lab "
+    "coat, black barber apron, giant riveted steel mechanical arm ending in huge scissors, barber harness with a small "
+    "red barber-chair seat on his back between two glass tanks of green liquid with tesla coils). "
+    "REPLACE the woman in the seat with a HORROR CREATURE, his failed experiment, strapped into the seat: a stitched "
+    "patchwork torso of mismatched grey-green flesh glistening with slime, thick black stitches and metal staples, "
+    "THREE overly long thin arms (one ends in a straight razor sewn in place of the hand, one has a chrome hair-dryer "
+    "grafted into the forearm whose nozzle crackles with green lightning, one ends in long hooked claws), a huge mouth "
+    "that splits its head side to side full of crooked teeth, many mismatched eyes scattered over its head and "
+    "shoulders, tufts of ripped green hair, rubber tubes and wires running from its back into the green tanks and into "
+    "the back of his neck, green lightning crawling along the stitches. It is a monster, clearly not a person; creepy "
+    "and grotesque but readable as a game sprite. He grins proudly; the creature screeches toward the opponent on the "
+    "right.")
