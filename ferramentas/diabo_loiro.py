@@ -262,15 +262,28 @@ def acao_cobranca():
     """(desenhos [(RGBA, eixo x, eixo y)], texto da ação 1660) do Diabo na Cobrança, ou (None, None) sem a folha.
     Eixo nos pés (âncora do diabo_terno); caixas medidas no desenho, em px 3x como o resto do corpo."""
     pasta = diabo_terno.SAIDA / COBRANCA["pasta"]
+    if (diabo_terno.SAIDA / "m_cobranca_garras/07.png").exists():
+        pasta = diabo_terno.SAIDA / "m_cobranca_garras"  # Cobrança das Garras do demônio (#47)
     if not (pasta / "00.png").exists():
         return None, None
     quadros, linhas = [], []
+    demonio = pasta.name.startswith("m_")
     for i, t in enumerate(COBRANCA["ticks"]):
         img = Image.open(pasta / f"{i:02d}.png").convert("RGBA")
         m = np.array(img)[..., 3] > 0
         ax, ay = diabo_terno.ancora(m)
         ex, ey = round(ax), int(ay)
         quadros.append((img, ex, ey))
+        if demonio:  # garras na frente: quadros 2 a 4 (investida e rasgo); caixas como nos golpes do demônio
+            import diabo_demonio
+            corpo, golpe = diabo_demonio._caixas(m, ex, ey, "frente", i in (2, 3, 4))
+            cx2 = [corpo] + ([golpe] if golpe else [])
+            linhas.append(f"Clsn2: {len(cx2)}")
+            linhas += [f" Clsn2[{j}] = {a}, {b}, {c}, {d}" for j, (a, b, c, d) in enumerate(cx2)]
+            if golpe:
+                linhas.append(f"Clsn1: 1\n Clsn1[0] = {golpe[0]}, {golpe[1]}, {golpe[2]}, {golpe[3]}")
+            linhas.append(f"{COBRANCA['grupo']},{i}, 0,0, {t}")
+            continue
         ys, xs = np.nonzero(m)
         x0, x1, y0, y1 = xs.min() - ex, xs.max() - ex, ys.min() - ey, ys.max() - ey
         topo = y0 + round(0.18 * (y1 - y0))  # sem a copa do chapéu
@@ -397,16 +410,16 @@ def agarrao_do_diabo(cns):
     return cns.replace(bloco, novo, 1)
 
 
-def ligar_cns(cns, diabo, aura_cns, cobranca=False):
+def ligar_cns(cns, diabo, aura_cns, cobranca=False, demonio=("", "")):
     assert "[Statedef 2000]" not in cns, "o Hazak já tem estado 2000: rode o gerar_hazaki.py antes"
     preset = "[RemapPreset despertado]\n" + "".join(f"{g - DIABO},{i} = {g},{i}\n" for g, i, *_ in diabo) + "\n"
     assert cns.count("[Data]") == 1
     cns = cns.replace("[Data]", preset + "[Data]", 1)
     cab = "[Statedef -2]\n\n"
     assert cns.count(cab) == 1
-    cns = cns.replace(cab, cab + MENOS_2, 1)
+    cns = cns.replace(cab, cab + MENOS_2 + demonio[1], 1)
     cns = agarrao_do_diabo(cns)
-    extra = cns_cobranca(1660) + cns_cobranca(1661) if cobranca else ""
+    extra = (cns_cobranca(1660) + cns_cobranca(1661) if cobranca else "") + demonio[0]
     cns = cns.replace(cab, cns_despertar() + cns_rajada() + extra + cab, 1)
     return cns.rstrip() + "\n\n" + aura_cns
 
@@ -468,6 +481,9 @@ def aplicar(pasta=SAIDA):
     if cob:
         air = efeitos.por_acao(air, 1660, texto)
         novos[COBRANCA["grupo"]] = cob
+    import diabo_demonio  # golpes próprios do demônio sem maleta (#47): estados 4200-4699
+    air, cmd, demonio_cns, demonio_menos2, demonio_sprites = diabo_demonio.ligar(air, cmd)
+    novos.update(demonio_sprites)
     for acao, quadros in patroa().items():
         air = efeitos.por_acao(air, acao, "\n".join(f"{acao},{i}, 0,0, {t}, , , 0.3333, 0.3333"
                                                       for i, (*_, t) in enumerate(quadros)))
@@ -496,7 +512,8 @@ def aplicar(pasta=SAIDA):
         png.append((g, i, img.width, img.height, int(ex), int(ey), efeitos.blob_png(img)))
     efeitos.gravar(sff, pal, rle, png)
     arq_air.write_text(air, encoding="utf-8", newline="\n")
-    arq_cns.write_text(ligar_cns(cns, diabo, a.cns(cabecalho=True), bool(cob)), encoding="utf-8", newline="\n")
+    arq_cns.write_text(ligar_cns(cns, diabo, a.cns(cabecalho=True), bool(cob), (demonio_cns, demonio_menos2)),
+                       encoding="utf-8", newline="\n")
     arq_cmd.write_text(ligar_cmd(cmd, bool(cob)), encoding="utf-8", newline="\n")
     import gerar_sons  # sons da pedra, do ki e da rajadona (ESPECIAIS["hazaki"]): depois dos estados novos
     gerar_sons.ligar("hazaki", pasta)

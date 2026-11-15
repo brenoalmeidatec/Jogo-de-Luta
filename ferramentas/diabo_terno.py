@@ -71,6 +71,10 @@ FOLHA = {
 # existe, a ação usa ela no lugar da mais parecida (ou, na estatueta_arremesso, no lugar do chapéu, que saiu)
 PROPRIAS = {acao for acao in FOLHA if (SAIDA / f"d_{acao}").is_dir() and FOLHA[acao] != f"d_{acao}"}
 FOLHA.update({acao: f"d_{acao}" for acao in PROPRIAS})
+# Diabo demônio sem maleta (#47, Breno 2026-11-15): onde a folha do demônio já existe (ferramentas/diabo_demonio.py,
+# pastas m_*), o básico usa ela no lugar da roupa do sobretudo
+from diabo_demonio import BASICOS  # noqa: E402
+FOLHA.update({acao: f"m_{m}" for acao, m in BASICOS.items() if (SAIDA / f"m_{m}" / "07.png").exists()})
 
 PARECIDA = {"ar_chute", "ascensao", "chute_alto_rajada", "chute_gancho", "cutucao", "jab_duplo", "guarda_aco",
             "passagem_rapida", "provoca", "rasteira", "sobe_chutando", "tapa_costas", "tesoura", "derrota_sirene",
@@ -166,7 +170,7 @@ def fator_da_folha(folha_d):
 
 
 def montar(pasta=None):
-    for folha_d in sorted(set(FOLHA.values()) - {f"d_{a}" for a in PROPRIAS}):
+    for folha_d in sorted(set(FOLHA.values()) - {f"d_{a}" for a in PROPRIAS} - {f for f in FOLHA.values() if f.startswith("m_")}):
         figs = hd_guiado.figuras(abrir_folha(folha_d, pasta))
         assert len(figs) == 8, f"{folha_d}: {len(figs)} figuras (esperava 8)"
         fat = fator_da_folha(folha_d)

@@ -172,7 +172,8 @@ def volta_para_si(corpo, n):
 
 
 def forca(n, kv, botao_forte, el_stype):
-    if kv.get("fall", "0").strip() in ("1",) or n >= 3000:
+    # 4200-4649: normais, correntes e especiais do Diabo demônio do Hazak (#47); o super dele é o 4650
+    if kv.get("fall", "0").strip() in ("1",) or (n >= 3000 and not 4200 <= n <= 4649):
         return "final"
     dano = int(re.match(r"-?\d+", kv.get("damage", "0") or "0").group())
     if dano >= 60 or botao_forte:

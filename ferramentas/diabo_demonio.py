@@ -307,6 +307,260 @@ def fila():
     print(f"{len(pedidos)} folhas, {sum(p['pronta'] for p in pedidos)} prontas")
 
 
+# ---------------------------------------------------------------------------------------------------------------------
+# parte 2: folha -> quadros do jogo (sprites/hazaki/diabo_terno/m_<folha>/NN.png)
+# ---------------------------------------------------------------------------------------------------------------------
+# O demônio é curvado e tem chifres: em pé (mediana do parado) ele fica com 1,08 da altura do Hazak em pé (324 px no
+# 3x). O Gemini desenha todas as folhas na mesma escala (mesma grade, "same scale"), então a escala da folha do parado
+# vale para todas.
+ALTURA = 1.08
+SAIDA = RAIZ / "sprites/hazaki/diabo_terno"
+
+
+def _figuras(nome):
+    sys.path.insert(0, str(RAIZ / "ferramentas"))
+    import converter_hazaki as ch
+    figs = ch.figuras(FOLHAS / f"{nome}.png")
+    assert all(q is not None for q in figs), f"{nome}: figura faltando na folha"
+    return figs
+
+
+def escala():
+    from PIL import Image
+    hz = Image.open(RAIZ / "sprites/hazaki/quadros_arcade_hd/parado/00.png").getbbox()
+    alvo = ALTURA * (hz[3] - hz[1])
+    alturas = sorted(q.height for q in _figuras("parado"))
+    return alvo / alturas[len(alturas) // 2]
+
+
+def converter(nome, e=None):
+    import subprocess
+    import numpy as np
+    from PIL import Image
+    import converter_hazaki as ch
+    import diabo_terno as dt
+    e = e or escala()
+    destino = SAIDA / f"m_{nome}"
+    destino.mkdir(parents=True, exist_ok=True)
+    for i, q in enumerate(_figuras(nome)):
+        tres = ch.seco(q.resize((max(1, round(q.width * e)), max(1, round(q.height * e))), Image.LANCZOS))
+        Image.fromarray(dt.quantizar(dt.chefao(np.array(tres)))).save(destino / f"{i:02d}.png", optimize=True)
+    subprocess.run([sys.executable, str(RAIZ / "ferramentas/pixel/cores.py"), "diabo", f"m_{nome}", "--consertar"],
+                   cwd=RAIZ, check=True, capture_output=True)
+    print(f"m_{nome}: escala {e:.4f}")
+
+
+def contato(saida, nomes):
+    """Hazak (em cima, só nas folhas que existem no Hazak) e demônio (embaixo), no tamanho do jogo 3x."""
+    from PIL import Image
+    w, h = 340, 420
+    tela = Image.new("RGB", (w * 8, h * 2 * len(nomes)), (110, 112, 118))
+    for j, nome in enumerate(nomes):
+        for i in range(8):
+            hz = RAIZ / "sprites/hazaki/quadros_arcade_hd" / nome / f"{i:02d}.png"
+            if hz.exists():
+                a = Image.open(hz).convert("RGBA")
+                a = a.crop(a.getbbox())
+                tela.paste(a, (i * w + (w - a.width) // 2, (2 * j + 1) * h - a.height), a)
+            d = SAIDA / f"m_{nome}" / f"{i:02d}.png"
+            if d.exists():
+                b = Image.open(d).convert("RGBA")
+                tela.paste(b, (i * w + (w - b.width) // 2, (2 * j + 2) * h - b.height), b)
+    tela.save(saida)
+    print(saida)
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# parte 3: golpes próprios no jogo (estados 4200-4699, sprites no grupo 60000 + estado)
+# ---------------------------------------------------------------------------------------------------------------------
+# Básicos do Hazak -> folha do demônio de mesmo papel (o diabo_terno troca o quadro k pelo quadro k da pasta m_*).
+BASICOS = {"parado": "parado", "anda": "anda", "recuo": "recuo", "corrida": "corrida", "vira": "vira", "pulo": "pulo",
+           "agachado": "agachado", "defesa": "defesa", "defesa_baixa": "defesa_baixa", "apanha": "apanha",
+           "queda": "queda", "levanta": "levanta", "vitoria": "vitoria", "provoca": "provoca", "intro": "intro",
+           "derrota_sirene": "derrota_sirene", "parry_alto": "parry_alto", "parry_baixo": "parry_baixo",
+           "despertar_pedido": "parado", "vitima_agarrado": "apanha", "vitima_arremessado": "queda"}
+GRUPO = 60000
+
+# peso -> (pausa, faísca, som do acerto, deslize, tempo de atordoado, empurrão)
+PESO = {"Light": (7, "S9200", "S51,0", 5, 15, -2.5), "Medium": (11, "S9207", "S51,1", 8, 18, -4),
+        "Heavy": (13, "S9207", "S51,2", 10, 20, -6)}
+
+# Cada golpe: folha e quadros (de 0 a 7), ticks por quadro, quadros com caixa de golpe, de onde sai a ponta (frente,
+# cima), dano, peso, guarda (MA, L, H), tipo do chão (High, Low, Trip), avanço [(tick, vel x)], cai (derruba).
+GOLPES = {
+    4200: dict(nome="Arranhão", folha="pe_maos", q=[0, 1, 2, 3], t=[3, 3, 4, 5], ativo=[1], dano=25, peso="Light"),
+    4201: dict(nome="Garra Cruzada", folha="pe_maos", q=[4, 5, 6, 7], t=[6, 4, 6, 10], ativo=[1], dano=62,
+               peso="Medium", avanca=[(2, 1.5), (10, 0)]),
+    4202: dict(nome="Joelhada Selvagem", folha="pe_pes", q=[0, 1, 2, 3], t=[4, 4, 5, 7], ativo=[1], dano=32,
+               peso="Light"),
+    4203: dict(nome="Coice com Garra", folha="pe_pes", q=[4, 5, 6, 7], t=[6, 5, 6, 10], ativo=[1], dano=72,
+               peso="Heavy"),
+    4400: dict(nome="Arranhão Baixo", folha="agachado_maos", q=[0, 1, 2, 3], t=[3, 3, 4, 5], ativo=[1], dano=22,
+               peso="Light", tipo="C", chao="Low"),
+    4401: dict(nome="Garra Subindo", folha="agachado_maos", q=[4, 5, 6, 7], t=[4, 4, 7, 9], ativo=[1, 2], dano=60,
+               peso="Medium", tipo="C", ponta="cima", sobe=True),
+}
+LEVES = (4200, 4202, 4400)
+# rota: estado -> (botão, segurando para baixo?, de quais estados cancela no contato)
+ROTAS = {4400: ("x", True, LEVES), 4401: ("y", True, ()), 4200: ("x", False, LEVES), 4201: ("y", False, ()),
+         4202: ("a", False, ()), 4203: ("b", False, ())}
+
+
+def disponiveis():
+    return {n: g for n, g in GOLPES.items() if (SAIDA / f"m_{g['folha']}" / "07.png").exists()}
+
+
+def _caixas(m, ex, ey, ponta, ativo):
+    """Caixas em px 3x em relação ao eixo: corpo (colunas com tinta >= 35% da mais cheia) e, nos quadros ativos, a
+    ponta do golpe (a faixa de 75 px da frente ou de cima)."""
+    import numpy as np
+    ys, xs = np.nonzero(m)
+    x0, x1, y0, y1 = xs.min(), xs.max(), ys.min(), ys.max()
+    col = m.sum(axis=0)
+    cheias = np.flatnonzero(col >= 0.35 * col.max())
+    topo = y0 + round(0.06 * (y1 - y0))
+    corpo = (int(cheias.min()) - ex, topo - ey, int(cheias.max()) - ex, 0)
+    golpe = None
+    if ativo:
+        if ponta == "cima":
+            # antiaéreo: da garra lá em cima até o peito (pega também quem está colado em pé)
+            faixa = np.nonzero(m[y0:y0 + 150])[1]
+            golpe = (int(faixa.min()) - 6 - ex, y0 - 6 - ey, int(faixa.max()) + 6 - ex, y0 + 150 - ey)
+        else:
+            faixa = np.nonzero(m[:, max(0, x1 - 75):x1 + 1])[0]
+            golpe = (x1 - 75 - ex, int(faixa.min()) - 6 - ey, x1 + 6 - ex, int(faixa.max()) + 6 - ey)
+    return corpo, golpe
+
+
+def acao(n, g):
+    """(quadros [(RGBA, eixo x, eixo y)], texto da ação n, centro da ponta em px do jogo para a faísca)."""
+    import numpy as np
+    from PIL import Image
+    import diabo_terno as dt
+    quadros, linhas, faisca = [], [], None
+    for j, (k, t) in enumerate(zip(g["q"], g["t"])):
+        img = Image.open(SAIDA / f"m_{g['folha']}" / f"{k:02d}.png").convert("RGBA")
+        m = np.array(img)[..., 3] > 0
+        ax, ay = dt.ancora(m)
+        ex, ey = round(ax), int(ay)
+        quadros.append((img, ex, ey))
+        corpo, golpe = _caixas(m, ex, ey, g.get("ponta", "frente"), j in g["ativo"])
+        cx2 = [corpo] + ([golpe] if golpe else [])
+        linhas.append(f"Clsn2: {len(cx2)}")
+        linhas += [f" Clsn2[{i}] = {a}, {b}, {c}, {d}" for i, (a, b, c, d) in enumerate(cx2)]
+        if golpe:
+            linhas += ["Clsn1: 1", f" Clsn1[0] = {golpe[0]}, {golpe[1]}, {golpe[2]}, {golpe[3]}"]
+            if faisca is None:
+                faisca = (round(golpe[2] / 3) - 18, round((golpe[1] + golpe[3]) / 6))
+        linhas.append(f"{GRUPO + n},{j}, 0,0, {t}")
+    return quadros, "\n".join(linhas), faisca
+
+
+def _ctl(n, titulo, tipo, *linhas):
+    return f"[State {n}, {titulo}]\ntype = {tipo}\n" + "".join(f"{x}\n" for x in linhas) + "\n"
+
+
+def cns(n, g, faisca):
+    tipo = g.get("tipo", "S")
+    fis = {"S": "S", "C": "C", "A": "A"}[tipo]
+    pausa, spark, som, desl, atord, emp = PESO[g["peso"]]
+    sai = sum(g["t"][:g["ativo"][0]])
+    c = [f"[Statedef {n}]\ntype = {tipo}\nmovetype = A\nphysics = {fis}\nctrl = 0\nsprpriority = 2\n"
+         f"anim = {n}\njuggle = {3 if g['peso'] == 'Light' else 4}\n" + ("velset = 0,0\n" if tipo != "A" else "") +
+         "\n"]
+    c.append(_ctl(n, "Vento", "PlaySnd", "trigger1 = Time = 0",
+                  f"value = F40,{ {'Light': 0, 'Medium': 1, 'Heavy': 2}[g['peso']] }"))
+    if n in LEVES:
+        c.append(_ctl(n, "Fracos em sequência", "VarAdd", "trigger1 = Time = 0", "var(5) = 1"))
+    for k, (tick, vx) in enumerate(g.get("avanca", [])):
+        c.append(_ctl(n, f"Avanço {k + 1}", "VelSet", f"trigger1 = Time = {tick}", f"x = {vx}"))
+    if g.get("sobe"):
+        c.append(_ctl(n, "Sobe: muda para em pé", "StateTypeSet", f"trigger1 = Time = {sai}", "statetype = S",
+                      "physics = S"))
+    queda = ["fall = 1", "fall.recover = 0", "ground.velocity = -4, -4", "air.velocity = -3, -4"] if g.get("cai") \
+        else [f"ground.velocity = {emp}", "air.velocity = -2, -4" if g.get("sobe") else "air.velocity = -1.4, -3"]
+    fx, fy = faisca or (-10, -70)
+    c.append(_ctl(n, g["nome"], "HitDef", f"trigger1 = Time = {sai}", f"attr = {tipo}, NA",
+                  f"damage = {g['dano']}, 0", f"animtype = {g['peso']}", f"guardflag = {g.get('guarda', 'MA')}",
+                  "hitflag = MAF", f"priority = {5 if g.get('sobe') else 4}, Hit", f"pausetime = {pausa}, {pausa}",
+                  f"guard.pausetime = {pausa - 1}, {pausa - 1}", f"sparkxy = {fx}, {fy}", f"sparkno = {spark}",
+                  "guard.sparkno = S9216", f"hitsound = {som}", "guardsound = F6,0",
+                  f"ground.type = {g.get('chao', 'High')}", f"ground.slidetime = {desl}",
+                  f"ground.hittime = {atord}", *queda))
+    if tipo != "A":
+        volta = 11 if tipo == "C" and not g.get("sobe") else 0
+        c.append(_ctl(n, "Fim", "ChangeState", "trigger1 = AnimTime = 0", f"value = {volta}", "ctrl = 1"))
+    return "".join(c)
+
+
+def rotas(n_ok):
+    """Rotas do .cmd do demônio (no fim do [Statedef -1]): cancelamento dos golpes dele e os botões."""
+    lista = " || ".join(f"stateno = {n}" for n in sorted(n_ok))
+    r = [f"[State -1, Demônio: pode cancelar]\ntype = VarSet\ntriggerall = var(20) > 0\n"
+         f"trigger1 = ({lista}) && movecontact && movecontact <= 8\nvar(1) = 1\n\n"]
+    for n, (botao, baixo, de) in ROTAS.items():
+        if n not in n_ok:
+            continue
+        tipo = GOLPES[n].get("tipo", "S")
+        r.append(f"[State -1, Demônio: {GOLPES[n]['nome']}]\ntype = ChangeState\nvalue = {n}\n"
+                 f"triggerall = var(20) > 0\ntriggerall = command = \"{botao}\"\n"
+                 f"triggerall = command {'=' if baixo else '!='} \"holddown\"\n"
+                 f"triggerall = statetype {'!= A' if tipo == 'C' else '= S'}\ntrigger1 = ctrl\n")
+        de = [d for d in de if d in n_ok]
+        if de:
+            r.append("trigger2 = (" + " || ".join(f"stateno = {d}" for d in de) + ") && movecontact && var(5) < 4\n")
+        r.append("\n")
+    return "".join(r)
+
+
+MENOS_2 = """[State -2, Demônio: conta acerto da corrente]
+type = VarAdd
+trigger1 = MoveHit
+trigger1 = var(11) = 0
+trigger1 = stateno = [4200,4349]
+var(10) = 1
+
+"""
+
+
+def bloquear_base(cmd):
+    """Na forma do demônio nenhum golpe do Hazak sai (normais, correntes, kombos, especiais e supers); ficam o
+    movimento, a defesa, os agarrões (800-899, thread dos agarrões) e os especiais do Diabo (1650, 1660, 1661)."""
+    import re
+
+    def golpe(v):
+        return (200 <= v <= 249 or 300 <= v <= 349 or 400 <= v <= 449 or 600 <= v <= 649
+                or (1000 <= v <= 1999 and v not in (1650, 1660, 1661)) or 3000 <= v <= 3999)
+
+    def troca(m):
+        bloco = m.group(0)
+        v = re.search(r"^value = \D*?(\d+)", bloco, re.M)
+        if "type = ChangeState" not in bloco or not v or not golpe(int(v.group(1))) or "var(20)" in bloco:
+            return bloco
+        return bloco.replace("type = ChangeState\n", "type = ChangeState\ntriggerall = var(20) <= 0\n", 1)
+
+    return re.sub(r"^\[State -1, [^\n]*\n(?:[^\n]+\n)*", troca, cmd, flags=re.M)
+
+
+def ligar(air, cmd):
+    """-> (air, cmd, cns dos estados, linhas do [Statedef -2], {grupo: quadros}) com os golpes que já têm folha."""
+    import efeitos
+    ok = disponiveis()
+    if not ok:
+        return air, cmd, "", "", {}
+    sprites, estados = {}, []
+    for n, g in ok.items():
+        quadros, texto, faisca = acao(n, g)
+        air = efeitos.por_acao(air, n, texto)
+        sprites[GRUPO + n] = quadros
+        estados.append(cns(n, g, faisca))
+    # no fim do [Statedef -1]: depois do "Pode cancelar" (que reescreve o var(1)) e dos agarrões (frente + y colado
+    # continua sendo agarrão); os golpes do Hazak que viriam antes estão travados na forma
+    cmd = bloquear_base(cmd).rstrip() + "\n\n" + rotas(set(ok))
+    print(f"demônio: {len(ok)} golpes próprios ({', '.join(g['nome'] for g in ok.values())})")
+    return air, cmd, "".join(estados), MENOS_2, sprites
+
+
 if __name__ == "__main__":
     args = sys.argv[1:]
     if "--fila" in args:
@@ -315,3 +569,10 @@ if __name__ == "__main__":
         print(pedido(args[args.index("--pedido") + 1]))
     elif "--seguinte" in args:
         print(pedido_seguinte(args[args.index("--seguinte") + 1]))
+    elif "--contato" in args:
+        i = args.index("--contato")
+        contato(args[i + 1], args[i + 2:])
+    else:
+        e = escala()
+        for nome in args or sorted(p.stem for p in FOLHAS.glob("*.png")):
+            converter(nome, e)
