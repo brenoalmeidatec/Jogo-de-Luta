@@ -33,7 +33,7 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: """
 
-PERSONAGEM = """Gbzin, the jiu-jitsu goat shepherd: a young white man with light pinkish skin, short straight dark-brown hair with a fringe over the forehead, round face with a thin short beard, calm friendly half-smile. Strong stocky grappler build. Outfit: black sleeveless tank top, white gym shorts with a thin black side stripe, a brown jiu-jitsu belt tied around the waist over the shorts with the two ends hanging, black sneakers, a gold wristwatch on the left wrist. He carries a SHORT wooden shepherd's crook (about as long as his arm, with a curved hook at the top) in the BACK hand."""
+PERSONAGEM = """Gbzin, the jiu-jitsu goat shepherd: a young man with light tanned skin (warm golden-tan, not pink), dark-brown WAVY hair that is thick and voluminous on top with a messy wavy fringe falling over the forehead and a short fade on the sides, big round full face with full cheeks, thick dark eyebrows, heavy-lidded calm brown eyes, a thin sparse moustache and a small sparse goatee on the chin only (clean cheeks, no full beard), serious relaxed expression. Big heavy stocky build: wide soft-strong torso, thick arms, thick legs, heavy like a grappler (strong and bulky, not lean, not a bodybuilder with defined abs). Outfit: black sleeveless tank top, white gym shorts with a thin black side stripe, a brown jiu-jitsu belt tied around the waist over the shorts with the two ends hanging, black sneakers, a gold wristwatch on the left wrist. He carries a SHORT wooden shepherd's crook (about as long as his arm, with a curved hook at the top) in the BACK hand."""
 
 CABECA = """Generate ONE image with your image generation tool. Do not write code and do not edit any file.
 
@@ -59,7 +59,7 @@ MOTION: """
 CONCEITO = {
     "conceito": """Generate ONE image with your image generation tool. Do not write code and do not edit any file.
 
-The attached photos show the real young man this character is based on (in the third photo, only the young man who appears in the other two photos; ignore the other person). Create an ORIGINAL 1990s arcade fighting game character concept sheet inspired by him: keep his face shape, hair and beard recognizable, but drawn as a heroic pixel-art fighter, not a photo. Character: """ + PERSONAGEM + """
+The attached photos show the real young man this character is based on. LIKENESS IS THE PRIORITY: anyone who knows him must recognize him at once. Copy from the photos, as faithfully as pixel art allows: the shape of his face (round, full cheeks), his hair (cut, volume, wave, fringe and fade), his eyebrows and eyes, his thin moustache and small goatee, his skin tone and his real body shape and proportions (big, heavy and stocky, as in the full-body photos; do not slim him down and do not turn him into a lean muscular hero). Only the art style (1990s arcade fighting game pixel art) and the outfit below are invented. Character: """ + PERSONAGEM + """
 
 Sheet layout, flat solid magenta background (#FF00FF), no text: 1) full body front view, standing, 2) full body side view facing right in a low grappler stance, crook in the back hand, 3) full body back view, 4) a big bust portrait of the face. Same scale for the three full bodies.
 
@@ -169,9 +169,9 @@ NOMES = [*CONCEITO.keys()][:1] + list(FOLHAS_GB) + ["e_conceito", "despertar_b"]
 
 def anexos(nome):
     if nome == "conceito":
-        return "as 3 fotos do Gbzin (fora do git)"
+        return "as 6 fotos do Gbzin (branch gbzin-fotos, fora da mugen)"
     if nome == "referencia_ginga":
-        return "conceito.png"
+        return "conceito_v2.png"
     if nome == "e_conceito":
         return "referencia_ginga.png"
     if nome == "e_referencia_ginga":
