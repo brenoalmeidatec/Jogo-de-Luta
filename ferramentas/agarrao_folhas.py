@@ -159,31 +159,47 @@ def aplicar(lutador, pasta=None):
     print(f"{lutador}: folhas próprias {sorted(achadas)} (parado com {altura} px em 3x)")
 
 
-def salvar(captura, lutador, nome):
+def salvar(captura, lutador, nome, tirar=()):
     """Guarda a captura da imagem gerada (zoom do Chrome, a imagem no canto e preto em volta) como a folha de 8
-    desenhos numa fileira. Imagem em grade 2x4 (o Gemini prefere) vira fileira: a de cima e depois a de baixo."""
+    desenhos numa fileira, um por célula. Acha cada boneco pelo recorte (o Gemini nem sempre respeita a grade 2x4),
+    ordena por fileira e da esquerda para a direita; `tirar` = índices (0..) de bonecos a jogar fora (quadro a mais)."""
+    import cv2
     import numpy as np
     a = np.asarray(Image.open(captura).convert("RGB")).astype(int)
     cheio = a.max(axis=2) > 40
     ys, xs = np.nonzero(cheio)
-    a = a[:ys.max() + 1, :xs.max() + 1].astype(np.uint8)
-    img = Image.fromarray(a)
-    if img.width / img.height < 2.2:  # grade de 2 fileiras
-        meio = img.height // 2
-        cima, baixo = img.crop((0, 0, img.width, meio)), img.crop((0, meio, img.width, meio * 2))
-        fila = Image.new("RGB", (img.width * 2, meio), (255, 0, 255))
-        fila.paste(cima, (0, 0))
-        fila.paste(baixo, (img.width, 0))
-        img = fila
+    a = a[:ys.max() + 1, :xs.max() + 1]
+    r, g, b = a[..., 0], a[..., 1], a[..., 2]
+    fundo = (r > 170) & (b > 170) & (g < 130)
+    corpo = (~fundo).astype(np.uint8)
+    junta = cv2.dilate(corpo, np.ones((5, 15), np.uint8))  # quase só na horizontal: pé de cima não gruda na cabeça de baixo
+    n, rot, st, cen = cv2.connectedComponentsWithStats(junta, connectivity=8)
+    figs = [k for k in range(1, n) if st[k, cv2.CC_STAT_AREA] > 0.004 * corpo.size]
+    meio = a.shape[0] / 2
+    figs.sort(key=lambda k: (cen[k][1] > meio, cen[k][0]))
+    figs = [k for i, k in enumerate(figs) if i not in tirar]
+    assert len(figs) == 8, f"{len(figs)} bonecos na imagem (precisa de 8; use tirar)"
+    caixas = [(st[k, 0], st[k, 1], st[k, 0] + st[k, 2], st[k, 1] + st[k, 3]) for k in figs]
+    cel = max(x1 - x0 for x0, _, x1, _ in caixas) + 24
+    alto = max(y1 for *_, y1 in caixas[:4]) - min(y0 for _, y0, *_ in caixas[:4])
+    alto = max(alto, max(y1 for *_, y1 in caixas[4:]) - min(y0 for _, y0, *_ in caixas[4:])) + 24
+    fila = Image.new("RGB", (cel * 8, alto), (255, 0, 255))
+    rgb = a.astype(np.uint8)
+    for i, (k, (x0, y0, x1, y1)) in enumerate(zip(figs, caixas)):
+        linha = caixas[:4] if i < 4 else caixas[4:]
+        chao = max(c[3] for c in linha)  # pés de cada fileira na mesma linha
+        m = (rot[y0:y1, x0:x1] == k) & (corpo[y0:y1, x0:x1] > 0)
+        pedaco = np.where(m[..., None], rgb[y0:y1, x0:x1], np.array([255, 0, 255], np.uint8))
+        fila.paste(Image.fromarray(pedaco), (i * cel + (cel - (x1 - x0)) // 2, alto - 12 - (chao - y0)))
     destino = RAIZ / f"sprites/{lutador}/quadros/folhas_agarrao/{nome}.png"
     destino.parent.mkdir(parents=True, exist_ok=True)
-    img.save(destino)
-    print(f"{destino.relative_to(RAIZ)}: {img.width}x{img.height}")
+    fila.save(destino)
+    print(f"{destino.relative_to(RAIZ)}: {fila.width}x{fila.height}")
 
 
 def main():
     if sys.argv[1:2] == ["--salvar"]:
-        salvar(*sys.argv[2:5])
+        salvar(*sys.argv[2:5], tirar=tuple(int(v) for v in sys.argv[5:]))
         return
     for l in sys.argv[1:] or LUTADORES:
         aplicar(l)
