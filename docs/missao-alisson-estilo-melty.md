@@ -37,6 +37,12 @@ do golpe). Revise **todos os quadros de todos os lutadores, nas duas formas**, c
 `regras-dos-lutadores.md`, e redesenhe os que estiverem errados. Atenção especial aos quadros novos do Diabo Loiro e aos
 20 golpes que usam folha aproximada. Poste uma folha de contato antes e depois.
 
+**Proporção fora de controle (pedido do Breno, junto com este item):** em vários momentos o lutador **fica gigante ou
+pequeno demais** de um quadro para outro, **principalmente ao agachar**. Cada lutador tem de manter a mesma escala em
+toda ação (mesma altura de cabeça, largura de ombro e tamanho de mão e pé; agachado só fica mais baixo, nunca encolhe
+nem cresce). Meça a altura da cabeça e dos ombros em todos os quadros de cada ação, nas duas formas, compare com o
+parado e corrija o que passar de uns 3%. Ponha essa medida no robô para não voltar.
+
 ## Atualização do Breno: são DOIS jogos
 
 Depois de ler esta missão, o Breno decidiu: ele quer **dois jogos**, com os mesmos lutadores, cenários e músicas:
