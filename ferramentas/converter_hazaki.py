@@ -89,6 +89,23 @@ def antigos(nome):
         b = subprocess.run(["git", "show", f"{ANTES}:sprites/hazaki/quadros_arcade/{nome}/{i:02d}.png"],
                            cwd=RAIZ, capture_output=True).stdout
         out.append(Image.open(io.BytesIO(b)).convert("RGBA") if b else None)
+    if not any(out) and nome.startswith("parry_"):
+        out = antigos_parry(nome)
+    return out
+
+
+def antigos_parry(nome):
+    """O parry não tinha quadros_arcade: o parry.py cortava a folha velha (quadros/folhas_arcade) direto em 3x, com o
+    1º quadro da altura da guarda (1º desenho da defesa em pé). Refaz esse corte e põe na tela 1x de sempre."""
+    import parry
+    b = subprocess.run(["git", "show", f"{ANTES}:sprites/hazaki/quadros_arcade_hd/defesa/00.png"],
+                       cwd=RAIZ, capture_output=True).stdout
+    cx = Image.open(io.BytesIO(b)).getchannel("A").getbbox()
+    out = []
+    for q, ex, ey in parry.quadros_parry("hazaki", nome, cx[3] - cx[1]):
+        tela = Image.new("RGBA", (fh.LARG * E, fh.ALT * E))
+        tela.paste(q, (fh.LARG * E // 2 - ex, 220 * E - ey), q)
+        out.append(tela.resize((fh.LARG, fh.ALT), Image.LANCZOS))
     return out
 
 
