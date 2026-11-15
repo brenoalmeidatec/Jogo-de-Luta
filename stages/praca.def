@@ -106,10 +106,32 @@ tilespacing = 0, 0
 velocity = -0.18, 0
 roundpos = 0
 
+[BG d_ceu_1]
+type = normal
+spriteno = 2, 0
+id = 913
+layerno = 0
+start = -640, -220
+delta = 0, 0
+mask = 1
+trans = sub
+roundpos = 0
+
+[BG d_ceu_2]
+type = normal
+spriteno = 3, 0
+id = 912
+layerno = 0
+start = -640, -220
+delta = 0, 0
+mask = 1
+trans = sub
+roundpos = 0
+
 [BG pombo1]
 type = anim
-actionno = 1002
-id = 102
+actionno = 1004
+id = 909
 layerno = 0
 start = -1040, 70
 delta = 0.8, 0.8
@@ -122,8 +144,8 @@ roundpos = 0
 
 [BG pombo2]
 type = anim
-actionno = 1003
-id = 103
+actionno = 1005
+id = 909
 layerno = 0
 start = -1940, 130
 delta = 0.8, 0.8
@@ -136,8 +158,8 @@ roundpos = 0
 
 [BG pombo3]
 type = anim
-actionno = 1004
-id = 104
+actionno = 1006
+id = 909
 layerno = 0
 start = -2840, 40
 delta = 0.8, 0.8
@@ -150,8 +172,8 @@ roundpos = 0
 
 [BG praca]
 type = normal
-spriteno = 5, 0
-id = 105
+spriteno = 7, 0
+id = 910
 layerno = 0
 start = -730, -176
 delta = 1, 1
@@ -160,8 +182,8 @@ roundpos = 0
 
 [BG sino]
 type = anim
-actionno = 1006
-id = 106
+actionno = 1008
+id = 910
 layerno = 0
 start = 550, -18
 delta = 1, 1
@@ -170,8 +192,8 @@ roundpos = 0
 
 [BG bandeira_bahia]
 type = anim
-actionno = 1007
-id = 107
+actionno = 1009
+id = 910
 layerno = 0
 start = -48, 215
 delta = 1, 1
@@ -180,8 +202,8 @@ roundpos = 0
 
 [BG bandeira_brasil]
 type = anim
-actionno = 1008
-id = 108
+actionno = 1010
+id = 910
 layerno = 0
 start = 4, 196
 delta = 1, 1
@@ -190,8 +212,8 @@ roundpos = 0
 
 [BG bandeira_municipio]
 type = anim
-actionno = 1009
-id = 109
+actionno = 1011
+id = 910
 layerno = 0
 start = 54, 215
 delta = 1, 1
@@ -200,8 +222,8 @@ roundpos = 0
 
 [BG ambulante]
 type = anim
-actionno = 1010
-id = 110
+actionno = 1012
+id = 909
 layerno = 0
 start = -709, 314
 delta = 1, 1
@@ -210,8 +232,8 @@ roundpos = 0
 
 [BG ciclista]
 type = anim
-actionno = 1011
-id = 111
+actionno = 1013
+id = 909
 layerno = 0
 start = -2040, 344
 delta = 1, 1
@@ -221,10 +243,419 @@ tilespacing = 14247, 250
 velocity = 1.8, 0
 roundpos = 0
 
+[BG d01_rachaduras]
+type = normal
+spriteno = 14, 0
+id = 913
+layerno = 0
+start = -729, 0
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d02_fumaca]
+type = anim
+actionno = 1015
+id = 913
+layerno = 0
+start = -379, -91
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d03_fogo]
+type = anim
+actionno = 1016
+id = 913
+layerno = 0
+start = -372, 140
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d04_fumaca]
+type = anim
+actionno = 1017
+id = 913
+layerno = 0
+start = 166, 60
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d05_fogo]
+type = anim
+actionno = 1018
+id = 913
+layerno = 0
+start = 172, 312
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d06_fumaca]
+type = anim
+actionno = 1019
+id = 913
+layerno = 0
+start = -692, -197
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d07_fogo]
+type = anim
+actionno = 1020
+id = 913
+layerno = 0
+start = -683, 139
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d08_fumaca]
+type = anim
+actionno = 1021
+id = 913
+layerno = 0
+start = 226, 105
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d09_fogo]
+type = anim
+actionno = 1022
+id = 913
+layerno = 0
+start = 234, 378
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d10_entulho_m]
+type = normal
+spriteno = 23, 0
+id = 913
+layerno = 0
+start = -197, 474
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d11_entulho_p]
+type = normal
+spriteno = 24, 0
+id = 913
+layerno = 0
+start = 392, 509
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d12_carrinho]
+type = normal
+spriteno = 25, 0
+id = 913
+layerno = 0
+start = -689, 464
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d13_correndo]
+type = anim
+actionno = 1026
+id = 913
+layerno = 0
+start = -1540, 339
+delta = 1, 1
+mask = 1
+tile = 1, 0
+tilespacing = 2533, 250
+velocity = 6.5, 0
+roundpos = 0
+
+[BG d14_correndo]
+type = anim
+actionno = 1027
+id = 913
+layerno = 0
+start = 1760, 345
+delta = 1, 1
+mask = 1
+tile = 1, 0
+tilespacing = 3298, 250
+velocity = -5.5, 0
+roundpos = 0
+
+[BG d15_fagulhas]
+type = anim
+actionno = 1028
+id = 913
+layerno = 0
+start = -768, 120
+delta = 1, 1
+mask = 1
+trans = add
+roundpos = 0
+
+[BG d16_clarao]
+type = anim
+actionno = 1029
+id = 913
+layerno = 0
+start = -640, 0
+delta = 0, 0
+mask = 1
+trans = add
+roundpos = 0
+
+[BG praca_ruina]
+type = normal
+spriteno = 30, 0
+id = 912
+layerno = 0
+start = -730, -195
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d17_fumaca]
+type = anim
+actionno = 1031
+id = 912
+layerno = 0
+start = -103, -617
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d18_fogo]
+type = anim
+actionno = 1032
+id = 912
+layerno = 0
+start = -86, -29
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d19_fumaca]
+type = anim
+actionno = 1033
+id = 912
+layerno = 0
+start = -412, -166
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d20_fogo]
+type = anim
+actionno = 1034
+id = 912
+layerno = 0
+start = -403, 149
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d21_fumaca]
+type = anim
+actionno = 1035
+id = 912
+layerno = 0
+start = 432, -580
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d22_fogo]
+type = anim
+actionno = 1036
+id = 912
+layerno = 0
+start = 442, -181
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d23_fumaca]
+type = anim
+actionno = 1037
+id = 912
+layerno = 0
+start = -707, -383
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d24_fogo]
+type = anim
+actionno = 1038
+id = 912
+layerno = 0
+start = -694, 79
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d25_fumaca]
+type = anim
+actionno = 1039
+id = 912
+layerno = 0
+start = 154, 27
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d26_fogo]
+type = anim
+actionno = 1040
+id = 912
+layerno = 0
+start = 163, 321
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d27_carro]
+type = normal
+spriteno = 41, 0
+id = 912
+layerno = 0
+start = -691, 375
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d28_fogo]
+type = anim
+actionno = 1042
+id = 912
+layerno = 0
+start = -608, 369
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d29_caido_velho]
+type = normal
+spriteno = 43, 0
+id = 912
+layerno = 0
+start = -321, 495
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d30_caida_amarela]
+type = normal
+spriteno = 44, 0
+id = 912
+layerno = 0
+start = 307, 477
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d31_caido_verde]
+type = normal
+spriteno = 45, 0
+id = 912
+layerno = 0
+start = -45, 513
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d32_entulho_g]
+type = normal
+spriteno = 46, 0
+id = 912
+layerno = 0
+start = 449, 395
+delta = 1, 1
+mask = 1
+roundpos = 0
+
+[BG d33_correndo]
+type = anim
+actionno = 1047
+id = 912
+layerno = 0
+start = -1340, 329
+delta = 1, 1
+mask = 1
+tile = 1, 0
+tilespacing = 1933, 250
+velocity = 7.5, 0
+roundpos = 0
+
+[BG d34_correndo]
+type = anim
+actionno = 1048
+id = 912
+layerno = 0
+start = 1560, 336
+delta = 1, 1
+mask = 1
+tile = 1, 0
+tilespacing = 2498, 250
+velocity = -6, 0
+roundpos = 0
+
+[BG d35_correndo]
+type = anim
+actionno = 1049
+id = 912
+layerno = 0
+start = 2960, 323
+delta = 1, 1
+mask = 1
+tile = 1, 0
+tilespacing = 3133, 250
+velocity = -8, 0
+roundpos = 0
+
+[BG d36_fagulhas]
+type = anim
+actionno = 1050
+id = 912
+layerno = 0
+start = -768, 60
+delta = 1, 1
+mask = 1
+trans = add
+roundpos = 0
+
+[BG d37_clarao]
+type = anim
+actionno = 1051
+id = 912
+layerno = 0
+start = -640, 0
+delta = 0, 0
+mask = 1
+trans = add
+roundpos = 0
+
+[BG d38_caida_sacola]
+type = normal
+spriteno = 52, 0
+id = 912
+layerno = 1
+start = 260, 638
+delta = 1, 1
+mask = 1
+roundpos = 0
+
 [BG pombos_chao1]
 type = anim
-actionno = 1012
-id = 112
+actionno = 1053
+id = 909
 layerno = 1
 start = -520, 652
 delta = 1.15, 1.15
@@ -233,33 +664,13 @@ roundpos = 0
 
 [BG pombos_chao2]
 type = anim
-actionno = 1013
-id = 113
+actionno = 1054
+id = 909
 layerno = 1
 start = 340, 652
 delta = 1.15, 1.15
 mask = 1
 roundpos = 0
-
-[Begin Action 1002]
-2,0, 0,0, 3
-2,1, 0,0, 3
-2,2, 0,0, 3
-2,3, 0,0, 3
-2,4, 0,0, 3
-2,5, 0,0, 3
-2,6, 0,0, 3
-2,7, 0,0, 3
-
-[Begin Action 1003]
-3,0, 0,0, 4
-3,1, 0,0, 4
-3,2, 0,0, 4
-3,3, 0,0, 4
-3,4, 0,0, 4
-3,5, 0,0, 4
-3,6, 0,0, 4
-3,7, 0,0, 4
 
 [Begin Action 1004]
 4,0, 0,0, 3
@@ -271,35 +682,35 @@ roundpos = 0
 4,6, 0,0, 3
 4,7, 0,0, 3
 
-[Begin Action 1006]
-6,0, 0,0, 7
-6,1, 0,0, 7
-6,2, 0,0, 7
-6,3, 0,0, 7
-6,4, 0,0, 7
-6,5, 0,0, 7
-6,6, 0,0, 7
-6,7, 0,0, 7
+[Begin Action 1005]
+5,0, 0,0, 4
+5,1, 0,0, 4
+5,2, 0,0, 4
+5,3, 0,0, 4
+5,4, 0,0, 4
+5,5, 0,0, 4
+5,6, 0,0, 4
+5,7, 0,0, 4
 
-[Begin Action 1007]
-7,0, 0,0, 5
-7,1, 0,0, 5
-7,2, 0,0, 5
-7,3, 0,0, 5
-7,4, 0,0, 5
-7,5, 0,0, 5
-7,6, 0,0, 5
-7,7, 0,0, 5
+[Begin Action 1006]
+6,0, 0,0, 3
+6,1, 0,0, 3
+6,2, 0,0, 3
+6,3, 0,0, 3
+6,4, 0,0, 3
+6,5, 0,0, 3
+6,6, 0,0, 3
+6,7, 0,0, 3
 
 [Begin Action 1008]
-8,0, 0,0, 5
-8,1, 0,0, 5
-8,2, 0,0, 5
-8,3, 0,0, 5
-8,4, 0,0, 5
-8,5, 0,0, 5
-8,6, 0,0, 5
-8,7, 0,0, 5
+8,0, 0,0, 7
+8,1, 0,0, 7
+8,2, 0,0, 7
+8,3, 0,0, 7
+8,4, 0,0, 7
+8,5, 0,0, 7
+8,6, 0,0, 7
+8,7, 0,0, 7
 
 [Begin Action 1009]
 9,0, 0,0, 5
@@ -312,41 +723,357 @@ roundpos = 0
 9,7, 0,0, 5
 
 [Begin Action 1010]
-10,0, 0,0, 8
-10,1, 0,0, 8
-10,2, 0,0, 8
-10,3, 0,0, 8
-10,4, 0,0, 8
-10,5, 0,0, 8
-10,6, 0,0, 8
-10,7, 0,0, 8
+10,0, 0,0, 5
+10,1, 0,0, 5
+10,2, 0,0, 5
+10,3, 0,0, 5
+10,4, 0,0, 5
+10,5, 0,0, 5
+10,6, 0,0, 5
+10,7, 0,0, 5
 
 [Begin Action 1011]
-11,0, 0,0, 4
-11,1, 0,0, 4
-11,2, 0,0, 4
-11,3, 0,0, 4
-11,4, 0,0, 4
-11,5, 0,0, 4
-11,6, 0,0, 4
-11,7, 0,0, 4
+11,0, 0,0, 5
+11,1, 0,0, 5
+11,2, 0,0, 5
+11,3, 0,0, 5
+11,4, 0,0, 5
+11,5, 0,0, 5
+11,6, 0,0, 5
+11,7, 0,0, 5
 
 [Begin Action 1012]
 12,0, 0,0, 8
-12,1, 0,0, 6
-12,2, 0,0, 5
-12,3, 0,0, 9
-12,4, 0,0, 7
-12,5, 0,0, 6
-12,6, 0,0, 10
+12,1, 0,0, 8
+12,2, 0,0, 8
+12,3, 0,0, 8
+12,4, 0,0, 8
+12,5, 0,0, 8
+12,6, 0,0, 8
 12,7, 0,0, 8
 
 [Begin Action 1013]
-13,0, 0,0, 9
-13,1, 0,0, 7
-13,2, 0,0, 6
-13,3, 0,0, 10
-13,4, 0,0, 8
-13,5, 0,0, 8
-13,6, 0,0, 6
-13,7, 0,0, 5
+13,0, 0,0, 4
+13,1, 0,0, 4
+13,2, 0,0, 4
+13,3, 0,0, 4
+13,4, 0,0, 4
+13,5, 0,0, 4
+13,6, 0,0, 4
+13,7, 0,0, 4
+
+[Begin Action 1015]
+15,0, 0,0, 7
+15,1, 0,0, 7
+15,2, 0,0, 7
+15,3, 0,0, 7
+15,4, 0,0, 7
+15,5, 0,0, 7
+15,6, 0,0, 7
+15,7, 0,0, 7
+
+[Begin Action 1016]
+16,0, 0,0, 5
+16,1, 0,0, 5
+16,2, 0,0, 5
+16,3, 0,0, 5
+16,4, 0,0, 5
+16,5, 0,0, 5
+16,6, 0,0, 5
+16,7, 0,0, 5
+
+[Begin Action 1017]
+17,0, 0,0, 7
+17,1, 0,0, 7
+17,2, 0,0, 7
+17,3, 0,0, 7
+17,4, 0,0, 7
+17,5, 0,0, 7
+17,6, 0,0, 7
+17,7, 0,0, 7
+
+[Begin Action 1018]
+18,0, 0,0, 5
+18,1, 0,0, 5
+18,2, 0,0, 5
+18,3, 0,0, 5
+18,4, 0,0, 5
+18,5, 0,0, 5
+18,6, 0,0, 5
+18,7, 0,0, 5
+
+[Begin Action 1019]
+19,0, 0,0, 7
+19,1, 0,0, 7
+19,2, 0,0, 7
+19,3, 0,0, 7
+19,4, 0,0, 7
+19,5, 0,0, 7
+19,6, 0,0, 7
+19,7, 0,0, 7
+
+[Begin Action 1020]
+20,0, 0,0, 5
+20,1, 0,0, 5
+20,2, 0,0, 5
+20,3, 0,0, 5
+20,4, 0,0, 5
+20,5, 0,0, 5
+20,6, 0,0, 5
+20,7, 0,0, 5
+
+[Begin Action 1021]
+21,0, 0,0, 7
+21,1, 0,0, 7
+21,2, 0,0, 7
+21,3, 0,0, 7
+21,4, 0,0, 7
+21,5, 0,0, 7
+21,6, 0,0, 7
+21,7, 0,0, 7
+
+[Begin Action 1022]
+22,0, 0,0, 5
+22,1, 0,0, 5
+22,2, 0,0, 5
+22,3, 0,0, 5
+22,4, 0,0, 5
+22,5, 0,0, 5
+22,6, 0,0, 5
+22,7, 0,0, 5
+
+[Begin Action 1026]
+26,0, 0,0, 5
+26,1, 0,0, 5
+26,2, 0,0, 5
+26,3, 0,0, 5
+
+[Begin Action 1027]
+27,0, 0,0, 5
+27,1, 0,0, 5
+27,2, 0,0, 5
+27,3, 0,0, 5
+
+[Begin Action 1028]
+28,0, 0,0, 6,,A
+28,1, 0,0, 6,,A
+28,2, 0,0, 6,,A
+28,3, 0,0, 6,,A
+28,4, 0,0, 6,,A
+28,5, 0,0, 6,,A
+28,6, 0,0, 6,,A
+28,7, 0,0, 6,,A
+
+[Begin Action 1029]
+29,0, 0,0, 5,,A
+29,1, 0,0, 4,,A
+29,2, 0,0, 6,,A
+29,3, 0,0, 3,,A
+29,4, 0,0, 5,,A
+29,5, 0,0, 4,,A
+
+[Begin Action 1031]
+31,0, 0,0, 7
+31,1, 0,0, 7
+31,2, 0,0, 7
+31,3, 0,0, 7
+31,4, 0,0, 7
+31,5, 0,0, 7
+31,6, 0,0, 7
+31,7, 0,0, 7
+
+[Begin Action 1032]
+32,0, 0,0, 5
+32,1, 0,0, 5
+32,2, 0,0, 5
+32,3, 0,0, 5
+32,4, 0,0, 5
+32,5, 0,0, 5
+32,6, 0,0, 5
+32,7, 0,0, 5
+
+[Begin Action 1033]
+33,0, 0,0, 7
+33,1, 0,0, 7
+33,2, 0,0, 7
+33,3, 0,0, 7
+33,4, 0,0, 7
+33,5, 0,0, 7
+33,6, 0,0, 7
+33,7, 0,0, 7
+
+[Begin Action 1034]
+34,0, 0,0, 5
+34,1, 0,0, 5
+34,2, 0,0, 5
+34,3, 0,0, 5
+34,4, 0,0, 5
+34,5, 0,0, 5
+34,6, 0,0, 5
+34,7, 0,0, 5
+
+[Begin Action 1035]
+35,0, 0,0, 7
+35,1, 0,0, 7
+35,2, 0,0, 7
+35,3, 0,0, 7
+35,4, 0,0, 7
+35,5, 0,0, 7
+35,6, 0,0, 7
+35,7, 0,0, 7
+
+[Begin Action 1036]
+36,0, 0,0, 5
+36,1, 0,0, 5
+36,2, 0,0, 5
+36,3, 0,0, 5
+36,4, 0,0, 5
+36,5, 0,0, 5
+36,6, 0,0, 5
+36,7, 0,0, 5
+
+[Begin Action 1037]
+37,0, 0,0, 7
+37,1, 0,0, 7
+37,2, 0,0, 7
+37,3, 0,0, 7
+37,4, 0,0, 7
+37,5, 0,0, 7
+37,6, 0,0, 7
+37,7, 0,0, 7
+
+[Begin Action 1038]
+38,0, 0,0, 5
+38,1, 0,0, 5
+38,2, 0,0, 5
+38,3, 0,0, 5
+38,4, 0,0, 5
+38,5, 0,0, 5
+38,6, 0,0, 5
+38,7, 0,0, 5
+
+[Begin Action 1039]
+39,0, 0,0, 7
+39,1, 0,0, 7
+39,2, 0,0, 7
+39,3, 0,0, 7
+39,4, 0,0, 7
+39,5, 0,0, 7
+39,6, 0,0, 7
+39,7, 0,0, 7
+
+[Begin Action 1040]
+40,0, 0,0, 5
+40,1, 0,0, 5
+40,2, 0,0, 5
+40,3, 0,0, 5
+40,4, 0,0, 5
+40,5, 0,0, 5
+40,6, 0,0, 5
+40,7, 0,0, 5
+
+[Begin Action 1042]
+42,0, 0,0, 5
+42,1, 0,0, 5
+42,2, 0,0, 5
+42,3, 0,0, 5
+42,4, 0,0, 5
+42,5, 0,0, 5
+42,6, 0,0, 5
+42,7, 0,0, 5
+
+[Begin Action 1047]
+47,0, 0,0, 5
+47,1, 0,0, 5
+47,2, 0,0, 5
+47,3, 0,0, 5
+
+[Begin Action 1048]
+48,0, 0,0, 5
+48,1, 0,0, 5
+48,2, 0,0, 5
+48,3, 0,0, 5
+
+[Begin Action 1049]
+49,0, 0,0, 5
+49,1, 0,0, 5
+49,2, 0,0, 5
+49,3, 0,0, 5
+
+[Begin Action 1050]
+50,0, 0,0, 6,,A
+50,1, 0,0, 6,,A
+50,2, 0,0, 6,,A
+50,3, 0,0, 6,,A
+50,4, 0,0, 6,,A
+50,5, 0,0, 6,,A
+50,6, 0,0, 6,,A
+50,7, 0,0, 6,,A
+
+[Begin Action 1051]
+51,0, 0,0, 5,,A
+51,1, 0,0, 4,,A
+51,2, 0,0, 6,,A
+51,3, 0,0, 3,,A
+51,4, 0,0, 5,,A
+51,5, 0,0, 4,,A
+
+[Begin Action 1053]
+53,0, 0,0, 8
+53,1, 0,0, 6
+53,2, 0,0, 5
+53,3, 0,0, 9
+53,4, 0,0, 7
+53,5, 0,0, 6
+53,6, 0,0, 10
+53,7, 0,0, 8
+
+[Begin Action 1054]
+54,0, 0,0, 9
+54,1, 0,0, 7
+54,2, 0,0, 6
+54,3, 0,0, 10
+54,4, 0,0, 8
+54,5, 0,0, 8
+54,6, 0,0, 6
+54,7, 0,0, 5
+
+[BGCtrlDef destruicao 909]
+looptime = -1
+ctrlID = 909
+
+[BGCtrl destruicao 909]
+type = Visible
+time = 0, 2000000000
+value = 1
+sctrlid = 909
+
+[BGCtrlDef destruicao 910]
+looptime = -1
+ctrlID = 910
+
+[BGCtrl destruicao 910]
+type = Visible
+time = 0, 2000000000
+value = 1
+sctrlid = 910
+
+[BGCtrlDef destruicao 912]
+looptime = -1
+ctrlID = 912
+
+[BGCtrl destruicao 912]
+type = Visible
+time = 0, 2000000000
+value = 0
+sctrlid = 912
+
+[BGCtrlDef destruicao 913]
+looptime = -1
+ctrlID = 913
+
+[BGCtrl destruicao 913]
+type = Visible
+time = 0, 2000000000
+value = 0
+sctrlid = 913

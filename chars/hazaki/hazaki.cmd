@@ -236,7 +236,31 @@ name = "holddown"
 command = /$D
 time = 1
 
+[Command]
+name = "despertar"
+command = x+y
+time = 3
+
 [Statedef -1]
+
+[State -1, Diabo Loiro (Despertar)]
+type = ChangeState
+value = 2000
+triggerall = command = "despertar"
+triggerall = power >= powermax
+triggerall = var(20) <= 0
+triggerall = statetype != A
+trigger1 = ctrl
+
+[State -1, Rajadona de Ki das Trevas]
+type = ChangeState
+value = 1650
+triggerall = command = "fb_x" || command = "fb_y"
+triggerall = var(20) > 0
+triggerall = power >= 1000
+triggerall = statetype != A
+triggerall = numproj = 0
+trigger1 = ctrl || var(1)
 
 [State -1, Pode cancelar]
 type = VarSet
@@ -323,7 +347,7 @@ triggerall = statetype != A
 triggerall = p2dist x > 0
 trigger1 = var(1)
 
-[State -1, Punho de Concreto]
+[State -1, Pedra]
 type = ChangeState
 value = 1001
 triggerall = command = "df_y"
@@ -331,7 +355,7 @@ triggerall = statetype != A
 triggerall = numproj = 0
 trigger1 = var(1)
 
-[State -1, Punho de Concreto]
+[State -1, Pedra]
 type = ChangeState
 value = 1000
 triggerall = command = "df_x"
@@ -339,7 +363,7 @@ triggerall = statetype != A
 triggerall = numproj = 0
 trigger1 = var(1)
 
-[State -1, Estatueta Dourada]
+[State -1, Bola de ki]
 type = ChangeState
 value = 1601
 triggerall = command = "fb_y"
@@ -347,7 +371,7 @@ triggerall = statetype != A
 triggerall = numproj = 0
 trigger1 = var(1)
 
-[State -1, Estatueta Dourada]
+[State -1, Bola de ki]
 type = ChangeState
 value = 1600
 triggerall = command = "fb_x"

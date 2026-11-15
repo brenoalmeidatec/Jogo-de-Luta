@@ -65,7 +65,7 @@ def ler_air(pasta, nome):
         elif atual is not None and re.match(r"-?\d+\s*,\s*-?\d+\s*,", linha):
             p = [x.strip() for x in linha.split(",")]
             flip = p[5].upper() if len(p) > 5 else ""
-            acoes[atual][0].append((int(p[0]), int(p[1]), int(p[2]), int(p[3]), int(p[4]), flip))
+            acoes[atual][0].append((int(p[0]), int(p[1]), int(p[2]), int(p[3]), int(float(p[4])), flip))
     return acoes
 
 

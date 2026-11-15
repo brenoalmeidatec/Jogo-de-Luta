@@ -126,6 +126,7 @@ def main():
     ap.add_argument("--modo", choices=list(ITENS_MENU), default="arcade")
     ap.add_argument("--direita", type=int, default=1, help="quantas vezes trocar de mapa antes de confirmar")
     ap.add_argument("--filmar", type=float, default=0)
+    ap.add_argument("--casa", type=int, default=0, help="quantas casas o P1 anda para a direita antes de escolher")
     ap.add_argument("--espera-titulo", type=float, default=25)
     ap.add_argument("--filmar-titulo", type=float, default=0, help="grava S segundos da abertura em titulo.mp4")
     ap.add_argument("--titulo-quadros", type=int, default=0, help="fotos extras da abertura animada")
@@ -148,6 +149,9 @@ def main():
             t.tecla("Down", ITENS_MENU[a.modo])
             t.tecla("Return")
             time.sleep(4)
+            if a.casa:
+                t.tecla("Right", a.casa)   # anda o cursor do P1 até a casa pedida antes da foto
+                time.sleep(1)
             t.foto("2_selecao.png")
             t.tecla("Return")   # P1 escolhe o lutador da 1a casa
             time.sleep(1.5)

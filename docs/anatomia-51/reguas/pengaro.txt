@@ -1,0 +1,492 @@
+pengaro/afastar/00: cabeça +13%; membro sobrando? 22 manchas de pele (parado 19)
+pengaro/afastar/01: cabeça +13%; membro sobrando? 21 manchas de pele (parado 19)
+pengaro/afastar/02: cabeça +13%
+pengaro/afastar/03: cabeça +13%
+pengaro/afastar/04: cabeça +11%
+pengaro/afastar/05: cabeça +13%
+pengaro/afastar/06: cabeça +13%; membro sobrando? 27 manchas de pele (parado 19)
+pengaro/afastar/07: cabeça +11%
+pengaro/agachado/00: membro sobrando? 26 manchas de pele (parado 19)
+pengaro/agachado/01: cabeça -3%; membro sobrando? 30 manchas de pele (parado 19)
+pengaro/agachado/02: membro sobrando? 34 manchas de pele (parado 19)
+pengaro/agachado/03: membro sobrando? 35 manchas de pele (parado 19)
+pengaro/agachado/04: cabeça -3%; membro sobrando? 46 manchas de pele (parado 19)
+pengaro/agachado/05: membro sobrando? 39 manchas de pele (parado 19)
+pengaro/agachado/06: membro sobrando? 27 manchas de pele (parado 19)
+pengaro/agachado/07: membro sobrando? 28 manchas de pele (parado 19)
+pengaro/agarrao/00: cabeça +11%
+pengaro/agarrao/01: cabeça +10%
+pengaro/agarrao/02: cabeça +8%
+pengaro/agarrao/03: cabeça +11%
+pengaro/agarrao/04: cabeça +10%
+pengaro/agarrao/05: cabeça não medida; corpo +12%
+pengaro/agarrao/06: cabeça +8%
+pengaro/agarrao/07: cabeça +7%; membro sobrando? 21 manchas de pele (parado 19)
+pengaro/anda/00: cabeça +6%
+pengaro/anda/01: cabeça +5%
+pengaro/anda/03: cabeça +5%
+pengaro/anda/04: cabeça +5%; membro sobrando? 21 manchas de pele (parado 19)
+pengaro/anda/05: cabeça +6%
+pengaro/anda/06: cabeça +5%
+pengaro/apanha/00: cabeça +10%
+pengaro/apanha/01: cabeça +6%
+pengaro/apanha/03: cabeça +6%
+pengaro/apanha/04: membro sobrando? 25 manchas de pele (parado 19)
+pengaro/apanha/05: cabeça +6%
+pengaro/apanha/06: cabeça +7%
+pengaro/apanha/07: cabeça +7%
+pengaro/ar_soco/00: cabeça +18%; membro sobrando? 28 manchas de pele (parado 19)
+pengaro/ar_soco/01: cabeça +18%; membro sobrando? 23 manchas de pele (parado 19)
+pengaro/ar_soco/02: cabeça +20%
+pengaro/ar_soco/03: cabeça +18%; membro sobrando? 24 manchas de pele (parado 19)
+pengaro/ar_soco/04: cabeça +22%; membro sobrando? 26 manchas de pele (parado 19)
+pengaro/ar_soco/05: cabeça +18%; membro sobrando? 22 manchas de pele (parado 19)
+pengaro/ar_soco/06: cabeça +16%; membro sobrando? 26 manchas de pele (parado 19)
+pengaro/ar_soco/07: cabeça +16%; membro sobrando? 26 manchas de pele (parado 19)
+pengaro/armada/00: cabeça +15%
+pengaro/armada/01: cabeça +18%
+pengaro/armada/02: cabeça +15%
+pengaro/armada/03: cabeça +15%
+pengaro/armada/04: cabeça +20%
+pengaro/armada/05: cabeça +15%
+pengaro/armada/06: cabeça +16%
+pengaro/armada/07: cabeça +16%
+pengaro/baixo_soco/04: membro sobrando? 22 manchas de pele (parado 19)
+pengaro/bicicleta/00: cabeça +12%; membro sobrando? 21 manchas de pele (parado 19)
+pengaro/bicicleta/01: cabeça +12%
+pengaro/bicicleta/02: cabeça +15%
+pengaro/bicicleta/03: cabeça +12%; membro sobrando? 21 manchas de pele (parado 19)
+pengaro/bicicleta/04: cabeça +14%
+pengaro/bicicleta/05: cabeça +13%; membro sobrando? 21 manchas de pele (parado 19)
+pengaro/bicicleta/06: cabeça +12%; membro sobrando? 23 manchas de pele (parado 19)
+pengaro/bicicleta/07: cabeça +12%
+pengaro/bola/00: cabeça +7%
+pengaro/bola/02: cabeça +5%
+pengaro/bola/03: cabeça +7%
+pengaro/bola/04: cabeça +6%
+pengaro/bola/05: cabeça +7%
+pengaro/bola/06: cabeça +8%
+pengaro/bola/07: cabeça +7%
+pengaro/cabecada/00: cabeça +21%; membro sobrando? 33 manchas de pele (parado 19)
+pengaro/cabecada/01: cabeça +24%; membro sobrando? 28 manchas de pele (parado 19)
+pengaro/cabecada/02: cabeça +24%
+pengaro/cabecada/03: cabeça +20%
+pengaro/cabecada/04: cabeça +24%
+pengaro/cabecada/05: cabeça +21%
+pengaro/cabecada/06: cabeça +24%; membro sobrando? 30 manchas de pele (parado 19)
+pengaro/cabecada/07: cabeça +23%; membro sobrando? 37 manchas de pele (parado 19)
+pengaro/caneta/00: cabeça +28%; membro sobrando? 23 manchas de pele (parado 19)
+pengaro/caneta/01: cabeça +26%; membro sobrando? 29 manchas de pele (parado 19)
+pengaro/caneta/02: cabeça +22%; membro sobrando? 40 manchas de pele (parado 19)
+pengaro/caneta/03: cabeça +23%; membro sobrando? 25 manchas de pele (parado 19)
+pengaro/caneta/04: cabeça +26%; membro sobrando? 36 manchas de pele (parado 19)
+pengaro/caneta/05: cabeça +26%; membro sobrando? 33 manchas de pele (parado 19)
+pengaro/caneta/06: cabeça +26%; membro sobrando? 39 manchas de pele (parado 19)
+pengaro/caneta/07: cabeça +23%
+pengaro/chute_alto/00: cabeça +12%
+pengaro/chute_alto/01: cabeça +12%
+pengaro/chute_alto/02: cabeça +13%
+pengaro/chute_alto/03: cabeça +12%
+pengaro/chute_alto/04: cabeça +12%
+pengaro/chute_alto/05: cabeça +10%
+pengaro/chute_alto/06: cabeça +12%
+pengaro/chute_alto/07: cabeça +14%
+pengaro/chute_baixo/00: cabeça +11%
+pengaro/chute_baixo/01: cabeça +11%
+pengaro/chute_baixo/02: cabeça +11%
+pengaro/chute_baixo/03: cabeça +11%
+pengaro/chute_baixo/04: cabeça +11%
+pengaro/chute_baixo/05: cabeça +11%
+pengaro/chute_baixo/06: cabeça +10%
+pengaro/chute_baixo/07: cabeça +12%
+pengaro/compasso/00: cabeça +27%; membro sobrando? 31 manchas de pele (parado 19)
+pengaro/compasso/01: cabeça não medida; corpo +18%; membro sobrando? 45 manchas de pele (parado 19)
+pengaro/compasso/02: cabeça não medida; corpo +15%; membro sobrando? 37 manchas de pele (parado 19)
+pengaro/compasso/03: cabeça não medida; membro sobrando? 32 manchas de pele (parado 19)
+pengaro/compasso/04: cabeça não medida; corpo +15%; membro sobrando? 31 manchas de pele (parado 19)
+pengaro/compasso/05: cabeça +17%; membro sobrando? 39 manchas de pele (parado 19)
+pengaro/compasso/06: cabeça +18%; membro sobrando? 32 manchas de pele (parado 19)
+pengaro/compasso/07: cabeça +27%; membro sobrando? 28 manchas de pele (parado 19)
+pengaro/corre/00: cabeça +10%; membro sobrando? 24 manchas de pele (parado 19)
+pengaro/corre/01: cabeça +10%; membro sobrando? 26 manchas de pele (parado 19)
+pengaro/corre/02: cabeça +10%; membro sobrando? 27 manchas de pele (parado 19)
+pengaro/corre/03: cabeça +10%; membro sobrando? 32 manchas de pele (parado 19)
+pengaro/corre/04: cabeça +10%; membro sobrando? 29 manchas de pele (parado 19)
+pengaro/corre/05: cabeça +8%; membro sobrando? 25 manchas de pele (parado 19)
+pengaro/corre/06: cabeça +8%; membro sobrando? 22 manchas de pele (parado 19)
+pengaro/corre/07: cabeça +8%; membro sobrando? 28 manchas de pele (parado 19)
+pengaro/defesa/01: cabeça +5%
+pengaro/defesa/02: cabeça +6%
+pengaro/defesa/03: cabeça +7%
+pengaro/defesa/04: cabeça +7%
+pengaro/defesa/05: cabeça +5%
+pengaro/derrota/00: cabeça +28%; membro sobrando? 32 manchas de pele (parado 19)
+pengaro/derrota/01: cabeça +21%; membro sobrando? 29 manchas de pele (parado 19)
+pengaro/derrota/02: cabeça +24%; membro sobrando? 35 manchas de pele (parado 19)
+pengaro/derrota/03: cabeça +21%; membro sobrando? 44 manchas de pele (parado 19)
+pengaro/derrota/04: cabeça +24%; membro sobrando? 45 manchas de pele (parado 19)
+pengaro/derrota/05: cabeça +24%; membro sobrando? 35 manchas de pele (parado 19)
+pengaro/derrota/06: cabeça +14%; membro sobrando? 42 manchas de pele (parado 19)
+pengaro/derrota/07: cabeça não medida; membro sobrando? 46 manchas de pele (parado 19)
+pengaro/despertar_a/00: cabeça -18%
+pengaro/despertar_a/01: cabeça não medida; corpo -25%
+pengaro/despertar_a/02: cabeça não medida; corpo -25%
+pengaro/despertar_a/03: cabeça -18%
+pengaro/despertar_a/04: cabeça -18%
+pengaro/despertar_a/05: cabeça não medida; corpo -25%
+pengaro/despertar_a/06: cabeça não medida; corpo -25%
+pengaro/despertar_a/07: cabeça não medida; corpo -22%
+pengaro/e_afastar/00: cabeça -8%
+pengaro/e_afastar/01: cabeça -5%
+pengaro/e_afastar/02: cabeça não medida
+pengaro/e_afastar/03: cabeça não medida; membro sobrando? 27 manchas de pele (parado 23)
+pengaro/e_afastar/04: cabeça não medida
+pengaro/e_afastar/05: cabeça -5%
+pengaro/e_afastar/06: cabeça -5%
+pengaro/e_afastar/07: cabeça não medida
+pengaro/e_agachado/00: cabeça +4%
+pengaro/e_agachado/02: cabeça não medida; membro sobrando? 29 manchas de pele (parado 23)
+pengaro/e_agachado/03: membro sobrando? 25 manchas de pele (parado 23)
+pengaro/e_agachado/04: membro sobrando? 25 manchas de pele (parado 23)
+pengaro/e_agachado/06: cabeça +4%
+pengaro/e_agachado/07: cabeça +5%
+pengaro/e_agarrao/00: cabeça não medida
+pengaro/e_agarrao/01: cabeça não medida
+pengaro/e_agarrao/02: cabeça não medida
+pengaro/e_agarrao/03: cabeça não medida
+pengaro/e_agarrao/04: cabeça não medida
+pengaro/e_agarrao/05: cabeça não medida
+pengaro/e_agarrao/06: cabeça não medida
+pengaro/e_agarrao/07: cabeça não medida
+pengaro/e_anda/00: cabeça não medida
+pengaro/e_anda/01: cabeça não medida
+pengaro/e_anda/02: cabeça não medida
+pengaro/e_anda/03: cabeça não medida
+pengaro/e_anda/04: cabeça não medida
+pengaro/e_anda/05: cabeça não medida
+pengaro/e_anda/06: cabeça não medida
+pengaro/e_anda/07: cabeça não medida
+pengaro/e_apanha/01: cabeça não medida
+pengaro/e_apanha/02: cabeça não medida
+pengaro/e_apanha/03: cabeça não medida
+pengaro/e_apanha/04: cabeça não medida
+pengaro/e_apanha/05: cabeça não medida
+pengaro/e_apanha/06: cabeça não medida
+pengaro/e_apanha/07: cabeça -5%
+pengaro/e_ar_soco/00: cabeça +14%
+pengaro/e_ar_soco/01: cabeça não medida; membro sobrando? 30 manchas de pele (parado 23)
+pengaro/e_ar_soco/02: cabeça não medida
+pengaro/e_ar_soco/03: cabeça +20%
+pengaro/e_ar_soco/04: cabeça não medida
+pengaro/e_ar_soco/05: cabeça não medida; membro sobrando? 26 manchas de pele (parado 23)
+pengaro/e_ar_soco/06: cabeça não medida
+pengaro/e_ar_soco/07: cabeça não medida; membro sobrando? 30 manchas de pele (parado 23)
+pengaro/e_armada/00: cabeça +6%
+pengaro/e_armada/01: cabeça não medida
+pengaro/e_armada/02: cabeça não medida
+pengaro/e_armada/03: cabeça não medida
+pengaro/e_armada/04: cabeça não medida
+pengaro/e_armada/05: cabeça não medida
+pengaro/e_armada/06: cabeça não medida
+pengaro/e_armada/07: cabeça +6%
+pengaro/e_baixo_soco/00: cabeça não medida
+pengaro/e_baixo_soco/01: cabeça não medida; membro sobrando? 26 manchas de pele (parado 23)
+pengaro/e_baixo_soco/02: cabeça não medida; membro sobrando? 27 manchas de pele (parado 23)
+pengaro/e_baixo_soco/03: cabeça -5%; membro sobrando? 30 manchas de pele (parado 23)
+pengaro/e_baixo_soco/04: cabeça não medida; membro sobrando? 26 manchas de pele (parado 23)
+pengaro/e_baixo_soco/05: cabeça -5%; membro sobrando? 25 manchas de pele (parado 23)
+pengaro/e_baixo_soco/06: cabeça -5%; membro sobrando? 28 manchas de pele (parado 23)
+pengaro/e_baixo_soco/07: cabeça -5%; membro sobrando? 26 manchas de pele (parado 23)
+pengaro/e_bicicleta/00: cabeça -5%
+pengaro/e_bicicleta/01: cabeça não medida
+pengaro/e_bicicleta/02: cabeça não medida
+pengaro/e_bicicleta/03: cabeça não medida
+pengaro/e_bicicleta/04: cabeça não medida
+pengaro/e_bicicleta/05: cabeça não medida
+pengaro/e_bicicleta/06: cabeça não medida
+pengaro/e_bicicleta/07: cabeça -5%
+pengaro/e_bola/00: cabeça -6%
+pengaro/e_bola/01: cabeça -3%
+pengaro/e_bola/02: cabeça não medida
+pengaro/e_bola/03: cabeça não medida
+pengaro/e_bola/04: cabeça -3%
+pengaro/e_bola/05: cabeça -5%
+pengaro/e_bola/06: cabeça -3%
+pengaro/e_bola/07: cabeça -4%
+pengaro/e_cabecada/00: cabeça não medida
+pengaro/e_cabecada/01: cabeça não medida
+pengaro/e_cabecada/02: cabeça não medida
+pengaro/e_cabecada/03: cabeça não medida
+pengaro/e_cabecada/04: cabeça não medida
+pengaro/e_cabecada/05: cabeça não medida
+pengaro/e_cabecada/06: cabeça não medida
+pengaro/e_cabecada/07: cabeça não medida
+pengaro/e_caneta/00: cabeça não medida
+pengaro/e_caneta/01: cabeça não medida; corpo -13%
+pengaro/e_caneta/02: cabeça não medida; corpo -21%
+pengaro/e_caneta/03: cabeça não medida; corpo -24%
+pengaro/e_caneta/04: cabeça não medida; corpo -24%
+pengaro/e_caneta/05: cabeça não medida; corpo -24%
+pengaro/e_caneta/06: cabeça não medida; corpo -24%
+pengaro/e_caneta/07: cabeça não medida
+pengaro/e_chute_alto/00: cabeça -5%
+pengaro/e_chute_alto/01: cabeça não medida
+pengaro/e_chute_alto/02: cabeça não medida
+pengaro/e_chute_alto/03: cabeça não medida
+pengaro/e_chute_alto/04: cabeça não medida
+pengaro/e_chute_alto/05: cabeça não medida
+pengaro/e_chute_alto/06: cabeça não medida
+pengaro/e_chute_alto/07: cabeça não medida
+pengaro/e_chute_baixo/00: cabeça +4%
+pengaro/e_chute_baixo/01: cabeça +6%
+pengaro/e_chute_baixo/02: cabeça não medida
+pengaro/e_chute_baixo/03: cabeça não medida
+pengaro/e_chute_baixo/04: cabeça +6%
+pengaro/e_chute_baixo/05: cabeça não medida
+pengaro/e_chute_baixo/06: cabeça +5%
+pengaro/e_chute_baixo/07: cabeça +4%
+pengaro/e_compasso/01: cabeça não medida
+pengaro/e_compasso/02: cabeça não medida
+pengaro/e_compasso/03: cabeça não medida
+pengaro/e_compasso/04: cabeça -6%
+pengaro/e_compasso/05: cabeça não medida
+pengaro/e_compasso/06: cabeça -7%
+pengaro/e_defesa/01: cabeça -5%
+pengaro/e_defesa/02: cabeça -5%
+pengaro/e_defesa/03: cabeça não medida
+pengaro/e_defesa/04: cabeça não medida
+pengaro/e_defesa/05: cabeça não medida
+pengaro/e_defesa/06: cabeça não medida
+pengaro/e_defesa/07: cabeça -5%
+pengaro/e_derrota/01: cabeça não medida
+pengaro/e_derrota/03: cabeça não medida; corpo -16%
+pengaro/e_derrota/04: cabeça não medida; corpo -14%
+pengaro/e_derrota/05: cabeça não medida; corpo -16%
+pengaro/e_derrota/06: cabeça não medida; corpo -15%
+pengaro/e_derrota/07: cabeça não medida; corpo -16%
+pengaro/e_despertar/00: cabeça não medida
+pengaro/e_despertar/01: cabeça não medida; corpo -20%
+pengaro/e_despertar/02: cabeça não medida; corpo -21%; membro sobrando? 25 manchas de pele (parado 23)
+pengaro/e_despertar/03: cabeça não medida
+pengaro/e_despertar/04: cabeça não medida; corpo -14%
+pengaro/e_despertar/05: cabeça não medida
+pengaro/e_despertar/06: cabeça não medida
+pengaro/e_despertar/07: cabeça +4%
+pengaro/e_ginga/03: cabeça +6%
+pengaro/e_ginga/07: cabeça +3%
+pengaro/e_golaco/00: cabeça não medida
+pengaro/e_golaco/01: cabeça não medida
+pengaro/e_golaco/02: cabeça não medida
+pengaro/e_golaco/03: cabeça não medida
+pengaro/e_golaco/04: cabeça não medida
+pengaro/e_golaco/05: cabeça não medida
+pengaro/e_golaco/06: cabeça não medida
+pengaro/e_golaco/07: cabeça não medida
+pengaro/e_lata/00: cabeça não medida; membro sobrando? 27 manchas de pele (parado 23)
+pengaro/e_lata/01: cabeça não medida
+pengaro/e_lata/02: cabeça não medida; membro sobrando? 27 manchas de pele (parado 23)
+pengaro/e_lata/03: cabeça não medida; membro sobrando? 26 manchas de pele (parado 23)
+pengaro/e_lata/04: cabeça não medida; membro sobrando? 28 manchas de pele (parado 23)
+pengaro/e_lata/05: cabeça não medida
+pengaro/e_lata/06: cabeça não medida
+pengaro/e_lata/07: cabeça não medida; membro sobrando? 26 manchas de pele (parado 23)
+pengaro/e_levanta/00: cabeça não medida; corpo -27%
+pengaro/e_levanta/01: cabeça não medida; corpo -25%
+pengaro/e_levanta/02: cabeça não medida; corpo -20%
+pengaro/e_levanta/03: cabeça não medida; corpo -12%
+pengaro/e_levanta/04: cabeça -10%
+pengaro/e_levanta/05: cabeça não medida; membro sobrando? 25 manchas de pele (parado 23)
+pengaro/e_levanta/06: cabeça -10%
+pengaro/e_levanta/07: cabeça -7%
+pengaro/e_martelo/00: cabeça +5%
+pengaro/e_martelo/01: cabeça +5%
+pengaro/e_martelo/02: cabeça não medida
+pengaro/e_martelo/03: cabeça não medida
+pengaro/e_martelo/04: cabeça não medida
+pengaro/e_martelo/05: cabeça +5%
+pengaro/e_martelo/06: cabeça não medida
+pengaro/e_martelo/07: cabeça +6%
+pengaro/e_provoca/00: cabeça não medida
+pengaro/e_provoca/01: cabeça não medida
+pengaro/e_provoca/02: cabeça não medida
+pengaro/e_provoca/03: cabeça não medida
+pengaro/e_provoca/04: cabeça não medida
+pengaro/e_provoca/05: cabeça não medida
+pengaro/e_pulo/01: cabeça não medida
+pengaro/e_pulo/02: cabeça não medida
+pengaro/e_pulo/03: cabeça não medida
+pengaro/e_pulo/04: cabeça não medida; corpo -13%
+pengaro/e_pulo/05: cabeça -5%
+pengaro/e_pulo/06: cabeça -3%
+pengaro/e_queda/00: cabeça não medida
+pengaro/e_queda/01: cabeça não medida
+pengaro/e_queda/02: cabeça não medida
+pengaro/e_queda/03: cabeça não medida; corpo -19%
+pengaro/e_queda/04: cabeça não medida; corpo -25%
+pengaro/e_queda/05: cabeça não medida; corpo -31%
+pengaro/e_queda/06: cabeça não medida; corpo -34%
+pengaro/e_queda/07: cabeça não medida; corpo -29%
+pengaro/e_rasteira/00: cabeça +5%
+pengaro/e_rasteira/01: cabeça +4%
+pengaro/e_rasteira/02: cabeça não medida; corpo -17%
+pengaro/e_rasteira/03: cabeça não medida; corpo -18%
+pengaro/e_rasteira/04: cabeça não medida; corpo -16%
+pengaro/e_rasteira/05: cabeça não medida; corpo -16%
+pengaro/e_rasteira/06: cabeça não medida; corpo -18%
+pengaro/e_rasteira/07: cabeça +5%
+pengaro/e_rasteirinha/00: cabeça não medida; membro sobrando? 27 manchas de pele (parado 23)
+pengaro/e_rasteirinha/01: cabeça não medida
+pengaro/e_rasteirinha/02: cabeça não medida
+pengaro/e_rasteirinha/03: cabeça não medida
+pengaro/e_rasteirinha/04: cabeça não medida
+pengaro/e_rasteirinha/05: cabeça não medida
+pengaro/e_rasteirinha/06: cabeça não medida
+pengaro/e_rasteirinha/07: cabeça não medida
+pengaro/e_rolamento/00: cabeça não medida
+pengaro/e_rolamento/01: cabeça não medida
+pengaro/e_rolamento/02: cabeça não medida; corpo -12%
+pengaro/e_rolamento/03: cabeça não medida
+pengaro/e_rolamento/04: cabeça não medida; corpo -15%
+pengaro/e_rolamento/05: cabeça não medida; corpo -17%
+pengaro/e_rolamento/06: cabeça não medida; corpo -13%
+pengaro/e_rolamento/07: cabeça não medida
+pengaro/e_soco/00: cabeça -3%
+pengaro/e_soco/01: cabeça -3%
+pengaro/e_soco/02: cabeça não medida
+pengaro/e_soco/03: cabeça -3%
+pengaro/e_soco/06: membro sobrando? 26 manchas de pele (parado 23)
+pengaro/e_soco/07: cabeça -3%
+pengaro/e_vitoria/00: cabeça -3%
+pengaro/e_vitoria/01: cabeça não medida
+pengaro/e_vitoria/02: cabeça não medida
+pengaro/e_vitoria/03: cabeça não medida
+pengaro/e_vitoria/04: cabeça não medida
+pengaro/e_vitoria/05: cabeça não medida
+pengaro/e_vitoria/06: cabeça não medida
+pengaro/e_vitoria/07: cabeça +5%
+pengaro/ginga/01: cabeça +3%
+pengaro/golaco/00: cabeça +16%
+pengaro/golaco/01: cabeça +9%
+pengaro/golaco/02: cabeça +21%
+pengaro/golaco/03: cabeça +17%
+pengaro/golaco/04: cabeça -9%
+pengaro/golaco/05: cabeça não medida
+pengaro/golaco/06: cabeça não medida
+pengaro/golaco/07: cabeça não medida
+pengaro/lata/00: cabeça +3%; membro sobrando? 29 manchas de pele (parado 19)
+pengaro/lata/01: cabeça +3%; membro sobrando? 24 manchas de pele (parado 19)
+pengaro/lata/02: membro sobrando? 23 manchas de pele (parado 19)
+pengaro/lata/03: cabeça +5%; membro sobrando? 28 manchas de pele (parado 19)
+pengaro/lata/04: membro sobrando? 30 manchas de pele (parado 19)
+pengaro/lata/05: membro sobrando? 21 manchas de pele (parado 19)
+pengaro/lata/06: cabeça +5%; membro sobrando? 22 manchas de pele (parado 19)
+pengaro/lata/07: membro sobrando? 27 manchas de pele (parado 19)
+pengaro/levanta/00: cabeça +10%; membro sobrando? 30 manchas de pele (parado 19)
+pengaro/levanta/01: cabeça +13%; membro sobrando? 36 manchas de pele (parado 19)
+pengaro/levanta/02: cabeça +10%; membro sobrando? 41 manchas de pele (parado 19)
+pengaro/levanta/03: cabeça +10%; membro sobrando? 21 manchas de pele (parado 19)
+pengaro/levanta/04: cabeça +18%; membro sobrando? 24 manchas de pele (parado 19)
+pengaro/levanta/05: cabeça +16%; membro sobrando? 30 manchas de pele (parado 19)
+pengaro/levanta/06: cabeça +17%; membro sobrando? 24 manchas de pele (parado 19)
+pengaro/levanta/07: cabeça +22%; membro sobrando? 21 manchas de pele (parado 19)
+pengaro/martelo/00: cabeça +8%
+pengaro/martelo/01: cabeça +11%
+pengaro/martelo/02: cabeça +11%
+pengaro/martelo/03: cabeça +11%
+pengaro/martelo/04: cabeça +8%
+pengaro/martelo/05: cabeça +8%
+pengaro/martelo/06: cabeça +9%
+pengaro/martelo/07: cabeça +8%
+pengaro/parado/00: cabeça +7%
+pengaro/parado/01: cabeça +5%
+pengaro/parado/02: cabeça +6%; membro sobrando? 25 manchas de pele (parado 19)
+pengaro/parado/03: cabeça +8%; membro sobrando? 24 manchas de pele (parado 19)
+pengaro/parado/04: cabeça +5%
+pengaro/parado/05: cabeça +7%
+pengaro/parado/06: cabeça +5%
+pengaro/parado/07: cabeça +7%
+pengaro/parry_alto/00: cabeça +3%
+pengaro/parry_alto/01: cabeça -6%
+pengaro/parry_alto/02: cabeça -8%
+pengaro/parry_alto/03: cabeça -6%
+pengaro/parry_alto/04: cabeça -6%
+pengaro/parry_baixo/00: cabeça +19%; membro sobrando? 33 manchas de pele (parado 19)
+pengaro/parry_baixo/01: cabeça não medida; corpo -12%; membro sobrando? 36 manchas de pele (parado 19)
+pengaro/parry_baixo/02: cabeça não medida; corpo -13%; membro sobrando? 39 manchas de pele (parado 19)
+pengaro/parry_baixo/03: cabeça não medida; membro sobrando? 32 manchas de pele (parado 19)
+pengaro/parry_baixo/04: cabeça não medida; membro sobrando? 42 manchas de pele (parado 19)
+pengaro/parry_baixo/05: cabeça +8%; membro sobrando? 35 manchas de pele (parado 19)
+pengaro/parry_baixo/06: membro sobrando? 22 manchas de pele (parado 19)
+pengaro/parry_baixo/07: cabeça +8%; membro sobrando? 29 manchas de pele (parado 19)
+pengaro/provoca/00: cabeça +7%
+pengaro/provoca/01: cabeça +10%
+pengaro/provoca/02: cabeça +8%; membro sobrando? 26 manchas de pele (parado 19)
+pengaro/provoca/03: membro sobrando? 21 manchas de pele (parado 19)
+pengaro/provoca/04: cabeça +5%
+pengaro/provoca/05: cabeça +5%; membro sobrando? 23 manchas de pele (parado 19)
+pengaro/provoca/06: membro sobrando? 21 manchas de pele (parado 19)
+pengaro/provoca/07: cabeça +6%; membro sobrando? 21 manchas de pele (parado 19)
+pengaro/pulo/00: cabeça +16%; membro sobrando? 26 manchas de pele (parado 19)
+pengaro/pulo/01: cabeça +20%
+pengaro/pulo/02: cabeça +22%
+pengaro/pulo/03: cabeça +20%; membro sobrando? 25 manchas de pele (parado 19)
+pengaro/pulo/04: cabeça +18%
+pengaro/pulo/05: cabeça +21%
+pengaro/pulo/06: cabeça +20%
+pengaro/pulo/07: cabeça +18%; membro sobrando? 27 manchas de pele (parado 19)
+pengaro/queda/00: cabeça +28%; membro sobrando? 27 manchas de pele (parado 19)
+pengaro/queda/01: cabeça +24%; membro sobrando? 23 manchas de pele (parado 19)
+pengaro/queda/02: cabeça não medida; membro sobrando? 30 manchas de pele (parado 19)
+pengaro/queda/03: cabeça +24%; membro sobrando? 36 manchas de pele (parado 19)
+pengaro/queda/04: cabeça +16%; membro sobrando? 52 manchas de pele (parado 19)
+pengaro/queda/05: cabeça +27%; membro sobrando? 46 manchas de pele (parado 19)
+pengaro/queda/06: cabeça não medida; membro sobrando? 53 manchas de pele (parado 19)
+pengaro/queda/07: cabeça -18%; membro sobrando? 50 manchas de pele (parado 19)
+pengaro/rasteira/00: cabeça +28%; membro sobrando? 28 manchas de pele (parado 19)
+pengaro/rasteira/01: cabeça +28%; membro sobrando? 24 manchas de pele (parado 19)
+pengaro/rasteira/02: cabeça +28%; membro sobrando? 29 manchas de pele (parado 19)
+pengaro/rasteira/03: cabeça +28%; membro sobrando? 30 manchas de pele (parado 19)
+pengaro/rasteira/04: cabeça +28%; membro sobrando? 29 manchas de pele (parado 19)
+pengaro/rasteira/05: cabeça +28%; membro sobrando? 24 manchas de pele (parado 19)
+pengaro/rasteira/06: cabeça +28%; membro sobrando? 27 manchas de pele (parado 19)
+pengaro/rasteira/07: cabeça +28%; membro sobrando? 24 manchas de pele (parado 19)
+pengaro/rasteirinha/00: cabeça +28%; membro sobrando? 39 manchas de pele (parado 19)
+pengaro/rasteirinha/01: cabeça +28%; membro sobrando? 37 manchas de pele (parado 19)
+pengaro/rasteirinha/02: cabeça +28%; membro sobrando? 37 manchas de pele (parado 19)
+pengaro/rasteirinha/03: cabeça +28%; membro sobrando? 39 manchas de pele (parado 19)
+pengaro/rasteirinha/04: cabeça +27%; membro sobrando? 32 manchas de pele (parado 19)
+pengaro/rasteirinha/05: cabeça +28%; membro sobrando? 32 manchas de pele (parado 19)
+pengaro/rasteirinha/06: cabeça +28%; membro sobrando? 31 manchas de pele (parado 19)
+pengaro/rasteirinha/07: cabeça +28%; membro sobrando? 38 manchas de pele (parado 19)
+pengaro/recuo/00: cabeça +4%
+pengaro/recuo/01: cabeça +7%
+pengaro/recuo/02: cabeça +8%
+pengaro/recuo/03: cabeça +7%
+pengaro/recuo/04: cabeça +8%
+pengaro/recuo/06: cabeça +10%
+pengaro/recuo/07: cabeça +7%
+pengaro/rolamento/00: cabeça +28%; membro sobrando? 22 manchas de pele (parado 19)
+pengaro/rolamento/01: cabeça +28%; membro sobrando? 39 manchas de pele (parado 19)
+pengaro/rolamento/02: cabeça não medida; membro sobrando? 45 manchas de pele (parado 19)
+pengaro/rolamento/03: cabeça não medida; membro sobrando? 23 manchas de pele (parado 19)
+pengaro/rolamento/04: cabeça +27%; membro sobrando? 46 manchas de pele (parado 19)
+pengaro/rolamento/05: cabeça +27%; membro sobrando? 44 manchas de pele (parado 19)
+pengaro/rolamento/06: cabeça +28%; membro sobrando? 34 manchas de pele (parado 19)
+pengaro/rolamento/07: cabeça +28%; membro sobrando? 23 manchas de pele (parado 19)
+pengaro/soco/00: cabeça +10%
+pengaro/soco/01: cabeça +9%
+pengaro/soco/02: cabeça +11%
+pengaro/soco/03: cabeça +9%
+pengaro/soco/04: cabeça +9%
+pengaro/soco/05: cabeça +9%; membro sobrando? 22 manchas de pele (parado 19)
+pengaro/soco/06: cabeça +11%
+pengaro/soco/07: cabeça +10%
+pengaro/vitoria/00: cabeça +14%
+pengaro/vitoria/01: cabeça +12%
+pengaro/vitoria/02: cabeça +14%
+pengaro/vitoria/03: cabeça +16%
+pengaro/vitoria/04: cabeça +21%
+pengaro/vitoria/05: cabeça +16%
+pengaro/vitoria/06: cabeça +10%
+pengaro/vitoria/07: cabeça +13%
+pengaro: 536 quadros, 491 com aviso

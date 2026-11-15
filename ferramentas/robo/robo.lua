@@ -56,7 +56,10 @@ do
   local steps, c
   local function add(f) steps[#steps + 1] = f end
   local ativo = (LUTADOR ~= "hazaki")  -- os roteiros daqui ate o bloco do Hazak sao dos outros lutadores
-  local function S(name, build) if ativo then scenarios[#scenarios + 1] = {name = name, build = build} end end
+  local FILTRO = "@FILTRO@"  -- so os roteiros com esse texto no nome (filmar_robo.py); vazio = todos
+  local function S(name, build)
+    if ativo and (FILTRO == "" or string.find(name, FILTRO, 1, true)) then scenarios[#scenarios + 1] = {name = name, build = build} end
+  end
   local ABORT = false
   local function wait(n)
     local ate
@@ -118,18 +121,19 @@ do
       add(function()
         local v, s2 = lifeP2(), snap(2).st
         if v < c.ult then c.golpes = c.golpes + 1; c.ult = v end
-        if s2 == 822 or s2 == 825 or s2 == 826 then c.reagiu = true end
+        if s2 >= 822 and s2 <= 829 and s2 ~= 823 and s2 ~= 824 then c.reagiu = true end
         if s2 == 823 or s2 == 824 then c.voou = c.voou or s2 end
         if st1() ~= 810 then c.dur = clock() - c.t0; return true end
         return clock() - c.t0 > 400
       end)
       note(function() return "pancadas " .. c.golpes .. "; dano " .. (c.vida0 - lifeP2()) .. "; duracao " .. tostring(c.dur) .. " ticks; P2 voou pelo " .. tostring(c.voou) end)
       need(function() return c.golpes >= 4 end, 1, "o dano saiu em 4 ou mais pancadas", false)
-      need(function() return c.reagiu end, 1, "o P2 reagiu as pancadas preso (822/825/826)", false)
+      need(function() return c.reagiu end, 1, "o P2 reagiu as pancadas preso (822 a 829)", false)
       need(function() return c.voou == (tras and 824 or 823) end, 1, "o P2 foi arremessado (" .. (tras and 824 or 823) .. ")", false)
       -- 120 de dano no roteiro; a defesa do Hazak (P2) aumenta um pouco
       need(function() local d = c.vida0 - lifeP2(); return d >= 110 and d <= 145 end, 1, "dano entre 110 e 145", false)
-      need(function() return c.dur and c.dur >= 60 and c.dur <= 150 end, 1, "duracao entre 60 e 150 ticks", false)
+      -- #45: cada pancada prepara, congela e volta a segurar; a sequência inteira fica entre 1 e 3,5 s
+      need(function() return c.dur and c.dur >= 60 and c.dur <= 210 end, 1, "duracao entre 60 e 210 ticks", false)
       need(function() local s = snap(2); return s.ctrl and s.st == 0 end, 300, "o P2 levantou e voltou ao controle", false)
       need(livre, 60, "o P1 voltou ao controle", false)
       note(function() return "lado do P2 antes " .. c.x2 .. ", depois " .. (snap(2).x - snap(1).x) end)
@@ -338,35 +342,25 @@ do
   end
   if LUTADOR == "pengaro" then
     -- a aura liga inteira e ja apagou quando o corpo volta a forma base (o fade de saida acaba junto com o var(20))
-    desperto("aura do endiabrado: liga as 4 camadas e apaga junto com a forma endiabrada", function()
+    desperto("aura do endiabrado: liga as 4 camadas e nao apaga por tempo", function()
       wait(70)
       need(function() return auraN(1) == 4 end, 10, "as 4 camadas da aura (9600 a 9603) vivas no Despertar")
-      add(function() held[1].fimdesp = clock() + 2; return true end)
-      need(function() local v = snap(1).v20; return v > 0 and v <= 40 end, 10, "Despertar no fim (var20 <= 40)")
-      need(function() return snap(1).v37 == 0 end, 60, "o corpo voltou a forma base (var37 = 0)")
-      acao(function() c.aura_volta = auraN(1); c.t_volta = clock() end)
-      need(function() return auraN(1) == 0 end, 2, "a aura apaga no maximo 2 tiques depois do corpo voltar", false)
-      note(function() return "camadas quando o corpo voltou: " .. c.aura_volta .. "; apagou " .. (clock() - c.t_volta) .. " tiques depois" end)
+      -- forma ate o fim da luta (forma_permanente.py): passa do tempo antigo (600 tiques) e nada apaga
+      wait(660)
+      need(function() local v = snap(1); return v.v20 > 0 and v.v37 == 1 end, 2, "660 tiques depois continua na forma (var20 > 0, var37 = 1)")
+      need(function() return auraN(1) == 4 end, 2, "a aura continua inteira", false)
     end)
   end
   if LUTADOR == "ck" then
     -- aura do Ratao (ferramentas/aura_ck.py: paredao 9600, chao 9601, fagulhas 9602): liga inteira e ja apagou
     -- quando o corpo volta a forma base (o fade de saida acaba junto com o var(20))
-    desperto("aura do Ratao: liga as 3 camadas e apaga junto com a forma do Ratao", function()
+    desperto("aura do Ratao: liga as 3 camadas e nao apaga por tempo", function()
       wait(70)
       need(function() return auraN(1) == 3 end, 10, "as 3 camadas da aura (9600 a 9602) vivas no Despertar")
-      add(function() held[1].fimdesp = clock() + 2; return true end)
-      need(function() local v = snap(1).v20; return v > 0 and v <= 40 end, 10, "Despertar no fim (var20 <= 40)")
-      -- a saida anda com o var(20) (aura_ck.RESTA), nao com o relogio do -4: o fade e var(20)/34 no fim
-      need(function() local v = snap(1).v20; return v > 0 and v <= 8 end, 40, "var20 <= 8")
-      acao(function() c.v20 = snap(1).v20; c.f = com(1, function() return map("au_ck_f") end) end)
-      note(function() return string.format("var20 %d: fade %.3f (var20/34 = %.3f), camadas %d", c.v20, c.f, c.v20 / 34, auraN(1)) end)
-      need(function() return math.abs(c.f - c.v20 / 34) < 0.035 and auraN(1) == 3 end, 1,
-        "no fim a aura segue o var(20): fade = var20/34 e as 3 camadas vivas", false)
-      need(function() return snap(1).v37 == 0 end, 60, "o corpo voltou a forma base (var37 = 0)")
-      acao(function() c.aura_volta = auraN(1); c.t_volta = clock() end)
-      need(function() return auraN(1) == 0 end, 2, "a aura apaga no maximo 2 tiques depois do corpo voltar", false)
-      note(function() return "camadas quando o corpo voltou: " .. c.aura_volta .. "; apagou " .. (clock() - c.t_volta) .. " tiques depois" end)
+      -- forma ate o fim da luta (forma_permanente.py): passa do tempo antigo (600 tiques) e nada apaga
+      wait(660)
+      need(function() local v = snap(1); return v.v20 > 0 and v.v37 == 1 end, 2, "660 tiques depois continua na forma (var20 > 0, var37 = 1)")
+      need(function() return auraN(1) == 3 end, 2, "a aura continua inteira", false)
     end)
     -- no Grave do Paredao o paredao e o da aura: sem caixa preta (9250), e ele incha (surto) no grave
     desperto("aura do Ratao: o Grave (3403) faz o paredao da aura inchar, sem caixa preta", function()
@@ -473,15 +467,14 @@ do
 
   desperto("super: Saideira Sombria (3100) fica endiabrado do comeco ao fim", function()
     approach(60)
-    acao(function() com(1, function() setPower(1000); return 0 end); c.vida0 = lifeP2() end)
+    acao(function() com(1, function() setPower(2000); return 0 end); c.vida0 = lifeP2() end)
     wait(3)
     press(1, {LUTADOR == "ck" and "baile" or "golaco"}, 3)  -- no CK o golaco do Ratao e a Rajada (3000)
     need(estadoEm(3100), 14, "entrou em 3100")
     need(function() local s = snap(1); return s.st == 3100 and s.t > 20 and s.v37 == 1 end, 80, "var(37) = 1 (arte endiabrada) no meio do 3100")
     need(function() return st1() == 0 end, 300, "terminou", false)
-    if LUTADOR == "pengaro" then  -- o 3100 zera o var(20): a aura apaga antes de ele acabar, pelo AnimTime
-      need(function() return auraN(1) == 0 end, 2, "a aura ja apagou quando o 3100 acabou (forma base)", false)
-    end
+    -- forma ate o fim da luta (forma_permanente.py): o super nao encerra mais a forma
+    need(function() local v = snap(1); return v.v20 > 0 and v.v37 == 1 end, 2, "continua na forma depois do super (var20 > 0, var37 = 1)", false)
     note(function() local s = snap(1); return "dano " .. (c.vida0 - lifeP2()) .. "; var20=" .. s.v20 .. " var37=" .. s.v37 end)
     need(function() return c.vida0 - lifeP2() > 150 end, 1, "o super acertou (dano > 150)", false)
   end)
@@ -526,7 +519,7 @@ do
   if LUTADOR == "ck" then  -- golpes que so o CK tem
     desperto("super: Baile da Esquina pelo comando proprio (tras, frente, baixo + x+y)", function()
       approach(60)
-      acao(function() com(1, function() setPower(1000); return 0 end); c.vida0 = lifeP2() end)
+      acao(function() com(1, function() setPower(2000); return 0 end); c.vida0 = lifeP2() end)
       wait(3)
       press(1, {"baile"}, 3)
       need(estadoEm(3100), 14, "entrou em 3100")
@@ -536,7 +529,7 @@ do
     end)
     desperto("Baile da Esquina nao encerra o Ratao (var(20) continua ligado)", function()
       approach(60)
-      acao(function() com(1, function() setPower(1000); return 0 end) end)
+      acao(function() com(1, function() setPower(2000); return 0 end) end)
       wait(3)
       press(1, {"baile"}, 3)
       need(estadoEm(3100), 14, "entrou em 3100")
@@ -614,7 +607,7 @@ do
   -- ================================================================ PARRY (docs/parry.md): todos os lutadores
   -- O P2 (Hazak) bate: jab em pe (x) ou chute agachado (agacha + a); o P1 entra no parry 1 tick depois e pega o golpe
   -- dentro da janela de 4 ticks. Parry certo: o P1 vai para o acertou e o P2 fica aberto (762) por 20 ticks.
-  local function T(name, build) scenarios[#scenarios + 1] = {name = name, build = build} end
+  local function T(name, build) if FILTRO == "" or string.find(name, FILTRO, 1, true) then scenarios[#scenarios + 1] = {name = name, build = build} end end
   local function parry(nome, cmd, postura, acertou, baixo, pega, depois)
     T("PARRY " .. nome, function()
       approach(30)
@@ -748,20 +741,24 @@ do
       need(function() return c.vida0 - lifeP2() > 0 end, 1, "o projetil acertou", false)
     end)
   end
-  projetilH("Punho de Concreto fraco (df_x)", "df_x", 70, 1000)
-  projetilH("Punho de Concreto forte (df_y)", "df_y", 100, 1001)
-  projetilH("Estatueta Dourada fraca (fb_x)", "fb_x", 70, 1600)
-  projetilH("Estatueta Dourada forte (fb_y)", "fb_y", 170, 1601)
+  projetilH("Pedra no soco (df_x)", "df_x", 120, 1000)
+  projetilH("Pedra no chute (df_y)", "df_y", 160, 1001)
+  projetilH("Bola de ki (fb_x)", "fb_x", 120, 1600)
+  projetilH("Bola de ki carregada (fb_y)", "fb_y", 175, 1601)
   S("2o projetil recusado com um na tela", function()
-    approach(170)
-    press(1, {"df_x"}, 2)
-    need(estadoEm(1000), 12, "entrou em 1000")
+    approach(182)  -- a bola de ki (4,5 px por tick) ainda esta no ar quando ele volta ao controle
+    press(1, {"fb_x"}, 2)
+    need(estadoEm(1600), 12, "entrou em 1600")
     need(function() return snap(1).proj > 0 end, 70, "projetil na tela")
-    need(function() local s = snap(1); return s.st == 0 and s.ctrl end, 60, "P1 livre com o projetil na tela")
-    add(function() held[1].df_x = clock() + 2; return true end)
-    wait(5)
+    -- aperta no mesmo tick em que ele volta ao controle (a bola acerta o P2 poucos ticks depois)
+    need(function()
+      local s, o = snap(1), snap(2)
+      if s.st == 0 and s.ctrl then held[1].fb_x = clock() + 2; held[1].df_x = clock() + 2; return true end
+      pendingPos[2] = o.x + (o.x > s.x and 3 or -3)  -- P2 recua junto com a bola para ela seguir no ar
+    end, 60, "P1 livre com o projetil na tela")
+    wait(3)
     note(function() local s = snap(1); return "estado " .. s.st .. ", projeteis " .. s.proj end)
-    need(function() local s = snap(1); return s.st ~= 1000 and s.proj > 0 end, 1, "o 2o Punho de Concreto NAO saiu", false)
+    need(function() local s = snap(1); return s.st ~= 1600 and s.st ~= 1000 and s.proj > 0 end, 1, "a 2a bola de ki (e a pedra) NAO sairam", false)
   end)
 
   role("Rolada de Tatame (a)", "bf_a", 1700)
@@ -847,7 +844,7 @@ do
     need(function() return c.vida0 - lifeP2() > 150 end, 1, "o super acertou (dano > 150)", false)
   end)
 
-  S("cancelar o 2o golpe da corrente em especial (Punho de Concreto)", function()
+  S("cancelar o 2o golpe da corrente em especial (Pedra)", function()
     approach(28)
     press(1, {"x"}, 2); need(contatoEm(200), 60, "200 encostou")
     press(1, {"x"}, 2); need(estadoEm(301), 20, "301")
@@ -909,23 +906,23 @@ do
     note(seDefendeu)
     need(function() return c.vida0 == lifeP2() and c.defendeu end, 1, "em pe o por cima foi defendido", false)
   end)
-  S("Punho de Concreto (df_x) contra defesa EM PE: acerta (so defende agachado)", function()
-    approach(70)
+  S("Pedra (df_x) contra defesa EM PE: defende", function()
+    approach(100)
     p2defende(false)
     press(1, {"df_x"}, 2)
     need(estadoEm(1000), 12, "entrou em 1000")
-    espia(140)
+    espia(90)
     note(seDefendeu)
-    need(function() return c.vida0 - lifeP2() > 20 and not c.defendeu end, 1, "a lasca acertou quem defendia em pe", false)
+    need(function() return c.vida0 - lifeP2() <= 10 and c.defendeu end, 1, "a pedra foi defendida (so o dano de raspao)", false)
   end)
-  S("Punho de Concreto (df_x) contra defesa AGACHADA: defende", function()
-    approach(70)
+  S("Bola de ki (fb_x) contra defesa AGACHADA: defende", function()
+    approach(100)
     p2defende(true)
-    press(1, {"df_x"}, 2)
-    need(estadoEm(1000), 12, "entrou em 1000")
-    espia(140)
+    press(1, {"fb_x"}, 2)
+    need(estadoEm(1600), 12, "entrou em 1600")
+    espia(100)
     note(seDefendeu)
-    need(function() return c.vida0 - lifeP2() <= 10 and c.defendeu end, 1, "agachado a lasca foi defendida (so o dano de raspao)", false)
+    need(function() return c.vida0 - lifeP2() <= 10 and c.defendeu end, 1, "agachado a bola de ki foi defendida", false)
   end)
   S("Pega Bolado forte (bd_b) DEFENDIDO: cai no 1503 (erra feio)", function()
     approach(130)
@@ -961,14 +958,103 @@ do
   guardaContraBaixo("Guarda de Aco y (db_y) contra golpe baixo: reverte", "db_y", 1101, true)
   guardaContraBaixo("Guarda de Aco x (db_x) contra golpe baixo: nao reverte", "db_x", 1100, false)
 
-  S("Despertar desligado: x + y com barra cheia nao transforma", function()
+  -- ---- Diabo Loiro (issue #44, ferramentas/diabo_loiro.py)
+  S("Diabo Loiro: x + y com a barra cheia faz a cena da patroa e transforma", function()
     approach(60)
-    acao(function() com(1, function() setPower(3000); return 0 end) end)
+    acao(function() com(1, function() setPower(3000); return 0 end); c.d0 = snap(1).d end)
     wait(3)
-    add(function() held[1].x = clock() + 3; held[1].y = clock() + 3; return true end)
+    press(1, {"despertar"}, 3)
+    need(estadoEm(2000), 14, "entrou em 2000")
+    need(function() return com(1, function() return numExplod(7450) end) > 0 end, 60, "a patroa chega", false)
+    need(function() return com(1, function() return numExplod(7451) end) > 0 end, 60, "a patroa faz que sim", false)
+    need(function() return snap(1).v20 > 0 end, 120, "virou o Diabo (var20 > 0)")
+    need(function() return snap(1).v37 == 1 end, 3, "arte do Diabo ligada (var37 = 1)", false)
+    need(function() return st1() ~= 2000 end, 80, "a cena terminou", false)
+    wait(30)
+    note(function() local s = snap(1); return "var20=" .. s.v20 .. " power=" .. s.pow .. " camadas da aura " .. auraN(1) end)
+    need(function() return snap(1).pow == 0 end, 1, "gastou a barra toda", false)
+    -- 4 camadas desde a #51: asas abertas, brasa no chao, asas meio fechadas e fechadas (o alfa escolhe qual aparece)
+    need(function() return auraN(1) == 4 end, 1, "as 4 camadas da aura (asas, brasa no chao, asas meio e fechadas) vivas", false)
+    need(livre, 30, "P1 livre depois da cena", false)
+  end)
+  S("Diabo Loiro SEM barra cheia (2 estoques) nao transforma", function()
+    approach(60)
+    acao(function() com(1, function() setPower(2000); return 0 end) end)
+    wait(3)
+    press(1, {"despertar"}, 3)
     wait(14)
-    note(function() local s = snap(1); return "estado " .. s.st .. ", var20=" .. s.v20 .. ", barra " .. s.pow end)
-    need(function() local s = snap(1); return s.st ~= 2000 and s.v20 == 0 end, 1, "nao entrou no 2000 (Despertar pendente)", false)
+    need(function() return st1() ~= 2000 end, 1, "nao entrou no 2000", false)
+  end)
+  local function diabo(nome, build)
+    S("[Diabo Loiro] " .. nome, function()
+      add(function() held[1].desperto = clock() + 3; return true end)
+      wait(4)
+      build()
+    end)
+  end
+  diabo("Rajadona de Ki das Trevas (fb_x, 1 estoque)", function()
+    approach(150)
+    acao(function() com(1, function() setPower(1000); return 0 end); c.vida0 = lifeP2() end)
+    wait(3)
+    acao(function() setAccel(1) end)  -- acelerado, o raio demora a acertar e o dano varia de rodada para rodada
+    press(1, {"fb_x"}, 3)
+    need(estadoEm(1650), 14, "entrou em 1650")
+    need(function() return snap(1).proj > 0 end, 70, "o raio saiu", false)
+    need(function() return st1() ~= 1650 end, 200, "acabou", false)
+    wait(20)
+    acao(function() setAccel(@ACCEL@) end)
+    note(function() return "dano " .. (c.vida0 - lifeP2()) .. "; barra " .. snap(1).pow end)
+    need(function() return c.vida0 - lifeP2() >= 250 end, 1, "o raio acertou quase todos os 12 (dano >= 250)", false)
+    need(function() return snap(1).pow < 1000 end, 1, "gastou o estoque", false)
+    need(livre, 60, "P1 voltou ao controle", false)
+  end)
+  diabo("Rajadona contra DEFESA: o P2 segura e so toma o desgaste", function()
+    approach(150)
+    acao(function() com(1, function() setPower(1000); return 0 end) end)
+    p2defende(false)
+    acao(function() setAccel(1) end)
+    press(1, {"fb_x"}, 3)
+    need(estadoEm(1650), 14, "entrou em 1650")
+    espia(190)
+    acao(function() setAccel(@ACCEL@) end)
+    note(seDefendeu)
+    need(function() local d = c.vida0 - lifeP2(); return c.defendeu and d > 0 and d < 120 end, 1, "defendeu o raio e tomou so desgaste (0 < dano < 120)", false)
+    add(function() held[2] = {}; return true end)
+  end)
+  -- vitrine: os golpes na roupa do Diabo, um atrás do outro (ferramentas/filmar_robo.py --filtro "vitrine")
+  diabo("vitrine dos golpes na roupa do conceito", function()
+    approach(34)
+    for _, cmd in ipairs({"x", "y", "a", "b"}) do press(1, {cmd}, 2); wait(36) end
+    press(1, {"fd_y"}, 2); wait(64)
+    approach(34)
+    press(1, {"df_a"}, 2); wait(90)
+    press(1, {"df_y"}, 2); wait(110)  -- sem reposicionar: o P2 ainda está levantando da pedra
+    press(1, {"fb_y"}, 2); wait(96)
+    need(function() return snap(1).v37 == 1 end, 1, "continuou Diabo a vitrine inteira", false)
+  end)
+  diabo("sem estoque, fb_x solta a bola de ki", function()
+    approach(150)
+    acao(function() com(1, function() setPower(0); return 0 end) end)
+    wait(3)
+    press(1, {"fb_x"}, 3)
+    need(estadoEm(1600), 14, "entrou em 1600 (bola de ki)")
+  end)
+  diabo("agarrao de fogo e ouro (frente + y colado)", function()
+    approach(6)
+    acao(function() c.vida0 = lifeP2() end)
+    press(1, {"holdfwd", "y"}, 3)
+    need(estadoEm(810), 30, "entrou em 810")
+    need(function() return st1() ~= 810 end, 200, "terminou", false)
+    wait(20)
+    note(function() return "dano " .. (c.vida0 - lifeP2()) end)
+    need(function() return c.vida0 - lifeP2() >= 150 end, 1, "dano do Diabo maior que o do agarrao normal (>= 150; o normal fica em 110 a 145)", false)
+  end)
+  diabo("nao acaba por tempo: continua o Diabo e a aura fica", function()
+    wait(60)
+    need(function() return auraN(1) == 4 end, 10, "aura viva no Diabo")
+    wait(660)
+    need(function() local v = snap(1); return v.v20 > 0 and v.v37 == 1 end, 2, "660 tiques depois continua o Diabo (var20 > 0, var37 = 1)")
+    need(function() return auraN(1) == 4 end, 2, "a aura continua viva", false)
   end)
 
   -- fica por ultimo: o nocaute acaba com o round
@@ -1053,6 +1139,6 @@ do
     end)
     if not ok then log("ERRO NO ROBO: " .. tostring(err)); ligado = false; LOG:close() end
   end)
-  pcall(function() setAccel(4) end)
+  pcall(function() setAccel(@ACCEL@) end)
   log("robo carregado: " .. #scenarios .. " roteiros")
 end

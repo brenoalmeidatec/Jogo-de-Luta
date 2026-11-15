@@ -941,7 +941,7 @@ sparkno = 2
 guard.sparkno = 40
 KO.echo = 0
 volume = 0
-IntPersistIndex = 60
+IntPersistIndex = 58
 FloatPersistIndex = 40
 
 [Size]
@@ -1157,7 +1157,7 @@ velset = 0,0
 [State 210, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 55,1
 ; som: fim
 
 [State 210, Arte despertada]
@@ -1171,6 +1171,9 @@ type = HitDef
 trigger1 = Time = 7
 attr = S, NA
 damage = 85, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -1182,7 +1185,7 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
+hitsound = S54,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
@@ -1209,7 +1212,7 @@ velset = 0,0
 [State 215, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 55,1
 ; som: fim
 
 [State 215, Arte despertada]
@@ -1220,9 +1223,12 @@ value = 10215
 
 [State 215, Golpe]
 type = HitDef
-trigger1 = Time = 4
+trigger1 = Time = 7
 attr = S, NA
 damage = 80, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -1234,7 +1240,7 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
+hitsound = S54,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
@@ -1332,6 +1338,9 @@ type = HitDef
 trigger1 = Time = 9
 attr = S, NA
 damage = 95, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -1381,9 +1390,12 @@ value = 10245
 
 [State 245, Golpe]
 type = HitDef
-trigger1 = Time = 5
+trigger1 = Time = 7
 attr = S, NA
 damage = 85, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -1436,11 +1448,14 @@ type = HitDef
 trigger1 = Time = 12
 attr = S, HA
 damage = 90, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Back
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -1533,7 +1548,7 @@ velset = 0,0
 [State 410, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 55,1
 ; som: fim
 
 [State 410, Arte despertada]
@@ -1544,10 +1559,13 @@ value = 10410
 
 [State 410, Golpe]
 type = HitDef
-trigger1 = Time = 6
+trigger1 = Time = 7
 attr = C, NA
 damage = 90, 0
-animtype = Up
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
+animtype = Medium
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
@@ -1558,7 +1576,7 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
+hitsound = S54,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
@@ -1610,7 +1628,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 8, 8
 guard.pausetime = 6, 6
-sparkxy = -10, -70
+sparkxy = -10, -11
 sparkno = S(ifelse(var(20) > 0, 9230, 9200))
 guard.sparkno = S9202
 sparkscale = 1, 1
@@ -1656,13 +1674,16 @@ type = HitDef
 trigger1 = Time = 10
 attr = C, NA
 damage = 80, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Back
 guardflag = L
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
-sparkxy = -10, -70
+sparkxy = -10, -10
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
@@ -1706,14 +1727,17 @@ value = 10600
 
 [State 600, Golpe]
 type = HitDef
-trigger1 = Time = 5
+trigger1 = Time = 7
 attr = A, NA
 damage = 60, 0
-animtype = Light
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
+animtype = Medium
 guardflag = HA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 8, 8
+pausetime = 11, 11
 guard.pausetime = 6, 6
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9230, 9200))
@@ -1751,9 +1775,12 @@ value = 10610
 
 [State 610, Golpe]
 type = HitDef
-trigger1 = Time = 6
+trigger1 = Time = 7
 attr = A, NA
 damage = 75, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = HA
 hitflag = MAF
@@ -1796,14 +1823,17 @@ value = 10650
 
 [State 650, Golpe]
 type = HitDef
-trigger1 = Time = 7
+trigger1 = Time = 10
 attr = A, HA
 damage = 80, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Back
 guardflag = HA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -1935,11 +1965,14 @@ type = HitDef
 trigger1 = Time = 12
 attr = S, HA
 damage = 0, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Back
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -2042,180 +2075,259 @@ var(2) = command = "holdback"
 
 [State 810, Segura]
 type = TargetBind
-trigger1 = Time < 76
+trigger1 = Time < 102
 trigger1 = NumTarget
 pos = 34, 0
 
 [State 810, Escapou]
 type = ChangeState
 trigger1 = Time > 1
-trigger1 = Time < 17
+trigger1 = Time < 23
 trigger1 = enemynear,stateno != 820
 value = 0
 ctrl = 1
 
 [State 810, Perdeu]
 type = ChangeState
-trigger1 = Time > 17
-trigger1 = Time < 76
+trigger1 = Time > 23
+trigger1 = Time < 102
 trigger1 = !NumTarget
 value = 0
 ctrl = 1
 
 [State 810, Pancada 1: dano]
 type = TargetLifeAdd
-trigger1 = Time = 17
+trigger1 = Time = 23
 trigger1 = NumTarget
 value = -22
 
 [State 810, Pancada 1: faísca]
 type = Explod
-trigger1 = Time = 17
+trigger1 = Time = 23
 trigger1 = NumTarget
 anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 30, -82
+pos = 34, -82
 removetime = -2
 sprpriority = 5
-ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
 
 [State 810, Pancada 1: som]
 type = PlaySnd
-trigger1 = Time = 17
-value = F5,0
+trigger1 = Time = 23
+value = S51,0
+
+[State 810, Pancada 1: tranco]
+type = TargetBind
+trigger1 = Time = [23, 28]
+trigger1 = NumTarget
+pos = 39, 0
 
 [State 810, Pancada 1: barra]
 type = PowerAdd
-trigger1 = Time = 17
+trigger1 = Time = 23
 trigger1 = NumTarget
 value = 11
 
 [State 810, Pancada 1: reage]
 type = TargetState
-trigger1 = Time = 17
+trigger1 = Time = 23
 trigger1 = NumTarget
 value = 822
 
+[State 810, Pancada 1: congela]
+type = Pause
+trigger1 = Time = 23
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 810, Pancada 1: treme]
+type = EnvShake
+trigger1 = Time = 23
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
 [State 810, Pancada 2: dano]
 type = TargetLifeAdd
-trigger1 = Time = 34
+trigger1 = Time = 47
 trigger1 = NumTarget
 value = -22
 
 [State 810, Pancada 2: faísca]
 type = Explod
-trigger1 = Time = 34
+trigger1 = Time = 47
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9231, 9201))
+anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 30, -79
+pos = 34, -79
 removetime = -2
 sprpriority = 5
-ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
 
 [State 810, Pancada 2: som]
 type = PlaySnd
-trigger1 = Time = 34
-value = F5,1
+trigger1 = Time = 47
+value = S51,1
+
+[State 810, Pancada 2: tranco]
+type = TargetBind
+trigger1 = Time = [47, 52]
+trigger1 = NumTarget
+pos = 39, 0
 
 [State 810, Pancada 2: barra]
 type = PowerAdd
-trigger1 = Time = 34
+trigger1 = Time = 47
 trigger1 = NumTarget
 value = 11
 
 [State 810, Pancada 2: reage]
 type = TargetState
-trigger1 = Time = 34
+trigger1 = Time = 47
 trigger1 = NumTarget
 value = 825
 
+[State 810, Pancada 2: congela]
+type = Pause
+trigger1 = Time = 47
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 810, Pancada 2: treme]
+type = EnvShake
+trigger1 = Time = 47
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
 [State 810, Pancada 3: dano]
 type = TargetLifeAdd
-trigger1 = Time = 55
+trigger1 = Time = 74
 trigger1 = NumTarget
 value = -22
 
 [State 810, Pancada 3: faísca]
 type = Explod
-trigger1 = Time = 55
+trigger1 = Time = 74
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9231, 9201))
+anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 30, -85
+pos = 34, -85
 removetime = -2
 sprpriority = 5
-ownpal = 1
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
 
 [State 810, Pancada 3: som]
 type = PlaySnd
-trigger1 = Time = 55
-value = F5,1
+trigger1 = Time = 74
+value = S54,1
+
+[State 810, Pancada 3: tranco]
+type = TargetBind
+trigger1 = Time = [74, 79]
+trigger1 = NumTarget
+pos = 39, 0
 
 [State 810, Pancada 3: barra]
 type = PowerAdd
-trigger1 = Time = 55
+trigger1 = Time = 74
 trigger1 = NumTarget
 value = 11
 
 [State 810, Pancada 3: reage]
 type = TargetState
-trigger1 = Time = 55
+trigger1 = Time = 74
 trigger1 = NumTarget
 value = 826
 
+[State 810, Pancada 3: congela]
+type = Pause
+trigger1 = Time = 74
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 810, Pancada 3: treme]
+type = EnvShake
+trigger1 = Time = 74
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
 [State 810, Final: dano]
 type = TargetLifeAdd
-trigger1 = Time = 76
+trigger1 = Time = 102
 trigger1 = NumTarget
 value = -54
 
 [State 810, Final: faísca]
 type = Explod
-trigger1 = Time = 76
+trigger1 = Time = 102
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9235, 9205))
+anim = (ifelse(var(20) > 0, 9231, 9201))
 postype = p1
-pos = 30, -81
+pos = 34, -81
 removetime = -2
 sprpriority = 5
-ownpal = 1
+scale = .6, .6
+ignorehitpause = 1
+pausemovetime = 99
 
 [State 810, Final: som]
 type = PlaySnd
-trigger1 = Time = 76
-value = F5,3
+trigger1 = Time = 102
+value = S54,3
 
 [State 810, Final: barra]
 type = PowerAdd
-trigger1 = Time = 76
+trigger1 = Time = 102
 trigger1 = NumTarget
 value = 27
 
+[State 810, Final: congela]
+type = Pause
+trigger1 = Time = 102
+trigger1 = NumTarget
+time = 14
+movetime = 0
+
 [State 810, Final: treme]
 type = EnvShake
-trigger1 = Time = 76
-time = 10
+trigger1 = Time = 102
+trigger1 = NumTarget
+time = 16
 freq = 150
-ampl = -4
+ampl = -5
 
 [State 810, Joga para trás]
 type = TargetState
-trigger1 = Time = 76
+trigger1 = Time = 102
 trigger1 = NumTarget
 trigger1 = var(2)
 value = 824
 
 [State 810, Joga]
 type = TargetState
-trigger1 = Time = 76
+trigger1 = Time = 102
 trigger1 = NumTarget
 trigger1 = !var(2)
 value = 823
 
 [State 810, Vira]
 type = Turn
-trigger1 = Time = 86
+trigger1 = Time = 112
 trigger1 = var(2)
 
 [State 810, Fim]
@@ -2225,15 +2337,24 @@ value = 0
 ctrl = 1
 
 [Statedef 820]
-type = A
+type = S
 movetype = H
 physics = N
 velset = 0,0
+ctrl = 0
 
 [State 820, Pose]
-type = ChangeAnim2
+type = ChangeAnim
 trigger1 = Time = 0
-value = 5030
+value = 5000
+elem = 1
+
+[State 820, Preso: pose]
+type = ChangeAnim
+trigger1 = Anim != 5000 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
 
 [State 820, Escape]
 type = SelfState
@@ -2245,6 +2366,7 @@ ctrl = 1
 
 [State 820, Solto]
 type = SelfState
+trigger1 = Time > 0
 trigger1 = !gethitvar(isbound)
 value = 5050
 
@@ -2370,7 +2492,7 @@ ownpal = 1
 [State 831, Capoeira som]
 type = PlaySnd
 trigger1 = Time = 26
-value = F5, 2
+value = 50,10 ; som:F5, 2
 
 [State 831, Whisky dano]
 type = TargetLifeAdd
@@ -2398,7 +2520,7 @@ ampl = -5
 [State 831, Whisky som]
 type = PlaySnd
 trigger1 = Time = 67
-value = F5, 2
+value = 51,2 ; som:F5, 2
 
 [State 831, Joga]
 type = TargetState
@@ -2539,7 +2661,7 @@ type = HitDef
 trigger1 = Time = 7
 attr = S, NA
 damage = 45, 0
-animtype = Medium
+animtype = Light
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
@@ -2595,6 +2717,8 @@ type = HitDef
 trigger1 = Time = 11
 attr = S, NA
 damage = 90, 0
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -2642,7 +2766,7 @@ velset = 0,0
 [State 311, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 55,0
 ; som: fim
 
 [State 311, Avanço]
@@ -2660,18 +2784,21 @@ type = HitDef
 trigger1 = Time = 9
 attr = S, NA
 damage = 60, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 11, 11
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S51,1 ; som:F5,1
+hitsound = S54,1 ; som:F5,1
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
@@ -2698,7 +2825,7 @@ velset = 0,0
 [State 312, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 55,0
 ; som: fim
 
 [State 312, Avanço]
@@ -2716,18 +2843,21 @@ type = HitDef
 trigger1 = Time = 8
 attr = S, NA
 damage = 70, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 11, 11
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S51,1 ; som:F5,1
+hitsound = S54,1 ; som:F5,1
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
@@ -2754,7 +2884,7 @@ velset = 0,0
 [State 313, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 55,1
 ; som: fim
 
 [State 313, Avanço]
@@ -2772,6 +2902,8 @@ type = HitDef
 trigger1 = Time = 10
 attr = S, NA
 damage = 110, 0
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -2783,7 +2915,7 @@ sparkno = S(ifelse(var(20) > 0, 9235, 9205))
 guard.sparkno = S9202
 sparkscale = 1.3, 1.3
 guard.sparkscale = .9, .9
-hitsound = S51,3 ; som:F5,3
+hitsound = S54,3 ; som:F5,3
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 8
@@ -2899,7 +3031,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 8, 8
 guard.pausetime = 6, 6
-sparkxy = -10, -70
+sparkxy = -10, -12
 sparkno = S(ifelse(var(20) > 0, 9230, 9200))
 guard.sparkno = S9202
 sparkscale = 1, 1
@@ -2936,9 +3068,11 @@ value = F40,3
 
 [State 323, Golpe]
 type = HitDef
-trigger1 = Time = 6
+trigger1 = Time = 10
 attr = S, NA
 damage = 85, 0
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -3004,11 +3138,14 @@ type = HitDef
 trigger1 = Time = 8
 attr = S, NA
 damage = 60, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 11, 11
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -3060,11 +3197,14 @@ type = HitDef
 trigger1 = Time = 8
 attr = S, NA
 damage = 70, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 11, 11
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -3108,14 +3248,16 @@ x = 2.0
 
 [State 333, Freia]
 type = VelSet
-trigger1 = Time = 16
+trigger1 = Time = 18
 x = 0
 
 [State 333, Golpe]
 type = HitDef
-trigger1 = Time = 8
+trigger1 = Time = 10
 attr = S, NA
 damage = 110, 0
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -3217,11 +3359,14 @@ type = HitDef
 trigger1 = Time = 8
 attr = S, NA
 damage = 80, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = HA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 11, 11
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -3269,7 +3414,7 @@ hitflag = MAF
 priority = 4, Hit
 pausetime = 8, 8
 guard.pausetime = 6, 6
-sparkxy = -10, -70
+sparkxy = -10, -12
 sparkno = S(ifelse(var(20) > 0, 9230, 9200))
 guard.sparkno = S9202
 sparkscale = 1, 1
@@ -3301,26 +3446,29 @@ velset = 0,0
 [State 343, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 55,0
 ; som: fim
 
 [State 343, Golpe]
 type = HitDef
-trigger1 = Time = 9
+trigger1 = Time = 10
 attr = S, NA
 damage = 70, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = HA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S51,1 ; som:F5,1
+hitsound = S54,1 ; som:F5,1
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
@@ -3349,7 +3497,7 @@ velset = 0,0
 [State 344, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 55,0
 ; som: fim
 
 [State 344, Avanço]
@@ -3367,7 +3515,7 @@ type = HitDef
 trigger1 = Time = 7
 attr = S, NA
 damage = 55, 0
-animtype = Medium
+animtype = Light
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
@@ -3378,7 +3526,7 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S51,1 ; som:F5,1
+hitsound = S54,1 ; som:F5,1
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
@@ -3413,11 +3561,14 @@ type = HitDef
 trigger1 = Time = 8
 attr = S, NA
 damage = 65, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 11, 11
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -3459,7 +3610,7 @@ type = HitDef
 trigger1 = Time = 6
 attr = S, NA
 damage = 55, 0
-animtype = Medium
+animtype = Light
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
@@ -3497,7 +3648,7 @@ velset = 0,0
 [State 347, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 55,1
 ; som: fim
 
 [State 347, Golpe]
@@ -3505,6 +3656,8 @@ type = HitDef
 trigger1 = Time = 11
 attr = S, NA
 damage = 70, 0
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -3516,7 +3669,7 @@ sparkno = S(ifelse(var(20) > 0, 9235, 9205))
 guard.sparkno = S9202
 sparkscale = 1.3, 1.3
 guard.sparkscale = .9, .9
-hitsound = S51,3 ; som:F5,3
+hitsound = S54,3 ; som:F5,3
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 8
@@ -3560,11 +3713,14 @@ type = HitDef
 trigger1 = Time = 8
 attr = S, NA
 damage = 65, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Medium
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 11, 11
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -3603,16 +3759,19 @@ value = F40,0
 
 [State 349, Golpe]
 type = HitDef
-trigger1 = Time = 8
+trigger1 = Time = 10
 attr = C, NA
 damage = 80, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = L
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
-sparkxy = -10, -70
+sparkxy = -10, -12
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
@@ -3656,19 +3815,22 @@ x = 1.8
 
 [State 3410, Freia]
 type = VelSet
-trigger1 = Time = 15
+trigger1 = Time = 18
 x = 0
 
 [State 3410, Golpe]
 type = HitDef
-trigger1 = Time = 7
+trigger1 = Time = 10
 attr = S, NA
 damage = 55, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -3712,19 +3874,22 @@ x = 1.8
 
 [State 3411, Freia]
 type = VelSet
-trigger1 = Time = 15
+trigger1 = Time = 18
 x = 0
 
 [State 3411, Golpe]
 type = HitDef
-trigger1 = Time = 7
+trigger1 = Time = 10
 attr = S, NA
 damage = 60, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -3776,11 +3941,14 @@ type = HitDef
 trigger1 = Time = 10
 attr = S, NA
 damage = 70, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -3824,14 +3992,16 @@ x = 2.2
 
 [State 3413, Freia]
 type = VelSet
-trigger1 = Time = 16
+trigger1 = Time = 18
 x = 0
 
 [State 3413, Golpe]
 type = HitDef
-trigger1 = Time = 8
+trigger1 = Time = 10
 attr = S, NA
 damage = 120, 0
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -3889,19 +4059,22 @@ x = 1.8
 
 [State 3420, Freia]
 type = VelSet
-trigger1 = Time = 15
+trigger1 = Time = 18
 x = 0
 
 [State 3420, Golpe]
 type = HitDef
-trigger1 = Time = 7
+trigger1 = Time = 10
 attr = S, NA
 damage = 60, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -3945,19 +4118,22 @@ x = 1.8
 
 [State 3421, Freia]
 type = VelSet
-trigger1 = Time = 15
+trigger1 = Time = 18
 x = 0
 
 [State 3421, Golpe]
 type = HitDef
-trigger1 = Time = 7
+trigger1 = Time = 10
 attr = S, NA
 damage = 70, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -4001,19 +4177,22 @@ x = 1.8
 
 [State 3422, Freia]
 type = VelSet
-trigger1 = Time = 20
+trigger1 = Time = 22
 x = 0
 
 [State 3422, Golpe]
 type = HitDef
-trigger1 = Time = 8
+trigger1 = Time = 10
 attr = S, NA
 damage = 75, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = HA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -4065,6 +4244,8 @@ type = HitDef
 trigger1 = Time = 10
 attr = S, NA
 damage = 125, 0
+palfx.time = 8 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -4120,11 +4301,14 @@ type = HitDef
 trigger1 = Time = 11
 attr = S, NA
 damage = 95, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -4202,11 +4386,14 @@ type = HitDef
 trigger1 = Time = 16 && MoveHit
 attr = S, NA
 damage = 60, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -4258,11 +4445,14 @@ type = HitDef
 trigger1 = Time = 11
 attr = S, NA
 damage = 100, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Heavy
 guardflag = HA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -4306,19 +4496,22 @@ x = -1.0
 
 [State 3433, Freia]
 type = VelSet
-trigger1 = Time = 12
+trigger1 = Time = 17
 x = 0
 
 [State 3433, Golpe]
 type = HitDef
-trigger1 = Time = 5
+trigger1 = Time = 10
 attr = S, NA
 damage = 58, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -4362,19 +4555,22 @@ x = -1.0
 
 [State 3434, Freia]
 type = VelSet
-trigger1 = Time = 15
+trigger1 = Time = 18
 x = 0
 
 [State 3434, Golpe]
 type = HitDef
-trigger1 = Time = 7
+trigger1 = Time = 10
 attr = S, NA
 damage = 70, 0
-animtype = Medium
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Hard
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 10, 10
+pausetime = 14, 14
 guard.pausetime = 8, 8
 sparkxy = -10, -70
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
@@ -4418,13 +4614,16 @@ type = HitDef
 trigger1 = Time = 11
 attr = C, NA
 damage = 100, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
 animtype = Heavy
 guardflag = L
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
-sparkxy = -10, -70
+sparkxy = -10, -11
 sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
@@ -4455,10 +4654,45 @@ anim = 3401
 juggle = 3
 velset = 0,0
 
+[State 3401, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 3401, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 45, 104), ifelse(var(20) > 0, 162, 120), ifelse(var(20) > 0, 57, 117)
+palmul = .3,.3,.3
+
+[State 3401, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 21, 48), ifelse(var(20) > 0, 76, 56), ifelse(var(20) > 0, 27, 55)
+mul = ifelse(var(20) > 0, 86, 152), ifelse(var(20) > 0, 170, 168), ifelse(var(20) > 0, 100, 170)
+ignorehitpause = 1
+
 [State 3401, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 55,1
 ; som: fim
 
 [State 3401, Avanço]
@@ -4468,14 +4702,19 @@ x = 5.0
 
 [State 3401, Freia]
 type = VelSet
-trigger1 = Time = 19
+trigger1 = Time = 20
 x = 0
 
 [State 3401, Golpe]
 type = HitDef
-trigger1 = Time = 9
+trigger1 = Time = 10
 attr = S, SA
 damage = 115, 0
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -4483,9 +4722,9 @@ priority = 4, Hit
 pausetime = 16, 16
 guard.pausetime = 10, 10
 sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9235, 9205))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.3, 1.3
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S53,3 ; som:F5,3
 guardsound = F6,0
@@ -4494,9 +4733,6 @@ ground.slidetime = 8
 ground.hittime = 32
 ground.velocity = -6,-4
 air.velocity = -5,-5
-envshake.time = 12
-envshake.freq = 150
-envshake.ampl = -3
 fall = 1
 fall.recover = 1
 fall.envshake.time = 8
@@ -4519,6 +4755,32 @@ sprpriority = 2
 anim = 1600
 juggle = 4
 velset = 0,0
+
+[State 1600, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1600, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 45, 104), ifelse(var(20) > 0, 162, 120), ifelse(var(20) > 0, 57, 117)
+palmul = .3,.3,.3
 
 [State 1600, som vento]
 type = PlaySnd
@@ -4547,12 +4809,17 @@ accel = 0, 0.2
 projheightbound = -400, 0
 attr = S, SP
 damage = 75, 5
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Med
 guardflag = MA
 hitflag = MAF
 pausetime = 4, 10
 sparkxy = 0, 0
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S51,1 ; som:F5,1
@@ -4578,6 +4845,32 @@ sprpriority = 2
 anim = 1601
 juggle = 4
 velset = 0,0
+
+[State 1601, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1601, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 45, 104), ifelse(var(20) > 0, 162, 120), ifelse(var(20) > 0, 57, 117)
+palmul = .3,.3,.3
 
 [State 1601, som vento]
 type = PlaySnd
@@ -4606,12 +4899,17 @@ accel = 0, 0.26
 projheightbound = -400, 0
 attr = S, SP
 damage = 75, 5
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Med
 guardflag = MA
 hitflag = MAF
 pausetime = 4, 10
 sparkxy = 0, 0
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S51,1 ; som:F5,1
@@ -4637,6 +4935,12 @@ sprpriority = 2
 anim = 1700
 juggle = 0
 velset = 0,0
+
+[State 1700, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,6
+; som: fim
 
 [State 1700, Invencivel]
 type = NotHitBy
@@ -4685,10 +4989,51 @@ anim = 1701
 juggle = 0
 velset = 0,0
 
+[State 1701, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1701, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 45, 104), ifelse(var(20) > 0, 162, 120), ifelse(var(20) > 0, 57, 117)
+palmul = .3,.3,.3
+
+[State 1701, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 21, 48), ifelse(var(20) > 0, 76, 56), ifelse(var(20) > 0, 27, 55)
+mul = ifelse(var(20) > 0, 86, 152), ifelse(var(20) > 0, 170, 168), ifelse(var(20) > 0, 100, 170)
+ignorehitpause = 1
+
 [State 1701, som vento]
 type = PlaySnd
 trigger1 = Time = 0
 value = F40,4
+; som: fim
+
+[State 1701, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,6
 ; som: fim
 
 [State 1701, Invencivel]
@@ -4727,6 +5072,11 @@ type = HitDef
 trigger1 = Time = 18
 attr = S, SA
 damage = 70, 0
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -4734,11 +5084,11 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S52,2 ; som:F5,2
+hitsound = S51,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
@@ -4751,6 +5101,11 @@ type = HitDef
 trigger1 = Time = 25
 attr = S, SA
 damage = 20, 0
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Light
 guardflag = MA
 hitflag = MAF
@@ -4758,11 +5113,11 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S52,2 ; som:F5,2
+hitsound = S51,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 4
@@ -4775,6 +5130,11 @@ type = HitDef
 trigger1 = Time = 32
 attr = S, SA
 damage = 20, 0
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Light
 guardflag = MA
 hitflag = MAF
@@ -4782,11 +5142,11 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S52,2 ; som:F5,2
+hitsound = S51,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 4
@@ -4810,58 +5170,104 @@ anim = 3402
 juggle = 0
 velset = 0,0
 
+[State 3402, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 3402, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 45, 104), ifelse(var(20) > 0, 162, 120), ifelse(var(20) > 0, 57, 117)
+palmul = .3,.3,.3
+
+[State 3402, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 21, 48), ifelse(var(20) > 0, 76, 56), ifelse(var(20) > 0, 27, 55)
+mul = ifelse(var(20) > 0, 86, 152), ifelse(var(20) > 0, 170, 168), ifelse(var(20) > 0, 100, 170)
+ignorehitpause = 1
+
 [State 3402, som vento]
 type = PlaySnd
 trigger1 = Time = 0
 value = F40,4
 ; som: fim
 
+[State 3402, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,3
+; som: fim
+
 [State 3402, Invencivel]
 type = NotHitBy
-trigger1 = Time < 18
+trigger1 = Time < 22
 value = SCA, NA, SA, HA, NP, SP, HP
 time = 1
 
 [State 3402, Atravessa]
 type = PlayerPush
-trigger1 = Time < 20
+trigger1 = Time < 24
 value = 0
 
 [State 3402, Atras]
 type = PosAdd
-trigger1 = Time = 14
+trigger1 = Time = 18
 trigger1 = p2dist x > 0
 trigger1 = p2dist x + 36 < frontedgebodydist
 x = p2dist x + 36
 
 [State 3402, Vira]
 type = Turn
-trigger1 = Time = 14
+trigger1 = Time = 18
 trigger1 = p2dist x > 0
 trigger1 = p2dist x + 36 < frontedgebodydist
 
 [State 3402, Canto]
 type = PosAdd
-trigger1 = Time = 14
+trigger1 = Time = 18
 trigger1 = p2dist x > 0
 trigger1 = !(p2dist x + 36 < frontedgebodydist)
 x = max(p2dist x - 28, 0)
 
 [State 3402, Golpe]
 type = HitDef
-trigger1 = Time = 6
+trigger1 = Time = 10
 attr = S, SA
 damage = 75, 0
-animtype = Medium
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
+animtype = Hard
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S53,2 ; som:F5,2
 guardsound = F6,0
@@ -4887,10 +5293,42 @@ anim = 3400
 juggle = 4
 velset = 0,0
 
+[State 3400, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 3400, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 45, 104), ifelse(var(20) > 0, 162, 120), ifelse(var(20) > 0, 57, 117)
+palmul = .3,.3,.3
+
 [State 3400, som vento]
 type = PlaySnd
 trigger1 = Time = 0
 value = F40,4
+; som: fim
+
+[State 3400, som assinatura]
+type = PlaySnd
+trigger1 = Time = 25
+value = 50,9
 ; som: fim
 
 [State 3400, Mão]
@@ -4908,17 +5346,19 @@ velocity = 1.8, 0
 accel = 0.07, 0
 attr = S, SP
 damage = 50, 5
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Med
 guardflag = MA
 hitflag = MAF
 pausetime = 8, 10
 sparkxy = 0, 0
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
-envshake.time = 6
-envshake.freq = 150
-envshake.ampl = -3
+sparkscale = 1, 1
 hitsound = S53,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
@@ -4943,10 +5383,51 @@ anim = 3403
 juggle = 4
 velset = 0,0
 
+[State 3403, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 3403, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 45, 104), ifelse(var(20) > 0, 162, 120), ifelse(var(20) > 0, 57, 117)
+palmul = .3,.3,.3
+
+[State 3403, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 21, 48), ifelse(var(20) > 0, 76, 56), ifelse(var(20) > 0, 27, 55)
+mul = ifelse(var(20) > 0, 86, 152), ifelse(var(20) > 0, 170, 168), ifelse(var(20) > 0, 100, 170)
+ignorehitpause = 1
+
 [State 3403, som vento]
 type = PlaySnd
 trigger1 = Time = 0
 value = F40,4
+; som: fim
+
+[State 3403, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,3
 ; som: fim
 
 [State 3403, Sobe]
@@ -4973,16 +5454,21 @@ type = HitDef
 trigger1 = Time >= 8 && Vel Y > 0
 attr = A, SA
 damage = 105, 0
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S53,2 ; som:F5,2
 guardsound = F6,0
@@ -5094,7 +5580,7 @@ ampl = -4
 [State 841, Som]
 type = PlaySnd
 trigger1 = Time = 20
-value = F5, 2
+value = 50,11 ; som:F5, 2
 
 [State 841, Joga]
 type = TargetState
@@ -5117,6 +5603,32 @@ sprpriority = 2
 anim = 1000
 juggle = 4
 velset = 0,0
+
+[State 1000, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1000, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 45, 104), ifelse(var(20) > 0, 162, 120), ifelse(var(20) > 0, 57, 117)
+palmul = .3,.3,.3
 
 [State 1000, som vento]
 type = PlaySnd
@@ -5150,12 +5662,17 @@ offset = 62, -86
 velocity = 3.2, 0
 attr = S, SP
 damage = 70, 4
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Med
 guardflag = MA
 hitflag = MAF
 pausetime = 4, 10
 sparkxy = 0, 0
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S51,1 ; som:F5,1
@@ -5178,11 +5695,16 @@ offset = 62, -86
 velocity = 4.4, 0
 attr = S, SP
 damage = 50, 4
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Med
 guardflag = MA
 hitflag = MAF
 pausetime = 4, 10
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S51,1 ; som:F5,1
@@ -5208,6 +5730,32 @@ sprpriority = 2
 anim = 1001
 juggle = 4
 velset = 0,0
+
+[State 1001, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1001, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 45, 104), ifelse(var(20) > 0, 162, 120), ifelse(var(20) > 0, 57, 117)
+palmul = .3,.3,.3
 
 [State 1001, som vento]
 type = PlaySnd
@@ -5241,12 +5789,17 @@ offset = 62, -86
 velocity = 5.4, 0
 attr = S, SP
 damage = 70, 4
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Med
 guardflag = MA
 hitflag = MAF
 pausetime = 4, 10
 sparkxy = 0, 0
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S51,1 ; som:F5,1
@@ -5269,11 +5822,16 @@ offset = 62, -86
 velocity = 6.6000000000000005, 0
 attr = S, SP
 damage = 50, 4
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Med
 guardflag = MA
 hitflag = MAF
 pausetime = 4, 10
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S51,1 ; som:F5,1
@@ -5300,10 +5858,51 @@ anim = 1100
 juggle = 4
 velset = 0,0
 
+[State 1100, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1100, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 45, 104), ifelse(var(20) > 0, 162, 120), ifelse(var(20) > 0, 57, 117)
+palmul = .3,.3,.3
+
+[State 1100, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 21, 48), ifelse(var(20) > 0, 76, 56), ifelse(var(20) > 0, 27, 55)
+mul = ifelse(var(20) > 0, 86, 152), ifelse(var(20) > 0, 170, 168), ifelse(var(20) > 0, 100, 170)
+ignorehitpause = 1
+
 [State 1100, som vento]
 type = PlaySnd
 trigger1 = Time = 0
 value = F40,4
+; som: fim
+
+[State 1100, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,4
 ; som: fim
 
 [State 1100, Arte despertada]
@@ -5327,18 +5926,23 @@ type = HitDef
 trigger1 = AnimElem = 2
 attr = S, SA
 damage = 110, 0
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S52,2 ; som:F5,2
+hitsound = S54,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
@@ -5364,10 +5968,51 @@ anim = 1200
 juggle = 4
 velset = 0,0
 
+[State 1200, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1200, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 45, 104), ifelse(var(20) > 0, 162, 120), ifelse(var(20) > 0, 57, 117)
+palmul = .3,.3,.3
+
+[State 1200, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 21, 48), ifelse(var(20) > 0, 76, 56), ifelse(var(20) > 0, 27, 55)
+mul = ifelse(var(20) > 0, 86, 152), ifelse(var(20) > 0, 170, 168), ifelse(var(20) > 0, 100, 170)
+ignorehitpause = 1
+
 [State 1200, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 55,1
+; som: fim
+
+[State 1200, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,0
 ; som: fim
 
 [State 1200, Arte despertada]
@@ -5378,39 +6023,44 @@ value = 11200
 
 [State 1200, Invencivel]
 type = NotHitBy
-trigger1 = Time < 5
+trigger1 = Time < 11
 value = SCA
 time = 1
 
 [State 1200, Sobe]
 type = VelSet
-trigger1 = Time = 4
+trigger1 = Time = 10
 x = 2
 y = -7.5
 
 [State 1200, Ar]
 type = StateTypeSet
-trigger1 = Time = 4
+trigger1 = Time = 10
 statetype = A
 physics = A
 
 [State 1200, Golpe]
 type = HitDef
-trigger1 = Time = 4
+trigger1 = Time = 10
 attr = S, SA
 damage = 120, 0
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Up
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S50,0 ; som:F5,2
+hitsound = S54,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
@@ -5436,10 +6086,51 @@ anim = 1300
 juggle = 4
 velset = 0,0
 
+[State 1300, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1300, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 45, 104), ifelse(var(20) > 0, 162, 120), ifelse(var(20) > 0, 57, 117)
+palmul = .3,.3,.3
+
+[State 1300, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 21, 48), ifelse(var(20) > 0, 76, 56), ifelse(var(20) > 0, 27, 55)
+mul = ifelse(var(20) > 0, 86, 152), ifelse(var(20) > 0, 170, 168), ifelse(var(20) > 0, 100, 170)
+ignorehitpause = 1
+
 [State 1300, som vento]
 type = PlaySnd
 trigger1 = Time = 0
 value = F40,4
+; som: fim
+
+[State 1300, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,5
 ; som: fim
 
 [State 1300, Arte despertada]
@@ -5479,16 +6170,21 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = C, SA
 damage = 70, 0
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Back
 guardflag = L
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
-sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkxy = -10, -12
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S51,2 ; som:F5,2
 guardsound = F6,0
@@ -5515,29 +6211,119 @@ sprpriority = 2
 anim = 2000
 velset = 0,0
 
+; Cena da transformação (issue #49): ferramentas/cena_transformacao.py
+[State 2000, Cena: congela o resto]
+type = Pause
+trigger1 = Time = 0
+time = 150
+movetime = 150
+pausebg = 0
+
+[State 2000, Cena: som de entrada]
+type = PlaySnd
+trigger1 = Time = 0
+value = F31,0
+
+[State 2000, Cena: sem HUD e sem sombra]
+type = AssertSpecial
+trigger1 = Time < 134
+flag = nobardisplay
+flag2 = globalnoshadow
+flag3 = timerfreeze
+ignorehitpause = 1
+
+[State 2000, Cena: cenário no escuro]
+type = BGPalFX
+trigger1 = Time < 150
+time = 2
+mul = ifelse(Time < 14, 256 * (14 - Time) / 14, ifelse(Time < 120, 0, min(256, 256 * (Time - 120) / 24))), ifelse(Time < 14, 256 * (14 - Time) / 14, ifelse(Time < 120, 0, min(256, 256 * (Time - 120) / 24))), ifelse(Time < 14, 256 * (14 - Time) / 14, ifelse(Time < 120, 0, min(256, 256 * (Time - 120) / 24)))
+ignorehitpause = 1
+
+[State 2000, Cena: oponente no escuro]
+type = PalFX
+trigger1 = Time < 150 && NumEnemy > 0
+redirectid = enemynear,id
+time = 2
+mul = ifelse(Time < 14, 256 * (14 - Time) / 14, ifelse(Time < 120, 0, min(256, 256 * (Time - 120) / 24))), ifelse(Time < 14, 256 * (14 - Time) / 14, ifelse(Time < 120, 0, min(256, 256 * (Time - 120) / 24))), ifelse(Time < 14, 256 * (14 - Time) / 14, ifelse(Time < 120, 0, min(256, 256 * (Time - 120) / 24)))
+ignorehitpause = 1
+
+[State 2000, Cena: oponente some]
+type = AssertSpecial
+trigger1 = Time >= 7 && Time < 132 && NumEnemy > 0
+redirectid = enemynear,id
+flag = invisible
+ignorehitpause = 1
+
+[State 2000, Cena: brilho das sombras]
+type = PalFX
+trigger1 = Time >= 55 && Time < 114
+time = 2
+add = 10 * (Time - 55) / 59, 90 * (Time - 55) / 59, 20 * (Time - 55) / 59
+ignorehitpause = 1
+
+[State 2000, Cena: câmera fecha]
+type = Zoom
+trigger1 = Time < 106
+time = 2
+pos = Pos X + 0 * Facing, Pos Y - 15
+scale = 1.24 * (1 + 0.18 * (Time / 114.0) * (Time / 114.0) * (3 - 2 * Time / 114.0)) ** 0.5
+lag = 0
+endlag = 0.9
+camerabound = 0
+stagebound = 0
+ignorehitpause = 1
+
+[State 2000, Cena: câmera empurra]
+type = Zoom
+trigger1 = Time >= 106 && Time < 126
+time = 2
+pos = Pos X + 0 * Facing, Pos Y - 15
+scale = 1.414
+lag = 0.8
+endlag = 0.9
+camerabound = 0
+stagebound = 0
+ignorehitpause = 1
+
+[State 2000, Cena: primeiro tremor]
+type = EnvShake
+trigger1 = Time = 55
+time = 10
+ampl = 2
+freq = 90
+
+[State 2000, Cena: auge: clarão]
+type = EnvColor
+trigger1 = Time = 114
+value = 255, 255, 255
+time = 3
+ignorehitpause = 1
+
+[State 2000, Cena: auge: clarão some]
+type = AllPalFX
+trigger1 = Time >= 117 && Time < 135
+time = 2
+add = 255 * (135 - Time) / 18, 255 * (135 - Time) / 18, 255 * (135 - Time) / 18
+ignorehitpause = 1
+
+[State 2000, Cena: auge: tremor]
+type = EnvShake
+trigger1 = Time = 114
+time = 28
+ampl = 7
+freq = 60
+
+[State 2000, som assinatura]
+type = PlaySnd
+trigger1 = Time = 30
+value = 50,4
+; som: fim
+
 [State 2000, som assinatura]
 type = PlaySnd
 trigger1 = Time = 55
 value = F31,1
 ; som: fim
-
-[State 2000, Pausa]
-type = SuperPause
-trigger1 = Time = 0
-time = 30
-anim = 100
-pos = 10, -60
-sound = F31,0 ; som:F20,0
-movetime = 0
-darken = 1
-
-[State 2000, Clarão da super]
-type = BGPalFX
-trigger1 = Time = 0
-time = 4
-add = 255,255,255
-mul = 256,256,256
-ignorehitpause = 1
 
 [State 2000, Rastro]
 type = AfterImage
@@ -5571,16 +6357,34 @@ trigger1 = p2bodydist x < 90
 x = -1.8
 redirectid = enemynear,id
 
+[State 2000, Pilar da transformação (efeitos.py)]
+type = Explod
+trigger1 = Anim = 2000 && AnimTime = 0
+anim = 9272
+id = 9272
+postype = p1
+pos = 0, 0
+sprpriority = -2
+ownpal = 1
+removetime = -2
+bindtime = 1
+ignorehitpause = 1
+
 [State 2000, Liga]
 type = VarSet
-trigger1 = AnimTime = 0
+trigger1 = Anim = 2000 && AnimTime = 0
 var(20) = 600
 
 [State 2000, Fim]
 type = ChangeState
-trigger1 = AnimTime = 0
+trigger1 = Time >= 150
 value = 0
 ctrl = 1
+
+[State 2000, Cena: forma nova parada]
+type = ChangeAnim
+trigger1 = Anim = 2000 && AnimTime = 0
+value = 0
 
 [Statedef 3000]
 type = S
@@ -5592,6 +6396,40 @@ anim = 3000
 juggle = 0
 velset = 0,0
 
+[State 3000, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9274, 9244)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+scale = 1.5, 1.5
+supermovetime = 90
+ignorehitpause = 1
+
+[State 3000, Fundo na cor da forma (efeitos.py)]
+type = BGPalFX
+trigger1 = Time >= 1
+time = 2
+mul = ifelse(var(20) > 0, 86, 152), ifelse(var(20) > 0, 170, 168), ifelse(var(20) > 0, 100, 170)
+
+[State 3000, Solta: tremida (efeitos.py)]
+type = EnvShake
+trigger1 = Time = 1
+time = 16
+freq = 170
+ampl = -3
+
+[State 3000, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,6
+; som: fim
+
 [State 3000, Arte despertada]
 type = ChangeAnim
 trigger1 = Time = 0
@@ -5602,7 +6440,7 @@ value = 13000
 type = SuperPause
 trigger1 = Time = 0
 time = 30
-anim = 100
+anim = -1
 pos = 10, -60
 sound = F20,0
 movetime = 0
@@ -5623,8 +6461,8 @@ time = 40
 length = 6
 trans = add
 palcolor = 0
+paladd = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 palbright = 40,40,40
-paladd = 0,0,0
 palmul = .6,.6,.6
 timegap = 2
 framegap = 2
@@ -5655,14 +6493,19 @@ projremovetime = 80
 projheightbound = -400, 1
 attr = S, HP
 damage = 42, 6
+envshake.time = 28 ; (efeitos.py)
+envshake.freq = 90 ; (efeitos.py)
+envshake.ampl = -10 ; (efeitos.py)
+palfx.time = 18 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Med
 guardflag = H
 hitflag = MAF
 pausetime = 4, 10
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
 sparkscale = 1, 1
-hitsound = S51,2 ; som:F5,2
+hitsound = S54,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 10
@@ -5685,14 +6528,19 @@ projremovetime = 80
 projheightbound = -400, 1
 attr = S, HP
 damage = 42, 6
+envshake.time = 28 ; (efeitos.py)
+envshake.freq = 90 ; (efeitos.py)
+envshake.ampl = -10 ; (efeitos.py)
+palfx.time = 18 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Med
 guardflag = H
 hitflag = MAF
 pausetime = 4, 10
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
 sparkscale = 1, 1
-hitsound = S51,2 ; som:F5,2
+hitsound = S54,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 10
@@ -5715,14 +6563,19 @@ projremovetime = 80
 projheightbound = -400, 1
 attr = S, HP
 damage = 42, 6
+envshake.time = 28 ; (efeitos.py)
+envshake.freq = 90 ; (efeitos.py)
+envshake.ampl = -10 ; (efeitos.py)
+palfx.time = 18 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Med
 guardflag = H
 hitflag = MAF
 pausetime = 4, 10
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
 sparkscale = 1, 1
-hitsound = S51,2 ; som:F5,2
+hitsound = S54,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 10
@@ -5745,14 +6598,19 @@ projremovetime = 80
 projheightbound = -400, 1
 attr = S, HP
 damage = 42, 6
+envshake.time = 28 ; (efeitos.py)
+envshake.freq = 90 ; (efeitos.py)
+envshake.ampl = -10 ; (efeitos.py)
+palfx.time = 18 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Med
 guardflag = H
 hitflag = MAF
 pausetime = 4, 10
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
 sparkscale = 1, 1
-hitsound = S51,2 ; som:F5,2
+hitsound = S54,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 10
@@ -5775,14 +6633,19 @@ projremovetime = 80
 projheightbound = -400, 1
 attr = S, HP
 damage = 42, 6
+envshake.time = 28 ; (efeitos.py)
+envshake.freq = 90 ; (efeitos.py)
+envshake.ampl = -10 ; (efeitos.py)
+palfx.time = 18 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Med
 guardflag = H
 hitflag = MAF
 pausetime = 4, 10
-sparkno = S(ifelse(var(20) > 0, 9230, 9200))
+sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
 sparkscale = 1, 1
-hitsound = S51,2 ; som:F5,2
+hitsound = S54,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 10
@@ -5805,14 +6668,19 @@ projremovetime = 80
 projheightbound = -400, 1
 attr = S, HP
 damage = 60, 6
+envshake.time = 28 ; (efeitos.py)
+envshake.freq = 90 ; (efeitos.py)
+envshake.ampl = -10 ; (efeitos.py)
+palfx.time = 18 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Heavy
 guardflag = H
 hitflag = MAF
 pausetime = 12, 14
-sparkno = S(ifelse(var(20) > 0, 9235, 9205))
+sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
-sparkscale = 1.3, 1.3
-hitsound = S51,3 ; som:F5,3
+sparkscale = 1, 1
+hitsound = S54,3 ; som:F5,3
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 10
@@ -5821,9 +6689,6 @@ ground.velocity = -2
 air.velocity = -2,-3
 fall = 1
 fall.recover = 0
-envshake.time = 8
-envshake.freq = 150
-envshake.ampl = -4
 fall.envshake.time = 8
 fall.envshake.freq = 150
 fall.envshake.ampl = -3
@@ -5844,6 +6709,40 @@ anim = 3100
 juggle = 0
 velset = 0,0
 
+[State 3100, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9274, 9244)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+scale = 1.5, 1.5
+supermovetime = 90
+ignorehitpause = 1
+
+[State 3100, Fundo na cor da forma (efeitos.py)]
+type = BGPalFX
+trigger1 = Time >= 1
+time = 2
+mul = ifelse(var(20) > 0, 86, 152), ifelse(var(20) > 0, 170, 168), ifelse(var(20) > 0, 100, 170)
+
+[State 3100, Solta: tremida (efeitos.py)]
+type = EnvShake
+trigger1 = Time = 1
+time = 16
+freq = 170
+ampl = -3
+
+[State 3100, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,4
+; som: fim
+
 [State 3100, Arte despertada]
 type = ChangeAnim
 trigger1 = Time = 0
@@ -5853,7 +6752,7 @@ value = 13100
 type = SuperPause
 trigger1 = Time = 0
 time = 30
-anim = 100
+anim = -1
 pos = 10, -60
 sound = F20,0
 movetime = 0
@@ -5874,8 +6773,8 @@ time = 40
 length = 6
 trans = add
 palcolor = 0
+paladd = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 palbright = 40,40,40
-paladd = 0,0,0
 palmul = .6,.6,.6
 timegap = 2
 framegap = 2
@@ -5883,29 +6782,29 @@ framegap = 2
 [State 3100, Gasta]
 type = PowerAdd
 trigger1 = Time = 0
-value = ifelse(var(20) > 0, -1000, -2000)
-
-[State 3100, Fim Despertar]
-type = VarSet
-trigger1 = Time = 0
-var(20) = 0
+value = -2000
 
 [State 3100, Invencivel]
 type = NotHitBy
-trigger1 = Time < 4
+trigger1 = Time < 7
 value = SCA
 time = 1
 
 [State 3100, Avança]
 type = VelSet
-trigger1 = Time = 4
+trigger1 = Time = 7
 x = 2
 
 [State 3100, Golpe]
 type = HitDef
-trigger1 = (Time >= 4) && (Time <= 32) && (Time % 4 = 0)
+trigger1 = (Time >= 7) && (Time <= 35) && (Time % 4 = 0)
 attr = S, HA
 damage = 47, 0
+envshake.time = 8 ; (efeitos.py)
+envshake.freq = 160 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 6 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -5913,11 +6812,11 @@ priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
 sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,1 ; som:F5,1
+hitsound = S53,1 ; som:F5,1
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 4
@@ -5927,9 +6826,14 @@ air.velocity = -1,-3
 
 [State 3100, Golpe]
 type = HitDef
-trigger1 = Time = 36
+trigger1 = Time = 39
 attr = S, HA
 damage = 60, 0
+envshake.time = 28 ; (efeitos.py)
+envshake.freq = 90 ; (efeitos.py)
+envshake.ampl = -10 ; (efeitos.py)
+palfx.time = 18 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Back
 guardflag = MA
 hitflag = MAF
@@ -5937,20 +6841,17 @@ priority = 4, Hit
 pausetime = 20, 20
 guard.pausetime = 12, 12
 sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9235, 9205))
+sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
-sparkscale = 1.5, 1.5
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,4 ; som:F5,4
+hitsound = S53,4 ; som:F5,4
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 18
 ground.velocity = -7,-6
 air.velocity = -7,-6
-envshake.time = 20
-envshake.freq = 150
-envshake.ampl = -3
 fall = 1
 fall.recover = 0
 fall.envshake.time = 12
@@ -5959,14 +6860,14 @@ fall.envshake.ampl = -2
 
 [State 3100, Clarão]
 type = BGPalFX
-trigger1 = MoveHit = 1 && Time >= 36
+trigger1 = MoveHit = 1 && Time >= 39
 time = 4
 add = 128, 128, 128
 ignorehitpause = 1
 
 [State 3100, Trava]
 type = VelSet
-trigger1 = Time = 36
+trigger1 = Time = 39
 x = 0
 
 [State 3100, Fim]
@@ -5985,10 +6886,51 @@ anim = 1101
 juggle = 4
 velset = 0,0
 
+[State 1101, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1101, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 45, 104), ifelse(var(20) > 0, 162, 120), ifelse(var(20) > 0, 57, 117)
+palmul = .3,.3,.3
+
+[State 1101, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 21, 48), ifelse(var(20) > 0, 76, 56), ifelse(var(20) > 0, 27, 55)
+mul = ifelse(var(20) > 0, 86, 152), ifelse(var(20) > 0, 170, 168), ifelse(var(20) > 0, 100, 170)
+ignorehitpause = 1
+
 [State 1101, som vento]
 type = PlaySnd
 trigger1 = Time = 0
 value = F40,4
+; som: fim
+
+[State 1101, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,4
 ; som: fim
 
 [State 1101, Arte despertada]
@@ -6012,18 +6954,23 @@ type = HitDef
 trigger1 = AnimElem = 2
 attr = S, SA
 damage = 132, 0
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S52,2 ; som:F5,2
+hitsound = S54,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
@@ -6049,10 +6996,51 @@ anim = 1201
 juggle = 4
 velset = 0,0
 
+[State 1201, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1201, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 45, 104), ifelse(var(20) > 0, 162, 120), ifelse(var(20) > 0, 57, 117)
+palmul = .3,.3,.3
+
+[State 1201, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 21, 48), ifelse(var(20) > 0, 76, 56), ifelse(var(20) > 0, 27, 55)
+mul = ifelse(var(20) > 0, 86, 152), ifelse(var(20) > 0, 170, 168), ifelse(var(20) > 0, 100, 170)
+ignorehitpause = 1
+
 [State 1201, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 55,1
+; som: fim
+
+[State 1201, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,0
 ; som: fim
 
 [State 1201, Arte despertada]
@@ -6063,39 +7051,44 @@ value = 11201
 
 [State 1201, Invencivel]
 type = NotHitBy
-trigger1 = Time < 5
+trigger1 = Time < 11
 value = SCA
 time = 1
 
 [State 1201, Sobe]
 type = VelSet
-trigger1 = Time = 4
+trigger1 = Time = 10
 x = 2
 y = -7.5
 
 [State 1201, Ar]
 type = StateTypeSet
-trigger1 = Time = 4
+trigger1 = Time = 10
 statetype = A
 physics = A
 
 [State 1201, Golpe]
 type = HitDef
-trigger1 = Time = 4
+trigger1 = Time = 10
 attr = S, SA
 damage = 144, 0
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Up
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
 sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S50,0 ; som:F5,2
+hitsound = S54,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
@@ -6121,10 +7114,51 @@ anim = 1301
 juggle = 4
 velset = 0,0
 
+[State 1301, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1301, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 45, 104), ifelse(var(20) > 0, 162, 120), ifelse(var(20) > 0, 57, 117)
+palmul = .3,.3,.3
+
+[State 1301, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 21, 48), ifelse(var(20) > 0, 76, 56), ifelse(var(20) > 0, 27, 55)
+mul = ifelse(var(20) > 0, 86, 152), ifelse(var(20) > 0, 170, 168), ifelse(var(20) > 0, 100, 170)
+ignorehitpause = 1
+
 [State 1301, som vento]
 type = PlaySnd
 trigger1 = Time = 0
 value = F40,4
+; som: fim
+
+[State 1301, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,5
 ; som: fim
 
 [State 1301, Arte despertada]
@@ -6164,16 +7198,21 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = C, SA
 damage = 92, 0
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Back
 guardflag = L
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
-sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkxy = -10, -12
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S51,2 ; som:F5,2
 guardsound = F6,0
@@ -6228,6 +7267,9 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = S, NA
 damage = 76, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -6280,6 +7322,9 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = S, NA
 damage = 90, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Heavy
 guardflag = HA
 hitflag = MAF
@@ -6342,7 +7387,7 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = S, NA
 damage = 47, 0
-animtype = Heavy
+animtype = Light
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
@@ -6404,7 +7449,7 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = S, NA
 damage = 57, 0
-animtype = Heavy
+animtype = Light
 guardflag = MA
 hitflag = MAF
 priority = 4, Hit
@@ -6441,7 +7486,7 @@ juggle = 5
 [State 601, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 55,1
 ; som: fim
 
 [State 601, Arte despertada]
@@ -6455,6 +7500,9 @@ type = HitDef
 trigger1 = AnimElem = 2
 attr = A, NA
 damage = 79, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Heavy
 guardflag = HA
 hitflag = MAF
@@ -6466,7 +7514,7 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
+hitsound = S54,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
@@ -6500,6 +7548,9 @@ type = HitDef
 trigger1 = AnimElem = 2
 attr = A, NA
 damage = 88, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
 animtype = Heavy
 guardflag = HA
 hitflag = MAF
@@ -6529,10 +7580,45 @@ anim = 1400
 juggle = 5
 velset = 0,0
 
+[State 1400, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1400, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 45, 104), ifelse(var(20) > 0, 162, 120), ifelse(var(20) > 0, 57, 117)
+palmul = .3,.3,.3
+
+[State 1400, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 21, 48), ifelse(var(20) > 0, 76, 56), ifelse(var(20) > 0, 27, 55)
+mul = ifelse(var(20) > 0, 86, 152), ifelse(var(20) > 0, 170, 168), ifelse(var(20) > 0, 100, 170)
+ignorehitpause = 1
+
 [State 1400, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 55,1
 ; som: fim
 
 [State 1400, Arte despertada]
@@ -6556,6 +7642,11 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = S, SA
 damage = 73, 0
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -6563,11 +7654,11 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S50,0 ; som:F5,2
+hitsound = S54,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
@@ -6591,10 +7682,45 @@ anim = 1401
 juggle = 5
 velset = 0,0
 
+[State 1401, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1401, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 45, 104), ifelse(var(20) > 0, 162, 120), ifelse(var(20) > 0, 57, 117)
+palmul = .3,.3,.3
+
+[State 1401, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 21, 48), ifelse(var(20) > 0, 76, 56), ifelse(var(20) > 0, 27, 55)
+mul = ifelse(var(20) > 0, 86, 152), ifelse(var(20) > 0, 170, 168), ifelse(var(20) > 0, 100, 170)
+ignorehitpause = 1
+
 [State 1401, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 55,1
 ; som: fim
 
 [State 1401, Arte despertada]
@@ -6618,6 +7744,11 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = S, SA
 damage = 95, 0
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -6625,11 +7756,11 @@ priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
 sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S50,0 ; som:F5,2
+hitsound = S54,2 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
@@ -6652,6 +7783,41 @@ sprpriority = 2
 anim = 1500
 juggle = 5
 velset = 0,0
+
+[State 1500, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1500, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 45, 104), ifelse(var(20) > 0, 162, 120), ifelse(var(20) > 0, 57, 117)
+palmul = .3,.3,.3
+
+[State 1500, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 21, 48), ifelse(var(20) > 0, 76, 56), ifelse(var(20) > 0, 27, 55)
+mul = ifelse(var(20) > 0, 86, 152), ifelse(var(20) > 0, 170, 168), ifelse(var(20) > 0, 100, 170)
+ignorehitpause = 1
 
 [State 1500, som vento]
 type = PlaySnd
@@ -6686,16 +7852,21 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = S, SA
 damage = 88, 0
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Heavy
 guardflag = L
 hitflag = MAF
 priority = 4, Hit
 pausetime = 12, 12
 guard.pausetime = 9, 9
-sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkxy = -10, -20
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S52,2 ; som:F5,2
 guardsound = F6,0
@@ -6732,6 +7903,41 @@ anim = 1501
 juggle = 5
 velset = 0,0
 
+[State 1501, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9273, 9243)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+ignorehitpause = 1
+
+[State 1501, Rastro do corpo (efeitos.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 18
+length = 6
+timegap = 2
+framegap = 2
+trans = add
+palcolor = 0
+palbright = 0,0,0
+paladd = ifelse(var(20) > 0, 45, 104), ifelse(var(20) > 0, 162, 120), ifelse(var(20) > 0, 57, 117)
+palmul = .3,.3,.3
+
+[State 1501, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 21, 48), ifelse(var(20) > 0, 76, 56), ifelse(var(20) > 0, 27, 55)
+mul = ifelse(var(20) > 0, 86, 152), ifelse(var(20) > 0, 170, 168), ifelse(var(20) > 0, 100, 170)
+ignorehitpause = 1
+
 [State 1501, som vento]
 type = PlaySnd
 trigger1 = Time = 0
@@ -6765,16 +7971,21 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = S, SA
 damage = 110, 0
+envshake.time = 16 ; (efeitos.py)
+envshake.freq = 120 ; (efeitos.py)
+envshake.ampl = -6 ; (efeitos.py)
+palfx.time = 12 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Heavy
 guardflag = L
 hitflag = MAF
 priority = 4, Hit
-pausetime = 12, 12
+pausetime = 14, 14
 guard.pausetime = 9, 9
-sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkxy = -10, -20
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
-sparkscale = 1.15, 1.15
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S52,2 ; som:F5,2
 guardsound = F6,0
@@ -6823,6 +8034,49 @@ anim = 3200
 juggle = 5
 velset = 0,0
 
+[State 3200, Carga (efeitos.py)]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9274, 9244)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+scale = 1.5, 1.5
+supermovetime = 90
+ignorehitpause = 1
+
+[State 3200, Fundo na cor da forma (efeitos.py)]
+type = BGPalFX
+trigger1 = Time >= 1
+time = 2
+mul = ifelse(var(20) > 0, 86, 152), ifelse(var(20) > 0, 170, 168), ifelse(var(20) > 0, 100, 170)
+
+[State 3200, Solta: tremida (efeitos.py)]
+type = EnvShake
+trigger1 = Time = 1
+time = 16
+freq = 170
+ampl = -3
+
+[State 3200, Clarão do acerto (efeitos.py)]
+type = BGPalFX
+trigger1 = MoveHit = 1
+persistent = 0
+time = 5
+add = ifelse(var(20) > 0, 21, 48), ifelse(var(20) > 0, 76, 56), ifelse(var(20) > 0, 27, 55)
+mul = ifelse(var(20) > 0, 86, 152), ifelse(var(20) > 0, 170, 168), ifelse(var(20) > 0, 100, 170)
+ignorehitpause = 1
+
+[State 3200, som assinatura]
+type = PlaySnd
+trigger1 = Time = 0
+value = 50,7
+; som: fim
+
 [State 3200, Arte despertada]
 type = ChangeAnim
 trigger1 = Time = 0
@@ -6833,7 +8087,7 @@ value = 13200
 type = SuperPause
 trigger1 = Time = 0
 time = 30
-anim = 100
+anim = -1
 pos = 10, -60
 sound = F20,0
 movetime = 0
@@ -6854,8 +8108,8 @@ time = 40
 length = 6
 trans = add
 palcolor = 0
+paladd = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 palbright = 40,40,40
-paladd = 0,0,0
 palmul = .6,.6,.6
 timegap = 2
 framegap = 2
@@ -6880,6 +8134,11 @@ type = HitDef
 trigger1 = AnimElem = 4
 attr = S, HA
 damage = 115, 0
+envshake.time = 8 ; (efeitos.py)
+envshake.freq = 160 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 6 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -6887,11 +8146,11 @@ priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
 sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,1 ; som:F5,1
+hitsound = S54,1 ; som:F5,1
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
@@ -6904,6 +8163,11 @@ type = HitDef
 trigger1 = AnimElem = 5 && MoveHit
 attr = S, HA
 damage = 115, 0
+envshake.time = 8 ; (efeitos.py)
+envshake.freq = 160 ; (efeitos.py)
+envshake.ampl = -3 ; (efeitos.py)
+palfx.time = 6 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -6911,11 +8175,11 @@ priority = 4, Hit
 pausetime = 3, 6
 guard.pausetime = 2, 6
 sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9231, 9201))
+sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,1 ; som:F5,1
+hitsound = S54,1 ; som:F5,1
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
@@ -6928,6 +8192,11 @@ type = HitDef
 trigger1 = AnimElem = 6 && MoveHit
 attr = S, HA
 damage = 115, 0
+envshake.time = 28 ; (efeitos.py)
+envshake.freq = 90 ; (efeitos.py)
+envshake.ampl = -10 ; (efeitos.py)
+palfx.time = 18 ; (efeitos.py)
+palfx.add = ifelse(var(20) > 0, 30, 69), ifelse(var(20) > 0, 108, 80), ifelse(var(20) > 0, 38, 78) ; (efeitos.py)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
@@ -6935,20 +8204,17 @@ priority = 4, Hit
 pausetime = 20, 20
 guard.pausetime = 12, 12
 sparkxy = -10, -70
-sparkno = S(ifelse(var(20) > 0, 9235, 9205))
+sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
-sparkscale = 1.5, 1.5
+sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,4 ; som:F5,4
+hitsound = S50,8 ; som:F5,4
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 28
 ground.velocity = -2,-3
 air.velocity = -2,-3
-envshake.time = 20
-envshake.freq = 150
-envshake.ampl = -3
 fall = 1
 fall.recover = 1
 fall.envshake.time = 12
@@ -7008,6 +8274,20 @@ sprpriority = 2
 anim = 761
 velset = 0,0
 
+[State 761, som comum]
+type = PlaySnd
+trigger1 = Time = 0
+trigger1 = var(20) <= 0
+value = F30,0
+; som: fim
+
+[State 761, som comum]
+type = PlaySnd
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = F30,1
+; som: fim
+
 [State 761, Arte despertada]
 type = ChangeAnim
 trigger1 = Time = 0
@@ -7059,6 +8339,20 @@ ctrl = 1
 sprpriority = 2
 anim = 765
 velset = 0,0
+
+[State 765, som comum]
+type = PlaySnd
+trigger1 = Time = 0
+trigger1 = var(20) <= 0
+value = F30,0
+; som: fim
+
+[State 765, som comum]
+type = PlaySnd
+trigger1 = Time = 0
+trigger1 = var(20) > 0
+value = F30,1
+; som: fim
 
 [State 765, Arte despertada]
 type = ChangeAnim
@@ -7145,6 +8439,44 @@ value = 5100
 
 [Statedef -2]
 
+; --- destruição do cenário (ferramentas/destruicao.py) ---
+[State -2, Destruição do cenário 909]
+type = ModifyBGCtrl
+trigger1 = !IsHelper
+id = 909
+value = (((var(20) > 0) + (NumEnemy > 0 && enemy, var(20) > 0)) = 0)
+ignorehitpause = 1
+
+[State -2, Destruição do cenário 910]
+type = ModifyBGCtrl
+trigger1 = !IsHelper
+id = 910
+value = (((var(20) > 0) + (NumEnemy > 0 && enemy, var(20) > 0)) < 2)
+ignorehitpause = 1
+
+[State -2, Destruição do cenário 911]
+type = ModifyBGCtrl
+trigger1 = !IsHelper
+id = 911
+value = (((var(20) > 0) + (NumEnemy > 0 && enemy, var(20) > 0)) >= 1)
+ignorehitpause = 1
+
+[State -2, Destruição do cenário 912]
+type = ModifyBGCtrl
+trigger1 = !IsHelper
+id = 912
+value = (((var(20) > 0) + (NumEnemy > 0 && enemy, var(20) > 0)) = 2)
+ignorehitpause = 1
+
+[State -2, Destruição do cenário 913]
+type = ModifyBGCtrl
+trigger1 = !IsHelper
+id = 913
+value = (((var(20) > 0) + (NumEnemy > 0 && enemy, var(20) > 0)) = 1)
+ignorehitpause = 1
+
+; --- fim da destruição do cenário ---
+
 [State -2, Zera fracos]
 type = VarSet
 trigger1 = ctrl
@@ -7187,16 +8519,40 @@ trigger1 = Time < 6
 value = SCA
 time = 1
 
-[State -2, Conta Despertar]
-type = VarAdd
-trigger1 = var(20) > 0
-var(20) = -1
-
 ; Musica do Despertar (Breno, issue #33): a do cenario baixa ate sumir, entra a do lutador em loop; volta ao fim.
 [State -2, Zera musica na intro]
 type = VarSet
 trigger1 = roundstate < 2
 var(51) = 0
+
+; Forma até o fim da luta (forma_permanente.py)
+[State -2, Forma fica: marca que despertou]
+type = VarSet
+trigger1 = var(20) > 0
+var(58) = 1
+
+[State -2, Forma fica: volta no round seguinte]
+type = VarSet
+trigger1 = var(58) = 1 && var(20) <= 0
+var(20) = 600
+
+[State -2, Forma fica: marca a musica]
+type = VarSet
+trigger1 = var(51) = 1
+var(59) = 1
+
+[State -2, Forma fica: musica volta no round seguinte]
+type = PlayBGM
+trigger1 = var(59) = 1 && var(51) = 0 && roundstate >= 1
+bgm = "despertar.ogg"
+volume = 100
+loop = 1
+loopstart = 2391921
+
+[State -2, Forma fica: musica marcada no round seguinte]
+type = VarSet
+trigger1 = var(59) = 1 && var(51) = 0 && roundstate >= 1
+var(51) = 1
 
 [State -2, Musica do cenario comeca a baixar]
 type = VarSet
@@ -7278,6 +8634,18 @@ type = VarSet
 trigger1 = var(20) <= 0 && stateno != 3100
 var(37) = 0
 
+[State -2, Aura]
+type = PalFX
+trigger1 = var(20) > 0 && alive
+time = 2
+add = 14, 14, 18
+sinadd = 10, 10, 14, 40
+
+[State -2, Rastro]
+type = AfterImageTime
+trigger1 = var(20) > 0
+time = 2
+
 [State -2, Ressaca anda devagar]
 type = PosAdd
 trigger1 = stateno = 20
@@ -7300,287 +8668,6 @@ type = VarAdd
 trigger1 = !alive
 var(32) = 1
 
-[Statedef -4]
-
-; ---- Aura animada 'raiclaven' (ferramentas/aura.py): 2 camadas, 0 partículas, explods 9600 a 9601, no máximo 2 vivos
-[State -4, Aura raiclaven: zera au_raiclaven_f antes do round]
-type = MapSet
-trigger1 = RoundState = 0
-map = "au_raiclaven_f"
-value = 0
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: zera au_raiclaven_e antes do round]
-type = MapSet
-trigger1 = RoundState = 0
-map = "au_raiclaven_e"
-value = 0
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: zera au_raiclaven_s antes do round]
-type = MapSet
-trigger1 = RoundState = 0
-map = "au_raiclaven_s"
-value = 0
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: zera au_raiclaven_k antes do round]
-type = MapSet
-trigger1 = RoundState = 0
-map = "au_raiclaven_k"
-value = 0
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: zera au_raiclaven_t antes do round]
-type = MapSet
-trigger1 = RoundState = 0
-map = "au_raiclaven_t"
-value = 0
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: zera au_raiclaven_c antes do round]
-type = MapSet
-trigger1 = RoundState = 0
-map = "au_raiclaven_c"
-value = 0
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: zera au_raiclaven_r antes do round]
-type = MapSet
-trigger1 = RoundState = 0
-map = "au_raiclaven_r"
-value = 0
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: zera au_raiclaven_v antes do round]
-type = MapSet
-trigger1 = RoundState = 0
-map = "au_raiclaven_v"
-value = 0
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: limpa 9600 antes do round]
-type = RemoveExplod
-trigger1 = RoundState = 0 && NumExplod(9600)
-id = 9600
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: limpa 9601 antes do round]
-type = RemoveExplod
-trigger1 = RoundState = 0 && NumExplod(9601)
-id = 9601
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: tempo volta a zero ao ligar]
-type = MapSet
-trigger1 = map(au_raiclaven_f) <= 0
-map = "au_raiclaven_t"
-value = 0
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: fade]
-type = MapSet
-trigger1 = RoundState > 0
-map = "au_raiclaven_f"
-value = min(ifelse(((ifelse(StateNo = 2000, ifelse(Time >= 56, 999, 0), ifelse(StateNo = 3100 && var(37) = 1, max(var(20), -AnimTime), var(20)))) > 0) && Alive && RoundState > 0, min(1, map(au_raiclaven_f) + 0.0227), max(0, map(au_raiclaven_f) - 0.0294)), max(0, ifelse(StateNo = 2000, ifelse(Time >= 56, 999, 0), ifelse(StateNo = 3100 && var(37) = 1, max(var(20), -AnimTime), var(20)))) / 34)
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: fade suave]
-type = MapSet
-trigger1 = 1
-map = "au_raiclaven_e"
-value = map(au_raiclaven_f) * map(au_raiclaven_f) * (3 - 2 * map(au_raiclaven_f))
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: virada passa]
-type = MapSet
-trigger1 = map(au_raiclaven_v) > 0
-map = "au_raiclaven_v"
-value = max(0, map(au_raiclaven_v) - 0.0833)
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: virou]
-type = MapSet
-trigger1 = map(au_raiclaven_f) > 0 && map(au_raiclaven_l) != Facing && map(au_raiclaven_l) != 0 && map(au_raiclaven_v) <= 0
-map = "au_raiclaven_v"
-value = 1
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: guarda o lado]
-type = MapSet
-trigger1 = map(au_raiclaven_v) <= 0 || map(au_raiclaven_v) = 1 || map(au_raiclaven_f) <= 0
-map = "au_raiclaven_l"
-value = Facing
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: folga do surto anda]
-type = MapSet
-trigger1 = map(au_raiclaven_r) > 0
-map = "au_raiclaven_r"
-value = map(au_raiclaven_r) - 1
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: surto dispara]
-type = MapSet
-trigger1 = (((StateNo = 3000 || StateNo = 3100 || StateNo = 3200) && Time = 1) || (StateNo = 2000 && Time = 56)) && map(au_raiclaven_f) > 0 && map(au_raiclaven_r) <= 0
-map = "au_raiclaven_s"
-value = 1
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: surto abre a folga]
-type = MapSet
-trigger1 = map(au_raiclaven_s) = 1
-map = "au_raiclaven_r"
-value = 120
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: surto sobe e desce macio]
-type = MapSet
-trigger1 = 1
-map = "au_raiclaven_k"
-value = map(au_raiclaven_k) + (ifelse(map(au_raiclaven_s) > 0, 1, 0) - map(au_raiclaven_k)) * 0.14
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: surto acaba em zero exato (escala volta a 1)]
-type = MapSet
-trigger1 = map(au_raiclaven_s) <= 0 && map(au_raiclaven_k) < 0.004
-map = "au_raiclaven_k"
-value = 0
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: surto conta]
-type = MapSet
-trigger1 = map(au_raiclaven_s) > 0
-map = "au_raiclaven_s"
-value = max(0, map(au_raiclaven_s) - 0.0333)
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: tempo anda (mais rápido no surto)]
-type = MapAdd
-trigger1 = map(au_raiclaven_f) > 0
-map = "au_raiclaven_t"
-value = 1 + 1.6 * map(au_raiclaven_k)
-ignorehitpause = 1
-
-[State -4, Aura raiclaven: relógio das partículas]
-type = MapAdd
-trigger1 = map(au_raiclaven_f) > 0
-map = "au_raiclaven_c"
-value = 1
-ignorehitpause = 1
-
-[State -4, Aura raiclaven leque: nasce]
-type = Explod
-trigger1 = map(au_raiclaven_f) > 0 && NumExplod(9600) = 0
-anim = 9600
-id = 9600
-animelem = 1
-animelemtime = 1
-postype = p1
-pos = 0, 0
-facing = 1
-bindtime = 0
-removetime = -1
-sprpriority = -7
-ownpal = 1
-scale = 1, 1
-trans = addalpha
-alpha = 0, 255
-removeongethit = 0
-supermovetime = -1
-pausemovetime = -1
-ignorehitpause = 1
-
-[State -4, Aura raiclaven chao: nasce]
-type = Explod
-trigger1 = map(au_raiclaven_f) > 0 && NumExplod(9601) = 0
-anim = 9601
-id = 9601
-animelem = 38
-animelemtime = 0
-postype = p1
-pos = 0, 0
-facing = 1
-bindtime = 0
-removetime = -1
-sprpriority = -6
-ownpal = 1
-scale = 1, 1
-trans = addalpha
-alpha = 0, 255
-removeongethit = 0
-supermovetime = -1
-pausemovetime = -1
-ignorehitpause = 1
-
-[State -4, Aura raiclaven leque: move]
-type = ModifyExplod
-trigger1 = NumExplod(9600) && map(au_raiclaven_v) <= 0.6
-id = 9600
-postype = p1
-pos = 0 + 0.8 * sin((map(au_raiclaven_t) + 0) * 0.037 + 1.3) + (0 + 1.5 * map(au_raiclaven_k)) * sin((map(au_raiclaven_t) + 0) * 1.2566 + 0), 0 + 1 * sin((map(au_raiclaven_t) + 0) * 0.0445 + 2.9) - min(0, Pos Y)
-scale = (1 + 0.12 * map(au_raiclaven_k)), (1 + 0.12 * map(au_raiclaven_k))
-bindtime = 0
-trans = addalpha
-alpha = floor(255 * min(1, max(0, (0.95 * map(au_raiclaven_e) * (1 + 0.06 * sin((map(au_raiclaven_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_raiclaven_k) * map(au_raiclaven_e)) * (0.6 + 0.4 * ifelse(map(au_raiclaven_v) > 0.6, (map(au_raiclaven_v) - 0.6) / 0.4, (0.6 - map(au_raiclaven_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.95 * map(au_raiclaven_e) * (1 + 0.06 * sin((map(au_raiclaven_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_raiclaven_k) * map(au_raiclaven_e)) * (0.6 + 0.4 * ifelse(map(au_raiclaven_v) > 0.6, (map(au_raiclaven_v) - 0.6) / 0.4, (0.6 - map(au_raiclaven_v)) / 0.6)))))
-ignorehitpause = 1
-
-[State -4, Aura raiclaven leque: apaga para virar]
-type = ModifyExplod
-trigger1 = NumExplod(9600) && map(au_raiclaven_v) > 0.6
-id = 9600
-trans = addalpha
-alpha = floor(255 * min(1, max(0, (0.95 * map(au_raiclaven_e) * (1 + 0.06 * sin((map(au_raiclaven_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_raiclaven_k) * map(au_raiclaven_e)) * (0.6 + 0.4 * ifelse(map(au_raiclaven_v) > 0.6, (map(au_raiclaven_v) - 0.6) / 0.4, (0.6 - map(au_raiclaven_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.95 * map(au_raiclaven_e) * (1 + 0.06 * sin((map(au_raiclaven_t) + 0) * 0.0849 + 0.4)) + 0.15 * map(au_raiclaven_k) * map(au_raiclaven_e)) * (0.6 + 0.4 * ifelse(map(au_raiclaven_v) > 0.6, (map(au_raiclaven_v) - 0.6) / 0.4, (0.6 - map(au_raiclaven_v)) / 0.6)))))
-ignorehitpause = 1
-
-[State -4, Aura raiclaven chao: move]
-type = ModifyExplod
-trigger1 = NumExplod(9601) && map(au_raiclaven_v) <= 0.6
-id = 9601
-postype = p1
-pos = 0 + 1 * sin((map(au_raiclaven_t) + 37.7) * 0.0381 + 2.3) + (0 + 1 * map(au_raiclaven_k)) * sin((map(au_raiclaven_t) + 37.7) * 1.2566 + 2.1), 0 - min(0, Pos Y)
-scale = (1 + 0.12 * map(au_raiclaven_k)), (1 + 0.12 * map(au_raiclaven_k))
-bindtime = 0
-trans = addalpha
-alpha = floor(255 * min(1, max(0, (0.95 * map(au_raiclaven_e) * (1 + 0.05 * sin((map(au_raiclaven_t) + 37.7) * 0.0669 + 2.7)) + 0.15 * map(au_raiclaven_k) * map(au_raiclaven_e)) * (0.6 + 0.4 * ifelse(map(au_raiclaven_v) > 0.6, (map(au_raiclaven_v) - 0.6) / 0.4, (0.6 - map(au_raiclaven_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.95 * map(au_raiclaven_e) * (1 + 0.05 * sin((map(au_raiclaven_t) + 37.7) * 0.0669 + 2.7)) + 0.15 * map(au_raiclaven_k) * map(au_raiclaven_e)) * (0.6 + 0.4 * ifelse(map(au_raiclaven_v) > 0.6, (map(au_raiclaven_v) - 0.6) / 0.4, (0.6 - map(au_raiclaven_v)) / 0.6)))))
-ignorehitpause = 1
-
-[State -4, Aura raiclaven chao: apaga para virar]
-type = ModifyExplod
-trigger1 = NumExplod(9601) && map(au_raiclaven_v) > 0.6
-id = 9601
-trans = addalpha
-alpha = floor(255 * min(1, max(0, (0.95 * map(au_raiclaven_e) * (1 + 0.05 * sin((map(au_raiclaven_t) + 37.7) * 0.0669 + 2.7)) + 0.15 * map(au_raiclaven_k) * map(au_raiclaven_e)) * (0.6 + 0.4 * ifelse(map(au_raiclaven_v) > 0.6, (map(au_raiclaven_v) - 0.6) / 0.4, (0.6 - map(au_raiclaven_v)) / 0.6))))), 255 - floor(255 * min(1, max(0, (0.95 * map(au_raiclaven_e) * (1 + 0.05 * sin((map(au_raiclaven_t) + 37.7) * 0.0669 + 2.7)) + 0.15 * map(au_raiclaven_k) * map(au_raiclaven_e)) * (0.6 + 0.4 * ifelse(map(au_raiclaven_v) > 0.6, (map(au_raiclaven_v) - 0.6) / 0.4, (0.6 - map(au_raiclaven_v)) / 0.6)))))
-ignorehitpause = 1
-
-[State -4, Aura raiclaven leque: corre no surto]
-type = ModifyExplod
-trigger1 = NumExplod(9600) && map(au_raiclaven_k) > 0.5
-id = 9600
-animelem = ((ExplodVar(9600, 0, animelem) - 1) % 96) + 1
-animelemtime = 1
-ignorehitpause = 1
-
-[State -4, Aura raiclaven leque: some]
-type = RemoveExplod
-trigger1 = map(au_raiclaven_f) <= 0 && NumExplod(9600)
-id = 9600
-ignorehitpause = 1
-
-[State -4, Aura raiclaven chao: corre no surto]
-type = ModifyExplod
-trigger1 = NumExplod(9601) && map(au_raiclaven_k) > 0.5
-id = 9601
-animelem = ((ExplodVar(9601, 0, animelem) - 0) % 96) + 1
-animelemtime = 0
-ignorehitpause = 1
-
-[State -4, Aura raiclaven chao: some]
-type = RemoveExplod
-trigger1 = map(au_raiclaven_f) <= 0 && NumExplod(9601)
-id = 9601
-ignorehitpause = 1
-
 ; ---- agarrão segura-e-bate (ferramentas/agarrao_mk.py) ----
 
 [Statedef 822]
@@ -7593,7 +8680,14 @@ ctrl = 0
 [State 822, Apanha]
 type = ChangeAnim
 trigger1 = Time = 0
+value = 5001
+
+[State 822, Preso: pose]
+type = ChangeAnim
+trigger1 = Time > 0 && Anim = 5001 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
 value = 5000
+elem = 1
 
 [State 822, Solto]
 type = SelfState
@@ -7611,7 +8705,14 @@ ctrl = 0
 [State 825, Apanha]
 type = ChangeAnim
 trigger1 = Time = 0
-value = 5001
+value = 5002
+
+[State 825, Preso: pose]
+type = ChangeAnim
+trigger1 = Time > 0 && Anim = 5002 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
 
 [State 825, Solto]
 type = SelfState
@@ -7631,7 +8732,89 @@ type = ChangeAnim
 trigger1 = Time = 0
 value = 5002
 
+[State 826, Preso: pose]
+type = ChangeAnim
+trigger1 = Time > 0 && Anim = 5002 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
 [State 826, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 827]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 827, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 5011
+
+[State 827, Preso: pose]
+type = ChangeAnim
+trigger1 = Time > 0 && Anim = 5011 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 827, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 828]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 828, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 5012
+
+[State 828, Preso: pose]
+type = ChangeAnim
+trigger1 = Time > 0 && Anim = 5012 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 828, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 829]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 829, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 5012
+
+[State 829, Preso: pose]
+type = ChangeAnim
+trigger1 = Time > 0 && Anim = 5012 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 829, Solto]
 type = SelfState
 trigger1 = Time > 0
 trigger1 = !gethitvar(isbound)

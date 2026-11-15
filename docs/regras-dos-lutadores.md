@@ -5,6 +5,10 @@
 > não cumpre tudo ganha missão em `docs/missoes-codex.md` até cumprir.
 >
 > Se uma ficha de personagem ou outro documento disser o contrário, vale este arquivo. Só o Breno muda estas regras.
+>
+> **Receita completa, do conceito até a `mugen`:** [`receita-de-lutador.md`](receita-de-lutador.md) junta tudo o que
+> já foi aprendido criando os lutadores (conceito pelas fotos, folhas nítidas, agarrões com animação própria, aura
+> estilo anime, despertado) e vale para todo lutador novo (Breno, 2026-11-15).
 
 ## Sumário
 
@@ -212,7 +216,8 @@ Ver a próxima seção.
 - **Padrão: x + y** (os dois socos juntos). A ficha do lutador pode trocar por outro par de botões livre
   (a + b, x + b, y + a) ou por um comando (exemplo: `↓ ↓` + x + y), desde que não bata com outro golpe dele.
 - A ativação tem animação de transformação, com invencibilidade, e empurra o oponente para longe.
-- O Despertar dura até a barra (que vai drenando) acabar, ou até o fim do round. Ao acabar, volta à forma base.
+- **O Despertar dura até o fim da luta** (Breno, 2026-11-14): quem desperta não volta à forma base por tempo nem no
+  fim do round, e a música da forma toca até a luta acabar. Feito pelo `ferramentas/forma_permanente.py`.
 
 ### Todo lutador tem a forma transformada, com arte própria
 
@@ -426,6 +431,7 @@ etapa, e não use ferramenta "sem licença" no jogo: essas servem só de referê
 | 5. Girar membros | [rotsprite-js](https://github.com/spuuntries/rotsprite-js) / [rotsprite-webgl](https://github.com/adnanlah/rotsprite-webgl) | Apache-2.0 / MIT | Girar braço e perna sem serrilhar (portar o algoritmo para o gerador) |
 | 6. Quadros do meio | [ToonCrafter](https://github.com/Doubiiu/ToonCrafter) ou [morphin](https://github.com/javierbyte/morphin) | Apache-2.0 (conferir modelo) / BSD-3 | Criar quadros intermediários entre poses; o resultado volta pelo `pixelizar.py` |
 | 6b. Quadros do meio no Blender | `ferramentas/animar_folha.py` + `ferramentas/blender_sprites.py` | nossa ([Blender](https://www.blender.org) é GPL, só o programa) | Entorta o próprio sprite desenhado em malha 2D até a pose seguinte; o gerador usa um desenho por tick. Nunca modelo 3D |
+| 6c. Efeitos no Blender (pixel FX) | `ferramentas/efeitos_pixel/` (`preparar_nuvem.sh`, `pixelfx.py`) | nossa ([bpy](https://pypi.org/project/bpy/) e [Blender](https://www.blender.org) são GPL, só o programa; Pillow MIT-CMU, numpy BSD-3) | Efeito renderizado no Blender e reduzido para pixel art: paleta curta, alfa 0/255, contorno de 1 px, dithering Bayer. Só efeito, nunca o lutador |
 | 7. Retoque | [LibreSprite](https://github.com/LibreSprite/LibreSprite) | GPL-2.0 (só o programa) | Limpar costuras, mão, quadril; o desenho é nosso |
 | 8. Gerador | `ferramentas/gerar_<nome>.py` | nossa | Monta SFF, AIR, CMD, CNS e movelist; **não editar `chars/<nome>/` à mão** |
 | 9. Caixas e quadros | [openkakutou/character-editor](https://github.com/openkakutou/character-editor), [CharFactory](https://github.com/eduardovbe/CharFactory) | MIT | Abrir SFF/AIR, conferir quadros e caixas de colisão; ajustes voltam para o gerador |
@@ -615,6 +621,10 @@ Produção
 [ ] endiabrado com aura grande e efeitos próprios (Breno, 2026-11-13: o endiabrado não muda); nenhum efeito do
     lutador por cima do HUD
 [ ] movelist.dat e README batem com o .cmd
+[ ] receita de lutador (docs/receita-de-lutador.md) seguida: conceitos da base e do despertado aprovados na issue,
+    boneco grande na folha e 3x direto da folha, despertado sem nada da roupa base
+[ ] agarrões (em pé, agachado e comando) com folhas próprias, e reações próprias de quem é agarrado
+[ ] aura estilo anime colada na silhueta: sai pelo braço e pela perna no golpe, com física, sem cara de adesivo
 [ ] testado no treino dos dois lados e no canto; uma luta CPU x CPU sem erro no log
 ```
 

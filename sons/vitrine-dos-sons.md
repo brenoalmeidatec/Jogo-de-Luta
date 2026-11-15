@@ -1,23 +1,22 @@
 # Vitrine dos sons (ouvir no fone)
 
-Arquivo: vitrine-dos-sons.mp3. Tempos:
+Arquivo: vitrine-dos-sons.mp3, feito por `ferramentas/vitrine_sons.py` com os .snd do jogo. Tempos:
 
 - 0:00.0  Menu: mover, confirmar, voltar
-- 0:02.9  Narrador: primeiro round, luta
-- 0:07.3  Soco fraco/médio/forte (vento + acerto)
-- 0:11.5  Chute fraco/forte
-- 0:14.7  Fim de corrente e fim de super
-- 0:18.6  Defesa e defesa forte
-- 0:20.7  Quedas
-- 0:24.2  Agarrão: pega, arremesso, escape
-- 0:27.2  Parry base e endiabrado
-- 0:31.0  Super (início) e projétil
-- 0:34.1  Golpes endiabrados
-- 0:37.8  Despertar do Pengaró: gole, vidro, possessão + estouro
-- 0:44.8  Pengaró garrafada; CK luva, boné, tragada, grave
-- 0:50.3  Gutto: beijinho, joelhada, galope, relincho
-- 0:54.8  Hazak: concreto, estatueta, aço, faixa
-- 0:59.3  Raiclaven: tesoura, borrifada, pente, cadeira
-- 1:03.0  Barra de poder: nível e máximo
-- 1:06.3  Narrador: KO, tempo, você venceu, perfeito
-Tudo sintetizado por ferramentas/gerar_sons.py (branch mugen, commit 07bb1285). Tabela completa em docs/sons.md.
+- 0:02.2  Narrador: primeiro round, luta
+- 0:06.3  Defesa, quedas, agarrão (pega, arremesso, escape), parry base e endiabrado
+- 0:15.0  Super (início), barra de poder, transformação
+- 0:23.0  Pengaró: soco, chute, garrafa (acerto), latinha (Latada: voa e bate), Garrafada em Arco, Mão de Chimpá
+- 0:29.0  Pengaró: Chuva de Bebidas (latas e garrafas), Despertar (gole, vidro, possessão), corrente e sombra
+- 0:38.0  CK: luva fraca e forte, Boné Voador (vai e acerta), Tragada, Grave do Paredão
+- 0:43.1  CK: Despertar (paredão tocando, garrafa quebrando), Modo Ratão (caco de garrafa), Garrafa Voadora
+- 0:51.6  Gutto: jab, canela de Muay Thai fraca e forte, cotovelo e joelhada, Joelhada Voadora, beijinho
+- 0:56.3  Gutto endiabrado: bufada, galope, coice, casco, relincho
+- 1:03.1  Hazak: soco de concreto, pedra (chuta do chão, voa e bate), estatueta, guarda de aço, faixa
+- 1:08.7  Hazak: carga e bola de ki; Diabo Loiro: rajada de ki das trevas, golpe das trevas
+- 1:16.2  Raiclaven: pente (x), tesoura abrindo e cortando (y fraco e forte), Tesoura Helicóptero, Tesourão
+- 1:21.3  Raiclaven: Pente Voador, Borrifada, Varrida, Cadeira, Próximo! (talco), Toalha Quente, Cabeça na Pia
+- 1:27.6  Raiclaven: Máquina Explosiva (zumbe e explode), Surto: Navalha de Sombra e corte de serra
+- 1:33.1  Narrador: nocaute, você venceu, perfeito
+
+Tudo sintetizado por `ferramentas/gerar_sons.py`. Tabela completa em `docs/sons.md`.

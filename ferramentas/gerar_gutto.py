@@ -431,8 +431,16 @@ def main():
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
     import parry  # parry em cima e embaixo, faísca própria e sem a "rede de futebol" (docs/parry.md)
     parry.aplicar("gutto", SAIDA)
+    import legibilidade  # golpes legíveis (#45): caixa no membro, congelamento, tremida, reação e preparo
+    legibilidade.aplicar("gutto", SAIDA)
     import balanceamento  # números do item 7 (attack, defence, velocidade)
     balanceamento.aplicar("gutto", SAIDA)
+    import cena_transformacao  # issue #49: tudo preto, zoom e clarão no Despertar (sempre por último)
+    cena_transformacao.aplicar("gutto", SAIDA)
+    import forma_permanente  # missão dos cenários 4.1: endiabrado até o fim da luta
+    forma_permanente.aplicar("gutto", SAIDA)
+    import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
+    destruicao.aplicar("gutto", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

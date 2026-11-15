@@ -2156,6 +2156,9 @@ faísca (a mesma do HitDef do golpe), som e o oponente reagindo com a animação
 - Os geradores chamam `agarrao_mk.aplicar` no fim (conferido: gerar_ck/hazaki/pengaro saem iguais ao arquivo
   aplicado). Robô: cenários "agarrao segura-e-bate" (frente e para trás) no `robo.lua` para todos.
 
+**Depois (#47, padrão grande e pesado):** rajadona com rastro do corpo, tremida forte ao soltar, fundo escurecido em
+vermelho e oponente piscando; agarrão do Diabo com fundo escuro, tremida a cada pancada, congela + clarão no final.
+
 **Sugestões:** folhas próprias de agarrão por lutador no ChatGPT (hoje são quadros emprestados); a faísca segue o
 número do HitDef, então quando o item 4 trocar a "rede de futebol" ela muda junto se a troca for no mesmo número;
 agarrão agachado (840) e o de comando (830) ainda são os antigos.
@@ -2270,3 +2273,237 @@ torneio para outro (mesmo kit): é sorte da CPU, não número.
 ficaram como estavam (só o multiplicador geral mudou).
 
 **Robô depois do ajuste:** Pengaró 190/0, CK 228/0, Gutto 185/0, Raiclaven 185/0, Hazak 213/0.
+
+## 2026-11-14 — Hazak: pedra, bola de ki e Diabo Loiro (issue #44) (Claude, thread do Alisson)
+
+**Pedido do Breno (#44):** tirar a rede de futebol, pedra (chute e soco) e bola de ki vermelha no lugar dos poderes de
+longe, ligar o Diabo Loiro de ponta a ponta com a Rajadona de Ki das Trevas e um agarrão próprio, efeitos laranja-ouro.
+
+**Feito:** detalhes, GIFs e vídeos em `docs/hazak-44/LEIA-ME.md`.
+- Rede de futebol já tinha saído no #38. Pedra (1000/1001) e bola de ki (1600/1601) com efeitos do Blender + pixelfx
+  (`hazak_poderes_blender.py`), maiores depois do recado do Breno na #47 ("poder de longe fraco").
+- Diabo Loiro: `diabo_arte.py` (arte por código: juba loira, chifres, olho vermelho, gi roxo com debrum em brasa) e
+  `diabo_loiro.py` (pós-passo chamado no fim do `gerar_hazaki.py`): estado 2000 com a cena da patroa, aura de 2 camadas,
+  Rajadona 1650 (preta, vermelha e ouro, fumaça preta, 12 acertos), agarrão 810 em chamas no Diabo.
+- `filmar_robo.py` filma qualquer parte do robô (filtro por nome); `testar_pengaro.py` ganhou filtro e aceleração.
+- Rebase em cima de `f7cd8579` (#45/#48): `legibilidade.py` roda depois do `diabo_loiro.py`.
+
+**Robô:** hazaki 235 PASS / 0 FAIL. Uma rodada com a máquina carregada (filmagem em paralelo) deu 1 FAIL na rajadona
+(só 4 acertos); sozinha passa. Se voltar, olhar o empurrão do raio (`ground.velocity`).
+
+**Depois (#47, padrão grande e pesado):** rajadona com rastro do corpo, tremida forte ao soltar, fundo escurecido em
+vermelho e oponente piscando; agarrão do Diabo com fundo escuro, tremida a cada pancada, congela + clarão no final.
+
+**Sugestões:** folhas desenhadas do Diabo (terno do conceito) para trocar a arte por código; som próprio da patroa e da
+rajadona; comparar Blender vs. pixelfx direto como o Breno pediu na #47.
+
+## 2026-11-14 — Diabo Loiro na roupa do conceito (issue #44, resposta do Breno) (Claude, thread do Alisson)
+
+**Pedido:** o Diabo não pode ficar de gi; usar a roupa do `d_conceito.png` (branch `bosses`), mais chefão, mesmas asas,
+todos os quadros na roupa nova, golpes/caixas/tempos iguais.
+
+**Feito:** `ferramentas/diabo_terno.py` troca o `diabo_arte.py` (apagado). Recorta as 49 folhas `d_*` da `bosses`, põe
+na escala do corpo 3x, dá o acabamento de chefão (brasa, ouro, sombra, olho aceso, luz do chão), reduz a 48 cores e
+grava em `sprites/hazaki/diabo_terno/`. O `diabo_loiro.py` casa cada desenho do Hazak no .sff com o quadro HD de origem
+(folha, número) e põe no lugar o quadro de mesmo número da folha do terno, alinhado pelo apoio dos pés. 395 desenhos,
+nenhum no gi. 20 folhas sem par usam a mais parecida (lista `PARECIDA`). O .sff foi de 9 para 15 MB.
+Robô hazaki 238 PASS / 0 FAIL (roteiro novo "vitrine" mostra os golpes na roupa). Detalhes em `docs/hazak-44/LEIA-ME.md`.
+
+## 2026-11-15 — Auras e asas seguem o corpo (issue #51, item 1) (Claude, thread do Alisson)
+
+**Pedido:** o Hazak endiabrado agachava ou caía e as asas ficavam no ar. Toda aura acompanha o lutador em todo estado.
+
+**Causa:** as camadas do `aura.py` nascem presas ao eixo (os pés) numa posição fixa; agachado, apanhando ou no chão o
+eixo não se mexe, só o desenho.
+
+**Feito:** `ferramentas/aura_no_corpo.py` (pós-passo, idempotente, chamado no fim do `diabo_loiro.py`, do
+`despertados_47.py`, do `gerar_pengaro.py` e do `gerar_ck.py`). Mede o peito, o centro e a altura do corpo em cada
+desenho do `.air` e escreve no `[Statedef -4]` uma tabela por ação/elemento; quatro maps (`au_<nome>_ax/ay/g/bx`)
+correm atrás do alvo com atraso curto. Camada do corpo (asas, garanhão, elos) segue o peito e recolhe com ele deitado;
+camada do chão anda em x com o corpo e não afunda mais na queda; coluna do Pengaró e paredão do CK baixam com ele caído.
+`ferramentas/filmar_aura_corpo.py` filma o roteiro de 30 estados e grava o log tique a tique.
+
+**Robô:** `aura_no_corpo.py --robo` passa nos 4 (asas do Hazak: de 31,5 px para 7,2 px em 95% dos tiques; solta por
+100 tiques seguidos antes, 1 agora). `testar_pengaro.py --linux`: hazaki 238, gutto 185, pengaro 190, ck 228, nenhuma falha (o hazaki deu 1 FAIL na
+rajadona com a máquina filmando em paralelo, o mesmo caso já anotado; sozinho passa).
+
+**Armadilha:** título de controlador no `.cns` não pode ter `;` (começa comentário e o controlador some sem erro).
+
+**Não feito / sugestões:** asa não gira com o corpo no ar; paredão e coluna não sobem no pulo (nascem do chão);
+desenho próprio de paredão baixo. Detalhes e vídeos em `docs/auras-51/LEIA-ME.md`.
+
+## 2026-11-15 — Endiabrado até o fim da luta (missão dos cenários, seção 4.1) (Claude, sessão do LightWolfMan)
+
+**Pedido do Breno:** quem desperta fica na forma até a luta acabar, com a música da forma, nos 5 lutadores; rever o
+balanceamento.
+
+**Feito:** pós-passo `ferramentas/forma_permanente.py`, chamado por último nos `gerar_<lutador>.py` (depois do
+`cena_transformacao.py`).
+- O contador do `var(20)` saiu: ele fica em 600 enquanto a forma durar. `var(20) > 0` continua sendo o sinal de
+  "está na forma" para tudo (arte, aura, golpes, e o cenário destruído da thread dos cenários).
+- `IntPersistIndex = 58`: o `var(58)` (já despertou) e o `var(59)` (música da forma tocando) atravessam os rounds. No
+  round seguinte a forma volta já na apresentação.
+- Música: o motor recomeça a música do cenário a cada round (medido com `testar_musica.py --rounds`), então a da forma
+  entra de novo na apresentação do round seguinte, direto.
+- A `Pause` da cena da transformação ganhou `pausebg = 0`, para o cenário poder trocar para o destruído no clarão.
+
+**Balanceamento da forma permanente:**
+- Custo para despertar: continua a barra inteira (3 estoques) nos 5.
+- Super da forma (estado 3100: Saideira Sombria, Baile da Esquina e os do Gutto e do Raiclaven): antes custava 1
+  estoque e acabava com a forma (no CK só valia nos 10 s). Agora **não acaba com a forma e custa 2 estoques**, igual ao
+  super fora da forma. É o único número mexido.
+- Dano e defesa da forma: não mexi. A forma já não tinha multiplicador de ataque nem de defesa; o que ela dá são golpes
+  melhores (agarrão e poder de longe do #47, especiais maiores). Como agora dura a luta toda, vale o Breno jogar e dizer
+  se ficou forte demais. Botões prontos para apertar, se ficar: defesa menor na forma (`DefenceMulSet`), barra enchendo
+  mais devagar na forma, ou despertar só com vida baixa.
+- A ressaca e a fumaça de saída do Despertar não acontecem mais (não há saída).
+
+**Robô:** os roteiros "a forma acaba" viraram "660 tiques depois continua na forma e a aura fica", e o do super confere
+que a forma continua depois dele.
+
+## 2026-11-15 — Cenário destruído em dois níveis nos 5 mapas (issue #35, missão dos cenários 4.2) (Claude, thread dos cenários)
+
+**Pedido do Breno** (`docs/missao-alisson-cenarios.md` seção 4.2): cada mapa ganha duas versões destruídas, animadas.
+O nível 1 liga no clarão da transformação do primeiro lutador que desperta (rachaduras, fogo, fumaça, coisas quebradas,
+gente fugindo). O nível 2 liga quando o segundo desperta (estruturas desabadas, crateras, fogo grande, gente correndo e
+gente caída, estilo arcade, sem sangue). Nada volta atrás no fim do round.
+
+**Como funciona:**
+- Campo `nivel` nas camadas do `gerar_cenario.py`: `"0"`, `"<2"`, `">=1"`, `"2"` e `"1"` viram os grupos de BG
+  909, 910, 911, 912 e 913. Cada grupo tem um `BGCtrl type=Visible` que os lutadores ligam e desligam com
+  `ModifyBGCtrl` (`ferramentas/destruicao.py`, aplicado no `[Statedef -2]` dos 5 lutadores, por último no
+  `gerar_<lutador>.py`).
+- O nível é `(var(20) > 0) + (NumEnemy > 0 && enemy, var(20) > 0)`. O `var(20)` é o endiabrado, que agora fica até o
+  fim da luta (4.1, `forma_permanente.py`). A forma `cond(..., (enemy, var(20)) > 0, 0)` NÃO funciona no IKEMEN.
+- `ferramentas/cenario_destruicao.py`: peças em comum (fogo, fumaça em bolas, rachaduras, fagulhas, clarão do fogo,
+  céu esfumaçado, gente correndo, caídos, entulho, carrinho, carro). A arte vem do ChatGPT em
+  `sprites/cenarios/comum/bruto/` (fogo, correndo, destroços).
+- Ruína de cada mapa (ChatGPT, chat "Pixel Art Background Request", conta do Alisson):
+  `sprites/cenarios/<mapa>/bruto/cena_destruida.png`. O Cristo usa `cena_destruida_larga.png` (3:1), porque o mundo
+  dele tem 1800 de largura e a ruína 3:2 não cabia com o Cristo inteiro na tela.
+- Maria Fumaça: o .sff aprovado não bate com os PNG, então ela NÃO passa pelo `gerar_cenario.py`. O
+  `cenario_maria_fumaca_destruicao.py` monta só as camadas novas e enxerta no def/sff aprovado (grupos +100, ações
+  +600, entre marcas de comentário; rodar de novo troca o enxerto). O povo do banco e das mesas e o desfile lá fora
+  passam para o grupo 909 (somem no nível 1).
+- Robô novo: `python3 ferramentas/testar_destruicao.py` põe cinco marcadores (um por grupo) na beira da tela de uma
+  cópia de cada cenário, filma a luta com os dois despertando e o P2 nocauteado, e confere nível 0 → 1 → 2 e o
+  round 2 começando no nível 2.
+- Filmagem: `python3 ferramentas/filmar_destruicao.py PASTA --cenario <mapa> --primeiro 360 --segundo 800`.
+
+**Pendente / sugestões:**
+- "A destruição com a cara de quem transformou" (pedido "se der") não foi feita. Um caminho barato é tingir o
+  `clarao_do_fogo` e as fagulhas com a cor da aura de quem despertou primeiro (um grupo de BG por lutador).
+- Teste no Windows pelo atalho do launcher (4.3) depende do PC do Alisson.
+
+## 2026-11-15 — Hazak pequeno na seleção, no VS e no HUD (issue #51) (Claude, thread do Alisson)
+
+**Erro visto pelo Breno:** o Hazak aparecia pequeno na tela de seleção perto dos outros.
+**Causa:** os retratos novos (PNG 100x100 e 448x216, `sprites/retratos/`) entram pelo `trocar_retratos.py`, mas os
+pós-passos do `gerar_hazaki.py` (o `diabo_loiro.py` da #44 regrava o .sff) devolviam os retratos antigos de 25x25 e
+109x95, que o layout desenha a 1/4. Os outros quatro não passam por esse pós-passo e ficaram certos.
+**Conserto:** o `gerar_hazaki.py` chama `trocar_retratos.trocar("hazaki")` por último. Conferido no motor (seleção, VS e
+HUD) com `testar_mapas.py --casa 1` (opção nova: anda o cursor do P1). Antes e depois em `docs/hazak-51/`.
+
+## 2026-11-15 — Asas grudadas nas costas, girando e fechando (issue #51, item 1, segunda volta) (Claude, thread do Alisson)
+
+**Pedido do Breno:** deitado a asa ficava em pé e aberta; ela tem de grudar nas costas, inclinar no ângulo do corpo e
+fechar ao cair, reabrindo ao levantar (asas e coroa do Hazak, garanhão do Gutto, elos do Pengaró).
+
+**Feito:** `aura_no_corpo.py` mede o ponto das costas e o ângulo do tronco em cada quadro (duas tabelas no `-4`,
+maps `au_<nome>_ax/ay/g/bx/th`) e gira a camada em volta das costas com `angle`. `aura.dobrar_asas` dobra os 48 quadros
+das asas como leque; o Hazak ganhou `asas_meio` e `asas_fechada` (9602, 9603) e o alfa troca conforme deita.
+`diabo_loiro.py --aura` refaz só a aura. O robô de luta espera 4 camadas no Diabo.
+
+**Robô:** aura nos 4 passa (asas 7 px e 6 graus em 95% dos tiques); `testar_pengaro.py --linux` hazaki 238, gutto 186,
+pengaro 189, ck 226, 0 falhas (o hazaki rodado em fila com outros deu de novo o FAIL conhecido da rajadona; sozinho passa).
+
+**Armadilha:** o `-4` roda antes da troca de ação; no pouso brusco (5030 para 5100) a camada fica 2 tiques fora.
+
+
+## 2026-11-15 — Ferramenta de pixel e teste 1 da anatomia no Diabo Loiro (issue #51, item 3) (Claude, thread do Alisson)
+
+**Pedido do Breno:** parar de regenerar quadro no ChatGPT; ferramenta nossa de desenho em pixel que o Claude usa por
+comando, com réguas de anatomia contra o parado; primeiro teste no Diabo com braço a mais, na rasteira do Diabo e no
+agachar do Hazak; comparar com Blender.
+
+**Feito:** `ferramentas/pixel/` (`pixel.py`, `reguas.py`, `quadros.py`, `LEIA-ME.md`): ver ampliado com grade e papel
+vegetal, tira com régua, antes/depois pelo git, GIF/MP4, pintar só com a paleta, copiar/colar, polígono, mover/girar/
+espelhar/escalar pedaço, esticar, remendar buraco (inpaint levado para a paleta), recolorir família de cor, escala da
+figura inteira sem borrar (Scale2x na grade do 1x), desfazer e histórico. Régua medida em todos os 2.872 quadros dos 6
+lutadores em `docs/anatomia-51/reguas/`.
+
+**Diabo:** o "braço a mais" era o antebraço do Hazak (faixa laranja e munhequeira verde-água) que sobrou entre a manga do
+terno e o punho. Munhequeira tirada dos 337 quadros (`recolore --matiz 160 210 --para pele`), antebraço nu coberto no
+parado. Rasteira: mão de apoio 22% menor, canela esticada, golpe inteiro 7% maior (cabeça de 0,90-0,94 para 0,96-0,99).
+Agachar do Hazak passou na régua (0,98). A rasteira do Hazak base está 18% menor, mas a forma base vai ser refeita na #36.
+
+**Blender (recorte com malha):** faz a mesma conta (esticar e encolher pedaço), mas precisa separar cada pedaço em camada
+e pintar o que fica escondido atrás; a ferramenta de pixel resolve isso no próprio quadro. Blender fica para animação nova
+montada de peças (asas, cabelo, casaco).
+
+**Robô:** hazaki 238 PASS / 0 FAIL; vitrine do Diabo filmada em `docs/anatomia-51/teste1/`.
+
+**Armadilha:** a régua da cabeça tem incerteza de uns 4 a 5% em quadro redesenhado ou reamostrado (a curva do casamento
+é achatada); só é firme quando o desenho é o mesmo em outro tamanho. O Pengaró tem 22 ações 7 a 26% maiores que a ginga:
+conferir se a ginga é que está pequena antes de mexer.
+
+## 2026-11-15 — Hazak base nítido, issue #36 (Claude, thread do Alisson)
+
+**Pedido do Breno:** refazer a forma base do Hazak, que continuava borrada, sem mudar desenho, cor, pose, caixas,
+`.air` ou `.cns`; Diabo Loiro como está; robô e antes/depois ao lado do CK na #36 antes de juntar.
+
+**Feito:** 64 folhas novas no ChatGPT do Alisson (plano GO, ~1 h, sem bater no limite; 11 com o conserto de anatomia
+da #51), conversão direta em 1x e 3x (`converter_hazaki.py`, paleta de 40 cores), parry do Hazak pelos quadros
+convertidos (`parry.py`), caixas presas às de antes (`manter_caixas.py` + `sprites/hazaki/caixas_base.air`).
+Detalhes e como refazer uma pose em `docs/hazak-36/LEIA-ME.md`.
+
+**Armadilha:** o gerador mede a caixa de dano no desenho. Trocar o desenho muda ~1900 caixas sem ninguém pedir; por
+isso o pós-passo de caixas. Sprites 1513..1527 (sem uso no `.air`) caem na paleta do corpo e o `diabo_loiro` avisa;
+é inofensivo.
+
+**Proporção (depois, mesma data):** a régua da anatomia achou cabeças de tamanhos diferentes entre as folhas (o parado
+9% maior; rasteira, agachado e vítimas herdavam o tamanho errado dos desenhos de antes). Parado gerado de novo e
+`converter_hazaki.py --cabeca` corrige a escala de cada folha pela cabeça (26 folhas). Cabeça de lado/deitada engana a
+régua: vira, derrota e vítimas foram escolhidas no olho (`CABECA_FIXA`). Caixas continuam presas. Ver
+`docs/hazak-36/proporcao.png`.
+
+## 2026-11-15 — Anatomia do Diabo, lote 2 (issue #51, item 3) (Claude, thread do Alisson)
+
+**Feito com `ferramentas/pixel/`:** escala do golpe inteiro em 7 ações que a régua mediu 6 a 10% menores que o
+`d_parado` (conferido também pela aba do chapéu): `d_agarrao_perna` 1,075, `d_ar_joelho` 1,065, `d_baixo_soco` 1,065,
+`d_bico_sapato` 1,11, `d_corrida` 1,09, `d_punho_anel` 1,07, `d_sapato_barriga` 1,07; todas voltaram para 0,98-1,02.
+Antebraço nu do Hazak coberto pela manga em `d_anda`, `d_agachado` e `d_defesa`; verde-água claro que sobrou em 11
+quadros virou pele. Antes/depois em `docs/anatomia-51/lote2/`.
+
+**Não mexi:** `d_vira` (+5 a 9%) e `d_chuva_abre` (+6%) têm a mesma altura do parado; a régua erra de frente para a
+câmera. `d_chapeu_arremesso` fica sem chapéu, então a régua não vale.
+
+**Hazak base novo (#36, 40f04bbe):** a régua mede 46 ações com mais de 6% (rasteira 0,80, agachado 0,88); avisado na
+thread da #36 (o conversor escala pela mediana do desenho antigo e herda o tamanho errado).
+
+## 2026-11-15 — Asas: pouso sem tranco e fechadas no quique do chão (issue #51, item 1, terceira volta) (Claude, thread do Alisson)
+
+**Contexto:** o Breno liberou decidir e juntar sozinho na #51. Os três pontos em aberto foram decididos.
+
+**Feito:** em `aura_no_corpo.py`, o `SALTO` (agora também para o deitado `g`) faz a camada pular junto quando o alvo
+salta demais, então o pouso fica 1 tique solto em vez de 2. O `_pesos` acende a asa fechada a partir de 0,5 deitado, e a
+asa não abre mais no quique do chão. A coroa segue com as asas e a asa fechada continua dobrada por código, até haver
+desenho à mão. Antes e depois em `docs/auras-51/v3_pouso_quadro_a_quadro.jpg`.
+
+**Robô:** aura nos 4 passa; `testar_pengaro.py --linux` hazaki 238, gutto 186, pengaro 189, ck 226, 0 falhas.
+
+## 2026-11-15 — Aura como nos animes, colada na silhueta (issue #51, item 1, quarta volta) (Claude, thread do Alisson)
+
+**Pedido do Breno (02:07Z):** aura com o formato do corpo em todo quadro, correndo pelo braço ou pela perna no golpe e
+saindo pelo punho ou pé, com inércia e labaredas vivas. A aura grande continua no endiabrado. Piloto no Hazak e depois
+os outros despertados.
+
+**Feito:** criei `ferramentas/aura_silhueta.py`. Ele gera duas camadas de cada desenho do despertado a partir do alfa:
+a pele (brilho somado quebrado) e a chama (línguas subindo em 6 fases). Reforça o membro dentro da Clsn1 e solta um
+estouro na ponta. Grava os grupos 9710/9711 e as ações 30000+N e 40000+N. A pele é um helper (estado 9610), que roda
+depois do lutador e por isso não atrasa na troca de ação. A chama é um Explod de um tique solto pelo helper, com
+`xshear` pela mola de velocidade. Aplicado no Hazak, no Gutto, no Pengaró e no CK.
+
+**Armadilhas:** a chama somada fica rosa no cenário azul, então ela usa `addalpha` (A, 255 - A) com alfa por pixel. A
+pele somada continua. O `ChangeAnim` com `elem` só funciona com elemento de tempo 1; com -1 o helper fica parado no
+último. O sinal do `xshear` no IKEMEN é ao contrário do que parece: com valor positivo a chama vai para a frente.

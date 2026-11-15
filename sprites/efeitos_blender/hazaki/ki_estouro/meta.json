@@ -1,0 +1,11 @@
+{
+ "pivo": [
+  69,
+  69
+ ],
+ "ticks": 2,
+ "quadros": 8,
+ "efeito": "ki_estouro",
+ "lutador": "hazaki",
+ "feito_por": "ferramentas/hazak_poderes_blender.py"
+}

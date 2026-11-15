@@ -29,6 +29,10 @@ docs/arcade/cenarios.md. Resumo dos campos (os que têm padrão podem faltar):
     seno_x / seno_y [amplitude, periodo_em_ticks, fase_em_ticks]
     mistura "normal" | "soma" | "subtrai",  alfa [origem, destino] (0 a 256, liga addalpha)
     suave                           troca o padrão do cenário só nesta camada
+    nivel "0" | "<2" | ">=1" | "1" | "2"   destruição (issue #35, item 4.2): em que nível a camada aparece. Sem o campo,
+                                    aparece sempre. 0 = lugar inteiro; 1 = o primeiro lutador despertou; 2 = os dois.
+                                    As camadas de cada grupo dividem um id (909 a 913) e um BGCtrl Visible com sctrlid
+                                    igual, que os lutadores mexem por ModifyBGCtrl (ferramentas/destruicao.py).
     controles [{"tipo": "VelSet", "tempo": [0], "x": 0.3}, ...], ciclo 480   BGCtrl em loop (VelSet, VelAdd,
                                     PosSet, PosAdd, SinX, SinY, Visible, Enabled, Anim) com os parâmetros do motor
 
@@ -65,6 +69,8 @@ RETRATO_TELA = (640, 360)   # prévia na tela de escolha de mapa (px da janela 1
 RETRATO_FAIXA = 42          # faixa da música embaixo da prévia (múltiplo de 3: a letra vai em 3x)
 RETRATO_QUADROS, RETRATO_TICKS = 12, 8
 MISTURAS = {"normal": "none", "soma": "add", "subtrai": "sub"}
+# grupo de destruição -> (id do grupo e do sctrlid, níveis em que aparece)
+NIVEIS = {"0": (909, (0,)), "<2": (910, (0, 1)), ">=1": (911, (1, 2)), "2": (912, (2,)), "1": (913, (1,))}
 TIPOS_CTRL = {"velset", "veladd", "posset", "posadd", "sinx", "siny", "visible", "enabled", "anim", "null"}
 
 
@@ -88,7 +94,7 @@ class Camada:
         self.nome = d.get("nome", f"camada{k}")
         desconhecidos = set(d) - {"nome", "imagem", "quadros", "folha", "ticks", "delta", "x", "y", "frente",
                                   "velocidade", "repete", "vao", "seno_x", "seno_y", "mistura", "alfa", "suave",
-                                  "controles", "ciclo"}
+                                  "controles", "ciclo", "nivel"}
         if desconhecidos:
             raise ValueError(f"camada {self.nome}: campo desconhecido {sorted(desconhecidos)}")
         if "folha" in d:
@@ -126,6 +132,12 @@ class Camada:
             raise ValueError(f"camada {self.nome}: mistura {self.mistura!r} (use {', '.join(MISTURAS)})")
         self.alfa = tuple(d["alfa"]) if d.get("alfa") else None
         self.suave = bool(d.get("suave", suave_padrao))
+        self.nivel = d.get("nivel")
+        if self.nivel is not None and str(self.nivel) not in NIVEIS:
+            raise ValueError(f"camada {self.nome}: nivel {self.nivel!r} (use {', '.join(NIVEIS)})")
+        self.nivel = None if self.nivel is None else str(self.nivel)
+        if self.nivel and d.get("controles"):
+            raise ValueError(f"camada {self.nome}: nivel e controles juntos não dá (o id da camada é o do grupo)")
         self.controles = d.get("controles", [])
         self.ciclo = d.get("ciclo")
         for c in self.controles:
@@ -198,11 +210,13 @@ class Cenario:
         if not self.camadas:
             raise ValueError("cenário sem camadas")
 
-    def compor(self, camx=0, camy=0, t=0, margem=0, fundo=(0, 0, 0, 0)):
+    def compor(self, camx=0, camy=0, t=0, margem=0, fundo=(0, 0, 0, 0), nivel=0):
         """Desenha a tela (320x180 mais a margem em volta) como o motor faria no tick t."""
         caixa = (-margem, -margem, TELA_L + margem, TELA_A + margem)
         tela = Image.new("RGBA", (TELA_L + 2 * margem, TELA_A + 2 * margem), fundo)
         for c in sorted(self.camadas, key=lambda c: c.frente):  # as de frente por último, na ordem da lista
+            if c.nivel and nivel not in NIVEIS[c.nivel][1]:
+                continue
             q = c.quadro_no_tick(t)
             for (x, y) in c.copias(camx, camy, t, caixa):
                 _colar(tela, q, x + margem, y + margem, c.mistura)
@@ -211,14 +225,16 @@ class Cenario:
     def furos(self):
         """Lista de (canto, pixels sem cobertura) nos quatro cantos do curso da câmera, só com camadas opacas."""
         ruins = []
-        for nome, camx in (("esquerda", -self.curso), ("direita", self.curso)):
-            for nv, camy in (("baixo", 0), ("alto", -self.subida)):
-                pior = 0
-                for t in (0, 97, 1201, 4999):  # camadas que se movem não podem ser a única cobertura
-                    a = self.compor(camx, camy, t).getchannel("A")
-                    pior = max(pior, int((np.asarray(a) < 255).sum()))
-                if pior:
-                    ruins.append((f"{nome}/{nv}", pior))
+        niveis = (0, 1, 2) if any(c.nivel for c in self.camadas) else (0,)
+        for nivel in niveis:
+            for nome, camx in (("esquerda", -self.curso), ("direita", self.curso)):
+                for nv, camy in (("baixo", 0), ("alto", -self.subida)):
+                    pior = 0
+                    for t in (0, 97, 1201, 4999):  # camadas que se movem não podem ser a única cobertura
+                        a = self.compor(camx, camy, t, nivel=nivel).getchannel("A")
+                        pior = max(pior, int((np.asarray(a) < 255).sum()))
+                    if pior:
+                        ruins.append((f"{nome}/{nv}" + (f" (destruição {nivel})" if nivel else ""), pior))
         return ruins
 
     # ---- saída para o motor ----
@@ -291,7 +307,7 @@ class Cenario:
                 L += ["type = anim", f"actionno = {1000 + c.k}"]
             else:
                 L += ["type = normal", f"spriteno = {c.k}, 0"]
-            L += [f"id = {100 + c.k}", f"layerno = {1 if c.frente else 0}",
+            L += [f"id = {NIVEIS[c.nivel][0] if c.nivel else 100 + c.k}", f"layerno = {1 if c.frente else 0}",
                   f"start = {num(c.x - TELA_L // 2)}, {num(c.y)}",
                   f"delta = {num(c.delta[0])}, {num(c.delta[1])}", "mask = 1"]
             if c.alfa:
@@ -327,6 +343,12 @@ class Cenario:
                     L += [f"{k} = " + (", ".join(num(v) for v in v) if isinstance(v, (list, tuple)) else num(v))
                           for k, v in ct.items() if k not in ("tipo", "tempo")]
                     L.append("")
+        # destruição: cada grupo começa visível ou não conforme o nível 0; os lutadores trocam o value
+        for g in sorted({c.nivel for c in self.camadas if c.nivel}, key=lambda g: NIVEIS[g][0]):
+            gid, quando = NIVEIS[g]
+            L += [f"[BGCtrlDef destruicao {gid}]", "looptime = -1", f"ctrlID = {gid}", "",
+                  f"[BGCtrl destruicao {gid}]", "type = Visible", "time = 0, 2000000000",
+                  f"value = {1 if 0 in quando else 0}", f"sctrlid = {gid}", ""]
         return "\r\n".join(L)
 
     def gravar(self, destino, furo_magenta=False):
@@ -370,6 +392,11 @@ class Cenario:
         for nome, camx in (("esq", -self.curso), ("centro", 0), ("dir", self.curso)):
             im = self.compor(camx, 0, 0, fundo=fundo).convert("RGB")
             im.resize((TELA_L * zoom, TELA_A * zoom), Image.NEAREST).save(pasta / f"{self.id}_{nome}.png")
+        if any(c.nivel for c in self.camadas):
+            for nivel in (1, 2):
+                for nome, camx in (("esq", -self.curso), ("centro", 0), ("dir", self.curso)):
+                    im = self.compor(camx, 0, 40, fundo=fundo, nivel=nivel).convert("RGB")
+                    im.save(pasta / f"{self.id}_d{nivel}_{nome}.png")
         quadros = []
         n = 120  # 8 s de jogo a 15 quadros por segundo; a câmera vai e volta de ponta a ponta
         for i in range(n):

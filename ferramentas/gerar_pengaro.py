@@ -4095,10 +4095,20 @@ def main():
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
     import parry  # parry em cima e embaixo, faísca própria e sem a "rede de futebol" (docs/parry.md)
     parry.aplicar("pengaro", SAIDA)
+    import legibilidade  # golpes legíveis (#45): caixa no membro, congelamento, tremida, reação e preparo
+    legibilidade.aplicar("pengaro", SAIDA)
     import gerar_sons  # sons próprios: sound = pengaro.snd no .def e PlaySnd/hitsound no .cns (missão 2026-11-14)
     gerar_sons.ligar("pengaro", SAIDA)  # depois do parry: os estados 761/765 dele também tocam o som (F30)
     import balanceamento  # números do item 7 (attack, defence, velocidade)
     balanceamento.aplicar("pengaro", SAIDA)
+    import cena_transformacao  # issue #49: tudo preto, zoom e clarão no Despertar (depois dos sons: usa o som da pausa)
+    cena_transformacao.aplicar("pengaro", SAIDA)
+    import forma_permanente  # missão dos cenários 4.1: endiabrado até o fim da luta
+    forma_permanente.aplicar("pengaro", SAIDA)
+    import aura_no_corpo  # a aura segue o corpo (issue #51): depois de tudo que regrava o .air, o .sff e o -4
+    aura_no_corpo.aplicar("pengaro", SAIDA)
+    import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
+    destruicao.aplicar("pengaro", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
     if SEM_FOLHA_BOSS:
         print("Endiabrado sem folha própria (pose emprestada do boss):", " ".join(sorted(SEM_FOLHA_BOSS)))

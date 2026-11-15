@@ -166,6 +166,68 @@ def luzes_cidade(longe, n=16, seed=7):
     return quadros
 
 
+def destruir(camadas):
+    """Destruição em dois níveis (issue #35, 4.2). Nível 1: o morro de sempre com fogo no terraço, nas torres e na
+    cidade lá embaixo, rachaduras no piso, os visitantes e os pássaros somem, o povo foge. Nível 2: o morro em ruínas
+    (cena_destruida_larga.png: o Cristo inteiro em cima do pedestal rachado, o terraço quebrado, a escadaria
+    desabando, uma torre torta, uma partida e uma caída, casas sem telhado, cerca quebrada, crateras)."""
+    from cenario_destruicao import Destruicao
+    for c in camadas:
+        if c["nome"] == "visitantes" or c["nome"].startswith("passaro"):
+            c["nivel"] = "0"
+        elif c["nome"] in ("longe", "luzes", "morro", "torres", "farol", "cristo", "holofote", "cerca", "chao"):
+            c["nivel"] = "<2"
+    d = Destruicao(SAIDA)
+    i_ceu = [c["nome"] for c in camadas].index("nuvens_perto") + 1
+    ceus = [d.ceu(1, (16, 34, 50)), d.ceu(2, (40, 80, 110))]
+    m = (LARGURA - 1280) // 2
+
+    # ---- nível 1 (posições na tela em repouso; o delta de cada efeito é o da camada em que ele está) ----
+    d.rachaduras(-m, 0, LARGURA, 720, [(x + m, y, c, a) for x, y, c, a in
+                 [(330, 640, 260, 5), (900, 620, 240, 175), (1500, 650, 200, 10)]], 1, seed=3, achata=0.4,
+                 torto=0.45, grosso=6)
+    d.fogo_com_fumaca(90, 488, 44, 1, delta=0.35, seed=1)           # a cidade lá embaixo
+    d.fogo_com_fumaca(1230, 474, 44, 1, delta=0.35, seed=2, fase=3)
+    d.fogo_com_fumaca(470, 525, 80, 1, delta=0.7, seed=3, fase=5)   # o terraço do Cristo
+    d.fogo_com_fumaca(840, 525, 70, 1, delta=0.7, seed=4, fase=2)
+    d.fogo_com_fumaca(1010, 545, 80, 1, delta=0.7, seed=5, fase=6)  # o pé das torres
+    d.peca("entulho_m", 250, 610, 100, 1)
+    d.peca("entulho_p", 980, 600, 64, 1)
+    d.correndo(0, 590, 240, 1, 6.5, -900, 2300)
+    d.correndo(1, 596, 240, 1, -5.5, 2400, 3100)
+    d.fagulhas(80, 1, seed=5, quantas=30)
+    d.clarao_do_fogo(1, (26, 9, 0))
+    nivel1 = d.camadas
+    d.camadas = []
+
+    # ---- nível 2: o morro em ruínas, uma peça só do tamanho do mundo ----
+    ruina = sem_magenta(Image.open(BRUTO / "cena_destruida_larga.png"))
+    k = LARGURA / ruina.width
+    topo = 660 - round(640 * k)                 # o meio da praça de pedra (y 640) fica no pé dos lutadores
+    alfa_duro(ruina.resize((LARGURA, round(ruina.height * k)), Image.LANCZOS)).save(SAIDA / "morro_ruina.png")
+    base2 = {"nome": "morro_ruina", "imagem": "morro_ruina.png", "delta": [1, 1], "y": topo, "nivel": "2"}
+    R = lambda x, y: (round(x * k) - m, topo + round(y * k))
+    d.fogo_com_fumaca(*R(130, 450), 70, 2, seed=11)                 # casas sem telhado da esquerda
+    d.fogo_com_fumaca(*R(330, 420), 60, 2, seed=12, fase=4)
+    d.fogo_com_fumaca(*R(500, 330), 90, 2, seed=13, fase=2)         # o terraço quebrado
+    d.fogo_com_fumaca(*R(1010, 430), 80, 2, seed=14, fase=6)
+    d.fogo_com_fumaca(*R(1220, 340), 90, 2, seed=15, fase=1)        # o pé das torres
+    d.fogo_com_fumaca(*R(1300, 420), 70, 2, seed=16, fase=3)        # a torre caída
+    d.fogo_com_fumaca(*R(1830, 440), 70, 2, seed=17, fase=5)        # a cidade
+    d.fogo_com_fumaca(*R(2000, 460), 70, 2, seed=18, fase=7)
+    d.peca("caido_velho", *R(700, 0)[:1], R(0, 600)[1], 60, 2)
+    d.peca("caida_amarela", *R(1500, 0)[:1], R(0, 606)[1], 58, 2, espelha=True)
+    d.correndo(0, R(0, 585)[1], 240, 2, 7.5, -700, 1700)
+    d.correndo(1, R(0, 590)[1], 240, 2, -6, 2200, 2300)
+    d.correndo(0, R(0, 582)[1], 240, 2, -8, 3600, 2900)
+    d.fagulhas(40, 2, seed=6, quantas=70, alto=520)
+    d.clarao_do_fogo(2, (44, 14, 0))
+    d.peca("caida_sacola", 40, 718, 80, 2, frente=True)
+    nivel2 = d.camadas
+    return (camadas[:i_ceu] + ceus + camadas[i_ceu:] + nivel1 + [base2] +
+            [c for c in nivel2 if not c.get("frente")] + [c for c in nivel2 if c.get("frente")])
+
+
 def main():
     SAIDA.mkdir(parents=True, exist_ok=True)
     camadas = []
@@ -240,6 +302,7 @@ def main():
     chao.save(SAIDA / "chao.png")
     camadas.append({"nome": "chao", "imagem": "chao.png", "delta": [1, 1], "y": 548})
 
+    camadas = destruir(camadas)
     desc = {"id": "cristo", "nome": "Cristo", "musica": "musicas/cristo.ogg", "musica_nome": "Cenário Cristo",
             "tela": [1280, 720], "largura_mundo": LARGURA, "subida": 160, "chao_y": 660,
             "camera": {"tensao": 200, "segue_vertical": 0.6, "tensao_chao": 120},

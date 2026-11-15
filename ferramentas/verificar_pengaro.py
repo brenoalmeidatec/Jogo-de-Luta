@@ -26,43 +26,28 @@ avisos = []  # regras novas entram como aviso até o conserto delas chegar; não
 
 
 def ler_sff():
-    d = (PASTA / f"{PERSONAGEM}.sff").read_bytes()
-    assert d[:12] == b"ElecbyteSpr\x00" and list(d[12:16]) == [0, 1, 0, 2], "cabeçalho do SFF"
-    ofs_s, n, ofs_p, n_p, ofs_l, len_l, ofs_t, _ = struct.unpack("<8I", d[36:68])
-    assert ofs_l + len_l == len(d) == ofs_t, "tamanho do SFF"
-    g, i, cols, link, po, pl = struct.unpack("<HHHHII", d[ofs_p:ofs_p + 16])
-    assert n_p in (1, 2) and cols == 256 and pl == 1024, "paleta"  # a 2 é a cópia do Endiabrado na seleção
-    pal = d[ofs_l + po:ofs_l + po + pl]
+    """{(grupo, índice): (w, h, eixo x, eixo y, pixels)} e a paleta. Lê pelo conferir_sff, que entende o SFF
+    com bloco tdata e os efeitos em PNG (ferramentas/efeitos.py); sprite em PNG é convertido para a paleta."""
+    import io
+    import conferir_sff
+    pal, nos, _ = conferir_sff.ler(PASTA / f"{PERSONAGEM}.sff")
     sprites = {}
-    nos = []  # na ordem do arquivo, para seguir o link
-    for k in range(n):
-        s = struct.unpack("<HHHHhhHBBIIHH", d[ofs_s + 28 * k:ofs_s + 28 * k + 28])
-        grupo, ind, w, h, ax, ay, link, fmt, prof, ofs, tam, _, _ = s
-        if tam == 0:
-            # Sprite linkado: o motor (shareCopy) usa os pixels e o tamanho do nó `link`, que vem antes; o eixo é deste.
-            assert link < k, f"link para frente no sprite {grupo},{ind}"
-            lw, lh, _, _, lpx = nos[link]
-            assert (lw, lh) == (w, h), f"tamanho do link do sprite {grupo},{ind}"
-            nos.append((lw, lh, ax, ay, lpx))
-            sprites[(grupo, ind)] = nos[-1]
-            continue
-        assert fmt == 2 and prof == 8, f"formato do sprite {grupo},{ind}"
-        dado = d[ofs_l + ofs:ofs_l + ofs + tam]
-        total = struct.unpack("<I", dado[:4])[0]
-        assert total == w * h, f"tamanho do sprite {grupo},{ind}"
-        px = bytearray()
-        j = 4
-        while j < len(dado):
-            b = dado[j]
-            if b & 0xC0 == 0x40:
-                px += bytes((dado[j + 1],)) * (b & 0x3F)
-                j += 2
-            else:
-                px.append(b)
-                j += 1
-        assert len(px) == total, f"RLE do sprite {grupo},{ind}"
-        nos.append((w, h, ax, ay, bytes(px)))
-        sprites[(grupo, ind)] = nos[-1]
+    for no in nos:
+        px = no["px"]
+        if no.get("png"):
+            img = Image.open(io.BytesIO(px[px.find(b"\x89PNG"):])).convert("RGBA")
+            ref = Image.new("P", (1, 1))
+            ref.putpalette(bytes(c for k in range(256) for c in pal[k * 4:k * 4 + 3]))
+            q = img.convert("RGB").quantize(palette=ref, dither=Image.Dither.NONE)
+            idx = bytearray(q.tobytes())
+            alfa = img.getchannel("A").tobytes()
+            for k, v in enumerate(alfa):
+                if v < 128:
+                    idx[k] = 0
+                elif idx[k] == 0:
+                    idx[k] = 1
+            px = bytes(idx)
+        sprites[(no["g"], no["i"])] = (no["w"], no["h"], no["x"], no["y"], px)
     return sprites, pal
 
 

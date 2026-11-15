@@ -1,0 +1,11 @@
+{
+ "pivo": [
+  60,
+  60
+ ],
+ "ticks": 2,
+ "quadros": 8,
+ "laco": -1,
+ "efeito": "pancada",
+ "lutador": "ck"
+}

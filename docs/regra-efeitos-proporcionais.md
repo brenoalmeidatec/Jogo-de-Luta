@@ -46,6 +46,12 @@ desfeita em 2026-11-13.
 - Lembrete do motor: Explod e projétil **não** usam a escala do lutador. O efeito em 3x precisa de `scale = 1/3` no Explod
   (ou `projscale` no projétil), para sair no tamanho certo e nítido.
 
+## Como está feito hoje (issue #38, 2026-11-14)
+
+Golpe normal usa os desenhos do pixelfx pintados na cor do lutador e da forma; especial, super e transformação usam
+efeitos do Blender, também na cor dele. Nada do ChatGPT. Ferramentas: `ferramentas/efeitos.py` (liga tudo) e
+`ferramentas/efeitos_blender.py` (renderiza). Detalhes, cores e temas em [efeitos-38/LEIA-ME.md](efeitos-38/LEIA-ME.md).
+
 ## Para conferir antes de subir
 
 - **Filmar:** um soco fraco, um forte e um super de cada lutador. O fraco quase não tem efeito, o forte se sente, e o
