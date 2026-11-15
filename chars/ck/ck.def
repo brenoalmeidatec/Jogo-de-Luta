@@ -15,6 +15,7 @@ st = ck.cns
 stcommon = common1.cns
 sprite = ck.sff
 anim = ck.air
+sound = ck.snd
 movelist = movelist.dat
 
 [Palette Keymap]

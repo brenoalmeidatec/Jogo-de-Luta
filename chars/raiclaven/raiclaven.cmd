@@ -160,6 +160,12 @@ command = ~B, F, D, y
 time = 24
 
 [Command]
+name = "parry_baixo"
+command = /$D, c
+time = 1
+buffer.time = 1
+
+[Command]
 name = "parry"
 command = /F, c
 time = 1
@@ -303,7 +309,7 @@ trigger1 = var(1)
 type = ChangeState
 value = 3100
 triggerall = command = "golaco"
-triggerall = power >= 1000
+triggerall = power >= 2000
 triggerall = ((var(20) > 0) || (life <= 200 && power >= 2000))
 triggerall = statetype != A
 trigger1 = var(1)
@@ -452,6 +458,13 @@ triggerall = command = "sombra_b"
 triggerall = var(20) > 0
 triggerall = statetype != A
 trigger1 = var(1)
+
+[State -1, Parry embaixo]
+type = ChangeState
+value = 764
+triggerall = command = "parry_baixo"
+triggerall = statetype != A
+trigger1 = ctrl
 
 [State -1, Parry]
 type = ChangeState

@@ -11,6 +11,7 @@ Lê sprites/pengaro/pixel/pengaro.png (9 poses) e escreve:
 Para mudar golpe, dano ou fala, edite este arquivo e rode:
   python ferramentas/gerar_pengaro.py
 """
+import agarrao_mk
 import json
 import math
 import random
@@ -50,7 +51,7 @@ def tempos_agarrao_whisky():
         inicio.append(t)
         t += round(n * RITMO)
     return inicio[5], inicio[10]  # 5 = compasso 4 (chute no contato); 10 = bola 4 (solta a garrafa)
-FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9202: "hit-flash", 9204: "parry",
+FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9202: "hit-flash",  # 9204 ("parry") saiu: parecia rede de futebol
            9205: "ground-slam", 9206: "fireball"}
 
 # Tela de trabalho de cada sprite: pés em (EIXO_X, EIXO_Y).
@@ -668,7 +669,7 @@ FAISCA_FINAL = [("F", 2, 1), ("F", 2, 1.25), (4, 2, 1), (8, 2, 1), (13, 2, 1), (
 FAISCA_DEFESA = [(3, 2, 1), (9, 2, 1), (15, 2, 1)]
 FX_PENGARO = {
     9200: ("whisky_acerto", "sombra_acerto", FAISCA_FRACA), 9201: ("whisky_forte", "sombra_forte", FAISCA_FORTE),
-    9202: ("defesa", "defesa", FAISCA_DEFESA), 9204: ("defesa", "defesa", FAISCA_DEFESA),
+    9202: ("defesa", "defesa", FAISCA_DEFESA),
     9205: ("whisky_forte", "sombra_forte", FAISCA_FINAL),
     9210: (None, "sombra_aura", 2), 9211: (None, "sombra_chao", 2), 9212: (None, "sombra_rastro", 1),
     9213: ("whisky_rastro", None, 1), 9214: ("poeira", None, 1), 9215: (None, "sombra_chao", 1),
@@ -1551,7 +1552,8 @@ ARCADE = {"levanta", "soco", "chute_alto", "martelo", "afastar", "apanha", "qued
           "rasteirinha", "rasteira", "ar_soco", "bicicleta", "cabecada",
           # Lote 6 (2026-11-11): o resto da forma normal. Só despertar_a/b (a cena do Despertar) segue na arte antiga.
           "chute_baixo", "defesa", "bola", "compasso", "armada", "caneta", "rolamento", "agarrao", "golaco", "lata",
-          "provoca", "vitoria", "derrota", "corre", "recuo"}
+          "provoca", "vitoria", "derrota", "corre", "recuo",
+          "despertar_a"}  # 2026-11-14 (#42): a cena do Despertar ganhou folha nova; só despertar_b (o Endiabrado) é e_despertar
 # Folha do gerador -> pasta em quadros_arcade/, quando o nome não é o mesmo. rasteira: a folha arcade da rasteira foi
 # reprovada (duas garrafas, joelheira verde no lugar da caneleira); no lugar dela entra o chute rasteiro dado da base
 # agachada (a folha que veio como "chute_baixo" e era outro golpe). O nome "rasteira" fica no gerador para os sprites
@@ -1565,14 +1567,13 @@ PASTA_ARCADE = {}
 # desenhos bons: ginga (0), garrafa subindo (1) e garrafa erguida (2), com um segundo brinde (1, 2) e a pose final no 2.
 # bola 2 (retoque 2): os dois braços saem do ombro de trás (um ergue a lata, o outro segura a garrafa) e o ombro da
 # frente fica sem braço; repete o 3 (o braço da lata já armado no alto), que é para onde o 2 ia.
-REPETE_ARCADE = {("golaco", 1): 0, ("vitoria", 3): 2, ("vitoria", 4): 1, ("vitoria", 5): 2, ("vitoria", 6): 2,
-                 ("vitoria", 7): 2, ("bola", 2): 3}
+REPETE_ARCADE = {}  # desenhos do padrão novo (2026-11-13, folhas_novas): os defeitos antigos não existem mais
 # Forma endiabrada das folhas novas que não têm e_<folha>: empresta o desenho endiabrado que a ação já usava
 # (correr = andar endiabrado; recuo = e_defesa 6), para o Despertar não mudar.
 ENDIABRADO_EMPRESTADO = {"corre": lambda i: ("anda_fluida", (0, 1, 2, 2, 3, 4, 5, 5)[i]), "recuo": lambda i: ("pulo", 3) if i >= 2 else ("defesa", 6)}  # Lote 7: no ar, o boss encolhido do pulo
 # Desenho arcade deslocado em x (px). afastar 6: o pé de apoio (o de trás, plantado em x=-41 no 5 e -39 no 7) aparecia
 # em -29: o corpo dava um tranco para a frente e voltava.
-DESLOCA_ARCADE = {("afastar", 6): -10}
+DESLOCA_ARCADE = {}  # padrão novo (2026-11-13)
 
 
 # Golpes de pengaro_extra.py com desenho trocado no Pengaró arcade: estado -> {elemento (de 0): (folha, desenho)}.
@@ -1958,9 +1959,12 @@ def acoes_folhas(Q):
     if desenhado():  # recuo (pulinho para trás): sai do chão (2) e fica encolhido no ar (3); era a defesa inclinada
         Q(105, [(f("recuo", 2), 3), (f("recuo", 3), -1)], NO_AR)
     # em pé <-> agachado: troca seca de 2 ticks com um desenho só (eram 6 e 4; o estado já é C desde o tick 0)
-    Q(10, [(f("agachado", 0 if arcade else 2), 2)], BAIXO)
-    Q(11, [(f("agachado", i), 8) for i in (4, 5, 6, 7, 6, 5)], BAIXO)
-    Q(12, [(f("agachado", 0 if arcade else 2), 2)], BAIXO)
+    # Pengaró redesenhado (folha de 2026-11-13): a folha agachado é a descida inteira (0 em pé, 1-2 descendo, 3-5 no
+    # fundo, 6-7 subindo); a troca usa o 2 (meio da descida) e a base agachada respira só entre 4 e 5, os dois mais
+    # baixos, sem o boneco subir até o 7 (meio em pé) no meio do agachado.
+    Q(10, [(f("agachado", 2), 2)], BAIXO)
+    Q(11, [(f("agachado", i), 10) for i in (4, 5)], BAIXO)
+    Q(12, [(f("agachado", 2), 2)], BAIXO)
     Q(40, [(f("pulo", 0), 4)])
     for n in (41, 42, 43):
         Q(n, [(f("pulo", 1), 3), (f("pulo", 2), 5), (f("pulo", 3), 6), (f("pulo", 4), -1)], NO_AR)
@@ -2110,9 +2114,9 @@ def montar_sprites(dados=None, retrato=None, hazaki=False):
     if desenhado():
         # lata: no desenho 1 ele abre a lata com duas mãos sem soltar a garrafa (três mãos); começa do 0, lata na mão
         TROCA_POR_FOLHA.update({"embaixada0": ("lata", 0), "parry": ("defesa", 3)})
-        # agachado arcade: 8 desenhos da base agachada respirando (0 e 7 os mais altos, 3 o mais baixo), sem descida
-        TROCA_POR_FOLHA.update({"agacha0": ("agachado", 0), "agacha1": ("agachado", 3), "agacha2": ("agachado", 4),
-                                "defesa_baixa": ("agachado", 3)})
+        # agachado redesenhado: a folha é a descida (0 em pé, 4 o mais baixo); agachar usa o meio da descida e o fundo
+        TROCA_POR_FOLHA.update({"agacha0": ("agachado", 2), "agacha1": ("agachado", 4), "agacha2": ("agachado", 5),
+                                "defesa_baixa": ("agachado", 4)})
     TROCA_POR_FOLHA.update({f"corre{i}": ("anda_fluida", i if desenhado() else i * 12) for i in range(4)})
 
     # retratos que o IKEMEN usa no menu e nas barras
@@ -2979,7 +2983,7 @@ value = 5100
 
 def reversao(numero, sucesso, atributos, gatilho):
     return (f"[State {numero}, Desvia]\ntype = ReversalDef\ntrigger1 = {gatilho}\n"
-            f"reversal.attr = {atributos}\npausetime = 0,0\nsparkno = S9204\n"
+            f"reversal.attr = {atributos}\npausetime = 0,0\nsparkno = S(ifelse(var(20) > 0, 7691, 7690))\n"  # faísca do parry.py
             f"p1stateno = {sucesso}\np2stateno = 762\n\n")
 
 
@@ -3182,6 +3186,77 @@ def cns_especiais_extra():
 
 def cns_extra():
     return "".join(cns_novo(m) for m in extra.TODOS) + cns_especiais_extra()
+
+
+
+# Música do Despertar (Breno, issue #33). A faixa do lutador (chars/<lutador>/despertar.ogg, feita por
+# converter_musicas.py) substitui a do cenário enquanto a forma dura: na cena da transformação a música do cenário
+# vai baixando até sumir (ModifyBGM a cada tique) e só então entra a do boss (PlayBGM), em loop sem emenda a partir do
+# loopstart de musicas/loops.json ("stagedef." = prefixo vazio do [Music] do cenário). Quando o Despertar acaba, a do cenário volta (se o oponente não estiver desperto).
+# var(51): 0 sem música própria, 2 baixando a do cenário, 1 a do boss tocando. var(52) conta os tiques do fade.
+# var(50) fica para os filmes (filmar_luta.py).
+FADE_MUSICA = 45  # tiques (0,75 s)
+
+
+def musica_despertar_cns():
+    loops = RAIZ / "musicas" / "loops.json"
+    loopstart = 0
+    if loops.exists():
+        for faixa in json.loads(loops.read_text(encoding="utf-8")).values():
+            if faixa["arquivo"] == f"chars/{SAIDA.name}/despertar.ogg":
+                loopstart = int(faixa["loopstart"])
+    f = FADE_MUSICA
+    return f"""; Musica do Despertar (Breno, issue #33): a do cenario baixa ate sumir, entra a do lutador em loop; volta ao fim.
+[State -2, Zera musica na intro]
+type = VarSet
+trigger1 = roundstate < 2
+var(51) = 0
+
+[State -2, Musica do cenario comeca a baixar]
+type = VarSet
+trigger1 = roundstate = 2 && var(51) = 0 && (var(20) > 0 || stateno = 2000)
+var(52) = 0
+
+[State -2, Marca fade da musica]
+type = VarSet
+trigger1 = roundstate = 2 && var(51) = 0 && (var(20) > 0 || stateno = 2000)
+var(51) = 2
+
+[State -2, Musica do cenario baixando]
+type = ModifyBGM
+trigger1 = var(51) = 2 && var(52) < {f}
+volume = 100 - (var(52) + 1) * 100 / {f}
+
+[State -2, Conta fade da musica]
+type = VarAdd
+trigger1 = var(51) = 2 && var(52) < {f}
+var(52) = 1
+
+[State -2, Musica do Despertar entra]
+type = PlayBGM
+trigger1 = var(51) = 2 && var(52) >= {f}
+bgm = "despertar.ogg"
+volume = 100
+loop = 1
+loopstart = {loopstart}
+
+[State -2, Marca musica do Despertar]
+type = VarSet
+trigger1 = var(51) = 2 && var(52) >= {f}
+var(51) = 1
+
+[State -2, Musica do cenario volta]
+type = PlayBGM
+trigger1 = var(51) != 0 && var(20) <= 0 && stateno != 2000
+trigger1 = NumEnemy = 0 || enemy,var(51) != 1
+source = "stagedef."
+
+[State -2, Desmarca musica do Despertar]
+type = VarSet
+trigger1 = var(51) != 0 && var(20) <= 0 && stateno != 2000
+var(51) = 0
+
+"""
 
 
 def montar_cns(hazaki=False):
@@ -3412,7 +3487,7 @@ type = VarAdd
 trigger1 = var(20) > 0
 var(20) = -1
 
-[State -2, Ressaca começa]
+""" + musica_despertar_cns() + """[State -2, Ressaca começa]
 type = VarSet
 trigger1 = var(20) = 1
 var(21) = 60
@@ -3724,7 +3799,7 @@ def montar_cmd(hazaki=False):
 DEF = """; Gerado por ferramentas/gerar_pengaro.py. Edite lá, não aqui.
 [Info]
 name = "Pengaro"
-displayname = "Pengaro"
+displayname = "Pengaró"
 versiondate = 11,05,2026
 mugenversion = 1.1
 author = "Breno"
@@ -3760,8 +3835,8 @@ Mão de Sombra <#bebebe>(projétil)</>	_D_D^X
 Chute da Corrente					_D_D^Y
 Sombra Atravessada					_D_D^A
 Queda Escura						_D_D^B
-Corrente Y: Revolta, Sola de Ferro, Cabeçada, Roda	^Y^Y^Y^Y
-Corrente B: Calcanhar, Afastar, Armada, Chute Partido	^B^B^B^B
+Y: Revolta, Sola de Ferro, Cabeçada, Roda	^Y^Y^Y^Y
+B: Calcanhar, Afastar, Armada, Chute Partido	^B^B^B^B
 Kombo Possessão						^B,^A,^X
 
 <#f0f000>:Correntes (acertando os 3, o 4º derruba):</>
@@ -3989,10 +4064,30 @@ def main():
         air, cns = hd.aplicar(s, air, cns, [(QUADROS_ARCADE, QUADROS_ARCADE_HD)], SPRITES_VITIMA)
         (SAIDA / "pengaro.air").write_text(air, encoding="utf-8", newline="\n")
         (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8", newline="\n")
+    # agarrão em pé segura-e-bate (ferramentas/agarrao_mk.py): montado dos golpes que ele já tem, depois do HD
+    air, cns = agarrao_mk.aplicar("pengaro", air, cns)
+    (SAIDA / "pengaro.air").write_text(air, encoding="utf-8", newline="\n")
+    (SAIDA / "pengaro.cns").write_text(cns, encoding="utf-8", newline="\n")
     escrever_sff(SAIDA / "pengaro.sff", s, manter=sprites_mantidos(air, cns))
     (SAIDA / "pengaro.cmd").write_text(montar_cmd(), encoding="utf-8")
     (SAIDA / "pengaro.def").write_text(DEF, encoding="utf-8", newline="\n")
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
+    import parry  # parry em cima e embaixo, faísca própria e sem a "rede de futebol" (docs/parry.md)
+    parry.aplicar("pengaro", SAIDA)
+    import legibilidade  # golpes legíveis (#45): caixa no membro, congelamento, tremida, reação e preparo
+    legibilidade.aplicar("pengaro", SAIDA)
+    import gerar_sons  # sons próprios: sound = pengaro.snd no .def e PlaySnd/hitsound no .cns (missão 2026-11-14)
+    gerar_sons.ligar("pengaro", SAIDA)  # depois do parry: os estados 761/765 dele também tocam o som (F30)
+    import balanceamento  # números do item 7 (attack, defence, velocidade)
+    balanceamento.aplicar("pengaro", SAIDA)
+    import cena_transformacao  # issue #49: tudo preto, zoom e clarão no Despertar (depois dos sons: usa o som da pausa)
+    cena_transformacao.aplicar("pengaro", SAIDA)
+    import forma_permanente  # missão dos cenários 4.1: endiabrado até o fim da luta
+    forma_permanente.aplicar("pengaro", SAIDA)
+    import aura_no_corpo  # a aura segue o corpo (issue #51): depois de tudo que regrava o .air, o .sff e o -4
+    aura_no_corpo.aplicar("pengaro", SAIDA)
+    import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
+    destruicao.aplicar("pengaro", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
     if SEM_FOLHA_BOSS:
         print("Endiabrado sem folha própria (pose emprestada do boss):", " ".join(sorted(SEM_FOLHA_BOSS)))

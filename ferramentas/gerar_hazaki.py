@@ -13,6 +13,7 @@ sprites/hazaki/quadros_arcade/<folha>/00..07.png (ferramentas/folhas_hazak_arcad
 O Despertar (Diabo Loiro) NÃO entra: as folhas d_* não existem. Não há comando `despertar` nem estado 2000; var(20)
 fica sempre 0. Ficha: docs/fichas/hazaki.md. Especificação e pendências: docs/arcade/hazak_gerador.md.
 """
+import agarrao_mk
 import json
 import re
 import sys
@@ -47,7 +48,7 @@ gp.FRACOS = {g.n for g in hg.NORMAIS + hg.CORRENTES + hg.KOMBOS if g.classe == "
 gp.BALOES_LIGADOS = False
 # efeitos do pixelfx (assets/efeitos): acerto fraco, crítico, parry, asfalto, soco seco, subida, poeira de pé no chão
 # e defesa. O charge-up entra com o Despertar; o hit-flash não é usado.
-gp.FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9204: "parry", 9205: "ground-slam", 9207: "blunt-hit",
+gp.FAISCAS = {9200: "hit-spark", 9201: "crit-hit", 9205: "ground-slam", 9207: "blunt-hit",
               9208: "uppercut", 9209: "heavy-landing", 9216: "shield-block"}
 # classe -> (pausetime, guard.pausetime, envshake, fall.envshake, faísca, sparkscale, hitsound)
 gp.IMPACTO = {
@@ -253,7 +254,7 @@ def montar_sprites():
     return s
 
 
-CENTRADAS = (9200, 9201, 9204, 9207, 9216)  # faíscas de acerto, defesa e parry
+CENTRADAS = (9200, 9201, 9207, 9216)  # faíscas de acerto, defesa e parry
 DESENHOS_DA_POEIRA = 28
 POEIRA = ((0, (14, 12, 10)), (.5, (118, 108, 98)), (1, (244, 236, 222)))  # asfalto: o ground-slam do pixelfx é azul
 
@@ -519,9 +520,14 @@ def montar_air(s, faiscas):
         Q(n, F("rolada_tatame 2/3 3/3 4/3 5/3"), AGACHADO)
     Q(5300, F("apanha 1/8 0/8"))
 
-    # projéteis (provisórios)
+    # projéteis: a pedra e a bola de ki. Os desenhos daqui são trocados pelos do Blender no diabo_loiro.py (#44)
     Q(1005, [(f"fx_lasca{i}", 2) for i in range(8)], [(-12, -14, 12, 2)])
     Q(1605, [(f"fx_estatueta{i}", 3) for i in range(8)], [(-9, -20, 9, 0)])
+    # Diabo Loiro (#44, estados e efeitos no diabo_loiro.py): a cena do "Ô vida, posso despertar?" (bate o pé, olha
+    # para trás e pede; a patroa entra, faz que sim e sai) e a pose em que ele vira o Diabo (último desenho), e a
+    # Rajadona de Ki das Trevas (carrega com as mãos abertas e segura o soco enquanto o raio sai)
+    Q(2000, F(f"despertar_pedido 0/6 1/8 2/6 3/12 4/30 5/20 6/40 7/{DESPERTAR_POSE}"))
+    Q(1650, F(f"pose_super 1/3 3/3 4/10 5/10 soco_reto 3/2 4/{RAJADA_SEGURA} 5/8 6/6 7/4"))
 
     # golpes
     for g in hg.NORMAIS + hg.CORRENTES + hg.KOMBOS:
@@ -751,25 +757,58 @@ def cns_agarroes():
     return "".join(c)
 
 
+# Diabo Loiro: quanto dura a pose da transformação (último desenho da cena) e quanto ele segura o soco da Rajadona
+DESPERTAR_POSE = 40
+RAJADA_SEGURA = 72
+
+# Pedra: tick em que ela pula do chão (pé no asfalto, chute_canela 3) e em que sai voando (soco_reto/chute 4), e o
+# ponto de saída do projétil (na frente do punho ou do pé). A subida do Explod (vel -6, accel .18) leva os 17 ticks.
+PEDRA = {"pula": 8, "sai": 25, "x": 58, "y": -80}
+# Bola de ki: a carga começa no tick 3 (pose_super 3, mãos abrindo) nas duas mãos, e a bola sai do punho do soco.
+KI = {"carga": 4, "maos": ((22, -46), (-30, -46)), "x": 52, "y": -80}
+
+
 def cns_especiais():
     c = []
     H = lambda n, k=0, **kw: gp.hitdef(n, f"Time = {acerto(n, k)}", kw.pop("attr", "S, SA"), kw.pop("dano"),
                                        classe=kw.pop("classe", "especial"), **kw)
 
-    # Punho de Concreto (↓ → x/y): soca o chão e solta uma lasca de asfalto rasteira; defende-se agachado
-    for n, t, vel, dano, extra in ((1000, 12, 3.0, 60, ("projremovetime = 73",)), (1001, 10, 6.0, 70, ())):
+    # Pedra (↓ → x/y, issue #44): chuta o chão, a pedra pula do asfalto e sobe na frente dele (Explod que sobe e
+    # desacelera, 7401) e, no tick 25, ele manda a pedra voando: x soca (mais lenta), y chuta de novo (mais rápida e
+    # mais forte). A pedra em voo é o projétil 1005 e quebra em cacos no acerto (7402). Efeitos: diabo_loiro.py.
+    for n, vel, dano in ((1000, 6.0, 65), (1001, 8.0, 80)):
         c.append(ataque(n))
-        c.append(projetil(n, f"Time = {t}", 1000, 1005, "46, 0", f"{vel}, 0", dano, "L", 9205, chao="Low",
-                          extra=extra))
-        c.append(ctl(n, "Asfalto", "Explod", f"trigger1 = Time = {t}", "anim = 9205", "postype = p1",
-                     "pos = 40, 0", "removetime = -2", "sprpriority = 4", "ownpal = 1"))
+        c.append(poeira(n, f"Time = {PEDRA['pula']}", 50))
+        c.append(ctl(n, "Pedra sobe", "Explod", f"trigger1 = Time = {PEDRA['pula']}", "anim = 7401", "id = 7401",
+                     "postype = p1", "pos = 54, -8", "vel = 0.15, -6", "accel = 0, .18", "bindtime = 0",
+                     f"removetime = {PEDRA['sai'] - PEDRA['pula']}", "sprpriority = 4", "ownpal = 1"))
+        c.append(ctl(n, "Pedra sai", "RemoveExplod", f"trigger1 = Time = {PEDRA['sai']}", "id = 7401"))
+        c.append(ctl(n, "Projétil", "Projectile", f"trigger1 = Time = {PEDRA['sai']}", "projid = 1000",
+                     "projanim = 1005", "projhitanim = 7402", "projremanim = 7402", "projcancelanim = 7402",
+                     "projhits = 1", "projpriority = 2", f"offset = {PEDRA['x']}, {PEDRA['y']}",
+                     f"velocity = {vel}, 0", "attr = S, SP", f"damage = {dano}, 5", "animtype = Med",
+                     "guardflag = MA", "hitflag = MAF", "pausetime = 4, 10", "sparkno = -1",
+                     "guard.sparkno = S9216", "hitsound = F5,2", "guardsound = F6,0", "ground.type = High",
+                     "ground.slidetime = 12", "ground.hittime = 18", "ground.velocity = -4",
+                     "air.velocity = -2,-3.5"))
         c.append(gp.fim(n))
 
-    # Estatueta Dourada (→ ← x/y): projétil em arco; x cai perto (~140 px), y cai longe (~240 px)
-    for n, vel, acel, dano in ((1600, "2.5, -6", .35, 70), (1601, "4.5, -6.5", .35, 80)):
+    # Bola de ki (→ ← x/y, issue #44): carrega o ki com as mãos abertas (brilho vermelho nas duas mãos, 7410) e solta
+    # a bola vermelha (1605) com o soco; estoura no acerto (7411). O y carrega mais: sai mais rápida e bate mais.
+    for n, vel, dano in ((1600, 4.5, 70), (1601, 6.5, 90)):
+        solta = duracao(anim(n)[0][:4]) + 2  # fim da carga (4 desenhos de pose_super) + o 1º do soco
         c.append(ataque(n))
-        c.append(projetil(n, "Time = 14", 1001, 1605, "20, -110", vel, dano, "MA", 9207,
-                          extra=(f"accel = 0, {acel}", "projheightbound = -400, 0")))
+        for k, (x, y) in enumerate(KI["maos"]):
+            c.append(ctl(n, f"Carga {k + 1}", "Explod", f"trigger1 = Time = {KI['carga']}", "anim = 7410",
+                         f"id = {7410 + k}", "postype = p1", f"pos = {x}, {y}", f"removetime = {solta - KI['carga']}",
+                         "sprpriority = 4", "ownpal = 1"))
+        c.append(ctl(n, "Projétil", "Projectile", f"trigger1 = Time = {solta}", "projid = 1001",
+                     "projanim = 1605", "projhitanim = 7411", "projremanim = 7411", "projcancelanim = 7411",
+                     "projhits = 1", "projpriority = 2", f"offset = {KI['x']}, {KI['y']}", f"velocity = {vel}, 0",
+                     "attr = S, SP", f"damage = {dano}, 6", "animtype = Med", "guardflag = MA", "hitflag = MAF",
+                     "pausetime = 4, 10", "sparkno = -1", "guard.sparkno = S9216", "hitsound = F5,2",
+                     "guardsound = F6,0", "ground.type = High", "ground.slidetime = 12", "ground.hittime = 18",
+                     "ground.velocity = -4", "air.velocity = -2,-3.5"))
         c.append(gp.fim(n))
 
     # Ascensão de Faixa (→ ↓ x/y): antiaéreo de joelho e ombro, pés no chão
@@ -1045,7 +1084,7 @@ def montar_cns():
              "; Gerado por ferramentas/gerar_hazaki.py. Edite lá, não aqui."),
             ("; var(20) tempo de Despertar, var(21) ressaca",
              "; var(12) Pega Bolado defendido, var(13)/(14) passagens do Rapidinho,\n"
-             "; var(20) e var(37) reservadas para o Despertar (sempre 0: ele não entra nesta versão)"),
+             "; var(20) tempo do Diabo Loiro (Despertar), var(37) arte do Diabo ligada (diabo_loiro.py)"),
             ("life = 1000", "life = 900"), ("defence = 100", "defence = 90"),
             ("walk.fwd = 2.7", "walk.fwd = 3.4"), ("walk.back = -2.2", "walk.back = -2.8"),
             ("run.fwd = 5.6, 0", "run.fwd = 7.2, 0"), ("run.back = -5.2,-3.4", "run.back = -6.4,-3.6")):
@@ -1064,8 +1103,8 @@ COMANDOS_DE_TOQUE = [  # (nome, comando, estado) na ordem de prioridade do [Stat
     ("fb_y", "~F, B, y", 1601), ("fb_x", "~F, B, x", 1600), ("df_b", "~D, F, b", 1301), ("df_a", "~D, F, a", 1300),
     ("db_y", "~D, B, y", 1101), ("db_x", "~D, B, x", 1100), ("db_b", "~D, B, b", 1401), ("db_a", "~D, B, a", 1400),
 ]
-NOMES_DE_ESPECIAL = {1000: "Punho de Concreto", 1100: "Guarda de Aço", 1200: "Ascensão de Faixa",
-                     1300: "Giro de Garagem", 1400: "Corte de Base", 1500: "Pega Bolado", 1600: "Estatueta Dourada",
+NOMES_DE_ESPECIAL = {1000: "Pedra", 1100: "Guarda de Aço", 1200: "Ascensão de Faixa",
+                     1300: "Giro de Garagem", 1400: "Corte de Base", 1500: "Pega Bolado", 1600: "Bola de ki",
                      1700: "Rolada de Tatame"}
 
 
@@ -1273,12 +1312,34 @@ def main():
     if (QUADROS.parent / "quadros_arcade_hd").exists():
         import hd
         air, cns = hd.aplicar(s, air, cns, [(QUADROS, QUADROS.parent / "quadros_arcade_hd")], gp.SPRITES_VITIMA)
+    # agarrão em pé segura-e-bate (ferramentas/agarrao_mk.py): montado dos golpes que ele já tem, depois do HD
+    air, cns = agarrao_mk.aplicar("hazaki", air, cns)
     (SAIDA / "hazaki.cns").write_text(cns.rstrip() + "\n", encoding="utf-8", newline="\n")
     (SAIDA / "hazaki.cmd").write_text(cmd.rstrip() + "\n", encoding="utf-8", newline="\n")
     (SAIDA / "hazaki.air").write_text(air, encoding="utf-8", newline="\n")
     gravados = escrever_sff(SAIDA / "hazaki.sff", s, gp.sprites_mantidos(air, cns))
     (SAIDA / "hazaki.def").write_text(DEF, encoding="utf-8", newline="\n")
+    import gerar_sons  # sons próprios: sound = hazaki.snd no .def e PlaySnd/hitsound no .cns (missão 2026-11-14)
+    gerar_sons.ligar("hazaki", SAIDA)
     (SAIDA / "movelist.dat").write_text(hg.MOVELIST, encoding="utf-8", newline="\n")
+    import parry  # parry em cima e embaixo, faísca própria e sem a "rede de futebol" (docs/parry.md)
+    parry.aplicar("hazaki", SAIDA)
+    gerar_sons.ligar("hazaki", SAIDA)  # depois do parry: os estados 761/765 dele também tocam o som (F30)
+    import balanceamento  # números do item 7 (attack, defence, velocidade)
+    balanceamento.aplicar("hazaki", SAIDA)
+    import diabo_loiro  # issue #44: pedra, bola de ki e o Diabo Loiro (efeitos do Blender em PNG no .sff)
+    diabo_loiro.aplicar(SAIDA)
+    import legibilidade  # golpes legíveis (#45): caixa no membro, congelamento, tremida, reação e preparo
+    legibilidade.aplicar("hazaki", SAIDA)
+    import cena_transformacao  # issue #49: tudo preto, zoom e clarão no Despertar (sempre por último)
+    cena_transformacao.aplicar("hazaki", SAIDA)
+    import forma_permanente  # missão dos cenários 4.1: endiabrado até o fim da luta
+    forma_permanente.aplicar("hazaki", SAIDA)
+    import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
+    destruicao.aplicar("hazaki", SAIDA)
+    # retratos em PNG (seleção, VS e HUD): os pós-passos regravam o .sff e deixariam os retratos antigos, pequenos
+    import trocar_retratos
+    assert trocar_retratos.trocar("hazaki"), "faltam os retratos do Hazak em sprites/retratos"
     print(f"{gravados} sprites no .sff (de {len(s.lista)} carregados), {len(a.acoes)} ações em {SAIDA}")
     if "--contato" in sys.argv:
         contato(Path(sys.argv[sys.argv.index("--contato") + 1]), s)

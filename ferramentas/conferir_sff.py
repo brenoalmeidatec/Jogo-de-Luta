@@ -56,7 +56,7 @@ def ler(caminho):
             continue
         base = ofs_l if fl == 0 else ofs_t
         raw = b[base + off:base + off + ln]
-        if fmt in (10, 11, 12) and g == 9000:
+        if fmt in (10, 11, 12):  # PNG: retratos (9000) e efeitos do pixelfx (ferramentas/efeitos.py)
             # retrato em PNG (trocar_retratos.py, fora da paleta): px guarda o PNG cru, png=True
             nos.append(dict(g=g, i=i, w=w, h=h, x=x, y=y, link=None, px=raw, hw=(w, h), png=True))
             continue

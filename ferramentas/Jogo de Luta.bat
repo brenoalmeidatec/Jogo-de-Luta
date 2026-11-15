@@ -151,8 +151,13 @@ if (Test-Path (Join-Path $game 'stages\maria_fumaca.def')) {
     if ($LASTEXITCODE -ge 8) { Fechar 'Nao consegui instalar os cenarios.' }
     $cenario = 'stages/maria_fumaca.def'
     $texto = [regex]::Replace($texto, '(?m)^(\s*(?:pengaro|hazaki|gutto|raiclaven|ck|gbzin)\s*,\s*)stages/stage0[-\w]*\.def', "`$1$cenario")
-    if ($texto -notmatch '(?m)^\s*stages/maria_fumaca\.def') {
-        $texto = [regex]::Replace($texto, '(?im)^\[ExtraStages\][^\r\n]*\r?\n', "`$0stages/maria_fumaca.def`r`n")
+    # Todo cenario Nazafights (menos o de teste da branch cenarios) entra na tela de escolha de mapa (issue #35).
+    foreach ($def in @(Get-ChildItem (Join-Path $game 'stages') -Filter '*.def' | Where-Object { $_.BaseName -ne 'teste' } | Sort-Object Name -Descending)) {
+        $linha = "stages/$($def.Name)"
+        if ($texto -notmatch ('(?m)^\s*' + [regex]::Escape($linha))) {
+            # cada um entra logo abaixo do [ExtraStages]: por isso a volta e de tras para frente (fica em ordem alfabetica)
+            $texto = [regex]::Replace($texto, '(?im)^\[ExtraStages\][^\r\n]*\r?\n', "`$0$linha`r`n")
+        }
     }
 }
 foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven', 'ck', 'gbzin')) {
@@ -167,6 +172,9 @@ foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven', 'ck', 'gbzin')
 # Tira da selecao os lutadores de exemplo que vem com o IKEMEN (Kung Fu Man e variacoes): so comenta a linha,
 # os arquivos ficam (o motor ainda pode precisar deles).
 $texto = [regex]::Replace($texto, '(?m)^([ \t]*kfm\w*[ \t]*,)', ';$1')
+# Tira da escolha os cenarios de exemplo do IKEMEN (Breno, issue #34): fica so o Training Room HD azul
+# (stage0-720, cenario de teste) e os de Nazare. So comenta a linha no [ExtraStages], os arquivos ficam.
+$texto = [regex]::Replace($texto, '(?m)^([ \t]*stages/(?:stage0|stage1|stage3d|stage3d_outline|stageZ|interactivestage|kfm)\.def[ \t]*(?:,|\r?$))', ';$1')
 [IO.File]::WriteAllText($select, $texto)
 
 # Layout Nazafights: espelha so a pasta dele em data\nazafight. O /MIR desfaz o que o Ajustar-Menus (passo 5)
@@ -218,6 +226,10 @@ if (Test-Path $cfg) {
             $nl = if ($t -match "`r`n") { "`r`n" } else { "`n" }
             $t = ([regex]'(?im)^\[Config\][^\r\n]*').Replace($t, ('$0' + $nl + $linha), 1)
         }
+    }
+    # Demo da abertura sem o link do motor no pe da tela: o States usa o demo.zss do layout (motif/nazafight).
+    if (Test-Path (Join-Path $motor 'data\nazafight\demo.zss')) {
+        $t = $t.Replace('data/demo.zss', 'data/nazafight/demo.zss')
     }
     $t = [regex]::Replace($t, '(?im)^(VsScreenLoading\s*=)[^\r\n]*', '${1} 1')
     $t = [regex]::Replace($t, '(?im)^(WindowScaleMode\s*=)[^\r\n]*', '${1} 0')

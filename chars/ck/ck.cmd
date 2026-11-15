@@ -15,6 +15,16 @@ command.time = 15
 command.buffer.time = 3
 
 [Command]
+name = "poder47"
+command = ~D, F, D, F, x
+time = 30
+
+[Command]
+name = "poder47"
+command = ~D, F, D, F, y
+time = 30
+
+[Command]
 name = "golaco"
 command = ~B, F, D, a
 time = 24
@@ -185,6 +195,12 @@ command = ~B, F, D, x+y
 time = 24
 
 [Command]
+name = "parry_baixo"
+command = /$D, c
+time = 1
+buffer.time = 1
+
+[Command]
 name = "parry"
 command = /F, c
 time = 1
@@ -282,6 +298,15 @@ time = 1
 
 [Statedef -1]
 
+[State -1, Poder de longe do despertado (despertados_47.py)]
+type = ChangeState
+value = 4750
+triggerall = command = "poder47"
+triggerall = var(20) > 0
+triggerall = statetype != A
+triggerall = NumProjID(4750) = 0
+trigger1 = ctrl
+
 [State -1, Pode cancelar]
 type = VarSet
 trigger1 = 1
@@ -291,7 +316,7 @@ var(1) = ctrl || ((stateno = 200 || stateno = 210 || stateno = 215 || stateno = 
 type = ChangeState
 value = 3100
 triggerall = command = "baile"
-triggerall = power >= 1000
+triggerall = power >= 2000
 triggerall = var(20) > 0
 triggerall = statetype != A
 trigger1 = var(1)
@@ -482,6 +507,13 @@ triggerall = statetype != A || (stateno = 50 && Time < 8)
 trigger1 = var(1)
 trigger2 = stateno = 40
 
+[State -1, Parry embaixo]
+type = ChangeState
+value = 764
+triggerall = command = "parry_baixo"
+triggerall = statetype != A
+trigger1 = ctrl
+
 [State -1, Parry]
 type = ChangeState
 value = 760
@@ -587,10 +619,38 @@ triggerall = p2statetype = C
 triggerall = p2movetype != H
 trigger1 = 1
 
+[State -1, Agarrao do despertado (despertados_47.py)]
+type = ChangeState
+value = 4700
+triggerall = var(20) > 0
+triggerall = command = "y"
+triggerall = statetype = S
+triggerall = ctrl
+triggerall = stateno != 100
+triggerall = p2bodydist x < 8
+triggerall = p2statetype != A
+triggerall = p2movetype != H
+triggerall = (command = "holdfwd" || command = "holdback")
+trigger1 = 1
+
 [State -1, Agarrao]
 type = ChangeState
 value = 800
 triggerall = command = "y"
+triggerall = statetype = S
+triggerall = ctrl
+triggerall = stateno != 100
+triggerall = p2bodydist x < 8
+triggerall = p2statetype != A
+triggerall = p2movetype != H
+triggerall = (command = "holdfwd" || command = "holdback")
+trigger1 = 1
+
+[State -1, Agarrao do despertado (despertados_47.py)]
+type = ChangeState
+value = 4700
+triggerall = var(20) > 0
+triggerall = command = "b"
 triggerall = statetype = S
 triggerall = ctrl
 triggerall = stateno != 100

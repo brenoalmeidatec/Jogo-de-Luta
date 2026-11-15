@@ -29,6 +29,10 @@ docs/arcade/cenarios.md. Resumo dos campos (os que têm padrão podem faltar):
     seno_x / seno_y [amplitude, periodo_em_ticks, fase_em_ticks]
     mistura "normal" | "soma" | "subtrai",  alfa [origem, destino] (0 a 256, liga addalpha)
     suave                           troca o padrão do cenário só nesta camada
+    nivel "0" | "<2" | ">=1" | "1" | "2"   destruição (issue #35, item 4.2): em que nível a camada aparece. Sem o campo,
+                                    aparece sempre. 0 = lugar inteiro; 1 = o primeiro lutador despertou; 2 = os dois.
+                                    As camadas de cada grupo dividem um id (909 a 913) e um BGCtrl Visible com sctrlid
+                                    igual, que os lutadores mexem por ModifyBGCtrl (ferramentas/destruicao.py).
     controles [{"tipo": "VelSet", "tempo": [0], "x": 0.3}, ...], ciclo 480   BGCtrl em loop (VelSet, VelAdd,
                                     PosSet, PosAdd, SinX, SinY, Visible, Enabled, Anim) com os parâmetros do motor
 
@@ -36,20 +40,37 @@ Antes de gravar, o gerador simula a câmera nos quatro cantos do curso e recusa 
 desenhado), que no jogo viraria faixa preta. --previa grava a simulação (três posições e um GIF) para olhar sem motor.
 """
 import argparse
+import re
 import json
 import math
 import sys
 from pathlib import Path
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageDraw
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from layout_sff import escrever_sff2  # noqa: E402  (SFF v2 com PNG de 32 bits, o mesmo do layout Nazafights)
+from layout_sff import escrever_sff2, escrever_sff2_bruto, ler_sff2  # noqa: E402  (SFF v2 com PNG de 32 bits, o mesmo do layout Nazafights)
 
 RAIZ = Path(__file__).resolve().parent.parent
+
+
+def loop_da_musica(arquivo):
+    """loopstart (amostras) da faixa em musicas/loops.json, feito por converter_musicas.py; 0 se não tiver."""
+    loops = RAIZ / "musicas" / "loops.json"
+    if not loops.exists():
+        return 0
+    for faixa in json.loads(loops.read_text(encoding="utf-8")).values():
+        if faixa["arquivo"] == arquivo:
+            return int(faixa["loopstart"])
+    return 0
 TELA_L, TELA_A = 320, 180
+RETRATO_TELA = (640, 360)   # prévia na tela de escolha de mapa (px da janela 1280x720)
+RETRATO_FAIXA = 42          # faixa da música embaixo da prévia (múltiplo de 3: a letra vai em 3x)
+RETRATO_QUADROS, RETRATO_TICKS = 12, 8
 MISTURAS = {"normal": "none", "soma": "add", "subtrai": "sub"}
+# grupo de destruição -> (id do grupo e do sctrlid, níveis em que aparece)
+NIVEIS = {"0": (909, (0,)), "<2": (910, (0, 1)), ">=1": (911, (1, 2)), "2": (912, (2,)), "1": (913, (1,))}
 TIPOS_CTRL = {"velset", "veladd", "posset", "posadd", "sinx", "siny", "visible", "enabled", "anim", "null"}
 
 
@@ -73,7 +94,7 @@ class Camada:
         self.nome = d.get("nome", f"camada{k}")
         desconhecidos = set(d) - {"nome", "imagem", "quadros", "folha", "ticks", "delta", "x", "y", "frente",
                                   "velocidade", "repete", "vao", "seno_x", "seno_y", "mistura", "alfa", "suave",
-                                  "controles", "ciclo"}
+                                  "controles", "ciclo", "nivel"}
         if desconhecidos:
             raise ValueError(f"camada {self.nome}: campo desconhecido {sorted(desconhecidos)}")
         if "folha" in d:
@@ -111,6 +132,12 @@ class Camada:
             raise ValueError(f"camada {self.nome}: mistura {self.mistura!r} (use {', '.join(MISTURAS)})")
         self.alfa = tuple(d["alfa"]) if d.get("alfa") else None
         self.suave = bool(d.get("suave", suave_padrao))
+        self.nivel = d.get("nivel")
+        if self.nivel is not None and str(self.nivel) not in NIVEIS:
+            raise ValueError(f"camada {self.nome}: nivel {self.nivel!r} (use {', '.join(NIVEIS)})")
+        self.nivel = None if self.nivel is None else str(self.nivel)
+        if self.nivel and d.get("controles"):
+            raise ValueError(f"camada {self.nome}: nivel e controles juntos não dá (o id da camada é o do grupo)")
         self.controles = d.get("controles", [])
         self.ciclo = d.get("ciclo")
         for c in self.controles:
@@ -176,32 +203,38 @@ class Cenario:
         self.sombra = (so.get("intensidade", 96), tuple(so.get("cor", (0, 0, 0))), so.get("escala_y", 0.3))
         self.reflexo = int(desc.get("reflexo", 0))
         self.musica = desc.get("musica", "")
+        self.musica_nome = desc.get("musica_nome", "ainda sem música")  # aparece na prévia da escolha de mapa
+        self.loopstart = loop_da_musica("stages/" + self.musica) if self.musica else 0
         self.suave = bool(desc.get("suave", True))
         self.camadas = [Camada(d, k, base, self.suave) for k, d in enumerate(desc["camadas"])]
         if not self.camadas:
             raise ValueError("cenário sem camadas")
 
-    def compor(self, camx=0, camy=0, t=0, margem=0, fundo=(0, 0, 0, 0)):
+    def compor(self, camx=0, camy=0, t=0, margem=0, fundo=(0, 0, 0, 0), nivel=0):
         """Desenha a tela (320x180 mais a margem em volta) como o motor faria no tick t."""
         caixa = (-margem, -margem, TELA_L + margem, TELA_A + margem)
         tela = Image.new("RGBA", (TELA_L + 2 * margem, TELA_A + 2 * margem), fundo)
         for c in sorted(self.camadas, key=lambda c: c.frente):  # as de frente por último, na ordem da lista
+            if c.nivel and nivel not in NIVEIS[c.nivel][1]:
+                continue
             q = c.quadro_no_tick(t)
             for (x, y) in c.copias(camx, camy, t, caixa):
-                _colar(tela, q, x + margem, y + margem)  # soma/subtrai entram na previa como sobreposicao simples
+                _colar(tela, q, x + margem, y + margem, c.mistura)
         return tela
 
     def furos(self):
         """Lista de (canto, pixels sem cobertura) nos quatro cantos do curso da câmera, só com camadas opacas."""
         ruins = []
-        for nome, camx in (("esquerda", -self.curso), ("direita", self.curso)):
-            for nv, camy in (("baixo", 0), ("alto", -self.subida)):
-                pior = 0
-                for t in (0, 97, 1201, 4999):  # camadas que se movem não podem ser a única cobertura
-                    a = self.compor(camx, camy, t).getchannel("A")
-                    pior = max(pior, int((np.asarray(a) < 255).sum()))
-                if pior:
-                    ruins.append((f"{nome}/{nv}", pior))
+        niveis = (0, 1, 2) if any(c.nivel for c in self.camadas) else (0,)
+        for nivel in niveis:
+            for nome, camx in (("esquerda", -self.curso), ("direita", self.curso)):
+                for nv, camy in (("baixo", 0), ("alto", -self.subida)):
+                    pior = 0
+                    for t in (0, 97, 1201, 4999):  # camadas que se movem não podem ser a única cobertura
+                        a = self.compor(camx, camy, t, nivel=nivel).getchannel("A")
+                        pior = max(pior, int((np.asarray(a) < 255).sum()))
+                    if pior:
+                        ruins.append((f"{nome}/{nv}" + (f" (destruição {nivel})" if nivel else ""), pior))
         return ruins
 
     # ---- saída para o motor ----
@@ -210,9 +243,39 @@ class Cenario:
         for c in self.camadas:
             for n, q in enumerate(c.quadros):
                 itens.append((c.k, n, q, 0, 0))
-        retrato = self.compor().convert("RGB").resize((240, 135), Image.NEAREST).crop((0, 17, 240, 117))
-        itens.append((9000, 1, retrato.convert("RGBA"), 0, 0))
+        quadros = self.retrato()
+        itens.append((9000, 1, quadros[0], 0, 0))
+        itens += [(9001, n, q, 0, 0) for n, q in enumerate(quadros)]
         return itens
+
+    def retrato(self):
+        """Prévia da tela de escolha de mapa: a tela com a câmera em repouso em RETRATO_QUADROS quadros (o cenário
+        animado de verdade, um quadro a cada RETRATO_TICKS ticks) e, embaixo, a faixa com a música do mapa.
+        Fica na resolução da janela (640x400 de 1280x720); o portraitscale do .def acerta a escala dos de 320x180."""
+        import gerar_layout as gl
+        L, A = RETRATO_TELA
+        texto = texto_acentuado(gl, f"MÚSICA: {self.musica_nome}".upper())
+        k = 3 if texto.width * 3 <= L - 12 else 2  # nome comprido cai para a letra em 2x
+        faixa = gl.nova(L // k, RETRATO_FAIXA // k)
+        d = ImageDraw.Draw(faixa)
+        d.rectangle([0, 0, faixa.width - 1, faixa.height - 1], fill=gl.cor("breu"))
+        d.line([0, 0, faixa.width - 1, 0], fill=gl.cor("madeira_cl"))
+        faixa.alpha_composite(texto, ((faixa.width - texto.width) // 2, (faixa.height - texto.height) // 2 + 1))
+        faixa = faixa.resize((L, RETRATO_FAIXA), Image.NEAREST)
+        quadros = []
+        for n in range(RETRATO_QUADROS):
+            tela = self.compor(t=n * RETRATO_TICKS).convert("RGB")
+            filtro = Image.NEAREST if TELA_L <= 320 else Image.LANCZOS
+            q = Image.new("RGBA", (L, A + RETRATO_FAIXA))
+            q.paste(tela.resize((L, A), filtro), (0, 0))
+            q.alpha_composite(faixa, (0, A))
+            # 256 cores por quadro: a prévia fica 3x menor no .sff e não dá para ver a diferença nesse tamanho
+            q = q.convert("RGB").quantize(256, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE).convert("RGBA")
+            quadros.append(q)
+        return quadros
+    def linhas_loop(self):
+        # loop sem emenda (Breno, issue #33): o arquivo termina no fim do loop e volta em bgmloopstart
+        return [f"bgmloop = 1", f"bgmloopstart = {self.loopstart}"] if self.loopstart else []
 
     def texto_def(self):
         L = []
@@ -230,20 +293,21 @@ class Cenario:
               f"leftbound = {-self.largura // 2}", f"rightbound = {self.largura // 2}", "",
               "[Bound]", f"screenleft = {self.margem_tela}", f"screenright = {self.margem_tela}", "",
               "[StageInfo]", f"zoffset = {self.chao_y}", "autoturn = 1", "resetBG = 1",
-              f"localcoord = {TELA_L}, {TELA_A}", "xscale = 1", "yscale = 1", "",
+              f"localcoord = {TELA_L}, {TELA_A}", "xscale = 1", "yscale = 1",
+              f"portraitscale = {num(TELA_L / 1280)}", "",
               "[Shadow]", f"intensity = {self.sombra[0]}", "color = " + ",".join(str(v) for v in self.sombra[1]),
               f"yscale = {num(self.sombra[2])}", "fade.range = 0,0", "",
               "[Reflection]", f"intensity = {self.reflexo}", "",
-              "[Music]", f"bgmusic = {self.musica}", "bgmvolume = 100", "",
+              "[Music]", f"bgmusic = {self.musica}", "bgmvolume = 100", *self.linhas_loop(), "",
               "[BGdef]", f"spr = {self.id}.sff", "debugbg = 0", "",
-              "[Begin Action 9000]", "9000,1, 0,0, -1", ""]
+              "[Begin Action 9000]"] + [f"9001,{n}, 0,0, {RETRATO_TICKS}" for n in range(RETRATO_QUADROS)] + [""]
         for c in self.camadas:
             L.append(f"[BG {c.nome}]")
             if c.animada:
                 L += ["type = anim", f"actionno = {1000 + c.k}"]
             else:
                 L += ["type = normal", f"spriteno = {c.k}, 0"]
-            L += [f"id = {100 + c.k}", f"layerno = {1 if c.frente else 0}",
+            L += [f"id = {NIVEIS[c.nivel][0] if c.nivel else 100 + c.k}", f"layerno = {1 if c.frente else 0}",
                   f"start = {num(c.x - TELA_L // 2)}, {num(c.y)}",
                   f"delta = {num(c.delta[0])}, {num(c.delta[1])}", "mask = 1"]
             if c.alfa:
@@ -279,6 +343,12 @@ class Cenario:
                     L += [f"{k} = " + (", ".join(num(v) for v in v) if isinstance(v, (list, tuple)) else num(v))
                           for k, v in ct.items() if k not in ("tipo", "tempo")]
                     L.append("")
+        # destruição: cada grupo começa visível ou não conforme o nível 0; os lutadores trocam o value
+        for g in sorted({c.nivel for c in self.camadas if c.nivel}, key=lambda g: NIVEIS[g][0]):
+            gid, quando = NIVEIS[g]
+            L += [f"[BGCtrlDef destruicao {gid}]", "looptime = -1", f"ctrlID = {gid}", "",
+                  f"[BGCtrl destruicao {gid}]", "type = Visible", "time = 0, 2000000000",
+                  f"value = {1 if 0 in quando else 0}", f"sctrlid = {gid}", ""]
         return "\r\n".join(L)
 
     def gravar(self, destino, furo_magenta=False):
@@ -288,8 +358,32 @@ class Cenario:
         if furo_magenta:
             txt = txt.replace("debugbg = 0", "debugbg = 1")
         (destino / f"{self.id}.def").write_text(txt, encoding="utf-8", newline="")
-        escrever_sff2(destino / f"{self.id}.sff", self.sprites())
+        escrever_sff2(destino / f"{self.id}.sff", self.sprites(), compactos=(9000, 9001))
         return destino / f"{self.id}.def"
+
+    def gravar_so_retrato(self, destino):
+        """Troca só a prévia da escolha de mapa num cenário já gravado, sem regerar as camadas (para um cenário cujo
+        .sff aprovado não bate mais com os PNG da pasta, como a Maria Fumaça de 2026-11-12)."""
+        destino = Path(destino)
+        sff, arq = destino / f"{self.id}.sff", destino / f"{self.id}.def"
+        velhos = [(g, n, w, h, ax, ay, png) for (g, n), (w, h, ax, ay, _f, png) in ler_sff2(sff).items()
+                  if g not in (9000, 9001)]
+        from layout_sff import png_pil
+        q = self.retrato()
+        novos = [(9000, 1, *q[0].size, 0, 0, png_pil(q[0]))]
+        novos += [(9001, n, *im.size, 0, 0, png_pil(im)) for n, im in enumerate(q)]
+        escrever_sff2_bruto(sff, velhos + novos)
+        txt = arq.read_text(encoding="utf-8")
+        nl = "\r\n" if "\r\n" in txt else "\n"
+        acao = nl.join(["[Begin Action 9000]"] + [f"9001,{n}, 0,0, {RETRATO_TICKS}" for n in range(len(q))]) + nl
+        txt, k = re.subn(r"\[Begin Action 9000\][^\[]*?(?=\r?\n\r?\n|\r?\n\[)", acao.rstrip("\r\n"), txt, count=1)
+        if not k:
+            raise SystemExit(f"{arq}: sem [Begin Action 9000]")
+        if not re.search(r"(?im)^portraitscale\s*=", txt):
+            txt = re.sub(r"(?im)^(localcoord\s*=[^\r\n]*)", lambda m: m.group(1) + nl + f"portraitscale = {num(TELA_L / 1280)}",
+                         txt, count=1)
+        arq.write_text(txt, encoding="utf-8", newline="")
+        return arq
 
     def previa(self, pasta, zoom=2):
         pasta = Path(pasta)
@@ -298,6 +392,11 @@ class Cenario:
         for nome, camx in (("esq", -self.curso), ("centro", 0), ("dir", self.curso)):
             im = self.compor(camx, 0, 0, fundo=fundo).convert("RGB")
             im.resize((TELA_L * zoom, TELA_A * zoom), Image.NEAREST).save(pasta / f"{self.id}_{nome}.png")
+        if any(c.nivel for c in self.camadas):
+            for nivel in (1, 2):
+                for nome, camx in (("esq", -self.curso), ("centro", 0), ("dir", self.curso)):
+                    im = self.compor(camx, 0, 40, fundo=fundo, nivel=nivel).convert("RGB")
+                    im.save(pasta / f"{self.id}_d{nivel}_{nome}.png")
         quadros = []
         n = 120  # 8 s de jogo a 15 quadros por segundo; a câmera vai e volta de ponta a ponta
         for i in range(n):
@@ -307,12 +406,33 @@ class Cenario:
         quadros[0].save(pasta / f"{self.id}.gif", save_all=True, append_images=quadros[1:], duration=67, loop=0)
 
 
-def _colar(tela, q, x, y):
-    """alpha_composite com recorte (a cópia pode sair da tela)."""
+def texto_acentuado(gl, texto):
+    """Linha na fonte 5x7 do layout Nazafights, com os acentos (o texto_bits do layout não desenha acento)."""
+    gs = [None if ch == " " else gl.de_desenho(gl.glifo_letra(ch, True), {"#": "farinha"}) for ch in texto]
+    w = sum(g.width if g else 3 for g in gs) + len(gs) - 1
+    img = gl.nova(w, 10)
+    x = 0
+    for g in gs:
+        if g:
+            img.alpha_composite(g, (x, 0))
+        x += (g.width if g else 3) + 1
+    return gl.com_sombra(img, "barro", 1, 1)
+
+
+def _colar(tela, q, x, y, mistura="normal"):
+    """alpha_composite com recorte (a cópia pode sair da tela); "soma" e "subtrai" como o motor faz."""
     x0, y0 = max(x, 0), max(y, 0)
     x1, y1 = min(x + q.width, tela.width), min(y + q.height, tela.height)
     if x1 > x0 and y1 > y0:
-        tela.alpha_composite(q.crop((x0 - x, y0 - y, x1 - x, y1 - y)), (x0, y0))
+        peca = q.crop((x0 - x, y0 - y, x1 - x, y1 - y))
+        if mistura in ("soma", "subtrai"):
+            base = np.asarray(tela.crop((x0, y0, x1, y1))).astype(int)
+            p = np.asarray(peca).astype(int)
+            rgb = p[..., :3] * (p[..., 3:4] > 0)
+            base[..., :3] = np.clip(base[..., :3] + (rgb if mistura == "soma" else -rgb), 0, 255)
+            tela.paste(Image.fromarray(base.astype(np.uint8)), (x0, y0))
+        else:
+            tela.alpha_composite(peca, (x0, y0))
 
 
 def gerar(desc, base, destino=RAIZ / "stages", previa=None, furo_magenta=False, aceita_furo=False):
@@ -338,8 +458,13 @@ def main():
     ap.add_argument("--previa", type=Path, help="pasta para a simulação (3 PNG e 1 GIF)")
     ap.add_argument("--furo-magenta", action="store_true", help="debugbg = 1: furo aparece magenta no jogo (só teste)")
     ap.add_argument("--aceita-furo", action="store_true", help="grava mesmo com furo (só para investigar)")
+    ap.add_argument("--so-retrato", action="store_true",
+                    help="troca só a prévia da tela de escolha de mapa no .def/.sff já gravados (não mexe nas camadas)")
     a = ap.parse_args()
     desc = json.loads(a.descricao.read_text(encoding="utf-8"))
+    if a.so_retrato:
+        print(Cenario(desc, a.descricao.parent).gravar_so_retrato(a.destino), "com a prévia nova")
+        return
     gerar(desc, a.descricao.parent, a.destino, a.previa, a.furo_magenta, a.aceita_furo)
 
 

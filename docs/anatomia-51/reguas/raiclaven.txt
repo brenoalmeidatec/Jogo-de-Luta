@@ -1,0 +1,174 @@
+raiclaven/afastar/00: cabeça +3%
+raiclaven/afastar/03: cabeça +16%
+raiclaven/afastar/04: cabeça +13%
+raiclaven/afastar/05: cabeça +14%
+raiclaven/afastar/06: cabeça +16%
+raiclaven/afastar/07: cabeça +11%
+raiclaven/agachado/00: cabeça +11%
+raiclaven/agachado/04: cabeça +17%
+raiclaven/agachado/06: cabeça +17%
+raiclaven/agarrao/03: cabeça +3%
+raiclaven/agarrao/04: cabeça não medida
+raiclaven/agarrao/06: cabeça não medida
+raiclaven/agarrao/07: cabeça +11%
+raiclaven/anda/00: cabeça +3%
+raiclaven/anda/03: cabeça -4%
+raiclaven/anda/05: cabeça +3%
+raiclaven/apanha/00: cabeça +5%
+raiclaven/apanha/01: cabeça -15%
+raiclaven/apanha/02: cabeça não medida
+raiclaven/apanha/03: cabeça não medida
+raiclaven/apanha/04: cabeça não medida
+raiclaven/apanha/05: cabeça não medida
+raiclaven/apanha/07: cabeça +11%
+raiclaven/ar_soco/01: cabeça -7%
+raiclaven/ar_soco/02: cabeça -15%
+raiclaven/ar_soco/04: cabeça não medida; corpo -17%
+raiclaven/ar_soco/05: cabeça +18%
+raiclaven/ar_soco/06: cabeça +3%
+raiclaven/armada/01: cabeça +16%
+raiclaven/armada/02: cabeça +16%
+raiclaven/armada/03: cabeça +16%
+raiclaven/armada/07: cabeça +3%
+raiclaven/baixo_soco/01: cabeça -4%
+raiclaven/baixo_soco/04: cabeça -4%
+raiclaven/baixo_soco/06: cabeça +3%
+raiclaven/baixo_soco/07: cabeça -4%
+raiclaven/bicicleta/00: cabeça -4%
+raiclaven/bicicleta/01: cabeça -10%
+raiclaven/bicicleta/02: cabeça -10%
+raiclaven/bicicleta/03: cabeça -10%
+raiclaven/bicicleta/04: cabeça -10%
+raiclaven/bicicleta/05: cabeça -10%
+raiclaven/bicicleta/06: cabeça -10%
+raiclaven/bicicleta/07: cabeça -10%
+raiclaven/bola/01: cabeça -4%
+raiclaven/bola/02: cabeça não medida
+raiclaven/bola/03: cabeça -4%
+raiclaven/bola/04: cabeça -4%
+raiclaven/cabecada/03: cabeça +6%
+raiclaven/cabecada/04: cabeça -13%
+raiclaven/cabecada/05: cabeça +15%
+raiclaven/caneta/00: cabeça -15%
+raiclaven/caneta/01: cabeça -15%
+raiclaven/caneta/02: cabeça -15%
+raiclaven/caneta/03: cabeça -11%
+raiclaven/caneta/04: cabeça -15%
+raiclaven/caneta/05: cabeça -13%
+raiclaven/caneta/06: cabeça -13%
+raiclaven/caneta/07: cabeça -15%
+raiclaven/chute_alto/01: cabeça -4%
+raiclaven/chute_alto/03: cabeça -4%
+raiclaven/chute_alto/04: cabeça -4%
+raiclaven/chute_alto/07: cabeça +3%
+raiclaven/chute_baixo/00: cabeça +11%
+raiclaven/chute_baixo/01: cabeça -4%
+raiclaven/chute_baixo/02: cabeça -4%
+raiclaven/chute_baixo/06: cabeça +11%
+raiclaven/chute_baixo/07: cabeça +3%
+raiclaven/compasso/00: cabeça +3%
+raiclaven/compasso/01: cabeça +3%
+raiclaven/compasso/04: cabeça -4%
+raiclaven/compasso/07: cabeça +11%
+raiclaven/defesa/00: cabeça +3%
+raiclaven/defesa/01: cabeça -4%
+raiclaven/defesa/02: cabeça não medida
+raiclaven/defesa/03: cabeça não medida
+raiclaven/defesa/05: cabeça não medida
+raiclaven/defesa/06: cabeça não medida
+raiclaven/defesa/07: cabeça não medida
+raiclaven/derrota/01: cabeça -4%
+raiclaven/derrota/02: cabeça -4%
+raiclaven/derrota/03: cabeça não medida
+raiclaven/derrota/04: cabeça não medida; corpo -12%
+raiclaven/derrota/05: cabeça não medida; corpo -13%
+raiclaven/derrota/06: cabeça não medida; corpo -15%
+raiclaven/derrota/07: cabeça não medida; corpo -16%
+raiclaven/despertar_a/00: cabeça +3%
+raiclaven/despertar_a/01: cabeça +3%
+raiclaven/despertar_a/06: cabeça -12%
+raiclaven/despertar_a/07: cabeça não medida
+raiclaven/despertar_b/00: cabeça +3%
+raiclaven/despertar_b/01: cabeça +3%
+raiclaven/despertar_b/06: cabeça -12%
+raiclaven/despertar_b/07: cabeça não medida
+raiclaven/endiabrado/00: cabeça +5%
+raiclaven/endiabrado/04: cabeça -4%
+raiclaven/endiabrado/05: cabeça -13%
+raiclaven/ginga/00: cabeça +3%
+raiclaven/ginga/01: cabeça +3%
+raiclaven/ginga/07: cabeça +11%
+raiclaven/golaco/00: cabeça +3%
+raiclaven/golaco/02: cabeça -6%
+raiclaven/golaco/03: cabeça +3%
+raiclaven/golaco/04: cabeça não medida; corpo -13%
+raiclaven/golaco/05: cabeça não medida
+raiclaven/golaco/06: cabeça -4%
+raiclaven/golaco/07: cabeça -10%
+raiclaven/lata/00: cabeça +3%
+raiclaven/lata/04: cabeça +3%
+raiclaven/lata/05: cabeça +3%
+raiclaven/lata/07: cabeça +11%
+raiclaven/levanta/00: cabeça +11%
+raiclaven/levanta/01: cabeça -15%
+raiclaven/levanta/02: cabeça -4%
+raiclaven/levanta/03: cabeça -4%
+raiclaven/levanta/04: cabeça +3%
+raiclaven/levanta/06: cabeça não medida
+raiclaven/martelo/01: cabeça -4%
+raiclaven/martelo/02: cabeça -4%
+raiclaven/martelo/03: cabeça +18%
+raiclaven/martelo/04: cabeça +17%
+raiclaven/martelo/05: cabeça -4%
+raiclaven/martelo/06: cabeça -9%
+raiclaven/pente_combo/00: cabeça +3%
+raiclaven/pente_combo/02: cabeça não medida
+raiclaven/pente_combo/04: cabeça +3%
+raiclaven/pente_combo/05: cabeça +3%
+raiclaven/pente_combo/07: cabeça não medida
+raiclaven/provoca/00: cabeça +3%
+raiclaven/provoca/01: cabeça +3%
+raiclaven/provoca/06: cabeça -12%
+raiclaven/provoca/07: cabeça não medida
+raiclaven/pulo/00: cabeça -4%
+raiclaven/pulo/02: cabeça +3%
+raiclaven/pulo/04: cabeça +11%
+raiclaven/pulo/05: cabeça +16%
+raiclaven/pulo/07: cabeça +5%
+raiclaven/queda/00: cabeça não medida; corpo -20%
+raiclaven/queda/01: cabeça não medida; corpo -28%
+raiclaven/queda/02: cabeça não medida; corpo -36%
+raiclaven/queda/03: cabeça -15%
+raiclaven/queda/04: cabeça -15%
+raiclaven/queda/05: cabeça não medida; corpo -41%
+raiclaven/queda/06: cabeça -15%
+raiclaven/queda/07: cabeça -15%
+raiclaven/rasteira/00: cabeça -4%
+raiclaven/rasteira/01: cabeça não medida
+raiclaven/rasteira/02: cabeça não medida
+raiclaven/rasteira/03: cabeça +14%
+raiclaven/rasteira/06: cabeça não medida
+raiclaven/rasteirinha/04: cabeça +3%
+raiclaven/rasteirinha/05: cabeça +3%
+raiclaven/rasteirinha/07: cabeça +3%
+raiclaven/rolamento/00: cabeça +3%
+raiclaven/rolamento/02: cabeça +3%
+raiclaven/rolamento/03: cabeça não medida; corpo +12%
+raiclaven/rolamento/04: cabeça não medida
+raiclaven/rolamento/05: cabeça +17%
+raiclaven/rolamento/07: cabeça +11%
+raiclaven/soco/00: cabeça +11%
+raiclaven/soco/01: cabeça -4%
+raiclaven/soco/02: cabeça -4%
+raiclaven/soco/03: cabeça -4%
+raiclaven/soco/04: cabeça -4%
+raiclaven/soco/06: cabeça -4%
+raiclaven/soco/07: cabeça +11%
+raiclaven/vitoria/00: cabeça +5%
+raiclaven/vitoria/01: cabeça -7%
+raiclaven/vitoria/03: cabeça não medida
+raiclaven/vitoria/04: cabeça não medida
+raiclaven/vitoria/05: cabeça não medida
+raiclaven/vitoria/06: cabeça -13%
+raiclaven/vitoria/07: cabeça não medida
+raiclaven: 272 quadros, 173 com aviso

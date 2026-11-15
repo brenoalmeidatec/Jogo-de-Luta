@@ -29,21 +29,41 @@ def png_rgba(w, h, pix):
             + chunk(b"IDAT", zlib.compress(raw, 9)) + chunk(b"IEND", b""))
 
 
-def escrever_sff2(caminho, sprites):
-    """sprites: lista de (grupo, numero, imagem_PIL_RGBA, eixo_x, eixo_y). Grupo/numero repetido e erro."""
-    vistos = set()
-    nos, dados = bytearray(), bytearray()
+def png_pil(img):
+    """PNG RGBA pelo codificador do Pillow (filtros adaptativos): bem menor que o png_rgba em arte pintada (prévia do
+    cenário). Também determinístico."""
+    import io
+    buf = io.BytesIO()
+    img.save(buf, "PNG", optimize=True)
+    return buf.getvalue()
+
+
+def escrever_sff2(caminho, sprites, compactos=()):
+    """sprites: lista de (grupo, numero, imagem_PIL_RGBA, eixo_x, eixo_y). Grupo/numero repetido e erro.
+    compactos: grupos cujo PNG sai pelo Pillow (png_pil) em vez do png_rgba."""
+    itens = []
     for (g, n, img, ax, ay) in sprites:
-        if (g, n) in vistos:
-            raise ValueError(f"sprite repetido {g},{n} em {caminho}")
-        vistos.add((g, n))
         if img.mode != "RGBA":
             img = img.convert("RGBA")
         w, h = img.size
-        blob = struct.pack("<I", w * h * 4) + png_rgba(w, h, img.tobytes())
+        png = png_pil(img) if g in compactos else png_rgba(w, h, img.tobytes())
+        itens.append((g, n, w, h, ax, ay, png))
+    escrever_sff2_bruto(caminho, itens)
+
+
+def escrever_sff2_bruto(caminho, itens):
+    """itens: lista de (grupo, numero, w, h, eixo_x, eixo_y, png_em_bytes), como o ler_sff2 devolve: permite trocar
+    alguns sprites de um .sff sem recomprimir os outros."""
+    vistos = set()
+    nos, dados = bytearray(), bytearray()
+    for (g, n, w, h, ax, ay, png) in itens:
+        if (g, n) in vistos:
+            raise ValueError(f"sprite repetido {g},{n} em {caminho}")
+        vistos.add((g, n))
+        blob = struct.pack("<I", w * h * 4) + png
         nos += struct.pack("<HHHHhhHBBIIHH", g, n, w, h, ax, ay, 0, 12, 32, len(dados), len(blob), 0, 0)
         dados += blob
-    qtd = len(sprites)
+    qtd = len(itens)
     nos_ofs = 512
     ldata_ofs = nos_ofs + 28 * qtd
     cab = bytearray(512)

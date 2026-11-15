@@ -31,7 +31,7 @@ INI_LINUX = {"MasterVolume": "0", "PauseMasterVolume": "0", "Fullscreen": "0", "
 CMDS = ["x", "y", "a", "b", "c", "holdfwd", "holdback", "holdup", "holddown", "agarrao_whisky", "garrafa_x",
         "garrafa_y", "role_a", "role_b", "sombra_x", "sombra_y", "sombra_a", "sombra_b", "despertar", "FF", "rolar",
         "afastar", "golaco", "golpe_216", "golpe_246", "golpe_201", "golpe_231", "golpe_1400", "golpe_1401",
-        "golpe_1500", "golpe_1501", "golpe_3200", "bola_fraca", "bola_forte", "parry"]
+        "golpe_1500", "golpe_1501", "golpe_3200", "bola_fraca", "bola_forte", "parry", "parry_baixo"]
 # comandos de toque do Hazak (ferramentas/gerar_hazaki.py). Só são injetados no .cmd que os define: os outros não mudam.
 CMDS += ["bfd_a", "bfd_b", "bfd_x", "bfd_y", "df_x", "df_y", "fb_x", "fb_y", "fd_x", "fd_y", "df_a", "df_b", "db_a",
          "db_b", "bf_a", "bf_b", "bd_a", "bd_b", "db_x", "db_y", "bf_y"]
@@ -98,7 +98,7 @@ def main():
         shutil.rmtree(tmp, ignore_errors=True)
 
 
-def preparar(destino, motor, lutador, saida_lua):
+def preparar(destino, motor, lutador, saida_lua, filtro="", acelera=4):
     """Escreve em destino/ o que substitui o motor: os .cmd injetados e o debug.lua com o robô."""
     for nome in (lutador, "hazaki"):
         arq = destino / "chars" / nome / f"{nome}.cmd"
@@ -109,7 +109,8 @@ def preparar(destino, motor, lutador, saida_lua):
     debug.parent.mkdir(parents=True, exist_ok=True)
     debug.write_text((motor / "external/script/debug.lua").read_text(encoding="utf-8") + "\n" +
                      (RAIZ / "ferramentas/robo/robo.lua").read_text(encoding="utf-8").replace("@SAIDA@", saida_lua)
-                     .replace("@LUTADOR@", lutador),
+                     .replace("@LUTADOR@", lutador)
+                     .replace("@FILTRO@", filtro).replace("@ACCEL@", str(acelera)),
                      encoding="utf-8")
 
 
@@ -139,7 +140,7 @@ def rodar_local(motor, lutador, tmp):
     for nome in (lutador, "hazaki"):
         shutil.copytree(RAIZ / "chars" / nome, copia / "chars" / nome, dirs_exist_ok=True)
     saida = tmp / "resultado.txt"
-    preparar(copia, motor, lutador, saida.as_posix())
+    preparar(copia, motor, lutador, saida.as_posix(), filtro=os.environ.get("NAZA_FILTRO", ""))  # NAZA_FILTRO: só os roteiros com esse texto no nome
     print("Rodando o robô (a janela do jogo abre sozinha)...")
     proc = subprocess.Popen([str(copia / "Ikemen_GO.exe")] + argumentos(lutador), cwd=copia,
                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -203,7 +204,7 @@ def rodar_linux(motor, lutador, tmp):
         shutil.copytree(RAIZ / "motif" / "nazafight", copia / "data" / "nazafight", dirs_exist_ok=True)
         INI_LINUX["Motif"] = "data/nazafight/system.def"
     saida = tmp / "resultado.txt"
-    preparar(copia, motor, lutador, saida.as_posix())
+    preparar(copia, motor, lutador, saida.as_posix(), filtro=os.environ.get("NAZA_FILTRO", ""))  # NAZA_FILTRO: só os roteiros com esse texto no nome
     ajustar_ini(copia)
     amb = ambiente_linux(copia)
     print("Rodando o robô no Linux (Xvfb + llvmpipe; leva alguns minutos)...", flush=True)

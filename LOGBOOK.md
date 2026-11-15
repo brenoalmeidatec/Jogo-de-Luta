@@ -2043,3 +2043,424 @@ Um GitHub Action com esse modo rodaria o robô a cada push.
 conceito, a ginga e as folhas; depois `converter_gbzin.py` + `gerar_gbzin.py` de novo. Depois disso, os golpes
 próprios da ficha (Gancho do Pastor, Cabra Solta, agarrões), o Deus Motoboy (folhas e_ e fx_), a aura verde-neon e o
 retrato da seleção (o do HUD saiu minúsculo).
+
+## 2026-11-11 (cenários animados: base pronta, branch `cenarios`)
+
+- **Feito:** `ferramentas/gerar_cenario.py` (descrição em JSON com camadas PNG → `stages/<id>.def` + `.sff` RGBA, com
+  simulação da câmera, recusa de furo e prévia em GIF), `ferramentas/cenario_teste.py` (cenário de teste por código, em
+  `cenarios/teste/` e `stages/teste.*`), `ferramentas/filmar_cenario.py` + `ferramentas/robo/passeio.lua` (filme do
+  passeio pelas duas pontas, com tiras). `sandbox.py` e `filmar_sandbox.py` copiam `stages/` para o motor da sandbox; o
+  `filmar_sandbox.py` ganhou `--cenario` e `--passeio` (mudanças aditivas). Método e medidas da arte em
+  `docs/arcade/cenarios.md`. Provado em dois filmes de 8 s na sandbox: cenário carrega, pés na linha do chão (y = 165),
+  nenhuma borda preta nas pontas nem com a câmera no alto, paralaxe, nuvens, rio e bandeira em quadros, balão em seno,
+  barco por BGCtrl, camada de frente, luz somada e reflexo.
+- **Pendente:** a arte dos quatro lugares (Cristo, Maria Fumaça, praça da prefeitura, passarela) não existe; o launcher
+  não baixa nem instala `stages/` e o `select.def` não lista cenário (o que falta está na seção 7 do `cenarios.md`); o
+  padrão do jogo continua `stage0-720`. Não provado: tremor de tela, `subtrai`/`alfa`, outros BGCtrl, escolha pelo menu.
+- **Próximo:** referência dos lugares, fila de prompts das camadas, converter a arte para a malha 320x180 e gerar os
+  quatro cenários; depois ligar no launcher.
+
+## 2026-11-11 (cenários de Nazaré: projeto e fila de arte, branch `cenarios`)
+
+- **Feito:** `docs/arcade/cenarios_nazare.md`: projeto dos quatro cenários pedidos pelo Alisson (Cristo ao entardecer,
+  Maria Fumaça de noite dentro do galpão da estação, praça da prefeitura em manhã de sol, passarela ao amanhecer com
+  neblina), cada um com lugar real e fontes, camadas com tamanho e delta, paleta, lista do que se mexe (10 ou 11 por
+  cenário) e a fila de 64 imagens para o ChatGPT com prompt pronto (14 + 14 + 13 + 17 + 6 comuns).
+- **Pendente:** nenhuma imagem gerada; a ferramenta de conversão (recorte pela cor de fundo, redução, quantização, fatia
+  das folhas) e o script de montagem de cada cenário (luzes por código + `cenario.json`) não existem; posições são de
+  prancheta, sem prévia nem motor. O topo do documento tem 11 perguntas para o Alisson (qual Cristo, cor da prefeitura,
+  locomotiva dentro do galpão ou na rua, passarela nova ou antiga, luta na beira ou em cima dela, horas do dia).
+- **Próximo:** respostas do Alisson; gerar o lote piloto (4 primeiras imagens de cada cenário); escrever a conversão;
+  montar e filmar um cenário inteiro (sugestão: a praça) antes de pedir o resto.
+
+## 2026-11-11 (cenários: frente PARADA de propósito às 15h50)
+
+O Alisson pediu para ir parando os trabalhos aos poucos, para mudar o modelo de trabalho com segurança. Esta frente
+(cenários animados de Nazaré: Cristo, Maria Fumaça, praça da prefeitura e passarela) foi interrompida durante a
+geração da arte do primeiro cenário.
+
+- **Feito e no git:** `ferramentas/gerar_cenario.py` (camadas, paralaxe, quadros, velocidade, seno, camada de frente),
+  `filmar_cenario.py`, cenário de teste `stages/teste.def` provado na sandbox, `sandbox.py` levando `stages/` ao motor;
+  método e medidas em `docs/arcade/cenarios.md`; pesquisa dos quatro lugares, projeto e fila de 64 imagens com prompt
+  em `docs/arcade/cenarios_nazare.md`; 9 imagens brutas do Cristo em `sprites/cenarios/cristo/bruto/` (céu, chão,
+  cristo, morro, torres, longe, nuvens longe e perto, cerca).
+- **Não feito:** o resto da arte do Cristo; toda a arte da Maria Fumaça, da praça e da passarela; a montagem dos quatro
+  cenários, o filme na sandbox e a conferência. Nenhum cenário de Nazaré existe no jogo ainda.
+- **Antes de retomar:** responder a lista "Para o Alisson confirmar" no topo de `docs/arcade/cenarios_nazare.md`
+  (qual Cristo, como ele está hoje, onde fica a Maria Fumaça, qual passarela). Depois seguir a fila do mesmo arquivo a
+  partir da primeira imagem do Cristo que não está em `bruto/`.
+
+## 2026-11-14 — Pengaró redesenhado do Breno de volta, com correções (Claude, sessão do Alisson)
+
+**Pedido do Breno (#32):** tirar o Pengaró antigo nítido, voltar o redesenho `dc3427b` mantendo a revisão `118326d`,
+conferir as 34 folhas e consertar só o que estiver errado, robô e foto ao lado do CK antes da mugen.
+
+**Feito:** reverts do antigo nítido + reapply do `dc3427b`, sff regerado com o gerador da revisão. Agachado no jogo usa a
+ordem da folha nova (antes subia até um quadro meio em pé no meio do agachado). Riscos soltos apagados nas folhas corre,
+afastar, pulo e rasteira (`ferramentas/limpar_riscos_pengaro.py`). Escala das folhas de parry pela mesma pose.
+Robô 151/0 na nuvem. Plano e lista quadro a quadro: `docs/arcade/pengaro-redesenho-correcoes.md`.
+**Sugestões:** os rastros que sobraram (laranja atrás da garrafa na corrida, mancha em compasso 4/5) pedem retoque à mão
+ou refazer esses quadros no ChatGPT; esperar a lista de erros do Breno na #32.
+## 2026-11-14 — Trilha sonora ligada no jogo (Claude, thread do Alisson)
+
+**Pedido:** avaliar a trilha que o Breno subiu e ligá-la (Alisson aprovou); depois o Breno pediu na #33 loop sem
+emenda e a música do cenário baixando até sumir antes da do boss.
+
+**Feito:** as 11 faixas em OGG (-14 LUFS, loop em batida com crossfade de 120 ms assado, `musicas/loops.json`), ligadas
+no título, na seleção, na Maria Fumaça e no Despertar do Pengaró, CK, Gutto e Raiclaven (fade de 45 tiques com
+`ModifyBGM`, depois `PlayBGM`; a do cenário volta no fim). Ferramentas novas: `converter_musicas.py` e
+`testar_musica.py`. Tudo em [`docs/trilha-sonora.md`](docs/trilha-sonora.md).
+
+**Conferido:** `testar_musica.py` (cenário toca, fade 100→0, entra a do boss, volta a do cenário; volta do loop no
+`loopstart`); robô `--linux`: Pengaró 151/0, CK 191/0, Gutto 146/0, Raiclaven 146/0.
+
+**Não feito / não verificado:** ninguém ouviu as emendas (som `dummy` na nuvem). Os `.cns` de Gutto e Raiclaven
+receberam só o bloco da música (o gerador sem `sprites/*/quadros_hd` sairia em 1x); `.sff`/`.cmd` de todos ficaram
+como estavam. Hazak sem Despertar, então sem música de boss ainda. Cristo, praça e passarela esperam os cenários.
+
+## 2026-11-14 — Issue #35: escolha de mapa e os 5 cenários animados (Claude, thread do Alisson)
+
+**Pedido (Breno, `docs/missao-alisson-cenarios.md`):** tela de escolha de mapa depois da seleção, em todos os modos e
+nunca aleatória; Katiara (boca de fumo, guardas fazendo o 7 sem apontar arma, muro pichado 7 e KT); Cristo, praça e
+passarela de Nazaré animados como a Maria Fumaça, cada um com o seu movimento.
+
+**Feito:**
+- **Escolha de mapa** (já na `mugen`, 69d0b663): painel 210,0 no `system.sff` (`gerar_layout.py`), `stage.*` no
+  `[Select Info]`, módulo `nazafights.lua` liga `main.stageMenu` em todo modo e zera o `stage_randomselect` (a chave com
+  erro de grafia que o `start.lua` v1.0.0 lê). Prévia de cada mapa = ação 9000 do próprio cenário (12 quadros 640x400
+  com a faixa "MÚSICA: ..."), feita pelo `gerar_cenario.py`; `--so-retrato` troca só a prévia (usado na Maria Fumaça,
+  cujo `.sff` aprovado não bate com os PNG da pasta: nunca regerar as camadas dela).
+- **Katiara** (`cenario_katiara.py`): rua, muro 7/KT, guardas (8 poses), moto passando, pipa, varal, nuvens. Música
+  do Breno (`cenario_katiara.m4a`) ligada com loop 27,9 s -> 137,6 s (`converter_musicas.py`).
+- **Cristo** (`cenario_cristo.py`): nuvens em 2 alturas, halo do sol, luzes da cidade, urubus, farol das torres,
+  holofote na estátua, visitantes na escada.
+- **Praça** (`cenario_praca.py`, 4 imagens do ChatGPT): bandeiras da Bahia, do Brasil e do município tremulando
+  (código), sino da Matriz balançando (recortado da arte), pombos voando e ciscando na frente, ambulante acenando,
+  ciclista passando, nuvens.
+- **Passarela** (`cenario_passarela.py`, 3 imagens): água do rio ondulando (linhas deslocadas em seno só nos pixels de
+  água, com inpaint dos obstáculos), reflexo do sol tremendo, sol com halo, garça, canoa a remo cruzando (atrás do
+  guarda-corpo: camada `frente` com tudo que não é água), lampiões tremendo, três faixas de neblina somadas.
+- `ferramentas/testar_mapas.py` abre o jogo de verdade (Xvfb + xdotool), escolhe o mapa N e filma a luta. Ordem da
+  lista: cristo, katiara, maria_fumaca, passarela, praca (`--direita 0..4`). Todos filmados e conferidos quadro a
+  quadro (fotos em `docs/arcade/img/*_luta.png`).
+
+**Lições:**
+- Captura do ChatGPT: a região do `zoom` deve terminar dentro do canvas (1536x1024 -> 940x626; 2172x724 -> 1330x443);
+  1 px a mais traz uma linha/coluna branca da página que estica a caixa da folha (ambulante flutuando).
+- `folha()` apaga fileiras escuras como "linha entre quadros": em folha sem linha use `linhas=False` (a borda dos 8
+  carrinhos alinhados sumia).
+- Chroma key: a buganvília rosa-choque e o reflexo rosa do rio caem no filtro magenta; só o componente grande que
+  encosta em cima é céu.
+- Céu com cúmulos grandes: a cor mais comum da linha pode ser a nuvem (céu saía branco); use a moda só dos pixels azuis.
+
+**Próximo:** layout novo (missão 2026-11-14 item 1) vai redesenhar o painel da escolha de mapa.
+
+## 2026-11-14 — Agarrões segura-e-bate em todos os lutadores (missão 14/11, item 3; issue #37)
+
+**Pedido do Breno:** agarrão como nos jogos de luta clássicos: pega, segura, bate várias vezes e arremessa.
+
+**Feito:** `ferramentas/agarrao_mk.py` refaz o agarrão em pé (800/810) de CK, Gutto, Hazak, Pengaró e Raiclaven
+(Gbzin fica para a branch dele: é só pôr um roteiro em `ROTEIROS`). Sem desenho novo: a ação 810 é montada com os
+quadros dos golpes que cada um já tem, e cada contato cai no tick da caixa de acerto do golpe emprestado, com dano,
+faísca (a mesma do HitDef do golpe), som e o oponente reagindo com a animação de apanhar DELE (estados 822/825/826,
+`ChangeAnim` 5000/5001/5002). No fim: 823 joga para longe; segurando ← sai o 824, que passa por cima e cai atrás.
+- CK, "Gola na Mão: boxe sujo": jab duplo, gancho no fígado, joelhada na coxa, uppercut.
+- Gutto, "Clinch de Muay Thai": joelhada, joelhada subindo, joelhada, chute alto.
+- Pengaró, "Roda de Capoeira com Garrafa": chute baixo, garrafada, meia-lua, aú.
+- Raiclaven, "Corte de Cabelo à Força": tesourada, tesourada de lado, corte de cima, chute giratório.
+- Hazak, "Abraço de Quebrada": soco, cutucão, joelhada, chute alto.
+- Dano 120 no roteiro (antes 100), 4 ou 5 pancadas, 69 a 85 ticks até o arremesso. Escape igual a antes (y ou b no
+  começo, antes da 1ª pancada). O .sff não muda; o RemapPreset do Despertar troca os desenhos sozinho.
+- Os geradores chamam `agarrao_mk.aplicar` no fim (conferido: gerar_ck/hazaki/pengaro saem iguais ao arquivo
+  aplicado). Robô: cenários "agarrao segura-e-bate" (frente e para trás) no `robo.lua` para todos.
+
+**Depois (#47, padrão grande e pesado):** rajadona com rastro do corpo, tremida forte ao soltar, fundo escurecido em
+vermelho e oponente piscando; agarrão do Diabo com fundo escuro, tremida a cada pancada, congela + clarão no final.
+
+**Sugestões:** folhas próprias de agarrão por lutador no ChatGPT (hoje são quadros emprestados); a faísca segue o
+número do HitDef, então quando o item 4 trocar a "rede de futebol" ela muda junto se a troca for no mesmo número;
+agarrão agachado (840) e o de comando (830) ainda são os antigos.
+
+## 2026-11-14 — Layout novo "Arena" (issue #39, item 1 da missão de 14/11)
+
+Título animado (rio ondulando, sol, aves, brasas, brilho no logo), HUD simples, VS com os bustos em tamanho natural e
+seleção de lutador e de mapa no estilo novo. Tudo por `ferramentas/gerar_layout.py` (as funções antigas da feira e do
+HUD de ouro saíram). Robô na nuvem 151/0; fotos do jogo rodando em `docs/previas-layout/jogo/`. Detalhes, armadilhas
+e sugestões em `docs/layout-novo.md`.
+## 2026-11-14 — Parry em cima e embaixo, sem a "rede de futebol" (Claude, thread do Alisson)
+
+**Pedido do Breno** (missão 2026-11-14, item 4; `docs/parry.md`): tirar a faísca pronta do pixelfx e colocar o parry
+de cada lutador no jogo.
+
+**Feito:** `ferramentas/parry.py` aplica nos 5 lutadores (e os `gerar_*.py` chamam no fim): as 10 folhas da forma base
+cortadas em 3x (`7600`/`7640`), faísca própria na cor de cada um a partir da estrela do `crit-hit` (`7690`/`7691`),
+parry em cima (→+c, 760/761, `SA`) e embaixo (↓+c, 764/765, `C`), acertou com controle (a piada cancela em qualquer
+golpe), oponente aberto 20 ticks. A `9204` saiu do parry, do Contragolpe do CK, da Guarda de Aço do Hazak, do `.air` e
+do `.sff`. Sprites antigos conferidos com `conferir_sff.py` (nenhum mudou).
+
+**Conferido:** robô `--linux` com 6 roteiros novos de parry: Pengaró 190/0, CK 228/0, Gutto 185/0, Raiclaven 185/0,
+Hazak 212/1 (a falha é a fuga da DERROTA, que já falha igual na `mugen` antes do parry).
+
+**Não feito:** folhas `e_parry_alto`/`e_parry_baixo` do endiabrado (precisam do ChatGPT; até lá o endiabrado usa a
+defesa redesenhada); ninguém jogou para sentir a janela e o tempo da piada; o verde do Raiclaven endiabrado sai prata
+(a paleta dele não tem verde, issue #38).
+## 2026-11-14 — Sons novos do jogo inteiro (missão 2026-11-14, item 2; Claude, sessão do LightWolfMan)
+
+**Pedido do Breno:** sons novos para golpes, defesa, agarrão, queda, especiais, supers, transformação, parry, menu,
+contagem do round e KO; cada lutador com o seu; nada copiado de outro jogo; volume parelho com as músicas.
+
+**Feito:** `ferramentas/gerar_sons.py` sintetiza tudo por código (numpy: osciladores, ruído filtrado, envelope e um
+bitcrush leve para casar com a trilha 8-bit) e monta os `.snd`: `motif/nazafight/common.snd` (troca os sons "F" do motor
+para todo mundo, mais parry `F30`, transformação `F31`, agarrão `F35`, projétil `F36`, vento `F40`),
+`motif/nazafight/fight.snd` (narrador em português e nível da barra), `motif/nazafight/system.snd` (menu e contagem do
+continue) e `chars/<lutador>/<lutador>.snd` (soco 51, chute 52, endiabrado 53 e assinatura 50: garrafa e vidro do
+Pengaró, boné/tragada/grave do paredão do CK, beijinho/joelhada/galope/relincho do Gutto, concreto/estatueta/aço/faixa
+do Hazak, tesoura/borrifada/pente/cadeira do Raiclaven). `gerar_sons.ligar()` põe `sound =` no `.def` e, no `.cns`,
+troca `hitsound` por soco/chute/endiabrado, põe vento no `Time = 0` de cada golpe e as assinaturas nos especiais e no
+Despertar; tudo marcado com `; som:` e reversível. Os cinco `gerar_<lutador>.py` chamam `ligar()` no fim.
+Narrador: Piper TTS, voz pt_BR "cadu" (dados CC0), cada fala escolhida entre até 12 gravações pela que o Whisper
+transcreveu certo depois do tratamento ("ráund" e "No-cáute" escritos assim para sair a pronúncia brasileira).
+Tabela completa em `docs/sons.md`.
+
+**Volume:** músicas em -14 LUFS; golpe forte e narrador -13,5 a -12 LUFS momentâneo, médio -15,5, fraco -17, vento -21
+a -18, menu -20; pico <= -1 dBFS. Medido pelo script e conferido com `ffmpeg -af ebur128` (diferença <= 0,5 dB).
+
+**Verificado:** robô na nuvem depois de juntar com layout, agarrões e parry: Pengaró 190, CK 228, Gutto 185, Raiclaven 185 verificações (contra o Hazak), nenhuma falha; `ligar()` é
+idempotente e desfazer volta o `.cns` byte a byte ao original.
+**NÃO verificado:** ninguém ouviu (na nuvem o motor roda mudo). Tempo das assinaturas no Despertar (ticks 9/42/55) é
+estimado pelos desenhos. `verificar_pengaro.py` já falhava antes ("tamanho do SFF"), sem relação com o som.
+Depois de juntar com os agarrões e o parry: parry que acertou (761/765) toca `F30,0` ou `F30,1` (endiabrado) e o
+agarrão que pegou (810/831/841) toca `F35,0`; as pancadas dos agarrões ficam nos `F5,x` novos.
+## 2026-11-14 — Revisão geral do jogo (missão 2026-11-14, item 6; Claude, thread do Alisson)
+
+**Pedido do Breno:** rodar o jogo inteiro procurando erro e coisa sem sentido, listar numa issue, consertar e rodar o
+robô em todos.
+
+**Feito** (lista completa e fotos em `docs/revisao-geral-2026-11-14.md`):
+- **Golpes mudos:** o `hitsound` dos golpes (grupos 50 a 53 do `.snd` de cada lutador) estava sem o `S`, então o
+  motor procurava no `common.snd` e não tocava nada. `gerar_sons.ligar()` corrigido e rodado nos 5 (só as linhas de
+  `hitsound` mudaram).
+- Textos do motor em português (`ferramentas/textos_ptbr.py`, colado no `system.def` pelo `gerar_layout.py`): opções,
+  pausa, pausa do treino, continuar, títulos da seleção (o "VERSUS MODE"), "Random" e a tela de teclas. Opções sem
+  acento: a tela de teclas herda a fonte do menu e some com qualquer troca (dez variações testadas).
+- Lista de golpes: comando sempre à direita (`parry.alinhar_movelist`), nomes de corrente encurtados.
+- Raiclaven: exclusivos do Surto sem os nomes de cavalo do Gutto (nomes provisórios de barbeiro).
+- Demo da abertura sem o link do motor (`motif/nazafight/demo.zss`, ligado pelo `.bat` e pelo `testar_mapas.py`).
+- Robô: o FAIL antigo do Hazak era do robô (media a fuga depois do round seguinte começar); agora guarda a última
+  posição da fuga.
+
+**Verificado:** robô na nuvem Pengaró 190/0, CK 228/0, Gutto 185/0, Raiclaven 185/0, Hazak 213/0; telas de opções,
+teclas, pausa, lista de golpes, continuar e demo fotografadas no motor.
+**NÃO verificado:** ninguém ouviu os golpes depois do `S` (motor mudo na nuvem); modo Treino não testado (escondido do
+menu); a `.bat` nova não rodou no Windows.
+
+**Sugestões:** acento na fonte `naza_hud` para PENGARÓ; verde na paleta do Raiclaven endiabrado (#38); folhas de parry
+do endiabrado; o risco cortado no alto da tela de continuar.
+## 2026-11-14 — Balanceamento (missão 2026-11-14, item 7; Claude, thread do Alisson)
+
+**Pedido do Breno:** ver dano, velocidade, alcance, recuperação, barra e transformação de cada lutador para nenhum
+ficar forte ou fraco demais, com luta CPU x CPU e os números do robô.
+
+**Como medi:** `ferramentas/torneio_cpu.py` (novo) põe as duas CPUs no nível 8 em cada par, dos dois lados, numa cópia
+do motor na nuvem; `ferramentas/robo/torneio.lua` anota cada round e reinicia sem deixar a luta acabar.
+
+**O que os números mostraram (antes):**
+- Pengaró, Gutto e Raiclaven usam o mesmo kit, com o mesmo dano em todo golpe; a diferença entre eles vem do
+  alcance do desenho (golpes do Gutto e do Raiclaven vão mais longe).
+- O CK tem o mesmo dano, mas o alcance é bem menor: o jab chega a 117 contra 204 do Pengaró e 222 do Gutto. A caixa
+  bate com a luva do desenho (é o boxe dele), então não estiquei caixa nenhuma.
+- O Hazak é o mais rápido (jab sai no 3º tick e acaba no 13º, contra 4 e 19), mas tem 900 de vida, defence 90 e
+  golpes com 55% a 80% do dano dos outros.
+- Torneio 1 (200 rounds): Raiclaven 79%, Gutto 74%, Pengaró 58%, CK 25%, Hazak 15%.
+
+**Mudou** (`ferramentas/balanceamento.py`, chamado no fim dos 5 geradores):
+| Lutador | Antes | Depois | Por quê |
+|---|---|---|---|
+| CK | attack 100, defence 100, walk 2,7, run 5,6 | attack 125, defence 105, walk 3,4, run 7,0 | alcance curto: chega mais rápido, bate e aguenta mais (boxeador) |
+| Hazak | attack 100, defence 90 | attack 125, defence 100 | segue rápido e com 900 de vida, mas o golpe passa a doer |
+| Gutto | attack 100 | attack 90 | alcance maior que o do Pengaró com o mesmo dano |
+| Raiclaven | attack 100 | attack 90 | idem |
+| Pengaró | — | — | referência |
+
+**Depois:** torneio 2 (128 rounds): Gutto 62, Pengaró 53, Hazak 50, Raiclaven 48, CK 36; torneio 4 (200 rounds):
+Pengaró 65%, CK 49%, Raiclaven 49%, Hazak 48%, Gutto 40%. Entre Pengaró, Gutto e Raiclaven a diferença muda de um
+torneio para outro (mesmo kit): é sorte da CPU, não número.
+
+**Não mexido:** barra e duração da transformação. A CPU do motor nunca usou o Despertar em 700 rounds (a barra chega a
+~1200 de 3000), então não dá para medir por CPU x CPU; precisa de gente jogando. Dano de cada golpe e frame data
+ficaram como estavam (só o multiplicador geral mudou).
+
+**Robô depois do ajuste:** Pengaró 190/0, CK 228/0, Gutto 185/0, Raiclaven 185/0, Hazak 213/0.
+
+## 2026-11-14 — Hazak: pedra, bola de ki e Diabo Loiro (issue #44) (Claude, thread do Alisson)
+
+**Pedido do Breno (#44):** tirar a rede de futebol, pedra (chute e soco) e bola de ki vermelha no lugar dos poderes de
+longe, ligar o Diabo Loiro de ponta a ponta com a Rajadona de Ki das Trevas e um agarrão próprio, efeitos laranja-ouro.
+
+**Feito:** detalhes, GIFs e vídeos em `docs/hazak-44/LEIA-ME.md`.
+- Rede de futebol já tinha saído no #38. Pedra (1000/1001) e bola de ki (1600/1601) com efeitos do Blender + pixelfx
+  (`hazak_poderes_blender.py`), maiores depois do recado do Breno na #47 ("poder de longe fraco").
+- Diabo Loiro: `diabo_arte.py` (arte por código: juba loira, chifres, olho vermelho, gi roxo com debrum em brasa) e
+  `diabo_loiro.py` (pós-passo chamado no fim do `gerar_hazaki.py`): estado 2000 com a cena da patroa, aura de 2 camadas,
+  Rajadona 1650 (preta, vermelha e ouro, fumaça preta, 12 acertos), agarrão 810 em chamas no Diabo.
+- `filmar_robo.py` filma qualquer parte do robô (filtro por nome); `testar_pengaro.py` ganhou filtro e aceleração.
+- Rebase em cima de `f7cd8579` (#45/#48): `legibilidade.py` roda depois do `diabo_loiro.py`.
+
+**Robô:** hazaki 235 PASS / 0 FAIL. Uma rodada com a máquina carregada (filmagem em paralelo) deu 1 FAIL na rajadona
+(só 4 acertos); sozinha passa. Se voltar, olhar o empurrão do raio (`ground.velocity`).
+
+**Depois (#47, padrão grande e pesado):** rajadona com rastro do corpo, tremida forte ao soltar, fundo escurecido em
+vermelho e oponente piscando; agarrão do Diabo com fundo escuro, tremida a cada pancada, congela + clarão no final.
+
+**Sugestões:** folhas desenhadas do Diabo (terno do conceito) para trocar a arte por código; som próprio da patroa e da
+rajadona; comparar Blender vs. pixelfx direto como o Breno pediu na #47.
+
+## 2026-11-14 — Diabo Loiro na roupa do conceito (issue #44, resposta do Breno) (Claude, thread do Alisson)
+
+**Pedido:** o Diabo não pode ficar de gi; usar a roupa do `d_conceito.png` (branch `bosses`), mais chefão, mesmas asas,
+todos os quadros na roupa nova, golpes/caixas/tempos iguais.
+
+**Feito:** `ferramentas/diabo_terno.py` troca o `diabo_arte.py` (apagado). Recorta as 49 folhas `d_*` da `bosses`, põe
+na escala do corpo 3x, dá o acabamento de chefão (brasa, ouro, sombra, olho aceso, luz do chão), reduz a 48 cores e
+grava em `sprites/hazaki/diabo_terno/`. O `diabo_loiro.py` casa cada desenho do Hazak no .sff com o quadro HD de origem
+(folha, número) e põe no lugar o quadro de mesmo número da folha do terno, alinhado pelo apoio dos pés. 395 desenhos,
+nenhum no gi. 20 folhas sem par usam a mais parecida (lista `PARECIDA`). O .sff foi de 9 para 15 MB.
+Robô hazaki 238 PASS / 0 FAIL (roteiro novo "vitrine" mostra os golpes na roupa). Detalhes em `docs/hazak-44/LEIA-ME.md`.
+
+## 2026-11-15 — Auras e asas seguem o corpo (issue #51, item 1) (Claude, thread do Alisson)
+
+**Pedido:** o Hazak endiabrado agachava ou caía e as asas ficavam no ar. Toda aura acompanha o lutador em todo estado.
+
+**Causa:** as camadas do `aura.py` nascem presas ao eixo (os pés) numa posição fixa; agachado, apanhando ou no chão o
+eixo não se mexe, só o desenho.
+
+**Feito:** `ferramentas/aura_no_corpo.py` (pós-passo, idempotente, chamado no fim do `diabo_loiro.py`, do
+`despertados_47.py`, do `gerar_pengaro.py` e do `gerar_ck.py`). Mede o peito, o centro e a altura do corpo em cada
+desenho do `.air` e escreve no `[Statedef -4]` uma tabela por ação/elemento; quatro maps (`au_<nome>_ax/ay/g/bx`)
+correm atrás do alvo com atraso curto. Camada do corpo (asas, garanhão, elos) segue o peito e recolhe com ele deitado;
+camada do chão anda em x com o corpo e não afunda mais na queda; coluna do Pengaró e paredão do CK baixam com ele caído.
+`ferramentas/filmar_aura_corpo.py` filma o roteiro de 30 estados e grava o log tique a tique.
+
+**Robô:** `aura_no_corpo.py --robo` passa nos 4 (asas do Hazak: de 31,5 px para 7,2 px em 95% dos tiques; solta por
+100 tiques seguidos antes, 1 agora). `testar_pengaro.py --linux`: hazaki 238, gutto 185, pengaro 190, ck 228, nenhuma falha (o hazaki deu 1 FAIL na
+rajadona com a máquina filmando em paralelo, o mesmo caso já anotado; sozinho passa).
+
+**Armadilha:** título de controlador no `.cns` não pode ter `;` (começa comentário e o controlador some sem erro).
+
+**Não feito / sugestões:** asa não gira com o corpo no ar; paredão e coluna não sobem no pulo (nascem do chão);
+desenho próprio de paredão baixo. Detalhes e vídeos em `docs/auras-51/LEIA-ME.md`.
+
+## 2026-11-15 — Endiabrado até o fim da luta (missão dos cenários, seção 4.1) (Claude, sessão do LightWolfMan)
+
+**Pedido do Breno:** quem desperta fica na forma até a luta acabar, com a música da forma, nos 5 lutadores; rever o
+balanceamento.
+
+**Feito:** pós-passo `ferramentas/forma_permanente.py`, chamado por último nos `gerar_<lutador>.py` (depois do
+`cena_transformacao.py`).
+- O contador do `var(20)` saiu: ele fica em 600 enquanto a forma durar. `var(20) > 0` continua sendo o sinal de
+  "está na forma" para tudo (arte, aura, golpes, e o cenário destruído da thread dos cenários).
+- `IntPersistIndex = 58`: o `var(58)` (já despertou) e o `var(59)` (música da forma tocando) atravessam os rounds. No
+  round seguinte a forma volta já na apresentação.
+- Música: o motor recomeça a música do cenário a cada round (medido com `testar_musica.py --rounds`), então a da forma
+  entra de novo na apresentação do round seguinte, direto.
+- A `Pause` da cena da transformação ganhou `pausebg = 0`, para o cenário poder trocar para o destruído no clarão.
+
+**Balanceamento da forma permanente:**
+- Custo para despertar: continua a barra inteira (3 estoques) nos 5.
+- Super da forma (estado 3100: Saideira Sombria, Baile da Esquina e os do Gutto e do Raiclaven): antes custava 1
+  estoque e acabava com a forma (no CK só valia nos 10 s). Agora **não acaba com a forma e custa 2 estoques**, igual ao
+  super fora da forma. É o único número mexido.
+- Dano e defesa da forma: não mexi. A forma já não tinha multiplicador de ataque nem de defesa; o que ela dá são golpes
+  melhores (agarrão e poder de longe do #47, especiais maiores). Como agora dura a luta toda, vale o Breno jogar e dizer
+  se ficou forte demais. Botões prontos para apertar, se ficar: defesa menor na forma (`DefenceMulSet`), barra enchendo
+  mais devagar na forma, ou despertar só com vida baixa.
+- A ressaca e a fumaça de saída do Despertar não acontecem mais (não há saída).
+
+**Robô:** os roteiros "a forma acaba" viraram "660 tiques depois continua na forma e a aura fica", e o do super confere
+que a forma continua depois dele.
+
+## 2026-11-15 — Cenário destruído em dois níveis nos 5 mapas (issue #35, missão dos cenários 4.2) (Claude, thread dos cenários)
+
+**Pedido do Breno** (`docs/missao-alisson-cenarios.md` seção 4.2): cada mapa ganha duas versões destruídas, animadas.
+O nível 1 liga no clarão da transformação do primeiro lutador que desperta (rachaduras, fogo, fumaça, coisas quebradas,
+gente fugindo). O nível 2 liga quando o segundo desperta (estruturas desabadas, crateras, fogo grande, gente correndo e
+gente caída, estilo arcade, sem sangue). Nada volta atrás no fim do round.
+
+**Como funciona:**
+- Campo `nivel` nas camadas do `gerar_cenario.py`: `"0"`, `"<2"`, `">=1"`, `"2"` e `"1"` viram os grupos de BG
+  909, 910, 911, 912 e 913. Cada grupo tem um `BGCtrl type=Visible` que os lutadores ligam e desligam com
+  `ModifyBGCtrl` (`ferramentas/destruicao.py`, aplicado no `[Statedef -2]` dos 5 lutadores, por último no
+  `gerar_<lutador>.py`).
+- O nível é `(var(20) > 0) + (NumEnemy > 0 && enemy, var(20) > 0)`. O `var(20)` é o endiabrado, que agora fica até o
+  fim da luta (4.1, `forma_permanente.py`). A forma `cond(..., (enemy, var(20)) > 0, 0)` NÃO funciona no IKEMEN.
+- `ferramentas/cenario_destruicao.py`: peças em comum (fogo, fumaça em bolas, rachaduras, fagulhas, clarão do fogo,
+  céu esfumaçado, gente correndo, caídos, entulho, carrinho, carro). A arte vem do ChatGPT em
+  `sprites/cenarios/comum/bruto/` (fogo, correndo, destroços).
+- Ruína de cada mapa (ChatGPT, chat "Pixel Art Background Request", conta do Alisson):
+  `sprites/cenarios/<mapa>/bruto/cena_destruida.png`. O Cristo usa `cena_destruida_larga.png` (3:1), porque o mundo
+  dele tem 1800 de largura e a ruína 3:2 não cabia com o Cristo inteiro na tela.
+- Maria Fumaça: o .sff aprovado não bate com os PNG, então ela NÃO passa pelo `gerar_cenario.py`. O
+  `cenario_maria_fumaca_destruicao.py` monta só as camadas novas e enxerta no def/sff aprovado (grupos +100, ações
+  +600, entre marcas de comentário; rodar de novo troca o enxerto). O povo do banco e das mesas e o desfile lá fora
+  passam para o grupo 909 (somem no nível 1).
+- Robô novo: `python3 ferramentas/testar_destruicao.py` põe cinco marcadores (um por grupo) na beira da tela de uma
+  cópia de cada cenário, filma a luta com os dois despertando e o P2 nocauteado, e confere nível 0 → 1 → 2 e o
+  round 2 começando no nível 2.
+- Filmagem: `python3 ferramentas/filmar_destruicao.py PASTA --cenario <mapa> --primeiro 360 --segundo 800`.
+
+**Pendente / sugestões:**
+- "A destruição com a cara de quem transformou" (pedido "se der") não foi feita. Um caminho barato é tingir o
+  `clarao_do_fogo` e as fagulhas com a cor da aura de quem despertou primeiro (um grupo de BG por lutador).
+- Teste no Windows pelo atalho do launcher (4.3) depende do PC do Alisson.
+
+## 2026-11-15 — Hazak pequeno na seleção, no VS e no HUD (issue #51) (Claude, thread do Alisson)
+
+**Erro visto pelo Breno:** o Hazak aparecia pequeno na tela de seleção perto dos outros.
+**Causa:** os retratos novos (PNG 100x100 e 448x216, `sprites/retratos/`) entram pelo `trocar_retratos.py`, mas os
+pós-passos do `gerar_hazaki.py` (o `diabo_loiro.py` da #44 regrava o .sff) devolviam os retratos antigos de 25x25 e
+109x95, que o layout desenha a 1/4. Os outros quatro não passam por esse pós-passo e ficaram certos.
+**Conserto:** o `gerar_hazaki.py` chama `trocar_retratos.trocar("hazaki")` por último. Conferido no motor (seleção, VS e
+HUD) com `testar_mapas.py --casa 1` (opção nova: anda o cursor do P1). Antes e depois em `docs/hazak-51/`.
+
+## 2026-11-15 — Asas grudadas nas costas, girando e fechando (issue #51, item 1, segunda volta) (Claude, thread do Alisson)
+
+**Pedido do Breno:** deitado a asa ficava em pé e aberta; ela tem de grudar nas costas, inclinar no ângulo do corpo e
+fechar ao cair, reabrindo ao levantar (asas e coroa do Hazak, garanhão do Gutto, elos do Pengaró).
+
+**Feito:** `aura_no_corpo.py` mede o ponto das costas e o ângulo do tronco em cada quadro (duas tabelas no `-4`,
+maps `au_<nome>_ax/ay/g/bx/th`) e gira a camada em volta das costas com `angle`. `aura.dobrar_asas` dobra os 48 quadros
+das asas como leque; o Hazak ganhou `asas_meio` e `asas_fechada` (9602, 9603) e o alfa troca conforme deita.
+`diabo_loiro.py --aura` refaz só a aura. O robô de luta espera 4 camadas no Diabo.
+
+**Robô:** aura nos 4 passa (asas 7 px e 6 graus em 95% dos tiques); `testar_pengaro.py --linux` hazaki 238, gutto 186,
+pengaro 189, ck 226, 0 falhas (o hazaki rodado em fila com outros deu de novo o FAIL conhecido da rajadona; sozinho passa).
+
+**Armadilha:** o `-4` roda antes da troca de ação; no pouso brusco (5030 para 5100) a camada fica 2 tiques fora.
+
+
+## 2026-11-15 — Ferramenta de pixel e teste 1 da anatomia no Diabo Loiro (issue #51, item 3) (Claude, thread do Alisson)
+
+**Pedido do Breno:** parar de regenerar quadro no ChatGPT; ferramenta nossa de desenho em pixel que o Claude usa por
+comando, com réguas de anatomia contra o parado; primeiro teste no Diabo com braço a mais, na rasteira do Diabo e no
+agachar do Hazak; comparar com Blender.
+
+**Feito:** `ferramentas/pixel/` (`pixel.py`, `reguas.py`, `quadros.py`, `LEIA-ME.md`): ver ampliado com grade e papel
+vegetal, tira com régua, antes/depois pelo git, GIF/MP4, pintar só com a paleta, copiar/colar, polígono, mover/girar/
+espelhar/escalar pedaço, esticar, remendar buraco (inpaint levado para a paleta), recolorir família de cor, escala da
+figura inteira sem borrar (Scale2x na grade do 1x), desfazer e histórico. Régua medida em todos os 2.872 quadros dos 6
+lutadores em `docs/anatomia-51/reguas/`.
+
+**Diabo:** o "braço a mais" era o antebraço do Hazak (faixa laranja e munhequeira verde-água) que sobrou entre a manga do
+terno e o punho. Munhequeira tirada dos 337 quadros (`recolore --matiz 160 210 --para pele`), antebraço nu coberto no
+parado. Rasteira: mão de apoio 22% menor, canela esticada, golpe inteiro 7% maior (cabeça de 0,90-0,94 para 0,96-0,99).
+Agachar do Hazak passou na régua (0,98). A rasteira do Hazak base está 18% menor, mas a forma base vai ser refeita na #36.
+
+**Blender (recorte com malha):** faz a mesma conta (esticar e encolher pedaço), mas precisa separar cada pedaço em camada
+e pintar o que fica escondido atrás; a ferramenta de pixel resolve isso no próprio quadro. Blender fica para animação nova
+montada de peças (asas, cabelo, casaco).
+
+**Robô:** hazaki 238 PASS / 0 FAIL; vitrine do Diabo filmada em `docs/anatomia-51/teste1/`.
+
+**Armadilha:** a régua da cabeça tem incerteza de uns 4 a 5% em quadro redesenhado ou reamostrado (a curva do casamento
+é achatada); só é firme quando o desenho é o mesmo em outro tamanho. O Pengaró tem 22 ações 7 a 26% maiores que a ginga:
+conferir se a ginga é que está pequena antes de mexer.

@@ -15,6 +15,7 @@ st = gutto.cns
 stcommon = common1.cns
 sprite = gutto.sff
 anim = gutto.air
+sound = gutto.snd
 movelist = movelist.dat
 
 [Palette Keymap]

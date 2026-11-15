@@ -15,6 +15,7 @@ st = raiclaven.cns
 stcommon = common1.cns
 sprite = raiclaven.sff
 anim = raiclaven.air
+sound = raiclaven.snd
 movelist = movelist.dat
 
 [Palette Keymap]
