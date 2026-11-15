@@ -973,7 +973,8 @@ do
     wait(30)
     note(function() local s = snap(1); return "var20=" .. s.v20 .. " power=" .. s.pow .. " camadas da aura " .. auraN(1) end)
     need(function() return snap(1).pow == 0 end, 1, "gastou a barra toda", false)
-    need(function() return auraN(1) == 2 end, 1, "as 2 camadas da aura (asas e brasa no chao) vivas", false)
+    -- 4 camadas desde a #51: asas abertas, brasa no chao, asas meio fechadas e fechadas (o alfa escolhe qual aparece)
+    need(function() return auraN(1) == 4 end, 1, "as 4 camadas da aura (asas, brasa no chao, asas meio e fechadas) vivas", false)
     need(livre, 30, "P1 livre depois da cena", false)
   end)
   S("Diabo Loiro SEM barra cheia (2 estoques) nao transforma", function()
@@ -1050,10 +1051,10 @@ do
   end)
   diabo("nao acaba por tempo: continua o Diabo e a aura fica", function()
     wait(60)
-    need(function() return auraN(1) == 2 end, 10, "aura viva no Diabo")
+    need(function() return auraN(1) == 4 end, 10, "aura viva no Diabo")
     wait(660)
     need(function() local v = snap(1); return v.v20 > 0 and v.v37 == 1 end, 2, "660 tiques depois continua o Diabo (var20 > 0, var37 = 1)")
-    need(function() return auraN(1) == 2 end, 2, "a aura continua viva", false)
+    need(function() return auraN(1) == 4 end, 2, "a aura continua viva", false)
   end)
 
   -- fica por ultimo: o nocaute acaba com o round

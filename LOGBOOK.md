@@ -2394,3 +2394,28 @@ gente caída, estilo arcade, sem sangue). Nada volta atrás no fim do round.
 - "A destruição com a cara de quem transformou" (pedido "se der") não foi feita. Um caminho barato é tingir o
   `clarao_do_fogo` e as fagulhas com a cor da aura de quem despertou primeiro (um grupo de BG por lutador).
 - Teste no Windows pelo atalho do launcher (4.3) depende do PC do Alisson.
+
+## 2026-11-15 — Hazak pequeno na seleção, no VS e no HUD (issue #51) (Claude, thread do Alisson)
+
+**Erro visto pelo Breno:** o Hazak aparecia pequeno na tela de seleção perto dos outros.
+**Causa:** os retratos novos (PNG 100x100 e 448x216, `sprites/retratos/`) entram pelo `trocar_retratos.py`, mas os
+pós-passos do `gerar_hazaki.py` (o `diabo_loiro.py` da #44 regrava o .sff) devolviam os retratos antigos de 25x25 e
+109x95, que o layout desenha a 1/4. Os outros quatro não passam por esse pós-passo e ficaram certos.
+**Conserto:** o `gerar_hazaki.py` chama `trocar_retratos.trocar("hazaki")` por último. Conferido no motor (seleção, VS e
+HUD) com `testar_mapas.py --casa 1` (opção nova: anda o cursor do P1). Antes e depois em `docs/hazak-51/`.
+
+## 2026-11-15 — Asas grudadas nas costas, girando e fechando (issue #51, item 1, segunda volta) (Claude, thread do Alisson)
+
+**Pedido do Breno:** deitado a asa ficava em pé e aberta; ela tem de grudar nas costas, inclinar no ângulo do corpo e
+fechar ao cair, reabrindo ao levantar (asas e coroa do Hazak, garanhão do Gutto, elos do Pengaró).
+
+**Feito:** `aura_no_corpo.py` mede o ponto das costas e o ângulo do tronco em cada quadro (duas tabelas no `-4`,
+maps `au_<nome>_ax/ay/g/bx/th`) e gira a camada em volta das costas com `angle`. `aura.dobrar_asas` dobra os 48 quadros
+das asas como leque; o Hazak ganhou `asas_meio` e `asas_fechada` (9602, 9603) e o alfa troca conforme deita.
+`diabo_loiro.py --aura` refaz só a aura. O robô de luta espera 4 camadas no Diabo.
+
+**Robô:** aura nos 4 passa (asas 7 px e 6 graus em 95% dos tiques); `testar_pengaro.py --linux` hazaki 238, gutto 186,
+pengaro 189, ck 226, 0 falhas (o hazaki rodado em fila com outros deu de novo o FAIL conhecido da rajadona; sozinho passa).
+
+**Armadilha:** o `-4` roda antes da troca de ação; no pouso brusco (5030 para 5100) a camada fica 2 tiques fora.
+

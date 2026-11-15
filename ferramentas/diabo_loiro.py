@@ -122,6 +122,9 @@ def patroa():
             7452: [(*q("patroa_sai", i), 6) for i in range(1, 8)]}
 
 
+RAIZ_ASAS = (181, 100)  # onde as duas asas se encontram, em px da tela da aura (sprites/hazaki/aura, 360 x 200)
+
+
 def montar_aura():
     import aura
     pasta = RAIZ / "sprites/hazaki/aura"
@@ -152,6 +155,17 @@ def montar_aura():
                     prioridade=-5, cresce=False,
                     mov=aura.Movimento(deriva=(1.0, 0), deriva_periodo=130, alfa=0.92, respira=0.06)),
     ]
+    # issue #51: caído, a asa fecha colada nas costas. Dois desenhos a mais (meio e fechada), dobrados como leque em
+    # volta da raiz; o ferramentas/aura_no_corpo.py troca um pelo outro pelo alfa, conforme o corpo deita e levanta.
+    # Entram no fim da lista para as asas e o chão continuarem em 9600 e 9601.
+    mov = aura.Movimento(deriva=(0.6, 1.5), deriva_periodo=120, alfa=0.95, respira=0.06)
+    # fechada: as duas asas quase juntas apontando para baixo, uma faixa colada nas costas (vista de lado, as duas
+    # dobram por cima uma da outra); com o corpo deitado ela deita ao longo dele, sem ponta para cima
+    for nome, fecha, encolhe, alvo, aperta in (("asas_meio", 0.55, 0.9, -84.0, 0.75),
+                                               ("asas_fechada", 0.5, 0.82, -90.0, 0.3)):
+        dobradas = aura.dobrar_asas(ler("asas"), RAIZ_ASAS, fecha, encolhe, alvo, aperta)
+        camadas.append(aura.Camada(nome, sobre(dobradas, ler("coroa")),
+                                   plano="tras", eixo=pe, tique=1, prioridade=-6, cresce=False, mov=mov))
     surto = f"(StateNo = 1650 && Time = 1) || (StateNo = 2000 && Time = {LIGA})"
     return aura.Aura("diabo", camadas, ligada=f"({resta}) > 0", surto=surto, base=9600, entra=30, sai=34,
                      virada_fundo=0.6, resta=resta)
@@ -407,5 +421,33 @@ def aplicar(pasta=SAIDA):
           f"camadas); {len(rle) + len(png)} sprites no .sff")
 
 
+def religar_aura(pasta=SAIDA):
+    """Só a aura, em cima de um chars/hazaki já pronto (o `aplicar` só roda logo depois do gerar_hazaki.py): troca as
+    ações, os sprites e o [Statedef -4] da aura pelos do montar_aura() de agora e prende de novo ao corpo."""
+    import aura_no_corpo
+    import despertados_47
+    pasta = Path(pasta)
+    sff, arq_air, arq_cns = (pasta / f"hazaki.{e}" for e in ("sff", "air", "cns"))
+    a = montar_aura()
+    cns = aura_no_corpo.desfazer(arq_cns.read_text(encoding="utf-8"))
+    air, cns = despertados_47.ligar_aura(a, arq_air.read_text(encoding="utf-8"), cns)
+    pal, nos, _ = cs.ler(sff)
+    grupos = set(a.ids())
+    rle, png, vistos = [], [], set()
+    for n in nos:
+        k = (n["g"], n["i"])
+        if k in vistos or n["g"] in grupos:
+            continue
+        vistos.add(k)
+        (png if n.get("png") else rle).append((n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], n["px"]))
+    for g, i, img, ex, ey in a.sprites():
+        png.append((g, i, img.width, img.height, int(ex), int(ey), efeitos.blob_png(img)))
+    efeitos.gravar(sff, pal, rle, png)
+    arq_air.write_text(re.sub(r"\n{3,}", "\n\n", air), encoding="utf-8", newline="\n")
+    arq_cns.write_text(cns, encoding="utf-8", newline="\n")
+    aura_no_corpo.aplicar("hazaki", pasta)
+    print(f"hazaki: aura religada ({len(a.camadas)} camadas, explods {a.ids()[0]} a {a.ids()[-1]})")
+
+
 if __name__ == "__main__":
-    aplicar()
+    religar_aura() if "--aura" in sys.argv else aplicar()

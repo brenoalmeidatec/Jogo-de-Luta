@@ -403,6 +403,32 @@ def ondular(quadros, amplitude=3, ondas=1.0, voltas=1):
     return saida
 
 
+def dobrar_asas(quadros, raiz, fecha, encolhe=1.0, alvo=-78.0, aperta=1.0):
+    """As asas fechando como leque em volta da raiz (issue #51: no chão a asa fecha colada nas costas).
+
+    Cada asa (um lado da raiz) é comprimida em ângulo para a direção `alvo` (graus acima da horizontal, para fora;
+    -78 = quase para baixo): fecha = 1 deixa como está, 0.35 é a asa fechada. `encolhe` encurta o comprimento e
+    `aperta` junta as duas asas para o meio (largura; a asa dobrada vista de lado é uma faixa estreita). A
+    amostra é o pixel mais próximo, então as cores continuam as do desenho. Devolve arrays RGBA do mesmo tamanho."""
+    saida = []
+    for q in quadros:
+        q = np.asarray(q)
+        h, w = q.shape[:2]
+        ys, xs = np.mgrid[0:h, 0:w].astype(np.float32)
+        dx, dy = (xs - raiz[0]) / aperta, ys - raiz[1]
+        lado = np.where(dx < 0, -1.0, 1.0)
+        fi = alvo + (np.degrees(np.arctan2(-dy, np.abs(dx))) - alvo) / fecha
+        r = np.hypot(dx, dy) / encolhe
+        xi = np.rint(raiz[0] + lado * r * np.cos(np.radians(fi))).astype(int)
+        yi = np.rint(raiz[1] - r * np.sin(np.radians(fi))).astype(int)
+        ok = (fi > -100) & (fi < 100) & (xi >= 0) & (xi < w) & (yi >= 0) & (yi < h)
+        novo = np.zeros_like(q)
+        novo[ok] = q[yi[ok], xi[ok]]
+        novo[novo[..., 3] == 0] = 0
+        saida.append(novo)
+    return saida
+
+
 def _girado(q, graus, escala, lado, pal=None):
     """Um quadro girado e escalado em volta do centro, numa tela quadrada de `lado` px, na grade do jogo."""
     h, w = q.shape[:2]

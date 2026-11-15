@@ -9,7 +9,7 @@ GO do robô (~/.cache/nazafight/ikemen). Só na cópia, o .cmd dos dois lutadore
 aciona por map, e o .cns ganha dois golpes de teste (7790 derruba, 7791 só encosta). O jogo e chars/ não são tocados.
 
 Roteiro do P1 (endiabrado o tempo todo), em tiques do round:
-  parado, agachado, pulo, anda para a frente e para trás, corre, leva golpe em pé, leva golpe agachado, é derrubado
+  parado, agachado, pulo, anda para a frente e para trás, corre, leva golpe em pé, solta três golpes, é derrubado
   (voa, cai, fica no chão, levanta), é agarrado e arremessado pelo P2, defende, e vence (pose de vitória).
 O aura_log.txt traz por tique: estado, ação, elemento, posição e lado do P1, os maps da âncora (ax, ay, g) e, de cada
 camada, a posição e a escala lidas do motor. Quem confere é o ferramentas/aura_no_corpo.py --conferir PASTA.
@@ -31,7 +31,7 @@ FIM = 1120  # tiques de round do roteiro
 
 # (de, até, o quê): o que o roteiro manda em cada janela. O nome da fase vai para o log.
 FASES = [(1, 40, "parado"), (40, 110, "agachado"), (110, 190, "pulo"), (190, 240, "anda_frente"),
-         (240, 290, "anda_tras"), (290, 345, "corre"), (345, 395, "golpe_em_pe"), (395, 465, "golpe_agachado"),
+         (240, 290, "anda_tras"), (290, 345, "corre"), (345, 395, "golpe_em_pe"), (395, 465, "golpes"),
          (465, 650, "derrubado"), (650, 900, "agarrado"), (900, 960, "defende"), (960, FIM, "vitoria")]
 
 LUA = """
@@ -59,12 +59,15 @@ do
       com(1, function()
         mapSet("f_desp", 1)
         mapSet("f_pos", 0); mapSet("f_estado", 0)
-        mapSet("f_baixo", (entre(40, 110) or entre(395, 465)) and 1 or 0)
+        mapSet("f_baixo", entre(40, 110) and 1 or 0)
         mapSet("f_frente", (entre(190, 240) or entre(290, 335)) and 1 or 0)
         mapSet("f_tras", (entre(240, 290) or entre(900, 960)) and 1 or 0)
         if t == 2 then mapSet("f_posx", -70); mapSet("f_pos", 1) end
         if t == 112 then mapSet("f_estado", 40) end
         if t == 292 then mapSet("f_estado", 100) end
+        if t == 398 then mapSet("f_estado", 230) end
+        if t == 422 then mapSet("f_estado", 240) end
+        if t == 446 then mapSet("f_estado", 210) end
         if t == 346 or t == 396 or t == 466 or t == 651 or t == 901 then mapSet("f_posx", -30); mapSet("f_pos", 1) end
       end)
       com(2, function()
@@ -72,22 +75,22 @@ do
         mapSet("f_pos", 0); mapSet("f_estado", 0)
         mapSet("f_baixo", 0); mapSet("f_frente", 0); mapSet("f_tras", 0)
         if t == 2 then mapSet("f_posx", 140); mapSet("f_pos", 1) end
-        if t == 346 or t == 396 or t == 466 or t == 901 then mapSet("f_posx", 14); mapSet("f_pos", 1) end
+        if t == 346 or t == 466 or t == 901 then mapSet("f_posx", 14); mapSet("f_pos", 1) end
+        if t == 396 then mapSet("f_posx", 140); mapSet("f_pos", 1) end
         if t == 651 then mapSet("f_posx", 4); mapSet("f_pos", 1) end
         if t == 356 or t == 910 or t == 930 then mapSet("f_estado", 7791) end
-        if t == 425 then mapSet("f_estado", 400) end
         if t == 476 then mapSet("f_estado", 7790) end
         if t == 656 then mapSet("f_estado", 800) end
         if t == 962 then setLife(0) end
       end)
       com(1, function()
-        local linha = {string.format("p=%.1f t=%d fase=%s st=%d anim=%d el=%d x=%.2f y=%.2f tx=%.2f ty=%.2f cx=%.2f cy=%.2f f=%d ax=%.2f ay=%.2f g=%.3f", map("au_" .. NOME .. "_p"), t, fase,
+        local linha = {string.format("p=%.1f t=%d fase=%s st=%d anim=%d el=%d x=%.2f y=%.2f tx=%.2f ty=%.2f cx=%.2f cy=%.2f f=%d ax=%.2f ay=%.2f g=%.3f th=%.1f", map("au_" .. NOME .. "_p"), t, fase,
           stateNo(), anim(), animElemNo(0), posX(), posY(), screenPosX(), screenPosY(), cameraPosX(), cameraPosY(), facing(), map("au_" .. NOME .. "_ax"),
-          map("au_" .. NOME .. "_ay"), map("au_" .. NOME .. "_g"))}
+          map("au_" .. NOME .. "_ay"), map("au_" .. NOME .. "_g"), map("au_" .. NOME .. "_th"))}
         for _, e in ipairs(CAM) do
           if numExplod(e) > 0 then
-            linha[#linha + 1] = string.format("%d px=%s py=%s sx=%s sy=%s", e, v(explodVar(e, 0, "pos x")),
-              v(explodVar(e, 0, "pos y")), v(explodVar(e, 0, "scale x")), v(explodVar(e, 0, "scale y")))
+            linha[#linha + 1] = string.format("%d px=%s py=%s sx=%s sy=%s an=%s", e, v(explodVar(e, 0, "pos x")),
+              v(explodVar(e, 0, "pos y")), v(explodVar(e, 0, "scale x")), v(explodVar(e, 0, "scale y")), v(explodVar(e, 0, "angle")))
           else
             linha[#linha + 1] = e .. " fora"
           end

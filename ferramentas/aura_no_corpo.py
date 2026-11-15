@@ -7,31 +7,39 @@
 
 O defeito (Breno, 2026-11-14): as camadas do ferramentas/aura.py nascem presas ao EIXO do lutador (os pés) numa posição
 fixa. O eixo não se mexe quando ele agacha, cai ou deita, só o desenho muda; então as asas do Diabo Loiro ficavam no
-ar, na altura de quem está em pé, com o corpo no chão.
+ar, na altura de quem está em pé, com o corpo no chão. Segunda volta (Breno, 2026-11-15): seguir a posição não basta.
+A asa é parte do corpo: fica grudada nas costas, INCLINA no ângulo do tronco e FECHA quando ele cai.
 
 O conserto é um pós-passo, como o parry.py e o efeitos.py: trabalha em cima do que já está em chars/<l>/ e pode rodar
 quantas vezes for (refaz o próprio bloco). Quem regrava o [Statedef -4] da aura chama `aplicar` no fim.
 
-  1. Mede, em cada desenho de cada ação do .air (no sprite do despertado, quando o RemapPreset troca), onde o corpo
-     está: o PEITO (centro da metade de cima da massa do desenho; braço erguido e arma pesam pouco), o centro do corpo
-     e a altura. Tudo relativo ao parado (ação 0), em px do jogo.
-  2. Escreve no [Statedef -4] uma tabela por ação/elemento (trechos vizinhos iguais viram um só gatilho) que diz o alvo
-     daquele tique, e quatro maps que correm atrás do alvo com atraso curto (o movimento secundário: a asa chega um
+  1. Mede, em cada desenho de cada ação do .air (no sprite do despertado, quando o RemapPreset troca), o TRONCO: o
+     ponto das costas (centro da metade do corpo que tem a cabeça), o ângulo do tronco (da metade das pernas para a
+     metade da cabeça; 0 = em pé, + = inclinado para a frente, -90 = deitado de costas), o centro e a altura. Em pé a
+     metade da cabeça é a de cima; deitado é a ponta mais pesada do eixo comprido do desenho.
+  2. Escreve no [Statedef -4] duas tabelas por ação/elemento (trechos vizinhos iguais viram um só gatilho) com o alvo
+     daquele tique, e cinco maps que correm atrás do alvo com atraso curto (o movimento secundário: a asa chega um
      instante depois do corpo):
-        au_<nome>_ax, _ay   deslocamento do peito          au_<nome>_bx   deslocamento do centro (camadas de chão)
-        au_<nome>_g         0 em pé .. 1 deitado: quanto a camada recolhe
-  3. Troca a posição e a escala de cada camada (o controlador "move" do aura.py):
-        camada do corpo (asas, garanhão, elos soltos): segue o peito, e recolhe (encolhe em volta do peito) com g;
+        au_<nome>_ax, _ay   deslocamento das costas        au_<nome>_th   ângulo do tronco, em graus
+        au_<nome>_g         0 em pé .. 1 deitado           au_<nome>_bx   deslocamento do centro (camadas de chão)
+  3. Troca a posição, a escala, o ângulo e o alfa de cada camada (os controladores do aura.py):
+        camada do corpo (asas, garanhão, elos soltos): gira no ângulo do tronco em volta do ponto das costas (o
+          `angle` do Explod gira em volta do eixo do desenho, nos pés; a posição compensa para o pivô ser as costas);
+        camada com desenhos fechando (<nome>, <nome>_meio, <nome>_fechada: as asas do Hazak): o alfa troca um desenho
+          pelo outro conforme o corpo deita (g) e reabre quando ele levanta;
+        camada do corpo sem desenho fechado (garanhão, elos): recolhe (encolhe em volta das costas) com g;
         camada do chão (brasa, crateras, anel, névoa, coluna, paredão): continua no chão, mas anda em x com o corpo;
         a coluna e o paredão (mais altos que o lutador) baixam quando ele cai, em vez de ficar de pé sobre o corpo.
 
-Conferência (--conferir, --robo): em todo tique do roteiro, o ponto do peito de cada camada do corpo tem de ficar perto
-do peito medido no desenho que está na tela. Aceite: percentil 95 <= 12 px, pior tique <= 45 px e no máximo 4 tiques
-seguidos a mais de 20 px (o tranco de um pouso ou de um golpe, que o atraso alcança logo); camada de chão a <= 6 px
-do chão.
+Conferência (--conferir, --robo): em todo tique do roteiro, o ponto das costas de cada camada do corpo tem de ficar
+perto das costas medidas no desenho que está na tela, e o ângulo da camada perto do ângulo do tronco. Aceite: distância
+com percentil 95 <= 12 px, pior tique <= 70 px e no máximo 4 tiques seguidos a mais de 20 px. O pior é o pouso de quem
+foi arremessado: o desenho passa de em pé (5030) para deitado (5100) num tique só, o [Statedef -4] roda antes da troca
+de ação e vê a ação nova um tique depois, e a camada leva mais um tique para chegar (60 px por 2 tiques no filme).; ângulo com percentil 95 <= 25 graus; camada de chão a <= 6 px do chão.
 """
 import argparse
 import io
+import math
 import re
 import sys
 from pathlib import Path
@@ -46,12 +54,17 @@ RAIZ = Path(__file__).resolve().parent.parent
 LUTADORES = ("hazaki", "gutto", "pengaro", "ck")
 INICIO, FIM = "; >>> aura_no_corpo.py", "; <<< aura_no_corpo.py"
 ORIG = "; aura_no_corpo.py, antes: "
-PASSO, PASSO_B, NIVEIS = 2, 4, 8  # px por degrau do peito, do centro, e degraus do recolher
-ATRASO = 0.45                     # fração do caminho que a camada anda por tique
-RECOLHE = 0.5                     # deitado, a camada do corpo fica com (1 - RECOLHE) do tamanho
-SOBE = 22                         # px que a camada recolhida sobe, para não entrar no chão
+PASSO, PASSO_B, NIVEIS, PASSO_T = 2, 4, 8, 7.5  # px por degrau das costas e do centro, degraus do recolher, graus
+ATRASO = 0.6                     # fração do caminho que a camada anda por tique
+RECOLHE = 0.5                     # deitado, a camada do corpo sem desenho fechado fica com (1 - RECOLHE) do tamanho
 ALTA, BAIXA = 120, 0.45           # camada de chão com desenho de ALTA px ou mais perde BAIXA da altura com ele deitado
-ZERO = 64 + 128 * 64 + 131072 * 32
+COLA = 8                          # deitado, o ponto das costas desce isto: a asa fechada fica colada no corpo, não por cima
+INCLINA = 50                      # em pé, o tronco inclina no máximo isto (um chute alto não deita a asa)
+ZERO_P = 64 + 128 * 64
+ZERO_Q = 8 * 32 + 512 * 16
+# o ponto do DESENHO da camada que gruda nas costas, em px a partir do eixo dela (os pés): onde as asas se encontram.
+# Sem entrada, é o ponto das costas do lutador parado (o desenho foi feito em volta dele).
+PIVO = {"diabo": (1.0, -90.0)}
 
 
 # ------------------------------------------------------------------------------------------------------------ medida
@@ -91,9 +104,13 @@ class Corpo:
         self.remap = _remap(self.cns)
         m = re.search(r"^xscale\s*=\s*([\d.]+)", self.cns, re.M)
         self.escala = float(m.group(1)) if m else 1.0
-        self._cache = {}
+        self._cache, self._medidas = {}, {}
+        self.ref = (0.0, 0.0, 0.0, 0.0, 1.0)
+        alturas = [self._nuvem(0, e) for e in range(1, len(self.acoes[0]) + 1)]
+        self.altura = float(np.mean([np.percentile(n[1], 97) - np.percentile(n[1], 3) for n in alturas if n]))
         ref = [v for v in (self.pontos(0, e) for e in range(1, len(self.acoes[0]) + 1)) if v]
-        self.ref = tuple(float(np.mean([r[k] for r in ref])) for k in range(5))  # px, py, cx, cy, altura
+        self._medidas = {}
+        self.ref = tuple(float(np.mean([r[k] for r in ref])) for k in range(5))  # costas x, y, centro x, ângulo, g
 
     def _mascara(self, chave):
         if chave not in self._cache:
@@ -110,9 +127,8 @@ class Corpo:
                 self._cache[chave] = None if len(xs) < 30 else ((xs - n["x"]) * self.escala, (ys - n["y"]) * self.escala)
         return self._cache[chave]
 
-    def pontos(self, acao, elem):
-        """(peito x, peito y, centro x, centro y, altura) do desenho do elemento (1..n), em px do jogo a partir do eixo;
-        x para a frente do lutador, y para baixo. None se o elemento não tem corpo."""
+    def _nuvem(self, acao, elem):
+        """(xs, ys) dos pixels do corpo do elemento, em px do jogo a partir do eixo: x para a frente, y para baixo."""
         els = self.acoes.get(acao)
         if not els or not 1 <= elem <= len(els):
             return None
@@ -120,34 +136,73 @@ class Corpo:
         m = self._mascara((g, i))
         if m is None:
             return None
-        xs, ys = (-m[0] if esp else m[0]) + ox * self.escala, m[1] + oy * self.escala
+        return (-m[0] if esp else m[0]) + ox * self.escala, m[1] + oy * self.escala
+
+    def pontos(self, acao, elem):
+        """(costas x, costas y, centro x, ângulo do tronco em graus, g) do desenho do elemento; None se não tem corpo.
+        g: 0 em pé .. 1 deitado, pela altura do desenho contra a do parado."""
+        chave = (acao, elem)
+        if chave in self._medidas:
+            return self._medidas[chave]
+        n = self._nuvem(acao, elem)
+        if n is None:
+            self._medidas[chave] = None
+            return None
+        xs, ys = n
+        g = float(np.clip((0.62 - (np.percentile(ys, 97) - np.percentile(ys, 3)) / self.altura) / 0.27, 0, 1))
+        # em pé: a metade de cima é a da cabeça
         cima = ys <= np.median(ys)
-        altura = float(np.percentile(ys, 97) - np.percentile(ys, 3))
-        return float(xs[cima].mean()), float(ys[cima].mean()), float(xs.mean()), float(ys.mean()), altura
+        cab = np.array([xs[cima].mean(), ys[cima].mean()])
+        per = np.array([xs[~cima].mean(), ys[~cima].mean()])
+        ang = float(np.clip(math.degrees(math.atan2(cab[0] - per[0], per[1] - cab[1])), -INCLINA, INCLINA))
+        if g > 0:
+            # deitando: o eixo comprido do desenho, e a cabeça na ponta mais pesada (o tronco é compacto, as pernas
+            # são compridas: o centro de massa fica mais perto da cabeça). Empate: a ponta de cima.
+            pts = np.stack([xs - xs.mean(), ys - ys.mean()], 1)
+            _, vecs = np.linalg.eigh(np.cov(pts.T))
+            u = vecs[:, -1]
+            proj = pts @ u
+            mais, menos = np.percentile(proj, 99), -np.percentile(proj, 1)
+            if abs(mais - menos) < 0.08 * (mais + menos):
+                u = u if u[1] < 0 else -u
+            elif mais > menos:
+                u = -u
+            proj = pts @ u
+            lado = proj > 0
+            cab_d = np.array([xs[lado].mean(), ys[lado].mean()])
+            ang_d = math.degrees(math.atan2(u[0], -u[1]))
+            if ang_d - ang > 180:
+                ang_d -= 360
+            elif ang - ang_d > 180:
+                ang_d += 360
+            cab = (1 - g) * cab + g * (cab_d + np.array([0.0, COLA]))
+            ang = (1 - g) * ang + g * float(np.clip(ang_d, -110, 110))
+        self._medidas[chave] = (float(cab[0]), float(cab[1]), float(xs.mean()), ang, g)
+        return self._medidas[chave]
 
     def alvo(self, acao, elem):
-        """(ax, ay, g, bx) do elemento, relativo ao parado; None se não tem corpo."""
+        """(ax, ay, g, bx, ângulo) do elemento, relativo ao parado; None se não tem corpo."""
         p = self.pontos(acao, elem)
         if p is None:
             return None
-        rel = p[4] / self.ref[4]
-        g = float(np.clip((0.62 - rel) / 0.27, 0, 1))
-        return p[0] - self.ref[0], p[1] - self.ref[1], g, p[2] - self.ref[2]
+        return p[0] - self.ref[0], p[1] - self.ref[1], p[4], p[2] - self.ref[2], p[3] - self.ref[3]
 
-    def peito(self):
+    def costas(self):
         return self.ref[0], self.ref[1]
 
 
 def _degraus(v):
-    ax, ay, g, bx = v
+    ax, ay, g, bx, th = v
     return (int(np.clip(round(ax / PASSO), -63, 63)), int(np.clip(round(ay / PASSO), -63, 63)),
-            int(np.clip(round(g * (NIVEIS - 1)), 0, NIVEIS - 1)), int(np.clip(round(bx / PASSO_B), -31, 31)))
+            int(np.clip(round(g * (NIVEIS - 1)), 0, NIVEIS - 1)), int(np.clip(round(bx / PASSO_B), -31, 31)),
+            int(np.clip(round(th / PASSO_T), -15, 15)))
 
 
 def tabela(corpo, ids_da_aura):
-    """{valor empacotado: [gatilhos]}: um trecho por ação enquanto os elementos vizinhos ficam a menos de 5 px (e 0,2
-    de recolher) uns dos outros. O que dá igual ao parado não entra (é o valor de partida)."""
-    saida = {}
+    """({valor de p: [gatilhos]}, {valor de q: [gatilhos]}). p guarda as costas (ax, ay); q guarda g, o centro e o
+    ângulo. Um trecho por ação enquanto os elementos vizinhos ficam a menos de 5 px, 0,2 de recolher e 10 graus uns
+    dos outros. O que dá igual ao parado não entra (é o valor de partida)."""
+    tp, tq = {}, {}
     for acao, els in sorted(corpo.acoes.items()):
         if acao in ids_da_aura or acao < 0:
             continue
@@ -164,22 +219,23 @@ def tabela(corpo, ids_da_aura):
             if e < len(alvos):
                 bloco = np.array(alvos[ini:e + 1])
                 folga = bloco.max(0) - bloco.min(0)
-                if folga[0] <= 5 and folga[1] <= 5 and folga[2] <= 0.2 and folga[3] <= 8:
+                if folga[0] <= 5 and folga[1] <= 5 and folga[2] <= 0.2 and folga[3] <= 8 and folga[4] <= 10:
                     continue
             trechos.append((ini + 1, e, _degraus(np.array(alvos[ini:e]).mean(0))))
             ini = e
-        for a, b, (qx, qy, qg, qb) in trechos:
-            valor = (qx + 64) + 128 * (qy + 64) + 16384 * qg + 131072 * (qb + 32)
-            if valor == ZERO:
-                continue
+        for a, b, (qx, qy, qg, qb, qt) in trechos:
             if a == 1 and b == len(alvos):
                 gat = f"Anim = {acao}"
             elif a == b:
                 gat = f"Anim = {acao} && AnimElemNo(0) = {a}"
             else:
                 gat = f"Anim = {acao} && AnimElemNo(0) = [{a}, {b}]"
-            saida.setdefault(valor, []).append(gat)
-    return saida
+            p, q = (qx + 64) + 128 * (qy + 64), qg + 8 * (qb + 32) + 512 * (qt + 16)
+            if p != ZERO_P:
+                tp.setdefault(p, []).append(gat)
+            if q != ZERO_Q:
+                tq.setdefault(q, []).append(gat)
+    return tp, tq
 
 
 # -------------------------------------------------------------------------------------------------------------- .cns
@@ -204,7 +260,23 @@ def _partes(expr):
 def desfazer(cns):
     """Tira o que este pós-passo pôs: o bloco da tabela e as linhas trocadas (a original fica guardada em comentário)."""
     cns = re.sub(rf"{re.escape(INICIO)}.*?{re.escape(FIM)}\n\n?", "", cns, flags=re.S)
+    cns = re.sub(rf"^{re.escape(ORIG)}\(linha nova\)\n[^\n]*\n", "", cns, flags=re.M)
     return re.sub(rf"^{re.escape(ORIG)}([^\n]*)\n[^\n]*\n", r"\1\n", cns, flags=re.M)
+
+
+def camadas_do_cns(cns):
+    """{id: (nome da camada, True se é do corpo / False se é do chão)}."""
+    nome, _ = aura_do_cns(desfazer(cns))
+    saida = {}
+    for mo in re.finditer(rf"^\[State -4, Aura {nome} (\w+): move\]\n(?:[^\n]+\n)+", cns, re.M):
+        saida[int(re.search(r"^id = (\d+)", mo.group(0), re.M).group(1))] = (mo.group(1), "\nbindtime = 0" not in mo.group(0))
+    return saida
+
+
+def _pesos(g):
+    """Quanto cada desenho da asa aparece conforme o corpo deita: aberta, meio, fechada (somam 1 ou mais)."""
+    return {"": f"min(1, max(0, 2 - 3 * {g}))", "_meio": f"min(1, max(0, 2 - abs(6 * {g} - 3)))",
+            "_fechada": f"min(1, max(0, 3 * {g} - 1))"}
 
 
 def ligar(cns, corpo):
@@ -212,28 +284,40 @@ def ligar(cns, corpo):
     assert nome, "o lutador não tem aura do ferramentas/aura.py no [Statedef -4]"
     cns = desfazer(cns)
     m = lambda letra: f"map(au_{nome}_{letra})"  # noqa: E731
-    p = m("p")
-    a0x, a0y = corpo.peito()
-    s = f"(1 - {RECOLHE} * {m('g')})"
+    p, q = m("p"), m("q")
+    pvx, pvy = PIVO.get(nome, corpo.costas())
+    camadas = camadas_do_cns(cns)
+    nomes = {n for n, _ in camadas.values()}
+    familias = {n for n in nomes if n + "_meio" in nomes and n + "_fechada" in nomes}
 
-    def mapa(titulo, letra, valor, gatilhos=("1",), tipo="MapSet"):
-        return (f"[State -4, Aura {nome} no corpo: {titulo}]\ntype = {tipo}\n"
+    def familia(n):
+        for f in familias:
+            for sufixo in ("_fechada", "_meio", ""):
+                if n == f + sufixo:
+                    return sufixo
+        return None
+
+    def mapa(titulo, letra, valor, gatilhos=("1",)):
+        return (f"[State -4, Aura {nome} no corpo: {titulo}]\ntype = MapSet\n"
                 + "".join(f"trigger{k + 1} = {g}\n" for k, g in enumerate(gatilhos))
                 + f"map = \"au_{nome}_{letra}\"\nvalue = {valor}\nignorehitpause = 1\n\n")
 
-    tab = tabela(corpo, set(ids))
-    bloco = [f"{INICIO}: a aura segue o corpo (issue #51). Tabela medida nos desenhos do .air: {len(tab)} valores, "
-             f"{sum(len(g) for g in tab.values())} trechos. Peito do parado em {a0x:.0f}, {a0y:.0f}. Não edite: rode "
-             f"python3 ferramentas/aura_no_corpo.py\n",
-             mapa("alvo de quem está em pé", "p", ZERO)]
-    for valor, gatilhos in sorted(tab.items()):
-        qx, qy = valor % 128 - 64, valor // 128 % 128 - 64
-        qg, qb = valor // 16384 % 8, valor // 131072 - 32
-        # sem ponto e vírgula no título: no .cns ele começa comentário e o controlador some
-        bloco.append(mapa(f"peito {qx * PASSO:+d} {qy * PASSO:+d}, recolhe {qg} de {NIVEIS - 1}, centro {qb * PASSO_B:+d}",
-                          "p", valor, gatilhos))
-    alvos = {"ax": f"((floor({p}) % 128) - 64) * {PASSO}", "ay": f"((floor({p} / 128) % 128) - 64) * {PASSO}",
-             "g": f"(floor({p} / 16384) % 8) / {NIVEIS - 1}.0", "bx": f"(floor({p} / 131072) - 32) * {PASSO_B}"}
+    tp, tq = tabela(corpo, set(ids))
+    bloco = [f"{INICIO}: a aura segue o corpo (issue #51). Tabelas medidas nos desenhos do .air: {len(tp)} + {len(tq)} "
+             f"valores, {sum(len(g) for g in tp.values()) + sum(len(g) for g in tq.values())} trechos. Pivô nas costas "
+             f"em {pvx:.0f}, {pvy:.0f}. Não edite: rode python3 ferramentas/aura_no_corpo.py\n",
+             mapa("costas de quem está em pé", "p", ZERO_P), mapa("tronco de quem está em pé", "q", ZERO_Q)]
+    # sem ponto e vírgula nos títulos: no .cns ele começa comentário e o controlador some sem erro
+    for valor, gatilhos in sorted(tp.items()):
+        qx, qy = valor % 128 - 64, valor // 128 - 64
+        bloco.append(mapa(f"costas {qx * PASSO:+d} {qy * PASSO:+d}", "p", valor, gatilhos))
+    for valor, gatilhos in sorted(tq.items()):
+        qg, qb, qt = valor % 8, valor // 8 % 64 - 32, valor // 512 - 16
+        bloco.append(mapa(f"recolhe {qg} de {NIVEIS - 1}, centro {qb * PASSO_B:+d}, tronco {qt * PASSO_T:+.0f} graus",
+                          "q", valor, gatilhos))
+    alvos = {"ax": f"((floor({p}) % 128) - 64) * {PASSO}", "ay": f"(floor({p} / 128) - 64) * {PASSO}",
+             "g": f"(floor({q}) % 8) / {NIVEIS - 1}.0", "bx": f"((floor({q} / 8) % 64) - 32) * {PASSO_B}",
+             "th": f"(floor({q} / 512) - 16) * {PASSO_T}"}
     for letra, alvo in alvos.items():
         bloco.append(mapa(f"{letra} zera antes do round", letra, "0", ("RoundState = 0",)))
         bloco.append(mapa(f"{letra} corre atrás do corpo", letra,
@@ -241,36 +325,54 @@ def ligar(cns, corpo):
     bloco.append(FIM + "\n\n")
     marco = re.search(rf"^\[State -4, Aura {nome} \w+: nasce\]", cns, re.M)
     cns = cns[:marco.start()] + "".join(bloco) + cns[marco.start():]
-
     altas = {e for e in ids if max((n["h"] for (g, _), n in corpo.nos.items() if g == e), default=0) >= ALTA}
+    rad = f"({m('th')} * 0.0174533)"
+
+    def linha(nova):
+        return lambda mm: f"{ORIG}{mm.group(0)}\n{nova}"
 
     def trocar(mo):
-        corpo_ctrl = mo.group(0)
-        do_chao = "\nbindtime = 0" in corpo_ctrl
-        px, py = _partes(re.search(r"^pos = ([^\n]*)$", corpo_ctrl, re.M).group(1))
-        sx, sy = _partes(re.search(r"^scale = ([^\n]*)$", corpo_ctrl, re.M).group(1))
+        ctrl = mo.group(0)
+        camada, movendo = mo.group(1), mo.group(2) == "move"
+        do_chao = camadas[int(re.search(r"^id = (\d+)", ctrl, re.M).group(1))][1] is False
+        sufixo = familia(camada)
+        if sufixo is not None:   # a asa abre e fecha: o alfa escolhe o desenho
+            peso = _pesos(m("g"))[sufixo]
+            ctrl = re.sub(r"^alpha = [^\n]*$", lambda mm: f"{ORIG}{mm.group(0)}\n"
+                          + mm.group(0).replace("min(1, max(0, ", f"min(1, max(0, {peso} * "), ctrl, count=1, flags=re.M)
+        if not movendo:
+            return ctrl
+        px, py = _partes(re.search(r"^pos = ([^\n]*)$", ctrl, re.M).group(1))
+        sx, sy = _partes(re.search(r"^scale = ([^\n]*)$", ctrl, re.M).group(1))
         if do_chao:
             # o aura.py descontava só a altura do pulo (- min(0, Pos Y)); na queda o motor leva o lutador para baixo
             # do chão por alguns tiques antes de pousar, e a camada do chão afundava junto (26 px no filme)
             py = py.replace("- min(0, Pos Y)", "- Pos Y")
-            nova_pos, nova_escala = f"pos = {px} + {m('bx')}, {py}", None
-            if int(re.search(r"^id = (\d+)", corpo_ctrl, re.M).group(1)) in altas:
+            nova_pos, nova_escala, angulo = f"pos = {px} + {m('bx')}, {py}", None, None
+            if int(re.search(r"^id = (\d+)", ctrl, re.M).group(1)) in altas:
                 # coluna e paredão: nascem do chão e são mais altos que o lutador; com ele caído, baixam junto
                 nova_escala = f"scale = {sx}, ({sy}) * (1 - {BAIXA} * {m('g')})"
         else:
-            nova_pos = (f"pos = {px} + {m('ax')} + ({a0x:.1f}) * (1 - {s}), "
-                        f"{py} + {m('ay')} + ({a0y:.1f}) * (1 - {s}) - {SOBE} * {m('g')}")
-            nova_escala = f"scale = ({sx}) * {s}, ({sy}) * {s}"
-
-        def linha(chave, nova):
-            return lambda mm: f"{ORIG}{mm.group(0)}\n{nova}"
-        corpo_ctrl = re.sub(r"^pos = [^\n]*$", linha("pos", nova_pos), corpo_ctrl, count=1, flags=re.M)
+            # gira em volta das costas: o motor gira o Explod em volta do eixo do desenho (os pés), então a posição
+            # leva o pivô de volta para o lugar. s encolhe a camada sem desenho fechado (garanhão, elos).
+            s = "1" if sufixo is not None else f"(1 - {RECOLHE} * {m('g')})"
+            nova_pos = (f"pos = {px} + {m('ax')} + ({pvx:.1f}) - {s} * (({pvx:.1f}) * cos({rad}) - ({pvy:.1f}) * sin({rad})), "
+                        f"{py} + {m('ay')} + ({pvy:.1f}) - {s} * (({pvx:.1f}) * sin({rad}) + ({pvy:.1f}) * cos({rad}))")
+            nova_escala = None if s == "1" else f"scale = ({sx}) * {s}, ({sy}) * {s}"
+            angulo = f"angle = {SINAL} * {m('th')}"
+        ctrl = re.sub(r"^pos = [^\n]*$", linha(nova_pos), ctrl, count=1, flags=re.M)
         if nova_escala:
-            corpo_ctrl = re.sub(r"^scale = [^\n]*$", linha("scale", nova_escala), corpo_ctrl, count=1, flags=re.M)
-        return corpo_ctrl
-    cns, n = re.subn(rf"^\[State -4, Aura {nome} \w+: move\]\n(?:[^\n]+\n)+", trocar, cns, flags=re.M)
-    assert n == len(ids), f"achei {n} controladores 'move' para {len(ids)} camadas"
+            ctrl = re.sub(r"^scale = [^\n]*$", linha(nova_escala), ctrl, count=1, flags=re.M)
+        if angulo:
+            ctrl = re.sub(r"^(trans = addalpha)$", lambda mm: f"{ORIG}(linha nova)\n{angulo}\n{mm.group(1)}", ctrl,
+                          count=1, flags=re.M)
+        return ctrl
+    cns, n = re.subn(rf"^\[State -4, Aura {nome} (\w+): (move|apaga para virar)\]\n(?:[^\n]+\n)+", trocar, cns, flags=re.M)
+    assert n == 2 * len(ids), f"achei {n} controladores para {len(ids)} camadas"
     return cns
+
+
+SINAL = -1  # o `angle` do Explod gira ao contrário do relógio; o tronco inclinado para a frente gira no sentido dele
 
 
 def aplicar(lutador, pasta=None):
@@ -280,77 +382,72 @@ def aplicar(lutador, pasta=None):
     novo = ligar(corpo.cns, corpo)
     arq.write_text(novo, encoding="utf-8", newline="\n")
     nome, ids = aura_do_cns(novo)
-    tab = tabela(corpo, set(ids))
-    print(f"{lutador}: aura '{nome}' presa ao corpo; {len(corpo.acoes)} ações medidas, {len(tab)} valores, "
-          f"{sum(len(g) for g in tab.values())} trechos na tabela")
+    tp, tq = tabela(corpo, set(ids))
+    print(f"{lutador}: aura '{nome}' presa ao corpo; {len(corpo.acoes)} ações medidas, {len(tp)} + {len(tq)} valores, "
+          f"{sum(len(g) for g in tp.values()) + sum(len(g) for g in tq.values())} trechos nas tabelas")
 
 
 # ---------------------------------------------------------------------------------------------------------- conferir
-def camadas_do_corpo(cns):
-    """{id: True se a camada é do corpo, False se é do chão}."""
-    nome, ids = aura_do_cns(cns)
-    tipo = {}
-    for mo in re.finditer(rf"^\[State -4, Aura {nome} \w+: move\]\n(?:[^\n]+\n)+", cns, re.M):
-        tipo[int(re.search(r"^id = (\d+)", mo.group(0), re.M).group(1))] = "\nbindtime = 0" not in mo.group(0)
-    return tipo
-
-
 def conferir(log, lutador, pasta=None, mostrar=True):
-    """Lê o aura_log.txt e devolve (passou, texto). Mede a distância do peito de cada camada ao peito do desenho."""
+    """Lê o aura_log.txt e devolve (passou, texto). Mede a distância das costas de cada camada às costas do desenho
+    e a diferença entre o ângulo da camada e o do tronco."""
     pasta = Path(pasta) if pasta else RAIZ / "chars" / lutador
     corpo = Corpo(pasta, lutador)
-    tipo = camadas_do_corpo(corpo.cns)
-    a0x, a0y = corpo.peito()
+    nome, _ = aura_do_cns(corpo.cns)
+    camadas = camadas_do_cns(corpo.cns)
+    pvx, pvy = PIVO.get(nome, corpo.costas())
     linhas = []
     for linha in Path(log).read_text(encoding="utf-8", errors="replace").splitlines():
         if linha.startswith("ERRO"):
             return False, linha
         m = re.search(r"t=(\d+) fase=(\S+) st=(-?\d+) anim=(-?\d+) el=(-?\d+) x=(\S+) y=(\S+) tx=\S+ ty=\S+ cx=(\S+) "
-                     r"cy=\S+ f=(-?\d+)", linha)
+                      r"cy=\S+ f=(-?\d+)", linha)
         if not m:
             continue
         d = dict(t=int(m.group(1)), fase=m.group(2), st=int(m.group(3)), anim=int(m.group(4)), el=int(m.group(5)),
                  x=float(m.group(6)) + float(m.group(8)), y=float(m.group(7)), f=int(m.group(9)), cam={})
-        for e, px, py, sx, sy in re.findall(r"(\d+) px=(\S+) py=(\S+) sx=(\S+) sy=(\S+)", linha):
-            d["cam"][int(e)] = tuple(float(v) for v in (px, py, sx, sy))
+        for e, px, py, sx, sy, an in re.findall(r"(\d+) px=(\S+) py=(\S+) sx=(\S+) sy=(\S+)(?: an=(\S+))?", linha):
+            d["cam"][int(e)] = tuple(float(v or 0) for v in (px, py, sx, sy, an))
         linhas.append(d)
     assert linhas, f"{log}: sem tiques"
     texto, passou = [], True
-    for e, do_corpo in sorted(tipo.items()):
+    for e, (camada, do_corpo) in sorted(camadas.items()):
         base = [d["cam"][e] for d in linhas if d["fase"] == "parado" and e in d["cam"] and d["t"] > 34]
         assert base, f"camada {e} não apareceu com o lutador parado"
         sx0 = float(np.median([b[2] for b in base]))
-        fases = {}
+        fases, angulos = {}, []
         for d in linhas:
             if e not in d["cam"] or d["t"] <= 34:
                 continue
-            px, py, sx, _ = d["cam"][e]
+            px, py, sx, _, an = d["cam"][e]
             dx, dy = (px - d["x"]) * d["f"], py - d["y"]
             if do_corpo:
                 alvo = corpo.alvo(d["anim"], d["el"])
                 if alvo is None:
                     continue
-                s = sx / sx0
-                # onde o ponto do peito da camada caiu, contra o peito do desenho da tela (o "sobe" do recolher sai)
-                ex = dx + s * a0x - (a0x + alvo[0])
-                ey = dy + s * a0y - (a0y + alvo[1]) + SOBE * alvo[2]
+                s, th = sx / sx0, math.radians(SINAL * an)
+                # onde o pivô da camada caiu (o motor gira em volta do eixo dela), contra as costas do desenho da tela
+                ex = dx + s * (pvx * math.cos(th) - pvy * math.sin(th)) - (pvx + alvo[0])
+                ey = dy + s * (pvx * math.sin(th) + pvy * math.cos(th)) - (pvy + alvo[1])
                 dist = float(np.hypot(ex, ey))
+                angulos.append(abs(SINAL * an - alvo[4]))
             else:
                 dist = abs(py)
             fases.setdefault(d["fase"], []).append((dist, d["t"], d["st"], d["anim"]))
         todas = np.array([v[0] for f in fases.values() for v in f])
         p95, pior = float(np.percentile(todas, 95)), max((v for f in fases.values() for v in f))
-        # o maior trecho seguido com a camada a mais de 20 px do peito: um tranco (pouso, golpe) pode passar por um
+        # o maior trecho seguido com a camada a mais de 20 px das costas: um tranco (pouso, golpe) pode passar por um
         # ou dois tiques, porque a tabela vê a ação nova um tique depois; ficar solta, não
         solta, seguidos, antes = 0, 0, None
         for dist, t, _, _ in sorted((v for f in fases.values() for v in f), key=lambda v: v[1]):
             seguidos = seguidos + 1 if dist > 20 and antes == t - 1 else (1 if dist > 20 else 0)
             solta, antes = max(solta, seguidos), t
-        ok = (p95 <= 12 and solta <= 4 and pior[0] <= 45) if do_corpo else pior[0] <= 6
+        a95 = float(np.percentile(angulos, 95)) if angulos else 0.0
+        ok = (p95 <= 12 and solta <= 4 and pior[0] <= 70 and a95 <= 25) if do_corpo else pior[0] <= 6
         passou &= ok
-        texto.append(f"  {'PASS' if ok else 'FAIL'} camada {e} ({'corpo' if do_corpo else 'chão'}): "
-                     + (f"distância ao peito p95 {p95:.1f} px, pior {pior[0]:.1f} px, solta (> 20 px) por no máximo "
-                        f"{solta} tiques seguidos"
+        texto.append(f"  {'PASS' if ok else 'FAIL'} camada {e} {camada} ({'corpo' if do_corpo else 'chão'}): "
+                     + (f"distância às costas p95 {p95:.1f} px, pior {pior[0]:.1f} px, solta (> 20 px) por no máximo "
+                        f"{solta} tiques seguidos; ângulo contra o tronco p95 {a95:.0f} graus"
                         if do_corpo else f"distância ao chão, pior {pior[0]:.1f} px")
                      + f" (tique {pior[1]}, estado {pior[2]}, ação {pior[3]})")
         for fase, vs in fases.items():
