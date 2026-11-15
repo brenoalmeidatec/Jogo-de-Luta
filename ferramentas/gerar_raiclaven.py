@@ -327,7 +327,9 @@ def cortar_dupla(nomes=None):
     import animar_folha as af
     for folha in sorted(DUPLA.glob("e_*.png")):
         nome = folha.stem
-        af.AJUSTE[nome] = FATOR_DUPLA
+        # a escala do animar_folha segue a largura da folha (2172 no ChatGPT); as do Gemini vêm com 8 células de 392
+        # (3136), já na escala da do ChatGPT pela lente verde do braço (compor no scratchpad, docs/raiclaven-despertado-43.md)
+        af.AJUSTE[nome] = FATOR_DUPLA * Image.open(folha).width / 2172
         if nomes and nome not in nomes and nome[2:] not in nomes:
             continue
         for amplia, base in ((1, QUADROS), (3, QUADROS.parent / "quadros_hd")):
@@ -345,11 +347,16 @@ _par_endiabrado = gp.par_endiabrado
 # folha que falta (ou sprite antigo) -> folha da dupla emprestada, só até a folha própria ser gerada
 EMPRESTADA_DUPLA = {
     "ar_soco": "pulo", "bicicleta": "pulo", "ar_chute": "pulo", "ar_cotovelo": "pulo", "mortal": "pulo",
-    "bola": "afastar", "caneta": "soco", "pente_combo": "soco", "golaco": "martelo", "agarrao": "martelo",
-    "agarra": "martelo", "joga": "afastar", "especial": "afastar", "kick_alto": "chute_alto", "compasso": "chute_alto",
-    "armada": "chute_alto", "gira": "chute_alto", "juliet": "chute_alto", "embaixada": "chute_baixo",
-    "rasteira": "baixo_soco", "rasteirinha": "baixo_soco", "rolamento": "agachado", "rola": "agachado",
-    "provoca": "ginga", "vitoria": "ginga", "derrota": "levanta", "parado": "ginga", "anda": "anda", "corre": "anda",
+    "bola": "afastar soco", "caneta": "soco", "pente_combo": "soco", "golaco": "martelo soco",
+    "agarrao": "martelo soco", "agarra": "martelo soco", "joga": "afastar soco", "especial": "afastar soco",
+    "kick_alto": "chute_alto soco", "compasso": "chute_alto soco", "armada": "chute_alto soco",
+    "gira": "chute_alto soco", "juliet": "chute_alto soco", "embaixada": "chute_baixo soco",
+    "rasteira": "baixo_soco agachado", "rasteirinha": "baixo_soco agachado", "rolamento": "agachado",
+    "rola": "agachado", "provoca": "ginga", "vitoria": "ginga", "derrota": "levanta", "parado": "ginga",
+    "anda": "anda", "corre": "anda",
+    # folhas de golpe que ainda não saíram (o limite de imagens do ChatGPT, 2026-11-15): o golpe mais parecido que já há
+    "martelo": "soco", "chute_baixo": "soco", "chute_alto": "soco", "afastar": "soco", "baixo_soco": "agachado",
+    "cabecada": "agachado",
 }
 
 
@@ -370,8 +377,9 @@ def par_endiabrado_dupla(nome):
         # folha da dupla que ainda não existe (esperando o Breno aprovar a parceira, #43) ou sprite antigo sem folha:
         # empresta a folha da dupla mais parecida, para o cientista sem a parceira não aparecer no meio da luta
         chave = re.fullmatch(r"(?:f_|m_)?([a-z_]+?)_?(\d*)(?:_\d+)?", nome)
-        folha = chave and next((v for k, v in EMPRESTADA_DUPLA.items() if chave[1] == k), None)
-        if folha and (QUADROS / f"e_{folha}").exists():
+        folha = chave and next((f for f in EMPRESTADA_DUPLA.get(chave[1], "").split()
+                                if (QUADROS / f"e_{f}").exists()), None)
+        if folha:
             n = int(chave[2] or 0) % 8
             return QUADROS / f"e_{folha}" / f"{n:02d}.png", folha, n
     if par is None:  # folha sem quadros do meio (ginga, anda, apanha, queda, levanta): o desenho-chave direto da dupla
