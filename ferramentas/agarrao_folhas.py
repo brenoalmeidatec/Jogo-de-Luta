@@ -239,7 +239,8 @@ def salvar(captura, lutador, nome, tirar=()):
     for kx in (15, 7, 3, 1):
         junta = cv2.dilate(corpo, np.ones((5 if kx > 1 else 1, kx), np.uint8))
         n, rot, st, cen = cv2.connectedComponentsWithStats(junta, connectivity=8)
-        figs = [k for k in range(1, n) if st[k, cv2.CC_STAT_AREA] > 0.004 * corpo.size]
+        figs = [k for k in range(1, n) if st[k, cv2.CC_STAT_AREA] > 0.004 * corpo.size  # sem a borda da imagem
+                and min(st[k, cv2.CC_STAT_WIDTH], st[k, cv2.CC_STAT_HEIGHT]) > 20]
         if len(figs) - len(tirar) >= 8:
             break
     meio = a.shape[0] / 2
