@@ -43,7 +43,11 @@ AGUA_X1 = 1338           # dali para a direita é a escada da passarela
 OBSTACULOS = [(290, 470, 326, 668), (232, 470, 384, 566), (1212, 470, 1248, 668), (1156, 470, 1306, 566),
               (1108, 488, 1188, 600), (1290, 530, 1346, 630)]
 LAMPIOES = [(258, 512), (356, 512), (1180, 512), (1280, 512)]   # centro de cada lanterna acesa na cena
-SOL = (150, 64)          # centro do sol na tela, logo acima dos morros da esquerda
+SOL = (150, 64)
+# na cena destruída: lampião torto, passarela desabada e pilares, canoas viradas, tábuas e tijolos boiando
+RUINA_FORA_DA_AGUA = [(200, 500, 270, 590), (255, 470, 345, 700), (800, 470, 1340, 585), (1140, 520, 1340, 600),
+                      (400, 566, 557, 614), (618, 546, 692, 568), (658, 583, 777, 627), (838, 606, 987, 650),
+                      (363, 600, 397, 620), (448, 648, 494, 670), (808, 660, 844, 680), (773, 556, 812, 572)]          # centro do sol na tela, logo acima dos morros da esquerda
 
 
 def na_tela(x, y):
@@ -111,10 +115,25 @@ def mascara_agua(a):
     return m
 
 
-def agua(cena, n=8):
+def mascara_ruina(a):
+    """Água da cena destruída: a faixa do rio menos as baronesas, o lampião torto, a passarela desabada e o que boia
+    (canoas viradas, tábuas, tijolos), em caixas medidas na cena_destruida.png."""
+    h, w = a.shape[:2]
+    m = np.zeros((h, w), bool)
+    m[532:668, :1340] = True
+    r, g, b = (a[..., i].astype(int) for i in range(3))
+    verde = (g > r + 30) & (g > b + 25)
+    m &= ~(cv2.dilate(verde.astype(np.uint8), np.ones((9, 9), np.uint8)) > 0)
+    m &= ~((r + g + b) < 110)
+    for x0, y0, x1, y1 in RUINA_FORA_DA_AGUA:
+        m[y0:y1, x0:x1] = False
+    return m
+
+
+def agua(cena, n=8, mascara=None):
     """Quadros da água: cada linha da faixa anda de lado num seno (o reflexo ondula); só nos pixels de água."""
     a = np.array(cena)
-    m = mascara_agua(a)
+    m = (mascara or mascara_agua)(a)
     y0, y1 = AGUA_Y
     faixa = a[y0:y1].copy()
     mf = m[y0:y1]
@@ -223,6 +242,116 @@ def brilho_lampiao(n=6):
     return quadros
 
 
+def sem_magenta_preso(img):
+    """Pedaços de céu magenta presos entre as vigas (não encostam lá em cima): só o magenta forte, acima do rio."""
+    a = np.array(img)
+    r, g, b = (a[..., i].astype(int) for i in range(3))
+    forte = (r > 190) & (b > 190) & (g < 90)
+    forte[AGUA_Y[0]:] = False
+    a[forte, 3] = 0
+    return Image.fromarray(a)
+
+
+def rio_agua_frente(cena, mascara, sufixo):
+    """As três camadas do rio de uma cena (a de sempre ou a destruída): a cena parada, a água ondulando por cima e a
+    frente (o que não é água da faixa do rio para baixo), que cobre a canoa e o que boia."""
+    escala(alfa_duro(cena)).save(SAIDA / f"rio{sufixo}.png")
+    rio = {"nome": f"rio{sufixo}", "imagem": f"rio{sufixo}.png", "delta": [1, 1], "y": TOPO}
+    aq, m = agua(cena, mascara=mascara)
+    aq = [alfa_duro(escala(q)) for q in aq]
+    emendar(aq).save(SAIDA / f"agua{sufixo}.png")
+    ax, ay = na_tela(0, AGUA_Y[0])
+    ag = {"nome": f"agua{sufixo}", "folha": {"imagem": f"agua{sufixo}.png", "n": 8}, "ticks": 9, "delta": [1, 1],
+          "x": ax, "y": ay}
+    a = np.array(cena)
+    frente = a.copy()
+    corte = np.zeros(a.shape[:2], bool)
+    corte[:AGUA_Y[0]] = True
+    corte |= m
+    frente[corte, 3] = 0
+    fr = alfa_duro(escala(Image.fromarray(frente)))
+    fr = fr.crop((0, round(AGUA_Y[0] * ESCALA) - 40, fr.width, fr.height))
+    fr.save(SAIDA / f"frente{sufixo}.png")
+    fr_ = {"nome": f"frente{sufixo}", "imagem": f"frente{sufixo}.png", "delta": [1, 1],
+           "y": TOPO + round(AGUA_Y[0] * ESCALA) - 40}
+    return rio, ag, fr_, m
+
+
+def destruir(camadas):
+    """Destruição em dois níveis (issue #35, 4.2). Nível 1: o calçadão rachado, casas da outra margem e a passarela
+    pegando fogo, um barco queimando, o povo fugindo. Nível 2: a beira-rio em ruínas (cena_destruida.png: passarela
+    desabada no rio, casas sem telhado, lampiões quebrados, guarda-corpo torto, crateras), fogo grande e caídos."""
+    from cenario_destruicao import Destruicao
+    for c in camadas:
+        if c["nome"] in ("garca", "canoa"):
+            c["nivel"] = "0"          # o amanhecer tranquilo: some quando a destruição começa
+        elif c["nome"] in ("rio", "agua", "reflexo", "frente") or c["nome"].startswith("lampiao"):
+            c["nivel"] = "<2"         # a beira-rio inteira dá lugar às ruínas no nível 2
+    d = Destruicao(SAIDA)
+    nomes = [c["nome"] for c in camadas]
+    i_ceu = nomes.index("sol") + 1
+    ceus = [d.ceu(1, (16, 40, 60)), d.ceu(2, (40, 90, 120))]
+    T = na_tela
+
+    # ---- nível 1: por cima da cena de sempre ----
+    pts = [(T(300, 960), 260, 5), (T(820, 945), 280, 175), (T(1240, 955), 220, 10), (T(560, 850), 180, 180)]
+    d.rachaduras(-MARGEM, 0, LARGURA, 720, [(x + MARGEM, y, comp, ang) for (x, y), comp, ang in pts], 1,
+                 achata=0.4, torto=0.45, grosso=6)
+    d.fogo_com_fumaca(*T(70, 425), 70, 1, seed=1)                   # casa azul da outra margem
+    d.fogo_com_fumaca(*T(230, 395), 80, 1, seed=2, fase=3)          # sobrado amarelo
+    d.fogo_com_fumaca(*T(620, 430), 66, 1, seed=3, fase=5)          # casas do meio
+    d.fogo_com_fumaca(*T(1230, 345), 90, 1, seed=4, fase=2)         # telhado da passarela
+    d.fogo(*T(905, 532), 46, 1, fase=6)                             # o barco vermelho amarrado
+    d.peca("entulho_m", T(640, 0)[0], T(0, 975)[1], 100, 1)
+    d.peca("entulho_p", T(1150, 0)[0], T(0, 955)[1], 66, 1)
+    d.peca("carrinho", T(40, 0)[0], T(0, 840)[1], 130, 1)           # carrinho de pipoca largado no calçadão
+    d.fogo_com_fumaca(*T(1060, 800), 100, 1, seed=6, fase=4)        # o pé da escada da passarela
+    d.correndo(0, T(0, 812)[1], 230, 1, 6.5, -900, 2300)
+    d.correndo(1, T(0, 818)[1], 230, 1, -5.5, 2400, 3100)
+    d.fagulhas(80, 1, seed=5, quantas=30)
+    d.clarao_do_fogo(1, (26, 9, 0))
+    nivel1 = d.camadas
+    d.camadas = []
+
+    # ---- nível 2: a beira-rio em ruínas no lugar da de sempre ----
+    ruina = sem_magenta_preso(com_1024(largura_1536(cena_sem_ceu(Image.open(BRUTO / "cena_destruida.png")))))
+    rio2, ag2, fr2, _ = rio_agua_frente(ruina, mascara_ruina, "_ruina")
+    for c in (rio2, ag2, fr2):
+        c["nivel"] = "2"
+    d.fogo_com_fumaca(*T(60, 440), 90, 2, seed=11)                  # casas azuis sem telhado
+    d.fogo_com_fumaca(*T(240, 410), 120, 2, seed=12, fase=4)        # sobrado amarelo destelhado
+    d.fogo_com_fumaca(*T(600, 445), 100, 2, seed=13, fase=2)        # casas do meio
+    d.fogo_com_fumaca(*T(1010, 572), 150, 2, seed=14, fase=6)       # a passarela caída no rio
+    d.fogo_com_fumaca(*T(1300, 330), 110, 2, seed=15, fase=1)       # o que sobrou do telhado da passarela
+    d.fogo(*T(915, 628), 60, 2, fase=3)                             # canoa virada
+    d.peca("caido_velho", T(470, 0)[0], T(0, 826)[1], 64, 2)
+    d.peca("caida_amarela", T(860, 0)[0], T(0, 822)[1], 60, 2, espelha=True)
+    d.peca("entulho_g", T(20, 0)[0], T(0, 830)[1], 140, 2)
+    d.correndo(0, T(0, 815)[1], 230, 2, 7.5, -700, 1700)
+    d.correndo(1, T(0, 820)[1], 230, 2, -6, 2200, 2300)
+    d.correndo(0, T(0, 810)[1], 230, 2, -8, 3600, 2900)
+    d.fagulhas(40, 2, seed=6, quantas=70, alto=520)
+    d.clarao_do_fogo(2, (44, 14, 0))
+    d.peca("caido_verde", 960, 718, 76, 2, frente=True)             # na frente dos lutadores, rente à tela
+    nivel2 = d.camadas
+
+    # ordem: céu, céu esfumaçado, a cena de sempre com as ruínas logo depois de cada peça dela, os efeitos
+    out = camadas[:i_ceu] + ceus
+    for c in camadas[i_ceu:]:
+        if c.get("frente") or c["nome"].startswith("neblina_perto"):
+            continue
+        out.append(c)
+        if c["nome"] == "rio":
+            out.append(rio2)
+        elif c["nome"] == "agua":
+            out.append(ag2)
+        elif c["nome"] == "frente":
+            out.append(fr2)
+    out += nivel1 + [c for c in nivel2 if not c.get("frente")]
+    out += [c for c in camadas if c["nome"].startswith("neblina_perto")]
+    return out + [c for c in camadas[i_ceu:] if c.get("frente")] + [c for c in nivel2 if c.get("frente")]
+
+
 def main():
     SAIDA.mkdir(parents=True, exist_ok=True)
     cena = com_1024(largura_1536(cena_sem_ceu(Image.open(BRUTO / "cena.png"))))
@@ -266,19 +395,14 @@ def main():
                     "x": 1500, "y": 30, "velocidade": [-0.9, 0], "repete": [1, 0], "vao": [2600, 0],
                     "seno_y": [14, 240, 0]})
 
-    escala(alfa_duro(cena)).save(SAIDA / "rio.png")
-    camadas.append({"nome": "rio", "imagem": "rio.png", "delta": [1, 1], "y": TOPO})
-
-    aq, m = agua(cena)
-    aq = [alfa_duro(escala(q)) for q in aq]
-    emendar(aq).save(SAIDA / "agua.png")
-    ax, ay = na_tela(0, AGUA_Y[0])
-    camadas.append({"nome": "agua", "folha": {"imagem": "agua.png", "n": 8}, "ticks": 9, "delta": [1, 1],
-                    "x": ax, "y": ay})
+    rio, ag, fr_, m = rio_agua_frente(cena, mascara_agua, "")
+    ax, ay = ag["x"], ag["y"]
+    camadas += [rio, ag]
 
     # reflexo do sol na água, embaixo do sol (o sol quase não anda: a coluna fica na mesma altura da tela)
+    aq0 = Image.open(SAIDA / "agua.png")
     m_tela = np.array(Image.fromarray(m[AGUA_Y[0]:AGUA_Y[1]].astype(np.uint8) * 255).resize(
-        (aq[0].width, aq[0].height), Image.NEAREST)) > 0
+        (aq0.width // 8, aq0.height), Image.NEAREST)) > 0
     rx = SOL[0] - 45 - ax
     rq = reflexo_sol(m_tela[:, max(0, rx):max(0, rx) + 90])
     emendar(rq).save(SAIDA / "reflexo.png")
@@ -300,17 +424,7 @@ def main():
                         "repete": [1, 0], "vao": [3000, 0], "seno_y": [2, 90, 0]})
 
     # na frente da água e da canoa: tudo que não é água na faixa do rio e tudo dali para baixo
-    a = np.array(cena)
-    frente = a.copy()
-    corte = np.zeros(a.shape[:2], bool)
-    corte[:AGUA_Y[0]] = True
-    corte |= m
-    frente[corte, 3] = 0
-    fr = alfa_duro(escala(Image.fromarray(frente)))
-    fr = fr.crop((0, round(AGUA_Y[0] * ESCALA) - 40, fr.width, fr.height))
-    fr.save(SAIDA / "frente.png")
-    camadas.append({"nome": "frente", "imagem": "frente.png", "delta": [1, 1],
-                    "y": TOPO + round(AGUA_Y[0] * ESCALA) - 40})
+    camadas.append(fr_)
 
     emendar(brilho_lampiao()).save(SAIDA / "lampiao.png")
     for i, (x, y) in enumerate(LAMPIOES):
@@ -330,6 +444,7 @@ def main():
                     "y": 640, "velocidade": [0.3, 0], "repete": [1, 0], "vao": [0, 0], "mistura": "soma",
                     "frente": True})
 
+    camadas = destruir(camadas)
     desc = {"id": "passarela", "nome": "Passarela", "musica": "musicas/passarela.ogg",
             "musica_nome": "Cenário Passarela", "tela": [1280, 720], "largura_mundo": LARGURA, "subida": 160,
             "chao_y": CHAO_Y, "camera": {"tensao": 200, "segue_vertical": 0.6, "tensao_chao": 120},

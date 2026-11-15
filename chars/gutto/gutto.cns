@@ -8562,6 +8562,44 @@ value = 5100
 
 [Statedef -2]
 
+; --- destruição do cenário (ferramentas/destruicao.py) ---
+[State -2, Destruição do cenário 909]
+type = ModifyBGCtrl
+trigger1 = !IsHelper
+id = 909
+value = (((var(20) > 0) + (NumEnemy > 0 && enemy, var(20) > 0)) = 0)
+ignorehitpause = 1
+
+[State -2, Destruição do cenário 910]
+type = ModifyBGCtrl
+trigger1 = !IsHelper
+id = 910
+value = (((var(20) > 0) + (NumEnemy > 0 && enemy, var(20) > 0)) < 2)
+ignorehitpause = 1
+
+[State -2, Destruição do cenário 911]
+type = ModifyBGCtrl
+trigger1 = !IsHelper
+id = 911
+value = (((var(20) > 0) + (NumEnemy > 0 && enemy, var(20) > 0)) >= 1)
+ignorehitpause = 1
+
+[State -2, Destruição do cenário 912]
+type = ModifyBGCtrl
+trigger1 = !IsHelper
+id = 912
+value = (((var(20) > 0) + (NumEnemy > 0 && enemy, var(20) > 0)) = 2)
+ignorehitpause = 1
+
+[State -2, Destruição do cenário 913]
+type = ModifyBGCtrl
+trigger1 = !IsHelper
+id = 913
+value = (((var(20) > 0) + (NumEnemy > 0 && enemy, var(20) > 0)) = 1)
+ignorehitpause = 1
+
+; --- fim da destruição do cenário ---
+
 [State -2, Zera fracos]
 type = VarSet
 trigger1 = ctrl

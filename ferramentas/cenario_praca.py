@@ -275,6 +275,68 @@ def escala(img, k=ESCALA):
     return img.resize((round(img.width * k), round(img.height * k)), Image.LANCZOS)
 
 
+def destruir(camadas):
+    """Destruição em dois níveis (issue #35, 4.2). Nível 1: a praça de sempre rachada e pegando fogo, o povo fugindo.
+    Nível 2: a praça em ruínas (cena_destruida.png: prefeitura desabada, torre da Matriz quebrada com o sino no chão,
+    crateras), fogo grande, gente correndo e caídos."""
+    from cenario_destruicao import Destruicao
+    for c in camadas:
+        if c["nome"] in ("ambulante", "ciclista") or c["nome"].startswith("pombo"):
+            c["nivel"] = "0"          # vida normal da praça: some quando a destruição começa
+        elif c["nome"] in ("praca", "sino") or c["nome"].startswith("bandeira"):
+            c["nivel"] = "<2"         # a praça inteira dá lugar às ruínas no nível 2
+    d = Destruicao(SAIDA)
+    fundo = [c for c in camadas if c["nome"] in ("ceu", "nuvens")]
+    resto = [c for c in camadas if c["nome"] not in ("ceu", "nuvens")]
+    ceus = [d.ceu(1, (10, 40, 70)), d.ceu(2, (30, 90, 130))]
+
+    # ---- nível 1: por cima da praça inteira ----
+    T = lambda x, y: na_tela(x, y)
+    # rachaduras no piso e uma na parede da Matriz (na fachada da prefeitura elas cortavam as janelas e o céu)
+    pts = [(T(330, 880), 220, 20), (T(1100, 910), 240, 160), (T(760, 850), 170, 60), (T(1380, 430), 150, 95)]
+    d.rachaduras(-MARGEM, 0, LARGURA, 720, [(x + MARGEM, y, comp, ang) for (x, y), comp, ang in pts], 1)
+    d.fogo_com_fumaca(*T(432, 448), 110, 1, seed=1)                 # janela de cima da prefeitura
+    d.fogo_com_fumaca(*T(1010, 640), 120, 1, seed=2, fase=3)        # janela de baixo, à direita
+    d.fogo_com_fumaca(*T(130, 500), 160, 1, seed=3, fase=5)         # telhado da casa azul
+    d.fogo_com_fumaca(*T(1080, 720), 130, 1, seed=4, fase=2)        # canteiro da direita
+    d.peca("entulho_m", T(560, 0)[0], T(0, 800)[1], 110, 1)
+    d.peca("entulho_p", T(1180, 0)[0], T(0, 795)[1], 70, 1)
+    d.peca("carrinho", -MARGEM + 40, T(0, 800)[1] + 30, 150, 1)     # o carrinho do ambulante, largado
+    d.correndo(0, T(0, 805)[1], 250, 1, 6.5, -900, 2300)
+    d.correndo(1, T(0, 812)[1], 250, 1, -5.5, 2400, 3100)
+    d.fagulhas(120, 1, seed=5, quantas=30)
+    d.clarao_do_fogo(1, (26, 9, 0))
+    nivel1 = d.camadas
+    d.camadas = []
+
+    # ---- nível 2: a praça em ruínas no lugar da de sempre ----
+    ruina = com_1024(cena_sem_magenta(Image.open(BRUTO / "cena_destruida.png")))
+    escala(alfa_duro(ruina)).save(SAIDA / "praca_ruina.png")
+    topo2 = CHAO_Y - round(900 * ESCALA)     # nas ruínas o piso vai de 690 a 960 e o meio-fio fica embaixo
+    R = lambda x, y: (round(x * ESCALA) - MARGEM, topo2 + round(y * ESCALA))
+    base2 = {"nome": "praca_ruina", "imagem": "praca_ruina.png", "delta": [1, 1], "y": topo2, "nivel": "2"}
+    d.fogo_com_fumaca(*R(820, 470), 280, 2, seed=11)                # o desabamento da prefeitura
+    d.fogo_com_fumaca(*R(420, 520), 150, 2, seed=12, fase=4)        # janela
+    d.fogo_com_fumaca(*R(1330, 215), 190, 2, seed=13, fase=2)       # torre da Matriz
+    d.fogo_com_fumaca(*R(150, 520), 220, 2, seed=14, fase=6)        # casa azul
+    d.fogo_com_fumaca(*R(1010, 690), 140, 2, seed=15, fase=1)       # palmeiras
+    d.peca("carro", R(40, 0)[0], R(0, 800)[1], 190, 2)
+    d.fogo(R(190, 0)[0], R(0, 720)[1], 120, 2, fase=3)              # o carro pegando fogo
+    # caídos na escala de quem corre no fundo (250 de altura em pé), espalhados pelo piso
+    d.peca("caido_velho", R(430, 0)[0], R(0, 792)[1], 62, 2)
+    d.peca("caida_amarela", R(1090, 0)[0], R(0, 770)[1], 60, 2, espelha=True)
+    d.peca("caido_verde", R(720, 0)[0], R(0, 815)[1], 66, 2)
+    d.peca("entulho_g", R(1240, 0)[0], R(0, 800)[1], 170, 2)
+    d.correndo(0, R(0, 815)[1], 250, 2, 7.5, -700, 1700)
+    d.correndo(1, R(0, 822)[1], 250, 2, -6, 2200, 2300)
+    d.correndo(0, R(0, 808)[1], 250, 2, -8, 3600, 2900)
+    d.fagulhas(60, 2, seed=6, quantas=70, alto=520)
+    d.clarao_do_fogo(2, (44, 14, 0))
+    d.peca("caida_sacola", 900, 718, 80, 2, frente=True)            # na frente dos lutadores, rente à tela
+    return fundo + ceus + resto[:0] + [c for c in resto if not c.get("frente")] + nivel1 + [base2] + d.camadas + \
+        [c for c in resto if c.get("frente")]
+
+
 def main():
     SAIDA.mkdir(parents=True, exist_ok=True)
     cena = com_1024(cena_sem_magenta(Image.open(BRUTO / "cena.png")))
@@ -335,6 +397,7 @@ def main():
                         "ticks": [8, 6, 5, 9, 7, 6, 10, 8][fase:] + [8, 6, 5, 9, 7, 6, 10, 8][:fase],
                         "delta": [1.15, 1.15], "x": x, "y": 652, "frente": True})
 
+    camadas = destruir(camadas)
     desc = {"id": "praca", "nome": "Praça", "musica": "musicas/praca.ogg", "musica_nome": "Cenário Praça",
             "tela": [1280, 720], "largura_mundo": LARGURA, "subida": 160, "chao_y": CHAO_Y,
             "camera": {"tensao": 200, "segue_vertical": 0.6, "tensao_chao": 120},

@@ -439,6 +439,8 @@ def main():
     cena_transformacao.aplicar("gutto", SAIDA)
     import forma_permanente  # missão dos cenários 4.1: endiabrado até o fim da luta
     forma_permanente.aplicar("gutto", SAIDA)
+    import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
+    destruicao.aplicar("gutto", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

@@ -409,6 +409,8 @@ def main():
     cena_transformacao.aplicar("raiclaven", SAIDA)
     import forma_permanente  # missão dos cenários 4.1: endiabrado até o fim da luta
     forma_permanente.aplicar("raiclaven", SAIDA)
+    import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
+    destruicao.aplicar("raiclaven", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 
