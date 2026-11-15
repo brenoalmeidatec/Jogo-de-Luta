@@ -12,6 +12,8 @@ histórico para desfazer.
 | `pixel.py` | a linha de comando (ver, medir, pintar, copiar/colar, mover, escalar, desfazer, vídeo) |
 | `quadros.py` | onde fica cada lutador, qual é a pose parada de cada forma e qual é a paleta |
 | `reguas.py` | as réguas de anatomia que o robô também usa (cabeça, corpo, membro sobrando, cor fora da paleta) |
+| `cores.py` | régua de cor contra o parado (deriva, salto, troca entre ações) e o conserto de tom / paleta única |
+| `remendar_sff.py` | troca no .sff do jogo só os sprites dos quadros consertados, sem regerar o lutador |
 
 Precisa de `numpy`, `Pillow` e `opencv-python-headless` (`pip install opencv-python-headless`); o MP4 usa o `ffmpeg`.
 
@@ -98,9 +100,42 @@ sobe para uns 4 a 5%, então trate aviso entre 3% e 6% como "olhar o quadro", n�
   no recorte cada pedaço precisa virar camada e o que fica atrás precisa ser pintado. Para consertar quadro existente a
   ferramenta de pixel ganha; o Blender serve para animação nova montada de peças (asas, cabelo, casaco).
 
+## Régua de cor (`cores.py`, #51 "cor mudando entre os quadros")
+
+O parado de cada forma vira 14 grupos de cor (k-means em Lab: pele, pele na sombra, roupa, cabelo...). Para cada quadro:
+
+- **deriva**: quanto a média de cada grupo foge da do parado (delta E, média pesada). Até ~3 é o normal de pose
+  diferente; acima de 4 já se vê; acima de 6 é aviso.
+- **salto**: quanto as cores pulam de um quadro para o seguinte.
+- **entra / sai**: a troca parado -> 1º quadro e último quadro -> parado (as trocas entre ações).
+- **fora**: fração de pixel longe de qualquer cor do parado (efeito, objeto ou mancha).
+
+```
+python3 cores.py diabo                          # mede todas as ações (ou só as que vierem depois)
+python3 cores.py gutto lata e_bicicleta --tom   # grava: puxa o tom de cada grupo ao do parado (desenhos e meio/)
+python3 cores.py diabo --consertar              # grava: tom + paleta única da forma (cria hazaki/diabo_terno/paleta.json)
+python3 remendar_sff.py gutto A.sff B.sff       # troca no .sff do jogo só os sprites dos quadros consertados
+```
+
+O conserto só mexe na cor: pose, alfa, tamanho, caixa e tempo ficam. Pixel longe de toda cor do parado (fumaça, fogo,
+objeto) não é puxado. `ginga_endiabrada` do Gutto é o parado da forma e_ (não começa com e_).
+
+**Por que o `remendar_sff.py`:** o `gerar_<l>.py` sozinho não refaz os pós-passos que já estão em chars/<l>/ e, no
+Gutto e no Raiclaven, o corpo do jogo é o HD do Blender (fora do git). A e B são o lutador gerado nesta máquina com os
+quadros de antes e de depois; o sprite que mudou entre eles é trocado no .sff do jogo (igual ao de B quando o do jogo é
+igual ao de A; senão, o próprio sprite do jogo passa pelo mesmo conserto de tom). Se outra thread regravar o .sff,
+rode de novo em cima do novo.
+
+Resultado na #51 (2026-11-15): Diabo com paleta única de 80 cores (pior ação de 7,5 para 3,9); Pengaró queda,
+compasso, parry_baixo e afastar; Gutto armada, derrota, lata, levanta, queda, rolamento e e_baixo_soco, e_bicicleta,
+e_bola, e_caneta, e_queda (todos abaixo de 2,6). CK é de paleta indexada e já sai sem deriva. Hazak base só tem
+deriva nos objetos e na patroa (não é ele). Raiclaven: defesa, cabecada, armada e pente_combo um pouco acima de 4,
+passado para a thread dele. Transformações (despertar, endiabrado) mudam de cor de propósito.
+
 ## Ideias para depois
 
 - Tela para gente (`tela.py` + navegador): tela com lápis, borracha, balde, papel vegetal e salvar, usando as mesmas
   funções.
 - Régua de ombro e de mão/pé por pontos marcados no parado (hoje só cabeça e corpo).
 - Ligar `mede` no robô (`testar_pengaro.py`) como etapa que falha com cabeça acima de 6%.
+- Régua de cor no robô: aviso com deriva acima de 6 fora das cenas de transformação.

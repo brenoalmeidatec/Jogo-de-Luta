@@ -4008,6 +4008,54 @@ ground.hittime = 18
 ground.velocity = -4
 air.velocity = -2,-3.5
 
+[State 1600, Luz do poder orbe]
+type = Explod
+trigger1 = Time = 24
+anim = 9730
+id = 9630
+postype = p1
+velocity = 4.5, 0.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+pos = 52.0, -80.0
+sprpriority = 6
+trans = add
+alpha = floor(255 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255
+
+[State 1600, Luz do poder halo]
+type = Explod
+trigger1 = Time = 24
+anim = 9731
+id = 9631
+postype = p1
+velocity = 4.5, 0.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+pos = 52.0, -80.0
+sprpriority = 5
+trans = addalpha
+alpha = floor(230 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255 - floor(230 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85)))
+
+[State 1600, Luz do poder poca]
+type = Explod
+trigger1 = Time = 24
+anim = 9721
+id = 9632
+postype = p1
+velocity = 4.5, 0.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+pos = 52.0, 0
+sprpriority = -8
+trans = addalpha
+alpha = floor(220 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255 - floor(220 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85)))
+
 [State 1600, Fim]
 type = ChangeState
 trigger1 = AnimTime = 0
@@ -4091,6 +4139,54 @@ ground.slidetime = 12
 ground.hittime = 18
 ground.velocity = -4
 air.velocity = -2,-3.5
+
+[State 1601, Luz do poder orbe]
+type = Explod
+trigger1 = Time = 32
+anim = 9730
+id = 9630
+postype = p1
+velocity = 6.5, 0.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+pos = 52.0, -80.0
+sprpriority = 6
+trans = add
+alpha = floor(255 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255
+
+[State 1601, Luz do poder halo]
+type = Explod
+trigger1 = Time = 32
+anim = 9731
+id = 9631
+postype = p1
+velocity = 6.5, 0.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+pos = 52.0, -80.0
+sprpriority = 5
+trans = addalpha
+alpha = floor(230 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255 - floor(230 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85)))
+
+[State 1601, Luz do poder poca]
+type = Explod
+trigger1 = Time = 32
+anim = 9721
+id = 9632
+postype = p1
+velocity = 6.5, 0.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+pos = 52.0, 0
+sprpriority = -8
+trans = addalpha
+alpha = floor(220 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255 - floor(220 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85)))
 
 [State 1601, Fim]
 type = ChangeState
@@ -6039,6 +6135,54 @@ palfx.time = 6
 palfx.add = 140, 50, 0
 palfx.sinadd = 30, 30, 30, 4
 guard.dist = 346
+
+[State 1650, Luz do poder orbe]
+type = Explod
+trigger1 = Time = 28
+anim = 9732
+id = 9633
+postype = p1
+velocity = 0.0, 0.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+pos = 52.0, -80.0
+sprpriority = 6
+trans = add
+alpha = floor(255 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255
+
+[State 1650, Luz do poder halo]
+type = Explod
+trigger1 = Time = 28
+anim = 9733
+id = 9634
+postype = p1
+velocity = 0.0, 0.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+pos = 52.0, -80.0
+sprpriority = 5
+trans = addalpha
+alpha = floor(230 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255 - floor(230 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85)))
+
+[State 1650, Luz do poder poca]
+type = Explod
+trigger1 = Time = 28
+anim = 9721
+id = 9635
+postype = p1
+velocity = 0.0, 0.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+pos = 52.0, 0
+sprpriority = -8
+trans = addalpha
+alpha = floor(220 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255 - floor(220 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85)))
 
 [State 1650, Chama no oponente]
 type = Explod
@@ -9458,6 +9602,167 @@ pausemovetime = -1
 ignorehitpause = 1
 
 ; <<< aura_silhueta.py
+; >>> luz.py: luz e brilho na base do KIKIU (issue #51). Não edite: rode python3 ferramentas/luz.py
+[State -4, Luz zera o poder]
+type = MapSet
+trigger1 = RoundState = 0
+map = "luz_p"
+value = 0
+ignorehitpause = 1
+
+[State -4, Luz do poder no ar]
+type = MapAdd
+trigger1 = 1
+map = "luz_p"
+value = 0.12 * (ifelse(NumProjID(1001) || NumProjID(1650), 1, 0) - map(luz_p))
+ignorehitpause = 1
+
+[State -4, Luz escuro nasce]
+type = Explod
+trigger1 = NumExplod(9623) = 0 && RoundState > 0
+anim = 9722
+id = 9623
+postype = p1
+pos = 0, -120
+facing = 1
+scale = 400, 120
+sprpriority = -20
+bindtime = -1
+removetime = -1
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 0, 256
+ignorehitpause = 1
+
+[State -4, Luz escuro]
+type = ModifyExplod
+trigger1 = NumExplod(9623)
+id = 9623
+trans = addalpha
+alpha = 0, 256 - floor(256 * min(0.45, 0.16 * min(1, max(0, map(au_diabo_e))) + 0.2 * map(luz_p)))
+ignorehitpause = 1
+
+[State -4, Luz halo nasce]
+type = Explod
+trigger1 = NumExplod(9620) = 0 && map(au_diabo_e) > 0.01
+anim = 9720
+id = 9620
+postype = p1
+pos = 0, 0
+facing = 1
+sprpriority = -7
+bindtime = -1
+removetime = -1
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 0, 256
+ignorehitpause = 1
+
+[State -4, Luz halo]
+type = ModifyExplod
+trigger1 = NumExplod(9620)
+id = 9620
+postype = p1
+pos = map(au_diabo_bx), -50.3 * (1 - 0.7 * map(au_diabo_g))
+trans = addalpha
+alpha = floor(255 * min(1, max(0, map(au_diabo_e))) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.0) + 0.04 * sin(GameTime * 0.1361 + 0.00))), 255 - floor(255 * min(1, max(0, map(au_diabo_e))) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.0) + 0.04 * sin(GameTime * 0.1361 + 0.00)))
+ignorehitpause = 1
+
+[State -4, Luz poca nasce]
+type = Explod
+trigger1 = NumExplod(9621) = 0 && map(au_diabo_e) > 0.01
+anim = 9721
+id = 9621
+postype = p1
+pos = 0, 0
+facing = 1
+sprpriority = -8
+bindtime = -1
+removetime = -1
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 0, 256
+ignorehitpause = 1
+
+[State -4, Luz poca]
+type = ModifyExplod
+trigger1 = NumExplod(9621)
+id = 9621
+postype = p1
+pos = map(au_diabo_bx), 0 - Pos Y
+bindtime = 0
+trans = addalpha
+alpha = floor(255 * min(1, max(0, map(au_diabo_e))) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 1.1) + 0.04 * sin(GameTime * 0.1361 + 1.87)) * (1 - min(1, max(0, -Pos Y / 140)))), 255 - floor(255 * min(1, max(0, map(au_diabo_e))) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 1.1) + 0.04 * sin(GameTime * 0.1361 + 1.87)) * (1 - min(1, max(0, -Pos Y / 140))))
+ignorehitpause = 1
+
+[State -4, Luz apaga 9620]
+type = RemoveExplod
+trigger1 = NumExplod(9620) && map(au_diabo_e) <= 0.01
+id = 9620
+ignorehitpause = 1
+
+[State -4, Luz apaga 9621]
+type = RemoveExplod
+trigger1 = NumExplod(9621) && map(au_diabo_e) <= 0.01
+id = 9621
+ignorehitpause = 1
+
+[State -4, Luz no oponente]
+type = PalFX
+trigger1 = map(au_diabo_e) > 0.01 && NumEnemy > 0 && RoundState = 2
+trigger1 = enemynear,MoveType != H && enemynear,StateNo < 1000 && enemynear,var(20) <= 0
+trigger1 = abs(P2BodyDist X) < 110
+redirectid = enemynear,id
+time = 2
+add = floor(255 * 0.3 * min(1, max(0, map(au_diabo_e))) * max(0, 1 - abs(P2BodyDist X) / 110) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.0) + 0.04 * sin(GameTime * 0.1361 + 0.00))), floor(125 * 0.3 * min(1, max(0, map(au_diabo_e))) * max(0, 1 - abs(P2BodyDist X) / 110) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.0) + 0.04 * sin(GameTime * 0.1361 + 0.00))), floor(25 * 0.3 * min(1, max(0, map(au_diabo_e))) * max(0, 1 - abs(P2BodyDist X) / 110) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.0) + 0.04 * sin(GameTime * 0.1361 + 0.00)))
+ignorehitpause = 1
+
+[State -4, Luz do poder 1001 apaga 9630]
+type = RemoveExplod
+trigger1 = NumExplod(9630) && NumProjID(1001) = 0
+id = 9630
+ignorehitpause = 1
+
+[State -4, Luz do poder 1001 apaga 9631]
+type = RemoveExplod
+trigger1 = NumExplod(9631) && NumProjID(1001) = 0
+id = 9631
+ignorehitpause = 1
+
+[State -4, Luz do poder 1001 apaga 9632]
+type = RemoveExplod
+trigger1 = NumExplod(9632) && NumProjID(1001) = 0
+id = 9632
+ignorehitpause = 1
+
+[State -4, Luz do poder 1650 apaga 9633]
+type = RemoveExplod
+trigger1 = NumExplod(9633) && NumProjID(1650) = 0
+id = 9633
+ignorehitpause = 1
+
+[State -4, Luz do poder 1650 apaga 9634]
+type = RemoveExplod
+trigger1 = NumExplod(9634) && NumProjID(1650) = 0
+id = 9634
+ignorehitpause = 1
+
+[State -4, Luz do poder 1650 apaga 9635]
+type = RemoveExplod
+trigger1 = NumExplod(9635) && NumProjID(1650) = 0
+id = 9635
+ignorehitpause = 1
+
+; <<< luz.py
 
 [State -4, Aura diabo asas: nasce]
 type = Explod
