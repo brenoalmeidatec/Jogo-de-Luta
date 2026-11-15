@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 """Gera o Gbzin, o Pastor do Jiu-Jitsu (ficha em docs/fichas/gbzin.md), sobre o kit do CK (gerar_ck.py).
 
-ESTÁGIO 1 (2026-11-14): cópia do gerar_ck.py com a arte da forma base do Gbzin (sprites/gbzin/quadros_arcade). A
-mecânica ainda é a do CK (correntes, especiais, projéteis e Despertar), com os efeitos e a aura do CK emprestados
-(sprites/ck/efeitos e sprites/ck/aura) e o Despertar sem arte própria (o Deus Motoboy usa os desenhos da base). Serve
-para o Gbzin entrar no jogo e no robô; os golpes da ficha (Gancho do Pastor, Cabra Solta, agarrões) entram depois,
-um por vez, trocando os blocos daqui. A arte é a do 1º conceito, reprovado na issue #30: sai de novo com a foto.
+ESTÁGIO 1 (2026-11-14, refeito em 2026-11-15 sobre o gerar_ck.py da mugen nova): cópia do gerar_ck.py com a arte da
+forma base do Gbzin (sprites/gbzin/quadros_arcade). A mecânica ainda é a do CK (correntes, especiais, projéteis e
+Despertar), com os efeitos, a aura e os sons do CK emprestados e o Despertar sem arte própria (o Grão-Pastor usa os
+desenhos da base). Os módulos que vêm depois do gerador (agarrão segura-e-bate, sons, parry, legibilidade,
+balanceamento, cena, forma permanente, aura no corpo, destruição) recebem o gbzin com os dados do CK (como_o_ck).
+Serve para o Gbzin entrar no jogo e no robô; os golpes da ficha entram depois, um por vez, trocando os blocos daqui.
+A arte é a do 1º conceito, reprovado na issue #30: sai de novo quando o Breno aprovar o conceito das fotos.
 
   python ferramentas/converter_gbzin.py           folhas_arcade -> quadros_arcade (e HD=3 para quadros_arcade_hd)
   python ferramentas/gerar_gbzin.py               monta chars/gbzin
   python ferramentas/gerar_gbzin.py --alcance     imprime até onde vai a caixa de cada golpe, sem gravar nada
 """
+import agarrao_mk
 import functools
 import re
 import shutil
@@ -22,7 +25,7 @@ import numpy as np
 from PIL import Image
 
 import gerar_pengaro as gp
-import aura_ck  # aura emprestada do CK até o Deus Motoboy ter a dele (aura_gbzin.py)
+import aura_ck  # aura emprestada do CK até o Grão-Pastor ter a dele (aura_gbzin.py)
 import hd
 from repertorio import Golpe
 
@@ -66,7 +69,7 @@ def quadro_folha(folha, i):
 gp.quadro_folha = quadro_folha
 gp.LOOPS = {"ginga_fluida": ("referencia_ginga", tuple(range(8)), (5,) * 8),
             "anda_fluida": ("anda", tuple(range(8)), (5,) * 8)}
-gp.LOOPS_ENDIABRADOS = {"ginga_fluida": ("referencia_ginga", tuple(range(8))),  # Deus Motoboy sem arte: a base
+gp.LOOPS_ENDIABRADOS = {"ginga_fluida": ("referencia_ginga", tuple(range(8))),  # Grão-Pastor sem arte: a base
                         "anda_fluida": ("anda", tuple(range(8)))}
 
 # Folhas de golpe: o conversor centra cada figura na célula, então no soco esticado o punho ia só 34 px à frente do
@@ -120,7 +123,7 @@ gp.colar_endiabrado = lambda normal, endiabrado, fator=1.0, dx=None: endiabrado
 # golaco (ganchos da base): na e_golaco refeita o desenho 3 é a rasteira deslizando e o 5-6 o agachado; os ganchos do
 # Ratão usam só as estocadas em pé (1 arma, 2 estoca, 4 estoca por cima, 7 estoca baixa de passo) e o soco agachado
 # usa o agachado (5) e a estocada rente ao chão (3).
-E_FOLHA = {}  # estágio 1: o Deus Motoboy ainda não tem folhas e_; cada desenho é o mesmo da base
+E_FOLHA = {}  # estágio 1: o Grão-Pastor ainda não tem folhas e_; cada desenho é o mesmo da base
 
 
 def arquivo_ratao(pasta, n):
@@ -1030,8 +1033,8 @@ Fim de Baile						^X, _F+^Y, ^B
 <#f0f000>:Correntes (acertando os 3, o 4º derruba):</>
 Jab, Jab Duplo, Cruzado, Uno-Dos de Rua		^X^X^X^X
 Direto, Ganchos, Levanta, Comédia			^Y^Y^Y^Y
-Bicuda, Chute Baixo, Joelhada, Bicuda de Pedreiro	^A^A^A^A
-Chute Frontal, Chute Alto, Pisão, Voadora da Esquina	^B^B^B^B
+Bicuda, Chute Baixo, Joelhada, Pedreiro	^A^A^A^A
+Frontal, Alto, Pisão, Voadora da Esquina	^B^B^B^B
 
 <#f0f000>:Kombos:</>
 Bom Dia, Cumpadi					_F+^Y, ^X, ^B
@@ -1095,6 +1098,15 @@ def imprimir_alcance(air):
             print(f"{n:5d}  caixa até {max(xs):3d}" + (f"  avanço {m.avanco}" if m and m.avanco else ""))
 
 
+def como_o_ck(modulo):
+    """Estágio 1: o módulo passa a conhecer o gbzin com os dados do CK (tabelas por lutador e listas de lutadores)."""
+    for nome, valor in list(vars(modulo).items()):
+        if isinstance(valor, dict) and "ck" in valor and "gbzin" not in valor:
+            valor["gbzin"] = valor["ck"]
+        elif isinstance(valor, (tuple, list, set, frozenset)) and "ck" in valor and "gbzin" not in valor:
+            setattr(modulo, nome, type(valor)([*valor, "gbzin"]))
+
+
 def main():
     preparar()
     SAIDA.mkdir(parents=True, exist_ok=True)
@@ -1156,12 +1168,42 @@ def main():
     # usa scale 1/3) pelo Explod dela; antes disso a aura contava como corpo e era ampliada 3x.
     if QUADROS_HD.exists():
         air, cns = hd.aplicar(s, air, cns, [(QUADROS, QUADROS_HD)], gp.SPRITES_VITIMA)
+    # agarrão em pé segura-e-bate (ferramentas/agarrao_mk.py): montado dos golpes que ele já tem, depois do HD
+    como_o_ck(agarrao_mk)
+    air, cns = agarrao_mk.aplicar("gbzin", air, cns)
     (SAIDA / "gbzin.air").write_text(air, encoding="utf-8", newline="\n")
     (SAIDA / "gbzin.cns").write_text(cns, encoding="utf-8", newline="\n")
     gp.escrever_sff(SAIDA / "gbzin.sff", s, manter=gp.sprites_mantidos(air, cns))
     (SAIDA / "gbzin.cmd").write_text(cmd_ck(gp.montar_cmd()), encoding="utf-8")
     (SAIDA / "gbzin.def").write_text(DEF, encoding="utf-8", newline="\n")
+    import gerar_sons  # sons próprios: sound = ck.snd no .def e PlaySnd/hitsound no .cns (missão 2026-11-14)
+    como_o_ck(gerar_sons)
+    gerar_sons.ligar("gbzin", SAIDA)
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
+    # parry próprio (ferramentas/parry.py): precisa das folhas parry_alto e parry_baixo do Gbzin, que ainda não
+    # existem (a arte está parada até o Breno aprovar o conceito, issue #30). Até lá fica o parry do kit.
+    if (RAIZ / "sprites/gbzin/quadros/folhas_arcade/parry_alto.png").exists():
+        import parry
+        como_o_ck(parry)
+        parry.aplicar("gbzin", SAIDA)
+    import legibilidade  # golpes legíveis (#45): caixa no membro, congelamento, tremida, reação e preparo
+    como_o_ck(legibilidade)
+    legibilidade.aplicar("gbzin", SAIDA)
+    import balanceamento  # números do item 7 (attack, defence, velocidade)
+    como_o_ck(balanceamento)
+    balanceamento.aplicar("gbzin", SAIDA)
+    import cena_transformacao  # issue #49: tudo preto, zoom e clarão no Despertar (sempre por último)
+    como_o_ck(cena_transformacao)
+    cena_transformacao.aplicar("gbzin", SAIDA)
+    import forma_permanente  # missão dos cenários 4.1: endiabrado até o fim da luta
+    como_o_ck(forma_permanente)
+    forma_permanente.aplicar("gbzin", SAIDA)
+    import aura_no_corpo  # a aura segue o corpo (issue #51): depois de tudo que regrava o .air, o .sff e o -4
+    como_o_ck(aura_no_corpo)
+    aura_no_corpo.aplicar("gbzin", SAIDA)
+    import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
+    como_o_ck(destruicao)
+    destruicao.aplicar("gbzin", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

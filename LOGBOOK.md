@@ -2464,3 +2464,22 @@ montada de peças (asas, cabelo, casaco).
 **Armadilha:** a régua da cabeça tem incerteza de uns 4 a 5% em quadro redesenhado ou reamostrado (a curva do casamento
 é achatada); só é firme quando o desenho é o mesmo em outro tamanho. O Pengaró tem 22 ações 7 a 26% maiores que a ginga:
 conferir se a ginga é que está pequena antes de mexer.
+
+## 2026-11-15 — Gbzin: conceitos novos (fotos e Grão-Pastor) e estágio 1 na mugen nova (Claude, sessão do Alisson)
+
+**Pedido (Breno, issue #30):** conceito da forma base refeito pelas fotos (branch `gbzin-fotos`); o Deus Motoboy saiu
+e o Despertar virou o **Grão-Pastor**.
+
+**Feito:**
+- `conceito_v2.png` (base, com as 6 fotos anexadas no ChatGPT) e `e_conceito.png` (Grão-Pastor), os dois postados na
+  #30 para o Breno aprovar. As fotos não entraram nesta branch nem na `mugen`.
+- Ficha (`docs/fichas/gbzin.md`), `gbzin-para-o-breno.md` e os pedidos (`folhas_gbzin.py`: PERSONAGEM pelas fotos,
+  forma despertada nova) atualizados. As folhas `e_` e `fx_` do `folhas_gbzin.py` ainda descrevem o motoboy: serão
+  reescritas quando o Breno aprovar o conceito e os exclusivos propostos na ficha.
+- Merge da `mugen` (100 commits). O `gerar_gbzin.py` foi refeito sobre o `gerar_ck.py` novo; os módulos de depois do
+  gerador recebem o gbzin com os dados do CK (`como_o_ck`).
+- **Robô na nuvem: 213 passaram, 5 falharam.** As 5 são do parry novo (estado 764): o `parry.py` precisa das folhas
+  `parry_alto` e `parry_baixo` do Gbzin, que não existem. Entram junto com as folhas novas.
+
+**Pendente:** aval do Breno nos dois conceitos e em três decisões (cabelo, lado do tapa-olho, exclusivos do
+Grão-Pastor). Depois: ginga, folhas da base (com parry_alto e parry_baixo), paleta medida de novo, folhas e_ e aura.

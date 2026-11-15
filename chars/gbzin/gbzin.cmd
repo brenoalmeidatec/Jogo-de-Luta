@@ -291,7 +291,7 @@ var(1) = ctrl || ((stateno = 200 || stateno = 210 || stateno = 215 || stateno = 
 type = ChangeState
 value = 3100
 triggerall = command = "baile"
-triggerall = power >= 1000
+triggerall = power >= 2000
 triggerall = var(20) > 0
 triggerall = statetype != A
 trigger1 = var(1)
