@@ -124,6 +124,6 @@ cambaleando e quebra a garrafa na nuca).
 
 ## Tamanho do trabalho e ordem
 
-Cada um dá umas **40 folhas novas** (16 normais, 12 golpes de corrente além do 1º, 4 especiais, poder, super, 3
-agarrões e as reações). Com o OK, a ordem é Gutto, Pengaró e CK, um de cada vez, cada um com vídeo aqui antes de
+Cada um dá umas **35 folhas novas** (16 normais, 12 golpes de corrente além do 1º, 4 especiais, poder, super e o
+agarrão em pé). Os agarrões agachado e colado e as reações de quem é agarrado ficam com a thread dos agarrões (#45). Com o OK, a ordem é Gutto, Pengaró e CK, um de cada vez, cada um com vídeo aqui antes de
 entrar na `mugen`. As folhas saem no ChatGPT com a referência do despertado anexada, como manda a receita.
