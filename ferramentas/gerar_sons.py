@@ -1289,6 +1289,18 @@ ESPECIAIS = {
         3400: (None, [("proj", "50,9")]), 3401: ("53", [("vento", "55,1")]),  # Navalha, Corte da Corrente
         3402: (None, [("T0", "50,3")]), 3403: (None, [("T0", "50,3")]),  # Cadeira Atravessada, Queda da Cadeira
         2000: (None, [("T30", "50,4"), ("T55", "F31,1")])},
+    "gbzin": {  # ficha do Gbzin: 50,k são as assinaturas (0 berro de cabra ... 8 mão gigante); 54 é o cajado
+        1600: ("54", []), 1601: ("54", []),  # Gancho do Pastor: madeira do cajado no acerto
+        1000: (None, [("T0", "50,0"), ("proj", "50,2")]), 1001: (None, [("T0", "50,0"), ("proj", "50,2")]),  # Cabra Solta
+        1200: (None, [("T0", "50,0")]), 1201: (None, [("T0", "50,0")]),  # Cabra Saltadora
+        1100: (None, [("T0", "50,3")]), 1101: (None, [("T0", "50,3")]),  # Rolo de Feno
+        1500: ("54", [("proj", "50,1")]), 1501: ("54", [("proj", "50,1")]),  # Cajado no Chão: a onda sai do chão
+        1400: ("51", []), 1401: ("51", []),  # Arm-lock Voador
+        3000: (None, [("T0", "50,2")]),  # Rebanho Desgovernado: o rebanho galopando
+        3100: ("53", [("T0", "50,7")]),  # Juízo do Rebanho: fogo verde
+        3400: (None, [("T0", "50,8")]), 3401: ("53", [("T0", "50,4")]),  # Puxão das Mãos, Estouro
+        3402: (None, [("proj", "50,8")]), 3403: (None, [("T0", "50,4")]),  # Mão do Pastor, Berro
+        2000: (None, [("T2", "50,5"), ("T42", "50,7"), ("T55", "F31,1")])},  # bateu três vezes e a chama verde
 }
 
 # botão da mão que segura a arma: normais (200 a 699) e kombos que saem dele usam o acerto 54 e o vento 55
