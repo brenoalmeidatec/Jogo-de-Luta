@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Fila do redesenho de anatomia (#51): anexos reduzidos e o prompt de cada folha de revisar_anatomia.FIX.
 
-  python ferramentas/fila_anatomia.py     grava docs/anatomia-51/anexos/<lutador>_<folha>.png, as referências
-                                          <lutador>_ref.png e docs/anatomia-51/fila.json (folha, anexos, prompt)
+  python ferramentas/fila_anatomia.py     grava docs/anatomia-51/anexos/<lutador>_<folha>.jpg, as referências
+                                          <lutador>_ref.jpg e docs/anatomia-51/fila.json (folha, anexos, prompt)
 
 Os anexos têm 1800x600 com fundo magenta para caberem inteiros na janela do navegador: no Chrome o anexo entra como
 captura de tela da imagem aberta pelo endereço raw do GitHub. As folhas d_* do Diabo Loiro vêm da branch origin/bosses.
@@ -85,7 +85,7 @@ def reduzir(img, destino):
     pq = fundo.convert("RGB").resize((round(img.width * s), round(img.height * s)), Image.LANCZOS)
     tela = Image.new("RGB", (1800, 600), (255, 0, 255))
     tela.paste(pq, ((1800 - pq.width) // 2, (600 - pq.height) // 2))
-    tela.save(destino)
+    tela.save(destino, quality=92)
 
 
 def main():
@@ -99,7 +99,7 @@ def main():
             desp = folha.startswith("e_") and (nome, True) in REF and folha != "e_despertar"
             origem = next((f"{p}/{folha}.png" for p in FOLHAS[nome] if existe(f"{p}/{folha}.png")), None)
             assert origem, f"{nome}/{folha}: sem folha"
-            reduzir(abrir(origem), SAIDA / f"{nome}_{folha}.png")
+            reduzir(abrir(origem), SAIDA / f"{nome}_{folha}.jpg")
             prompt = (
                 "Generate ONE image with your image generation tool. Do not write code and do not edit any file. "
                 f"The FIRST attached image is the reference sprite sheet and shows the exact character to keep, with the same "
@@ -110,7 +110,7 @@ def main():
                 "Consecutive frames differ by a small amount, so the motion looks smooth in sequence."
             )
             fila.append(dict(lutador=nome, folha=folha, origem=origem, ref=f"{nome}_{'e_' if desp else ''}ref.png",
-                             anexo=f"{nome}_{folha}.png", prompt=prompt))
+                             anexo=f"{nome}_{folha}.jpg", prompt=prompt))
     (RAIZ / "docs/anatomia-51/fila.json").write_text(json.dumps(fila, ensure_ascii=False, indent=1), encoding="utf-8")
     print(len(fila), "folhas na fila")
 
