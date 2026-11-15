@@ -2360,3 +2360,12 @@ balanceamento.
 
 **Robô:** os roteiros "a forma acaba" viraram "660 tiques depois continua na forma e a aura fica", e o do super confere
 que a forma continua depois dele.
+
+## 2026-11-15 — Hazak pequeno na seleção, no VS e no HUD (issue #51) (Claude, thread do Alisson)
+
+**Erro visto pelo Breno:** o Hazak aparecia pequeno na tela de seleção perto dos outros.
+**Causa:** os retratos novos (PNG 100x100 e 448x216, `sprites/retratos/`) entram pelo `trocar_retratos.py`, mas os
+pós-passos do `gerar_hazaki.py` (o `diabo_loiro.py` da #44 regrava o .sff) devolviam os retratos antigos de 25x25 e
+109x95, que o layout desenha a 1/4. Os outros quatro não passam por esse pós-passo e ficaram certos.
+**Conserto:** o `gerar_hazaki.py` chama `trocar_retratos.trocar("hazaki")` por último. Conferido no motor (seleção, VS e
+HUD) com `testar_mapas.py --casa 1` (opção nova: anda o cursor do P1). Antes e depois em `docs/hazak-51/`.

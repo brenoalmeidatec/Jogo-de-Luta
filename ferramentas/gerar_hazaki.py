@@ -1335,6 +1335,9 @@ def main():
     cena_transformacao.aplicar("hazaki", SAIDA)
     import forma_permanente  # missão dos cenários 4.1: endiabrado até o fim da luta
     forma_permanente.aplicar("hazaki", SAIDA)
+    # retratos em PNG (seleção, VS e HUD): os pós-passos regravam o .sff e deixariam os retratos antigos, pequenos
+    import trocar_retratos
+    assert trocar_retratos.trocar("hazaki"), "faltam os retratos do Hazak em sprites/retratos"
     print(f"{gravados} sprites no .sff (de {len(s.lista)} carregados), {len(a.acoes)} ações em {SAIDA}")
     if "--contato" in sys.argv:
         contato(Path(sys.argv[sys.argv.index("--contato") + 1]), s)
