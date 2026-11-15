@@ -2507,3 +2507,31 @@ depois do lutador e por isso não atrasa na troca de ação. A chama é um Explo
 **Armadilhas:** a chama somada fica rosa no cenário azul, então ela usa `addalpha` (A, 255 - A) com alfa por pixel. A
 pele somada continua. O `ChangeAnim` com `elem` só funciona com elemento de tempo 1; com -1 o helper fica parado no
 último. O sinal do `xshear` no IKEMEN é ao contrário do que parece: com valor positivo a chama vai para a frente.
+
+## 2026-11-15 — Cor mudando entre os quadros (issue #51, comentário de 03:51Z, item 1) (Claude, thread do Alisson)
+
+**Pedido do Breno:** os lutadores mudam de cor entre os quadros (pele, roupa e detalhe pulando no meio do golpe e na
+troca entre golpes). Achar com a ferramenta de pixel e pintar na paleta, sem mudar pose, caixa nem tempo, nos lutadores
+todos e nas duas formas, olhando também a troca parado -> golpe -> parado.
+
+**Feito:** `ferramentas/pixel/cores.py`, régua de cor contra o parado de cada forma (deriva de cada grupo de cor, salto
+entre quadros, entrada e saída do golpe) e o conserto (`--tom` puxa o tom de cada grupo ao do parado; `--consertar`
+faz isso e pinta numa paleta única). `ferramentas/pixel/remendar_sff.py` troca no .sff do jogo só os sprites dos
+quadros consertados.
+- **Diabo:** os 352 quadros tinham cores próprias (k-means quadro a quadro), e o terno ficava mais claro e mais
+  vermelho em ar_soco, corrida, agarrao_cutucao e ar_joelho. Agora há uma paleta única de 80 cores
+  (`sprites/hazaki/diabo_terno/paleta.json`, também usada pelo `pixel.py`) e o tom de cada quadro foi puxado ao do
+  d_parado. Pior ação: deriva de 7,5 para 3,9. `gerar_hazaki.py` mudou só os sprites do Diabo (grupos 20000+).
+- **Pengaró:** queda, compasso, parry_baixo e afastar (1x e 3x). **Gutto:** armada, derrota, lata, levanta, queda,
+  rolamento, e_baixo_soco, e_bicicleta, e_bola, e_caneta e e_queda (desenhos e quadros do meio). Todos abaixo de 2,6.
+  No .sff do jogo pelo `remendar_sff.py`: 33 sprites no Pengaró, 200 no Gutto (HD do Blender consertado no próprio
+  sprite). .air, .cns, caixas e tempo iguais.
+- **CK:** paleta indexada, deriva zero fora da transformação. **Hazak base:** limpo (só objeto e a patroa fogem).
+  **Raiclaven:** defesa, cabecada, armada e pente_combo um pouco acima de 4; passado para a thread do Raiclaven.
+
+**Armadilhas:** `ginga_endiabrada` do Gutto não começa com `e_`, então `quadros.py` precisava saber que ela é o parado
+da forma e_ (antes a régua comparava o endiabrado com a ginga normal). Rodar só o `gerar_gutto.py`/`gerar_pengaro.py`
+desfaz pós-passos e, no Gutto, troca o HD do Blender pelo 1x: use o `remendar_sff.py`. Se outra thread regravar o
+.sff, rode o remendo de novo em cima do novo.
+
+**Saída:** `docs/anatomia-51/cor/` (folhas antes/depois e vídeos da troca parado -> golpe -> parado).
