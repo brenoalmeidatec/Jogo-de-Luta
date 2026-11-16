@@ -223,6 +223,29 @@ ANIM = {
                           ("554_0", 5, 0, {"coxa_frente": {"ang": 18, "var": "camara"}}), ("555_0", 9, 0),
                           ("556_0", 9, 0)],
                     (45, -300, 189, -180)),
+    # SUPER 3000 Chuva de Beijinhos: guarda, abaixa juntando força, joelho sobe, chute alto e fica no joelho
+    # enquanto os beijinhos (3010/3011, ajudantes) voam. Sem caixa própria: quem bate são os beijinhos
+    "super_beijinhos": (3000, [("573_0", 9, 0, {"_base": "94_0"}),
+                               ("574_0", 9, 0, {"_base": "94_0", "_dy": 8, "braco_frente": {"ang": 10},
+                                                "braco_tras": {"ang": 8}}),
+                               ("575_0", 9, 0, {"_base": "965_0"}), ("576_0", 9, 0, {"_base": "957_0"}),
+                               ("577_0", 9, 0, {"_base": "965_0"}), ("577_0", 15, 0, {"_base": "965_0"}),
+                               ("577_0", 36, 0, {"_base": "965_0"})], None),
+    # SUPER 3100 Bando de Chutes: misturava costas, frente, rasteira com a mão no chão e socos de outro tronco. Agora
+    # é uma sequência só de frente com as peças: joelho, jab, joelhada, chute baixo, jab, chute alto, joelhada,
+    # chute baixo, chute alto e volta. Mesmos ticks; caixa = a maior das 9 (o .air muda só a largura, 128 a 220)
+    "super_chutes": (3100, [("202_0", 7, 0, {"_base": "965_0"}),
+                            ("199_0", 6, 1, {"_base": "94_0", "braco_frente": {"ang": 4, "var": "esticado"}}),
+                            ("203_0", 6, 1, {"_base": "965_0", "coxa_frente": {"ang": -14, "var": "camara"}}),
+                            ("210_0", 6, 1, {"_base": "417_0", "coxa_frente": {"ang": 58, "var": "esticada"}}),
+                            ("200_0", 6, 1, {"_base": "94_0", "braco_frente": {"ang": 2, "var": "esticado"}}),
+                            ("204_0", 6, 1, {"_base": "957_0"}),
+                            ("222_0", 6, 1, {"_base": "965_0", "coxa_frente": {"ang": -14, "var": "camara"}}),
+                            ("211_0", 6, 1, {"_base": "417_0", "coxa_frente": {"ang": 56, "var": "esticada"}}),
+                            ("225_0", 6, 1, {"_base": "957_0"}),
+                            ("225_0", 2, 0, {"_base": "957_0", "coxa_frente": {"ang": 4, "var": "esticada"}}),
+                            ("205_0", 28, 0, {"_base": "426_0"})],
+                     (0, -330, 220, -30)),
     # agachado: o corpo do parado desce (o mesmo tronco e rosto), joelhos dobram, respira
     "agachado": (11, [("359_0", 6, 0, {"_base": "359_0"}), ("359_0", 6, 0, {"_base": "359_0"}),
                       ("359_0", 6, 0, {"_base": "359_0"})], None),
@@ -613,7 +636,36 @@ def desenhar_agachado(pf, kit, pose):
                                                                           "braco_tras", "coxa_frente")]), minimo=80)
 
 
+def sem_pontinhos(tela):
+    """Pontinho de pele no meio do calção (sobra do recorte da perna): mancha pequena de pele cercada de calção
+    (preto/branco) vira a cor do calção em volta."""
+    a = tela[..., 3] > 0
+    hsv = cv2.cvtColor(np.ascontiguousarray(tela[..., :3]), cv2.COLOR_RGB2HSV).astype(int)
+    pele = (a & (hsv[..., 0] <= 25) & (hsv[..., 1] > 70) & (hsv[..., 2] > 50)).astype(np.uint8)
+    calcao = a & (hsv[..., 1] < 60)
+    n, rot, st, _ = cv2.connectedComponentsWithStats(pele, 8)
+    out = tela.copy()
+    k = np.ones((7, 7), np.float32)
+    for c in range(1, n):
+        if st[c, cv2.CC_STAT_AREA] > 60:
+            continue
+        x, y, w, h = st[c, :4]
+        x0, y0, x1, y1 = max(0, x - 4), max(0, y - 4), x + w + 4, y + h + 4
+        m = rot[y0:y1, x0:x1] == c
+        anel = (cv2.dilate(m.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0) & ~m
+        cal = calcao[y0:y1, x0:x1]
+        if anel.sum() == 0 or (anel & cal).sum() < 0.75 * anel.sum():
+            continue
+        cor = np.median(tela[y0:y1, x0:x1][anel & cal][:, :3], axis=0).astype(np.uint8)
+        out[y0:y1, x0:x1][m, :3] = cor
+    return out
+
+
 def desenhar(pf, kit, pose):
+    return sem_pontinhos(_desenhar(pf, kit, pose))
+
+
+def _desenhar(pf, kit, pose):
     if "_agachado" in pose:
         return desenhar_agachado(pf, kit, pose)
     tela = b.desenhar(kit, pose)
@@ -659,6 +711,9 @@ def pernas_no_chao(pf, pose, alvo, so_tras=False):
     return pf.pernas_no_chao(pose, alvo, so_tras=so_tras)
 
 
+CHUTES_ALTOS = {"chute_alto", "super_beijinhos", "super_chutes"}  # perna levantada no ângulo do desenho
+
+
 def pose_de(pf, kit, q, nome):
     alvo = b.abrir(q)
     dx, dy = corpo(kit, alvo, folga_y=(-50, 150)) if nome in AGACHADOS else pf.corpo(kit, alvo)
@@ -674,7 +729,7 @@ def pose_de(pf, kit, q, nome):
         b.BUSCA["braco_tras"] = (range(0, 1), 1, [None])
         b.BUSCA["braco_frente"] = (range(0, 1), 1, [None])
     pose = b.encaixar(kit, alvo, pose, ordem=["braco_tras", "braco_frente"])
-    if q in PERNA and nome == "chute_alto":
+    if q in PERNA and nome in CHUTES_ALTOS:
         giro = range(-6, 7, 2)  # a perna levantada fica no ângulo em que foi desenhada (joelho para cima)
         b.BUSCA["coxa_frente"] = (giro, 2, [PERNA[q]])
         b.ANGULOS_VARIANTE = giro
@@ -683,7 +738,7 @@ def pose_de(pf, kit, q, nome):
         # dela encosta no chão
         pose["coxa_tras"] = {"ang": 0, "var": "apoio"}
         pose["quadril"]["dy"] = 0
-    elif nome == "chute_alto" and len(pf.pes(alvo)) < 2:
+    elif nome in CHUTES_ALTOS and len(pf.pes(alvo)) < 2:
         pose = pernas_no_chao(pf, pose, alvo, so_tras=True)
         b.BUSCA["coxa_frente"] = (range(-40, 41, 2), 2, [None])
         b.BUSCA["canela_frente"] = (range(-40, 41, 2), 2, [None])
