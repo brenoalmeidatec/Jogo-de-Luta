@@ -16,18 +16,45 @@
 | agachado/13 | agachado/06 | PASS |
 | agachado/14 | agachado/06 | PASS |
 | agachado/15 | agachado/06 | PASS |
+| ar_soco/00 | ar_soco/02 (desenho de hoje) | PASS |
+| ar_soco/01 | ar_soco/03 (desenho de hoje) | PASS |
+| ar_soco/02 | ar_soco/04 (desenho de hoje) | PASS |
+| ar_soco/03 | ar_soco/06 (desenho de hoje) | PASS |
 | baixo_soco/00 | baixo_soco/02 | PASS |
 | baixo_soco/01 | baixo_soco/03 | PASS |
 | baixo_soco/02 | baixo_soco/04 | PASS |
 | baixo_soco/03 | baixo_soco/05 | PASS |
 | baixo_soco/04 | baixo_soco/05 | PASS |
 | baixo_soco/05 | baixo_soco/06 | PASS |
+| calcada_levantada/00 | calcada_levantada/01 (desenho de hoje) | PASS |
+| calcada_levantada/01 | calcada_levantada/02 (desenho de hoje) | PASS |
+| calcada_levantada/02 | calcada_levantada/03 (desenho de hoje) | PASS |
+| calcada_levantada/03 | calcada_levantada/04 (desenho de hoje) | PASS |
+| calcada_levantada/04 | calcada_levantada/05 (desenho de hoje) | PASS |
+| calcada_levantada/05 | calcada_levantada/06 (desenho de hoje) | PASS |
+| calcada_levantada/06 | calcada_levantada/07 | PASS |
+| calcada_levantada/07 | calcada_levantada/07 | PASS |
+| calcada_levantada/08 | calcada_levantada/07 | PASS |
+| chute_alto_rajada/00 | chute_alto_rajada/00 | PASS |
+| chute_alto_rajada/01 | chute_alto_rajada/01 (desenho de hoje) | PASS |
+| chute_alto_rajada/02 | chute_alto_rajada/06 | PASS |
+| chute_alto_rajada/03 | chute_alto_rajada/06 | PASS |
+| chute_alto_rajada/04 | chute_alto_rajada/07 | PASS |
+| chute_alto_rajada/05 | chute_alto_rajada/07 | PASS |
 | chute_canela/00 | chute_canela/01 | PASS |
 | chute_canela/01 | chute_canela/02 | PASS |
 | chute_canela/02 | chute_canela/04 | PASS |
 | chute_canela/03 | chute_canela/05 | PASS |
 | chute_canela/04 | chute_canela/05 | PASS |
 | chute_canela/05 | chute_canela/06 | PASS |
+| chute_giratorio/00 | chute_giratorio/01 (desenho de hoje) | PASS |
+| chute_giratorio/01 | chute_giratorio/02 (desenho de hoje) | PASS |
+| chute_giratorio/02 | chute_giratorio/03 (desenho de hoje) | PASS |
+| chute_giratorio/03 | chute_giratorio/04 (desenho de hoje) | PASS |
+| chute_giratorio/04 | chute_giratorio/05 (desenho de hoje) | PASS |
+| chute_giratorio/05 | chute_giratorio/06 (desenho de hoje) | PASS |
+| chute_giratorio/06 | chute_giratorio/07 | PASS |
+| chute_giratorio/07 | chute_giratorio/07 | PASS |
 | chute_lateral/00 | chute_lateral/01 | PASS |
 | chute_lateral/01 | chute_lateral/02 | PASS |
 | chute_lateral/02 | chute_lateral/03 | PASS |
@@ -38,6 +65,18 @@
 | chute_lateral/07 | chute_lateral/06 | PASS |
 | chute_lateral/08 | chute_lateral/07 | PASS |
 | chute_lateral/09 | chute_lateral/07 | PASS |
+| giro_garagem/00 | giro_garagem/01 (desenho de hoje) | PASS |
+| giro_garagem/01 | giro_garagem/02 (desenho de hoje) | PASS |
+| giro_garagem/02 | giro_garagem/03 (desenho de hoje) | PASS |
+| giro_garagem/03 | giro_garagem/04 (desenho de hoje) | PASS |
+| giro_garagem/04 | giro_garagem/05 (desenho de hoje) | PASS |
+| giro_garagem/05 | giro_garagem/06 | PASS |
+| giro_garagem/06 | giro_garagem/06 | PASS |
+| giro_garagem/07 | giro_garagem/06 | PASS |
+| giro_garagem/08 | giro_garagem/06 | PASS |
+| giro_garagem/09 | giro_garagem/07 | PASS |
+| giro_garagem/10 | giro_garagem/07 | PASS |
+| giro_garagem/11 | giro_garagem/07 | PASS |
 | machado/00 | machado/01 | PASS |
 | machado/01 | machado/02 | PASS |
 | machado/02 | machado/02 | PASS |
@@ -128,5 +167,32 @@
 | soco_reto/07 | soco_reto/06 | PASS |
 | soco_reto/08 | soco_reto/07 | PASS |
 | soco_reto/09 | soco_reto/07 | PASS |
+| tapa_costas/00 | tapa_costas/01 (desenho de hoje) | PASS |
+| tapa_costas/01 | tapa_costas/02 (desenho de hoje) | PASS |
+| tapa_costas/02 | tapa_costas/03 (desenho de hoje) | PASS |
+| tapa_costas/03 | tapa_costas/04 (desenho de hoje) | PASS |
+| tapa_costas/04 | tapa_costas/05 (desenho de hoje) | PASS |
+| tapa_costas/05 | tapa_costas/06 | PASS |
+| tapa_costas/06 | tapa_costas/06 | PASS |
+| tapa_costas/07 | tapa_costas/06 | PASS |
+| tapa_costas/08 | tapa_costas/07 | PASS |
+| tapa_costas/09 | tapa_costas/07 | PASS |
+| tesoura/00 | tesoura/01 (desenho de hoje) | PASS |
+| tesoura/01 | tesoura/02 (desenho de hoje) | PASS |
+| tesoura/02 | tesoura/03 (desenho de hoje) | PASS |
+| tesoura/03 | tesoura/04 (desenho de hoje) | PASS |
+| tesoura/04 | tesoura/05 (desenho de hoje) | PASS |
+| tesoura/05 | tesoura/06 (desenho de hoje) | PASS |
+| tesoura/06 | tesoura/07 | PASS |
+| tesoura/07 | tesoura/07 | PASS |
+| tesoura/08 | tesoura/07 | PASS |
+| voadora/00 | corrida/00 (desenho de hoje) | PASS |
+| voadora/01 | corrida/01 (desenho de hoje) | PASS |
+| voadora/02 | voadora/01 (desenho de hoje) | PASS |
+| voadora/03 | voadora/02 (desenho de hoje) | PASS |
+| voadora/04 | voadora/04 (desenho de hoje) | PASS |
+| voadora/05 | voadora/05 (desenho de hoje) | PASS |
+| voadora_pouso/00 | voadora/06 (desenho de hoje) | PASS |
+| voadora_pouso/01 | voadora/07 (desenho de hoje) | PASS |
 
-0 de 128 desenho(s) com defeito.
+0 de 194 desenho(s) com defeito.

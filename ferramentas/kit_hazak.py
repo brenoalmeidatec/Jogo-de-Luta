@@ -107,7 +107,25 @@ ANIMS = {
     "soco_reto": (210, "soco_reto 1/2 2/3 3/2 4/4A 5/5 6/5 7/4", (14, -88, 52, -72)),
     "machado": (333, "machado 1/3 2/4 3/6 4/4A 5/5 6/7 7/5", (10, -104, 51, -66)),
     "machado_curto": (246, "machado_curto 1/5 2/7 3/4A 4/5 5/4 6/4", (10, -98, 49, -56)),
+    # lote 4: giros de costas, golpes de lado, no chão e no ar (o corpo do kit é de frente: o que é de costas, de lado
+    # ou deitado fica com o desenho de hoje no tamanho do parado; o resto é montado com as peças)
+    "tesoura": (323, "tesoura 1/3 2/3 3/3 4/3 5/4A 6/7 7/6", (10, -88, 59, -66)),
+    "chute_giratorio": (331, "chute_giratorio 1/2 2/3 3/3 4/4A 5/5 6/6 7/5", (14, -74, 61, -50)),
+    "giro_garagem": (1300, "giro_garagem 1/3 2/4 3/3 4/4A 5/3A 6/8 7/6", (14, -74, 66, -50)),
+    "tapa_costas": (303, "tapa_costas 1/3 2/4 3/3 4/4A 5/5 6/6 7/5", (16, -96, 63, -80)),
+    "calcada_levantada": (313, "calcada_levantada 1/4 2/4 3/3 4/4A 5/5 6/8 7/6", (12, -36, 41, 0)),
+    "chute_alto_rajada": (322, "chute_alto_rajada 0/5 1/3A 6/5 7/5", (14, -104, 59, -74)),
+    "voadora": (1500, "corrida 0/3 1/3 voadora 1/3 2/3 4/12A 5/-1", (10, -44, 57, -10)),
+    "voadora_pouso": (1502, "voadora 6/6 7/8", None),
+    "ar_soco": (600, "ar_soco 2/1 3/2 4/8A 6/-1", (10, -42, 54, -12)),
 }
+# folhas em que o quadro que o kit não casa (IoU < 0.65) fica com o desenho de hoje; FIRMES/ESPECIAIS forçam
+AUTO_ESPECIAL = {"tesoura", "chute_giratorio", "giro_garagem", "tapa_costas", "calcada_levantada",
+                 "chute_alto_rajada", "corrida", "voadora", "ar_soco"}
+FIRMES = set()
+# de costas: a silhueta engana o encaixe (o kit poria o rosto de frente nas costas)
+ESPECIAIS = {"tesoura/02", "chute_giratorio/01", "chute_giratorio/02", "giro_garagem/01", "giro_garagem/02",
+             "tapa_costas/02"}
 # expressão do rosto por quadro (o rosto é sempre o mesmo desenho; muda só a expressão)
 EXPRESSOES = {}
 # nó e pontas da faixa: ficam no quadril, nunca nas pernas
@@ -128,3 +146,12 @@ PERNAS_DE = {**{f"agachado/{i:02d}": "agachado" for i in range(2, 7)},
              **{f"{g}/{i:02d}": ("canela" if i in (2, 3, 4, 5) else "agachado")
                 for g in ("rasteira", "rasteira_arco") for i in range(0, 8)}}
 LACOS = {0, 11}  # animações em laço (parado, agachado)
+# lote 4
+BRACO_VAR.update({f"tapa_costas/{i:02d}": ["esticado"] for i in (3, 4, 5)})
+PERNA_NO_AR.update({"chute_alto_rajada/00": "camara", "chute_alto_rajada/01": "esticada",
+                    "chute_alto_rajada/06": "camara"})
+PERNAS_DE["voadora/07"] = "agachado"  # pouso da voadora: cai agachado
+ESPECIAIS.add("calcada_levantada/06")  # levantando de joelho: perna de trás ainda dobrada
+# tapa de mão aberta (o kit só tem punho), braço por cima da cabeça e chute alto de lado: desenho de hoje
+ESPECIAIS.update({"tapa_costas/03", "tapa_costas/04", "tapa_costas/05", "calcada_levantada/01",
+                  "chute_alto_rajada/01"})

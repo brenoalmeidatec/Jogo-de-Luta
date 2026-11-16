@@ -493,7 +493,46 @@ def pernas_no_chao(pose, alvo, quais=("tras", "frente")):
     return pose
 
 
+def iou(a, b_):
+    x, y = a[..., 3] > 0, b_[..., 3] > 0
+    return float((x & y).sum()) / max(1, int((x | y).sum()))
+
+
 def pose_de(kit, q):
+    """Pose do kit para o quadro `q`, ou {"_especial"} quando o corpo do kit não serve (de costas, de lado, deitado):
+    aí fica o desenho de hoje, no tamanho do parado."""
+    if q in getattr(K, "ESPECIAIS", ()):
+        return {"_especial": {"var": q}}
+    pose = _pose_kit(kit, q)
+    folha = q.split("/")[0]
+    if folha in getattr(K, "AUTO_ESPECIAL", ()) and q not in getattr(K, "FIRMES", ()) and \
+            q not in getattr(K, "POSES", {}) and iou(desenhar(kit, pose), normal(q)) < LIMIAR_ESPECIAL:
+        return {"_especial": {"var": q}}
+    return pose
+
+
+LIMIAR_ESPECIAL = 0.65
+_ESP = {}
+
+
+def especial(q):
+    """Desenho de hoje (já na paleta travada) levado ao tamanho do parado, sem migalhas."""
+    if q not in _ESP:
+        # sem reescala: a régua da cabeça erra de lado e de costas (aumentaria o boneco); os desenhos de hoje já têm o
+        # tamanho do parado (conferido no lote 4)
+        a = sem_migalha(abrir(q))
+        # furinho de 1 a 40 px é erro do desenho; vão maior (entre o braço e o corpo) é desenhado de propósito
+        fundo = (a[..., 3] == 0).astype(np.uint8)
+        n, lab, st, _ = cv2.connectedComponentsWithStats(fundo, connectivity=4)
+        m = np.isin(lab, [i for i in range(1, n) if st[i, 4] <= 40]) & buracos(a)
+        if m.any():
+            rgb = cv2.inpaint(np.ascontiguousarray(a[..., :3]), m.astype(np.uint8), 3, cv2.INPAINT_TELEA)
+            a[m, :3], a[m, 3] = rgb[m], 255
+        _ESP[q] = a
+    return _ESP[q].copy()
+
+
+def _pose_kit(kit, q):
     alvo = normal(q)
     dx, dy, giro = corpo(kit, alvo)
     pose = {"quadril": {"ang": 0, "dx": dx, "dy": dy}, "tronco": {"ang": giro}}
@@ -637,6 +676,9 @@ def malha_perna(lado, w):
 def desenhar(kit, pose):
     """Peças rígidas giradas nas juntas; pernas no chão deformadas por malha (calça larga dobra sem emenda);
     perna levantada com o desenho de câmara ou esticada preso no quadril."""
+    if pose.get("_especial", {}).get("var"):
+        desenhar.pintado, desenhar.pint = 0, None
+        return especial(pose["_especial"]["var"])
     pv = pose.get("_pernas", {}).get("var")
     if pv:  # metade de baixo rígida: o quadril fica sempre onde ela pisa no chão (também no meio do caminho)
         cx, cy = kit["pecas"][f"pernas_{pv}"]["corpo"]
@@ -759,7 +801,7 @@ def ys_max(tela):
     return int(np.nonzero((tela[..., 3] > 0).any(1))[0].max())
 
 
-def conferir(tela, juntas, no_chao=True):
+def conferir(tela, juntas, no_chao=True, buraco_ok=0):
     """Defeitos do quadro montado (vazio = passou): pedaço solto, fresta na junta, pé enterrado ou flutuando perto do
     chão, peça fora da tela."""
     erros = []
@@ -778,7 +820,7 @@ def conferir(tela, juntas, no_chao=True):
     if no_chao and ys_max(tela) < EIXO[1] - 8:
         erros.append(f"pé flutuando (y={ys_max(tela)})")
     nb = int(buracos(tela).sum())
-    if nb:
+    if nb > buraco_ok:
         erros.append(f"buraco {nb} px")
     ys = np.nonzero(al.any(1))[0]
     if ys.max() >= EIXO[1]:
@@ -849,6 +891,14 @@ def gerar(nomes, so_pose=False):
             out = desenhar(kit, pose)
             pintado = desenhar.pintado
             w = b.mundo(pose)
+            esp = pose.get("_especial", {}).get("var")
+            if esp:  # desenho de hoje: só pedaço solto, fora da tela e pé onde o desenho de hoje pisa
+                erros = conferir(out, no_chao=ys_max(abrir(esp)) >= EIXO[1] - 8, juntas=[],
+                                 buraco_ok=int(buracos(especial(esp)).sum()))
+                linhas[f"{nome}/{i:02d}"] = f"| {nome}/{i:02d} | {q} (desenho de hoje) | {'PASS' if not erros else 'FAIL ' + '; '.join(erros)} |"
+                Image.fromarray(out).save(b.SPR / "quadros_pecas_hd" / nome / f"{i:02d}.png")
+                Image.fromarray(np.ascontiguousarray(out[1::3, 1::3])).save(b.SPR / "quadros_pecas" / nome / f"{i:02d}.png")
+                continue
             erros = conferir(out, no_chao=True, juntas=[w[s][0] for s in ("braco_tras", "braco_frente", *(("antebraco_tras",) if "antebraco_tras" in w else ()), "cabeca",
                                                      # metade de baixo inteira de um desenho: as juntas das pernas não valem
                                                      *(() if pose.get("_pernas") else ("coxa_tras", "coxa_frente", "canela_tras", "canela_frente")))])
