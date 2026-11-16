@@ -217,6 +217,50 @@
     502
    ]
   },
+  "pernas_agachado": {
+   "arquivo": "pernas_agachado.png",
+   "origem": [
+    461,
+    379
+   ],
+   "junta": [
+    548,
+    492
+   ],
+   "mae": null,
+   "fonte": "agachado/04",
+   "sobra": "pernas_agachado_sobra.png",
+   "origem_sobra": [
+    452,
+    370
+   ],
+   "corpo": [
+    -6,
+    142
+   ]
+  },
+  "pernas_canela": {
+   "arquivo": "pernas_canela.png",
+   "origem": [
+    476,
+    389
+   ],
+   "junta": [
+    548,
+    492
+   ],
+   "mae": null,
+   "fonte": "chute_canela/03",
+   "sobra": "pernas_canela_sobra.png",
+   "origem_sobra": [
+    467,
+    380
+   ],
+   "corpo": [
+    -5,
+    101
+   ]
+  },
   "braco_tras_cruzado": {
    "arquivo": "braco_tras_cruzado.png",
    "origem": [

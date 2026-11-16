@@ -1,0 +1,85 @@
+{
+ "acao": 440,
+ "caixa": [
+  36,
+  -84,
+  207,
+  -24
+ ],
+ "origem": [
+  "rasteira_arco/01",
+  "rasteira_arco/02",
+  "rasteira_arco/03",
+  "rasteira_arco/04",
+  "rasteira_arco/06",
+  "rasteira_arco/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "rasteira_arco/01"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": false,
+   "de": "rasteira_arco/02"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rasteira_arco/03"
+  },
+  {
+   "desenho": 3,
+   "ticks": 4,
+   "caixa": true,
+   "de": "rasteira_arco/04"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rasteira_arco/06"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rasteira_arco/06"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rasteira_arco/06"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rasteira_arco/06"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rasteira_arco/07"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rasteira_arco/07"
+  },
+  {
+   "desenho": 10,
+   "ticks": 3,
+   "caixa": false,
+   "de": "rasteira_arco/07"
+  }
+ ]
+}

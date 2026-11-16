@@ -59,10 +59,17 @@ POSES = {
     "machado_curto/01": dict(GUARDA),
     "machado_curto/02": {**GUARDA, "quadril": {"ang": 0, "dx": 0, "dy": -60, "so_dy": 1}, "coxa_frente": {"var": "esticada", "ang": -55}, "tronco": {"ang": -12}},
     "machado_curto/03": {**GUARDA, "coxa_frente": {"var": "esticada", "ang": -25}, "tronco": {"ang": -5}},
+    **{f"agachado/{i:02d}": dict(GUARDA) for i in range(2, 7)},
+    **{f"chute_canela/{i:02d}": dict(GUARDA) for i in range(0, 8)},
+    # rasteira: agacha, joga a perna rente ao chão e apoia a mão de perto no chão (o corpo continua o do kit)
+    **{f"{g}/{i:02d}": {**GUARDA, "tronco": {"ang": 6}} for g in ("rasteira", "rasteira_arco") for i in (0, 1, 6, 7)},
+    **{f"{g}/{i:02d}": {**GUARDA, "tronco": {"ang": 16}, "braco_tras": {"ang": -8}, "antebraco_tras": {"ang": 100},
+                        "braco_frente": {"ang": 22}} for g in ("rasteira", "rasteira_arco") for i in (2, 3, 4, 5)},
     "machado_curto/04": dict(GUARDA), "machado_curto/05": dict(GUARDA), "machado_curto/06": dict(GUARDA),
 }
 # variantes de braço só nos quadros listados (senão o encaixe usa variante onde não deve)
-BRACO_VAR = {"soco/03": ["esticado"], "soco/05": ["esticado"], "soco/06": ["esticado"]}
+BRACO_VAR = {"soco/03": ["esticado"], "soco/05": ["esticado"], "soco/06": ["esticado"],
+             **{f"baixo_soco/{i:02d}": ["esticado"] for i in range(2, 7)}}
 
 # variantes: peça que muda de desenho (não só de ângulo). (quadro de onde sai, polígono, junta nesse quadro)
 VARIANTES = {
@@ -92,6 +99,11 @@ ANIMS = {
     "parado": (0, "parado 0/7 1/7 2/7 3/7 4/7 5/7 6/7", None),
     "soco": (200, "soco 3/3 5/3A 6/4 7/3", (16, -90, 59, -76)),
     "chute_lateral": (240, "chute_lateral 1/2 2/3 3/3 4/4A 5/5 6/5 7/4", (14, -82, 56, -58)),
+    "agachado": (11, "agachado 3/8 4/8 5/8 6/8", None),
+    "baixo_soco": (400, "baixo_soco 2/1 3/2 4/3A 5/4 6/3", (14, -54, 57, -42)),
+    "chute_canela": (430, "chute_canela 1/2 2/2 4/3A 5/4 6/3", (14, -22, 58, -4)),
+    "rasteira_arco": (440, "rasteira_arco 1/3 2/3 3/2 4/4A 6/8 7/7", (12, -28, 69, -8)),
+    "rasteira": (1400, "rasteira 0/4 1/5 2/3A 3/3A 4/4A 5/4A 6/8 7/6", (14, -20, 78, -2)),
     "soco_reto": (210, "soco_reto 1/2 2/3 3/2 4/4A 5/5 6/5 7/4", (14, -88, 52, -72)),
     "machado": (333, "machado 1/3 2/4 3/6 4/4A 5/5 6/7 7/5", (10, -104, 51, -66)),
     "machado_curto": (246, "machado_curto 1/5 2/7 3/4A 4/5 5/4 6/4", (10, -98, 49, -56)),
@@ -108,3 +120,11 @@ PERNA_NO_AR = {"chute_lateral/02": "camara", "chute_lateral/03": "esticada", "ch
                "machado_curto/03": "esticada"}
 # desenho em que o peito aparece (braços para baixo) e a área dele que serve para o peito escondido do kit
 PEITO_DOADOR = ("vitoria/00", [(516, 390), (568, 400), (568, 448), (545, 458), (516, 470)])
+# metade de baixo inteira tirada de um desenho bom (agachar dobra a calça larga demais para a malha)
+PERNAS_VAR = {"agachado": "agachado/04", "canela": "chute_canela/03"}
+PERNAS_DE = {**{f"agachado/{i:02d}": "agachado" for i in range(2, 7)},
+             **{f"baixo_soco/{i:02d}": "agachado" for i in range(0, 8)},
+             **{f"chute_canela/{i:02d}": ("canela" if i in (2, 3, 4) else "agachado") for i in range(0, 8)},
+             **{f"{g}/{i:02d}": ("canela" if i in (2, 3, 4, 5) else "agachado")
+                for g in ("rasteira", "rasteira_arco") for i in range(0, 8)}}
+LACOS = {0, 11}  # animações em laço (parado, agachado)

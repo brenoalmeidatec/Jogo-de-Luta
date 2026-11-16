@@ -199,6 +199,30 @@ def montar_kit():
     base = b.ler_kit()
     if hasattr(K, "PEITO_DOADOR"):
         peito_de_outro_desenho(base, pintado)
+    for nome, fonte in getattr(K, "PERNAS_VAR", {}).items():
+        # metade de baixo inteira (faixa, quadril e pernas) de um desenho bom, levada ao corpo do kit
+        dx, dy, giro = corpo(base, normal(fonte))
+        d = normal(fonte)
+        d = cv2.warpAffine(d, np.float32([[1, 0, -dx], [0, 1, -dy]]), b.TELA, flags=cv2.INTER_NEAREST)
+        yy2 = np.mgrid[:b.TELA[1], :b.TELA[0]][0]
+        # abaixo da faixa, e acima dela só o que fica fora do tronco, da cabeça e dos braços do kit (os joelhos
+        # do agachado sobem ao lado do corpo); a peça vai atrás do tronco
+        cima = np.zeros(yy2.shape, bool)
+        for nome_p in ("tronco", "cabeca"):
+            if nome_p in base["pecas"]:
+                pp = base["pecas"][nome_p]
+                hh, ww = pp["img"].shape[:2]
+                ox, oy = pp["origem"]
+                cima[oy:oy + hh, ox:ox + ww] |= pp["img"][..., 3] > 0
+        cima = cv2.dilate(cima.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0
+        m = (d[..., 3] > 0) & ((yy2 >= K.CINTURA) | (~cima & (yy2 >= K.CINTURA - 90)))
+        img = so_o_grosso(np.where(m[..., None], d, 0).astype(np.uint8))
+        junta = K.OSSOS["quadril"][0]
+        guardar(f"pernas_{nome}", img, junta, None, d, fonte)
+        kit["pecas"][f"pernas_{nome}"]["corpo"] = [int(dx), int(dy)]
+        print(f"pernas_{nome}: de {fonte} (corpo {dx:+d},{dy:+d})")
+    (b.PECAS / "kit.json").write_text(json.dumps(kit, indent=1, ensure_ascii=False), encoding="utf-8")
+    base = b.ler_kit()
     for slot, vs in K.VARIANTES.items():
         junta, mae, _ = K.OSSOS[slot]
         for var, (fonte, poli, _junta_fonte, *fixa) in vs.items():
@@ -389,7 +413,7 @@ def corpo(kit, alvo, folga=60):
         rx0, ry0 = int(round(jx - piv[0])), int(round(jy - piv[1]))
         h, w = r.shape[:2]
         X0, Y0 = max(0, rx0 - folga), max(0, ry0 - folga)
-        reg = alvo[Y0:ry0 + h + folga, X0:rx0 + w + folga]
+        reg = alvo[Y0:ry0 + h + folga + 110, X0:rx0 + w + folga]  # agachado: o corpo desce até ~170 px
         mm = (r[..., 3] > 0).astype(np.float32)
         res = cv2.matchTemplate(cinza(reg), cinza(r), cv2.TM_SQDIFF, mask=np.repeat(mm[..., None], 3, -1))
         v, _, p_min, _ = cv2.minMaxLoc(res)
@@ -482,6 +506,13 @@ def pose_de(kit, q):
     # a cabeça fica de pé quando o tronco inclina (o olhar continua no oponente)
     if giro:
         pose["cabeca"] = dict(pose.get("cabeca", {}), ang=-round(giro * 0.7))
+    pv = getattr(K, "PERNAS_DE", {}).get(q)
+    if pv:  # a metade de baixo é rígida e fica no chão: o quadril fica onde ela foi recortada e o tronco respira
+        pose["_pernas"] = {"var": pv}
+        cx, cy = kit["pecas"][f"pernas_{pv}"]["corpo"]
+        pose["quadril"] = {"ang": 0, "dx": cx, "dy": cy}
+        lim = lambda v: max(-4, min(4, v))  # o tronco só balança um pouco em cima das pernas (sem abrir vão)
+        pose["tronco"] = dict(pose.get("tronco", {}), dx=lim(dx - cx), dy=lim(dy - cy))
     mao = getattr(K, "POSES", {}).get(q, {})
     for slot, v in mao.items():
         if slot == "quadril" and v.get("so_dy"):
@@ -491,7 +522,9 @@ def pose_de(kit, q):
     if "tronco" in mao:
         pose["cabeca"] = dict(pose.get("cabeca", {}), ang=-round(mao["tronco"]["ang"] * 0.7))
     no_ar = getattr(K, "PERNA_NO_AR", {}).get(q)
-    if no_ar is None:
+    if pv:
+        pass  # metade de baixo vem inteira do desenho dito no kit
+    elif no_ar is None:
         pose = pernas_no_chao(pose, alvo)
     else:  # perna da frente no ar: a de trás fica plantada e a da frente é casada com o desenho dito no kit
         pose = pernas_no_chao(pose, alvo, quais=("tras",))
@@ -604,6 +637,10 @@ def malha_perna(lado, w):
 def desenhar(kit, pose):
     """Peças rígidas giradas nas juntas; pernas no chão deformadas por malha (calça larga dobra sem emenda);
     perna levantada com o desenho de câmara ou esticada preso no quadril."""
+    pv = pose.get("_pernas", {}).get("var")
+    if pv:  # metade de baixo rígida: o quadril fica sempre onde ela pisa no chão (também no meio do caminho)
+        cx, cy = kit["pecas"][f"pernas_{pv}"]["corpo"]
+        pose = dict(pose, quadril=dict(pose.get("quadril", {}), dx=cx, dy=cy))
     w = b.mundo(pose)
     tela = np.zeros((b.TELA[1], b.TELA[0], 4), np.uint8)
     pint = np.zeros(tela.shape[:2], bool)
@@ -620,8 +657,17 @@ def desenhar(kit, pose):
         if X1 > X0 and Y1 > Y0:
             pint[Y0:Y1, X0:X1] &= ~(r[Y0 - y0:Y1 - y0, X0 - x0:X1 - x0, 3] > 0)
         b.colar(tela, r, x0, y0)
+    pernas = pose.get("_pernas", {}).get("var")
     for slot in camadas:
         lado = slot.split("_")[-1]
+        if pernas and (slot.startswith("coxa") or slot.startswith("canela")):
+            continue
+        if pernas and slot == "quadril":
+            p = kit["pecas"][f"pernas_{pernas}"]
+            pos, ang = w["quadril"]
+            r, x0, y0 = b.colocar(p, p["img"], p["origem"], pos, ang)
+            por(r, x0, y0)
+            continue
         if slot.startswith("canela"):
             continue
         if slot.startswith("coxa") and not pose.get(slot, {}).get("var"):
@@ -791,7 +837,7 @@ def gerar(nomes, so_pose=False):
         for q in unicos:
             poses[q] = pose_de(kit, q)
         bate = next((i for i, e in enumerate(elems) if e[2]), None)
-        laco = acao == 0
+        laco = acao in getattr(K, "LACOS", {0})
         quadros = vida.animar(poses, [(q, t) for q, t, _ in elems], bate=bate, laco=laco,
                               guarda=None if laco else poses.get(K.REF) or pose_de(kit, K.REF))
         if laco:
@@ -803,8 +849,9 @@ def gerar(nomes, so_pose=False):
             out = desenhar(kit, pose)
             pintado = desenhar.pintado
             w = b.mundo(pose)
-            erros = conferir(out, no_chao=True, juntas=[w[s][0] for s in ("braco_tras", "braco_frente", *(("antebraco_tras",) if "antebraco_tras" in w else ()), "coxa_tras", "coxa_frente",
-                                                     "canela_tras", "canela_frente", "cabeca")])
+            erros = conferir(out, no_chao=True, juntas=[w[s][0] for s in ("braco_tras", "braco_frente", *(("antebraco_tras",) if "antebraco_tras" in w else ()), "cabeca",
+                                                     # metade de baixo inteira de um desenho: as juntas das pernas não valem
+                                                     *(() if pose.get("_pernas") else ("coxa_tras", "coxa_frente", "canela_tras", "canela_frente")))])
             m_novo, m_hoje = mancha(out, guarda)
             if pintado > 30:
                 erros.append(f"peito pintado à vista {pintado} px")

@@ -1,5 +1,33 @@
 | quadro | desenho de hoje | robô de defeitos |
 |---|---|---|
+| agachado/00 | agachado/03 | PASS |
+| agachado/01 | agachado/03 | PASS |
+| agachado/02 | agachado/03 | PASS |
+| agachado/03 | agachado/03 | PASS |
+| agachado/04 | agachado/04 | PASS |
+| agachado/05 | agachado/04 | PASS |
+| agachado/06 | agachado/04 | PASS |
+| agachado/07 | agachado/04 | PASS |
+| agachado/08 | agachado/05 | PASS |
+| agachado/09 | agachado/05 | PASS |
+| agachado/10 | agachado/05 | PASS |
+| agachado/11 | agachado/05 | PASS |
+| agachado/12 | agachado/06 | PASS |
+| agachado/13 | agachado/06 | PASS |
+| agachado/14 | agachado/06 | PASS |
+| agachado/15 | agachado/06 | PASS |
+| baixo_soco/00 | baixo_soco/02 | PASS |
+| baixo_soco/01 | baixo_soco/03 | PASS |
+| baixo_soco/02 | baixo_soco/04 | PASS |
+| baixo_soco/03 | baixo_soco/05 | PASS |
+| baixo_soco/04 | baixo_soco/05 | PASS |
+| baixo_soco/05 | baixo_soco/06 | PASS |
+| chute_canela/00 | chute_canela/01 | PASS |
+| chute_canela/01 | chute_canela/02 | PASS |
+| chute_canela/02 | chute_canela/04 | PASS |
+| chute_canela/03 | chute_canela/05 | PASS |
+| chute_canela/04 | chute_canela/05 | PASS |
+| chute_canela/05 | chute_canela/06 | PASS |
 | chute_lateral/00 | chute_lateral/01 | PASS |
 | chute_lateral/01 | chute_lateral/02 | PASS |
 | chute_lateral/02 | chute_lateral/03 | PASS |
@@ -57,6 +85,34 @@
 | parado/18 | parado/06 | PASS |
 | parado/19 | parado/06 | PASS |
 | parado/20 | parado/06 | PASS |
+| rasteira/00 | rasteira/00 | PASS |
+| rasteira/01 | rasteira/00 | PASS |
+| rasteira/02 | rasteira/01 | PASS |
+| rasteira/03 | rasteira/01 | PASS |
+| rasteira/04 | rasteira/02 | PASS |
+| rasteira/05 | rasteira/03 | PASS |
+| rasteira/06 | rasteira/04 | PASS |
+| rasteira/07 | rasteira/04 | PASS |
+| rasteira/08 | rasteira/05 | PASS |
+| rasteira/09 | rasteira/05 | PASS |
+| rasteira/10 | rasteira/06 | PASS |
+| rasteira/11 | rasteira/06 | PASS |
+| rasteira/12 | rasteira/06 | PASS |
+| rasteira/13 | rasteira/06 | PASS |
+| rasteira/14 | rasteira/07 | PASS |
+| rasteira/15 | rasteira/07 | PASS |
+| rasteira/16 | rasteira/07 | PASS |
+| rasteira_arco/00 | rasteira_arco/01 | PASS |
+| rasteira_arco/01 | rasteira_arco/02 | PASS |
+| rasteira_arco/02 | rasteira_arco/03 | PASS |
+| rasteira_arco/03 | rasteira_arco/04 | PASS |
+| rasteira_arco/04 | rasteira_arco/06 | PASS |
+| rasteira_arco/05 | rasteira_arco/06 | PASS |
+| rasteira_arco/06 | rasteira_arco/06 | PASS |
+| rasteira_arco/07 | rasteira_arco/06 | PASS |
+| rasteira_arco/08 | rasteira_arco/07 | PASS |
+| rasteira_arco/09 | rasteira_arco/07 | PASS |
+| rasteira_arco/10 | rasteira_arco/07 | PASS |
 | soco/00 | soco/03 | PASS |
 | soco/01 | soco/05 | PASS |
 | soco/02 | soco/06 | PASS |
@@ -73,4 +129,4 @@
 | soco_reto/08 | soco_reto/07 | PASS |
 | soco_reto/09 | soco_reto/07 | PASS |
 
-0 de 72 desenho(s) com defeito.
+0 de 128 desenho(s) com defeito.
