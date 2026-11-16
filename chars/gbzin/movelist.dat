@@ -1,36 +1,37 @@
 <#f0f000>:Especiais:</>
-Cabra Solta <#bebebe>(a cabra corre pelo chão)</>	_D_F^P
+Cabra Solta <#bebebe>(a cabra corre pelo chão)</>		_D_F^P
 Cabra Saltadora <#bebebe>(antiaéreo)</>		_D_U^P
 Gancho do Pastor <#bebebe>(prende e puxa)</>		_B_F^P
-Passinho de Pinguim <#bebebe>(passa por trás)</>	_F_F^K
+Passinho de Pinguim <#bebebe>(passa por trás)</>		_F_F^K
 Guarda Fechada <#bebebe>(contragolpe)</>		_D_B^K
-Arm-lock Voador						_U_D^K
+Arm-lock Voador		_U_D^K
 Rolo de Feno <#bebebe>(rola e derruba)</>		_B_D^P
 Cajado no Chão <#bebebe>(pega rasteiro)</>		_D_D^P
 
 <#f0f000>:Só no Grão-Pastor:</>
 Estouro <#bebebe>(investida de chifres)</>		_F_F^P
-Mão do Pastor <#bebebe>(a mão gigante voa)</>	_D_F^K
-Berro <#bebebe>(empurra para longe)</>			_D_U^K
-Puxão das Mãos <#bebebe>(puxa de qualquer distância)</>	_B_F^K
+Mão do Pastor <#bebebe>(a mão gigante voa)</>		_D_F^K
+Berro <#bebebe>(empurra para longe)</>		_D_U^K
+Puxão das Mãos <#bebebe>(puxa de qualquer distância)</>		_B_F^K
 
 <#f0f000>:Correntes (acertando os 3, o 4º derruba):</>
-Tapa, Cotovelada, Cutucada, Gancho no Pescoço	^X^X^X^X
+Tapa, Cotovelada, Cutucada, Gancho no Pescoço		^X^X^X^X
 Cajado Reto, Girando, De Cima, Pastoreio		^Y^Y^Y^Y
 Chute Baixo, Canela, Rasteira, Raspagem		^A^A^A^A
-Chute no Peito, Joelhada, Chute de Base, Coice	^B^B^B^B
+Chute no Peito, Joelhada, Chute de Base, Coice		^B^B^B^B
 
 <#f0f000>:Supers:</>
 Rebanho Desgovernado <#bebebe>(1000)</>		_B_F_D^K
 Mata-Leão do Sertão <#bebebe>(2000)</>		_B_F_D^P
-Juízo do Rebanho <#bebebe>(no Grão-Pastor)</>	_B_F_D^X_+^Y
+Juízo do Rebanho <#bebebe>(no Grão-Pastor)</>		_B_F_D^X_+^Y
 
 <#f0f000>:Sistema:</>
 Grão-Pastor <#bebebe>(barra cheia)</>		^X_+^Y
-Rolamento							^X_+^A
-Golpe de afastar					^Y_+^B
+Rolamento		^X_+^A
+Golpe de afastar		^Y_+^B
 Tchau Cabrito <#bebebe>(agarrão)</>		[_B/_F]_+^Y
-Montada <#bebebe>(oponente agachado)</>	_D_+^Y
-Ordenha do Bode <#bebebe>(agarrão de comando)</>	_F_B_F^C
-Provocação							^C
-Parry                              _F^C
+Montada <#bebebe>(oponente agachado)</>		_D_+^Y
+Ordenha do Bode <#bebebe>(agarrão de comando)</>		_F_B_F^C
+Provocação		^C
+Parry em cima		_F^C
+Parry embaixo		_D^C
