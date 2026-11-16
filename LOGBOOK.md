@@ -2738,3 +2738,23 @@ O Alisson aprovou o corpo firme e pediu fluidez, vida e qualidade, sem nenhum er
 
 **Robô de defeitos** (`conferir` em `piloto_firme.py`): procura fresta, mancha escura a mais que o desenho de hoje,
 pedaço solto e pé fora do chão. Deu 0 de 41 desenhos (`docs/boneco-pecas/vida/robo_defeitos.md`).
+
+### 2026-11-16 — Gbzin no boneco de peças: piloto (parado, soco, chute alto)
+
+O Alisson aprovou no Pengaró o "corpo firme + vida" e pediu o mesmo para todos, com fluidez e zero erro de peça, e os
+golpes confusos refeitos com exatidão. Começou pelo Gbzin (branch `claude/project-thread-y90n0e`, com a branch do Gbzin
+juntada). Nada foi para o `.sff` nem para a `mugen`.
+
+- **Achado:** 17 golpes do Gbzin vieram de outro boneco (pele laranja, sem barba, franja nos olhos). Lista completa e
+  golpes que não mostram o pedido (despertar com caixa de pizza, bicicleta sem chute...) em
+  `/mnt/project-files/gbzin-pecas/golpes-confusos.md`.
+- `ferramentas/gbzin_pecas.py`: kit do `referencia_ginga/00` (cabeça por cima do braço da frente, tronco com o que os
+  braços tapam forrado de regata lisa, braço de trás com o cajado, perna da frente com a boca do calção, pontas da
+  faixa soltas, furos do desenho que o fechamento de frestas não pode tapar). Guarda refeita = desenho original (2 px).
+  Desenho laranja vira rosado por troca de cor 1 para 1 (`rosado`) e perde as linhas da grade (`sem_grade`).
+- Parado e soco: cabeça, tronco e braços do kit; calção e pernas do desenho de hoje (as pernas duras do kit quebravam
+  o joelho na ginga funda). O corpo anda junto com as pernas, sem deslizar.
+- Chute alto: poses do kit, pelo pedido da folha (joelho no peito e sola reta no peito); o de hoje mal esticava.
+- Robô (`conferir` do piloto_firme): 0 defeitos em 41 desenhos. Vídeos em `docs/boneco-pecas/gbzin/`.
+
+Ressalvas: a boca do calção fica serrilhada quando a coxa sobe; a perna de apoio não sobe o quadril (IK no limite).
