@@ -229,7 +229,22 @@ def montar_kit():
     t = imgs["tronco"]
     esc_t = (M(PEITO_ESCONDIDO) | M(LADO_ESCONDIDO)) & ~baixo & (m_bf | m_bt | ~alfa) & ~(t[..., 3] > 0)
     esc_t &= ~(M(CABECA) & alfa)
-    imgs["tronco"] = pintar(t, esc_t)
+    t = pintar(t, esc_t)
+    # volume nas costas: sombra da ombreira (faixa escura logo abaixo dela), uma dobra de camisa descendo até o cinto
+    # e o brilho roxo da beira de trás, nas mesmas cores da camisa que aparece
+    base = cor_base(imgs["tronco"]).astype(int)
+    sombra = (cv2.dilate(m_omb.astype(np.uint8), np.ones((15, 15), np.uint8)) > 0) & esc_t & (yy > 396)
+    t[sombra, :3] = np.clip(base * 0.55, 0, 255).astype(np.uint8)
+    dobra = np.zeros(esc_t.shape, np.uint8)
+    cv2.line(dobra, (494, 420), (500, 482), 1, 2)
+    cv2.line(dobra, (486, 440), (490, 478), 1, 1)
+    t[(dobra > 0) & esc_t & ~sombra, :3] = np.clip(base * 0.6, 0, 255).astype(np.uint8)
+    a = t[..., 3] > 0
+    beira = a & ~(cv2.erode(a.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0)
+    brilho = (cv2.dilate(beira.astype(np.uint8), np.ones((7, 7), np.uint8)) > 0) & ~beira & esc_t & ~sombra & \
+        (xx < 500) & ~(cv2.dilate(beira.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0)
+    t[brilho, :3] = np.clip(base * 1.6 + (12, 0, 18), 0, 255).astype(np.uint8)
+    imgs["tronco"] = t
     q = imgs["quadril"]
     esc_q = ((M(AVENTAL_ESCONDIDO) & M(AVENTAL)) | M(CINTO_ESCONDIDO)) & baixo & m_bt
     imgs["quadril"] = pintar(q, esc_q, friso=[AVENTAL[1:3], AVENTAL[-1:] + AVENTAL[0:1]])
