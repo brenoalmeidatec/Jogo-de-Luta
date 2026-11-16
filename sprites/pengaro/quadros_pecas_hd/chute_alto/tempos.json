@@ -1,0 +1,128 @@
+{
+ "acao": 240,
+ "caixa": [
+  36,
+  -300,
+  159,
+  -174
+ ],
+ "elementos": [
+  {
+   "desenho": 1,
+   "ticks": 5,
+   "caixa": false
+  },
+  {
+   "desenho": 2,
+   "ticks": 4,
+   "caixa": false
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": true
+  },
+  {
+   "desenho": 3,
+   "ticks": 4,
+   "caixa": true
+  },
+  {
+   "desenho": 4,
+   "ticks": 3,
+   "caixa": false
+  },
+  {
+   "desenho": 5,
+   "ticks": 12,
+   "caixa": false
+  },
+  {
+   "desenho": 0,
+   "ticks": 12,
+   "caixa": false
+  }
+ ],
+ "poses": [
+  {},
+  {
+   "perna_frente": {
+    "var": "camara",
+    "dx": -14,
+    "dy": 4,
+    "ang": 14
+   },
+   "perna_tras": {
+    "ang": -6
+   },
+   "tronco": {
+    "dx": -2
+   }
+  },
+  {
+   "perna_frente": {
+    "var": "camara",
+    "dx": -25,
+    "dy": -10
+   },
+   "perna_tras": {
+    "ang": -12
+   },
+   "tronco": {
+    "dx": -4
+   },
+   "braco_frente": {
+    "dx": 2
+   }
+  },
+  {
+   "perna_frente": {
+    "var": "esticada",
+    "dx": -25,
+    "dy": -10
+   },
+   "perna_tras": {
+    "ang": -12
+   },
+   "tronco": {
+    "dx": -8
+   },
+   "cabeca": {
+    "dx": -1
+   },
+   "braco_frente": {
+    "dx": 1
+   }
+  },
+  {
+   "perna_frente": {
+    "var": "camara",
+    "dx": -25,
+    "dy": -10
+   },
+   "perna_tras": {
+    "ang": -12
+   },
+   "tronco": {
+    "dx": -4
+   },
+   "braco_frente": {
+    "dx": 2
+   }
+  },
+  {
+   "perna_frente": {
+    "var": "camara",
+    "dx": -14,
+    "dy": 4,
+    "ang": 14
+   },
+   "perna_tras": {
+    "ang": -6
+   },
+   "tronco": {
+    "dx": -2
+   }
+  }
+ ]
+}

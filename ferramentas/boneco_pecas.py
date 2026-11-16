@@ -124,16 +124,37 @@ VARIANTES = {
                              (625, 428), (595, 431), (578, 431), (569, 420)]),
 }
 OMBRO_FRENTE = (580, 411)
+# pernas: a de trás (caneleira) e a da frente (calça branca) saem do quadril; o nó da faixa e as bolinhas ficam no quadril
+POLI_PERNAS = {
+    "perna_tras": [(485, 515), (520, 505), (552, 530), (552, 545), (530, 575), (522, 600), (510, 625), (505, 662),
+                   (452, 662), (460, 630), (475, 610), (478, 580), (490, 550)],
+    "perna_frente": [(552, 545), (552, 520), (575, 505), (598, 505), (610, 540), (614, 600), (602, 612), (598, 625),
+                     (632, 645), (634, 662), (558, 662), (566, 630), (564, 612), (556, 580)],
+}
+NO_DA_FAIXA = [(545, 466), (600, 466), (598, 540), (565, 545), (548, 520)]
+QUADRIL_TRAS, QUADRIL_FRENTE = (522, 510), (572, 512)
+# variantes da perna da frente no chute: (desenho aprovado, polígono, quadril no desenho)
+VARIANTES_PERNA = {
+    "camara": ("chute_alto/02", [(512, 472), (530, 455), (545, 440), (575, 425), (600, 420), (611, 432), (613, 480),
+                                 (599, 491), (589, 502), (586, 540), (584, 562), (564, 562), (558, 520), (553, 497),
+                                 (538, 492), (518, 497), (511, 486)], (525, 485)),
+    "esticada": ("chute_alto/04", [(512, 470), (560, 430), (600, 405), (628, 388), (640, 350), (660, 341), (693, 344),
+                                   (693, 373), (670, 399), (645, 405), (643, 441), (600, 463), (575, 479), (555, 506),
+                                   (535, 521), (512, 522)], (525, 490)),
+}
 JUNTAS = {  # pivô de cada peça no parado e a peça mãe
     "pernas": ((540, 470), None),
-    "tronco": ((540, 470), "pernas"),
+    "quadril": ((540, 490), None),
+    "perna_tras": (QUADRIL_TRAS, "quadril"),
+    "perna_frente": (QUADRIL_FRENTE, "quadril"),
+    "tronco": ((540, 470), "quadril"),
     "braco_tras": ((497, 406), "tronco"),
     "cabeca": ((560, 386), "tronco"),
     "braco_frente": (OMBRO_FRENTE, "tronco"),
 }
 # a cabeça vai por baixo do tronco: o pescoço dela (sobra escondida) fica atrás do pescoço do tronco e não abre buraco
 # quando a cabeça mexe
-CAMADAS = ["cabeca", "tronco", "pernas", "braco_tras", "braco_frente"]
+CAMADAS = ["cabeca", "tronco", "perna_tras", "quadril", "perna_frente", "braco_tras", "braco_frente"]
 PESCOCO = [(536, 372), (552, 380), (568, 390), (588, 394), (588, 404), (566, 406), (540, 402), (530, 390)]
 
 
@@ -163,9 +184,23 @@ def montar_kit():
     partes = {
         "cabeca": (m_cab | mascara(PESCOCO)) & ~m_bf,
         "braco_tras": m_bt,
-        "pernas": baixo & ~m_bt,
+        "perna_tras": baixo & ~m_bt & mascara(POLI_PERNAS["perna_tras"]),
+        "perna_frente": baixo & ~m_bt & mascara(POLI_PERNAS["perna_frente"]) & ~mascara(NO_DA_FAIXA),
         "tronco": ~baixo & ~m_bt & ~m_cab & ~m_bf,
     }
+    # o que sobrou abaixo da virilha (contorno, beirada da calça) vai para a perna mais perto, para não ficar pixel
+    # solto no lugar quando a perna sai
+    resto = baixo & ~m_bt & ~partes["perna_tras"] & ~partes["perna_frente"] & (idx >= 0) & (yy >= 540)
+    import cv2
+    d_tras = cv2.distanceTransform(np.uint8(~partes["perna_tras"]), cv2.DIST_L2, 3)
+    d_frente = cv2.distanceTransform(np.uint8(~partes["perna_frente"]), cv2.DIST_L2, 3)
+    partes["perna_tras"] |= resto & (d_tras <= d_frente)
+    partes["perna_frente"] |= resto & (d_frente < d_tras)
+    # a calça branca atrás das bolinhas é da coxa da frente (sai com ela no chute); o nó e as bolinhas ficam
+    ids = [c["id"] for c in DADOS["cores"]]
+    calca = np.isin(idx, [ids.index(c) for c in ("calca_branco", "calca_sombra", "calca_contorno")])
+    partes["perna_frente"] |= baixo & ~m_bt & calca & (yy >= 498) & (xx >= 566)
+    partes["quadril"] = baixo & ~m_bt & ~partes["perna_tras"] & ~partes["perna_frente"]
     kit = {"ref": f"quadros_arcade_hd/{REF}.png", "tela": TELA, "eixo": EIXO, "camadas": CAMADAS, "pecas": {}}
     for nome, m in partes.items():
         r, (x0, y0) = recorte(idx, m)
@@ -182,6 +217,16 @@ def montar_kit():
         kit["pecas"][nome] = {"arquivo": f"{nome}.png", "origem": [x0 + dx, y0 + dy], "pivo": list(OMBRO_FRENTE),
                               "mae": "tronco", "fonte": f"quadros_arcade_hd/{fonte}.png", "alinhamento": [dx, dy]}
         print(f"{nome}: de {fonte}, alinhado {dx:+d},{dy:+d}")
+    for var, (fonte, poli, quadril) in VARIANTES_PERNA.items():
+        fidx = indexar(HD / f"{fonte}.png")
+        r, (x0, y0) = recorte(fidx, mascara(poli))
+        nome = f"perna_frente_{var}"
+        Image.fromarray(np.uint8(r + 1)).save(PECAS / f"{nome}.png")
+        # o quadril do desenho vai para o quadril da frente do kit
+        dx, dy = QUADRIL_FRENTE[0] - quadril[0], QUADRIL_FRENTE[1] - quadril[1]
+        kit["pecas"][nome] = {"arquivo": f"{nome}.png", "origem": [x0 + dx, y0 + dy], "pivo": list(QUADRIL_FRENTE),
+                              "mae": "quadril", "fonte": f"quadros_arcade_hd/{fonte}.png", "alinhamento": [dx, dy]}
+        print(f"{nome}: de {fonte}, quadril {quadril} -> {QUADRIL_FRENTE}")
     (PECAS / "kit.json").write_text(json.dumps(kit, indent=1, ensure_ascii=False), encoding="utf-8")
     return kit
 
@@ -226,7 +271,8 @@ def montar(kit, pose):
         p = pose.get(nome, {})
         if p.get("esconde"):
             continue
-        chave = f"{nome}_{p['var']}" if p.get("var") else nome
+        var = p.get("var") or ("aberta" if nome == "braco_frente" else None)
+        chave = f"{nome}_{var}" if var else nome
         peca = kit["pecas"][chave]
         pos, ang, piv = transf(nome)
         ox, oy = peca["origem"]
@@ -237,7 +283,17 @@ def montar(kit, pose):
         sub = tela[y0:y0 + h, x0:x0 + w]
         rr = r[:sub.shape[0], :sub.shape[1]]
         sub[rr >= 0] = rr[rr >= 0]
-    return limpar(tela, DADOS)
+    return limpar(sem_migalha(tela), DADOS)
+
+
+def sem_migalha(idx, minimo=40):
+    """Tira os pedacinhos soltos (menos de `minimo` px) que sobram nas emendas."""
+    import cv2
+    n, rot, st, _ = cv2.connectedComponentsWithStats(np.uint8(idx >= 0), connectivity=8)
+    for i in range(1, n):
+        if st[i, cv2.CC_STAT_AREA] < minimo:
+            idx[rot == i] = -1
+    return idx
 
 
 def para_1x(idx):

@@ -11,7 +11,9 @@
  "camadas": [
   "cabeca",
   "tronco",
-  "pernas",
+  "perna_tras",
+  "quadril",
+  "perna_frente",
   "braco_tras",
   "braco_frente"
  ],
@@ -40,17 +42,29 @@
    ],
    "mae": "tronco"
   },
-  "pernas": {
-   "arquivo": "pernas.png",
+  "perna_tras": {
+   "arquivo": "perna_tras.png",
    "origem": [
     463,
-    468
+    505
    ],
    "pivo": [
-    540,
-    470
+    522,
+    510
    ],
-   "mae": null
+   "mae": "quadril"
+  },
+  "perna_frente": {
+   "arquivo": "perna_frente.png",
+   "origem": [
+    552,
+    500
+   ],
+   "pivo": [
+    572,
+    512
+   ],
+   "mae": "quadril"
   },
   "tronco": {
    "arquivo": "tronco.png",
@@ -62,7 +76,19 @@
     540,
     470
    ],
-   "mae": "pernas"
+   "mae": "quadril"
+  },
+  "quadril": {
+   "arquivo": "quadril.png",
+   "origem": [
+    503,
+    468
+   ],
+   "pivo": [
+    540,
+    490
+   ],
+   "mae": null
   },
   "braco_frente_aberta": {
    "arquivo": "braco_frente_aberta.png",
@@ -113,6 +139,40 @@
    "alinhamento": [
     -7,
     -1
+   ]
+  },
+  "perna_frente_camara": {
+   "arquivo": "perna_frente_camara.png",
+   "origem": [
+    558,
+    447
+   ],
+   "pivo": [
+    572,
+    512
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_arcade_hd/chute_alto/02.png",
+   "alinhamento": [
+    47,
+    27
+   ]
+  },
+  "perna_frente_esticada": {
+   "arquivo": "perna_frente_esticada.png",
+   "origem": [
+    559,
+    370
+   ],
+   "pivo": [
+    572,
+    512
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_arcade_hd/chute_alto/04.png",
+   "alinhamento": [
+    47,
+    22
    ]
   }
  }

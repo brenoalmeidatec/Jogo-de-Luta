@@ -2604,3 +2604,33 @@ vídeo conferido antes de juntar.
 - Conferência do vídeo quadro a quadro (8 revisores + 1 cético): o desenho novo destoava do parado (risca branca,
   manchas magenta, munhequeira verde-água) → `harmonizar`; o estouro da Cobrança parecia preso → acompanha o P2 e
   ficou menor. Robô 249/0. Vídeos em docs/diabo-44/video/.
+
+## 2026-11-16 — Piloto boneco de peças do Pengaró base (Claude, sessão do LightWolfMan)
+
+**Pedido:** `docs/missao-alisson-boneco-de-pecas.md`, etapa 1 (parado, soco e chute alto pelo método do
+`docs/estudo-animacao.md`). Ferramenta escolhida pelo Alisson: só grátis, Python/Pillow na nuvem (sem Aseprite). Antes do
+piloto, o Alisson pediu um comparativo de caminhos no soco.
+
+**Feito (branch `claude/project-thread-c23bpn`, fora da `mugen`, nada ligado no gerador nem no `.sff`):**
+- `sprites/pengaro/paleta_arcade_pecas.json`: 15 cores medidas na arte atual (a `paleta_arcade.json` era da arte antiga,
+  mais clara). Use `FORMA=pecas` no `conferir_arte.py`.
+- `ferramentas/boneco_pecas.py`: kit em `sprites/pengaro/pecas/` (cabeça com pescoço escondido, tronco, quadril, perna de
+  trás, perna da frente, braço de trás com a garrafa; variantes do braço da frente aberta/punho/esticado e da perna da
+  frente câmara/esticada, recortadas de desenhos aprovados e encaixadas na junta), RotSprite em índice de paleta,
+  montagem por pose e saída 3x + 1x.
+- `ferramentas/boneco_blender.py`: caminho B (mesmo kit num esqueleto do Blender, roda com `$NAZAFX_PY`).
+- `ferramentas/conferir_pecas.py`: régua de cabeça e tronco contra o parado (limite 5%).
+- `ferramentas/piloto_pecas.py`: as três animações, com `tempos.json` nos mesmos ticks e caixas das ações 0, 200 e 240.
+- `ferramentas/video_pecas.py`: vídeo lado a lado a 60 fps, tira de ticks e folha antes/depois em `docs/boneco-pecas/piloto/`.
+
+**Resultado:** comparativo do soco (`docs/boneco-pecas/soco_comparativo.*`): o atual reprova na régua (cabeça +7 a 9%,
+peito −9 a −20% entre quadros); A e B passam, quase iguais, e o A ficou por não reamostrar pixel. Piloto: régua 17/17
+PASS e `conferir_arte` regras 1, 3, 4, 5 e 7 PASS nos 17 quadros.
+
+**Tempo:** o kit e a montagem levaram a maior parte (~1 h 30 de máquina contando o comparativo); depois do kit pronto,
+cada animação nova levou ~10 min (achar as poses e conferir). O custo cai bem nos próximos golpes.
+
+**Não testado / limites:** não foi aberto no motor (vídeo montado pelos ticks do `.air`, como o `video_golpe.py`); a
+paleta de 15 cores deixa a arte mais chapada que a atual; frente e costas da folha-modelo não foram geradas (pedem
+ChatGPT/Gemini e não fazem falta nestas três animações); as pontas da faixa ainda não atrasam no chute (bolinhas estão
+no quadril); a câmara baixa do chute é a câmara girada e pede retoque à mão.
