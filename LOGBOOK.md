@@ -2701,3 +2701,30 @@ O Alisson aprovou o corpo firme e pediu fluidez, vida e qualidade, sem nenhum er
 
 **Robô de defeitos** (`conferir` em `piloto_firme.py`): procura fresta, mancha escura a mais que o desenho de hoje,
 pedaço solto e pé fora do chão. Deu 0 de 41 desenhos (`docs/boneco-pecas/vida/robo_defeitos.md`).
+
+### 2026-11-16 — CK pelo boneco de peças (corpo firme + vida), 1ª leva
+
+Pedido do Alisson depois do OK no Pengaró: passar todos os lutadores para o método, com fluidez e sem erro de peça, e
+refazer com exatidão os golpes confusos. Esta thread ficou com o CK (branch `claude/project-thread-anyey2`).
+
+- Lista dos golpes confusos do CK base em `docs/boneco-pecas/ck/golpes_confusos.png` (giros de costas da armada, compasso
+  e rolamento; braço/perna que estica no ar_soco, uppercut, chute_alto, afastar e Bote; jab agachado inflado; Gola na
+  Mão ilegível; troca de cabeça na entrada e na derrota).
+- `ferramentas/pecas_ck.py`: kit do CK a partir de `referencia_ginga/00` em `sprites/ck/pecas/` (cabeça, tronco,
+  quadril, braços inteiros, coxa e canela de cada lado, pé separado). Os furinhos transparentes que os desenhos de hoje
+  têm por dentro do boneco são fechados no kit. O peito escondido atrás das luvas é pintado em faixas chapadas com as
+  cores da camisa (ressalva: aparece liso quando o braço sai da frente).
+- Corpo achado pela cabeça (boné e rosto), só translação; no chute o quadril fica em cima do pé de apoio e o tronco
+  inclina. Pernas no chão por IK com o joelho para a frente e agachada limitada (a canela do CK é curta).
+- Poses escritas à mão (`POSES`) no jab, no direto e nos dois chutes, em vez de copiar o desenho de hoje: braço esticado
+  é o desenho do soco de hoje preso no ombro do kit, passando por baixo do queixo; perna do chute é a coxa e a canela
+  do kit giradas, sem encolher.
+- Vida pelo `vida_pecas.py` (intermediários, respiração no parado, atraso da cabeça) com os mesmos ticks e elementos de
+  acerto do `gerar_ck.py`.
+- Robô (`conferir`): peça solta, racha (vão cercado sem contorno escuro), pé fora do chão e figura mais alta que o
+  parado. As rachas e frestas são fechadas na montagem. Resultado: 0 de 69 desenhos.
+- Saída: `sprites/ck/quadros_pecas_hd|quadros_pecas/acoes/<ação>/` (com `tempos.json`) e os desenhos-chave no índice
+  de hoje em `quadros_pecas*/<folha>/`. Vídeos e folhas antes/depois em `docs/boneco-pecas/ck/`.
+
+Nada foi ligado no gerador nem no `.sff`. Falta: os outros golpes confusos e o resto do CK base; o braço esticado tem
+a raiz escura embaixo do queixo; o alcance do direto ficou um pouco menor que o de hoje (conferir a caixa antes de ligar).

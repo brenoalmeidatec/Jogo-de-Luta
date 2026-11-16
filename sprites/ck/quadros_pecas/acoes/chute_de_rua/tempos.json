@@ -1,0 +1,156 @@
+{
+ "acao": 260,
+ "folha": "afastar",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "afastar/01"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "afastar/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "afastar/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "afastar/02"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "afastar/03"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "afastar/03"
+  },
+  {
+   "desenho": 6,
+   "ticks": 1,
+   "caixa": true,
+   "de": "afastar/04"
+  },
+  {
+   "desenho": 7,
+   "ticks": 3,
+   "caixa": true,
+   "de": "afastar/04"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "afastar/05"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "afastar/05"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "afastar/05"
+  },
+  {
+   "desenho": 11,
+   "ticks": 2,
+   "caixa": false,
+   "de": "afastar/05"
+  },
+  {
+   "desenho": 12,
+   "ticks": 2,
+   "caixa": false,
+   "de": "afastar/06"
+  },
+  {
+   "desenho": 13,
+   "ticks": 2,
+   "caixa": false,
+   "de": "afastar/06"
+  },
+  {
+   "desenho": 14,
+   "ticks": 2,
+   "caixa": false,
+   "de": "afastar/06"
+  },
+  {
+   "desenho": 15,
+   "ticks": 2,
+   "caixa": false,
+   "de": "afastar/07"
+  },
+  {
+   "desenho": 16,
+   "ticks": 2,
+   "caixa": false,
+   "de": "afastar/07"
+  },
+  {
+   "desenho": 17,
+   "ticks": 2,
+   "caixa": false,
+   "de": "afastar/07"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "afastar/01",
+   "ticks": 4,
+   "caixa": false
+  },
+  {
+   "de": "afastar/02",
+   "ticks": 4,
+   "caixa": false
+  },
+  {
+   "de": "afastar/03",
+   "ticks": 4,
+   "caixa": false
+  },
+  {
+   "de": "afastar/04",
+   "ticks": 1,
+   "caixa": true
+  },
+  {
+   "de": "afastar/04",
+   "ticks": 3,
+   "caixa": true
+  },
+  {
+   "de": "afastar/05",
+   "ticks": 8,
+   "caixa": false
+  },
+  {
+   "de": "afastar/06",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "afastar/07",
+   "ticks": 6,
+   "caixa": false
+  }
+ ]
+}
