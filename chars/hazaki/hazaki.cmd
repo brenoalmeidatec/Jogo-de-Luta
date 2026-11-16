@@ -924,7 +924,7 @@ trigger2 = (stateno = 600 || stateno = 610) && movehit && movehit <= 8
 [State -1, Demônio: pode cancelar]
 type = VarSet
 triggerall = var(20) > 0
-trigger1 = (stateno = 4200 || stateno = 4201 || stateno = 4202 || stateno = 4203 || stateno = 4400 || stateno = 4401) && movecontact && movecontact <= 8
+trigger1 = (stateno = 4200 || stateno = 4201 || stateno = 4202 || stateno = 4203 || stateno = 4400 || stateno = 4401 || stateno = 4402 || stateno = 4403) && movecontact && movecontact <= 8
 var(1) = 1
 
 [State -1, Demônio: Arranhão Baixo]
@@ -935,7 +935,7 @@ triggerall = command = "x"
 triggerall = command = "holddown"
 trigger1 = ctrl
 trigger1 = statetype != A
-trigger2 = (stateno = 4200 || stateno = 4202 || stateno = 4400) && movecontact && var(5) < 4
+trigger2 = (stateno = 4200 || stateno = 4202 || stateno = 4400 || stateno = 4402) && movecontact && var(5) < 4
 
 [State -1, Demônio: Garra Subindo]
 type = ChangeState
@@ -954,7 +954,7 @@ triggerall = command = "x"
 triggerall = command != "holddown"
 trigger1 = ctrl
 trigger1 = statetype = S
-trigger2 = (stateno = 4200 || stateno = 4202 || stateno = 4400) && movecontact && var(5) < 4
+trigger2 = (stateno = 4200 || stateno = 4202 || stateno = 4400 || stateno = 4402) && movecontact && var(5) < 4
 
 [State -1, Demônio: Garra Cruzada]
 type = ChangeState
@@ -982,4 +982,22 @@ triggerall = command = "b"
 triggerall = command != "holddown"
 trigger1 = ctrl
 trigger1 = statetype = S
+
+[State -1, Demônio: Rabo Rasteiro]
+type = ChangeState
+value = 4402
+triggerall = var(20) > 0
+triggerall = command = "a"
+triggerall = command = "holddown"
+trigger1 = ctrl
+trigger1 = statetype != A
+
+[State -1, Demônio: Varrida de Garras]
+type = ChangeState
+value = 4403
+triggerall = var(20) > 0
+triggerall = command = "b"
+triggerall = command = "holddown"
+trigger1 = ctrl
+trigger1 = statetype != A
 

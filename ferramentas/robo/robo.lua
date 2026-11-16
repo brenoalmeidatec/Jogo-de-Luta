@@ -1067,6 +1067,8 @@ do
   demonio("Coice com Garra (b)", {"b"}, 4203, 40)
   demonio("Arranhao Baixo (baixo+x)", {"holddown", "x"}, 4400, 34)
   demonio("Garra Subindo (baixo+y), colado", {"holddown", "y"}, 4401, 8)
+  demonio("Rabo Rasteiro (baixo+a)", {"holddown", "a"}, 4402, 30)
+  demonio("Varrida de Garras (baixo+b, derruba)", {"holddown", "b"}, 4403, 34)
   diabo("demonio: Arranhao emenda Arranhao no contato", function()
     approach(34)
     acao(function() c.vida0 = lifeP2() end)
@@ -1090,13 +1092,26 @@ do
   -- vitrine: os golpes do demônio, um atrás do outro (ferramentas/filmar_robo.py --filtro "vitrine")
   diabo("vitrine do demonio", function()
     press(1, {"c"}, 2); wait(110)
-    for _, cmd in ipairs({{"x"}, {"y"}, {"a"}, {"b"}, {"holddown", "x"}, {"holddown", "y"}}) do
+    for _, cmd in ipairs({{"x"}, {"y"}, {"a"}, {"b"}, {"holddown", "x"}, {"holddown", "y"}, {"holddown", "a"}}) do
+      need(function() return snap(2).st == 0 end, 200, "P2 de pe", false)
       add(function() pendingPos[2] = 60; return true end); wait(4); approach(34); press(1, cmd, 2); wait(44)
     end
+    need(function() return snap(2).st == 0 end, 200, "P2 de pe", false)
     add(function() pendingPos[2] = 60; return true end); wait(4); approach(60)
     press(1, {"df_a"}, 2); wait(90)
+    need(function() return snap(2).st == 0 end, 200, "P2 de pe", false)
     add(function() pendingPos[2] = 60; return true end); wait(4); approach(70)
     press(1, {"df_b"}, 2); wait(110)
+    need(function() return snap(2).st == 0 end, 200, "P2 de pe", false)
+    local ate
+    add(function()  -- anda até o P2 (depois de derrubar, o PosSet erra com a câmera deslocada)
+      ate = ate or (clock() + 240)
+      if snap(1).d <= 36 or clock() >= ate then return true end
+      held[1]["holdfwd"] = clock() + 2
+      return false
+    end)
+    wait(4)
+    press(1, {"holddown", "b"}, 2); wait(90)  -- Varrida de Garras por último: derruba
     need(function() return snap(1).v37 == 1 end, 1, "continuou Diabo a vitrine inteira", false)
   end)
   diabo("agarrao de fogo e ouro (frente + y colado)", function()

@@ -399,11 +399,15 @@ GOLPES = {
                peso="Light", tipo="C", chao="Low"),
     4401: dict(nome="Garra Subindo", folha="agachado_maos", q=[4, 5, 6, 7], t=[4, 4, 7, 9], ativo=[1, 2], dano=60,
                peso="Medium", tipo="C", ponta="cima", sobe=True),
+    4402: dict(nome="Rabo Rasteiro", folha="agachado_pes", q=[0, 1, 2, 3], t=[4, 4, 5, 7], ativo=[1], dano=30,
+               peso="Light", tipo="C", guarda="L", chao="Low"),
+    4403: dict(nome="Varrida de Garras", folha="agachado_pes", q=[4, 5, 6, 7], t=[6, 4, 8, 10], ativo=[1, 2], dano=65,
+               peso="Heavy", tipo="C", guarda="L", chao="Trip", cai=True),
 }
-LEVES = (4200, 4202, 4400)
+LEVES = (4200, 4202, 4400, 4402)
 # rota: estado -> (botão, segurando para baixo?, de quais estados cancela no contato)
 ROTAS = {4400: ("x", True, LEVES), 4401: ("y", True, ()), 4200: ("x", False, LEVES), 4201: ("y", False, ()),
-         4202: ("a", False, ()), 4203: ("b", False, ())}
+         4202: ("a", False, ()), 4203: ("b", False, ()), 4402: ("a", True, ()), 4403: ("b", True, ())}
 
 
 def disponiveis():

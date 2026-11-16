@@ -31,15 +31,19 @@ python3 ferramentas/gerar_hazaki.py                         # liga tudo no jogo 
 Os golpes que ainda não têm folha não saem na forma (o botão não faz nada): o jogo só vai para a `mugen` com as 34
 folhas prontas, o robô passando e o vídeo na #47.
 
-## Situação (15/11, 20:35Z)
+## Situação (16/11, 00:30Z)
 
-- Folhas prontas (Gemini): parado, anda, pe_maos, pe_pes, cobranca_garras, agachado_maos.
+- Folhas prontas (16 de 34): parado, anda, pe_maos, pe_pes, cobranca_garras, agachado_maos (Gemini); agachado, pulo,
+  defesa, defesa_baixa, apanha, queda, levanta, recuo, provoca, agachado_pes (ChatGPT Plus, turno de 15-16/11).
 - Ligados no jogo: Arranhão (x), Garra Cruzada (y), Joelhada Selvagem (a), Coice com Garra (b), Arranhão Baixo
-  (↓x), Garra Subindo (↓y) e a Cobrança das Garras (↘a/↘b), mais parado e andar.
-- Faltam 28 folhas: agachado_pes, ar_maos, ar_pes, direcionais_a/b, fins_maos/pes, bola_trevas, voo, rasgo, os
-  básicos (recuo, corrida, vira, pulo, agachado, defesa, defesa_baixa, apanha, queda, levanta, vitoria, provoca,
-  intro, derrota_sirene, parry_alto, parry_baixo) e o super (juizo_a, juizo_b). Vão pelo ChatGPT (fila em
-  `imagens/fila-chatgpt.md` nos arquivos do projeto) e pelo Gemini quando o contador do dia deixar.
+  (↓x), Garra Subindo (↓y), Rabo Rasteiro (↓a, baixo), Varrida de Garras (↓b, derruba) e a Cobrança das Garras
+  (↘a/↘b), mais os básicos das folhas prontas.
+- Faltam 18 folhas: ar_maos, ar_pes, direcionais_a/b, fins_maos/pes, bola_trevas, voo, rasgo, vira, corrida,
+  vitoria, intro, derrota_sirene, parry_alto, parry_baixo, juizo_a, juizo_b. Próximo turno do ChatGPT
+  (`imagens/fila-chatgpt.md`).
+- ChatGPT: o `gpt_demonio.js` (`ferramentas/chatgpt_demonio.js`; troque o commit na constante C e os pedidos) anexa o conceito e a folha
+  do parado do raw do GitHub, manda o pedido completo na 1ª e o `--seguinte` nas outras, e o `__cap` mostra a imagem
+  reduzida a 1024 px para o zoom [0,0,628,420] do print. A escala sai igual à do Gemini (altura ~2% menor).
 
 ## Lições
 
