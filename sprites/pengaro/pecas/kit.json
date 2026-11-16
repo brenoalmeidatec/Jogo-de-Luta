@@ -131,7 +131,7 @@
    "arquivo": "canela_frente.png",
    "origem": [
     561,
-    576
+    564
    ],
    "junta": [
     586,
@@ -142,7 +142,7 @@
    "sobra": "canela_frente_sobra.png",
    "origem_sobra": [
     552,
-    567
+    555
    ]
   },
   "quadril": {
@@ -233,6 +233,24 @@
    "origem_sobra": [
     523,
     345
+   ]
+  },
+  "coxa_frente_agachada": {
+   "arquivo": "coxa_frente_agachada.png",
+   "origem": [
+    527,
+    495
+   ],
+   "junta": [
+    572,
+    512
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_arcade_hd/ginga/02.png",
+   "sobra": "coxa_frente_agachada_sobra.png",
+   "origem_sobra": [
+    518,
+    486
    ]
   },
   "cabeca_foco": {

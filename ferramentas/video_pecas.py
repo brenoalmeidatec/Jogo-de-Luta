@@ -68,7 +68,7 @@ def main():
         a = [(p, None) for p in ticks_atual(nome)]
         n = ticks_novo(nome)
         guarda_a = (SPR / "quadros_arcade_hd/ginga/00.png", None)
-        guarda_n = guarda_a  # a guarda (ginga/00) é a referência da régua, não muda
+        guarda_n = (SPR / "quadros_pecas_hd/guarda.png", None)
         if nome != "parado":  # o golpe sai da guarda e volta para ela, em loop
             a, n = [guarda_a] * 20 + a + [guarda_a] * 20, [guarda_n] * 20 + n + [guarda_n] * 20
         total = max(len(a), len(n))

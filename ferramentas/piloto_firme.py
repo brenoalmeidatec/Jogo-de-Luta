@@ -29,6 +29,7 @@ AQUI = Path(__file__).resolve().parent
 sys.path.insert(0, str(AQUI))
 import boneco_ajuste as b  # noqa: E402
 import corrigir_cabeca as cc  # noqa: E402
+import vida_pecas as vida  # noqa: E402
 from video_pecas import ATUAL  # noqa: E402
 
 SPR = b.SPR
@@ -38,9 +39,11 @@ EXPRESSAO = {"soco/03": "foco", "soco/05": "esforco", "soco/06": "esforco", "soc
              "chute_alto/01": "foco", "chute_alto/02": "foco", "chute_alto/04": "esforco",
              "chute_alto/05": "esforco", "chute_alto/06": "foco"}
 # perna levantada: desenho do chute de hoje de onde sai a perna inteira
-PERNA = {"chute_alto/02": "camara", "chute_alto/04": "esticada", "chute_alto/05": "esticada",
+PERNA = {"ginga/06": "agachada", "ginga/02": "agachada", "chute_alto/01": "camara", "chute_alto/02": "camara", "chute_alto/04": "esticada", "chute_alto/05": "esticada",
          "chute_alto/06": "camara"}
 FOLGA_CORPO = 40
+CHAO = 659  # pixel mais baixo do pé no parado (3x)
+RAIZ_DOCS = AQUI.parent / "docs/boneco-pecas/corpo_firme"
 # pé separado da canela: fica sempre reto no chão (a canela gira, o pé não), preso no tornozelo
 TORNOZELO = {"canela_tras": (488, 624), "canela_frente": (580, 618)}
 
@@ -64,6 +67,22 @@ def corpo(kit, alvo):
     r = cv2.matchTemplate(cinza(reg), cinza(t), cv2.TM_SQDIFF, mask=np.repeat(m[..., None], 3, -1))
     _, _, p_min, _ = cv2.minMaxLoc(r)
     return p_min[0] + X0 - x0, p_min[1] + Y0 - y0
+
+
+# perna da frente agachada (ginga funda): desenho inteiro da perna do ginga/02, sem faixa e sem bolinhas
+b.VARIANTES["coxa_frente"]["agachada"] = ("ginga/02", [
+    (548, 540), (556, 552), (575, 556), (592, 552), (598, 530), (612, 522), (625, 548), (626, 605), (612, 620),
+    (618, 663), (552, 663), (556, 622), (562, 602), (548, 575)], (572, 512))
+
+
+def tirar_faixa(im):
+    """Tira faixa verde e bolinhas (são do quadril) de um recorte de perna."""
+    hsv = cv2.cvtColor(np.ascontiguousarray(im[..., :3]), cv2.COLOR_RGB2HSV).astype(int)
+    verde = (hsv[..., 0] >= 35) & (hsv[..., 0] <= 90) & (hsv[..., 1] > 80)
+    bolinha = (hsv[..., 0] >= 14) & (hsv[..., 0] <= 32) & (hsv[..., 1] > 150) & (hsv[..., 2] > 150)
+    im = im.copy()
+    im[(verde | bolinha) & (im[..., 3] > 0)] = 0
+    return im
 
 
 def montar():
@@ -94,6 +113,9 @@ def montar():
         pele = (im[..., 3] > 0) & (hsv[..., 0] <= 22) & (hsv[..., 1] > 70) & (hsv[..., 2] < 235)
         im[pele & (src < limite[1])] = 0
         Image.fromarray(im).save(arq)
+    pe = kit["pecas"]["coxa_frente_agachada"]
+    arq = b.PECAS / pe["arquivo"]
+    Image.fromarray(tirar_faixa(np.asarray(Image.open(arq).convert("RGBA")))).save(arq)
     limpar_contorno_dos_bracos(kit)
     base = kit["pecas"]["cabeca"]
     base_img = np.asarray(Image.open(b.PECAS / base["arquivo"]).convert("RGBA"))
@@ -178,18 +200,55 @@ def pernas_no_chao(pose, alvo, so_tras=False):
 
 
 def separar_pes(kit):
-    """Tira o pé de cada canela do kit e guarda à parte (kit['pes'])."""
+    """Tira o pé de cada canela do kit e guarda à parte (kit['pes']); separa também o cordão e as bolinhas da faixa
+    (kit['bolinhas']), que vão por cima de tudo."""
+    q = kit["pecas"]["quadril"]["img"]
+    hsv = cv2.cvtColor(np.ascontiguousarray(q[..., :3]), cv2.COLOR_RGB2HSV).astype(int)
+    laranja = (q[..., 3] > 0) & (hsv[..., 0] >= 12) & (hsv[..., 0] <= 32) & (hsv[..., 1] > 120) & (hsv[..., 2] > 110)
+    laranja = cv2.dilate(laranja.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool) & (q[..., 3] > 0)
+    n, lab, st, _ = cv2.connectedComponentsWithStats(laranja.astype(np.uint8))
+    grandes = [i for i in range(1, n) if st[i, 4] > 60]
+    bol = np.zeros_like(q)
+    m = np.isin(lab, grandes)
+    bol[m] = q[m]
+    kit["bolinhas"] = bol
+    # e tira do quadril, senão elas aparecem em dobro quando balançam: o que fica atrás delas vira calça (inpaint),
+    # só onde o quadril continua em volta; o que pendia para fora do quadril fica vazio
+    resto = (q[..., 3] > 0) & ~m
+    fechado = cv2.morphologyEx(resto.astype(np.uint8), cv2.MORPH_CLOSE, np.ones((9, 9), np.uint8)) > 0
+    vazio = q[..., 3] == 0
+    pint = cv2.inpaint(np.ascontiguousarray(q[..., :3]), (m | vazio).astype(np.uint8), 4, cv2.INPAINT_TELEA)
+    q2 = q.copy()
+    tapa = m & fechado
+    q2[tapa, :3] = pint[tapa]
+    q2[m & ~fechado] = 0
+    kit["pecas"]["quadril"]["img"] = q2
+    ys, xs = np.nonzero(m)
+    o = kit["pecas"]["quadril"]["origem"]
+    kit["no_bolinhas"] = (o[0] + float(xs.mean()), o[1] + float(ys.min()))  # o cordão pende do nó, em cima
     kit["pes"] = {}
     for slot, (tx, ty) in TORNOZELO.items():
         p = kit["pecas"][slot]
         img = p["img"].copy()
         ox, oy = p["origem"]
         corte = ty - oy
+        hsv = cv2.cvtColor(np.ascontiguousarray(img[..., :3]), cv2.COLOR_RGB2HSV).astype(int)
+        rgb = img[..., :3].astype(int)
+        calca = (rgb.min(-1) > 140) & (np.ptp(rgb, -1) < 100)
+        caneleira = (hsv[..., 0] >= 25) & (hsv[..., 0] <= 95) & (hsv[..., 1] > 40)
+        so_pe = np.zeros(img.shape[:2], bool)
+        so_pe[corte:] = True
+        barra = np.zeros(img.shape[:2], bool)
+        barra[:corte + 10] = True  # barra da calça e caneleira só existem logo abaixo do tornozelo
+        mpe = so_pe & (img[..., 3] > 0) & ~((calca | caneleira) & barra)
         pe = np.zeros_like(img)
-        pe[corte:] = img[corte:]
-        img[corte + 3:] = 0  # 3 linhas de sobra: a canela cobre o começo do pé, sem fresta
+        pe[mpe] = img[mpe]
+        fundo = np.zeros(img.shape[:2], bool)
+        fundo[corte + 3:] = True
+        img[fundo & mpe] = 0  # 3 linhas de sobra: a canela cobre o começo do pé, sem fresta
         p["img"] = img
-        kit["pes"][slot] = {"img": pe, "origem": (ox, oy), "tornozelo": (tx, ty)}
+        kit["pes"][slot] = {"img": pe, "origem": (ox, oy), "tornozelo": (tx, ty),
+                            "fundo": int(np.nonzero(pe[..., 3].any(1))[0].max())}
     return kit
 
 
@@ -197,6 +256,7 @@ def desenhar(kit, pose):
     """O desenho do boneco_ajuste, com os pés retos no chão presos no tornozelo de cada canela."""
     tela = b.desenhar(kit, pose)
     w = b.mundo(pose)
+    # cordão e bolinhas da faixa ficam por cima da perna da frente, como no desenho
     for slot in ("canela_tras", "canela_frente"):
         if slot == "canela_frente" and pose.get("coxa_frente", {}).get("var"):
             continue
@@ -207,16 +267,47 @@ def desenhar(kit, pose):
         tx, ty = t[0] + joelho[0] - jr[0], t[1] + joelho[1] - jr[1]
         x0 = int(round(pe["origem"][0] + tx - pe["tornozelo"][0]))
         y0 = int(round(pe["origem"][1] + ty - pe["tornozelo"][1]))
+        # pé perto do chão encosta no chão (o chão do parado), sem afundar nem flutuar alguns pixels
+        fundo = pe["fundo"] + y0
+        if abs(fundo - CHAO) <= 10:
+            y0 += CHAO - fundo
         b.colar(tela, pe["img"], x0, y0, so_vazio=(slot == "canela_tras"))
-    return fechar_frestas(tela)
+    p = kit["pecas"]["quadril"]
+    bo = pose.get("_bolinhas", {})
+    (qx, qy), qang = w["quadril"]
+    jq = b.OSSOS["quadril"][0]
+    no = b.girar(kit["no_bolinhas"], jq, qang)  # nó da faixa no mundo
+    no = (no[0] + qx - jq[0] + bo.get("dx", 0), no[1] + qy - jq[1] + bo.get("dy", 0))
+    piv = (kit["no_bolinhas"][0] - p["origem"][0], kit["no_bolinhas"][1] - p["origem"][1])
+    r, piv2 = b.rotsprite(kit["bolinhas"], qang + bo.get("ang", 0), piv)
+    b.colar(tela, r, int(round(no[0] - piv2[0])), int(round(no[1] - piv2[1])))
+    return sem_migalha(fechar_frestas(tela, juntas=[w[sl][0] for sl in b.OSSOS]))
 
 
-def fechar_frestas(tela, raio=5):
+def sem_migalha(tela, minimo=12):
+    """Some com pixel solto (migalha de borda de peça girada) separado da figura."""
+    al = (tela[..., 3] > 0).astype(np.uint8)
+    n, lab, st, _ = cv2.connectedComponentsWithStats(al, connectivity=8)
+    out = tela.copy()
+    for i in range(1, n):
+        if st[i, 4] < minimo:
+            out[lab == i] = 0
+    return out
+
+
+PERTO_DA_JUNTA = 22
+
+
+def fechar_frestas(tela, raio=5, juntas=()):
     """Fresta entre duas peças (o fundo aparecendo onde o braço ou o joelho girou): fecha com a cor de volta
-    (inpaint), só em buraco estreito, cercado de corpo; a silhueta de fora não muda."""
+    (inpaint), só em buraco estreito e só perto de uma junta. O vão entre os dedos e entre o braço e o corpo, que é
+    do desenho, fica como está."""
     al = (tela[..., 3] > 0).astype(np.uint8)
     k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * raio + 1, 2 * raio + 1))
-    fresta = (cv2.morphologyEx(al, cv2.MORPH_CLOSE, k) > 0) & (al == 0)
+    perto = np.zeros_like(al)
+    for x, y in juntas:
+        cv2.circle(perto, (int(round(x)), int(round(y))), PERTO_DA_JUNTA, 1, -1)
+    fresta = (cv2.morphologyEx(al, cv2.MORPH_CLOSE, k) > 0) & (al == 0) & (perto > 0)
     if not fresta.any():
         return tela
     out = tela.copy()
@@ -231,7 +322,9 @@ def limpar_contorno_dos_bracos(kit):
     Quando o braço gira, ele aparece como uma mancha preta: troca pela cor de volta (inpaint), só por dentro da peça."""
     ref = b.abrir(b.REF)
     bracos = (b.mascara(b.BRACO_TRAS) | b.mascara(b.BRACO_FRENTE)) & (ref[..., 3] > 0)
-    perto = cv2.dilate(bracos.astype(np.uint8), np.ones((9, 9), np.uint8)) > 0
+    perto = cv2.dilate(bracos.astype(np.uint8), np.ones((17, 17), np.uint8)) > 0
+    # por dentro da figura do parado (o contorno de fora fica); a beira cortada da peça, onde o braço estava, não conta
+    dentro_ref = cv2.erode((ref[..., 3] > 0).astype(np.uint8), np.ones((7, 7), np.uint8)) > 0
     for nome in ("tronco", "quadril"):
         pe = kit["pecas"][nome]
         arq = b.PECAS / pe["arquivo"]
@@ -239,15 +332,60 @@ def limpar_contorno_dos_bracos(kit):
         ox, oy = pe["origem"]
         h, w = im.shape[:2]
         area = perto[oy:oy + h, ox:ox + w]
-        al = (im[..., 3] > 0).astype(np.uint8)
-        dentro = cv2.erode(al, np.ones((5, 5), np.uint8)) > 0
-        escuro = (im[..., :3].astype(int).sum(-1) < 150) & dentro & area
+        # dentro da figura do parado ou da parte que foi tapada por baixo do braço (sem a beira de 1 px da peça)
+        dentro = (dentro_ref[oy:oy + h, ox:ox + w] | (cv2.erode((im[..., 3] > 0).astype(np.uint8),
+                                                               np.ones((3, 3), np.uint8)) > 0)) & (im[..., 3] > 0)
+        dentro &= cv2.erode((im[..., 3] > 0).astype(np.uint8), np.ones((3, 3), np.uint8)) > 0
+        # na calça (branca/lilás) qualquer cinza é resto do contorno da mão e da garrafa
+        limite = 330 if nome == "quadril" else 190
+        escuro = (im[..., :3].astype(int).sum(-1) < limite) & dentro & area
         escuro = cv2.dilate(escuro.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool) & dentro
         if escuro.any():
             rgb = cv2.inpaint(np.ascontiguousarray(im[..., :3]), escuro.astype(np.uint8), 4, cv2.INPAINT_TELEA)
             im[escuro, :3] = rgb[escuro]
             Image.fromarray(im).save(arq)
             print(f"{nome}: {int(escuro.sum())} px de contorno de braço tirados")
+
+
+# ------------------------------------------------------------------ robô de defeitos (nenhum erro de peça)
+def conferir(tela, original, juntas):
+    """Lista de defeitos do quadro montado. Vazio = passou.
+      fresta    buraco perto de junta que o fechamento não deu conta (> 40 px antes de fechar = peça desgrudou)
+      mancha    mancha escura grossa no corpo (abaixo do queixo) a mais que no parado
+      solta     pedaço de figura separado do resto
+      chão      pé fora do chão (no quadro de hoje ele está no chão)"""
+    erros = []
+    al = (tela[..., 3] > 0).astype(np.uint8)
+    n, _, st, _ = cv2.connectedComponentsWithStats(al, connectivity=8)
+    soltos = sorted(int(x) for x in st[1:, 4] if x >= 4)[:-1]
+    if soltos:
+        erros.append(f"solta {soltos}")
+    s = tela[..., :3].astype(int).sum(-1)
+    grosso = cv2.erode(((s < 110) & (al > 0)).astype(np.uint8), np.ones((4, 4), np.uint8))
+    ys = np.nonzero(al.any(1))[0]
+    corpo = grosso[ys.min() + 80:].sum()
+    og = cv2.erode(((original[..., :3].astype(int).sum(-1) < 110) & (original[..., 3] > 0)).astype(np.uint8),
+                   np.ones((4, 4), np.uint8))
+    yo0 = np.nonzero((original[..., 3] > 0).any(1))[0].min()
+    base = max(MANCHA_REF, int(og[yo0 + 80:].sum()))  # sombra que o desenho de hoje também tem não é defeito
+    if corpo > base + 40:
+        erros.append(f"mancha {int(corpo)} px (esperado até {base + 40})")
+    yo = np.nonzero((original[..., 3] > 0).any(1))[0].max()
+    if yo >= 655 and not (655 <= ys.max() <= 663):
+        erros.append(f"chão: pé em y={ys.max()} (hoje {yo})")
+    return erros
+
+
+def mancha_ref():
+    r = b.abrir(b.REF)
+    al = (r[..., 3] > 0).astype(np.uint8)
+    s = r[..., :3].astype(int).sum(-1)
+    grosso = cv2.erode(((s < 110) & (al > 0)).astype(np.uint8), np.ones((4, 4), np.uint8))
+    ys = np.nonzero(al.any(1))[0]
+    return int(grosso[ys.min() + 80:].sum())
+
+
+MANCHA_REF = None
 
 
 def pose_de(kit, q):
@@ -265,7 +403,9 @@ def pose_de(kit, q):
         b.BUSCA["braco_frente"] = (range(-45, 46, 3), 4, [None, "punho", "esticado"])
     pose = b.encaixar(kit, alvo, pose, ordem=ordem)
     if q in PERNA:  # a perna levantada só gira um pouco em volta do quadril; a de trás fica plantada
-        b.BUSCA["coxa_frente"] = (range(-30, 31, 2), 2, [PERNA[q]])
+        giro = range(-4, 5, 1) if PERNA[q] == "agachada" else range(-30, 31, 2)  # agachada: pé fica no chão
+        b.BUSCA["coxa_frente"] = (giro, 2, [PERNA[q]])
+        b.ANGULOS_VARIANTE = giro
         pose = b.encaixar(kit, alvo, pose, ordem=["coxa_frente"])
         pose = pernas_no_chao(pose, alvo, so_tras=True)
     elif q.startswith("chute_alto") and len(pes(alvo)) < 2:  # pé da frente subindo, sem desenho de perna
@@ -287,25 +427,44 @@ def main():
     b.BUSCA["canela_tras"] = (range(-20, 21, 2), 2, [None])
     b.BUSCA["canela_frente"] = (range(-24, 25, 2), 2, [None])
     poses = {}
+    global MANCHA_REF
+    MANCHA_REF = mancha_ref()
+    relatorio = ["| quadro | desenho de hoje | robô de defeitos |", "|---|---|---|"]
     for nome, elems in ATUAL.items():
         for pasta in ("quadros_pecas_hd", "quadros_pecas"):
             shutil.rmtree(SPR / pasta / nome, ignore_errors=True)
             (SPR / pasta / nome).mkdir(parents=True)
         unicos = list(dict.fromkeys(q for q, _ in elems))
-        for i, q in enumerate(unicos):
-            pose = pose_de(kit, q)
-            poses[q] = pose
+        for q in unicos:
+            poses[q] = pose_de(kit, q)
+        bate, cx = CAIXA.get(nome, (None, None))
+        laco = nome == "parado"
+        quadros = vida.animar(poses, elems, bate=bate, laco=laco, guarda={})
+        if laco:
+            quadros = vida.respirar(quadros)
+        quadros = vida.atrasar(quadros, laco=laco)
+        originais = {}
+        for i, (pose, t, caixa_on, q) in enumerate(quadros):
             out = desenhar(kit, pose)
+            if q not in originais:
+                originais[q] = b.abrir(q)
+            erros = conferir(out, originais[q], None)
+            relatorio.append(f"| {nome}/{i:02d} | {q} | {'PASS' if not erros else 'FAIL ' + '; '.join(erros)} |")
             Image.fromarray(out).save(SPR / "quadros_pecas_hd" / nome / f"{i:02d}.png")
             Image.fromarray(np.ascontiguousarray(out[1::3, 1::3])).save(SPR / "quadros_pecas" / nome / f"{i:02d}.png")
-            print(nome, i, q, {s: (v.get("var"), v["ang"], v.get("custo")) for s, v in pose.items()})
-        bate, cx = CAIXA.get(nome, (None, None))
         tempos = {"acao": ACAO[nome], "caixa": cx, "origem": unicos,
-                  "elementos": [{"desenho": unicos.index(q), "ticks": t, "caixa": k == bate}
-                                for k, (q, t) in enumerate(elems)]}
+                  "elementos": [{"desenho": i, "ticks": t, "caixa": c, "de": q}
+                                for i, (_, t, c, q) in enumerate(quadros)]}
+        assert sum(e["ticks"] for e in tempos["elementos"]) == sum(t for _, t in elems)
         for pasta in ("quadros_pecas_hd", "quadros_pecas"):
             (SPR / pasta / nome / "tempos.json").write_text(json.dumps(tempos, indent=1, ensure_ascii=False),
                                                             encoding="utf-8")
+        print(nome, len(unicos), "poses-chave ->", len(quadros), "desenhos")
+    Image.fromarray(desenhar(kit, {})).save(SPR / "quadros_pecas_hd" / "guarda.png")
+    falhas = sum("FAIL" in l for l in relatorio)
+    texto = "\n".join(relatorio) + f"\n\n{falhas} quadro(s) com defeito.\n"
+    print(texto)
+    (RAIZ_DOCS / "robo_defeitos.md").write_text(texto, encoding="utf-8")
     (SPR / "quadros_pecas_hd" / "poses.json").write_text(json.dumps(poses, indent=1), encoding="utf-8")
 
 

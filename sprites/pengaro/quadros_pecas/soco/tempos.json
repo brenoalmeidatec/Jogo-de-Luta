@@ -15,23 +15,45 @@
  "elementos": [
   {
    "desenho": 0,
-   "ticks": 4,
-   "caixa": false
+   "ticks": 2,
+   "caixa": false,
+   "de": "soco/03"
   },
   {
    "desenho": 1,
-   "ticks": 6,
-   "caixa": true
+   "ticks": 2,
+   "caixa": false,
+   "de": "soco/03"
   },
   {
    "desenho": 2,
-   "ticks": 3,
-   "caixa": false
+   "ticks": 6,
+   "caixa": true,
+   "de": "soco/05"
   },
   {
    "desenho": 3,
-   "ticks": 6,
-   "caixa": false
+   "ticks": 3,
+   "caixa": false,
+   "de": "soco/06"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "soco/07"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "soco/07"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "soco/07"
   }
  ]
 }

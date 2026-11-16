@@ -2678,3 +2678,26 @@ de decisão ele escolheu **corpo firme, só os membros mexem**.
 
 **Defeitos que ainda aparecem:** no agachado mais fundo da ginga (quadros 3 e 4), a calça da frente abre no joelho.
 Sobra um cantinho escuro perto da mão da garrafa em alguns quadros. O 1º quadro do chute ainda está com o pé no chão.
+
+### 2026-11-16 — Pengaró com vida (corpo firme + intermediários) e robô de defeitos
+
+O Alisson aprovou o corpo firme e pediu fluidez, vida e qualidade, sem nenhum erro de animação ou de peça.
+
+**Vida** (`ferramentas/vida_pecas.py`):
+- Intermediários a cada 2 ticks entre as poses-chave, com a mesma soma de ticks e o mesmo elemento de acerto. O
+  impacto fica segurado, a ida acelera e a volta desacelera.
+- Respiração: no laço do parado o peito sobe 1 px do jogo.
+- Atraso: a cabeça e o cordão com as bolinhas ficam atrás do movimento do quadril, e as bolinhas balançam em volta
+  do nó.
+- Resultado: parado foi de 5 para 16 desenhos, soco de 4 para 7, chute alto de 6 para 18.
+
+**Defeitos fechados:**
+- Ginga funda: a perna da frente agora é o desenho inteiro do ginga/02, sem faixa.
+- Pé: virou peça separada (só pele e contorno), fica reto e encosta no chão.
+- Bolinhas: saíram do quadril e vão por cima de todos os quadros.
+- Mancha preta embaixo dos braços: vinha do `tapar`, que usava o fundo transparente como cor. Corrigido.
+- Frestas: o fechamento agora só age perto das juntas, e as migalhas soltas foram apagadas.
+- Começo do chute: a perna sobe usando o desenho de câmara.
+
+**Robô de defeitos** (`conferir` em `piloto_firme.py`): procura fresta, mancha escura a mais que o desenho de hoje,
+pedaço solto e pé fora do chão. Deu 0 de 41 desenhos (`docs/boneco-pecas/vida/robo_defeitos.md`).

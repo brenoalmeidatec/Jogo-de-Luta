@@ -137,7 +137,9 @@ def tapar(img, regiao, dono):
     if not alvo.any():
         return img
     rgb = cv2.cvtColor(img[..., :3], cv2.COLOR_RGB2BGR)
-    pint = cv2.inpaint(rgb, np.uint8(alvo) * 255, 4, cv2.INPAINT_TELEA)
+    # o fundo transparente (preto) não serve de cor: entra na máscara junto, senão o preto escorre para dentro
+    vazio = (img[..., 3] == 0) & (cv2.dilate(np.uint8(alvo), np.ones((25, 25), np.uint8)) > 0)
+    pint = cv2.inpaint(rgb, np.uint8(alvo | vazio) * 255, 4, cv2.INPAINT_TELEA)
     out = img.copy()
     out[alvo, :3] = cv2.cvtColor(pint, cv2.COLOR_BGR2RGB)[alvo]
     out[alvo, 3] = 255
@@ -180,7 +182,9 @@ def montar_kit():
         "coxa_tras": pt & (yy < JOELHO_TRAS[1]),
         "canela_tras": pt & (yy >= JOELHO_TRAS[1]),
         "coxa_frente": pf & (yy < JOELHO_FRENTE[1]),
-        "canela_frente": pf & (yy >= JOELHO_FRENTE[1]),
+        # a canela da frente leva 12 linhas da coxa acima do joelho: fica por baixo da coxa e tapa a fresta quando
+        # o joelho dobra
+        "canela_frente": pf & (yy >= JOELHO_FRENTE[1] - 12),
     }
     partes["quadril"] = baixo & ~m_bt & ~pt & ~pf & alfa
     imgs = {k: np.where(m[..., None], ref, 0).astype(np.uint8) for k, m in partes.items()}
