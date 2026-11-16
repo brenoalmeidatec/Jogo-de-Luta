@@ -88,7 +88,8 @@ if LUTADOR == "gbzin":
     # Gbzin: mesmo caminho do CK (fundo_ck, sempre por célula). Na ginga nova (boneco grande, receita seção 3) ele tem
     # ~470 px numa folha de 2172, por isso a escala 0.236 dá os mesmos ~111 px do jogo da ginga antiga (386 x 0.288).
     POR_CELULA = POR_CELULA | set(FOLHAS_GBZIN)
-    AJUSTE = {}
+    # folhas em que o ChatGPT desenhou a figura menor: em pé tem de dar ~110 como a ginga (converter_gbzin.py --medir)
+    AJUSTE = {"rolo_feno": 1.13, "cajado_chao": 1.05, "compasso": 1.07, "rolamento": 1.03, "agarrao": 1.03}
 
 
 # Pengaró: toda folha (normal e endiabrada) alinhada pelo centro do tronco no eixo do lutador. Alinhar pelo pé de trás
