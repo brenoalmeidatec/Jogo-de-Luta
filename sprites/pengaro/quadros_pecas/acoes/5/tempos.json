@@ -1,0 +1,23 @@
+{
+ "acao": 5,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "ginga/03|None"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "ginga/03|None"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "ginga/03|None"
+  }
+ ]
+}

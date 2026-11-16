@@ -1,0 +1,10484 @@
+{
+ "5": [
+  {
+   "sprite": [
+    94,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "ginga/03.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "q_ginga_fluida0"
+  }
+ ],
+ "6": [
+  {
+   "sprite": [
+    369,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "agachado/04.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_agachado4"
+  },
+  {
+   "sprite": [
+    370,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "agachado/05.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_agachado5"
+  },
+  {
+   "sprite": [
+    371,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "agachado/06.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_agachado6"
+  }
+ ],
+ "100": [
+  {
+   "sprite": [
+    605,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "corre/00.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_corre0"
+  },
+  {
+   "sprite": [
+    606,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "corre/01.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_corre1"
+  },
+  {
+   "sprite": [
+    607,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "corre/02.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_corre2"
+  },
+  {
+   "sprite": [
+    608,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "corre/03.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_corre3"
+  },
+  {
+   "sprite": [
+    609,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "corre/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_corre4"
+  },
+  {
+   "sprite": [
+    610,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "corre/05.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_corre5"
+  },
+  {
+   "sprite": [
+    611,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "corre/06.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_corre6"
+  },
+  {
+   "sprite": [
+    612,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "corre/07.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_corre7"
+  }
+ ],
+ "105": [
+  {
+   "sprite": [
+    615,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "recuo/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_recuo2"
+  },
+  {
+   "sprite": [
+    616,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "recuo/03.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_recuo3"
+  }
+ ],
+ "10": [
+  {
+   "sprite": [
+    367,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "agachado/02.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_agachado2"
+  }
+ ],
+ "11": [
+  {
+   "sprite": [
+    369,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "agachado/04.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_agachado4"
+  },
+  {
+   "sprite": [
+    370,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "agachado/05.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_agachado5"
+  }
+ ],
+ "12": [
+  {
+   "sprite": [
+    367,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "agachado/02.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_agachado2"
+  }
+ ],
+ "40": [
+  {
+   "sprite": [
+    373,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/00.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_pulo0"
+  }
+ ],
+ "41": [
+  {
+   "sprite": [
+    374,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/01.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_pulo1"
+  },
+  {
+   "sprite": [
+    375,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/02.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_pulo2"
+  },
+  {
+   "sprite": [
+    376,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/03.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_pulo3"
+  },
+  {
+   "sprite": [
+    377,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/04.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_pulo4"
+  }
+ ],
+ "42": [
+  {
+   "sprite": [
+    374,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/01.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_pulo1"
+  },
+  {
+   "sprite": [
+    375,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/02.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_pulo2"
+  },
+  {
+   "sprite": [
+    376,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/03.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_pulo3"
+  },
+  {
+   "sprite": [
+    377,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/04.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_pulo4"
+  }
+ ],
+ "43": [
+  {
+   "sprite": [
+    374,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/01.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_pulo1"
+  },
+  {
+   "sprite": [
+    375,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/02.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_pulo2"
+  },
+  {
+   "sprite": [
+    376,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/03.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_pulo3"
+  },
+  {
+   "sprite": [
+    377,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/04.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_pulo4"
+  }
+ ],
+ "44": [
+  {
+   "sprite": [
+    377,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/04.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_pulo4"
+  },
+  {
+   "sprite": [
+    378,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/05.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_pulo5"
+  },
+  {
+   "sprite": [
+    379,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/06.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_pulo6"
+  }
+ ],
+ "45": [
+  {
+   "sprite": [
+    377,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/04.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_pulo4"
+  },
+  {
+   "sprite": [
+    378,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/05.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_pulo5"
+  },
+  {
+   "sprite": [
+    379,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/06.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_pulo6"
+  }
+ ],
+ "46": [
+  {
+   "sprite": [
+    377,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/04.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_pulo4"
+  },
+  {
+   "sprite": [
+    378,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/05.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_pulo5"
+  },
+  {
+   "sprite": [
+    379,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/06.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_pulo6"
+  }
+ ],
+ "47": [
+  {
+   "sprite": [
+    379,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/06.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_pulo6"
+  },
+  {
+   "sprite": [
+    380,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "pulo/07.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_pulo7"
+  }
+ ],
+ "120": [
+  {
+   "sprite": [
+    382,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "defesa/01.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_defesa1"
+  },
+  {
+   "sprite": [
+    383,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "defesa/02.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_defesa2"
+  },
+  {
+   "sprite": [
+    384,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "defesa/03.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_defesa3"
+  }
+ ],
+ "130": [
+  {
+   "sprite": [
+    384,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "defesa/03.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_defesa3"
+  },
+  {
+   "sprite": [
+    385,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "defesa/04.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_defesa4"
+  }
+ ],
+ "140": [
+  {
+   "sprite": [
+    384,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "defesa/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_defesa3"
+  },
+  {
+   "sprite": [
+    383,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "defesa/02.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_defesa2"
+  },
+  {
+   "sprite": [
+    382,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "defesa/01.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_defesa1"
+  }
+ ],
+ "150": [
+  {
+   "sprite": [
+    386,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "defesa/05.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_defesa5"
+  },
+  {
+   "sprite": [
+    387,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "defesa/06.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_defesa6"
+  },
+  {
+   "sprite": [
+    388,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "defesa/07.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_defesa7"
+  }
+ ],
+ "170": [
+  {
+   "sprite": [
+    509,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "derrota/00.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_derrota0"
+  },
+  {
+   "sprite": [
+    510,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "derrota/01.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_derrota1"
+  },
+  {
+   "sprite": [
+    511,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "derrota/02.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_derrota2"
+  },
+  {
+   "sprite": [
+    512,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "derrota/03.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_derrota3"
+  },
+  {
+   "sprite": [
+    513,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "derrota/04.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_derrota4"
+  },
+  {
+   "sprite": [
+    514,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "derrota/05.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_derrota5"
+  },
+  {
+   "sprite": [
+    515,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "derrota/06.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_derrota6"
+  },
+  {
+   "sprite": [
+    516,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "derrota/07.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_derrota7"
+  }
+ ],
+ "181": [
+  {
+   "sprite": [
+    501,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "vitoria/00.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_vitoria0"
+  },
+  {
+   "sprite": [
+    502,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "vitoria/01.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_vitoria1"
+  },
+  {
+   "sprite": [
+    503,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "vitoria/02.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_vitoria2"
+  },
+  {
+   "sprite": [
+    504,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "vitoria/03.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_vitoria3"
+  },
+  {
+   "sprite": [
+    505,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "vitoria/04.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_vitoria4"
+  },
+  {
+   "sprite": [
+    506,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "vitoria/05.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_vitoria5"
+  },
+  {
+   "sprite": [
+    507,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "vitoria/06.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_vitoria6"
+  },
+  {
+   "sprite": [
+    508,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "vitoria/07.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_vitoria7"
+  }
+ ],
+ "195": [
+  {
+   "sprite": [
+    517,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "provoca/00.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_provoca0"
+  },
+  {
+   "sprite": [
+    518,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "provoca/01.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_provoca1"
+  },
+  {
+   "sprite": [
+    519,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "provoca/02.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_provoca2"
+  },
+  {
+   "sprite": [
+    520,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "provoca/03.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_provoca3"
+  },
+  {
+   "sprite": [
+    521,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "provoca/04.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_provoca4"
+  },
+  {
+   "sprite": [
+    522,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "provoca/05.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_provoca5"
+  },
+  {
+   "sprite": [
+    523,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "provoca/06.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_provoca6"
+  },
+  {
+   "sprite": [
+    524,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "provoca/07.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_provoca7"
+  }
+ ],
+ "5000": [
+  {
+   "sprite": [
+    391,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_apanha2"
+  },
+  {
+   "sprite": [
+    392,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/03.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_apanha3"
+  },
+  {
+   "sprite": [
+    390,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/01.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_apanha1"
+  }
+ ],
+ "5005": [
+  {
+   "sprite": [
+    395,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/06.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_apanha6"
+  },
+  {
+   "sprite": [
+    396,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/07.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_apanha7"
+  }
+ ],
+ "5001": [
+  {
+   "sprite": [
+    392,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/03.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_apanha3"
+  },
+  {
+   "sprite": [
+    393,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/04.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_apanha4"
+  },
+  {
+   "sprite": [
+    394,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/05.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_apanha5"
+  },
+  {
+   "sprite": [
+    390,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/01.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_apanha1"
+  }
+ ],
+ "5006": [
+  {
+   "sprite": [
+    395,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/06.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_apanha6"
+  },
+  {
+   "sprite": [
+    396,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/07.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_apanha7"
+  }
+ ],
+ "5002": [
+  {
+   "sprite": [
+    393,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/04.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_apanha4"
+  },
+  {
+   "sprite": [
+    394,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/05.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_apanha5"
+  },
+  {
+   "sprite": [
+    392,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/03.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_apanha3"
+  },
+  {
+   "sprite": [
+    390,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/01.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_apanha1"
+  }
+ ],
+ "5007": [
+  {
+   "sprite": [
+    395,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/06.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_apanha6"
+  },
+  {
+   "sprite": [
+    396,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/07.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_apanha7"
+  }
+ ],
+ "5010": [
+  {
+   "sprite": [
+    391,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_apanha2"
+  },
+  {
+   "sprite": [
+    392,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/03.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_apanha3"
+  },
+  {
+   "sprite": [
+    390,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/01.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_apanha1"
+  }
+ ],
+ "5015": [
+  {
+   "sprite": [
+    395,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/06.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_apanha6"
+  },
+  {
+   "sprite": [
+    396,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/07.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_apanha7"
+  }
+ ],
+ "5011": [
+  {
+   "sprite": [
+    392,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/03.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_apanha3"
+  },
+  {
+   "sprite": [
+    393,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/04.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_apanha4"
+  },
+  {
+   "sprite": [
+    394,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/05.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_apanha5"
+  },
+  {
+   "sprite": [
+    390,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/01.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_apanha1"
+  }
+ ],
+ "5016": [
+  {
+   "sprite": [
+    395,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/06.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_apanha6"
+  },
+  {
+   "sprite": [
+    396,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/07.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_apanha7"
+  }
+ ],
+ "5012": [
+  {
+   "sprite": [
+    393,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/04.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_apanha4"
+  },
+  {
+   "sprite": [
+    394,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/05.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_apanha5"
+  },
+  {
+   "sprite": [
+    392,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/03.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_apanha3"
+  },
+  {
+   "sprite": [
+    390,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/01.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_apanha1"
+  }
+ ],
+ "5017": [
+  {
+   "sprite": [
+    395,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/06.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_apanha6"
+  },
+  {
+   "sprite": [
+    396,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/07.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_apanha7"
+  }
+ ],
+ "5050": [
+  {
+   "sprite": [
+    398,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/01.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_queda1"
+  },
+  {
+   "sprite": [
+    399,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/02.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_queda2"
+  },
+  {
+   "sprite": [
+    400,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/03.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_queda3"
+  }
+ ],
+ "5100": [
+  {
+   "sprite": [
+    401,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/04.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_queda4"
+  },
+  {
+   "sprite": [
+    402,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/05.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_queda5"
+  },
+  {
+   "sprite": [
+    403,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/06.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_queda6"
+  }
+ ],
+ "5101": [
+  {
+   "sprite": [
+    402,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/05.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_queda5"
+  },
+  {
+   "sprite": [
+    403,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/06.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_queda6"
+  }
+ ],
+ "5110": [
+  {
+   "sprite": [
+    404,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/07.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_queda7"
+  }
+ ],
+ "5160": [
+  {
+   "sprite": [
+    403,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/06.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_queda6"
+  },
+  {
+   "sprite": [
+    404,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/07.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_queda7"
+  }
+ ],
+ "5170": [
+  {
+   "sprite": [
+    403,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/06.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_queda6"
+  },
+  {
+   "sprite": [
+    404,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/07.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_queda7"
+  }
+ ],
+ "5120": [
+  {
+   "sprite": [
+    406,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "levanta/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_levanta1"
+  },
+  {
+   "sprite": [
+    407,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "levanta/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_levanta2"
+  },
+  {
+   "sprite": [
+    408,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "levanta/03.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_levanta3"
+  },
+  {
+   "sprite": [
+    409,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "levanta/04.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_levanta4"
+  },
+  {
+   "sprite": [
+    410,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "levanta/05.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_levanta5"
+  },
+  {
+   "sprite": [
+    411,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "levanta/06.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_levanta6"
+  },
+  {
+   "sprite": [
+    412,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "levanta/07.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_levanta7"
+  }
+ ],
+ "700": [
+  {
+   "sprite": [
+    413,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/00.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_rolamento0"
+  },
+  {
+   "sprite": [
+    414,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/01.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_rolamento1"
+  },
+  {
+   "sprite": [
+    415,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/02.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_rolamento2"
+  },
+  {
+   "sprite": [
+    416,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/03.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_rolamento3"
+  },
+  {
+   "sprite": [
+    417,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/04.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_rolamento4"
+  },
+  {
+   "sprite": [
+    418,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/05.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_rolamento5"
+  },
+  {
+   "sprite": [
+    419,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/06.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_rolamento6"
+  },
+  {
+   "sprite": [
+    420,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/00.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_rolamento7"
+  }
+ ],
+ "5200": [
+  {
+   "sprite": [
+    413,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/00.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento0"
+  },
+  {
+   "sprite": [
+    414,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/01.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento1"
+  },
+  {
+   "sprite": [
+    415,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento2"
+  },
+  {
+   "sprite": [
+    416,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/03.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento3"
+  },
+  {
+   "sprite": [
+    417,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/04.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento4"
+  },
+  {
+   "sprite": [
+    418,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/05.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento5"
+  },
+  {
+   "sprite": [
+    419,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/06.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento6"
+  },
+  {
+   "sprite": [
+    420,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/00.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento7"
+  }
+ ],
+ "5210": [
+  {
+   "sprite": [
+    413,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/00.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento0"
+  },
+  {
+   "sprite": [
+    414,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/01.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento1"
+  },
+  {
+   "sprite": [
+    415,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento2"
+  },
+  {
+   "sprite": [
+    416,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/03.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento3"
+  },
+  {
+   "sprite": [
+    417,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/04.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento4"
+  },
+  {
+   "sprite": [
+    418,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/05.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento5"
+  },
+  {
+   "sprite": [
+    419,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/06.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento6"
+  },
+  {
+   "sprite": [
+    420,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/00.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento7"
+  }
+ ],
+ "705": [
+  {
+   "sprite": [
+    420,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/00.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_rolamento7"
+  },
+  {
+   "sprite": [
+    419,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/06.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_rolamento6"
+  },
+  {
+   "sprite": [
+    418,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/05.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_rolamento5"
+  },
+  {
+   "sprite": [
+    417,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/04.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_rolamento4"
+  },
+  {
+   "sprite": [
+    416,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/03.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_rolamento3"
+  },
+  {
+   "sprite": [
+    415,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/02.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_rolamento2"
+  },
+  {
+   "sprite": [
+    414,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/01.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_rolamento1"
+  },
+  {
+   "sprite": [
+    413,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/00.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_rolamento0"
+  }
+ ],
+ "230": [
+  {
+   "sprite": [
+    423,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_chute_baixo2"
+  },
+  {
+   "sprite": [
+    423,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/02.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_chute_baixo2"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 2,
+   "bate": true,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 3,
+   "bate": true,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    426,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/05.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_chute_baixo5"
+  },
+  {
+   "sprite": [
+    426,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/05.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_chute_baixo5"
+  },
+  {
+   "sprite": [
+    428,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/07.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_chute_baixo7"
+  }
+ ],
+ "240": [
+  {
+   "sprite": [
+    430,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/01.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_chute_alto1"
+  },
+  {
+   "sprite": [
+    431,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_chute_alto2"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 2,
+   "bate": true,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    434,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/05.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_chute_alto5"
+  },
+  {
+   "sprite": [
+    435,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/06.png",
+   "ticks": 12,
+   "bate": false,
+   "nome": "f_chute_alto6"
+  },
+  {
+   "sprite": [
+    436,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/07.png",
+   "ticks": 12,
+   "bate": false,
+   "nome": "f_chute_alto7"
+  }
+ ],
+ "210": [
+  {
+   "sprite": [
+    567,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_martelo2"
+  },
+  {
+   "sprite": [
+    568,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/03.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_martelo3"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 2,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    570,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/05.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_martelo5"
+  },
+  {
+   "sprite": [
+    571,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/06.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_martelo6"
+  },
+  {
+   "sprite": [
+    572,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/07.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_martelo7"
+  }
+ ],
+ "215": [
+  {
+   "sprite": [
+    567,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/02.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_martelo2"
+  },
+  {
+   "sprite": [
+    568,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/03.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_martelo3"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 2,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 3,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    570,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/05.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_martelo5"
+  },
+  {
+   "sprite": [
+    571,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/06.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_martelo6"
+  },
+  {
+   "sprite": [
+    572,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/07.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_martelo7"
+  }
+ ],
+ "245": [
+  {
+   "sprite": [
+    422,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/01.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_chute_baixo1"
+  },
+  {
+   "sprite": [
+    423,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_chute_baixo2"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 2,
+   "bate": true,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 3,
+   "bate": true,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    426,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/05.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_chute_baixo5"
+  },
+  {
+   "sprite": [
+    427,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/06.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_chute_baixo6"
+  },
+  {
+   "sprite": [
+    428,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/07.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_chute_baixo7"
+  }
+ ],
+ "260": [
+  {
+   "sprite": [
+    558,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/01.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_afastar1"
+  },
+  {
+   "sprite": [
+    559,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/02.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_afastar2"
+  },
+  {
+   "sprite": [
+    561,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/04.png",
+   "ticks": 2,
+   "bate": true,
+   "nome": "f_afastar4"
+  },
+  {
+   "sprite": [
+    561,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_afastar4"
+  },
+  {
+   "sprite": [
+    561,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_afastar4"
+  },
+  {
+   "sprite": [
+    562,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/05.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_afastar5"
+  },
+  {
+   "sprite": [
+    563,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/06.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_afastar6"
+  },
+  {
+   "sprite": [
+    564,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_afastar7"
+  }
+ ],
+ "1100": [
+  {
+   "sprite": [
+    534,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/01.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_compasso1"
+  },
+  {
+   "sprite": [
+    535,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/02.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_compasso2"
+  },
+  {
+   "sprite": [
+    536,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/03.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_compasso3"
+  },
+  {
+   "sprite": [
+    537,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_compasso4"
+  },
+  {
+   "sprite": [
+    538,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/05.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_compasso5"
+  },
+  {
+   "sprite": [
+    538,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/05.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_compasso5"
+  },
+  {
+   "sprite": [
+    539,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/06.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_compasso6"
+  },
+  {
+   "sprite": [
+    540,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_compasso7"
+  }
+ ],
+ "1200": [
+  {
+   "sprite": [
+    543,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_armada2"
+  },
+  {
+   "sprite": [
+    544,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/03.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_armada3"
+  },
+  {
+   "sprite": [
+    545,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/04.png",
+   "ticks": 9,
+   "bate": true,
+   "nome": "f_armada4"
+  },
+  {
+   "sprite": [
+    545,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_armada4"
+  },
+  {
+   "sprite": [
+    546,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/05.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_armada5"
+  },
+  {
+   "sprite": [
+    547,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/06.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_armada6"
+  }
+ ],
+ "1300": [
+  {
+   "sprite": [
+    551,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/02.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_caneta2"
+  },
+  {
+   "sprite": [
+    552,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_caneta3"
+  },
+  {
+   "sprite": [
+    553,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/04.png",
+   "ticks": 12,
+   "bate": true,
+   "nome": "f_caneta4"
+  },
+  {
+   "sprite": [
+    553,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_caneta4"
+  },
+  {
+   "sprite": [
+    554,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/05.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_caneta5"
+  },
+  {
+   "sprite": [
+    555,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/06.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_caneta6"
+  },
+  {
+   "sprite": [
+    556,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_caneta7"
+  }
+ ],
+ "1101": [
+  {
+   "sprite": [
+    534,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/01.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_compasso1"
+  },
+  {
+   "sprite": [
+    535,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/02.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_compasso2"
+  },
+  {
+   "sprite": [
+    536,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/03.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_compasso3"
+  },
+  {
+   "sprite": [
+    537,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_compasso4"
+  },
+  {
+   "sprite": [
+    538,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/05.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_compasso5"
+  },
+  {
+   "sprite": [
+    538,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/05.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_compasso5"
+  },
+  {
+   "sprite": [
+    539,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/06.png",
+   "ticks": 14,
+   "bate": false,
+   "nome": "f_compasso6"
+  },
+  {
+   "sprite": [
+    540,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/07.png",
+   "ticks": 14,
+   "bate": false,
+   "nome": "f_compasso7"
+  }
+ ],
+ "1201": [
+  {
+   "sprite": [
+    543,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_armada2"
+  },
+  {
+   "sprite": [
+    544,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/03.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_armada3"
+  },
+  {
+   "sprite": [
+    545,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/04.png",
+   "ticks": 9,
+   "bate": true,
+   "nome": "f_armada4"
+  },
+  {
+   "sprite": [
+    545,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_armada4"
+  },
+  {
+   "sprite": [
+    546,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/05.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_armada5"
+  },
+  {
+   "sprite": [
+    547,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/06.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_armada6"
+  }
+ ],
+ "1301": [
+  {
+   "sprite": [
+    551,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/02.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_caneta2"
+  },
+  {
+   "sprite": [
+    552,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_caneta3"
+  },
+  {
+   "sprite": [
+    553,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/04.png",
+   "ticks": 12,
+   "bate": true,
+   "nome": "f_caneta4"
+  },
+  {
+   "sprite": [
+    553,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_caneta4"
+  },
+  {
+   "sprite": [
+    554,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/05.png",
+   "ticks": 13,
+   "bate": false,
+   "nome": "f_caneta5"
+  },
+  {
+   "sprite": [
+    555,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/06.png",
+   "ticks": 12,
+   "bate": false,
+   "nome": "f_caneta6"
+  },
+  {
+   "sprite": [
+    556,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/07.png",
+   "ticks": 12,
+   "bate": false,
+   "nome": "f_caneta7"
+  }
+ ],
+ "400": [
+  {
+   "sprite": [
+    440,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "baixo_soco/03.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_baixo_soco3"
+  },
+  {
+   "sprite": [
+    440,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "baixo_soco/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_baixo_soco3"
+  },
+  {
+   "sprite": [
+    440,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "baixo_soco/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_baixo_soco3"
+  },
+  {
+   "sprite": [
+    441,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "baixo_soco/04.png",
+   "ticks": 2,
+   "bate": true,
+   "nome": "f_baixo_soco4"
+  },
+  {
+   "sprite": [
+    441,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "baixo_soco/04.png",
+   "ticks": 3,
+   "bate": true,
+   "nome": "f_baixo_soco4"
+  },
+  {
+   "sprite": [
+    441,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "baixo_soco/04.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_baixo_soco4"
+  },
+  {
+   "sprite": [
+    443,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "baixo_soco/06.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_baixo_soco6"
+  },
+  {
+   "sprite": [
+    444,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "baixo_soco/07.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_baixo_soco7"
+  }
+ ],
+ "410": [
+  {
+   "sprite": [
+    446,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/01.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_cabecada1"
+  },
+  {
+   "sprite": [
+    447,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_cabecada2"
+  },
+  {
+   "sprite": [
+    449,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/04.png",
+   "ticks": 2,
+   "bate": true,
+   "nome": "f_cabecada4"
+  },
+  {
+   "sprite": [
+    449,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_cabecada4"
+  },
+  {
+   "sprite": [
+    449,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_cabecada4"
+  },
+  {
+   "sprite": [
+    450,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/05.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_cabecada5"
+  },
+  {
+   "sprite": [
+    451,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/06.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_cabecada6"
+  },
+  {
+   "sprite": [
+    452,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_cabecada7"
+  }
+ ],
+ "430": [
+  {
+   "sprite": [
+    455,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rasteirinha2"
+  },
+  {
+   "sprite": [
+    455,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/02.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_rasteirinha2"
+  },
+  {
+   "sprite": [
+    456,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/03.png",
+   "ticks": 2,
+   "bate": true,
+   "nome": "f_rasteirinha3"
+  },
+  {
+   "sprite": [
+    456,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/03.png",
+   "ticks": 3,
+   "bate": true,
+   "nome": "f_rasteirinha3"
+  },
+  {
+   "sprite": [
+    456,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_rasteirinha3"
+  },
+  {
+   "sprite": [
+    458,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/05.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_rasteirinha5"
+  },
+  {
+   "sprite": [
+    458,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/05.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_rasteirinha5"
+  },
+  {
+   "sprite": [
+    460,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/07.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_rasteirinha7"
+  }
+ ],
+ "440": [
+  {
+   "sprite": [
+    462,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteira/01.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_rasteira1"
+  },
+  {
+   "sprite": [
+    463,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteira/02.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_rasteira2"
+  },
+  {
+   "sprite": [
+    465,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteira/04.png",
+   "ticks": 2,
+   "bate": true,
+   "nome": "f_rasteira4"
+  },
+  {
+   "sprite": [
+    465,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteira/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_rasteira4"
+  },
+  {
+   "sprite": [
+    465,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteira/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_rasteira4"
+  },
+  {
+   "sprite": [
+    466,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteira/05.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_rasteira5"
+  },
+  {
+   "sprite": [
+    467,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteira/06.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_rasteira6"
+  },
+  {
+   "sprite": [
+    468,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteira/07.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_rasteira7"
+  }
+ ],
+ "600": [
+  {
+   "sprite": [
+    472,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "ar_soco/03.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_ar_soco3"
+  },
+  {
+   "sprite": [
+    472,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "ar_soco/03.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_ar_soco3"
+  },
+  {
+   "sprite": [
+    474,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "ar_soco/05.png",
+   "ticks": 12,
+   "bate": true,
+   "nome": "f_ar_soco5"
+  },
+  {
+   "sprite": [
+    474,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "ar_soco/05.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_ar_soco5"
+  },
+  {
+   "sprite": [
+    475,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "ar_soco/06.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_ar_soco6"
+  }
+ ],
+ "650": [
+  {
+   "sprite": [
+    479,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_bicicleta2"
+  },
+  {
+   "sprite": [
+    480,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/03.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_bicicleta3"
+  },
+  {
+   "sprite": [
+    481,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/04.png",
+   "ticks": 9,
+   "bate": true,
+   "nome": "f_bicicleta4"
+  },
+  {
+   "sprite": [
+    481,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_bicicleta4"
+  },
+  {
+   "sprite": [
+    483,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/06.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_bicicleta6"
+  }
+ ],
+ "810": [
+  {
+   "sprite": [
+    7800,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 16,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7800,
+    2
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7800,
+    3
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7800,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 8,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7800,
+    4
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7800,
+    5
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7800,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 8,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7800,
+    2
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7800,
+    3
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7800,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 8,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7800,
+    6
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 10,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7800,
+    7
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 10,
+   "bate": false,
+   "nome": ""
+  }
+ ],
+ "216": [
+  {
+   "sprite": [
+    566,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/01.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_martelo1"
+  },
+  {
+   "sprite": [
+    567,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/02.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_martelo2"
+  },
+  {
+   "sprite": [
+    568,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_martelo3"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    571,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/06.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_martelo6"
+  },
+  {
+   "sprite": [
+    572,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_martelo7"
+  }
+ ],
+ "246": [
+  {
+   "sprite": [
+    430,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/01.png",
+   "ticks": 15,
+   "bate": false,
+   "nome": "f_chute_alto1"
+  },
+  {
+   "sprite": [
+    431,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/02.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_chute_alto2"
+  },
+  {
+   "sprite": [
+    432,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_chute_alto3"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    434,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/05.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_chute_alto5"
+  },
+  {
+   "sprite": [
+    435,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/06.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_chute_alto6"
+  },
+  {
+   "sprite": [
+    436,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_chute_alto7"
+  }
+ ],
+ "201": [
+  {
+   "sprite": [
+    574,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_soco1"
+  },
+  {
+   "sprite": [
+    575,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/02.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_soco2"
+  },
+  {
+   "sprite": [
+    576,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_soco3"
+  },
+  {
+   "sprite": [
+    578,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/05.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_soco5"
+  },
+  {
+   "sprite": [
+    578,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/05.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_soco5"
+  },
+  {
+   "sprite": [
+    579,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/06.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_soco6"
+  },
+  {
+   "sprite": [
+    580,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/07.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_soco7"
+  }
+ ],
+ "231": [
+  {
+   "sprite": [
+    422,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/01.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_chute_baixo1"
+  },
+  {
+   "sprite": [
+    423,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/02.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_chute_baixo2"
+  },
+  {
+   "sprite": [
+    424,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_chute_baixo3"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    427,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/06.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_chute_baixo6"
+  },
+  {
+   "sprite": [
+    428,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_chute_baixo7"
+  }
+ ],
+ "601": [
+  {
+   "sprite": [
+    470,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "ar_soco/01.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_ar_soco1"
+  },
+  {
+   "sprite": [
+    471,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "ar_soco/02.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_ar_soco2"
+  },
+  {
+   "sprite": [
+    472,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "ar_soco/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_ar_soco3"
+  },
+  {
+   "sprite": [
+    473,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "ar_soco/04.png",
+   "ticks": 8,
+   "bate": true,
+   "nome": "f_ar_soco4"
+  },
+  {
+   "sprite": [
+    473,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "ar_soco/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_ar_soco4"
+  },
+  {
+   "sprite": [
+    475,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "ar_soco/06.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_ar_soco6"
+  }
+ ],
+ "611": [
+  {
+   "sprite": [
+    478,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/01.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_bicicleta1"
+  },
+  {
+   "sprite": [
+    479,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/02.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_bicicleta2"
+  },
+  {
+   "sprite": [
+    480,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_bicicleta3"
+  },
+  {
+   "sprite": [
+    481,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/04.png",
+   "ticks": 9,
+   "bate": true,
+   "nome": "f_bicicleta4"
+  },
+  {
+   "sprite": [
+    481,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_bicicleta4"
+  },
+  {
+   "sprite": [
+    483,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/06.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_bicicleta6"
+  }
+ ],
+ "1400": [
+  {
+   "sprite": [
+    566,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/01.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_martelo1"
+  },
+  {
+   "sprite": [
+    567,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/02.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_martelo2"
+  },
+  {
+   "sprite": [
+    568,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_martelo3"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    570,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/05.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_martelo5"
+  },
+  {
+   "sprite": [
+    571,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/06.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_martelo6"
+  },
+  {
+   "sprite": [
+    572,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/07.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_martelo7"
+  }
+ ],
+ "1401": [
+  {
+   "sprite": [
+    566,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/01.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_martelo1"
+  },
+  {
+   "sprite": [
+    567,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/02.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_martelo2"
+  },
+  {
+   "sprite": [
+    568,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_martelo3"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 9,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    570,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/05.png",
+   "ticks": 11,
+   "bate": false,
+   "nome": "f_martelo5"
+  },
+  {
+   "sprite": [
+    571,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/06.png",
+   "ticks": 11,
+   "bate": false,
+   "nome": "f_martelo6"
+  },
+  {
+   "sprite": [
+    572,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/07.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_martelo7"
+  }
+ ],
+ "1500": [
+  {
+   "sprite": [
+    423,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/02.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_chute_baixo2"
+  },
+  {
+   "sprite": [
+    424,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_chute_baixo3"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    426,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/05.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_chute_baixo5"
+  },
+  {
+   "sprite": [
+    427,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/06.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_chute_baixo6"
+  },
+  {
+   "sprite": [
+    428,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/07.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_chute_baixo7"
+  }
+ ],
+ "1501": [
+  {
+   "sprite": [
+    423,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/02.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_chute_baixo2"
+  },
+  {
+   "sprite": [
+    424,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_chute_baixo3"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 9,
+   "bate": true,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    426,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/05.png",
+   "ticks": 11,
+   "bate": false,
+   "nome": "f_chute_baixo5"
+  },
+  {
+   "sprite": [
+    427,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/06.png",
+   "ticks": 11,
+   "bate": false,
+   "nome": "f_chute_baixo6"
+  },
+  {
+   "sprite": [
+    428,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/07.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_chute_baixo7"
+  }
+ ],
+ "3200": [
+  {
+   "sprite": [
+    566,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/01.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_martelo1"
+  },
+  {
+   "sprite": [
+    567,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/02.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_martelo2"
+  },
+  {
+   "sprite": [
+    568,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/03.png",
+   "ticks": 8,
+   "bate": true,
+   "nome": "f_martelo3"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 8,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    570,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/05.png",
+   "ticks": 9,
+   "bate": true,
+   "nome": "f_martelo5"
+  },
+  {
+   "sprite": [
+    570,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/05.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_martelo5"
+  },
+  {
+   "sprite": [
+    571,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/06.png",
+   "ticks": 19,
+   "bate": false,
+   "nome": "f_martelo6"
+  },
+  {
+   "sprite": [
+    572,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/07.png",
+   "ticks": 18,
+   "bate": false,
+   "nome": "f_martelo7"
+  }
+ ],
+ "760": [
+  {
+   "sprite": [
+    7600,
+    0
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 3,
+   "bate": true,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7600,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 3,
+   "bate": true,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7600,
+    2
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 30,
+   "bate": true,
+   "nome": ""
+  }
+ ],
+ "610": [
+  {
+   "sprite": [
+    478,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_bicicleta1"
+  },
+  {
+   "sprite": [
+    479,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/02.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_bicicleta2"
+  },
+  {
+   "sprite": [
+    480,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/03.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_bicicleta3"
+  },
+  {
+   "sprite": [
+    481,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/04.png",
+   "ticks": 15,
+   "bate": true,
+   "nome": "f_bicicleta4"
+  },
+  {
+   "sprite": [
+    481,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_bicicleta4"
+  },
+  {
+   "sprite": [
+    483,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/06.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_bicicleta6"
+  }
+ ],
+ "301": [
+  {
+   "sprite": [
+    575,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_soco2"
+  },
+  {
+   "sprite": [
+    575,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/02.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_soco2"
+  },
+  {
+   "sprite": [
+    576,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_soco3"
+  },
+  {
+   "sprite": [
+    578,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/05.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_soco5"
+  },
+  {
+   "sprite": [
+    578,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/05.png",
+   "ticks": 3,
+   "bate": true,
+   "nome": "f_soco5"
+  },
+  {
+   "sprite": [
+    578,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/05.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_soco5"
+  },
+  {
+   "sprite": [
+    579,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/06.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_soco6"
+  },
+  {
+   "sprite": [
+    580,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/07.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_soco7"
+  }
+ ],
+ "302": [
+  {
+   "sprite": [
+    566,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_martelo1"
+  },
+  {
+   "sprite": [
+    567,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/02.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_martelo2"
+  },
+  {
+   "sprite": [
+    568,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_martelo3"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    571,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/06.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_martelo6"
+  },
+  {
+   "sprite": [
+    572,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/07.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_martelo7"
+  }
+ ],
+ "303": [
+  {
+   "sprite": [
+    447,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_cabecada2"
+  },
+  {
+   "sprite": [
+    447,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_cabecada2"
+  },
+  {
+   "sprite": [
+    448,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/03.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_cabecada3"
+  },
+  {
+   "sprite": [
+    450,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/05.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_cabecada5"
+  },
+  {
+   "sprite": [
+    450,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/05.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_cabecada5"
+  },
+  {
+   "sprite": [
+    450,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/05.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_cabecada5"
+  },
+  {
+   "sprite": [
+    451,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/06.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_cabecada6"
+  },
+  {
+   "sprite": [
+    452,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/07.png",
+   "ticks": 12,
+   "bate": false,
+   "nome": "f_cabecada7"
+  }
+ ],
+ "311": [
+  {
+   "sprite": [
+    566,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/01.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_martelo1"
+  },
+  {
+   "sprite": [
+    567,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_martelo2"
+  },
+  {
+   "sprite": [
+    568,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_martelo3"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    571,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/06.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_martelo6"
+  },
+  {
+   "sprite": [
+    572,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_martelo7"
+  }
+ ],
+ "312": [
+  {
+   "sprite": [
+    422,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_chute_baixo1"
+  },
+  {
+   "sprite": [
+    423,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_chute_baixo2"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    426,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/05.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_chute_baixo5"
+  },
+  {
+   "sprite": [
+    427,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/06.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_chute_baixo6"
+  },
+  {
+   "sprite": [
+    428,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_chute_baixo7"
+  }
+ ],
+ "313": [
+  {
+   "sprite": [
+    542,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/01.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_armada1"
+  },
+  {
+   "sprite": [
+    543,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/02.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_armada2"
+  },
+  {
+   "sprite": [
+    544,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/03.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_armada3"
+  },
+  {
+   "sprite": [
+    545,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_armada4"
+  },
+  {
+   "sprite": [
+    546,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/05.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_armada5"
+  },
+  {
+   "sprite": [
+    546,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/05.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_armada5"
+  },
+  {
+   "sprite": [
+    547,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/06.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_armada6"
+  },
+  {
+   "sprite": [
+    548,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/07.png",
+   "ticks": 12,
+   "bate": false,
+   "nome": "f_armada7"
+  }
+ ],
+ "321": [
+  {
+   "sprite": [
+    423,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_chute_baixo2"
+  },
+  {
+   "sprite": [
+    423,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/02.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_chute_baixo2"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 3,
+   "bate": true,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    426,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/05.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_chute_baixo5"
+  },
+  {
+   "sprite": [
+    426,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/05.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_chute_baixo5"
+  },
+  {
+   "sprite": [
+    428,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/07.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_chute_baixo7"
+  }
+ ],
+ "322": [
+  {
+   "sprite": [
+    455,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rasteirinha2"
+  },
+  {
+   "sprite": [
+    455,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rasteirinha2"
+  },
+  {
+   "sprite": [
+    456,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/03.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_rasteirinha3"
+  },
+  {
+   "sprite": [
+    456,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/03.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_rasteirinha3"
+  },
+  {
+   "sprite": [
+    456,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_rasteirinha3"
+  },
+  {
+   "sprite": [
+    458,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/05.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_rasteirinha5"
+  },
+  {
+   "sprite": [
+    458,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/05.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_rasteirinha5"
+  },
+  {
+   "sprite": [
+    460,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/07.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_rasteirinha7"
+  }
+ ],
+ "323": [
+  {
+   "sprite": [
+    430,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/01.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_chute_alto1"
+  },
+  {
+   "sprite": [
+    431,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/02.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_chute_alto2"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    434,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/05.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_chute_alto5"
+  },
+  {
+   "sprite": [
+    435,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/06.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_chute_alto6"
+  },
+  {
+   "sprite": [
+    436,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_chute_alto7"
+  }
+ ],
+ "331": [
+  {
+   "sprite": [
+    430,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_chute_alto1"
+  },
+  {
+   "sprite": [
+    431,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_chute_alto2"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    434,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/05.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_chute_alto5"
+  },
+  {
+   "sprite": [
+    435,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/06.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_chute_alto6"
+  },
+  {
+   "sprite": [
+    436,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_chute_alto7"
+  }
+ ],
+ "332": [
+  {
+   "sprite": [
+    558,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_afastar1"
+  },
+  {
+   "sprite": [
+    559,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_afastar2"
+  },
+  {
+   "sprite": [
+    561,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_afastar4"
+  },
+  {
+   "sprite": [
+    561,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_afastar4"
+  },
+  {
+   "sprite": [
+    561,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_afastar4"
+  },
+  {
+   "sprite": [
+    562,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/05.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_afastar5"
+  },
+  {
+   "sprite": [
+    563,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/06.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_afastar6"
+  },
+  {
+   "sprite": [
+    564,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_afastar7"
+  }
+ ],
+ "333": [
+  {
+   "sprite": [
+    534,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_compasso1"
+  },
+  {
+   "sprite": [
+    535,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/02.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_compasso2"
+  },
+  {
+   "sprite": [
+    537,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_compasso4"
+  },
+  {
+   "sprite": [
+    537,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_compasso4"
+  },
+  {
+   "sprite": [
+    537,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_compasso4"
+  },
+  {
+   "sprite": [
+    538,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/05.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_compasso5"
+  },
+  {
+   "sprite": [
+    539,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/06.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_compasso6"
+  },
+  {
+   "sprite": [
+    540,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_compasso7"
+  }
+ ],
+ "340": [
+  {
+   "sprite": [
+    575,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_soco2"
+  },
+  {
+   "sprite": [
+    575,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/02.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_soco2"
+  },
+  {
+   "sprite": [
+    576,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_soco3"
+  },
+  {
+   "sprite": [
+    578,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/05.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_soco5"
+  },
+  {
+   "sprite": [
+    578,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/05.png",
+   "ticks": 3,
+   "bate": true,
+   "nome": "f_soco5"
+  },
+  {
+   "sprite": [
+    578,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/05.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_soco5"
+  },
+  {
+   "sprite": [
+    579,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/06.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_soco6"
+  },
+  {
+   "sprite": [
+    580,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/07.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_soco7"
+  }
+ ],
+ "341": [
+  {
+   "sprite": [
+    430,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_chute_alto1"
+  },
+  {
+   "sprite": [
+    431,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_chute_alto2"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    434,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/05.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_chute_alto5"
+  },
+  {
+   "sprite": [
+    435,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/06.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_chute_alto6"
+  },
+  {
+   "sprite": [
+    436,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_chute_alto7"
+  }
+ ],
+ "342": [
+  {
+   "sprite": [
+    455,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rasteirinha2"
+  },
+  {
+   "sprite": [
+    455,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rasteirinha2"
+  },
+  {
+   "sprite": [
+    456,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/03.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_rasteirinha3"
+  },
+  {
+   "sprite": [
+    456,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/03.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_rasteirinha3"
+  },
+  {
+   "sprite": [
+    456,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_rasteirinha3"
+  },
+  {
+   "sprite": [
+    458,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/05.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_rasteirinha5"
+  },
+  {
+   "sprite": [
+    458,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/05.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_rasteirinha5"
+  },
+  {
+   "sprite": [
+    460,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteirinha/07.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_rasteirinha7"
+  }
+ ],
+ "343": [
+  {
+   "sprite": [
+    566,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/01.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_martelo1"
+  },
+  {
+   "sprite": [
+    567,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_martelo2"
+  },
+  {
+   "sprite": [
+    568,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/03.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_martelo3"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    571,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/06.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_martelo6"
+  },
+  {
+   "sprite": [
+    572,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_martelo7"
+  }
+ ],
+ "344": [
+  {
+   "sprite": [
+    566,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_martelo1"
+  },
+  {
+   "sprite": [
+    567,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/02.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_martelo2"
+  },
+  {
+   "sprite": [
+    568,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_martelo3"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    571,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/06.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_martelo6"
+  },
+  {
+   "sprite": [
+    572,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/07.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_martelo7"
+  }
+ ],
+ "345": [
+  {
+   "sprite": [
+    558,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_afastar1"
+  },
+  {
+   "sprite": [
+    559,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_afastar2"
+  },
+  {
+   "sprite": [
+    561,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_afastar4"
+  },
+  {
+   "sprite": [
+    561,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_afastar4"
+  },
+  {
+   "sprite": [
+    561,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_afastar4"
+  },
+  {
+   "sprite": [
+    562,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/05.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_afastar5"
+  },
+  {
+   "sprite": [
+    563,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/06.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_afastar6"
+  },
+  {
+   "sprite": [
+    564,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_afastar7"
+  }
+ ],
+ "346": [
+  {
+   "sprite": [
+    430,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/01.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_chute_alto1"
+  },
+  {
+   "sprite": [
+    431,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_chute_alto2"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    434,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/05.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_chute_alto5"
+  },
+  {
+   "sprite": [
+    435,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/06.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_chute_alto6"
+  },
+  {
+   "sprite": [
+    436,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/07.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_chute_alto7"
+  }
+ ],
+ "347": [
+  {
+   "sprite": [
+    447,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_cabecada2"
+  },
+  {
+   "sprite": [
+    447,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_cabecada2"
+  },
+  {
+   "sprite": [
+    448,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/03.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_cabecada3"
+  },
+  {
+   "sprite": [
+    450,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/05.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_cabecada5"
+  },
+  {
+   "sprite": [
+    450,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/05.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_cabecada5"
+  },
+  {
+   "sprite": [
+    450,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/05.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_cabecada5"
+  },
+  {
+   "sprite": [
+    451,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/06.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_cabecada6"
+  },
+  {
+   "sprite": [
+    452,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/07.png",
+   "ticks": 12,
+   "bate": false,
+   "nome": "f_cabecada7"
+  }
+ ],
+ "348": [
+  {
+   "sprite": [
+    534,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_compasso1"
+  },
+  {
+   "sprite": [
+    535,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_compasso2"
+  },
+  {
+   "sprite": [
+    537,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_compasso4"
+  },
+  {
+   "sprite": [
+    537,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_compasso4"
+  },
+  {
+   "sprite": [
+    537,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_compasso4"
+  },
+  {
+   "sprite": [
+    538,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/05.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_compasso5"
+  },
+  {
+   "sprite": [
+    539,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/06.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_compasso6"
+  },
+  {
+   "sprite": [
+    540,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_compasso7"
+  }
+ ],
+ "349": [
+  {
+   "sprite": [
+    550,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_caneta1"
+  },
+  {
+   "sprite": [
+    551,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/02.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_caneta2"
+  },
+  {
+   "sprite": [
+    552,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/03.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_caneta3"
+  },
+  {
+   "sprite": [
+    552,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/03.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_caneta3"
+  },
+  {
+   "sprite": [
+    552,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/03.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_caneta3"
+  },
+  {
+   "sprite": [
+    554,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/05.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_caneta5"
+  },
+  {
+   "sprite": [
+    555,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/06.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_caneta6"
+  },
+  {
+   "sprite": [
+    556,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "caneta/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_caneta7"
+  }
+ ],
+ "3410": [
+  {
+   "sprite": [
+    566,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_martelo1"
+  },
+  {
+   "sprite": [
+    567,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/02.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_martelo2"
+  },
+  {
+   "sprite": [
+    568,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/03.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_martelo3"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    571,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/06.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_martelo6"
+  },
+  {
+   "sprite": [
+    572,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/07.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_martelo7"
+  }
+ ],
+ "3411": [
+  {
+   "sprite": [
+    422,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_chute_baixo1"
+  },
+  {
+   "sprite": [
+    423,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/02.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_chute_baixo2"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    426,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/05.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_chute_baixo5"
+  },
+  {
+   "sprite": [
+    427,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/06.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_chute_baixo6"
+  },
+  {
+   "sprite": [
+    428,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/07.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_chute_baixo7"
+  }
+ ],
+ "3412": [
+  {
+   "sprite": [
+    447,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_cabecada2"
+  },
+  {
+   "sprite": [
+    447,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_cabecada2"
+  },
+  {
+   "sprite": [
+    448,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/03.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_cabecada3"
+  },
+  {
+   "sprite": [
+    450,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/05.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_cabecada5"
+  },
+  {
+   "sprite": [
+    450,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/05.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_cabecada5"
+  },
+  {
+   "sprite": [
+    450,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/05.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_cabecada5"
+  },
+  {
+   "sprite": [
+    451,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/06.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_cabecada6"
+  },
+  {
+   "sprite": [
+    452,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_cabecada7"
+  }
+ ],
+ "3413": [
+  {
+   "sprite": [
+    534,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_compasso1"
+  },
+  {
+   "sprite": [
+    535,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/02.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_compasso2"
+  },
+  {
+   "sprite": [
+    537,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_compasso4"
+  },
+  {
+   "sprite": [
+    537,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_compasso4"
+  },
+  {
+   "sprite": [
+    537,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_compasso4"
+  },
+  {
+   "sprite": [
+    538,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/05.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_compasso5"
+  },
+  {
+   "sprite": [
+    539,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/06.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_compasso6"
+  },
+  {
+   "sprite": [
+    540,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_compasso7"
+  }
+ ],
+ "3420": [
+  {
+   "sprite": [
+    430,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_chute_alto1"
+  },
+  {
+   "sprite": [
+    431,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/02.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_chute_alto2"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    434,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/05.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_chute_alto5"
+  },
+  {
+   "sprite": [
+    435,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/06.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_chute_alto6"
+  },
+  {
+   "sprite": [
+    436,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/07.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_chute_alto7"
+  }
+ ],
+ "3421": [
+  {
+   "sprite": [
+    558,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_afastar1"
+  },
+  {
+   "sprite": [
+    559,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/02.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_afastar2"
+  },
+  {
+   "sprite": [
+    561,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_afastar4"
+  },
+  {
+   "sprite": [
+    561,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_afastar4"
+  },
+  {
+   "sprite": [
+    561,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_afastar4"
+  },
+  {
+   "sprite": [
+    562,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/05.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_afastar5"
+  },
+  {
+   "sprite": [
+    563,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/06.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_afastar6"
+  },
+  {
+   "sprite": [
+    564,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "afastar/07.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_afastar7"
+  }
+ ],
+ "3422": [
+  {
+   "sprite": [
+    542,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_armada1"
+  },
+  {
+   "sprite": [
+    543,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/02.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_armada2"
+  },
+  {
+   "sprite": [
+    544,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/03.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_armada3"
+  },
+  {
+   "sprite": [
+    545,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_armada4"
+  },
+  {
+   "sprite": [
+    546,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/05.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_armada5"
+  },
+  {
+   "sprite": [
+    546,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/05.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_armada5"
+  },
+  {
+   "sprite": [
+    547,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/06.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_armada6"
+  },
+  {
+   "sprite": [
+    548,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_armada7"
+  }
+ ],
+ "3423": [
+  {
+   "sprite": [
+    542,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/01.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_armada1"
+  },
+  {
+   "sprite": [
+    543,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/02.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_armada2"
+  },
+  {
+   "sprite": [
+    544,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/03.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_armada3"
+  },
+  {
+   "sprite": [
+    545,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_armada4"
+  },
+  {
+   "sprite": [
+    546,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/05.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_armada5"
+  },
+  {
+   "sprite": [
+    546,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/05.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_armada5"
+  },
+  {
+   "sprite": [
+    547,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/06.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_armada6"
+  },
+  {
+   "sprite": [
+    548,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/07.png",
+   "ticks": 12,
+   "bate": false,
+   "nome": "f_armada7"
+  }
+ ],
+ "3430": [
+  {
+   "sprite": [
+    447,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_cabecada2"
+  },
+  {
+   "sprite": [
+    447,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_cabecada2"
+  },
+  {
+   "sprite": [
+    448,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/03.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_cabecada3"
+  },
+  {
+   "sprite": [
+    450,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/05.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_cabecada5"
+  },
+  {
+   "sprite": [
+    450,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/05.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_cabecada5"
+  },
+  {
+   "sprite": [
+    450,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/05.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_cabecada5"
+  },
+  {
+   "sprite": [
+    451,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/06.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_cabecada6"
+  },
+  {
+   "sprite": [
+    452,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "cabecada/07.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_cabecada7"
+  }
+ ],
+ "3431": [
+  {
+   "sprite": [
+    566,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/01.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_martelo1"
+  },
+  {
+   "sprite": [
+    567,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_martelo2"
+  },
+  {
+   "sprite": [
+    568,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_martelo3"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    568,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/03.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_martelo3"
+  },
+  {
+   "sprite": [
+    569,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_martelo4"
+  },
+  {
+   "sprite": [
+    570,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/05.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_martelo5"
+  },
+  {
+   "sprite": [
+    571,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/06.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_martelo6"
+  },
+  {
+   "sprite": [
+    572,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "martelo/07.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_martelo7"
+  }
+ ],
+ "3432": [
+  {
+   "sprite": [
+    430,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/01.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_chute_alto1"
+  },
+  {
+   "sprite": [
+    431,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/02.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_chute_alto2"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    434,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/05.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_chute_alto5"
+  },
+  {
+   "sprite": [
+    435,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/06.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_chute_alto6"
+  },
+  {
+   "sprite": [
+    436,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/07.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_chute_alto7"
+  }
+ ],
+ "3433": [
+  {
+   "sprite": [
+    574,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/01.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_soco1"
+  },
+  {
+   "sprite": [
+    575,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/02.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_soco2"
+  },
+  {
+   "sprite": [
+    576,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/03.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_soco3"
+  },
+  {
+   "sprite": [
+    578,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/05.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_soco5"
+  },
+  {
+   "sprite": [
+    578,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/05.png",
+   "ticks": 3,
+   "bate": true,
+   "nome": "f_soco5"
+  },
+  {
+   "sprite": [
+    578,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/05.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_soco5"
+  },
+  {
+   "sprite": [
+    579,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/06.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_soco6"
+  },
+  {
+   "sprite": [
+    580,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/07.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_soco7"
+  }
+ ],
+ "3434": [
+  {
+   "sprite": [
+    422,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_chute_baixo1"
+  },
+  {
+   "sprite": [
+    423,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/02.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_chute_baixo2"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    425,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_chute_baixo4"
+  },
+  {
+   "sprite": [
+    426,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/05.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_chute_baixo5"
+  },
+  {
+   "sprite": [
+    427,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/06.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_chute_baixo6"
+  },
+  {
+   "sprite": [
+    428,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_baixo/07.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_chute_baixo7"
+  }
+ ],
+ "3435": [
+  {
+   "sprite": [
+    462,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteira/01.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_rasteira1"
+  },
+  {
+   "sprite": [
+    463,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteira/02.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_rasteira2"
+  },
+  {
+   "sprite": [
+    465,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteira/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_rasteira4"
+  },
+  {
+   "sprite": [
+    465,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteira/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_rasteira4"
+  },
+  {
+   "sprite": [
+    465,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteira/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_rasteira4"
+  },
+  {
+   "sprite": [
+    466,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteira/05.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_rasteira5"
+  },
+  {
+   "sprite": [
+    467,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteira/06.png",
+   "ticks": 12,
+   "bate": false,
+   "nome": "f_rasteira6"
+  },
+  {
+   "sprite": [
+    468,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteira/07.png",
+   "ticks": 12,
+   "bate": false,
+   "nome": "f_rasteira7"
+  }
+ ],
+ "3401": [
+  {
+   "sprite": [
+    430,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/01.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_chute_alto1"
+  },
+  {
+   "sprite": [
+    431,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/02.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "f_chute_alto2"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    434,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/05.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_chute_alto5"
+  },
+  {
+   "sprite": [
+    435,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/06.png",
+   "ticks": 12,
+   "bate": false,
+   "nome": "f_chute_alto6"
+  },
+  {
+   "sprite": [
+    436,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/07.png",
+   "ticks": 12,
+   "bate": false,
+   "nome": "f_chute_alto7"
+  }
+ ],
+ "1600": [
+  {
+   "sprite": [
+    526,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/01.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_bola1"
+  },
+  {
+   "sprite": [
+    527,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/02.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_bola2"
+  },
+  {
+   "sprite": [
+    528,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/03.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_bola3"
+  },
+  {
+   "sprite": [
+    529,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/04.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_bola4"
+  },
+  {
+   "sprite": [
+    530,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/05.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_bola5"
+  },
+  {
+   "sprite": [
+    532,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/07.png",
+   "ticks": 33,
+   "bate": false,
+   "nome": "f_bola7"
+  }
+ ],
+ "1601": [
+  {
+   "sprite": [
+    526,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/01.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_bola1"
+  },
+  {
+   "sprite": [
+    527,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/02.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_bola2"
+  },
+  {
+   "sprite": [
+    528,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/03.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_bola3"
+  },
+  {
+   "sprite": [
+    529,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/04.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_bola4"
+  },
+  {
+   "sprite": [
+    530,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/05.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_bola5"
+  },
+  {
+   "sprite": [
+    532,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/07.png",
+   "ticks": 39,
+   "bate": false,
+   "nome": "f_bola7"
+  }
+ ],
+ "1700": [
+  {
+   "sprite": [
+    414,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/01.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_rolamento1"
+  },
+  {
+   "sprite": [
+    415,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_rolamento2"
+  },
+  {
+   "sprite": [
+    416,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/03.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_rolamento3"
+  },
+  {
+   "sprite": [
+    417,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/04.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_rolamento4"
+  },
+  {
+   "sprite": [
+    418,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/05.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_rolamento5"
+  },
+  {
+   "sprite": [
+    419,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/06.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_rolamento6"
+  },
+  {
+   "sprite": [
+    420,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/00.png",
+   "ticks": 12,
+   "bate": false,
+   "nome": "f_rolamento7"
+  }
+ ],
+ "1701": [
+  {
+   "sprite": [
+    418,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/05.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento5"
+  },
+  {
+   "sprite": [
+    418,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/05.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento5"
+  },
+  {
+   "sprite": [
+    418,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/05.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento5"
+  },
+  {
+   "sprite": [
+    418,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/05.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento5"
+  },
+  {
+   "sprite": [
+    418,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/05.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento5"
+  },
+  {
+   "sprite": [
+    431,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/02.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_chute_alto2"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    433,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_chute_alto4"
+  },
+  {
+   "sprite": [
+    434,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/05.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_chute_alto5"
+  },
+  {
+   "sprite": [
+    435,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/06.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_chute_alto6"
+  },
+  {
+   "sprite": [
+    436,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/07.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_chute_alto7"
+  }
+ ],
+ "3400": [
+  {
+   "sprite": [
+    582,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "golaco/01.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_golaco1"
+  },
+  {
+   "sprite": [
+    583,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "golaco/02.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_golaco2"
+  },
+  {
+   "sprite": [
+    584,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "golaco/03.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_golaco3"
+  },
+  {
+   "sprite": [
+    585,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "golaco/04.png",
+   "ticks": 39,
+   "bate": false,
+   "nome": "f_golaco4"
+  }
+ ],
+ "3402": [
+  {
+   "sprite": [
+    414,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/01.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "f_rolamento1"
+  },
+  {
+   "sprite": [
+    415,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/02.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_rolamento2"
+  },
+  {
+   "sprite": [
+    417,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_rolamento4"
+  },
+  {
+   "sprite": [
+    417,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/04.png",
+   "ticks": 4,
+   "bate": true,
+   "nome": "f_rolamento4"
+  },
+  {
+   "sprite": [
+    417,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_rolamento4"
+  },
+  {
+   "sprite": [
+    418,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/05.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_rolamento5"
+  },
+  {
+   "sprite": [
+    419,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/06.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_rolamento6"
+  },
+  {
+   "sprite": [
+    420,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rolamento/00.png",
+   "ticks": 12,
+   "bate": false,
+   "nome": "f_rolamento7"
+  }
+ ],
+ "3403": [
+  {
+   "sprite": [
+    479,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_bicicleta2"
+  },
+  {
+   "sprite": [
+    479,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_bicicleta2"
+  },
+  {
+   "sprite": [
+    480,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/03.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_bicicleta3"
+  },
+  {
+   "sprite": [
+    481,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_bicicleta4"
+  },
+  {
+   "sprite": [
+    481,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "f_bicicleta4"
+  },
+  {
+   "sprite": [
+    481,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "f_bicicleta4"
+  },
+  {
+   "sprite": [
+    483,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bicicleta/06.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "f_bicicleta6"
+  }
+ ],
+ "840": [
+  {
+   "sprite": [
+    7810,
+    0
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 4,
+   "bate": true,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7810,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 2,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7810,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 4,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7810,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7810,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  }
+ ],
+ "841": [
+  {
+   "sprite": [
+    7810,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 16,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7810,
+    2
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7810,
+    3
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7810,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 8,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7810,
+    4
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7810,
+    5
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7810,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 8,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7810,
+    2
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7810,
+    3
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7810,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 8,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7810,
+    6
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 10,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7810,
+    7
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 10,
+   "bate": false,
+   "nome": ""
+  }
+ ],
+ "830": [
+  {
+   "sprite": [
+    7820,
+    0
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 4,
+   "bate": true,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7820,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 2,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7820,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 4,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7820,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7820,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  }
+ ],
+ "831": [
+  {
+   "sprite": [
+    7820,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 16,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7820,
+    2
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7820,
+    3
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7820,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 8,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7820,
+    4
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7820,
+    5
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7820,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 8,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7820,
+    2
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7820,
+    3
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7820,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 8,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7820,
+    6
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 10,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7820,
+    7
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 10,
+   "bate": false,
+   "nome": ""
+  }
+ ],
+ "2000": [
+  {
+   "sprite": [
+    589,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "despertar_a/00.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_despertar_a0"
+  },
+  {
+   "sprite": [
+    590,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "despertar_a/01.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_despertar_a1"
+  },
+  {
+   "sprite": [
+    591,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "despertar_a/02.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_despertar_a2"
+  },
+  {
+   "sprite": [
+    592,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "despertar_a/03.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_despertar_a3"
+  },
+  {
+   "sprite": [
+    593,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "despertar_a/04.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_despertar_a4"
+  },
+  {
+   "sprite": [
+    594,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "despertar_a/05.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_despertar_a5"
+  },
+  {
+   "sprite": [
+    595,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "despertar_a/06.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_despertar_a6"
+  },
+  {
+   "sprite": [
+    596,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "despertar_a/07.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "f_despertar_a7"
+  },
+  {
+   "sprite": [
+    597,
+    0
+   ],
+   "origem": "endiab",
+   "desenho": "e_despertar/00.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_despertar_b0"
+  },
+  {
+   "sprite": [
+    598,
+    0
+   ],
+   "origem": "endiab",
+   "desenho": "e_despertar/01.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_despertar_b1"
+  },
+  {
+   "sprite": [
+    599,
+    0
+   ],
+   "origem": "endiab",
+   "desenho": "e_despertar/02.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_despertar_b2"
+  },
+  {
+   "sprite": [
+    600,
+    0
+   ],
+   "origem": "endiab",
+   "desenho": "e_despertar/03.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_despertar_b3"
+  },
+  {
+   "sprite": [
+    601,
+    0
+   ],
+   "origem": "endiab",
+   "desenho": "e_despertar/04.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_despertar_b4"
+  },
+  {
+   "sprite": [
+    602,
+    0
+   ],
+   "origem": "endiab",
+   "desenho": "e_despertar/05.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_despertar_b5"
+  },
+  {
+   "sprite": [
+    603,
+    0
+   ],
+   "origem": "endiab",
+   "desenho": "e_despertar/06.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "f_despertar_b6"
+  },
+  {
+   "sprite": [
+    604,
+    0
+   ],
+   "origem": "endiab",
+   "desenho": "e_despertar/07.png",
+   "ticks": 10,
+   "bate": false,
+   "nome": "f_despertar_b7"
+  }
+ ],
+ "1000": [
+  {
+   "sprite": [
+    527,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/02.png",
+   "ticks": 12,
+   "bate": false,
+   "nome": "f_bola2"
+  },
+  {
+   "sprite": [
+    529,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/04.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_bola4"
+  },
+  {
+   "sprite": [
+    530,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/05.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_bola5"
+  },
+  {
+   "sprite": [
+    532,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/07.png",
+   "ticks": 33,
+   "bate": false,
+   "nome": "f_bola7"
+  }
+ ],
+ "1001": [
+  {
+   "sprite": [
+    527,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/02.png",
+   "ticks": 12,
+   "bate": false,
+   "nome": "f_bola2"
+  },
+  {
+   "sprite": [
+    529,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/04.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "f_bola4"
+  },
+  {
+   "sprite": [
+    530,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/05.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_bola5"
+  },
+  {
+   "sprite": [
+    532,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "bola/07.png",
+   "ticks": 39,
+   "bate": false,
+   "nome": "f_bola7"
+  }
+ ],
+ "0": [
+  {
+   "sprite": [
+    94,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "ginga/03.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "q_ginga_fluida0"
+  },
+  {
+   "sprite": [
+    95,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "ginga/07.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "q_ginga_fluida1"
+  },
+  {
+   "sprite": [
+    96,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "ginga/05.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "q_ginga_fluida2"
+  },
+  {
+   "sprite": [
+    97,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "ginga/06.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "q_ginga_fluida3"
+  },
+  {
+   "sprite": [
+    98,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "ginga/02.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "q_ginga_fluida4"
+  },
+  {
+   "sprite": [
+    99,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "ginga/01.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "q_ginga_fluida5"
+  }
+ ],
+ "20": [
+  {
+   "sprite": [
+    158,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "anda/00.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "q_anda_fluida0"
+  },
+  {
+   "sprite": [
+    159,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "anda/02.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "q_anda_fluida1"
+  },
+  {
+   "sprite": [
+    160,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "anda/03.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "q_anda_fluida2"
+  },
+  {
+   "sprite": [
+    161,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "anda/04.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "q_anda_fluida3"
+  },
+  {
+   "sprite": [
+    162,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "anda/06.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "q_anda_fluida4"
+  },
+  {
+   "sprite": [
+    163,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "anda/07.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "q_anda_fluida5"
+  }
+ ],
+ "21": [
+  {
+   "sprite": [
+    163,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "anda/07.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "q_anda_fluida5"
+  },
+  {
+   "sprite": [
+    162,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "anda/06.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "q_anda_fluida4"
+  },
+  {
+   "sprite": [
+    161,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "anda/04.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "q_anda_fluida3"
+  },
+  {
+   "sprite": [
+    160,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "anda/03.png",
+   "ticks": 5,
+   "bate": false,
+   "nome": "q_anda_fluida2"
+  },
+  {
+   "sprite": [
+    159,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "anda/02.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "q_anda_fluida1"
+  },
+  {
+   "sprite": [
+    158,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "anda/00.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "q_anda_fluida0"
+  }
+ ],
+ "121": [
+  {
+   "sprite": [
+    47,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "agachado/04.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "defesa_baixa"
+  }
+ ],
+ "131": [
+  {
+   "sprite": [
+    47,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "agachado/04.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "defesa_baixa"
+  }
+ ],
+ "141": [
+  {
+   "sprite": [
+    47,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "agachado/04.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "defesa_baixa"
+  }
+ ],
+ "122": [
+  {
+   "sprite": [
+    45,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "defesa/03.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "defesa"
+  }
+ ],
+ "132": [
+  {
+   "sprite": [
+    45,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "defesa/03.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "defesa"
+  }
+ ],
+ "142": [
+  {
+   "sprite": [
+    45,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "defesa/03.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "defesa"
+  }
+ ],
+ "151": [
+  {
+   "sprite": [
+    47,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "agachado/04.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "defesa_baixa"
+  }
+ ],
+ "152": [
+  {
+   "sprite": [
+    46,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "defesa/05.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "defesa_ai"
+  }
+ ],
+ "190": [
+  {
+   "sprite": [
+    259,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "lata/00.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "embaixada0"
+  },
+  {
+   "sprite": [
+    260,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "lata/02.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "embaixada1"
+  },
+  {
+   "sprite": [
+    261,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "lata/03.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "embaixada2"
+  },
+  {
+   "sprite": [
+    262,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "lata/04.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "embaixada3"
+  },
+  {
+   "sprite": [
+    259,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "lata/00.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "embaixada0"
+  },
+  {
+   "sprite": [
+    260,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "lata/02.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "embaixada1"
+  },
+  {
+   "sprite": [
+    261,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "lata/03.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "embaixada2"
+  },
+  {
+   "sprite": [
+    262,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "lata/04.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "embaixada3"
+  },
+  {
+   "sprite": [
+    10,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "ginga/03.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "parado0"
+  }
+ ],
+ "191": [
+  {
+   "sprite": [
+    259,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "lata/00.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "embaixada0"
+  },
+  {
+   "sprite": [
+    260,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "lata/02.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "embaixada1"
+  },
+  {
+   "sprite": [
+    261,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "lata/03.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "embaixada2"
+  },
+  {
+   "sprite": [
+    262,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "lata/04.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "embaixada3"
+  }
+ ],
+ "192": [
+  {
+   "sprite": [
+    259,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "lata/00.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "embaixada0"
+  },
+  {
+   "sprite": [
+    260,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "lata/02.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "embaixada1"
+  },
+  {
+   "sprite": [
+    261,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "lata/03.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "embaixada2"
+  },
+  {
+   "sprite": [
+    262,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "lata/04.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "embaixada3"
+  }
+ ],
+ "200": [
+  {
+   "sprite": [
+    89,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "q_soco3"
+  },
+  {
+   "sprite": [
+    89,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/03.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "q_soco3"
+  },
+  {
+   "sprite": [
+    89,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/03.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "q_soco3"
+  },
+  {
+   "sprite": [
+    91,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/05.png",
+   "ticks": 2,
+   "bate": true,
+   "nome": "q_soco5"
+  },
+  {
+   "sprite": [
+    91,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/05.png",
+   "ticks": 3,
+   "bate": true,
+   "nome": "q_soco5"
+  },
+  {
+   "sprite": [
+    91,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/05.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "q_soco5"
+  },
+  {
+   "sprite": [
+    92,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/06.png",
+   "ticks": 3,
+   "bate": false,
+   "nome": "q_soco6"
+  },
+  {
+   "sprite": [
+    93,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/07.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "q_soco7"
+  }
+ ],
+ "800": [
+  {
+   "sprite": [
+    7800,
+    0
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 4,
+   "bate": true,
+   "nome": ""
+  }
+ ],
+ "3000": [
+  {
+   "sprite": [
+    581,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "golaco/00.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_golaco0"
+  },
+  {
+   "sprite": [
+    582,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "golaco/01.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_golaco1"
+  },
+  {
+   "sprite": [
+    583,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "golaco/02.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_golaco2"
+  },
+  {
+   "sprite": [
+    584,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "golaco/03.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_golaco3"
+  },
+  {
+   "sprite": [
+    585,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "golaco/04.png",
+   "ticks": 9,
+   "bate": false,
+   "nome": "f_golaco4"
+  },
+  {
+   "sprite": [
+    585,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "golaco/04.png",
+   "ticks": 15,
+   "bate": false,
+   "nome": "f_golaco4"
+  },
+  {
+   "sprite": [
+    585,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "golaco/04.png",
+   "ticks": 36,
+   "bate": false,
+   "nome": "f_golaco4"
+  }
+ ],
+ "3100": [
+  {
+   "sprite": [
+    210,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/02.png",
+   "ticks": 7,
+   "bate": false,
+   "nome": "chute0"
+  },
+  {
+   "sprite": [
+    207,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/05.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "soco1"
+  },
+  {
+   "sprite": [
+    211,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/03.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "chute1"
+  },
+  {
+   "sprite": [
+    218,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteira/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "rasteira1"
+  },
+  {
+   "sprite": [
+    208,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "soco/05.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "soco2"
+  },
+  {
+   "sprite": [
+    212,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "chute2"
+  },
+  {
+   "sprite": [
+    231,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "compasso/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "gira2"
+  },
+  {
+   "sprite": [
+    219,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "rasteira/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "rasteira2"
+  },
+  {
+   "sprite": [
+    233,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/04.png",
+   "ticks": 6,
+   "bate": true,
+   "nome": "kick_alto"
+  },
+  {
+   "sprite": [
+    233,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "armada/04.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "kick_alto"
+  },
+  {
+   "sprite": [
+    213,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "chute_alto/05.png",
+   "ticks": 28,
+   "bate": false,
+   "nome": "chute3"
+  }
+ ],
+ "761": [
+  {
+   "sprite": [
+    7600,
+    3
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 5,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7600,
+    4
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 5,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7600,
+    5
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7600,
+    6
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 8,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7600,
+    7
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 12,
+   "bate": false,
+   "nome": ""
+  }
+ ],
+ "5020": [
+  {
+   "sprite": [
+    48,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/01.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "apanha0"
+  },
+  {
+   "sprite": [
+    391,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/02.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_apanha2"
+  },
+  {
+   "sprite": [
+    49,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/03.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "apanha1"
+  }
+ ],
+ "5025": [
+  {
+   "sprite": [
+    25,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "agachado/02.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "agacha0"
+  }
+ ],
+ "5021": [
+  {
+   "sprite": [
+    48,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/01.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "apanha0"
+  },
+  {
+   "sprite": [
+    391,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/02.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_apanha2"
+  },
+  {
+   "sprite": [
+    49,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/03.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "apanha1"
+  },
+  {
+   "sprite": [
+    50,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/04.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "apanha2"
+  }
+ ],
+ "5026": [
+  {
+   "sprite": [
+    25,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "agachado/02.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "agacha0"
+  }
+ ],
+ "5022": [
+  {
+   "sprite": [
+    48,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/01.png",
+   "ticks": 2,
+   "bate": false,
+   "nome": "apanha0"
+  },
+  {
+   "sprite": [
+    391,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/02.png",
+   "ticks": 1,
+   "bate": false,
+   "nome": "f_apanha2"
+  },
+  {
+   "sprite": [
+    49,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/03.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "apanha1"
+  },
+  {
+   "sprite": [
+    50,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/04.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "apanha2"
+  }
+ ],
+ "5027": [
+  {
+   "sprite": [
+    25,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "agachado/02.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "agacha0"
+  }
+ ],
+ "5030": [
+  {
+   "sprite": [
+    49,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/03.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "apanha1"
+  }
+ ],
+ "5035": [
+  {
+   "sprite": [
+    49,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/03.png",
+   "ticks": 6,
+   "bate": false,
+   "nome": "apanha1"
+  }
+ ],
+ "5040": [
+  {
+   "sprite": [
+    51,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/01.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "cai0"
+  }
+ ],
+ "5051": [
+  {
+   "sprite": [
+    51,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/01.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "cai0"
+  },
+  {
+   "sprite": [
+    52,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/02.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "cai1"
+  }
+ ],
+ "5061": [
+  {
+   "sprite": [
+    52,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/02.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "cai1"
+  }
+ ],
+ "5070": [
+  {
+   "sprite": [
+    51,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/01.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "cai0"
+  },
+  {
+   "sprite": [
+    52,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/02.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "cai1"
+  }
+ ],
+ "5080": [
+  {
+   "sprite": [
+    52,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/02.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "cai1"
+  },
+  {
+   "sprite": [
+    400,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/03.png",
+   "ticks": 4,
+   "bate": false,
+   "nome": "f_queda3"
+  },
+  {
+   "sprite": [
+    53,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/04.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "cai2"
+  }
+ ],
+ "5090": [
+  {
+   "sprite": [
+    53,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/04.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "cai2"
+  }
+ ],
+ "5150": [
+  {
+   "sprite": [
+    54,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "queda/07.png",
+   "ticks": -1,
+   "bate": false,
+   "nome": "deitado"
+  }
+ ],
+ "5300": [
+  {
+   "sprite": [
+    58,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/03.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "tonto0"
+  },
+  {
+   "sprite": [
+    59,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/04.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "tonto1"
+  },
+  {
+   "sprite": [
+    60,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/03.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "tonto2"
+  },
+  {
+   "sprite": [
+    61,
+    0
+   ],
+   "origem": "nova",
+   "desenho": "apanha/04.png",
+   "ticks": 8,
+   "bate": false,
+   "nome": "tonto3"
+  }
+ ],
+ "764": [
+  {
+   "sprite": [
+    7640,
+    0
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 3,
+   "bate": true,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7640,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 3,
+   "bate": true,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7640,
+    2
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 30,
+   "bate": true,
+   "nome": ""
+  }
+ ],
+ "765": [
+  {
+   "sprite": [
+    7640,
+    3
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 5,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7640,
+    4
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 5,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7640,
+    5
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7640,
+    6
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 8,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7640,
+    7
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 12,
+   "bate": false,
+   "nome": ""
+  }
+ ],
+ "5940": [
+  {
+   "sprite": [
+    7850,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": -1,
+   "bate": false,
+   "nome": ""
+  }
+ ],
+ "5941": [
+  {
+   "sprite": [
+    7850,
+    2
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 4,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7850,
+    3
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7850,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": -1,
+   "bate": false,
+   "nome": ""
+  }
+ ],
+ "5942": [
+  {
+   "sprite": [
+    7850,
+    4
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 4,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7850,
+    5
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": 6,
+   "bate": false,
+   "nome": ""
+  },
+  {
+   "sprite": [
+    7850,
+    1
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": -1,
+   "bate": false,
+   "nome": ""
+  }
+ ],
+ "5943": [
+  {
+   "sprite": [
+    7850,
+    6
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": -1,
+   "bate": false,
+   "nome": ""
+  }
+ ],
+ "5944": [
+  {
+   "sprite": [
+    7850,
+    7
+   ],
+   "origem": "?",
+   "desenho": "",
+   "ticks": -1,
+   "bate": false,
+   "nome": ""
+  }
+ ]
+}

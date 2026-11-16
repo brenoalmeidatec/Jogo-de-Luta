@@ -1,0 +1,598 @@
+#!/usr/bin/env python3
+"""Pengaró inteiro no boneco de peças (corpo firme + vida): todas as ações da forma básica.
+
+  python ferramentas/pengaro_todo.py poses [desenho ...]   poses-chave de cada desenho de hoje (cache em
+                                                            docs/boneco-pecas/todo/poses.json)
+  python ferramentas/pengaro_todo.py animar [ação ...]      intermediários, respiração e atraso; grava
+                                                            sprites/pengaro/quadros_pecas_hd/acoes/<ação>/ e o robô
+  python ferramentas/pengaro_todo.py folha                  folha de contato de todas as ações (para olhar)
+
+A lista de ações (desenho e ticks de cada elemento) vem de ferramentas/acoes_pengaro.py
+(docs/boneco-pecas/acoes_pengaro.json). O corpo é achado no quadro de hoje em qualquer posição e ângulo (pulo,
+queda, rolamento, de ponta-cabeça): o peito do kit é procurado girado de 15 em 15 graus. Com o corpo em pé e o pé
+no chão, as pernas saem por IK (pé plantado); no ar ou deitado, cada osso é encaixado no desenho de hoje.
+"""
+import json
+import shutil
+import sys
+from pathlib import Path
+
+import cv2
+import numpy as np
+from PIL import Image, ImageDraw, ImageFont
+
+AQUI = Path(__file__).resolve().parent
+sys.path.insert(0, str(AQUI))
+import boneco_ajuste as b  # noqa: E402
+import piloto_firme as pf  # noqa: E402
+import vida_pecas as vida  # noqa: E402
+import corrigir_cabeca as cc  # noqa: E402
+import piloto_corrigido as pc  # noqa: E402
+
+sys.path.insert(0, str(AQUI / "pixel"))
+import cores  # noqa: E402
+
+RAIZ = AQUI.parent
+DOCS = RAIZ / "docs/boneco-pecas/todo"
+ACOES = RAIZ / "docs/boneco-pecas/acoes_pengaro.json"
+SPR = b.SPR
+SAIDA = b.SPR / "quadros_pecas_hd/acoes"
+SAIDA_1X = b.SPR / "quadros_pecas/acoes"
+ANGULOS_CORPO = [0, 15, -15, 30, -30, 45, -45, 60, -60, 90, -90, 120, -120, 150, -150, 180]
+GIRO_CUSTO = 0.0004  # preferência pelo corpo em pé quando o casamento empata
+# expressões por tipo de ação
+DOR = ("apanha", "queda", "derrota")
+RISO = ("vitoria", "provoca", "golaco")
+IOU_MINIMO = 0.65  # abaixo disso o quadro é "especial": desenho de hoje com o rosto do kit e a paleta do parado
+LACOS = {0, 20, 21, 5, 6, 10, 11, 12, 120, 130, 140, 150, 121, 131, 141, 122, 132, 142, 151, 152, 100, 105}
+
+
+# Golpes que hoje ficam confusos (lista mandada ao Alisson em 16/11): a pose-chave do encaixe ganha um ajuste à mão
+# para o golpe ler de longe. Chave: desenho de hoje; valor: o que muda na pose (por osso).
+AJUSTE = {
+    # defesa: hoje o antebraço cruza na frente do rosto (escorço que a peça de lado não faz); no kit o punho sobe e
+    # cobre o queixo, guarda alta, com cara de esforço
+    **{f"defesa/0{i}": {"braco_frente": {"var": "punho", "ang": -45, "dx": -2, "dy": -4},
+                        "cabeca": {"ang": -4, "var": "esforco"}} for i in range(2, 7)},
+    "defesa/01": {"braco_frente": {"var": "punho", "ang": -25, "dx": -2, "dy": -4}},
+    "defesa/07": {"braco_frente": {"var": "punho", "ang": -25, "dx": -2, "dy": -4}},
+    # soco no ar: o braço da frente sai esticado para baixo, na diagonal (hoje ele fica encolhido em todos os quadros)
+    "ar_soco/04": {"braco_frente": {"var": "esticado", "ang": 28, "dx": 0, "dy": 0}},
+    "ar_soco/05": {"braco_frente": {"var": "esticado", "ang": 22, "dx": 0, "dy": 0}},
+    # provocação: riso e a mão da frente chamando ("vem"), indo e voltando
+    "provoca/02": {"braco_frente": {"ang": -35, "dx": 0, "dy": 0}, "cabeca": {"ang": 0, "var": "riso"}},
+    "provoca/03": {"braco_frente": {"ang": -10, "dx": 0, "dy": 0}, "cabeca": {"ang": 0, "var": "riso"}},
+    "provoca/04": {"braco_frente": {"ang": -35, "dx": 0, "dy": 0}, "cabeca": {"ang": 0, "var": "riso"}},
+    "provoca/05": {"braco_frente": {"ang": -10, "dx": 0, "dy": 0}, "cabeca": {"ang": 0, "var": "riso"}},
+}
+
+
+# Golpes refeitos inteiros à mão, com o corpo firme (os desenhos de hoje não servem de molde): pose por osso; as pernas
+# plantam no chão por IK nos pés do parado.
+CABECADA = {
+    # antecipação: puxa o tronco para trás, abaixa um pouco
+    "cabecada/02": {"quadril": {"dx": -6, "dy": 6}, "tronco": {"ang": -8}, "cabeca": {"ang": -6, "var": "foco"},
+                    "braco_frente": {"ang": -15, "var": "punho"}, "braco_tras": {"ang": -10}},
+    "cabecada/03": {"quadril": {"dx": -10, "dy": 10}, "tronco": {"ang": -12}, "cabeca": {"ang": -10, "var": "foco"},
+                    "braco_frente": {"ang": -5, "var": "punho"}, "braco_tras": {"ang": -15}},
+    # bate: o corpo vai para a frente e a testa é o que chega primeiro; os braços ficam para trás
+    "cabecada/04": {"quadril": {"dx": 16, "dy": 4}, "tronco": {"ang": 10}, "cabeca": {"ang": 12, "dx": 4, "var": "esforco"},
+                    "braco_frente": {"ang": 30, "var": "punho"}, "braco_tras": {"ang": 12}},
+    "cabecada/05": {"quadril": {"dx": 16, "dy": 4}, "tronco": {"ang": 10}, "cabeca": {"ang": 12, "dx": 4, "var": "esforco"},
+                    "braco_frente": {"ang": 30, "var": "punho"}, "braco_tras": {"ang": 12}},
+    # volta
+    "cabecada/06": {"quadril": {"dx": 6, "dy": 2}, "tronco": {"ang": 5}, "cabeca": {"ang": 4, "var": "foco"},
+                    "braco_frente": {"ang": 10, "var": "punho"}, "braco_tras": {"ang": 0}},
+}
+REF_IMG = {}
+
+
+def feita(q):
+    if "ref" not in REF_IMG:
+        REF_IMG["ref"] = b.abrir(b.REF)
+    pose = {"quadril": {"ang": 0, "dx": 0, "dy": 0}}
+    for slot, v in CABECADA[q].items():
+        pose[slot] = dict({"ang": 0}, **v)
+    return pf.pernas_no_chao(pose, REF_IMG["ref"])
+
+
+def ajustar(pose, q):
+    if q in CABECADA:
+        return feita(q)
+    p = {k: dict(v) for k, v in pose.items() if not k.startswith("_")}
+    for slot, mud in AJUSTE.get(q, {}).items():
+        p.setdefault(slot, {"ang": 0}).update(mud)
+        if "var" in mud and mud["var"] is None:
+            p[slot].pop("var")
+    return p
+
+
+def acoes():
+    a = json.loads(ACOES.read_text(encoding="utf-8"))
+    out = {}
+    for n, els in a.items():
+        ds = [e for e in els if "desenho" in e]
+        if ds and all(e["origem"] == "nova" for e in ds):
+            out[int(n)] = [e for e in els if "desenho" in e]
+    return out
+
+
+def cinza(a):
+    rgb = a[..., :3].astype(np.float32)
+    rgb[a[..., 3] == 0] = 110.0
+    return rgb
+
+
+CORPO_FIRME_ATE = 10
+
+
+def corpo_geral(kit, alvo):
+    """(dx, dy, ang) do quadril para o peito do kit cair em cima do peito do desenho de hoje, em qualquer ângulo."""
+    p = kit["pecas"]["tronco"]
+    t = p["img"].copy()
+    ox, oy = p["origem"]
+    t[440 - oy:] = 0  # só ombro e peito
+    jx, jy = b.OSSOS["tronco"][0]
+    piv = (jx - ox, jy - oy)
+    ys, xs = np.nonzero(alvo[..., 3] > 0)
+    pad = 70
+    X0, Y0 = max(0, xs.min() - pad), max(0, ys.min() - pad)
+    X1, Y1 = min(alvo.shape[1], xs.max() + pad), min(alvo.shape[0], ys.max() + pad)
+    base = cinza(alvo[Y0:Y1, X0:X1])
+    melhor = None
+    for ang in ANGULOS_CORPO:
+        r, pv = b.rotsprite(t, ang, piv)
+        m = (r[..., 3] > 0).astype(np.float32)
+        if m.sum() < 50:
+            continue
+        res = cv2.matchTemplate(base, cinza(r), cv2.TM_SQDIFF, mask=np.repeat(m[..., None], 3, -1))
+        res = res / (m.sum() * 3 * 255 * 255)
+        v, _, loc, _ = cv2.minMaxLoc(res)
+        v += GIRO_CUSTO * abs(ang) / 15
+        if melhor is None or v < melhor[0]:
+            melhor = (v, ang, (loc[0] + pv[0] + X0, loc[1] + pv[1] + Y0))
+    v, ang, (px, py) = melhor
+    # refino de 5 em 5 graus em volta do melhor
+    for a2 in (ang - 10, ang - 5, ang + 5, ang + 10):
+        r, pv = b.rotsprite(t, a2, piv)
+        m = (r[..., 3] > 0).astype(np.float32)
+        res = cv2.matchTemplate(base, cinza(r), cv2.TM_SQDIFF, mask=np.repeat(m[..., None], 3, -1))
+        res = res / (m.sum() * 3 * 255 * 255)
+        v2, _, loc, _ = cv2.minMaxLoc(res)
+        v2 += GIRO_CUSTO * abs(a2) / 15
+        if v2 < v:
+            v, ang, (px, py) = v2, a2, (loc[0] + pv[0] + X0, loc[1] + pv[1] + Y0)
+    if 0 < abs(ang) <= CORPO_FIRME_ATE:
+        # corpo firme (escolha do Alisson): inclinação pequena não gira o tronco (girar abre fresta nas emendas do
+        # quadril e do ombro); só translação
+        r, pv = b.rotsprite(t, 0, piv)
+        m = (r[..., 3] > 0).astype(np.float32)
+        res = cv2.matchTemplate(base, cinza(r), cv2.TM_SQDIFF, mask=np.repeat(m[..., None], 3, -1))
+        res = res / (m.sum() * 3 * 255 * 255)
+        v, _, loc, _ = cv2.minMaxLoc(res)
+        ang, (px, py) = 0, (loc[0] + pv[0] + X0, loc[1] + pv[1] + Y0)
+    # quadril: o peito gira em volta da junta do tronco, que é filha do quadril
+    qx, qy = b.OSSOS["quadril"][0]
+    g = b.girar((jx, jy), (qx, qy), ang)
+    return {"ang": ang, "dx": px - g[0], "dy": py - g[1]}, float(v)
+
+
+def expressao(acao_nome, bate):
+    if acao_nome in DOR:
+        return "dor"
+    if acao_nome in RISO:
+        return "riso"
+    if bate:
+        return "esforco"
+    if acao_nome in ("ginga", "anda", "corre", "recuo", "agachado", "defesa", "pulo"):
+        return None
+    return "foco"
+
+
+def pose_de(kit, q, expr):
+    alvo = b.abrir(q)
+    quadril, nota = corpo_geral(kit, alvo)
+    pose = {"quadril": quadril}
+    if expr:
+        pose["cabeca"] = {"ang": 0, "var": expr}
+    angs, folga, _ = b.BUSCA["braco_frente"]
+    b.BUSCA["braco_frente"] = (range(-60, 61, 3), 4, [None, "punho", "esticado"])
+    b.BUSCA["braco_tras"] = (range(-60, 61, 3), 3, [None])
+    pose = b.encaixar(kit, alvo, pose, ordem=["braco_tras", "braco_frente"])
+    em_pe = abs(quadril["ang"]) <= 20
+    no_chao = (alvo[..., 3] > 0).any(1).nonzero()[0].max() >= 655 and len(pf.pes(alvo)) >= 1
+    if q in pf.PERNA:
+        giro = range(-4, 5, 1) if pf.PERNA[q] == "agachada" else range(-30, 31, 2)
+        b.BUSCA["coxa_frente"] = (giro, 2, [pf.PERNA[q]])
+        b.ANGULOS_VARIANTE = giro
+        pose = b.encaixar(kit, alvo, pose, ordem=["coxa_frente"])
+        pose = pf.pernas_no_chao(pose, alvo, so_tras=True)
+    elif em_pe and no_chao and len(pf.pes(alvo)) >= 2:
+        pose = pf.pernas_no_chao(pose, alvo)
+    else:
+        for s in ("coxa_tras", "canela_tras", "coxa_frente", "canela_frente"):
+            b.BUSCA[s] = (range(-70, 71, 3), 2, [None])
+        if em_pe and no_chao:
+            pose = pf.pernas_no_chao(pose, alvo, so_tras=True)
+            pose = b.encaixar(kit, alvo, pose, ordem=["coxa_frente", "canela_frente"])
+        else:
+            pose = b.encaixar(kit, alvo, pose, ordem=["coxa_tras", "canela_tras", "coxa_frente", "canela_frente"])
+    pose["_nota_corpo"] = round(nota, 4)
+    # nota da montagem: quanto a silhueta do boneco cobre a do desenho de hoje (IoU). Abaixo do limite, a pose não
+    # cabe no kit de frente (deitado, de cabeça para baixo, de costas) e o quadro vira "especial"
+    m = pf.desenhar(kit, {k: v for k, v in pose.items() if not k.startswith("_")})[..., 3] > 0
+    o = alvo[..., 3] > 0
+    pose["_iou"] = round(float((m & o).sum() / max(1, (m | o).sum())), 3)
+    return pose
+
+
+def preparar():
+    kit = pf.separar_pes(b.ler_kit())
+    b.FOLGA_VARIANTE = {"coxa_frente": 3}
+    pf.MANCHA_REF = pf.mancha_ref()
+    return kit
+
+
+ESPECIAL = {}
+
+
+def especial(q, expr):
+    """Quadro que não cabe no kit de frente: o desenho de hoje, com o rosto do kit (mesmo rosto e tamanho, na
+    expressão do golpe) e a pele e a roupa puxadas para a paleta do parado (cor travada)."""
+    if not ESPECIAL:
+        tmpl, caixa = cc.referencia()
+        ESPECIAL["tmpl"], ESPECIAL["caixa"] = tmpl, caixa
+        ESPECIAL["cab"] = {n: cc.cabeca_do_kit(n, tmpl, caixa) for n in cc.EXPRESSOES}
+        ESPECIAL["refcor"] = cores.RefCor([str(cc.REF)])
+        ref = cc.abrir(cc.REF)
+        ESPECIAL["pal"] = pc.paleta_do_parado(ref, [ref])
+    a = b.abrir(q)
+    try:
+        out, info = cc.trocar(a, ESPECIAL["tmpl"], ESPECIAL["caixa"], ESPECIAL["cab"][expr or "guarda"])
+        # a máscara da cabeça velha pega o que encosta nela (braço levantado, garrafa): o que sumiu longe da
+        # cabeça nova volta como estava; migalha que ficou solta do cabelo velho sai
+        perdido = ((a[..., 3] > 0) & (out[..., 3] == 0)).astype(np.uint8)
+        if (cv2.erode(perdido, np.ones((7, 7), np.uint8)) > 0).sum() > 100:
+            raise ValueError("a cabeça nova não cobre a velha (cabeça muito inclinada ou com braço na frente)")
+        longe = cv2.dilate(info["cabeca"].astype(np.uint8), np.ones((25, 25), np.uint8)) == 0
+        volta = longe & (a[..., 3] > 0) & (out[..., 3] == 0)
+        out[volta] = a[volta]
+        out = pf.sem_migalha(out, 150)
+    except Exception:  # cabeça não achada (de costas, escondida): fica a do desenho
+        out = a
+    return cores.pintar_na_paleta(ESPECIAL["refcor"].corrigir(out), ESPECIAL["pal"])
+
+
+def cmd_poses(so=None, parte=0, partes=1):
+    """Pose-chave de cada desenho (uma vez por desenho; a expressão entra depois). Com partes > 1, cada processo faz
+    uma fatia e grava poses_<parte>.json (cmd_animar junta)."""
+    kit = preparar()
+    DOCS.mkdir(parents=True, exist_ok=True)
+    cache = DOCS / (f"poses_{parte}.json" if partes > 1 else "poses.json")
+    poses = json.loads(cache.read_text()) if cache.exists() else {}
+    desenhos = sorted({e["desenho"].removesuffix(".png") for els in acoes().values() for e in els})
+    desenhos = [q for k, q in enumerate(desenhos) if k % partes == parte]
+    for i, q in enumerate(desenhos):
+        if so and q not in so:
+            continue
+        if q in poses and not so:
+            continue
+        poses[q] = pose_de(kit, q, None)
+        cache.write_text(json.dumps(poses, indent=1), encoding="utf-8")
+        print(f"[{i + 1}/{len(desenhos)}] {q} corpo ang {poses[q]['quadril']['ang']} "
+              f"nota {poses[q]['_nota_corpo']} iou {poses[q]['_iou']}", flush=True)
+
+
+def todas_poses():
+    poses = {}
+    for f in sorted(DOCS.glob("poses*.json")):
+        poses.update(json.loads(f.read_text()))
+    return poses
+
+
+def juntar(els):
+    """Elementos seguidos com o mesmo desenho e a mesma caixa viram um só (os ticks somam)."""
+    out = []
+    for e in els:
+        if out and out[-1]["desenho"] == e["desenho"] and out[-1]["bate"] == e["bate"] and e["ticks"] > 0 \
+                and out[-1]["ticks"] > 0:
+            out[-1] = dict(out[-1], ticks=out[-1]["ticks"] + e["ticks"])
+        else:
+            out.append(dict(e))
+    return out
+
+
+# Andar: os desenhos de hoje trocam a perna da joelheira de lado a cada passo (o kit tem uma perna de trás e uma da
+# frente fixas), então o andar sai por código: cada pé faz o ciclo apoio (desliza para trás no chão) e balanço (sobe e
+# vai para a frente), as pernas por IK, o quadril desce um pouco quando os dois pés apoiam e os braços balançam.
+PASSO_PX = 66      # tamanho do passo no HD (22 px do jogo)
+SOBE_PE = 30       # altura do pé no balanço
+DESCE_QUADRIL = 6  # quanto o quadril desce no apoio duplo
+ANDAR = {20: 1, 21: -1}  # ação -> sentido (1 frente, -1 trás)
+
+
+def andar(sentido, ticks_total):
+    quadros = []
+    n = ticks_total // 2
+    qr = {c: b.OSSOS[c][0] for c in ("coxa_tras", "coxa_frente")}
+    for i in range(n):
+        fase = (i / n) if sentido > 0 else (1 - i / n)
+        dy = DESCE_QUADRIL * (0.5 + 0.5 * np.cos(4 * np.pi * fase))
+        pose = {"quadril": {"ang": 0, "dx": 0, "dy": dy}}
+        w = b.mundo(pose)
+        for coxa, canela, desloc in (("coxa_tras", "canela_tras", 0.0), ("coxa_frente", "canela_frente", 0.5)):
+            f = (fase + desloc) % 1
+            if f < 0.5:  # apoio
+                x, y = PASSO_PX / 2 - PASSO_PX * (f / 0.5), 0.0
+            else:  # balanço
+                u = (f - 0.5) / 0.5
+                x = -PASSO_PX / 2 + PASSO_PX * vida.suave(u)
+                y = -SOBE_PE * np.sin(np.pi * u)
+            tr = pf.TORNOZELO[canela]
+            c1, c2 = pf.ik(w[coxa][0], (tr[0] + x, tr[1] + y), b.OSSOS[canela][0], qr[coxa], tr)
+            pose[coxa] = {"ang": c1}
+            pose[canela] = {"ang": c2}
+        balanco = 6 * np.sin(2 * np.pi * fase)
+        pose["braco_tras"] = {"ang": balanco}
+        pose["braco_frente"] = {"ang": -balanco * 0.6 - 8, "var": "punho"}
+        quadros.append((pose, 2, False, "anda|None"))
+    return quadros
+
+
+def dobra_funda(pose):
+    """Agachado fundo, pernas encolhidas: o joelho vem para a frente (na direção de quem olha) e as peças de lado do
+    kit não encurtam; montado, a calça rasga e a perna dobra para trás. Esses quadros ficam especiais."""
+    nz = lambda a: (a + 180) % 360 - 180
+    coxas = [abs(nz(pose[s]["ang"])) for s in ("coxa_tras", "coxa_frente") if s in pose and not pose[s].get("var")]
+    canelas = [abs(nz(pose[s]["ang"])) for s in ("canela_tras", "canela_frente") if s in pose]
+    return any(a > 70 for a in coxas) or any(a > 100 for a in canelas)
+
+
+MEMBRO_PERDIDO_PX = 800
+PERDIDO_CACHE = {}
+
+
+def membro_perdido(kit, q, pose):
+    """Parte do desenho de hoje que a montagem não cobre nem de perto (15 px): é braço ou perna que o encaixe não
+    alcançou (chute que vira pose parada, braço da bola que não sobe). Acima do limite o quadro fica especial."""
+    if q not in PERDIDO_CACHE:
+        o = b.abrir(q)[..., 3] > 0
+        m = (pf.desenhar(kit, pose)[..., 3] > 0).astype(np.uint8)
+        falta = o & (cv2.dilate(m, np.ones((15, 15), np.uint8)) == 0)
+        n, _, st, _ = cv2.connectedComponentsWithStats(falta.astype(np.uint8))
+        PERDIDO_CACHE[q] = int(st[1:, 4].max()) if n > 1 else 0
+    return PERDIDO_CACHE[q] > MEMBRO_PERDIDO_PX
+
+
+PLANTA_CACHE = {}
+
+
+def plantar(kit, pose, q):
+    """Confere a pose-chave montada. Pé fora do chão (hoje ele está no chão): as pernas saem por IK até o pé de hoje.
+    Devolve False quando ainda sobra defeito (aí o quadro vira especial). Mexe na pose no lugar."""
+    chave = (q, json.dumps(pose, sort_keys=True))
+    if chave in PLANTA_CACHE:
+        ok, nova = PLANTA_CACHE[chave]
+        pose.clear(); pose.update(json.loads(nova))
+        return ok
+    alvo = b.abrir(q)
+    limpa = lambda p: {k: v for k, v in p.items() if not k.startswith("_")}
+    erros = pf.conferir(pf.desenhar(kit, limpa(pose)), alvo, None)
+    if any(e.startswith("chão") for e in erros):
+        tenta = json.loads(json.dumps(pose))
+        pf.pernas_no_chao(tenta, alvo, so_tras=q in pf.PERNA)
+        e2 = pf.conferir(pf.desenhar(kit, limpa(tenta)), alvo, None)
+        if len(e2) < len(erros):
+            pose.clear(); pose.update(tenta)
+            erros = e2
+    ok = not erros
+    PLANTA_CACHE[chave] = (ok, json.dumps(pose))
+    return ok
+
+
+def cmd_animar(so=None):
+    kit = preparar()
+    poses = todas_poses()
+    relatorio = ["| ação | desenhos | defeitos |", "|---|---|---|"]
+    for n, els in sorted(acoes().items()):
+        if so and n not in so:
+            continue
+        els = juntar(els)
+        chaves = []
+        pp = {}
+        for e in els:
+            q = e["desenho"].removesuffix(".png")
+            ex = expressao(q.split('/')[0], e["bate"])
+            ch = f"{q}|{ex}"
+            pp[ch] = ajustar(dict(poses[q], **({"cabeca": {"ang": 0, "var": ex}} if ex else {})), q)
+            chaves.append((ch, max(e["ticks"], 1) if e["ticks"] >= 0 else 1, e["bate"]))
+        elems = [(c, t) for c, t, _ in chaves]
+        fixos = {c for c, _, _ in chaves if (poses[c.split("|")[0]].get("_iou", 1) < IOU_MINIMO
+                 or dobra_funda(poses[c.split("|")[0]])) and c.split("|")[0] not in AJUSTE and c.split("|")[0] not in CABECADA}
+        for c in {c for c, _, _ in chaves} - fixos:
+            q0 = c.split("|")[0]
+            if q0 not in AJUSTE and q0 not in CABECADA and q0 not in pf.PERNA and membro_perdido(kit, q0, pp[c]):
+                fixos.add(c)
+                continue
+            if not plantar(kit, pp[c], c.split("|")[0]):
+                fixos.add(c)  # pose-chave que o kit não monta sem defeito vira quadro especial
+        bate = next((k for k, (_, _, bt) in enumerate(chaves) if bt), None)
+        laco = n in LACOS
+        quadros = vida.animar(pp, elems, bate=bate, laco=laco, guarda=None if laco else {}, fixos=fixos)
+        if n in ANDAR:
+            fixos = set()
+            quadros = andar(ANDAR[n], sum(t for _, t in elems))
+        if n in (0, 5):
+            quadros = vida.respirar(quadros)
+        quadros = vida.atrasar(quadros, laco=laco)
+        for pasta in (SAIDA / str(n), SAIDA_1X / str(n)):
+            shutil.rmtree(pasta, ignore_errors=True)
+            pasta.mkdir(parents=True)
+        defeitos = []
+        originais = {}
+        for i, (pose, t, cx, ch) in enumerate(quadros):
+            q, ex = ch.split("|")
+            if q == "anda":
+                q = "ginga/00"  # andar feito por código: o robô compara com o parado (pés no chão)
+            if ch in fixos:
+                out = especial(q, None if ex == "None" else ex)
+            else:
+                out = pf.desenhar(kit, pose)
+            originais.setdefault(q, b.abrir(q))
+            erros = pf.conferir(out, originais[q], None)
+            if ch not in fixos and any(e.startswith("chão") for e in erros):
+                # intermediário com o pé fora do chão: as pernas plantam por IK no pé do desenho de onde ele sai
+                p2 = json.loads(json.dumps(pose))
+                pf.pernas_no_chao(p2, originais[q], so_tras=q in pf.PERNA)
+                out2 = pf.desenhar(kit, p2)
+                e2 = pf.conferir(out2, originais[q], None)
+                if len(e2) < len(erros):
+                    out, erros = out2, e2
+            if ch not in fixos and erros:
+                # intermediário que ainda tem defeito: fica a pose-chave de onde ele sai (segura um tique a mais)
+                out2 = pf.desenhar(kit, pp[ch])
+                e2 = pf.conferir(out2, originais[q], None)
+                if not e2:
+                    out, erros = out2, e2
+            if ch in fixos:  # quadro especial é o desenho de hoje: só conta o que a troca de rosto e cor criou
+                antes = pf.conferir(originais[q], originais[q], None)
+                erros = [e for e in erros if not e.startswith("mancha")
+                         and not (e.startswith("solta") and any(a.startswith("solta") for a in antes))]
+            if erros:
+                defeitos.append(f"{i:02d} ({q}): {'; '.join(erros)}")
+            Image.fromarray(out).save(SAIDA / str(n) / f"{i:02d}.png")
+            Image.fromarray(np.ascontiguousarray(out[1::3, 1::3])).save(SAIDA_1X / str(n) / f"{i:02d}.png")
+        tempos = {"acao": n, "elementos": [{"desenho": i, "ticks": t, "caixa": c, "de": ch}
+                                          for i, (_, t, c, ch) in enumerate(quadros)]}
+        (SAIDA / str(n) / "tempos.json").write_text(json.dumps(tempos, indent=1, ensure_ascii=False), encoding="utf-8")
+        relatorio.append(f"| {n} | {len(quadros)} ({len(fixos)} especiais) | {'PASS' if not defeitos else '<br>'.join(defeitos)} |")
+        print(n, len(quadros), "desenhos", "PASS" if not defeitos else f"{len(defeitos)} com defeito", flush=True)
+    falhas = sum("PASS" not in l for l in relatorio[2:])
+    texto = "\n".join(relatorio) + f"\n\n{falhas} ação(ões) com defeito.\n"
+    (DOCS / "robo_defeitos.md").write_text(texto, encoding="utf-8")
+    print(f"{falhas} ação(ões) com defeito")
+
+
+def cmd_folha():
+    fonte = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 14)
+    pastas = sorted((p for p in SAIDA.iterdir() if p.is_dir()), key=lambda p: int(p.name))
+    W, H, col = 120, 110, 14
+    for parte in range(0, len(pastas), 20):
+        grupo = pastas[parte:parte + 20]
+        im = Image.new("RGB", (60 + col * W, len(grupo) * H), (40, 40, 48))
+        d = ImageDraw.Draw(im)
+        for r, p in enumerate(grupo):
+            d.text((4, r * H + 45), p.name, fill=(255, 230, 120), font=fonte)
+            fs = sorted(p.glob("[0-9][0-9].png"))
+            passo = max(1, len(fs) // col + (len(fs) % col > 0))
+            for c, f in enumerate(fs[::passo][:col]):
+                a = Image.open(f).convert("RGBA")
+                bg = Image.new("RGBA", a.size, (60, 60, 70, 255))
+                bg.alpha_composite(a)
+                cr = bg.crop((300, 200, 780, 670))
+                cr.thumbnail((W - 4, H - 4))
+                im.paste(cr.convert("RGB"), (60 + c * W, r * H))
+        im.save(DOCS / f"folha_{parte // 20:02d}.png")
+
+
+def cmd_revisar():
+    """Folha de revisão: cada desenho montado (IoU >= limite) ao lado do desenho de hoje, para olhar peça por peça."""
+    kit = preparar()
+    poses = todas_poses()
+    qs = sorted(q for q, p in poses.items()
+                if (p.get("_iou", 0) >= IOU_MINIMO and not dobra_funda(p)
+                    and (q in pf.PERNA or not membro_perdido(kit, q, ajustar(p, q)))) or q in AJUSTE or q in CABECADA)
+    fonte = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 13)
+    W, H, col = 300, 240, 6
+    for parte in range(0, len(qs), 24):
+        grupo = qs[parte:parte + 24]
+        im = Image.new("RGB", (col * W, ((len(grupo) + col - 1) // col) * H), (40, 40, 48))
+        d = ImageDraw.Draw(im)
+        for k, q in enumerate(grupo):
+            x, y = (k % col) * W, (k // col) * H
+            hoje = b.abrir(q)
+            mont = pf.desenhar(kit, ajustar(poses[q], q))
+            for j, a in enumerate((hoje, mont)):
+                bg = Image.new("RGBA", (a.shape[1], a.shape[0]), (60, 60, 70, 255))
+                bg.alpha_composite(Image.fromarray(a))
+                cr = bg.crop((330, 220, 750, 680))
+                cr.thumbnail((W // 2 - 2, H - 18))
+                im.paste(cr.convert("RGB"), (x + j * (W // 2), y + 16))
+            d.text((x + 4, y + 1), f"{q}  iou {poses[q].get('_iou')}", fill=(255, 230, 120), font=fonte)
+        im.save(DOCS / f"revisao_{parte // 24:02d}.png")
+
+
+VIDEO_ACOES = [(0, "parado"), (20, "andar (refeito por código)"), (200, "soco"), (240, "chute alto"),
+               (410, "cabeçada (refeita à mão)"), (600, "soco no ar"), (130, "defesa"), (195, "provocação"),
+               (1000, "bola"), (11, "agachar")]
+
+
+def cmd_video(saida):
+    """Vídeo lado a lado (hoje x boneco de peças) das ações da lista, uma atrás da outra, a 60 fps."""
+    import subprocess
+    saida = Path(saida)
+    saida.mkdir(parents=True, exist_ok=True)
+    fonte = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 20)
+    todas = acoes()
+    corte = (380, 250, 760, 670)
+    w, h = corte[2] - corte[0], corte[3] - corte[1]
+
+    def q_img(arq):
+        f = Image.open(arq).convert("RGBA")
+        bg = Image.new("RGBA", f.size, (60, 60, 70, 255))
+        bg.alpha_composite(f)
+        return bg.crop(corte).convert("RGB")
+
+    tmp = saida / "_quadros"
+    shutil.rmtree(tmp, ignore_errors=True)
+    tmp.mkdir()
+    k = 0
+    for n, nome in VIDEO_ACOES:
+        if n not in todas or not (SAIDA / str(n) / "tempos.json").exists():
+            continue
+        hoje = []
+        for e in todas[n]:
+            hoje += [SPR / "quadros_arcade_hd" / e["desenho"]] * max(e["ticks"], 1)
+        tempos = json.loads((SAIDA / str(n) / "tempos.json").read_text(encoding="utf-8"))
+        novo = []
+        for e in tempos["elementos"]:
+            novo += [SAIDA / str(n) / f"{e['desenho']:02d}.png"] * e["ticks"]
+        total = max(len(hoje), len(novo))
+        hoje += [hoje[-1]] * (total - len(hoje))
+        novo += [novo[-1]] * (total - len(novo))
+        voltas = max(2, 150 // total)
+        cache = {}
+        for v in range(voltas):
+            for a, b_ in zip(hoje, novo):
+                if (a, b_) not in cache:
+                    img = Image.new("RGB", (w * 2, h + 34), (40, 40, 48))
+                    img.paste(q_img(a), (0, 34))
+                    img.paste(q_img(b_), (w, 34))
+                    d = ImageDraw.Draw(img)
+                    d.text((8, 6), f"{nome}: hoje", fill=(255, 230, 120), font=fonte)
+                    d.text((w + 8, 6), "boneco de peças", fill=(140, 255, 160), font=fonte)
+                    cache[(a, b_)] = img
+                cache[(a, b_)].save(tmp / f"{k:06d}.png")
+                k += 1
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-framerate", "60", "-i", str(tmp / "%06d.png"),
+                    "-vf", "scale=iw*2:ih*2:flags=neighbor", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18",
+                    str(saida / "pengaro_lado_a_lado.mp4")], check=True)
+    shutil.rmtree(tmp)
+
+
+if __name__ == "__main__":
+    cmd, resto = sys.argv[1], sys.argv[2:]
+    if cmd == "poses":
+        if resto and "/" in resto[0] and resto[0].replace("/", "").isdigit():
+            i, n = map(int, resto[0].split("/"))
+            cmd_poses(None, i, n)
+        else:
+            cmd_poses(set(resto) or None)
+    elif cmd == "animar":
+        cmd_animar({int(x) for x in resto} or None)
+    elif cmd == "folha":
+        cmd_folha()
+    elif cmd == "revisar":
+        cmd_revisar()
+    elif cmd == "video":
+        cmd_video(resto[0] if resto else DOCS)

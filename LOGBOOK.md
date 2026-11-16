@@ -2701,3 +2701,24 @@ O Alisson aprovou o corpo firme e pediu fluidez, vida e qualidade, sem nenhum er
 
 **Robô de defeitos** (`conferir` em `piloto_firme.py`): procura fresta, mancha escura a mais que o desenho de hoje,
 pedaço solto e pé fora do chão. Deu 0 de 41 desenhos (`docs/boneco-pecas/vida/robo_defeitos.md`).
+
+### 2026-11-16 — Pengaró inteiro no boneco de peças (154 ações)
+
+Pedido do Alisson: "faça isso para todos", com fluidez, vida e nenhum erro de peça, e refazer os golpes confusos.
+
+- `ferramentas/acoes_pengaro.py` lista as 154 ações base do Pengaró (194 desenhos); `ferramentas/pengaro_todo.py`
+  faz poses (`poses i/n`), anima (`animar`), confere (robô), e gera `revisar`, `folha` e `video`.
+- Corpo firme em toda inclinação pequena (até 10°): girar o tronco abria fresta nas emendas.
+- Robô: pé desgrudado da canela (tornozelo estica/encolhe até 10 px), pé fora do chão (IK planta no pé de hoje,
+  inclusive nos intermediários), contorno escuro na beira cortada das peças, rosto trocado com fresta (aí o quadro
+  especial fica com a cabeça do desenho).
+- Quadro "especial" (desenho de hoje + rosto do kit + paleta travada do parado) quando o kit de frente não monta:
+  IoU < 0.65, agachado fundo/pernas encolhidas, ou braço/perna que o encaixe não alcança (> 800 px de fora).
+  59 dos 194 desenhos saem montados; o resto é especial.
+- Refeitos: andar (por código, ciclo apoio/balanço com IK; o desenho de hoje trocava a perna da joelheira),
+  cabeçada (à mão: antecipação, testa na frente, volta), defesa (punho sobe e cobre o queixo), soco no ar,
+  provocação.
+- Resultado: robô 0 defeitos nas 154 ações (1344 desenhos com intermediários). Saída 1x em
+  sprites/pengaro/quadros_pecas/acoes/<ação>/ (+ tempos.json); o HD se refaz com `pengaro_todo.py animar`.
+- Fraco ainda: manchinhas cinza na calça perto da virilha (resto do contorno do parado), fresta pequena no ombro de
+  trás quando o tronco inclina; agarrão, parry baixo e despertar ficaram fora (não são da lista base).

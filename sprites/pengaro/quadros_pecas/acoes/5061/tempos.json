@@ -1,0 +1,11 @@
+{
+ "acao": 5061,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 1,
+   "caixa": false,
+   "de": "queda/02|dor"
+  }
+ ]
+}
