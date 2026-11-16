@@ -202,8 +202,8 @@
   "coxa_frente_camara": {
    "arquivo": "coxa_frente_camara.png",
    "origem": [
-    558,
-    447
+    521,
+    426
    ],
    "junta": [
     572,
@@ -213,15 +213,15 @@
    "fonte": "quadros_arcade_hd/chute_alto/02.png",
    "sobra": "coxa_frente_camara_sobra.png",
    "origem_sobra": [
-    549,
-    438
+    512,
+    417
    ]
   },
   "coxa_frente_esticada": {
    "arquivo": "coxa_frente_esticada.png",
    "origem": [
-    559,
-    370
+    532,
+    354
    ],
    "junta": [
     572,
@@ -231,8 +231,44 @@
    "fonte": "quadros_arcade_hd/chute_alto/04.png",
    "sobra": "coxa_frente_esticada_sobra.png",
    "origem_sobra": [
-    550,
-    361
+    523,
+    345
+   ]
+  },
+  "cabeca_foco": {
+   "arquivo": "cabeca_foco.png",
+   "origem": [
+    529,
+    326
+   ],
+   "junta": [
+    560,
+    388
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/soco/05.png",
+   "sobra": "cabeca_sobra.png",
+   "origem_sobra": [
+    520,
+    317
+   ]
+  },
+  "cabeca_esforco": {
+   "arquivo": "cabeca_esforco.png",
+   "origem": [
+    529,
+    326
+   ],
+   "junta": [
+    560,
+    388
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/chute_alto/04.png",
+   "sobra": "cabeca_sobra.png",
+   "origem_sobra": [
+    520,
+    317
    ]
   }
  }

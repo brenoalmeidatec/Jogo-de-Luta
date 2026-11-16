@@ -89,7 +89,7 @@ def main():
                 img.paste(quadro(*inn), (w, 44))
                 d = ImageDraw.Draw(img)
                 d.text((12, 8), f"{nome}: atual (jogo hoje)", fill=(255, 230, 120), font=FONTE)
-                d.text((w + 12, 8), f"{nome}: cabeça corrigida", fill=(255, 230, 120), font=FONTE)
+                d.text((w + 12, 8), f"{nome}: corpo firme", fill=(255, 230, 120), font=FONTE)
                 cache[chave] = img
             cache[chave].save(tmp / f"{k:05d}.png")
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-framerate", "60", "-i", str(tmp / "%05d.png"),
@@ -113,7 +113,7 @@ def main():
         folha = Image.new("RGB", (tw * col, th * 2 + 80), (40, 40, 48))
         d = ImageDraw.Draw(folha)
         d.text((8, 6), "antes (jogo hoje)", fill=(255, 230, 120), font=FONTE)
-        d.text((8, th + 46), "depois (cabeça corrigida)", fill=(255, 230, 120), font=FONTE)
+        d.text((8, th + 46), "depois (corpo firme)", fill=(255, 230, 120), font=FONTE)
         for i, p in enumerate(antes):
             folha.paste(quadro(p).resize((tw, th)), (i * tw, 36))
         for i, p in enumerate(depois):

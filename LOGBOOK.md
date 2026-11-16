@@ -2659,3 +2659,22 @@ não mudou. Cores, contorno e membros são os originais. Antes e depois em `docs
 do alto da cabeça até a faixa dá 99–101% nesses quadros, então deixei o tronco como está e pedi ao Breno para olhar.
 
 **Tempo:** cerca de 40 min de máquina para as três animações.
+
+### 2026-11-16 — Piloto boneco de peças, versão 3: corpo firme (escolha do Alisson)
+
+O Alisson reprovou a v2, que só mexia na cabeça: o rosto e a pele continuavam mudando de quadro para quadro. No cartão
+de decisão ele escolheu **corpo firme, só os membros mexem**.
+
+- `ferramentas/piloto_firme.py`: o kit em cor cheia sai do ginga/00 (`boneco_ajuste.py`). O tronco é casado em cada
+  quadro de hoje só por translação, sem girar e sem escalar.
+  - Braços: encaixe osso por osso.
+  - Pernas no chão: cinemática inversa, com o pé plantado onde está hoje. O pé é uma peça separada e fica reto.
+  - Perna do chute: desenho inteiro da perna do chute de hoje, preso no quadril, sem a pele da barriga.
+  - Rosto: sempre o mesmo, em 3 expressões (guarda = ginga/00, foco = soco/05, esforço = chute_alto/04), todas
+    levadas ao tamanho do parado com `corrigir_cabeca.py`.
+  - Limpeza: frestas entre peças fecham com inpaint, e o contorno dos braços do parado sai do tronco e do quadril.
+- Saída em `quadros_pecas_hd`/`quadros_pecas` e `poses.json`; vídeos e zoom do rosto e da pele em
+  `docs/boneco-pecas/corpo_firme/`.
+
+**Defeitos que ainda aparecem:** no agachado mais fundo da ginga (quadros 3 e 4), a calça da frente abre no joelho.
+Sobra um cantinho escuro perto da mão da garrafa em alguns quadros. O 1º quadro do chute ainda está com o pé no chão.

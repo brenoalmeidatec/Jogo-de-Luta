@@ -390,7 +390,7 @@ def encaixar(kit, alvo, pose=None, ordem=ORDEM):
         pose[slot]["custo"] = round(float(c), 1)
     # perna levantada fora do lugar: o quadril (e o corpo todo) vai até ela, e a perna fica presa na junta
     v = pose.get("coxa_frente", {})
-    if v.get("var") and (abs(v["dx"]) > 2 or abs(v["dy"]) > 2) and ordem is ORDEM:
+    if v.get("var") and (abs(v.get("dx", 0)) > 2 or abs(v.get("dy", 0)) > 2) and ordem is ORDEM:
         q = dict(pose["quadril"])
         q["dx"] += v["dx"]
         q["dy"] += v["dy"]
