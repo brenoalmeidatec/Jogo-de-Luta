@@ -49,6 +49,9 @@ folhas prontas, o robô passando e o vídeo na #47.
 
 ## Lições
 
+- Ao fechar o turno do ChatGPT, limpe a caixa de texto: um rascunho do Diabo que ficou lá foi enviado junto no
+  primeiro pedido do turno seguinte (16/11). O `__envia` só escreve o pedido quando a caixa está vazia.
+
 - O Gemini repete a mesma pose se o pedido não insistir: o `SEGUINTE` pede poses "clearly DIFFERENT".
 - O auditor de golpes (`auditar_golpes.forca`) tratava todo estado 3000+ como super e esticava o preparo do Arranhão
   para 10 ticks; a faixa 4200-4649 agora conta como golpe normal.
