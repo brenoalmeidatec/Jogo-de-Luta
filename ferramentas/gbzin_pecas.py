@@ -67,6 +67,29 @@ def sem_grade(img):
     return pf.sem_migalha(out, minimo=30)
 
 
+_PALETA = None
+
+
+def paleta():
+    global _PALETA
+    if _PALETA is None:
+        r = np.array(Image.open(SPR / "quadros_arcade_hd" / f"{REF}.png").convert("RGBA"))
+        _PALETA = np.unique(r[r[..., 3] > 0][:, :3], axis=0).astype(int)
+    return _PALETA
+
+
+def quantizar(img):
+    """Toda cor fora das 15 do parado (pintura por baixo, borda de giro) vira a mais perto delas: paleta travada."""
+    out = img.copy()
+    al = out[..., 3] > 0
+    px = out[al][:, :3].astype(int)
+    pal = paleta()
+    d = ((px[:, None, :] - pal[None, :, :]) ** 2).sum(-1)
+    out[al, :3] = pal[d.argmin(1)]
+    out[..., 3] = np.where(al, 255, 0)
+    return out
+
+
 def abrir(nome):
     img = np.array(Image.open(SPR / "quadros_arcade_hd" / f"{nome}.png").convert("RGBA"))
     return sem_grade(rosado(img))
@@ -243,7 +266,7 @@ def montar_kit():
     kit = {"ref": f"quadros_arcade_hd/{REF}.png", "pecas": {}}
 
     def guardar(nome, img, junta, mae, fonte_img, fonte, sobra_propria=False):
-        img = pf.sem_migalha(img, minimo=80)
+        img = quantizar(pf.sem_migalha(img, minimo=80))
         if sobra_propria:
             fonte_img = img
         a = img[..., 3] > 0
@@ -446,7 +469,7 @@ def desenhar(kit, pose):
         tela = pf.fechar_frestas(tela, juntas=[w[sl][0] for sl in ("tronco", "cabeca", "braco_tras",
                                                                      "braco_frente")])
         tela[(tela[..., 3] > 0) & ~antes & (furo[..., 3] > 0)] = 0
-        return pf.sem_migalha(tela)
+        return quantizar(pf.sem_migalha(tela))
     # pontas da faixa: penduradas no nó, atrás do movimento do quadril
     pt = kit["pontas_faixa"]
     bo = pose.get("_bolinhas", {})
@@ -462,7 +485,7 @@ def desenhar(kit, pose):
     antes = tela[..., 3] > 0
     tela = pf.fechar_frestas(tela, juntas=[w[sl][0] for sl in OSSOS])
     tela[(tela[..., 3] > 0) & ~antes & (furo[..., 3] > 0)] = 0
-    return pf.sem_migalha(tela)
+    return quantizar(pf.sem_migalha(tela))
 
 
 # ------------------------------------------------------------------ poses
@@ -642,6 +665,224 @@ def video(saida=None):
     vp.main()
 
 
+# ------------------------------------------------------------------ quadro especial: desenho de hoje + cabeça do kit
+CABELO = {(149, 44, 65), (101, 29, 53), (76, 23, 53), (22, 20, 36)}
+
+
+def _cabeca_girada(kit, ang):
+    cab = kit["pecas"]["cabeca"]
+    junta = cab["junta"]
+    piv = (junta[0] - cab["origem"][0], junta[1] - cab["origem"][1])
+    r, p = b.rotsprite(cab["img"], ang, piv)
+    t, _ = b.rotsprite(kit["topo"], ang, piv)
+    return r, t, p
+
+
+def achar_cabeca(kit, src, angulos=range(-60, 61, 5), regiao=None):
+    """Onde a cabeça do kit casa melhor no desenho (giro e lugar da junta do pescoço). Casa pela cor já trocada, então
+    acha a cabeça laranja também (sem barba e de franja, mas no mesmo lugar)."""
+    al = src[..., 3] > 0
+    ys, xs = np.nonzero(al)
+    if regiao is None:
+        y_lim = ys.min() + int((ys.max() - ys.min()) * 0.55)
+        regiao = (max(0, xs.min() - 20), max(0, ys.min() - 20), xs.max() + 20, y_lim + 40)
+    X0, Y0, X1, Y1 = regiao
+    reg = pf.cinza(src[Y0:Y1, X0:X1])
+    melhor = None
+    for ang in angulos:
+        r, t, p = _cabeca_girada(kit, ang)
+        m = (t[..., 3] > 0).astype(np.float32)
+        if r.shape[0] >= reg.shape[0] or r.shape[1] >= reg.shape[1]:
+            continue
+        res = cv2.matchTemplate(reg, pf.cinza(r), cv2.TM_SQDIFF,
+                                mask=np.ascontiguousarray(np.repeat(m[..., None], 3, -1)))
+        v, _, pm, _ = cv2.minMaxLoc(res)
+        nota = np.sqrt(v / (m.sum() * 3))
+        if melhor is None or nota < melhor[0]:
+            melhor = (nota, ang, (pm[0] + X0 + p[0], pm[1] + Y0 + p[1]))
+    return melhor
+
+
+def trocar_cabeca(kit, src, achado=None):
+    """Tira a cabeça do desenho e põe a do kit no mesmo lugar e giro. Devolve (quadro, nota do casamento)."""
+    nota, ang, junta = achado or achar_cabeca(kit, src)
+    r, t, p = _cabeca_girada(kit, ang)
+    x0, y0 = int(round(junta[0] - p[0])), int(round(junta[1] - p[1]))
+    lugar_t = np.zeros_like(src)
+    b.colar(lugar_t, t, x0, y0)
+    mt = lugar_t[..., 3] > 0
+    out = src.copy()
+    apaga = cv2.dilate(mt.astype(np.uint8), np.ones((9, 9), np.uint8)) > 0
+    # franja e cabelo da cabeça velha que passam da cabeça nova
+    perto = cv2.dilate(mt.astype(np.uint8), np.ones((25, 25), np.uint8)) > 0
+    cabelo = so_cores(src, perto & ~apaga, CABELO - {(22, 20, 36)})
+    contorno = so_cores(src, perto & ~apaga, {(22, 20, 36)})
+    cabelo |= contorno & (cv2.dilate(cabelo.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0)
+    # o que sobra só fica se não for parte do corpo (o corpo fica mais longe do alto da cabeça)
+    out[(apaga | cabelo) & (src[..., 3] > 0)] = 0
+    pesc = np.zeros_like(src)
+    b.colar(pesc, r, x0, y0)
+    b.colar(out, pesc, 0, 0, so_vazio=True)  # pescoço só no vazio (por baixo da regata)
+    b.colar(out, np.where(mt[..., None], pesc, 0).astype(np.uint8), 0, 0)
+    # pedaço da cabeça velha que ficou solto (nariz, orelha) some; o que já era solto no desenho (gancho) fica
+    al = (out[..., 3] > 0).astype(np.uint8)
+    n, lab, st, _ = cv2.connectedComponentsWithStats(al, connectivity=8)
+    solto_antes = cv2.connectedComponents((src[..., 3] > 0).astype(np.uint8), connectivity=8)[1]
+    maior = 1 + int(np.argmax(st[1:, 4])) if n > 1 else 0
+    for i in range(1, n):
+        if i != maior and st[i, 4] < 600:
+            m = lab == i
+            rot = np.unique(solto_antes[m])
+            era_solto = any(r != 0 and (solto_antes == r).sum() < 2000 for r in rot)
+            if not era_solto:
+                out[m] = 0
+    return quantizar(pf.sem_migalha(out, minimo=30)), nota
+
+
+LIMITE_CABECA = 63   # nota do casamento da cabeça: acima disso o quadro vai para a revisão (cabeça escondida ou girada)
+FIRMES = SPR / "quadros_firmes_hd"
+
+
+def firmes(golpes=None):
+    """Todos os quadros de todos os golpes, na mesma numeração de quadros_arcade_hd (o gerador só troca a pasta):
+    cor do Gbzin certo, sem grade e com a cabeça do kit. Os golpes montados pelo kit (POSES_QUADRO) saem do kit."""
+    kit = ler_kit()
+    linhas = ["| quadro | como saiu | nota da cabeça |", "|---|---|---|"]
+    golpes = golpes or sorted(p.name for p in (SPR / "quadros_arcade_hd").iterdir() if p.is_dir())
+    for gn in golpes:
+        (FIRMES / gn).mkdir(parents=True, exist_ok=True)
+        (FIRMES.parent / "quadros_firmes" / gn).mkdir(parents=True, exist_ok=True)
+        for i in range(8):
+            q = f"{gn}/{i:02d}"
+            if q in SILHUETA:  # fim do Despertar: só a silhueta escura contra a luz verde
+                base = np.asarray(Image.open(FIRMES / SILHUETA[q][0] / f"{SILHUETA[q][1]:02d}.png")).copy()
+                out = silhueta(base)
+                como, nota = f"silhueta de {SILHUETA[q][0]}/{SILHUETA[q][1]:02d}", None
+            elif q == "rolamento/06" and False:  # termina o giro virado para a esquerda: a guarda espelhada
+                out, como, nota = np.ascontiguousarray(desenhar(kit, {})[:, ::-1]), "kit espelhado", None
+                ys, xs = np.nonzero(out[..., 3] > 0)
+                out = np.roll(out, 1080 - 2 * 540 + (540 - (xs.min() + xs.max()) // 2) * 0, 1)
+            elif q in POSES_QUADRO:
+                out, como, nota = desenhar(kit, POSES_QUADRO[q](kit)), "kit", None
+                if gn in NO_AR:
+                    ys = np.nonzero(out[..., 3].any(1))[0]
+                    out = np.roll(out, 659 - ys.max(), 0)
+            else:
+                src = abrir(TROCA_QUADRO.get(q, q))
+                achado = achar_cabeca(kit, src)
+                if achado[0] <= LIMITE_CABECA:
+                    out, nota = trocar_cabeca(kit, src, achado)
+                    como = "desenho + cabeça do kit" + (f" (desenho de {TROCA_QUADRO[q]})" if q in TROCA_QUADRO else "")
+                else:
+                    out, nota, como = quantizar(src), achado[0], "REVISAR: cabeça não achada (fica a do desenho, na cor certa)"
+            Image.fromarray(out).save(FIRMES / gn / f"{i:02d}.png")
+            Image.fromarray(np.ascontiguousarray(out[1::3, 1::3])).save(FIRMES.parent / "quadros_firmes" / gn /
+                                                                         f"{i:02d}.png")
+            linhas.append(f"| {q} | {como} | {'' if nota is None else round(float(nota), 1)} |")
+        print(gn, "ok", flush=True)
+    DOCS.mkdir(parents=True, exist_ok=True)
+    (DOCS / "firmes.md").write_text("\n".join(linhas) + "\n", encoding="utf-8")
+
+
+def _quadro_kit(nome, q):
+    def f(kit):
+        pose = POSES_FEITAS[nome]()[q] if nome in POSES_FEITAS else pose_de(kit, q, nome)
+        return pose
+    return f
+
+
+POSES_QUADRO = {}
+# Despertar: a folha pedia três pancadas do cajado no chão; vieram celular e caixa de pizza (02 a 06). As pancadas saem
+# dos desenhos bons do Cajado no Chão (mesmo boneco, mesmas mãos no cajado), na ordem do pedido.
+TROCA_QUADRO = {
+    "despertar_a/01": "cajado_chao/01",   # levanta o cajado com as duas mãos
+    "despertar_a/02": "cajado_chao/04",   # 1ª pancada
+    "despertar_a/03": "cajado_chao/02",   # levanta de novo, mais bravo
+    "despertar_a/04": "cajado_chao/04",   # 2ª pancada (o quadro segue o 02 do jogo: mais tempo segurado)
+    "despertar_a/05": "cajado_chao/02",   # cajado no alto
+    "despertar_a/06": "cajado_chao/04",   # 3ª pancada, com o corpo todo
+}
+SILHUETA = {"despertar_a/07": ("despertar_a", 6)}
+
+
+def _ar(coxa_f, canela_f, coxa_t, canela_t, braco=0, cab=0, quadril=0):
+    """Pose no ar (as duas pernas soltas, pés girando com a canela). O quadro desce depois até o pé mais baixo
+    encostar na linha do chão do desenho (o pulo é do motor), como nos desenhos de hoje."""
+    return {"quadril": {"ang": quadril, "dx": 0, "dy": 0}, "coxa_frente": {"ang": coxa_f},
+            "canela_frente": {"ang": canela_f, "pe": 0}, "coxa_tras": {"ang": coxa_t},
+            "canela_tras": {"ang": canela_t, "pe": 0}, "braco_frente": {"ang": braco},
+            "braco_tras": {"ang": -braco / 2}, "cabeca": {"ang": 0, "dx": cab, "dy": 0}}
+
+
+# coxa da frente: -92 encolhida, -87 esticada; canela: 89 pendurada, -31 reta. Coxa de trás: -134 encolhida, -139
+# esticada; canela de trás: 134 pendurada, 24 reta (ângulos medidos no osso do parado).
+ENC_F, EST_F = (-92, 89), (-87, -31)
+ENC_T, EST_T = (-134, 128), (-139, 24)
+BICICLETA = {  # chute duplo no ar: a perna da frente estica três vezes (a de trás fica dobrada, encolhida)
+    "bicicleta/00": _ar(-86, 70, -40, 70, braco=0),
+    "bicicleta/01": _ar(-94, -28, -46, 76, braco=-10, cab=-2),
+    "bicicleta/02": _ar(-86, 70, -40, 70, braco=-4),
+    "bicicleta/03": _ar(-100, -22, -48, 78, braco=-12, cab=-3),
+    "bicicleta/04": _ar(-86, 70, -40, 70, braco=-4),
+    "bicicleta/05": _ar(-94, -28, -46, 76, braco=-10, cab=-2),
+    "bicicleta/06": _ar(-80, 60, -36, 66, braco=-2),
+    "bicicleta/07": _ar(-60, 50, -30, 60, braco=0),
+}
+NO_AR = {"bicicleta"}
+
+
+def _cotovelada(ang, cab=0, qdx=0, var="recolhido"):
+    bf = {"ang": ang, "var": var} if var else {"ang": ang}
+    pose = {"quadril": {"ang": 0, "dx": qdx, "dy": 0}, "braco_frente": bf,
+            "cabeca": {"ang": 0, "dx": cab, "dy": 0}}
+    return pf.pernas_no_chao(pose, abrir("referencia_ginga/00"))
+
+
+def _pinguim(braco_f, braco_t, balanco, passo):
+    """Passinho de Pinguim: braços duros abertos para os lados, o corpo balança e o pé anda curtinho."""
+    pose = {"quadril": {"ang": balanco, "dx": passo, "dy": -2 if balanco else 0}, "braco_frente": {"ang": braco_f},
+            "braco_tras": {"ang": braco_t}, "cabeca": {"ang": -balanco, "dx": 0, "dy": 0}}
+    return _perna_de_apoio_dupla(pose)
+
+
+def _perna_de_apoio_dupla(pose):
+    w = b.mundo(pose)
+    for coxa, canela in (("coxa_tras", "canela_tras"), ("coxa_frente", "canela_frente")):
+        qr, jr = OSSOS[coxa][0], OSSOS[canela][0]
+        tr = TORNOZELO[canela]
+        alvo = (tr[0] + pose["quadril"]["dx"] * 0.6, tr[1])
+        c1, c2 = pf.ik(w[coxa][0], alvo, jr, qr, tr)
+        pose[coxa], pose[canela] = {"ang": c1}, {"ang": c2}
+    return pose
+
+
+def silhueta(img):
+    """Silhueta escura com a borda acesa (a luz verde do Despertar vem de trás, como efeito à parte)."""
+    out = img.copy()
+    al = cv2.morphologyEx((img[..., 3] > 0).astype(np.uint8), cv2.MORPH_CLOSE, np.ones((9, 9), np.uint8)) > 0
+    n, lab = cv2.connectedComponents((~al).astype(np.uint8))
+    al |= (lab != lab[0, 0]) & ~al  # buracos de dentro também ficam escuros
+    out[..., 3] = np.where(al, 255, 0)
+    dentro = cv2.erode(al.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0
+    out[al, :3] = (54, 40, 68)
+    out[al & ~dentro, :3] = (250, 176, 90)
+    return out
+for _q in ("referencia_ginga/%02d" % i for i in range(8)):
+    POSES_QUADRO[_q] = _quadro_kit("parado", _q)
+for _q in ("soco/01", "soco/02", "soco/03", "soco/07", "soco/00"):
+    POSES_QUADRO[_q] = _quadro_kit("soco", _q)
+for _q in ("chute_alto/01", "chute_alto/02", "chute_alto/04", "chute_alto/05", "chute_alto/06", "chute_alto/07"):
+    POSES_QUADRO[_q] = _quadro_kit("chute_alto", _q)
+POSES_QUADRO["chute_alto/00"] = lambda kit: {}
+POSES_QUADRO["chute_alto/03"] = lambda kit: vida.misturar(poses_chute_alto()["chute_alto/02"],
+                                                          poses_chute_alto()["chute_alto/04"], 0.5)
+# Bicicleta, cotovelada e Passinho de Pinguim pedem peças novas (perna esticada de lado, braço da cotovelada, braços
+# abertos): girar o desenho de três quartos do parado nesses ângulos rasga a coxa e o calção. Ficam como desenho +
+# cabeça do kit até as peças novas existirem; as poses de tentativa (BICICLETA, _cotovelada, PINGUIM) ficam aqui.
+POSES_QUADRO["rolamento/00"] = lambda kit: {}
+POSES_QUADRO["rolamento/07"] = lambda kit: {}
+
+
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "kit":
         montar_kit()
@@ -649,3 +890,5 @@ if __name__ == "__main__":
         animar(sys.argv[2:] or list(ATUAL))
     elif len(sys.argv) > 1 and sys.argv[1] == "video":
         video()
+    elif len(sys.argv) > 1 and sys.argv[1] == "firmes":
+        firmes(sys.argv[2:] or None)

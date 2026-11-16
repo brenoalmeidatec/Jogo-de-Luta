@@ -2758,3 +2758,21 @@ juntada). Nada foi para o `.sff` nem para a `mugen`.
 - Robô (`conferir` do piloto_firme): 0 defeitos em 41 desenhos. Vídeos em `docs/boneco-pecas/gbzin/`.
 
 Ressalvas: a boca do calção fica serrilhada quando a coxa sobe; a perna de apoio não sobe o quadril (IK no limite).
+
+### 2026-11-16 — Gbzin: todos os quadros no corpo firme (quadros_firmes_hd)
+
+- `python ferramentas/gbzin_pecas.py firmes`: os 288 quadros (36 golpes x 8) em `sprites/gbzin/quadros_firmes_hd/` e
+  `quadros_firmes/` (1x), na MESMA numeração de `quadros_arcade_hd` (o gerador só troca a pasta). Cada quadro: cor do
+  Gbzin certo (os 17 golpes laranja trocados 1 para 1), paleta travada nas 15 cores do parado, sem a grade da folha e
+  com a cabeça do kit no lugar da cabeça do desenho (`achar_cabeca` + `trocar_cabeca`). Parado, soco e chute alto saem
+  do kit inteiro.
+- Despertar: os quadros 02 a 06 (celular e caixa de pizza) viraram as três pancadas do cajado, com os desenhos do
+  Cajado no Chão; o 07 é a silhueta do 06.
+- Robô (`conferir`): 0 pedaço solto novo (os 2 que sobram, defesa/05 e 06, são o gancho do cajado já solto no desenho).
+- Relatório por quadro em `docs/boneco-pecas/gbzin/firmes.md`; vídeo `todos_antes_depois.mp4`.
+
+**Falta / limites:** 41 quadros com o rosto tampado ou muito girado (defesa, queda, levanta, cabeçada, apanha...)
+ficam com a cabeça do próprio desenho, só na cor certa: pedem encaixe à mão. Bicicleta, cotovelada (soco/05) e
+Passinho de Pinguim: girar o parado de três quartos nesses ângulos rasga coxa e calção (tentativas no código:
+BICICLETA, _cotovelada, PINGUIM); pedem peças novas desenhadas (perna esticada de lado, braço da cotovelada, braços
+abertos). Golaço e arm-lock voador seguem como estão. Nada ligado no gerador nem no `.sff`.
