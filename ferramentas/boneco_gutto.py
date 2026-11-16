@@ -223,7 +223,65 @@ ANIM = {
                           ("554_0", 5, 0, {"coxa_frente": {"ang": 18, "var": "camara"}}), ("555_0", 9, 0),
                           ("556_0", 9, 0)],
                     (45, -300, 189, -180)),
+    # agachado: o corpo do parado desce (o mesmo tronco e rosto), joelhos dobram, respira
+    "agachado": (11, [("359_0", 6, 0, {"_base": "359_0"}), ("359_0", 6, 0, {"_base": "359_0"}),
+                      ("359_0", 6, 0, {"_base": "359_0"})], None),
+    # soco agachado: começava com o braço já esticado e terminava na guarda. Agora: guarda baixa, jab, volta
+    "soco_agachado": (400, [("432_0", 2, 0, {"_base": "359_0"}),
+                            ("432_0", 1, 0, {"_base": "359_0", "braco_frente": {"ang": -10}}),
+                            ("432_0", 1, 0, {"_base": "359_0", "braco_frente": {"ang": 14, "var": "esticado"}}),
+                            ("433_0", 2, 1, {"_base": "359_0", "braco_frente": {"ang": 4, "var": "esticado"}}),
+                            ("433_0", 3, 1, {"_base": "359_0", "braco_frente": {"ang": 4, "var": "esticado"}}),
+                            ("433_0", 1, 0, {"_base": "359_0", "braco_frente": {"ang": 8, "var": "esticado"}}),
+                            ("435_0", 5, 0, {"_base": "359_0", "braco_frente": {"ang": -6}}),
+                            ("436_0", 4, 0, {"_base": "359_0"})],
+                      (45, -168, 162, -126)),
+    # chute baixo agachado: perna da frente esticada rente ao chão, a de trás dobrada
+    "chute_baixo_agachado": (430, [("447_0", 3, 0, {"_base": "359_0"}),
+                                   ("447_0", 1, 0, {"_base": "359_0", "_sem_apoio": 1,
+                                                    "coxa_frente": {"ang": 50, "var": "camara"}}),
+                                   ("1146_0", 1, 0, {"_base": "359_0", "_sem_apoio": 1,
+                                                     "coxa_frente": {"ang": 52, "var": "esticada"}}),
+                                   ("449_0", 5, 1, {"_base": "359_0", "_sem_apoio": 1,
+                                                    "coxa_frente": {"ang": 46, "var": "esticada"}}),
+                                   ("449_0", 1, 0, {"_base": "359_0", "_sem_apoio": 1,
+                                                    "coxa_frente": {"ang": 48, "var": "esticada"}}),
+                                   ("450_0", 5, 0, {"_base": "359_0", "_sem_apoio": 1,
+                                                    "coxa_frente": {"ang": 50, "var": "camara"}}),
+                                   ("450_0", 4, 0, {"_base": "359_0"}), ("452_0", 4, 0, {"_base": "359_0"})],
+                             (36, -54, 186, -12)),
+    # chute alto agachado: ficava em pé no meio. Agora chuta para cima sem levantar, apoiado na perna de trás
+    "chute_alto_agachado": (410, [("438_0", 3, 0, {"_base": "359_0"}),
+                                  ("439_0", 2, 0, {"_base": "359_0", "_sem_apoio": 1,
+                                                   "coxa_frente": {"ang": -10, "var": "camara"}}),
+                                  ("1128_0", 2, 0, {"_base": "359_0", "_sem_apoio": 1,
+                                                    "coxa_frente": {"ang": -30, "var": "camara"}}),
+                                  ("1118_0", 8, 1, {"_base": "359_0", "_sem_apoio": 1,
+                                                    "coxa_frente": {"ang": -20, "var": "esticada"}}),
+                                  ("1118_0", 2, 0, {"_base": "359_0", "_sem_apoio": 1,
+                                                    "coxa_frente": {"ang": -16, "var": "esticada"}}),
+                                  ("442_0", 7, 0, {"_base": "359_0", "_sem_apoio": 1,
+                                                   "coxa_frente": {"ang": -14, "var": "camara"}}),
+                                  ("443_0", 9, 0, {"_base": "359_0"}), ("444_0", 9, 0, {"_base": "359_0"})],
+                            (15, -366, 126, -180)),
+    # rasteira (chute forte agachado): mais baixo e mais longo que o chute baixo
+    "rasteira": (440, [("454_0", 5, 0, {"_base": "359_0"}),
+                       ("455_0", 3, 0, {"_base": "359_0", "_sem_apoio": 1,
+                                        "coxa_frente": {"ang": 56, "var": "camara"}}),
+                       ("1163_0", 1, 0, {"_base": "359_0", "_sem_apoio": 1,
+                                         "coxa_frente": {"ang": 62, "var": "esticada"}}),
+                       ("1164_0", 1, 0, {"_base": "359_0", "_sem_apoio": 1,
+                                         "coxa_frente": {"ang": 58, "var": "esticada"}}),
+                       ("457_0", 6, 1, {"_base": "359_0", "_sem_apoio": 1,
+                                        "coxa_frente": {"ang": 56, "var": "esticada"}}),
+                       ("457_0", 2, 0, {"_base": "359_0", "_sem_apoio": 1,
+                                        "coxa_frente": {"ang": 58, "var": "esticada"}}),
+                       ("1153_0", 5, 0, {"_base": "359_0", "_sem_apoio": 1,
+                                         "coxa_frente": {"ang": 54, "var": "camara"}}),
+                       ("458_0", 5, 0, {"_base": "359_0"})],
+                 (36, -54, 207, -6)),
 }
+AGACHADOS = {"agachado", "soco_agachado", "chute_baixo_agachado", "chute_alto_agachado", "rasteira"}
 PERNA = {"423_0": "camara", "965_0": "camara", "966_0": "camara", "957_0": "esticada", "426_0": "camara"}
 
 
@@ -482,7 +540,82 @@ def separar_pes(kit):
     return kit
 
 
+# agachado: da cintura para baixo é o desenho do agachado de hoje (359,0), um desenho só e sempre o mesmo. Dobrar as
+# peças da perna em pé até o agachado fundo quebrava o joelho em lascas. A perna da frente sai à parte (só pele) para
+# os chutes agachados poderem trocá-la pelo desenho da perna do chute.
+AGACHADO = "359_0"
+PERNA_FRENTE_AGACHADA = [(546, 536), (580, 528), (612, 540), (626, 560), (620, 600), (608, 626), (630, 644),
+                         (632, 664), (552, 664), (556, 630), (566, 600), (556, 580), (546, 560)]
+_BAIXO = {}
+
+
+def baixo_agachado(kit):
+    """(lower body sem a perna da frente, perna da frente) do agachado, em coordenadas do kit (tronco no lugar do
+    parado), e o deslocamento do corpo no 359."""
+    if _BAIXO:
+        return _BAIXO
+    a = b.abrir(AGACHADO)
+    dx, dy = corpo(kit, a, folga_y=(-50, 150))
+    yy, xx = np.mgrid[:a.shape[0], :a.shape[1]]
+    baixo = (a[..., 3] > 0) & (yy >= cinto(xx - dx) + dy + 2)
+    hsv = cv2.cvtColor(np.ascontiguousarray(a[..., :3]), cv2.COLOR_RGB2HSV).astype(int)
+    pele = (hsv[..., 0] <= 25) & (hsv[..., 1] > 70) & (hsv[..., 2] > 50)
+    poli = b.mascara(PERNA_FRENTE_AGACHADA) & baixo
+    frente = poli & (cv2.dilate((poli & pele).astype(np.uint8), np.ones((3, 3), np.uint8)) > 0)
+    frente &= pele | (a[..., :3].astype(int).sum(-1) < 200)
+    M = np.float32([[1, 0, -dx], [0, 1, -dy]])
+    sem = np.where((baixo & ~frente)[..., None], a, 0).astype(np.uint8)
+    so = np.where(frente[..., None], a, 0).astype(np.uint8)
+    # sem a perna da frente inteira (quando ela vem de variante): tira o polígono todo e as lascas que sobrarem soltas
+    # o calção da perna da frente fica (a coxa da variante sai de baixo dele); só pele e contorno saem
+    calcao = (hsv[..., 1] < 70) & (a[..., :3].astype(int).sum(-1) > 90) & (yy < 566)
+    calcao = cv2.morphologyEx(calcao.astype(np.uint8), cv2.MORPH_CLOSE, np.ones((5, 5), np.uint8)) > 0
+    vazio = (baixo & ~(poli & ~(calcao & (yy < 566)))).astype(np.uint8)
+    n, rot, st, _ = cv2.connectedComponentsWithStats(vazio, 8)
+    for i in range(1, n):
+        if st[i, cv2.CC_STAT_AREA] < 400:
+            vazio[rot == i] = 0
+    sem_tudo = np.where(vazio.astype(bool)[..., None], a, 0).astype(np.uint8)
+    _BAIXO.update(resto_sem_frente=cv2.warpAffine(sem_tudo, M, b.TELA, flags=cv2.INTER_NEAREST))
+    _BAIXO.update(resto=cv2.warpAffine(sem, M, b.TELA, flags=cv2.INTER_NEAREST),
+                  frente=cv2.warpAffine(so, M, b.TELA, flags=cv2.INTER_NEAREST), dx=dx, dy=dy)
+    return _BAIXO
+
+
+def desenhar_agachado(pf, kit, pose):
+    bx = baixo_agachado(kit)
+    w = b.mundo(pose)
+    (qx, qy), _ = w["quadril"]
+    j = OSSOS["quadril"][0]
+    ox, oy = int(round(qx - j[0])), int(round(qy - j[1]))
+    tela = np.zeros((b.TELA[1], b.TELA[0], 4), np.uint8)
+    var = pose.get("coxa_frente", {}).get("var")
+    usados = []
+    if var:  # a coxa da variante vai por baixo do calção do agachado
+        p = kit["pecas"][b.chave("coxa_frente", pose)]
+        pos, ang = w["coxa_frente"]
+        r, x0, y0 = b.colocar(p, p["img"], p["origem"], pos, ang)
+        b.colar(tela, r, x0, y0)
+    b.colar(tela, bx["resto_sem_frente" if var else "resto"], ox, oy)
+    if not var:
+        b.colar(tela, bx["frente"], ox, oy)
+    camadas = ["tronco", "cabeca", "braco_frente", "braco_tras"]
+    for slot in camadas:
+        p = kit["pecas"][b.chave(slot, pose)]
+        pos, ang = w[slot]
+        r, x0, y0 = b.colocar(p, p["img"], p["origem"], pos, ang)
+        b.colar(tela, r, x0, y0)
+        usados.append((p, pos, ang))
+    for p, pos, ang in usados:
+        r, x0, y0 = b.colocar(p, p["sob"], p["origem_sobra"], pos, ang)
+        b.colar(tela, r, x0, y0, so_vazio=True)
+    return pf.sem_migalha(pf.fechar_frestas(tela, juntas=[w[sl][0] for sl in ("tronco", "cabeca", "braco_frente",
+                                                                          "braco_tras", "coxa_frente")]), minimo=80)
+
+
 def desenhar(pf, kit, pose):
+    if "_agachado" in pose:
+        return desenhar_agachado(pf, kit, pose)
     tela = b.desenhar(kit, pose)
     w = b.mundo(pose)
     for slot in ("canela_tras", "canela_frente"):
@@ -528,7 +661,7 @@ def pernas_no_chao(pf, pose, alvo, so_tras=False):
 
 def pose_de(pf, kit, q, nome):
     alvo = b.abrir(q)
-    dx, dy = pf.corpo(kit, alvo)
+    dx, dy = corpo(kit, alvo, folga_y=(-50, 150)) if nome in AGACHADOS else pf.corpo(kit, alvo)
     pose = {"quadril": {"ang": 0, "dx": dx, "dy": dy}}
     if nome == "parado":  # respira, não pula: a respiração do vida_pecas cuida do peito
         pose["quadril"]["dy"] = max(-2, min(2, dy))
@@ -593,7 +726,11 @@ def animar():
                 # `_base`: o corpo e os pés saem de outro desenho (ex.: preparo que parte da guarda do parado)
                 pose = pose_de(pf, kit, (forca or {}).get("_base", q), nome)
                 forca = dict(forca or {})
-                if forca.get("coxa_frente", {}).get("var") and "coxa_tras" not in forca:
+                if forca.get("coxa_frente", {}).get("var") and "coxa_tras" not in forca and "_sem_apoio" in forca:
+                    # agachado: a perna de trás continua dobrada, com o pé onde está
+                    pose["coxa_frente"] = dict(forca["coxa_frente"])
+                    pose = pernas_no_chao(pf, pose, b.abrir(forca.get("_base", q)), so_tras=True)
+                elif forca.get("coxa_frente", {}).get("var") and "coxa_tras" not in forca:
                     # perna levantada: a de trás é a perna de apoio esticada, com o pé no chão
                     forca["coxa_tras"] = {"ang": 0, "var": "apoio"}
                     pose["quadril"]["dy"] = 0
@@ -601,8 +738,16 @@ def animar():
                     for sl in ("coxa_tras", "canela_tras", "coxa_frente", "canela_frente"):
                         pose[sl] = {"ang": 0}
                     pose["_ar"] = {"ang": 0}
+                if nome in AGACHADOS:
+                    pose["_agachado"] = {"ang": 0}
+                    bx = baixo_agachado(kit)
+                    pose["quadril"] = {"ang": 0, "dx": bx["dx"], "dy": bx["dy"]}
+                    forca.pop("_sem_apoio", None)
+                    if forca.get("coxa_frente", {}).get("var"):
+                        # no agachado o quadril da frente fica dentro da perna do calção (o 359 é mais baixo)
+                        forca["coxa_frente"] = {"dx": -3, "dy": -22, **forca["coxa_frente"]}
                 for slot, v in forca.items():
-                    if slot in ("_pes", "_ar", "_base"):
+                    if slot in ("_pes", "_ar", "_base", "_sem_apoio"):
                         continue
                     if slot == "_y":  # altura do quadril escrita à mão (no ar o desenho de hoje pula de altura)
                         pose["quadril"]["dy"] = v
@@ -611,15 +756,19 @@ def animar():
                         pose["quadril"]["dy"] += v
                     else:
                         pose[slot] = dict(v)
-                if ("_dy" in forca or "_pes" in forca) and "_ar" not in forca and \
+                if nome in AGACHADOS:
+                    pass
+                elif "_sem_apoio" in forca and "_dy" in forca:
+                    pose = pernas_no_chao(pf, pose, b.abrir(forca.get("_base", q)), so_tras=True)
+                elif ("_dy" in forca or "_pes" in forca) and "_ar" not in forca and \
                         not pose.get("coxa_frente", {}).get("var"):
                     # o quadril mudou: os pés continuam no chão (onde estão hoje, ou onde `_pes` manda)
                     pose = pernas_no_chao(pf, pose, b.abrir(forca.get("_pes", forca.get("_base", q))))
                 poses[rot] = pose
         bate = [k for k, e in enumerate(elems) if e[2]]
-        laco = nome == "parado"
+        laco = nome in ("parado", "agachado")
         quadros = vida.animar(poses, [(r, e[1]) for r, e in zip(rotulos, elems)], bate=bate or None, laco=laco,
-                              guarda={})
+                              guarda=poses[rotulos[0]] if nome in AGACHADOS else {})
         for pose, _, _, _ in quadros:  # perna de apoio esticada: o pé dela encosta no chão com o quadril em 0
             if pose.get("coxa_tras", {}).get("var") == "apoio":
                 pose["quadril"]["dy"] = 0

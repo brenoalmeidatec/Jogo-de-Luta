@@ -1,0 +1,63 @@
+{
+ "acao": 11,
+ "caixa": null,
+ "origem": [
+  "359_0"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "359_0@agachado0"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "359_0@agachado0"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "359_0@agachado0"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "359_0@agachado1"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "359_0@agachado1"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "359_0@agachado1"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "359_0@agachado2"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "359_0@agachado2"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "359_0@agachado2"
+  }
+ ]
+}
