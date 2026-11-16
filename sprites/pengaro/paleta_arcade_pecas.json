@@ -1,0 +1,148 @@
+{
+ "lutador": "pengaro",
+ "fonte": "quadros_arcade_hd/ginga/00.png (arte atual, redesenho do Breno)",
+ "nota": "Paleta do boneco de peças (piloto de 2026-11-16): 15 cores medidas na arte atual, pele puxada para as faixas da regra 3 e sombra da calça para a regra 4. Use FORMA=pecas no conferir_arte.py.",
+ "contorno_grupo": {
+  "pele": "pele_contorno",
+  "calca": "calca_contorno",
+  "faixa": "calca_contorno",
+  "caneleira": "pele_contorno"
+ },
+ "cores": [
+  {
+   "id": "pele_contorno",
+   "grupo": "pele",
+   "rgb": [
+    46,
+    20,
+    30
+   ]
+  },
+  {
+   "id": "pele_escuro",
+   "grupo": "pele",
+   "rgb": [
+    112,
+    32,
+    30
+   ]
+  },
+  {
+   "id": "pele_sombra",
+   "grupo": "pele",
+   "rgb": [
+    166,
+    58,
+    42
+   ]
+  },
+  {
+   "id": "pele_medio",
+   "grupo": "pele",
+   "rgb": [
+    212,
+    114,
+    64
+   ]
+  },
+  {
+   "id": "pele_luz",
+   "grupo": "pele",
+   "rgb": [
+    244,
+    178,
+    112
+   ]
+  },
+  {
+   "id": "pele_brilho",
+   "grupo": "pele",
+   "rgb": [
+    250,
+    224,
+    184
+   ]
+  },
+  {
+   "id": "calca_contorno",
+   "grupo": "calca",
+   "rgb": [
+    60,
+    22,
+    70
+   ]
+  },
+  {
+   "id": "calca_sombra",
+   "grupo": "calca",
+   "rgb": [
+    180,
+    166,
+    208
+   ]
+  },
+  {
+   "id": "calca_branco",
+   "grupo": "calca",
+   "rgb": [
+    251,
+    243,
+    208
+   ]
+  },
+  {
+   "id": "faixa_escuro",
+   "grupo": "faixa",
+   "rgb": [
+    20,
+    100,
+    56
+   ]
+  },
+  {
+   "id": "faixa_verde",
+   "grupo": "faixa",
+   "rgb": [
+    44,
+    162,
+    82
+   ]
+  },
+  {
+   "id": "faixa_amarelo",
+   "grupo": "faixa",
+   "rgb": [
+    244,
+    196,
+    24
+   ]
+  },
+  {
+   "id": "caneleira_escuro",
+   "grupo": "caneleira",
+   "rgb": [
+    50,
+    62,
+    42
+   ]
+  },
+  {
+   "id": "caneleira",
+   "grupo": "caneleira",
+   "rgb": [
+    102,
+    100,
+    62
+   ]
+  },
+  {
+   "id": "garrafa",
+   "grupo": "pele",
+   "rgb": [
+    196,
+    52,
+    30
+   ]
+  }
+ ]
+}

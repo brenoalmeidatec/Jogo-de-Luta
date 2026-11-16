@@ -1,0 +1,119 @@
+{
+ "ref": "quadros_arcade_hd/ginga/00.png",
+ "tela": [
+  1080,
+  780
+ ],
+ "eixo": [
+  540,
+  660
+ ],
+ "camadas": [
+  "cabeca",
+  "tronco",
+  "pernas",
+  "braco_tras",
+  "braco_frente"
+ ],
+ "pecas": {
+  "cabeca": {
+   "arquivo": "cabeca.png",
+   "origem": [
+    529,
+    326
+   ],
+   "pivo": [
+    560,
+    386
+   ],
+   "mae": "tronco"
+  },
+  "braco_tras": {
+   "arquivo": "braco_tras.png",
+   "origem": [
+    454,
+    392
+   ],
+   "pivo": [
+    497,
+    406
+   ],
+   "mae": "tronco"
+  },
+  "pernas": {
+   "arquivo": "pernas.png",
+   "origem": [
+    463,
+    468
+   ],
+   "pivo": [
+    540,
+    470
+   ],
+   "mae": null
+  },
+  "tronco": {
+   "arquivo": "tronco.png",
+   "origem": [
+    498,
+    376
+   ],
+   "pivo": [
+    540,
+    470
+   ],
+   "mae": "pernas"
+  },
+  "braco_frente_aberta": {
+   "arquivo": "braco_frente_aberta.png",
+   "origem": [
+    568,
+    382
+   ],
+   "pivo": [
+    580,
+    411
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/ginga/00.png",
+   "alinhamento": [
+    0,
+    0
+   ]
+  },
+  "braco_frente_punho": {
+   "arquivo": "braco_frente_punho.png",
+   "origem": [
+    576,
+    400
+   ],
+   "pivo": [
+    580,
+    411
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/parado/00.png",
+   "alinhamento": [
+    2,
+    7
+   ]
+  },
+  "braco_frente_esticado": {
+   "arquivo": "braco_frente_esticado.png",
+   "origem": [
+    562,
+    392
+   ],
+   "pivo": [
+    580,
+    411
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/soco/05.png",
+   "alinhamento": [
+    -7,
+    -1
+   ]
+  }
+ }
+}
