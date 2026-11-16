@@ -95,6 +95,7 @@ class Proprio:
     bind: int = 34
     fim: str = "joga"   # "joga": para longe, ou por cima segurando ←; "por_cima": o desenho é de arremesso por cima
     #                     do ombro (vai para trás dele; segurando ←, ele vira antes); "derruba": cai no lugar
+    entre: int = 8      # ticks de volta na pose de segurar entre uma pancada e outra (menos = porrada mais seguida)
 
 
 # tipo -> (estado da tentativa, estado de quem agarrou). O oponente fica sempre no 820.
@@ -110,20 +111,36 @@ def padrao(nome, danos=(22, 22, 22, 54), altos=(True, False, True), fim="joga", 
     return Proprio(nome, 1, (a, b, c), Batida((6,), 7, danos[3], True, som), alcanca=(0, 1), bind=bind, fim=fim)
 
 
+# Hazak: desenhos de golpes dele que entram nos agarrões depois dos 8 da folha do agarrão (índices 8 em diante). O
+# Breno não gostou dos agarrões dele na #45 (2026-11-15): pediu "sequência de porrada", várias pancadas seguidas e
+# bem visíveis, cada uma com impacto, antes do final. Só desenhos que já estão no .sff do jogo (o 0 de várias folhas
+# foi podado).
+HAZAK_EXTRAS = {
+    "pe": (("jab_duplo", 1), ("jab_duplo", 2), ("jab_duplo", 4), ("jab_duplo", 5), ("cruzado", 2), ("cruzado", 5),
+           ("cotovelada", 2), ("cotovelada", 5), ("soco_reto", 2), ("soco_reto", 4)),
+    "baixo": (("baixo_soco", 2), ("baixo_soco", 3), ("baixo_soco", 4), ("cotovelada", 2), ("cotovelada", 5)),
+    "comando": (("tapa_costas", 3), ("tapa_costas", 5), ("jab_duplo", 1), ("jab_duplo", 2), ("cruzado", 2),
+                ("cruzado", 5)),
+}
+
 PROPRIOS = {
-    # Hazak: as folhas agarrao_abraco, agarrao_perna e agarrao_cutucao (#36) já eram dele, com outra ordem de desenhos
     "hazaki": {
-        # abraça (2), aperta três vezes (3), gira levantando (4) e joga por cima do ombro (5); 6 e 7 são a volta
-        "pe": Proprio("Abraço de Quebrada", 2, (Batida((2,), 3, 22, False), Batida((2,), 3, 22, False),
-                                                 Batida((2,), 3, 22, False)),
-                      Batida((4,), 5, 54), solta=(6, 7), bind=30, fim="por_cima"),
-        # agacha, pega o tornozelo (2), dá o puxão (3) e levanta a perna dele até derrubar (4); 5 e 6 são a volta
-        "baixo": Proprio("Puxa a Perna", 2, (Batida((2,), 3, 40, False),), Batida((3,), 4, 60, False),
-                         solta=(5, 6), fim="derruba"),
-        # prende pelo pescoço (1), cutuca as costelas três vezes (2 -> 3, 4 -> 5, 2 -> 3) e empurra (6); 7 é a piada
-        "comando": Proprio("Cutucão Sacana", 1, (Batida((2,), 3, 30, False), Batida((4,), 5, 30, False),
-                                                  Batida((2,), 3, 30, False)),
-                           Batida((5,), 6, 50), solta=(7,), bind=30, fim="derruba"),
+        # abraça (1), e com ele preso: jab, jab, cruzado, cotovelada e soco no estômago; gira levantando (4) e joga
+        # por cima do ombro (5); 6 e 7 são a volta. Extras: 8/9 e 10/11 jab, 12/13 cruzado, 14/15 cotovelada,
+        # 16/17 soco reto
+        "pe": Proprio("Abraço de Quebrada", 1, (Batida((8,), 9, 14), Batida((10,), 11, 14), Batida((12,), 13, 18),
+                                                 Batida((14,), 15, 18), Batida((16,), 17, 18, False)),
+                      Batida((4,), 5, 50), solta=(6, 7), bind=30, fim="por_cima", entre=5),
+        # agacha e pega o tornozelo (2): soco baixo, soco baixo, cotovelada de cima e o puxão (3); levanta a perna
+        # dele até derrubar (4); 5 e 6 são a volta. Extras: 8 preparo e 9/10 soco baixo, 11/12 cotovelada
+        "baixo": Proprio("Puxa a Perna", 2, (Batida((8,), 9, 16, False), Batida((8,), 10, 16, False),
+                                            Batida((11,), 12, 18), Batida((2,), 3, 20, False)),
+                         Batida((3,), 4, 60, False), solta=(5, 6), fim="derruba", entre=5),
+        # prende pelo pescoço (1): dois cutucões nas costelas, tapa, jab e cruzado; empurra (6); 7 é a piada.
+        # Extras: 8/9 tapa, 10/11 jab, 12/13 cruzado
+        "comando": Proprio("Cutucão Sacana", 1, (Batida((2,), 3, 14, False), Batida((4,), 5, 14, False),
+                                                  Batida((8,), 9, 18), Batida((10,), 11, 18), Batida((12,), 13, 20)),
+                           Batida((5,), 6, 64), solta=(7,), bind=30, fim="derruba", entre=5),
     },
 }
 
@@ -295,8 +312,8 @@ def montar_proprio(p, refs, caixas2):
                 quadros.append(q(i, dur))
                 t += dur
         else:
-            quadros += [q(b.bate, CONTATO + 1), q(p.segura, SEGURA)]
-            t += CONTATO + 1 + SEGURA
+            quadros += [q(b.bate, CONTATO + 1), q(p.segura, p.entre)]
+            t += CONTATO + 1 + p.entre
     return quadros, contatos
 
 
@@ -368,7 +385,7 @@ def estados(r, contatos, frente, vitima_preso, fim_tipo="joga"):
                          "trigger1 = NumTarget", f"pos = {r.bind + 5}, 0"))
         c.append(ctl(810, f"{nome}: barra", "PowerAdd", f"trigger1 = Time = {t}", "trigger1 = NumTarget",
                      f"value = {dano // 2}"))
-        reacao = REACOES[min(k, 2) + (0 if alto else 3)][0]
+        reacao = REACOES[k % 3 + (0 if alto else 3)][0]  # varia a reação a cada pancada
         if not final:
             c.append(ctl(810, f"{nome}: reage", "TargetState", f"trigger1 = Time = {t}", "trigger1 = NumTarget",
                          f"value = {reacao}"))

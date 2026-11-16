@@ -2552,6 +2552,42 @@ desfaz pós-passos e, no Gutto, troca o HD do Blender pelo 1x: use o `remendar_s
 
 **Saída:** `docs/anatomia-51/cor/` (folhas antes/depois e vídeos da troca parado -> golpe -> parado).
 
+## 2026-11-15 — Pengaró de três braços e anatomia quadro a quadro de todos (issue #51, comentário 6898143291) (Claude, thread do Alisson)
+
+**Pedido do Breno:** o Pengaró segurava a garrafa e aparecia outro braço por cima dando soco. Achar e consertar; passar
+o Pengaró inteiro e todos os lutadores quadro a quadro, com os olhos; melhorar a régua de membro sobrando.
+
+**O jab (ação 200, sprite 91,0 = `pengaro/soco/05`):** era um quadro de outra geração de desenho (sem joelheira, pernas
+em outra pose) com o braço do soco saindo do mesmo ombro da garrafa. Agora é o soco/04 com o braço esticado até o
+alcance do 05: o soco sai do ombro da frente e a garrafa fica na mão de trás.
+
+**Passada com os olhos:** `ferramentas/pixel/tira_jogo.py` tirou 743 tiras (cada ação como o jogo mostra); 29 erros
+confirmados por dois revisores. Depois, o Pengaró base inteiro em zoom (288 quadros): mais 47. Tudo consertado com a
+ferramenta de pixel e conferido por um revisor visual separado:
+- **Pengaró:** jab; ginga/05, lata/05 e anda/06 (o mesmo desenho sem joelheira); braço da frente faltando em
+  cabecada/03-04 e ar_soco/02; braço a mais em ar_soco/02; bola/02 com os dois braços do mesmo lado; golaco/00 com
+  garrafa e mão soltas na boca; compasso (braço solto, cabeça de outro desenho, manchas); corrida com cabeça de outro
+  desenho; joelheira sumindo na bicicleta; rolamento redesenhado na proporção do parado; listras, cordões e manchas
+  soltas em afastar, armada, caneta, chute_baixo, derrota, levanta, martelo, parry, pulo, queda, rasteira(inha), vitoria.
+- **Diabo:** três braços no agarrão Cutucão (d_agarrao_cutucao/03-05); toco de antebraço de pele acima do punho da
+  maleta em d_pisao_chefe, d_chute_lateral, d_sapato_barriga e d_fumaca (73 sprites no .sff).
+- **Gutto (HD do Blender, consertado no próprio sprite com `sprite_sff.py`):** três mãos no soco no pulo (467,0),
+  cabelo, sobra na boca, magenta e mancha na barriga (753, 423/202, 443, 444, 562, 563).
+- **CK:** luva de trás pintada de lilás na rasteira (parecia pé), tira lilás solta, duas luvas no baixo_soco/03,
+  três mãos na caneta/04.
+- **Hazak base** (patroa, chute_alto_rajada/01) é da thread do Hazak; **Raiclaven** sem erro confirmado.
+
+**Régua nova:** `ferramentas/pixel/sequencia.py` (quadro intruso: peça do parado que some ou aparece num quadro só,
+com o contorno fugindo dos vizinhos). Pega o jab antigo, a ginga, a lata e o anda; hoje só avisa o d_corrida/01 do
+Diabo (tom de outro desenho, sem erro de membro) e a transformação do Pengaró.
+
+**Bug achado e consertado:** o `indices_de` do `remendar_sff.py` jogava o quase-preto no índice 0 (transparente). O
+remendo de cor do Gutto tinha aberto buraco no contorno de 102 sprites (33 mil pixels); devolvidos com
+`sprite_sff.py tapar`. O `remendar_sff.py` agora também leva o recorte/eixo novo quando o conserto muda o tamanho do
+sprite, e o `pixel.py sincroniza L/A/NN` refaz só aquele quadro do 1x.
+
+**Robôs:** Pengaró 189/0, Gutto 186/0, CK 226/0, Hazak 238/0. **Saída:** `docs/anatomia-51/membros/` (antes/depois de
+cada lutador, o jab no jogo e o vídeo das correntes do Pengaró).
 ## 2026-11-15 — Diabo Loiro #44, 2ª rodada: Cobrança do Diabo e folhas próprias (Claude, thread do Hazak)
 
 **Pedido do Breno na #44:** tirar o Chapéu Bumerangue, especial novo que não seja projétil nem repita golpe de outro
