@@ -473,7 +473,7 @@ Anatomy check for every frame: exactly two arms and two legs, both hands always 
 
 Fighting-game timing (attacks): a clear anticipation pose before the hit, at most one stretched smear pose right before contact, the contact pose with the striking limb (or the staff) fully extended and drawn about 15% bigger, then a recovery that is longer on heavy moves; the brown belt ends and the hair fringe lag 1-2 frames behind the body and settle.
 
-MOTION: a flying knee in mid air. All frames in the air. 1 tucked, 2 and 3 he grabs forward with both hands, 4 and 5 the front knee drives forward at head height, 6 to 8 back to tucked.
+MOTION: a mid-air DOUBLE KICK (bicycle kick), all frames in the air, always facing right: 1 tucked, 2 the front leg kicks straight forward to the RIGHT at chest height, sole of the sneaker pointing right, leg fully extended, 3 that leg pulls back while the other leg starts forward, 4 the second leg kicks straight forward to the right, fully extended, 5 the first leg kicks again, fully extended, 6 the second leg again, 7 both legs pulling back, 8 tucked. Every kick is a long straight leg, never just a knee.
 
 SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair, soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
 ```
