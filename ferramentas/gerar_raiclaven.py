@@ -515,6 +515,8 @@ def main():
     parry.aplicar("raiclaven", SAIDA)
     import caixas_dupla  # #43: no despertado a caixa de golpe vai para a arma da frente (navalha, secador, tesoura, bota)
     caixas_dupla.aplicar("raiclaven", SAIDA)
+    import kit_raiclaven  # #43/#47: kit todo próprio do despertado com A Cliente (estados 20000+, agarrões 24100/24200)
+    kit_raiclaven.aplicar(SAIDA, com_cmd=False)
     import legibilidade  # golpes legíveis (#45): caixa no membro, congelamento, tremida, reação e preparo
     legibilidade.aplicar("raiclaven", SAIDA)
     import balanceamento  # números do item 7 (attack, defence, velocidade)
@@ -527,6 +529,7 @@ def main():
     destruicao.aplicar("raiclaven", SAIDA)
     import despertados_47  # #43/#47: Cadeira Elétrica (agarrão) e Secador de Raio (poder), efeitos do Blender
     despertados_47.aplicar("raiclaven", SAIDA)
+    kit_raiclaven.aplicar(SAIDA, so_cmd=True)  # o .cmd por último: trava os golpes do normal com var(20) = 0
     import aura_no_corpo  # a aura grande (lâminas e raios) presa ao corpo da dupla (#51), depois de tudo que regrava o -4
     aura_no_corpo.aplicar("raiclaven", SAIDA)
     import aura_silhueta  # aura de anime colada na silhueta dos dois, em verde (#43/#51); sempre por último

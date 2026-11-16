@@ -82,8 +82,9 @@ CFG = {
     # Cientista Louco (#43): ele segura, ela corta; raio verde dos tanques no agarrado, lascas de aço no final.
     # O poder sai do secador dela, lá no alto das costas dele. Sons do .snd dele: 50,7 máquina zumbindo,
     # 50,8 máquina explodindo, 50,9 navalha (gerar_sons.ESPECIAIS)
-    "raiclaven": Cfg("Cadeira Elétrica", (G(3433, 26, "navalhada"), G(3420, 26, "secador na cara"),
-                                          G(3410, 26, "tesourada")), G(3423, 62, "corte final"), 4,
+    # Os golpes são os do kit próprio dele (kit_raiclaven.py, regra da seção 4): rode o kit antes.
+    "raiclaven": Cfg("Cadeira Elétrica", (G(20210, 26, "navalhada"), G(20270, 26, "secador na cara"),
+                                          G(20301, 26, "garra")), G(20303, 62, "dentes e chacoalha"), 4,
                      "Secador de Raio", 25, (45, -92), 3.4, "50,7", "50,9", "S53,2", "50,8"),
 }
 
@@ -378,6 +379,7 @@ def ligar_cmd(lutador, cmd):
             novo = (bloco.group(0).replace("[State -1, Agarrao]", f"[State -1, Agarrao do despertado {MARCA}]")
                     .replace("value = 800", "value = 4700"))
             novo = re.sub(r"(value = 4700\r?\n)", rf"\1triggerall = var(20) > 0{nl}", novo, count=1)
+            novo = re.sub(r"(?m)^[^\n]*\(kit_raiclaven\.py\)[^\n]*\n", "", novo)  # a trava do modo normal não vem junto
             out.append(novo)
         out.append(p)
     cmd = "".join(out)

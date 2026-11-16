@@ -8,13 +8,19 @@ Cadeira Giratória		_B_D^K
 Borrifada <#bebebe>(projétil em arco)</>		_F_B^P
 Próximo! (a passa, b passa e chuta)		_F_B^K
 
-<#f0f000>:Exclusivos do Surto de Tesoura:</>
-Navalha de Sombra <#bebebe>(projétil)</>		_D_D^X
-Corte da Corrente		_D_D^Y
-Cadeira Atravessada		_D_D^A
-Queda da Cadeira		_D_D^B
-Corrente Y e B de 4 golpes		^Y^Y^Y^Y / ^B^B^B^B
-Kombo do Salão		^B,^A,^X
+<#f0f000>:Surto de Tesoura: Cientista Louco e A Cliente (kit todo próprio):</>
+Peruca Viva <#bebebe>(projétil pelo chão)</>		_D_F^X / _D_F^Y
+Pescoço de Borracha <#bebebe>(y puxa)</>		_D_B^X / _D_B^Y
+Tanque Estourado		_F_D^A / _F_D^B
+Bigodes Carnívoros <#bebebe>(vários acertos)</>		_B_F^B
+Sala de Cirurgia <#bebebe>(super, 2000)</>		_B_F_D^Y
+Lavagem <#bebebe>(agarrão baixo)</>		_D+^Y
+Transplante <#bebebe>(agarrão de comando)</>		_F_D_F^Y
+Por cima / Pisão de Choque		_F+^Y / _F+^B
+Bafo do Secador / Puxa pela Gola		_B+^X / _B+^A
+Tesourinha / Navalha Comprida		^X^X^X^X / ^Y^Y^Y^Y
+Tubo Chicote / Pião da Cadeira		^A^A^A^A / ^B^B^B^B
+Kombo Cobaia		_B+^A, ^Y, _D+^B
 
 <#f0f000>:Correntes (acertando os 3, o 4º derruba):</>
 Soco fraco		^X^X^X^X
@@ -30,7 +36,6 @@ Lançador		^A, ^B, _D+^Y
 
 <#f0f000>:Supers:</>
 Próximo, Cliente! <#bebebe>(1000)</>		_B_F_D^K
-Último Cliente (no Surto de Tesoura)		_B_F_D^K
 Máquina Explosiva		_B_F_D^P
 
 <#f0f000>:Sistema:</>

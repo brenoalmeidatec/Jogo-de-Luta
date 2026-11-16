@@ -12105,6 +12105,3129 @@ trigger1 = map(au_raiclaven_f) <= 0 && NumExplod(9601)
 id = 9601
 ignorehitpause = 1
 
+
+
+
+; ---- kit próprio do Raiclaven despertado (ferramentas/kit_raiclaven.py) ----
+[Statedef 20200]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20200
+juggle = 3
+velset = 0,0
+; Tapa de Garra (kit_raiclaven.py)
+
+[State 20200, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20200, Golpe]
+type = HitDef
+trigger1 = Time = 4
+attr = S, NA
+damage = 34, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 8, 8
+guard.pausetime = 6, 6
+sparkxy = -10, -70
+sparkno = S9200
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 14
+ground.velocity = -2.5
+air.velocity = -1.4,-3
+
+[State 20200, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20210]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20210
+juggle = 3
+velset = 0,0
+; Navalha Comprida (kit_raiclaven.py)
+
+[State 20210, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20210, Golpe]
+type = HitDef
+trigger1 = Time = 8
+attr = S, NA
+damage = 62, 0
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 10, 10
+guard.pausetime = 8, 8
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 0.9, 0.9
+guard.sparkscale = .9, .9
+hitsound = F5,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 7
+ground.hittime = 20
+ground.velocity = -3.5
+air.velocity = -1.4,-3
+
+[State 20210, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20230]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20230
+juggle = 3
+velset = 0,0
+; Bota e Gosma (kit_raiclaven.py)
+
+[State 20230, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20230, Golpe]
+type = HitDef
+trigger1 = Time = 5
+attr = S, NA
+damage = 44, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 8, 8
+guard.pausetime = 6, 6
+sparkxy = -10, -70
+sparkno = S9200
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 14
+ground.velocity = -2.5
+air.velocity = -1.4,-3
+
+[State 20230, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20240]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20240
+juggle = 3
+velset = 0,0
+; Três Braços (kit_raiclaven.py)
+
+[State 20240, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20240, Golpe]
+type = HitDef
+trigger1 = Time = 10
+attr = S, NA
+damage = 30, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 8, 8
+guard.pausetime = 6, 6
+sparkxy = -10, -70
+sparkno = S9200
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 14
+ground.velocity = -2.5
+air.velocity = -1.4,-3
+
+[State 20240, Golpe]
+type = HitDef
+trigger1 = Time = 13 && MoveHit
+attr = S, NA
+damage = 40, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 8, 8
+guard.pausetime = 6, 6
+sparkxy = -10, -70
+sparkno = S9200
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 14
+ground.velocity = -2.5
+air.velocity = -1.4,-3
+
+[State 20240, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20400]
+type = C
+movetype = A
+physics = C
+ctrl = 0
+sprpriority = 2
+anim = 20400
+juggle = 3
+velset = 0,0
+; Belisco no Tornozelo (kit_raiclaven.py)
+
+[State 20400, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20400, Golpe]
+type = HitDef
+trigger1 = Time = 4
+attr = C, NA
+damage = 30, 0
+animtype = Light
+guardflag = L
+hitflag = MAF
+priority = 4, Hit
+pausetime = 8, 8
+guard.pausetime = 6, 6
+sparkxy = -10, -70
+sparkno = S9200
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 14
+ground.velocity = -2.5
+air.velocity = -1.4,-3
+
+[State 20400, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[Statedef 20410]
+type = C
+movetype = A
+physics = C
+ctrl = 0
+sprpriority = 2
+anim = 20410
+juggle = 3
+velset = 0,0
+; Mordida Antiaérea (kit_raiclaven.py)
+
+[State 20410, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20410, Golpe]
+type = HitDef
+trigger1 = Time = 7
+attr = C, NA
+damage = 60, 0
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 10, 10
+guard.pausetime = 8, 8
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 0.9, 0.9
+guard.sparkscale = .9, .9
+hitsound = F5,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 7
+ground.hittime = 20
+ground.velocity = -2,-6
+air.velocity = -2,-7
+fall = 1
+fall.recover = 1
+
+[State 20410, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[Statedef 20430]
+type = C
+movetype = A
+physics = C
+ctrl = 0
+sprpriority = 2
+anim = 20430
+juggle = 3
+velset = 0,0
+; Tubo no Chão (kit_raiclaven.py)
+
+[State 20430, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20430, Golpe]
+type = HitDef
+trigger1 = Time = 5
+attr = C, NA
+damage = 36, 0
+animtype = Light
+guardflag = L
+hitflag = MAF
+priority = 4, Hit
+pausetime = 8, 8
+guard.pausetime = 6, 6
+sparkxy = -10, -70
+sparkno = S9200
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,0
+guardsound = F6,0
+ground.type = Low
+ground.slidetime = 5
+ground.hittime = 14
+ground.velocity = -2.5
+air.velocity = -1.4,-3
+
+[State 20430, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[Statedef 20440]
+type = C
+movetype = A
+physics = C
+ctrl = 0
+sprpriority = 2
+anim = 20440
+juggle = 3
+velset = 0,0
+; Varrida de Garra (kit_raiclaven.py)
+
+[State 20440, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20440, Golpe]
+type = HitDef
+trigger1 = Time = 10
+attr = C, NA
+damage = 66, 0
+animtype = Medium
+guardflag = L
+hitflag = MAF
+priority = 4, Hit
+pausetime = 10, 10
+guard.pausetime = 8, 8
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 0.9, 0.9
+guard.sparkscale = .9, .9
+hitsound = F5,1
+guardsound = F6,0
+ground.type = Trip
+ground.slidetime = 7
+ground.hittime = 20
+ground.velocity = -2,-2
+air.velocity = -2,-3
+fall = 1
+fall.recover = 1
+
+[State 20440, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[Statedef 20600]
+type = A
+movetype = A
+physics = A
+ctrl = 0
+sprpriority = 2
+anim = 20600
+juggle = 3
+; Arranhão de Cima (kit_raiclaven.py)
+
+[State 20600, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20600, Golpe]
+type = HitDef
+trigger1 = Time = 7
+attr = A, NA
+damage = 34, 0
+animtype = Light
+guardflag = HA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 8, 8
+guard.pausetime = 6, 6
+sparkxy = -10, -70
+sparkno = S9200
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 14
+ground.velocity = -2.5
+air.velocity = -1.4,-3
+
+[State 20600, Cai]
+type = ChangeState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 52
+
+[Statedef 20610]
+type = A
+movetype = A
+physics = A
+ctrl = 0
+sprpriority = 2
+anim = 20610
+juggle = 3
+; Navalha em Arco (kit_raiclaven.py)
+
+[State 20610, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20610, Golpe]
+type = HitDef
+trigger1 = Time = 7
+attr = A, NA
+damage = 58, 0
+animtype = Medium
+guardflag = HA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 10, 10
+guard.pausetime = 8, 8
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 0.9, 0.9
+guard.sparkscale = .9, .9
+hitsound = F5,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 7
+ground.hittime = 20
+ground.velocity = -3.5
+air.velocity = -1.4,-3
+
+[State 20610, Cai]
+type = ChangeState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 52
+
+[Statedef 20630]
+type = A
+movetype = A
+physics = A
+ctrl = 0
+sprpriority = 2
+anim = 20630
+juggle = 3
+; Joelhada e Mordida (kit_raiclaven.py)
+
+[State 20630, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20630, Golpe]
+type = HitDef
+trigger1 = Time = 7
+attr = A, NA
+damage = 46, 0
+animtype = Medium
+guardflag = HA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 10, 10
+guard.pausetime = 8, 8
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 0.9, 0.9
+guard.sparkscale = .9, .9
+hitsound = F5,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 7
+ground.hittime = 20
+ground.velocity = -3.5
+air.velocity = -1.4,-3
+
+[State 20630, Cai]
+type = ChangeState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 52
+
+[Statedef 20640]
+type = A
+movetype = A
+physics = A
+ctrl = 0
+sprpriority = 2
+anim = 20640
+juggle = 3
+; Por Baixo Mordendo (kit_raiclaven.py)
+
+[State 20640, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20640, Golpe]
+type = HitDef
+trigger1 = Time = 9
+attr = A, NA
+damage = 60, 0
+animtype = Medium
+guardflag = HA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 10, 10
+guard.pausetime = 8, 8
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 0.9, 0.9
+guard.sparkscale = .9, .9
+hitsound = F5,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 7
+ground.hittime = 20
+ground.velocity = -3.5
+air.velocity = -1.4,-3
+
+[State 20640, Cai]
+type = ChangeState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 52
+
+[Statedef 20250]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20250
+juggle = 3
+velset = 0,0
+; Mordida por Cima (kit_raiclaven.py)
+
+[State 20250, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20250, Golpe]
+type = HitDef
+trigger1 = Time = 8
+attr = S, NA
+damage = 66, 0
+animtype = Medium
+guardflag = HA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 10, 10
+guard.pausetime = 8, 8
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 0.9, 0.9
+guard.sparkscale = .9, .9
+hitsound = F5,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 7
+ground.hittime = 20
+ground.velocity = -3.5
+air.velocity = -1.4,-3
+
+[State 20250, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20260]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20260
+juggle = 3
+velset = 0,0
+; Pisão de Choque (kit_raiclaven.py)
+
+[State 20260, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20260, Golpe]
+type = HitDef
+trigger1 = Time = 7
+attr = S, NA
+damage = 62, 0
+animtype = Medium
+guardflag = L
+hitflag = MAF
+priority = 4, Hit
+pausetime = 10, 10
+guard.pausetime = 8, 8
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 0.9, 0.9
+guard.sparkscale = .9, .9
+hitsound = F5,1
+guardsound = F6,0
+ground.type = Low
+ground.slidetime = 7
+ground.hittime = 20
+ground.velocity = -3.5
+air.velocity = -1.4,-3
+
+[State 20260, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20270]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20270
+juggle = 3
+velset = 0,0
+; Bafo do Secador (kit_raiclaven.py)
+
+[State 20270, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20270, Golpe]
+type = HitDef
+trigger1 = Time = 6
+attr = S, NA
+damage = 40, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 8, 8
+guard.pausetime = 6, 6
+sparkxy = -10, -70
+sparkno = S9200
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 14
+ground.velocity = -10
+air.velocity = -1.4,-3
+
+[State 20270, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20280]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20280
+juggle = 3
+velset = 0,0
+; Puxa pela Gola (kit_raiclaven.py)
+
+[State 20280, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20280, Golpe]
+type = HitDef
+trigger1 = Time = 8
+attr = S, NA
+damage = 36, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 8, 8
+guard.pausetime = 6, 6
+sparkxy = -10, -70
+sparkno = S9200
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 14
+ground.velocity = 4
+air.velocity = 2,-3
+
+[State 20280, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20301]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20301
+juggle = 3
+velset = 0,0
+; Tesourinha: garra (kit_raiclaven.py)
+
+[State 20301, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20301, Avanço]
+type = VelSet
+trigger1 = Time = 3
+x = 2.4
+
+[State 20301, Freia]
+type = VelSet
+trigger1 = Time = 8
+x = 0
+
+[State 20301, Golpe]
+type = HitDef
+trigger1 = Time = 6
+attr = S, NA
+damage = 34, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 8, 8
+guard.pausetime = 6, 6
+sparkxy = -10, -70
+sparkno = S9200
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 14
+ground.velocity = -1.5
+air.velocity = -1.4,-3
+
+[State 20301, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20302]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20302
+juggle = 3
+velset = 0,0
+; Tesourinha: mordida (kit_raiclaven.py)
+
+[State 20302, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20302, Avanço]
+type = VelSet
+trigger1 = Time = 5
+x = 3.2
+
+[State 20302, Freia]
+type = VelSet
+trigger1 = Time = 10
+x = 0
+
+[State 20302, Golpe]
+type = HitDef
+trigger1 = Time = 8
+attr = S, NA
+damage = 40, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 8, 8
+guard.pausetime = 6, 6
+sparkxy = -10, -70
+sparkno = S9200
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 14
+ground.velocity = -1.5
+air.velocity = -1.4,-3
+
+[State 20302, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20303]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20303
+juggle = 3
+velset = 0,0
+; Tesourinha: dentes e chacoalha (kit_raiclaven.py)
+
+[State 20303, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20303, Golpe]
+type = HitDef
+trigger1 = Time = 10
+attr = S, NA
+damage = 30, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 8, 8
+guard.pausetime = 6, 6
+sparkxy = -10, -70
+sparkno = S9200
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 14
+ground.velocity = -6,-4
+air.velocity = -5,-5
+
+[State 20303, Golpe]
+type = HitDef
+trigger1 = Time = 18 && MoveHit
+attr = S, NA
+damage = 30, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 8, 8
+guard.pausetime = 6, 6
+sparkxy = -10, -70
+sparkno = S9200
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 14
+ground.velocity = -6,-4
+air.velocity = -5,-5
+
+[State 20303, Golpe]
+type = HitDef
+trigger1 = Time = 26 && MoveHit
+attr = S, NA
+damage = 50, 0
+animtype = Heavy
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 16, 16
+guard.pausetime = 10, 10
+sparkxy = -10, -70
+sparkno = S9205
+guard.sparkno = S9202
+sparkscale = 1.3, 1.3
+guard.sparkscale = .9, .9
+hitsound = F5,3
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 8
+ground.hittime = 21
+ground.velocity = -6,-4
+air.velocity = -5,-5
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -3
+fall = 1
+fall.recover = 1
+fall.envshake.time = 8
+fall.envshake.freq = 150
+fall.envshake.ampl = -2
+fall.recovertime = 30
+
+[State 20303, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20311]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20311
+juggle = 3
+velset = 0,0
+; Navalha Comprida 2 (kit_raiclaven.py)
+
+[State 20311, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20311, Avanço]
+type = VelSet
+trigger1 = Time = 5
+x = 1.8
+
+[State 20311, Freia]
+type = VelSet
+trigger1 = Time = 10
+x = 0
+
+[State 20311, Golpe]
+type = HitDef
+trigger1 = Time = 8
+attr = S, NA
+damage = 50, 0
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 10, 10
+guard.pausetime = 8, 8
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 0.9, 0.9
+guard.sparkscale = .9, .9
+hitsound = F5,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 7
+ground.hittime = 20
+ground.velocity = -1.5
+air.velocity = -1.4,-3
+
+[State 20311, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20312]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20312
+juggle = 3
+velset = 0,0
+; Navalha Comprida 3 (kit_raiclaven.py)
+
+[State 20312, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20312, Avanço]
+type = VelSet
+trigger1 = Time = 14
+x = 1.8
+
+[State 20312, Freia]
+type = VelSet
+trigger1 = Time = 19
+x = 0
+
+[State 20312, Golpe]
+type = HitDef
+trigger1 = Time = 17
+attr = S, NA
+damage = 56, 0
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 10, 10
+guard.pausetime = 8, 8
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 0.9, 0.9
+guard.sparkscale = .9, .9
+hitsound = F5,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 7
+ground.hittime = 20
+ground.velocity = -1.5
+air.velocity = -1.4,-3
+
+[State 20312, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20313]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20313
+juggle = 3
+velset = 0,0
+; Corte em X (kit_raiclaven.py)
+
+[State 20313, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20313, Golpe]
+type = HitDef
+trigger1 = Time = 10
+attr = S, NA
+damage = 120, 0
+animtype = Heavy
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 16, 16
+guard.pausetime = 10, 10
+sparkxy = -10, -70
+sparkno = S9205
+guard.sparkno = S9202
+sparkscale = 1.3, 1.3
+guard.sparkscale = .9, .9
+hitsound = F5,3
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 8
+ground.hittime = 21
+ground.velocity = -6,-4
+air.velocity = -5,-5
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -3
+fall = 1
+fall.recover = 1
+fall.envshake.time = 8
+fall.envshake.freq = 150
+fall.envshake.ampl = -2
+fall.recovertime = 30
+
+[State 20313, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20321]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20321
+juggle = 3
+velset = 0,0
+; Tubo Chicote baixo (kit_raiclaven.py)
+
+[State 20321, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20321, Avanço]
+type = VelSet
+trigger1 = Time = 5
+x = 1.8
+
+[State 20321, Freia]
+type = VelSet
+trigger1 = Time = 10
+x = 0
+
+[State 20321, Golpe]
+type = HitDef
+trigger1 = Time = 8
+attr = S, NA
+damage = 40, 0
+animtype = Light
+guardflag = L
+hitflag = MAF
+priority = 4, Hit
+pausetime = 8, 8
+guard.pausetime = 6, 6
+sparkxy = -10, -70
+sparkno = S9200
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,0
+guardsound = F6,0
+ground.type = Low
+ground.slidetime = 5
+ground.hittime = 14
+ground.velocity = -1.5
+air.velocity = -1.4,-3
+
+[State 20321, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20322]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20322
+juggle = 3
+velset = 0,0
+; Tubo Chicote alto (kit_raiclaven.py)
+
+[State 20322, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20322, Avanço]
+type = VelSet
+trigger1 = Time = 2
+x = 2.4
+
+[State 20322, Freia]
+type = VelSet
+trigger1 = Time = 7
+x = 0
+
+[State 20322, Golpe]
+type = HitDef
+trigger1 = Time = 5
+attr = S, NA
+damage = 44, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 8, 8
+guard.pausetime = 6, 6
+sparkxy = -10, -70
+sparkno = S9200
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 14
+ground.velocity = -1.5
+air.velocity = -1.4,-3
+
+[State 20322, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20323]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20323
+juggle = 3
+velset = 0,0
+; Tubo Laça o Pé (kit_raiclaven.py)
+
+[State 20323, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20323, Golpe]
+type = HitDef
+trigger1 = Time = 10
+attr = S, NA
+damage = 110, 0
+animtype = Heavy
+guardflag = L
+hitflag = MAF
+priority = 4, Hit
+pausetime = 16, 16
+guard.pausetime = 10, 10
+sparkxy = -10, -70
+sparkno = S9205
+guard.sparkno = S9202
+sparkscale = 1.3, 1.3
+guard.sparkscale = .9, .9
+hitsound = F5,3
+guardsound = F6,0
+ground.type = Trip
+ground.slidetime = 8
+ground.hittime = 21
+ground.velocity = 3,-2
+air.velocity = 2,-3
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -3
+fall = 1
+fall.recover = 1
+fall.envshake.time = 8
+fall.envshake.freq = 150
+fall.envshake.ampl = -2
+fall.recovertime = 30
+
+[State 20323, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20331]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20331
+juggle = 3
+velset = 0,0
+; Pião da Cadeira 1 (kit_raiclaven.py)
+
+[State 20331, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20331, Avanço]
+type = VelSet
+trigger1 = Time = 4
+x = 1.8
+
+[State 20331, Freia]
+type = VelSet
+trigger1 = Time = 9
+x = 0
+
+[State 20331, Golpe]
+type = HitDef
+trigger1 = Time = 7
+attr = S, NA
+damage = 44, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 8, 8
+guard.pausetime = 6, 6
+sparkxy = -10, -70
+sparkno = S9200
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 14
+ground.velocity = -1.5
+air.velocity = -1.4,-3
+
+[State 20331, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20332]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20332
+juggle = 3
+velset = 0,0
+; Pião da Cadeira 2 (kit_raiclaven.py)
+
+[State 20332, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20332, Avanço]
+type = VelSet
+trigger1 = Time = 14
+x = 1.8
+
+[State 20332, Freia]
+type = VelSet
+trigger1 = Time = 19
+x = 0
+
+[State 20332, Golpe]
+type = HitDef
+trigger1 = Time = 17
+attr = S, NA
+damage = 50, 0
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 10, 10
+guard.pausetime = 8, 8
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 0.9, 0.9
+guard.sparkscale = .9, .9
+hitsound = F5,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 7
+ground.hittime = 20
+ground.velocity = -1.5
+air.velocity = -1.4,-3
+
+[State 20332, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20333]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20333
+juggle = 3
+velset = 0,0
+; Choque em Círculo (kit_raiclaven.py)
+
+[State 20333, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20333, Golpe]
+type = HitDef
+trigger1 = Time = 8
+attr = S, NA
+damage = 125, 0
+animtype = Heavy
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 16, 16
+guard.pausetime = 10, 10
+sparkxy = -10, -70
+sparkno = S9205
+guard.sparkno = S9202
+sparkscale = 1.3, 1.3
+guard.sparkscale = .9, .9
+hitsound = F5,3
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 8
+ground.hittime = 21
+ground.velocity = -6,-4
+air.velocity = -5,-5
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -3
+fall = 1
+fall.recover = 1
+fall.envshake.time = 8
+fall.envshake.freq = 150
+fall.envshake.ampl = -2
+fall.recovertime = 30
+
+[State 20333, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20341]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 20341
+juggle = 3
+velset = 0,0
+; Cobaia: navalha (kit_raiclaven.py)
+
+[State 20341, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20341, Avanço]
+type = VelSet
+trigger1 = Time = 4
+x = 1.5
+
+[State 20341, Freia]
+type = VelSet
+trigger1 = Time = 9
+x = 0
+
+[State 20341, Golpe]
+type = HitDef
+trigger1 = Time = 7
+attr = S, NA
+damage = 50, 0
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 10, 10
+guard.pausetime = 8, 8
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 0.9, 0.9
+guard.sparkscale = .9, .9
+hitsound = F5,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 7
+ground.hittime = 20
+ground.velocity = -3.5
+air.velocity = -1.4,-3
+
+[State 20341, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20342]
+type = C
+movetype = A
+physics = C
+ctrl = 0
+sprpriority = 2
+anim = 20342
+juggle = 3
+velset = 0,0
+; Cobaia: varre e lança (kit_raiclaven.py)
+
+[State 20342, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 20342, Golpe]
+type = HitDef
+trigger1 = Time = 10
+attr = C, NA
+damage = 85, 0
+animtype = Heavy
+guardflag = L
+hitflag = MAF
+priority = 4, Hit
+pausetime = 16, 16
+guard.pausetime = 10, 10
+sparkxy = -10, -70
+sparkno = S9205
+guard.sparkno = S9202
+sparkscale = 1.3, 1.3
+guard.sparkscale = .9, .9
+hitsound = F5,3
+guardsound = F6,0
+ground.type = Low
+ground.slidetime = 8
+ground.hittime = 21
+ground.velocity = -1.5,-9
+air.velocity = -1.5,-9
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -3
+fall = 1
+fall.recover = 1
+fall.envshake.time = 8
+fall.envshake.freq = 150
+fall.envshake.ampl = -2
+fall.recovertime = 30
+
+[State 20342, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[Statedef 21100]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 21100
+juggle = 3
+velset = 0,0
+; Pescoço de Borracha (kit_raiclaven.py)
+
+[State 21100, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 21100, Golpe]
+type = HitDef
+trigger1 = Time = 12
+attr = S, NA
+damage = 80, 0
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 10, 10
+guard.pausetime = 8, 8
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 0.9, 0.9
+guard.sparkscale = .9, .9
+hitsound = F5,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 7
+ground.hittime = 20
+ground.velocity = -5
+air.velocity = -1.4,-3
+
+[State 21100, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 21101]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 21101
+juggle = 3
+velset = 0,0
+; Pescoço de Borracha (puxa) (kit_raiclaven.py)
+
+[State 21101, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 21101, Golpe]
+type = HitDef
+trigger1 = Time = 12
+attr = S, NA
+damage = 70, 0
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 10, 10
+guard.pausetime = 8, 8
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 0.9, 0.9
+guard.sparkscale = .9, .9
+hitsound = F5,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 7
+ground.hittime = 20
+ground.velocity = 6
+air.velocity = 4,-3
+
+[State 21101, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 21200]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+sprpriority = 2
+anim = 21200
+juggle = 3
+velset = 0,0
+; Tanque Estourado (kit_raiclaven.py)
+
+[State 21200, Pula (kit_raiclaven.py)]
+type = VelSet
+trigger1 = Time = 2
+y = -4.5
+
+[State 21200, Gravidade (kit_raiclaven.py)]
+type = VelAdd
+trigger1 = Time > 2 && Time < 11
+y = .5
+
+[State 21200, Cai de costas (kit_raiclaven.py)]
+type = PosSet
+trigger1 = Time = 11
+y = 0
+
+[State 21200, Para (kit_raiclaven.py)]
+type = VelSet
+trigger1 = Time = 11
+y = 0
+
+[State 21200, Choque: tremida (kit_raiclaven.py)]
+type = EnvShake
+trigger1 = Time = 11
+time = 18
+freq = 120
+ampl = -6
+
+[State 21200, Choque: estouro verde (kit_raiclaven.py)]
+type = Explod
+trigger1 = Time = 11
+anim = 47004
+postype = p1
+pos = 0, -10
+removetime = -2
+scale = 2.2, 1.2
+sprpriority = 5
+ownpal = 1
+
+[State 21200, Choque: som (kit_raiclaven.py)]
+type = PlaySnd
+trigger1 = Time = 11
+value = 50,8
+
+[State 21200, som vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 21200, Golpe]
+type = HitDef
+trigger1 = Time = 11
+attr = S, SA
+damage = 100, 0
+animtype = Heavy
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 12, 12
+guard.pausetime = 9, 9
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 1.15, 1.15
+guard.sparkscale = .9, .9
+hitsound = F5,2
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 8
+ground.hittime = 21
+ground.velocity = -5,-5
+air.velocity = -4,-6
+fall = 1
+fall.recover = 1
+
+[State 21200, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 21000]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 21000
+velset = 0,0
+; Peruca Viva fraca (kit_raiclaven.py)
+
+[State 21000, Som (kit_raiclaven.py)]
+type = PlaySnd
+trigger1 = Time = 8
+value = F40,1
+
+[State 21000, Peruca corre pelo chão (kit_raiclaven.py)]
+type = Projectile
+trigger1 = Time = 8
+projid = 21000
+projanim = 21050
+projhitanim = 21051
+projremanim = 21051
+projscale = 1,1
+offset = 40, -10
+velocity = 3.2, 0
+attr = S, SP
+damage = 60, 6
+animtype = Light
+guardflag = L
+hitflag = MAF
+ground.type = Low
+pausetime = 0, 10
+ground.hittime = 16
+ground.velocity = -3
+air.velocity = -2,-3
+sparkno = S9200
+guard.sparkno = S9202
+hitsound = S51,0
+guardsound = F6,0
+projpriority = 1
+projremovetime = 160
+sprpriority = 3
+
+[State 21000, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 21001]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 21001
+velset = 0,0
+; Peruca Viva forte (kit_raiclaven.py)
+
+[State 21001, Som (kit_raiclaven.py)]
+type = PlaySnd
+trigger1 = Time = 8
+value = F40,1
+
+[State 21001, Peruca corre pelo chão (kit_raiclaven.py)]
+type = Projectile
+trigger1 = Time = 8
+projid = 21000
+projanim = 21050
+projhitanim = 21051
+projremanim = 21051
+projscale = 1,1
+offset = 40, -10
+velocity = 4.6, 0
+attr = S, SP
+damage = 60, 6
+animtype = Light
+guardflag = L
+hitflag = MAF
+ground.type = Low
+pausetime = 0, 10
+ground.hittime = 16
+ground.velocity = -3
+air.velocity = -2,-3
+sparkno = S9200
+guard.sparkno = S9202
+hitsound = S51,0
+guardsound = F6,0
+projpriority = 1
+projremovetime = 160
+sprpriority = 3
+
+[State 21001, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 21300]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 21300
+velset = 0,0
+; Bigodes Carnívoros (kit_raiclaven.py)
+
+[State 21300, Som (kit_raiclaven.py)]
+type = PlaySnd
+trigger1 = Time = 8
+value = F40,2
+
+[State 21300, Nuvem de bigodes (kit_raiclaven.py)]
+type = Projectile
+trigger1 = Time = 8
+projid = 21300
+projanim = 21350
+projhitanim = 21350
+projremanim = 21351
+offset = 50, -70
+velocity = 3.4, 0
+projhits = 5
+projmisstime = 6
+projremove = 0
+attr = S, SP
+damage = 18, 2
+animtype = Light
+guardflag = MA
+hitflag = MAF
+pausetime = 0, 6
+ground.hittime = 12
+ground.velocity = -.5
+air.velocity = -.5,-2
+sparkno = S9200
+guard.sparkno = S9202
+hitsound = S51,0
+guardsound = F6,0
+projpriority = 2
+projremovetime = 150
+sprpriority = 4
+
+[State 21300, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 23000]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 23000
+velset = 0,0
+juggle = 0
+poweradd = -2000
+; Sala de Cirurgia (kit_raiclaven.py)
+
+[State 23000, Escurece: centro cirúrgico (kit_raiclaven.py)]
+type = SuperPause
+trigger1 = Time = 0
+time = 40
+anim = -1
+sound = 50,7
+darken = 1
+p2defmul = 1
+poweradd = 0
+
+[State 23000, Luz de cirurgia pisca (kit_raiclaven.py)]
+type = BGPalFX
+trigger1 = Time = 0
+time = 40
+mul = 60,80,60
+sinadd = 90,110,90,8
+
+[State 23000, Rastro (kit_raiclaven.py)]
+type = AfterImage
+trigger1 = Time = 0
+time = 73
+length = 8
+palcolor = 0
+paladd = 0,60,0
+palmul = .6,.9,.6
+timegap = 2
+framegap = 3
+
+[State 23000, Prende com o braço de aço (kit_raiclaven.py)]
+type = VelSet
+trigger1 = Time = 12
+x = 5
+
+[State 23000, Freia (kit_raiclaven.py)]
+type = VelSet
+trigger1 = Time = 19
+x = 0
+
+[State 23000, Golpe]
+type = HitDef
+trigger1 = Time = 18
+attr = S, HA
+damage = 40, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 3, 6
+guard.pausetime = 2, 6
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 0
+ground.hittime = 40
+ground.velocity = 0
+air.velocity = 0,-1
+
+[State 23000, Golpe]
+type = HitDef
+trigger1 = Time = 27 && MoveHit
+attr = S, HA
+damage = 25, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 3, 6
+guard.pausetime = 2, 6
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 0
+ground.hittime = 40
+ground.velocity = 0
+air.velocity = 0,-1
+
+[State 23000, Operação 1: estouro verde (kit_raiclaven.py)]
+type = Explod
+trigger1 = Time = 27
+trigger1 = MoveHit
+anim = 47004
+postype = p1
+pos = 46, -62
+removetime = -2
+sprpriority = 6
+ownpal = 1
+ignorehitpause = 1
+
+[State 23000, Golpe]
+type = HitDef
+trigger1 = Time = 36 && MoveHit
+attr = S, HA
+damage = 25, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 3, 6
+guard.pausetime = 2, 6
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 0
+ground.hittime = 40
+ground.velocity = 0
+air.velocity = 0,-1
+
+[State 23000, Operação 2: estouro verde (kit_raiclaven.py)]
+type = Explod
+trigger1 = Time = 36
+trigger1 = MoveHit
+anim = 47004
+postype = p1
+pos = 52, -54
+removetime = -2
+sprpriority = 6
+ownpal = 1
+ignorehitpause = 1
+
+[State 23000, Golpe]
+type = HitDef
+trigger1 = Time = 45 && MoveHit
+attr = S, HA
+damage = 25, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 3, 6
+guard.pausetime = 2, 6
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 0
+ground.hittime = 40
+ground.velocity = 0
+air.velocity = 0,-1
+
+[State 23000, Operação 3: estouro verde (kit_raiclaven.py)]
+type = Explod
+trigger1 = Time = 45
+trigger1 = MoveHit
+anim = 47004
+postype = p1
+pos = 58, -46
+removetime = -2
+sprpriority = 6
+ownpal = 1
+ignorehitpause = 1
+
+[State 23000, Golpe]
+type = HitDef
+trigger1 = Time = 54 && MoveHit
+attr = S, HA
+damage = 25, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 3, 6
+guard.pausetime = 2, 6
+sparkxy = -10, -70
+sparkno = S9201
+guard.sparkno = S9202
+sparkscale = 1, 1
+guard.sparkscale = .9, .9
+hitsound = F5,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 0
+ground.hittime = 40
+ground.velocity = 0
+air.velocity = 0,-1
+
+[State 23000, Operação 4: estouro verde (kit_raiclaven.py)]
+type = Explod
+trigger1 = Time = 54
+trigger1 = MoveHit
+anim = 47004
+postype = p1
+pos = 64, -38
+removetime = -2
+sprpriority = 6
+ownpal = 1
+ignorehitpause = 1
+
+[State 23000, Golpe]
+type = HitDef
+trigger1 = Time = 63 && MoveHit
+attr = S, HA
+damage = 140, 0
+animtype = Heavy
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 16, 16
+guard.pausetime = 10, 10
+sparkxy = -10, -70
+sparkno = S9205
+guard.sparkno = S9202
+sparkscale = 1.3, 1.3
+guard.sparkscale = .9, .9
+hitsound = F5,3
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 12
+ground.velocity = -8,-6
+air.velocity = -6,-7
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -3
+fall = 1
+fall.recover = 1
+fall.envshake.time = 8
+fall.envshake.freq = 150
+fall.envshake.ampl = -2
+fall.recovertime = 30
+
+[State 23000, Operação 5: estouro verde (kit_raiclaven.py)]
+type = Explod
+trigger1 = Time = 63
+trigger1 = MoveHit
+anim = 47004
+postype = p1
+pos = 70, -30
+removetime = -2
+sprpriority = 6
+ownpal = 1
+ignorehitpause = 1
+
+[State 23000, Raio da Cabeça no Pote (kit_raiclaven.py)]
+type = Explod
+trigger1 = Time = 54
+trigger1 = MoveHit
+anim = 47002
+postype = p1
+pos = 20, -60
+removetime = -2
+scale = .9, .9
+sprpriority = 6
+ownpal = 1
+
+[State 23000, Final: tanques estouram (kit_raiclaven.py)]
+type = Explod
+trigger1 = Time = 63
+trigger1 = MoveHit
+anim = 47001
+postype = p1
+pos = 50, -60
+removetime = -2
+sprpriority = 6
+ownpal = 1
+
+[State 23000, Final: congela (kit_raiclaven.py)]
+type = Pause
+trigger1 = Time = 63
+trigger1 = MoveHit
+time = 14
+movetime = 0
+
+[State 23000, Final: clarão (kit_raiclaven.py)]
+type = BGPalFX
+trigger1 = Time = 63
+time = 6
+add = 120,160,120
+
+[State 23000, Final: tremida forte (kit_raiclaven.py)]
+type = EnvShake
+trigger1 = Time = 63
+time = 30
+freq = 90
+ampl = -11
+
+[State 23000, Final: som (kit_raiclaven.py)]
+type = PlaySnd
+trigger1 = Time = 63
+value = 50,8
+
+[State 23000, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+; Agarrão do despertado: Lavagem (issue #43) (kit_raiclaven.py)
+[Statedef 24100]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 800
+juggle = 0
+velset = 0,0
+
+[State 24100, Agarra]
+type = HitDef
+trigger1 = Time = 0
+attr = S, NT
+hitflag = M-
+priority = 1, Miss
+sparkno = -1
+p1sprpriority = 1
+p1facing = 1
+p2facing = 1
+p1stateno = 24110
+p2stateno = 820
+guard.dist = 0
+fall = 1
+
+[State 24100, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 24110]
+type = S
+movetype = A
+physics = N
+anim = 24110
+velset = 0,0
+ctrl = 0
+sprpriority = 2
+
+; Lavagem: pega, segura, 2 pancadas e arremessa. Escape: y ou b no começo.
+[State 24110, Lado]
+type = VarSet
+trigger1 = Time = 0
+var(2) = command = "holdback"
+
+[State 24110, Segura]
+type = TargetBind
+trigger1 = Time < 72
+trigger1 = NumTarget
+pos = 34, 0
+
+[State 24110, Escapou]
+type = ChangeState
+trigger1 = Time > 1
+trigger1 = Time < 22
+trigger1 = enemynear,stateno != 820
+value = 0
+ctrl = 1
+
+[State 24110, Perdeu]
+type = ChangeState
+trigger1 = Time > 22
+trigger1 = Time < 72
+trigger1 = !NumTarget
+value = 0
+ctrl = 1
+
+[State 24110, Pancada 1: dano]
+type = TargetLifeAdd
+trigger1 = Time = 22
+trigger1 = NumTarget
+value = -24
+
+[State 24110, Pancada 1: faísca]
+type = Explod
+trigger1 = Time = 22
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 34, -49
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 24110, Pancada 1: som]
+type = PlaySnd
+trigger1 = Time = 22
+value = F5,0
+
+[State 24110, Pancada 1: tranco]
+type = TargetBind
+trigger1 = Time = [22, 27]
+trigger1 = NumTarget
+pos = 39, 0
+
+[State 24110, Pancada 1: barra]
+type = PowerAdd
+trigger1 = Time = 22
+trigger1 = NumTarget
+value = 12
+
+[State 24110, Pancada 1: reage]
+type = TargetState
+trigger1 = Time = 22
+trigger1 = NumTarget
+value = 827
+
+[State 24110, Pancada 1: congela]
+type = Pause
+trigger1 = Time = 22
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 24110, Pancada 1: treme]
+type = EnvShake
+trigger1 = Time = 22
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 24110, Pancada 2: dano]
+type = TargetLifeAdd
+trigger1 = Time = 44
+trigger1 = NumTarget
+value = -24
+
+[State 24110, Pancada 2: faísca]
+type = Explod
+trigger1 = Time = 44
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 34, -17
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 24110, Pancada 2: som]
+type = PlaySnd
+trigger1 = Time = 44
+value = F5,0
+
+[State 24110, Pancada 2: tranco]
+type = TargetBind
+trigger1 = Time = [44, 49]
+trigger1 = NumTarget
+pos = 39, 0
+
+[State 24110, Pancada 2: barra]
+type = PowerAdd
+trigger1 = Time = 44
+trigger1 = NumTarget
+value = 12
+
+[State 24110, Pancada 2: reage]
+type = TargetState
+trigger1 = Time = 44
+trigger1 = NumTarget
+value = 828
+
+[State 24110, Pancada 2: congela]
+type = Pause
+trigger1 = Time = 44
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 24110, Pancada 2: treme]
+type = EnvShake
+trigger1 = Time = 44
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 24110, Final: dano]
+type = TargetLifeAdd
+trigger1 = Time = 72
+trigger1 = NumTarget
+value = -60
+
+[State 24110, Final: faísca]
+type = Explod
+trigger1 = Time = 72
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9231, 9201))
+postype = p1
+pos = 34, -17
+removetime = -2
+sprpriority = 5
+scale = .6, .6
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 24110, Final: som]
+type = PlaySnd
+trigger1 = Time = 72
+value = F5,3
+
+[State 24110, Final: barra]
+type = PowerAdd
+trigger1 = Time = 72
+trigger1 = NumTarget
+value = 30
+
+[State 24110, Final: congela]
+type = Pause
+trigger1 = Time = 72
+trigger1 = NumTarget
+time = 14
+movetime = 0
+
+[State 24110, Final: treme]
+type = EnvShake
+trigger1 = Time = 72
+trigger1 = NumTarget
+time = 16
+freq = 150
+ampl = -5
+
+[State 24110, Joga para trás]
+type = TargetState
+trigger1 = Time = 72
+trigger1 = NumTarget
+trigger1 = var(2)
+value = 824
+
+[State 24110, Joga]
+type = TargetState
+trigger1 = Time = 72
+trigger1 = NumTarget
+trigger1 = !var(2)
+value = 823
+
+[State 24110, Vira]
+type = Turn
+trigger1 = Time = 82
+trigger1 = var(2)
+
+[State 24110, Efeito da forma no oponente (kit_raiclaven.py)]
+type = Explod
+trigger1 = Time = 16
+trigger1 = NumTarget
+anim = 47000
+id = 47000
+postype = p1
+pos = 34, 0
+bindtime = -1
+removetime = -1
+sprpriority = 4
+ownpal = 1
+ignorehitpause = 1
+
+[State 24110, Tira o efeito (kit_raiclaven.py)]
+type = RemoveExplod
+trigger1 = Time = 72
+trigger2 = !NumTarget
+id = 47000
+
+[State 24110, Estouro do final (kit_raiclaven.py)]
+type = Explod
+trigger1 = Time = 72
+trigger1 = NumTarget
+anim = 47001
+postype = p1
+pos = 34, -17
+removetime = -2
+sprpriority = 6
+ownpal = 1
+pausemovetime = 12
+scale = .8, .8
+
+[State 24110, Fundo escurece na cor da forma (kit_raiclaven.py)]
+type = BGPalFX
+trigger1 = Time = 1
+trigger1 = NumTarget
+time = 92
+mul = 95,125,100
+sinadd = 0,0,0,0
+
+[State 24110, Pancada 1: tremida (kit_raiclaven.py)]
+type = EnvShake
+trigger1 = Time = 22
+trigger1 = NumTarget
+time = 8
+freq = 140
+ampl = -4
+
+[State 24110, Pancada 2: tremida (kit_raiclaven.py)]
+type = EnvShake
+trigger1 = Time = 44
+trigger1 = NumTarget
+time = 8
+freq = 140
+ampl = -4
+
+[State 24110, Pancada 1: oponente pisca (kit_raiclaven.py)]
+type = PalFX
+trigger1 = Time = 22
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 40,120,20
+
+[State 24110, Pancada 2: oponente pisca (kit_raiclaven.py)]
+type = PalFX
+trigger1 = Time = 44
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 40,120,20
+
+[State 24110, Pancada 3: oponente pisca (kit_raiclaven.py)]
+type = PalFX
+trigger1 = Time = 72
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 40,120,20
+
+[State 24110, Pancada 1: estouro da forma (kit_raiclaven.py)]
+type = Explod
+trigger1 = Time = 22
+trigger1 = NumTarget
+anim = 47004
+postype = p1
+pos = 34, -49
+removetime = -2
+sprpriority = 6
+ownpal = 1
+scale = 1.5, 1.5
+ignorehitpause = 1
+
+[State 24110, Pancada 2: estouro da forma (kit_raiclaven.py)]
+type = Explod
+trigger1 = Time = 44
+trigger1 = NumTarget
+anim = 47004
+postype = p1
+pos = 34, -17
+removetime = -2
+sprpriority = 6
+ownpal = 1
+scale = 1.5, 1.5
+ignorehitpause = 1
+
+[State 24110, Final: congela no impacto (kit_raiclaven.py)]
+type = Pause
+trigger1 = Time = 72
+trigger1 = NumTarget
+time = 12
+movetime = 0
+
+[State 24110, Final: clarão (kit_raiclaven.py)]
+type = BGPalFX
+trigger1 = Time = 72
+time = 6
+add = 120,120,120
+mul = 95,125,100
+
+[State 24110, Final: tremida forte (kit_raiclaven.py)]
+type = EnvShake
+trigger1 = Time = 72
+time = 30
+freq = 90
+ampl = -11
+
+[State 24110, Som do final (kit_raiclaven.py)]
+type = PlaySnd
+trigger1 = Time = 72
+value = 50,8
+
+[State 24110, Som de pegar (kit_raiclaven.py)]
+type = PlaySnd
+trigger1 = Time = 0
+value = F35,0
+
+[State 24110, Som da forma (kit_raiclaven.py)]
+type = PlaySnd
+trigger1 = Time = 16
+trigger1 = NumTarget
+value = 50,9
+channel = 3
+
+[State 24110, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+; Agarrão do despertado: Transplante (issue #43) (kit_raiclaven.py)
+[Statedef 24200]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 800
+juggle = 0
+velset = 0,0
+
+[State 24200, Agarra]
+type = HitDef
+trigger1 = Time = 0
+attr = S, NT
+hitflag = M-
+priority = 1, Miss
+sparkno = -1
+p1sprpriority = 1
+p1facing = 1
+p2facing = 1
+p1stateno = 24210
+p2stateno = 820
+guard.dist = 0
+fall = 1
+
+[State 24200, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 24210]
+type = S
+movetype = A
+physics = N
+anim = 24210
+velset = 0,0
+ctrl = 0
+sprpriority = 2
+
+; Transplante: pega, segura, 3 pancadas e arremessa. Escape: y ou b no começo.
+[State 24210, Lado]
+type = VarSet
+trigger1 = Time = 0
+var(2) = command = "holdback"
+
+[State 24210, Segura]
+type = TargetBind
+trigger1 = Time < 102
+trigger1 = NumTarget
+pos = 34, 0
+
+[State 24210, Escapou]
+type = ChangeState
+trigger1 = Time > 1
+trigger1 = Time < 27
+trigger1 = enemynear,stateno != 820
+value = 0
+ctrl = 1
+
+[State 24210, Perdeu]
+type = ChangeState
+trigger1 = Time > 27
+trigger1 = Time < 102
+trigger1 = !NumTarget
+value = 0
+ctrl = 1
+
+[State 24210, Pancada 1: dano]
+type = TargetLifeAdd
+trigger1 = Time = 27
+trigger1 = NumTarget
+value = -24
+
+[State 24210, Pancada 1: faísca]
+type = Explod
+trigger1 = Time = 27
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 34, -49
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 24210, Pancada 1: som]
+type = PlaySnd
+trigger1 = Time = 27
+value = F5,0
+
+[State 24210, Pancada 1: tranco]
+type = TargetBind
+trigger1 = Time = [27, 32]
+trigger1 = NumTarget
+pos = 39, 0
+
+[State 24210, Pancada 1: barra]
+type = PowerAdd
+trigger1 = Time = 27
+trigger1 = NumTarget
+value = 12
+
+[State 24210, Pancada 1: reage]
+type = TargetState
+trigger1 = Time = 27
+trigger1 = NumTarget
+value = 827
+
+[State 24210, Pancada 1: congela]
+type = Pause
+trigger1 = Time = 27
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 24210, Pancada 1: treme]
+type = EnvShake
+trigger1 = Time = 27
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 24210, Pancada 2: dano]
+type = TargetLifeAdd
+trigger1 = Time = 51
+trigger1 = NumTarget
+value = -24
+
+[State 24210, Pancada 2: faísca]
+type = Explod
+trigger1 = Time = 51
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 34, -49
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 24210, Pancada 2: som]
+type = PlaySnd
+trigger1 = Time = 51
+value = F5,0
+
+[State 24210, Pancada 2: tranco]
+type = TargetBind
+trigger1 = Time = [51, 56]
+trigger1 = NumTarget
+pos = 39, 0
+
+[State 24210, Pancada 2: barra]
+type = PowerAdd
+trigger1 = Time = 51
+trigger1 = NumTarget
+value = 12
+
+[State 24210, Pancada 2: reage]
+type = TargetState
+trigger1 = Time = 51
+trigger1 = NumTarget
+value = 828
+
+[State 24210, Pancada 2: congela]
+type = Pause
+trigger1 = Time = 51
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 24210, Pancada 2: treme]
+type = EnvShake
+trigger1 = Time = 51
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 24210, Pancada 3: dano]
+type = TargetLifeAdd
+trigger1 = Time = 76
+trigger1 = NumTarget
+value = -24
+
+[State 24210, Pancada 3: faísca]
+type = Explod
+trigger1 = Time = 76
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9230, 9200))
+postype = p1
+pos = 34, -49
+removetime = -2
+sprpriority = 5
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 24210, Pancada 3: som]
+type = PlaySnd
+trigger1 = Time = 76
+value = F5,1
+
+[State 24210, Pancada 3: tranco]
+type = TargetBind
+trigger1 = Time = [76, 81]
+trigger1 = NumTarget
+pos = 39, 0
+
+[State 24210, Pancada 3: barra]
+type = PowerAdd
+trigger1 = Time = 76
+trigger1 = NumTarget
+value = 12
+
+[State 24210, Pancada 3: reage]
+type = TargetState
+trigger1 = Time = 76
+trigger1 = NumTarget
+value = 829
+
+[State 24210, Pancada 3: congela]
+type = Pause
+trigger1 = Time = 76
+trigger1 = NumTarget
+time = 7
+movetime = 0
+
+[State 24210, Pancada 3: treme]
+type = EnvShake
+trigger1 = Time = 76
+trigger1 = NumTarget
+time = 6
+freq = 150
+ampl = -2
+
+[State 24210, Final: dano]
+type = TargetLifeAdd
+trigger1 = Time = 102
+trigger1 = NumTarget
+value = -66
+
+[State 24210, Final: faísca]
+type = Explod
+trigger1 = Time = 102
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9231, 9201))
+postype = p1
+pos = 34, -55
+removetime = -2
+sprpriority = 5
+scale = .6, .6
+ignorehitpause = 1
+pausemovetime = 99
+
+[State 24210, Final: som]
+type = PlaySnd
+trigger1 = Time = 102
+value = F5,3
+
+[State 24210, Final: barra]
+type = PowerAdd
+trigger1 = Time = 102
+trigger1 = NumTarget
+value = 33
+
+[State 24210, Final: congela]
+type = Pause
+trigger1 = Time = 102
+trigger1 = NumTarget
+time = 14
+movetime = 0
+
+[State 24210, Final: treme]
+type = EnvShake
+trigger1 = Time = 102
+trigger1 = NumTarget
+time = 16
+freq = 150
+ampl = -5
+
+[State 24210, Joga para trás]
+type = TargetState
+trigger1 = Time = 102
+trigger1 = NumTarget
+trigger1 = var(2)
+value = 824
+
+[State 24210, Joga]
+type = TargetState
+trigger1 = Time = 102
+trigger1 = NumTarget
+trigger1 = !var(2)
+value = 823
+
+[State 24210, Vira]
+type = Turn
+trigger1 = Time = 112
+trigger1 = var(2)
+
+[State 24210, Efeito da forma no oponente (kit_raiclaven.py)]
+type = Explod
+trigger1 = Time = 21
+trigger1 = NumTarget
+anim = 47000
+id = 47000
+postype = p1
+pos = 34, 0
+bindtime = -1
+removetime = -1
+sprpriority = 4
+ownpal = 1
+ignorehitpause = 1
+
+[State 24210, Tira o efeito (kit_raiclaven.py)]
+type = RemoveExplod
+trigger1 = Time = 102
+trigger2 = !NumTarget
+id = 47000
+
+[State 24210, Estouro do final (kit_raiclaven.py)]
+type = Explod
+trigger1 = Time = 102
+trigger1 = NumTarget
+anim = 47001
+postype = p1
+pos = 34, -55
+removetime = -2
+sprpriority = 6
+ownpal = 1
+pausemovetime = 12
+scale = .8, .8
+
+[State 24210, Fundo escurece na cor da forma (kit_raiclaven.py)]
+type = BGPalFX
+trigger1 = Time = 1
+trigger1 = NumTarget
+time = 122
+mul = 95,125,100
+sinadd = 0,0,0,0
+
+[State 24210, Pancada 1: tremida (kit_raiclaven.py)]
+type = EnvShake
+trigger1 = Time = 27
+trigger1 = NumTarget
+time = 8
+freq = 140
+ampl = -4
+
+[State 24210, Pancada 2: tremida (kit_raiclaven.py)]
+type = EnvShake
+trigger1 = Time = 51
+trigger1 = NumTarget
+time = 8
+freq = 140
+ampl = -4
+
+[State 24210, Pancada 3: tremida (kit_raiclaven.py)]
+type = EnvShake
+trigger1 = Time = 76
+trigger1 = NumTarget
+time = 8
+freq = 140
+ampl = -4
+
+[State 24210, Pancada 1: oponente pisca (kit_raiclaven.py)]
+type = PalFX
+trigger1 = Time = 27
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 40,120,20
+
+[State 24210, Pancada 2: oponente pisca (kit_raiclaven.py)]
+type = PalFX
+trigger1 = Time = 51
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 40,120,20
+
+[State 24210, Pancada 3: oponente pisca (kit_raiclaven.py)]
+type = PalFX
+trigger1 = Time = 76
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 40,120,20
+
+[State 24210, Pancada 4: oponente pisca (kit_raiclaven.py)]
+type = PalFX
+trigger1 = Time = 102
+trigger1 = NumTarget
+redirectid = target,id
+time = 6
+add = 40,120,20
+
+[State 24210, Pancada 1: estouro da forma (kit_raiclaven.py)]
+type = Explod
+trigger1 = Time = 27
+trigger1 = NumTarget
+anim = 47004
+postype = p1
+pos = 34, -49
+removetime = -2
+sprpriority = 6
+ownpal = 1
+scale = 1.5, 1.5
+ignorehitpause = 1
+
+[State 24210, Pancada 2: estouro da forma (kit_raiclaven.py)]
+type = Explod
+trigger1 = Time = 51
+trigger1 = NumTarget
+anim = 47004
+postype = p1
+pos = 34, -49
+removetime = -2
+sprpriority = 6
+ownpal = 1
+scale = 1.5, 1.5
+ignorehitpause = 1
+
+[State 24210, Pancada 3: estouro da forma (kit_raiclaven.py)]
+type = Explod
+trigger1 = Time = 76
+trigger1 = NumTarget
+anim = 47004
+postype = p1
+pos = 34, -49
+removetime = -2
+sprpriority = 6
+ownpal = 1
+scale = 1.5, 1.5
+ignorehitpause = 1
+
+[State 24210, Final: congela no impacto (kit_raiclaven.py)]
+type = Pause
+trigger1 = Time = 102
+trigger1 = NumTarget
+time = 12
+movetime = 0
+
+[State 24210, Final: clarão (kit_raiclaven.py)]
+type = BGPalFX
+trigger1 = Time = 102
+time = 6
+add = 120,120,120
+mul = 95,125,100
+
+[State 24210, Final: tremida forte (kit_raiclaven.py)]
+type = EnvShake
+trigger1 = Time = 102
+time = 30
+freq = 90
+ampl = -11
+
+[State 24210, Som do final (kit_raiclaven.py)]
+type = PlaySnd
+trigger1 = Time = 102
+value = 50,8
+
+[State 24210, Som de pegar (kit_raiclaven.py)]
+type = PlaySnd
+trigger1 = Time = 0
+value = F35,0
+
+[State 24210, Som da forma (kit_raiclaven.py)]
+type = PlaySnd
+trigger1 = Time = 21
+trigger1 = NumTarget
+value = 50,9
+channel = 3
+
+[State 24210, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+; ---- fim do kit próprio do Raiclaven despertado ----
+
 ; Agarrão do despertado: Cadeira Elétrica (issue #47) (despertados_47.py)
 [Statedef 4700]
 type = S
@@ -12154,39 +15277,39 @@ var(2) = command = "holdback"
 
 [State 4710, Segura]
 type = TargetBind
-trigger1 = Time < 106
+trigger1 = Time < 99
 trigger1 = NumTarget
 pos = 34, 0
 
 [State 4710, Escapou]
 type = ChangeState
 trigger1 = Time > 1
-trigger1 = Time < 26
+trigger1 = Time < 25
 trigger1 = enemynear,stateno != 820
 value = 0
 ctrl = 1
 
 [State 4710, Perdeu]
 type = ChangeState
-trigger1 = Time > 26
-trigger1 = Time < 106
+trigger1 = Time > 25
+trigger1 = Time < 99
 trigger1 = !NumTarget
 value = 0
 ctrl = 1
 
 [State 4710, Pancada 1: dano]
 type = TargetLifeAdd
-trigger1 = Time = 26
+trigger1 = Time = 25
 trigger1 = NumTarget
 value = -26
 
 [State 4710, Pancada 1: faísca]
 type = Explod
-trigger1 = Time = 26
+trigger1 = Time = 25
 trigger1 = NumTarget
 anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 34, -80
+pos = 34, -89
 removetime = -2
 sprpriority = 5
 scale = .75, .75
@@ -12195,37 +15318,37 @@ pausemovetime = 99
 
 [State 4710, Pancada 1: som]
 type = PlaySnd
-trigger1 = Time = 26
-value = S53,1
+trigger1 = Time = 25
+value = F5,1
 
 [State 4710, Pancada 1: tranco]
 type = TargetBind
-trigger1 = Time = [26, 31]
+trigger1 = Time = [25, 30]
 trigger1 = NumTarget
 pos = 39, 0
 
 [State 4710, Pancada 1: barra]
 type = PowerAdd
-trigger1 = Time = 26
+trigger1 = Time = 25
 trigger1 = NumTarget
 value = 13
 
 [State 4710, Pancada 1: reage]
 type = TargetState
-trigger1 = Time = 26
+trigger1 = Time = 25
 trigger1 = NumTarget
 value = 822
 
 [State 4710, Pancada 1: congela]
 type = Pause
-trigger1 = Time = 26
+trigger1 = Time = 25
 trigger1 = NumTarget
 time = 7
 movetime = 0
 
 [State 4710, Pancada 1: treme]
 type = EnvShake
-trigger1 = Time = 26
+trigger1 = Time = 25
 trigger1 = NumTarget
 time = 6
 freq = 150
@@ -12233,17 +15356,17 @@ ampl = -2
 
 [State 4710, Pancada 2: dano]
 type = TargetLifeAdd
-trigger1 = Time = 52
+trigger1 = Time = 49
 trigger1 = NumTarget
 value = -26
 
 [State 4710, Pancada 2: faísca]
 type = Explod
-trigger1 = Time = 52
+trigger1 = Time = 49
 trigger1 = NumTarget
 anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 34, -82
+pos = 34, -57
 removetime = -2
 sprpriority = 5
 scale = .75, .75
@@ -12252,37 +15375,37 @@ pausemovetime = 99
 
 [State 4710, Pancada 2: som]
 type = PlaySnd
-trigger1 = Time = 52
-value = S53,1
+trigger1 = Time = 49
+value = F5,0
 
 [State 4710, Pancada 2: tranco]
 type = TargetBind
-trigger1 = Time = [52, 57]
+trigger1 = Time = [49, 54]
 trigger1 = NumTarget
 pos = 39, 0
 
 [State 4710, Pancada 2: barra]
 type = PowerAdd
-trigger1 = Time = 52
+trigger1 = Time = 49
 trigger1 = NumTarget
 value = 13
 
 [State 4710, Pancada 2: reage]
 type = TargetState
-trigger1 = Time = 52
+trigger1 = Time = 49
 trigger1 = NumTarget
-value = 825
+value = 828
 
 [State 4710, Pancada 2: congela]
 type = Pause
-trigger1 = Time = 52
+trigger1 = Time = 49
 trigger1 = NumTarget
 time = 7
 movetime = 0
 
 [State 4710, Pancada 2: treme]
 type = EnvShake
-trigger1 = Time = 52
+trigger1 = Time = 49
 trigger1 = NumTarget
 time = 6
 freq = 150
@@ -12290,17 +15413,17 @@ ampl = -2
 
 [State 4710, Pancada 3: dano]
 type = TargetLifeAdd
-trigger1 = Time = 78
+trigger1 = Time = 73
 trigger1 = NumTarget
 value = -26
 
 [State 4710, Pancada 3: faísca]
 type = Explod
-trigger1 = Time = 78
+trigger1 = Time = 73
 trigger1 = NumTarget
 anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 34, -79
+pos = 34, -57
 removetime = -2
 sprpriority = 5
 scale = .75, .75
@@ -12309,37 +15432,37 @@ pausemovetime = 99
 
 [State 4710, Pancada 3: som]
 type = PlaySnd
-trigger1 = Time = 78
-value = S53,1
+trigger1 = Time = 73
+value = F5,0
 
 [State 4710, Pancada 3: tranco]
 type = TargetBind
-trigger1 = Time = [78, 83]
+trigger1 = Time = [73, 78]
 trigger1 = NumTarget
 pos = 39, 0
 
 [State 4710, Pancada 3: barra]
 type = PowerAdd
-trigger1 = Time = 78
+trigger1 = Time = 73
 trigger1 = NumTarget
 value = 13
 
 [State 4710, Pancada 3: reage]
 type = TargetState
-trigger1 = Time = 78
+trigger1 = Time = 73
 trigger1 = NumTarget
-value = 826
+value = 829
 
 [State 4710, Pancada 3: congela]
 type = Pause
-trigger1 = Time = 78
+trigger1 = Time = 73
 trigger1 = NumTarget
 time = 7
 movetime = 0
 
 [State 4710, Pancada 3: treme]
 type = EnvShake
-trigger1 = Time = 78
+trigger1 = Time = 73
 trigger1 = NumTarget
 time = 6
 freq = 150
@@ -12347,17 +15470,17 @@ ampl = -2
 
 [State 4710, Final: dano]
 type = TargetLifeAdd
-trigger1 = Time = 106
+trigger1 = Time = 99
 trigger1 = NumTarget
 value = -62
 
 [State 4710, Final: faísca]
 type = Explod
-trigger1 = Time = 106
+trigger1 = Time = 99
 trigger1 = NumTarget
 anim = (ifelse(var(20) > 0, 9231, 9201))
 postype = p1
-pos = 34, -82
+pos = 34, -50
 removetime = -2
 sprpriority = 5
 scale = .6, .6
@@ -12366,25 +15489,25 @@ pausemovetime = 99
 
 [State 4710, Final: som]
 type = PlaySnd
-trigger1 = Time = 106
-value = S53,3
+trigger1 = Time = 99
+value = F5,0
 
 [State 4710, Final: barra]
 type = PowerAdd
-trigger1 = Time = 106
+trigger1 = Time = 99
 trigger1 = NumTarget
 value = 31
 
 [State 4710, Final: congela]
 type = Pause
-trigger1 = Time = 106
+trigger1 = Time = 99
 trigger1 = NumTarget
 time = 14
 movetime = 0
 
 [State 4710, Final: treme]
 type = EnvShake
-trigger1 = Time = 106
+trigger1 = Time = 99
 trigger1 = NumTarget
 time = 16
 freq = 150
@@ -12392,26 +15515,26 @@ ampl = -5
 
 [State 4710, Joga para trás]
 type = TargetState
-trigger1 = Time = 106
+trigger1 = Time = 99
 trigger1 = NumTarget
 trigger1 = var(2)
 value = 824
 
 [State 4710, Joga]
 type = TargetState
-trigger1 = Time = 106
+trigger1 = Time = 99
 trigger1 = NumTarget
 trigger1 = !var(2)
 value = 823
 
 [State 4710, Vira]
 type = Turn
-trigger1 = Time = 116
+trigger1 = Time = 109
 trigger1 = var(2)
 
 [State 4710, Efeito da forma no oponente (despertados_47.py)]
 type = Explod
-trigger1 = Time = 20
+trigger1 = Time = 19
 trigger1 = NumTarget
 anim = 47000
 id = 47000
@@ -12425,17 +15548,17 @@ ignorehitpause = 1
 
 [State 4710, Tira o efeito (despertados_47.py)]
 type = RemoveExplod
-trigger1 = Time = 106
+trigger1 = Time = 99
 trigger2 = !NumTarget
 id = 47000
 
 [State 4710, Estouro do final (despertados_47.py)]
 type = Explod
-trigger1 = Time = 106
+trigger1 = Time = 99
 trigger1 = NumTarget
 anim = 47001
 postype = p1
-pos = 34, -82
+pos = 34, -50
 removetime = -2
 sprpriority = 6
 ownpal = 1
@@ -12446,13 +15569,13 @@ scale = .8, .8
 type = BGPalFX
 trigger1 = Time = 1
 trigger1 = NumTarget
-time = 126
+time = 119
 mul = 95,125,100
 sinadd = 0,0,0,0
 
 [State 4710, Pancada 1: tremida (despertados_47.py)]
 type = EnvShake
-trigger1 = Time = 26
+trigger1 = Time = 25
 trigger1 = NumTarget
 time = 8
 freq = 140
@@ -12460,7 +15583,7 @@ ampl = -4
 
 [State 4710, Pancada 2: tremida (despertados_47.py)]
 type = EnvShake
-trigger1 = Time = 52
+trigger1 = Time = 49
 trigger1 = NumTarget
 time = 8
 freq = 140
@@ -12468,7 +15591,7 @@ ampl = -4
 
 [State 4710, Pancada 3: tremida (despertados_47.py)]
 type = EnvShake
-trigger1 = Time = 78
+trigger1 = Time = 73
 trigger1 = NumTarget
 time = 8
 freq = 140
@@ -12476,7 +15599,7 @@ ampl = -4
 
 [State 4710, Pancada 1: oponente pisca (despertados_47.py)]
 type = PalFX
-trigger1 = Time = 26
+trigger1 = Time = 25
 trigger1 = NumTarget
 redirectid = target,id
 time = 6
@@ -12484,7 +15607,7 @@ add = 40,120,20
 
 [State 4710, Pancada 2: oponente pisca (despertados_47.py)]
 type = PalFX
-trigger1 = Time = 52
+trigger1 = Time = 49
 trigger1 = NumTarget
 redirectid = target,id
 time = 6
@@ -12492,7 +15615,7 @@ add = 40,120,20
 
 [State 4710, Pancada 3: oponente pisca (despertados_47.py)]
 type = PalFX
-trigger1 = Time = 78
+trigger1 = Time = 73
 trigger1 = NumTarget
 redirectid = target,id
 time = 6
@@ -12500,7 +15623,7 @@ add = 40,120,20
 
 [State 4710, Pancada 4: oponente pisca (despertados_47.py)]
 type = PalFX
-trigger1 = Time = 106
+trigger1 = Time = 99
 trigger1 = NumTarget
 redirectid = target,id
 time = 6
@@ -12508,11 +15631,11 @@ add = 40,120,20
 
 [State 4710, Pancada 1: estouro da forma (despertados_47.py)]
 type = Explod
-trigger1 = Time = 26
+trigger1 = Time = 25
 trigger1 = NumTarget
 anim = 47004
 postype = p1
-pos = 34, -80
+pos = 34, -89
 removetime = -2
 sprpriority = 6
 ownpal = 1
@@ -12521,11 +15644,11 @@ ignorehitpause = 1
 
 [State 4710, Pancada 2: estouro da forma (despertados_47.py)]
 type = Explod
-trigger1 = Time = 52
+trigger1 = Time = 49
 trigger1 = NumTarget
 anim = 47004
 postype = p1
-pos = 34, -82
+pos = 34, -57
 removetime = -2
 sprpriority = 6
 ownpal = 1
@@ -12534,11 +15657,11 @@ ignorehitpause = 1
 
 [State 4710, Pancada 3: estouro da forma (despertados_47.py)]
 type = Explod
-trigger1 = Time = 78
+trigger1 = Time = 73
 trigger1 = NumTarget
 anim = 47004
 postype = p1
-pos = 34, -79
+pos = 34, -57
 removetime = -2
 sprpriority = 6
 ownpal = 1
@@ -12547,28 +15670,28 @@ ignorehitpause = 1
 
 [State 4710, Final: congela no impacto (despertados_47.py)]
 type = Pause
-trigger1 = Time = 106
+trigger1 = Time = 99
 trigger1 = NumTarget
 time = 12
 movetime = 0
 
 [State 4710, Final: clarão (despertados_47.py)]
 type = BGPalFX
-trigger1 = Time = 106
+trigger1 = Time = 99
 time = 6
 add = 120,120,120
 mul = 95,125,100
 
 [State 4710, Final: tremida forte (despertados_47.py)]
 type = EnvShake
-trigger1 = Time = 106
+trigger1 = Time = 99
 time = 30
 freq = 90
 ampl = -11
 
 [State 4710, Som do final (despertados_47.py)]
 type = PlaySnd
-trigger1 = Time = 106
+trigger1 = Time = 99
 value = 50,8
 
 [State 4710, Som de pegar (despertados_47.py)]
@@ -12578,7 +15701,7 @@ value = F35,0
 
 [State 4710, Som da forma (despertados_47.py)]
 type = PlaySnd
-trigger1 = Time = 20
+trigger1 = Time = 19
 trigger1 = NumTarget
 value = 50,9
 channel = 3
