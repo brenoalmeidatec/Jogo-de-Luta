@@ -65,31 +65,31 @@
   "quadril": {
    "ang": 0,
    "dx": 1,
-   "dy": -2
+   "dy": -1
   },
   "braco_tras": {
-   "ang": -6,
-   "dx": -2,
-   "dy": -3,
-   "custo": 26.8
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 35.5
   },
   "braco_frente": {
-   "ang": 6,
-   "dx": 3,
-   "dy": 0,
-   "custo": 32.1
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 42.5
   },
   "coxa_tras": {
-   "ang": 3.2
+   "ang": 1.8
   },
   "canela_tras": {
-   "ang": -5.8
+   "ang": -3.0
   },
   "coxa_frente": {
-   "ang": 2.9
+   "ang": 1.5
   },
   "canela_frente": {
-   "ang": -4.3
+   "ang": -1.8
   }
  },
  "126_0": {
@@ -99,16 +99,16 @@
    "dy": 0
   },
   "braco_tras": {
-   "ang": -2,
-   "dx": 0,
-   "dy": -3,
-   "custo": 30.4
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 37.9
   },
   "braco_frente": {
-   "ang": 12,
-   "dx": 1,
-   "dy": 2,
-   "custo": 37.3
+   "ang": 0,
+   "dx": -1,
+   "dy": 1,
+   "custo": 56.3
   },
   "coxa_tras": {
    "ang": -1.3
@@ -127,156 +127,156 @@
   "quadril": {
    "ang": 0,
    "dx": 16,
-   "dy": -2
+   "dy": 5
   },
   "braco_tras": {
    "ang": -12,
    "dx": 3,
    "dy": -2,
-   "custo": 36.3
+   "custo": 39.6
   },
   "braco_frente": {
-   "ang": -6,
+   "ang": 0,
    "dx": 4,
    "dy": -4,
-   "custo": 56.1
+   "custo": 56.5
   },
   "coxa_tras": {
-   "ang": 20.8
+   "ang": 8.4
   },
   "canela_tras": {
-   "ang": -27.4
+   "ang": -2.8
   },
   "coxa_frente": {
-   "ang": 6.7
+   "ang": -1.0
   },
   "canela_frente": {
-   "ang": 3.1
+   "ang": 16.8
   }
  },
  "1278_0": {
   "quadril": {
    "ang": 0,
    "dx": 20,
-   "dy": 0
+   "dy": 6
   },
   "braco_tras": {
-   "ang": -12,
+   "ang": 0,
    "dx": 3,
    "dy": -3,
-   "custo": 67.6
+   "custo": 68.9
   },
   "braco_frente": {
    "ang": 3,
    "dx": -4,
    "dy": -4,
-   "custo": 64.8
+   "custo": 65.6
   },
   "coxa_tras": {
-   "ang": 19.6
+   "ang": 8.8
   },
   "canela_tras": {
-   "ang": -23.7
+   "ang": -2.1
   },
   "coxa_frente": {
-   "ang": 5.4
+   "ang": -0.8
   },
   "canela_frente": {
-   "ang": 8.0
+   "ang": 19.0
   }
  },
  "1252_0": {
   "quadril": {
    "ang": 0,
    "dx": 15,
-   "dy": 0
+   "dy": 8
   },
   "braco_tras": {
-   "ang": -12,
+   "ang": 0,
    "dx": 3,
    "dy": -3,
-   "custo": 66.4
+   "custo": 67.7
   },
   "braco_frente": {
    "ang": -6,
    "dx": 3,
    "dy": -4,
    "var": "esticado",
-   "custo": 46.2
+   "custo": 47.9
   },
   "coxa_tras": {
-   "ang": 23.2
+   "ang": 10.9
   },
   "canela_tras": {
-   "ang": -27.5
+   "ang": -2.3
   },
   "coxa_frente": {
-   "ang": 4.8
+   "ang": -3.2
   },
   "canela_frente": {
-   "ang": 7.7
+   "ang": 22.0
   }
  },
  "84_0": {
   "quadril": {
    "ang": 0,
    "dx": 14,
-   "dy": -2
+   "dy": 5
   },
   "braco_tras": {
    "ang": -12,
    "dx": 3,
    "dy": -3,
-   "custo": 41.3
+   "custo": 44.6
   },
   "braco_frente": {
    "ang": -3,
    "dx": 4,
    "dy": -4,
-   "custo": 58.2
+   "custo": 59.0
   },
   "coxa_tras": {
-   "ang": 20.2
+   "ang": 6.9
   },
   "canela_tras": {
-   "ang": -27.4
+   "ang": -1.0
   },
   "coxa_frente": {
-   "ang": 6.1
+   "ang": -1.7
   },
   "canela_frente": {
-   "ang": 2.6
+   "ang": 16.3
   }
  },
  "85_0": {
   "quadril": {
    "ang": 0,
    "dx": 2,
-   "dy": -1
+   "dy": 1
   },
   "braco_tras": {
-   "ang": -6,
-   "dx": -2,
-   "dy": -2,
-   "custo": 44.8
+   "ang": 0,
+   "dx": 3,
+   "dy": 1,
+   "custo": 45.6
   },
   "braco_frente": {
    "ang": -3,
    "dx": 4,
    "dy": -4,
-   "custo": 42.3
+   "custo": 43.1
   },
   "coxa_tras": {
-   "ang": 6.2
+   "ang": 3.3
   },
   "canela_tras": {
-   "ang": -7.7
+   "ang": -2.0
   },
   "coxa_frente": {
-   "ang": 1.9
+   "ang": -0.7
   },
   "canela_frente": {
-   "ang": -0.1
+   "ang": 4.4
   }
  },
  "422_0": {
@@ -286,16 +286,16 @@
    "dy": 4
   },
   "braco_tras": {
-   "ang": -8,
-   "dx": 3,
-   "dy": 3,
-   "custo": 74.6
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 79.0
   },
   "braco_frente": {
-   "ang": -10,
-   "dx": -3,
-   "dy": -3,
-   "custo": 83.1
+   "ang": 0,
+   "dx": -1,
+   "dy": -1,
+   "custo": 91.6
   },
   "coxa_tras": {
    "ang": -31.3
@@ -317,23 +317,23 @@
    "dy": 0
   },
   "braco_tras": {
-   "ang": -12,
-   "dx": 3,
-   "dy": 3,
-   "custo": 98.9
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 102.5
   },
   "braco_frente": {
-   "ang": 20,
-   "dx": -3,
-   "dy": -3,
-   "custo": 71.5
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 75.0
   },
   "coxa_frente": {
-   "ang": -6,
+   "ang": 0,
    "dx": 3,
    "dy": 3,
    "var": "camara",
-   "custo": 73.2
+   "custo": 74.4
   },
   "coxa_tras": {
    "ang": 0,
@@ -347,23 +347,23 @@
    "dy": 0
   },
   "braco_tras": {
-   "ang": -12,
-   "dx": 3,
-   "dy": 3,
-   "custo": 97.8
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 100.4
   },
   "braco_frente": {
-   "ang": -8,
-   "dx": -3,
-   "dy": 3,
-   "custo": 62.3
+   "ang": 0,
+   "dx": -1,
+   "dy": -1,
+   "custo": 63.6
   },
   "coxa_frente": {
    "ang": -6,
    "dx": 3,
    "dy": -3,
    "var": "camara",
-   "custo": 70.4
+   "custo": 72.0
   },
   "coxa_tras": {
    "ang": 0,
@@ -377,23 +377,23 @@
    "dy": 0
   },
   "braco_tras": {
-   "ang": -12,
-   "dx": 3,
-   "dy": -3,
-   "custo": 97.2
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 100.7
   },
   "braco_frente": {
-   "ang": -6,
-   "dx": 2,
-   "dy": 3,
-   "custo": 62.6
+   "ang": 0,
+   "dx": 0,
+   "dy": -1,
+   "custo": 63.4
   },
   "coxa_frente": {
    "ang": -6,
    "dx": 3,
    "dy": 3,
    "var": "camara",
-   "custo": 71.4
+   "custo": 73.0
   },
   "coxa_tras": {
    "ang": 0,
@@ -407,23 +407,23 @@
    "dy": 0
   },
   "braco_tras": {
-   "ang": -12,
-   "dx": 3,
-   "dy": -3,
-   "custo": 93.3
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 100.1
   },
   "braco_frente": {
    "ang": 0,
-   "dx": -3,
-   "dy": 3,
-   "custo": 69.5
+   "dx": -1,
+   "dy": 1,
+   "custo": 72.2
   },
   "coxa_frente": {
    "ang": -6,
    "dx": -3,
    "dy": -3,
    "var": "esticada",
-   "custo": 72.7
+   "custo": 74.4
   },
   "coxa_tras": {
    "ang": 0,
@@ -437,23 +437,23 @@
    "dy": 0
   },
   "braco_tras": {
-   "ang": -12,
-   "dx": 3,
-   "dy": -3,
-   "custo": 101.3
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 104.1
   },
   "braco_frente": {
-   "ang": 2,
-   "dx": -3,
-   "dy": 3,
-   "custo": 73.2
+   "ang": 0,
+   "dx": -1,
+   "dy": 1,
+   "custo": 78.0
   },
   "coxa_frente": {
    "ang": -6,
    "dx": 3,
    "dy": 3,
    "var": "camara",
-   "custo": 79.1
+   "custo": 80.8
   },
   "coxa_tras": {
    "ang": 0,
@@ -464,31 +464,31 @@
   "quadril": {
    "ang": 0,
    "dx": -25,
-   "dy": -2
+   "dy": 8
   },
   "braco_tras": {
-   "ang": -12,
-   "dx": 3,
-   "dy": -3,
-   "custo": 57.4
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 73.0
   },
   "braco_frente": {
-   "ang": -20,
-   "dx": 3,
-   "dy": -3,
-   "custo": 74.3
+   "ang": 0,
+   "dx": 0,
+   "dy": -1,
+   "custo": 79.9
   },
   "coxa_tras": {
-   "ang": -33.7
+   "ang": -45.4
   },
   "canela_tras": {
-   "ang": 4.8
+   "ang": 23.7
   },
   "coxa_frente": {
-   "ang": 5.5
+   "ang": -9.4
   },
   "canela_frente": {
-   "ang": -31.3
+   "ang": -6.6
   }
  },
  "428_0": {
@@ -498,16 +498,16 @@
    "dy": 8
   },
   "braco_tras": {
-   "ang": -8,
-   "dx": 2,
-   "dy": -3,
-   "custo": 42.2
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 54.5
   },
   "braco_frente": {
-   "ang": -10,
-   "dx": 3,
-   "dy": -3,
-   "custo": 47.6
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 67.6
   },
   "coxa_tras": {
    "ang": -13.0
@@ -520,6 +520,1522 @@
   },
   "canela_frente": {
    "ang": 12.0
+  }
+ },
+ "558_0": {
+  "quadril": {
+   "ang": 0,
+   "dx": -8,
+   "dy": 1
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 0,
+   "dy": -1,
+   "custo": 73.8
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 82.2
+  },
+  "coxa_tras": {
+   "ang": -4.9
+  },
+  "canela_tras": {
+   "ang": 5.7
+  },
+  "coxa_frente": {
+   "ang": -1.8
+  },
+  "canela_frente": {
+   "ang": -3.2
+  }
+ },
+ "559_0@soco_forte1": {
+  "quadril": {
+   "ang": 0,
+   "dx": -8,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": -6
+  },
+  "braco_frente": {
+   "ang": -28
+  },
+  "coxa_tras": {
+   "ang": -6.2
+  },
+  "canela_tras": {
+   "ang": 5.4
+  },
+  "coxa_frente": {
+   "ang": -0.3
+  },
+  "canela_frente": {
+   "ang": -5.8
+  }
+ },
+ "984_0@soco_forte2": {
+  "quadril": {
+   "ang": 0,
+   "dx": 19,
+   "dy": 16
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 71.9
+  },
+  "braco_frente": {
+   "ang": -30,
+   "var": "cotovelo"
+  },
+  "coxa_tras": {
+   "ang": 5.6
+  },
+  "canela_tras": {
+   "ang": 11.7
+  },
+  "coxa_frente": {
+   "ang": -10.5
+  },
+  "canela_frente": {
+   "ang": 33.7
+  }
+ },
+ "970_0@soco_forte3": {
+  "quadril": {
+   "ang": 0,
+   "dx": 30,
+   "dy": 27
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 74.3
+  },
+  "braco_frente": {
+   "ang": 0,
+   "var": "cotovelo"
+  },
+  "coxa_tras": {
+   "ang": 9.5
+  },
+  "canela_tras": {
+   "ang": 17.3
+  },
+  "coxa_frente": {
+   "ang": -13.2
+  },
+  "canela_frente": {
+   "ang": 48.8
+  }
+ },
+ "970_0@soco_forte4": {
+  "quadril": {
+   "ang": 0,
+   "dx": 30,
+   "dy": 27
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 74.3
+  },
+  "braco_frente": {
+   "ang": 6,
+   "var": "cotovelo"
+  },
+  "coxa_tras": {
+   "ang": 9.5
+  },
+  "canela_tras": {
+   "ang": 17.3
+  },
+  "coxa_frente": {
+   "ang": -13.2
+  },
+  "canela_frente": {
+   "ang": 48.8
+  }
+ },
+ "562_0@soco_forte5": {
+  "quadril": {
+   "ang": 0,
+   "dx": 7,
+   "dy": 3
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 81.3
+  },
+  "braco_frente": {
+   "ang": -12
+  },
+  "coxa_tras": {
+   "ang": 6.2
+  },
+  "canela_tras": {
+   "ang": -2.7
+  },
+  "coxa_frente": {
+   "ang": -2.4
+  },
+  "canela_frente": {
+   "ang": 9.8
+  }
+ },
+ "563_0": {
+  "quadril": {
+   "ang": 0,
+   "dx": 2,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 60.7
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": -1,
+   "dy": 1,
+   "custo": 80.9
+  },
+  "coxa_tras": {
+   "ang": 1.8
+  },
+  "canela_tras": {
+   "ang": -1.8
+  },
+  "coxa_frente": {
+   "ang": 0.3
+  },
+  "canela_frente": {
+   "ang": 1.4
+  }
+ },
+ "564_0": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 1
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 47.6
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 65.2
+  },
+  "coxa_tras": {
+   "ang": 1.9
+  },
+  "canela_tras": {
+   "ang": -0.6
+  },
+  "coxa_frente": {
+   "ang": -1.4
+  },
+  "canela_frente": {
+   "ang": 2.0
+  }
+ },
+ "971_0@cotovelo1": {
+  "quadril": {
+   "ang": 0,
+   "dx": 32,
+   "dy": 22
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 75.4
+  },
+  "braco_frente": {
+   "ang": -60,
+   "var": "cotovelo"
+  },
+  "coxa_tras": {
+   "ang": 14.7
+  },
+  "canela_tras": {
+   "ang": 6.8
+  },
+  "coxa_frente": {
+   "ang": -8.6
+  },
+  "canela_frente": {
+   "ang": 42.7
+  }
+ },
+ "972_0@cotovelo2": {
+  "quadril": {
+   "ang": 0,
+   "dx": 33,
+   "dy": 24
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 77.1
+  },
+  "braco_frente": {
+   "ang": -38,
+   "var": "cotovelo"
+  },
+  "coxa_tras": {
+   "ang": 14.4
+  },
+  "canela_tras": {
+   "ang": 8.9
+  },
+  "coxa_frente": {
+   "ang": -9.4
+  },
+  "canela_frente": {
+   "ang": 45.2
+  }
+ },
+ "561_0@cotovelo3": {
+  "quadril": {
+   "ang": 0,
+   "dx": 35,
+   "dy": 36
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 78.2
+  },
+  "braco_frente": {
+   "ang": 22,
+   "var": "cotovelo"
+  },
+  "coxa_tras": {
+   "ang": 10.5
+  },
+  "canela_tras": {
+   "ang": 23.6
+  },
+  "coxa_frente": {
+   "ang": -15.8
+  },
+  "canela_frente": {
+   "ang": 59.1
+  }
+ },
+ "561_0@cotovelo4": {
+  "quadril": {
+   "ang": 0,
+   "dx": 35,
+   "dy": 36
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 78.2
+  },
+  "braco_frente": {
+   "ang": 26,
+   "var": "cotovelo"
+  },
+  "coxa_tras": {
+   "ang": 10.5
+  },
+  "canela_tras": {
+   "ang": 23.6
+  },
+  "coxa_frente": {
+   "ang": -15.8
+  },
+  "canela_frente": {
+   "ang": 59.1
+  }
+ },
+ "562_0@cotovelo5": {
+  "quadril": {
+   "ang": 0,
+   "dx": 7,
+   "dy": 5
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 81.3
+  },
+  "braco_frente": {
+   "ang": -12
+  },
+  "coxa_tras": {
+   "ang": 3.9
+  },
+  "canela_tras": {
+   "ang": 2.2
+  },
+  "coxa_frente": {
+   "ang": -4.6
+  },
+  "canela_frente": {
+   "ang": 13.5
+  }
+ },
+ "526_0": {
+  "quadril": {
+   "ang": 0,
+   "dx": -12,
+   "dy": -1
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 70.8
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 61.2
+  },
+  "coxa_tras": {
+   "ang": -13.0
+  },
+  "canela_tras": {
+   "ang": 8.8
+  },
+  "coxa_frente": {
+   "ang": 4.5
+  },
+  "canela_frente": {
+   "ang": 4.5
+  }
+ },
+ "1043_0@coice1": {
+  "quadril": {
+   "ang": 0,
+   "dx": -28,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 67.8
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": -1,
+   "dy": -1,
+   "custo": 72.2
+  },
+  "coxa_tras": {
+   "ang": 0,
+   "var": "apoio"
+  },
+  "canela_tras": {
+   "ang": 7.4
+  },
+  "coxa_frente": {
+   "ang": 20,
+   "var": "camara"
+  },
+  "canela_frente": {
+   "ang": -6.0
+  }
+ },
+ "1044_0@coice2": {
+  "quadril": {
+   "ang": 0,
+   "dx": -31,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 68.6
+  },
+  "braco_frente": {
+   "ang": -10
+  },
+  "coxa_tras": {
+   "ang": 0,
+   "var": "apoio"
+  },
+  "canela_tras": {
+   "ang": 10.1
+  },
+  "coxa_frente": {
+   "ang": 4,
+   "var": "camara"
+  },
+  "canela_frente": {
+   "ang": -5.3
+  }
+ },
+ "1013_0@coice3": {
+  "quadril": {
+   "ang": 0,
+   "dx": -55,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 72.1
+  },
+  "braco_frente": {
+   "ang": -14
+  },
+  "coxa_tras": {
+   "ang": 0,
+   "var": "apoio"
+  },
+  "canela_tras": {
+   "ang": 51.4
+  },
+  "coxa_frente": {
+   "ang": 34,
+   "var": "esticada"
+  },
+  "canela_frente": {
+   "ang": -5.8
+  }
+ },
+ "1019_0@coice4": {
+  "quadril": {
+   "ang": 0,
+   "dx": -91,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 73.3
+  },
+  "braco_frente": {
+   "ang": -14
+  },
+  "coxa_tras": {
+   "ang": 0,
+   "var": "apoio"
+  },
+  "canela_tras": {
+   "ang": 71.2
+  },
+  "coxa_frente": {
+   "ang": 30,
+   "var": "esticada"
+  },
+  "canela_frente": {
+   "ang": -31.3
+  }
+ },
+ "529_0@coice5": {
+  "quadril": {
+   "ang": 0,
+   "dx": -101,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 71.9
+  },
+  "braco_frente": {
+   "ang": -12
+  },
+  "coxa_tras": {
+   "ang": 0,
+   "var": "apoio"
+  },
+  "canela_tras": {
+   "ang": 66.5
+  },
+  "coxa_frente": {
+   "ang": 32,
+   "var": "esticada"
+  },
+  "canela_frente": {
+   "ang": -31.7
+  }
+ },
+ "1034_0@coice6": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 41.1
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": -1,
+   "dy": 1,
+   "custo": 67.0
+  },
+  "coxa_tras": {
+   "ang": 0,
+   "var": "apoio"
+  },
+  "canela_tras": {
+   "ang": -0.9
+  },
+  "coxa_frente": {
+   "ang": 6,
+   "var": "camara"
+  },
+  "canela_frente": {
+   "ang": 2.3
+  }
+ },
+ "1034_0@coice7": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 41.1
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": -1,
+   "dy": 1,
+   "custo": 67.0
+  },
+  "coxa_tras": {
+   "ang": 0,
+   "var": "apoio"
+  },
+  "canela_tras": {
+   "ang": -0.9
+  },
+  "coxa_frente": {
+   "ang": 14,
+   "var": "camara"
+  },
+  "canela_frente": {
+   "ang": 2.3
+  }
+ },
+ "531_0": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": -2
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 40.8
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": -1,
+   "dy": 1,
+   "custo": 80.2
+  },
+  "coxa_tras": {
+   "ang": -0.9
+  },
+  "canela_tras": {
+   "ang": -1.8
+  },
+  "coxa_frente": {
+   "ang": 5.2
+  },
+  "canela_frente": {
+   "ang": 1.7
+  }
+ },
+ "532_0": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 47.6
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 68.6
+  },
+  "coxa_tras": {
+   "ang": 2.3
+  },
+  "canela_tras": {
+   "ang": -2.2
+  },
+  "coxa_frente": {
+   "ang": -0.2
+  },
+  "canela_frente": {
+   "ang": -1.3
+  }
+ },
+ "535_0@joelhada0": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 5
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 0,
+   "custo": 0.0
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 0,
+   "custo": 0.0
+  },
+  "coxa_tras": {
+   "ang": -5.4
+  },
+  "canela_tras": {
+   "ang": 10.9
+  },
+  "coxa_frente": {
+   "ang": -6.1
+  },
+  "canela_frente": {
+   "ang": 10.4
+  }
+ },
+ "1061_0@joelhada1": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 8
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 0,
+   "custo": 0.0
+  },
+  "braco_frente": {
+   "ang": 8
+  },
+  "coxa_tras": {
+   "ang": -8.0
+  },
+  "canela_tras": {
+   "ang": 16.4
+  },
+  "coxa_frente": {
+   "ang": -9.4
+  },
+  "canela_frente": {
+   "ang": 15.8
+  }
+ },
+ "1062_0@joelhada2": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 10
+  },
+  "braco_tras": {
+   "ang": 6
+  },
+  "braco_frente": {
+   "ang": 10
+  },
+  "coxa_tras": {
+   "ang": -9.6
+  },
+  "canela_tras": {
+   "ang": 19.8
+  },
+  "coxa_frente": {
+   "ang": -11.4
+  },
+  "canela_frente": {
+   "ang": 19.1
+  }
+ },
+ "1050_0@joelhada3": {
+  "quadril": {
+   "ang": 0,
+   "dx": -57,
+   "dy": -24
+  },
+  "braco_tras": {
+   "ang": -8
+  },
+  "braco_frente": {
+   "ang": -24
+  },
+  "coxa_tras": {
+   "ang": 30
+  },
+  "canela_tras": {
+   "ang": 44
+  },
+  "coxa_frente": {
+   "ang": -16,
+   "var": "camara"
+  },
+  "canela_frente": {
+   "ang": 0
+  },
+  "_ar": {
+   "ang": 0
+  }
+ },
+ "1050_0@joelhada4": {
+  "quadril": {
+   "ang": 0,
+   "dx": -57,
+   "dy": -24
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 90.4
+  },
+  "braco_frente": {
+   "ang": -18
+  },
+  "coxa_tras": {
+   "ang": 28
+  },
+  "canela_tras": {
+   "ang": 40
+  },
+  "coxa_frente": {
+   "ang": -12,
+   "var": "camara"
+  },
+  "canela_frente": {
+   "ang": 0
+  },
+  "_ar": {
+   "ang": 0
+  }
+ },
+ "1045_0@joelhada5": {
+  "quadril": {
+   "ang": 0,
+   "dx": -97,
+   "dy": -20
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 99.2
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": -1,
+   "dy": 1,
+   "custo": 68.9
+  },
+  "coxa_tras": {
+   "ang": 18
+  },
+  "canela_tras": {
+   "ang": 26
+  },
+  "coxa_frente": {
+   "ang": 4,
+   "var": "camara"
+  },
+  "canela_frente": {
+   "ang": 0
+  },
+  "_ar": {
+   "ang": 0
+  }
+ },
+ "538_0@joelhada6": {
+  "quadril": {
+   "ang": 0,
+   "dx": -50,
+   "dy": -12
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 89.4
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": -1,
+   "dy": -1,
+   "custo": 92.1
+  },
+  "coxa_tras": {
+   "ang": 10
+  },
+  "canela_tras": {
+   "ang": 14
+  },
+  "coxa_frente": {
+   "ang": -16
+  },
+  "canela_frente": {
+   "ang": 26
+  },
+  "_ar": {
+   "ang": 0
+  }
+ },
+ "539_0@joelhada7": {
+  "quadril": {
+   "ang": 0,
+   "dx": -8,
+   "dy": -4
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 75.5
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": -1,
+   "dy": 1,
+   "custo": 104.4
+  },
+  "coxa_tras": {
+   "ang": 6
+  },
+  "canela_tras": {
+   "ang": 8
+  },
+  "coxa_frente": {
+   "ang": -8
+  },
+  "canela_frente": {
+   "ang": 12
+  },
+  "_ar": {
+   "ang": 0
+  }
+ },
+ "415_0": {
+  "quadril": {
+   "ang": 0,
+   "dx": -28,
+   "dy": 8
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 68.6
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": -1,
+   "dy": 1,
+   "custo": 76.4
+  },
+  "coxa_tras": {
+   "ang": -46.8
+  },
+  "canela_tras": {
+   "ang": 20.9
+  },
+  "coxa_frente": {
+   "ang": -9.4
+  },
+  "canela_frente": {
+   "ang": -6.6
+  }
+ },
+ "935_0@quina1": {
+  "quadril": {
+   "ang": 0,
+   "dx": -30,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 72.6
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": -1,
+   "dy": 1,
+   "custo": 72.8
+  },
+  "coxa_tras": {
+   "ang": 0,
+   "var": "apoio"
+  },
+  "canela_tras": {
+   "ang": 25.7
+  },
+  "coxa_frente": {
+   "ang": 40,
+   "var": "camara"
+  },
+  "canela_frente": {
+   "ang": -6.8
+  }
+ },
+ "936_0@quina2": {
+  "quadril": {
+   "ang": 0,
+   "dx": -30,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 73.8
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": -1,
+   "dy": 1,
+   "custo": 72.9
+  },
+  "coxa_tras": {
+   "ang": 0,
+   "var": "apoio"
+  },
+  "canela_tras": {
+   "ang": 25.7
+  },
+  "coxa_frente": {
+   "ang": 46,
+   "var": "esticada"
+  },
+  "canela_frente": {
+   "ang": -6.8
+  }
+ },
+ "417_0@quina3": {
+  "quadril": {
+   "ang": 0,
+   "dx": -30,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 75.6
+  },
+  "braco_frente": {
+   "ang": 8
+  },
+  "coxa_tras": {
+   "ang": 0,
+   "var": "apoio"
+  },
+  "canela_tras": {
+   "ang": 25.7
+  },
+  "coxa_frente": {
+   "ang": 58,
+   "var": "esticada"
+  },
+  "canela_frente": {
+   "ang": -6.8
+  }
+ },
+ "417_0@quina4": {
+  "quadril": {
+   "ang": 0,
+   "dx": -30,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 75.6
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": -1,
+   "dy": 1,
+   "custo": 72.9
+  },
+  "coxa_tras": {
+   "ang": 0,
+   "var": "apoio"
+  },
+  "canela_tras": {
+   "ang": 25.7
+  },
+  "coxa_frente": {
+   "ang": 56,
+   "var": "esticada"
+  },
+  "canela_frente": {
+   "ang": -6.8
+  }
+ },
+ "418_0@quina5": {
+  "quadril": {
+   "ang": 0,
+   "dx": -30,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 78.7
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": -1,
+   "dy": 1,
+   "custo": 56.3
+  },
+  "coxa_tras": {
+   "ang": 0,
+   "var": "apoio"
+  },
+  "canela_tras": {
+   "ang": 21.8
+  },
+  "coxa_frente": {
+   "ang": 36,
+   "var": "camara"
+  },
+  "canela_frente": {
+   "ang": -6.8
+  }
+ },
+ "419_0": {
+  "quadril": {
+   "ang": 0,
+   "dx": -21,
+   "dy": -4
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 66.2
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 34.2
+  },
+  "coxa_tras": {
+   "ang": -25.9
+  },
+  "canela_tras": {
+   "ang": 6.5
+  },
+  "coxa_frente": {
+   "ang": 7.0
+  },
+  "canela_frente": {
+   "ang": -5.1
+  }
+ },
+ "420_0": {
+  "quadril": {
+   "ang": 0,
+   "dx": -12,
+   "dy": -1
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 48.1
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 65.3
+  },
+  "coxa_tras": {
+   "ang": -3.8
+  },
+  "canela_tras": {
+   "ang": 2.1
+  },
+  "coxa_frente": {
+   "ang": 1.2
+  },
+  "canela_frente": {
+   "ang": -6.4
+  }
+ },
+ "550_0": {
+  "quadril": {
+   "ang": 0,
+   "dx": -43,
+   "dy": 18
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 92.2
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 72.7
+  },
+  "coxa_tras": {
+   "ang": -59.2
+  },
+  "canela_tras": {
+   "ang": 24.9
+  },
+  "coxa_frente": {
+   "ang": -18.4
+  },
+  "canela_frente": {
+   "ang": -4.5
+  }
+ },
+ "551_0@chute_forte1": {
+  "quadril": {
+   "ang": 0,
+   "dx": -53,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 91.5
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 77.5
+  },
+  "coxa_tras": {
+   "ang": 0,
+   "var": "apoio"
+  },
+  "canela_tras": {
+   "ang": 19.2
+  },
+  "coxa_frente": {
+   "ang": 26,
+   "var": "camara"
+  },
+  "canela_frente": {
+   "ang": -6.3
+  }
+ },
+ "1001_0@chute_forte2": {
+  "quadril": {
+   "ang": 0,
+   "dx": -69,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 95.7
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": 0,
+   "dy": -1,
+   "custo": 64.7
+  },
+  "coxa_tras": {
+   "ang": 0,
+   "var": "apoio"
+  },
+  "canela_tras": {
+   "ang": 33.6
+  },
+  "coxa_frente": {
+   "ang": 6,
+   "var": "camara"
+  },
+  "canela_frente": {
+   "ang": -5.2
+  }
+ },
+ "1002_0@chute_forte3": {
+  "quadril": {
+   "ang": 0,
+   "dx": -73,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 98.0
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 63.1
+  },
+  "coxa_tras": {
+   "ang": 0,
+   "var": "apoio"
+  },
+  "canela_tras": {
+   "ang": 36.7
+  },
+  "coxa_frente": {
+   "ang": 0,
+   "var": "camara"
+  },
+  "canela_frente": {
+   "ang": -5.5
+  }
+ },
+ "992_0@chute_forte4": {
+  "quadril": {
+   "ang": 0,
+   "dx": -71,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 97.9
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 64.6
+  },
+  "coxa_tras": {
+   "ang": 0,
+   "var": "apoio"
+  },
+  "canela_tras": {
+   "ang": 31.6
+  },
+  "coxa_frente": {
+   "ang": 14,
+   "var": "esticada"
+  },
+  "canela_frente": {
+   "ang": -6.1
+  }
+ },
+ "992_0@chute_forte5": {
+  "quadril": {
+   "ang": 0,
+   "dx": -71,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 97.9
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 64.6
+  },
+  "coxa_tras": {
+   "ang": 0,
+   "var": "apoio"
+  },
+  "canela_tras": {
+   "ang": 31.6
+  },
+  "coxa_frente": {
+   "ang": 16,
+   "var": "esticada"
+  },
+  "canela_frente": {
+   "ang": -6.1
+  }
+ },
+ "991_0@chute_forte6": {
+  "quadril": {
+   "ang": 0,
+   "dx": -80,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 99.4
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": -1,
+   "dy": -1,
+   "custo": 64.7
+  },
+  "coxa_tras": {
+   "ang": 0,
+   "var": "apoio"
+  },
+  "canela_tras": {
+   "ang": 35.1
+  },
+  "coxa_frente": {
+   "ang": 4,
+   "var": "camara"
+  },
+  "canela_frente": {
+   "ang": -6.4
+  }
+ },
+ "554_0@chute_forte7": {
+  "quadril": {
+   "ang": 0,
+   "dx": -26,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 90.6
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 60.4
+  },
+  "coxa_tras": {
+   "ang": 0,
+   "var": "apoio"
+  },
+  "canela_tras": {
+   "ang": 12.6
+  },
+  "coxa_frente": {
+   "ang": 18,
+   "var": "camara"
+  },
+  "canela_frente": {
+   "ang": -6.6
+  }
+ },
+ "555_0": {
+  "quadril": {
+   "ang": 0,
+   "dx": -16,
+   "dy": 4
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 75.6
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 0,
+   "custo": 54.5
+  },
+  "coxa_tras": {
+   "ang": -28.5
+  },
+  "canela_tras": {
+   "ang": 22.2
+  },
+  "coxa_frente": {
+   "ang": -5.5
+  },
+  "canela_frente": {
+   "ang": -5.0
+  }
+ },
+ "556_0": {
+  "quadril": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 2
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 0,
+   "custo": 49.1
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": 1,
+   "dy": -1,
+   "custo": 67.7
+  },
+  "coxa_tras": {
+   "ang": 0.3
+  },
+  "canela_tras": {
+   "ang": 2.3
+  },
+  "coxa_frente": {
+   "ang": -2.7
+  },
+  "canela_frente": {
+   "ang": 3.9
   }
  }
 }

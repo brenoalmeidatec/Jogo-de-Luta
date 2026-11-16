@@ -58,7 +58,7 @@
   "tronco": {
    "arquivo": "tronco.png",
    "origem": [
-    481,
+    478,
     375
    ],
    "junta": [
@@ -161,6 +161,24 @@
    "origem_sobra": [
     460,
     466
+   ]
+  },
+  "braco_frente_cotovelo": {
+   "arquivo": "braco_frente_cotovelo.png",
+   "origem": [
+    574,
+    394
+   ],
+   "junta": [
+    588,
+    418
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/970_0.png",
+   "sobra": "braco_frente_cotovelo_sobra.png",
+   "origem_sobra": [
+    565,
+    385
    ]
   },
   "braco_frente_esticado": {

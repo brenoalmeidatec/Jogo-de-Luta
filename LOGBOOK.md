@@ -2701,3 +2701,24 @@ O Alisson aprovou o corpo firme e pediu fluidez, vida e qualidade, sem nenhum er
 
 **Robô de defeitos** (`conferir` em `piloto_firme.py`): procura fresta, mancha escura a mais que o desenho de hoje,
 pedaço solto e pé fora do chão. Deu 0 de 41 desenhos (`docs/boneco-pecas/vida/robo_defeitos.md`).
+
+### 2026-11-16 — Gutto no boneco de peças (corpo firme + vida) e golpes confusos refeitos
+
+O Alisson aprovou o corpo firme do Pengaró e pediu o mesmo para todos, com vida e sem erro de peça, e os golpes
+confusos refeitos com exatidão. Branch `claude/project-thread-zoipeb`, nada no `.sff` nem na `mugen`.
+
+- `ferramentas/extrair_hd_sff.py`: o Gutto não tem `quadros_arcade_hd` no git; os desenhos 3x saem do próprio `.sff`
+  (tela 1080x780, eixo 540,660) para `sprites/gutto/quadros_sff_hd/` (fora do git).
+- `ferramentas/boneco_gutto.py kit|animar|video`: kit do parado 94,0 com as ferramentas do Pengaró por cima.
+  Novidades: tronco achado por molde de tronco+cabeça sem os braços; peito escondido pelos braços vem aberto do 558
+  (cor casada) e nunca passa da silhueta do parado; sombra entre o cotovelo e o corpo anda com o braço; calção da
+  perna fica no quadril; perna de apoio e perna do chute são desenhos inteiros só de pele; perna que não alcança o pé
+  abaixa o quadril (joelho dobra, nunca estica). Golpes refeitos escritos na tabela `ANIM` (pose forçada por
+  elemento: `var`, `ang`, `_dy`, `_y`, `_ar`, `_base`, `_pes`), com os mesmos ticks e caixas do `.air`.
+- `vida_pecas.animar` aceita várias caixas de golpe (lista).
+- Feito: parado, soco, chute alto, soco forte (vira cotovelada limpa), cotovelo pesado (sobe e desce), coice (chute
+  reto na barriga), joelhada voadora (agacha, sobe com joelho, cai), chute de quina (baixo, na canela), chute forte
+  (com preparo). Robô de defeitos 0. Vídeos em `docs/boneco-pecas/gutto/corpo_firme/`.
+- Falta: soco/chute agachados, supers, despertado. O pé do chute alto alcança ~50 px menos que a caixa (o corpo não
+  tomba); o Breno decide se a caixa encolhe. O "giratório" do cotovelo e do coice não gira: girar pede desenho de
+  costas, que o kit não tem.
