@@ -22,10 +22,12 @@ window.__pedidos = {"agachado": "Generate ONE image with your image generation t
     await espera(1500);
     const caixa = document.querySelector('#prompt-textarea') || document.querySelector('[contenteditable=true]');
     caixa.focus();
-    document.execCommand('insertText', false, window.__pedidos[n]);
+    if (!caixa.innerText.trim()) document.execCommand('insertText', false, window.__pedidos[n]);
     await espera(2500);
     const u = window.__ult(); window.__src0 = u ? u.src : '';
-    const b = document.querySelector('[data-testid=send-button]') || document.querySelector('#composer-submit-button');
+    // o ChatGPT Plus (16/11) trocou o botão: é o "Enviar" dentro do form
+    const b = [...document.querySelectorAll('form button')].find(x => x.getAttribute('aria-label') === 'Enviar')
+      || document.querySelector('[data-testid=send-button]') || document.querySelector('#composer-submit-button');
     if (!b || b.disabled) throw new Error('sem botao enviar');
     b.click(); return 'enviou ' + n;
   };
