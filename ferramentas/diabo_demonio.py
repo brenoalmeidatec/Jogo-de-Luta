@@ -274,6 +274,39 @@ FOLHAS_DEMONIO = {
         "roaring, head back",
         "laughing",
         "back to the hunched ready pose"]),
+    # agarrões (#45): quadro k no mesmo papel do quadro k das folhas agarrao_* do Hazak (agarrao_mk.PROPRIOS["hazaki"]);
+    # pedidos da thread dos agarrões (project-files agarroes-45/diabo-demonio-agarroes.md); fogo vem do diabo_loiro
+    "agarrao_abraco": ("Claws on the Neck: standing grab and overhead slam of an invisible opponent, no effects", [
+        "hunched beast stance, both clawed hands reaching forward at chest height, fingers spread",
+        "both claws clamp the invisible opponent's neck at chest height and pull him close, fangs bared",
+        "still gripping with one claw, the other claw draws back by the ear, talons open",
+        "the free claw rakes across at chest height, arm fully swept through",
+        "he twists his whole body and heaves both claws up above his head, lifting the invisible opponent overhead, "
+        "spine arched back, head visible above the shoulders",
+        "he slams both claws down behind his back over his shoulder toward the ground, body bent forward, tail "
+        "whipping up",
+        "crouched low after the slam, claws on the ground, glancing back",
+        "rising into his hunched beast stance, snarling, claws open at his sides"]),
+    "agarrao_perna": ("Drag to Hell: low grab of a crouching invisible opponent by the ankle, no effects", [
+        "hunched beast stance, looking down",
+        "he drops low to one knee, one clawed hand reaching down to ground level in front of him",
+        "the claw grips the invisible opponent's ankle at ground level, the other claw braced on the floor",
+        "still gripping, he yanks the claw back toward his hip, dragging, body leaning back",
+        "he springs up to full height and swings the claw high above his head, lifting the invisible leg",
+        "he slams the claw down to the ground in front of him at ground level, bent over, the leg fully extended",
+        "crouched, claws on the ground, panting, tail curled",
+        "rising halfway, one claw on the knee, grinning"]),
+    "agarrao_cutucao": ("Grip of Darkness: command grab, holds the invisible opponent by the throat and stabs, "
+                        "no effects", [
+        "hunched beast stance, the front claw reaching forward at chest height",
+        "the front claw clamps the invisible opponent's throat at chest height, the arm locked, the other claw "
+        "cocked low",
+        "still holding the throat, the back claw draws back at waist height, talons together like a spear",
+        "the back claw stabs forward into the belly at waist height, arm fully extended",
+        "still holding, the back claw pulls back again, higher, by the shoulder",
+        "the back claw stabs forward into the chest at chest height",
+        "he lets go and blasts both open claws forward at chest height, palms out, shoving, body leaning in",
+        "standing tall, one claw on his hip, the other pointing forward, laughing with his head thrown back"]),
 }
 
 
@@ -378,7 +411,21 @@ BASICOS = {"parado": "parado", "anda": "anda", "recuo": "recuo", "corrida": "cor
            "agachado": "agachado", "defesa": "defesa", "defesa_baixa": "defesa_baixa", "apanha": "apanha",
            "queda": "queda", "levanta": "levanta", "vitoria": "vitoria", "provoca": "provoca", "intro": "intro",
            "derrota_sirene": "derrota_sirene", "parry_alto": "parry_alto", "parry_baixo": "parry_baixo",
-           "despertar_pedido": "parado", "vitima_agarrado": "apanha", "vitima_arremessado": "queda"}
+           "despertar_pedido": "parado", "vitima_agarrado": "apanha", "vitima_arremessado": "queda",
+           "agarrao_abraco": "agarrao_abraco", "agarrao_perna": "agarrao_perna", "agarrao_cutucao": "agarrao_cutucao"}
+# Pancadas extras da porrada dos agarrões (agarrao_mk.HAZAK_EXTRAS): desenhos de golpes do Hazak que, na forma, saem
+# como um quadro de preparo ou de batida de uma folha do demônio. Só os agarrões mostram esses desenhos na forma (os
+# golpes do Hazak estão travados pelo bloquear_base). (folha do Hazak, quadro) -> (folha do demônio, quadro).
+QUADROS_EXTRAS = {
+    ("jab_duplo", 1): ("pe_maos", 0), ("jab_duplo", 2): ("pe_maos", 1),        # arranhão
+    ("jab_duplo", 4): ("pe_maos", 0), ("jab_duplo", 5): ("pe_maos", 1),        # arranhão de novo
+    ("cruzado", 2): ("pe_pes", 0), ("cruzado", 5): ("pe_pes", 1),              # joelhada
+    ("cotovelada", 2): ("pe_maos", 4), ("cotovelada", 5): ("pe_maos", 5),      # garra cruzada (de cima)
+    ("soco_reto", 2): ("pe_pes", 4), ("soco_reto", 4): ("pe_pes", 5),          # coice com garra
+    ("baixo_soco", 2): ("agachado_maos", 0), ("baixo_soco", 3): ("agachado_maos", 1),
+    ("baixo_soco", 4): ("agachado_maos", 2),                                   # arranhão baixo e o embalo
+    ("tapa_costas", 3): ("pe_maos", 4), ("tapa_costas", 5): ("pe_maos", 5),    # garra cruzada
+}
 GRUPO = 60000
 
 # peso -> (pausa, faísca, som do acerto, deslize, tempo de atordoado, empurrão)

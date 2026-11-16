@@ -3,7 +3,7 @@
 Pedido do Breno em 15/11 (16:58Z e 17:00Z), aprovado às 19:23Z (comentário 6899928948). O Diabo vira um demônio
 descontrolado: sem maleta, chapéu e sobretudo, com garras, investidas, voo e fogo das trevas. As asas ficam. Todos os
 golpes são próprios, nada do Hazak normal: 16 normais, 4 correntes, 4 especiais (1 projétil), kombo, super e
-agarrões. A lista aprovada está na proposta da #47 (comentário 6898251397).
+agarrões (37 folhas no total, com as 3 dos agarrões). A lista aprovada está na proposta da #47 (comentário 6898251397).
 
 Ferramenta: `ferramentas/diabo_demonio.py`.
 
@@ -26,9 +26,11 @@ python3 ferramentas/gerar_hazaki.py                         # liga tudo no jogo 
 | golpes próprios | estados 4200-4699, sprites no grupo 60000 + estado, caixas medidas no desenho (`GOLPES`, `_caixas`) |
 | Cobrança das Garras | os estados 1660/1661 de sempre, com a arte `m_cobranca_garras` (investida nos quadros 2 a 4) |
 | rotas | no fim do `[Statedef -1]`, com `var(20) > 0`; os golpes do Hazak ganham `var(20) <= 0` (`bloquear_base`) |
-| agarrões e reações de agarrado | thread dos agarrões (#45), com este conceito |
+| agarrões (Garras no Pescoço, Arrasta pro Inferno, Pegada das Trevas) | folhas `agarrao_abraco/perna/cutucao` daqui, com o quadro k no papel do quadro k da folha do Hazak (`BASICOS`); tempos e caixas do `agarrao_mk.PROPRIOS["hazaki"]`; fogo do `diabo_loiro.agarrao_do_diabo`; quem filma e posta na #45 é a thread dos agarrões |
+| pancadas extras da porrada | `QUADROS_EXTRAS`: o desenho do Hazak (jab, cruzado, cotovelada...) vira um quadro de preparo ou batida do `m_pe_maos`, `m_pe_pes` ou `m_agachado_maos` |
+| reação de agarrado | `vitima_agarrado` -> `m_apanha`, `vitima_arremessado` -> `m_queda` |
 
-Os golpes que ainda não têm folha não saem na forma (o botão não faz nada): o jogo só vai para a `mugen` com as 34
+Os golpes que ainda não têm folha não saem na forma (o botão não faz nada): o jogo só vai para a `mugen` com as 37
 folhas prontas, o robô passando e o vídeo na #47.
 
 ## Situação (16/11, 00:30Z)
@@ -38,7 +40,7 @@ folhas prontas, o robô passando e o vídeo na #47.
 - Ligados no jogo: Arranhão (x), Garra Cruzada (y), Joelhada Selvagem (a), Coice com Garra (b), Arranhão Baixo
   (↓x), Garra Subindo (↓y), Rabo Rasteiro (↓a, baixo), Varrida de Garras (↓b, derruba) e a Cobrança das Garras
   (↘a/↘b), mais os básicos das folhas prontas.
-- Faltam 18 folhas: ar_maos, ar_pes, direcionais_a/b, fins_maos/pes, bola_trevas, voo, rasgo, vira, corrida,
+- Faltam 21 folhas: agarrao_abraco, agarrao_perna, agarrao_cutucao (16/11, combinado com a thread dos agarrões), ar_maos, ar_pes, direcionais_a/b, fins_maos/pes, bola_trevas, voo, rasgo, vira, corrida,
   vitoria, intro, derrota_sirene, parry_alto, parry_baixo, juizo_a, juizo_b. Próximo turno do ChatGPT
   (`imagens/fila-chatgpt.md`).
 - ChatGPT: o `gpt_demonio.js` (`ferramentas/chatgpt_demonio.js`; troque o commit na constante C e os pedidos) anexa o conceito e a folha

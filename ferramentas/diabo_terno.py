@@ -73,8 +73,10 @@ PROPRIAS = {acao for acao in FOLHA if (SAIDA / f"d_{acao}").is_dir() and FOLHA[a
 FOLHA.update({acao: f"d_{acao}" for acao in PROPRIAS})
 # Diabo demônio sem maleta (#47, Breno 2026-11-15): onde a folha do demônio já existe (ferramentas/diabo_demonio.py,
 # pastas m_*), o básico usa ela no lugar da roupa do sobretudo
-from diabo_demonio import BASICOS  # noqa: E402
+from diabo_demonio import BASICOS, QUADROS_EXTRAS  # noqa: E402
 FOLHA.update({acao: f"m_{m}" for acao, m in BASICOS.items() if (SAIDA / f"m_{m}" / "07.png").exists()})
+# quadro a quadro (pancadas extras dos agarrões): (folha, k) do Hazak -> (pasta m_, k) do demônio, quando existe
+QUADRO = {fk: (f"m_{m}", j) for fk, (m, j) in QUADROS_EXTRAS.items() if (SAIDA / f"m_{m}" / f"{j:02d}.png").exists()}
 
 PARECIDA = {"ar_chute", "ascensao", "chute_alto_rajada", "chute_gancho", "cutucao", "jab_duplo", "guarda_aco",
             "passagem_rapida", "provoca", "rasteira", "sobe_chutando", "tapa_costas", "tesoura", "derrota_sirene",
@@ -259,14 +261,15 @@ class Terno:
         if par is None:
             return None  # não é desenho do corpo (objeto, efeito): quem chama decide
         folha, k, esp = par
-        fig = self.figura(FOLHA[folha], k)
+        pasta, k = QUADRO.get((folha, k), (FOLHA[folha], k))
+        fig = self.figura(pasta, k)
         if esp:
             fig = fig[:, ::-1]
             m = m[:, ::-1]
         ax, ay = ancora(m)
         if esp:
             ax = m.shape[1] - 1 - ax
-        dx, dy = (ancora_demonio if FOLHA[folha].startswith("m_") else ancora)(fig[..., 3] > 0)
+        dx, dy = (ancora_demonio if pasta.startswith("m_") else ancora)(fig[..., 3] > 0)
         if esp:
             pass  # a figura já está espelhada: a âncora dela foi medida espelhada
         # eixo do Hazak em relação à âncora dele; o Diabo põe a âncora dele no mesmo lugar
