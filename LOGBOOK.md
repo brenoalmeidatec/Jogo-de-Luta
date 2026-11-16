@@ -2719,6 +2719,14 @@ confusos refeitos com exatidão. Branch `claude/project-thread-zoipeb`, nada no 
 - Feito: parado, soco, chute alto, soco forte (vira cotovelada limpa), cotovelo pesado (sobe e desce), coice (chute
   reto na barriga), joelhada voadora (agacha, sobe com joelho, cai), chute de quina (baixo, na canela), chute forte
   (com preparo). Robô de defeitos 0. Vídeos em `docs/boneco-pecas/gutto/corpo_firme/`.
-- Falta: soco/chute agachados, supers, despertado. O pé do chute alto alcança ~50 px menos que a caixa (o corpo não
+- Agachados (20b7476f): o de baixo é o desenho do agachado 359 (calção, perna de trás e pés de hoje) com o tronco
+  firme por cima; a perna do chute sai de baixo do calção. Chute alto agachado não levanta mais (chuta pra cima
+  agachado); rasteira rente ao chão.
+- Supers (c014563e): Chuva de Beijinhos (guarda, abaixa, joelho, chute alto, fica no joelho) e Bando de Chutes só de
+  frente (joelho, jab, joelhada, chute baixo, jab, chute alto...), sem as costas e a mão no chão. Caixa do Bando = a
+  maior das 9 do `.air`. `sem_pontinhos` tira manchinha de pele no calção. Robô 0/275.
+- Despertado: hoje as ações 10xxx usam os MESMOS desenhos da base com paleta trocada, então o corpo firme já cobre
+  ele. O Garanhão minotauro do conceito (e_conceito.png) não tem desenho no jogo: pede kit novo desenhado.
+- Falta: despertado minotauro. O pé do chute alto alcança ~50 px menos que a caixa (o corpo não
   tomba); o Breno decide se a caixa encolhe. O "giratório" do cotovelo e do coice não gira: girar pede desenho de
   costas, que o kit não tem.
