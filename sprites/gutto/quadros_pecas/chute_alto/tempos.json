@@ -1,0 +1,129 @@
+{
+ "acao": 240,
+ "caixa": [
+  36,
+  -300,
+  208,
+  -174
+ ],
+ "origem": [
+  "422_0",
+  "423_0",
+  "965_0",
+  "966_0",
+  "957_0",
+  "426_0",
+  "427_0",
+  "428_0"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "422_0"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": false,
+   "de": "422_0"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "423_0"
+  },
+  {
+   "desenho": 3,
+   "ticks": 1,
+   "caixa": false,
+   "de": "965_0"
+  },
+  {
+   "desenho": 4,
+   "ticks": 1,
+   "caixa": false,
+   "de": "966_0"
+  },
+  {
+   "desenho": 5,
+   "ticks": 6,
+   "caixa": true,
+   "de": "957_0"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "957_0"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "426_0"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "426_0"
+  },
+  {
+   "desenho": 9,
+   "ticks": 3,
+   "caixa": false,
+   "de": "426_0"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "427_0"
+  },
+  {
+   "desenho": 11,
+   "ticks": 2,
+   "caixa": false,
+   "de": "427_0"
+  },
+  {
+   "desenho": 12,
+   "ticks": 2,
+   "caixa": false,
+   "de": "427_0"
+  },
+  {
+   "desenho": 13,
+   "ticks": 3,
+   "caixa": false,
+   "de": "427_0"
+  },
+  {
+   "desenho": 14,
+   "ticks": 2,
+   "caixa": false,
+   "de": "428_0"
+  },
+  {
+   "desenho": 15,
+   "ticks": 2,
+   "caixa": false,
+   "de": "428_0"
+  },
+  {
+   "desenho": 16,
+   "ticks": 2,
+   "caixa": false,
+   "de": "428_0"
+  },
+  {
+   "desenho": 17,
+   "ticks": 3,
+   "caixa": false,
+   "de": "428_0"
+  }
+ ]
+}

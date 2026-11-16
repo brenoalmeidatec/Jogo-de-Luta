@@ -57,6 +57,7 @@ def animar(poses, elems, bate=None, laco=False, guarda=None):
     guarda: pose para onde o golpe volta no fim (a guarda)."""
     saida = []
     n = len(elems)
+    batem = set(bate) if isinstance(bate, (set, list, tuple)) else ({bate} if bate is not None else set())
     for k, (q, ticks) in enumerate(elems):
         a = poses[q]
         if k + 1 < n:
@@ -65,13 +66,13 @@ def animar(poses, elems, bate=None, laco=False, guarda=None):
             b_ = poses[elems[0][0]]
         else:
             b_ = guarda if guarda is not None else a
-        caixa = k == bate
+        caixa = k in batem
         if caixa or ticks < 4:  # impacto segurado; elemento curto não tem espaço para meio
             saida.append((dict(a), ticks, caixa, q))
             continue
-        if bate is not None and k < bate:
+        if batem and k < min(batem):
             curva = acelera
-        elif bate is not None and k > bate:
+        elif batem and k > max(batem):
             curva = desacelera
         else:
             curva = suave

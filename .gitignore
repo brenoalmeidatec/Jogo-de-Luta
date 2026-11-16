@@ -8,3 +8,6 @@ sprites/raiclaven/quadros_hd/
 # comparação dos caminhos dos efeitos da #47 (despertados_47_blender.py --comparar)
 sprites/efeitos_blender/*/d47_*_pixelfx/
 sprites/efeitos_blender/*/d47_*_direto/
+
+# sprites do Gutto tirados do .sff (python ferramentas/extrair_hd_sff.py gutto): reconstruíveis
+sprites/gutto/quadros_sff_hd/
