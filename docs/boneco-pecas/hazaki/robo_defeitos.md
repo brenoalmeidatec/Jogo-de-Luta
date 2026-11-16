@@ -10,6 +10,32 @@
 | chute_lateral/07 | chute_lateral/06 | PASS |
 | chute_lateral/08 | chute_lateral/07 | PASS |
 | chute_lateral/09 | chute_lateral/07 | PASS |
+| machado/00 | machado/01 | PASS |
+| machado/01 | machado/02 | PASS |
+| machado/02 | machado/02 | PASS |
+| machado/03 | machado/03 | PASS |
+| machado/04 | machado/03 | PASS |
+| machado/05 | machado/03 | PASS |
+| machado/06 | machado/04 | PASS |
+| machado/07 | machado/05 | PASS |
+| machado/08 | machado/05 | PASS |
+| machado/09 | machado/06 | PASS |
+| machado/10 | machado/06 | PASS |
+| machado/11 | machado/06 | PASS |
+| machado/12 | machado/07 | PASS |
+| machado/13 | machado/07 | PASS |
+| machado_curto/00 | machado_curto/01 | PASS |
+| machado_curto/01 | machado_curto/01 | PASS |
+| machado_curto/02 | machado_curto/02 | PASS |
+| machado_curto/03 | machado_curto/02 | PASS |
+| machado_curto/04 | machado_curto/02 | PASS |
+| machado_curto/05 | machado_curto/03 | PASS |
+| machado_curto/06 | machado_curto/04 | PASS |
+| machado_curto/07 | machado_curto/04 | PASS |
+| machado_curto/08 | machado_curto/05 | PASS |
+| machado_curto/09 | machado_curto/05 | PASS |
+| machado_curto/10 | machado_curto/06 | PASS |
+| machado_curto/11 | machado_curto/06 | PASS |
 | parado/00 | parado/00 | PASS |
 | parado/01 | parado/00 | PASS |
 | parado/02 | parado/00 | PASS |
@@ -36,5 +62,15 @@
 | soco/02 | soco/06 | PASS |
 | soco/03 | soco/06 | PASS |
 | soco/04 | soco/07 | PASS |
+| soco_reto/00 | soco_reto/01 | PASS |
+| soco_reto/01 | soco_reto/02 | PASS |
+| soco_reto/02 | soco_reto/03 | PASS |
+| soco_reto/03 | soco_reto/04 | PASS |
+| soco_reto/04 | soco_reto/05 | PASS |
+| soco_reto/05 | soco_reto/05 | PASS |
+| soco_reto/06 | soco_reto/06 | PASS |
+| soco_reto/07 | soco_reto/06 | PASS |
+| soco_reto/08 | soco_reto/07 | PASS |
+| soco_reto/09 | soco_reto/07 | PASS |
 
-0 de 36 desenho(s) com defeito.
+0 de 72 desenho(s) com defeito.

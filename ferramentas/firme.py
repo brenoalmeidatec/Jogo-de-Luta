@@ -105,13 +105,14 @@ def configurar(nome):
     b.OSSOS = K.OSSOS
     b.CAMADAS = K.CAMADAS
     b.VARIANTES = K.VARIANTES
-    vars_bf = [None] + list(K.VARIANTES.get("braco_frente", {}))
-    vars_bt = [None] + list(K.VARIANTES.get("braco_tras", {}))
+    vars_bf = [None]
+    vars_bt = [None]
     b.BUSCA = {
         "quadril": (range(-8, 9, 2), 30, [None]),
         "tronco": (range(-10, 11, 2), 3, [None]),
         "cabeca": (range(-10, 11, 2), 3, [None]),
-        "braco_tras": (range(-18, 19, 3), 2, vars_bt),
+        "braco_tras": (range(-110, 41, 3), 2, vars_bt),
+        "antebraco_tras": (range(-60, 91, 3), 2, [None]),
         "braco_frente": (range(-50, 51, 3), 4, vars_bf),
         "coxa_tras": (range(-30, 31, 2), 2, [None]),
         "canela_tras": (range(-30, 31, 2), 2, [None]),
@@ -140,10 +141,16 @@ def montar_kit():
     pt = b.mascara(K.PERNA_TRAS) & alfa & ~bracos & baixo & ~no
     pf = b.mascara(K.PERNA_FRENTE) & alfa & ~bracos & baixo & ~pt & ~no
     jt, jf = K.JOELHO_TRAS[1], K.JOELHO_FRENTE[1]
+    m_ant = np.zeros_like(m_bt)
+    if hasattr(K, "ANTEBRACO_LINHA"):
+        (x1, y1), (x2, y2) = K.ANTEBRACO_LINHA
+        abaixo = (yy - y1) * (x2 - x1) - (xx - x1) * (y2 - y1) > 0
+        m_ant = m_bt & (abaixo | (xx >= K.PUNHO_X))
     partes = {
         "cabeca": m_cab,
-        "braco_tras": m_bt,
+        "braco_tras": m_bt & ~m_ant,
         "braco_frente": m_bf,
+        **({"antebraco_tras": m_ant} if m_ant.any() else {}),
         "tronco": ~baixo & alfa & ~m_cab & ~bracos,
         "quadril": baixo & alfa & ~pt & ~pf & ~bracos,
         "coxa_tras": pt & (yy < jt),
@@ -194,7 +201,7 @@ def montar_kit():
         peito_de_outro_desenho(base, pintado)
     for slot, vs in K.VARIANTES.items():
         junta, mae, _ = K.OSSOS[slot]
-        for var, (fonte, poli, _junta_fonte) in vs.items():
+        for var, (fonte, poli, _junta_fonte, *fixa) in vs.items():
             # a junta no desenho de onde a peça sai é a junta do kit levada pelo corpo daquele desenho (o corpo
             # firme casado nele): a peça fica presa no mesmo ponto do corpo em que ela sai no desenho de hoje
             dx, dy, giro = corpo(base, normal(fonte))
@@ -202,6 +209,8 @@ def montar_kit():
             jk = b.girar(junta, jt, giro) if mae == "tronco" else junta
             e0 = escala(fonte)
             junta_fonte = (EIXO[0] + (jk[0] + dx - EIXO[0]) * e0, EIXO[1] + (jk[1] + dy - EIXO[1]) * e0)
+            if fixa:  # junta marcada à mão no desenho (o membro sai de outro ponto do corpo naquele desenho)
+                junta_fonte = _junta_fonte
             f = abrir(fonte)
             m = b.mascara(poli) & (f[..., 3] > 0)
             if slot.startswith("coxa"):
@@ -250,8 +259,13 @@ def peito_de_outro_desenho(base, pintado):
     pano = (img[..., 3] > 0) & ~resto & (hsv[..., 0] >= 105) & (hsv[..., 0] <= 140) & (hsv[..., 1] > 60)
     if pano.any() and resto.any():
         lum = rgb[pano].sum(-1)
-        sombra = rgb[pano][lum <= np.percentile(lum, 20)]
+        sombra = rgb[pano][(lum >= np.percentile(lum, 30)) & (lum <= np.percentile(lum, 50))]
         img[resto, :3] = np.median(sombra, 0).astype(np.uint8)
+        # contorno escuro na beira nova (onde antes encostava o braço), como o resto do desenho
+        al = (img[..., 3] > 0).astype(np.uint8)
+        borda = (al > 0) & (cv2.erode(al, np.ones((3, 3), np.uint8)) == 0) & \
+            (cv2.dilate(resto.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0)
+        img[borda, :3] = (40, 20, 40)
     Image.fromarray(img).save(b.PECAS / p["arquivo"])
     pm = np.asarray(Image.open(b.PECAS / "tronco_pintado.png")).copy()
     pm[u | resto] = 0
@@ -415,6 +429,31 @@ def pernas_no_chao(pose, alvo, quais=("tras", "frente")):
     if _PES_REF is None:
         _PES_REF = pes_no_chao(abrir(K.REF))
     agora = pes_no_chao(alvo)
+
+    def alvo_tornozelo(lado):
+        i = 0 if lado == "tras" else -1
+        tr = K.TORNOZELO[f"canela_{lado}"]
+        dx = 0
+        if agora and (len(agora) > 1 or len(quais) == 1):
+            dx = agora[i] - _PES_REF[i]
+        return (tr[0] + dx, tr[1])
+
+    # perna plantada não estica além do que ela mede: se o quadril subiu demais, o corpo desce até o pé alcançar
+    descer = 0.0
+    w = b.mundo(pose)
+    for lado in quais:
+        coxa, canela = f"coxa_{lado}", f"canela_{lado}"
+        qr, jr = K.OSSOS[coxa][0], K.OSSOS[canela][0]
+        tr = K.TORNOZELO[canela]
+        L = np.linalg.norm(np.subtract(jr, qr)) + np.linalg.norm(np.subtract(tr, jr)) - 1.5
+        q = w[coxa][0]
+        t = alvo_tornozelo(lado)
+        ddx = t[0] - q[0]
+        if abs(ddx) < L:
+            alto = t[1] - np.sqrt(L * L - ddx * ddx)  # quadril mais alto possível
+            descer = max(descer, alto - q[1])
+    if descer > 0:
+        pose["quadril"] = dict(pose["quadril"], dy=pose["quadril"].get("dy", 0) + int(np.ceil(descer)))
     w = b.mundo(pose)
     for lado in quais:
         i = 0 if lado == "tras" else -1
@@ -436,10 +475,21 @@ def pose_de(kit, q):
     pose = {"quadril": {"ang": 0, "dx": dx, "dy": dy}, "tronco": {"ang": giro}}
     if q in K.EXPRESSOES:
         pose["cabeca"] = {"ang": 0, "var": K.EXPRESSOES[q]}
-    pose = b.encaixar(kit, alvo, pose, ordem=["braco_tras", "braco_frente"])
+    vb = getattr(K, "BRACO_VAR", {}).get(q, [])
+    b.BUSCA["braco_frente"] = (b.BUSCA["braco_frente"][0], 4, [None] + vb)
+    ordem = ["braco_tras"] + (["antebraco_tras"] if "antebraco_tras" in K.OSSOS else []) + ["braco_frente"]
+    pose = b.encaixar(kit, alvo, pose, ordem=ordem)
     # a cabeça fica de pé quando o tronco inclina (o olhar continua no oponente)
     if giro:
         pose["cabeca"] = dict(pose.get("cabeca", {}), ang=-round(giro * 0.7))
+    mao = getattr(K, "POSES", {}).get(q, {})
+    for slot, v in mao.items():
+        if slot == "quadril" and v.get("so_dy"):
+            pose["quadril"] = dict(pose["quadril"], dy=v["dy"])
+        elif slot != "coxa_frente":
+            pose[slot] = dict(v)
+    if "tronco" in mao:
+        pose["cabeca"] = dict(pose.get("cabeca", {}), ang=-round(mao["tronco"]["ang"] * 0.7))
     no_ar = getattr(K, "PERNA_NO_AR", {}).get(q)
     if no_ar is None:
         pose = pernas_no_chao(pose, alvo)
@@ -447,9 +497,11 @@ def pose_de(kit, q):
         pose = pernas_no_chao(pose, alvo, quais=("tras",))
         vs = [None] if no_ar == "livre" else [no_ar]
         b.BUSCA["coxa_frente"] = (range(-60, 61, 2), 3, vs)
-        b.ANGULOS_VARIANTE = range(-50, 51, 2)
+        b.ANGULOS_VARIANTE = range(-100, 51, 2)
         b.FOLGA_VARIANTE = {"coxa_frente": 4}
         pose = b.encaixar(kit, alvo, pose, ordem=["coxa_frente"])
+        if "coxa_frente" in mao:
+            pose["coxa_frente"] = dict(mao["coxa_frente"])
         if not pose["coxa_frente"].get("var"):
             pose = b.encaixar(kit, alvo, pose, ordem=["canela_frente"])
             pose["_chute_livre"] = {"sim": 1}
@@ -534,7 +586,7 @@ def malha_perna(lado, w):
            [(tr[0] - L, EIXO[1] + 4), (tr[0] + L, EIXO[1] + 4)]]
     chao = EIXO[1] + 4
     dt = (t[0] - tr[0], t[1] - tr[1])
-    if abs(dt[1]) <= 12:  # pé no chão: assenta no chão
+    if dt[1] >= -12:  # pé no chão (ou que afundaria no meio do caminho entre duas poses): assenta no chão
         dt = (dt[0], 0)
     dst = [[(qr[0] - L + dq[0], topo_y + dq[1]), (qr[0] + L + dq[0], topo_y + dq[1])],
            [tuple(np.array(j) - n2 * L), tuple(np.array(j) + n2 * L)],
@@ -556,6 +608,11 @@ def desenhar(kit, pose):
     tela = np.zeros((b.TELA[1], b.TELA[0], 4), np.uint8)
     pint = np.zeros(tela.shape[:2], bool)
     usados = []
+    camadas = list(K.CAMADAS)
+    cf = pose.get("coxa_frente", {})
+    if cf.get("var") and w["coxa_frente"][1] < -40:  # perna lá no alto passa na frente do tronco (atrás do punho)
+        camadas.remove("coxa_frente")
+        camadas.insert(camadas.index("braco_tras"), "coxa_frente")
 
     def por(r, x0, y0):
         h, w_ = r.shape[:2]
@@ -563,7 +620,7 @@ def desenhar(kit, pose):
         if X1 > X0 and Y1 > Y0:
             pint[Y0:Y1, X0:X1] &= ~(r[Y0 - y0:Y1 - y0, X0 - x0:X1 - x0, 3] > 0)
         b.colar(tela, r, x0, y0)
-    for slot in K.CAMADAS:
+    for slot in camadas:
         lado = slot.split("_")[-1]
         if slot.startswith("canela"):
             continue
@@ -580,6 +637,8 @@ def desenhar(kit, pose):
             antes = tela[..., 3].copy()
             deformar(p["img"], p["origem"], ts, td, tela)
             pint &= ~((tela[..., 3] > 0) & (antes == 0))
+            continue
+        if slot.startswith("antebraco") and pose.get(slot.replace("antebraco", "braco"), {}).get("var"):
             continue
         p = kit["pecas"][b.chave(slot, pose)]
         pos, ang = w[slot]
@@ -623,7 +682,7 @@ def tapar_buracos(tela):
     return out
 
 
-def sem_migalha(tela, minimo=12):
+def sem_migalha(tela, minimo=20):
     al = (tela[..., 3] > 0).astype(np.uint8)
     n, lab, st, _ = cv2.connectedComponentsWithStats(al, connectivity=8)
     out = tela.copy()
@@ -650,7 +709,11 @@ def fechar_frestas(tela, juntas, raio=5, perto_px=22):
 
 
 # ------------------------------------------------------------------ robô de defeitos
-def conferir(tela, juntas):
+def ys_max(tela):
+    return int(np.nonzero((tela[..., 3] > 0).any(1))[0].max())
+
+
+def conferir(tela, juntas, no_chao=True):
     """Defeitos do quadro montado (vazio = passou): pedaço solto, fresta na junta, pé enterrado ou flutuando perto do
     chão, peça fora da tela."""
     erros = []
@@ -666,6 +729,8 @@ def conferir(tela, juntas):
         cv2.circle(m, (int(round(x)), int(round(y))), 14, 1, -1)
         if (buraco & (m > 0)).sum() > 6:
             erros.append(f"fresta em {int(x)},{int(y)}")
+    if no_chao and ys_max(tela) < EIXO[1] - 8:
+        erros.append(f"pé flutuando (y={ys_max(tela)})")
     nb = int(buracos(tela).sum())
     if nb:
         erros.append(f"buraco {nb} px")
@@ -738,7 +803,7 @@ def gerar(nomes, so_pose=False):
             out = desenhar(kit, pose)
             pintado = desenhar.pintado
             w = b.mundo(pose)
-            erros = conferir(out, [w[s][0] for s in ("braco_tras", "braco_frente", "coxa_tras", "coxa_frente",
+            erros = conferir(out, no_chao=True, juntas=[w[s][0] for s in ("braco_tras", "braco_frente", *(("antebraco_tras",) if "antebraco_tras" in w else ()), "coxa_tras", "coxa_frente",
                                                      "canela_tras", "canela_frente", "cabeca")])
             m_novo, m_hoje = mancha(out, guarda)
             if pintado > 30:

@@ -30,6 +30,7 @@ OSSOS = {  # junta no parado, mãe, ponta
     "tronco": ((548, 470), "quadril", (552, 400)),
     "cabeca": ((552, 398), "tronco", (555, 345)),
     "braco_tras": ((497, 402), "tronco", (545, 420)),
+    "antebraco_tras": ((487, 452), "braco_tras", (540, 428)),
     "braco_frente": ((586, 410), "tronco", (620, 420)),
     "coxa_tras": ((515, 515), "quadril", JOELHO_TRAS),
     "canela_tras": (JOELHO_TRAS, "coxa_tras", TORNOZELO["canela_tras"]),
@@ -38,10 +39,38 @@ OSSOS = {  # junta no parado, mãe, ponta
 }
 # de trás para a frente: braço de cima levantado fica atrás do tronco; o braço do punho no peito fica na frente
 CAMADAS = ["braco_frente", "coxa_frente", "canela_frente", "coxa_tras", "canela_tras", "quadril", "tronco",
-           "cabeca", "braco_tras"]
+           "cabeca", "braco_tras", "antebraco_tras"]
+# braço de perto em dois ossos: abaixo desta linha (dobra do cotovelo) e da coluna do punho é antebraço
+ANTEBRACO_LINHA = ((470, 441), (528, 429))
+PUNHO_X = 519
+# pose dada à mão (vence o encaixe). "quadril" com so_dy: só a altura (-60 = o mais alto que a perna de apoio
+# alcança, perna esticada); o x continua o do encaixe: onde o desenho de hoje é confuso demais para casar as peças.
+# ângulos em graus (horário na tela), relativos à peça mãe; "var" troca o desenho da peça.
+GUARDA = {"braco_tras": {"ang": 0}, "antebraco_tras": {"ang": 0}, "braco_frente": {"ang": 0}}
+POSES = {
+    "soco_reto/03": {"braco_tras": {"var": "cruzado", "ang": -2}, "tronco": {"ang": 8}},
+    "soco_reto/04": {"braco_tras": {"var": "cruzado", "ang": -1}, "tronco": {"ang": 9}},
+    "soco_reto/05": {"braco_tras": {"var": "cruzado", "ang": 1}, "tronco": {"ang": 8}},
+    "machado/01": {**GUARDA, "coxa_frente": {"var": "esticada", "ang": -36}, "tronco": {"ang": -6}},
+    "machado/02": {**GUARDA, "quadril": {"ang": 0, "dx": 0, "dy": -60, "so_dy": 1}, "coxa_frente": {"var": "esticada", "ang": -58}, "tronco": {"ang": -15}},
+    "machado/03": {**GUARDA, "quadril": {"ang": 0, "dx": 0, "dy": -60, "so_dy": 1}, "coxa_frente": {"var": "esticada", "ang": -62}, "tronco": {"ang": -18}},
+    "machado/04": {**GUARDA, "coxa_frente": {"var": "esticada", "ang": -14}, "tronco": {"ang": -4}},
+    "machado/05": dict(GUARDA), "machado/06": dict(GUARDA), "machado/07": dict(GUARDA),
+    "machado_curto/01": dict(GUARDA),
+    "machado_curto/02": {**GUARDA, "quadril": {"ang": 0, "dx": 0, "dy": -60, "so_dy": 1}, "coxa_frente": {"var": "esticada", "ang": -55}, "tronco": {"ang": -12}},
+    "machado_curto/03": {**GUARDA, "coxa_frente": {"var": "esticada", "ang": -25}, "tronco": {"ang": -5}},
+    "machado_curto/04": dict(GUARDA), "machado_curto/05": dict(GUARDA), "machado_curto/06": dict(GUARDA),
+}
+# variantes de braço só nos quadros listados (senão o encaixe usa variante onde não deve)
+BRACO_VAR = {"soco/03": ["esticado"], "soco/05": ["esticado"], "soco/06": ["esticado"]}
 
 # variantes: peça que muda de desenho (não só de ângulo). (quadro de onde sai, polígono, junta nesse quadro)
 VARIANTES = {
+    "braco_tras": {  # soco cruzado: o braço de perto esticado, desenho do soco_reto/04, preso pelo ombro
+        "cruzado": ("soco_reto/04", [(507, 408), (530, 401), (560, 403), (600, 407), (640, 404), (680, 404),
+                                     (691, 414), (691, 441), (675, 443), (640, 438), (600, 437), (570, 441),
+                                     (545, 449), (520, 453), (507, 441)], (528, 425), "fixa"),
+    },
     "braco_frente": {
         "esticado": ("soco/05", [(568, 425), (580, 412), (600, 413), (630, 418), (660, 416), (687, 419),
                                  (690, 447), (670, 453), (640, 447), (610, 453), (590, 461), (569, 452)],
@@ -63,6 +92,9 @@ ANIMS = {
     "parado": (0, "parado 0/7 1/7 2/7 3/7 4/7 5/7 6/7", None),
     "soco": (200, "soco 3/3 5/3A 6/4 7/3", (16, -90, 59, -76)),
     "chute_lateral": (240, "chute_lateral 1/2 2/3 3/3 4/4A 5/5 6/5 7/4", (14, -82, 56, -58)),
+    "soco_reto": (210, "soco_reto 1/2 2/3 3/2 4/4A 5/5 6/5 7/4", (14, -88, 52, -72)),
+    "machado": (333, "machado 1/3 2/4 3/6 4/4A 5/5 6/7 7/5", (10, -104, 51, -66)),
+    "machado_curto": (246, "machado_curto 1/5 2/7 3/4A 4/5 5/4 6/4", (10, -98, 49, -56)),
 }
 # expressão do rosto por quadro (o rosto é sempre o mesmo desenho; muda só a expressão)
 EXPRESSOES = {}
@@ -70,6 +102,9 @@ EXPRESSOES = {}
 NO_DA_FAIXA = [(534, 470), (578, 470), (578, 562), (534, 562)]
 # quadros com a perna da frente no ar e o desenho que ela usa ("livre" = coxa e canela do parado giradas)
 PERNA_NO_AR = {"chute_lateral/02": "camara", "chute_lateral/03": "esticada", "chute_lateral/04": "esticada",
-               "chute_lateral/05": "esticada", "chute_lateral/06": "camara"}
+               "chute_lateral/05": "esticada", "chute_lateral/06": "camara",
+               "machado/01": "esticada", "machado/02": "esticada", "machado/03": "esticada",
+               "machado/04": "esticada", "machado_curto/01": "camara", "machado_curto/02": "esticada",
+               "machado_curto/03": "esticada"}
 # desenho em que o peito aparece (braços para baixo) e a área dele que serve para o peito escondido do kit
 PEITO_DOADOR = ("vitoria/00", [(516, 390), (568, 400), (568, 448), (545, 458), (516, 470)])
