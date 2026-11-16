@@ -33,19 +33,19 @@ python3 ferramentas/gerar_hazaki.py                         # liga tudo no jogo 
 Os golpes que ainda não têm folha não saem na forma (o botão não faz nada): o jogo só vai para a `mugen` com as 37
 folhas prontas, o robô passando e o vídeo na #47.
 
-## Situação (16/11, 00:30Z)
+## Situação (16/11, 01:20Z)
 
-- Folhas prontas (16 de 34): parado, anda, pe_maos, pe_pes, cobranca_garras, agachado_maos (Gemini); agachado, pulo,
-  defesa, defesa_baixa, apanha, queda, levanta, recuo, provoca, agachado_pes (ChatGPT Plus, turno de 15-16/11).
-- Ligados no jogo: Arranhão (x), Garra Cruzada (y), Joelhada Selvagem (a), Coice com Garra (b), Arranhão Baixo
-  (↓x), Garra Subindo (↓y), Rabo Rasteiro (↓a, baixo), Varrida de Garras (↓b, derruba) e a Cobrança das Garras
-  (↘a/↘b), mais os básicos das folhas prontas.
-- Faltam 21 folhas: agarrao_abraco, agarrao_perna, agarrao_cutucao (16/11, combinado com a thread dos agarrões), ar_maos, ar_pes, direcionais_a/b, fins_maos/pes, bola_trevas, voo, rasgo, vira, corrida,
-  vitoria, intro, derrota_sirene, parry_alto, parry_baixo, juizo_a, juizo_b. Próximo turno do ChatGPT
-  (`imagens/fila-chatgpt.md`).
-- ChatGPT: o `gpt_demonio.js` (`ferramentas/chatgpt_demonio.js`; troque o commit na constante C e os pedidos) anexa o conceito e a folha
-  do parado do raw do GitHub, manda o pedido completo na 1ª e o `--seguinte` nas outras, e o `__cap` mostra a imagem
-  reduzida a 1024 px para o zoom [0,0,628,420] do print. A escala sai igual à do Gemini (altura ~2% menor).
+- Folhas prontas (26 de 37): parado, anda, pe_maos, pe_pes, cobranca_garras, agachado_maos (Gemini); agachado, pulo,
+  defesa, defesa_baixa, apanha, queda, levanta, recuo, provoca, agachado_pes (ChatGPT, 15-16/11); agarrao_abraco,
+  agarrao_perna, agarrao_cutucao, vira, corrida, vitoria, intro, derrota_sirene, parry_alto, parry_baixo (ChatGPT,
+  16/11 01h). Todos os básicos e os 3 agarrões já saem com a arte do demônio (`agarroes_extras.png`: 810, 841 e 831
+  na forma, sem nenhum quadro de sobretudo).
+- Golpes ligados: Arranhão (x), Garra Cruzada (y), Joelhada Selvagem (a), Coice com Garra (b), Arranhão Baixo (↓x),
+  Garra Subindo (↓y), Rabo Rasteiro (↓a), Varrida de Garras (↓b), Cobrança das Garras (↘a/↘b) e os 3 agarrões.
+- Faltam 11 folhas: ar_maos, ar_pes, direcionais_a/b, fins_maos/pes, bola_trevas, voo, rasgo, juizo_a, juizo_b.
+  Próximo turno do ChatGPT (`imagens/fila-chatgpt.md`).
+- ChatGPT: `ferramentas/chatgpt_demonio.js` (troque os pedidos; o `__cap` diz a largura em px CSS da imagem reduzida,
+  use-a no zoom: [0,0,745,497] no Chrome de casa em 16/11, [0,0,628,420] antes).
 
 ## Lições
 
