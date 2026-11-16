@@ -2634,3 +2634,28 @@ cada animação nova levou ~10 min (achar as poses e conferir). O custo cai bem 
 paleta de 15 cores deixa a arte mais chapada que a atual; frente e costas da folha-modelo não foram geradas (pedem
 ChatGPT/Gemini e não fazem falta nestas três animações); as pontas da faixa ainda não atrasam no chute (bolinhas estão
 no quadril); a câmara baixa do chute é a câmara girada e pede retoque à mão.
+
+### 2026-11-16 — Piloto boneco de peças, versão 2: conserto em cima dos quadros de hoje
+
+**Por quê:** o Alisson reprovou a versão 1 por três motivos: perdeu nitidez (paleta de 15 cores), os membros
+desgrudavam e o movimento mudava. A proposta dele foi partir dos sprites que já estão no jogo e consertar só o que
+varia. Foi o que fiz.
+
+**O que mudou:**
+- `ferramentas/corrigir_cabeca.py`: a régua acha a cabeça e a escala dela. Se passar de 3%, a cabeça é recortada acima
+  do queixo, só a parte ligada a ela (a mão levantada fica de fora), e encolhida em volta do queixo com Scale2x x3 e
+  amostragem. A nuca, o trapézio e o ombro ficam com os pixels originais.
+- `ferramentas/piloto_corrigido.py`: grava `quadros_pecas_hd` e `quadros_pecas` com os mesmos desenhos, ticks e caixas
+  que o jogo mostra hoje nas ações 0, 200 e 240.
+- `ferramentas/conferir_pecas.py`: quando a nota do casamento fica abaixo de 0,6, a medida aparece como inconclusiva e
+  não reprova. É o caso do tronco, que gira entre as poses.
+- `ferramentas/video_pecas.py`: a guarda dos dois lados é o ginga/00.
+- A versão 1 do boneco montado continua no histórico (e16c177b) e em `docs/boneco-pecas/piloto/`.
+
+**Resultado:** a cabeça foi de 107–112% para 97–103% nos 10 quadros do soco e do chute. O parado já estava dentro e
+não mudou. Cores, contorno e membros são os originais. Antes e depois em `docs/boneco-pecas/corrigido/`.
+
+**Ressalva honesta:** o molde do tronco reprova soco/01 (84%) e soco/03 (89%) com nota fraca (0,62 e 0,71). A distância
+do alto da cabeça até a faixa dá 99–101% nesses quadros, então deixei o tronco como está e pedi ao Breno para olhar.
+
+**Tempo:** cerca de 40 min de máquina para as três animações.

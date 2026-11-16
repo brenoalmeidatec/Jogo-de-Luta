@@ -1,0 +1,43 @@
+{
+ "acao": 0,
+ "caixa": null,
+ "origem": [
+  "ginga/03",
+  "ginga/07",
+  "ginga/01",
+  "ginga/06",
+  "ginga/02"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "desenho": 1,
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "desenho": 2,
+   "ticks": 5,
+   "caixa": false
+  },
+  {
+   "desenho": 3,
+   "ticks": 7,
+   "caixa": false
+  },
+  {
+   "desenho": 4,
+   "ticks": 7,
+   "caixa": false
+  },
+  {
+   "desenho": 2,
+   "ticks": 5,
+   "caixa": false
+  }
+ ]
+}

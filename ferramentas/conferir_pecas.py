@@ -23,6 +23,7 @@ import reguas  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parent.parent
 LIMITE = 0.05
+NOTA_MINIMA = 0.6  # casamento abaixo disso não é medida (o tronco gira e o desenho do peito muda entre poses)
 TRONCO = (512, 395, 575, 465)  # peito e barriga no parado do kit (ginga/00), sem os braços
 
 
@@ -62,11 +63,14 @@ def main():
     for pasta in args:
         for f in sorted(Path(pasta).glob("[0-9][0-9].png")):
             m = medir(abrir(f), cab, tro)
-            ruim = [n for n in ("cabeca", "tronco") if abs(m[n] - 1) > LIMITE]
+            ruim = [n for n in ("cabeca", "tronco") if abs(m[n] - 1) > LIMITE and m["nota_" + n] >= NOTA_MINIMA]
             falhas += bool(ruim)
-            linhas.append(f"| {Path(pasta).name}/{f.name} | {m['cabeca']:.0%} | {m['tronco']:.0%} | "
+            fraco = lambda n: f"{m[n]:.0%}" + (f" (inconclusivo, nota {m['nota_' + n]:.2f})"
+                                                if m["nota_" + n] < NOTA_MINIMA else "")
+            linhas.append(f"| {Path(pasta).name}/{f.name} | {fraco('cabeca')} | {fraco('tronco')} | "
                           f"{m['altura'] / alt_ref:.0%} | {'FAIL ' + ', '.join(ruim) if ruim else 'PASS'} |")
-    texto = "\n".join(linhas) + f"\n\n{falhas} quadro(s) reprovado(s); limite {LIMITE:.0%} na cabeça e no tronco.\n"
+    texto = "\n".join(linhas) + (f"\n\n{falhas} quadro(s) reprovado(s); limite {LIMITE:.0%} na cabeça e no tronco; "
+             f"medida com nota abaixo de {NOTA_MINIMA} não reprova (conferir no olho).\n")
     print(texto)
     if relatorio:
         Path(relatorio).write_text(texto, encoding="utf-8")

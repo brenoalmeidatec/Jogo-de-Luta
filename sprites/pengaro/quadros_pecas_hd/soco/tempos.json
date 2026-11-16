@@ -6,90 +6,32 @@
   153,
   -192
  ],
+ "origem": [
+  "soco/03",
+  "soco/05",
+  "soco/06",
+  "soco/07"
+ ],
  "elementos": [
   {
-   "desenho": 1,
-   "ticks": 1,
+   "desenho": 0,
+   "ticks": 4,
    "caixa": false
   },
   {
    "desenho": 1,
-   "ticks": 1,
-   "caixa": false
-  },
-  {
-   "desenho": 1,
-   "ticks": 2,
-   "caixa": false
-  },
-  {
-   "desenho": 2,
-   "ticks": 2,
+   "ticks": 6,
    "caixa": true
   },
   {
    "desenho": 2,
    "ticks": 3,
-   "caixa": true
-  },
-  {
-   "desenho": 2,
-   "ticks": 1,
    "caixa": false
   },
   {
    "desenho": 3,
-   "ticks": 3,
-   "caixa": false
-  },
-  {
-   "desenho": 4,
    "ticks": 6,
    "caixa": false
   }
- ],
- "poses": [
-  {},
-  {
-   "braco_frente": {
-    "var": "punho",
-    "dx": -5,
-    "dy": 1
-   },
-   "tronco": {
-    "dx": -2
-   },
-   "cabeca": {
-    "dx": -1
-   },
-   "perna_tras": {
-    "ang": 1
-   }
-  },
-  {
-   "braco_frente": {
-    "var": "esticado",
-    "dx": 2
-   },
-   "tronco": {
-    "dx": 4
-   },
-   "cabeca": {
-    "dx": 2
-   },
-   "perna_tras": {
-    "ang": -2
-   }
-  },
-  {
-   "braco_frente": {
-    "var": "punho",
-    "dx": 1
-   },
-   "tronco": {
-    "dx": 2
-   }
-  },
-  {}
  ]
 }

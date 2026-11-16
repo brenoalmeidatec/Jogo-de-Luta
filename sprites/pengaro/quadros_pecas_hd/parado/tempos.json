@@ -1,6 +1,13 @@
 {
  "acao": 0,
  "caixa": null,
+ "origem": [
+  "ginga/03",
+  "ginga/07",
+  "ginga/01",
+  "ginga/06",
+  "ginga/02"
+ ],
  "elementos": [
   {
    "desenho": 0,
@@ -28,56 +35,9 @@
    "caixa": false
   },
   {
-   "desenho": 5,
+   "desenho": 2,
    "ticks": 5,
    "caixa": false
-  }
- ],
- "poses": [
-  {},
-  {
-   "tronco": {
-    "dy": 1
-   },
-   "braco_frente": {
-    "dx": 1
-   }
-  },
-  {
-   "tronco": {
-    "dy": 2
-   },
-   "braco_frente": {
-    "dx": 1,
-    "dy": 1
-   },
-   "braco_tras": {
-    "dy": 1
-   }
-  },
-  {
-   "tronco": {
-    "dy": 3
-   },
-   "braco_frente": {
-    "dy": 1
-   },
-   "braco_tras": {
-    "dy": 1
-   }
-  },
-  {
-   "tronco": {
-    "dy": 2
-   },
-   "braco_frente": {
-    "dx": -1
-   }
-  },
-  {
-   "tronco": {
-    "dy": 1
-   }
   }
  ]
 }

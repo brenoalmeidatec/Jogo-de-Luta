@@ -1,0 +1,37 @@
+{
+ "acao": 200,
+ "caixa": [
+  45,
+  -276,
+  153,
+  -192
+ ],
+ "origem": [
+  "soco/03",
+  "soco/05",
+  "soco/06",
+  "soco/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 4,
+   "caixa": false
+  },
+  {
+   "desenho": 1,
+   "ticks": 6,
+   "caixa": true
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": false
+  },
+  {
+   "desenho": 3,
+   "ticks": 6,
+   "caixa": false
+  }
+ ]
+}
