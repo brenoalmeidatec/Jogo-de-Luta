@@ -217,7 +217,7 @@ def trocar(a, tmpl, caixa, cabeca_ref=None):
     emenda &= esq & dir_
     if emenda.any():
         out[..., :3] = cv2.inpaint(np.ascontiguousarray(out[..., :3]), emenda.astype(np.uint8), 3, cv2.INPAINT_TELEA)
-    return out, {"escala_antes": e, "angulo": ang, "nota": nota, "cabeca": sob}
+    return out, {"escala_antes": e, "angulo": ang, "nota": nota}
 
 
 def main():
