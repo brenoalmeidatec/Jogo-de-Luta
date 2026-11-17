@@ -96,6 +96,9 @@ do
             linha[#linha + 1] = e .. " fora"
           end
         end
+        if numExplod(9640) > 0 then
+          linha[#linha + 1] = string.format("9640 clarao n=%d px=%s py=%s", numExplod(9640), v(explodVar(9640, 0, "pos x")), v(explodVar(9640, 0, "pos y")))
+        end
         if helper(9610) then
           linha[#linha + 1] = string.format("9610 sil anim=%d el=%d", anim(), animElemNo(0))
           if numExplod(9611) > 0 then
