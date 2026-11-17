@@ -102,7 +102,7 @@ ANIMS = {
     "agachado": (11, "agachado 3/8 4/8 5/8 6/8", None),
     "baixo_soco": (400, "baixo_soco 2/1 3/2 4/3A 5/4 6/3", (14, -54, 57, -42)),
     "chute_canela": (430, "chute_canela 1/2 2/2 4/3A 5/4 6/3", (14, -22, 58, -4)),
-    "rasteira_arco": (440, "rasteira_arco 1/3 2/3 3/2 4/4A 6/8 7/7", (12, -28, 69, -8)),
+    "rasteira_arco": (440, "rasteira_arco 1/3 2/3 3/4 4/4A 6/8 7/7", (12, -28, 69, -8)),
     "rasteira": (1400, "rasteira 0/4 1/5 2/3A 3/3A 4/4A 5/4A 6/8 7/6", (14, -20, 78, -2)),
     "soco_reto": (210, "soco_reto 1/2 2/3 3/2 4/4A 5/5 6/5 7/4", (14, -88, 52, -72)),
     "machado": (333, "machado 1/3 2/4 3/6 4/4A 5/5 6/7 7/5", (10, -104, 51, -66)),

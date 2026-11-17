@@ -515,7 +515,6 @@ def pernas_no_chao(pose, alvo, quais=("tras", "frente")):
         if abs(ddx) < L:
             alto = t[1] - np.sqrt(L * L - ddx * ddx)  # quadril mais alto possível
             descer = max(descer, alto - q[1])
-    descer = min(descer, 24)  # agachar mais que isso para alcançar o pé vira boneco afundado: o pé é que encurta
     if descer > 0:
         pose["quadril"] = dict(pose["quadril"], dy=pose["quadril"].get("dy", 0) + int(np.ceil(descer)))
     w = b.mundo(pose)
