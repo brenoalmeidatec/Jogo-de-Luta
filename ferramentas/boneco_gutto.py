@@ -27,6 +27,7 @@ import extrair_hd_sff as sff  # noqa: E402
 RAIZ = AQUI.parent
 SPR = RAIZ / "sprites" / "gutto"
 HD = SPR / "quadros_sff_hd"
+ARTE = SPR / "arte_braco"  # braço novo do ChatGPT (direto e braço para trás no chute alto), na escala do kit
 REF = "94_0"
 PROVA = RAIZ / "docs" / "boneco-pecas" / "gutto"
 
@@ -83,6 +84,11 @@ def configurar():
 def garantir_hd(nomes):
     """Grava em quadros_sff_hd os sprites que faltam (grupo_indice)."""
     falta = [n for n in nomes if not (HD / f"{n}.png").exists()]
+    for n in list(falta):  # arte nova (ChatGPT, 17/11) que não está no .sff: vem de sprites/gutto/arte_braco
+        if (ARTE / f"{n}.png").exists():
+            HD.mkdir(parents=True, exist_ok=True)
+            shutil.copy(ARTE / f"{n}.png", HD / f"{n}.png")
+            falta.remove(n)
     if not falta:
         return
     cores, sp = sff.sprites("gutto")
@@ -134,10 +140,27 @@ def kit():
 # (desenho de onde sai, polígono, junta no desenho de origem: None = acha pelo tronco)
 VARIANTES = {
     "braco_frente": {
+        # o de longe jogado para trás no chute alto: só o antebraço e a mão saem de trás das costas (sem a corda, que é
+        # do braço de perto); vai atrás do tronco (`_atras`)
+        "atras": ("9902_0", [(398, 413), (442, 410), (438, 436), (424, 448), (412, 448), (408, 480), (410, 493),
+                             (380, 493), (376, 472), (384, 448), (394, 432)], (486, 374)),
         "cotovelo": ("970_0", [(548, 388), (575, 384), (595, 391), (625, 392), (655, 392), (668, 398), (670, 416),
                                (660, 424), (630, 426), (605, 430), (585, 432), (560, 428), (548, 410)], (562, 408)),
         "esticado": ("1252_0", [(588, 384), (640, 382), (680, 384), (700, 387), (726, 390), (728, 422), (700, 420),
                                 (660, 414), (626, 422), (600, 428), (588, 410)], (606, 404)),
+    },
+    # braço novo (ChatGPT, 17/11, estudo de anatomia): o de perto esticado no direto, com a corda no bíceps
+    "braco_tras": {
+        "direto": ("9901_0", [(452, 362), (466, 350), (494, 348), (520, 350), (560, 356), (620, 358), (680, 358),
+                              (684, 392), (620, 384), (570, 386), (530, 394), (530, 430), (512, 430), (510, 404),
+                              (490, 398), (466, 392), (454, 380)], (456, 368)),
+    },
+    # o tronco virado do direto (mesmo desenho do braço): no parado o braço de trás tapa o peito todo e, quando ele
+    # sai para o soco, o que fica embaixo é pintado; aqui o quadril e o ombro giram de verdade (estudo de anatomia)
+    "tronco": {
+        "direto": ("9901_0", [(450, 365), (462, 352), (490, 348), (505, 352), (520, 358), (545, 356), (562, 362),
+                              (562, 400), (552, 422), (548, 447), (470, 448), (462, 440), (458, 410), (452, 390)],
+                   (500, 446)),
     },
     "coxa_tras": {  # perna de apoio esticada (chute): desenho inteiro da perna do 957, preso no quadril de trás
         "apoio": ("957_0", [(500, 505), (556, 500), (556, 540), (546, 570), (527, 600), (517, 630), (540, 648),
@@ -165,18 +188,28 @@ ANIM = {
     "chute_alto": (240, [("422_0", 5, 0), ("423_0", 2, 0),
                          ("965_0", 1, 0, {"tronco": {"ang": TR_CAMARA}, "braco_frente": {"ang": BF_CAMARA}}),
                          ("966_0", 1, 0, {"tronco": {"ang": TR_CAMARA}, "braco_frente": {"ang": BF_CAMARA}}),
-                         ("957_0", 6, 1, {"tronco": {"ang": TR_ALTO}, "braco_frente": {"ang": BF_ALTO}}),
-                         ("957_0", 2, 0, {"tronco": {"ang": TR_ALTO}, "braco_frente": {"ang": BF_ALTO}}),
+                         ("957_0", 6, 1, {"tronco": {"ang": TR_ALTO}, "braco_frente": {"ang": 0, "var": "atras"},
+                                          "_atras": {}}),
+                         ("957_0", 2, 0, {"tronco": {"ang": TR_ALTO}, "braco_frente": {"ang": 0, "var": "atras"},
+                                          "_atras": {}}),
                          ("426_0", 7, 0, {"tronco": {"ang": TR_CAMARA}, "braco_frente": {"ang": BF_CAMARA}}),
                          ("427_0", 9, 0), ("428_0", 9, 0)],
                    (36, -300, 208, -174)),
     # golpes refeitos (lista dos confusos): o 4º campo força a pose de uma peça no lugar do encaixe
-    # 1) soco forte: era mão atrás da cabeça + cotovelo + soco; agora é uma cotovelada só, com preparo e volta
-    "soco_forte": (210, [("558_0", 4, 0), ("559_0", 2, 0, {"braco_frente": {"ang": -28}, "braco_tras": {"ang": -6}}),
-                         ("984_0", 1, 0, {"braco_frente": {"ang": -30, "var": "cotovelo"}, "_dy": 2, "_pes": "558_0"}),
-                         ("970_0", 6, 1, {"braco_frente": {"ang": 0, "var": "cotovelo"}, "_dy": 4, "_pes": "558_0"}),
-                         ("970_0", 2, 0, {"braco_frente": {"ang": 6, "var": "cotovelo"}, "_dy": 4, "_pes": "558_0"}),
-                         ("562_0", 7, 0, {"braco_frente": {"ang": -12}, "_dy": 1, "_pes": "558_0"}), ("563_0", 8, 0), ("564_0", 8, 0)],
+    # 1) soco forte: era mão atrás da cabeça + cotovelo + soco; virou cotovelada e, no estudo de anatomia (Breno, 17/11),
+    # um direto de verdade: o quadril e o tronco giram antes, o braço de trás (o de perto, com a corda) vai esticado
+    # (desenho novo do ChatGPT, braco_tras "direto") e a mão da frente volta para o queixo
+    "soco_forte": (210, [("558_0", 4, 0),
+                         ("559_0", 2, 0, {"tronco": {"ang": -4}, "braco_frente": {"ang": -28}, "braco_tras": {"ang": -6},
+                                          "_dy": 3, "_pes": "558_0"}),
+                         ("984_0", 1, 0, {"tronco": {"ang": 4, "var": "direto"}, "braco_frente": {"ang": -30},
+                                          "braco_tras": {"ang": 14, "var": "direto"}, "_dy": 3, "_pes": "558_0"}),
+                         ("970_0", 6, 1, {"tronco": {"ang": 0, "var": "direto"}, "braco_frente": {"ang": -30},
+                                          "braco_tras": {"ang": 0, "var": "direto"}, "_dy": 4, "_pes": "558_0"}),
+                         ("970_0", 2, 0, {"tronco": {"ang": -1, "var": "direto"}, "braco_frente": {"ang": -28},
+                                          "braco_tras": {"ang": 5, "var": "direto"}, "_dy": 4, "_pes": "558_0"}),
+                         ("562_0", 7, 0, {"braco_frente": {"ang": -12}, "_dy": 1, "_pes": "558_0"}), ("563_0", 8, 0),
+                         ("564_0", 8, 0)],
                    (45, -276, 163, -192)),
     # cotovelo giratório / cotovelada pesada: o cotovelo sobe acima da cabeça e desce pesado (caixa alta)
     "cotovelo": (1400, [("558_0", 6, 0),
