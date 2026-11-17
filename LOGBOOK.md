@@ -2973,3 +2973,18 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   costas e volta). Cabeça do kit em todos; soco/05 e rolamento/06 (espelhada) pela busca guiada.
 - Robô de defeitos: os 21 quadros novos passam; robô do jogo 236/236. Vídeo e folha:
   `docs/boneco-pecas/gbzin/pecas_novas_antes_depois.{mp4,png}`.
+
+## 2026-11-17 — Raiclaven: martelo e cabeçada no jogo pelo boneco de peças
+
+- `ferramentas/mapa_acoes.py raiclaven`: qual desenho de `quadros/<pasta>/NN` cada elemento de cada ação mostra hoje
+  (máscara do .sff contra os quadros de 1x) -> `docs/boneco-pecas/raiclaven/mapa_acoes.json`.
+- `ferramentas/golpes_raiclaven.py`: pose-chave por desenho (POSE); toda ação cujos desenhos têm pose é refeita com os
+  mesmos ticks e caixa (pastas `quadros_pecas_hd/a<ação>`). Martelo: 215, 216, 311, 1400, 1401, 3200, 3410, 3431.
+  Cabeçada: 303, 347, 410, 3412, 3430. Braço erguido = variante desenhada (martelo/01 "armado", martelo/02 "alto")
+  com a ombreira junto (a do kit vira "vazio"); girar a peça para trás descolava o cotovelo.
+- Consertado: o braço "estocada" trazia um pedaço do poste do bolso (poste duplicado no soco); filtro `colorido`.
+- Ligado com `ligar_pecas.py raiclaven` (todas as pastas, a partir do .sff/.air/.cns de antes de qualquer ligação).
+  Robô de peças 0; robô de luta 186/186, dano idêntico. Vídeo: `docs/boneco-pecas/raiclaven/golpes_lado_a_lado.mp4`
+  (`ferramentas/video_golpes_raiclaven.py`).
+- Para ligar de novo: `git checkout 95134c46 -- chars/raiclaven` e `ligar_pecas.py raiclaven` (rodar duas vezes em cima
+  do já ligado não foi testado).
