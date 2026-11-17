@@ -548,6 +548,10 @@ Nenhum boneco entra com erro de animação. Conta como erro, e reprova o golpe:
 O kit continua separado em peças (`sprites/<lutador>/pecas/`): dá para trocar a cabeça ou retocar uma peça e
 remontar todos os golpes de uma vez, sem redesenhar quadro por quadro.
 
+**Quadros do meio (Alisson, 2026-11-17, meio-termo com a Lei 10 do [`estudo-anatomia-golpes.md`](estudo-anatomia-golpes.md)):** o golpe
+tem quadros do meio na guarda, na preparação e na volta, mas da antecipação até o contato vai no máximo um quadro de
+borrão, para o golpe chegar seco. Cada pose segue a lista da Parte 4 do estudo.
+
 O robô de defeitos (`firme.py`/`piloto_firme.py`) pega os três primeiros; o quarto se confere no vídeo lado a lado,
 quadro a quadro, antes de mandar. Expressões do rosto casadas com as falas vêm depois, quando as falas forem gravadas.
 
