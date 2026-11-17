@@ -26,7 +26,15 @@ Aqui:
               velocidade do Projectile) e somem quando ele some (o orbe é somado, o halo é brilho por alfa); a poça de luz corre no chão embaixo. Enquanto há poder
               no ar o mundo escurece mais.
 
-Pós-passo idempotente (refaz os próprios blocos). Roda encadeado no fim do aura_silhueta.aplicar.
+  6. EFEITOS  (luz_efeitos.py) todo Explod de efeito que brilha ganha um Explod irmão com a luz tirada do próprio
+              desenho (cor, tamanho e força quadro a quadro), e todo golpe que entra solta um clarão no ponto do impacto.
+              O que acende e o que não acende está revisado em luz_classes.json.
+
+Os poderes que acendem são os projéteis cujo desenho brilha (luz_classes.json): pedra, garrafa e latinha ficam fora.
+O lutador sem aura em camadas (Raiclaven) fica só com os itens 1 (no poder), 5 e 6.
+
+Pós-passo idempotente (refaz os próprios blocos). Roda encadeado no fim do aura_silhueta.aplicar (e no fim do
+gerar_raiclaven.py).
 """
 import argparse
 import colorsys
@@ -43,6 +51,7 @@ import aura_no_corpo as anc  # noqa: E402
 import aura_silhueta as asil  # noqa: E402
 import conferir_sff as cs  # noqa: E402
 import efeitos  # noqa: E402
+import luz_efeitos as le  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parent.parent
 GRAD_OFF = (0.0, 0.22, 0.55, 1.0)
@@ -54,10 +63,11 @@ ACAO = 9720                      # ações 9720.. (halo, poça, escuro) e 9730 +
 R_HALO, R_POCA, R_ORBE, R_HALO_PODER = 170, 120, 20, 115
 ESCURO_DESPERTO, ESCURO_PODER = 0.16, 0.2   # quanto o cenário escurece (fração)
 MARCA, FIM = "; >>> luz.py", "; <<< luz.py"
-# os poderes de energia de cada um (projid do Projectile); a pedra do Hazak é uma pedra, não acende
-PODERES = {"hazaki": (1001, 1650)}
-# quem já tem a luz (o aura_silhueta.py chama a luz.py no fim para estes)
-LIGADOS = ("hazaki",)
+# os poderes que acendem saem da revisão em luz_classes.json (o desenho do projétil brilha); pedra, garrafa e
+# latinha não acendem. Quem tem a luz: o aura_silhueta.py chama a luz.py no fim para estes.
+LIGADOS = ("hazaki", "gutto", "pengaro", "ck", "raiclaven")
+FORCA_OPONENTE = 0.08   # 0,3 e 0,16 deixavam o oponente do CK chapado de verde-oliva
+FEIXE = 100             # projétil com brilho de raio maior que isto (pixels do jogo) é um raio: luz quadro a quadro
 GRAO = 2                          # pixel da luz, em pixels do jogo
 
 
@@ -137,8 +147,9 @@ def tremor(fase=0.0):
 
 
 def bloco_menos4(nome, altura, cor, poderes):
-    e = f"map(au_{nome}_e)"
-    g, bx = f"map(au_{nome}_g)", f"map(au_{nome}_bx)"
+    """`nome` None: lutador sem aura em camadas (Raiclaven); só o escuro do poder e a luz dos poderes."""
+    e = f"map(au_{nome}_e)" if nome else "0"
+    g, bx = (f"map(au_{nome}_g)", f"map(au_{nome}_bx)") if nome else ("0", "0")
     p = "map(luz_p)"
     vivo = f"{e} > 0.01"
     sim = ("bindtime = -1", "removetime = -1", "ownpal = 1", "removeongethit = 0", "supermovetime = -1",
@@ -176,8 +187,8 @@ def bloco_menos4(nome, altura, cor, poderes):
                        f"id = {ident}"))
     # 4. oponente perto clareia (leve)
     perto = "max(0, 1 - abs(P2BodyDist X) / 110)"
-    forca = f"0.3 * min(1, max(0, {e})) * {perto} * {tremor()}"
-    r, gg, b = cor
+    forca = f"{FORCA_OPONENTE} * min(1, max(0, {e})) * {perto} * {tremor()}"
+    r, gg, b = ((c + 255) // 2 for c in cor)   # metade branco: clareia sem pintar o oponente da cor da aura
     out.append(ctl(-4, "Luz no oponente", "PalFX",
                    f"trigger1 = {vivo} && NumEnemy > 0 && RoundState = 2",
                    "trigger1 = enemynear,MoveType != H && enemynear,StateNo < 1000 && enemynear,var(20) <= 0",
@@ -193,18 +204,38 @@ def bloco_menos4(nome, altura, cor, poderes):
     return "\n".join(out) + "\n"
 
 
-def explods_do_poder(estado, gatilhos, proj, k_, cor_poder):
-    """Orbe, halo e poça que saem junto com o Projectile e andam com ele."""
+def explod_do_feixe(estado, gatilhos, proj, k_, acao_luz):
+    """O raio leva a luz do próprio desenho, quadro a quadro (orbe e poça soltos na frente dele pareciam outra coisa)."""
     ox, oy = proj["offset"]
     vx, vy = proj["velocity"]
+    esc = proj.get("escala", 1.0)
+    return "\n".join([f"[State {estado}, Luz do poder halo]", "type = Explod", *gatilhos, f"anim = {acao_luz}",
+                      f"id = {ID_PODER + 3 * k_ + 1}", "postype = p1", f"pos = {ox}, {oy}", f"velocity = {vx}, {vy}",
+                      f"scale = {esc}, {esc}", "removetime = -1", "ownpal = 1", "removeongethit = 0",
+                      "ignorehitpause = 1", "sprpriority = 1", "trans = addalpha", "alpha = 255, 0", "",
+                      f"[State {estado}, Luz do poder orbe]", "type = Explod", *gatilhos, f"anim = {ACAO + 10 + 2 * k_}",
+                      f"id = {ID_PODER + 3 * k_}", "postype = p1", f"pos = {ox}, {oy}", "bindtime = -1",
+                      "removetime = -1", "ownpal = 1", "removeongethit = 0", "ignorehitpause = 1", "sprpriority = 6",
+                      "trans = add", f"alpha = floor(255 * {tremor(0.5)}), 255", ""])
+
+
+BOLA = 50   # projétil com brilho até este raio é uma bola: o orbe somado vai por cima e é o miolo quente dela
+
+
+def explods_do_poder(estado, gatilhos, proj, k_, cor_poder, centro=(0, 0), raio=0.0):
+    """Orbe, halo e poça que saem junto com o Projectile e andam com ele, na altura do brilho do desenho dele."""
+    ox, oy = proj["offset"]
+    oy = round(oy + centro[1], 1)
+    ax, ay = proj.get("accel", (0.0, 0.0))   # só a altura: no x, o centro do brilho cai no rastro (bola) ou no meio (raio)
+    vx, vy = proj["velocity"]
     base = ID_PODER + 3 * k_
-    comum = [*gatilhos, "postype = p1", f"velocity = {vx}, {vy}", "removetime = -1", "ownpal = 1",
+    comum = [*gatilhos, "postype = p1", f"velocity = {vx}, {vy}", f"accel = {ax}, {ay}", "removetime = -1", "ownpal = 1",
              "removeongethit = 0", "ignorehitpause = 1"]
     out = []
     a = tremor(0.5)
     for d, (anim, prio, pos, alfa, modo) in enumerate((
-            (ACAO + 10 + 2 * k_, 6, f"{ox}, {oy}", f"floor(255 * {a})", "add"),
-            (ACAO + 11 + 2 * k_, 5, f"{ox}, {oy}", f"floor(230 * {a})", "addalpha"),
+            (ACAO + 10 + 2 * k_, 6 if raio <= BOLA else 2, f"{ox}, {oy}", f"floor(255 * {a})", "add"),
+            (ACAO + 11 + 2 * k_, 1, f"{ox}, {oy}", f"floor(230 * {a})", "addalpha"),
             (ACAO + 1, -8, f"{ox}, 0", f"floor(220 * {a})", "addalpha"))):
         nome = ("orbe", "halo", "poca")[d]
         linhas = [x for x in comum]
@@ -226,7 +257,7 @@ def projeteis(cns):
         if not re.search(r"^type\s*=\s*Projectile\s*$", corpo, re.M | re.I):
             continue
         d = {}
-        for chave in ("projid", "offset", "velocity", "projanim", "postype"):
+        for chave in ("projid", "offset", "velocity", "projanim", "postype", "projscale", "accel"):
             mm = re.search(rf"^{chave}\s*=\s*([^;\n]+)", corpo, re.M | re.I)
             if mm:
                 d[chave] = mm.group(1).strip()
@@ -235,6 +266,8 @@ def projeteis(cns):
             d["offset"] = tuple(float(v) for v in d.get("offset", "0,0").split(",")[:2])
             d["velocity"] = tuple(float(v) for v in d.get("velocity", "0,0").split(",")[:2])
             d["projanim"] = int(d.get("projanim", "0"))
+            d["escala"] = float(d.get("projscale", "1").split(",")[0])
+            d["accel"] = tuple(float(v) for v in (d.get("accel", "0,0").split(",") + ["0"])[:2])
         except ValueError:
             continue
         gat = [ln for ln in corpo.splitlines() if re.match(r"\s*trigger(all|\d+)\s*=", ln, re.I)]
@@ -243,20 +276,24 @@ def projeteis(cns):
 
 
 def tirar_cns(cns):
+    cns = le.tirar_cns(cns)
     cns = re.sub(rf"\n?{re.escape(MARCA)}.*?{re.escape(FIM)}\n", "\n", cns, flags=re.S)
     cns = re.sub(r"^\[State -?\d+, Luz do poder (orbe|halo|poca)\]\n.*?(?=^\[|\Z)", "", cns, flags=re.M | re.S)
     return cns
 
 
 def tirar_air(air):
+    air = le.tirar_air(air)
     return re.sub(rf"\[Begin Action ({ACAO}|{ACAO + 1}|{ACAO + 2}|97[34]\d)\].*?(?=\[Begin Action|\Z)", "", air,
                   flags=re.S | re.I).rstrip() + "\n"
 
 
-def desenhos(cor, cores_poder):
-    """{(grupo, i): (img, ex, ey)} e o texto do .air."""
+def desenhos(cor, cores_poder, tamanhos=None, com_corpo=True):
+    """{(grupo, i): (img, ex, ey)} e o texto do .air. `tamanhos`: fator do orbe e do halo de cada poder."""
     sp, air = {}, []
-    sp[(GRUPO, 0)] = mancha(R_HALO, R_HALO * 1.1, cor, 0.85, modo="alfa")
+    tamanhos = tamanhos or [1.0] * len(cores_poder)
+    if com_corpo:
+        sp[(GRUPO, 0)] = mancha(R_HALO, R_HALO * 1.1, cor, 0.85, modo="alfa")
     sp[(GRUPO, 1)] = mancha(R_POCA, R_POCA * 0.2, cor, 0.9, modo="alfa")
     preto = Image.new("RGBA", (8, 8), (0, 0, 0, 255))
     sp[(GRUPO, 2)] = (preto, 4, 4)
@@ -264,11 +301,34 @@ def desenhos(cor, cores_poder):
         air.append(f"[Begin Action {a}]\n{GRUPO},{i}, 0,0, -1\n")
     for k_, c in enumerate(cores_poder):
         miolo = tuple(int(255 - (255 - v) * 0.15) for v in c)
-        sp[(GRUPO + 1, k_)] = mancha(R_ORBE, R_ORBE, c, 1.0, miolo=miolo, raio_miolo=0.5)
-        sp[(GRUPO + 2, k_)] = mancha(R_HALO_PODER, R_HALO_PODER * 0.8, c, 0.85, modo="alfa")
+        h_, s_, v_ = colorsys.rgb_to_hsv(*(x / 255 for x in c))
+        if h_ < 0.07 or h_ > 0.95:   # vermelho no fundo azul vira roxo: o halo puxa para o laranja
+            c = tuple(int(round(x * 255)) for x in colorsys.hsv_to_rgb(0.07, s_, v_))
+        f = tamanhos[k_]
+        sp[(GRUPO + 1, k_)] = mancha(R_ORBE * f, R_ORBE * f, c, 1.0, miolo=miolo, raio_miolo=0.5)
+        sp[(GRUPO + 2, k_)] = mancha(R_HALO_PODER * f, R_HALO_PODER * 0.8 * f, c, 0.85, modo="alfa")
         air.append(f"[Begin Action {ACAO + 10 + 2 * k_}]\n{GRUPO + 1},{k_}, 0,0, -1\n")
         air.append(f"[Begin Action {ACAO + 11 + 2 * k_}]\n{GRUPO + 2},{k_}, 0,0, -1\n")
     return sp, "\n".join(air)
+
+
+def poderes_que_acendem(lutador, cns, air_txt, pasta):
+    """[(projid, projanim, raio em pixels do jogo)] dos projéteis cujo desenho brilha (revisão em luz_classes.json)."""
+    air = le.ler_air_completo(air_txt)
+    des = le.Desenhos(Path(pasta) / f"{lutador}.sff")
+    out = []
+    for ini, fim, estado, gat, d in projeteis(cns):
+        anim = d["projanim"]
+        if anim not in air or d["projid"] in [o[0] for o in out]:
+            continue
+        m = le.medir(anim, air[anim], des)
+        if le.acende(m, lutador):
+            pesos = [q[0] for q in m["quadros"]]
+            tot = sum(pesos) or 1
+            cx = sum(w * q[1] for w, q in zip(pesos, m["quadros"])) / tot * d.get("escala", 1.0)
+            cy = sum(w * q[2] for w, q in zip(pesos, m["quadros"])) / tot * d.get("escala", 1.0)
+            out.append((d["projid"], anim, m["raio"] * d.get("escala", 1.0), (cx, cy)))
+    return out
 
 
 def aplicar(lutador, pasta=None):
@@ -277,45 +337,54 @@ def aplicar(lutador, pasta=None):
     cns = tirar_cns(arq_cns.read_text(encoding="utf-8").replace("\r\n", "\n"))
     air = tirar_air(arq_air.read_text(encoding="utf-8").replace("\r\n", "\n"))
     nome, ids = anc.aura_do_cns(cns)
-    if not nome:
-        raise SystemExit(f"{lutador}: sem aura em camadas; rode o gerador da aura antes")
     pal, nos, _ = cs.ler(arq_sff)
     paleta = asil._paleta(arq_sff)
-    tons = asil.tons_da_aura(nos, set(ids), paleta)
-    cor = cor_viva(tons[1])
+    cor = cor_viva(asil.tons_da_aura(nos, set(ids), paleta)[1]) if nome else (255, 230, 190)
     air_acoes = asil.ler_air_clsn(air)
-    quer = PODERES.get(lutador, ())
-    projs = [p for p in projeteis(cns) if p[4]["projid"] in quer]
-    ordem = []
-    for p in projs:
-        if p[4]["projid"] not in [o[0] for o in ordem]:
-            ordem.append((p[4]["projid"], p[4]["projanim"]))
-    cores_poder = [cor_do_poder(nos, paleta, air_acoes, anim) for _, anim in ordem]
+    ordem = poderes_que_acendem(lutador, cns, air, pasta)
+    quer = [o[0] for o in ordem]
+    cores_poder = [cor_do_poder(nos, paleta, air_acoes, o[1]) for o in ordem]
+    tamanhos = [min(1.15, max(0.45, o[2] * 2.9 / R_HALO_PODER)) for o in ordem]
+    # a luz de todo efeito que brilha (Explods e faíscas de golpe); os raios ganham a luz do próprio desenho
+    feixes = {o[1] for o in ordem if o[2] > FEIXE}
+    cns, air_ef, sp_ef, bloco_ef, resumo = le.gerar(lutador, cns, air, pasta, extras=sorted(feixes))
     # explods dos poderes logo depois de cada Projectile (de trás para a frente, para os índices valerem)
+    projs = [p for p in projeteis(cns) if p[4]["projid"] in quer]
     for ini, fim, estado, gat, d in sorted(projs, key=lambda p: -p[0]):
-        k_ = [o[0] for o in ordem].index(d["projid"])
-        cns = cns[:fim] + explods_do_poder(estado, gat, d, k_, cores_poder[k_]) + "\n" + cns[fim:]
-    corpo = anc.Corpo(pasta, lutador)
-    bloco = bloco_menos4(nome, corpo.altura, cor, ordem)
-    m = re.search(r"^; <<< aura_silhueta\.py\n", cns, re.M) or re.search(r"^; <<< aura_no_corpo\.py\n", cns, re.M)
+        k_ = quer.index(d["projid"])
+        if d["projanim"] in feixes:
+            novo = explod_do_feixe(estado, gat, d, k_, resumo["extras"][d["projanim"]])
+        else:
+            novo = explods_do_poder(estado, gat, d, k_, cores_poder[k_], ordem[k_][3], ordem[k_][2])
+        cns = cns[:fim] + novo + "\n" + cns[fim:]
+    altura = anc.Corpo(pasta, lutador).altura if nome else 0
+    bloco = bloco_menos4(nome, altura, cor, [(o[0], o[1]) for o in ordem]) + bloco_ef
+    m = (re.search(r"^; <<< aura_silhueta\.py\n", cns, re.M) or re.search(r"^; <<< aura_no_corpo\.py\n", cns, re.M)
+         or re.search(r"^\[Statedef -4\][^\n]*\n", cns, re.M | re.I))
     if not m:
-        raise SystemExit("o [Statedef -4] não tem o bloco da aura; rode o aura_no_corpo.py antes")
+        cns = cns.rstrip() + "\n\n[Statedef -4]\n\n"
+        m = re.search(r"^\[Statedef -4\][^\n]*\n\n", cns, re.M | re.I)
     cns = cns[:m.end()] + bloco + cns[m.end():]
     cns = re.sub(r"\n{3,}(; >>> (aura_no_corpo|luz))", r"\n\n\1", cns)
-    sp, texto = desenhos(cor, cores_poder)
+    cns = re.sub(r"(\[Statedef -4\][^\n]*\n)\n*(; >>> luz\.py)", r"\1\2", cns, flags=re.I)
+    cns = re.sub(r"(; <<< luz_efeitos\.py\n)\n*", r"\1\n", cns)
+    sp, texto = desenhos(cor, cores_poder, tamanhos, com_corpo=bool(nome))
+    sp.update(sp_ef)
+    meus = (GRUPO, GRUPO + 1, GRUPO + 2, le.GRUPO_EF, le.GRUPO_FA)
     rle, png, vistos = [], [], set()
     for n in nos:
         k = (n["g"], n["i"])
-        if k in vistos or n["g"] in (GRUPO, GRUPO + 1, GRUPO + 2):
+        if k in vistos or n["g"] in meus:
             continue
         vistos.add(k)
         (png if n.get("png") else rle).append((n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], n["px"]))
     for (g, i), (img, ex, ey) in sp.items():
         png.append((g, i, img.width, img.height, ex, ey, efeitos.blob_png(img)))
     efeitos.gravar(arq_sff, pal, rle, png)
-    arq_air.write_text(air.rstrip() + "\n\n" + texto, encoding="utf-8", newline="\n")
+    arq_air.write_text(air.rstrip() + "\n\n" + texto + "\n" + air_ef, encoding="utf-8", newline="\n")
     arq_cns.write_text(cns, encoding="utf-8", newline="\n")
-    print(f"{lutador}: luz ligada; cor {cor}, poderes {[(o[0], c) for o, c in zip(ordem, cores_poder)]}")
+    print(f"{lutador}: luz ligada; cor {cor if nome else 'sem aura'}, poderes {quer}, "
+          f"{resumo['efeitos']} efeitos em {resumo['explods']} Explods, {resumo['faiscas']} golpes com clarão")
 
 
 def tirar(lutador, pasta=None):
@@ -327,7 +396,7 @@ def tirar(lutador, pasta=None):
     rle, png, vistos = [], [], set()
     for n in nos:
         k = (n["g"], n["i"])
-        if k in vistos or n["g"] in (GRUPO, GRUPO + 1, GRUPO + 2):
+        if k in vistos or n["g"] in (GRUPO, GRUPO + 1, GRUPO + 2, le.GRUPO_EF, le.GRUPO_FA):
             continue
         vistos.add(k)
         (png if n.get("png") else rle).append((n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], n["px"]))
