@@ -3117,3 +3117,9 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   Regerado duas vezes: `.air`, `.cns` e `.sff` saem iguais byte a byte.
 - Robô de luta 236/236 com as linhas de dano idênticas às de antes da ligação. Vídeos lado a lado:
   `docs/boneco-pecas/gbzin/{parado,soco,chute_alto}_lado_a_lado.mp4`.
+- 17/11 (fim da tarde): CK pelo estudo de anatomia do Breno (`docs/estudo-anatomia-golpes.md`). Jab e direto pela
+  receita (joelhos afundam, ombro anda, mão livre no queixo, calcanhar de trás gira no direto: `calc_tras`), chutes
+  com a perna da frente de longe atrás da bacia (`perna_longe`), pé de apoio girado e braço do lado da perna descendo,
+  soco agachado afunda e sobe. `vida_pecas.py` da mugen com o meio-termo do Alisson (antecipação segurada até o
+  contato). `pecas_ck.py trocar` troca só os desenhos no .sff quando o número de desenhos não muda; quando muda,
+  `ligar_pecas.py ck` religa por cima. Robô de peças 0/201.

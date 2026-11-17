@@ -10,33 +10,33 @@
   },
   {
    "desenho": 1,
-   "ticks": 2,
+   "ticks": 5,
    "caixa": false,
    "de": "soco/04"
   },
   {
    "desenho": 2,
-   "ticks": 3,
-   "caixa": false,
-   "de": "soco/04"
-  },
-  {
-   "desenho": 3,
    "ticks": 2,
    "caixa": true,
    "de": "soco/05"
   },
   {
-   "desenho": 4,
+   "desenho": 3,
    "ticks": 3,
    "caixa": true,
+   "de": "soco/05"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
    "de": "soco/05"
   },
   {
    "desenho": 5,
    "ticks": 2,
    "caixa": false,
-   "de": "soco/05"
+   "de": "soco/06"
   },
   {
    "desenho": 6,
@@ -46,13 +46,13 @@
   },
   {
    "desenho": 7,
-   "ticks": 2,
+   "ticks": 3,
    "caixa": false,
    "de": "soco/06"
   },
   {
    "desenho": 8,
-   "ticks": 3,
+   "ticks": 2,
    "caixa": false,
    "de": "soco/06"
   },
@@ -72,7 +72,7 @@
    "desenho": 11,
    "ticks": 2,
    "caixa": false,
-   "de": "soco/06"
+   "de": "soco/07"
   },
   {
    "desenho": 12,
@@ -82,12 +82,6 @@
   },
   {
    "desenho": 13,
-   "ticks": 2,
-   "caixa": false,
-   "de": "soco/07"
-  },
-  {
-   "desenho": 14,
    "ticks": 2,
    "caixa": false,
    "de": "soco/07"
