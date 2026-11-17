@@ -2948,6 +2948,13 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   remap do despertado para cada sprite novo e refaz as ações da aura (30000/40000 + ação).
 - Gutto: 16 golpes, 299 quadros. Robô de peças 0 defeito; robô de luta 186/186 antes e depois, dano idêntico.
 - Agachado passou a ter 48 ticks e a rasteira ganhou a volta (459, 1173, 460) para bater com o tempo do jogo.
+- Garanhão (despertado do Gutto) no jogo: `ligar_pecas.py gutto --de garanhao --grupo 49000 --ajustar` com parado
+  (por remap do parado novo do Gutto) e 10 golpes 10xxx (chifrada, investida, pisão, patada, casco na canela, bufada,
+  garra rasteira, chifrada que sobe, raspa o casco, rabo-chicote). `--ajustar` estica/encolhe o tempo para o impacto
+  cair no tick da Clsn1 antiga; quadros de outra pasta vão em PNG RGBA (na paleta da base o brilho apagava). Depois
+  `aura_silhueta.py gutto` de novo. Robô de luta 186/186 igual; filmado no motor (docs/boneco-pecas/no_jogo/).
+- Fora por enquanto: coice (desenho da folha com outro corpo) e golpes no ar (não leem); rasga-couro, empinada,
+  corrente em X, joelho e cascos no ar não têm ação no jogo (são do #47).
 - `ferramentas/acoes_pengaro.py` lista as 154 ações base do Pengaró (194 desenhos); `ferramentas/pengaro_todo.py`
   faz poses (`poses i/n`), anima (`animar`), confere (robô), e gera `revisar`, `folha` e `video`.
 - Corpo firme em toda inclinação pequena (até 10°): girar o tronco abria fresta nas emendas.
@@ -3028,6 +3035,15 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   (`ferramentas/video_golpes_raiclaven.py`).
 - Para ligar de novo: `git checkout 95134c46 -- chars/raiclaven` e `ligar_pecas.py raiclaven` (rodar duas vezes em cima
   do já ligado não foi testado).
+
+## 17/11/2026 - Gbzin: pele nas juntas (pele_pecas.py da thread do Pengaró)
+- Os quadros feitos pelo kit (parado, soco 00-03/07, chute alto, rolamento 00/07) agora saem por `desenhar_pele`: as
+  peças viram pele que dobra nas juntas (`pele_pecas.py`), com sobra, pés retos, cabeça por cima, furos e pontas da
+  faixa iguais ao `desenhar` de antes. Some o caco branco do calção e a linha de corte no chute alto.
+- Robô de peças 0 defeitos, robô do jogo 236/236. Antes e depois: `docs/boneco-pecas/gbzin/pele_antes_depois.{mp4,png}`.
+- 17/11 (tarde): o CK passou a ser desenhado com a pele do `pele_pecas.py` (`PELE = True` em `pecas_ck.py`): as
+  juntas dobram sem linha de corte (regra do Alisson); pés continuam apoiados no chão (`colar_pe`) e o braço esticado
+  continua saindo de baixo do queixo. Religado a partir do `chars/ck` sem peças (4b54d61f), robô de peças 0/206.
 
 ## 17/11/2026 - Gbzin: Grão-Pastor (despertado) com folhas próprias no jogo
 - Rascunhos de pose no ChatGPT (3 turnos, pedidos em `ferramentas/folhas_gbzin.py`), folhas em
