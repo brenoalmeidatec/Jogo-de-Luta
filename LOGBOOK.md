@@ -2753,3 +2753,13 @@ quadro a quadro por revisores independentes.
 (9600 a 9999), não pelo número da ação. A faísca do HitDef vem em expressão (`S(ifelse(var(20) > 0, 9231, 9201))`).
 Grão de luz maior que 2 pixels e raio acima de 90 viram tabuleiro de quadrados. O PalFX no oponente pinta o corpo
 inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copiar velocity e accel.
+
+## 2026-11-17 — Gutto base no jogo pelo boneco de peças (corpo firme)
+
+- Pedido do Alisson (o Breno liberou auto-aprovação): pôr no jogo o que passou no robô.
+- `ferramentas/ligar_pecas.py <lutador> [golpe ...]`: liga os quadros de `quadros_pecas_hd/` no `.sff` (indexados na
+  paleta, grupo 48000 + n.º do golpe), reescreve a ação do `.air` partindo os quadros novos em toda fronteira antiga
+  (mesmas caixas, mesmo tick de acerto), troca AnimElem/AnimElemTime/AnimElemNo do `.cns` para os elementos novos, põe
+  remap do despertado para cada sprite novo e refaz as ações da aura (30000/40000 + ação).
+- Gutto: 16 golpes, 299 quadros. Robô de peças 0 defeito; robô de luta 186/186 antes e depois, dano idêntico.
+- Agachado passou a ter 48 ticks e a rasteira ganhou a volta (459, 1173, 460) para bater com o tempo do jogo.

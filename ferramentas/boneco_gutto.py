@@ -247,8 +247,7 @@ ANIM = {
                             ("205_0", 28, 0, {"_base": "426_0"})],
                      (0, -330, 220, -30)),
     # agachado: o corpo do parado desce (o mesmo tronco e rosto), joelhos dobram, respira
-    "agachado": (11, [("359_0", 6, 0, {"_base": "359_0"}), ("359_0", 6, 0, {"_base": "359_0"}),
-                      ("359_0", 6, 0, {"_base": "359_0"})], None),
+    "agachado": (11, [("359_0", 6, 0, {"_base": "359_0"})] * 8, None),  # 48 ticks como a ação 11 do jogo
     # soco agachado: começava com o braço já esticado e terminava na guarda. Agora: guarda baixa, jab, volta
     "soco_agachado": (400, [("432_0", 2, 0, {"_base": "359_0"}),
                             ("432_0", 1, 0, {"_base": "359_0", "braco_frente": {"ang": -10}}),
@@ -301,7 +300,10 @@ ANIM = {
                                         "coxa_frente": {"ang": 58, "var": "esticada"}}),
                        ("1153_0", 5, 0, {"_base": "359_0", "_sem_apoio": 1,
                                          "coxa_frente": {"ang": 54, "var": "camara"}}),
-                       ("458_0", 5, 0, {"_base": "359_0"})],
+                       ("458_0", 5, 0, {"_base": "359_0"}),
+                       # volta da rasteira (o jogo tem 48 ticks: sem isso o golpe acabava 20 ticks antes)
+                       ("459_0", 5, 0, {"_base": "359_0"}), ("1173_0", 5, 0, {"_base": "359_0"}),
+                       ("460_0", 10, 0, {"_base": "359_0"})],
                  (36, -54, 207, -6)),
 }
 AGACHADOS = {"agachado", "soco_agachado", "chute_baixo_agachado", "chute_alto_agachado", "rasteira"}
