@@ -1,0 +1,42 @@
+{
+ "acao": 5017,
+ "folha": "apanha",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "apanha/06"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "apanha/06"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "apanha/07"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "apanha/07"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "apanha/06",
+   "ticks": 4,
+   "caixa": false
+  },
+  {
+   "de": "apanha/07",
+   "ticks": 4,
+   "caixa": false
+  }
+ ]
+}

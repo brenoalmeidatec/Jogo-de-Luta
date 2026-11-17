@@ -575,6 +575,14 @@ GOLPES_NOVOS = {
 }
 
 
+def solto(qa, ct, kt, cf, kf, bt=0, bf=0, cab=0, sx=0, **k):
+    """Corpo inteiro girado (queda, deitado, rolamento): quadril gira tudo, coxas relativas ao quadril, sem chão por
+    IK; o desenho é posto em cima do de hoje (ponto mais baixo e meio)."""
+    return {**ar(ct, kt, cf, kf, qa=qa, bf={"ang": bf} if isinstance(bf, (int, float)) else bf,
+                 bt={"ang": bt} if isinstance(bt, (int, float)) else bt, cab=cab),
+            "corpo_abs": (0, 0), "solto": True, "sx": sx, **k}
+
+
 def ar(ct, kt, cf, kf, qa=0, bf=None, bt=None, cab=0):
     """Pose no ar (estudo: uma perna estica e a outra encolhe, nunca as duas esticadas): coxas relativas ao quadril."""
     return {"coxa_tras": {"ang": ct}, "canela_tras": {"ang": kt}, "coxa_frente": {"ang": cf},
@@ -634,6 +642,45 @@ POSES = {
 }
 
 
+
+# 3.ª leva (17/11): pulo, apanha, queda, levanta, armada, compasso, rolamento, provoca, vitória e derrota.
+# Quadros de costas, deitados, sentados e com braço caído/aberto ficam no ESPECIAIS (desenho de hoje).
+ESPECIAIS = {"armada/01", "armada/02", "compasso/03", *(f"provoca/{i:02d}" for i in range(3, 8)),
+              "vitoria/01", "vitoria/02", "vitoria/05", "vitoria/06", "vitoria/07"}
+GOLPES_NOVOS.update({
+    # pulo: agacha, estica as pernas na subida, encolhe no alto, abre para cair e amortece
+    "pulo/00": baixo(qa=8, pp=(-78, 96, -82, 98, 4)),
+    "pulo/01": ar(-12, 10, 12, 8, qa=2),
+    "pulo/02": ar(-10, 6, 14, 4, qa=2),
+    "pulo/03": ar(-70, 110, -85, 115, qa=6, cab=2),
+    "pulo/04": ar(-75, 115, -90, 118, qa=6, cab=2),
+    "pulo/05": ar(-28, 40, -6, 36, qa=3),
+    "pulo/06": ar(-18, 26, 0, 24, qa=2),
+    "pulo/07": baixo(qa=8, pp=(-72, 90, -76, 92, 4)),
+    # apanha: a cabeça vai para trás primeiro, o tronco acompanha e volta para a guarda
+    "apanha/01": {"corpo_abs": (-3, 0), "quadril_ang": -5, "cabeca": {"ang": -8}, "braco_tras": {"ang": -3}, "braco_frente": {"ang": 3}},
+    "apanha/02": {"corpo_abs": (-6, 0), "quadril_ang": -15, "cabeca": {"ang": -16}, "braco_tras": {"ang": -4}, "braco_frente": {"ang": 6}},
+    "apanha/03": {"corpo_abs": (-12, 0), "quadril_ang": -24, "cabeca": {"ang": -18}, "braco_tras": {"ang": -6}, "braco_frente": {"ang": 8}},
+    "apanha/04": {"corpo_abs": (-8, 0), "quadril_ang": -17, "cabeca": {"ang": -8}, "braco_tras": {"ang": -4}, "braco_frente": {"ang": 6}},
+    "apanha/05": {"corpo_abs": (-3, 0), "quadril_ang": -6, "cabeca": {"ang": -4}, "braco_tras": {"ang": -2}, "braco_frente": {"ang": 3}},
+    "apanha/06": {"corpo_abs": (-1, 0), "quadril_ang": -3, "cabeca": {"ang": -2}},
+    # queda: o golpe tira do chão, o corpo vai de costas (03 em diante é o desenho de hoje: deitado)
+    "queda/01": solto(-18, -40, 70, -50, 90, bt=-6, bf=-6, cab=-14),
+    "queda/02": solto(-45, -60, 90, -70, 100, bt=-8, bf=-8, cab=-10),
+    # levanta: do agachado (05) à guarda
+    "levanta/05": baixo(qa=10, pp=(-62, 80, -66, 82, 4), cab=2),
+    "levanta/06": {"postura": (-40, 50, -45, 52), "quadril_ang": 5},
+    # armada: agacha armando e solta o braço da frente esticado, com passo e giro de quadril
+    "armada/03": baixo(qa=12, pp=(-55, 75, -60, 75, 4), bf={"ang": 8}, bt={"ang": -8}, cab=2),
+    "armada/04": soco((8, 4), 12, 6, bf={"ang": -4, "var": "jab", "dx": 4, "dy": -8}, bt={"ang": -4}, cab=2),
+    "armada/05": soco((22, 6), 28, 10, bf={"ang": -8, "var": "direto", "dx": -4}, bt={"ang": -4}, cab=4, calc=12),
+    "armada/06": soco((6, 3), 8, 3, cab=1),
+    # compasso: gira de costas (01-03, desenho de hoje) e solta o direto com o braço da frente
+    "compasso/04": soco((24, 6), 30, 10, bf={"ang": -8, "var": "direto", "dx": -4}, bt={"ang": -4}, cab=4, calc=12),
+    "compasso/05": soco((10, 4), 12, 5, cab=2),
+})
+POSES.update(GOLPES_NOVOS)
+
 def limitar_agachada(pose, alvo, quais=("tras", "frente")):
     """Sobe o quadril se o desenho-guia agacha mais do que as pernas do kit deixam sem dobrar o joelho demais."""
     agora = pes(alvo)
@@ -669,10 +716,23 @@ GUARDA = {"referencia_ginga", "anda", "agachado", "pulo", "queda"}
 AR = {"ar_soco", "bicicleta", "pulo"}  # folhas no ar: pernas escritas à mão, sem chão
 
 
+# Quadro especial (docs/regra-de-criacao-de-personagem.md, seção 8): onde o kit de lado não monta (deitado, sentado,
+# de costas, de frente) fica o desenho de hoje, que já está na paleta travada do kit (as mesmas 16 cores). É dívida:
+# quando a peça que falta entrar no kit, ele vira quadro montado.
+ESPECIAIS |= {
+    *(f"queda/{i:02d}" for i in range(3, 8)),     # caindo de costas e deitado
+    *(f"levanta/{i:02d}" for i in range(0, 5)),   # deitado, sentado, de cabeça para baixo, apoiado
+    *(f"derrota/{i:02d}" for i in range(1, 8)),   # sentado no chão, mão na cabeça
+    "rolamento/04", "compasso/01", "compasso/02",  # de costas no giro
+}
+
+
 def pose_de(kit, guia, no_chao=True):
     """Pose-chave das peças em cima do desenho-guia (nome 'folha/NN')."""
+    if guia in ESPECIAIS:
+        return {"_especial": {"var": guia}}
     configurar()
-    if guia.split("/")[0] in AR:
+    if guia.split("/")[0] in AR or POSES.get(guia, {}).get("solto"):
         no_chao = False
     if guia.split("/")[0] in GUARDA:
         for s_ in ("braco_tras", "braco_frente"):
@@ -727,10 +787,14 @@ def pose_de(kit, guia, no_chao=True):
     for k in ("calc_tras", "calc_frente", "perna_longe"):  # pé girado na ponta e perna de longe atrás da bacia
         if k in fixo:
             pose[k] = dict(fixo[k])
-    if guia.split("/")[0] in AR:  # no ar: o ponto mais baixo fica onde está o do desenho de hoje (o jogo sobe o corpo)
-        ys = np.nonzero((desenhar(kit, pose)[..., 3] > 0).any(1))[0]
-        yg = np.nonzero((alvo[..., 3] > 0).any(1))[0]
+    if guia.split("/")[0] in AR or fixo.get("solto"):  # no ar ou no chão deitado: o ponto mais baixo fica onde está
+        a_ = desenhar(kit, pose)[..., 3] > 0  # o do desenho de hoje (o jogo sobe o corpo)
+        g_ = alvo[..., 3] > 0
+        ys, yg = np.nonzero(a_.any(1))[0], np.nonzero(g_.any(1))[0]
         pose["quadril"]["dy"] += int(yg.max() - ys.max())
+        if fixo.get("solto"):  # deitado/rolando: o meio do corpo fica no meio do desenho de hoje
+            xs, xg = np.nonzero(a_.any(0))[0], np.nonzero(g_.any(0))[0]
+            pose["quadril"]["dx"] += int(round((xg.min() + xg.max() - xs.min() - xs.max()) / 2)) + fixo.get("sx", 0)
     return pose
 
 
@@ -814,6 +878,8 @@ def colar_pe(tela, kit, slot, pos, ang, calcanhar=0):
 
 
 def desenhar(kit, pose):
+    if pose.get("_especial", {}).get("var"):  # quadro especial (regra de criação, seção 8): o desenho de hoje
+        return b.abrir(pose["_especial"]["var"]).copy()
     if PELE:
         import pele_pecas as pele
         w = b.mundo(pose)
@@ -893,6 +959,13 @@ def rachas(tela):
 
 def limpar(tela, pose):
     import piloto_firme as pf
+    if pose.get("_especial"):  # desenho de hoje: só o corpo (risco de efeito e migalha soltos saem, regra 3)
+        al = (tela[..., 3] > 0).astype(np.uint8)
+        n, lab, st, _ = cv2.connectedComponentsWithStats(al, connectivity=8)
+        if n > 2:
+            tela = tela.copy()
+            tela[lab != 1 + int(np.argmax(st[1:, 4]))] = 0
+        return tela
     juntas = [w[0] for w in b.mundo(pose).values()]
     tela = pf.fechar_frestas(tela, juntas=juntas)
     r = rachas(tela)
@@ -916,6 +989,8 @@ def conferir(tela, guia):
     soltos = sorted(int(x) for x in st[1:, 4])[:-1]
     if soltos:
         erros.append(f"solta {soltos}")
+    if guia in ESPECIAIS:  # quadro especial: é o desenho de hoje (o vão entre braço e corpo é dele); só peça solta
+        return erros
     fora = np.pad(1 - al, 1, constant_values=1)
     nf, labf = cv2.connectedComponents(fora.astype(np.uint8), connectivity=4)
     cercado = ((labf != labf[0, 0]) & (fora > 0))[1:-1, 1:-1]  # transparente cercado pela figura
@@ -968,6 +1043,23 @@ ACOES = {
     "soco_no_ar": ("ar_soco", (), (), None, 600),
     "voadora": ("bicicleta", (), (), None, 610),
     "voadora_rapida": ("bicicleta", (), (), None, 650),
+    # 3.ª leva
+    **{f"anda_{n}": ("anda", (), (), None, n) for n in (20, 21, 100)},
+    **{f"pulo_{n}": ("pulo", (), (), None, n) for n in range(40, 48)},
+    **{f"defesa_{n}": ("defesa", (), (), None, n) for n in (105, 120, 130, 140, 150, 152)},
+    **{f"defesa_baixa_{n}": ("agachado", (), (), None, n) for n in (121, 141, 151)},
+    **{f"apanha_{n}": ("apanha", (), (), None, n) for n in (5000, 5001, 5002, 5005, 5006, 5007, 5010, 5011, 5012,
+                                                             5015, 5016, 5017, 5030, 5035, 5300)},
+    **{f"apanha_baixo_{n}": ("agachado", (), (), None, n) for n in (5020, 5021, 5022, 5025, 5026, 5027)},
+    **{f"queda_{n}": ("queda", (), (), None, n) for n in (5040, 5050, 5051, 5061, 5070, 5080, 5090, 5100, 5101,
+                                                           5110, 5150, 5160, 5170)},
+    "levanta": ("levanta", (), (), None, 5120),
+    **{f"rolamento_{n}": ("rolamento", (), (), None, n) for n in (700, 705)},
+    **{f"armada_{n}": ("armada", (), (), None, n) for n in (1300, 1301, 1310)},
+    "compasso": ("compasso", (), (), None, 201),
+    "provoca": ("provoca", (), (), None, 195),
+    "vitoria": ("vitoria", (), (), None, 181),
+    "derrota": ("derrota", (), (), None, 170),
 }
 OUT_HD, OUT_1X = SPR / "quadros_pecas_hd", SPR / "quadros_pecas"  # <ação>/ (o ligar_pecas.py lê) e chaves/<folha>/
 LACOS = {"parado", "agachado"}  # ações em laço: respiram

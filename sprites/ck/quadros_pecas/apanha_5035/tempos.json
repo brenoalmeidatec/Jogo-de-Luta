@@ -1,0 +1,31 @@
+{
+ "acao": 5035,
+ "folha": "apanha",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "apanha/03"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "apanha/03"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "apanha/03"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "apanha/03",
+   "ticks": 6,
+   "caixa": false
+  }
+ ]
+}

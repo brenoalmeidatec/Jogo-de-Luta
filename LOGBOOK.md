@@ -3173,3 +3173,7 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   cajado só; ainda não ligado: a vítima é posicionada pelo `agarrao_mk` da base) e as folhas de vítima da forma base
   (`vitima_agarrado`, `vitima_arremessado`, para a thread da base ligar). `verde_solto()` no `gbzin_e_pecas.py`: verde
   escuro longe das chamas (calça pintada de oliva num quadro) volta ao roxo da calça. Robô 236/0.
+
+## 2026-11-17 — CK: 3ª leva pelo boneco de peças (pausa)
+- Entraram andar, pulo, defesa, apanha, queda, levanta, rolamento, armada, compasso, provoca, vitória e derrota (87 ações, 667 desenhos). Robô de peças 0/778, robô de luta 226/226 com dano igual.
+- Deitado, sentado, de costas e braço caído ficam como quadro especial (desenho de hoje), por enquanto. Detalhes e próximos passos em docs/pausa-2026-11-17/ck-base-pecas.md.

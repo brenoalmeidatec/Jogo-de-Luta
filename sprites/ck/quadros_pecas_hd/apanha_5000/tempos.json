@@ -1,0 +1,59 @@
+{
+ "acao": 5000,
+ "folha": "apanha",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "apanha/02"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "apanha/02"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": false,
+   "de": "apanha/03"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "apanha/01"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "apanha/01"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "apanha/01"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "apanha/02",
+   "ticks": 4,
+   "caixa": false
+  },
+  {
+   "de": "apanha/03",
+   "ticks": 3,
+   "caixa": false
+  },
+  {
+   "de": "apanha/01",
+   "ticks": 6,
+   "caixa": false
+  }
+ ]
+}

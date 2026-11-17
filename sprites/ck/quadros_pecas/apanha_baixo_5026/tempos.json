@@ -1,0 +1,42 @@
+{
+ "acao": 5026,
+ "folha": "agachado",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "agachado/05"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "agachado/05"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "agachado/06"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "agachado/06"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "agachado/05",
+   "ticks": 4,
+   "caixa": false
+  },
+  {
+   "de": "agachado/06",
+   "ticks": 4,
+   "caixa": false
+  }
+ ]
+}

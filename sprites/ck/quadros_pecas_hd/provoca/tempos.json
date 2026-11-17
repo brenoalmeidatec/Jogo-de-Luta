@@ -1,0 +1,120 @@
+{
+ "acao": 195,
+ "folha": "provoca",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "provoca/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "provoca/00"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": false,
+   "de": "provoca/00"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "provoca/01"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "provoca/01"
+  },
+  {
+   "desenho": 5,
+   "ticks": 3,
+   "caixa": false,
+   "de": "provoca/01"
+  },
+  {
+   "desenho": 6,
+   "ticks": 7,
+   "caixa": false,
+   "de": "provoca/02"
+  },
+  {
+   "desenho": 7,
+   "ticks": 7,
+   "caixa": false,
+   "de": "provoca/03"
+  },
+  {
+   "desenho": 8,
+   "ticks": 7,
+   "caixa": false,
+   "de": "provoca/04"
+  },
+  {
+   "desenho": 9,
+   "ticks": 7,
+   "caixa": false,
+   "de": "provoca/05"
+  },
+  {
+   "desenho": 10,
+   "ticks": 7,
+   "caixa": false,
+   "de": "provoca/06"
+  },
+  {
+   "desenho": 11,
+   "ticks": 7,
+   "caixa": false,
+   "de": "provoca/07"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "provoca/00",
+   "ticks": 7,
+   "caixa": false
+  },
+  {
+   "de": "provoca/01",
+   "ticks": 7,
+   "caixa": false
+  },
+  {
+   "de": "provoca/02",
+   "ticks": 7,
+   "caixa": false
+  },
+  {
+   "de": "provoca/03",
+   "ticks": 7,
+   "caixa": false
+  },
+  {
+   "de": "provoca/04",
+   "ticks": 7,
+   "caixa": false
+  },
+  {
+   "de": "provoca/05",
+   "ticks": 7,
+   "caixa": false
+  },
+  {
+   "de": "provoca/06",
+   "ticks": 7,
+   "caixa": false
+  },
+  {
+   "de": "provoca/07",
+   "ticks": 7,
+   "caixa": false
+  }
+ ]
+}

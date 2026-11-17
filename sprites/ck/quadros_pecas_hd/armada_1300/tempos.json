@@ -1,0 +1,64 @@
+{
+ "acao": 1300,
+ "folha": "armada",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 4,
+   "caixa": false,
+   "de": "armada/01"
+  },
+  {
+   "desenho": 1,
+   "ticks": 24,
+   "caixa": true,
+   "de": "armada/02"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "armada/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "armada/00"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "armada/00"
+  },
+  {
+   "desenho": 5,
+   "ticks": 3,
+   "caixa": false,
+   "de": "armada/00"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "armada/01",
+   "ticks": 4,
+   "caixa": false
+  },
+  {
+   "de": "armada/02",
+   "ticks": 24,
+   "caixa": true
+  },
+  {
+   "de": "armada/02",
+   "ticks": 2,
+   "caixa": false
+  },
+  {
+   "de": "armada/00",
+   "ticks": 7,
+   "caixa": false
+  }
+ ]
+}
