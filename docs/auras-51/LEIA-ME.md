@@ -231,3 +231,32 @@ um força dois poderes e um golpe que acerta. Na última rodada os 5 foram aprov
 frente da ponta enquanto o raio cresce; pontilhado leve no cenário escurecido do CK, visível com zoom; o clarão do
 golpe do CK é verde-claro e some um pouco no fundo; um ponto rosa no chão perto do casco do Gutto enquanto o raio dele
 carrega.
+
+## Sétima volta (Alisson, 2026-11-17): as sobras da luz e a energia juntando na mão
+
+O Alisson aprovou a luz nos efeitos e pediu as sobras e a aura juntando na mão antes do especial. Feito nos 5:
+
+- **Raio com a luz assada no próprio desenho.** Antes a luz do raio era uma bola por quadro, num Explod irmão, e passava
+  da ponta enquanto o raio crescia. Pior: o Projectile para a cada acerto (o `pausetime` do golpe vale para ele) e o
+  Explod não, então no raio do KO a luz corria na frente e virava névoa. Agora cada desenho do raio ganha, por baixo
+  dele, a luz que nasce do contorno dos pixels que brilham e cai pela curva do KIKIU até uns 40 pixels
+  (`luz.assar_feixes` com `luz_efeitos.luz_do_contorno`). Vai numa cópia da ação do raio (ações 9780+, grupo 9729, mesmas
+  caixas de golpe e tempos), e o `projanim` aponta para ela (`; luz assada de <ação>`). A luz anda, para e some junto
+  com o raio. Efeito grande vai mais fraco, para o anel do KO do Gutto não lavar a tela. O raio do KO dos despertados,
+  que anda, voltou a ser tratado como raio (é comprido: largura mais que 2,2 vezes a altura); a bola grande que voa
+  (Bola das Trevas) continua com orbe, halo e poça.
+- **Orbe parado na boca só no raio preso nela.** No raio que anda, o orbe ficava para trás no ponto de nascimento, que
+  no Gutto é o chão perto do casco: era a mancha rosa.
+- **Clarão do golpe com miolo branco.** O clarão de cada golpe vai da cor da faísca para o branco no terço do meio, em
+  degraus de pixel. Aparece em qualquer fundo (o verde-claro do CK sumia) e a cor não vira oliva em cima do vermelho.
+- **Borda fraca da luz zerada** (`CORTE = 0,07`): o pontilhado da borda do halo virava pontinhos soltos no cenário
+  escurecido do CK.
+- **Energia juntando na mão** (`ferramentas/luz_junta.py`, chamado no fim do `luz.aplicar`). Nos 22 tiques antes de
+  cada poder que brilha nascer, 26 fagulhas (cabeça quase branca, cauda na cor do poder) e um anel pontilhado vêm de uns 84 pixels em espiral e entram no ponto de onde o
+  poder sai (o centro do brilho da bola ou a ponta de trás do raio, que é a mão), um miolo branco cresce e pisca e uma
+  luz fraca acende a mão e o corpo. Some quando o Projectile nasce ou se o lutador apanha. Poder que sai em menos de 22
+  tiques ganha a versão de 1 tique por quadro. Não entra na chuva da super (projétil que nasce no céu).
+
+Desenhos novos: grupos 9728 (junção) e 9729 (raio com luz); ações 9760 + 2k e 9780 + j; Explod 9660. Nenhum desenho do lutador muda
+(conferido pixel a pixel contra a `mugen`).
+

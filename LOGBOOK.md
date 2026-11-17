@@ -3123,3 +3123,11 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   soco agachado afunda e sobe. `vida_pecas.py` da mugen com o meio-termo do Alisson (antecipação segurada até o
   contato). `pecas_ck.py trocar` troca só os desenhos no .sff quando o número de desenhos não muda; quando muda,
   `ligar_pecas.py ck` religa por cima. Robô de peças 0/201.
+
+## 2026-11-17 — Sobras da luz e energia juntando na mão (#51 item 2, Alisson aprovou e pediu tudo)
+
+**Feito:** luz do raio no contorno do próprio desenho (não passa da ponta; o KO que anda volta a ser raio), orbe da boca
+só no raio preso (era a mancha rosa no casco do Gutto), clarão do golpe com miolo branco (CK e Gutto), borda fraca da
+luz zerada (pontinhos no escuro do CK) e `ferramentas/luz_junta.py`: fagulhas da cor do poder entrando na mão nos 22
+tiques antes de cada poder que brilha. Nos 5 lutadores; nenhum desenho deles mudou. Detalhes em
+`docs/auras-51/LEIA-ME.md` (sétima volta).

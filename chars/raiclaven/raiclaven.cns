@@ -5856,6 +5856,24 @@ ground.hittime = 30
 ground.velocity = -3
 air.velocity = -2,-3.5
 
+[State 3400, Luz junta na mao]
+type = Explod
+trigger1 = Time = 3
+anim = 9760
+id = 9660
+postype = p1
+pos = 54.5, -78.8
+bindtime = -1
+removetime = 22
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+pausemovetime = -1
+supermovetime = -1
+sprpriority = 5
+trans = add
+alpha = 256, 256
+
 [State 3400, Luz do poder orbe]
 type = Explod
 trigger1 = Time = 25
@@ -15770,6 +15788,24 @@ projpriority = 1
 projremovetime = 160
 sprpriority = 3
 
+[State 21000, Luz junta na mao]
+type = Explod
+trigger1 = Time = 0
+anim = 9763
+id = 9660
+postype = p1
+pos = 38.7, -10.9
+bindtime = -1
+removetime = 8
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+pausemovetime = -1
+supermovetime = -1
+sprpriority = 5
+trans = add
+alpha = 256, 256
+
 [State 21000, Luz do poder orbe]
 type = Explod
 trigger1 = Time = 8
@@ -15869,6 +15905,24 @@ guardsound = F6,0
 projpriority = 1
 projremovetime = 160
 sprpriority = 3
+
+[State 21001, Luz junta na mao]
+type = Explod
+trigger1 = Time = 0
+anim = 9763
+id = 9660
+postype = p1
+pos = 38.7, -10.9
+bindtime = -1
+removetime = 8
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+pausemovetime = -1
+supermovetime = -1
+sprpriority = 5
+trans = add
+alpha = 256, 256
 
 [State 21001, Luz do poder orbe]
 type = Explod
@@ -15970,6 +16024,24 @@ guardsound = F6,0
 projpriority = 2
 projremovetime = 150
 sprpriority = 4
+
+[State 21300, Luz junta na mao]
+type = Explod
+trigger1 = Time = 0
+anim = 9765
+id = 9660
+postype = p1
+pos = 50.9, -71.7
+bindtime = -1
+removetime = 8
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+pausemovetime = -1
+supermovetime = -1
+sprpriority = 5
+trans = add
+alpha = 256, 256
 
 [State 21300, Luz do poder orbe]
 type = Explod
@@ -18337,7 +18409,7 @@ x = .8
 type = Projectile
 trigger1 = Time = 25
 projid = 4750
-projanim = 47002
+projanim = 9780 ; luz assada de 47002
 projhitanim = 47004
 projremanim = 47004
 projscale = 0.75, 0.75
@@ -18376,56 +18448,25 @@ palfx.time = 14
 palfx.add = 40,120,20
 palfx.sinadd = 30,30,30,4
 
-[State 4750, Luz do poder orbe]
+
+
+[State 4750, Luz junta na mao]
 type = Explod
-trigger1 = Time = 25
-anim = 9736
-id = 9641
+trigger1 = Time = 3
+anim = 9766
+id = 9660
 postype = p1
-velocity = 3.4, 0.0
-accel = 0.0, 0.0
-removetime = -1
+pos = -43.8, -94.4
+bindtime = -1
+removetime = 22
 ownpal = 1
-removeongethit = 0
+removeongethit = 1
 ignorehitpause = 1
-pos = 45.0, -91.9
-sprpriority = 2
+pausemovetime = -1
+supermovetime = -1
+sprpriority = 5
 trans = add
-alpha = floor(255 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255
-
-[State 4750, Luz do poder halo]
-type = Explod
-trigger1 = Time = 25
-anim = 9737
-id = 9642
-postype = p1
-velocity = 3.4, 0.0
-accel = 0.0, 0.0
-removetime = -1
-ownpal = 1
-removeongethit = 0
-ignorehitpause = 1
-pos = 45.0, -91.9
-sprpriority = 1
-trans = addalpha
-alpha = floor(230 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255 - floor(230 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85)))
-
-[State 4750, Luz do poder poca]
-type = Explod
-trigger1 = Time = 25
-anim = 9721
-id = 9643
-postype = p1
-velocity = 3.4, 0.0
-accel = 0.0, 0.0
-removetime = -1
-ownpal = 1
-removeongethit = 0
-ignorehitpause = 1
-pos = 45.0, 0
-sprpriority = -8
-trans = addalpha
-alpha = floor(220 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255 - floor(220 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85)))
+alpha = 256, 256
 
 [State 4750, Fim (despertados_47.py)]
 type = ChangeState

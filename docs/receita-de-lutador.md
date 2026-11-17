@@ -95,6 +95,9 @@ Regra do Breno (2026-11-15): **todo agarrão tem animação própria, e quem é 
     próprio efeito, com a cor dele, do tamanho dele e piscando junto com ele, quadro a quadro. Cada golpe que entra
     solta um clarão no ponto do impacto, na cor da faísca. Pedra, poeira, fumaça, garrafa, latinha, coração, pente e
     gente não acendem;
+  - **o raio leva a luz no contorno do próprio desenho** e o **poder junta na mão antes de sair** (Alisson,
+    2026-11-17): fagulhas da cor do poder entram no ponto de onde ele nasce, com um miolo branco crescendo
+    (`ferramentas/luz_junta.py`, automático para todo Projectile que brilha);
   A ferramenta é a `ferramentas/luz.py` (com a `ferramentas/luz_efeitos.py`). Ela roda sozinha no fim do
   `aura_silhueta.py` para quem está em `LIGADOS`; o Raiclaven, sem aura em camadas, chama no fim do gerador. **Efeito
   novo:** rode `python3 ferramentas/luz_efeitos.py --inventario PASTA <id>`, olhe a folha e anote em

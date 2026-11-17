@@ -6223,6 +6223,24 @@ ground.hittime = 18
 ground.velocity = -4
 air.velocity = -2,-3.5
 
+[State 1600, Luz junta na mao]
+type = Explod
+trigger1 = Time = 2
+anim = 9760
+id = 9660
+postype = p1
+pos = 21.9, -81.1
+bindtime = -1
+removetime = 22
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+pausemovetime = -1
+supermovetime = -1
+sprpriority = 5
+trans = add
+alpha = 256, 256
+
 [State 1600, Luz do poder orbe]
 type = Explod
 trigger1 = Time = 24
@@ -6385,6 +6403,24 @@ ground.slidetime = 12
 ground.hittime = 18
 ground.velocity = -4
 air.velocity = -2,-3.5
+
+[State 1601, Luz junta na mao]
+type = Explod
+trigger1 = Time = 10
+anim = 9760
+id = 9660
+postype = p1
+pos = 21.9, -81.1
+bindtime = -1
+removetime = 22
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+pausemovetime = -1
+supermovetime = -1
+sprpriority = 5
+trans = add
+alpha = 256, 256
 
 [State 1601, Luz do poder orbe]
 type = Explod
@@ -8424,7 +8460,7 @@ alpha = 255, 0
 type = Projectile
 trigger1 = Time = 28
 projid = 1650
-projanim = 7420
+projanim = 9780 ; luz assada de 7420
 projhitanim = 7421
 projremanim = 7421
 projcancelanim = 7421
@@ -8455,22 +8491,23 @@ palfx.add = 140, 50, 0
 palfx.sinadd = 30, 30, 30, 4
 guard.dist = 346
 
-[State 1650, Luz do poder halo]
+[State 1650, Luz junta na mao]
 type = Explod
-trigger1 = Time = 28
-anim = 9809
-id = 9634
+trigger1 = Time = 6
+anim = 9762
+id = 9660
 postype = p1
-pos = 52.0, -80.0
-velocity = 0.0, 0.0
-scale = 1.0, 1.0
-removetime = -1
+pos = 27.5, -79.0
+bindtime = -1
+removetime = 22
 ownpal = 1
-removeongethit = 0
+removeongethit = 1
 ignorehitpause = 1
-sprpriority = 1
-trans = addalpha
-alpha = 255, 0
+pausemovetime = -1
+supermovetime = -1
+sprpriority = 5
+trans = add
+alpha = 256, 256
 
 [State 1650, Luz do poder orbe]
 type = Explod

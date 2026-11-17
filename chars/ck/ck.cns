@@ -18501,6 +18501,24 @@ palfx.time = 14
 palfx.add = 40,90,60
 palfx.sinadd = 30,30,30,4
 
+[State 4750, Luz junta na mao]
+type = Explod
+trigger1 = Time = 5
+anim = 9761
+id = 9660
+postype = p1
+pos = 13.7, -78.3
+bindtime = -1
+removetime = 11
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+pausemovetime = -1
+supermovetime = -1
+sprpriority = 5
+trans = add
+alpha = 256, 256
+
 [State 4750, Luz do poder orbe]
 type = Explod
 trigger1 = Time = 16
