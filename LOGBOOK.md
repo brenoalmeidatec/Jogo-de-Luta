@@ -3209,3 +3209,5 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
 - Religado por cima da mugen atual (despertados novos) com `--grupo 49000`, `aura_no_corpo.py pengaro` (encadeia a
   silhueta) e `encolher_sff.py pengaro` (poda os desenhos velhos 48xxx): .sff 78,9 -> 40,7 MB. Robô de luta 189/189,
   idêntico ao da mugen.
+- Cabeçada do Gbzin: a pasta `cabecada` é o antiaéreo da bengala (410, 313, 347, 1200), não uma testada. Confere
+  com a receita do uppercut versão de jogo; fica como está (anatomia.md).
