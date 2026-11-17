@@ -55,15 +55,15 @@
   },
   {
    "desenho": 6,
-   "ticks": 2,
-   "caixa": false,
+   "ticks": 4,
+   "caixa": true,
    "de": "corrente_x/05"
   },
   {
    "desenho": 7,
    "ticks": 2,
    "caixa": false,
-   "de": "corrente_x/05"
+   "de": "corrente_x/06"
   },
   {
    "desenho": 8,
@@ -75,16 +75,10 @@
    "desenho": 9,
    "ticks": 2,
    "caixa": false,
-   "de": "corrente_x/06"
-  },
-  {
-   "desenho": 10,
-   "ticks": 2,
-   "caixa": false,
    "de": "corrente_x/07"
   },
   {
-   "desenho": 11,
+   "desenho": 10,
    "ticks": 3,
    "caixa": false,
    "de": "corrente_x/07"

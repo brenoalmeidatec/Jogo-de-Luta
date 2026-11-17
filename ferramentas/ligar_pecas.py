@@ -153,6 +153,9 @@ def estados_da_acao(cns, n):
 def trocar_elem(txt, n, mapa):
     """AnimElem = k → ifelse(Anim = n, AnimElemTime(m), AnimElemTime(k)) = 0; AnimElemTime(k) idem."""
     def t(m):  # uma passada só: o que já foi trocado não é trocado de novo
+        if m.group(3) is not None:  # golpe religado: o ifelse da ligação anterior só troca o elemento da ação n
+            k = int(m.group(3))
+            return f"ifelse(Anim = {n}, AnimElemTime({mapa.get(k, k)}), AnimElemTime({m.group(4)}))"
         if m.group(1) is not None:
             k = int(m.group(1))
             if k not in mapa or mapa[k] == k:
@@ -166,7 +169,8 @@ def trocar_elem(txt, n, mapa):
     for l in txt.splitlines(keepends=True):
         if re.match(r"(?i)^\s*trigger", l) and "AnimElem" in l and "parent," not in l:
             corpo, _, coment = l.partition(";")
-            corpo = re.sub(r"(?i)\bAnimElem\s*=\s*(\d+)\b(?!\s*,)|\bAnimElemTime\((\d+)\)", t, corpo)
+            corpo = re.sub(rf"(?i)\bAnimElem\s*=\s*(\d+)\b(?!\s*,)|\bAnimElemTime\((\d+)\)"
+                           rf"|ifelse\(Anim = {n}, AnimElemTime\((\d+)\), AnimElemTime\((\d+)\)\)", t, corpo)
             l = corpo + (";" + coment if coment else "")
         linhas.append(l)
     return "".join(linhas)

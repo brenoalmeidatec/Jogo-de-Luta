@@ -1,0 +1,181 @@
+{
+ "acao": 1401,
+ "folha": "caneta",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "caneta/02"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "caneta/02"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "caneta/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "caneta/02"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "caneta/02"
+  },
+  {
+   "desenho": 5,
+   "ticks": 1,
+   "caixa": false,
+   "de": "caneta/03"
+  },
+  {
+   "desenho": 6,
+   "ticks": 9,
+   "caixa": true,
+   "de": "caneta/04"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "caneta/04"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "caneta/05"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "caneta/05"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "caneta/05"
+  },
+  {
+   "desenho": 11,
+   "ticks": 2,
+   "caixa": false,
+   "de": "caneta/05"
+  },
+  {
+   "desenho": 12,
+   "ticks": 3,
+   "caixa": false,
+   "de": "caneta/05"
+  },
+  {
+   "desenho": 13,
+   "ticks": 2,
+   "caixa": false,
+   "de": "caneta/06"
+  },
+  {
+   "desenho": 14,
+   "ticks": 2,
+   "caixa": false,
+   "de": "caneta/06"
+  },
+  {
+   "desenho": 15,
+   "ticks": 2,
+   "caixa": false,
+   "de": "caneta/06"
+  },
+  {
+   "desenho": 16,
+   "ticks": 2,
+   "caixa": false,
+   "de": "caneta/06"
+  },
+  {
+   "desenho": 17,
+   "ticks": 3,
+   "caixa": false,
+   "de": "caneta/06"
+  },
+  {
+   "desenho": 18,
+   "ticks": 2,
+   "caixa": false,
+   "de": "caneta/07"
+  },
+  {
+   "desenho": 19,
+   "ticks": 2,
+   "caixa": false,
+   "de": "caneta/07"
+  },
+  {
+   "desenho": 20,
+   "ticks": 2,
+   "caixa": false,
+   "de": "caneta/07"
+  },
+  {
+   "desenho": 21,
+   "ticks": 2,
+   "caixa": false,
+   "de": "caneta/07"
+  },
+  {
+   "desenho": 22,
+   "ticks": 2,
+   "caixa": false,
+   "de": "caneta/07"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "caneta/02",
+   "ticks": 10,
+   "caixa": false
+  },
+  {
+   "de": "caneta/03",
+   "ticks": 1,
+   "caixa": false
+  },
+  {
+   "de": "caneta/04",
+   "ticks": 9,
+   "caixa": true
+  },
+  {
+   "de": "caneta/04",
+   "ticks": 2,
+   "caixa": false
+  },
+  {
+   "de": "caneta/05",
+   "ticks": 11,
+   "caixa": false
+  },
+  {
+   "de": "caneta/06",
+   "ticks": 11,
+   "caixa": false
+  },
+  {
+   "de": "caneta/07",
+   "ticks": 10,
+   "caixa": false
+  }
+ ]
+}

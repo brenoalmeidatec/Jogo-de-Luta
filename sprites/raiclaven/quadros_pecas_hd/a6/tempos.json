@@ -1,0 +1,41 @@
+{
+ "acao": 6,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 1,
+   "caixa": false,
+   "de": "agachado/04"
+  },
+  {
+   "desenho": 1,
+   "ticks": 1,
+   "caixa": false,
+   "de": "agachado/04"
+  },
+  {
+   "desenho": 2,
+   "ticks": 1,
+   "caixa": false,
+   "de": "agachado/05"
+  },
+  {
+   "desenho": 3,
+   "ticks": 1,
+   "caixa": false,
+   "de": "agachado/05"
+  },
+  {
+   "desenho": 4,
+   "ticks": 1,
+   "caixa": false,
+   "de": "agachado/06"
+  },
+  {
+   "desenho": 5,
+   "ticks": 1,
+   "caixa": false,
+   "de": "agachado/06"
+  }
+ ]
+}

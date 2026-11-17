@@ -198,6 +198,60 @@
     539,
     389
    ]
+  },
+  "braco_frente_alto": {
+   "arquivo": "braco_frente_alto.png",
+   "origem": [
+    544,
+    296
+   ],
+   "junta": [
+    556,
+    414
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/cabecada/04.png",
+   "sobra": "braco_frente_alto_sobra.png",
+   "origem_sobra": [
+    535,
+    287
+   ]
+  },
+  "braco_tras_direto": {
+   "arquivo": "braco_tras_direto.png",
+   "origem": [
+    498,
+    382
+   ],
+   "junta": [
+    506,
+    398
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/soco/05.png",
+   "sobra": "braco_tras_direto_sobra.png",
+   "origem_sobra": [
+    489,
+    373
+   ]
+  },
+  "braco_tras_overhand": {
+   "arquivo": "braco_tras_overhand.png",
+   "origem": [
+    471,
+    308
+   ],
+   "junta": [
+    506,
+    398
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/martelo/02.png",
+   "sobra": "braco_tras_overhand_sobra.png",
+   "origem_sobra": [
+    462,
+    299
+   ]
   }
  }
 }

@@ -32,33 +32,33 @@
   },
   {
    "desenho": 3,
-   "ticks": 2,
+   "ticks": 8,
    "caixa": false,
    "de": "talo/02"
   },
   {
    "desenho": 4,
-   "ticks": 2,
-   "caixa": false,
-   "de": "talo/02"
+   "ticks": 3,
+   "caixa": true,
+   "de": "talo/03"
   },
   {
    "desenho": 5,
    "ticks": 2,
    "caixa": false,
-   "de": "talo/02"
+   "de": "talo/04"
   },
   {
    "desenho": 6,
    "ticks": 2,
    "caixa": false,
-   "de": "talo/02"
+   "de": "talo/04"
   },
   {
    "desenho": 7,
-   "ticks": 3,
-   "caixa": true,
-   "de": "talo/03"
+   "ticks": 2,
+   "caixa": false,
+   "de": "talo/04"
   },
   {
    "desenho": 8,
@@ -76,64 +76,46 @@
    "desenho": 10,
    "ticks": 2,
    "caixa": false,
-   "de": "talo/04"
+   "de": "talo/05"
   },
   {
    "desenho": 11,
    "ticks": 2,
    "caixa": false,
-   "de": "talo/04"
+   "de": "talo/05"
   },
   {
    "desenho": 12,
    "ticks": 2,
    "caixa": false,
-   "de": "talo/04"
+   "de": "talo/05"
   },
   {
    "desenho": 13,
    "ticks": 2,
    "caixa": false,
-   "de": "talo/05"
+   "de": "talo/06"
   },
   {
    "desenho": 14,
    "ticks": 2,
    "caixa": false,
-   "de": "talo/05"
+   "de": "talo/06"
   },
   {
    "desenho": 15,
    "ticks": 2,
    "caixa": false,
-   "de": "talo/05"
+   "de": "talo/06"
   },
   {
    "desenho": 16,
    "ticks": 2,
    "caixa": false,
-   "de": "talo/06"
-  },
-  {
-   "desenho": 17,
-   "ticks": 2,
-   "caixa": false,
-   "de": "talo/06"
-  },
-  {
-   "desenho": 18,
-   "ticks": 2,
-   "caixa": false,
-   "de": "talo/06"
-  },
-  {
-   "desenho": 19,
-   "ticks": 2,
-   "caixa": false,
    "de": "talo/07"
   },
   {
-   "desenho": 20,
+   "desenho": 17,
    "ticks": 3,
    "caixa": false,
    "de": "talo/07"

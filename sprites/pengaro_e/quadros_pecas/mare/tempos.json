@@ -32,27 +32,27 @@
   },
   {
    "desenho": 3,
-   "ticks": 2,
+   "ticks": 6,
    "caixa": false,
    "de": "mare/02"
   },
   {
    "desenho": 4,
-   "ticks": 2,
-   "caixa": false,
-   "de": "mare/02"
+   "ticks": 3,
+   "caixa": true,
+   "de": "mare/03"
   },
   {
    "desenho": 5,
    "ticks": 2,
    "caixa": false,
-   "de": "mare/02"
+   "de": "mare/04"
   },
   {
    "desenho": 6,
-   "ticks": 3,
-   "caixa": true,
-   "de": "mare/03"
+   "ticks": 2,
+   "caixa": false,
+   "de": "mare/04"
   },
   {
    "desenho": 7,
@@ -76,13 +76,13 @@
    "desenho": 10,
    "ticks": 2,
    "caixa": false,
-   "de": "mare/04"
+   "de": "mare/05"
   },
   {
    "desenho": 11,
    "ticks": 2,
    "caixa": false,
-   "de": "mare/04"
+   "de": "mare/05"
   },
   {
    "desenho": 12,
@@ -94,13 +94,13 @@
    "desenho": 13,
    "ticks": 2,
    "caixa": false,
-   "de": "mare/05"
+   "de": "mare/06"
   },
   {
    "desenho": 14,
    "ticks": 2,
    "caixa": false,
-   "de": "mare/05"
+   "de": "mare/06"
   },
   {
    "desenho": 15,
@@ -112,22 +112,10 @@
    "desenho": 16,
    "ticks": 2,
    "caixa": false,
-   "de": "mare/06"
-  },
-  {
-   "desenho": 17,
-   "ticks": 2,
-   "caixa": false,
-   "de": "mare/06"
-  },
-  {
-   "desenho": 18,
-   "ticks": 2,
-   "caixa": false,
    "de": "mare/07"
   },
   {
-   "desenho": 19,
+   "desenho": 17,
    "ticks": 3,
    "caixa": false,
    "de": "mare/07"

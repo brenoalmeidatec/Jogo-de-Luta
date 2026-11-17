@@ -18,16 +18,16 @@
    "ang": 0
   },
   "coxa_tras": {
-   "ang": -3.0
+   "ang": -5.0
   },
   "canela_tras": {
-   "ang": 7.4
+   "ang": 9.7
   },
   "coxa_frente": {
-   "ang": -3.1
+   "ang": -2.5
   },
   "canela_frente": {
-   "ang": 7.7
+   "ang": 7.8
   }
  },
  "referencia_ginga/01": {
@@ -49,16 +49,16 @@
    "ang": 2
   },
   "coxa_tras": {
-   "ang": -4.0
+   "ang": -5.0
   },
   "canela_tras": {
-   "ang": 8.6
+   "ang": 9.7
   },
   "coxa_frente": {
-   "ang": -3.6
+   "ang": -2.5
   },
   "canela_frente": {
-   "ang": 7.5
+   "ang": 7.8
   }
  },
  "referencia_ginga/02": {
@@ -86,10 +86,10 @@
    "ang": 9.7
   },
   "coxa_frente": {
-   "ang": -4.0
+   "ang": -2.5
   },
   "canela_frente": {
-   "ang": 7.3
+   "ang": 7.8
   }
  },
  "referencia_ginga/03": {
@@ -117,10 +117,10 @@
    "ang": 9.7
   },
   "coxa_frente": {
-   "ang": -4.0
+   "ang": -2.5
   },
   "canela_frente": {
-   "ang": 7.3
+   "ang": 7.8
   }
  },
  "referencia_ginga/04": {
@@ -142,16 +142,16 @@
    "ang": 0
   },
   "coxa_tras": {
-   "ang": -4.0
+   "ang": -5.0
   },
   "canela_tras": {
-   "ang": 8.6
+   "ang": 9.7
   },
   "coxa_frente": {
-   "ang": -3.6
+   "ang": -2.5
   },
   "canela_frente": {
-   "ang": 7.5
+   "ang": 7.8
   }
  },
  "referencia_ginga/05": {
@@ -266,16 +266,16 @@
    "ang": 0
   },
   "coxa_tras": {
-   "ang": -3.0
+   "ang": -5.0
   },
   "canela_tras": {
-   "ang": 7.4
+   "ang": 9.7
   },
   "coxa_frente": {
-   "ang": -3.1
+   "ang": -2.5
   },
   "canela_frente": {
-   "ang": 7.7
+   "ang": 7.8
   }
  },
  "paredao/01": {
@@ -394,10 +394,10 @@
    "ang": -4
   },
   "coxa_tras": {
-   "ang": 4.5
+   "ang": 3.3
   },
   "canela_tras": {
-   "ang": 8.0
+   "ang": 9.7
   },
   "coxa_frente": {
    "ang": -11.1
@@ -458,10 +458,10 @@
    "ang": -6
   },
   "coxa_tras": {
-   "ang": 5.0
+   "ang": 4.9
   },
   "canela_tras": {
-   "ang": 9.5
+   "ang": 9.7
   },
   "coxa_frente": {
    "ang": -12.4
@@ -520,16 +520,16 @@
    "ang": 0
   },
   "coxa_tras": {
-   "ang": -3.0
+   "ang": -5.0
   },
   "canela_tras": {
-   "ang": 7.4
+   "ang": 9.7
   },
   "coxa_frente": {
-   "ang": -3.1
+   "ang": -2.5
   },
   "canela_frente": {
-   "ang": 7.7
+   "ang": 7.8
   }
  },
  "talo/01": {
@@ -552,16 +552,16 @@
    "ang": 2
   },
   "coxa_tras": {
-   "ang": -4.0
+   "ang": -5.0
   },
   "canela_tras": {
-   "ang": 8.6
+   "ang": 9.7
   },
   "coxa_frente": {
-   "ang": -4.5
+   "ang": -2.5
   },
   "canela_frente": {
-   "ang": 7.0
+   "ang": 7.8
   }
  },
  "talo/02": {
@@ -648,10 +648,10 @@
    "ang": -5
   },
   "coxa_tras": {
-   "ang": 4.5
+   "ang": 3.3
   },
   "canela_tras": {
-   "ang": 8.0
+   "ang": 9.7
   },
   "coxa_frente": {
    "ang": -11.1
@@ -742,16 +742,16 @@
    "ang": 0
   },
   "coxa_tras": {
-   "ang": -3.0
+   "ang": -5.0
   },
   "canela_tras": {
-   "ang": 7.4
+   "ang": 9.7
   },
   "coxa_frente": {
-   "ang": -3.1
+   "ang": -2.5
   },
   "canela_frente": {
-   "ang": 7.7
+   "ang": 7.8
   }
  }
 }

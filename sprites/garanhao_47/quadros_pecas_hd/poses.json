@@ -1,4 +1,35 @@
 {
+ "rasga_couro/00": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 1
+  },
+  "tronco": {
+   "ang": 0
+  },
+  "braco_tras": {
+   "ang": 0
+  },
+  "braco_frente": {
+   "ang": 0
+  },
+  "cabeca": {
+   "ang": 0
+  },
+  "coxa_tras": {
+   "ang": -2.1
+  },
+  "canela_tras": {
+   "ang": 5.8
+  },
+  "coxa_frente": {
+   "ang": -2.5
+  },
+  "canela_frente": {
+   "ang": 5.6
+  }
+ },
  "levanta/00": {
   "quadril": {
    "ang": 0,

@@ -947,6 +947,40 @@ triggerall = var(20) > 0
 triggerall = statetype != A
 trigger1 = ctrl || var(1)
 
+[State -1, Demônio: Juízo Infernal (super)]
+type = ChangeState
+value = 4650
+triggerall = var(20) > 0
+triggerall = command = "dfdf_x" || command = "dfdf_y"
+triggerall = power >= 1000
+triggerall = statetype != A
+trigger1 = ctrl || var(1)
+
+[State -1, Demônio: Rasgo Ascendente]
+type = ChangeState
+value = ifelse(command = "fd_y", 4521, 4520)
+triggerall = var(20) > 0
+triggerall = command = "fd_x" || command = "fd_y"
+triggerall = statetype != A
+trigger1 = ctrl || var(1)
+
+[State -1, Demônio: Bola das Trevas]
+type = ChangeState
+value = ifelse(command = "df_y", 4501, 4500)
+triggerall = var(20) > 0
+triggerall = command = "df_x" || command = "df_y"
+triggerall = numprojid(4500) = 0 && numprojid(4501) = 0
+triggerall = statetype != A
+trigger1 = ctrl || var(1)
+
+[State -1, Demônio: Voo Infernal]
+type = ChangeState
+value = ifelse(command = "dd_b", 4511, 4510)
+triggerall = var(20) > 0
+triggerall = command = "dd_a" || command = "dd_b"
+triggerall = statetype != A
+trigger1 = ctrl || var(1)
+
 [State -1, Demônio: Pisoteio 3]
 type = ChangeState
 value = 4332
