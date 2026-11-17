@@ -3080,3 +3080,23 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   cima, estouro, mão do pastor, berro e puxão. Ligados no despertado: chute alto (estampido), afastar (giro do manto),
   caneta (direção), armada (juízo de cima), cajado no chão (mãos), bola (mão do pastor), compasso (puxão). `TROCA_COR`
   conserta cor errada de um quadro só (perna do chute oliva). Falta desenho próprio só no agarrão e no golaço.
+
+## 2026-11-17 — Raiclaven: agachar, rasteira, golaço, armada, agarrão e pente combo no boneco de peças
+- `golpes_raiclaven.py` monta 36 ações (robô do boneco 0 defeito). Novidades no kit (`piloto_raiclaven.py`):
+  metade de baixo agachada inteira (`baixo="agachado"`, do agachado/04), braço da vassoura (vassoura/varre), braço do
+  pente esticado (`arremesso`), mão agarrando (`agarra`), mão no cabelo (`cabelo`) e `ESP(q)`: quadro especial com o
+  desenho de hoje inteiro onde o kit não serve (de costas na armada, toalha nas duas mãos no agarrão, giro do pente
+  combo), sem meio com os vizinhos, mesmo critério do `firme.py`.
+- Erros de animação achados de olho e consertados: a perna levantada do chute alto (já no jogo) sumia atrás do avental
+  e sobrava um toco de calça (agora vai na frente do avental, com braço e tesoura na frente dela, e o toco sai);
+  41 furinhos transparentes por quadro deixavam o cenário aparecer (`tapar_furos`); fresta entre o tronco e a metade
+  agachada (`emenda_agachado`); de pé para agachado não tem quadro de meio (o meio deslizava o tronco sobre as pernas).
+- O mapa aceita casamento 0.7-0.85 quando a pasta bate com a de um vizinho firme, e 0.6-0.7 segue o desenho anterior
+  (quadro de meio desenhado à parte); a ação 11 foi remapeada no tempo da mugen (20 ticks).
+- Religado com `raiclaven_no_jogo.py` (preserva o despertado com A Cliente), que agora termina com `podar()`: tira do
+  .sff os desenhos órfãos (o .sff estava a caminho dos 100 MB do GitHub).
+- Decisão do Alisson (17/11, meio-termo com a Lei 10 do estudo de anatomia): `vida_pecas.animar` não põe mais quadro
+  do meio entre a preparação e o contato (o golpe chega seco); meio só na preparação, na volta e na guarda. Vale para
+  todo lutador que montar golpe com `animar(..., bate=...)` daqui em diante.
+- Falta: soco no ar (600/601), levantar, as ações que usam desenho que ninguém reconhece (210, 302, 343, 344) e testar
+  a `pele_pecas.py` do Pengaró no lugar do desenho por peças rígidas.

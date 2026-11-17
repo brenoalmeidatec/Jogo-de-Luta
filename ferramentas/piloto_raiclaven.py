@@ -313,28 +313,34 @@ def desenhar(kit, pose):
     w = b.mundo(pose)
     lev = pose.get("_lev", {})
     if pose.get("coxa_frente", {}).get("var") not in (None, "vazio"):
-        # perna da frente levantada (desenho inteiro de outro quadro): fica NA FRENTE do avental. Na ordem do kit ela
-        # ia por baixo do quadril e o joelho e o sapato sumiam atrás do pano (chute alto e armada)
-        # (e os braços, a tesoura e a ombreira continuam na frente dela, como no desenho). O pano da coxa da frente
-        # que o quadril traz do parado (à direita do debrum do avental) sai: com a perna no ar ele virava um toco.
-        frente = np.zeros(tela.shape[:2], bool)
-        camadas = []
-        for slot in ("coxa_frente", "braco_frente", "braco_tras", "ombreira", "antebraco_tras"):
+        # perna da frente levantada (desenho inteiro de outro quadro). Como no desenho de hoje, ela passa NA FRENTE do
+        # avental (o joelho e o sapato apareciam por cima do pano), mas ATRÁS do tronco, dos braços e da tesoura: o
+        # polígono da perna traz um pedaço da camisa do outro desenho, que por cima virava um remendo claro e cobria a
+        # listra de barbeiro. O pano da coxa da frente que o quadril traz do parado (à direita do debrum) sai: com a
+        # perna no ar ele virava um toco.
+        def mascara(slot):
             p = kit["pecas"][b.chave(slot, pose)]
             pos, ang = w[slot]
             r, x0, y0 = b.colocar(p, p["img"], p["origem"], pos, ang)
-            camadas.append((r, x0, y0))
+            m = np.zeros(tela.shape[:2], bool)
             h_, w_ = r.shape[:2]
             X0, Y0 = max(0, x0), max(0, y0)
             sub = r[Y0 - y0:min(tela.shape[0], y0 + h_) - y0, X0 - x0:min(tela.shape[1], x0 + w_) - x0, 3] > 0
-            frente[Y0:Y0 + sub.shape[0], X0:X0 + sub.shape[1]] |= sub
+            m[Y0:Y0 + sub.shape[0], X0:X0 + sub.shape[1]] = sub
+            return m, (r, x0, y0)
+        cima = np.zeros(tela.shape[:2], bool)
+        for slot in ("tronco", "cabeca", "braco_frente", "braco_tras", "ombreira", "antebraco_tras"):
+            cima |= mascara(slot)[0]
         j0 = pr.OSSOS["quadril"][0]
         ox, oy = int(round(w["quadril"][0][0] - j0[0])), int(round(w["quadril"][0][1] - j0[1]))
-        toco = np.zeros_like(frente)
+        toco = np.zeros_like(cima)
         toco[500 + oy:600 + oy, 573 + ox:] = True
-        tela[toco & ~frente] = 0
-        for r, x0, y0 in camadas:
-            b.colar(tela, r, x0, y0)
+        tela[toco & ~cima] = 0
+        perna, (r, x0, y0) = mascara("coxa_frente")
+        camada = np.zeros_like(tela)
+        b.colar(camada, r, x0, y0)
+        pinta = perna & ~cima & (camada[..., 3] > 0)
+        tela[pinta] = camada[pinta]
     if pose.get("_agachado"):  # o desenho agachado já traz sapatos e laço
         emenda_agachado(tela, w)
         return tapar_furos(pf.sem_migalha(pf.fechar_frestas(tela, juntas=[w[sl][0] for sl in pr.OSSOS])))
