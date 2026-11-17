@@ -71,9 +71,70 @@ FIRMES.update(f"parado/{i:02d}" for i in range(8))
 FIRMES.update(f"anda/{i:02d}" for i in range(8))
 # as garras sobem por cima da cabeça (garra cruzada) e varrem para a frente: faixa de giro maior que a do Hazak
 BUSCA = {"braco_tras": (range(-170, 61, 3), 2, [None]), "braco_frente": (range(-170, 61, 3), 4, [None])}
-# perna da frente no coice: o desenho esticado do pe_pes/05 preso no quadril
-VARIANTES["coxa_frente"] = {
-    "esticada": ("pe_pes/05", [(545, 452), (565, 447), (600, 444), (640, 442), (668, 440), (690, 435), (712, 438),
-                               (715, 470), (690, 476), (640, 480), (600, 484), (565, 492), (545, 498)], (552, 472)),
+# variantes desenhadas: (desenho de onde sai, polígono nele, junta nele, "fixa" = junta marcada à mão)
+VARIANTES["braco_frente"] = {
+    # garra esticada para a frente (pe_maos/01)
+    "esticado": ("pe_maos/01", [(545, 398), (570, 394), (600, 400), (630, 402), (660, 402), (690, 397), (712, 398),
+                                (712, 434), (690, 428), (660, 431), (630, 436), (610, 443), (590, 441), (565, 433),
+                                (545, 428)], (562, 414), "fixa"),
+    # garra erguida por cima da cabeça (pe_maos/04)
+    "erguido": ("pe_maos/04", [(560, 280), (590, 284), (610, 300), (625, 320), (640, 345), (652, 362), (646, 392),
+                               (630, 410), (605, 416), (588, 405), (592, 385), (600, 365), (590, 345), (575, 332),
+                               (556, 326), (548, 300)], (596, 404), "fixa"),
 }
-PERNA_NO_AR = {"pe_pes/01": "livre", "pe_pes/04": "livre", "pe_pes/05": "esticada"}
+VARIANTES["braco_tras"] = {
+    # garra de trás erguida ao lado da cabeça (pe_maos/00)
+    "alto": ("pe_maos/00", [(455, 338), (475, 336), (492, 343), (490, 360), (483, 372), (492, 385), (505, 395),
+                            (505, 425), (495, 448), (470, 453), (440, 453), (427, 436), (437, 400), (449, 376),
+                            (452, 355)], (494, 414), "fixa"),
+    "erguido": ("pe_maos/04", [(455, 345), (470, 330), (490, 310), (505, 290), (520, 287), (532, 298), (526, 320),
+                               (510, 332), (495, 346), (482, 362), (486, 385), (500, 400), (506, 420), (492, 438),
+                               (465, 440), (448, 420), (438, 392), (444, 365)], (496, 412), "fixa"),
+    "esticado": ("pe_maos/01", [(545, 398), (570, 394), (600, 400), (630, 402), (660, 402), (690, 397), (712, 398),
+                                (712, 434), (690, 428), (660, 431), (630, 436), (610, 443), (590, 441), (565, 433),
+                                (545, 428)], (562, 414), "fixa"),
+}
+# perna da frente: joelho erguido (pe_pes/04) e esticada no coice (pe_pes/05), presas no quadril
+VARIANTES["coxa_frente"] = {
+    "camara": ("pe_pes/04", [(550, 445), (580, 440), (605, 441), (626, 447), (630, 470), (623, 500), (626, 540),
+                             (634, 560), (632, 571), (612, 571), (588, 556), (591, 520), (595, 495), (588, 480),
+                             (570, 488), (550, 502)], (566, 478), "fixa"),
+    "esticada": ("pe_pes/05", [(545, 452), (565, 447), (600, 446), (622, 443), (650, 440), (668, 428), (685, 417),
+                               (706, 417), (706, 470), (690, 473), (650, 478), (600, 484), (565, 496), (545, 500)],
+                 (552, 472), "fixa"),
+}
+PERNA_NO_AR = {"pe_pes/00": "camara", "pe_pes/01": "camara", "pe_pes/04": "camara", "pe_pes/05": "esticada"}
+# golpes em pé: o corpo é sempre o do kit (nada de desenho de hoje), braços e perna postos à mão
+FIRMES.update(f"pe_maos/{i:02d}" for i in range(8))
+FIRMES.update(f"pe_pes/{i:02d}" for i in range(8))
+POSES.update({
+    "pe_maos/00": {"braco_tras": {"var": "alto", "ang": 0}, "tronco": {"ang": -4}},
+    "pe_maos/01": {"braco_frente": {"var": "esticado", "ang": 0}},
+    "pe_maos/02": {"braco_frente": {"var": "esticado", "ang": 22}},
+    "pe_maos/04": {"braco_tras": {"var": "erguido", "ang": 0}, "braco_frente": {"var": "erguido", "ang": 0},
+                   "tronco": {"ang": -5}},
+    "pe_maos/05": {"braco_frente": {"var": "esticado", "ang": -18}, "braco_tras": {"var": "esticado", "ang": 24}},
+    "pe_maos/06": {"braco_frente": {"var": "esticado", "ang": 36}, "braco_tras": {"var": "esticado", "ang": 52}},
+})
+# corpo inteiro no golpe: o quadril vai à frente, o tronco inclina e o pé da frente avança
+PASSO = {
+    "pe_maos/00": {"quadril": -4, "tronco": -3},
+    "pe_maos/01": {"quadril": 12, "tronco": 7, "frente": 16},
+    "pe_maos/02": {"quadril": 8, "tronco": 5, "frente": 16},
+    "pe_maos/04": {"quadril": -5, "tronco": -4},
+    "pe_maos/05": {"quadril": 12, "tronco": 9, "frente": 16},
+    "pe_maos/06": {"quadril": 9, "tronco": 7, "frente": 14},
+}
+# chutes: corpo do kit parado no lugar, perna de trás plantada, perna da frente (peça desenhada) girada no quadril
+_GUARDA = {"quadril": {"abs": 1, "dx": 0, "dy": 0, "pes": (0, 0)}, "braco_tras": {"ang": 0},
+           "braco_frente": {"ang": -12}}
+POSES.update({
+    "pe_pes/00": {**_GUARDA, "coxa_frente": {"var": "camara", "ang": 0}, "tronco": {"ang": -2}},
+    "pe_pes/01": {**_GUARDA, "coxa_frente": {"var": "camara", "ang": -6}, "tronco": {"ang": -4}},
+    "pe_pes/04": {**_GUARDA, "coxa_frente": {"var": "camara", "ang": -4}, "tronco": {"ang": -3}},
+    "pe_pes/05": {**_GUARDA, "coxa_frente": {"var": "esticada", "ang": -8}, "tronco": {"ang": -8},
+                  "braco_frente": {"ang": -30}, "braco_tras": {"ang": 12}},
+})
+# fim dos chutes: volta à guarda do kit com os pés do parado
+POSES.update({f"pe_pes/{i:02d}": dict(_GUARDA) for i in (2, 3, 6, 7)})
+TIRA_FAIXA = False  # o demônio não tem faixa: o marrom da pele nos rasgos da calça fica na perna

@@ -10,27 +10,27 @@
  "elementos": [
   {
    "desenho": 0,
-   "ticks": 6,
+   "ticks": 2,
    "caixa": false,
    "de": "pe_pes/04"
   },
   {
    "desenho": 1,
-   "ticks": 5,
-   "caixa": true,
-   "de": "pe_pes/05"
+   "ticks": 2,
+   "caixa": false,
+   "de": "pe_pes/04"
   },
   {
    "desenho": 2,
    "ticks": 2,
    "caixa": false,
-   "de": "pe_pes/06"
+   "de": "pe_pes/04"
   },
   {
    "desenho": 3,
-   "ticks": 2,
-   "caixa": false,
-   "de": "pe_pes/06"
+   "ticks": 5,
+   "caixa": true,
+   "de": "pe_pes/05"
   },
   {
    "desenho": 4,
@@ -42,13 +42,13 @@
    "desenho": 5,
    "ticks": 2,
    "caixa": false,
-   "de": "pe_pes/07"
+   "de": "pe_pes/06"
   },
   {
    "desenho": 6,
    "ticks": 2,
    "caixa": false,
-   "de": "pe_pes/07"
+   "de": "pe_pes/06"
   },
   {
    "desenho": 7,
@@ -64,6 +64,18 @@
   },
   {
    "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pe_pes/07"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pe_pes/07"
+  },
+  {
+   "desenho": 11,
    "ticks": 2,
    "caixa": false,
    "de": "pe_pes/07"

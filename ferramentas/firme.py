@@ -271,7 +271,7 @@ def montar_kit():
                 junta_fonte = _junta_fonte
             f = abrir(fonte)
             m = b.mascara(poli) & (f[..., 3] > 0)
-            if slot.startswith("coxa"):
+            if slot.startswith("coxa") and getattr(K, "TIRA_FAIXA", True):  # faixa do quimono (Hazak)
                 m &= ~faixa_marrom(f)
                 m = limpar_ilhas(m)
             rec = so_o_grosso(np.where(m[..., None], f, 0).astype(np.uint8))
@@ -967,6 +967,10 @@ def gerar(nomes, so_pose=False):
                 Image.fromarray(out).save(b.SPR / "quadros_pecas_hd" / nome / f"{i:02d}.png")
                 Image.fromarray(np.ascontiguousarray(out[1::3, 1::3])).save(b.SPR / "quadros_pecas" / nome / f"{i:02d}.png")
                 continue
+            if "_ar" not in pose:  # ponta de dedo que o giro do pé empurrou 1-2 px para baixo do chão: some
+                abaixo = out[EIXO[1]:, :, 3] > 0
+                if 0 < abaixo.sum() <= 8:
+                    out[EIXO[1]:] = 0
             erros = conferir(out, no_chao="_ar" not in pose, juntas=[w[s][0] for s in ("braco_tras", "braco_frente", *(("antebraco_tras",) if "antebraco_tras" in w else ()), "cabeca",
                                                      # metade de baixo inteira de um desenho: as juntas das pernas não valem
                                                      *(() if pose.get("_pernas") else ("coxa_tras", "coxa_frente", "canela_tras", "canela_frente")))])

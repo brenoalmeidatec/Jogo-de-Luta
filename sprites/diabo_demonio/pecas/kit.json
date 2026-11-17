@@ -216,6 +216,132 @@
     531,
     483
    ]
+  },
+  "braco_frente_esticado": {
+   "arquivo": "braco_frente_esticado.png",
+   "origem": [
+    581,
+    392
+   ],
+   "junta": [
+    598,
+    412
+   ],
+   "mae": "tronco",
+   "fonte": "pe_maos/01",
+   "sobra": "braco_frente_esticado_sobra.png",
+   "origem_sobra": [
+    572,
+    383
+   ]
+  },
+  "braco_frente_erguido": {
+   "arquivo": "braco_frente_erguido.png",
+   "origem": [
+    551,
+    302
+   ],
+   "junta": [
+    598,
+    412
+   ],
+   "mae": "tronco",
+   "fonte": "pe_maos/04",
+   "sobra": "braco_frente_erguido_sobra.png",
+   "origem_sobra": [
+    542,
+    293
+   ]
+  },
+  "braco_tras_alto": {
+   "arquivo": "braco_tras_alto.png",
+   "origem": [
+    425,
+    337
+   ],
+   "junta": [
+    490,
+    412
+   ],
+   "mae": "tronco",
+   "fonte": "pe_maos/00",
+   "sobra": "braco_tras_alto_sobra.png",
+   "origem_sobra": [
+    416,
+    328
+   ]
+  },
+  "braco_tras_erguido": {
+   "arquivo": "braco_tras_erguido.png",
+   "origem": [
+    436,
+    296
+   ],
+   "junta": [
+    490,
+    412
+   ],
+   "mae": "tronco",
+   "fonte": "pe_maos/04",
+   "sobra": "braco_tras_erguido_sobra.png",
+   "origem_sobra": [
+    427,
+    287
+   ]
+  },
+  "braco_tras_esticado": {
+   "arquivo": "braco_tras_esticado.png",
+   "origem": [
+    473,
+    392
+   ],
+   "junta": [
+    490,
+    412
+   ],
+   "mae": "tronco",
+   "fonte": "pe_maos/01",
+   "sobra": "braco_tras_esticado_sobra.png",
+   "origem_sobra": [
+    464,
+    383
+   ]
+  },
+  "coxa_frente_camara": {
+   "arquivo": "coxa_frente_camara.png",
+   "origem": [
+    564,
+    468
+   ],
+   "junta": [
+    580,
+    506
+   ],
+   "mae": "quadril",
+   "fonte": "pe_pes/04",
+   "sobra": "coxa_frente_camara_sobra.png",
+   "origem_sobra": [
+    555,
+    459
+   ]
+  },
+  "coxa_frente_esticada": {
+   "arquivo": "coxa_frente_esticada.png",
+   "origem": [
+    573,
+    451
+   ],
+   "junta": [
+    580,
+    506
+   ],
+   "mae": "quadril",
+   "fonte": "pe_pes/05",
+   "sobra": "coxa_frente_esticada_sobra.png",
+   "origem_sobra": [
+    564,
+    442
+   ]
   }
  }
 }

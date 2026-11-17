@@ -22,7 +22,7 @@
   },
   {
    "desenho": 2,
-   "ticks": 4,
+   "ticks": 2,
    "caixa": false,
    "de": "pe_maos/02"
   },
@@ -30,10 +30,16 @@
    "desenho": 3,
    "ticks": 2,
    "caixa": false,
-   "de": "pe_maos/03"
+   "de": "pe_maos/02"
   },
   {
    "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pe_maos/03"
+  },
+  {
+   "desenho": 5,
    "ticks": 3,
    "caixa": false,
    "de": "pe_maos/03"
