@@ -67,7 +67,8 @@ def animar(poses, elems, bate=None, laco=False, guarda=None):
         else:
             b_ = guarda if guarda is not None else a
         caixa = k in batem
-        if caixa or ticks < 4:  # impacto segurado; elemento curto não tem espaço para meio
+        if caixa or ticks < 4 or "_especial" in a or "_especial" in b_:  # impacto segurado; elemento curto
+            # não tem espaço para meio; desenho de hoje (especial) não se mistura com peças
             saida.append((dict(a), ticks, caixa, q))
             continue
         if batem and k < min(batem):

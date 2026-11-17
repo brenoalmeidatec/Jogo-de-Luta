@@ -2727,6 +2727,15 @@ confusos refeitos com exatidão. Branch `claude/project-thread-zoipeb`, nada no 
   maior das 9 do `.air`. `sem_pontinhos` tira manchinha de pele no calção. Robô 0/275.
 - Despertado: hoje as ações 10xxx usam os MESMOS desenhos da base com paleta trocada, então o corpo firme já cobre
   ele. O Garanhão minotauro do conceito (e_conceito.png) não tem desenho no jogo: pede kit novo desenhado.
-- Falta: despertado minotauro. O pé do chute alto alcança ~50 px menos que a caixa (o corpo não
+- Garanhão (despertado minotauro, 17/11, Alisson apertou "Começar já o kit"): sem imagem nova. As 18 folhas do
+  ChatGPT de 16/11 (branch fm5ilj) foram para `sprites/garanhao/folhas`; `ferramentas/importar_garanhao.py` corta as 8
+  células, tira o magenta e põe na tela 3x (264 px de altura, o tamanho do endiabrado de hoje; `quadros_arcade_hd`
+  fica fora do git e sai de novo pelo importador). Motor genérico `ferramentas/firme.py` (do Hazak, thread 46qshe) +
+  `kit_garanhao.py` (corpo do rasga_couro/00, poses à mão por quadro com `_p(...)`) + `garanhao_pecas.py` (pinta por
+  baixo do braço de perto a raiz do rabo, o calção entre as pernas e a coxa escondida; crina atrás do rosto).
+  Mudanças no firme.py: `SEM_REGUA`, quadril `abs` com `pes`, cabeça e perna à mão vencem, `MANCHA_FOLGA` (o
+  Garanhão é escuro: 900). Feitos parado, chifrada, investida e pisão; robô 0/73. Vídeos em
+  `docs/boneco-pecas/garanhao/`.
+- Falta: resto dos golpes do Garanhão (15 folhas prontas). O pé do chute alto alcança ~50 px menos que a caixa (o corpo não
   tomba); o Breno decide se a caixa encolhe. O "giratório" do cotovelo e do coice não gira: girar pede desenho de
   costas, que o kit não tem.
