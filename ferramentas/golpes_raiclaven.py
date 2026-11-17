@@ -104,6 +104,11 @@ POSE = {
     "agarrao/07": P(q=(1, 1), bt=-2, abt=2, bf=2),
     # pente_combo: sai do rolamento, estoca o pente, ergue a tesoura, gira (desenho inteiro) e corta duas vezes com a
     # tesoura à frente, e termina penteando o cabelo
+    # soco no ar e levantar: no ar e no chão o kit de pé não serve; ficam os desenhos de hoje inteiros (mesma folha
+    # do kit, mesma cara e mesmas cores), e o fim do levantar entra na guarda do kit
+    **{f"ar_soco/{i:02d}": ESP(f"ar_soco/{i:02d}") for i in range(8)},
+    **{f"levanta/{i:02d}": ESP(f"levanta/{i:02d}") for i in range(1, 7)},
+    "levanta/07": P(),
     "rolamento/05": P(baixo="agachado", tronco=6, cabeca=2, bt=8, abt=-8, bf=6),  # sai do rolamento
     "rolamento/06": P(q=(2, 6), tronco=2, cabeca=1, bt=4, abt=-4, bf=-4),
     "pente_combo/01": P(q=(12, 10), tronco=6, cabeca=2, mao="arremesso", bt=18, abt=-6, pe_frente=18),
@@ -118,6 +123,10 @@ POSE = {
 # sprite do jogo que o mapa casou errado, conferido de olho: o desenho certo
 SPRITE_E = {
     (894, 0): "martelo/04",  # idem, a variante do 343
+    # soco no ar (600, 601): encolhido no pulo, tesoura erguida, estocada para baixo e volta encolhido
+    (462, 0): "ar_soco/00", (463, 0): "ar_soco/02", (465, 0): "ar_soco/04", (467, 0): "ar_soco/07",
+    # levantar (5120): sentado no chão, apoia na tesoura, sobe e fica na guarda
+    **{(398 + i, 0): f"levanta/{i + 1:02d}" for i in range(7)},
     (893, 0): "martelo/04",  # contato do martelo forte (210, 302, 343, 344): passo longo, tesoura lá embaixo à frente
 }
 
@@ -185,7 +194,8 @@ def main():
         defeitos = []
         for i, (pose, t, caixa_on, q) in enumerate(quadros):
             out = R.desenhar(kit, R.plantar(pose))
-            erros = pf.conferir(out, ref, None)
+            # quadro especial é o desenho de hoje inteiro (no ar, no chão, de costas): o robô do kit não se aplica
+            erros = [] if "_especial" in pose else pf.conferir(out, ref, None)
             if erros:
                 defeitos.append(f"{i:02d} ({q.split('#')[0]}): {'; '.join(erros)}")
             Image.fromarray(out).save(R.SPR / "quadros_pecas_hd" / nome / f"{i:02d}.png")

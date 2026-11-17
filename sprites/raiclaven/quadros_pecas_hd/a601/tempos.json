@@ -1,0 +1,29 @@
+{
+ "acao": 601,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 7,
+   "caixa": false,
+   "de": "ar_soco/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 8,
+   "caixa": true,
+   "de": "ar_soco/04"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "ar_soco/04"
+  },
+  {
+   "desenho": 3,
+   "ticks": 1,
+   "caixa": false,
+   "de": "ar_soco/07"
+  }
+ ]
+}
