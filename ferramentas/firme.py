@@ -569,6 +569,17 @@ def iou(a, b_):
 def pose_de(kit, q):
     """Pose do kit para o quadro `q`, ou {"_especial"} quando o corpo do kit não serve (de costas, de lado, deitado):
     aí fica o desenho de hoje, no tamanho do parado."""
+    troca = getattr(K, "TROCA", {}).get(q)
+    if troca:  # quadro trocado por outro: uma pose nova da folha-modelo (inteira) ou a pose do kit de outro quadro
+        v = troca if isinstance(troca, tuple) else (troca,)
+        alvo, dx, dy, ang = (tuple(v) + (0, 0, 0))[:4]
+        if alvo.startswith("modelo/"):
+            return {"_especial": {"var": alvo, "dx": dx, "dy": dy, "ang": ang}}
+        pose = pose_de(kit, alvo)
+        if dx or dy:
+            pose = dict(pose, quadril=dict(pose.get("quadril", {}), dx=pose.get("quadril", {}).get("dx", 0) + dx,
+                                           dy=pose.get("quadril", {}).get("dy", 0) + dy))
+        return pose
     if q in getattr(K, "ESPECIAIS", ()):
         return {"_especial": {"var": q}}
     pose = _pose_kit(kit, q)
@@ -808,7 +819,20 @@ def desenhar(kit, pose):
     perna levantada com o desenho de câmara ou esticada preso no quadril."""
     if pose.get("_especial", {}).get("var"):
         desenhar.pintado, desenhar.pint = 0, None
-        return especial(pose["_especial"]["var"])
+        e = pose["_especial"]
+        a = especial(e["var"])
+        if e.get("ang"):  # gira em volta do meio do corpo (RotSprite)
+            ys, xs = np.nonzero(a[..., 3] > 0)
+            y0, y1, x0, x1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
+            rec = np.ascontiguousarray(a[y0:y1, x0:x1])
+            piv = ((x1 - x0) / 2, (y1 - y0) / 2)
+            r, p0 = b.rotsprite(rec, e["ang"], piv)
+            out = np.zeros_like(a)
+            b.colar(out, r, int(round(x0 + piv[0] - p0[0])), int(round(y0 + piv[1] - p0[1])))
+            a = out
+        if e.get("dx") or e.get("dy"):
+            a = np.roll(a, (int(round(e.get("dy", 0))), int(round(e.get("dx", 0)))), axis=(0, 1))
+        return a
     pv = pose.get("_pernas", {}).get("var")
     if pv:  # metade de baixo rígida: o quadril fica sempre onde ela pisa no chão (também no meio do caminho)
         cx, cy = kit["pecas"][f"pernas_{pv}"]["corpo"]

@@ -146,3 +146,66 @@ PELE_VIZINHOS = {"coxa_frente": ("quadril",)}  # ombro desenhado como pele (sem 
 # o tronco é pintado por baixo da beira da cabeça (6 px): quando o tronco inclina e a cabeça contra-gira não abre vão
 TAPAR_FAIXA = 6
 TAPAR = ("tronco",)
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Folhas que o kit de frente não monta: quadro trocado por uma pose nova da folha-modelo (diabo_modelo.py, mesma
+# escala e paleta do parado; modelo/NN inteiro, com deslocamento e giro) ou pela pose do kit de outro quadro.
+# Quadro "modelo/" é quadro especial (dívida): vira montado quando a peça entrar no kit.
+# modelo: 00 agachado, 01 agachado com garra baixa, 02 defesa, 03 defesa agachada, 04 deitado, 05 apanha, 06 no ar,
+# 07 ajoelhado, 08 corrida, 09 cobrança, 10 vitória, 11 sentado, 12 provoca, 13 agarra, 14 garra que sobe,
+# 15 pulo para trás, 16 de frente, 17 de costas
+M = lambda n, dx=0, dy=0, ang=0: (f"modelo/{n:02d}", dx, dy, ang)
+RESPIRA = [0, 1, 2, 2, 1, 0, 1, 2]  # px: o agachado parado respira
+TROCA = {
+    **{f"agachado/{i:02d}": M(0, 0, RESPIRA[i]) for i in range(2, 8)},
+    "agachado_maos/00": M(0), "agachado_maos/01": M(1), "agachado_maos/02": M(1, 8), "agachado_maos/03": M(0),
+    "agachado_maos/04": M(0, 0, 2), "agachado_maos/05": M(14), "agachado_maos/06": M(14, 0, -10),
+    "agachado_maos/07": M(0),
+    "agachado_pes/00": M(0), "agachado_pes/01": M(1, 4), "agachado_pes/02": M(1), "agachado_pes/03": M(0),
+    "agachado_pes/04": M(0, 0, 2), "agachado_pes/05": M(1, 10), "agachado_pes/06": M(1, 16), "agachado_pes/07": M(0),
+    "defesa/02": M(2), "defesa/03": M(2, -3), "defesa/04": M(2, -6), "defesa/05": M(2, -3),
+    **{f"defesa_baixa/{i:02d}": M(3, -(0, 0, 2, 4, 6, 3, 0, 0)[i]) for i in range(8)},
+    **{f"parry_baixo/{i:02d}": M((0, 3, 3, 1, 1, 3, 0, 0)[i]) for i in range(8)},
+    "apanha/01": M(5), "apanha/02": M(5, -8), "apanha/03": M(5, -16, 0, -25), "apanha/04": M(5, -24, -20, -60),
+    "apanha/05": M(4, -20, -12, 10), "apanha/06": M(4, -16), "apanha/07": M(4, -16),
+    **{f"queda/{i:02d}": M(4, 0, (0, -10, 0, 0, 0, 0, 0, 0)[i]) for i in range(8)},
+    "levanta/00": M(4), "levanta/01": M(11), "levanta/02": M(11, 0, -2), "levanta/03": M(7), "levanta/04": M(7, 0, -3),
+    "levanta/05": M(0),
+    "pulo/00": M(0), "pulo/01": M(0, 0, 3), "pulo/02": M(6), "pulo/03": M(6, 0, -4), "pulo/04": M(6, 0, -4),
+    "pulo/05": M(6), "pulo/06": M(6, 0, 2), "pulo/07": M(0),
+    **{f"vira/{i:02d}": M(16) for i in range(1, 7)},
+    **{f"corrida/{i:02d}": M(8, 0, (0, -4, -6, -4, 0, -4, -6, -4)[i]) for i in range(8)},
+    "recuo/02": M(0), "recuo/03": M(15), "recuo/04": M(15, -6), "recuo/05": M(0),
+    **{f"provoca/{i:02d}": M(12, 0, (0, 0, 1, 2, 2, 1, 0, 0)[i]) for i in range(1, 7)},
+    "vitoria/01": M(12), "vitoria/02": M(12, 0, 1), **{f"vitoria/{i:02d}": M(10, 0, (0, 0, 0, 1, 2)[i - 3]) for i in range(3, 8)},
+    "intro/00": M(0), "intro/01": M(0, 0, 2), "intro/02": M(7), "intro/04": M(12), "intro/05": M(12, 0, 1),
+    "intro/06": M(10), "intro/07": M(10, 0, 1),
+    "derrota_sirene/00": M(4), "derrota_sirene/01": M(4), "derrota_sirene/02": M(11), "derrota_sirene/03": M(11),
+    "derrota_sirene/04": M(7), "derrota_sirene/05": M(7, 0, -2), "derrota_sirene/06": M(0),
+    "cobranca_garras/00": M(0), "cobranca_garras/01": M(8), "cobranca_garras/02": M(9), "cobranca_garras/03": M(9, 0, -6),
+    "cobranca_garras/04": M(13),
+    # agarrões: pega com as duas garras (modelo/13) e bate com as garras do kit (arranhão e garra cruzada)
+    **{f"{g}/{i:02d}": v for g in ("agarrao_abraco", "agarrao_cutucao", "agarrao_perna")
+       for i, v in enumerate([None, M(13), M(13, 4), "pe_maos/01", "pe_maos/04", "pe_maos/05", "pe_maos/06", None]) if v},
+}
+# o resto das folhas em pé é a guarda do kit (nada de desenho de hoje)
+for _f in ("agachado", "defesa", "parry_alto", "recuo", "vira", "provoca", "vitoria", "intro", "derrota_sirene",
+           "cobranca_garras", "agarrao_abraco", "agarrao_cutucao", "agarrao_perna", "levanta", "apanha"):
+    for _i in range(8):
+        FIRMES.add(f"{_f}/{_i:02d}")
+        POSES.setdefault(f"{_f}/{_i:02d}", dict(_GUARDA))
+POSES["agachado/01"] = {**_GUARDA, "quadril": {"abs": 1, "dx": 0, "dy": 26, "pes": (0, 0)}, "tronco": {"ang": 6}}
+POSES["levanta/06"] = dict(POSES["agachado/01"])
+POSES["recuo/01"] = {**_GUARDA, "quadril": {"abs": 1, "dx": -8, "dy": 8, "pes": (0, 0)}, "tronco": {"ang": -5}}
+# aparar no alto: a garra da frente sobe e corta na frente da cabeça
+for _i, _a in enumerate((0, -40, -75, -85, -75, -45, -15, 0)):
+    if _a:
+        POSES[f"parry_alto/{_i:02d}"] = {**_GUARDA, "braco_frente": {"var": "esticado", "ang": _a}, "tronco": {"ang": -3}}
+
+# poses das folhas dos especiais (bola_trevas, voo, rasgo, juizo_a, juizo_b), feitas pela thread do motor do #47
+try:
+    from kit_diabo_especiais import POSES as _P_ESP, TROCA as _T_ESP  # noqa: E402
+    POSES.update(_P_ESP)
+    TROCA.update(_T_ESP)
+except ImportError:
+    pass
