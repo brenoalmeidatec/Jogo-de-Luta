@@ -21,51 +21,51 @@
   },
   {
    "desenho": 3,
-   "ticks": 2,
+   "ticks": 8,
    "caixa": false,
    "de": "bola/04|foco"
   },
   {
    "desenho": 4,
-   "ticks": 2,
+   "ticks": 9,
    "caixa": false,
-   "de": "bola/04|foco"
+   "de": "bola/05|foco"
   },
   {
    "desenho": 5,
    "ticks": 2,
    "caixa": false,
-   "de": "bola/04|foco"
+   "de": "bola/07|foco"
   },
   {
    "desenho": 6,
    "ticks": 2,
    "caixa": false,
-   "de": "bola/04|foco"
+   "de": "bola/07|foco"
   },
   {
    "desenho": 7,
    "ticks": 2,
    "caixa": false,
-   "de": "bola/05|foco"
+   "de": "bola/07|foco"
   },
   {
    "desenho": 8,
    "ticks": 2,
    "caixa": false,
-   "de": "bola/05|foco"
+   "de": "bola/07|foco"
   },
   {
    "desenho": 9,
    "ticks": 2,
    "caixa": false,
-   "de": "bola/05|foco"
+   "de": "bola/07|foco"
   },
   {
    "desenho": 10,
-   "ticks": 3,
+   "ticks": 2,
    "caixa": false,
-   "de": "bola/05|foco"
+   "de": "bola/07|foco"
   },
   {
    "desenho": 11,
@@ -123,42 +123,6 @@
   },
   {
    "desenho": 20,
-   "ticks": 2,
-   "caixa": false,
-   "de": "bola/07|foco"
-  },
-  {
-   "desenho": 21,
-   "ticks": 2,
-   "caixa": false,
-   "de": "bola/07|foco"
-  },
-  {
-   "desenho": 22,
-   "ticks": 2,
-   "caixa": false,
-   "de": "bola/07|foco"
-  },
-  {
-   "desenho": 23,
-   "ticks": 2,
-   "caixa": false,
-   "de": "bola/07|foco"
-  },
-  {
-   "desenho": 24,
-   "ticks": 2,
-   "caixa": false,
-   "de": "bola/07|foco"
-  },
-  {
-   "desenho": 25,
-   "ticks": 2,
-   "caixa": false,
-   "de": "bola/07|foco"
-  },
-  {
-   "desenho": 26,
    "ticks": 3,
    "caixa": false,
    "de": "bola/07|foco"
