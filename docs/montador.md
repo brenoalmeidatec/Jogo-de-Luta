@@ -7,6 +7,7 @@ interface.
 ```bash
 python ferramentas/montador.py                  # Pengaró
 python ferramentas/montador.py --lutador gbzin  # Gbzin
+python ferramentas/montador.py --lutador gutto  # Gutto
 ```
 
 Abre `http://127.0.0.1:8765` no navegador. Precisa só de `pillow numpy opencv-python-headless`, os mesmos de sempre.
@@ -14,7 +15,7 @@ Abre `http://127.0.0.1:8765` no navegador. Precisa só de `pillow numpy opencv-p
 ## Como funciona
 
 - Cada quadro é desenhado pelo **mesmo código do piloto** (`piloto_firme.desenhar` no Pengaró, `gbzin_pecas.desenhar`
-  no Gbzin): RotSprite em cor cheia, sobra nas juntas, pés retos no chão. O que aparece na página é o que vai para a
+  no Gbzin, `boneco_gutto.desenhar` no Gutto): RotSprite em cor cheia, sobra nas juntas, pés retos no chão. O que aparece na página é o que vai para a
   pasta. Conferido: as poses-chave do chute alto do piloto saem pixel a pixel iguais.
 - **Abrir…** carrega um golpe que o piloto já montou (`quadros_pecas_hd/poses.json` + `tempos.json`) para ajustar, um
   projeto gravado antes, ou um golpe novo partindo da guarda.

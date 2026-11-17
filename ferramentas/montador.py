@@ -3,6 +3,7 @@
 
   python ferramentas/montador.py                  Pengaró (kit em sprites/pengaro/pecas)
   python ferramentas/montador.py --lutador gbzin  Gbzin (kit em sprites/gbzin/pecas)
+  python ferramentas/montador.py --lutador gutto  Gutto (kit em sprites/gutto/pecas)
   opções: --porta 8765   --sem-navegador
 
 Abre http://127.0.0.1:8765 no navegador. Cada quadro é desenhado aqui no Python, com o MESMO código do piloto
@@ -50,13 +51,29 @@ class Lutador:
             self._desenhar = g.desenhar
             self.ossos, self.camadas = g.OSSOS, g.CAMADAS
             self.guarda = "referencia_ginga/00"
+        elif nome == "gutto":
+            import boneco_gutto as g
+            g.configurar()
+            pfg = g.configurar_piloto()
+            self.kit = g.separar_pes(b.ler_kit())
+            def desenhar_gutto(kit, pose):
+                # pose agachada lê o desenho de hoje direto do .sff (quadros_sff_hd não fica no git): extrai e tenta de novo
+                for _ in range(4):
+                    try:
+                        return g.desenhar(pfg, kit, pose)
+                    except FileNotFoundError as e:
+                        g.garantir_hd([Path(e.filename).stem])
+                return g.desenhar(pfg, kit, pose)
+            self._desenhar = desenhar_gutto
+            self.ossos, self.camadas = g.OSSOS, g.CAMADAS
+            self.guarda = g.REF
         elif nome == "pengaro":
             self.kit = pf.separar_pes(b.ler_kit())
             self._desenhar = pf.desenhar
             self.ossos, self.camadas = b.OSSOS, b.CAMADAS
             self.guarda = "ginga/00"
         else:
-            raise SystemExit(f"lutador sem kit no montador: {nome} (tem: pengaro, gbzin)")
+            raise SystemExit(f"lutador sem kit no montador: {nome} (tem: pengaro, gbzin, gutto)")
         self.spr = RAIZ / "sprites" / nome
         self.trava = threading.Lock()  # o código do piloto usa variáveis globais; um desenho por vez
         self.cache = {}
