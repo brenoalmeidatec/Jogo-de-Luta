@@ -531,6 +531,12 @@ Nenhum boneco entra com erro de animação. Conta como erro, e reprova o golpe:
    esticando: o quadril gira, o pé dá um passo à frente, o ombro vai junto e o corpo volta. Chute tira o peso da
    perna de apoio; cabeçada leva o tronco; pisão sobe o joelho e o corpo cai com o peso.
 
+5. **Linha de corte à vista:** o boneco é feito de peças, mas tem que parecer sempre um desenho inteiro. Não pode
+   aparecer emenda, degrau de cor, contorno de peça por dentro do corpo nem vão no ombro, no quadril ou no pescoço.
+
+O kit continua separado em peças (`sprites/<lutador>/pecas/`): dá para trocar a cabeça ou retocar uma peça e
+remontar todos os golpes de uma vez, sem redesenhar quadro por quadro.
+
 O robô de defeitos (`firme.py`/`piloto_firme.py`) pega os três primeiros; o quarto se confere no vídeo lado a lado,
 quadro a quadro, antes de mandar. Expressões do rosto casadas com as falas vêm depois, quando as falas forem gravadas.
 
