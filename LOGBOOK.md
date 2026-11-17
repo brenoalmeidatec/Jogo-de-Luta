@@ -3108,3 +3108,12 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
 - Decidido depois (Breno deixou a escolha com o Claude): sem quadro do meio entre antecipação e contato, no máximo 1
   borrão; a fluidez vem da antecipação, da volta, da guarda, do parado e das transições. Os kits já ligados ainda
   põem meio nesse trecho: ajustar o `vida_pecas.py` e religar é trabalho à parte.
+
+## 17/11/2026 - Gbzin: golpes do boneco de peças ligados no jogo (regra de criação, seção 11)
+- Parado, soco e chute alto do boneco de peças (com quadros do meio no meio-termo do Alisson: preparação segurada e
+  seca até o contato, meio na volta e na guarda, `vida_pecas.py` da mugen 448b9158) ligados com `ligar_pecas.py gbzin`
+  (grupos 48000-48002, 39 sprites, remap do despertado), depois `aura_silhueta.py` e `encolher_sff.py`.
+- O `gerar_gbzin.py` agora roda esses três passos sozinho no fim: quem regerar o Gbzin não perde a ligação.
+  Regerado duas vezes: `.air`, `.cns` e `.sff` saem iguais byte a byte.
+- Robô de luta 236/236 com as linhas de dano idênticas às de antes da ligação. Vídeos lado a lado:
+  `docs/boneco-pecas/gbzin/{parado,soco,chute_alto}_lado_a_lado.mp4`.
