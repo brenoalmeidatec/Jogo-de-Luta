@@ -32,8 +32,10 @@ from repertorio import Golpe
 N = gp.extra.N
 RAIZ = gp.RAIZ
 SAIDA = RAIZ / "chars/gbzin"
-QUADROS = RAIZ / "sprites/gbzin/quadros_arcade"
-QUADROS_HD = RAIZ / "sprites/gbzin/quadros_arcade_hd"  # os mesmos desenhos em 3x (converter_ck.py com HD=3)
+# Boneco de peças (2026-11-17): corpo firme, cor travada e a cabeça do kit em todo quadro (ferramentas/gbzin_pecas.py
+# firmes). Mesma numeração de quadros_arcade; o desenho de origem continua lá.
+QUADROS = RAIZ / "sprites/gbzin/quadros_firmes"
+QUADROS_HD = RAIZ / "sprites/gbzin/quadros_firmes_hd"  # os mesmos desenhos em 3x (converter_ck.py com HD=3)
 EFEITOS = RAIZ / "sprites/ck/efeitos"  # emprestados do CK (estágio 1)
 RETRATO = RAIZ / "sprites/gbzin-selecao-kof.png"
 EX, EY = gp.EIXO_X, gp.EIXO_Y
