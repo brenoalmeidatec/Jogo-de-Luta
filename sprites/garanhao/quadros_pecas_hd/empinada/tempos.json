@@ -61,21 +61,21 @@
   },
   {
    "desenho": 7,
-   "ticks": 2,
+   "ticks": 5,
    "caixa": false,
    "de": "empinada/04"
   },
   {
    "desenho": 8,
-   "ticks": 3,
-   "caixa": false,
-   "de": "empinada/04"
-  },
-  {
-   "desenho": 9,
    "ticks": 5,
    "caixa": true,
    "de": "empinada/05"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "empinada/06"
   },
   {
    "desenho": 10,
@@ -93,7 +93,7 @@
    "desenho": 12,
    "ticks": 2,
    "caixa": false,
-   "de": "empinada/06"
+   "de": "empinada/07"
   },
   {
    "desenho": 13,
@@ -103,12 +103,6 @@
   },
   {
    "desenho": 14,
-   "ticks": 2,
-   "caixa": false,
-   "de": "empinada/07"
-  },
-  {
-   "desenho": 15,
    "ticks": 2,
    "caixa": false,
    "de": "empinada/07"

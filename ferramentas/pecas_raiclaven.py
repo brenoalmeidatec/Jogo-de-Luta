@@ -407,7 +407,7 @@ def montar_kit():
     # peça vazia: o filho de uma variante que já traz o membro inteiro (antebraço na estocada, canela na perna)
     vazio = np.zeros((b.TELA[1], b.TELA[0], 4), np.uint8)
     vazio[0, 0] = (0, 0, 0, 1)
-    for slot in ("antebraco_tras", "canela_frente", "ombreira"):
+    for slot in ("antebraco_tras", "canela_frente", "ombreira", "coxa_tras", "coxa_frente", "canela_tras"):
         guardar(f"{slot}_vazio", vazio, OSSOS[slot][0], OSSOS[slot][1])
     (P / "kit.json").write_text(json.dumps(kit, indent=1, ensure_ascii=False), encoding="utf-8")
     return partes
@@ -432,6 +432,8 @@ def escala_e_canto(a):
 
 
 REF_CABECA = None
+# quanto o quadril desce no agachado (o cinto do agachado/04 ampliado cai 69 px abaixo do cinto do parado)
+AGACHADO = (0, 69)
 
 
 def variante(fonte, poli, ancora, filtro, imgs):
@@ -444,10 +446,12 @@ def variante(fonte, poli, ancora, filtro, imgs):
     e, c = escala_e_canto(f)
     k = e_ref / e
     big = _ampliar(f, k, c)
-    if ancora == "chao":  # o pé de trás no chão é o mesmo ponto nos dois desenhos (o corte é pelos pés)
+    if ancora in ("chao", "agachado"):  # o pé de trás no chão é o mesmo ponto nos dois desenhos (corte pelos pés)
         c = (446, CHAO)
         big = _ampliar(f, k, c)
         dx, dy = 0, 0
+        if ancora == "agachado":  # metade de baixo agachada: o quadril da pose desce AGACHADO, a peça sobe junto
+            dx, dy = -AGACHADO[0], -AGACHADO[1]
     elif ancora == "cabeca":
         dx, dy = c_ref[0] - c[0], c_ref[1] - c[1]
     else:  # avental: a faixa do cinto ao bolso do quadril do kit casada no desenho ampliado
@@ -465,9 +469,17 @@ def variante(fonte, poli, ancora, filtro, imgs):
     T = np.float32([[1, 0, dx], [0, 1, dy]])
     inteira = cv2.warpAffine(big, T, b.TELA, flags=cv2.INTER_NEAREST)
     msk = b.mascara(poli) & (f[..., 3] > 0)  # o polígono é medido no desenho de origem
+    tapar = None
     if filtro:
-        msk &= ~filtro(f)
+        fora = filtro(f)
+        if getattr(filtro, "tapa", False):  # o que o filtro tira de dentro da peça vira pano escuro (lâmina no colo)
+            tapar = msk & fora
+        msk &= ~fora
     so = np.where(msk[..., None], f, 0).astype(np.uint8)
+    if tapar is not None and tapar.any():
+        escuro = so[msk & (so[..., :3].astype(int).sum(-1) < 150) & (so[..., :3].astype(int).sum(-1) > 30)][:, :3]
+        so[tapar, :3] = np.median(escuro, 0).astype(np.uint8)
+        so[tapar, 3] = 255
     img = cv2.warpAffine(_ampliar(so, k, c), T, b.TELA, flags=cv2.INTER_NEAREST)
     n, lab, st, _ = cv2.connectedComponentsWithStats((img[..., 3] > 0).astype(np.uint8), connectivity=8)
     if n > 2:
@@ -487,6 +499,28 @@ def claro(a):
     """Lâmina e friso do avental (cinza-lilás claro): fora da peça de calça."""
     hsv = cv2.cvtColor(np.ascontiguousarray(a[..., :3]), cv2.COLOR_RGB2HSV).astype(int)
     return (a[..., 3] > 0) & (hsv[..., 2] > 150) & (hsv[..., 1] < 80)
+
+
+def lamina_no_colo(a):
+    """Lâmina da tesoura por cima do colo no agachado (claro na faixa do cinto ao meio da coxa): fora da peça."""
+    hsv = cv2.cvtColor(np.ascontiguousarray(a[..., :3]), cv2.COLOR_RGB2HSV).astype(int)
+    yy, xx = np.mgrid[:a.shape[0], :a.shape[1]]
+    creme = (hsv[..., 0] >= 8) & (hsv[..., 0] <= 40) & (hsv[..., 1] >= 25)  # pente e pincel do bolso ficam
+    m = (a[..., 3] > 0) & (hsv[..., 2] > 120) & (hsv[..., 1] < 80) & (yy < 600) & (xx > 470) & ~creme
+    m = cv2.dilate(m.astype(np.uint8), np.ones((5, 5), np.uint8)).astype(bool) & (yy < 600)
+    return m
+
+
+lamina_no_colo.tapa = True
+
+
+def escuro_longe(a):
+    """Roupa escura que entrou no polígono do braço (camisa, calça): fora. O contorno escuro colado na pele, na madeira
+    e na vassoura fica (até 3 px)."""
+    hsv = cv2.cvtColor(np.ascontiguousarray(a[..., :3]), cv2.COLOR_RGB2HSV).astype(int)
+    claro_ = (a[..., 3] > 0) & (hsv[..., 2] >= 75)
+    perto = cv2.dilate(claro_.astype(np.uint8), np.ones((7, 7), np.uint8)) > 0
+    return (a[..., 3] > 0) & ~claro_ & ~perto
 
 
 def colorido(a):

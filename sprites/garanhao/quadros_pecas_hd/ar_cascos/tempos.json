@@ -37,27 +37,27 @@
   },
   {
    "desenho": 3,
-   "ticks": 2,
+   "ticks": 4,
    "caixa": false,
    "de": "ar_cascos/02"
   },
   {
    "desenho": 4,
-   "ticks": 2,
-   "caixa": false,
-   "de": "ar_cascos/02"
-  },
-  {
-   "desenho": 5,
    "ticks": 6,
    "caixa": true,
    "de": "ar_cascos/03"
   },
   {
-   "desenho": 6,
+   "desenho": 5,
    "ticks": 3,
    "caixa": false,
    "de": "ar_cascos/04"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "ar_cascos/05"
   },
   {
    "desenho": 7,
@@ -67,18 +67,12 @@
   },
   {
    "desenho": 8,
-   "ticks": 2,
-   "caixa": false,
-   "de": "ar_cascos/05"
-  },
-  {
-   "desenho": 9,
    "ticks": 3,
    "caixa": false,
    "de": "ar_cascos/06"
   },
   {
-   "desenho": 10,
+   "desenho": 9,
    "ticks": 3,
    "caixa": false,
    "de": "ar_cascos/07"
