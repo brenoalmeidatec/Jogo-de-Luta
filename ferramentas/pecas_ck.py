@@ -1000,8 +1000,6 @@ def gerar(nomes=None):
             quadros = segurado(poses, elems, bate)
         else:  # pedido do Alisson (fluidez e vida): quadros do meio, mesmo tempo total e caixa no mesmo tick
             quadros = vida.animar(poses, elems, bate=bate, laco=laco, guarda=poses.get(f"{folha}/00"))
-            if not laco and bate:
-                quadros = meio_termo(quadros, poses, elems, bate)
             if laco:
                 quadros = vida.respirar(quadros)
             quadros = vida.atrasar(quadros, laco=laco)

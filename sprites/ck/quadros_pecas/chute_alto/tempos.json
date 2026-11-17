@@ -16,15 +16,15 @@
   },
   {
    "desenho": 2,
-   "ticks": 3,
+   "ticks": 4,
    "caixa": false,
    "de": "chute_alto/02"
   },
   {
    "desenho": 3,
-   "ticks": 1,
-   "caixa": false,
-   "de": "chute_alto/02"
+   "ticks": 2,
+   "caixa": true,
+   "de": "chute_alto/04"
   },
   {
    "desenho": 4,
@@ -40,15 +40,15 @@
   },
   {
    "desenho": 6,
-   "ticks": 2,
-   "caixa": true,
-   "de": "chute_alto/04"
-  },
-  {
-   "desenho": 7,
    "ticks": 3,
    "caixa": false,
    "de": "chute_alto/05"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto/06"
   },
   {
    "desenho": 8,
@@ -84,7 +84,7 @@
    "desenho": 13,
    "ticks": 2,
    "caixa": false,
-   "de": "chute_alto/06"
+   "de": "chute_alto/07"
   },
   {
    "desenho": 14,
@@ -112,12 +112,6 @@
   },
   {
    "desenho": 18,
-   "ticks": 2,
-   "caixa": false,
-   "de": "chute_alto/07"
-  },
-  {
-   "desenho": 19,
    "ticks": 2,
    "caixa": false,
    "de": "chute_alto/07"

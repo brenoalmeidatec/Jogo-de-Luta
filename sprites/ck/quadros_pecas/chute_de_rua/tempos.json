@@ -28,15 +28,15 @@
   },
   {
    "desenho": 4,
-   "ticks": 3,
+   "ticks": 4,
    "caixa": false,
    "de": "afastar/03"
   },
   {
    "desenho": 5,
-   "ticks": 1,
-   "caixa": false,
-   "de": "afastar/03"
+   "ticks": 2,
+   "caixa": true,
+   "de": "afastar/04"
   },
   {
    "desenho": 6,
@@ -53,14 +53,14 @@
   {
    "desenho": 8,
    "ticks": 2,
-   "caixa": true,
+   "caixa": false,
    "de": "afastar/04"
   },
   {
    "desenho": 9,
    "ticks": 2,
    "caixa": false,
-   "de": "afastar/04"
+   "de": "afastar/05"
   },
   {
    "desenho": 10,
@@ -90,7 +90,7 @@
    "desenho": 14,
    "ticks": 2,
    "caixa": false,
-   "de": "afastar/05"
+   "de": "afastar/06"
   },
   {
    "desenho": 15,
@@ -106,15 +106,15 @@
   },
   {
    "desenho": 17,
-   "ticks": 2,
+   "ticks": 3,
    "caixa": false,
    "de": "afastar/06"
   },
   {
    "desenho": 18,
-   "ticks": 3,
+   "ticks": 2,
    "caixa": false,
-   "de": "afastar/06"
+   "de": "afastar/07"
   },
   {
    "desenho": 19,
@@ -130,12 +130,6 @@
   },
   {
    "desenho": 21,
-   "ticks": 2,
-   "caixa": false,
-   "de": "afastar/07"
-  },
-  {
-   "desenho": 22,
    "ticks": 3,
    "caixa": false,
    "de": "afastar/07"
