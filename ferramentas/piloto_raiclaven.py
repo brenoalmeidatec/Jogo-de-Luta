@@ -233,6 +233,56 @@ def plantar(pose):
     return pose
 
 
+def tapar_furos(tela, maximo=60):
+    """Furinho transparente no meio do corpo (emenda de peça girada, borda da lâmina) aparecia como pontinho do
+    cenário: todo vazio fechado de até `maximo` px toma a cor do vizinho pintado mais perto."""
+    vazio = (tela[..., 3] == 0).astype(np.uint8)
+    n, lab, st, _ = cv2.connectedComponentsWithStats(vazio, connectivity=4)
+    h, w_ = vazio.shape
+    furo = np.zeros_like(vazio)
+    for k in range(1, n):
+        x, y, ww, hh, area = st[k]
+        if area <= maximo and x > 0 and y > 0 and x + ww < w_ and y + hh < h:
+            furo[lab == k] = 1
+    if not furo.any():
+        return tela
+    _, idx = cv2.distanceTransformWithLabels(furo, cv2.DIST_L2, 5, labelType=cv2.DIST_LABEL_PIXEL)
+    ys, xs = np.nonzero(furo == 0)
+    lut_y = np.zeros(idx.max() + 1, np.int32)
+    lut_x = np.zeros(idx.max() + 1, np.int32)
+    lut_y[idx[ys, xs]], lut_x[idx[ys, xs]] = ys, xs
+    fy, fx = np.nonzero(furo)
+    tela[fy, fx] = tela[lut_y[idx[fy, fx]], lut_x[idx[fy, fx]]]
+    tela[fy, fx, 3] = 255
+    return tela
+
+
+def emenda_agachado(tela, w):
+    """Na cintura do agachado (tronco do kit em cima, metade de baixo inteira de outro desenho) sobrava fresta onde o
+    braço tirou pano do tronco: em cada linha da faixa da cintura, o vazio entre o primeiro e o último pixel do corpo
+    vira pano escuro (a cor mediana do pano vizinho). Regra do Alisson: nenhuma linha de corte."""
+    j0 = pr.OSSOS["quadril"][0]
+    ox, oy = int(round(w["quadril"][0][0] - j0[0])), int(round(w["quadril"][0][1] - j0[1]))
+    # só na largura da cintura do agachado (fora dela fica o laço, a lâmina e o cabo da vassoura, com fundo de verdade)
+    y0, y1 = max(0, pr.CINTO + oy - 45), min(tela.shape[0], pr.CINTO + oy + 26)
+    faixa = tela[y0:y1, 440 + ox:626 + ox]
+    al = faixa[..., 3] > 0
+    soma = faixa[..., :3].astype(int).sum(-1)
+    pano = faixa[al & (soma > 40) & (soma < 170)]
+    if not len(pano):
+        return
+    cor = np.median(pano[:, :3], axis=0).astype(np.uint8)
+    for r in range(faixa.shape[0]):
+        xs = np.nonzero(al[r])[0]
+        if len(xs) < 2:
+            continue
+        buraco = ~al[r, xs[0]:xs[-1] + 1]
+        if buraco.any():
+            seg = faixa[r, xs[0]:xs[-1] + 1]
+            seg[buraco, :3] = cor
+            seg[buraco, 3] = 255
+
+
 def desenhar(kit, pose):
     """As peças na ordem de camada, os sapatos (reto no chão; girando com a canela no pé levantado), o laço do
     avental e o fechamento de fresta perto das juntas."""
@@ -240,7 +290,8 @@ def desenhar(kit, pose):
     w = b.mundo(pose)
     lev = pose.get("_lev", {})
     if pose.get("_agachado"):  # o desenho agachado já traz sapatos e laço
-        return pf.sem_migalha(pf.fechar_frestas(tela, juntas=[w[sl][0] for sl in pr.OSSOS]))
+        emenda_agachado(tela, w)
+        return tapar_furos(pf.sem_migalha(pf.fechar_frestas(tela, juntas=[w[sl][0] for sl in pr.OSSOS])))
     for slot in ("canela_tras", "canela_frente"):
         joelho, ang = w[slot]
         jr = pr.OSSOS[slot][0]
@@ -270,7 +321,7 @@ def desenhar(kit, pose):
     r, piv2 = b.rotsprite(kit["bolinhas"], qang + bo.get("ang", 0), piv)
     # o laço fica atrás da perna de trás e do braço: só pinta onde está vazio
     b.colar(tela, r, int(round(no[0] - piv2[0])), int(round(no[1] - piv2[1])), so_vazio=True)
-    return pf.sem_migalha(pf.fechar_frestas(tela, juntas=[w[sl][0] for sl in pr.OSSOS]))
+    return tapar_furos(pf.sem_migalha(pf.fechar_frestas(tela, juntas=[w[sl][0] for sl in pr.OSSOS])))
 
 
 def mancha_maxima(kit):
