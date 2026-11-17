@@ -96,10 +96,13 @@ def rgba_do_no(n):
     return np.asarray(Image.open(io.BytesIO(cru)).convert("RGBA"))
 
 
-def png_menor(a):
+def png_menor(a, atual=None):
+    """O menor entre o PNG que já está no .sff e o do Pillow (filtros adaptativos). Na aura e na luz (alfa parcial,
+    poucas cores) o filtro 0 do png_rgba sai menor; no desenho pintado, o Pillow. Os pixels são os mesmos."""
     o = io.BytesIO()
     Image.fromarray(a, "RGBA").save(o, "PNG", optimize=True)
-    return struct.pack("<I", a.shape[0] * a.shape[1] * 4) + o.getvalue()
+    novo = struct.pack("<I", a.shape[0] * a.shape[1] * 4) + o.getvalue()
+    return atual if atual is not None and len(atual) <= len(novo) else novo
 
 
 def faixa(txt):
@@ -134,7 +137,7 @@ def encolher(lutador, indexar_grupos=(), podar=True, so_medir=False):
             if binario and any(g0 <= n["g"] <= g1 for g0, g1 in indexar_grupos):
                 a_indexar.append((n, a))
             else:
-                png.append((n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], png_menor(a), a))
+                png.append((n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], png_menor(a, n["px"]), a))
         else:
             rle.append((n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], n["px"], n.get("pi", 0)))
 
@@ -142,13 +145,26 @@ def encolher(lutador, indexar_grupos=(), podar=True, so_medir=False):
     erro_cor = []
     for g0, g1 in indexar_grupos:
         lote = [(n, a) for n, a in a_indexar if g0 <= n["g"] <= g1]
-        if not lote:
-            continue
         guardada = RAIZ / "sprites" / lutador / f"paleta_{g0}.bin"
         if guardada.exists() and guardada.read_bytes() in extras:
             j = extras.index(guardada.read_bytes())
+            velha = np.frombuffer(extras[j], np.uint8).reshape(256, 4)
+            # o que já estava nessa paleta volta a RGBA e entra no lote (senão ficaria apontando para paleta nenhuma)
+            ficam = []
+            for r in rle:
+                if r[7] == 2 + j:
+                    idx = np.frombuffer(r[6], np.uint8).reshape(r[3], r[2])
+                    a = velha[idx].copy()
+                    a[..., 3] = np.where(idx > 0, 255, 0)
+                    lote.append((dict(g=r[0], i=r[1], x=r[4], y=r[5]), a))
+                else:
+                    ficam.append(r)
+            if not lote:
+                continue
             extras.pop(j)
-            rle = [r[:7] + ((r[7] - 1 if r[7] > 2 + j else r[7]),) for r in rle]
+            rle = [r[:7] + ((r[7] - 1 if r[7] > 2 + j else r[7]),) for r in ficam]
+        if not lote:
+            continue
         nova = paleta_de([a for _, a in lote])
         extras.append(nova.tobytes())
         pi = 2 + len(extras) - 1
