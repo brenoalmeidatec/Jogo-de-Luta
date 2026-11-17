@@ -115,10 +115,19 @@ POSE = {
 }
 
 
+# sprite do jogo que o mapa casou errado, conferido de olho: o desenho certo
+SPRITE_E = {
+    (894, 0): "martelo/04",  # idem, a variante do 343
+    (893, 0): "martelo/04",  # contato do martelo forte (210, 302, 343, 344): passo longo, tesoura lá embaixo à frente
+}
+
+
 def acoes():
     m = json.loads(MAPA.read_text(encoding="utf-8"))
     out, faltam = {}, {}
     for num, els in m.items():
+        els = [dict(e, desenho=SPRITE_E[tuple(e["sprite"])], iou=1.0) if tuple(e["sprite"]) in SPRITE_E else e
+               for e in els]
         num = int(num)
         if num >= 10000:  # despertado: o ligar_pecas cuida pelo remap
             continue
