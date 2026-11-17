@@ -3100,5 +3100,6 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   retratos → `encolher_sff`) e revisão (robôs, vídeo lado a lado, foto, issue, checklist).
 - CLAUDE.md, AGENTS.md, como-trabalhar, receita, regras dos lutadores, bíblia, estudos, missão e montador apontam para
   ela em vez de repetir. O passo a passo antigo (folha de 8 quadros + 6 do meio do Blender) ficou marcado como histórico.
-- Em aberto (não decidido): quadro do meio entre antecipação e contato. Vale a fluidez do Alisson até ele ou o Breno
-  escolherem o "seco antes do contato" do estudo.
+- Decidido depois (Breno deixou a escolha com o Claude): sem quadro do meio entre antecipação e contato, no máximo 1
+  borrão; a fluidez vem da antecipação, da volta, da guarda, do parado e das transições. Os kits já ligados ainda
+  põem meio nesse trecho: ajustar o `vida_pecas.py` e religar é trabalho à parte.

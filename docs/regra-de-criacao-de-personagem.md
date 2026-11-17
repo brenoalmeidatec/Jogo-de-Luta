@@ -18,7 +18,7 @@ muda esta regra.
 4. Ossos não mudam de tamanho, as cores são só as do kit (paleta travada), o rosto é sempre o do kit.
 5. Cada golpe é posado pela anatomia: corpo inteiro, peso, base, camadas perto e longe, mão livre fora do golpe.
 6. Tempo e caixas de golpe do jogo não mudam: mesma soma de ticks, mesmo tick de acerto, `Clsn1` no membro que bate.
-7. Vida: quadros do meio feitos com as peças, respiração, atraso da cabeça e da roupa; nunca fluxo óptico.
+7. Vida: quadros do meio feitos com as peças (menos entre antecipação e contato), respiração e atraso; nunca fluxo óptico.
 8. Robô de defeitos com 0 defeito, sem linha de corte; tudo em 3x mostrado em 1/3.
 9. Liga no jogo com `ligar_pecas.py`, depois aura, luz e `encolher_sff.py`; robô de luta sem falha e dano igual.
 10. Vídeo lado a lado e foto no jogo na issue, checklist marcado, sobe na `mugen`.
@@ -169,9 +169,12 @@ Antes de gravar cada pose, passe a lista de 12 conferências da Parte 4 do estud
   ticks nem o elemento de acerto.
 - Respiração no parado (peito sobe 1 px do jogo), loop sem salto do último para o primeiro.
 - Atraso: cabeça, cabelo, cordão, pontas da faixa e roupa chegam atrasados e balançam até parar.
-- **Entre a antecipação e o contato**, o estudo pede nenhum quadro do meio (no máximo um borrão), porque quadro a mais ali
-  deixa o golpe lento. Hoje vale a regra de fluidez do Alisson (meio em todo intervalo); a troca para "seco antes do
-  contato" é decisão dele ou do Breno (`SECO = True` nos kits que já têm a opção).
+- **Entre a antecipação e o contato não vai quadro do meio** (Breno, 2026-11-17): a troca é seca, para o golpe ter
+  impacto. No máximo **um** quadro de borrão (smear), e só se o golpe ficar truncado. A fluidez que o Alisson pediu
+  vem dos quadros do meio **na antecipação, na volta, na guarda e no parado e nas transições** (andar, agachar, virar).
+  Golpe novo já sai assim. Os golpes que já estão no jogo ainda têm meio nesse trecho (o `vida_pecas.py` põe meio
+  em todo intervalo); eles se corrigem quando o `vida_pecas.py` pular o intervalo que termina no elemento de acerto e
+  cada lutador for religado.
 - **Anatomia vem antes da fluidez:** quadro do meio que inventa membro, troca a roupa de perna ou derrete a cabeça sai.
 - O andar acompanha a velocidade do jogo: passada do tamanho do deslocamento real, pé sem patinar.
 
@@ -269,5 +272,6 @@ O guia de quem muda o quê em cada lutador é o [`aplicar-estudo-anatomia.md`](a
 | Boneco de peças é a regra | Breno, 2026-11-17, issue #32 |
 | Zero erro de animação, golpe natural, sem linha de corte | Alisson, 2026-11-17, seção 7.4 das regras |
 | Leis do corpo, camadas perto e longe, limites de junta, receitas | [`estudo-anatomia-golpes.md`](estudo-anatomia-golpes.md), Breno, 2026-11-17 |
+| Sem quadro do meio entre antecipação e contato (no máximo 1 borrão) | Breno, 2026-11-17, nesta regra |
 | Montador, pintar e apagar na peça, camada por pose | [`montador.md`](montador.md), Breno, 2026-11-17 |
 | Conceito, despertado, aura, luz, agarrões | [`receita-de-lutador.md`](receita-de-lutador.md), Breno, 2026-11-15 |
