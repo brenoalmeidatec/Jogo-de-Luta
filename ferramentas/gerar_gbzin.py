@@ -148,7 +148,8 @@ GRAO_PASTOR = {"referencia_ginga": ("e_referencia_ginga", None), "anda": ("e_and
                "ar_soco": ("e_ar_soco", (1, 2, 3, 4, 5, 6, 7, 7)), "defesa": ("e_defesa", None),
                "chute_alto": ("e_estampido", (1, 3, 4, 4, 5, 6, 7, 0)), "afastar": ("e_giro_manto", None),
                "caneta": ("e_dir_tras", None), "armada": ("e_juizo_cima", None), "cajado_chao": ("e_maos", None),
-               "bola": ("e_mao_pastor", None), "compasso": ("e_compasso", None)}
+               "bola": ("e_mao_pastor", None), "compasso": ("e_compasso", None),
+               "golaco": ("e_juizo", None)}
 GRAO_PASTOR = {k: v for k, v in GRAO_PASTOR.items() if (QUADROS_E / v[0] / "00.png").exists()}
 
 
@@ -1274,6 +1275,11 @@ def main():
     como_o_ck(destruicao)
     destruicao.aplicar("gbzin", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
+    # Regra de criação, seção 11 (17/11/2026): os golpes do boneco de peças (parado, soco, chute alto, com os quadros
+    # do meio) entram por cima do que o gerador fez, e depois a aura e o encolher. Sempre por último.
+    import subprocess
+    for passo in (["ligar_pecas.py", "gbzin"], ["aura_silhueta.py", "gbzin"], ["encolher_sff.py", "gbzin"]):
+        subprocess.run([sys.executable, str(RAIZ / "ferramentas" / passo[0])] + passo[1:], check=True)
 
 
 if __name__ == "__main__":

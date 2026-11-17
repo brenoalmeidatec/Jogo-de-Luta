@@ -3093,6 +3093,11 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   caneta (direção), armada (juízo de cima), cajado no chão (mãos), bola (mão do pastor), compasso (puxão). `TROCA_COR`
   conserta cor errada de um quadro só (perna do chute oliva). Falta desenho próprio só no agarrão e no golaço.
 
+## 17/11/2026 - Gbzin: estudo de anatomia do Breno aplicado
+- Conferência dos 36 golpes contra a Parte 4 do estudo: `docs/boneco-pecas/gbzin/anatomia.md` (ficha perto/longe,
+  marcas de roupa, golpe a golpe). Cabeçada fica para o Breno decidir (bate com a bengala, não com a testa).
+- `PELE_CAMADAS`: a pele do Gbzin usa a ordem de camadas dele (perna longe nasce atrás da faixa), não a do Pengaró.
+  Robô de peças 0, robô do jogo 236/236.
 ## 2026-11-17 — Regra definitiva de criação de personagem (Claude, thread do Breno)
 - Pedido do Breno: uma regra só, juntando tudo. Nova `docs/regra-de-criacao-de-personagem.md`: ficha, conceitos,
   folha-modelo, kit de peças (corpo firme, paleta travada do kit, régua de ossos), posar pelas 12 leis e pela regra de
@@ -3103,3 +3108,22 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
 - Decidido depois (Breno deixou a escolha com o Claude): sem quadro do meio entre antecipação e contato, no máximo 1
   borrão; a fluidez vem da antecipação, da volta, da guarda, do parado e das transições. Os kits já ligados ainda
   põem meio nesse trecho: ajustar o `vida_pecas.py` e religar é trabalho à parte.
+
+## 17/11/2026 - Gbzin: golpes do boneco de peças ligados no jogo (regra de criação, seção 11)
+- Parado, soco e chute alto do boneco de peças (com quadros do meio no meio-termo do Alisson: preparação segurada e
+  seca até o contato, meio na volta e na guarda, `vida_pecas.py` da mugen 448b9158) ligados com `ligar_pecas.py gbzin`
+  (grupos 48000-48002, 39 sprites, remap do despertado), depois `aura_silhueta.py` e `encolher_sff.py`.
+- O `gerar_gbzin.py` agora roda esses três passos sozinho no fim: quem regerar o Gbzin não perde a ligação.
+  Regerado duas vezes: `.air`, `.cns` e `.sff` saem iguais byte a byte.
+- Robô de luta 236/236 com as linhas de dano idênticas às de antes da ligação. Vídeos lado a lado:
+  `docs/boneco-pecas/gbzin/{parado,soco,chute_alto}_lado_a_lado.mp4`.
+- 17/11 (fim da tarde): CK pelo estudo de anatomia do Breno (`docs/estudo-anatomia-golpes.md`). Jab e direto pela
+  receita (joelhos afundam, ombro anda, mão livre no queixo, calcanhar de trás gira no direto: `calc_tras`), chutes
+  com a perna da frente de longe atrás da bacia (`perna_longe`), pé de apoio girado e braço do lado da perna descendo,
+  soco agachado afunda e sobe. `vida_pecas.py` da mugen com o meio-termo do Alisson (antecipação segurada até o
+  contato). `pecas_ck.py trocar` troca só os desenhos no .sff quando o número de desenhos não muda; quando muda,
+  `ligar_pecas.py ck` religa por cima. Robô de peças 0/201.
+- Turno 5 (17/11): juízo (golaço do despertado, cajado preso na faixa no mata-leão), agarrão do Grão-Pastor refeito (um
+  cajado só; ainda não ligado: a vítima é posicionada pelo `agarrao_mk` da base) e as folhas de vítima da forma base
+  (`vitima_agarrado`, `vitima_arremessado`, para a thread da base ligar). `verde_solto()` no `gbzin_e_pecas.py`: verde
+  escuro longe das chamas (calça pintada de oliva num quadro) volta ao roxo da calça. Robô 236/0.

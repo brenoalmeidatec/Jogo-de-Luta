@@ -2,43 +2,35 @@
 |---|---|---|
 | algema/00 | algema/00 | PASS |
 | algema/01 | algema/01 | PASS |
-| algema/02 | algema/01 | PASS |
-| algema/03 | algema/02 | PASS |
+| algema/02 | algema/02 | PASS |
+| algema/03 | algema/03 | PASS |
 | algema/04 | algema/03 | PASS |
 | algema/05 | algema/03 | PASS |
-| algema/06 | algema/03 | PASS |
-| algema/07 | algema/04 | PASS |
-| algema/08 | algema/04 | PASS |
-| algema/09 | algema/04 | PASS |
-| algema/10 | algema/04 | PASS |
-| algema/11 | algema/05 | PASS |
-| algema/12 | algema/05 | PASS |
-| algema/13 | algema/05 | PASS |
-| algema/14 | algema/06 | PASS |
-| algema/15 | algema/06 | PASS |
-| algema/16 | algema/06 | PASS |
-| algema/17 | algema/07 | PASS |
-| algema/18 | algema/07 | PASS |
+| algema/06 | algema/04 | PASS |
+| algema/07 | algema/05 | PASS |
+| algema/08 | algema/06 | PASS |
+| algema/09 | algema/06 | PASS |
+| algema/10 | algema/06 | PASS |
+| algema/11 | algema/07 | PASS |
+| algema/12 | algema/07 | PASS |
 | mare/00 | mare/00 | PASS |
 | mare/01 | mare/01 | PASS |
 | mare/02 | mare/01 | PASS |
 | mare/03 | mare/02 | PASS |
-| mare/04 | mare/02 | PASS |
-| mare/05 | mare/02 | PASS |
-| mare/06 | mare/03 | PASS |
+| mare/04 | mare/03 | PASS |
+| mare/05 | mare/04 | PASS |
+| mare/06 | mare/04 | PASS |
 | mare/07 | mare/04 | PASS |
 | mare/08 | mare/04 | PASS |
 | mare/09 | mare/04 | PASS |
-| mare/10 | mare/04 | PASS |
-| mare/11 | mare/04 | PASS |
+| mare/10 | mare/05 | PASS |
+| mare/11 | mare/05 | PASS |
 | mare/12 | mare/05 | PASS |
-| mare/13 | mare/05 | PASS |
-| mare/14 | mare/05 | PASS |
+| mare/13 | mare/06 | PASS |
+| mare/14 | mare/06 | PASS |
 | mare/15 | mare/06 | PASS |
-| mare/16 | mare/06 | PASS |
-| mare/17 | mare/06 | PASS |
-| mare/18 | mare/07 | PASS |
-| mare/19 | mare/07 | PASS |
+| mare/16 | mare/07 | PASS |
+| mare/17 | mare/07 | PASS |
 | parado/00 | ginga/00 | PASS |
 | parado/01 | ginga/00 | PASS |
 | parado/02 | ginga/00 | PASS |
@@ -64,4 +56,4 @@
 | parado/22 | ginga/07 | PASS |
 | parado/23 | ginga/07 | PASS |
 
-0 de 63 desenho(s) com defeito.
+0 de 55 desenho(s) com defeito.

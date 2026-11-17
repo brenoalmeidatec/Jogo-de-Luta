@@ -206,6 +206,19 @@ def celulas(nome):
     return im, out, cortes
 
 
+def verde_solto(fig, d=6, limite=250):
+    """O ChatGPT às vezes pinta a calça de oliva num quadro só; travado, vira o verde escuro das chamas e a calça
+    "muda de cor". Verde escuro longe (mais de d px) de qualquer verde claro de chama não é chama: se passa do limite
+    (o normal é ~70 px por quadro), volta para o roxo escuro da calça."""
+    a = fig[..., 3] > 0
+    escuro = (fig[..., :3] == (77, 105, 32)).all(-1) & a
+    claro = ((fig[..., :3] == (90, 216, 20)).all(-1) | (fig[..., :3] == (214, 230, 48)).all(-1)) & a
+    perto = cv2.dilate(claro.astype(np.uint8), np.ones((2 * d + 1, 2 * d + 1), np.uint8)) > 0
+    solto = escuro & ~perto
+    if solto.sum() > limite:
+        fig[solto, :3] = (64, 48, 71)
+
+
 def firme(nomes):
     pal = paleta()
     for nome in nomes:
@@ -237,6 +250,7 @@ def firme(nomes):
                 fig = travar(pm / np.maximum(aa[..., None], 1e-3), aa >= 0.55, pal)
                 for de, para in TROCA_COR.get(nome, {}).get(i, {}).items():
                     fig[(fig[..., :3] == de).all(-1) & (fig[..., 3] > 0), :3] = para
+                verde_solto(fig)
                 # meio da célula vai para o eixo; o chão da folha vai para o chão do jogo
                 meio = (i + 0.5) * CELULA + desvio
                 X = round(EIXO + (x0 - meio) * esc)
