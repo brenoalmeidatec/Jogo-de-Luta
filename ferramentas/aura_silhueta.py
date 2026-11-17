@@ -436,7 +436,10 @@ def tirar_air(air):
     # as ações 30000 + anim e 40000 + anim (antes só tirava as que começavam com "30000" e duplicava o resto)
     def fora(m):
         n = int(m.group(1))
-        return "" if BASE_PELE <= n < BASE_PELE + 10000 or BASE_CHAMA <= n < BASE_CHAMA + 10000 else m.group(0)
+        if not (BASE_PELE <= n < BASE_PELE + 10000 or BASE_CHAMA <= n < BASE_CHAMA + 10000):
+            return m.group(0)
+        # só as ações da aura (desenhos 9710/9711): 47000+ são os efeitos e desenhos próprios dos despertados (#47)
+        return "" if re.search(rf"^\s*({GRUPO_PELE}|{GRUPO_CHAMA})\s*,", m.group(0), re.M) else m.group(0)
     return re.sub(r"\[Begin Action (\d+)\].*?(?=\[Begin Action|\Z)", fora, air, flags=re.S | re.I).rstrip() + "\n"
 
 

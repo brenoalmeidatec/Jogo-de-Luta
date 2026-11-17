@@ -1,0 +1,51 @@
+| quadro | guia de hoje | robô de defeitos |
+|---|---|---|
+| parado/00 | ginga/00 | PASS |
+| parado/01 | ginga/00 | PASS |
+| parado/02 | ginga/00 | PASS |
+| parado/03 | ginga/01 | PASS |
+| parado/04 | ginga/01 | PASS |
+| parado/05 | ginga/01 | PASS |
+| parado/06 | ginga/02 | PASS |
+| parado/07 | ginga/02 | PASS |
+| parado/08 | ginga/02 | PASS |
+| parado/09 | ginga/03 | PASS |
+| parado/10 | ginga/03 | PASS |
+| parado/11 | ginga/03 | PASS |
+| parado/12 | ginga/04 | PASS |
+| parado/13 | ginga/04 | PASS |
+| parado/14 | ginga/04 | PASS |
+| parado/15 | ginga/05 | PASS |
+| parado/16 | ginga/05 | PASS |
+| parado/17 | ginga/05 | PASS |
+| parado/18 | ginga/06 | PASS |
+| parado/19 | ginga/06 | PASS |
+| parado/20 | ginga/06 | PASS |
+| parado/21 | ginga/07 | PASS |
+| parado/22 | ginga/07 | PASS |
+| parado/23 | ginga/07 | PASS |
+| soco/00 | soco/03 | PASS |
+| soco/01 | soco/04 | PASS |
+| soco/02 | soco/05 | PASS |
+| soco/03 | soco/06 | PASS |
+| soco/04 | soco/07 | PASS |
+| soco/05 | soco/07 | PASS |
+| soco/06 | soco/07 | PASS |
+| chute_alto/00 | chute_alto/01 | PASS |
+| chute_alto/01 | chute_alto/01 | PASS |
+| chute_alto/02 | chute_alto/02 | PASS |
+| chute_alto/03 | chute_alto/03 | PASS |
+| chute_alto/04 | chute_alto/04 | PASS |
+| chute_alto/05 | chute_alto/05 | PASS |
+| chute_alto/06 | chute_alto/05 | PASS |
+| chute_alto/07 | chute_alto/05 | PASS |
+| chute_alto/08 | chute_alto/06 | PASS |
+| chute_alto/09 | chute_alto/06 | PASS |
+| chute_alto/10 | chute_alto/06 | PASS |
+| chute_alto/11 | chute_alto/06 | PASS |
+| chute_alto/12 | chute_alto/07 | PASS |
+| chute_alto/13 | chute_alto/07 | PASS |
+| chute_alto/14 | chute_alto/07 | PASS |
+| chute_alto/15 | chute_alto/07 | PASS |
+
+0 quadro(s) com defeito.

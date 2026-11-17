@@ -1,0 +1,53 @@
+{
+ "acao": 181,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 6,
+   "caixa": false,
+   "de": "vitoria/00|riso"
+  },
+  {
+   "desenho": 1,
+   "ticks": 6,
+   "caixa": false,
+   "de": "vitoria/01|riso"
+  },
+  {
+   "desenho": 2,
+   "ticks": 6,
+   "caixa": false,
+   "de": "vitoria/02|riso"
+  },
+  {
+   "desenho": 3,
+   "ticks": 6,
+   "caixa": false,
+   "de": "vitoria/03|riso"
+  },
+  {
+   "desenho": 4,
+   "ticks": 6,
+   "caixa": false,
+   "de": "vitoria/04|riso"
+  },
+  {
+   "desenho": 5,
+   "ticks": 6,
+   "caixa": false,
+   "de": "vitoria/05|riso"
+  },
+  {
+   "desenho": 6,
+   "ticks": 6,
+   "caixa": false,
+   "de": "vitoria/06|riso"
+  },
+  {
+   "desenho": 7,
+   "ticks": 1,
+   "caixa": false,
+   "de": "vitoria/07|riso"
+  }
+ ]
+}

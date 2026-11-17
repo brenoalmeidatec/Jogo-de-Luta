@@ -1,0 +1,47 @@
+{
+ "acao": 5120,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 4,
+   "caixa": false,
+   "de": "levanta/01|foco"
+  },
+  {
+   "desenho": 1,
+   "ticks": 4,
+   "caixa": false,
+   "de": "levanta/02|foco"
+  },
+  {
+   "desenho": 2,
+   "ticks": 4,
+   "caixa": false,
+   "de": "levanta/03|foco"
+  },
+  {
+   "desenho": 3,
+   "ticks": 4,
+   "caixa": false,
+   "de": "levanta/04|foco"
+  },
+  {
+   "desenho": 4,
+   "ticks": 4,
+   "caixa": false,
+   "de": "levanta/05|foco"
+  },
+  {
+   "desenho": 5,
+   "ticks": 4,
+   "caixa": false,
+   "de": "levanta/06|foco"
+  },
+  {
+   "desenho": 6,
+   "ticks": 4,
+   "caixa": false,
+   "de": "levanta/07|foco"
+  }
+ ]
+}

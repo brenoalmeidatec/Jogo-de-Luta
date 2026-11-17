@@ -1,0 +1,29 @@
+{
+ "acao": 41,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "pulo/01|None"
+  },
+  {
+   "desenho": 1,
+   "ticks": 5,
+   "caixa": false,
+   "de": "pulo/02|None"
+  },
+  {
+   "desenho": 2,
+   "ticks": 6,
+   "caixa": false,
+   "de": "pulo/03|None"
+  },
+  {
+   "desenho": 3,
+   "ticks": 1,
+   "caixa": false,
+   "de": "pulo/04|None"
+  }
+ ]
+}

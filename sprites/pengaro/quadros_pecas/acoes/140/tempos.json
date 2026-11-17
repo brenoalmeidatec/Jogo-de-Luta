@@ -1,0 +1,23 @@
+{
+ "acao": 140,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 1,
+   "caixa": false,
+   "de": "defesa/03|None"
+  },
+  {
+   "desenho": 1,
+   "ticks": 1,
+   "caixa": false,
+   "de": "defesa/02|None"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "defesa/01|None"
+  }
+ ]
+}

@@ -1,0 +1,77 @@
+{
+ "acao": 400,
+ "caixa": [
+  45,
+  -168,
+  162,
+  -126
+ ],
+ "origem": [
+  "432_0",
+  "433_0",
+  "435_0",
+  "436_0"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "432_0@soco_agachado0"
+  },
+  {
+   "desenho": 1,
+   "ticks": 1,
+   "caixa": false,
+   "de": "432_0@soco_agachado1"
+  },
+  {
+   "desenho": 2,
+   "ticks": 1,
+   "caixa": false,
+   "de": "432_0@soco_agachado2"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": true,
+   "de": "433_0@soco_agachado3"
+  },
+  {
+   "desenho": 4,
+   "ticks": 3,
+   "caixa": true,
+   "de": "433_0@soco_agachado4"
+  },
+  {
+   "desenho": 5,
+   "ticks": 1,
+   "caixa": false,
+   "de": "433_0@soco_agachado5"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "435_0@soco_agachado6"
+  },
+  {
+   "desenho": 7,
+   "ticks": 3,
+   "caixa": false,
+   "de": "435_0@soco_agachado6"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "436_0@soco_agachado7"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "436_0@soco_agachado7"
+  }
+ ]
+}

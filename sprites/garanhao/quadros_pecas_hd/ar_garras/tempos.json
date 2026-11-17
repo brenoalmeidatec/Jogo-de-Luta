@@ -1,0 +1,75 @@
+{
+ "acao": 10600,
+ "caixa": [
+  18,
+  -210,
+  138,
+  -60
+ ],
+ "origem": [
+  "ar_garras/00",
+  "ar_garras/01",
+  "ar_garras/02",
+  "ar_garras/03",
+  "ar_garras/04",
+  "ar_garras/05",
+  "ar_garras/06",
+  "ar_garras/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "ar_garras/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": false,
+   "de": "ar_garras/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": false,
+   "de": "ar_garras/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 5,
+   "caixa": true,
+   "de": "ar_garras/03"
+  },
+  {
+   "desenho": 4,
+   "ticks": 3,
+   "caixa": false,
+   "de": "ar_garras/04"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "ar_garras/05"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "ar_garras/05"
+  },
+  {
+   "desenho": 7,
+   "ticks": 3,
+   "caixa": false,
+   "de": "ar_garras/06"
+  },
+  {
+   "desenho": 8,
+   "ticks": 3,
+   "caixa": false,
+   "de": "ar_garras/07"
+  }
+ ]
+}
