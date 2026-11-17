@@ -3128,6 +3128,25 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   borrão; a fluidez vem da antecipação, da volta, da guarda, do parado e das transições. Os kits já ligados ainda
   põem meio nesse trecho: ajustar o `vida_pecas.py` e religar é trabalho à parte.
 
+### 2026-11-17 — Estudo de anatomia do Breno no Gutto e no Garanhão; quadros do meio no meio-termo do Alisson
+- Gutto (boneco_gutto.py): a perna da frente é a do lado LONGE. Quando ela sobe (variante de coxa), nasce atrás da faixa e do
+  tronco (camada por pose). Vale em todo chute: chute alto, chute forte, coice, joelhada, quina e os dois supers. No chute
+  alto o tronco vai 4-8° para trás e o braço da frente desce um pouco, sem tapar o chute. Mandar o braço da guarda para trás
+  do tronco deixou uma aba de ombro solta; isso pede desenho novo e ficou de fora.
+- Garanhão (kit_garanhao.py): a investida segue a receita da cabeçada. Não empina para trás (isso telegrafava): o queixo
+  desce, o tronco recua 3-4° e no contato dobra 26° com passo curto e o peso junto. Na chifrada o tronco dobra antes de
+  enganchar, com passo e peso.
+- vida_pecas novo (448b9158): os dois foram regerados. O tempo do Gutto e o dos golpes do Garanhão que estão no jogo não
+  mudaram; mudaram só ar_cabecada, ar_cascos, empinada e rasga_couro, que não estão no jogo.
+- `ferramentas/trocar_desenhos.py <lutador> <golpes> [--de pasta --grupo G]`: troca só os desenhos de golpe já ligado,
+  quando o tempo não mudou. Ação, caixas, AnimElem e remap ficam como estão.
+- `ligar_pecas.py` agora religa sem estragar o .cns: o ifelse da ligação anterior só troca o elemento da ação.
+- `encolher_sff.py`: fica o PNG menor entre o que já está no .sff e o do Pillow (na aura o filtro 0 é menor). Ao trocar a
+  paleta própria, o que estava nela é reindexado.
+- Robô de peças 0 defeito; robô de luta 186/186 com o mesmo dano. Vídeo:
+  docs/boneco-pecas/no_jogo/gutto_anatomia_antes_depois.mp4.
+- Ainda falta: o soco forte pela receita do direto (braço de trás esticado) e o braço da frente indo para trás no chute
+  alto pedem desenho novo de braço.
 ## 17/11/2026 - Gbzin: golpes do boneco de peças ligados no jogo (regra de criação, seção 11)
 - Parado, soco e chute alto do boneco de peças (com quadros do meio no meio-termo do Alisson: preparação segurada e
   seca até o contato, meio na volta e na guarda, `vida_pecas.py` da mugen 448b9158) ligados com `ligar_pecas.py gbzin`
