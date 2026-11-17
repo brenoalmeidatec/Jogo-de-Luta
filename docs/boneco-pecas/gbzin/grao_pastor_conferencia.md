@@ -5,6 +5,7 @@ Robô de `python ferramentas/gbzin_e_pecas.py conferir`: cor fora da paleta, ped
 | Folha | Defeitos | Onde |
 |---|---|---|
 | e_agachado | 0 | ok |
+| e_agarrao | 0 | ok |
 | e_anda | 0 | ok |
 | e_apanha | 0 | ok |
 | e_ar_chifre | 0 | ok |
@@ -22,6 +23,7 @@ Robô de `python ferramentas/gbzin_e_pecas.py conferir`: cor fora da paleta, ped
 | e_estampido | 0 | ok |
 | e_estouro | 0 | ok |
 | e_giro_manto | 0 | ok |
+| e_juizo | 0 | ok |
 | e_juizo_cima | 0 | ok |
 | e_levanta | 0 | ok |
 | e_manto_asa | 0 | ok |
