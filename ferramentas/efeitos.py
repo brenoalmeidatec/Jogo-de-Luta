@@ -599,7 +599,12 @@ def gravar(destino, pal, rle, png, extras=None):
         corpo = struct.pack("<I", len(px)) + rle8(px)
         nos += struct.pack(NO, g, i, w, h, x, y, 0, 2, 8, len(ldata), len(corpo), pi, 0)
         ldata += corpo
-    for g, i, w, h, x, y, blob in png:
+    vistos_png = {}
+    for k, (g, i, w, h, x, y, blob) in enumerate(png, start=len(rle)):
+        if (w, h, blob) in vistos_png:   # PNG repetido vira link, como o RLE (encolher_sff.py)
+            nos += struct.pack(NO, g, i, w, h, x, y, vistos_png[(w, h, blob)], 12, 32, 0, 0, 0, 1)
+            continue
+        vistos_png[(w, h, blob)] = k
         nos += struct.pack(NO, g, i, w, h, x, y, 0, 12, 32, len(tdata), len(blob), 0, 1)
         tdata += blob
     n = len(rle) + len(png)
