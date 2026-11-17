@@ -56,7 +56,7 @@ EFEITOS = {
 # Nível do Hazak (pedido do Breno na #44, 2026-11-14): estouros maiores, com halo de brilho por baixo do pixel seco
 # (o caminho escolhido na #47), e a carga: a energia do lutador juntando no corpo antes do especial e da super.
 # O Hazak fica com os efeitos que a conversa dele fez (não entra na lista padrão daqui).
-PADRAO = ("pengaro", "gutto", "raiclaven", "ck")
+PADRAO = ("pengaro", "gutto", "raiclaven", "ck", "gbzin")
 HALO = {"especial": (6, .85, 12), "super": (9, .85, 18), "carga": (6, .9, 12), "transformacao": (7, .7, 14)}
 # forma escura com a borda acesa (o "sombrio" da #47): a sombra do Pengaró endiabrado e a fumaça do Ratão do CK
 SOMBRIO = {("pengaro", "desperto"), ("ck", "desperto")}
@@ -79,6 +79,10 @@ RECEITAS = {
     "ck": {"especial": ["bola", "miolo", "anel", "anel2", "fumaca"], "super": ["bola", "anel", "anel2", "anel3", "fumaca"],
            "transformacao": ["pilar", "anel_chao", "fumaca"],
            "carga": ["nucleo", "dentro:anel", "dentro:anel2", "dentro:anel3"]},
+    # Gbzin: poeira e palha do pasto na base; fogo verde do Grão-Pastor (mesmo render, só a rampa muda)
+    "gbzin": {"especial": ["miolo", "anel", "fumaca", "cacos"], "super": ["bola", "anel", "anel2", "chamas", "brasas"],
+              "transformacao": ["pilar", "anel_chao", "chamas", "brasas"],
+              "carga": ["nucleo", "dentro:brasas", "dentro:anel"]},
 }
 
 
