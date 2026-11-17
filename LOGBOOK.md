@@ -2642,6 +2642,20 @@ vídeo conferido antes de juntar.
   manchas magenta, munhequeira verde-água) → `harmonizar`; o estouro da Cobrança parecia preso → acompanha o P2 e
   ficou menor. Robô 249/0. Vídeos em docs/diabo-44/video/.
 
+## 2026-11-16 — Luz em todo efeito que brilha, nos 5 lutadores (issue #51, item 2) (Claude, thread do Alisson)
+
+**Pedido do Alisson:** gostou da luz do Hazak; pôr em todos os efeitos que têm luz.
+
+**Feito:** `ferramentas/luz_efeitos.py` (inventário, folha de revisão e geração) e `ferramentas/luz.py` genérica:
+luz tirada de cada efeito (cor, força e tamanho quadro a quadro), clarão no ponto de cada golpe acertado, poderes
+reconhecidos pela revisão (`ferramentas/luz_classes.json`), raio com a luz do próprio desenho. Ligada no Hazak, no
+Gutto, no Pengaró, no CK e no Raiclaven (este pelo fim do `gerar_raiclaven.py`). Quatro rodadas de filme conferidas
+quadro a quadro por revisores independentes.
+
+**Armadilhas:** a ação 47002 (raio) cai na faixa 40000+ da silhueta; a aura agora é reconhecida pelo grupo do desenho
+(9600 a 9999), não pelo número da ação. A faísca do HitDef vem em expressão (`S(ifelse(var(20) > 0, 9231, 9201))`).
+Grão de luz maior que 2 pixels e raio acima de 90 viram tabuleiro de quadrados. O PalFX no oponente pinta o corpo
+inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copiar velocity e accel.
 ## 2026-11-16 — Piloto boneco de peças do Pengaró base (Claude, sessão do LightWolfMan)
 
 **Pedido:** `docs/missao-alisson-boneco-de-pecas.md`, etapa 1 (parado, soco e chute alto pelo método do
@@ -2916,13 +2930,9 @@ abertos). Golaço e arm-lock voador seguem como estão. Nada ligado no gerador n
   Fica para peça nova: bicicleta sem chute, Passinho de Pinguim (rolamento) e parry_baixo virando estrela.
 ## 2026-11-16 — Luz em todo efeito que brilha, nos 5 lutadores (issue #51, item 2) (Claude, thread do Alisson)
 
-**Pedido do Alisson:** gostou da luz do Hazak; pôr em todos os efeitos que têm luz.
+### 2026-11-16 — Pengaró inteiro no boneco de peças (154 ações)
 
-**Feito:** `ferramentas/luz_efeitos.py` (inventário, folha de revisão e geração) e `ferramentas/luz.py` genérica:
-luz tirada de cada efeito (cor, força e tamanho quadro a quadro), clarão no ponto de cada golpe acertado, poderes
-reconhecidos pela revisão (`ferramentas/luz_classes.json`), raio com a luz do próprio desenho. Ligada no Hazak, no
-Gutto, no Pengaró, no CK e no Raiclaven (este pelo fim do `gerar_raiclaven.py`). Quatro rodadas de filme conferidas
-quadro a quadro por revisores independentes.
+Pedido do Alisson: "faça isso para todos", com fluidez, vida e nenhum erro de peça, e refazer os golpes confusos.
 
 **Armadilhas:** a ação 47002 (raio) cai na faixa 40000+ da silhueta; a aura agora é reconhecida pelo grupo do desenho
 (9600 a 9999), não pelo número da ação. A faísca do HitDef vem em expressão (`S(ifelse(var(20) > 0, 9231, 9201))`).
@@ -2938,6 +2948,43 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   remap do despertado para cada sprite novo e refaz as ações da aura (30000/40000 + ação).
 - Gutto: 16 golpes, 299 quadros. Robô de peças 0 defeito; robô de luta 186/186 antes e depois, dano idêntico.
 - Agachado passou a ter 48 ticks e a rasteira ganhou a volta (459, 1173, 460) para bater com o tempo do jogo.
+- Garanhão (despertado do Gutto) no jogo: `ligar_pecas.py gutto --de garanhao --grupo 49000 --ajustar` com parado
+  (por remap do parado novo do Gutto) e 10 golpes 10xxx (chifrada, investida, pisão, patada, casco na canela, bufada,
+  garra rasteira, chifrada que sobe, raspa o casco, rabo-chicote). `--ajustar` estica/encolhe o tempo para o impacto
+  cair no tick da Clsn1 antiga; quadros de outra pasta vão em PNG RGBA (na paleta da base o brilho apagava). Depois
+  `aura_silhueta.py gutto` de novo. Robô de luta 186/186 igual; filmado no motor (docs/boneco-pecas/no_jogo/).
+- Fora por enquanto: coice (desenho da folha com outro corpo) e golpes no ar (não leem); rasga-couro, empinada,
+  corrente em X, joelho e cascos no ar não têm ação no jogo (são do #47).
+- `ferramentas/acoes_pengaro.py` lista as 154 ações base do Pengaró (194 desenhos); `ferramentas/pengaro_todo.py`
+  faz poses (`poses i/n`), anima (`animar`), confere (robô), e gera `revisar`, `folha` e `video`.
+- Corpo firme em toda inclinação pequena (até 10°): girar o tronco abria fresta nas emendas.
+- Robô: pé desgrudado da canela (tornozelo estica/encolhe até 10 px), pé fora do chão (IK planta no pé de hoje,
+  inclusive nos intermediários), contorno escuro na beira cortada das peças, rosto trocado com fresta (aí o quadro
+  especial fica com a cabeça do desenho).
+- Quadro "especial" (desenho de hoje + rosto do kit + paleta travada do parado) quando o kit de frente não monta:
+  IoU < 0.65, agachado fundo/pernas encolhidas, ou braço/perna que o encaixe não alcança (> 800 px de fora).
+  59 dos 194 desenhos saem montados; o resto é especial.
+- Refeitos: andar (por código, ciclo apoio/balanço com IK; o desenho de hoje trocava a perna da joelheira),
+  cabeçada (à mão: antecipação, testa na frente, volta), defesa (punho sobe e cobre o queixo), soco no ar,
+  provocação.
+- Resultado: robô 0 defeitos nas 154 ações (1344 desenhos com intermediários). Saída 1x em
+  sprites/pengaro/quadros_pecas/acoes/<ação>/ (+ tempos.json); o HD se refaz com `pengaro_todo.py animar`.
+- Fraco ainda: manchinhas cinza na calça perto da virilha (resto do contorno do parado), fresta pequena no ombro de
+  trás quando o tronco inclina; agarrão, parry baixo e despertar ficaram fora (não são da lista base).
+
+## 2026-11-17 — Pengaró inteiro no jogo pelo boneco de peças, sem linha de corte (Claude, thread do Alisson)
+
+- Regra nova na `docs/regras-dos-lutadores.md` seção 7.4 (zero erro de animação: membro descolando, silhueta grossa,
+  pedaço voando, linha de corte, movimento fisicamente errado) + linha no checklist da seção 9.
+- `ferramentas/pele_pecas.py`: o boneco é desenhado como pele que dobra nas juntas (skinning linear com peso dos dois
+  lados da emenda, faixa de 28 px; braço 8 px). O kit continua separado (trocar cabeça e ajuste fino), mas na tela não
+  aparece corte entre quadril, coxa, canela e tronco. Liga com `piloto_firme.PELE = True`.
+- Limpeza do kit (bolinhas fantasmas, risco cinza na calça, contorno escuro na beira dos braços).
+- Soco refeito com o corpo inteiro: quadril gira e anda 22 px, passo à frente, braço de trás recua.
+- Andar na velocidade do jogo (passadas do tamanho do deslocamento real, sem patinar).
+- Ligado no jogo com `ligar_pecas.py`: 154 ações, 1157 sprites novos (grupos 48000+), remaps do despertado e da aura.
+  Robô do boneco 0 defeito; robô de luta 189/189 antes e depois, dano idêntico. Foto e vídeo em docs/boneco-pecas/todo/.
+- Próximo: chutes com o mesmo corpo inteiro do soco; agarrão, parry baixo e despertar continuam fora da lista base.
 
 ### 2026-11-17 — CK base no jogo pelo boneco de peças
 - Pedido do Alisson (o Breno liberou auto-aprovação): pôr no jogo o que passou no robô.
@@ -2988,3 +3035,36 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   (`ferramentas/video_golpes_raiclaven.py`).
 - Para ligar de novo: `git checkout 95134c46 -- chars/raiclaven` e `ligar_pecas.py raiclaven` (rodar duas vezes em cima
   do já ligado não foi testado).
+
+## 17/11/2026 - Gbzin: pele nas juntas (pele_pecas.py da thread do Pengaró)
+- Os quadros feitos pelo kit (parado, soco 00-03/07, chute alto, rolamento 00/07) agora saem por `desenhar_pele`: as
+  peças viram pele que dobra nas juntas (`pele_pecas.py`), com sobra, pés retos, cabeça por cima, furos e pontas da
+  faixa iguais ao `desenhar` de antes. Some o caco branco do calção e a linha de corte no chute alto.
+- Robô de peças 0 defeitos, robô do jogo 236/236. Antes e depois: `docs/boneco-pecas/gbzin/pele_antes_depois.{mp4,png}`.
+- 17/11 (tarde): o CK passou a ser desenhado com a pele do `pele_pecas.py` (`PELE = True` em `pecas_ck.py`): as
+  juntas dobram sem linha de corte (regra do Alisson); pés continuam apoiados no chão (`colar_pe`) e o braço esticado
+  continua saindo de baixo do queixo. Religado a partir do `chars/ck` sem peças (4b54d61f), robô de peças 0/206.
+
+## 2026-11-17 — Pengaró: chute alto com o corpo inteiro (Claude, thread do Alisson)
+
+- `CORPO` em `ferramentas/pengaro_todo.py`: no chute alto montado, o quadril entra e sobe na ponta do pé de apoio, o
+  tronco deita para trás (até 12°), a cabeça olha o alvo e o braço de trás abre de contrapeso; o pé de apoio volta a
+  plantar por IK. O chute baixo e os golpes de impacto que ficaram "especiais" já vêm do desenho com o corpo junto.
+- `pele_pecas.py`: com a perna da frente erguida (câmara/esticada), a parte do quadril que é o alto da coxa no parado
+  sai (sobrava um pedaço de calça cinza pendurado embaixo da perna).
+- 20 ações refeitas, robô do boneco 0 defeito; religado a partir do Pengaró antes da ligação (ba260cd9), robô de luta
+  189/189 igual. Antes/depois em docs/boneco-pecas/todo/chute_alto_antes_depois.png.
+
+## 17/11/2026 - Gbzin: Grão-Pastor (despertado) com folhas próprias no jogo
+- Rascunhos de pose no ChatGPT (3 turnos, pedidos em `ferramentas/folhas_gbzin.py`), folhas em
+  `sprites/gbzin/quadros/folhas_arcade/e_*.png`. `ferramentas/gbzin_e_pecas.py firme NOMES` corta as células por costura
+  de menos tinta, trava a paleta do kit (`sprites/gbzin/pecas_e/paleta.json`, 15 cores), usa a cabeça como régua do
+  tamanho do corpo e cola a cabeça do kit (`pecas_e/cabeca.png`, presa na junta do pescoço) em todo quadro onde ela
+  não tapa mão ou nuca; resultado em `quadros_e_firmes(_hd)`. `conferir` grava
+  `docs/boneco-pecas/gbzin/grao_pastor_conferencia.md` (0 defeitos em 25 folhas).
+- `gerar_gbzin.py` (`GRAO_PASTOR`): 23 estados do despertado com desenho próprio: parado (respiração sem emenda),
+  andar, x, y, a, agachado, golpe baixo, rasteirinha, rasteira, anti-aéreo, pulo, golpes no ar (bicicleta e soco),
+  defesa, defesa alta/baixa, apanha, queda, levanta, rolamento, vitória, derrota, provocação. O resto do despertado
+  segue no desenho da base até as próximas folhas (estampido, giro do manto, mãos, juízo, especiais, agarrões).
+- Breno liberou auto-aprovação (17/11); robô 236/0 no estado juntado. Também tirei marcadores de conflito que tinham
+  ficado commitados neste LOGBOOK.

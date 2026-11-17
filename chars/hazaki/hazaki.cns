@@ -12,6 +12,10 @@
 1006,0 = 21006,0
 1008,0 = 21008,0
 1009,0 = 21009,0
+1012,0 = 21012,0
+1013,0 = 21013,0
+1014,0 = 21014,0
+1015,0 = 21015,0
 1016,0 = 21016,0
 1017,0 = 21017,0
 1018,0 = 21018,0
@@ -26,7 +30,6 @@
 1028,0 = 21028,0
 1029,0 = 21029,0
 1030,0 = 21030,0
-1031,0 = 21031,0
 1032,0 = 21032,0
 1033,0 = 21033,0
 1034,0 = 21034,0
@@ -357,6 +360,11 @@
 1474,0 = 21474,0
 1477,0 = 21477,0
 1478,0 = 21478,0
+1480,0 = 21480,0
+1481,0 = 21481,0
+1482,0 = 21482,0
+1483,0 = 21483,0
+1488,0 = 21488,0
 1496,0 = 21496,0
 1497,0 = 21497,0
 1498,0 = 21498,0
@@ -8639,7 +8647,7 @@ hitflag = MAF
 priority = 5, Hit
 pausetime = 14, 14
 guard.pausetime = 10, 10
-sparkxy = -6, -40
+sparkxy = -6, -67
 sparkno = S9240
 guard.sparkno = S9216
 sparkscale = 1.2, 1.2
@@ -8832,7 +8840,7 @@ hitflag = MAF
 priority = 5, Hit
 pausetime = 14, 14
 guard.pausetime = 10, 10
-sparkxy = -6, -40
+sparkxy = -6, -67
 sparkno = S9240
 guard.sparkno = S9216
 sparkscale = 1.2, 1.2
@@ -8908,6 +8916,724 @@ trigger1 = Time > 24
 x = .8
 
 [State 1661, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 4200]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 4200
+juggle = 3
+velset = 0,0
+
+[State 4200, Vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 4200, Fracos em sequência]
+type = VarAdd
+trigger1 = Time = 0
+var(5) = 1
+
+[State 4200, Arranhão]
+type = HitDef
+trigger1 = Time = 3
+attr = S, NA
+damage = 25, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 7, 7
+guard.pausetime = 6, 6
+sparkxy = -10, -81
+sparkno = S9200
+guard.sparkno = S9216
+hitsound = S51,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 15
+ground.velocity = -2.5
+air.velocity = -1.4, -3
+
+[State 4200, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 4201]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 4201
+juggle = 4
+velset = 0,0
+
+[State 4201, Vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,1
+
+[State 4201, Avanço 1]
+type = VelSet
+trigger1 = Time = 2
+x = 1.5
+
+[State 4201, Avanço 2]
+type = VelSet
+trigger1 = Time = 11
+x = 0
+
+[State 4201, Garra Cruzada]
+type = HitDef
+trigger1 = Time = 7
+attr = S, NA
+damage = 62, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 11, 11
+guard.pausetime = 10, 10
+sparkxy = -10, -86
+sparkno = S9207
+guard.sparkno = S9216
+hitsound = S51,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 8
+ground.hittime = 18
+ground.velocity = -2
+air.velocity = -1.4, -3
+
+[State 4201, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 4202]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 4202
+juggle = 3
+velset = 0,0
+
+[State 4202, Vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 4202, Fracos em sequência]
+type = VarAdd
+trigger1 = Time = 0
+var(5) = 1
+
+[State 4202, Joelhada Selvagem]
+type = HitDef
+trigger1 = Time = 4
+attr = S, NA
+damage = 32, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 7, 7
+guard.pausetime = 6, 6
+sparkxy = -10, -66
+sparkno = S9200
+guard.sparkno = S9216
+hitsound = S52,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 15
+ground.velocity = -2
+air.velocity = -1.4, -3
+
+[State 4202, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 4203]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 4203
+juggle = 4
+velset = 0,0
+
+[State 4203, Vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,2
+
+[State 4203, Coice com Garra]
+type = HitDef
+trigger1 = Time = 7
+attr = S, NA
+damage = 72, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
+animtype = Heavy
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 13, 13
+guard.pausetime = 12, 12
+sparkxy = -10, -72
+sparkno = S9207
+guard.sparkno = S9216
+hitsound = S52,2
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 20
+ground.velocity = -2
+air.velocity = -1.4, -3
+
+[State 4203, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 4400]
+type = C
+movetype = A
+physics = C
+ctrl = 0
+sprpriority = 2
+anim = 4400
+juggle = 3
+velset = 0,0
+
+[State 4400, Vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 4400, Fracos em sequência]
+type = VarAdd
+trigger1 = Time = 0
+var(5) = 1
+
+[State 4400, Arranhão Baixo]
+type = HitDef
+trigger1 = Time = 3
+attr = C, NA
+damage = 22, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 7, 7
+guard.pausetime = 6, 6
+sparkxy = -10, -50
+sparkno = S9200
+guard.sparkno = S9216
+hitsound = S51,0
+guardsound = F6,0
+ground.type = Low
+ground.slidetime = 5
+ground.hittime = 15
+ground.velocity = -2.5
+air.velocity = -1.4, -3
+
+[State 4400, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[Statedef 4401]
+type = C
+movetype = A
+physics = C
+ctrl = 0
+sprpriority = 2
+anim = 4401
+juggle = 4
+velset = 0,0
+
+[State 4401, Vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,1
+
+[State 4401, Antiaéreo: ganha de quem vem do ar]
+type = NotHitBy
+trigger1 = Time = [2, 18]
+value = A
+time = 1
+
+[State 4401, Sobe: muda para em pé]
+type = StateTypeSet
+trigger1 = Time = 7
+statetype = S
+physics = S
+
+[State 4401, Garra Subindo]
+type = HitDef
+trigger1 = Time = 7
+attr = S, NA
+damage = 60, 0
+envshake.time = 6
+envshake.freq = 150
+envshake.ampl = -2
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+priority = 5, Hit
+pausetime = 11, 11
+guard.pausetime = 10, 10
+sparkxy = -10, -95
+sparkno = S9207
+guard.sparkno = S9216
+hitsound = S51,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 8
+ground.hittime = 18
+ground.velocity = -4
+air.velocity = -2, -4
+
+[State 4401, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 4402]
+type = C
+movetype = A
+physics = C
+ctrl = 0
+sprpriority = 2
+anim = 4402
+juggle = 3
+velset = 0,0
+
+[State 4402, Vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 4402, Fracos em sequência]
+type = VarAdd
+trigger1 = Time = 0
+var(5) = 1
+
+[State 4402, Rabo Rasteiro]
+type = HitDef
+trigger1 = Time = 4
+attr = C, NA
+damage = 30, 0
+animtype = Light
+guardflag = L
+hitflag = MAF
+priority = 4, Hit
+pausetime = 7, 7
+guard.pausetime = 6, 6
+sparkxy = -10, -10
+sparkno = S9200
+guard.sparkno = S9216
+hitsound = S52,0
+guardsound = F6,0
+ground.type = Low
+ground.slidetime = 5
+ground.hittime = 15
+ground.velocity = -2
+air.velocity = -1.4, -3
+
+[State 4402, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[Statedef 4403]
+type = C
+movetype = A
+physics = C
+ctrl = 0
+sprpriority = 2
+anim = 4403
+juggle = 4
+velset = 0,0
+
+[State 4403, Vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,2
+
+[State 4403, Varrida de Garras]
+type = HitDef
+trigger1 = Time = 10
+attr = C, NA
+damage = 65, 0
+envshake.time = 12
+envshake.freq = 150
+envshake.ampl = -4
+animtype = Heavy
+guardflag = L
+hitflag = MAF
+priority = 4, Hit
+pausetime = 14, 14
+guard.pausetime = 12, 12
+sparkxy = -10, -10
+sparkno = S9207
+guard.sparkno = S9216
+hitsound = S52,2
+guardsound = F6,0
+ground.type = Trip
+ground.slidetime = 10
+ground.hittime = 20
+fall = 1
+fall.recover = 0
+ground.velocity = -4, -4
+air.velocity = -4, -4
+
+[State 4403, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[Statedef 4301]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 4301
+juggle = 3
+velset = 0,0
+
+[State 4301, Vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 4301, Avanço 1]
+type = VelSet
+trigger1 = Time = 1
+x = 2.5
+
+[State 4301, Avanço 2]
+type = VelSet
+trigger1 = Time = 7
+x = 0
+
+[State 4301, Fúria das Garras 2]
+type = HitDef
+trigger1 = Time = 3
+attr = S, NA
+damage = 26, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 7, 7
+guard.pausetime = 6, 6
+sparkxy = -10, -81
+sparkno = S9200
+guard.sparkno = S9216
+hitsound = S51,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 15
+ground.velocity = -2
+air.velocity = -1.4, -3
+
+[State 4301, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 4302]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 4302
+juggle = 3
+velset = 0,0
+
+[State 4302, Vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 4302, Avanço 1]
+type = VelSet
+trigger1 = Time = 1
+x = 2.5
+
+[State 4302, Avanço 2]
+type = VelSet
+trigger1 = Time = 7
+x = 0
+
+[State 4302, Fúria das Garras 3]
+type = HitDef
+trigger1 = Time = 3
+attr = S, NA
+damage = 28, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 7, 7
+guard.pausetime = 6, 6
+sparkxy = -10, -81
+sparkno = S9200
+guard.sparkno = S9216
+hitsound = S51,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 15
+ground.velocity = -2
+air.velocity = -1.4, -3
+
+[State 4302, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 4311]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 4311
+juggle = 4
+velset = 0,0
+
+[State 4311, Vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,1
+
+[State 4311, Avanço 1]
+type = VelSet
+trigger1 = Time = 1
+x = 2.5
+
+[State 4311, Avanço 2]
+type = VelSet
+trigger1 = Time = 7
+x = 0
+
+[State 4311, Dilacerar 2]
+type = HitDef
+trigger1 = Time = 5
+attr = S, NA
+damage = 40, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 11, 11
+guard.pausetime = 10, 10
+sparkxy = -10, -86
+sparkno = S9207
+guard.sparkno = S9216
+hitsound = S51,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 8
+ground.hittime = 18
+ground.velocity = -2
+air.velocity = -1.4, -3
+
+[State 4311, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 4312]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 4312
+juggle = 3
+velset = 0,0
+
+[State 4312, Vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 4312, Avanço 1]
+type = VelSet
+trigger1 = Time = 1
+x = 4
+
+[State 4312, Avanço 2]
+type = VelSet
+trigger1 = Time = 8
+x = 0
+
+[State 4312, Dilacerar 3]
+type = HitDef
+trigger1 = Time = 4
+attr = S, NA
+damage = 34, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 7, 7
+guard.pausetime = 6, 6
+sparkxy = -10, -66
+sparkno = S9200
+guard.sparkno = S9216
+hitsound = S51,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 15
+ground.velocity = -2
+air.velocity = -1.4, -3
+
+[State 4312, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 4331]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 4331
+juggle = 4
+velset = 0,0
+
+[State 4331, Vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,1
+
+[State 4331, Avanço 1]
+type = VelSet
+trigger1 = Time = 1
+x = 2.5
+
+[State 4331, Avanço 2]
+type = VelSet
+trigger1 = Time = 7
+x = 0
+
+[State 4331, Pisoteio 2]
+type = HitDef
+trigger1 = Time = 5
+attr = S, NA
+damage = 40, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 11, 11
+guard.pausetime = 10, 10
+sparkxy = -10, -72
+sparkno = S9207
+guard.sparkno = S9216
+hitsound = S52,1
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 8
+ground.hittime = 18
+ground.velocity = -2
+air.velocity = -1.4, -3
+
+[State 4331, Fim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 4332]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+sprpriority = 2
+anim = 4332
+juggle = 3
+velset = 0,0
+
+[State 4332, Vento]
+type = PlaySnd
+trigger1 = Time = 0
+value = F40,0
+
+[State 4332, Avanço 1]
+type = VelSet
+trigger1 = Time = 1
+x = 4
+
+[State 4332, Avanço 2]
+type = VelSet
+trigger1 = Time = 8
+x = 0
+
+[State 4332, Pisoteio 3]
+type = HitDef
+trigger1 = Time = 4
+attr = S, NA
+damage = 32, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 7, 7
+guard.pausetime = 6, 6
+sparkxy = -10, -66
+sparkno = S9200
+guard.sparkno = S9216
+hitsound = S52,0
+guardsound = F6,0
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 15
+ground.velocity = -2
+air.velocity = -1.4, -3
+
+[State 4332, Fim]
 type = ChangeState
 trigger1 = AnimTime = 0
 value = 0
@@ -9058,6 +9784,26 @@ type = AttackMulSet
 trigger1 = 1
 value = ifelse(var(20) > 0, 1.25, 1)
 
+[State -2, Demônio: Bola das Trevas acertou (tremida)]
+type = EnvShake
+trigger1 = ProjHitTime(4500) = 0 || ProjHitTime(4501) = 0
+time = 14
+freq = 100
+ampl = -7
+
+[State -2, Demônio: Bola das Trevas acertou (fundo pisca)]
+type = BGPalFX
+trigger1 = ProjHitTime(4500) = 0 || ProjHitTime(4501) = 0
+time = 6
+add = 100, 20, 0
+
+[State -2, Demônio: conta acerto da corrente]
+type = VarAdd
+trigger1 = MoveHit
+trigger1 = var(11) = 0
+trigger1 = stateno = [4200,4449]
+var(10) = 1
+
 [State -2, Zera fracos]
 type = VarSet
 trigger1 = ctrl
@@ -9144,6 +9890,358 @@ trigger1 = anim = 171 && AnimElemNo(0) >= 6
 trigger2 = stateno = 170 && AnimElemNo(0) >= 3
 value = 0
 movecamera = 0,0
+
+; ---- agarrão segura-e-bate (ferramentas/agarrao_mk.py) ----
+
+[Statedef 822]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 822, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5941)
+value = 5941
+
+[State 822, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5941)
+value = 5001
+
+[State 822, Preso: pose]
+type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
+trigger1 = Time > 0 && Anim = 5001 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 822, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
+
+[State 822, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 825]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 825, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5941)
+value = 5941
+
+[State 825, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5941)
+value = 5002
+
+[State 825, Preso: pose]
+type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
+trigger1 = Time > 0 && Anim = 5002 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 825, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
+
+[State 825, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 826]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 826, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5941)
+value = 5941
+
+[State 826, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5941)
+value = 5002
+
+[State 826, Preso: pose]
+type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
+trigger1 = Time > 0 && Anim = 5002 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 826, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
+
+[State 826, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 827]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 827, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5942)
+value = 5942
+
+[State 827, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5942)
+value = 5011
+
+[State 827, Preso: pose]
+type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
+trigger1 = Time > 0 && Anim = 5011 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 827, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
+
+[State 827, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 828]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 828, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5942)
+value = 5942
+
+[State 828, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5942)
+value = 5012
+
+[State 828, Preso: pose]
+type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
+trigger1 = Time > 0 && Anim = 5012 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 828, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
+
+[State 828, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 829]
+type = S
+movetype = H
+physics = N
+velset = 0,0
+ctrl = 0
+
+[State 829, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5942)
+value = 5942
+
+[State 829, Apanha]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5942)
+value = 5012
+
+[State 829, Preso: pose]
+type = ChangeAnim
+triggerall = !SelfAnimExist(5940)
+trigger1 = Time > 0 && Anim = 5012 && AnimTime = 0
+trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
+value = 5000
+elem = 1
+
+[State 829, Preso: pose própria]
+type = ChangeAnim
+triggerall = SelfAnimExist(5940)
+trigger1 = Anim != 5940 && AnimTime = 0
+value = 5940
+
+[State 829, Solto]
+type = SelfState
+trigger1 = Time > 0
+trigger1 = !gethitvar(isbound)
+value = 5050
+
+[Statedef 823]
+type = A
+movetype = H
+physics = N
+velset = -4.2, -5.5
+ctrl = 0
+
+[State 823, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5943)
+value = 5943
+
+[State 823, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5943)
+value = 5030
+
+[State 823, Caindo]
+type = ChangeAnim
+trigger1 = Vel Y > 0
+trigger1 = Anim = 5943
+trigger1 = SelfAnimExist(5944)
+value = 5944
+
+[State 823, Queda]
+type = VelAdd
+trigger1 = 1
+y = .45
+
+[State 823, Chão]
+type = SelfState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 5100
+
+[Statedef 824]
+type = A
+movetype = H
+physics = N
+velset = 4.6, -6.5
+ctrl = 0
+
+[State 824, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5943)
+value = 5943
+
+[State 824, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5943)
+value = 5030
+
+[State 824, Caindo]
+type = ChangeAnim
+trigger1 = Vel Y > 0
+trigger1 = Anim = 5943
+trigger1 = SelfAnimExist(5944)
+value = 5944
+
+[State 824, Passa por cima]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 824, Queda]
+type = VelAdd
+trigger1 = 1
+y = .45
+
+[State 824, Chão]
+type = SelfState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 5100
+
+[Statedef 835]
+type = A
+movetype = H
+physics = N
+velset = -1.6, -4
+ctrl = 0
+
+[State 835, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5943)
+value = 5943
+
+[State 835, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5943)
+value = 5030
+
+[State 835, Caindo]
+type = ChangeAnim
+trigger1 = Vel Y > 0
+trigger1 = Anim = 5943
+trigger1 = SelfAnimExist(5944)
+value = 5944
+
+[State 835, Queda]
+type = VelAdd
+trigger1 = 1
+y = .45
+
+[State 835, Chão]
+type = SelfState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 5100
 
 [Statedef -4]
 
@@ -9326,7 +10424,7 @@ map = "au_diabo_c"
 value = 1
 ignorehitpause = 1
 
-; >>> aura_no_corpo.py: a aura segue o corpo (issue #51). Tabelas medidas nos desenhos do .air: 185 + 92 valores, 994 trechos. Pivô nas costas em 1, -90. Não edite: rode python3 ferramentas/aura_no_corpo.py
+; >>> aura_no_corpo.py: a aura segue o corpo (issue #51). Tabelas medidas nos desenhos do .air: 233 + 111 valores, 1277 trechos. Pivô nas costas em 1, -90. Não edite: rode python3 ferramentas/aura_no_corpo.py
 [State -4, Aura diabo no corpo: costas de quem está em pé]
 type = MapSet
 trigger1 = 1
@@ -9341,7 +10439,7 @@ map = "au_diabo_q"
 value = 8448
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -2 -36]
+[State -4, Aura diabo no corpo: costas -6 -32]
 type = MapSet
 trigger1 = Anim = 1600 && AnimElemNo(0) = [3, 4]
 trigger2 = Anim = 1601 && AnimElemNo(0) = [3, 4]
@@ -9349,232 +10447,257 @@ trigger3 = Anim = 1650 && AnimElemNo(0) = [3, 4]
 trigger4 = Anim = 3000 && AnimElemNo(0) = 3
 trigger5 = Anim = 3200 && AnimElemNo(0) = 3
 map = "au_diabo_p"
-value = 5951
+value = 6205
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -18 -34]
-type = MapSet
-trigger1 = Anim = 1201 && AnimElemNo(0) = [3, 5]
-map = "au_diabo_p"
-value = 6071
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -16 -34]
+[State -4, Aura diabo no corpo: costas -22 -30]
 type = MapSet
 trigger1 = Anim = 1200 && AnimElemNo(0) = [3, 4]
+trigger2 = Anim = 1201 && AnimElemNo(0) = [3, 5]
 map = "au_diabo_p"
-value = 6072
+value = 6325
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -12 -34]
+[State -4, Aura diabo no corpo: costas -16 -30]
 type = MapSet
 trigger1 = Anim = 347 && AnimElemNo(0) = [3, 4]
 trigger2 = Anim = 410 && AnimElemNo(0) = [3, 4]
-trigger3 = Anim = 810 && AnimElemNo(0) = [13, 14]
 map = "au_diabo_p"
-value = 6074
+value = 6328
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +42 -34]
+[State -4, Aura diabo no corpo: costas +38 -30]
 type = MapSet
 trigger1 = Anim = 650 && AnimElemNo(0) = [2, 3]
 map = "au_diabo_p"
-value = 6101
+value = 6355
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +0 -32]
-type = MapSet
-trigger1 = Anim = 312 && AnimElemNo(0) = 2
-map = "au_diabo_p"
-value = 6208
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +28 -28]
+[State -4, Aura diabo no corpo: costas +22 -24]
 type = MapSet
 trigger1 = Anim = 650 && AnimElemNo(0) = 1
 map = "au_diabo_p"
-value = 6478
+value = 6731
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -12 -26]
+[State -4, Aura diabo no corpo: costas -18 -22]
 type = MapSet
 trigger1 = Anim = 610 && AnimElemNo(0) = 3
 map = "au_diabo_p"
-value = 6586
+value = 6839
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -10 -22]
+[State -4, Aura diabo no corpo: costas -14 -18]
 type = MapSet
 trigger1 = Anim = 610 && AnimElemNo(0) = [1, 2]
 map = "au_diabo_p"
-value = 6843
+value = 7097
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -8 -16]
+[State -4, Aura diabo no corpo: costas -6 -14]
+type = MapSet
+trigger1 = Anim = 303 && AnimElemNo(0) = [3, 3]
+trigger2 = Anim = 831 && AnimElemNo(0) = 8
+map = "au_diabo_p"
+value = 7357
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -4 -14]
+type = MapSet
+trigger1 = Anim = 4201 && AnimElemNo(0) = 1
+trigger2 = Anim = 4311 && AnimElemNo(0) = 1
+map = "au_diabo_p"
+value = 7358
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -2 -14]
+type = MapSet
+trigger1 = Anim = 312 && AnimElemNo(0) = 2
+trigger2 = Anim = 810 && AnimElemNo(0) = 11
+trigger3 = Anim = 841 && AnimElemNo(0) = 8
+map = "au_diabo_p"
+value = 7359
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -14 -12]
 type = MapSet
 trigger1 = Anim = 246 && AnimElemNo(0) = [3, 5]
 map = "au_diabo_p"
-value = 7228
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -2 -16]
-type = MapSet
-trigger1 = Anim = 650 && AnimElemNo(0) = 4
-map = "au_diabo_p"
-value = 7231
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -10 -12]
-type = MapSet
-trigger1 = Anim = 44 && AnimElemNo(0) = [2, 3]
-trigger2 = Anim = 45 && AnimElemNo(0) = [2, 3]
-trigger3 = Anim = 46 && AnimElemNo(0) = [2, 3]
-trigger4 = Anim = 321 && AnimElemNo(0) = 5
-trigger5 = Anim = 1001 && AnimElemNo(0) = 10
-trigger6 = Anim = 1701 && AnimElemNo(0) = 9
-map = "au_diabo_p"
-value = 7483
+value = 7481
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -8 -12]
 type = MapSet
-trigger1 = Anim = 610 && AnimElemNo(0) = 4
+trigger1 = Anim = 650 && AnimElemNo(0) = 4
 map = "au_diabo_p"
 value = 7484
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +2 -12]
+[State -4, Aura diabo no corpo: costas -6 -10]
 type = MapSet
-trigger1 = Anim = 332 && AnimElemNo(0) = 6
+trigger1 = Anim = 44 && AnimElemNo(0) = [1, 2]
+trigger2 = Anim = 45 && AnimElemNo(0) = [1, 2]
+trigger3 = Anim = 46 && AnimElemNo(0) = [1, 2]
 map = "au_diabo_p"
-value = 7489
+value = 7613
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +6 -12]
+[State -4, Aura diabo no corpo: costas +2 -10]
 type = MapSet
 trigger1 = Anim = 601 && AnimElemNo(0) = 1
 map = "au_diabo_p"
-value = 7491
+value = 7617
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +12 -12]
+[State -4, Aura diabo no corpo: costas -16 -8]
 type = MapSet
-trigger1 = Anim = 41 && AnimElemNo(0) = 3
-trigger2 = Anim = 42 && AnimElemNo(0) = 3
-trigger3 = Anim = 43 && AnimElemNo(0) = 3
+trigger1 = Anim = 321 && AnimElemNo(0) = 5
+trigger2 = Anim = 1001 && AnimElemNo(0) = 10
+trigger3 = Anim = 1701 && AnimElemNo(0) = 9
 map = "au_diabo_p"
-value = 7494
+value = 7736
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +22 -12]
+[State -4, Aura diabo no corpo: costas -14 -8]
 type = MapSet
-trigger1 = Anim = 41 && AnimElemNo(0) = 4
-trigger2 = Anim = 42 && AnimElemNo(0) = 4
-trigger3 = Anim = 43 && AnimElemNo(0) = 4
-trigger4 = Anim = 44 && AnimElemNo(0) = 1
-trigger5 = Anim = 45 && AnimElemNo(0) = 1
-trigger6 = Anim = 46 && AnimElemNo(0) = 1
+trigger1 = Anim = 610 && AnimElemNo(0) = 4
 map = "au_diabo_p"
-value = 7499
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -10 -10]
-type = MapSet
-trigger1 = Anim = 321 && AnimElemNo(0) = [1, 2]
-trigger2 = Anim = 1001 && AnimElemNo(0) = [6, 7]
-map = "au_diabo_p"
-value = 7611
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -8 -10]
-type = MapSet
-trigger1 = Anim = 1660 && AnimElemNo(0) = [7, 8]
-trigger2 = Anim = 1701 && AnimElemNo(0) = 6
-map = "au_diabo_p"
-value = 7612
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -2 -10]
-type = MapSet
-trigger1 = Anim = 332 && AnimElemNo(0) = [1, 2]
-map = "au_diabo_p"
-value = 7615
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +0 -10]
-type = MapSet
-trigger1 = Anim = 20 && AnimElemNo(0) = 8
-trigger2 = Anim = 321 && AnimElemNo(0) = [3, 4]
-trigger3 = Anim = 600 && AnimElemNo(0) = [1, 1]
-trigger4 = Anim = 1001 && AnimElemNo(0) = [8, 9]
-trigger5 = Anim = 1701 && AnimElemNo(0) = [7, 8]
-map = "au_diabo_p"
-value = 7616
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +6 -10]
-type = MapSet
-trigger1 = Anim = 332 && AnimElemNo(0) = [3, 5]
-map = "au_diabo_p"
-value = 7619
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +10 -10]
-type = MapSet
-trigger1 = Anim = 311 && AnimElemNo(0) = [4, 5]
-trigger2 = Anim = 611 && AnimElemNo(0) = 5
-map = "au_diabo_p"
-value = 7621
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -30 -8]
-type = MapSet
-trigger1 = Anim = 601 && AnimElemNo(0) = 3
-trigger2 = Anim = 611 && AnimElemNo(0) = 4
-map = "au_diabo_p"
-value = 7729
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -8 -8]
-type = MapSet
-trigger1 = Anim = 240 && AnimElemNo(0) = [2, 2]
-trigger2 = Anim = 260 && AnimElemNo(0) = 2
-trigger3 = Anim = 341 && AnimElemNo(0) = 2
-trigger4 = Anim = 343 && AnimElemNo(0) = 2
-trigger5 = Anim = 346 && AnimElemNo(0) = 2
-map = "au_diabo_p"
-value = 7740
+value = 7737
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -6 -8]
 type = MapSet
-trigger1 = Anim = 321 && AnimElemNo(0) = 6
-trigger2 = Anim = 332 && AnimElemNo(0) = 7
-trigger3 = Anim = 333 && AnimElemNo(0) = [1, 1]
-trigger4 = Anim = 810 && AnimElemNo(0) = 16
-trigger5 = Anim = 1001 && AnimElemNo(0) = 11
-trigger6 = Anim = 1701 && AnimElemNo(0) = 10
+trigger1 = Anim = 41 && AnimElemNo(0) = 4
+trigger2 = Anim = 42 && AnimElemNo(0) = 4
+trigger3 = Anim = 43 && AnimElemNo(0) = 4
+trigger4 = Anim = 4401 && AnimElemNo(0) = 3
 map = "au_diabo_p"
 value = 7741
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -4 -8]
 type = MapSet
-trigger1 = Anim = 3001 && AnimElemNo(0) = [2, 3]
+trigger1 = Anim = 332 && AnimElemNo(0) = 6
 map = "au_diabo_p"
 value = 7742
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -2 -8]
+[State -4, Aura diabo no corpo: costas +4 -8]
+type = MapSet
+trigger1 = Anim = 311 && AnimElemNo(0) = 4
+map = "au_diabo_p"
+value = 7746
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -14 -6]
+type = MapSet
+trigger1 = Anim = 240 && AnimElemNo(0) = [2, 2]
+trigger2 = Anim = 260 && AnimElemNo(0) = 2
+trigger3 = Anim = 321 && AnimElemNo(0) = [1, 2]
+trigger4 = Anim = 341 && AnimElemNo(0) = 2
+trigger5 = Anim = 343 && AnimElemNo(0) = 2
+trigger6 = Anim = 346 && AnimElemNo(0) = 2
+trigger7 = Anim = 1001 && AnimElemNo(0) = [6, 7]
+trigger8 = Anim = 1701 && AnimElemNo(0) = 6
+map = "au_diabo_p"
+value = 7865
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -8 -6]
+type = MapSet
+trigger1 = Anim = 332 && AnimElemNo(0) = [1, 2]
+map = "au_diabo_p"
+value = 7868
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -6 -6]
+type = MapSet
+trigger1 = Anim = 600 && AnimElemNo(0) = [1, 1]
+trigger2 = Anim = 4203 && AnimElemNo(0) = [1, 2]
+trigger3 = Anim = 4331 && AnimElemNo(0) = [1, 2]
+map = "au_diabo_p"
+value = 7869
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -4 -6]
+type = MapSet
+trigger1 = Anim = 210 && AnimElemNo(0) = [2, 2]
+trigger2 = Anim = 321 && AnimElemNo(0) = [3, 4]
+trigger3 = Anim = 344 && AnimElemNo(0) = 2
+trigger4 = Anim = 810 && AnimElemNo(0) = [14, 15]
+trigger5 = Anim = 1000 && AnimElemNo(0) = 6
+trigger6 = Anim = 1001 && AnimElemNo(0) = [8, 9]
+trigger7 = Anim = 1701 && AnimElemNo(0) = [7, 8]
+map = "au_diabo_p"
+value = 7870
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -2 -6]
+type = MapSet
+trigger1 = Anim = 210 && AnimElemNo(0) = [4, 4]
+trigger2 = Anim = 344 && AnimElemNo(0) = 4
+trigger3 = Anim = 1000 && AnimElemNo(0) = 8
+trigger4 = Anim = 1600 && AnimElemNo(0) = 6
+trigger5 = Anim = 1601 && AnimElemNo(0) = 6
+trigger6 = Anim = 1650 && AnimElemNo(0) = 6
+map = "au_diabo_p"
+value = 7871
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +0 -6]
+type = MapSet
+trigger1 = Anim = 332 && AnimElemNo(0) = [3, 5]
+map = "au_diabo_p"
+value = 7872
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +6 -6]
+type = MapSet
+trigger1 = Anim = 611 && AnimElemNo(0) = 5
+map = "au_diabo_p"
+value = 7875
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -36 -4]
+type = MapSet
+trigger1 = Anim = 601 && AnimElemNo(0) = 3
+trigger2 = Anim = 611 && AnimElemNo(0) = 4
+map = "au_diabo_p"
+value = 7982
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -12 -4]
+type = MapSet
+trigger1 = Anim = 333 && AnimElemNo(0) = [1, 1]
+map = "au_diabo_p"
+value = 7994
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -10 -4]
+type = MapSet
+trigger1 = Anim = 321 && AnimElemNo(0) = 6
+trigger2 = Anim = 332 && AnimElemNo(0) = 7
+trigger3 = Anim = 1001 && AnimElemNo(0) = 11
+trigger4 = Anim = 1701 && AnimElemNo(0) = 10
+trigger5 = Anim = 3001 && AnimElemNo(0) = [2, 3]
+map = "au_diabo_p"
+value = 7995
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -8 -4]
 type = MapSet
 trigger1 = Anim = 1600 && AnimElemNo(0) = [1, 2]
 trigger2 = Anim = 1601 && AnimElemNo(0) = [1, 2]
 trigger3 = Anim = 1650 && AnimElemNo(0) = [1, 2]
+trigger4 = Anim = 3000 && AnimElemNo(0) = [1, 2]
+trigger5 = Anim = 3200 && AnimElemNo(0) = [1, 2]
+trigger6 = Anim = 4200 && AnimElemNo(0) = 1
+trigger7 = Anim = 4302 && AnimElemNo(0) = 1
 map = "au_diabo_p"
-value = 7743
+value = 7996
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +0 -8]
+[State -4, Aura diabo no corpo: costas -6 -4]
 type = MapSet
 trigger1 = Anim = 240 && AnimElemNo(0) = [3, 6]
 trigger2 = Anim = 260 && AnimElemNo(0) = [3, 5]
@@ -9584,342 +10707,168 @@ trigger5 = Anim = 343 && AnimElemNo(0) = [3, 5]
 trigger6 = Anim = 346 && AnimElemNo(0) = [3, 5]
 trigger7 = Anim = 600 && AnimElemNo(0) = [4, 4]
 map = "au_diabo_p"
-value = 7744
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +2 -8]
-type = MapSet
-trigger1 = Anim = 21 && AnimElemNo(0) = [1, 4]
-map = "au_diabo_p"
-value = 7745
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +4 -8]
-type = MapSet
-trigger1 = Anim = 20 && AnimElemNo(0) = [4, 7]
-trigger2 = Anim = 21 && AnimElemNo(0) = 5
-trigger3 = Anim = 600 && AnimElemNo(0) = [2, 2]
-map = "au_diabo_p"
-value = 7746
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +6 -8]
-type = MapSet
-trigger1 = Anim = 3001 && AnimElemNo(0) = [4, 5]
-map = "au_diabo_p"
-value = 7747
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +10 -8]
-type = MapSet
-trigger1 = Anim = 3001 && AnimElemNo(0) = 6
-trigger2 = Anim = 3002 && AnimElemNo(0) = 1
-map = "au_diabo_p"
-value = 7749
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -10 -6]
-type = MapSet
-trigger1 = Anim = 1300 && AnimElemNo(0) = [4, 4]
-trigger2 = Anim = 1301 && AnimElemNo(0) = 4
-map = "au_diabo_p"
-value = 7867
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -8 -6]
-type = MapSet
-trigger1 = Anim = 1660 && AnimElemNo(0) = 1
-map = "au_diabo_p"
-value = 7868
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -6 -6]
-type = MapSet
-trigger1 = Anim = 600 && AnimElemNo(0) = [3, 3]
-map = "au_diabo_p"
-value = 7869
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -4 -6]
-type = MapSet
-trigger1 = Anim = 311 && AnimElemNo(0) = 1
-trigger2 = Anim = 311 && AnimElemNo(0) = 3
-trigger3 = Anim = 3000 && AnimElemNo(0) = [1, 2]
-trigger4 = Anim = 3200 && AnimElemNo(0) = [1, 2]
-map = "au_diabo_p"
-value = 7870
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -2 -6]
-type = MapSet
-trigger1 = Anim = 322 && AnimElemNo(0) = [2, 6]
-trigger2 = Anim = 1300 && AnimElemNo(0) = [2, 3]
-trigger3 = Anim = 1300 && AnimElemNo(0) = [5, 5]
-trigger4 = Anim = 1301 && AnimElemNo(0) = [2, 3]
-trigger5 = Anim = 1301 && AnimElemNo(0) = 5
-trigger6 = Anim = 3001 && AnimElemNo(0) = [7, 8]
-map = "au_diabo_p"
-value = 7871
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +0 -6]
-type = MapSet
-trigger1 = Anim = 20 && AnimElemNo(0) = [1, 2]
-trigger2 = Anim = 21 && AnimElemNo(0) = [7, 8]
-trigger3 = Anim = 240 && AnimElemNo(0) = [7, 10]
-trigger4 = Anim = 260 && AnimElemNo(0) = [6, 7]
-trigger5 = Anim = 341 && AnimElemNo(0) = [6, 7]
-trigger6 = Anim = 343 && AnimElemNo(0) = [6, 7]
-trigger7 = Anim = 346 && AnimElemNo(0) = [6, 7]
-trigger8 = Anim = 1700 && AnimElemNo(0) = 7
-trigger9 = Anim = 3000 && AnimElemNo(0) = 4
-trigger10 = Anim = 3002 && AnimElemNo(0) = 2
-trigger11 = Anim = 3200 && AnimElemNo(0) = 4
-map = "au_diabo_p"
-value = 7872
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +2 -6]
-type = MapSet
-trigger1 = Anim = 240 && AnimElemNo(0) = [1, 1]
-trigger2 = Anim = 260 && AnimElemNo(0) = 1
-trigger3 = Anim = 341 && AnimElemNo(0) = 1
-trigger4 = Anim = 343 && AnimElemNo(0) = 1
-trigger5 = Anim = 346 && AnimElemNo(0) = 1
-map = "au_diabo_p"
-value = 7873
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +8 -6]
-type = MapSet
-trigger1 = Anim = 333 && AnimElemNo(0) = [2, 3]
-trigger2 = Anim = 810 && AnimElemNo(0) = 1
-trigger3 = Anim = 810 && AnimElemNo(0) = 5
-trigger4 = Anim = 810 && AnimElemNo(0) = 10
-trigger5 = Anim = 810 && AnimElemNo(0) = 15
-trigger6 = Anim = 810 && AnimElemNo(0) = 17
-map = "au_diabo_p"
-value = 7876
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +10 -6]
-type = MapSet
-trigger1 = Anim = 246 && AnimElemNo(0) = [11, 12]
-map = "au_diabo_p"
-value = 7877
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +16 -6]
-type = MapSet
-trigger1 = Anim = 210 && AnimElemNo(0) = [4, 6]
-trigger2 = Anim = 344 && AnimElemNo(0) = [4, 5]
-trigger3 = Anim = 1000 && AnimElemNo(0) = [8, 9]
-trigger4 = Anim = 1600 && AnimElemNo(0) = [6, 7]
-trigger5 = Anim = 1601 && AnimElemNo(0) = [6, 7]
-trigger6 = Anim = 1650 && AnimElemNo(0) = [6, 7]
-map = "au_diabo_p"
-value = 7880
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -20 -4]
-type = MapSet
-trigger1 = Anim = 3002 && AnimElemNo(0) = 6
-map = "au_diabo_p"
-value = 7990
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -18 -4]
-type = MapSet
-trigger1 = Anim = 246 && AnimElemNo(0) = [1, 2]
-map = "au_diabo_p"
-value = 7991
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -12 -4]
-type = MapSet
-trigger1 = Anim = 322 && AnimElemNo(0) = [1, 1]
-trigger2 = Anim = 3001 && AnimElemNo(0) = 1
-map = "au_diabo_p"
-value = 7994
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -8 -4]
-type = MapSet
-trigger1 = Anim = 311 && AnimElemNo(0) = 2
-trigger2 = Anim = 331 && AnimElemNo(0) = [6, 6]
-trigger3 = Anim = 1200 && AnimElemNo(0) = 5
-trigger4 = Anim = 1201 && AnimElemNo(0) = 6
-map = "au_diabo_p"
-value = 7996
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -6 -4]
-type = MapSet
-trigger1 = Anim = 230 && AnimElemNo(0) = [1, 2]
-trigger2 = Anim = 340 && AnimElemNo(0) = [1, 2]
-trigger3 = Anim = 347 && AnimElemNo(0) = 5
-trigger4 = Anim = 410 && AnimElemNo(0) = 5
-map = "au_diabo_p"
 value = 7997
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -4 -4]
 type = MapSet
-trigger1 = Anim = 20 && AnimElemNo(0) = 3
-trigger2 = Anim = 21 && AnimElemNo(0) = 6
+trigger1 = Anim = 810 && AnimElemNo(0) = 17
 map = "au_diabo_p"
 value = 7998
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -2 -4]
 type = MapSet
-trigger1 = Anim = 100 && AnimElemNo(0) = 4
-trigger2 = Anim = 313 && AnimElemNo(0) = [7, 9]
-trigger3 = Anim = 331 && AnimElemNo(0) = [1, 3]
-trigger4 = Anim = 331 && AnimElemNo(0) = [7, 8]
-trigger5 = Anim = 333 && AnimElemNo(0) = [10, 14]
-trigger6 = Anim = 810 && AnimElemNo(0) = [21, 22]
-trigger7 = Anim = 1501 && AnimElemNo(0) = 4
-trigger8 = Anim = 3003 && AnimElemNo(0) = [3, 4]
+trigger1 = Anim = 301 && AnimElemNo(0) = 1
+trigger2 = Anim = 810 && AnimElemNo(0) = 2
+trigger3 = Anim = 831 && AnimElemNo(0) = 11
+trigger4 = Anim = 1660 && AnimElemNo(0) = 2
 map = "au_diabo_p"
 value = 7999
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas +0 -4]
 type = MapSet
-trigger1 = Anim = 0 && AnimElemNo(0) = [19, 21]
-trigger2 = Anim = 41 && AnimElemNo(0) = [1, 2]
-trigger3 = Anim = 42 && AnimElemNo(0) = [1, 2]
-trigger4 = Anim = 43 && AnimElemNo(0) = [1, 2]
-trigger5 = Anim = 47 && AnimElemNo(0) = 2
-trigger6 = Anim = 100 && AnimElemNo(0) = 8
-trigger7 = Anim = 201
-trigger8 = Anim = 216 && AnimElemNo(0) = 7
-trigger9 = Anim = 313 && AnimElemNo(0) = [1, 1]
-trigger10 = Anim = 345 && AnimElemNo(0) = 7
-trigger11 = Anim = 2000 && AnimElemNo(0) = 1
+trigger1 = Anim = 301 && AnimElemNo(0) = 4
+trigger2 = Anim = 600 && AnimElemNo(0) = [2, 2]
+trigger3 = Anim = 810 && AnimElemNo(0) = 5
+trigger4 = Anim = 3001 && AnimElemNo(0) = [4, 5]
+trigger5 = Anim = 4201 && AnimElemNo(0) = 2
+trigger6 = Anim = 4311 && AnimElemNo(0) = 2
 map = "au_diabo_p"
 value = 8000
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +2 -4]
+[State -4, Aura diabo no corpo: costas +4 -4]
 type = MapSet
-trigger1 = Anim = 5
-trigger2 = Anim = 331 && AnimElemNo(0) = [4, 5]
-trigger3 = Anim = 2000 && AnimElemNo(0) = [7, 8]
+trigger1 = Anim = 303 && AnimElemNo(0) = [5, 5]
+trigger2 = Anim = 312 && AnimElemNo(0) = 4
+trigger3 = Anim = 810 && AnimElemNo(0) = 12
+trigger4 = Anim = 831 && AnimElemNo(0) = 9
+trigger5 = Anim = 841 && AnimElemNo(0) = 9
 map = "au_diabo_p"
-value = 8001
+value = 8002
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas +6 -4]
 type = MapSet
-trigger1 = Anim = 210 && AnimElemNo(0) = [3, 3]
-trigger2 = Anim = 344 && AnimElemNo(0) = 3
-trigger3 = Anim = 601 && AnimElemNo(0) = 4
-trigger4 = Anim = 830
-trigger5 = Anim = 831 && AnimElemNo(0) = [1, 2]
-trigger6 = Anim = 1000 && AnimElemNo(0) = 7
-trigger7 = Anim = 1600 && AnimElemNo(0) = 5
-trigger8 = Anim = 1601 && AnimElemNo(0) = 5
-trigger9 = Anim = 1650 && AnimElemNo(0) = 5
-trigger10 = Anim = 3201 && AnimElemNo(0) = 4
+trigger1 = Anim = 3001 && AnimElemNo(0) = 6
+trigger2 = Anim = 3002 && AnimElemNo(0) = 1
 map = "au_diabo_p"
 value = 8003
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas +8 -4]
 type = MapSet
-trigger1 = Anim = 800
+trigger1 = Anim = 301 && AnimElemNo(0) = 5
+trigger2 = Anim = 810 && AnimElemNo(0) = 6
 map = "au_diabo_p"
 value = 8004
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -24 -2]
+[State -4, Aura diabo no corpo: costas +10 -4]
 type = MapSet
-trigger1 = Anim = 1102 && AnimElemNo(0) = [1, 2]
-trigger2 = Anim = 1103 && AnimElemNo(0) = [1, 2]
+trigger1 = Anim = 301 && AnimElemNo(0) = 2
+trigger2 = Anim = 810 && AnimElemNo(0) = 3
+trigger3 = Anim = 831 && AnimElemNo(0) = 12
 map = "au_diabo_p"
-value = 8116
+value = 8005
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -18 -2]
 type = MapSet
-trigger1 = Anim = 1102 && AnimElemNo(0) = 3
-trigger2 = Anim = 1103 && AnimElemNo(0) = 3
+trigger1 = Anim = 5930
+trigger2 = Anim = 5931 && AnimElemNo(0) = 1
+trigger3 = Anim = 5940
+trigger4 = Anim = 5941 && AnimElemNo(0) = 3
+trigger5 = Anim = 5942 && AnimElemNo(0) = 2
 map = "au_diabo_p"
 value = 8119
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -10 -2]
+[State -4, Aura diabo no corpo: costas -16 -2]
 type = MapSet
-trigger1 = Anim = 190 && AnimElemNo(0) = 6
-trigger2 = Anim = 191 && AnimElemNo(0) = 6
-trigger3 = Anim = 192 && AnimElemNo(0) = 6
-trigger4 = Anim = 312 && AnimElemNo(0) = 1
+trigger1 = Anim = 1300 && AnimElemNo(0) = [4, 4]
+trigger2 = Anim = 1301 && AnimElemNo(0) = 4
 map = "au_diabo_p"
-value = 8123
+value = 8120
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -12 -2]
+type = MapSet
+trigger1 = Anim = 600 && AnimElemNo(0) = [3, 3]
+map = "au_diabo_p"
+value = 8122
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -8 -2]
 type = MapSet
-trigger1 = Anim = 303 && AnimElemNo(0) = [2, 3]
-trigger2 = Anim = 1300 && AnimElemNo(0) = [1, 1]
-trigger3 = Anim = 1301 && AnimElemNo(0) = 1
+trigger1 = Anim = 44 && AnimElemNo(0) = 3
+trigger2 = Anim = 45 && AnimElemNo(0) = 3
+trigger3 = Anim = 46 && AnimElemNo(0) = 3
+trigger4 = Anim = 311 && AnimElemNo(0) = [1, 3]
+trigger5 = Anim = 322 && AnimElemNo(0) = [2, 6]
+trigger6 = Anim = 810 && AnimElemNo(0) = [8, 9]
+trigger7 = Anim = 831 && AnimElemNo(0) = [14, 15]
+trigger8 = Anim = 1300 && AnimElemNo(0) = [2, 3]
+trigger9 = Anim = 1300 && AnimElemNo(0) = [5, 5]
+trigger10 = Anim = 1301 && AnimElemNo(0) = [2, 3]
+trigger11 = Anim = 1301 && AnimElemNo(0) = 5
+trigger12 = Anim = 3001 && AnimElemNo(0) = [7, 8]
 map = "au_diabo_p"
 value = 8124
 ignorehitpause = 1
 
+[State -4, Aura diabo no corpo: costas -6 -2]
+type = MapSet
+trigger1 = Anim = 240 && AnimElemNo(0) = [7, 10]
+trigger2 = Anim = 260 && AnimElemNo(0) = [6, 7]
+trigger3 = Anim = 341 && AnimElemNo(0) = [6, 7]
+trigger4 = Anim = 343 && AnimElemNo(0) = [6, 7]
+trigger5 = Anim = 346 && AnimElemNo(0) = [6, 7]
+trigger6 = Anim = 1700 && AnimElemNo(0) = 7
+trigger7 = Anim = 4202 && AnimElemNo(0) = [1, 2]
+trigger8 = Anim = 4312 && AnimElemNo(0) = [1, 2]
+trigger9 = Anim = 4332 && AnimElemNo(0) = [1, 2]
+trigger10 = Anim = 5943
+map = "au_diabo_p"
+value = 8125
+ignorehitpause = 1
+
 [State -4, Aura diabo no corpo: costas -4 -2]
 type = MapSet
-trigger1 = Anim = 195 && AnimElemNo(0) = [10, 11]
-trigger2 = Anim = 831 && AnimElemNo(0) = 9
+trigger1 = Anim = 240 && AnimElemNo(0) = [1, 1]
+trigger2 = Anim = 260 && AnimElemNo(0) = 1
+trigger3 = Anim = 341 && AnimElemNo(0) = 1
+trigger4 = Anim = 343 && AnimElemNo(0) = 1
+trigger5 = Anim = 346 && AnimElemNo(0) = 1
+trigger6 = Anim = 3000 && AnimElemNo(0) = 4
+trigger7 = Anim = 3002 && AnimElemNo(0) = 2
+trigger8 = Anim = 3200 && AnimElemNo(0) = 4
+trigger9 = Anim = 5000 && AnimElemNo(0) = 1
+trigger10 = Anim = 5001 && AnimElemNo(0) = [1, 2]
+trigger11 = Anim = 5002 && AnimElemNo(0) = [2, 3]
+trigger12 = Anim = 5005 && AnimElemNo(0) = 1
+trigger13 = Anim = 5006 && AnimElemNo(0) = 1
+trigger14 = Anim = 5007 && AnimElemNo(0) = 1
+trigger15 = Anim = 5010 && AnimElemNo(0) = 1
+trigger16 = Anim = 5011 && AnimElemNo(0) = [1, 2]
+trigger17 = Anim = 5012 && AnimElemNo(0) = [2, 3]
+trigger18 = Anim = 5015 && AnimElemNo(0) = 1
+trigger19 = Anim = 5016 && AnimElemNo(0) = 1
+trigger20 = Anim = 5017 && AnimElemNo(0) = 1
+trigger21 = Anim = 5300 && AnimElemNo(0) = 1
+trigger22 = Anim = 5941 && AnimElemNo(0) = 1
 map = "au_diabo_p"
 value = 8126
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -2 -2]
-type = MapSet
-trigger1 = Anim = 140
-trigger2 = Anim = 181 && AnimElemNo(0) = [1, 3]
-trigger3 = Anim = 181 && AnimElemNo(0) = [5, 8]
-trigger4 = Anim = 190 && AnimElemNo(0) = [1, 3]
-trigger5 = Anim = 190 && AnimElemNo(0) = [7, 9]
-trigger6 = Anim = 191 && AnimElemNo(0) = [1, 3]
-trigger7 = Anim = 191 && AnimElemNo(0) = [7, 9]
-trigger8 = Anim = 192 && AnimElemNo(0) = [1, 3]
-trigger9 = Anim = 192 && AnimElemNo(0) = [7, 9]
-trigger10 = Anim = 200
-trigger11 = Anim = 230 && AnimElemNo(0) = [3, 6]
-trigger12 = Anim = 301 && AnimElemNo(0) = [6, 7]
-trigger13 = Anim = 302 && AnimElemNo(0) = [1, 2]
-trigger14 = Anim = 302 && AnimElemNo(0) = 6
-trigger15 = Anim = 311 && AnimElemNo(0) = [6, 7]
-trigger16 = Anim = 312 && AnimElemNo(0) = [5, 6]
-trigger17 = Anim = 340 && AnimElemNo(0) = [3, 6]
-trigger18 = Anim = 810 && AnimElemNo(0) = [6, 7]
-trigger19 = Anim = 1100 && AnimElemNo(0) = 4
-trigger20 = Anim = 1101 && AnimElemNo(0) = 4
-trigger21 = Anim = 1102 && AnimElemNo(0) = 4
-trigger22 = Anim = 1103 && AnimElemNo(0) = 4
-map = "au_diabo_p"
-value = 8127
-ignorehitpause = 1
-
 [State -4, Aura diabo no corpo: costas +0 -2]
 type = MapSet
-trigger1 = Anim = 0 && AnimElemNo(0) = [1, 6]
-trigger2 = Anim = 122
-trigger3 = Anim = 130
-trigger4 = Anim = 132
-trigger5 = Anim = 142
-trigger6 = Anim = 150
-trigger7 = Anim = 152
-trigger8 = Anim = 303 && AnimElemNo(0) = [1, 1]
-trigger9 = Anim = 303 && AnimElemNo(0) = [4, 10]
-trigger10 = Anim = 611 && AnimElemNo(0) = 2
-trigger11 = Anim = 1300 && AnimElemNo(0) = [10, 12]
-trigger12 = Anim = 1301 && AnimElemNo(0) = 7
-trigger13 = Anim = 5120 && AnimElemNo(0) = [6, 7]
+trigger1 = Anim = 0 && AnimElemNo(0) = [16, 21]
+trigger2 = Anim = 4200 && AnimElemNo(0) = 2
+trigger3 = Anim = 4301 && AnimElemNo(0) = [2, 3]
+trigger4 = Anim = 4302 && AnimElemNo(0) = 2
 map = "au_diabo_p"
 value = 8128
 ignorehitpause = 1
@@ -9927,635 +10876,819 @@ ignorehitpause = 1
 [State -4, Aura diabo no corpo: costas +2 -2]
 type = MapSet
 trigger1 = Anim = 120
-trigger2 = Anim = 301 && AnimElemNo(0) = [1, 3]
-trigger3 = Anim = 302 && AnimElemNo(0) = [3, 4]
-trigger4 = Anim = 611 && AnimElemNo(0) = 6
-trigger5 = Anim = 810 && AnimElemNo(0) = [2, 4]
-trigger6 = Anim = 810 && AnimElemNo(0) = [8, 9]
-trigger7 = Anim = 831 && AnimElemNo(0) = [3, 8]
-trigger8 = Anim = 1100 && AnimElemNo(0) = [1, 2]
-trigger9 = Anim = 1101 && AnimElemNo(0) = [1, 2]
+trigger2 = Anim = 1660 && AnimElemNo(0) = [4, 5]
+trigger3 = Anim = 3201 && AnimElemNo(0) = 4
 map = "au_diabo_p"
 value = 8129
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +6 -2]
+[State -4, Aura diabo no corpo: costas +4 -2]
 type = MapSet
-trigger1 = Anim = 301 && AnimElemNo(0) = [4, 5]
-trigger2 = Anim = 601 && AnimElemNo(0) = 2
-trigger3 = Anim = 1100 && AnimElemNo(0) = 3
-trigger4 = Anim = 1101 && AnimElemNo(0) = 3
-trigger5 = Anim = 1300 && AnimElemNo(0) = [6, 9]
-trigger6 = Anim = 1301 && AnimElemNo(0) = 6
+trigger1 = Anim = 246 && AnimElemNo(0) = [11, 12]
+trigger2 = Anim = 333 && AnimElemNo(0) = [2, 3]
+trigger3 = Anim = 2000 && AnimElemNo(0) = [6, 7]
 map = "au_diabo_p"
-value = 8131
+value = 8130
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +10 -2]
+type = MapSet
+trigger1 = Anim = 210 && AnimElemNo(0) = [5, 6]
+trigger2 = Anim = 344 && AnimElemNo(0) = 5
+trigger3 = Anim = 1000 && AnimElemNo(0) = 9
+trigger4 = Anim = 1600 && AnimElemNo(0) = 7
+trigger5 = Anim = 1601 && AnimElemNo(0) = 7
+trigger6 = Anim = 1650 && AnimElemNo(0) = 7
+map = "au_diabo_p"
+value = 8133
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -26 +0]
+type = MapSet
+trigger1 = Anim = 2000 && AnimElemNo(0) = 2
+map = "au_diabo_p"
+value = 8243
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -24 +0]
 type = MapSet
-trigger1 = Anim = 2000 && AnimElemNo(0) = 2
+trigger1 = Anim = 246 && AnimElemNo(0) = [1, 2]
+trigger2 = Anim = 3002 && AnimElemNo(0) = 6
 map = "au_diabo_p"
 value = 8244
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -18 +0]
 type = MapSet
-trigger1 = Anim = 5930
-trigger2 = Anim = 5931 && AnimElemNo(0) = 1
+trigger1 = Anim = 322 && AnimElemNo(0) = [1, 1]
+trigger2 = Anim = 3001 && AnimElemNo(0) = 1
 map = "au_diabo_p"
 value = 8247
 ignorehitpause = 1
 
+[State -4, Aura diabo no corpo: costas -16 +0]
+type = MapSet
+trigger1 = Anim = 20 && AnimElemNo(0) = 8
+trigger2 = Anim = 21 && AnimElemNo(0) = 1
+map = "au_diabo_p"
+value = 8248
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -14 +0]
+type = MapSet
+trigger1 = Anim = 331 && AnimElemNo(0) = [6, 6]
+trigger2 = Anim = 1200 && AnimElemNo(0) = 5
+trigger3 = Anim = 1201 && AnimElemNo(0) = 6
+map = "au_diabo_p"
+value = 8249
+ignorehitpause = 1
+
 [State -4, Aura diabo no corpo: costas -12 +0]
 type = MapSet
-trigger1 = Anim = 190 && AnimElemNo(0) = 4
-trigger2 = Anim = 191 && AnimElemNo(0) = 4
-trigger3 = Anim = 192 && AnimElemNo(0) = 4
+trigger1 = Anim = 347 && AnimElemNo(0) = 5
+trigger2 = Anim = 410 && AnimElemNo(0) = 5
 map = "au_diabo_p"
 value = 8250
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -10 +0]
+type = MapSet
+trigger1 = Anim = 230 && AnimElemNo(0) = [1, 2]
+trigger2 = Anim = 340 && AnimElemNo(0) = [1, 2]
+map = "au_diabo_p"
+value = 8251
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -8 +0]
 type = MapSet
 trigger1 = Anim = 181 && AnimElemNo(0) = 4
-trigger2 = Anim = 302 && AnimElemNo(0) = 5
-trigger3 = Anim = 347 && AnimElemNo(0) = 2
-trigger4 = Anim = 410 && AnimElemNo(0) = 2
-trigger5 = Anim = 810 && AnimElemNo(0) = 12
-trigger6 = Anim = 841 && AnimElemNo(0) = 4
+trigger2 = Anim = 181 && AnimElemNo(0) = 8
+trigger3 = Anim = 190 && AnimElemNo(0) = 4
+trigger4 = Anim = 191 && AnimElemNo(0) = 4
+trigger5 = Anim = 192 && AnimElemNo(0) = 4
+trigger6 = Anim = 311 && AnimElemNo(0) = [5, 7]
+trigger7 = Anim = 331 && AnimElemNo(0) = [1, 3]
 map = "au_diabo_p"
 value = 8252
 ignorehitpause = 1
 
+[State -4, Aura diabo no corpo: costas -6 +0]
+type = MapSet
+trigger1 = Anim = 216 && AnimElemNo(0) = 7
+trigger2 = Anim = 230 && AnimElemNo(0) = [3, 6]
+trigger3 = Anim = 301 && AnimElemNo(0) = 3
+trigger4 = Anim = 313 && AnimElemNo(0) = [1, 1]
+trigger5 = Anim = 313 && AnimElemNo(0) = [7, 9]
+trigger6 = Anim = 331 && AnimElemNo(0) = [7, 8]
+trigger7 = Anim = 333 && AnimElemNo(0) = [10, 14]
+trigger8 = Anim = 340 && AnimElemNo(0) = [3, 6]
+trigger9 = Anim = 345 && AnimElemNo(0) = 7
+trigger10 = Anim = 3003 && AnimElemNo(0) = [3, 4]
+map = "au_diabo_p"
+value = 8253
+ignorehitpause = 1
+
 [State -4, Aura diabo no corpo: costas -4 +0]
 type = MapSet
-trigger1 = Anim = 195 && AnimElemNo(0) = [1, 2]
-trigger2 = Anim = 5000 && AnimElemNo(0) = 1
-trigger3 = Anim = 5001 && AnimElemNo(0) = [1, 2]
-trigger4 = Anim = 5002 && AnimElemNo(0) = [1, 3]
-trigger5 = Anim = 5005 && AnimElemNo(0) = 1
-trigger6 = Anim = 5006 && AnimElemNo(0) = 1
-trigger7 = Anim = 5007 && AnimElemNo(0) = 1
-trigger8 = Anim = 5010 && AnimElemNo(0) = 1
-trigger9 = Anim = 5011 && AnimElemNo(0) = [1, 2]
-trigger10 = Anim = 5012 && AnimElemNo(0) = [1, 3]
-trigger11 = Anim = 5015 && AnimElemNo(0) = 1
-trigger12 = Anim = 5016 && AnimElemNo(0) = 1
-trigger13 = Anim = 5017 && AnimElemNo(0) = 1
-trigger14 = Anim = 5030 && AnimElemNo(0) = 1
-trigger15 = Anim = 5300 && AnimElemNo(0) = 1
+trigger1 = Anim = 201
+trigger2 = Anim = 4201 && AnimElemNo(0) = [3, 4]
+trigger3 = Anim = 4311 && AnimElemNo(0) = [3, 4]
+trigger4 = Anim = 4401 && AnimElemNo(0) = 4
 map = "au_diabo_p"
 value = 8254
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -2 +0]
 type = MapSet
-trigger1 = Anim = 5931 && AnimElemNo(0) = [2, 3]
+trigger1 = Anim = 21 && AnimElemNo(0) = 8
+trigger2 = Anim = 47 && AnimElemNo(0) = 2
+trigger3 = Anim = 130
+trigger4 = Anim = 150
+trigger5 = Anim = 190 && AnimElemNo(0) = 9
+trigger6 = Anim = 191 && AnimElemNo(0) = 9
+trigger7 = Anim = 192 && AnimElemNo(0) = 9
+trigger8 = Anim = 331 && AnimElemNo(0) = [4, 5]
+trigger9 = Anim = 2000 && AnimElemNo(0) = 1
 map = "au_diabo_p"
 value = 8255
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas +2 +0]
 type = MapSet
-trigger1 = Anim = 7452 && AnimElemNo(0) = 3
+trigger1 = Anim = 20 && AnimElemNo(0) = [1, 2]
+trigger2 = Anim = 140
+trigger3 = Anim = 210 && AnimElemNo(0) = [3, 3]
+trigger4 = Anim = 344 && AnimElemNo(0) = 3
+trigger5 = Anim = 601 && AnimElemNo(0) = 4
+trigger6 = Anim = 1000 && AnimElemNo(0) = 7
+trigger7 = Anim = 1300 && AnimElemNo(0) = [6, 9]
+trigger8 = Anim = 1301 && AnimElemNo(0) = 6
+trigger9 = Anim = 1600 && AnimElemNo(0) = 5
+trigger10 = Anim = 1601 && AnimElemNo(0) = 5
+trigger11 = Anim = 1650 && AnimElemNo(0) = 5
 map = "au_diabo_p"
 value = 8257
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +4 +0]
+[State -4, Aura diabo no corpo: costas -28 +2]
 type = MapSet
-trigger1 = Anim = 190 && AnimElemNo(0) = 5
-trigger2 = Anim = 191 && AnimElemNo(0) = 5
-trigger3 = Anim = 192 && AnimElemNo(0) = 5
-trigger4 = Anim = 216 && AnimElemNo(0) = [3, 6]
-trigger5 = Anim = 345 && AnimElemNo(0) = [3, 6]
+trigger1 = Anim = 1102 && AnimElemNo(0) = [1, 2]
+trigger2 = Anim = 1103 && AnimElemNo(0) = [1, 2]
 map = "au_diabo_p"
-value = 8258
+value = 8370
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +6 +0]
+[State -4, Aura diabo no corpo: costas -22 +2]
 type = MapSet
-trigger1 = Anim = 195 && AnimElemNo(0) = [3, 5]
+trigger1 = Anim = 1102 && AnimElemNo(0) = 3
+trigger2 = Anim = 1103 && AnimElemNo(0) = 3
 map = "au_diabo_p"
-value = 8259
+value = 8373
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +8 +0]
+[State -4, Aura diabo no corpo: costas -16 +2]
 type = MapSet
-trigger1 = Anim = 195 && AnimElemNo(0) = [6, 9]
-trigger2 = Anim = 3002 && AnimElemNo(0) = 3
+trigger1 = Anim = 312 && AnimElemNo(0) = 1
 map = "au_diabo_p"
-value = 8260
+value = 8376
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +10 +0]
+[State -4, Aura diabo no corpo: costas -12 +2]
 type = MapSet
-trigger1 = Anim = 313 && AnimElemNo(0) = [3, 5]
+trigger1 = Anim = 20 && AnimElemNo(0) = 4
+trigger2 = Anim = 21 && AnimElemNo(0) = 5
+trigger3 = Anim = 303 && AnimElemNo(0) = [2, 2]
+trigger4 = Anim = 1300 && AnimElemNo(0) = [1, 1]
+trigger5 = Anim = 1301 && AnimElemNo(0) = 1
 map = "au_diabo_p"
-value = 8261
+value = 8378
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +12 +0]
+[State -4, Aura diabo no corpo: costas -8 +2]
 type = MapSet
-trigger1 = Anim = 231 && AnimElemNo(0) = [1, 2]
-trigger2 = Anim = 333 && AnimElemNo(0) = [4, 6]
-trigger3 = Anim = 810 && AnimElemNo(0) = 18
+trigger1 = Anim = 190 && AnimElemNo(0) = [6, 7]
+trigger2 = Anim = 191 && AnimElemNo(0) = [6, 7]
+trigger3 = Anim = 192 && AnimElemNo(0) = [6, 7]
+trigger4 = Anim = 200
+trigger5 = Anim = 302 && AnimElemNo(0) = [1, 2]
+trigger6 = Anim = 302 && AnimElemNo(0) = 6
+trigger7 = Anim = 1102 && AnimElemNo(0) = 4
+trigger8 = Anim = 1103 && AnimElemNo(0) = 4
 map = "au_diabo_p"
-value = 8262
+value = 8380
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +16 +0]
+[State -4, Aura diabo no corpo: costas -6 +2]
 type = MapSet
-trigger1 = Anim = 313 && AnimElemNo(0) = [6, 6]
+trigger1 = Anim = 301 && AnimElemNo(0) = [6, 7]
+trigger2 = Anim = 303 && AnimElemNo(0) = [1, 1]
+trigger3 = Anim = 303 && AnimElemNo(0) = [6, 10]
+trigger4 = Anim = 312 && AnimElemNo(0) = [5, 6]
+trigger5 = Anim = 611 && AnimElemNo(0) = 2
+trigger6 = Anim = 1100 && AnimElemNo(0) = 4
+trigger7 = Anim = 1101 && AnimElemNo(0) = 4
+trigger8 = Anim = 1300 && AnimElemNo(0) = [10, 12]
+trigger9 = Anim = 1301 && AnimElemNo(0) = 7
+trigger10 = Anim = 4401 && AnimElemNo(0) = 2
 map = "au_diabo_p"
-value = 8264
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +24 +0]
-type = MapSet
-trigger1 = Anim = 611 && AnimElemNo(0) = 3
-map = "au_diabo_p"
-value = 8268
+value = 8381
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -4 +2]
 type = MapSet
-trigger1 = Anim = 246 && AnimElemNo(0) = [6, 8]
+trigger1 = Anim = 302 && AnimElemNo(0) = [3, 4]
+trigger2 = Anim = 303 && AnimElemNo(0) = [4, 4]
+trigger3 = Anim = 611 && AnimElemNo(0) = 6
+trigger4 = Anim = 1100 && AnimElemNo(0) = [1, 2]
+trigger5 = Anim = 1101 && AnimElemNo(0) = [1, 2]
+trigger6 = Anim = 1660 && AnimElemNo(0) = [7, 8]
+trigger7 = Anim = 4203 && AnimElemNo(0) = [3, 4]
+trigger8 = Anim = 4331 && AnimElemNo(0) = [3, 4]
 map = "au_diabo_p"
 value = 8382
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -2 +2]
 type = MapSet
-trigger1 = Anim = 231 && AnimElemNo(0) = 6
-trigger2 = Anim = 841 && AnimElemNo(0) = 3
+trigger1 = Anim = 122
+trigger2 = Anim = 132
+trigger3 = Anim = 142
+trigger4 = Anim = 152
+trigger5 = Anim = 831 && AnimElemNo(0) = 19
+trigger6 = Anim = 4200 && AnimElemNo(0) = [3, 4]
+trigger7 = Anim = 4202 && AnimElemNo(0) = [3, 4]
+trigger8 = Anim = 4302 && AnimElemNo(0) = [3, 4]
+trigger9 = Anim = 4312 && AnimElemNo(0) = [3, 4]
+trigger10 = Anim = 4332 && AnimElemNo(0) = [3, 4]
+trigger11 = Anim = 5931 && AnimElemNo(0) = 3
+trigger12 = Anim = 5942 && AnimElemNo(0) = 1
 map = "au_diabo_p"
 value = 8383
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas +0 +2]
 type = MapSet
-trigger1 = Anim = 105 && AnimElemNo(0) = 1
-trigger2 = Anim = 210 && AnimElemNo(0) = [1, 2]
-trigger3 = Anim = 344 && AnimElemNo(0) = [1, 2]
-trigger4 = Anim = 1000 && AnimElemNo(0) = 6
+trigger1 = Anim = 20 && AnimElemNo(0) = [5, 7]
+trigger2 = Anim = 21 && AnimElemNo(0) = [2, 4]
+trigger3 = Anim = 601 && AnimElemNo(0) = 2
+trigger4 = Anim = 2000 && AnimElemNo(0) = [3, 5]
+trigger5 = Anim = 5000 && AnimElemNo(0) = 2
+trigger6 = Anim = 5001 && AnimElemNo(0) = 3
+trigger7 = Anim = 5002 && AnimElemNo(0) = 4
+trigger8 = Anim = 5005 && AnimElemNo(0) = 2
+trigger9 = Anim = 5006 && AnimElemNo(0) = 2
+trigger10 = Anim = 5007 && AnimElemNo(0) = 2
+trigger11 = Anim = 5010 && AnimElemNo(0) = 2
+trigger12 = Anim = 5011 && AnimElemNo(0) = 3
+trigger13 = Anim = 5012 && AnimElemNo(0) = 4
+trigger14 = Anim = 5015 && AnimElemNo(0) = 2
+trigger15 = Anim = 5016 && AnimElemNo(0) = 2
+trigger16 = Anim = 5017 && AnimElemNo(0) = 2
+trigger17 = Anim = 5300 && AnimElemNo(0) = 2
+trigger18 = Anim = 5941 && AnimElemNo(0) = 2
 map = "au_diabo_p"
 value = 8384
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas +2 +2]
 type = MapSet
-trigger1 = Anim = 216 && AnimElemNo(0) = [1, 2]
-trigger2 = Anim = 246 && AnimElemNo(0) = [9, 10]
-trigger3 = Anim = 345 && AnimElemNo(0) = [1, 2]
-trigger4 = Anim = 1660 && AnimElemNo(0) = [2, 3]
-trigger5 = Anim = 1660 && AnimElemNo(0) = 6
-trigger6 = Anim = 7452 && AnimElemNo(0) = 5
+trigger1 = Anim = 1100 && AnimElemNo(0) = 3
+trigger2 = Anim = 1101 && AnimElemNo(0) = 3
 map = "au_diabo_p"
 value = 8385
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +8 +2]
+[State -4, Aura diabo no corpo: costas +4 +2]
 type = MapSet
-trigger1 = Anim = 231 && AnimElemNo(0) = [3, 5]
-trigger2 = Anim = 611 && AnimElemNo(0) = 1
+trigger1 = Anim = 190 && AnimElemNo(0) = 5
+trigger2 = Anim = 191 && AnimElemNo(0) = 5
+trigger3 = Anim = 192 && AnimElemNo(0) = 5
 map = "au_diabo_p"
-value = 8388
+value = 8386
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +6 +2]
+type = MapSet
+trigger1 = Anim = 313 && AnimElemNo(0) = [3, 5]
+map = "au_diabo_p"
+value = 8387
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -14 +4]
+type = MapSet
+trigger1 = Anim = 347 && AnimElemNo(0) = 2
+trigger2 = Anim = 410 && AnimElemNo(0) = 2
+map = "au_diabo_p"
+value = 8505
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -12 +4]
+type = MapSet
+trigger1 = Anim = 302 && AnimElemNo(0) = 5
+map = "au_diabo_p"
+value = 8506
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -10 +4]
+type = MapSet
+trigger1 = Anim = 41 && AnimElemNo(0) = [1, 3]
+trigger2 = Anim = 42 && AnimElemNo(0) = [1, 3]
+trigger3 = Anim = 43 && AnimElemNo(0) = [1, 3]
+map = "au_diabo_p"
+value = 8507
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -8 +4]
 type = MapSet
-trigger1 = Anim = 100 && AnimElemNo(0) = 5
-trigger2 = Anim = 1501 && AnimElemNo(0) = 5
+trigger1 = Anim = 841 && AnimElemNo(0) = 15
 map = "au_diabo_p"
 value = 8508
 ignorehitpause = 1
 
+[State -4, Aura diabo no corpo: costas -6 +4]
+type = MapSet
+trigger1 = Anim = 210 && AnimElemNo(0) = [7, 10]
+trigger2 = Anim = 231 && AnimElemNo(0) = 6
+trigger3 = Anim = 344 && AnimElemNo(0) = [6, 7]
+trigger4 = Anim = 1000 && AnimElemNo(0) = [10, 11]
+trigger5 = Anim = 1600 && AnimElemNo(0) = [8, 9]
+trigger6 = Anim = 1601 && AnimElemNo(0) = [8, 9]
+trigger7 = Anim = 1650 && AnimElemNo(0) = [8, 9]
+map = "au_diabo_p"
+value = 8509
+ignorehitpause = 1
+
 [State -4, Aura diabo no corpo: costas -4 +4]
 type = MapSet
-trigger1 = Anim = 100 && AnimElemNo(0) = 1
-trigger2 = Anim = 1500 && AnimElemNo(0) = [1, 1]
-trigger3 = Anim = 1501 && AnimElemNo(0) = 1
+trigger1 = Anim = 181 && AnimElemNo(0) = [5, 7]
 map = "au_diabo_p"
 value = 8510
 ignorehitpause = 1
 
+[State -4, Aura diabo no corpo: costas -2 +4]
+type = MapSet
+trigger1 = Anim = 246 && AnimElemNo(0) = [9, 10]
+trigger2 = Anim = 7452 && AnimElemNo(0) = 3
+trigger3 = Anim = 7452 && AnimElemNo(0) = 5
+map = "au_diabo_p"
+value = 8511
+ignorehitpause = 1
+
 [State -4, Aura diabo no corpo: costas +0 +4]
 type = MapSet
-trigger1 = Anim = 7451
+trigger1 = Anim = 216 && AnimElemNo(0) = [3, 6]
+trigger2 = Anim = 345 && AnimElemNo(0) = [3, 6]
+trigger3 = Anim = 4301 && AnimElemNo(0) = 1
 map = "au_diabo_p"
 value = 8512
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas +2 +4]
 type = MapSet
-trigger1 = Anim = 0 && AnimElemNo(0) = [7, 12]
-trigger2 = Anim = 100 && AnimElemNo(0) = 3
-trigger3 = Anim = 1501 && AnimElemNo(0) = 3
-trigger4 = Anim = 2000 && AnimElemNo(0) = [3, 4]
-trigger5 = Anim = 3201 && AnimElemNo(0) = 3
-trigger6 = Anim = 7452 && AnimElemNo(0) = [6, 7]
+trigger1 = Anim = 21 && AnimElemNo(0) = [6, 7]
+trigger2 = Anim = 231 && AnimElemNo(0) = [3, 5]
 map = "au_diabo_p"
 value = 8513
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +12 +4]
+[State -4, Aura diabo no corpo: costas +4 +4]
 type = MapSet
-trigger1 = Anim = 312 && AnimElemNo(0) = [3, 4]
+trigger1 = Anim = 195 && AnimElemNo(0) = [4, 5]
+trigger2 = Anim = 195 && AnimElemNo(0) = [7, 8]
+trigger3 = Anim = 611 && AnimElemNo(0) = 1
+trigger4 = Anim = 3002 && AnimElemNo(0) = 3
 map = "au_diabo_p"
-value = 8518
+value = 8514
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +26 +4]
+[State -4, Aura diabo no corpo: costas +6 +4]
 type = MapSet
-trigger1 = Anim = 3201 && AnimElemNo(0) = 5
-trigger2 = Anim = 3203 && AnimElemNo(0) = 1
+trigger1 = Anim = 231 && AnimElemNo(0) = [1, 2]
 map = "au_diabo_p"
-value = 8525
+value = 8515
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +38 +4]
+[State -4, Aura diabo no corpo: costas +8 +4]
 type = MapSet
-trigger1 = Anim = 3201 && AnimElemNo(0) = 1
+trigger1 = Anim = 333 && AnimElemNo(0) = [4, 6]
 map = "au_diabo_p"
-value = 8531
+value = 8516
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -14 +6]
+[State -4, Aura diabo no corpo: costas +10 +4]
 type = MapSet
-trigger1 = Anim = 5030 && AnimElemNo(0) = 2
-trigger2 = Anim = 5035
-trigger3 = Anim = 5040
-trigger4 = Anim = 5050 && AnimElemNo(0) = 1
+trigger1 = Anim = 313 && AnimElemNo(0) = [6, 6]
 map = "au_diabo_p"
-value = 8633
+value = 8517
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -8 +6]
+[State -4, Aura diabo no corpo: costas +18 +4]
 type = MapSet
-trigger1 = Anim = 3002 && AnimElemNo(0) = [4, 5]
+trigger1 = Anim = 611 && AnimElemNo(0) = 3
 map = "au_diabo_p"
-value = 8636
+value = 8521
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -2 +6]
+[State -4, Aura diabo no corpo: costas -10 +6]
 type = MapSet
-trigger1 = Anim = 3203 && AnimElemNo(0) = 3
+trigger1 = Anim = 246 && AnimElemNo(0) = [6, 8]
 map = "au_diabo_p"
-value = 8639
+value = 8635
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -4 +6]
+type = MapSet
+trigger1 = Anim = 210 && AnimElemNo(0) = [1, 1]
+trigger2 = Anim = 216 && AnimElemNo(0) = [1, 2]
+trigger3 = Anim = 344 && AnimElemNo(0) = 1
+trigger4 = Anim = 345 && AnimElemNo(0) = [1, 2]
+map = "au_diabo_p"
+value = 8638
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas +0 +6]
 type = MapSet
-trigger1 = Anim = 7450
-trigger2 = Anim = 7452 && AnimElemNo(0) = 4
+trigger1 = Anim = 20 && AnimElemNo(0) = 3
+trigger2 = Anim = 195 && AnimElemNo(0) = [10, 11]
 map = "au_diabo_p"
 value = 8640
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +2 +6]
-type = MapSet
-trigger1 = Anim = 7452 && AnimElemNo(0) = [1, 2]
-map = "au_diabo_p"
-value = 8641
-ignorehitpause = 1
-
 [State -4, Aura diabo no corpo: costas +4 +6]
 type = MapSet
-trigger1 = Anim = 333 && AnimElemNo(0) = [8, 9]
-trigger2 = Anim = 700 && AnimElemNo(0) = 1
-trigger3 = Anim = 705 && AnimElemNo(0) = 6
-trigger4 = Anim = 810 && AnimElemNo(0) = 20
-trigger5 = Anim = 1700 && AnimElemNo(0) = 1
-trigger6 = Anim = 1701 && AnimElemNo(0) = 1
-trigger7 = Anim = 3003 && AnimElemNo(0) = 2
+trigger1 = Anim = 800
+trigger2 = Anim = 810 && AnimElemNo(0) = 1
+trigger3 = Anim = 810 && AnimElemNo(0) = 4
+trigger4 = Anim = 810 && AnimElemNo(0) = 7
+trigger5 = Anim = 810 && AnimElemNo(0) = 10
+trigger6 = Anim = 810 && AnimElemNo(0) = 13
+trigger7 = Anim = 810 && AnimElemNo(0) = 16
 map = "au_diabo_p"
 value = 8642
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas +8 +6]
 type = MapSet
-trigger1 = Anim = 100 && AnimElemNo(0) = 7
+trigger1 = Anim = 831 && AnimElemNo(0) = [4, 7]
 map = "au_diabo_p"
 value = 8644
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +10 +6]
+[State -4, Aura diabo no corpo: costas +12 +6]
 type = MapSet
-trigger1 = Anim = 1660 && AnimElemNo(0) = [4, 5]
+trigger1 = Anim = 195 && AnimElemNo(0) = 6
+trigger2 = Anim = 195 && AnimElemNo(0) = 9
 map = "au_diabo_p"
-value = 8645
+value = 8646
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -16 +8]
-type = MapSet
-trigger1 = Anim = 333 && AnimElemNo(0) = [7, 7]
-trigger2 = Anim = 810 && AnimElemNo(0) = 19
-trigger3 = Anim = 3003 && AnimElemNo(0) = 1
-map = "au_diabo_p"
-value = 8760
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -14 +8]
+[State -4, Aura diabo no corpo: costas -22 +8]
 type = MapSet
 trigger1 = Anim = 765 && AnimElemNo(0) = 1
 map = "au_diabo_p"
-value = 8761
+value = 8757
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -6 +8]
 type = MapSet
-trigger1 = Anim = 105 && AnimElemNo(0) = [2, 3]
+trigger1 = Anim = 7451
 map = "au_diabo_p"
 value = 8765
 ignorehitpause = 1
 
+[State -4, Aura diabo no corpo: costas -4 +8]
+type = MapSet
+trigger1 = Anim = 181 && AnimElemNo(0) = [1, 3]
+trigger2 = Anim = 3201 && AnimElemNo(0) = 3
+trigger3 = Anim = 7452 && AnimElemNo(0) = [6, 7]
+map = "au_diabo_p"
+value = 8766
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -2 +8]
+type = MapSet
+trigger1 = Anim = 700 && AnimElemNo(0) = 1
+trigger2 = Anim = 705 && AnimElemNo(0) = 6
+trigger3 = Anim = 1700 && AnimElemNo(0) = 1
+trigger4 = Anim = 1701 && AnimElemNo(0) = 1
+map = "au_diabo_p"
+value = 8767
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +0 +8]
+type = MapSet
+trigger1 = Anim = 5
+trigger2 = Anim = 810 && AnimElemNo(0) = 20
+trigger3 = Anim = 830 && AnimElemNo(0) = 1
+map = "au_diabo_p"
+value = 8768
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +4 +8]
+type = MapSet
+trigger1 = Anim = 195 && AnimElemNo(0) = [1, 2]
+map = "au_diabo_p"
+value = 8770
+ignorehitpause = 1
+
 [State -4, Aura diabo no corpo: costas +6 +8]
 type = MapSet
-trigger1 = Anim = 700 && AnimElemNo(0) = 6
-trigger2 = Anim = 705 && AnimElemNo(0) = 1
-trigger3 = Anim = 1700 && AnimElemNo(0) = 6
+trigger1 = Anim = 312 && AnimElemNo(0) = 3
 map = "au_diabo_p"
 value = 8771
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -6 +10]
+[State -4, Aura diabo no corpo: costas +8 +8]
 type = MapSet
-trigger1 = Anim = 5050 && AnimElemNo(0) = 2
-trigger2 = Anim = 5051 && AnimElemNo(0) = 1
-trigger3 = Anim = 5061 && AnimElemNo(0) = 1
-trigger4 = Anim = 5070 && AnimElemNo(0) = 1
+trigger1 = Anim = 831 && AnimElemNo(0) = [1, 2]
+trigger2 = Anim = 831 && AnimElemNo(0) = [16, 18]
 map = "au_diabo_p"
-value = 8893
+value = 8772
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +10 +8]
+type = MapSet
+trigger1 = Anim = 195 && AnimElemNo(0) = 3
+trigger2 = Anim = 830 && AnimElemNo(0) = 2
+trigger3 = Anim = 831 && AnimElemNo(0) = 10
+trigger4 = Anim = 831 && AnimElemNo(0) = 13
+map = "au_diabo_p"
+value = 8773
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +22 +8]
+type = MapSet
+trigger1 = Anim = 3201 && AnimElemNo(0) = 5
+trigger2 = Anim = 3203 && AnimElemNo(0) = 1
+map = "au_diabo_p"
+value = 8779
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +32 +8]
+type = MapSet
+trigger1 = Anim = 3201 && AnimElemNo(0) = 1
+map = "au_diabo_p"
+value = 8784
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -14 +10]
+type = MapSet
+trigger1 = Anim = 3002 && AnimElemNo(0) = [4, 5]
+map = "au_diabo_p"
+value = 8889
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -8 +10]
+type = MapSet
+trigger1 = Anim = 3203 && AnimElemNo(0) = 3
+map = "au_diabo_p"
+value = 8892
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -4 +10]
+type = MapSet
+trigger1 = Anim = 7450
+trigger2 = Anim = 7452 && AnimElemNo(0) = [1, 2]
+trigger3 = Anim = 7452 && AnimElemNo(0) = 4
+map = "au_diabo_p"
+value = 8894
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -2 +10]
 type = MapSet
-trigger1 = Anim = 761 && AnimElemNo(0) = [3, 5]
-trigger2 = Anim = 841 && AnimElemNo(0) = 2
+trigger1 = Anim = 1660 && AnimElemNo(0) = 6
 map = "au_diabo_p"
 value = 8895
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas +0 +10]
 type = MapSet
-trigger1 = Anim = 760
-trigger2 = Anim = 761 && AnimElemNo(0) = [1, 2]
-trigger3 = Anim = 841 && AnimElemNo(0) = [5, 6]
+trigger1 = Anim = 333 && AnimElemNo(0) = [8, 9]
+trigger2 = Anim = 3003 && AnimElemNo(0) = 2
 map = "au_diabo_p"
 value = 8896
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas +2 +10]
 type = MapSet
-trigger1 = Anim = 5120 && AnimElemNo(0) = 5
+trigger1 = Anim = 831 && AnimElemNo(0) = 3
 map = "au_diabo_p"
 value = 8897
 ignorehitpause = 1
 
+[State -4, Aura diabo no corpo: costas +4 +10]
+type = MapSet
+trigger1 = Anim = 1660 && AnimElemNo(0) = 3
+map = "au_diabo_p"
+value = 8898
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +30 +10]
+type = MapSet
+trigger1 = Anim = 170 && AnimElemNo(0) = 4
+trigger2 = Anim = 171 && AnimElemNo(0) = 7
+map = "au_diabo_p"
+value = 8911
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -22 +12]
+type = MapSet
+trigger1 = Anim = 333 && AnimElemNo(0) = [7, 7]
+trigger2 = Anim = 3003 && AnimElemNo(0) = 1
+map = "au_diabo_p"
+value = 9013
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -10 +12]
+type = MapSet
+trigger1 = Anim = 5944 && AnimElemNo(0) = 1
+map = "au_diabo_p"
+value = 9019
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -8 +12]
+type = MapSet
+trigger1 = Anim = 5002 && AnimElemNo(0) = 1
+trigger2 = Anim = 5012 && AnimElemNo(0) = 1
+trigger3 = Anim = 5030 && AnimElemNo(0) = 1
+trigger4 = Anim = 5931 && AnimElemNo(0) = 2
+map = "au_diabo_p"
+value = 9020
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -4 +12]
+type = MapSet
+trigger1 = Anim = 1660 && AnimElemNo(0) = 1
+trigger2 = Anim = 4400 && AnimElemNo(0) = [1, 2]
+map = "au_diabo_p"
+value = 9022
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +0 +12]
+type = MapSet
+trigger1 = Anim = 6
+trigger2 = Anim = 700 && AnimElemNo(0) = 6
+trigger3 = Anim = 705 && AnimElemNo(0) = 1
+trigger4 = Anim = 1700 && AnimElemNo(0) = 6
+map = "au_diabo_p"
+value = 9024
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +2 +12]
+type = MapSet
+trigger1 = Anim = 841 && AnimElemNo(0) = 5
+map = "au_diabo_p"
+value = 9025
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +4 +12]
+type = MapSet
+trigger1 = Anim = 170 && AnimElemNo(0) = [2, 3]
+trigger2 = Anim = 171 && AnimElemNo(0) = [5, 6]
+trigger3 = Anim = 400 && AnimElemNo(0) = [1, 2]
+trigger4 = Anim = 841 && AnimElemNo(0) = [2, 3]
+map = "au_diabo_p"
+value = 9026
+ignorehitpause = 1
+
 [State -4, Aura diabo no corpo: costas -2 +14]
 type = MapSet
-trigger1 = Anim = 323 && AnimElemNo(0) = [1, 1]
-trigger2 = Anim = 1500 && AnimElemNo(0) = [3, 3]
-trigger3 = Anim = 1501 && AnimElemNo(0) = 6
+trigger1 = Anim = 4401 && AnimElemNo(0) = 1
 map = "au_diabo_p"
 value = 9151
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +0 +14]
+[State -4, Aura diabo no corpo: costas +4 +14]
 type = MapSet
-trigger1 = Anim = 1500 && AnimElemNo(0) = [4, 4]
-trigger2 = Anim = 1501 && AnimElemNo(0) = 7
-trigger3 = Anim = 3202 && AnimElemNo(0) = 1
+trigger1 = Anim = 190 && AnimElemNo(0) = 8
+trigger2 = Anim = 191 && AnimElemNo(0) = 8
+trigger3 = Anim = 192 && AnimElemNo(0) = 8
 map = "au_diabo_p"
-value = 9152
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +2 +14]
-type = MapSet
-trigger1 = Anim = 10
-trigger2 = Anim = 12
-map = "au_diabo_p"
-value = 9153
+value = 9154
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -4 +16]
 type = MapSet
-trigger1 = Anim = 323 && AnimElemNo(0) = [2, 3]
+trigger1 = Anim = 105 && AnimElemNo(0) = 1
+trigger2 = Anim = 7470
 map = "au_diabo_p"
 value = 9278
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas +0 +16]
 type = MapSet
-trigger1 = Anim = 100 && AnimElemNo(0) = 6
+trigger1 = Anim = 810 && AnimElemNo(0) = 18
 map = "au_diabo_p"
 value = 9280
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +6 +16]
+[State -4, Aura diabo no corpo: costas +2 +16]
 type = MapSet
-trigger1 = Anim = 840
-trigger2 = Anim = 3201 && AnimElemNo(0) = 6
-trigger3 = Anim = 3203 && AnimElemNo(0) = 2
+trigger1 = Anim = 10
+trigger2 = Anim = 12
 map = "au_diabo_p"
-value = 9283
+value = 9281
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas +8 +16]
 type = MapSet
-trigger1 = Anim = 6
-trigger2 = Anim = 5120 && AnimElemNo(0) = 4
+trigger1 = Anim = 760 && AnimElemNo(0) = 3
+trigger2 = Anim = 761 && AnimElemNo(0) = [1, 2]
 map = "au_diabo_p"
 value = 9284
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +4 +18]
+[State -4, Aura diabo no corpo: costas -8 +18]
 type = MapSet
-trigger1 = Anim = 121
+trigger1 = Anim = 323 && AnimElemNo(0) = [2, 3]
+trigger2 = Anim = 1500 && AnimElemNo(0) = [3, 3]
+trigger3 = Anim = 1501 && AnimElemNo(0) = 6
 map = "au_diabo_p"
-value = 9410
+value = 9404
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +6 +18]
+[State -4, Aura diabo no corpo: costas -6 +18]
 type = MapSet
-trigger1 = Anim = 40
-trigger2 = Anim = 141
-trigger3 = Anim = 841 && AnimElemNo(0) = 1
+trigger1 = Anim = 323 && AnimElemNo(0) = [1, 1]
+trigger2 = Anim = 1500 && AnimElemNo(0) = [4, 4]
+trigger3 = Anim = 1501 && AnimElemNo(0) = 7
+trigger4 = Anim = 3202 && AnimElemNo(0) = 1
 map = "au_diabo_p"
-value = 9411
+value = 9405
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -16 +20]
+[State -4, Aura diabo no corpo: costas -2 +18]
 type = MapSet
-trigger1 = Anim = 1500 && AnimElemNo(0) = [5, 6]
-trigger2 = Anim = 1501 && AnimElemNo(0) = [8, 9]
-trigger3 = Anim = 3202 && AnimElemNo(0) = 2
+trigger1 = Anim = 190 && AnimElemNo(0) = 3
+trigger2 = Anim = 191 && AnimElemNo(0) = 3
+trigger3 = Anim = 192 && AnimElemNo(0) = 3
+trigger4 = Anim = 4400 && AnimElemNo(0) = [3, 4]
 map = "au_diabo_p"
-value = 9528
+value = 9407
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -14 +20]
+[State -4, Aura diabo no corpo: costas +0 +18]
 type = MapSet
-trigger1 = Anim = 323 && AnimElemNo(0) = [4, 4]
+trigger1 = Anim = 5120 && AnimElemNo(0) = [6, 7]
 map = "au_diabo_p"
-value = 9529
+value = 9408
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -6 +20]
+[State -4, Aura diabo no corpo: costas +2 +18]
 type = MapSet
-trigger1 = Anim = 323 && AnimElemNo(0) = [5, 5]
+trigger1 = Anim = 761 && AnimElemNo(0) = [3, 4]
 map = "au_diabo_p"
-value = 9533
+value = 9409
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +26 +18]
+type = MapSet
+trigger1 = Anim = 170 && AnimElemNo(0) = 5
+trigger2 = Anim = 171 && AnimElemNo(0) = 8
+map = "au_diabo_p"
+value = 9421
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas +2 +20]
 type = MapSet
-trigger1 = Anim = 100 && AnimElemNo(0) = 2
-trigger2 = Anim = 1500 && AnimElemNo(0) = [2, 2]
-trigger3 = Anim = 1501 && AnimElemNo(0) = 2
+trigger1 = Anim = 3201 && AnimElemNo(0) = 6
+trigger2 = Anim = 3203 && AnimElemNo(0) = 2
 map = "au_diabo_p"
 value = 9537
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas +4 +20]
 type = MapSet
-trigger1 = Anim = 131
-trigger2 = Anim = 151
-trigger3 = Anim = 3201 && AnimElemNo(0) = 2
+trigger1 = Anim = 400 && AnimElemNo(0) = [3, 3]
+trigger2 = Anim = 841 && AnimElemNo(0) = 6
 map = "au_diabo_p"
 value = 9538
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +6 +20]
+[State -4, Aura diabo no corpo: costas -22 +22]
 type = MapSet
-trigger1 = Anim = 47 && AnimElemNo(0) = 1
-trigger2 = Anim = 342
-trigger3 = Anim = 430
-trigger4 = Anim = 1000 && AnimElemNo(0) = [1, 5]
-trigger5 = Anim = 1001 && AnimElemNo(0) = [1, 5]
+trigger1 = Anim = 1500 && AnimElemNo(0) = [5, 6]
+trigger2 = Anim = 1501 && AnimElemNo(0) = [8, 9]
+trigger3 = Anim = 3202 && AnimElemNo(0) = 2
 map = "au_diabo_p"
-value = 9539
+value = 9653
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +4 +22]
+[State -4, Aura diabo no corpo: costas -20 +22]
 type = MapSet
-trigger1 = Anim = 440 && AnimElemNo(0) = [10, 12]
+trigger1 = Anim = 323 && AnimElemNo(0) = [4, 4]
 map = "au_diabo_p"
-value = 9666
+value = 9654
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +8 +22]
+[State -4, Aura diabo no corpo: costas -12 +22]
 type = MapSet
-trigger1 = Anim = 1400 && AnimElemNo(0) = [1, 2]
-trigger2 = Anim = 1401 && AnimElemNo(0) = 1
+trigger1 = Anim = 323 && AnimElemNo(0) = [5, 5]
 map = "au_diabo_p"
-value = 9668
+value = 9658
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +0 +24]
-type = MapSet
-trigger1 = Anim = 1400 && AnimElemNo(0) = [3, 4]
-trigger2 = Anim = 1401 && AnimElemNo(0) = 2
-map = "au_diabo_p"
-value = 9792
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +2 +24]
-type = MapSet
-trigger1 = Anim = 347 && AnimElemNo(0) = 6
-trigger2 = Anim = 410 && AnimElemNo(0) = 6
-map = "au_diabo_p"
-value = 9793
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +4 +24]
-type = MapSet
-trigger1 = Anim = 400 && AnimElemNo(0) = [4, 6]
-trigger2 = Anim = 440 && AnimElemNo(0) = [1, 1]
-trigger3 = Anim = 1200 && AnimElemNo(0) = 6
-trigger4 = Anim = 1201 && AnimElemNo(0) = 7
-map = "au_diabo_p"
-value = 9794
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +6 +24]
-type = MapSet
-trigger1 = Anim = 323 && AnimElemNo(0) = [7, 9]
-trigger2 = Anim = 1502 && AnimElemNo(0) = [2, 2]
-trigger3 = Anim = 1503 && AnimElemNo(0) = 2
-trigger4 = Anim = 3202 && AnimElemNo(0) = 4
-trigger5 = Anim = 5120 && AnimElemNo(0) = 3
-map = "au_diabo_p"
-value = 9795
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +10 +24]
-type = MapSet
-trigger1 = Anim = 400 && AnimElemNo(0) = [1, 3]
-trigger2 = Anim = 1400 && AnimElemNo(0) = [11, 17]
-trigger3 = Anim = 1401 && AnimElemNo(0) = [7, 8]
-map = "au_diabo_p"
-value = 9797
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +16 +24]
-type = MapSet
-trigger1 = Anim = 440 && AnimElemNo(0) = [6, 9]
-map = "au_diabo_p"
-value = 9800
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +0 +26]
-type = MapSet
-trigger1 = Anim = 5020 && AnimElemNo(0) = 1
-trigger2 = Anim = 5021 && AnimElemNo(0) = 1
-trigger3 = Anim = 5022 && AnimElemNo(0) = 1
-map = "au_diabo_p"
-value = 9920
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +2 +26]
-type = MapSet
-trigger1 = Anim = 1200 && AnimElemNo(0) = [1, 2]
-trigger2 = Anim = 1201 && AnimElemNo(0) = [1, 2]
-map = "au_diabo_p"
-value = 9921
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +6 +26]
-type = MapSet
-trigger1 = Anim = 700 && AnimElemNo(0) = 5
-trigger2 = Anim = 705 && AnimElemNo(0) = 2
-trigger3 = Anim = 1700 && AnimElemNo(0) = 5
-trigger4 = Anim = 1701 && AnimElemNo(0) = 5
-trigger5 = Anim = 5200 && AnimElemNo(0) = 4
-trigger6 = Anim = 5210 && AnimElemNo(0) = 4
-map = "au_diabo_p"
-value = 9923
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +8 +26]
-type = MapSet
-trigger1 = Anim = 700 && AnimElemNo(0) = 2
-trigger2 = Anim = 705 && AnimElemNo(0) = 5
-trigger3 = Anim = 1700 && AnimElemNo(0) = 2
-trigger4 = Anim = 1701 && AnimElemNo(0) = 2
-trigger5 = Anim = 5200 && AnimElemNo(0) = 1
-trigger6 = Anim = 5210 && AnimElemNo(0) = 1
-map = "au_diabo_p"
-value = 9924
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +4 +28]
-type = MapSet
-trigger1 = Anim = 11
-trigger2 = Anim = 764 && AnimElemNo(0) = 1
-map = "au_diabo_p"
-value = 10050
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +6 +28]
+[State -4, Aura diabo no corpo: costas +2 +22]
 type = MapSet
 trigger1 = Anim = 5020 && AnimElemNo(0) = 2
 trigger2 = Anim = 5021 && AnimElemNo(0) = 2
@@ -10564,101 +11697,430 @@ trigger4 = Anim = 5025
 trigger5 = Anim = 5026
 trigger6 = Anim = 5027
 map = "au_diabo_p"
-value = 10051
+value = 9665
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +8 +28]
+[State -4, Aura diabo no corpo: costas -4 +24]
 type = MapSet
-trigger1 = Anim = 347 && AnimElemNo(0) = 1
-trigger2 = Anim = 410 && AnimElemNo(0) = 1
-trigger3 = Anim = 765 && AnimElemNo(0) = 5
-trigger4 = Anim = 810 && AnimElemNo(0) = 11
+trigger1 = Anim = 764 && AnimElemNo(0) = 1
 map = "au_diabo_p"
-value = 10052
+value = 9790
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -6 +30]
+[State -4, Aura diabo no corpo: costas +0 +24]
 type = MapSet
-trigger1 = Anim = 764 && AnimElemNo(0) = [2, 3]
-trigger2 = Anim = 5120 && AnimElemNo(0) = 2
+trigger1 = Anim = 190 && AnimElemNo(0) = 2
+trigger2 = Anim = 191 && AnimElemNo(0) = 2
+trigger3 = Anim = 192 && AnimElemNo(0) = 2
+trigger4 = Anim = 841 && AnimElemNo(0) = 12
+trigger5 = Anim = 841 && AnimElemNo(0) = 14
+trigger6 = Anim = 3201 && AnimElemNo(0) = 2
+trigger7 = Anim = 5120 && AnimElemNo(0) = 5
 map = "au_diabo_p"
-value = 10173
+value = 9792
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +2 +24]
+type = MapSet
+trigger1 = Anim = 11
+trigger2 = Anim = 342
+trigger3 = Anim = 430
+trigger4 = Anim = 1000 && AnimElemNo(0) = [1, 5]
+trigger5 = Anim = 1001 && AnimElemNo(0) = [1, 5]
+map = "au_diabo_p"
+value = 9793
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +4 +24]
+type = MapSet
+trigger1 = Anim = 760 && AnimElemNo(0) = [1, 2]
+trigger2 = Anim = 840 && AnimElemNo(0) = 1
+map = "au_diabo_p"
+value = 9794
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -10 +26]
+type = MapSet
+trigger1 = Anim = 105 && AnimElemNo(0) = [2, 3]
+map = "au_diabo_p"
+value = 9915
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -4 +26]
+type = MapSet
+trigger1 = Anim = 5020 && AnimElemNo(0) = 1
+trigger2 = Anim = 5021 && AnimElemNo(0) = 1
+trigger3 = Anim = 5022 && AnimElemNo(0) = 1
+map = "au_diabo_p"
+value = 9918
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +0 +26]
+type = MapSet
+trigger1 = Anim = 440 && AnimElemNo(0) = [10, 12]
+map = "au_diabo_p"
+value = 9920
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +2 +26]
+type = MapSet
+trigger1 = Anim = 761 && AnimElemNo(0) = 5
+trigger2 = Anim = 1400 && AnimElemNo(0) = [1, 2]
+trigger3 = Anim = 1401 && AnimElemNo(0) = 1
+map = "au_diabo_p"
+value = 9921
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -8 +28]
+type = MapSet
+trigger1 = Anim = 810 && AnimElemNo(0) = 19
+trigger2 = Anim = 841 && AnimElemNo(0) = 16
+map = "au_diabo_p"
+value = 10044
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -6 +28]
+type = MapSet
+trigger1 = Anim = 1400 && AnimElemNo(0) = [3, 4]
+trigger2 = Anim = 1401 && AnimElemNo(0) = 2
+map = "au_diabo_p"
+value = 10045
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -4 +28]
+type = MapSet
+trigger1 = Anim = 151
+map = "au_diabo_p"
+value = 10046
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -2 +28]
+type = MapSet
+trigger1 = Anim = 347 && AnimElemNo(0) = 6
+trigger2 = Anim = 400 && AnimElemNo(0) = [4, 6]
+trigger3 = Anim = 410 && AnimElemNo(0) = 6
+map = "au_diabo_p"
+value = 10047
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +0 +28]
+type = MapSet
+trigger1 = Anim = 440 && AnimElemNo(0) = [1, 1]
+trigger2 = Anim = 1200 && AnimElemNo(0) = 6
+trigger3 = Anim = 1201 && AnimElemNo(0) = 7
+map = "au_diabo_p"
+value = 10048
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +2 +28]
+type = MapSet
+trigger1 = Anim = 323 && AnimElemNo(0) = [7, 9]
+trigger2 = Anim = 1502 && AnimElemNo(0) = [2, 2]
+trigger3 = Anim = 1503 && AnimElemNo(0) = 2
+trigger4 = Anim = 3202 && AnimElemNo(0) = 4
+map = "au_diabo_p"
+value = 10049
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +4 +28]
+type = MapSet
+trigger1 = Anim = 1400 && AnimElemNo(0) = [11, 17]
+trigger2 = Anim = 1401 && AnimElemNo(0) = [7, 8]
+map = "au_diabo_p"
+value = 10050
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +10 +28]
+type = MapSet
+trigger1 = Anim = 440 && AnimElemNo(0) = [6, 9]
+map = "au_diabo_p"
+value = 10053
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -4 +30]
+type = MapSet
+trigger1 = Anim = 131
+trigger2 = Anim = 1200 && AnimElemNo(0) = [1, 2]
+trigger3 = Anim = 1201 && AnimElemNo(0) = [1, 2]
+map = "au_diabo_p"
+value = 10174
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -2 +30]
+type = MapSet
+trigger1 = Anim = 121
+map = "au_diabo_p"
+value = 10175
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +0 +30]
+type = MapSet
+trigger1 = Anim = 47 && AnimElemNo(0) = 1
+trigger2 = Anim = 141
+map = "au_diabo_p"
+value = 10176
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas +2 +30]
 type = MapSet
-trigger1 = Anim = 440 && AnimElemNo(0) = [2, 2]
-trigger2 = Anim = 765 && AnimElemNo(0) = [3, 4]
+trigger1 = Anim = 700 && AnimElemNo(0) = 5
+trigger2 = Anim = 705 && AnimElemNo(0) = 2
+trigger3 = Anim = 765 && AnimElemNo(0) = 5
+trigger4 = Anim = 1700 && AnimElemNo(0) = 5
+trigger5 = Anim = 1701 && AnimElemNo(0) = 5
+trigger6 = Anim = 5200 && AnimElemNo(0) = 4
+trigger7 = Anim = 5210 && AnimElemNo(0) = 4
 map = "au_diabo_p"
 value = 10177
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +8 +30]
+[State -4, Aura diabo no corpo: costas +4 +30]
 type = MapSet
-trigger1 = Anim = 1400 && AnimElemNo(0) = [5, 5]
-trigger2 = Anim = 1401 && AnimElemNo(0) = 3
+trigger1 = Anim = 700 && AnimElemNo(0) = 2
+trigger2 = Anim = 705 && AnimElemNo(0) = 5
+trigger3 = Anim = 1700 && AnimElemNo(0) = 2
+trigger4 = Anim = 1701 && AnimElemNo(0) = 2
+trigger5 = Anim = 5200 && AnimElemNo(0) = 1
+trigger6 = Anim = 5210 && AnimElemNo(0) = 1
 map = "au_diabo_p"
-value = 10180
+value = 10178
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -14 +32]
+[State -4, Aura diabo no corpo: costas -4 +32]
+type = MapSet
+trigger1 = Anim = 190 && AnimElemNo(0) = 1
+trigger2 = Anim = 191 && AnimElemNo(0) = 1
+trigger3 = Anim = 192 && AnimElemNo(0) = 1
+trigger4 = Anim = 5120 && AnimElemNo(0) = 4
+map = "au_diabo_p"
+value = 10302
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -2 +32]
+type = MapSet
+trigger1 = Anim = 40
+trigger2 = Anim = 171 && AnimElemNo(0) = 3
+map = "au_diabo_p"
+value = 10303
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +2 +32]
+type = MapSet
+trigger1 = Anim = 347 && AnimElemNo(0) = 1
+trigger2 = Anim = 410 && AnimElemNo(0) = 1
+trigger3 = Anim = 840 && AnimElemNo(0) = 2
+trigger4 = Anim = 841 && AnimElemNo(0) = 1
+trigger5 = Anim = 841 && AnimElemNo(0) = 4
+trigger6 = Anim = 841 && AnimElemNo(0) = 7
+trigger7 = Anim = 841 && AnimElemNo(0) = [10, 11]
+trigger8 = Anim = 841 && AnimElemNo(0) = 13
+trigger9 = Anim = 5030 && AnimElemNo(0) = 2
+trigger10 = Anim = 5035
+trigger11 = Anim = 5040
+trigger12 = Anim = 5050 && AnimElemNo(0) = 1
+map = "au_diabo_p"
+value = 10305
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -20 +34]
 type = MapSet
 trigger1 = Anim = 765 && AnimElemNo(0) = 2
 map = "au_diabo_p"
-value = 10297
+value = 10422
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +4 +32]
+[State -4, Aura diabo no corpo: costas -12 +34]
 type = MapSet
-trigger1 = Anim = 440 && AnimElemNo(0) = [3, 5]
+trigger1 = Anim = 764 && AnimElemNo(0) = 2
 map = "au_diabo_p"
-value = 10306
+value = 10426
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +6 +32]
+[State -4, Aura diabo no corpo: costas -6 +34]
 type = MapSet
-trigger1 = Anim = 1400 && AnimElemNo(0) = [6, 10]
-trigger2 = Anim = 1401 && AnimElemNo(0) = [4, 6]
+trigger1 = Anim = 323 && AnimElemNo(0) = [6, 6]
 map = "au_diabo_p"
-value = 10307
+value = 10429
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -4 +34]
 type = MapSet
-trigger1 = Anim = 323 && AnimElemNo(0) = [6, 6]
+trigger1 = Anim = 440 && AnimElemNo(0) = [2, 2]
 map = "au_diabo_p"
 value = 10430
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +0 +34]
+[State -4, Aura diabo no corpo: costas -2 +34]
 type = MapSet
 trigger1 = Anim = 1502 && AnimElemNo(0) = [1, 1]
 trigger2 = Anim = 1503 && AnimElemNo(0) = 1
 trigger3 = Anim = 3202 && AnimElemNo(0) = 3
 map = "au_diabo_p"
+value = 10431
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +0 +34]
+type = MapSet
+trigger1 = Anim = 440 && AnimElemNo(0) = [3, 5]
+map = "au_diabo_p"
 value = 10432
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -12 +44]
+[State -4, Aura diabo no corpo: costas +2 +34]
 type = MapSet
-trigger1 = Anim = 5120 && AnimElemNo(0) = 1
+trigger1 = Anim = 1400 && AnimElemNo(0) = [5, 5]
+trigger2 = Anim = 1400 && AnimElemNo(0) = [6, 10]
+trigger3 = Anim = 1401 && AnimElemNo(0) = 3
+trigger4 = Anim = 1401 && AnimElemNo(0) = [4, 6]
 map = "au_diabo_p"
-value = 11066
+value = 10433
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +2 +36]
+type = MapSet
+trigger1 = Anim = 841 && AnimElemNo(0) = 17
+map = "au_diabo_p"
+value = 10561
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -24 +38]
+type = MapSet
+trigger1 = Anim = 100 && AnimElemNo(0) = 4
+trigger2 = Anim = 1501 && AnimElemNo(0) = 4
+map = "au_diabo_p"
+value = 10676
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -22 +38]
+type = MapSet
+trigger1 = Anim = 100 && AnimElemNo(0) = 8
+map = "au_diabo_p"
+value = 10677
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +2 +38]
+type = MapSet
+trigger1 = Anim = 100 && AnimElemNo(0) = 3
+trigger2 = Anim = 1501 && AnimElemNo(0) = 3
+map = "au_diabo_p"
+value = 10689
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +8 +38]
+type = MapSet
+trigger1 = Anim = 100 && AnimElemNo(0) = 7
+map = "au_diabo_p"
+value = 10692
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -38 +42]
+type = MapSet
+trigger1 = Anim = 100 && AnimElemNo(0) = 1
+trigger2 = Anim = 1500 && AnimElemNo(0) = [1, 1]
+trigger3 = Anim = 1501 && AnimElemNo(0) = 1
+map = "au_diabo_p"
+value = 10925
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -34 +42]
+type = MapSet
+trigger1 = Anim = 100 && AnimElemNo(0) = 5
+trigger2 = Anim = 1501 && AnimElemNo(0) = 5
+map = "au_diabo_p"
+value = 10927
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -12 +42]
+type = MapSet
+trigger1 = Anim = 764 && AnimElemNo(0) = 3
+map = "au_diabo_p"
+value = 10938
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -6 +42]
+type = MapSet
+trigger1 = Anim = 4403 && AnimElemNo(0) = [1, 2]
+map = "au_diabo_p"
+value = 10941
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -4 +42]
+type = MapSet
+trigger1 = Anim = 765 && AnimElemNo(0) = [3, 4]
+map = "au_diabo_p"
+value = 10942
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +0 +44]
+type = MapSet
+trigger1 = Anim = 4402
+map = "au_diabo_p"
+value = 11072
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -14 +46]
 type = MapSet
-trigger1 = Anim = 5050 && AnimElemNo(0) = 3
-trigger2 = Anim = 5051 && AnimElemNo(0) = 2
-trigger3 = Anim = 5061 && AnimElemNo(0) = 2
-trigger4 = Anim = 5070 && AnimElemNo(0) = 2
-trigger5 = Anim = 5080
-trigger6 = Anim = 5090
+trigger1 = Anim = 5120 && AnimElemNo(0) = 2
 map = "au_diabo_p"
 value = 11193
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +6 +52]
+[State -4, Aura diabo no corpo: costas +0 +46]
+type = MapSet
+trigger1 = Anim = 4403 && AnimElemNo(0) = 4
+map = "au_diabo_p"
+value = 11200
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -10 +48]
+type = MapSet
+trigger1 = Anim = 5050 && AnimElemNo(0) = 2
+trigger2 = Anim = 5051 && AnimElemNo(0) = 1
+trigger3 = Anim = 5061 && AnimElemNo(0) = 1
+trigger4 = Anim = 5070 && AnimElemNo(0) = 1
+map = "au_diabo_p"
+value = 11323
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -2 +48]
+type = MapSet
+trigger1 = Anim = 170 && AnimElemNo(0) = 1
+trigger2 = Anim = 171 && AnimElemNo(0) = 4
+map = "au_diabo_p"
+value = 11327
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +4 +48]
+type = MapSet
+trigger1 = Anim = 5120 && AnimElemNo(0) = 3
+map = "au_diabo_p"
+value = 11330
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -2 +50]
+type = MapSet
+trigger1 = Anim = 100 && AnimElemNo(0) = 6
+map = "au_diabo_p"
+value = 11455
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +0 +50]
+type = MapSet
+trigger1 = Anim = 100 && AnimElemNo(0) = 2
+trigger2 = Anim = 1500 && AnimElemNo(0) = [2, 2]
+trigger3 = Anim = 1501 && AnimElemNo(0) = 2
+map = "au_diabo_p"
+value = 11456
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -8 +52]
+type = MapSet
+trigger1 = Anim = 4403 && AnimElemNo(0) = 3
+map = "au_diabo_p"
+value = 11580
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +0 +54]
 type = MapSet
 trigger1 = Anim = 700 && AnimElemNo(0) = [3, 4]
 trigger2 = Anim = 705 && AnimElemNo(0) = [3, 4]
@@ -10667,388 +12129,469 @@ trigger4 = Anim = 1701 && AnimElemNo(0) = [3, 4]
 trigger5 = Anim = 5200 && AnimElemNo(0) = [2, 3]
 trigger6 = Anim = 5210 && AnimElemNo(0) = [2, 3]
 map = "au_diabo_p"
-value = 11587
+value = 11712
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -14 +56]
+[State -4, Aura diabo no corpo: costas -16 +56]
 type = MapSet
-trigger1 = Anim = 5100 && AnimElemNo(0) = 2
-trigger2 = Anim = 5101 && AnimElemNo(0) = 2
-trigger3 = Anim = 5160 && AnimElemNo(0) = 1
-trigger4 = Anim = 5170 && AnimElemNo(0) = 1
+trigger1 = Anim = 5120 && AnimElemNo(0) = 1
 map = "au_diabo_p"
-value = 11833
+value = 11832
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -10 +56]
+[State -4, Aura diabo no corpo: costas -6 +58]
 type = MapSet
-trigger1 = Anim = 171 && AnimElemNo(0) = 3
+trigger1 = Anim = 7471 && AnimElemNo(0) = [7, 14]
 map = "au_diabo_p"
-value = 11835
+value = 11965
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -34 +64]
+[State -4, Aura diabo no corpo: costas -4 +64]
+type = MapSet
+trigger1 = Anim = 7471 && AnimElemNo(0) = [4, 6]
+map = "au_diabo_p"
+value = 12350
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -22 +68]
+type = MapSet
+trigger1 = Anim = 5100
+trigger2 = Anim = 5101
+map = "au_diabo_p"
+value = 12597
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -30 +70]
 type = MapSet
 trigger1 = Anim = 171 && AnimElemNo(0) = 2
 map = "au_diabo_p"
-value = 12335
+value = 12721
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -22 +64]
+[State -4, Aura diabo no corpo: costas -22 +70]
 type = MapSet
-trigger1 = Anim = 5100 && AnimElemNo(0) = 1
-trigger2 = Anim = 5101 && AnimElemNo(0) = 1
+trigger1 = Anim = 5050 && AnimElemNo(0) = 3
+trigger2 = Anim = 5051 && AnimElemNo(0) = 2
+trigger3 = Anim = 5061 && AnimElemNo(0) = 2
+trigger4 = Anim = 5070 && AnimElemNo(0) = 2
+trigger5 = Anim = 5080
+trigger6 = Anim = 5090
 map = "au_diabo_p"
-value = 12341
+value = 12725
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -18 +64]
+[State -4, Aura diabo no corpo: costas -30 +72]
+type = MapSet
+trigger1 = Anim = 5944 && AnimElemNo(0) = 2
+map = "au_diabo_p"
+value = 12849
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -24 +72]
+type = MapSet
+trigger1 = Anim = 5110
+trigger2 = Anim = 5150
+trigger3 = Anim = 5160
+trigger4 = Anim = 5170
+map = "au_diabo_p"
+value = 12852
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -22 +72]
 type = MapSet
 trigger1 = Anim = 171 && AnimElemNo(0) = 1
 map = "au_diabo_p"
-value = 12343
+value = 12853
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -24 +66]
+[State -4, Aura diabo no corpo: costas -8 +72]
 type = MapSet
-trigger1 = Anim = 170 && AnimElemNo(0) = 1
-trigger2 = Anim = 171 && AnimElemNo(0) = 4
-trigger3 = Anim = 5110
-trigger4 = Anim = 5150
-trigger5 = Anim = 5160 && AnimElemNo(0) = 2
-trigger6 = Anim = 5170 && AnimElemNo(0) = 2
+trigger1 = Anim = 9241 && AnimElemNo(0) = [9, 10]
+trigger2 = Anim = 9271 && AnimElemNo(0) = [9, 10]
 map = "au_diabo_p"
-value = 12468
+value = 12860
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -20 +66]
+[State -4, Aura diabo no corpo: costas -6 +72]
 type = MapSet
-trigger1 = Anim = 170 && AnimElemNo(0) = [2, 3]
-trigger2 = Anim = 171 && AnimElemNo(0) = [5, 6]
+trigger1 = Anim = 7471 && AnimElemNo(0) = 3
 map = "au_diabo_p"
-value = 12470
+value = 12861
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +4 +66]
-type = MapSet
-trigger1 = Anim = 170 && AnimElemNo(0) = [4, 5]
-trigger2 = Anim = 171 && AnimElemNo(0) = [7, 8]
-map = "au_diabo_p"
-value = 12482
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -4 +70]
-type = MapSet
-trigger1 = Anim = 9241 && AnimElemNo(0) = 10
-trigger2 = Anim = 9271 && AnimElemNo(0) = 10
-map = "au_diabo_p"
-value = 12734
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -4 +72]
-type = MapSet
-trigger1 = Anim = 9241 && AnimElemNo(0) = 9
-trigger2 = Anim = 9271 && AnimElemNo(0) = 9
-map = "au_diabo_p"
-value = 12862
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -6 +74]
+[State -4, Aura diabo no corpo: costas -10 +76]
 type = MapSet
 trigger1 = Anim = 9241 && AnimElemNo(0) = [7, 8]
 trigger2 = Anim = 9271 && AnimElemNo(0) = [7, 8]
 map = "au_diabo_p"
-value = 12989
+value = 13115
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -4 +76]
+[State -4, Aura diabo no corpo: costas -6 +76]
+type = MapSet
+trigger1 = Anim = 7471 && AnimElemNo(0) = [1, 2]
+map = "au_diabo_p"
+value = 13117
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -8 +80]
 type = MapSet
 trigger1 = Anim = 7402 && AnimElemNo(0) = 8
 map = "au_diabo_p"
-value = 13118
+value = 13372
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -6 +80]
+[State -4, Aura diabo no corpo: costas -10 +82]
 type = MapSet
 trigger1 = Anim = 9241 && AnimElemNo(0) = 6
 trigger2 = Anim = 9271 && AnimElemNo(0) = 6
 map = "au_diabo_p"
-value = 13373
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -2 +80]
-type = MapSet
-trigger1 = Anim = 7402 && AnimElemNo(0) = [1, 7]
-trigger2 = Anim = 9201 && AnimElemNo(0) = 5
-trigger3 = Anim = 9207 && AnimElemNo(0) = 5
-map = "au_diabo_p"
-value = 13375
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +0 +80]
-type = MapSet
-trigger1 = Anim = 7410 && AnimElemNo(0) = [1, 2]
-trigger2 = Anim = 9201 && AnimElemNo(0) = 4
-map = "au_diabo_p"
-value = 13376
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -8 +82]
-type = MapSet
-trigger1 = Anim = 9241 && AnimElemNo(0) = 5
-trigger2 = Anim = 9271 && AnimElemNo(0) = 5
-map = "au_diabo_p"
-value = 13500
+value = 13499
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -6 +82]
 type = MapSet
-trigger1 = Anim = 9209
+trigger1 = Anim = 7472 && AnimElemNo(0) = 4
 map = "au_diabo_p"
 value = 13501
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -4 +82]
+[State -4, Aura diabo no corpo: costas -8 +84]
 type = MapSet
-trigger1 = Anim = 7411 && AnimElemNo(0) = 8
-trigger2 = Anim = 9201 && AnimElemNo(0) = 6
-trigger3 = Anim = 9207 && AnimElemNo(0) = 6
+trigger1 = Anim = 7472 && AnimElemNo(0) = 2
+trigger2 = Anim = 9201 && AnimElemNo(0) = 5
 map = "au_diabo_p"
-value = 13502
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -2 +82]
-type = MapSet
-trigger1 = Anim = 1005 && AnimElemNo(0) = 4
-trigger2 = Anim = 1005 && AnimElemNo(0) = 8
-trigger3 = Anim = 7401 && AnimElemNo(0) = 4
-trigger4 = Anim = 7401 && AnimElemNo(0) = 8
-trigger5 = Anim = 7420 && AnimElemNo(0) = 1
-trigger6 = Anim = 9208
-map = "au_diabo_p"
-value = 13503
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +0 +82]
-type = MapSet
-trigger1 = Anim = 1005 && AnimElemNo(0) = 3
-trigger2 = Anim = 1005 && AnimElemNo(0) = 7
-trigger3 = Anim = 7401 && AnimElemNo(0) = 3
-trigger4 = Anim = 7401 && AnimElemNo(0) = 7
-trigger5 = Anim = 7410 && AnimElemNo(0) = [3, 4]
-trigger6 = Anim = 7410 && AnimElemNo(0) = [5, 6]
-trigger7 = Anim = 7410 && AnimElemNo(0) = 10
-map = "au_diabo_p"
-value = 13504
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +2 +82]
-type = MapSet
-trigger1 = Anim = 1005 && AnimElemNo(0) = 2
-trigger2 = Anim = 1005 && AnimElemNo(0) = 6
-trigger3 = Anim = 7401 && AnimElemNo(0) = 2
-trigger4 = Anim = 7401 && AnimElemNo(0) = 6
-trigger5 = Anim = 7411 && AnimElemNo(0) = 1
-map = "au_diabo_p"
-value = 13505
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +4 +82]
-type = MapSet
-trigger1 = Anim = 7411 && AnimElemNo(0) = [2, 4]
-trigger2 = Anim = 9201 && AnimElemNo(0) = 3
-map = "au_diabo_p"
-value = 13506
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +6 +82]
-type = MapSet
-trigger1 = Anim = 9207 && AnimElemNo(0) = [2, 4]
-map = "au_diabo_p"
-value = 13507
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -12 +84]
-type = MapSet
-trigger1 = Anim = 9205 && AnimElemNo(0) = [7, 11]
-map = "au_diabo_p"
-value = 13626
+value = 13628
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -6 +84]
 type = MapSet
-trigger1 = Anim = 9205 && AnimElemNo(0) = [1, 6]
+trigger1 = Anim = 7402 && AnimElemNo(0) = [1, 7]
+trigger2 = Anim = 7472 && AnimElemNo(0) = 1
+trigger3 = Anim = 9201 && AnimElemNo(0) = 4
+trigger4 = Anim = 9207 && AnimElemNo(0) = 5
 map = "au_diabo_p"
 value = 13629
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas -4 +84]
 type = MapSet
-trigger1 = Anim = 1605
-trigger2 = Anim = 7411 && AnimElemNo(0) = [6, 7]
-trigger3 = Anim = 9240 && AnimElemNo(0) = [3, 7]
-trigger4 = Anim = 9270 && AnimElemNo(0) = [3, 7]
+trigger1 = Anim = 7410 && AnimElemNo(0) = [1, 2]
 map = "au_diabo_p"
 value = 13630
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas -2 +84]
+[State -4, Aura diabo no corpo: costas -12 +86]
 type = MapSet
-trigger1 = Anim = 7410 && AnimElemNo(0) = 8
-trigger2 = Anim = 9207 && AnimElemNo(0) = 1
+trigger1 = Anim = 9205 && AnimElemNo(0) = [1, 6]
+trigger2 = Anim = 9241 && AnimElemNo(0) = 5
+trigger3 = Anim = 9271 && AnimElemNo(0) = 5
 map = "au_diabo_p"
-value = 13631
+value = 13754
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +0 +84]
+[State -4, Aura diabo no corpo: costas -10 +86]
+type = MapSet
+trigger1 = Anim = 9201 && AnimElemNo(0) = 6
+trigger2 = Anim = 9209
+map = "au_diabo_p"
+value = 13755
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -8 +86]
+type = MapSet
+trigger1 = Anim = 7411 && AnimElemNo(0) = 8
+trigger2 = Anim = 9207 && AnimElemNo(0) = 6
+map = "au_diabo_p"
+value = 13756
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -6 +86]
+type = MapSet
+trigger1 = Anim = 1005 && AnimElemNo(0) = 4
+trigger2 = Anim = 1005 && AnimElemNo(0) = 7
+trigger3 = Anim = 1005 && AnimElemNo(0) = 8
+trigger4 = Anim = 7401 && AnimElemNo(0) = 4
+trigger5 = Anim = 7401 && AnimElemNo(0) = 7
+trigger6 = Anim = 7401 && AnimElemNo(0) = 8
+trigger7 = Anim = 7420 && AnimElemNo(0) = 1
+trigger8 = Anim = 9208
+map = "au_diabo_p"
+value = 13757
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -4 +86]
+type = MapSet
+trigger1 = Anim = 1005 && AnimElemNo(0) = 3
+trigger2 = Anim = 7401 && AnimElemNo(0) = 3
+trigger3 = Anim = 7410 && AnimElemNo(0) = [3, 4]
+trigger4 = Anim = 7410 && AnimElemNo(0) = [5, 6]
+trigger5 = Anim = 7410 && AnimElemNo(0) = 10
+trigger6 = Anim = 7411 && AnimElemNo(0) = 1
+map = "au_diabo_p"
+value = 13758
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -2 +86]
+type = MapSet
+trigger1 = Anim = 1005 && AnimElemNo(0) = 2
+trigger2 = Anim = 1005 && AnimElemNo(0) = 6
+trigger3 = Anim = 7401 && AnimElemNo(0) = 2
+trigger4 = Anim = 7401 && AnimElemNo(0) = 6
+trigger5 = Anim = 7411 && AnimElemNo(0) = [2, 4]
+map = "au_diabo_p"
+value = 13759
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +0 +86]
+type = MapSet
+trigger1 = Anim = 7411 && AnimElemNo(0) = 5
+trigger2 = Anim = 9201 && AnimElemNo(0) = 3
+trigger3 = Anim = 9207 && AnimElemNo(0) = [2, 4]
+map = "au_diabo_p"
+value = 13760
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -16 +88]
+type = MapSet
+trigger1 = Anim = 9205 && AnimElemNo(0) = [7, 11]
+map = "au_diabo_p"
+value = 13880
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -10 +88]
+type = MapSet
+trigger1 = Anim = 7411 && AnimElemNo(0) = [6, 7]
+trigger2 = Anim = 9240 && AnimElemNo(0) = [3, 7]
+trigger3 = Anim = 9270 && AnimElemNo(0) = [3, 7]
+map = "au_diabo_p"
+value = 13883
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -8 +88]
+type = MapSet
+trigger1 = Anim = 1605
+trigger2 = Anim = 7410 && AnimElemNo(0) = 8
+trigger3 = Anim = 9207 && AnimElemNo(0) = 1
+map = "au_diabo_p"
+value = 13884
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -4 +88]
 type = MapSet
 trigger1 = Anim = 9200 && AnimElemNo(0) = [1, 3]
 trigger2 = Anim = 9216
 map = "au_diabo_p"
-value = 13632
+value = 13886
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: costas +4 +84]
+[State -4, Aura diabo no corpo: costas -2 +88]
 type = MapSet
 trigger1 = Anim = 1005 && AnimElemNo(0) = 1
 trigger2 = Anim = 1005 && AnimElemNo(0) = 5
 trigger3 = Anim = 7401 && AnimElemNo(0) = 1
 trigger4 = Anim = 7401 && AnimElemNo(0) = 5
-trigger5 = Anim = 7411 && AnimElemNo(0) = 5
-trigger6 = Anim = 7420 && AnimElemNo(0) = 2
+trigger5 = Anim = 7420 && AnimElemNo(0) = 2
 map = "au_diabo_p"
-value = 13634
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +6 +84]
-type = MapSet
-trigger1 = Anim = 7690
-trigger2 = Anim = 7691
-map = "au_diabo_p"
-value = 13635
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +8 +84]
-type = MapSet
-trigger1 = Anim = 7420 && AnimElemNo(0) = 3
-trigger2 = Anim = 9201 && AnimElemNo(0) = [1, 2]
-map = "au_diabo_p"
-value = 13636
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +16 +84]
-type = MapSet
-trigger1 = Anim = 7420 && AnimElemNo(0) = [4, 5]
-map = "au_diabo_p"
-value = 13640
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +18 +84]
-type = MapSet
-trigger1 = Anim = 7421 && AnimElemNo(0) = [4, 5]
-map = "au_diabo_p"
-value = 13641
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +22 +84]
-type = MapSet
-trigger1 = Anim = 7420 && AnimElemNo(0) = [6, 12]
-trigger2 = Anim = 7421 && AnimElemNo(0) = [1, 3]
-map = "au_diabo_p"
-value = 13643
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas -6 +86]
-type = MapSet
-trigger1 = Anim = 9241 && AnimElemNo(0) = [1, 4]
-trigger2 = Anim = 9271 && AnimElemNo(0) = [1, 4]
-map = "au_diabo_p"
-value = 13757
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +0 +86]
-type = MapSet
-trigger1 = Anim = 7410 && AnimElemNo(0) = 7
-map = "au_diabo_p"
-value = 13760
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +4 +86]
-type = MapSet
-trigger1 = Anim = 9240 && AnimElemNo(0) = [1, 2]
-trigger2 = Anim = 9270 && AnimElemNo(0) = [1, 2]
-map = "au_diabo_p"
-value = 13762
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: costas +6 +86]
-type = MapSet
-trigger1 = Anim = 9200 && AnimElemNo(0) = 4
-trigger2 = Anim = 9201 && AnimElemNo(0) = [7, 9]
-map = "au_diabo_p"
-value = 13763
+value = 13887
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: costas +0 +88]
 type = MapSet
-trigger1 = Anim = 7410 && AnimElemNo(0) = 9
+trigger1 = Anim = 9200 && AnimElemNo(0) = 4
 map = "au_diabo_p"
 value = 13888
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco -112 graus]
+[State -4, Aura diabo no corpo: costas +2 +88]
+type = MapSet
+trigger1 = Anim = 7690
+trigger2 = Anim = 7691
+trigger3 = Anim = 9201 && AnimElemNo(0) = [1, 2]
+map = "au_diabo_p"
+value = 13889
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +4 +88]
+type = MapSet
+trigger1 = Anim = 7420 && AnimElemNo(0) = 3
+map = "au_diabo_p"
+value = 13890
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +10 +88]
+type = MapSet
+trigger1 = Anim = 7420 && AnimElemNo(0) = [4, 5]
+map = "au_diabo_p"
+value = 13893
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +12 +88]
+type = MapSet
+trigger1 = Anim = 7421 && AnimElemNo(0) = [4, 5]
+map = "au_diabo_p"
+value = 13894
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +16 +88]
+type = MapSet
+trigger1 = Anim = 7421 && AnimElemNo(0) = [1, 3]
+map = "au_diabo_p"
+value = 13896
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +18 +88]
+type = MapSet
+trigger1 = Anim = 7420 && AnimElemNo(0) = [6, 12]
+map = "au_diabo_p"
+value = 13897
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -10 +90]
+type = MapSet
+trigger1 = Anim = 9241 && AnimElemNo(0) = [1, 4]
+trigger2 = Anim = 9271 && AnimElemNo(0) = [1, 4]
+map = "au_diabo_p"
+value = 14011
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -6 +90]
+type = MapSet
+trigger1 = Anim = 7410 && AnimElemNo(0) = 7
+map = "au_diabo_p"
+value = 14013
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -2 +90]
+type = MapSet
+trigger1 = Anim = 9240 && AnimElemNo(0) = [1, 2]
+trigger2 = Anim = 9270 && AnimElemNo(0) = [1, 2]
+map = "au_diabo_p"
+value = 14015
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +0 +90]
+type = MapSet
+trigger1 = Anim = 9201 && AnimElemNo(0) = [7, 9]
+map = "au_diabo_p"
+value = 14016
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -4 +92]
+type = MapSet
+trigger1 = Anim = 7410 && AnimElemNo(0) = 9
+map = "au_diabo_p"
+value = 14142
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -2 +92]
+type = MapSet
+trigger1 = Anim = 7472 && AnimElemNo(0) = [6, 8]
+map = "au_diabo_p"
+value = 14143
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas -2 +94]
+type = MapSet
+trigger1 = Anim = 7472 && AnimElemNo(0) = 3
+map = "au_diabo_p"
+value = 14271
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: costas +0 +96]
+type = MapSet
+trigger1 = Anim = 7472 && AnimElemNo(0) = 5
+map = "au_diabo_p"
+value = 14400
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco -112 graus]
 type = MapSet
 trigger1 = Anim = 7410 && AnimElemNo(0) = 7
 trigger2 = Anim = 7410 && AnimElemNo(0) = 9
 map = "au_diabo_q"
-value = 775
+value = 767
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -12, tronco -90 graus]
+type = MapSet
+trigger1 = Anim = 5944 && AnimElemNo(0) = 2
+map = "au_diabo_q"
+value = 2287
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco -90 graus]
+type = MapSet
+trigger1 = Anim = 171 && AnimElemNo(0) = 1
+trigger2 = Anim = 5100
+trigger3 = Anim = 5101
+trigger4 = Anim = 5110
+trigger5 = Anim = 5150
+trigger6 = Anim = 5160
+trigger7 = Anim = 5170
+trigger8 = Anim = 7410 && AnimElemNo(0) = 8
+trigger9 = Anim = 9205 && AnimElemNo(0) = [1, 6]
+trigger10 = Anim = 9205 && AnimElemNo(0) = [7, 11]
+trigger11 = Anim = 9207 && AnimElemNo(0) = 1
+trigger12 = Anim = 9209
+trigger13 = Anim = 9241 && AnimElemNo(0) = [1, 4]
+trigger14 = Anim = 9271 && AnimElemNo(0) = [1, 4]
+map = "au_diabo_q"
+value = 2303
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco -90 graus]
 type = MapSet
-trigger1 = Anim = 9205 && AnimElemNo(0) = [1, 6]
-trigger2 = Anim = 9205 && AnimElemNo(0) = [7, 11]
-trigger3 = Anim = 9207 && AnimElemNo(0) = 1
-trigger4 = Anim = 9209
-trigger5 = Anim = 9241 && AnimElemNo(0) = [1, 4]
-trigger6 = Anim = 9271 && AnimElemNo(0) = [1, 4]
+trigger1 = Anim = 5050 && AnimElemNo(0) = 3
+trigger2 = Anim = 5051 && AnimElemNo(0) = 2
+trigger3 = Anim = 5061 && AnimElemNo(0) = 2
+trigger4 = Anim = 5070 && AnimElemNo(0) = 2
+trigger5 = Anim = 5080
+trigger6 = Anim = 5090
 map = "au_diabo_q"
 value = 2311
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +28, tronco -90 graus]
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +12, tronco -90 graus]
+type = MapSet
+trigger1 = Anim = 7420 && AnimElemNo(0) = 2
+map = "au_diabo_q"
+value = 2335
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +24, tronco -90 graus]
 type = MapSet
 trigger1 = Anim = 7420 && AnimElemNo(0) = 3
 map = "au_diabo_q"
-value = 2367
+value = 2359
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +40, tronco -90 graus]
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +36, tronco -90 graus]
 type = MapSet
 trigger1 = Anim = 7420 && AnimElemNo(0) = [4, 5]
 map = "au_diabo_q"
-value = 2391
+value = 2383
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +44, tronco -90 graus]
+type = MapSet
+trigger1 = Anim = 7421 && AnimElemNo(0) = [4, 5]
+map = "au_diabo_q"
+value = 2399
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 7 de 7, centro +48, tronco -90 graus]
 type = MapSet
-trigger1 = Anim = 7421 && AnimElemNo(0) = [4, 5]
+trigger1 = Anim = 7421 && AnimElemNo(0) = [1, 3]
 map = "au_diabo_q"
 value = 2407
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 7 de 7, centro +52, tronco -90 graus]
 type = MapSet
-trigger1 = Anim = 7421 && AnimElemNo(0) = [1, 3]
-map = "au_diabo_q"
-value = 2415
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +56, tronco -90 graus]
-type = MapSet
 trigger1 = Anim = 7420 && AnimElemNo(0) = [6, 12]
 map = "au_diabo_q"
-value = 2423
+value = 2415
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 7 de 7, centro -12, tronco -82 graus]
@@ -11060,820 +12603,875 @@ ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco -82 graus]
 type = MapSet
-trigger1 = Anim = 170 && AnimElemNo(0) = 1
-trigger2 = Anim = 171 && AnimElemNo(0) = 4
+trigger1 = Anim = 9240 && AnimElemNo(0) = [3, 7]
+trigger2 = Anim = 9270 && AnimElemNo(0) = [3, 7]
 map = "au_diabo_q"
 value = 2815
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco -82 graus]
-type = MapSet
-trigger1 = Anim = 170 && AnimElemNo(0) = [2, 3]
-trigger2 = Anim = 171 && AnimElemNo(0) = [5, 6]
-trigger3 = Anim = 5100 && AnimElemNo(0) = 1
-trigger4 = Anim = 5101 && AnimElemNo(0) = 1
-trigger5 = Anim = 5110
-trigger6 = Anim = 5150
-trigger7 = Anim = 5160 && AnimElemNo(0) = 2
-trigger8 = Anim = 5170 && AnimElemNo(0) = 2
-trigger9 = Anim = 7410 && AnimElemNo(0) = 8
-trigger10 = Anim = 9240 && AnimElemNo(0) = [3, 7]
-trigger11 = Anim = 9270 && AnimElemNo(0) = [3, 7]
-map = "au_diabo_q"
-value = 2823
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +4, tronco -82 graus]
-type = MapSet
-trigger1 = Anim = 171 && AnimElemNo(0) = 1
-map = "au_diabo_q"
-value = 2831
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +16, tronco -82 graus]
-type = MapSet
-trigger1 = Anim = 7420 && AnimElemNo(0) = 2
-map = "au_diabo_q"
-value = 2855
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +28, tronco -82 graus]
-type = MapSet
-trigger1 = Anim = 170 && AnimElemNo(0) = [4, 5]
-trigger2 = Anim = 171 && AnimElemNo(0) = [7, 8]
-map = "au_diabo_q"
-value = 2879
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 6 de 7, centro +0, tronco -75 graus]
+[State -4, Aura diabo no corpo: recolhe 6 de 7, centro -4, tronco -75 graus]
 type = MapSet
 trigger1 = Anim = 9241 && AnimElemNo(0) = 5
 trigger2 = Anim = 9271 && AnimElemNo(0) = 5
 map = "au_diabo_q"
-value = 3334
+value = 3326
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco -75 graus]
+type = MapSet
+trigger1 = Anim = 7411 && AnimElemNo(0) = [6, 7]
+map = "au_diabo_q"
+value = 3327
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco -75 graus]
 type = MapSet
-trigger1 = Anim = 7411 && AnimElemNo(0) = [6, 7]
-trigger2 = Anim = 9200 && AnimElemNo(0) = [1, 3]
+trigger1 = Anim = 9200 && AnimElemNo(0) = [1, 3]
 map = "au_diabo_q"
 value = 3335
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +8, tronco -75 graus]
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +4, tronco -75 graus]
 type = MapSet
 trigger1 = Anim = 7420 && AnimElemNo(0) = 1
 map = "au_diabo_q"
-value = 3351
+value = 3343
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 4 de 7, centro +0, tronco -60 graus]
-type = MapSet
-trigger1 = Anim = 5050 && AnimElemNo(0) = 3
-trigger2 = Anim = 5051 && AnimElemNo(0) = 2
-trigger3 = Anim = 5061 && AnimElemNo(0) = 2
-trigger4 = Anim = 5070 && AnimElemNo(0) = 2
-trigger5 = Anim = 5080
-trigger6 = Anim = 5090
-trigger7 = Anim = 5100 && AnimElemNo(0) = 2
-trigger8 = Anim = 5101 && AnimElemNo(0) = 2
-trigger9 = Anim = 5160 && AnimElemNo(0) = 1
-trigger10 = Anim = 5170 && AnimElemNo(0) = 1
-map = "au_diabo_q"
-value = 4356
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 5 de 7, centro +0, tronco -60 graus]
-type = MapSet
-trigger1 = Anim = 9241 && AnimElemNo(0) = 6
-trigger2 = Anim = 9271 && AnimElemNo(0) = 6
-map = "au_diabo_q"
-value = 4357
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco -60 graus]
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco -68 graus]
 type = MapSet
 trigger1 = Anim = 9201 && AnimElemNo(0) = 6
 trigger2 = Anim = 9207 && AnimElemNo(0) = 6
 map = "au_diabo_q"
-value = 4359
+value = 3839
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 4 de 7, centro +4, tronco -60 graus]
+[State -4, Aura diabo no corpo: recolhe 4 de 7, centro -4, tronco -60 graus]
 type = MapSet
-trigger1 = Anim = 171 && AnimElemNo(0) = 3
+trigger1 = Anim = 5120 && AnimElemNo(0) = 1
 map = "au_diabo_q"
-value = 4364
+value = 4348
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco -52 graus]
+[State -4, Aura diabo no corpo: recolhe 4 de 7, centro -4, tronco -52 graus]
 type = MapSet
-trigger1 = Anim = 7411 && AnimElemNo(0) = 8
+trigger1 = Anim = 9241 && AnimElemNo(0) = 6
+trigger2 = Anim = 9271 && AnimElemNo(0) = 6
 map = "au_diabo_q"
-value = 4871
+value = 4860
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 4 de 7, centro +0, tronco -45 graus]
-type = MapSet
-trigger1 = Anim = 9241 && AnimElemNo(0) = [7, 8]
-trigger2 = Anim = 9271 && AnimElemNo(0) = [7, 8]
-map = "au_diabo_q"
-value = 5380
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco -45 graus]
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco -52 graus]
 type = MapSet
 trigger1 = Anim = 1005 && AnimElemNo(0) = 4
 trigger2 = Anim = 1005 && AnimElemNo(0) = 8
 trigger3 = Anim = 7401 && AnimElemNo(0) = 4
 trigger4 = Anim = 7401 && AnimElemNo(0) = 8
+trigger5 = Anim = 7411 && AnimElemNo(0) = 8
 map = "au_diabo_q"
-value = 5383
+value = 4863
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco -45 graus]
+type = MapSet
+trigger1 = Anim = 7472 && AnimElemNo(0) = 2
+map = "au_diabo_q"
+value = 5375
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 3 de 7, centro +0, tronco -45 graus]
+type = MapSet
+trigger1 = Anim = 4403 && AnimElemNo(0) = 3
+map = "au_diabo_q"
+value = 5379
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 3 de 7, centro -4, tronco -38 graus]
+type = MapSet
+trigger1 = Anim = 9241 && AnimElemNo(0) = [7, 8]
+trigger2 = Anim = 9271 && AnimElemNo(0) = [7, 8]
+map = "au_diabo_q"
+value = 5883
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +4, tronco -38 graus]
+type = MapSet
+trigger1 = Anim = 5002 && AnimElemNo(0) = 1
+trigger2 = Anim = 5012 && AnimElemNo(0) = 1
+trigger3 = Anim = 5030 && AnimElemNo(0) = 1
+trigger4 = Anim = 5931 && AnimElemNo(0) = 2
+trigger5 = Anim = 5944 && AnimElemNo(0) = 1
+map = "au_diabo_q"
+value = 5896
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 2 de 7, centro -8, tronco -30 graus]
+type = MapSet
+trigger1 = Anim = 5120 && AnimElemNo(0) = 2
+map = "au_diabo_q"
+value = 6386
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 2 de 7, centro -4, tronco -30 graus]
-type = MapSet
-trigger1 = Anim = 5120 && AnimElemNo(0) = 1
-map = "au_diabo_q"
-value = 6394
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 3 de 7, centro +0, tronco -30 graus]
-type = MapSet
-trigger1 = Anim = 9241 && AnimElemNo(0) = 9
-trigger2 = Anim = 9271 && AnimElemNo(0) = 9
-map = "au_diabo_q"
-value = 6403
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco -30 graus]
-type = MapSet
-trigger1 = Anim = 9207 && AnimElemNo(0) = 5
-map = "au_diabo_q"
-value = 6407
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +4, tronco -30 graus]
 type = MapSet
 trigger1 = Anim = 5050 && AnimElemNo(0) = 2
 trigger2 = Anim = 5051 && AnimElemNo(0) = 1
 trigger3 = Anim = 5061 && AnimElemNo(0) = 1
 trigger4 = Anim = 5070 && AnimElemNo(0) = 1
 map = "au_diabo_q"
-value = 6408
+value = 6394
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco -30 graus]
+type = MapSet
+trigger1 = Anim = 9207 && AnimElemNo(0) = 5
+trigger2 = Anim = 9208
+map = "au_diabo_q"
+value = 6399
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -16, tronco -22 graus]
+type = MapSet
+trigger1 = Anim = 1500 && AnimElemNo(0) = [5, 6]
+trigger2 = Anim = 1501 && AnimElemNo(0) = [8, 9]
+map = "au_diabo_q"
+value = 6880
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro -12, tronco -22 graus]
 type = MapSet
-trigger1 = Anim = 1500 && AnimElemNo(0) = [5, 6]
-trigger2 = Anim = 1501 && AnimElemNo(0) = [8, 9]
-trigger3 = Anim = 3202 && AnimElemNo(0) = 2
+trigger1 = Anim = 323 && AnimElemNo(0) = [4, 4]
+trigger2 = Anim = 3202 && AnimElemNo(0) = 2
 map = "au_diabo_q"
 value = 6888
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -8, tronco -22 graus]
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -4, tronco -22 graus]
 type = MapSet
-trigger1 = Anim = 323 && AnimElemNo(0) = [4, 4]
+trigger1 = Anim = 323 && AnimElemNo(0) = [5, 5]
 map = "au_diabo_q"
-value = 6896
+value = 6904
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 2 de 7, centro -4, tronco -22 graus]
+type = MapSet
+trigger1 = Anim = 9241 && AnimElemNo(0) = [9, 10]
+trigger2 = Anim = 9271 && AnimElemNo(0) = [9, 10]
+map = "au_diabo_q"
+value = 6906
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco -22 graus]
+type = MapSet
+trigger1 = Anim = 7472 && AnimElemNo(0) = 1
+trigger2 = Anim = 7472 && AnimElemNo(0) = 4
+trigger3 = Anim = 9201 && AnimElemNo(0) = 5
+map = "au_diabo_q"
+value = 6911
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro +0, tronco -22 graus]
 type = MapSet
-trigger1 = Anim = 323 && AnimElemNo(0) = [5, 5]
+trigger1 = Anim = 323 && AnimElemNo(0) = [2, 3]
+trigger2 = Anim = 1500 && AnimElemNo(0) = [4, 4]
+trigger3 = Anim = 1501 && AnimElemNo(0) = 7
+trigger4 = Anim = 3202 && AnimElemNo(0) = 1
 map = "au_diabo_q"
 value = 6912
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 3 de 7, centro +0, tronco -22 graus]
+[State -4, Aura diabo no corpo: recolhe 2 de 7, centro +0, tronco -22 graus]
 type = MapSet
-trigger1 = Anim = 9241 && AnimElemNo(0) = 10
-trigger2 = Anim = 9271 && AnimElemNo(0) = 10
+trigger1 = Anim = 4403 && AnimElemNo(0) = [1, 2]
 map = "au_diabo_q"
-value = 6915
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco -22 graus]
-type = MapSet
-trigger1 = Anim = 9201 && AnimElemNo(0) = 5
-trigger2 = Anim = 9208
-map = "au_diabo_q"
-value = 6919
+value = 6914
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro +4, tronco -22 graus]
 type = MapSet
-trigger1 = Anim = 323 && AnimElemNo(0) = [2, 3]
+trigger1 = Anim = 5943
 map = "au_diabo_q"
 value = 6920
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -24, tronco -15 graus]
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -28, tronco -15 graus]
 type = MapSet
 trigger1 = Anim = 601 && AnimElemNo(0) = 3
 map = "au_diabo_q"
-value = 7376
+value = 7368
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -8, tronco -15 graus]
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -12, tronco -15 graus]
 type = MapSet
-trigger1 = Anim = 5030 && AnimElemNo(0) = 2
-trigger2 = Anim = 5035
-trigger3 = Anim = 5040
-trigger4 = Anim = 5050 && AnimElemNo(0) = 1
+trigger1 = Anim = 5930
+trigger2 = Anim = 5931 && AnimElemNo(0) = 1
+trigger3 = Anim = 5940
+trigger4 = Anim = 5941 && AnimElemNo(0) = 3
+trigger5 = Anim = 5942 && AnimElemNo(0) = 2
 map = "au_diabo_q"
-value = 7408
+value = 7400
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -4, tronco -15 graus]
+type = MapSet
+trigger1 = Anim = 841 && AnimElemNo(0) = 15
+map = "au_diabo_q"
+value = 7416
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco -15 graus]
+type = MapSet
+trigger1 = Anim = 7410 && AnimElemNo(0) = [5, 6]
+map = "au_diabo_q"
+value = 7423
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +0, tronco -15 graus]
+type = MapSet
+trigger1 = Anim = 210 && AnimElemNo(0) = [4, 4]
+trigger2 = Anim = 344 && AnimElemNo(0) = 4
+trigger3 = Anim = 1000 && AnimElemNo(0) = 8
+trigger4 = Anim = 1600 && AnimElemNo(0) = 6
+trigger5 = Anim = 1601 && AnimElemNo(0) = 6
+trigger6 = Anim = 1650 && AnimElemNo(0) = 6
+trigger7 = Anim = 5000 && AnimElemNo(0) = 1
+trigger8 = Anim = 5005 && AnimElemNo(0) = 1
+trigger9 = Anim = 5006 && AnimElemNo(0) = 1
+trigger10 = Anim = 5007 && AnimElemNo(0) = 1
+trigger11 = Anim = 5010 && AnimElemNo(0) = 1
+trigger12 = Anim = 5015 && AnimElemNo(0) = 1
+trigger13 = Anim = 5016 && AnimElemNo(0) = 1
+trigger14 = Anim = 5017 && AnimElemNo(0) = 1
+trigger15 = Anim = 5300 && AnimElemNo(0) = 1
+trigger16 = Anim = 5941 && AnimElemNo(0) = 1
+map = "au_diabo_q"
+value = 7424
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro +4, tronco -15 graus]
 type = MapSet
-trigger1 = Anim = 1500 && AnimElemNo(0) = [4, 4]
-trigger2 = Anim = 1501 && AnimElemNo(0) = 7
-trigger3 = Anim = 3202 && AnimElemNo(0) = 1
+trigger1 = Anim = 440 && AnimElemNo(0) = [3, 5]
+trigger2 = Anim = 5001 && AnimElemNo(0) = [1, 2]
+trigger3 = Anim = 5002 && AnimElemNo(0) = [2, 3]
+trigger4 = Anim = 5011 && AnimElemNo(0) = [1, 2]
+trigger5 = Anim = 5012 && AnimElemNo(0) = [2, 3]
 map = "au_diabo_q"
 value = 7432
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro +8, tronco -15 graus]
 type = MapSet
-trigger1 = Anim = 440 && AnimElemNo(0) = [3, 5]
+trigger1 = Anim = 1400 && AnimElemNo(0) = [6, 10]
+trigger2 = Anim = 1401 && AnimElemNo(0) = [4, 6]
+trigger3 = Anim = 5030 && AnimElemNo(0) = 2
+trigger4 = Anim = 5035
+trigger5 = Anim = 5040
+trigger6 = Anim = 5050 && AnimElemNo(0) = 1
 map = "au_diabo_q"
 value = 7440
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +12, tronco -15 graus]
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -28, tronco -8 graus]
 type = MapSet
-trigger1 = Anim = 1400 && AnimElemNo(0) = [6, 10]
-trigger2 = Anim = 1401 && AnimElemNo(0) = [4, 6]
+trigger1 = Anim = 1102 && AnimElemNo(0) = [1, 2]
+trigger2 = Anim = 1103 && AnimElemNo(0) = [1, 2]
 map = "au_diabo_q"
-value = 7448
+value = 7880
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -16, tronco -8 graus]
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -24, tronco -8 graus]
 type = MapSet
-trigger1 = Anim = 5930
-trigger2 = Anim = 5931 && AnimElemNo(0) = 1
+trigger1 = Anim = 3002 && AnimElemNo(0) = 6
 map = "au_diabo_q"
-value = 7904
+value = 7888
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -12, tronco -8 graus]
+type = MapSet
+trigger1 = Anim = 302 && AnimElemNo(0) = 5
+trigger2 = Anim = 303 && AnimElemNo(0) = [2, 2]
+trigger3 = Anim = 312 && AnimElemNo(0) = 1
+trigger4 = Anim = 331 && AnimElemNo(0) = [6, 6]
+trigger5 = Anim = 764 && AnimElemNo(0) = 3
+trigger6 = Anim = 1300 && AnimElemNo(0) = [1, 1]
+trigger7 = Anim = 1301 && AnimElemNo(0) = 1
+map = "au_diabo_q"
+value = 7912
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -8, tronco -8 graus]
+type = MapSet
+trigger1 = Anim = 181 && AnimElemNo(0) = 4
+trigger2 = Anim = 200
+trigger3 = Anim = 321 && AnimElemNo(0) = 6
+trigger4 = Anim = 332 && AnimElemNo(0) = 7
+trigger5 = Anim = 1001 && AnimElemNo(0) = 11
+trigger6 = Anim = 1701 && AnimElemNo(0) = 10
+map = "au_diabo_q"
+value = 7920
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro -4, tronco -8 graus]
 type = MapSet
-trigger1 = Anim = 321 && AnimElemNo(0) = 6
-trigger2 = Anim = 332 && AnimElemNo(0) = 7
-trigger3 = Anim = 1001 && AnimElemNo(0) = 11
-trigger4 = Anim = 1701 && AnimElemNo(0) = 10
-trigger5 = Anim = 5000 && AnimElemNo(0) = 1
-trigger6 = Anim = 5005 && AnimElemNo(0) = 1
-trigger7 = Anim = 5006 && AnimElemNo(0) = 1
-trigger8 = Anim = 5007 && AnimElemNo(0) = 1
-trigger9 = Anim = 5010 && AnimElemNo(0) = 1
-trigger10 = Anim = 5015 && AnimElemNo(0) = 1
-trigger11 = Anim = 5016 && AnimElemNo(0) = 1
-trigger12 = Anim = 5017 && AnimElemNo(0) = 1
-trigger13 = Anim = 5120 && AnimElemNo(0) = 2
-trigger14 = Anim = 5300 && AnimElemNo(0) = 1
+trigger1 = Anim = 181 && AnimElemNo(0) = [5, 7]
+trigger2 = Anim = 181 && AnimElemNo(0) = 8
+trigger3 = Anim = 190 && AnimElemNo(0) = 1
+trigger4 = Anim = 191 && AnimElemNo(0) = 1
+trigger5 = Anim = 192 && AnimElemNo(0) = 1
+trigger6 = Anim = 230 && AnimElemNo(0) = [3, 6]
+trigger7 = Anim = 301 && AnimElemNo(0) = 3
+trigger8 = Anim = 301 && AnimElemNo(0) = [6, 7]
+trigger9 = Anim = 302 && AnimElemNo(0) = [1, 2]
+trigger10 = Anim = 302 && AnimElemNo(0) = 6
+trigger11 = Anim = 303 && AnimElemNo(0) = [6, 10]
+trigger12 = Anim = 312 && AnimElemNo(0) = [5, 6]
+trigger13 = Anim = 340 && AnimElemNo(0) = [3, 6]
+trigger14 = Anim = 4200 && AnimElemNo(0) = 1
+trigger15 = Anim = 4203 && AnimElemNo(0) = [1, 2]
+trigger16 = Anim = 4302 && AnimElemNo(0) = 1
+trigger17 = Anim = 4331 && AnimElemNo(0) = [1, 2]
+trigger18 = Anim = 4401 && AnimElemNo(0) = 3
 map = "au_diabo_q"
 value = 7928
 ignorehitpause = 1
 
+[State -4, Aura diabo no corpo: recolhe 5 de 7, centro -4, tronco -8 graus]
+type = MapSet
+trigger1 = Anim = 7471 && AnimElemNo(0) = [1, 2]
+map = "au_diabo_q"
+value = 7933
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco -8 graus]
+type = MapSet
+trigger1 = Anim = 1005 && AnimElemNo(0) = 7
+trigger2 = Anim = 7401 && AnimElemNo(0) = 7
+trigger3 = Anim = 7402 && AnimElemNo(0) = [1, 7]
+trigger4 = Anim = 7402 && AnimElemNo(0) = 8
+trigger5 = Anim = 9201 && AnimElemNo(0) = 4
+map = "au_diabo_q"
+value = 7935
+ignorehitpause = 1
+
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro +0, tronco -8 graus]
 type = MapSet
-trigger1 = Anim = 5001 && AnimElemNo(0) = [1, 2]
-trigger2 = Anim = 5002 && AnimElemNo(0) = [1, 3]
-trigger3 = Anim = 5011 && AnimElemNo(0) = [1, 2]
-trigger4 = Anim = 5012 && AnimElemNo(0) = [1, 3]
-trigger5 = Anim = 5030 && AnimElemNo(0) = 1
-trigger6 = Anim = 5931 && AnimElemNo(0) = [2, 3]
+trigger1 = Anim = 47 && AnimElemNo(0) = 2
+trigger2 = Anim = 171 && AnimElemNo(0) = 3
+trigger3 = Anim = 190 && AnimElemNo(0) = 9
+trigger4 = Anim = 191 && AnimElemNo(0) = 9
+trigger5 = Anim = 192 && AnimElemNo(0) = 9
+trigger6 = Anim = 210 && AnimElemNo(0) = [2, 2]
+trigger7 = Anim = 301 && AnimElemNo(0) = 1
+trigger8 = Anim = 344 && AnimElemNo(0) = 2
+trigger9 = Anim = 810 && AnimElemNo(0) = 2
+trigger10 = Anim = 810 && AnimElemNo(0) = [14, 15]
+trigger11 = Anim = 810 && AnimElemNo(0) = 17
+trigger12 = Anim = 810 && AnimElemNo(0) = 18
+trigger13 = Anim = 831 && AnimElemNo(0) = 11
+trigger14 = Anim = 831 && AnimElemNo(0) = 19
+trigger15 = Anim = 1000 && AnimElemNo(0) = 6
+trigger16 = Anim = 2000 && AnimElemNo(0) = 1
+trigger17 = Anim = 2000 && AnimElemNo(0) = 8
 map = "au_diabo_q"
 value = 7936
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco -8 graus]
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +4, tronco -8 graus]
 type = MapSet
-trigger1 = Anim = 1005 && AnimElemNo(0) = 7
-trigger2 = Anim = 7401 && AnimElemNo(0) = 7
-trigger3 = Anim = 7410 && AnimElemNo(0) = [5, 6]
+trigger1 = Anim = 301 && AnimElemNo(0) = 4
+trigger2 = Anim = 601 && AnimElemNo(0) = 2
+trigger3 = Anim = 810 && AnimElemNo(0) = 5
 map = "au_diabo_q"
-value = 7943
+value = 7944
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -32, tronco +0 graus]
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +8, tronco -8 graus]
+type = MapSet
+trigger1 = Anim = 195 && AnimElemNo(0) = [4, 5]
+trigger2 = Anim = 195 && AnimElemNo(0) = [7, 8]
+trigger3 = Anim = 611 && AnimElemNo(0) = 5
+map = "au_diabo_q"
+value = 7952
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -36, tronco +0 graus]
 type = MapSet
 trigger1 = Anim = 611 && AnimElemNo(0) = 4
 map = "au_diabo_q"
-value = 8384
+value = 8376
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro -24, tronco +0 graus]
 type = MapSet
-trigger1 = Anim = 1102 && AnimElemNo(0) = [1, 2]
-trigger2 = Anim = 1103 && AnimElemNo(0) = [1, 2]
-trigger3 = Anim = 2000 && AnimElemNo(0) = 2
+trigger1 = Anim = 246 && AnimElemNo(0) = [1, 2]
+trigger2 = Anim = 2000 && AnimElemNo(0) = 2
 map = "au_diabo_q"
 value = 8400
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro -20, tronco +0 graus]
 type = MapSet
-trigger1 = Anim = 246 && AnimElemNo(0) = [1, 2]
-trigger2 = Anim = 3002 && AnimElemNo(0) = 6
+trigger1 = Anim = 333 && AnimElemNo(0) = [7, 7]
+trigger2 = Anim = 765 && AnimElemNo(0) = 1
+trigger3 = Anim = 765 && AnimElemNo(0) = 2
+trigger4 = Anim = 1102 && AnimElemNo(0) = 3
+trigger5 = Anim = 1103 && AnimElemNo(0) = 3
+trigger6 = Anim = 1200 && AnimElemNo(0) = [3, 4]
+trigger7 = Anim = 1201 && AnimElemNo(0) = [3, 5]
+trigger8 = Anim = 3003 && AnimElemNo(0) = 1
 map = "au_diabo_q"
 value = 8408
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro -16, tronco +0 graus]
 type = MapSet
-trigger1 = Anim = 333 && AnimElemNo(0) = [7, 7]
-trigger2 = Anim = 810 && AnimElemNo(0) = 19
-trigger3 = Anim = 1102 && AnimElemNo(0) = 3
-trigger4 = Anim = 1103 && AnimElemNo(0) = 3
-trigger5 = Anim = 1200 && AnimElemNo(0) = [3, 4]
-trigger6 = Anim = 1201 && AnimElemNo(0) = [3, 5]
-trigger7 = Anim = 3003 && AnimElemNo(0) = 1
+trigger1 = Anim = 20 && AnimElemNo(0) = 8
+trigger2 = Anim = 21 && AnimElemNo(0) = 1
+trigger3 = Anim = 321 && AnimElemNo(0) = [1, 2]
+trigger4 = Anim = 321 && AnimElemNo(0) = 5
+trigger5 = Anim = 322 && AnimElemNo(0) = [1, 1]
+trigger6 = Anim = 347 && AnimElemNo(0) = 2
+trigger7 = Anim = 347 && AnimElemNo(0) = [3, 4]
+trigger8 = Anim = 410 && AnimElemNo(0) = 2
+trigger9 = Anim = 410 && AnimElemNo(0) = [3, 4]
+trigger10 = Anim = 1001 && AnimElemNo(0) = [6, 7]
+trigger11 = Anim = 1001 && AnimElemNo(0) = 10
+trigger12 = Anim = 1701 && AnimElemNo(0) = 9
+trigger13 = Anim = 3001 && AnimElemNo(0) = 1
 map = "au_diabo_q"
 value = 8416
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro -12, tronco +0 graus]
 type = MapSet
-trigger1 = Anim = 190 && AnimElemNo(0) = 4
-trigger2 = Anim = 190 && AnimElemNo(0) = 6
-trigger3 = Anim = 191 && AnimElemNo(0) = 4
-trigger4 = Anim = 191 && AnimElemNo(0) = 6
-trigger5 = Anim = 192 && AnimElemNo(0) = 4
-trigger6 = Anim = 192 && AnimElemNo(0) = 6
-trigger7 = Anim = 322 && AnimElemNo(0) = [1, 1]
-trigger8 = Anim = 347 && AnimElemNo(0) = [3, 4]
-trigger9 = Anim = 410 && AnimElemNo(0) = [3, 4]
-trigger10 = Anim = 810 && AnimElemNo(0) = [13, 14]
-trigger11 = Anim = 3001 && AnimElemNo(0) = 1
+trigger1 = Anim = 20 && AnimElemNo(0) = 4
+trigger2 = Anim = 21 && AnimElemNo(0) = 5
+trigger3 = Anim = 105 && AnimElemNo(0) = [2, 3]
+trigger4 = Anim = 333 && AnimElemNo(0) = [1, 1]
+trigger5 = Anim = 347 && AnimElemNo(0) = 5
+trigger6 = Anim = 410 && AnimElemNo(0) = 5
+trigger7 = Anim = 600 && AnimElemNo(0) = [3, 3]
+trigger8 = Anim = 610 && AnimElemNo(0) = 4
+trigger9 = Anim = 764 && AnimElemNo(0) = 2
+trigger10 = Anim = 1200 && AnimElemNo(0) = 5
+trigger11 = Anim = 1201 && AnimElemNo(0) = 6
+trigger12 = Anim = 3001 && AnimElemNo(0) = [2, 3]
+trigger13 = Anim = 3002 && AnimElemNo(0) = [4, 5]
 map = "au_diabo_q"
 value = 8424
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro -8, tronco +0 graus]
 type = MapSet
-trigger1 = Anim = 181 && AnimElemNo(0) = 4
-trigger2 = Anim = 302 && AnimElemNo(0) = 5
-trigger3 = Anim = 303 && AnimElemNo(0) = [2, 3]
-trigger4 = Anim = 311 && AnimElemNo(0) = 2
-trigger5 = Anim = 312 && AnimElemNo(0) = 1
-trigger6 = Anim = 331 && AnimElemNo(0) = [6, 6]
-trigger7 = Anim = 347 && AnimElemNo(0) = 5
-trigger8 = Anim = 410 && AnimElemNo(0) = 5
-trigger9 = Anim = 600 && AnimElemNo(0) = [3, 3]
-trigger10 = Anim = 841 && AnimElemNo(0) = 4
-trigger11 = Anim = 1200 && AnimElemNo(0) = 5
-trigger12 = Anim = 1201 && AnimElemNo(0) = 6
-trigger13 = Anim = 1300 && AnimElemNo(0) = [1, 1]
-trigger14 = Anim = 1301 && AnimElemNo(0) = 1
-trigger15 = Anim = 1660 && AnimElemNo(0) = 1
-trigger16 = Anim = 1660 && AnimElemNo(0) = [7, 8]
-trigger17 = Anim = 3002 && AnimElemNo(0) = [4, 5]
+trigger1 = Anim = 44 && AnimElemNo(0) = 3
+trigger2 = Anim = 45 && AnimElemNo(0) = 3
+trigger3 = Anim = 46 && AnimElemNo(0) = 3
+trigger4 = Anim = 190 && AnimElemNo(0) = 4
+trigger5 = Anim = 190 && AnimElemNo(0) = [6, 7]
+trigger6 = Anim = 191 && AnimElemNo(0) = 4
+trigger7 = Anim = 191 && AnimElemNo(0) = [6, 7]
+trigger8 = Anim = 192 && AnimElemNo(0) = 4
+trigger9 = Anim = 192 && AnimElemNo(0) = [6, 7]
+trigger10 = Anim = 230 && AnimElemNo(0) = [1, 2]
+trigger11 = Anim = 311 && AnimElemNo(0) = [1, 3]
+trigger12 = Anim = 311 && AnimElemNo(0) = [5, 7]
+trigger13 = Anim = 322 && AnimElemNo(0) = [2, 6]
+trigger14 = Anim = 323 && AnimElemNo(0) = [1, 1]
+trigger15 = Anim = 331 && AnimElemNo(0) = [1, 3]
+trigger16 = Anim = 332 && AnimElemNo(0) = [1, 2]
+trigger17 = Anim = 340 && AnimElemNo(0) = [1, 2]
+trigger18 = Anim = 650 && AnimElemNo(0) = 4
+trigger19 = Anim = 810 && AnimElemNo(0) = [8, 9]
+trigger20 = Anim = 810 && AnimElemNo(0) = 19
+trigger21 = Anim = 831 && AnimElemNo(0) = [14, 15]
+trigger22 = Anim = 841 && AnimElemNo(0) = 16
+trigger23 = Anim = 1102 && AnimElemNo(0) = 4
+trigger24 = Anim = 1103 && AnimElemNo(0) = 4
+trigger25 = Anim = 1500 && AnimElemNo(0) = [3, 3]
+trigger26 = Anim = 1501 && AnimElemNo(0) = 6
+trigger27 = Anim = 3000 && AnimElemNo(0) = [1, 2]
+trigger28 = Anim = 3001 && AnimElemNo(0) = [7, 8]
+trigger29 = Anim = 3200 && AnimElemNo(0) = [1, 2]
+trigger30 = Anim = 3203 && AnimElemNo(0) = 3
+trigger31 = Anim = 4401 && AnimElemNo(0) = 2
 map = "au_diabo_q"
 value = 8432
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro -4, tronco +0 graus]
 type = MapSet
-trigger1 = Anim = 20 && AnimElemNo(0) = 3
-trigger2 = Anim = 21 && AnimElemNo(0) = 6
-trigger3 = Anim = 195 && AnimElemNo(0) = [1, 2]
-trigger4 = Anim = 195 && AnimElemNo(0) = [10, 11]
-trigger5 = Anim = 200
-trigger6 = Anim = 230 && AnimElemNo(0) = [1, 2]
-trigger7 = Anim = 311 && AnimElemNo(0) = 1
-trigger8 = Anim = 311 && AnimElemNo(0) = [6, 7]
-trigger9 = Anim = 322 && AnimElemNo(0) = [2, 6]
-trigger10 = Anim = 323 && AnimElemNo(0) = [1, 1]
-trigger11 = Anim = 332 && AnimElemNo(0) = [1, 2]
-trigger12 = Anim = 340 && AnimElemNo(0) = [1, 2]
-trigger13 = Anim = 831 && AnimElemNo(0) = 9
-trigger14 = Anim = 1102 && AnimElemNo(0) = 4
-trigger15 = Anim = 1103 && AnimElemNo(0) = 4
-trigger16 = Anim = 1500 && AnimElemNo(0) = [3, 3]
-trigger17 = Anim = 1501 && AnimElemNo(0) = 6
-trigger18 = Anim = 3000 && AnimElemNo(0) = [1, 2]
-trigger19 = Anim = 3200 && AnimElemNo(0) = [1, 2]
+trigger1 = Anim = 41 && AnimElemNo(0) = 4
+trigger2 = Anim = 42 && AnimElemNo(0) = 4
+trigger3 = Anim = 43 && AnimElemNo(0) = 4
+trigger4 = Anim = 44 && AnimElemNo(0) = [1, 2]
+trigger5 = Anim = 45 && AnimElemNo(0) = [1, 2]
+trigger6 = Anim = 46 && AnimElemNo(0) = [1, 2]
+trigger7 = Anim = 105 && AnimElemNo(0) = 1
+trigger8 = Anim = 122
+trigger9 = Anim = 132
+trigger10 = Anim = 142
+trigger11 = Anim = 152
+trigger12 = Anim = 181 && AnimElemNo(0) = [1, 3]
+trigger13 = Anim = 190 && AnimElemNo(0) = 3
+trigger14 = Anim = 191 && AnimElemNo(0) = 3
+trigger15 = Anim = 192 && AnimElemNo(0) = 3
+trigger16 = Anim = 201
+trigger17 = Anim = 210 && AnimElemNo(0) = [1, 1]
+trigger18 = Anim = 210 && AnimElemNo(0) = [7, 10]
+trigger19 = Anim = 216 && AnimElemNo(0) = [1, 2]
+trigger20 = Anim = 216 && AnimElemNo(0) = [3, 6]
+trigger21 = Anim = 216 && AnimElemNo(0) = 7
+trigger22 = Anim = 231 && AnimElemNo(0) = 6
+trigger23 = Anim = 240 && AnimElemNo(0) = [1, 1]
+trigger24 = Anim = 240 && AnimElemNo(0) = [7, 10]
+trigger25 = Anim = 260 && AnimElemNo(0) = 1
+trigger26 = Anim = 260 && AnimElemNo(0) = [6, 7]
+trigger27 = Anim = 302 && AnimElemNo(0) = [3, 4]
+trigger28 = Anim = 303 && AnimElemNo(0) = [1, 1]
+trigger29 = Anim = 303 && AnimElemNo(0) = [3, 3]
+trigger30 = Anim = 303 && AnimElemNo(0) = [4, 4]
+trigger31 = Anim = 313 && AnimElemNo(0) = [1, 1]
+trigger32 = Anim = 313 && AnimElemNo(0) = [7, 9]
+trigger33 = Anim = 331 && AnimElemNo(0) = [4, 5]
+trigger34 = Anim = 331 && AnimElemNo(0) = [7, 8]
+trigger35 = Anim = 332 && AnimElemNo(0) = 6
+trigger36 = Anim = 333 && AnimElemNo(0) = [10, 14]
+trigger37 = Anim = 341 && AnimElemNo(0) = 1
+trigger38 = Anim = 341 && AnimElemNo(0) = [6, 7]
+trigger39 = Anim = 343 && AnimElemNo(0) = 1
+trigger40 = Anim = 343 && AnimElemNo(0) = [6, 7]
+trigger41 = Anim = 344 && AnimElemNo(0) = 1
+trigger42 = Anim = 344 && AnimElemNo(0) = [6, 7]
+trigger43 = Anim = 345 && AnimElemNo(0) = [1, 2]
+trigger44 = Anim = 345 && AnimElemNo(0) = [3, 6]
+trigger45 = Anim = 345 && AnimElemNo(0) = 7
+trigger46 = Anim = 346 && AnimElemNo(0) = 1
+trigger47 = Anim = 346 && AnimElemNo(0) = [6, 7]
+trigger48 = Anim = 440 && AnimElemNo(0) = [2, 2]
+trigger49 = Anim = 764 && AnimElemNo(0) = 1
+trigger50 = Anim = 765 && AnimElemNo(0) = [3, 4]
+trigger51 = Anim = 831 && AnimElemNo(0) = 8
+trigger52 = Anim = 1000 && AnimElemNo(0) = [10, 11]
+trigger53 = Anim = 1100 && AnimElemNo(0) = [1, 2]
+trigger54 = Anim = 1100 && AnimElemNo(0) = 4
+trigger55 = Anim = 1101 && AnimElemNo(0) = [1, 2]
+trigger56 = Anim = 1101 && AnimElemNo(0) = 4
+trigger57 = Anim = 1300 && AnimElemNo(0) = [10, 12]
+trigger58 = Anim = 1301 && AnimElemNo(0) = 7
+trigger59 = Anim = 1600 && AnimElemNo(0) = [1, 2]
+trigger60 = Anim = 1600 && AnimElemNo(0) = [3, 4]
+trigger61 = Anim = 1600 && AnimElemNo(0) = [8, 9]
+trigger62 = Anim = 1601 && AnimElemNo(0) = [1, 2]
+trigger63 = Anim = 1601 && AnimElemNo(0) = [3, 4]
+trigger64 = Anim = 1601 && AnimElemNo(0) = [8, 9]
+trigger65 = Anim = 1650 && AnimElemNo(0) = [1, 2]
+trigger66 = Anim = 1650 && AnimElemNo(0) = [3, 4]
+trigger67 = Anim = 1650 && AnimElemNo(0) = [8, 9]
+trigger68 = Anim = 1660 && AnimElemNo(0) = 1
+trigger69 = Anim = 1660 && AnimElemNo(0) = 6
+trigger70 = Anim = 1660 && AnimElemNo(0) = [7, 8]
+trigger71 = Anim = 1700 && AnimElemNo(0) = 7
+trigger72 = Anim = 3000 && AnimElemNo(0) = 3
+trigger73 = Anim = 3000 && AnimElemNo(0) = 4
+trigger74 = Anim = 3003 && AnimElemNo(0) = [3, 4]
+trigger75 = Anim = 3200 && AnimElemNo(0) = 3
+trigger76 = Anim = 3200 && AnimElemNo(0) = 4
+trigger77 = Anim = 4201 && AnimElemNo(0) = 1
+trigger78 = Anim = 4201 && AnimElemNo(0) = [3, 4]
+trigger79 = Anim = 4202 && AnimElemNo(0) = [1, 2]
+trigger80 = Anim = 4202 && AnimElemNo(0) = [3, 4]
+trigger81 = Anim = 4203 && AnimElemNo(0) = [3, 4]
+trigger82 = Anim = 4311 && AnimElemNo(0) = 1
+trigger83 = Anim = 4311 && AnimElemNo(0) = [3, 4]
+trigger84 = Anim = 4312 && AnimElemNo(0) = [1, 2]
+trigger85 = Anim = 4312 && AnimElemNo(0) = [3, 4]
+trigger86 = Anim = 4331 && AnimElemNo(0) = [3, 4]
+trigger87 = Anim = 4332 && AnimElemNo(0) = [1, 2]
+trigger88 = Anim = 4332 && AnimElemNo(0) = [3, 4]
+trigger89 = Anim = 4400 && AnimElemNo(0) = [1, 2]
+trigger90 = Anim = 4401 && AnimElemNo(0) = 4
+trigger91 = Anim = 5020 && AnimElemNo(0) = 1
+trigger92 = Anim = 5021 && AnimElemNo(0) = 1
+trigger93 = Anim = 5022 && AnimElemNo(0) = 1
+trigger94 = Anim = 7450
+trigger95 = Anim = 7451
+trigger96 = Anim = 7452 && AnimElemNo(0) = [1, 2]
+trigger97 = Anim = 7452 && AnimElemNo(0) = 3
+trigger98 = Anim = 7452 && AnimElemNo(0) = 4
+trigger99 = Anim = 7452 && AnimElemNo(0) = 5
+trigger100 = Anim = 7452 && AnimElemNo(0) = [6, 7]
+trigger101 = Anim = 7470
+trigger102 = Anim = 7471 && AnimElemNo(0) = [4, 6]
+trigger103 = Anim = 7471 && AnimElemNo(0) = [7, 14]
 map = "au_diabo_q"
 value = 8440
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 1 de 7, centro -4, tronco +0 graus]
+[State -4, Aura diabo no corpo: recolhe 2 de 7, centro -4, tronco +0 graus]
 type = MapSet
-trigger1 = Anim = 323 && AnimElemNo(0) = [6, 6]
+trigger1 = Anim = 7471 && AnimElemNo(0) = 3
 map = "au_diabo_q"
-value = 8441
+value = 8442
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 1 de 7, centro +0, tronco +0 graus]
-type = MapSet
-trigger1 = Anim = 1502 && AnimElemNo(0) = [1, 1]
-trigger2 = Anim = 1503 && AnimElemNo(0) = 1
-trigger3 = Anim = 3202 && AnimElemNo(0) = 3
-map = "au_diabo_q"
-value = 8449
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco +0 graus]
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco +0 graus]
 type = MapSet
 trigger1 = Anim = 1005 && AnimElemNo(0) = 3
 trigger2 = Anim = 7401 && AnimElemNo(0) = 3
-trigger3 = Anim = 7402 && AnimElemNo(0) = [1, 7]
-trigger4 = Anim = 7402 && AnimElemNo(0) = 8
-trigger5 = Anim = 7410 && AnimElemNo(0) = [3, 4]
-trigger6 = Anim = 7410 && AnimElemNo(0) = 10
-trigger7 = Anim = 9201 && AnimElemNo(0) = 4
+trigger3 = Anim = 7410 && AnimElemNo(0) = [3, 4]
+trigger4 = Anim = 7410 && AnimElemNo(0) = 10
 map = "au_diabo_q"
-value = 8455
+value = 8447
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro +4, tronco +0 graus]
 type = MapSet
 trigger1 = Anim = 10
-trigger2 = Anim = 11
-trigger3 = Anim = 12
+trigger2 = Anim = 12
+trigger3 = Anim = 21 && AnimElemNo(0) = [6, 7]
 trigger4 = Anim = 190 && AnimElemNo(0) = 5
-trigger5 = Anim = 191 && AnimElemNo(0) = 5
-trigger6 = Anim = 192 && AnimElemNo(0) = 5
-trigger7 = Anim = 301 && AnimElemNo(0) = [4, 5]
-trigger8 = Anim = 333 && AnimElemNo(0) = [8, 9]
-trigger9 = Anim = 400 && AnimElemNo(0) = [4, 6]
-trigger10 = Anim = 601 && AnimElemNo(0) = 2
-trigger11 = Anim = 800
-trigger12 = Anim = 810 && AnimElemNo(0) = 20
-trigger13 = Anim = 840
-trigger14 = Anim = 841 && AnimElemNo(0) = 1
-trigger15 = Anim = 1100 && AnimElemNo(0) = 3
-trigger16 = Anim = 1101 && AnimElemNo(0) = 3
-trigger17 = Anim = 3003 && AnimElemNo(0) = 2
-trigger18 = Anim = 5020 && AnimElemNo(0) = 2
-trigger19 = Anim = 5021 && AnimElemNo(0) = 2
-trigger20 = Anim = 5022 && AnimElemNo(0) = 2
-trigger21 = Anim = 5025
-trigger22 = Anim = 5026
-trigger23 = Anim = 5027
+trigger5 = Anim = 190 && AnimElemNo(0) = 8
+trigger6 = Anim = 191 && AnimElemNo(0) = 5
+trigger7 = Anim = 191 && AnimElemNo(0) = 8
+trigger8 = Anim = 192 && AnimElemNo(0) = 5
+trigger9 = Anim = 192 && AnimElemNo(0) = 8
+trigger10 = Anim = 246 && AnimElemNo(0) = [11, 12]
+trigger11 = Anim = 400 && AnimElemNo(0) = [1, 2]
+trigger12 = Anim = 765 && AnimElemNo(0) = 5
+trigger13 = Anim = 840 && AnimElemNo(0) = 1
+trigger14 = Anim = 841 && AnimElemNo(0) = [2, 3]
+trigger15 = Anim = 841 && AnimElemNo(0) = 5
+trigger16 = Anim = 1300 && AnimElemNo(0) = [6, 9]
+trigger17 = Anim = 1301 && AnimElemNo(0) = 6
+trigger18 = Anim = 1400 && AnimElemNo(0) = [5, 5]
+trigger19 = Anim = 1401 && AnimElemNo(0) = 3
+trigger20 = Anim = 2000 && AnimElemNo(0) = [6, 7]
+trigger21 = Anim = 3002 && AnimElemNo(0) = 1
+trigger22 = Anim = 3002 && AnimElemNo(0) = 3
+trigger23 = Anim = 5020 && AnimElemNo(0) = 2
+trigger24 = Anim = 5021 && AnimElemNo(0) = 2
+trigger25 = Anim = 5022 && AnimElemNo(0) = 2
+trigger26 = Anim = 5025
+trigger27 = Anim = 5026
+trigger28 = Anim = 5027
 map = "au_diabo_q"
 value = 8456
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro +8, tronco +0 graus]
 type = MapSet
-trigger1 = Anim = 6
-trigger2 = Anim = 246 && AnimElemNo(0) = [11, 12]
-trigger3 = Anim = 400 && AnimElemNo(0) = [1, 3]
-trigger4 = Anim = 810 && AnimElemNo(0) = 1
-trigger5 = Anim = 810 && AnimElemNo(0) = 5
-trigger6 = Anim = 810 && AnimElemNo(0) = 10
-trigger7 = Anim = 810 && AnimElemNo(0) = 15
-trigger8 = Anim = 1300 && AnimElemNo(0) = [6, 9]
-trigger9 = Anim = 1301 && AnimElemNo(0) = 6
-trigger10 = Anim = 1400 && AnimElemNo(0) = [5, 5]
-trigger11 = Anim = 1401 && AnimElemNo(0) = 3
+trigger1 = Anim = 195 && AnimElemNo(0) = 6
+trigger2 = Anim = 195 && AnimElemNo(0) = 9
+trigger3 = Anim = 333 && AnimElemNo(0) = [4, 6]
 map = "au_diabo_q"
 value = 8464
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +12, tronco +0 graus]
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +20, tronco +0 graus]
 type = MapSet
-trigger1 = Anim = 611 && AnimElemNo(0) = 5
+trigger1 = Anim = 611 && AnimElemNo(0) = 3
 map = "au_diabo_q"
-value = 8472
+value = 8488
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro -16, tronco +8 graus]
 type = MapSet
-trigger1 = Anim = 765 && AnimElemNo(0) = 1
-trigger2 = Anim = 765 && AnimElemNo(0) = 2
+trigger1 = Anim = 240 && AnimElemNo(0) = [2, 2]
+trigger2 = Anim = 246 && AnimElemNo(0) = [3, 5]
+trigger3 = Anim = 260 && AnimElemNo(0) = 2
+trigger4 = Anim = 341 && AnimElemNo(0) = 2
+trigger5 = Anim = 343 && AnimElemNo(0) = 2
+trigger6 = Anim = 346 && AnimElemNo(0) = 2
+trigger7 = Anim = 1300 && AnimElemNo(0) = [4, 4]
+trigger8 = Anim = 1301 && AnimElemNo(0) = 4
+trigger9 = Anim = 1701 && AnimElemNo(0) = 6
 map = "au_diabo_q"
 value = 8928
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro -12, tronco +8 graus]
 type = MapSet
-trigger1 = Anim = 44 && AnimElemNo(0) = [2, 3]
-trigger2 = Anim = 45 && AnimElemNo(0) = [2, 3]
-trigger3 = Anim = 46 && AnimElemNo(0) = [2, 3]
-trigger4 = Anim = 240 && AnimElemNo(0) = [2, 2]
-trigger5 = Anim = 246 && AnimElemNo(0) = [3, 5]
-trigger6 = Anim = 260 && AnimElemNo(0) = 2
-trigger7 = Anim = 321 && AnimElemNo(0) = [1, 2]
-trigger8 = Anim = 321 && AnimElemNo(0) = 5
-trigger9 = Anim = 341 && AnimElemNo(0) = 2
-trigger10 = Anim = 343 && AnimElemNo(0) = 2
-trigger11 = Anim = 346 && AnimElemNo(0) = 2
-trigger12 = Anim = 347 && AnimElemNo(0) = 2
-trigger13 = Anim = 410 && AnimElemNo(0) = 2
-trigger14 = Anim = 810 && AnimElemNo(0) = 12
-trigger15 = Anim = 1001 && AnimElemNo(0) = [6, 7]
-trigger16 = Anim = 1001 && AnimElemNo(0) = 10
-trigger17 = Anim = 1300 && AnimElemNo(0) = [4, 4]
-trigger18 = Anim = 1301 && AnimElemNo(0) = 4
-trigger19 = Anim = 1701 && AnimElemNo(0) = 6
-trigger20 = Anim = 1701 && AnimElemNo(0) = 9
+trigger1 = Anim = 41 && AnimElemNo(0) = [1, 3]
+trigger2 = Anim = 42 && AnimElemNo(0) = [1, 3]
+trigger3 = Anim = 43 && AnimElemNo(0) = [1, 3]
+trigger4 = Anim = 1300 && AnimElemNo(0) = [2, 3]
+trigger5 = Anim = 1300 && AnimElemNo(0) = [5, 5]
+trigger6 = Anim = 1301 && AnimElemNo(0) = [2, 3]
+trigger7 = Anim = 1301 && AnimElemNo(0) = 5
 map = "au_diabo_q"
 value = 8936
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro -8, tronco +8 graus]
 type = MapSet
-trigger1 = Anim = 105 && AnimElemNo(0) = [2, 3]
-trigger2 = Anim = 333 && AnimElemNo(0) = [1, 1]
-trigger3 = Anim = 610 && AnimElemNo(0) = 4
-trigger4 = Anim = 764 && AnimElemNo(0) = [2, 3]
-trigger5 = Anim = 810 && AnimElemNo(0) = 16
-trigger6 = Anim = 1300 && AnimElemNo(0) = [2, 3]
-trigger7 = Anim = 1301 && AnimElemNo(0) = [2, 3]
-trigger8 = Anim = 3001 && AnimElemNo(0) = [2, 3]
+trigger1 = Anim = 313 && AnimElemNo(0) = [2, 2]
+trigger2 = Anim = 321 && AnimElemNo(0) = [3, 4]
+trigger3 = Anim = 600 && AnimElemNo(0) = [1, 1]
+trigger4 = Anim = 600 && AnimElemNo(0) = [4, 4]
+trigger5 = Anim = 611 && AnimElemNo(0) = 2
+trigger6 = Anim = 1001 && AnimElemNo(0) = [8, 9]
+trigger7 = Anim = 1200 && AnimElemNo(0) = [1, 2]
+trigger8 = Anim = 1201 && AnimElemNo(0) = [1, 2]
+trigger9 = Anim = 1701 && AnimElemNo(0) = [7, 8]
+trigger10 = Anim = 3002 && AnimElemNo(0) = 2
 map = "au_diabo_q"
 value = 8944
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro -4, tronco +8 graus]
 type = MapSet
-trigger1 = Anim = 20 && AnimElemNo(0) = 8
-trigger2 = Anim = 41 && AnimElemNo(0) = [1, 2]
-trigger3 = Anim = 42 && AnimElemNo(0) = [1, 2]
-trigger4 = Anim = 43 && AnimElemNo(0) = [1, 2]
-trigger5 = Anim = 100 && AnimElemNo(0) = 6
-trigger6 = Anim = 240 && AnimElemNo(0) = [7, 10]
-trigger7 = Anim = 260 && AnimElemNo(0) = [6, 7]
-trigger8 = Anim = 311 && AnimElemNo(0) = 3
-trigger9 = Anim = 313 && AnimElemNo(0) = [2, 2]
-trigger10 = Anim = 321 && AnimElemNo(0) = [3, 4]
-trigger11 = Anim = 331 && AnimElemNo(0) = [1, 3]
-trigger12 = Anim = 341 && AnimElemNo(0) = [6, 7]
-trigger13 = Anim = 343 && AnimElemNo(0) = [6, 7]
-trigger14 = Anim = 346 && AnimElemNo(0) = [6, 7]
-trigger15 = Anim = 600 && AnimElemNo(0) = [1, 1]
-trigger16 = Anim = 600 && AnimElemNo(0) = [4, 4]
-trigger17 = Anim = 650 && AnimElemNo(0) = 4
-trigger18 = Anim = 1001 && AnimElemNo(0) = [8, 9]
-trigger19 = Anim = 1701 && AnimElemNo(0) = [7, 8]
-trigger20 = Anim = 3001 && AnimElemNo(0) = [7, 8]
-trigger21 = Anim = 3002 && AnimElemNo(0) = 2
-trigger22 = Anim = 3203 && AnimElemNo(0) = 3
+trigger1 = Anim = 40
+trigger2 = Anim = 121
+trigger3 = Anim = 131
+trigger4 = Anim = 151
+trigger5 = Anim = 347 && AnimElemNo(0) = 6
+trigger6 = Anim = 410 && AnimElemNo(0) = 6
+trigger7 = Anim = 600 && AnimElemNo(0) = [2, 2]
+trigger8 = Anim = 611 && AnimElemNo(0) = 6
+trigger9 = Anim = 1200 && AnimElemNo(0) = 6
+trigger10 = Anim = 1201 && AnimElemNo(0) = 7
+trigger11 = Anim = 1660 && AnimElemNo(0) = 2
+trigger12 = Anim = 3201 && AnimElemNo(0) = 2
+trigger13 = Anim = 3201 && AnimElemNo(0) = 3
+trigger14 = Anim = 4200 && AnimElemNo(0) = 2
+trigger15 = Anim = 4200 && AnimElemNo(0) = [3, 4]
+trigger16 = Anim = 4201 && AnimElemNo(0) = 2
+trigger17 = Anim = 4301 && AnimElemNo(0) = 1
+trigger18 = Anim = 4301 && AnimElemNo(0) = [2, 3]
+trigger19 = Anim = 4302 && AnimElemNo(0) = 2
+trigger20 = Anim = 4302 && AnimElemNo(0) = [3, 4]
+trigger21 = Anim = 4311 && AnimElemNo(0) = 2
+trigger22 = Anim = 4400 && AnimElemNo(0) = [3, 4]
+trigger23 = Anim = 4401 && AnimElemNo(0) = 1
+trigger24 = Anim = 5120 && AnimElemNo(0) = 4
+trigger25 = Anim = 5120 && AnimElemNo(0) = 5
 map = "au_diabo_q"
 value = 8952
 ignorehitpause = 1
 
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco +8 graus]
+type = MapSet
+trigger1 = Anim = 7410 && AnimElemNo(0) = [1, 2]
+map = "au_diabo_q"
+value = 8959
+ignorehitpause = 1
+
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro +0, tronco +8 graus]
 type = MapSet
-trigger1 = Anim = 20 && AnimElemNo(0) = [4, 7]
-trigger2 = Anim = 21 && AnimElemNo(0) = [1, 4]
-trigger3 = Anim = 100 && AnimElemNo(0) = 2
-trigger4 = Anim = 100 && AnimElemNo(0) = 3
-trigger5 = Anim = 121
-trigger6 = Anim = 131
-trigger7 = Anim = 151
-trigger8 = Anim = 216 && AnimElemNo(0) = [3, 6]
-trigger9 = Anim = 331 && AnimElemNo(0) = [4, 5]
-trigger10 = Anim = 332 && AnimElemNo(0) = 6
-trigger11 = Anim = 345 && AnimElemNo(0) = [3, 6]
-trigger12 = Anim = 347 && AnimElemNo(0) = 6
-trigger13 = Anim = 410 && AnimElemNo(0) = 6
-trigger14 = Anim = 600 && AnimElemNo(0) = [2, 2]
-trigger15 = Anim = 611 && AnimElemNo(0) = 6
-trigger16 = Anim = 700 && AnimElemNo(0) = 1
-trigger17 = Anim = 705 && AnimElemNo(0) = 6
-trigger18 = Anim = 764 && AnimElemNo(0) = 1
-trigger19 = Anim = 765 && AnimElemNo(0) = [3, 4]
-trigger20 = Anim = 831 && AnimElemNo(0) = [3, 8]
-trigger21 = Anim = 1200 && AnimElemNo(0) = 6
-trigger22 = Anim = 1201 && AnimElemNo(0) = 7
-trigger23 = Anim = 1500 && AnimElemNo(0) = [2, 2]
-trigger24 = Anim = 1501 && AnimElemNo(0) = 2
-trigger25 = Anim = 1501 && AnimElemNo(0) = 3
-trigger26 = Anim = 1660 && AnimElemNo(0) = 6
-trigger27 = Anim = 1700 && AnimElemNo(0) = 1
-trigger28 = Anim = 1701 && AnimElemNo(0) = 1
-trigger29 = Anim = 3201 && AnimElemNo(0) = 2
-trigger30 = Anim = 3201 && AnimElemNo(0) = 3
-trigger31 = Anim = 5120 && AnimElemNo(0) = 5
+trigger1 = Anim = 120
+trigger2 = Anim = 141
+trigger3 = Anim = 210 && AnimElemNo(0) = [3, 3]
+trigger4 = Anim = 303 && AnimElemNo(0) = [5, 5]
+trigger5 = Anim = 312 && AnimElemNo(0) = 4
+trigger6 = Anim = 332 && AnimElemNo(0) = [3, 5]
+trigger7 = Anim = 333 && AnimElemNo(0) = [2, 3]
+trigger8 = Anim = 344 && AnimElemNo(0) = 3
+trigger9 = Anim = 347 && AnimElemNo(0) = 1
+trigger10 = Anim = 400 && AnimElemNo(0) = [3, 3]
+trigger11 = Anim = 410 && AnimElemNo(0) = 1
+trigger12 = Anim = 601 && AnimElemNo(0) = 1
+trigger13 = Anim = 601 && AnimElemNo(0) = 4
+trigger14 = Anim = 700 && AnimElemNo(0) = 2
+trigger15 = Anim = 700 && AnimElemNo(0) = 5
+trigger16 = Anim = 705 && AnimElemNo(0) = 2
+trigger17 = Anim = 705 && AnimElemNo(0) = 5
+trigger18 = Anim = 760 && AnimElemNo(0) = [1, 2]
+trigger19 = Anim = 800
+trigger20 = Anim = 810 && AnimElemNo(0) = 1
+trigger21 = Anim = 810 && AnimElemNo(0) = 4
+trigger22 = Anim = 810 && AnimElemNo(0) = 7
+trigger23 = Anim = 810 && AnimElemNo(0) = 10
+trigger24 = Anim = 810 && AnimElemNo(0) = 12
+trigger25 = Anim = 810 && AnimElemNo(0) = 13
+trigger26 = Anim = 810 && AnimElemNo(0) = 16
+trigger27 = Anim = 831 && AnimElemNo(0) = 9
+trigger28 = Anim = 840 && AnimElemNo(0) = 2
+trigger29 = Anim = 841 && AnimElemNo(0) = 1
+trigger30 = Anim = 841 && AnimElemNo(0) = 4
+trigger31 = Anim = 841 && AnimElemNo(0) = 6
+trigger32 = Anim = 841 && AnimElemNo(0) = 7
+trigger33 = Anim = 841 && AnimElemNo(0) = 9
+trigger34 = Anim = 841 && AnimElemNo(0) = [10, 11]
+trigger35 = Anim = 841 && AnimElemNo(0) = 13
+trigger36 = Anim = 841 && AnimElemNo(0) = 17
+trigger37 = Anim = 1000 && AnimElemNo(0) = 7
+trigger38 = Anim = 1400 && AnimElemNo(0) = [1, 2]
+trigger39 = Anim = 1401 && AnimElemNo(0) = 1
+trigger40 = Anim = 1600 && AnimElemNo(0) = 5
+trigger41 = Anim = 1601 && AnimElemNo(0) = 5
+trigger42 = Anim = 1650 && AnimElemNo(0) = 5
+trigger43 = Anim = 1700 && AnimElemNo(0) = 2
+trigger44 = Anim = 1700 && AnimElemNo(0) = 5
+trigger45 = Anim = 1701 && AnimElemNo(0) = 2
+trigger46 = Anim = 1701 && AnimElemNo(0) = 5
+trigger47 = Anim = 3201 && AnimElemNo(0) = 6
+trigger48 = Anim = 3203 && AnimElemNo(0) = 2
+trigger49 = Anim = 5200 && AnimElemNo(0) = 1
+trigger50 = Anim = 5200 && AnimElemNo(0) = 4
+trigger51 = Anim = 5210 && AnimElemNo(0) = 1
+trigger52 = Anim = 5210 && AnimElemNo(0) = 4
 map = "au_diabo_q"
 value = 8960
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco +8 graus]
-type = MapSet
-trigger1 = Anim = 7410 && AnimElemNo(0) = [1, 2]
-map = "au_diabo_q"
-value = 8967
-ignorehitpause = 1
-
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro +4, tronco +8 graus]
 type = MapSet
-trigger1 = Anim = 21 && AnimElemNo(0) = 5
-trigger2 = Anim = 141
-trigger3 = Anim = 195 && AnimElemNo(0) = [3, 5]
-trigger4 = Anim = 195 && AnimElemNo(0) = [6, 9]
-trigger5 = Anim = 210 && AnimElemNo(0) = [3, 3]
-trigger6 = Anim = 332 && AnimElemNo(0) = [3, 5]
-trigger7 = Anim = 333 && AnimElemNo(0) = [2, 3]
-trigger8 = Anim = 342
-trigger9 = Anim = 344 && AnimElemNo(0) = 3
-trigger10 = Anim = 430
-trigger11 = Anim = 440 && AnimElemNo(0) = [10, 12]
-trigger12 = Anim = 601 && AnimElemNo(0) = 1
-trigger13 = Anim = 601 && AnimElemNo(0) = 4
-trigger14 = Anim = 700 && AnimElemNo(0) = 2
-trigger15 = Anim = 700 && AnimElemNo(0) = 6
-trigger16 = Anim = 705 && AnimElemNo(0) = 1
-trigger17 = Anim = 705 && AnimElemNo(0) = 5
-trigger18 = Anim = 765 && AnimElemNo(0) = 5
-trigger19 = Anim = 810 && AnimElemNo(0) = 17
-trigger20 = Anim = 830
-trigger21 = Anim = 831 && AnimElemNo(0) = [1, 2]
-trigger22 = Anim = 1000 && AnimElemNo(0) = [1, 5]
-trigger23 = Anim = 1000 && AnimElemNo(0) = 7
-trigger24 = Anim = 1001 && AnimElemNo(0) = [1, 5]
-trigger25 = Anim = 1400 && AnimElemNo(0) = [1, 2]
-trigger26 = Anim = 1401 && AnimElemNo(0) = 1
-trigger27 = Anim = 1600 && AnimElemNo(0) = 5
-trigger28 = Anim = 1601 && AnimElemNo(0) = 5
-trigger29 = Anim = 1650 && AnimElemNo(0) = 5
-trigger30 = Anim = 1700 && AnimElemNo(0) = 2
-trigger31 = Anim = 1700 && AnimElemNo(0) = 6
-trigger32 = Anim = 1701 && AnimElemNo(0) = 2
-trigger33 = Anim = 3201 && AnimElemNo(0) = 6
-trigger34 = Anim = 3203 && AnimElemNo(0) = 2
-trigger35 = Anim = 5120 && AnimElemNo(0) = 3
-trigger36 = Anim = 5120 && AnimElemNo(0) = 4
-trigger37 = Anim = 5200 && AnimElemNo(0) = 1
-trigger38 = Anim = 5210 && AnimElemNo(0) = 1
+trigger1 = Anim = 301 && AnimElemNo(0) = 2
+trigger2 = Anim = 301 && AnimElemNo(0) = 5
+trigger3 = Anim = 760 && AnimElemNo(0) = 3
+trigger4 = Anim = 810 && AnimElemNo(0) = 3
+trigger5 = Anim = 810 && AnimElemNo(0) = 6
+trigger6 = Anim = 830 && AnimElemNo(0) = 2
+trigger7 = Anim = 831 && AnimElemNo(0) = [1, 2]
+trigger8 = Anim = 831 && AnimElemNo(0) = [4, 7]
+trigger9 = Anim = 831 && AnimElemNo(0) = 10
+trigger10 = Anim = 831 && AnimElemNo(0) = 12
+trigger11 = Anim = 831 && AnimElemNo(0) = 13
+trigger12 = Anim = 1400 && AnimElemNo(0) = [11, 17]
+trigger13 = Anim = 1401 && AnimElemNo(0) = [7, 8]
 map = "au_diabo_q"
 value = 8968
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro +8, tronco +8 graus]
 type = MapSet
-trigger1 = Anim = 100 && AnimElemNo(0) = 7
-trigger2 = Anim = 1400 && AnimElemNo(0) = [11, 17]
-trigger3 = Anim = 1401 && AnimElemNo(0) = [7, 8]
-trigger4 = Anim = 3002 && AnimElemNo(0) = 1
-trigger5 = Anim = 3002 && AnimElemNo(0) = 3
+trigger1 = Anim = 195 && AnimElemNo(0) = 3
+trigger2 = Anim = 440 && AnimElemNo(0) = [6, 9]
 map = "au_diabo_q"
 value = 8976
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +12, tronco +8 graus]
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +20, tronco +8 graus]
 type = MapSet
-trigger1 = Anim = 333 && AnimElemNo(0) = [4, 6]
-trigger2 = Anim = 440 && AnimElemNo(0) = [6, 9]
-trigger3 = Anim = 810 && AnimElemNo(0) = 18
+trigger1 = Anim = 650 && AnimElemNo(0) = 1
+trigger2 = Anim = 3201 && AnimElemNo(0) = 5
+trigger3 = Anim = 3203 && AnimElemNo(0) = 1
 map = "au_diabo_q"
-value = 8984
+value = 9000
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +24, tronco +8 graus]
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -24, tronco +15 graus]
 type = MapSet
-trigger1 = Anim = 611 && AnimElemNo(0) = 3
+trigger1 = Anim = 610 && AnimElemNo(0) = 3
 map = "au_diabo_q"
-value = 9008
+value = 9424
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro -20, tronco +15 graus]
 type = MapSet
-trigger1 = Anim = 610 && AnimElemNo(0) = 3
+trigger1 = Anim = 610 && AnimElemNo(0) = [1, 2]
 map = "au_diabo_q"
 value = 9432
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro -16, tronco +15 graus]
 type = MapSet
-trigger1 = Anim = 610 && AnimElemNo(0) = [1, 2]
+trigger1 = Anim = 246 && AnimElemNo(0) = [6, 8]
 map = "au_diabo_q"
 value = 9440
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro -12, tronco +15 graus]
-type = MapSet
-trigger1 = Anim = 100 && AnimElemNo(0) = 5
-trigger2 = Anim = 246 && AnimElemNo(0) = [6, 8]
-trigger3 = Anim = 1501 && AnimElemNo(0) = 5
-map = "au_diabo_q"
-value = 9448
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -8, tronco +15 graus]
-type = MapSet
-trigger1 = Anim = 100 && AnimElemNo(0) = 1
-trigger2 = Anim = 100 && AnimElemNo(0) = 4
-trigger3 = Anim = 1300 && AnimElemNo(0) = [5, 5]
-trigger4 = Anim = 1301 && AnimElemNo(0) = 5
-trigger5 = Anim = 1500 && AnimElemNo(0) = [1, 1]
-trigger6 = Anim = 1501 && AnimElemNo(0) = 1
-trigger7 = Anim = 1501 && AnimElemNo(0) = 4
-map = "au_diabo_q"
-value = 9456
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -4, tronco +15 graus]
-type = MapSet
-trigger1 = Anim = 100 && AnimElemNo(0) = 8
-trigger2 = Anim = 611 && AnimElemNo(0) = 2
-trigger3 = Anim = 1200 && AnimElemNo(0) = [1, 2]
-trigger4 = Anim = 1201 && AnimElemNo(0) = [1, 2]
-trigger5 = Anim = 1400 && AnimElemNo(0) = [3, 4]
-trigger6 = Anim = 1401 && AnimElemNo(0) = 2
-map = "au_diabo_q"
-value = 9464
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +0, tronco +15 graus]
-type = MapSet
-trigger1 = Anim = 40
-trigger2 = Anim = 231 && AnimElemNo(0) = [3, 5]
-trigger3 = Anim = 323 && AnimElemNo(0) = [7, 9]
-trigger4 = Anim = 440 && AnimElemNo(0) = [1, 1]
-trigger5 = Anim = 1502 && AnimElemNo(0) = [2, 2]
-trigger6 = Anim = 1503 && AnimElemNo(0) = 2
-trigger7 = Anim = 1660 && AnimElemNo(0) = [2, 3]
-trigger8 = Anim = 3201 && AnimElemNo(0) = 4
-trigger9 = Anim = 3202 && AnimElemNo(0) = 4
-map = "au_diabo_q"
-value = 9472
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +4, tronco +15 graus]
-type = MapSet
-trigger1 = Anim = 47 && AnimElemNo(0) = 1
-trigger2 = Anim = 231 && AnimElemNo(0) = [1, 2]
-trigger3 = Anim = 312 && AnimElemNo(0) = [3, 4]
-trigger4 = Anim = 347 && AnimElemNo(0) = 1
-trigger5 = Anim = 410 && AnimElemNo(0) = 1
-trigger6 = Anim = 611 && AnimElemNo(0) = 1
-trigger7 = Anim = 700 && AnimElemNo(0) = 5
-trigger8 = Anim = 705 && AnimElemNo(0) = 2
-trigger9 = Anim = 810 && AnimElemNo(0) = 11
-trigger10 = Anim = 1700 && AnimElemNo(0) = 5
-trigger11 = Anim = 1701 && AnimElemNo(0) = 5
-trigger12 = Anim = 5200 && AnimElemNo(0) = 4
-trigger13 = Anim = 5210 && AnimElemNo(0) = 4
-map = "au_diabo_q"
-value = 9480
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +8, tronco +15 graus]
-type = MapSet
-trigger1 = Anim = 41 && AnimElemNo(0) = 3
-trigger2 = Anim = 42 && AnimElemNo(0) = 3
-trigger3 = Anim = 43 && AnimElemNo(0) = 3
-trigger4 = Anim = 210 && AnimElemNo(0) = [4, 6]
-trigger5 = Anim = 344 && AnimElemNo(0) = [4, 5]
-trigger6 = Anim = 1000 && AnimElemNo(0) = [8, 9]
-trigger7 = Anim = 1600 && AnimElemNo(0) = [6, 7]
-trigger8 = Anim = 1601 && AnimElemNo(0) = [6, 7]
-trigger9 = Anim = 1650 && AnimElemNo(0) = [6, 7]
-map = "au_diabo_q"
-value = 9488
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +16, tronco +15 graus]
-type = MapSet
-trigger1 = Anim = 41 && AnimElemNo(0) = 4
-trigger2 = Anim = 42 && AnimElemNo(0) = 4
-trigger3 = Anim = 43 && AnimElemNo(0) = 4
-trigger4 = Anim = 44 && AnimElemNo(0) = 1
-trigger5 = Anim = 45 && AnimElemNo(0) = 1
-trigger6 = Anim = 46 && AnimElemNo(0) = 1
-map = "au_diabo_q"
-value = 9504
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +20, tronco +15 graus]
-type = MapSet
-trigger1 = Anim = 650 && AnimElemNo(0) = 1
-map = "au_diabo_q"
-value = 9512
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +24, tronco +15 graus]
-type = MapSet
-trigger1 = Anim = 3201 && AnimElemNo(0) = 5
-trigger2 = Anim = 3203 && AnimElemNo(0) = 1
-map = "au_diabo_q"
-value = 9520
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +32, tronco +15 graus]
-type = MapSet
-trigger1 = Anim = 3201 && AnimElemNo(0) = 1
-map = "au_diabo_q"
-value = 9536
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +36, tronco +15 graus]
-type = MapSet
-trigger1 = Anim = 650 && AnimElemNo(0) = [2, 3]
-map = "au_diabo_q"
-value = 9544
-ignorehitpause = 1
-
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -8, tronco +22 graus]
 type = MapSet
 trigger1 = Anim = 240 && AnimElemNo(0) = [3, 6]
 trigger2 = Anim = 260 && AnimElemNo(0) = [3, 5]
@@ -11881,42 +13479,153 @@ trigger3 = Anim = 341 && AnimElemNo(0) = [3, 5]
 trigger4 = Anim = 343 && AnimElemNo(0) = [3, 5]
 trigger5 = Anim = 346 && AnimElemNo(0) = [3, 5]
 map = "au_diabo_q"
-value = 9968
+value = 9448
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -4, tronco +22 graus]
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -8, tronco +15 graus]
 type = MapSet
 trigger1 = Anim = 246 && AnimElemNo(0) = [9, 10]
-trigger2 = Anim = 3001 && AnimElemNo(0) = [4, 5]
+trigger2 = Anim = 323 && AnimElemNo(0) = [6, 6]
+trigger3 = Anim = 1400 && AnimElemNo(0) = [3, 4]
+trigger4 = Anim = 1401 && AnimElemNo(0) = 2
+trigger5 = Anim = 3001 && AnimElemNo(0) = [4, 5]
 map = "au_diabo_q"
-value = 9976
+value = 9456
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -4, tronco +15 graus]
+type = MapSet
+trigger1 = Anim = 231 && AnimElemNo(0) = [3, 5]
+trigger2 = Anim = 311 && AnimElemNo(0) = 4
+trigger3 = Anim = 313 && AnimElemNo(0) = [3, 5]
+trigger4 = Anim = 323 && AnimElemNo(0) = [7, 9]
+trigger5 = Anim = 440 && AnimElemNo(0) = [1, 1]
+trigger6 = Anim = 830 && AnimElemNo(0) = 1
+trigger7 = Anim = 1502 && AnimElemNo(0) = [1, 1]
+trigger8 = Anim = 1502 && AnimElemNo(0) = [2, 2]
+trigger9 = Anim = 1503 && AnimElemNo(0) = 1
+trigger10 = Anim = 1503 && AnimElemNo(0) = 2
+trigger11 = Anim = 1660 && AnimElemNo(0) = [4, 5]
+trigger12 = Anim = 3201 && AnimElemNo(0) = 4
+trigger13 = Anim = 3202 && AnimElemNo(0) = 3
+trigger14 = Anim = 3202 && AnimElemNo(0) = 4
+map = "au_diabo_q"
+value = 9464
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +0, tronco +15 graus]
+type = MapSet
+trigger1 = Anim = 170 && AnimElemNo(0) = [2, 3]
+trigger2 = Anim = 171 && AnimElemNo(0) = [5, 6]
+trigger3 = Anim = 195 && AnimElemNo(0) = [1, 2]
+trigger4 = Anim = 231 && AnimElemNo(0) = [1, 2]
+trigger5 = Anim = 312 && AnimElemNo(0) = 3
+trigger6 = Anim = 611 && AnimElemNo(0) = 1
+trigger7 = Anim = 831 && AnimElemNo(0) = 3
+trigger8 = Anim = 3001 && AnimElemNo(0) = 6
+map = "au_diabo_q"
+value = 9472
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +4, tronco +15 graus]
+type = MapSet
+trigger1 = Anim = 210 && AnimElemNo(0) = [5, 6]
+trigger2 = Anim = 344 && AnimElemNo(0) = 5
+trigger3 = Anim = 761 && AnimElemNo(0) = [1, 2]
+trigger4 = Anim = 831 && AnimElemNo(0) = [16, 18]
+trigger5 = Anim = 1000 && AnimElemNo(0) = 9
+trigger6 = Anim = 1600 && AnimElemNo(0) = 7
+trigger7 = Anim = 1601 && AnimElemNo(0) = 7
+trigger8 = Anim = 1650 && AnimElemNo(0) = 7
+map = "au_diabo_q"
+value = 9480
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +28, tronco +15 graus]
+type = MapSet
+trigger1 = Anim = 3201 && AnimElemNo(0) = 1
+map = "au_diabo_q"
+value = 9528
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +32, tronco +15 graus]
+type = MapSet
+trigger1 = Anim = 650 && AnimElemNo(0) = [2, 3]
+map = "au_diabo_q"
+value = 9536
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 2 de 7, centro -28, tronco +22 graus]
+type = MapSet
+trigger1 = Anim = 100 && AnimElemNo(0) = 4
+trigger2 = Anim = 100 && AnimElemNo(0) = 8
+trigger3 = Anim = 1501 && AnimElemNo(0) = 4
+map = "au_diabo_q"
+value = 9930
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 1 de 7, centro -4, tronco +22 graus]
+type = MapSet
+trigger1 = Anim = 100 && AnimElemNo(0) = 3
+trigger2 = Anim = 1501 && AnimElemNo(0) = 3
+map = "au_diabo_q"
+value = 9977
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 2 de 7, centro -4, tronco +22 graus]
+type = MapSet
+trigger1 = Anim = 4402
+map = "au_diabo_q"
+value = 9978
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: recolhe 0 de 7, centro +0, tronco +22 graus]
 type = MapSet
-trigger1 = Anim = 311 && AnimElemNo(0) = [4, 5]
-trigger2 = Anim = 313 && AnimElemNo(0) = [3, 5]
-trigger3 = Anim = 1660 && AnimElemNo(0) = [4, 5]
+trigger1 = Anim = 313 && AnimElemNo(0) = [6, 6]
 map = "au_diabo_q"
 value = 9984
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +4, tronco +22 graus]
+[State -4, Aura diabo no corpo: recolhe 1 de 7, centro +4, tronco +22 graus]
 type = MapSet
-trigger1 = Anim = 313 && AnimElemNo(0) = [6, 6]
-trigger2 = Anim = 3001 && AnimElemNo(0) = 6
+trigger1 = Anim = 100 && AnimElemNo(0) = 7
 map = "au_diabo_q"
-value = 9992
+value = 9993
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco +30 graus]
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +20, tronco +22 graus]
 type = MapSet
-trigger1 = Anim = 7411 && AnimElemNo(0) = 1
+trigger1 = Anim = 170 && AnimElemNo(0) = 5
+trigger2 = Anim = 171 && AnimElemNo(0) = 8
 map = "au_diabo_q"
-value = 10503
+value = 10024
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 4 de 7, centro +0, tronco +38 graus]
+[State -4, Aura diabo no corpo: recolhe 2 de 7, centro -44, tronco +30 graus]
+type = MapSet
+trigger1 = Anim = 100 && AnimElemNo(0) = 1
+trigger2 = Anim = 1500 && AnimElemNo(0) = [1, 1]
+trigger3 = Anim = 1501 && AnimElemNo(0) = 1
+map = "au_diabo_q"
+value = 10410
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 2 de 7, centro -40, tronco +30 graus]
+type = MapSet
+trigger1 = Anim = 100 && AnimElemNo(0) = 5
+trigger2 = Anim = 1501 && AnimElemNo(0) = 5
+map = "au_diabo_q"
+value = 10418
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 2 de 7, centro -4, tronco +30 graus]
+type = MapSet
+trigger1 = Anim = 4403 && AnimElemNo(0) = 4
+map = "au_diabo_q"
+value = 10490
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 3 de 7, centro -4, tronco +30 graus]
 type = MapSet
 trigger1 = Anim = 700 && AnimElemNo(0) = [3, 4]
 trigger2 = Anim = 705 && AnimElemNo(0) = [3, 4]
@@ -11925,76 +13634,150 @@ trigger4 = Anim = 1701 && AnimElemNo(0) = [3, 4]
 trigger5 = Anim = 5200 && AnimElemNo(0) = [2, 3]
 trigger6 = Anim = 5210 && AnimElemNo(0) = [2, 3]
 map = "au_diabo_q"
-value = 11012
+value = 10491
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco +38 graus]
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco +30 graus]
+type = MapSet
+trigger1 = Anim = 7411 && AnimElemNo(0) = 1
+map = "au_diabo_q"
+value = 10495
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro +20, tronco +30 graus]
+type = MapSet
+trigger1 = Anim = 170 && AnimElemNo(0) = 4
+trigger2 = Anim = 171 && AnimElemNo(0) = 7
+map = "au_diabo_q"
+value = 10536
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 0 de 7, centro -8, tronco +38 graus]
+type = MapSet
+trigger1 = Anim = 1660 && AnimElemNo(0) = 3
+map = "au_diabo_q"
+value = 10992
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 3 de 7, centro -8, tronco +38 graus]
+type = MapSet
+trigger1 = Anim = 170 && AnimElemNo(0) = 1
+trigger2 = Anim = 171 && AnimElemNo(0) = 4
+map = "au_diabo_q"
+value = 10995
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 3 de 7, centro -4, tronco +38 graus]
+type = MapSet
+trigger1 = Anim = 5120 && AnimElemNo(0) = 3
+map = "au_diabo_q"
+value = 11003
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco +38 graus]
 type = MapSet
 trigger1 = Anim = 1005 && AnimElemNo(0) = 6
 trigger2 = Anim = 7401 && AnimElemNo(0) = 6
 map = "au_diabo_q"
-value = 11015
+value = 11007
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco +45 graus]
+[State -4, Aura diabo no corpo: recolhe 4 de 7, centro -8, tronco +45 graus]
+type = MapSet
+trigger1 = Anim = 100 && AnimElemNo(0) = 2
+trigger2 = Anim = 100 && AnimElemNo(0) = 6
+trigger3 = Anim = 1500 && AnimElemNo(0) = [2, 2]
+trigger4 = Anim = 1501 && AnimElemNo(0) = 2
+map = "au_diabo_q"
+value = 11508
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco +45 graus]
 type = MapSet
 trigger1 = Anim = 1005 && AnimElemNo(0) = 2
 trigger2 = Anim = 7401 && AnimElemNo(0) = 2
 trigger3 = Anim = 7411 && AnimElemNo(0) = [2, 4]
 map = "au_diabo_q"
-value = 11527
+value = 11519
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco +68 graus]
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco +60 graus]
 type = MapSet
-trigger1 = Anim = 9201 && AnimElemNo(0) = 3
-trigger2 = Anim = 9207 && AnimElemNo(0) = [2, 4]
+trigger1 = Anim = 9207 && AnimElemNo(0) = [2, 4]
 map = "au_diabo_q"
-value = 13063
+value = 12543
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco +75 graus]
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco +68 graus]
 type = MapSet
 trigger1 = Anim = 7411 && AnimElemNo(0) = 5
-trigger2 = Anim = 9216
+trigger2 = Anim = 9201 && AnimElemNo(0) = 3
 map = "au_diabo_q"
-value = 13575
+value = 13055
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco +82 graus]
+[State -4, Aura diabo no corpo: recolhe 5 de 7, centro -4, tronco +75 graus]
 type = MapSet
-trigger1 = Anim = 1005 && AnimElemNo(0) = 5
-trigger2 = Anim = 7401 && AnimElemNo(0) = 5
-trigger3 = Anim = 7690
-trigger4 = Anim = 7691
+trigger1 = Anim = 7472 && AnimElemNo(0) = [6, 8]
 map = "au_diabo_q"
-value = 14087
+value = 13565
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -8, tronco +90 graus]
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco +75 graus]
+type = MapSet
+trigger1 = Anim = 9216
+map = "au_diabo_q"
+value = 13567
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco +82 graus]
+type = MapSet
+trigger1 = Anim = 1005 && AnimElemNo(0) = 1
+trigger2 = Anim = 1005 && AnimElemNo(0) = 5
+trigger3 = Anim = 7401 && AnimElemNo(0) = 1
+trigger4 = Anim = 7401 && AnimElemNo(0) = 5
+trigger5 = Anim = 7690
+trigger6 = Anim = 7691
+trigger7 = Anim = 9201 && AnimElemNo(0) = [1, 2]
+trigger8 = Anim = 9201 && AnimElemNo(0) = [7, 9]
+map = "au_diabo_q"
+value = 14079
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -12, tronco +90 graus]
 type = MapSet
 trigger1 = Anim = 1605
 map = "au_diabo_q"
-value = 14583
+value = 14575
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco +90 graus]
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco +90 graus]
 type = MapSet
-trigger1 = Anim = 1005 && AnimElemNo(0) = 1
-trigger2 = Anim = 7401 && AnimElemNo(0) = 1
-trigger3 = Anim = 9201 && AnimElemNo(0) = [1, 2]
-trigger4 = Anim = 9201 && AnimElemNo(0) = [7, 9]
-trigger5 = Anim = 9240 && AnimElemNo(0) = [1, 2]
-trigger6 = Anim = 9270 && AnimElemNo(0) = [1, 2]
+trigger1 = Anim = 9240 && AnimElemNo(0) = [1, 2]
+trigger2 = Anim = 9270 && AnimElemNo(0) = [1, 2]
 map = "au_diabo_q"
-value = 14599
+value = 14591
 ignorehitpause = 1
 
-[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +4, tronco +112 graus]
+[State -4, Aura diabo no corpo: recolhe 6 de 7, centro -4, tronco +98 graus]
+type = MapSet
+trigger1 = Anim = 7472 && AnimElemNo(0) = 5
+map = "au_diabo_q"
+value = 15102
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro -4, tronco +105 graus]
+type = MapSet
+trigger1 = Anim = 7472 && AnimElemNo(0) = 3
+map = "au_diabo_q"
+value = 15615
+ignorehitpause = 1
+
+[State -4, Aura diabo no corpo: recolhe 7 de 7, centro +0, tronco +105 graus]
 type = MapSet
 trigger1 = Anim = 9200 && AnimElemNo(0) = 4
 map = "au_diabo_q"
-value = 16143
+value = 15623
 ignorehitpause = 1
 
 [State -4, Aura diabo no corpo: ax zera antes do round]
@@ -12195,7 +13978,7 @@ type = ModifyExplod
 trigger1 = NumExplod(9620)
 id = 9620
 postype = p1
-pos = map(au_diabo_bx), -50.3 * (1 - 0.7 * map(au_diabo_g))
+pos = map(au_diabo_bx), -46.8 * (1 - 0.7 * map(au_diabo_g))
 trans = addalpha
 alpha = floor(255 * min(1, max(0, map(au_diabo_e))) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.0) + 0.04 * sin(GameTime * 0.1361 + 0.00))), 255 - floor(255 * min(1, max(0, map(au_diabo_e))) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.0) + 0.04 * sin(GameTime * 0.1361 + 0.00)))
 ignorehitpause = 1
@@ -12975,8 +14758,48 @@ type = Explod
 triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
 trigger1 = StateNo = 1660 || StateNo = 1661
 anim = 9954
-pos = const(size.ground.front) + P2BodyDist X + (-6), (-40)
+pos = const(size.ground.front) + P2BodyDist X + (-6), (-67)
 scale = 1.300, 1.300
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 4402
+anim = 9950
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-10)
+scale = 1.900, 1.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 4403
+anim = 9952
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-10)
+scale = 1.900, 1.900
 id = 9640
 sprpriority = 4
 postype = p1
@@ -12996,6 +14819,26 @@ triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
 trigger1 = StateNo = 3202
 anim = 9955
 pos = const(size.ground.front) + P2BodyDist X + (-10), (-27)
+scale = 1.900, 1.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 4400
+anim = 9950
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-50)
 scale = 1.900, 1.900
 id = 9640
 sprpriority = 4
@@ -13053,6 +14896,46 @@ ignorehitpause = 1
 [State -4, Luz da faisca golpe]
 type = Explod
 triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 4202 || StateNo = 4312 || StateNo = 4332
+anim = 9950
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-66)
+scale = 1.900, 1.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 4203 || StateNo = 4331
+anim = 9952
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-72)
+scale = 1.900, 1.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
 trigger1 = StateNo = 3001
 anim = 9955
 pos = const(size.ground.front) + P2BodyDist X + (-10), (-78)
@@ -13073,9 +14956,69 @@ ignorehitpause = 1
 [State -4, Luz da faisca golpe]
 type = Explod
 triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 4200 || StateNo = 4301 || StateNo = 4302
+anim = 9950
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-81)
+scale = 1.900, 1.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
 trigger1 = StateNo = 3003
 anim = 9955
 pos = const(size.ground.front) + P2BodyDist X + (-10), (-81)
+scale = 1.900, 1.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 4201 || StateNo = 4311
+anim = 9952
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-86)
+scale = 1.900, 1.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 4401
+anim = 9952
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-95)
 scale = 1.900, 1.900
 id = 9640
 sprpriority = 4
@@ -13695,8 +15638,28 @@ type = Explod
 triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
 trigger1 = StateNo = 1660 || StateNo = 1661
 anim = 9951
-pos = const(size.ground.front) + P2BodyDist X + (-6), (-40)
+pos = const(size.ground.front) + P2BodyDist X + (-6), (-67)
 scale = 0.780, 0.780
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 4402 || StateNo = 4403
+anim = 9951
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-10)
+scale = 1.140, 1.140
 id = 9640
 sprpriority = 4
 postype = p1
@@ -13716,6 +15679,26 @@ triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
 trigger1 = StateNo = 3202
 anim = 9951
 pos = const(size.ground.front) + P2BodyDist X + (-10), (-27)
+scale = 1.140, 1.140
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 4400
+anim = 9951
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-50)
 scale = 1.140, 1.140
 id = 9640
 sprpriority = 4
@@ -13773,6 +15756,46 @@ ignorehitpause = 1
 [State -4, Luz da faisca guarda]
 type = Explod
 triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 4202 || StateNo = 4312 || StateNo = 4332
+anim = 9951
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-66)
+scale = 1.140, 1.140
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 4203 || StateNo = 4331
+anim = 9951
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-72)
+scale = 1.140, 1.140
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
 trigger1 = StateNo = 3001
 anim = 9951
 pos = const(size.ground.front) + P2BodyDist X + (-10), (-78)
@@ -13793,9 +15816,49 @@ ignorehitpause = 1
 [State -4, Luz da faisca guarda]
 type = Explod
 triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
-trigger1 = StateNo = 3003
+trigger1 = StateNo = 3003 || StateNo = 4200 || StateNo = 4301 || StateNo = 4302
 anim = 9951
 pos = const(size.ground.front) + P2BodyDist X + (-10), (-81)
+scale = 1.140, 1.140
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 4201 || StateNo = 4311
+anim = 9951
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-86)
+scale = 1.140, 1.140
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 4401
+anim = 9951
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-95)
 scale = 1.140, 1.140
 id = 9640
 sprpriority = 4
@@ -14126,355 +16189,3 @@ xshear = -0.02 * max(-5, min(5, root,map(au_sil_x)))
 ignorehitpause = 1
 
 ; <<< aura_silhueta.py
-
-; ---- agarrão segura-e-bate (ferramentas/agarrao_mk.py) ----
-
-[Statedef 822]
-type = S
-movetype = H
-physics = N
-velset = 0,0
-ctrl = 0
-
-[State 822, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-trigger1 = SelfAnimExist(5941)
-value = 5941
-
-[State 822, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-trigger1 = !SelfAnimExist(5941)
-value = 5001
-
-[State 822, Preso: pose]
-type = ChangeAnim
-triggerall = !SelfAnimExist(5940)
-trigger1 = Time > 0 && Anim = 5001 && AnimTime = 0
-trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
-value = 5000
-elem = 1
-
-[State 822, Preso: pose própria]
-type = ChangeAnim
-triggerall = SelfAnimExist(5940)
-trigger1 = Anim != 5940 && AnimTime = 0
-value = 5940
-
-[State 822, Solto]
-type = SelfState
-trigger1 = Time > 0
-trigger1 = !gethitvar(isbound)
-value = 5050
-
-[Statedef 825]
-type = S
-movetype = H
-physics = N
-velset = 0,0
-ctrl = 0
-
-[State 825, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-trigger1 = SelfAnimExist(5941)
-value = 5941
-
-[State 825, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-trigger1 = !SelfAnimExist(5941)
-value = 5002
-
-[State 825, Preso: pose]
-type = ChangeAnim
-triggerall = !SelfAnimExist(5940)
-trigger1 = Time > 0 && Anim = 5002 && AnimTime = 0
-trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
-value = 5000
-elem = 1
-
-[State 825, Preso: pose própria]
-type = ChangeAnim
-triggerall = SelfAnimExist(5940)
-trigger1 = Anim != 5940 && AnimTime = 0
-value = 5940
-
-[State 825, Solto]
-type = SelfState
-trigger1 = Time > 0
-trigger1 = !gethitvar(isbound)
-value = 5050
-
-[Statedef 826]
-type = S
-movetype = H
-physics = N
-velset = 0,0
-ctrl = 0
-
-[State 826, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-trigger1 = SelfAnimExist(5941)
-value = 5941
-
-[State 826, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-trigger1 = !SelfAnimExist(5941)
-value = 5002
-
-[State 826, Preso: pose]
-type = ChangeAnim
-triggerall = !SelfAnimExist(5940)
-trigger1 = Time > 0 && Anim = 5002 && AnimTime = 0
-trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
-value = 5000
-elem = 1
-
-[State 826, Preso: pose própria]
-type = ChangeAnim
-triggerall = SelfAnimExist(5940)
-trigger1 = Anim != 5940 && AnimTime = 0
-value = 5940
-
-[State 826, Solto]
-type = SelfState
-trigger1 = Time > 0
-trigger1 = !gethitvar(isbound)
-value = 5050
-
-[Statedef 827]
-type = S
-movetype = H
-physics = N
-velset = 0,0
-ctrl = 0
-
-[State 827, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-trigger1 = SelfAnimExist(5942)
-value = 5942
-
-[State 827, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-trigger1 = !SelfAnimExist(5942)
-value = 5011
-
-[State 827, Preso: pose]
-type = ChangeAnim
-triggerall = !SelfAnimExist(5940)
-trigger1 = Time > 0 && Anim = 5011 && AnimTime = 0
-trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
-value = 5000
-elem = 1
-
-[State 827, Preso: pose própria]
-type = ChangeAnim
-triggerall = SelfAnimExist(5940)
-trigger1 = Anim != 5940 && AnimTime = 0
-value = 5940
-
-[State 827, Solto]
-type = SelfState
-trigger1 = Time > 0
-trigger1 = !gethitvar(isbound)
-value = 5050
-
-[Statedef 828]
-type = S
-movetype = H
-physics = N
-velset = 0,0
-ctrl = 0
-
-[State 828, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-trigger1 = SelfAnimExist(5942)
-value = 5942
-
-[State 828, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-trigger1 = !SelfAnimExist(5942)
-value = 5012
-
-[State 828, Preso: pose]
-type = ChangeAnim
-triggerall = !SelfAnimExist(5940)
-trigger1 = Time > 0 && Anim = 5012 && AnimTime = 0
-trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
-value = 5000
-elem = 1
-
-[State 828, Preso: pose própria]
-type = ChangeAnim
-triggerall = SelfAnimExist(5940)
-trigger1 = Anim != 5940 && AnimTime = 0
-value = 5940
-
-[State 828, Solto]
-type = SelfState
-trigger1 = Time > 0
-trigger1 = !gethitvar(isbound)
-value = 5050
-
-[Statedef 829]
-type = S
-movetype = H
-physics = N
-velset = 0,0
-ctrl = 0
-
-[State 829, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-trigger1 = SelfAnimExist(5942)
-value = 5942
-
-[State 829, Apanha]
-type = ChangeAnim
-trigger1 = Time = 0
-trigger1 = !SelfAnimExist(5942)
-value = 5012
-
-[State 829, Preso: pose]
-type = ChangeAnim
-triggerall = !SelfAnimExist(5940)
-trigger1 = Time > 0 && Anim = 5012 && AnimTime = 0
-trigger2 = Anim = 5000 && AnimElemTime(2) >= 0
-value = 5000
-elem = 1
-
-[State 829, Preso: pose própria]
-type = ChangeAnim
-triggerall = SelfAnimExist(5940)
-trigger1 = Anim != 5940 && AnimTime = 0
-value = 5940
-
-[State 829, Solto]
-type = SelfState
-trigger1 = Time > 0
-trigger1 = !gethitvar(isbound)
-value = 5050
-
-[Statedef 823]
-type = A
-movetype = H
-physics = N
-velset = -4.2, -5.5
-ctrl = 0
-
-[State 823, Pose]
-type = ChangeAnim
-trigger1 = Time = 0
-trigger1 = SelfAnimExist(5943)
-value = 5943
-
-[State 823, Pose]
-type = ChangeAnim
-trigger1 = Time = 0
-trigger1 = !SelfAnimExist(5943)
-value = 5030
-
-[State 823, Caindo]
-type = ChangeAnim
-trigger1 = Vel Y > 0
-trigger1 = Anim = 5943
-trigger1 = SelfAnimExist(5944)
-value = 5944
-
-[State 823, Queda]
-type = VelAdd
-trigger1 = 1
-y = .45
-
-[State 823, Chão]
-type = SelfState
-trigger1 = Vel Y > 0
-trigger1 = Pos Y >= 0
-value = 5100
-
-[Statedef 824]
-type = A
-movetype = H
-physics = N
-velset = 4.6, -6.5
-ctrl = 0
-
-[State 824, Pose]
-type = ChangeAnim
-trigger1 = Time = 0
-trigger1 = SelfAnimExist(5943)
-value = 5943
-
-[State 824, Pose]
-type = ChangeAnim
-trigger1 = Time = 0
-trigger1 = !SelfAnimExist(5943)
-value = 5030
-
-[State 824, Caindo]
-type = ChangeAnim
-trigger1 = Vel Y > 0
-trigger1 = Anim = 5943
-trigger1 = SelfAnimExist(5944)
-value = 5944
-
-[State 824, Passa por cima]
-type = PlayerPush
-trigger1 = 1
-value = 0
-
-[State 824, Queda]
-type = VelAdd
-trigger1 = 1
-y = .45
-
-[State 824, Chão]
-type = SelfState
-trigger1 = Vel Y > 0
-trigger1 = Pos Y >= 0
-value = 5100
-
-[Statedef 835]
-type = A
-movetype = H
-physics = N
-velset = -1.6, -4
-ctrl = 0
-
-[State 835, Pose]
-type = ChangeAnim
-trigger1 = Time = 0
-trigger1 = SelfAnimExist(5943)
-value = 5943
-
-[State 835, Pose]
-type = ChangeAnim
-trigger1 = Time = 0
-trigger1 = !SelfAnimExist(5943)
-value = 5030
-
-[State 835, Caindo]
-type = ChangeAnim
-trigger1 = Vel Y > 0
-trigger1 = Anim = 5943
-trigger1 = SelfAnimExist(5944)
-value = 5944
-
-[State 835, Queda]
-type = VelAdd
-trigger1 = 1
-y = .45
-
-[State 835, Chão]
-type = SelfState
-trigger1 = Vel Y > 0
-trigger1 = Pos Y >= 0
-value = 5100

@@ -39,31 +39,7 @@
   },
   {
    "desenho": 6,
-   "ticks": 2,
-   "caixa": false,
-   "de": "chute_baixo/07|foco"
-  },
-  {
-   "desenho": 7,
-   "ticks": 2,
-   "caixa": false,
-   "de": "chute_baixo/07|foco"
-  },
-  {
-   "desenho": 8,
-   "ticks": 2,
-   "caixa": false,
-   "de": "chute_baixo/07|foco"
-  },
-  {
-   "desenho": 9,
-   "ticks": 2,
-   "caixa": false,
-   "de": "chute_baixo/07|foco"
-  },
-  {
-   "desenho": 10,
-   "ticks": 2,
+   "ticks": 10,
    "caixa": false,
    "de": "chute_baixo/07|foco"
   }

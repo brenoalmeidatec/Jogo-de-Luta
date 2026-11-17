@@ -84,26 +84,94 @@ CABECADA = {
     "cabecada/06": {"quadril": {"dx": 6, "dy": 2}, "tronco": {"ang": 5}, "cabeca": {"ang": 4, "var": "foco"},
                     "braco_frente": {"ang": 10, "var": "punho"}, "braco_tras": {"ang": 0}},
 }
-REF_IMG = {}
+# Soco natural (regra do Alisson, 17/11): o quadril vai para a frente e gira (o tronco inclina para o soco), o pé da
+# frente dá um passo, o ombro e o braço chegam juntos e o braço de trás recua (contrapeso). "_pes": quanto cada pé
+# anda no chão (px HD, trás e frente) em relação ao parado.
+SOCO = {
+    "soco/01": {"quadril": {"dx": 0, "dy": 2}, "cabeca": {"ang": 0, "var": "foco"},
+                "braco_frente": {"ang": -8, "var": "punho"}, "_pes": (0, 0)},
+    # antecipação: o peso vai para trás, o punho recua junto do rosto
+    "soco/02": {"quadril": {"dx": -6, "dy": 5}, "tronco": {"ang": -5}, "cabeca": {"ang": -3, "var": "foco"},
+                "braco_frente": {"ang": -24, "dx": -4, "var": "punho"}, "braco_tras": {"ang": 4}, "_pes": (0, 0)},
+    "soco/03": {"quadril": {"dx": -4, "dy": 5}, "tronco": {"ang": -4}, "cabeca": {"ang": -3, "var": "foco"},
+                "braco_frente": {"ang": -20, "dx": -4, "var": "punho"}, "braco_tras": {"ang": 4}, "_pes": (0, 0)},
+    # contato: passo à frente, quadril e ombro entram, braço inteiro esticado na altura do ombro
+    "soco/05": {"quadril": {"dx": 22, "dy": 7}, "tronco": {"ang": 8}, "cabeca": {"ang": 6, "dx": 2, "var": "esforco"},
+                "braco_frente": {"ang": -8, "var": "esticado"}, "braco_tras": {"ang": -16}, "_pes": (6, 30)},
+    # recolhe: o punho volta, o corpo ainda na frente
+    "soco/06": {"quadril": {"dx": 14, "dy": 5}, "tronco": {"ang": 4}, "cabeca": {"ang": 3, "var": "foco"},
+                "braco_frente": {"ang": -14, "var": "punho"}, "braco_tras": {"ang": -8}, "_pes": (6, 30)},
+    # volta para a guarda trazendo o pé
+    "soco/07": {"quadril": {"dx": 5, "dy": 2}, "tronco": {"ang": 1}, "cabeca": {"ang": 0, "var": "foco"},
+                "braco_frente": {"ang": -8, "var": "punho"}, "braco_tras": {"ang": -2}, "_pes": (2, 12)},
+}
+FEITAS = {**CABECADA, **SOCO}
+
+# Chute com o corpo inteiro (regra 7.4): a perna do chute continua a do encaixe, mas o corpo acompanha. O quadril
+# entra na direção do chute e sobe na ponta do pé de apoio, o tronco inclina para trás (contrapeso), a cabeça fica
+# olhando o alvo, o braço de trás abre para equilibrar e o da frente guarda o rosto. Valores SOMADOS à pose encaixada
+# (dx/dy em px HD, ang em graus); o pé de apoio volta a plantar por IK onde estava no desenho de hoje.
+def _corpo(qdx, qdy, tronco, cabeca, btras, bfrente=0):
+    return {"quadril": {"dx": qdx, "dy": qdy}, "tronco": {"ang": tronco}, "cabeca": {"ang": cabeca},
+            "braco_tras": {"ang": btras}, "braco_frente": {"ang": bfrente}}
+
+
+CORPO = {
+    # chute alto: carrega (peso atrás), sobe o joelho, estica com o quadril entrando e o tronco deitando para trás
+    "chute_alto/02": _corpo(-4, 2, -4, 2, -6, -6),
+    "chute_alto/03": _corpo(4, 0, -8, 4, -14, -8),
+    "chute_alto/04": _corpo(12, -3, -12, 6, -24, -10),
+    "chute_alto/05": _corpo(9, -2, -10, 5, -18, -8),
+    "chute_alto/06": _corpo(3, 2, -5, 2, -8, -4),
+    "chute_alto/07": _corpo(0, 0, -1, 0, -2),
+    # chute baixo (de frente): o quadril empurra a perna, o tronco recua um pouco
+    "chute_baixo/02": _corpo(8, -1, -7, 3, -14, -6),
+    "chute_baixo/03": _corpo(2, 1, -3, 1, -6),
+    "chute_baixo/04": _corpo(10, -2, -9, 4, -18, -8),
+    "chute_baixo/05": _corpo(7, -1, -7, 3, -12, -6),
+    "chute_baixo/06": _corpo(2, 1, -2, 0, -4),
+}
+
+
+def corpo_inteiro(p, q):
+    """Soma o movimento do corpo (CORPO) na pose e planta de novo o pé de apoio."""
+    for slot, d in CORPO[q].items():
+        o = p.setdefault(slot, {"ang": 0})
+        for k, v in d.items():
+            o[k] = o.get(k, 0) + v
+    return pf.pernas_no_chao(p, b.abrir(q), so_tras=True)
+
+
+def plantar_pes(pose, dx_tras=0, dx_frente=0):
+    """Pernas por IK com cada pé no chão, deslocado dx do pé do parado."""
+    w = b.mundo(pose)
+    for coxa, canela, dx in (("coxa_tras", "canela_tras", dx_tras), ("coxa_frente", "canela_frente", dx_frente)):
+        tr = pf.TORNOZELO[canela]
+        c1, c2 = pf.ik(w[coxa][0], (tr[0] + dx, tr[1]), b.OSSOS[canela][0], b.OSSOS[coxa][0], tr)
+        pose[coxa] = {"ang": c1}
+        pose[canela] = {"ang": c2}
+    return pose
 
 
 def feita(q):
-    if "ref" not in REF_IMG:
-        REF_IMG["ref"] = b.abrir(b.REF)
     pose = {"quadril": {"ang": 0, "dx": 0, "dy": 0}}
-    for slot, v in CABECADA[q].items():
-        pose[slot] = dict({"ang": 0}, **v)
-    return pf.pernas_no_chao(pose, REF_IMG["ref"])
+    pes = FEITAS[q].get("_pes", (0, 0))
+    for slot, v in FEITAS[q].items():
+        if not slot.startswith("_"):
+            pose[slot] = dict({"ang": 0}, **v)
+    return plantar_pes(pose, *pes)
 
 
 def ajustar(pose, q):
-    if q in CABECADA:
+    if q in FEITAS:
         return feita(q)
     p = {k: dict(v) for k, v in pose.items() if not k.startswith("_")}
     for slot, mud in AJUSTE.get(q, {}).items():
         p.setdefault(slot, {"ang": 0}).update(mud)
         if "var" in mud and mud["var"] is None:
             p[slot].pop("var")
+    if q in CORPO:
+        p = corpo_inteiro(p, q)
     return p
 
 
@@ -227,9 +295,15 @@ def pose_de(kit, q, expr):
 
 
 def preparar():
+    pf.PELE = True  # sem linha de corte entre as peças (regra 7.4)
     kit = pf.separar_pes(b.ler_kit())
     b.FOLGA_VARIANTE = {"coxa_frente": 3}
     pf.MANCHA_REF = pf.mancha_ref()
+    if pf.PELE:  # base do robô: o que o próprio desenho em pele dá no parado (contorno das juntas conta como sombra)
+        t = pf.desenhar(kit, {"quadril": {"ang": 0}})
+        al = t[..., 3] > 0
+        g = cv2.erode(((t[..., :3].astype(int).sum(-1) < 110) & al).astype(np.uint8), np.ones((4, 4), np.uint8))
+        pf.MANCHA_REF = max(pf.MANCHA_REF, int(g[np.nonzero(al.any(1))[0].min() + 80:].sum()))
     return kit
 
 
@@ -305,28 +379,33 @@ def juntar(els):
 # Andar: os desenhos de hoje trocam a perna da joelheira de lado a cada passo (o kit tem uma perna de trás e uma da
 # frente fixas), então o andar sai por código: cada pé faz o ciclo apoio (desliza para trás no chão) e balanço (sobe e
 # vai para a frente), as pernas por IK, o quadril desce um pouco quando os dois pés apoiam e os braços balançam.
-PASSO_PX = 66      # tamanho do passo no HD (22 px do jogo)
+PASSO_PX = 66      # tamanho do passo no HD (22 px do jogo); o andar do jogo usa ANDAR_JOGO
 SOBE_PE = 30       # altura do pé no balanço
 DESCE_QUADRIL = 6  # quanto o quadril desce no apoio duplo
 ANDAR = {20: 1, 21: -1}  # ação -> sentido (1 frente, -1 trás)
+# O pé de apoio não pode deslizar no chão: ele anda para trás na tela na mesma velocidade em que o lutador anda para a
+# frente (walk.fwd 2.7 e walk.back 2.2 px do jogo por tique = 8.1 e 6.6 px no HD). O tempo da ação fica o de hoje
+# (34 tiques, o jogo liga sem mudar tempo): são 2 passadas por volta, meio ciclo de 8,5 tiques, passo = velocidade x 8,5.
+ANDAR_JOGO = {20: (8.1 * 8.5, 34, 2), 21: (6.6 * 8.5, 34, 2)}  # ação -> (passo HD, tiques, passadas por volta)
 
 
-def andar(sentido, ticks_total):
+def andar(sentido, ticks_total, passo=None, passadas=1):
+    passo = passo or PASSO_PX
     quadros = []
     n = ticks_total // 2
     qr = {c: b.OSSOS[c][0] for c in ("coxa_tras", "coxa_frente")}
     for i in range(n):
-        fase = (i / n) if sentido > 0 else (1 - i / n)
+        fase = ((i / n) if sentido > 0 else (1 - i / n)) * passadas % 1
         dy = DESCE_QUADRIL * (0.5 + 0.5 * np.cos(4 * np.pi * fase))
         pose = {"quadril": {"ang": 0, "dx": 0, "dy": dy}}
         w = b.mundo(pose)
         for coxa, canela, desloc in (("coxa_tras", "canela_tras", 0.0), ("coxa_frente", "canela_frente", 0.5)):
             f = (fase + desloc) % 1
             if f < 0.5:  # apoio
-                x, y = PASSO_PX / 2 - PASSO_PX * (f / 0.5), 0.0
+                x, y = passo / 2 - passo * (f / 0.5), 0.0
             else:  # balanço
                 u = (f - 0.5) / 0.5
-                x = -PASSO_PX / 2 + PASSO_PX * vida.suave(u)
+                x = -passo / 2 + passo * vida.suave(u)
                 y = -SOBE_PE * np.sin(np.pi * u)
             tr = pf.TORNOZELO[canela]
             c1, c2 = pf.ik(w[coxa][0], (tr[0] + x, tr[1] + y), b.OSSOS[canela][0], qr[coxa], tr)
@@ -408,10 +487,10 @@ def cmd_animar(so=None):
             chaves.append((ch, max(e["ticks"], 1) if e["ticks"] >= 0 else 1, e["bate"]))
         elems = [(c, t) for c, t, _ in chaves]
         fixos = {c for c, _, _ in chaves if (poses[c.split("|")[0]].get("_iou", 1) < IOU_MINIMO
-                 or dobra_funda(poses[c.split("|")[0]])) and c.split("|")[0] not in AJUSTE and c.split("|")[0] not in CABECADA}
+                 or dobra_funda(poses[c.split("|")[0]])) and c.split("|")[0] not in AJUSTE and c.split("|")[0] not in FEITAS}
         for c in {c for c, _, _ in chaves} - fixos:
             q0 = c.split("|")[0]
-            if q0 not in AJUSTE and q0 not in CABECADA and q0 not in pf.PERNA and membro_perdido(kit, q0, pp[c]):
+            if q0 not in AJUSTE and q0 not in FEITAS and q0 not in pf.PERNA and membro_perdido(kit, q0, pp[c] if q0 not in CORPO else {k: v for k, v in poses[q0].items() if not k.startswith("_")}):
                 fixos.add(c)
                 continue
             if not plantar(kit, pp[c], c.split("|")[0]):
@@ -421,7 +500,7 @@ def cmd_animar(so=None):
         quadros = vida.animar(pp, elems, bate=bate, laco=laco, guarda=None if laco else {}, fixos=fixos)
         if n in ANDAR:
             fixos = set()
-            quadros = andar(ANDAR[n], sum(t for _, t in elems))
+            quadros = andar(ANDAR[n], ANDAR_JOGO[n][1], ANDAR_JOGO[n][0], ANDAR_JOGO[n][2])
         if n in (0, 5):
             quadros = vida.respirar(quadros)
         quadros = vida.atrasar(quadros, laco=laco)
@@ -448,7 +527,7 @@ def cmd_animar(so=None):
                 e2 = pf.conferir(out2, originais[q], None)
                 if len(e2) < len(erros):
                     out, erros = out2, e2
-            if ch not in fixos and erros:
+            if ch not in fixos and erros and ch in pp:
                 # intermediário que ainda tem defeito: fica a pose-chave de onde ele sai (segura um tique a mais)
                 out2 = pf.desenhar(kit, pp[ch])
                 e2 = pf.conferir(out2, originais[q], None)
@@ -467,6 +546,12 @@ def cmd_animar(so=None):
         (SAIDA / str(n) / "tempos.json").write_text(json.dumps(tempos, indent=1, ensure_ascii=False), encoding="utf-8")
         relatorio.append(f"| {n} | {len(quadros)} ({len(fixos)} especiais) | {'PASS' if not defeitos else '<br>'.join(defeitos)} |")
         print(n, len(quadros), "desenhos", "PASS" if not defeitos else f"{len(defeitos)} com defeito", flush=True)
+    if so and (DOCS / "robo_defeitos.md").exists():
+        # rodada parcial: as outras ações ficam com a linha da última rodada completa
+        feitas = {l.split("|")[1].strip() for l in relatorio[2:]}
+        velhas = [l for l in (DOCS / "robo_defeitos.md").read_text(encoding="utf-8").splitlines()[2:]
+                  if l.startswith("| ") and l.split("|")[1].strip() not in feitas]
+        relatorio = relatorio[:2] + sorted(relatorio[2:] + velhas, key=lambda l: int(l.split("|")[1]))
     falhas = sum("PASS" not in l for l in relatorio[2:])
     texto = "\n".join(relatorio) + f"\n\n{falhas} ação(ões) com defeito.\n"
     (DOCS / "robo_defeitos.md").write_text(texto, encoding="utf-8")
@@ -501,7 +586,7 @@ def cmd_revisar():
     poses = todas_poses()
     qs = sorted(q for q, p in poses.items()
                 if (p.get("_iou", 0) >= IOU_MINIMO and not dobra_funda(p)
-                    and (q in pf.PERNA or not membro_perdido(kit, q, ajustar(p, q)))) or q in AJUSTE or q in CABECADA)
+                    and (q in pf.PERNA or not membro_perdido(kit, q, ajustar(p, q)))) or q in AJUSTE or q in FEITAS)
     fonte = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 13)
     W, H, col = 300, 240, 6
     for parte in range(0, len(qs), 24):

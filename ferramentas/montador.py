@@ -18,6 +18,7 @@ sprites/<lutador>/quadros_montador/<nome>/ (1x), com poses.json e tempos.json no
 editável fica em sprites/<lutador>/montador/<nome>.json. Ligar no gerador continua sendo trabalho do Alisson.
 """
 import argparse
+import base64
 import io
 import json
 import re
@@ -45,9 +46,11 @@ class Lutador:
         import boneco_ajuste as b
         import piloto_firme as pf
         self.b = b
+        self.modulos = [b]  # módulos cujo CAMADAS o desenho lê (trocado por pose para esconder ou mandar para trás)
         if nome == "gbzin":
             import gbzin_pecas as g
             self.kit = g.ler_kit()  # já chama configurar()
+            self.modulos.append(g)
             self._desenhar = g.desenhar
             self.ossos, self.camadas = g.OSSOS, g.CAMADAS
             self.guarda = "referencia_ginga/00"
@@ -91,18 +94,71 @@ class Lutador:
             "ossos": {s: {"junta": list(j), "mae": m, "ponta": list(p)} for s, (j, m, p) in self.ossos.items()},
             "camadas": list(self.camadas),
             "variantes": variantes,
+            "pecas": {k: {"origem": list(p["origem"]), "junta": list(p["junta"]),
+                          "tam": [int(p["img"].shape[1]), int(p["img"].shape[0])]}
+                      for k, p in self.kit["pecas"].items()},
         }
 
     def desenhar(self, pose):
         chave = json.dumps(pose, sort_keys=True)
         if chave in self.cache:
             return self.cache[chave]
+        pose = limpar_pose(pose)
+        kit, camadas = self.preparar(pose)
         with self.trava:
-            out = self._desenhar(self.kit, limpar_pose(pose))
+            antes = [m.CAMADAS for m in self.modulos]
+            try:
+                for m in self.modulos:
+                    m.CAMADAS = camadas
+                out = self._desenhar(kit, pose)
+            finally:
+                for m, c in zip(self.modulos, antes):
+                    m.CAMADAS = c
         if len(self.cache) > 400:
             self.cache.clear()
         self.cache[chave] = out
         return out
+
+    def preparar(self, pose):
+        """Kit e ordem de camadas desta pose: peça pintada ou apagada à mão ("ret"), peça escondida ("esconde") e
+        peça mandada para trás do corpo ou para a frente de tudo ("camada")."""
+        kit = self.kit
+        camadas = list(self.camadas)
+
+        def copia():
+            nonlocal kit
+            if kit is self.kit:
+                kit = dict(self.kit)
+                kit["pecas"] = dict(self.kit["pecas"])
+                if "pes" in self.kit:
+                    kit["pes"] = dict(self.kit["pes"])
+            return kit
+
+        for slot, v in pose.items():
+            if slot not in self.ossos:
+                continue
+            ret = v.get("ret")
+            if ret and ret.get("var", "") == (v.get("var") or ""):
+                k = f"{slot}_{v['var']}" if v.get("var") else slot
+                p = copia()["pecas"][k]
+                kit["pecas"][k] = dict(p, img=aplicar_retoque(p["img"], ret["png"]))
+            if v.get("esconde"):
+                if slot in camadas:
+                    camadas.remove(slot)
+                if "pes" in kit and slot in kit["pes"]:  # o pé é desenhado à parte, preso na canela
+                    pe = copia()["pes"][slot]
+                    kit["pes"][slot] = dict(pe, img=np.zeros_like(pe["img"]))
+        for slot, v in pose.items():
+            lugar = v.get("camada") if isinstance(v, dict) else None
+            if slot not in camadas or lugar not in ("atras", "frente"):
+                continue
+            camadas.remove(slot)
+            if lugar == "frente":
+                camadas.append(slot)
+            else:  # atrás do corpo: logo antes do tronco (e da cabeça, que fica por baixo do tronco)
+                i = min([camadas.index(c) for c in ("cabeca", "tronco") if c in camadas] or [0])
+                camadas.insert(i, slot)
+        return kit, camadas
 
     def png(self, pose, escala=3):
         out = self.desenhar(pose)
@@ -214,8 +270,36 @@ def limpar_pose(pose):
             w["pe"] = round(float(v["pe"]), 1)
         if v.get("var"):
             w["var"] = str(v["var"])
+        if v.get("estica") not in (None, 1, 1.0):
+            w["estica"] = float(v["estica"])
+        if v.get("esconde"):
+            w["esconde"] = True
+        if v.get("camada") in ("atras", "frente"):
+            w["camada"] = v["camada"]
+        if isinstance(v.get("ret"), dict) and v["ret"].get("png"):
+            w["ret"] = {"var": str(v["ret"].get("var") or ""), "png": str(v["ret"]["png"])}
         if w:
             out[osso] = w
+    return out
+
+
+APAGA = (255, 0, 255, 128)  # no PNG do retoque: pixel que a borracha apagou
+
+
+def aplicar_retoque(img, png):
+    """Pinta e apaga na peça (antes de girar, então a pintura gira junto). `png` é um data URL do tamanho da peça:
+    alfa 255 pinta aquela cor, magenta com alfa 128 apaga, o resto deixa como está."""
+    if "," in png:
+        png = png.split(",", 1)[1]
+    r = np.asarray(Image.open(io.BytesIO(base64.b64decode(png))).convert("RGBA"))
+    h, w = img.shape[:2]
+    r = r[:h, :w]
+    out = img.copy()
+    sub = out[:r.shape[0], :r.shape[1]]
+    pinta = r[..., 3] == 255
+    apaga = (r[..., 3] == APAGA[3]) & (r[..., 0] == 255) & (r[..., 1] == 0) & (r[..., 2] == 255)
+    sub[pinta] = r[pinta]
+    sub[apaga] = 0
     return out
 
 
