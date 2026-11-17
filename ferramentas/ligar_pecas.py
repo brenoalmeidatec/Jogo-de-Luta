@@ -1,6 +1,9 @@
 """Liga no jogo os golpes feitos no boneco de peças (sprites/<lutador>/quadros_pecas_hd/<golpe>/).
 
-Uso:  python3 ferramentas/ligar_pecas.py <lutador> [golpe ...] [--grupo 48000] [--de <pasta>] [--ajustar]
+Uso:  python3 ferramentas/ligar_pecas.py <lutador> [golpe ...] [--grupo 48000] [--de <pasta>] [--pasta <nome>] [--ajustar]
+
+`--pasta` troca a pasta dos quadros dentro de sprites/<de ou lutador>/ (padrão quadros_pecas_hd). O Grão-Pastor (Gbzin
+despertado) tem o kit no mesmo sprites/gbzin: `--de gbzin --pasta quadros_e_pecas_hd --grupo 49000`.
 
 O jogo não muda de tempo nem de caixa: só o desenho. Para cada golpe:
 - os quadros entram no .sff (indexados na paleta do lutador, grupo `--grupo` + n.º do golpe, índice = quadro);
@@ -209,9 +212,9 @@ def ajustar_tempo(novos, caixas, velhos, ini_v, total_v):
     return out
 
 
-def ligar(lutador, golpes, grupo_base=48000, de=None, ajustar=False):
+def ligar(lutador, golpes, grupo_base=48000, de=None, ajustar=False, pasta="quadros_pecas_hd"):
     chars = RAIZ / "chars" / lutador
-    spr = RAIZ / "sprites" / (de or lutador) / "quadros_pecas_hd"
+    spr = RAIZ / "sprites" / (de or lutador) / pasta
     air = (chars / f"{lutador}.air").read_text(encoding="utf-8", errors="replace")
     cns = (chars / f"{lutador}.cns").read_text(encoding="utf-8", errors="replace")
     pal, nos, _ = cs.ler(chars / f"{lutador}.sff")
@@ -352,12 +355,17 @@ def main():
         k = args.index("--de")
         de = args[k + 1]
         del args[k:k + 2]
+    pasta = "quadros_pecas_hd"
+    if "--pasta" in args:  # outra pasta de quadros no mesmo sprites/<l> (o despertado com kit próprio no Gbzin)
+        k = args.index("--pasta")
+        pasta = args[k + 1]
+        del args[k:k + 2]
     ajustar = "--ajustar" in args  # tempo do golpe levado ao da ação do jogo (impacto no tick da Clsn1)
     args = [a for a in args if a != "--ajustar"]
     lutador = args.pop(0)
-    golpes = args or sorted(p.name for p in (RAIZ / "sprites" / (de or lutador) / "quadros_pecas_hd").iterdir()
+    golpes = args or sorted(p.name for p in (RAIZ / "sprites" / (de or lutador) / pasta).iterdir()
                             if (p / "tempos.json").exists())
-    ligar(lutador, golpes, grupo, de, ajustar)
+    ligar(lutador, golpes, grupo, de, ajustar, pasta)
 
 
 if __name__ == "__main__":
