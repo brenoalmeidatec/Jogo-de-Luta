@@ -2753,8 +2753,6 @@ O Alisson aprovou o corpo firme e pediu fluidez, vida e qualidade, sem nenhum er
 **Robô de defeitos** (`conferir` em `piloto_firme.py`): procura fresta, mancha escura a mais que o desenho de hoje,
 pedaço solto e pé fora do chão. Deu 0 de 41 desenhos (`docs/boneco-pecas/vida/robo_defeitos.md`).
 
-<<<<<<< HEAD
-=======
 ### 2026-11-16 — CK pelo boneco de peças (corpo firme + vida), 1ª leva
 
 Pedido do Alisson depois do OK no Pengaró: passar todos os lutadores para o método, com fluidez e sem erro de peça, e
@@ -2842,7 +2840,6 @@ Pedido do Alisson: "faça isso para todos", com fluidez, vida e nenhum erro de p
   sprites/pengaro/quadros_pecas/acoes/<ação>/ (+ tempos.json); o HD se refaz com `pengaro_todo.py animar`.
 - Fraco ainda: manchinhas cinza na calça perto da virilha (resto do contorno do parado), fresta pequena no ombro de
   trás quando o tronco inclina; agarrão, parry baixo e despertar ficaram fora (não são da lista base).
->>>>>>> origin/mugen
 ### 2026-11-16 — Gutto no boneco de peças (corpo firme + vida) e golpes confusos refeitos
 
 O Alisson aprovou o corpo firme do Pengaró e pediu o mesmo para todos, com vida e sem erro de peça, e os golpes
@@ -2951,7 +2948,6 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   remap do despertado para cada sprite novo e refaz as ações da aura (30000/40000 + ação).
 - Gutto: 16 golpes, 299 quadros. Robô de peças 0 defeito; robô de luta 186/186 antes e depois, dano idêntico.
 - Agachado passou a ter 48 ticks e a rasteira ganhou a volta (459, 1173, 460) para bater com o tempo do jogo.
-<<<<<<< HEAD
 - `ferramentas/acoes_pengaro.py` lista as 154 ações base do Pengaró (194 desenhos); `ferramentas/pengaro_todo.py`
   faz poses (`poses i/n`), anima (`animar`), confere (robô), e gera `revisar`, `folha` e `video`.
 - Corpo firme em toda inclinação pequena (até 10°): girar o tronco abria fresta nas emendas.
@@ -2982,7 +2978,6 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
 - Ligado no jogo com `ligar_pecas.py`: 154 ações, 1157 sprites novos (grupos 48000+), remaps do despertado e da aura.
   Robô do boneco 0 defeito; robô de luta 189/189 antes e depois, dano idêntico. Foto e vídeo em docs/boneco-pecas/todo/.
 - Próximo: chutes com o mesmo corpo inteiro do soco; agarrão, parry baixo e despertar continuam fora da lista base.
-=======
 
 ### 2026-11-17 — CK base no jogo pelo boneco de peças
 - Pedido do Alisson (o Breno liberou auto-aprovação): pôr no jogo o que passou no robô.
@@ -3033,4 +3028,17 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   (`ferramentas/video_golpes_raiclaven.py`).
 - Para ligar de novo: `git checkout 95134c46 -- chars/raiclaven` e `ligar_pecas.py raiclaven` (rodar duas vezes em cima
   do já ligado não foi testado).
->>>>>>> origin/mugen
+
+## 17/11/2026 - Gbzin: Grão-Pastor (despertado) com folhas próprias no jogo
+- Rascunhos de pose no ChatGPT (3 turnos, pedidos em `ferramentas/folhas_gbzin.py`), folhas em
+  `sprites/gbzin/quadros/folhas_arcade/e_*.png`. `ferramentas/gbzin_e_pecas.py firme NOMES` corta as células por costura
+  de menos tinta, trava a paleta do kit (`sprites/gbzin/pecas_e/paleta.json`, 15 cores), usa a cabeça como régua do
+  tamanho do corpo e cola a cabeça do kit (`pecas_e/cabeca.png`, presa na junta do pescoço) em todo quadro onde ela
+  não tapa mão ou nuca; resultado em `quadros_e_firmes(_hd)`. `conferir` grava
+  `docs/boneco-pecas/gbzin/grao_pastor_conferencia.md` (0 defeitos em 25 folhas).
+- `gerar_gbzin.py` (`GRAO_PASTOR`): 23 estados do despertado com desenho próprio: parado (respiração sem emenda),
+  andar, x, y, a, agachado, golpe baixo, rasteirinha, rasteira, anti-aéreo, pulo, golpes no ar (bicicleta e soco),
+  defesa, defesa alta/baixa, apanha, queda, levanta, rolamento, vitória, derrota, provocação. O resto do despertado
+  segue no desenho da base até as próximas folhas (estampido, giro do manto, mãos, juízo, especiais, agarrões).
+- Breno liberou auto-aprovação (17/11); robô 236/0 no estado juntado. Também tirei marcadores de conflito que tinham
+  ficado commitados neste LOGBOOK.
