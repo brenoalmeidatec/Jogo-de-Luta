@@ -16,15 +16,15 @@
   },
   {
    "desenho": 2,
-   "ticks": 2,
+   "ticks": 5,
    "caixa": false,
    "de": "rasteira/02"
   },
   {
    "desenho": 3,
-   "ticks": 3,
-   "caixa": false,
-   "de": "rasteira/02"
+   "ticks": 2,
+   "caixa": true,
+   "de": "rasteira/04"
   },
   {
    "desenho": 4,
@@ -41,14 +41,14 @@
   {
    "desenho": 6,
    "ticks": 2,
-   "caixa": true,
+   "caixa": false,
    "de": "rasteira/04"
   },
   {
    "desenho": 7,
    "ticks": 2,
    "caixa": false,
-   "de": "rasteira/04"
+   "de": "rasteira/05"
   },
   {
    "desenho": 8,
@@ -78,7 +78,7 @@
    "desenho": 12,
    "ticks": 2,
    "caixa": false,
-   "de": "rasteira/05"
+   "de": "rasteira/06"
   },
   {
    "desenho": 13,
@@ -108,7 +108,7 @@
    "desenho": 17,
    "ticks": 2,
    "caixa": false,
-   "de": "rasteira/06"
+   "de": "rasteira/07"
   },
   {
    "desenho": 18,
@@ -130,12 +130,6 @@
   },
   {
    "desenho": 21,
-   "ticks": 2,
-   "caixa": false,
-   "de": "rasteira/07"
-  },
-  {
-   "desenho": 22,
    "ticks": 2,
    "caixa": false,
    "de": "rasteira/07"
