@@ -520,6 +520,10 @@ um assert que confere soma de ticks, caixa por tick e os `AnimElem` do .cns.
 5. **Contato segurado:** o quadro de contato é o mais forte da animação (o de maior alcance), fica parado o ativo
    inteiro e mais 1–2 ticks, e é nele que entram a caixa de acerto, o efeito e o congelamento.
 
+6. **Corpo inteiro no golpe (regra do Alisson, 17/11):** golpe é movimento natural do corpo todo. Soco gira o
+   quadril, o ombro vai junto e o pé dá um passo à frente; não vale só esticar o braço com o resto parado. Chute
+   transfere o peso para a perna de apoio e o tronco compensa.
+
 ### 7.2.1 Zero erro de animação (regra do Alisson, 2026-11-17)
 
 Nenhum boneco entra com erro de animação. Conta como erro, e reprova o golpe:
@@ -550,6 +554,29 @@ para retocar. O gerador do lutador (`ferramentas/gerar_<nome>.py`) é quem monta
 
 Estimativa: com o kit mínimo (forma base + Despertar), cada lutador fica com **cerca de 1.500 desenhos** no
 mínimo, e chega perto de 3.000 se tudo que tem meta for feito na meta. O SFF aguenta; o cuidado é manter a paleta e a âncora nos pés iguais em todos.
+
+### 7.4 Zero erro de animação (Alisson, 2026-11-17)
+
+Nenhum lutador sai com erro de animação. Conta como erro, e o quadro não entra:
+
+1. **Membro descolando:** braço, perna, pé, mão ou cabeça separado do corpo, ou com fresta na junta.
+2. **Silhueta grossa demais:** contorno dobrado, membro inchado ou figura mais larga que o desenho do parado.
+3. **Pedaço de sprite voando junto:** migalha, resto de outra pose ou pedaço solto que acompanha o boneco.
+4. **Linha de corte aparecendo:** a emenda entre duas peças (ombro, cotovelo, cintura, quadril, joelho, tornozelo,
+   pescoço) não pode ser vista; o boneco parece sempre um desenho inteiro, nunca peças coladas.
+5. **Movimento fisicamente errado ou estranho:** membro que estica além do próprio tamanho, junta que dobra para o lado
+   errado, pé que desliza ou afunda no chão, peso que não muda de perna.
+
+O golpe tem que ser **natural**, com o corpo inteiro: **o soco gira o quadril e dá um passo à frente**, o ombro vai junto
+e o braço chega no tamanho dele; o calcanhar de trás sobe quando o peso passa para a frente. O chute gira o quadril e
+o pé de apoio. Esticar só o braço com o corpo parado não serve.
+
+O kit de peças continua separado por dentro (cabeça, tronco, braços, pernas, pés), para trocar a cabeça, a expressão
+ou uma peça e fazer ajuste fino depois sem refazer o boneco; o que é inteiro é o resultado na tela.
+
+No boneco de peças quem confere é o robô (`conferir()` em `ferramentas/piloto_firme.py`, rodado pelo
+`ferramentas/pengaro_todo.py animar`): o relatório tem que dar **0 defeitos**. Expressões junto com as falas vêm
+depois, quando o Alisson gravar as vozes.
 
 ---
 
@@ -648,6 +675,8 @@ Produção
     smear de no máximo 2 ticks, sem vai-e-volta
 [ ] (desejável) ginga, andar e corpo do Despertar na meta de 1 desenho por tick
 [ ] todo golpe tem antecipação, smear, contato segurado e recuperação legível (seção 7.2)
+[ ] zero erro de animação (seção 7.4): nada descolando, silhueta grossa, pedaço voando ou movimento estranho; soco
+    com quadril e passo, sem linha de corte entre as peças, robô do boneco de peças com 0 defeitos
 [ ] todo impacto usa efeito do pixelfx (seção 8.1), com pausetime/EnvShake pelo piso da 8.3
 [ ] caixas conferidas no editor; combos conferidos no ikemen-combo-finder
 [ ] gerador roda limpo e o verificador passa; nada editado à mão em chars/<nome>/

@@ -57,7 +57,7 @@ def ticks_novo(nome):
     tempos = json.loads((SPR / "quadros_pecas_hd" / nome / "tempos.json").read_text(encoding="utf-8"))
     out = []
     for e in tempos["elementos"]:
-        out += [(SPR / "quadros_pecas_hd" / nome / f"{e['desenho']:02d}.png", tuple(tempos["caixa"]) if e["caixa"] else None)] \
+        out += [(SPR / "quadros_pecas_hd" / nome / f"{e['desenho']:02d}.png", tuple(tempos["caixa"]) if e["caixa"] and tempos.get("caixa") else None)] \
             * e["ticks"]
     return out
 

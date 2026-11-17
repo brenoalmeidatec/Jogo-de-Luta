@@ -80,7 +80,7 @@ _ESC = {}
 def escala(q):
     """Tamanho do quadro `q` contra o parado, medido pela cabeça (1.0 = igual)."""
     global _CAB
-    if getattr(K, "SEM_REGUA", False):  # desenhos já no tamanho do parado (a régua é de cabeça humana)
+    if getattr(K, "ESCALA_FIXA", False) or getattr(K, "SEM_REGUA", False):  # desenhos já no tamanho do parado
         return 1.0
     if q not in _ESC:
         if _CAB is None:
@@ -121,6 +121,7 @@ def configurar(nome):
         "coxa_frente": (range(-30, 31, 2), 2, [None]),
         "canela_frente": (range(-30, 31, 2), 2, [None]),
     }
+    b.BUSCA.update(getattr(K, "BUSCA", {}))  # faixa de ângulos própria do lutador (ex.: garras por cima da cabeça)
     return K
 
 
@@ -135,11 +136,34 @@ def montar_kit():
     baixo = yy >= K.CINTURA
     m_bt = b.mascara(K.BRACO_TRAS) & alfa
     m_bf = b.mascara(K.BRACO_FRENTE) & alfa & ~m_bt
+    # peças a mais do lutador (a criatura nas costas do Raiclaven despertado e os braços dela): cada uma com o seu
+    # polígono e o seu osso em K.OSSOS; saem do corpo antes da cabeça, do tronco e das pernas
+    extras = {}
+    for nome, poli in getattr(K, "EXTRAS", {}).items():
+        extras[nome] = b.mascara(poli) & alfa & ~(m_bt | m_bf) & ~np.any(list(extras.values()) or [np.zeros_like(alfa)], 0)
     bracos = m_bt | m_bf
+    for m_ in extras.values():
+        bracos = bracos | m_
     m_cab = b.mascara(K.CABECA) & alfa & ~bracos
     # só o marrom do nó fica no quadril; a calça atrás dele é das pernas
     no = (b.mascara(K.NO_DA_FAIXA) & faixa_marrom(ref)) if hasattr(K, "NO_DA_FAIXA") else np.zeros_like(alfa)
     no = cv2.dilate(no.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool) & b.mascara(K.NO_DA_FAIXA)
+    # rabo (demônio): peça própria presa no quadril, por cima das pernas
+    m_cauda = np.zeros_like(alfa)
+    cauda_falta = np.zeros_like(alfa)
+    if hasattr(K, "CAUDA_LINHA"):
+        faixa = np.zeros(alfa.shape, np.uint8)
+        cv2.polylines(faixa, [np.int32(K.CAUDA_LINHA)], False, 1, K.CAUDA_LARG)
+        faixa = (faixa > 0) | b.mascara(K.CAUDA_PONTA)
+        R, G, B_ = (ref[..., i].astype(int) for i in range(3))
+        cor = (R > B_ + 6) & (G < R * 0.66)
+        m_cauda = faixa & alfa & cor & ~bracos
+        m_cauda = limpar_ilhas(m_cauda, 40)
+        # trecho da linha sem rabo à vista (escondido): completa com um traço da cor do rabo
+        miolo = np.zeros(alfa.shape, np.uint8)
+        cv2.polylines(miolo, [np.int32(K.CAUDA_LINHA)], False, 1, max(5, K.CAUDA_LARG // 2))
+        cauda_falta = (miolo > 0) & ~m_cauda
+    no |= m_cauda
     pt = b.mascara(K.PERNA_TRAS) & alfa & ~bracos & baixo & ~no
     pf = b.mascara(K.PERNA_FRENTE) & alfa & ~bracos & baixo & ~pt & ~no
     jt, jf = K.JOELHO_TRAS[1], K.JOELHO_FRENTE[1]
@@ -153,21 +177,51 @@ def montar_kit():
         "braco_tras": m_bt & ~m_ant,
         "braco_frente": m_bf,
         **({"antebraco_tras": m_ant} if m_ant.any() else {}),
-        "tronco": ~baixo & alfa & ~m_cab & ~bracos,
-        "quadril": baixo & alfa & ~pt & ~pf & ~bracos,
+        "tronco": (yy < K.CINTURA + getattr(K, "TRONCO_SOBRA", 0)) & alfa & ~m_cab & ~bracos & ~m_cauda,
+        "quadril": baixo & alfa & ~pt & ~pf & ~bracos & ~m_cauda,
+        **({"cauda": m_cauda} if m_cauda.any() else {}),
         "coxa_tras": pt & (yy < jt),
         "canela_tras": pt & (yy >= jt - 12),  # 12 linhas por baixo da coxa: tapa a fresta quando o joelho dobra
         "coxa_frente": pf & (yy < jf),
         "canela_frente": pf & (yy >= jf - 12),
         "perna_tras": pt,
         "perna_frente": pf,
+        **extras,
     }
     imgs = {k: np.where(m[..., None], ref, 0).astype(np.uint8) for k, m in partes.items()}
+    if "cauda" in imgs and cauda_falta.any():
+        c = imgs["cauda"]
+        cores = ref[m_cauda][:, :3].astype(int)
+        escuro = np.percentile(cores, 25, axis=0).astype(np.uint8)
+        c[cauda_falta, :3] = escuro
+        c[cauda_falta, 3] = 255
+        borda = cv2.dilate(cauda_falta.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool) & ~cauda_falta \
+            & (c[..., 3] == 0)
+        c[borda, :3] = (np.percentile(cores, 5, axis=0)).astype(np.uint8)
+        c[borda, 3] = 255
     # peito e lado do tronco que o braço de trás esconde
     esc = b.mascara(K.TRONCO_ESCONDIDO) & m_bt & ~baixo
     imgs["tronco"] = b.tapar(np.where((partes["tronco"] | esc)[..., None], ref, 0).astype(np.uint8), esc,
                              partes["tronco"])
     pintado = esc & ~partes["tronco"]
+    if hasattr(K, "QUADRIL_ESCONDIDO"):  # barra do paletó e quadril que a mão de trás esconde
+        escq = b.mascara(K.QUADRIL_ESCONDIDO) & m_bt & baixo
+        imgs["quadril"] = b.tapar(np.where((partes["quadril"] | escq)[..., None], ref, 0).astype(np.uint8), escq,
+                                  partes["quadril"])
+    faixa = getattr(K, "TAPAR_FAIXA", 0)
+    if faixa:  # pinta por baixo de quem cobre a peça, numa faixa junto da beirada (respirar não abre buraco)
+        k_ = np.ones((2 * faixa + 1, 2 * faixa + 1), np.uint8)
+        for nome in getattr(K, "TAPAR", ("tronco", "quadril")):
+            dono = imgs[nome][..., 3] > 0
+            # só onde a peça de cima fica por cima dela (pela ordem das camadas): o que fica atrás não é tapado
+            i_dono = K.CAMADAS.index(nome)
+            em_cima = np.zeros_like(alfa)
+            for outro, m_ in partes.items():
+                cam = outro.replace("perna", "coxa")
+                if outro != nome and cam in K.CAMADAS and K.CAMADAS.index(cam) > i_dono:
+                    em_cima |= m_
+            cobre = em_cima & ~dono & (cv2.dilate(dono.astype(np.uint8), k_) > 0)
+            imgs[nome] = b.tapar(imgs[nome], cobre, dono)
     # cada peça fica só com o pedaço ligado a ela (sem lasca de outra peça que caiu dentro do polígono)
     imgs = {k: so_o_grosso(v) for k, v in imgs.items()}
     kit = {"ref": f"quadros_arcade_hd/{K.REF}.png", "pecas": {}}
@@ -449,6 +503,9 @@ def ik(quadril, tornozelo, joelho_ref, quadril_ref, tornozelo_ref):
 _PES_REF = None
 
 
+_PASSO = {}
+
+
 def pernas_no_chao(pose, alvo, quais=("tras", "frente")):
     """Pernas plantadas por IK: o tornozelo vai para cima do pé do quadro de hoje."""
     global _PES_REF
@@ -462,9 +519,9 @@ def pernas_no_chao(pose, alvo, quais=("tras", "frente")):
     def alvo_tornozelo(lado):
         i = 0 if lado == "tras" else -1
         tr = K.TORNOZELO[f"canela_{lado}"]
-        dx = 0
+        dx = _PASSO.get(lado, 0)
         if agora and (len(agora) > 1 or len(quais) == 1):
-            dx = agora[i] - _PES_REF[i]
+            dx += agora[i] - _PES_REF[i]
         return (tr[0] + dx, tr[1])
 
     # perna plantada não estica além do que ela mede: se o quadril subiu demais, o corpo desce até o pé alcançar
@@ -489,10 +546,16 @@ def pernas_no_chao(pose, alvo, quais=("tras", "frente")):
         coxa, canela = f"coxa_{lado}", f"canela_{lado}"
         qr, jr = K.OSSOS[coxa][0], K.OSSOS[canela][0]
         tr = K.TORNOZELO[canela]
-        dx = 0
+        dx = _PASSO.get(lado, 0)
         if agora and (len(agora) > 1 or len(quais) == 1):
-            dx = agora[i] - _PES_REF[i]
-        c1, c2 = ik(w[coxa][0], (tr[0] + dx, tr[1]), jr, qr, tr)
+            dx += agora[i] - _PES_REF[i]
+        # o pé não vai além do que a perna alcança (perna não estica)
+        L = np.linalg.norm(np.subtract(jr, qr)) + np.linalg.norm(np.subtract(tr, jr)) - 2
+        hq = w[coxa][0]
+        vy = tr[1] - hq[1]
+        alcance = np.sqrt(max(1.0, L * L - vy * vy))
+        tx = min(max(tr[0] + dx, hq[0] - alcance), hq[0] + alcance)
+        c1, c2 = ik(hq, (tx, tr[1]), jr, qr, tr)
         pose[coxa] = {"ang": c1}
         pose[canela] = {"ang": c2}
     return pose
@@ -525,7 +588,8 @@ def especial(q):
     if q not in _ESP:
         # sem reescala: a régua da cabeça erra de lado e de costas (aumentaria o boneco); os desenhos de hoje já têm o
         # tamanho do parado (conferido no lote 4)
-        a = sem_migalha(abrir(q))
+        lado = b.SPR / "pecas_lado" / f"{q}.png"  # kit de lado/costas (hazak_lado.py) vence o desenho de hoje
+        a = sem_migalha(np.array(Image.open(lado).convert("RGBA")) if lado.exists() else abrir(q))
         # furinho de 1 a 40 px é erro do desenho; vão maior (entre o braço e o corpo) é desenhado de propósito
         fundo = (a[..., 3] == 0).astype(np.uint8)
         n, lab, st, _ = cv2.connectedComponentsWithStats(fundo, connectivity=4)
@@ -568,6 +632,14 @@ def _pose_kit(kit, q):
             pose[slot] = dict(v)
     if "tronco" in mao and "cabeca" not in mao:
         pose["cabeca"] = dict(pose.get("cabeca", {}), ang=-round(mao["tronco"]["ang"] * 0.7))
+    # passo do golpe (regra do corpo inteiro): o quadril vai à frente, o tronco inclina e o pé da frente avança
+    global _PASSO
+    _PASSO = getattr(K, "PASSO", {}).get(q, {})
+    if _PASSO:
+        pose["quadril"] = dict(pose["quadril"], dx=pose["quadril"].get("dx", 0) + _PASSO.get("quadril", 0))
+        ta = pose.get("tronco", {}).get("ang", 0) + _PASSO.get("tronco", 0)
+        pose["tronco"] = dict(pose.get("tronco", {}), ang=ta)
+        pose["cabeca"] = dict(pose.get("cabeca", {}), ang=-round(ta * 0.7))
     no_ar = getattr(K, "PERNA_NO_AR", {}).get(q)
     if "_ar" in mao:  # no ar: as duas pernas nos ângulos dados à mão, sem pé plantado
         pose.pop("_pes", None)
@@ -690,6 +762,28 @@ def malha_perna(lado, w):
     return ts, td
 
 
+def esticar(p, est, slot=None):
+    """A peça esticada `est` vezes na linha do osso (da junta para a ponta, K.OSSOS), em volta da junta, por vizinho
+    mais próximo: não cria cor nova. É o braço de borracha da criatura do Raiclaven."""
+    img, (ox, oy), (jx, jy) = p["img"], p["origem"], p["junta"]
+    ponta = K.OSSOS[slot][2] if slot in K.OSSOS else (jx + 1, jy)
+    th = np.arctan2(ponta[1] - jy, ponta[0] - jx)
+    c, s_ = np.cos(th), np.sin(th)
+    R = np.array([[c, -s_], [s_, c]])
+    M = R @ np.diag([est, 1.0]) @ R.T  # estica só na direção do osso
+    h, w = img.shape[:2]
+    cantos = np.array([[0, 0], [w, 0], [0, h], [w, h]], float) - (jx - ox, jy - oy)
+    novos = cantos @ M.T
+    x0, y0 = np.floor(novos.min(0)).astype(int)
+    x1, y1 = np.ceil(novos.max(0)).astype(int)
+    # saída (u, v) relativa à junta = M (x - j); o cv2 quer a matriz direta da peça para a saída
+    A = np.zeros((2, 3))
+    A[:, :2] = M
+    A[:, 2] = -M @ np.array([jx - ox, jy - oy]) - (x0, y0)
+    out = cv2.warpAffine(img, A, (int(x1 - x0), int(y1 - y0)), flags=cv2.INTER_NEAREST, borderValue=(0, 0, 0, 0))
+    return dict(p, img=out, origem=[int(jx + x0), int(jy + y0)])
+
+
 def desenhar(kit, pose):
     """Peças rígidas giradas nas juntas; pernas no chão deformadas por malha (calça larga dobra sem emenda);
     perna levantada com o desenho de câmara ou esticada preso no quadril."""
@@ -747,6 +841,9 @@ def desenhar(kit, pose):
             continue
         p = kit["pecas"][b.chave(slot, pose)]
         pos, ang = w[slot]
+        est = pose.get(slot, {}).get("estica", 1)
+        if abs(est - 1) > 0.01:  # membro de borracha (a criatura do Raiclaven): estica na linha do osso
+            p = esticar(p, est, slot)
         r, x0, y0 = b.colocar(p, p["img"], p["origem"], pos, ang)
         por(r, x0, y0)
         if slot == "tronco":
@@ -777,7 +874,7 @@ def buracos(tela, maximo=900):
 
 
 def tapar_buracos(tela):
-    m = buracos(tela)
+    m = buracos(tela, getattr(K, "BURACO_MAX", 900))
     if not m.any():
         return tela
     out = tela.copy()
@@ -836,7 +933,7 @@ def conferir(tela, juntas, no_chao=True, buraco_ok=0):
             erros.append(f"fresta em {int(x)},{int(y)}")
     if no_chao and ys_max(tela) < EIXO[1] - 8:
         erros.append(f"pé flutuando (y={ys_max(tela)})")
-    nb = int(buracos(tela).sum())
+    nb = int(buracos(tela, getattr(K, "BURACO_MAX", 900)).sum())
     if nb > buraco_ok:
         erros.append(f"buraco {nb} px")
     ys = np.nonzero(al.any(1))[0]
@@ -911,8 +1008,9 @@ def gerar(nomes, so_pose=False):
             esp = pose.get("_especial", {}).get("var")
             if esp:  # desenho de hoje: só pedaço solto, fora da tela e pé onde o desenho de hoje pisa
                 erros = conferir(out, no_chao=ys_max(abrir(esp)) >= EIXO[1] - 8, juntas=[],
-                                 buraco_ok=int(buracos(especial(esp)).sum()))
-                linhas[f"{nome}/{i:02d}"] = f"| {nome}/{i:02d} | {q} (desenho de hoje) | {'PASS' if not erros else 'FAIL ' + '; '.join(erros)} |"
+                                 buraco_ok=0 if (b.SPR / "pecas_lado" / f"{esp}.png").exists()
+                                 else int(buracos(especial(esp)).sum()))
+                linhas[f"{nome}/{i:02d}"] = f"| {nome}/{i:02d} | {q} ({'kit de lado' if (b.SPR / 'pecas_lado' / f'{esp}.png').exists() else 'desenho de hoje'}) | {'PASS' if not erros else 'FAIL ' + '; '.join(erros)} |"
                 Image.fromarray(out).save(b.SPR / "quadros_pecas_hd" / nome / f"{i:02d}.png")
                 Image.fromarray(np.ascontiguousarray(out[1::3, 1::3])).save(b.SPR / "quadros_pecas" / nome / f"{i:02d}.png")
                 continue
@@ -920,7 +1018,7 @@ def gerar(nomes, so_pose=False):
                                                      # metade de baixo inteira de um desenho: as juntas das pernas não valem
                                                      *(() if pose.get("_pernas") else ("coxa_tras", "coxa_frente", "canela_tras", "canela_frente")))])
             m_novo, m_hoje = mancha(out, guarda)
-            if pintado > 30:
+            if pintado > getattr(K, "PINTADO_MAX", 30):
                 erros.append(f"peito pintado à vista {pintado} px")
             if m_novo > m_hoje + getattr(K, "MANCHA_FOLGA", 60):
                 erros.append(f"mancha {m_novo} px (hoje {m_hoje})")

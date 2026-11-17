@@ -1,0 +1,80 @@
+{
+ "acao": 303,
+ "caixa": [
+  48,
+  -288,
+  189,
+  -240
+ ],
+ "origem": [
+  "tapa_costas/01",
+  "tapa_costas/02",
+  "tapa_costas/03",
+  "tapa_costas/04",
+  "tapa_costas/05",
+  "tapa_costas/06",
+  "tapa_costas/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "tapa_costas/01"
+  },
+  {
+   "desenho": 1,
+   "ticks": 4,
+   "caixa": false,
+   "de": "tapa_costas/02"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": false,
+   "de": "tapa_costas/03"
+  },
+  {
+   "desenho": 3,
+   "ticks": 4,
+   "caixa": true,
+   "de": "tapa_costas/04"
+  },
+  {
+   "desenho": 4,
+   "ticks": 5,
+   "caixa": false,
+   "de": "tapa_costas/05"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "tapa_costas/06"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "tapa_costas/06"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "tapa_costas/06"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "tapa_costas/07"
+  },
+  {
+   "desenho": 9,
+   "ticks": 3,
+   "caixa": false,
+   "de": "tapa_costas/07"
+  }
+ ]
+}
