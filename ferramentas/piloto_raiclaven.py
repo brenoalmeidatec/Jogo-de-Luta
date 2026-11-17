@@ -55,9 +55,18 @@ pr.VARIANTES.update({
                                (692, 373), (652, 386), (624, 398), (692, 401), (692, 416), (640, 423), (600, 426),
                                (560, 433), (520, 433), (488, 429)], "cabeca", None),
         # estocada: braço todo esticado, tesoura fechada lá na frente (soco/05)
+        # martelo: braço erguido dobrado, tesoura aberta acima da cabeça (martelo/01), com a ombreira junto
+        "armado": ("martelo/01", [(424, 372), (428, 340), (445, 315), (468, 300), (476, 262), (530, 240), (610, 236),
+                                  (612, 262), (545, 288), (522, 318), (500, 330), (516, 360), (522, 404), (490, 412),
+                                  (452, 410), (430, 396)], "cabeca", None),
+        # martelo: braço todo erguido, tesoura lá em cima (martelo/02), com a ombreira junto
+        "alto": ("martelo/02", [(422, 335), (428, 300), (445, 272), (462, 258), (466, 240), (470, 232), (492, 226),
+                                (500, 200), (520, 175), (548, 158), (554, 166), (532, 192), (514, 226), (560, 204),
+                                (594, 188), (598, 198), (562, 222), (522, 246), (516, 262), (494, 276), (482, 300),
+                                (498, 330), (504, 368), (472, 394), (440, 394), (422, 372)], "cabeca", None),
         "estocada": ("soco/05", [(480, 372), (530, 368), (560, 372), (580, 366), (620, 368), (692, 374),
                                  (703, 388), (692, 401), (640, 407), (600, 415), (578, 421), (540, 415), (500, 414),
-                                 (480, 413)], "cabeca", None),
+                                 (480, 413)], "cabeca", pr.colorido),
     },
     "coxa_frente": {  # perna da frente inteira levantada (coxa, canela e sapato), sem avental, lâmina e mão
         "baixa": ("chute_alto/01", [(572, 445), (600, 436), (633, 449), (637, 490), (626, 520), (613, 530),
@@ -74,6 +83,9 @@ pr.VARIANTES.update({
 })
 
 
+COM_OMBREIRA = {"armado", "alto"}
+
+
 def P(q=(0, 0), tronco=0, cabeca=0, bt=0, abt=0, bf=0, abf=0, pente=0, coxa=None, canela=None, pe_frente=0,
       pe_tras=0, lev=False, braco=None, perna=None):
     """Pose por junta. q = deslocamento do quadril (x, y); ângulos em graus, horário na tela (para quem olha à
@@ -85,6 +97,8 @@ def P(q=(0, 0), tronco=0, cabeca=0, bt=0, abt=0, bf=0, abf=0, pente=0, coxa=None
     if braco:  # o braço mecânico inteiro vem do desenho da variante
         pose["braco_tras"]["var"] = braco
         pose["antebraco_tras"]["var"] = "vazio"
+        if braco in COM_OMBREIRA:  # a variante traz a ombreira levantada junto: a do kit sai
+            pose["ombreira"] = {"ang": 0, "var": "vazio"}
     if lev or perna:
         pose["coxa_frente"] = {"ang": coxa or 0}
         pose["canela_frente"] = {"ang": canela or 0}
@@ -234,7 +248,7 @@ def mancha_maxima(kit):
     """Escuro grosso do corpo com os braços tirados: a camisa é preta, e o que o braço descobre não é defeito. O
     robô reprova o que passar disso (contorno solto, sombra de peça, buraco pintado de preto)."""
     vazio = {k: dict(v, img=np.zeros((1, 1, 4), np.uint8), sob=np.zeros((1, 1, 4), np.uint8))
-             for k, v in kit["pecas"].items() if k.startswith(("braco", "antebraco"))}
+             for k, v in kit["pecas"].items() if k.startswith(("braco", "antebraco", "ombreira"))}
     k2 = dict(kit, pecas={**kit["pecas"], **vazio})
     sem = desenhar(k2, plantar(P()))
     al = (sem[..., 3] > 0).astype(np.uint8)

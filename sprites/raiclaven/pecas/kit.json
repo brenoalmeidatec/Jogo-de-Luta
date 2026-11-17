@@ -217,11 +217,47 @@
     349
    ]
   },
+  "braco_tras_armado": {
+   "arquivo": "braco_tras_armado.png",
+   "origem": [
+    429,
+    235
+   ],
+   "junta": [
+    462,
+    398
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/martelo/01.png",
+   "sobra": "braco_tras_armado_sobra.png",
+   "origem_sobra": [
+    420,
+    226
+   ]
+  },
+  "braco_tras_alto": {
+   "arquivo": "braco_tras_alto.png",
+   "origem": [
+    444,
+    166
+   ],
+   "junta": [
+    462,
+    398
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/martelo/02.png",
+   "sobra": "braco_tras_alto_sobra.png",
+   "origem_sobra": [
+    435,
+    157
+   ]
+  },
   "braco_tras_estocada": {
    "arquivo": "braco_tras_estocada.png",
    "origem": [
     476,
-    366
+    367
    ],
    "junta": [
     462,
@@ -232,7 +268,7 @@
    "sobra": "braco_tras_estocada_sobra.png",
    "origem_sobra": [
     467,
-    357
+    358
    ]
   },
   "coxa_frente_baixa": {
@@ -320,6 +356,24 @@
    "mae": "coxa_frente",
    "fonte": "quadros_arcade_hd/ginga/00.png",
    "sobra": "canela_frente_vazio_sobra.png",
+   "origem_sobra": [
+    -9,
+    -9
+   ]
+  },
+  "ombreira_vazio": {
+   "arquivo": "ombreira_vazio.png",
+   "origem": [
+    0,
+    0
+   ],
+   "junta": [
+    470,
+    392
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/ginga/00.png",
+   "sobra": "ombreira_vazio_sobra.png",
    "origem_sobra": [
     -9,
     -9
