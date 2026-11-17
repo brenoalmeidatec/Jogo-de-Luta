@@ -300,9 +300,9 @@ def _mascara_do_no(n):
 
 def acoes_do_corpo(acoes, remap):
     """As ações do corpo do despertado: todo elemento com sprite trocado pelo RemapPreset despertado, ou desenho
-    próprio do despertado do boneco de peças (grupos 47100 a 47199: o agarrão da #47 em 4700/4710)."""
+    próprio do despertado do boneco de peças (grupos 47100 a 47249: agarrão, poder, especiais e super da #47)."""
     return sorted(a for a, els in acoes.items()
-                  if els and a < 9000 and all((g, i) in remap or 47100 <= g < 47200 for g, i, *_ in els if g >= 0))
+                  if els and a < 9000 and all((g, i) in remap or 47100 <= g < 47250 for g, i, *_ in els if g >= 0))
 
 
 def gerar(pasta, lutador, so=None):

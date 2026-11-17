@@ -89,11 +89,52 @@ value = 4700
 """
 
 
-def injetar(cns):
+def roteiro_golpes(golpes):
+    """Roteiro com uma lista de golpes "estado:distância:ticks" em sequência, num ciclo, depois do despertar."""
+    partes = [ROTEIRO.split("[State -2, demo47 longe: P1]")[0]]
+    lista = [tuple(int(v) for v in g.split(":")) for g in golpes.split(",")]
+    ciclo = sum(t for _, _, t in lista)
+    ini = 0
+    for n, (est, dist, t) in enumerate(lista):
+        q = ini + 20
+        partes.append(f"""
+[State -2, demo47 g{n} P1]
+type = PosSet
+trigger1 = RoundState = 2 && var(20) > 0 && GameTime % {ciclo} = {q}
+x = {-dist // 2 - 20}
+y = 0
+
+[State -2, demo47 g{n} P2]
+type = PosSet
+trigger1 = RoundState = 2 && var(20) > 0 && GameTime % {ciclo} = {q}
+redirectid = enemynear,id
+x = {dist - dist // 2 - 20}
+y = 0
+
+[State -2, demo47 g{n} vida]
+type = LifeSet
+trigger1 = RoundState = 2 && GameTime % {ciclo} = {q}
+redirectid = enemynear,id
+value = 1000
+
+[State -2, demo47 g{n} vira]
+type = Turn
+trigger1 = RoundState = 2 && GameTime % {ciclo} = {q + 2} && facing = -1
+
+[State -2, demo47 g{n} golpe]
+type = ChangeState
+trigger1 = RoundState = 2 && var(20) > 0 && GameTime % {ciclo} = {q + 6} && stateno = 0
+value = {est}
+""")
+        ini += t
+    return "".join(partes)
+
+
+def injetar(cns, roteiro=None):
     txt = cns.read_text(encoding="utf-8")
     i = txt.index("[Statedef -2]")
     j = txt.index("\n\n", i) + 2
-    cns.write_text(txt[:j] + ROTEIRO + txt[j:], encoding="utf-8", newline="\n")
+    cns.write_text(txt[:j] + (roteiro or ROTEIRO) + txt[j:], encoding="utf-8", newline="\n")
 
 
 def main():
@@ -105,6 +146,7 @@ def main():
     ap.add_argument("--espera", type=int, default=12)
     ap.add_argument("--fotos", type=Path)
     ap.add_argument("--cenario", default="stages/stage0-720.def")
+    ap.add_argument("--golpes", help='em vez do agarrão e do poder: "estado:distância:ticks,..." (ex. 4800:300:150)')
     a = ap.parse_args()
     motor = motor_linux()
     with tempfile.TemporaryDirectory() as td:
@@ -118,7 +160,7 @@ def main():
         INI_LINUX["Motif"] = "data/nazafight/system.def"
         INI_LINUX["VSync"] = "1"
         ajustar_ini(copia)
-        injetar(copia / "chars" / a.p1 / f"{a.p1}.cns")
+        injetar(copia / "chars" / a.p1 / f"{a.p1}.cns", roteiro_golpes(a.golpes) if a.golpes else None)
         disp = f":{80 + os.getpid() % 9}"
         xvfb = subprocess.Popen(["Xvfb", disp, "-screen", "0", "1280x720x24"], stdout=subprocess.DEVNULL,
                                 stderr=subprocess.DEVNULL)
