@@ -1,0 +1,53 @@
+{
+ "acao": 170,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 6,
+   "caixa": false,
+   "de": "derrota/00|dor"
+  },
+  {
+   "desenho": 1,
+   "ticks": 6,
+   "caixa": false,
+   "de": "derrota/01|dor"
+  },
+  {
+   "desenho": 2,
+   "ticks": 6,
+   "caixa": false,
+   "de": "derrota/02|dor"
+  },
+  {
+   "desenho": 3,
+   "ticks": 6,
+   "caixa": false,
+   "de": "derrota/03|dor"
+  },
+  {
+   "desenho": 4,
+   "ticks": 6,
+   "caixa": false,
+   "de": "derrota/04|dor"
+  },
+  {
+   "desenho": 5,
+   "ticks": 6,
+   "caixa": false,
+   "de": "derrota/05|dor"
+  },
+  {
+   "desenho": 6,
+   "ticks": 6,
+   "caixa": false,
+   "de": "derrota/06|dor"
+  },
+  {
+   "desenho": 7,
+   "ticks": 1,
+   "caixa": false,
+   "de": "derrota/07|dor"
+  }
+ ]
+}

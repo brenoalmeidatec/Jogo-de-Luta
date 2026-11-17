@@ -44,8 +44,11 @@ def indices_de(a, pal):
     """Como o escrever_sff do gerador: quantize na paleta fixa (sem o índice 0) e +1; alfa vazio vira 0."""
     rgb = np.frombuffer(pal, np.uint8).reshape(-1, 4)[1:256, :3].reshape(-1).tolist()
     q = Image.new("P", (1, 1))
-    q.putpalette(rgb + [0] * (768 - len(rgb)))
-    ind = np.asarray(Image.fromarray(a[..., :3]).quantize(palette=q, dither=Image.NONE)).astype(np.uint16) + 1
+    # 255 cores + 1 de enchimento: o enchimento repete a 1ª cor (com preto, o quase preto do contorno caía no índice
+    # 255 -> +1 = 256 -> 0 = transparente e o contorno virava buraco)
+    q.putpalette(rgb + rgb[:3] * ((768 - len(rgb)) // 3))
+    ind = np.asarray(Image.fromarray(a[..., :3]).quantize(palette=q, dither=Image.NONE)).astype(np.uint16)
+    ind = np.where(ind >= len(rgb) // 3, 0, ind) + 1
     return np.where(a[..., 3] < 128, 0, ind).astype(np.uint8).tobytes()
 
 
@@ -104,19 +107,24 @@ def main():
     ofs_spr, nspr, ofs_pal, npal, ofs_l, len_l, ofs_t, len_t = struct.unpack_from("<8I", b, 36)
     assert ofs_t + len_t == len(b), "tdata não é o fim do arquivo"
     novos = bytearray()
-    exatos = tom = 0
+    exatos = tom = recortes = 0
     trocados = set()
+    pulados = []
     for k, n in enumerate(C):
         chave = (n["g"], n["i"])
         if chave not in mud or n["link"] is not None:
             continue
+        novo_tam = None  # o conserto pode mudar o recorte (w, h) e o eixo: no exato vale o de B
         if n.get("png"):  # PNG de 32 bits (o Diabo, os efeitos): só troca se o do jogo é igual ao de antes
-            if n["px"] != dA[chave]["px"] or (n["w"], n["h"]) != (dB[chave]["w"], dB[chave]["h"]):
+            if n["px"] != dA[chave]["px"]:
+                pulados.append(chave)
                 continue
             corpo = dB[chave]["px"]  # já vem com o tamanho descomprimido na frente
+            novo_tam = dB[chave]
             exatos += 1
         elif (n["w"], n["h"], n["px"]) == (dA[chave]["w"], dA[chave]["h"], dA[chave]["px"]):
             px = dB[chave]["px"]
+            novo_tam = dB[chave]
             exatos += 1
         else:
             a = rgba_de(n, pc)
@@ -127,6 +135,12 @@ def main():
         if not n.get("png"):
             corpo = struct.pack("<I", len(px)) + rle8(px)
         g, i, w, h, x, y, link, fmt, dep, off, ln, pi, fl = struct.unpack_from("<HHHHhhHBBIIHH", b, ofs_spr + 28 * k)
+        if novo_tam is not None and (novo_tam["w"], novo_tam["h"]) != (w, h):
+            # recorte novo: o eixo anda junto (x, y do jogo + o quanto o eixo de B andou em relação ao de A)
+            a_ = dA[chave]
+            w, h = novo_tam["w"], novo_tam["h"]
+            x, y = x + novo_tam["x"] - a_["x"], y + novo_tam["y"] - a_["y"]
+            recortes += 1
         struct.pack_into("<HHHHhhHBBIIHH", b, ofs_spr + 28 * k, g, i, w, h, x, y, link, fmt, dep,
                          len_t + len(novos), len(corpo), pi, fl | 1)
         novos += corpo
@@ -138,6 +152,8 @@ def main():
     saida.write_bytes(compactar(bytes(b) + bytes(novos)))
     print(f"{saida}: {exatos} sprites trocados pelo gerado (iguais ao de antes), {tom} consertados no próprio sprite, "
           f"{len(mud) - exatos - tom} de {len(mud)} são link (seguem o nó trocado) ou não estão no jogo; +{len(novos) / 1e6:.2f} MB"
+          + (f"; {recortes} com recorte/eixo novo" if recortes else "")
+          + (f"; PULADOS (o do jogo não é o de antes): {pulados[:10]}" if pulados else "")
           + (f"; ATENÇÃO, links para sprites trocados fora da lista: {estranhos[:10]}" if estranhos else ""))
 
 

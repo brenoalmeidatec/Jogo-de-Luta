@@ -858,7 +858,7 @@ def sincroniza(end):
     """1x a partir do 3x: cada bloco 3x3 vira a cor mais frequente dele (cheio se 5 dos 9 pixels estão pintados)."""
     assert end.fator == 3 and not end.um_x, "sincroniza vale para Hazak, CK e Pengaró, a partir do desenho 3x"
     peq = Endereco(f"{end.lutador}/{end.acao}", um_x=True)
-    for p in end.quadros():
+    for p in ([end.arquivo] if end.n is not None else end.quadros()):  # com NN, só aquele quadro
         g = abrir(p)
         h, w = g.shape[0] // 3, g.shape[1] // 3
         blocos = g[:h * 3, :w * 3].reshape(h, 3, w, 3, 4).transpose(0, 2, 1, 3, 4).reshape(h, w, 9, 4)

@@ -2552,6 +2552,42 @@ desfaz pós-passos e, no Gutto, troca o HD do Blender pelo 1x: use o `remendar_s
 
 **Saída:** `docs/anatomia-51/cor/` (folhas antes/depois e vídeos da troca parado -> golpe -> parado).
 
+## 2026-11-15 — Pengaró de três braços e anatomia quadro a quadro de todos (issue #51, comentário 6898143291) (Claude, thread do Alisson)
+
+**Pedido do Breno:** o Pengaró segurava a garrafa e aparecia outro braço por cima dando soco. Achar e consertar; passar
+o Pengaró inteiro e todos os lutadores quadro a quadro, com os olhos; melhorar a régua de membro sobrando.
+
+**O jab (ação 200, sprite 91,0 = `pengaro/soco/05`):** era um quadro de outra geração de desenho (sem joelheira, pernas
+em outra pose) com o braço do soco saindo do mesmo ombro da garrafa. Agora é o soco/04 com o braço esticado até o
+alcance do 05: o soco sai do ombro da frente e a garrafa fica na mão de trás.
+
+**Passada com os olhos:** `ferramentas/pixel/tira_jogo.py` tirou 743 tiras (cada ação como o jogo mostra); 29 erros
+confirmados por dois revisores. Depois, o Pengaró base inteiro em zoom (288 quadros): mais 47. Tudo consertado com a
+ferramenta de pixel e conferido por um revisor visual separado:
+- **Pengaró:** jab; ginga/05, lata/05 e anda/06 (o mesmo desenho sem joelheira); braço da frente faltando em
+  cabecada/03-04 e ar_soco/02; braço a mais em ar_soco/02; bola/02 com os dois braços do mesmo lado; golaco/00 com
+  garrafa e mão soltas na boca; compasso (braço solto, cabeça de outro desenho, manchas); corrida com cabeça de outro
+  desenho; joelheira sumindo na bicicleta; rolamento redesenhado na proporção do parado; listras, cordões e manchas
+  soltas em afastar, armada, caneta, chute_baixo, derrota, levanta, martelo, parry, pulo, queda, rasteira(inha), vitoria.
+- **Diabo:** três braços no agarrão Cutucão (d_agarrao_cutucao/03-05); toco de antebraço de pele acima do punho da
+  maleta em d_pisao_chefe, d_chute_lateral, d_sapato_barriga e d_fumaca (73 sprites no .sff).
+- **Gutto (HD do Blender, consertado no próprio sprite com `sprite_sff.py`):** três mãos no soco no pulo (467,0),
+  cabelo, sobra na boca, magenta e mancha na barriga (753, 423/202, 443, 444, 562, 563).
+- **CK:** luva de trás pintada de lilás na rasteira (parecia pé), tira lilás solta, duas luvas no baixo_soco/03,
+  três mãos na caneta/04.
+- **Hazak base** (patroa, chute_alto_rajada/01) é da thread do Hazak; **Raiclaven** sem erro confirmado.
+
+**Régua nova:** `ferramentas/pixel/sequencia.py` (quadro intruso: peça do parado que some ou aparece num quadro só,
+com o contorno fugindo dos vizinhos). Pega o jab antigo, a ginga, a lata e o anda; hoje só avisa o d_corrida/01 do
+Diabo (tom de outro desenho, sem erro de membro) e a transformação do Pengaró.
+
+**Bug achado e consertado:** o `indices_de` do `remendar_sff.py` jogava o quase-preto no índice 0 (transparente). O
+remendo de cor do Gutto tinha aberto buraco no contorno de 102 sprites (33 mil pixels); devolvidos com
+`sprite_sff.py tapar`. O `remendar_sff.py` agora também leva o recorte/eixo novo quando o conserto muda o tamanho do
+sprite, e o `pixel.py sincroniza L/A/NN` refaz só aquele quadro do 1x.
+
+**Robôs:** Pengaró 189/0, Gutto 186/0, CK 226/0, Hazak 238/0. **Saída:** `docs/anatomia-51/membros/` (antes/depois de
+cada lutador, o jab no jogo e o vídeo das correntes do Pengaró).
 ## 2026-11-15 — Diabo Loiro #44, 2ª rodada: Cobrança do Diabo e folhas próprias (Claude, thread do Hazak)
 
 **Pedido do Breno na #44:** tirar o Chapéu Bumerangue, especial novo que não seja projétil nem repita golpe de outro
@@ -2568,3 +2604,121 @@ vídeo conferido antes de juntar.
 - Conferência do vídeo quadro a quadro (8 revisores + 1 cético): o desenho novo destoava do parado (risca branca,
   manchas magenta, munhequeira verde-água) → `harmonizar`; o estouro da Cobrança parecia preso → acompanha o P2 e
   ficou menor. Robô 249/0. Vídeos em docs/diabo-44/video/.
+
+## 2026-11-16 — Piloto boneco de peças do Pengaró base (Claude, sessão do LightWolfMan)
+
+**Pedido:** `docs/missao-alisson-boneco-de-pecas.md`, etapa 1 (parado, soco e chute alto pelo método do
+`docs/estudo-animacao.md`). Ferramenta escolhida pelo Alisson: só grátis, Python/Pillow na nuvem (sem Aseprite). Antes do
+piloto, o Alisson pediu um comparativo de caminhos no soco.
+
+**Feito (branch `claude/project-thread-c23bpn`, fora da `mugen`, nada ligado no gerador nem no `.sff`):**
+- `sprites/pengaro/paleta_arcade_pecas.json`: 15 cores medidas na arte atual (a `paleta_arcade.json` era da arte antiga,
+  mais clara). Use `FORMA=pecas` no `conferir_arte.py`.
+- `ferramentas/boneco_pecas.py`: kit em `sprites/pengaro/pecas/` (cabeça com pescoço escondido, tronco, quadril, perna de
+  trás, perna da frente, braço de trás com a garrafa; variantes do braço da frente aberta/punho/esticado e da perna da
+  frente câmara/esticada, recortadas de desenhos aprovados e encaixadas na junta), RotSprite em índice de paleta,
+  montagem por pose e saída 3x + 1x.
+- `ferramentas/boneco_blender.py`: caminho B (mesmo kit num esqueleto do Blender, roda com `$NAZAFX_PY`).
+- `ferramentas/conferir_pecas.py`: régua de cabeça e tronco contra o parado (limite 5%).
+- `ferramentas/piloto_pecas.py`: as três animações, com `tempos.json` nos mesmos ticks e caixas das ações 0, 200 e 240.
+- `ferramentas/video_pecas.py`: vídeo lado a lado a 60 fps, tira de ticks e folha antes/depois em `docs/boneco-pecas/piloto/`.
+
+**Resultado:** comparativo do soco (`docs/boneco-pecas/soco_comparativo.*`): o atual reprova na régua (cabeça +7 a 9%,
+peito −9 a −20% entre quadros); A e B passam, quase iguais, e o A ficou por não reamostrar pixel. Piloto: régua 17/17
+PASS e `conferir_arte` regras 1, 3, 4, 5 e 7 PASS nos 17 quadros.
+
+**Tempo:** o kit e a montagem levaram a maior parte (~1 h 30 de máquina contando o comparativo); depois do kit pronto,
+cada animação nova levou ~10 min (achar as poses e conferir). O custo cai bem nos próximos golpes.
+
+**Não testado / limites:** não foi aberto no motor (vídeo montado pelos ticks do `.air`, como o `video_golpe.py`); a
+paleta de 15 cores deixa a arte mais chapada que a atual; frente e costas da folha-modelo não foram geradas (pedem
+ChatGPT/Gemini e não fazem falta nestas três animações); as pontas da faixa ainda não atrasam no chute (bolinhas estão
+no quadril); a câmara baixa do chute é a câmara girada e pede retoque à mão.
+
+### 2026-11-16 — Piloto boneco de peças, versão 2: conserto em cima dos quadros de hoje
+
+**Por quê:** o Alisson reprovou a versão 1 por três motivos: perdeu nitidez (paleta de 15 cores), os membros
+desgrudavam e o movimento mudava. A proposta dele foi partir dos sprites que já estão no jogo e consertar só o que
+varia. Foi o que fiz.
+
+**O que mudou:**
+- `ferramentas/corrigir_cabeca.py`: a régua acha a cabeça e a escala dela. Se passar de 3%, a cabeça é recortada acima
+  do queixo, só a parte ligada a ela (a mão levantada fica de fora), e encolhida em volta do queixo com Scale2x x3 e
+  amostragem. A nuca, o trapézio e o ombro ficam com os pixels originais.
+- `ferramentas/piloto_corrigido.py`: grava `quadros_pecas_hd` e `quadros_pecas` com os mesmos desenhos, ticks e caixas
+  que o jogo mostra hoje nas ações 0, 200 e 240.
+- `ferramentas/conferir_pecas.py`: quando a nota do casamento fica abaixo de 0,6, a medida aparece como inconclusiva e
+  não reprova. É o caso do tronco, que gira entre as poses.
+- `ferramentas/video_pecas.py`: a guarda dos dois lados é o ginga/00.
+- A versão 1 do boneco montado continua no histórico (e16c177b) e em `docs/boneco-pecas/piloto/`.
+
+**Resultado:** a cabeça foi de 107–112% para 97–103% nos 10 quadros do soco e do chute. O parado já estava dentro e
+não mudou. Cores, contorno e membros são os originais. Antes e depois em `docs/boneco-pecas/corrigido/`.
+
+**Ressalva honesta:** o molde do tronco reprova soco/01 (84%) e soco/03 (89%) com nota fraca (0,62 e 0,71). A distância
+do alto da cabeça até a faixa dá 99–101% nesses quadros, então deixei o tronco como está e pedi ao Breno para olhar.
+
+**Tempo:** cerca de 40 min de máquina para as três animações.
+
+### 2026-11-16 — Piloto boneco de peças, versão 3: corpo firme (escolha do Alisson)
+
+O Alisson reprovou a v2, que só mexia na cabeça: o rosto e a pele continuavam mudando de quadro para quadro. No cartão
+de decisão ele escolheu **corpo firme, só os membros mexem**.
+
+- `ferramentas/piloto_firme.py`: o kit em cor cheia sai do ginga/00 (`boneco_ajuste.py`). O tronco é casado em cada
+  quadro de hoje só por translação, sem girar e sem escalar.
+  - Braços: encaixe osso por osso.
+  - Pernas no chão: cinemática inversa, com o pé plantado onde está hoje. O pé é uma peça separada e fica reto.
+  - Perna do chute: desenho inteiro da perna do chute de hoje, preso no quadril, sem a pele da barriga.
+  - Rosto: sempre o mesmo, em 3 expressões (guarda = ginga/00, foco = soco/05, esforço = chute_alto/04), todas
+    levadas ao tamanho do parado com `corrigir_cabeca.py`.
+  - Limpeza: frestas entre peças fecham com inpaint, e o contorno dos braços do parado sai do tronco e do quadril.
+- Saída em `quadros_pecas_hd`/`quadros_pecas` e `poses.json`; vídeos e zoom do rosto e da pele em
+  `docs/boneco-pecas/corpo_firme/`.
+
+**Defeitos que ainda aparecem:** no agachado mais fundo da ginga (quadros 3 e 4), a calça da frente abre no joelho.
+Sobra um cantinho escuro perto da mão da garrafa em alguns quadros. O 1º quadro do chute ainda está com o pé no chão.
+
+### 2026-11-16 — Pengaró com vida (corpo firme + intermediários) e robô de defeitos
+
+O Alisson aprovou o corpo firme e pediu fluidez, vida e qualidade, sem nenhum erro de animação ou de peça.
+
+**Vida** (`ferramentas/vida_pecas.py`):
+- Intermediários a cada 2 ticks entre as poses-chave, com a mesma soma de ticks e o mesmo elemento de acerto. O
+  impacto fica segurado, a ida acelera e a volta desacelera.
+- Respiração: no laço do parado o peito sobe 1 px do jogo.
+- Atraso: a cabeça e o cordão com as bolinhas ficam atrás do movimento do quadril, e as bolinhas balançam em volta
+  do nó.
+- Resultado: parado foi de 5 para 16 desenhos, soco de 4 para 7, chute alto de 6 para 18.
+
+**Defeitos fechados:**
+- Ginga funda: a perna da frente agora é o desenho inteiro do ginga/02, sem faixa.
+- Pé: virou peça separada (só pele e contorno), fica reto e encosta no chão.
+- Bolinhas: saíram do quadril e vão por cima de todos os quadros.
+- Mancha preta embaixo dos braços: vinha do `tapar`, que usava o fundo transparente como cor. Corrigido.
+- Frestas: o fechamento agora só age perto das juntas, e as migalhas soltas foram apagadas.
+- Começo do chute: a perna sobe usando o desenho de câmara.
+
+**Robô de defeitos** (`conferir` em `piloto_firme.py`): procura fresta, mancha escura a mais que o desenho de hoje,
+pedaço solto e pé fora do chão. Deu 0 de 41 desenhos (`docs/boneco-pecas/vida/robo_defeitos.md`).
+
+### 2026-11-16 — Pengaró inteiro no boneco de peças (154 ações)
+
+Pedido do Alisson: "faça isso para todos", com fluidez, vida e nenhum erro de peça, e refazer os golpes confusos.
+
+- `ferramentas/acoes_pengaro.py` lista as 154 ações base do Pengaró (194 desenhos); `ferramentas/pengaro_todo.py`
+  faz poses (`poses i/n`), anima (`animar`), confere (robô), e gera `revisar`, `folha` e `video`.
+- Corpo firme em toda inclinação pequena (até 10°): girar o tronco abria fresta nas emendas.
+- Robô: pé desgrudado da canela (tornozelo estica/encolhe até 10 px), pé fora do chão (IK planta no pé de hoje,
+  inclusive nos intermediários), contorno escuro na beira cortada das peças, rosto trocado com fresta (aí o quadro
+  especial fica com a cabeça do desenho).
+- Quadro "especial" (desenho de hoje + rosto do kit + paleta travada do parado) quando o kit de frente não monta:
+  IoU < 0.65, agachado fundo/pernas encolhidas, ou braço/perna que o encaixe não alcança (> 800 px de fora).
+  59 dos 194 desenhos saem montados; o resto é especial.
+- Refeitos: andar (por código, ciclo apoio/balanço com IK; o desenho de hoje trocava a perna da joelheira),
+  cabeçada (à mão: antecipação, testa na frente, volta), defesa (punho sobe e cobre o queixo), soco no ar,
+  provocação.
+- Resultado: robô 0 defeitos nas 154 ações (1344 desenhos com intermediários). Saída 1x em
+  sprites/pengaro/quadros_pecas/acoes/<ação>/ (+ tempos.json); o HD se refaz com `pengaro_todo.py animar`.
+- Fraco ainda: manchinhas cinza na calça perto da virilha (resto do contorno do parado), fresta pequena no ombro de
+  trás quando o tronco inclina; agarrão, parry baixo e despertar ficaram fora (não são da lista base).

@@ -14,6 +14,10 @@ histórico para desfazer.
 | `reguas.py` | as réguas de anatomia que o robô também usa (cabeça, corpo, membro sobrando, cor fora da paleta) |
 | `cores.py` | régua de cor contra o parado (deriva, salto, troca entre ações) e o conserto de tom / paleta única |
 | `remendar_sff.py` | troca no .sff do jogo só os sprites dos quadros consertados, sem regerar o lutador |
+| `sequencia.py` | régua de quadro intruso: peça que some e volta / quadro de outro desenho no meio da ação |
+| `tira_jogo.py` | tira de cada ação como o jogo mostra (sprites do .sff na ordem do .air), para conferir com os olhos |
+| `achar_quadro.py` | de qual quadro (pasta/ação/NN) saiu um sprite do .sff |
+| `sprite_sff.py` | tira um sprite do .sff para PNG e põe de volta consertado (Gutto e Raiclaven, corpo HD do Blender) |
 
 Precisa de `numpy`, `Pillow` e `opencv-python-headless` (`pip install opencv-python-headless`); o MP4 usa o `ffmpeg`.
 
@@ -131,6 +135,30 @@ compasso, parry_baixo e afastar; Gutto armada, derrota, lata, levanta, queda, ro
 e_bola, e_caneta, e_queda (todos abaixo de 2,6). CK é de paleta indexada e já sai sem deriva. Hazak base só tem
 deriva nos objetos e na patroa (não é ele). Raiclaven: defesa, cabecada, armada e pente_combo um pouco acima de 4,
 passado para a thread dele. Transformações (despertar, endiabrado) mudam de cor de propósito.
+
+## Membro sobrando: o jab do Pengaró de três braços (#51, 2026-11-15)
+
+O Breno achou o Pengaró segurando a garrafa e dando soco com outro braço por cima. Era `soco/05`: um quadro de outra
+geração de desenho (sem a joelheira, pernas em outra pose) com o braço do soco saindo do mesmo ombro da garrafa. A régua
+de manchas de pele não pega (tronco nu e braços viram uma mancha só), então a conferência agora tem três passos:
+
+1. `tira_jogo.py L --saida DIR` tira cada ação como o jogo mostra; olhar tira por tira contando cabeça, braços (de qual
+   ombro sai cada um), mãos e pernas. Foi assim que saíram os 29 erros da #51.
+2. `sequencia.py L` (ou `--todos`) avisa do quadro intruso: grupo de cor do parado (joelheira, cabelo, luva) que está
+   nos dois vizinhos e some neste quadro, ou aparece só nele, com o contorno fugindo dos vizinhos. Pegou o jab, a
+   lata/05, a ginga/05 e o anda/06 do Pengaró (todos do mesmo desenho sem joelheira). "olhar" é só contorno.
+3. `achar_quadro.py L G,I` diz de qual arquivo saiu o sprite; conserta com `pixel.py` (ou `sprite_sff.py` no HD do
+   Gutto/Raiclaven) e põe no .sff com `remendar_sff.py`.
+
+```
+python3 tira_jogo.py pengaro --saida /tmp/tiras          # ações < 9000; --despertado usa o RemapPreset
+python3 sequencia.py --todos                            # quadros intrusos de todos
+python3 achar_quadro.py pengaro 91,0                    # -> pengaro/quadros_arcade_hd/soco/05.png
+python3 sprite_sff.py extrair gutto 467,0 /tmp/s.png    # ... conserta ... e:
+python3 sprite_sff.py repor gutto 467,0 /tmp/s.png
+```
+
+`pixel.py sincroniza L/ACAO/NN` agora refaz só aquele quadro do 1x (sem NN, a ação inteira, que regrava os outros 1x).
 
 ## Ideias para depois
 
