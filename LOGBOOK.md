@@ -2877,3 +2877,17 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   sprites/pengaro/quadros_pecas/acoes/<ação>/ (+ tempos.json); o HD se refaz com `pengaro_todo.py animar`.
 - Fraco ainda: manchinhas cinza na calça perto da virilha (resto do contorno do parado), fresta pequena no ombro de
   trás quando o tronco inclina; agarrão, parry baixo e despertar ficaram fora (não são da lista base).
+
+## 2026-11-17 — Pengaró inteiro no jogo pelo boneco de peças, sem linha de corte (Claude, thread do Alisson)
+
+- Regra nova na `docs/regras-dos-lutadores.md` seção 7.4 (zero erro de animação: membro descolando, silhueta grossa,
+  pedaço voando, linha de corte, movimento fisicamente errado) + linha no checklist da seção 9.
+- `ferramentas/pele_pecas.py`: o boneco é desenhado como pele que dobra nas juntas (skinning linear com peso dos dois
+  lados da emenda, faixa de 28 px; braço 8 px). O kit continua separado (trocar cabeça e ajuste fino), mas na tela não
+  aparece corte entre quadril, coxa, canela e tronco. Liga com `piloto_firme.PELE = True`.
+- Limpeza do kit (bolinhas fantasmas, risco cinza na calça, contorno escuro na beira dos braços).
+- Soco refeito com o corpo inteiro: quadril gira e anda 22 px, passo à frente, braço de trás recua.
+- Andar na velocidade do jogo (passadas do tamanho do deslocamento real, sem patinar).
+- Ligado no jogo com `ligar_pecas.py`: 154 ações, 1157 sprites novos (grupos 48000+), remaps do despertado e da aura.
+  Robô do boneco 0 defeito; robô de luta 189/189 antes e depois, dano idêntico. Foto e vídeo em docs/boneco-pecas/todo/.
+- Próximo: chutes com o mesmo corpo inteiro do soco; agarrão, parry baixo e despertar continuam fora da lista base.
