@@ -1,0 +1,11 @@
+{
+ "acao": 10,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "agachado/02"
+  }
+ ]
+}

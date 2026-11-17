@@ -68,6 +68,35 @@ pr.VARIANTES.update({
                                  (703, 388), (692, 401), (640, 407), (600, 415), (578, 421), (540, 415), (500, 414),
                                  (480, 413)], "cabeca", pr.colorido),
     },
+    "braco_frente": {
+        # golaço: braço do pente todo esticado à frente, o pente na ponta dos dedos (golaco/03)
+        "arremesso": ("golaco/03", [(548, 404), (565, 400), (600, 400), (625, 404), (650, 404), (680, 400),
+                                    (690, 405), (690, 416), (650, 424), (633, 435), (607, 434), (585, 438),
+                                    (563, 443), (552, 447), (546, 425)], "cabeca", None),
+        # pente_combo: mão no cabelo, penteando com o pente (pente_combo/07)
+        "cabelo": ("pente_combo/07", [(540, 292), (560, 295), (578, 299), (597, 299), (617, 318), (633, 343),
+                                      (645, 368), (642, 388), (620, 395), (596, 397), (588, 380), (593, 365),
+                                      (605, 360), (606, 338), (595, 325), (580, 323), (560, 320), (543, 312)],
+                   "cabeca", None),
+        # agarrão: braço esticado, mão aberta agarrando (agarrao/05)
+        "agarra": ("agarrao/05", [(550, 362), (580, 345), (618, 340), (636, 312), (650, 310), (662, 320),
+                                  (663, 335), (658, 352), (626, 358), (600, 376), (568, 396), (552, 402)],
+                   "cabeca", None),
+        # rasteira: tira a vassoura e ergue ao lado da cabeça (rasteira/02)
+        "vassoura": ("rasteira/02", [(566, 346), (630, 336), (634, 372), (614, 384), (618, 436), (636, 440),
+                                     (640, 472), (628, 490), (640, 556), (662, 636), (650, 642), (628, 560),
+                                     (614, 508), (590, 508), (578, 488), (582, 462), (598, 450), (596, 384),
+                                     (568, 378)], "cabeca", pr.escuro_longe),
+        # rasteira: braço para baixo varrendo, a vassoura no chão (rasteira/03)
+        "varre": ("rasteira/03", [(575, 485), (600, 480), (625, 510), (627, 535), (615, 560), (627, 610),
+                                  (640, 622), (655, 625), (667, 645), (665, 659), (595, 659), (592, 645),
+                                  (602, 627), (620, 615), (602, 572), (592, 572), (582, 550), (582, 525),
+                                  (575, 500)], "cabeca", pr.escuro_longe),
+    },
+    "quadril": {  # metade de baixo agachada inteira (avental, as duas pernas e os sapatos), do agachado/04
+        "agachado": ("agachado/04", [(420, 556), (500, 552), (640, 556), (652, 600), (660, 680), (410, 680),
+                                     (414, 600)], "agachado", pr.lamina_no_colo),
+    },
     "coxa_frente": {  # perna da frente inteira levantada (coxa, canela e sapato), sem avental, lâmina e mão
         "baixa": ("chute_alto/01", [(572, 445), (600, 436), (633, 449), (637, 490), (626, 520), (613, 530),
                                     (629, 565), (631, 588), (608, 590), (588, 576), (566, 561), (565, 530),
@@ -87,18 +116,29 @@ COM_OMBREIRA = {"armado", "alto"}
 
 
 def P(q=(0, 0), tronco=0, cabeca=0, bt=0, abt=0, bf=0, abf=0, pente=0, coxa=None, canela=None, pe_frente=0,
-      pe_tras=0, lev=False, braco=None, perna=None):
+      pe_tras=0, lev=False, braco=None, perna=None, baixo=None, mao=None):
     """Pose por junta. q = deslocamento do quadril (x, y); ângulos em graus, horário na tela (para quem olha à
     direita, tronco > 0 inclina para a frente). braco/perna escolhem uma variante (o membro inteiro vem de outro
     desenho); as pernas no chão saem por cinemática inversa com o pé onde estava no parado (+ pe_frente/pe_tras)."""
     pose = {"quadril": {"ang": 0, "dx": q[0], "dy": q[1]}, "tronco": {"ang": tronco}, "cabeca": {"ang": cabeca},
             "braco_tras": {"ang": bt}, "antebraco_tras": {"ang": abt}, "braco_frente": {"ang": bf + abf / 2},
             "_pe": {"frente": pe_frente, "tras": pe_tras}}
+    if mao:  # o braço do pente vem de outro desenho (com a vassoura)
+        pose["braco_frente"]["var"] = mao
     if braco:  # o braço mecânico inteiro vem do desenho da variante
         pose["braco_tras"]["var"] = braco
         pose["antebraco_tras"]["var"] = "vazio"
         if braco in COM_OMBREIRA:  # a variante traz a ombreira levantada junto: a do kit sai
             pose["ombreira"] = {"ang": 0, "var": "vazio"}
+    if baixo:  # metade de baixo agachada: um desenho só do cinto aos pés, o quadril desce junto
+        pose["quadril"]["var"] = baixo
+        pose["quadril"]["dx"] += pr.AGACHADO[0]
+        pose["quadril"]["dy"] += pr.AGACHADO[1]
+        for s_ in ("coxa_tras", "coxa_frente", "canela_tras", "canela_frente"):
+            pose[s_] = {"ang": 0, "var": "vazio"}
+        pose["_lev"] = {"frente": 1, "tras": 1}
+        pose["_agachado"] = {"sim": 1}
+        return pose
     if lev or perna:
         pose["coxa_frente"] = {"ang": coxa or 0}
         pose["canela_frente"] = {"ang": canela or 0}
@@ -188,8 +228,16 @@ def separar(kit):
     return kit
 
 
+def ESP(q):
+    """Quadro em que o corpo do kit não serve (de costas, girando, rolando, com a toalha nas duas mãos): fica o desenho
+    de hoje inteiro, sem meio com os vizinhos (vida_pecas não mistura `_especial`). Mesmo critério do firme.py."""
+    return {"_especial": {"var": q}}
+
+
 def plantar(pose):
     """Pernas no chão por cinemática inversa: o tornozelo fica onde está no parado (+ o passo da pose)."""
+    if "_especial" in pose:
+        return pose
     pose = {k: dict(v) for k, v in pose.items()}
     pes = pose.get("_pe", {})
     lev = pose.get("_lev", {})
@@ -206,12 +254,96 @@ def plantar(pose):
     return pose
 
 
+def tapar_furos(tela, maximo=60):
+    """Furinho transparente no meio do corpo (emenda de peça girada, borda da lâmina) aparecia como pontinho do
+    cenário: todo vazio fechado de até `maximo` px toma a cor do vizinho pintado mais perto."""
+    vazio = (tela[..., 3] == 0).astype(np.uint8)
+    n, lab, st, _ = cv2.connectedComponentsWithStats(vazio, connectivity=4)
+    h, w_ = vazio.shape
+    furo = np.zeros_like(vazio)
+    for k in range(1, n):
+        x, y, ww, hh, area = st[k]
+        if area <= maximo and x > 0 and y > 0 and x + ww < w_ and y + hh < h:
+            furo[lab == k] = 1
+    if not furo.any():
+        return tela
+    _, idx = cv2.distanceTransformWithLabels(furo, cv2.DIST_L2, 5, labelType=cv2.DIST_LABEL_PIXEL)
+    ys, xs = np.nonzero(furo == 0)
+    lut_y = np.zeros(idx.max() + 1, np.int32)
+    lut_x = np.zeros(idx.max() + 1, np.int32)
+    lut_y[idx[ys, xs]], lut_x[idx[ys, xs]] = ys, xs
+    fy, fx = np.nonzero(furo)
+    tela[fy, fx] = tela[lut_y[idx[fy, fx]], lut_x[idx[fy, fx]]]
+    tela[fy, fx, 3] = 255
+    return tela
+
+
+def emenda_agachado(tela, w):
+    """Na cintura do agachado (tronco do kit em cima, metade de baixo inteira de outro desenho) sobrava fresta onde o
+    braço tirou pano do tronco: em cada linha da faixa da cintura, o vazio entre o primeiro e o último pixel do corpo
+    vira pano escuro (a cor mediana do pano vizinho). Regra do Alisson: nenhuma linha de corte."""
+    j0 = pr.OSSOS["quadril"][0]
+    ox, oy = int(round(w["quadril"][0][0] - j0[0])), int(round(w["quadril"][0][1] - j0[1]))
+    # só na largura da cintura do agachado (fora dela fica o laço, a lâmina e o cabo da vassoura, com fundo de verdade)
+    y0, y1 = max(0, pr.CINTO + oy - 45), min(tela.shape[0], pr.CINTO + oy + 26)
+    faixa = tela[y0:y1, 440 + ox:626 + ox]
+    al = faixa[..., 3] > 0
+    soma = faixa[..., :3].astype(int).sum(-1)
+    pano = faixa[al & (soma > 40) & (soma < 170)]
+    if not len(pano):
+        return
+    cor = np.median(pano[:, :3], axis=0).astype(np.uint8)
+    for r in range(faixa.shape[0]):
+        xs = np.nonzero(al[r])[0]
+        if len(xs) < 2:
+            continue
+        buraco = ~al[r, xs[0]:xs[-1] + 1]
+        if buraco.any():
+            seg = faixa[r, xs[0]:xs[-1] + 1]
+            seg[buraco, :3] = cor
+            seg[buraco, 3] = 255
+
+
 def desenhar(kit, pose):
     """As peças na ordem de camada, os sapatos (reto no chão; girando com a canela no pé levantado), o laço do
     avental e o fechamento de fresta perto das juntas."""
+    if "_especial" in pose:
+        return tapar_furos(pf.sem_migalha(b.abrir(pose["_especial"]["var"])))
     tela = b.desenhar(kit, pose)
     w = b.mundo(pose)
     lev = pose.get("_lev", {})
+    if pose.get("coxa_frente", {}).get("var") not in (None, "vazio"):
+        # perna da frente levantada (desenho inteiro de outro quadro). Como no desenho de hoje, ela passa NA FRENTE do
+        # avental (o joelho e o sapato apareciam por cima do pano), mas ATRÁS do tronco, dos braços e da tesoura: o
+        # polígono da perna traz um pedaço da camisa do outro desenho, que por cima virava um remendo claro e cobria a
+        # listra de barbeiro. O pano da coxa da frente que o quadril traz do parado (à direita do debrum) sai: com a
+        # perna no ar ele virava um toco.
+        def mascara(slot):
+            p = kit["pecas"][b.chave(slot, pose)]
+            pos, ang = w[slot]
+            r, x0, y0 = b.colocar(p, p["img"], p["origem"], pos, ang)
+            m = np.zeros(tela.shape[:2], bool)
+            h_, w_ = r.shape[:2]
+            X0, Y0 = max(0, x0), max(0, y0)
+            sub = r[Y0 - y0:min(tela.shape[0], y0 + h_) - y0, X0 - x0:min(tela.shape[1], x0 + w_) - x0, 3] > 0
+            m[Y0:Y0 + sub.shape[0], X0:X0 + sub.shape[1]] = sub
+            return m, (r, x0, y0)
+        cima = np.zeros(tela.shape[:2], bool)
+        for slot in ("tronco", "cabeca", "braco_frente", "braco_tras", "ombreira", "antebraco_tras"):
+            cima |= mascara(slot)[0]
+        j0 = pr.OSSOS["quadril"][0]
+        ox, oy = int(round(w["quadril"][0][0] - j0[0])), int(round(w["quadril"][0][1] - j0[1]))
+        toco = np.zeros_like(cima)
+        toco[500 + oy:600 + oy, 573 + ox:] = True
+        tela[toco & ~cima] = 0
+        perna, (r, x0, y0) = mascara("coxa_frente")
+        camada = np.zeros_like(tela)
+        b.colar(camada, r, x0, y0)
+        pinta = perna & ~cima & (camada[..., 3] > 0)
+        tela[pinta] = camada[pinta]
+    if pose.get("_agachado"):  # o desenho agachado já traz sapatos e laço
+        emenda_agachado(tela, w)
+        return tapar_furos(pf.sem_migalha(pf.fechar_frestas(tela, juntas=[w[sl][0] for sl in pr.OSSOS])))
     for slot in ("canela_tras", "canela_frente"):
         joelho, ang = w[slot]
         jr = pr.OSSOS[slot][0]
@@ -241,7 +373,7 @@ def desenhar(kit, pose):
     r, piv2 = b.rotsprite(kit["bolinhas"], qang + bo.get("ang", 0), piv)
     # o laço fica atrás da perna de trás e do braço: só pinta onde está vazio
     b.colar(tela, r, int(round(no[0] - piv2[0])), int(round(no[1] - piv2[1])), so_vazio=True)
-    return pf.sem_migalha(pf.fechar_frestas(tela, juntas=[w[sl][0] for sl in pr.OSSOS]))
+    return tapar_furos(pf.sem_migalha(pf.fechar_frestas(tela, juntas=[w[sl][0] for sl in pr.OSSOS])))
 
 
 def mancha_maxima(kit):

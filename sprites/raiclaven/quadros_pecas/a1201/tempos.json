@@ -1,0 +1,65 @@
+{
+ "acao": 1201,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "armada/02"
+  },
+  {
+   "desenho": 1,
+   "ticks": 1,
+   "caixa": false,
+   "de": "armada/04"
+  },
+  {
+   "desenho": 2,
+   "ticks": 7,
+   "caixa": false,
+   "de": "armada/04"
+  },
+  {
+   "desenho": 3,
+   "ticks": 9,
+   "caixa": true,
+   "de": "armada/04"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "armada/04"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "armada/04"
+  },
+  {
+   "desenho": 6,
+   "ticks": 3,
+   "caixa": false,
+   "de": "armada/04"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "armada/05"
+  },
+  {
+   "desenho": 8,
+   "ticks": 3,
+   "caixa": false,
+   "de": "armada/05"
+  },
+  {
+   "desenho": 9,
+   "ticks": 1,
+   "caixa": false,
+   "de": "armada/06"
+  }
+ ]
+}
