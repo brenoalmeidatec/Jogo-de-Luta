@@ -46,20 +46,13 @@ def ler(caminho):
     ofs_spr, nspr, ofs_pal, npal, ofs_l, len_l, ofs_t, len_t = struct.unpack_from("<8I", b, 36)
     pg, pn, pc, plink, poff, plen = struct.unpack_from("<HHHHII", b, ofs_pal)
     pal = b[ofs_l + poff:ofs_l + poff + plen]
-    # paletas a mais (grupo 2: a paleta própria do despertado, gerar_pengaro.escrever_sff), na ordem do arquivo
-    extras = []
-    for j in range(2, npal):
-        _, _, _, _, eoff, elen = struct.unpack_from("<HHHHII", b, ofs_pal + 16 * j)
-        extras.append(b[ofs_l + eoff:ofs_l + eoff + elen])
-    EXTRAS[str(caminho)] = extras
-    EXTRAS[str(Path(caminho).resolve())] = extras
     nos = []
     for k in range(nspr):
         g, i, w, h, x, y, link, fmt, dep, off, ln, pi, fl = struct.unpack_from("<HHHHhhHBBIIHH", b, ofs_spr + 28 * k)
         if ln == 0:
             assert link < k, f"{caminho}: sprite {g},{i} linka para frente ({link} >= {k})"
             src = nos[link]
-            nos.append(dict(g=g, i=i, w=src["w"], h=src["h"], x=x, y=y, link=link, px=src["px"], hw=(w, h), pi=pi))
+            nos.append(dict(g=g, i=i, w=src["w"], h=src["h"], x=x, y=y, link=link, px=src["px"], hw=(w, h)))
             continue
         base = ofs_l if fl == 0 else ofs_t
         raw = b[base + off:base + off + ln]
@@ -72,17 +65,8 @@ def ler(caminho):
         assert n == w * h, f"{caminho}: tamanho do sprite {g},{i}"
         px = unrle8(raw[4:], n)
         assert len(px) == n, f"{caminho}: RLE do sprite {g},{i}"
-        nos.append(dict(g=g, i=i, w=w, h=h, x=x, y=y, link=None, px=px, hw=(w, h), pi=pi))
-    PI[str(Path(caminho).resolve())] = {(n["g"], n["i"]): n["pi"] for n in nos if n.get("pi")}
+        nos.append(dict(g=g, i=i, w=w, h=h, x=x, y=y, link=None, px=px, hw=(w, h)))
     return pal, nos, len(b)
-
-
-EXTRAS = {}  # caminho -> paletas a mais do último ler()
-PI = {}      # caminho resolvido -> {(g, i): índice de paleta} do último ler() (efeitos.gravar repõe)
-
-
-def _item(n):
-    return (n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], n["px"]) + ((n["pi"],) if n.get("pi") else ())
 
 
 def resumo(caminho):
@@ -121,19 +105,9 @@ def religar(origem, destino, manter=None):
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     import gerar_pengaro as gp
     pal, nos, _ = ler(origem)
-    nos = [n for n in nos if manter is None or n["g"] == 9000 or (n["g"], n["i"]) in manter]
-    if any(n.get("png") for n in nos):
-        return _gravar_misto(Path(destino), pal, nos, EXTRAS[str(origem)])
-    gp.gravar_sff(Path(destino), pal, [_item(n) for n in nos], EXTRAS[str(origem)])
-
-
-def _gravar_misto(destino, pal, nos, extras):
-    """Sprite PNG (efeitos do pixelfx/Blender, retratos) continua PNG no tdata; o resto vai como antes, com o índice
-    de paleta. Antes o PNG entrava aqui como pixel indexado e o .sff saía torto (o 8200,0 do Raiclaven)."""
-    import efeitos
-    rle = [_item(n) + ((0,) if not n.get("pi") else ()) for n in nos if not n.get("png")]
-    png = [(n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], n["px"]) for n in nos if n.get("png")]
-    efeitos.gravar(destino, pal, rle, png, extras)
+    itens = [(n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], n["px"]) for n in nos
+             if manter is None or n["g"] == 9000 or (n["g"], n["i"]) in manter]
+    gp.gravar_sff(Path(destino), pal, itens)
 
 
 def paleta(origem, destino):
@@ -160,9 +134,8 @@ def transplantar(base, pasta):
         if k in da_base and k not in desp and not da_base[k].get("png"):  # retrato PNG: o trocar_retratos.py repõe
             trocados += (n["w"], n["h"], n["x"], n["y"], n["px"]) != tuple(da_base[k][c] for c in "whxy") + (da_base[k]["px"],)
             n = da_base[k]
-        itens.append(n)
-    _gravar_misto(novo, pal_n, itens, EXTRAS[str(novo)])
-    itens = [_item(n) for n in itens]
+        itens.append((n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], n["px"]))
+    gp.gravar_sff(novo, pal_n, itens)
     print(f"{novo}: {len(itens)} sprites, {sum(k in desp for k in (tuple(i[:2]) for i in itens))} do despertado "
           f"(do gerador), {sum(1 for i in itens if tuple(i[:2]) in da_base and tuple(i[:2]) not in desp)} da base "
           f"({trocados} diferiam do gerado), {sum(1 for i in itens if tuple(i[:2]) not in da_base)} novos"

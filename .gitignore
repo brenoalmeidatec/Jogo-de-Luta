@@ -8,3 +8,5 @@ sprites/raiclaven/quadros_hd/
 # comparação dos caminhos dos efeitos da #47 (despertados_47_blender.py --comparar)
 sprites/efeitos_blender/*/d47_*_pixelfx/
 sprites/efeitos_blender/*/d47_*_direto/
+sprites/raiclaven/quadros_sff_hd/
+sprites/raiclaven_cliente/quadros_arcade_hd/

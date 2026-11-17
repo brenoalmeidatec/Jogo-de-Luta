@@ -149,13 +149,100 @@ SIMPLES = NORMAIS + tuple(g for c in CORRENTES.values() for g in c) + KOMBO + tu
 TODOS = SIMPLES + tuple(g for g in ESPECIAIS if not g.danos) + (SUPER,)
 
 
+# ---------------------------------------------------------------------------------------------- arte nova
+# Arte do corpo firme (boneco de peças, ferramentas/firme.py cliente): cada animação do kit_cliente.ANIMS com quadros
+# em sprites/raiclaven_cliente/quadros_pecas_hd/<nome>/ entra no .sff como PNG RGBA (formato 12) no grupo
+# GRUPO_PECAS + posição no ANIMS. O golpe com arte nova usa os desenhos e os ticks do tempos.json (a caixa de golpe sai
+# de lá); sem arte nova continua a provisória. O parado (ação 0) entra pelo remap do despertado (86..93).
+PECAS = RAIZ / "sprites/raiclaven_cliente/quadros_pecas_hd"
+GRUPO_PECAS = 26000
+EIXO_PECAS = (540, 660)
+
+
+def anims_pecas():
+    """{nome: (ação, grupo, tempos)} das animações do corpo firme que já têm quadros."""
+    import json
+    import kit_cliente as kc
+    out = {}
+    for k, (nome, (acao, _q, _c)) in enumerate(kc.ANIMS.items()):
+        t = PECAS / nome / "tempos.json"
+        if t.exists():
+            out[nome] = (acao, GRUPO_PECAS + k, json.loads(t.read_text(encoding="utf-8")))
+    return out
+
+
+def pecas_da_acao(estado):
+    for nome, (acao, grupo, tempos) in anims_pecas().items():
+        if acao == estado:
+            return nome, grupo, tempos
+    return None
+
+
+def sprites_pecas(sff):
+    """Põe no .sff os desenhos do corpo firme (some o que havia nos grupos GRUPO_PECAS..+99)."""
+    import conferir_sff as cs
+    from PIL import Image
+    import numpy as np
+    pal, nos, _ = cs.ler(sff)
+    rle, png, vistos = [], [], set()
+    for n in nos:
+        k = (n["g"], n["i"])
+        if k in vistos or GRUPO_PECAS <= n["g"] < GRUPO_PECAS + 100:
+            continue
+        vistos.add(k)
+        (png if n.get("png") else rle).append((n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], n["px"]))
+    novos = 0
+    for nome, (_a, grupo, tempos) in anims_pecas().items():
+        for i in sorted({e["desenho"] for e in tempos["elementos"]}):
+            a = np.array(Image.open(PECAS / nome / f"{i:02d}.png").convert("RGBA"))
+            ys, xs = np.nonzero(a[..., 3])
+            y0, y1, x0, x1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
+            img = Image.fromarray(np.ascontiguousarray(a[y0:y1, x0:x1]))
+            png.append((grupo, i, img.width, img.height, int(EIXO_PECAS[0] - x0), int(EIXO_PECAS[1] - y0),
+                        efeitos.blob_png(img)))
+            novos += 1
+    efeitos.gravar(sff, pal, rle, png)
+    return novos
+
+
+def remap_parado(cns, air):
+    """O parado do despertado (ação 0 com o remap) passa a mostrar o parado do corpo firme: cada sprite da ação 0
+    aponta para o desenho que o corpo firme mostra naquele tick (a ação 0 tem 8 sprites de 7 ticks)."""
+    pec = anims_pecas().get("parado")
+    if not pec:
+        return cns
+    _a, grupo, tempos = pec
+    els = mk.elementos(mk.acoes(air)[0])
+    linha = []
+    for e in tempos["elementos"]:
+        linha += [e["desenho"]] * e["ticks"]
+    total_base = sum(max(t, 1) for _e, t, *_ in els)
+    t = 0
+    for el, d, *_ in els:
+        g, i = (int(v) for v in el.split(",")[:2])
+        meio = t + max(d, 1) / 2
+        desenho = linha[min(len(linha) - 1, int(meio / total_base * len(linha)))]
+        cns, k = re.subn(rf"^{g},{i} = \d+,\d+$", f"{g},{i} = {grupo},{desenho}", cns, count=1, flags=re.M)
+        assert k == 1, f"remap do despertado sem a linha {g},{i}"
+        t += max(d, 1)
+    return cns
+
+
 # ---------------------------------------------------------------------------------------------- .air
 def quadros(g, tabela):
-    """[(elemento, ticks, resto, caixas2, caixa1)] do golpe, a partir da fonte (arte provisória da dupla)."""
+    """[(elemento, ticks, resto, caixas2, caixa1)] do golpe, a partir da fonte (arte provisória da dupla) ou, quando
+    o corpo firme já tem a animação, dos desenhos novos."""
     if g.fonte not in tabela:
         raise SystemExit(f"kit_raiclaven: a ação {g.fonte} ({g.nome}) não existe no .air")
     out = []
     els = mk.elementos(tabela[g.fonte])
+    nova = pecas_da_acao(g.estado)
+    if nova:
+        _nome, grupo, tempos = nova
+        c2 = els[0][3]
+        cx = tuple(tempos["caixa"]) if tempos.get("caixa") else (tuple(v * E for v in g.caixa) if g.caixa else None)
+        return [(f"{grupo},{e['desenho']}, 0,0, ", e["ticks"], "", c2, cx if e["caixa"] else None)
+                for e in tempos["elementos"]]
     for el, t, resto, c2, c1 in els:
         if t > 0:
             t = max(1, round(t * g.ritmo))
@@ -565,6 +652,9 @@ def aplicar(pasta=None, so_cmd=False, com_cmd=True):
     pa, pc, pm = (pasta / f"raiclaven.{e}" for e in ("air", "cns", "cmd"))
     if not so_cmd:
         air, cns = aplicar_air_cns(pa.read_text(encoding="utf-8"), pc.read_text(encoding="utf-8"))
+        cns = remap_parado(cns, air)
+        n = sprites_pecas(pasta / "raiclaven.sff") if anims_pecas() else 0
+        print(f"raiclaven: {n} desenhos do corpo firme no .sff ({', '.join(anims_pecas())})")
         pa.write_text(air, encoding="utf-8", newline="\n")
         pc.write_text(cns, encoding="utf-8", newline="\n")
     mv = pasta / "movelist.dat"
