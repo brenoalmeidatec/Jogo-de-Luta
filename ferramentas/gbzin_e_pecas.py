@@ -134,6 +134,9 @@ FOLHAS = SPR / "quadros/folhas_arcade"
 FIRMES = SPR / "quadros_e_firmes_hd"
 FIRMES_1X = SPR / "quadros_e_firmes"   # o gêmeo 1x (360x260) que o gerador lê: o pixel do meio de cada 3x3
 ALTURA_REF = 406           # altura do Grão-Pastor de pé no 3x (ref.png, chifre ao casco)
+# folhas de pulo e de golpe no ar: o motor sobe o boneco pela velocidade, então cada quadro fica com o pé na linha do
+# chão (como os quadros de pulo da base); a altura que o ChatGPT desenhou ficaria somada ao pulo
+NO_AR = {"e_pulo", "e_queda", "e_ar_chifre", "e_ar_soco", "e_manto_asa", "e_dir_tras", "e_juizo_cima"}
 AJUSTE = {}                # folha: fator extra quando o quadro mais alto não é o de pé (pulo, chifre erguido)
 CELULA = 2172 / 8
 
@@ -235,7 +238,7 @@ def firme(nomes):
                 # meio da célula vai para o eixo; o chão da folha vai para o chão do jogo
                 meio = (i + 0.5) * CELULA + desvio
                 X = round(EIXO + (x0 - meio) * esc)
-                Y = round(CHAO - 1 - (chao - y0) * esc)  # o casco no pixel 659, como a base
+                Y = round(CHAO - 1 - ((y1 if nome in NO_AR else chao) - y0) * esc)  # casco no pixel 659, como a base
                 xa, ya = max(0, X), max(0, Y)
                 xb, yb = min(TELA[0], X + nw), min(TELA[1], Y + nh)
                 tela[ya:yb, xa:xb] = fig[ya - Y:yb - Y, xa - X:xb - X]
@@ -251,6 +254,10 @@ CABECA_POLI = [(538, 258), (600, 252), (668, 258), (668, 296), (652, 312), (640,
                (590, 352), (578, 336), (570, 320), (556, 312), (540, 300)]
 JUNTA_PESCOCO = (604, 352)
 REGUA_CABECA = 0.8
+NOTA_MAX = 65              # casamento pior que isto (cabeça muito virada, escondida): fica a cabeça do rascunho
+SEM_CABECA = {"e_provoca", "e_rolamento"}  # provoca: a mão passa na frente da cabeça; rolamento: de costas e de frente no giro
+SEM_CABECA_QUADRO = {"e_parry_alto": {7}}  # quadros com a mão no chifre: fica a cabeça do rascunho
+DEITADO = {"e_queda", "e_levanta", "e_rolamento", "e_derrota", "e_vitima_agarrado", "e_vitima_arremessado"}
 MANTO = {(33, 26, 43), (64, 48, 71), (114, 80, 105)}
 
 
@@ -372,6 +379,9 @@ def um_x(nomes):
 
 def cabecas(nomes):
     for nome in nomes:
+        if nome in SEM_CABECA:
+            print(nome, "cabeça: a do rascunho (mão na frente da cabeça)")
+            continue
         pasta = FIRMES / nome
         qs = [np.asarray(Image.open(pasta / f"{i:02d}.png")) for i in range(8)]
         # A cabeça é a régua da folha: o ChatGPT desenha o corpo em tamanhos diferentes a cada folha, mas a cabeça
@@ -379,18 +389,69 @@ def cabecas(nomes):
         # folha veio maior ou menor, a escala inteira corrige até a cabeça dar 0,8. A cabeça do kit entra sempre no
         # tamanho do kit (proporção do conceito aprovado), presa na junta do pescoço.
         escalas = (0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0)
-        achados = [achar_cabeca(q, escalas=escalas) if q[..., 3].any() else None for q in qs]
-        escs = sorted(a[2] for a in achados if a)
-        mediana = escs[len(escs) // 2]
+        angs = range(-120, 121, 10) if nome in DEITADO else range(-35, 36, 5)
+        achados = [achar_cabeca(q, angs, escalas) if q[..., 3].any() else None for q in qs]
+        # só os casamentos bons medem; sem nenhum (folha toda deitada), fica a escala pela altura
+        escs = sorted(a[2] for a in achados if a and a[0] <= NOTA_MAX)
+        mediana = escs[len(escs) // 2] if escs else REGUA_CABECA
         if abs(mediana - REGUA_CABECA) > 0.03:
             AJUSTE[nome] = AJUSTE.get(nome, 1.0) * REGUA_CABECA / mediana
             firme([nome])
             qs = [np.asarray(Image.open(pasta / f"{i:02d}.png")) for i in range(8)]
-            achados = [achar_cabeca(q, escalas=(0.75, 0.8, 0.85)) if q[..., 3].any() else None for q in qs]
+            achados = [achar_cabeca(q, angs, (0.75, 0.8, 0.85)) if q[..., 3].any() else None for q in qs]
         for i, (q, a) in enumerate(zip(qs, achados)):
-            if a:
+            if a and a[0] <= NOTA_MAX and i not in SEM_CABECA_QUADRO.get(nome, ()):
                 Image.fromarray(trocar_cabeca(q, a)).save(pasta / f"{i:02d}.png")
         print(nome, "cabeça:", [f"{a[1]}°x{a[2]} nota {a[0]:.0f}" if a else "-" for a in achados])
+
+
+# ------------------------------------------------------------------ conferência (robô de defeitos do Grão-Pastor)
+def conferir(nomes=None):
+    """Por quadro: cor fora da paleta, pedaço solto (ilha de mais de 40 px longe do corpo), tamanho do corpo que pula
+    de um quadro para o seguinte (mais de 12% na largura do tronco) e casco fora do chão no que devia estar no chão.
+    Grava docs/boneco-pecas/gbzin/grao_pastor_conferencia.md."""
+    pal = {tuple(c) for c in paleta().tolist()}
+    nomes = nomes or sorted(p.name for p in FIRMES.iterdir() if p.is_dir())
+    linhas, total = [], 0
+    for nome in nomes:
+        defeitos = []
+        larg_ant = None
+        for arq in sorted((FIRMES / nome).glob("*.png")):
+            q = np.asarray(Image.open(arq))
+            al = q[..., 3] > 0
+            if not al.any():
+                defeitos.append(f"{arq.stem}: quadro vazio")
+                continue
+            cores = {tuple(c) for c in q[al][:, :3].tolist()}
+            fora = cores - pal
+            if fora:
+                defeitos.append(f"{arq.stem}: {len(fora)} cores fora da paleta")
+            n, rot, st, _ = cv2.connectedComponentsWithStats(al.astype(np.uint8), connectivity=8)
+            maior = 1 + int(np.argmax(st[1:, 4]))
+            perto = cv2.dilate((rot == maior).astype(np.uint8), np.ones((25, 25), np.uint8)) > 0
+            soltos = [i for i in range(1, n) if i != maior and st[i, 4] > 40 and not perto[rot == i].any()]
+            if soltos:
+                defeitos.append(f"{arq.stem}: {len(soltos)} pedaço(s) solto(s) longe do corpo")
+            ys, xs = np.nonzero(al)
+            # largura do tronco: na altura do peito (35% de cima), só a pele e a caveira, sem manto
+            yp = ys.min() + int(0.35 * (ys.max() - ys.min()))
+            faixa = q[yp - 6:yp + 6]
+            corpo = (faixa[..., 3] > 0) & ~_cores(faixa, MANTO)
+            cols = np.nonzero(corpo.any(0))[0]
+            larg = cols.max() - cols.min() if len(cols) else 0
+            if larg_ant and larg and abs(larg - larg_ant) / larg_ant > 0.12 and nome == "e_referencia_ginga":
+                defeitos.append(f"{arq.stem}: tronco muda de {larg_ant} para {larg} px")
+            larg_ant = larg
+        total += len(defeitos)
+        linhas.append(f"| {nome} | {len(defeitos)} | {'; '.join(defeitos) or 'ok'} |")
+    rel = RAIZ / "docs/boneco-pecas/gbzin/grao_pastor_conferencia.md"
+    rel.parent.mkdir(parents=True, exist_ok=True)
+    rel.write_text("# Conferência do Grão-Pastor (quadros_e_firmes_hd)\n\n"
+                   "Robô de `python ferramentas/gbzin_e_pecas.py conferir`: cor fora da paleta, pedaço solto longe do "
+                   "corpo, quadro vazio, tronco que muda de tamanho no parado.\n\n| Folha | Defeitos | Onde |\n|---|---|---|\n"
+                   + "\n".join(linhas) + f"\n\nTotal: {total}\n", encoding="utf-8")
+    print(f"conferência: {total} defeitos em {len(nomes)} folhas")
+    return total
 
 
 if __name__ == "__main__":
@@ -401,4 +462,4 @@ if __name__ == "__main__":
         if "e_referencia_ginga" in sys.argv[2:]:
             parado()
     else:
-        {"ref": ref, "parado": parado, "kit": kit_cabeca}[sys.argv[1]]()
+        {"ref": ref, "parado": parado, "kit": kit_cabeca, "conferir": conferir}[sys.argv[1]]()

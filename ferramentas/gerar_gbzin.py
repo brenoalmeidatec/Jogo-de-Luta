@@ -132,11 +132,16 @@ E_FOLHA = {}  # estágio 1: o Grão-Pastor ainda não tem folhas e_; cada desenh
 # com a cabeça do kit, a paleta própria de 15 cores e a escala pela cabeça, em quadros_e_firmes(_hd). Folha da base ->
 # (folha do Grão-Pastor, ordem dos desenhos ou None). Cada golpe da base que ainda não tem folha própria continua com o
 # desenho da base (estágio 1). Os botões batem com FOLHAS_GP de folhas_gbzin.py: x = chifrada (soco), y = arco_osso
-# (martelo), a = casco (chute_baixo).
+# (martelo), a = casco (chute_baixo: o coice do casco vem no 3º desenho, a sola da base no 4º e 5º).
 QUADROS_E = RAIZ / "sprites/gbzin/quadros_e_firmes"
 QUADROS_E_HD = RAIZ / "sprites/gbzin/quadros_e_firmes_hd"
 GRAO_PASTOR = {"referencia_ginga": ("e_referencia_ginga", None), "anda": ("e_anda", None),
-               "soco": ("e_chifrada", None), "martelo": ("e_arco_osso", None)}
+               "soco": ("e_chifrada", None), "martelo": ("e_arco_osso", None),
+               "chute_baixo": ("e_casco", (0, 1, 1, 2, 2, 3, 3, 7)), "agachado": ("e_agachado", None),
+               "cabecada": ("e_cabecada", (0, 0, 1, 3, 4, 6, 7, 7)), "pulo": ("e_pulo", None),
+               "apanha": ("e_apanha", None), "queda": ("e_queda", None),
+               "levanta": ("e_levanta", None), "vitoria": ("e_vitoria", None), "derrota": ("e_derrota", None),
+               "provoca": ("e_provoca", None)}
 GRAO_PASTOR = {k: v for k, v in GRAO_PASTOR.items() if (QUADROS_E / v[0] / "00.png").exists()}
 
 
