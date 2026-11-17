@@ -2786,3 +2786,7 @@ abertos). Golaço e arm-lock voador seguem como estão. Nada ligado no gerador n
 - Achado para depois: defesa/00 e 04 estão 80 px acima do chão no desenho de origem (conferir alinhamento no gerador).
 - (17/11, tarde) Chão: 10 desenhos de pé vieram 80 px acima do chão (1º quadro de linha da folha): CHAO_ERRADO desce
   até CHAO. Gancho da defesa/05 e 06 preso no cabo (prender_gancho estica a ponta do cabo com as cores dele). Robô 0/288.
+- (17/11, regra do Alisson: zero erro de animação) Soco: no tapa o corpo desce e avança com as pernas do soco/04
+  (passo, quadril junto) e volta pela base do soco/06 (PASSO). Pulo/04, ar_soco 00/04 e bicicleta 02/04 desceram ao
+  chão do desenho (o motor é quem sobe; antes davam um salto a mais no meio do pulo). Robô 0/288, piloto 0 defeitos.
+  Fica para peça nova: bicicleta sem chute, Passinho de Pinguim (rolamento) e parry_baixo virando estrela.
