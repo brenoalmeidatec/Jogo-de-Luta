@@ -8991,7 +8991,7 @@ x = 1.5
 
 [State 4201, Avanço 2]
 type = VelSet
-trigger1 = Time = 11
+trigger1 = Time = 10
 x = 0
 
 [State 4201, Garra Cruzada]
@@ -9090,7 +9090,7 @@ value = F40,2
 
 [State 4203, Coice com Garra]
 type = HitDef
-trigger1 = Time = 7
+trigger1 = Time = 8
 attr = S, NA
 damage = 72, 0
 envshake.time = 6
@@ -9184,7 +9184,7 @@ value = F40,1
 
 [State 4401, Antiaéreo: ganha de quem vem do ar]
 type = NotHitBy
-trigger1 = Time = [2, 18]
+trigger1 = Time = [2,18]
 value = A
 time = 1
 
@@ -9454,7 +9454,7 @@ x = 0
 
 [State 4311, Dilacerar 2]
 type = HitDef
-trigger1 = Time = 5
+trigger1 = Time = 7
 attr = S, NA
 damage = 40, 0
 animtype = Light
@@ -9560,7 +9560,7 @@ x = 0
 
 [State 4331, Pisoteio 2]
 type = HitDef
-trigger1 = Time = 5
+trigger1 = Time = 7
 attr = S, NA
 damage = 40, 0
 animtype = Light

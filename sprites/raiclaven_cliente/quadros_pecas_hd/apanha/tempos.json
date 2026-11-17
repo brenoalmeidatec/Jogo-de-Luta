@@ -1,0 +1,43 @@
+{
+ "acao": 5000,
+ "caixa": null,
+ "origem": [
+  "apanha/00",
+  "apanha/01",
+  "apanha/02",
+  "apanha/03",
+  "apanha/04"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "apanha/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": false,
+   "de": "apanha/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": false,
+   "de": "apanha/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 3,
+   "caixa": false,
+   "de": "apanha/03"
+  },
+  {
+   "desenho": 4,
+   "ticks": 3,
+   "caixa": false,
+   "de": "apanha/04"
+  }
+ ]
+}
