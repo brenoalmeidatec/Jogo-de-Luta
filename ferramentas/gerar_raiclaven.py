@@ -312,6 +312,103 @@ def retocar():
         shutil.copytree(QUADROS / "provoca", QUADROS / pasta)
 
 
+# ================================================================ Despertar com a parceira (issue #38, Breno 2026-11-14)
+# O Cientista Louco (cabelo verde, óculos verdes, tanques nas costas) com a parceira anã nos ombros: no Despertar quem
+# ataca é ela. Folhas em quadros/folhas_dupla/e_<folha>.png (pedidos em DUPLA de ferramentas/folhas_raiclaven.py, modelo
+# folhas_dupla/dupla_modelo.png), cada uma nos mesmos 8 tempos da folha normal. `--dupla` corta em quadros/e_<folha>/
+# (1x) e quadros_hd/e_<folha>/ (3x, o gêmeo da regra da alta resolução), sem quadros do meio: a troca é seca.
+DUPLA = QUADROS / "folhas_dupla"
+FATOR_DUPLA = 1.16  # o cientista com os tanques fica do tamanho do barbeiro (~118 px) e ela sobra por cima dos ombros;
+# a escala entra no corte (1x e 3x direto da folha, nítido) e não no colar_endiabrado, que só esticaria o 3x
+
+
+def cortar_dupla(nomes=None):
+    os.environ["LUTADOR"] = "raiclaven"
+    import animar_folha as af
+    for folha in sorted(DUPLA.glob("e_*.png")):
+        nome = folha.stem
+        # a escala do animar_folha segue a largura da folha (2172 no ChatGPT); as do Gemini vêm com 8 células de 392
+        # (3136), já na escala da do ChatGPT pela lente verde do braço (compor no scratchpad, docs/raiclaven-despertado-43.md)
+        af.AJUSTE[nome] = FATOR_DUPLA * Image.open(folha).width / 2172
+        if nomes and nome not in nomes and nome[2:] not in nomes:
+            continue
+        for amplia, base in ((1, QUADROS), (3, QUADROS.parent / "quadros_hd")):
+            destino = base / nome
+            shutil.rmtree(destino, ignore_errors=True)
+            destino.mkdir(parents=True)
+            for i, pose in enumerate(af.poses(folha, "pes", amplia)):
+                pose = af.sem_magenta(pose, minimo=15 * amplia * amplia)
+                pose.putalpha(pose.getchannel("A").point(lambda v: 255 if v >= 128 else 0))
+                pose.save(destino / f"{i:02d}.png")
+        print(f"{nome}: 8 desenhos da dupla (1x e 3x)")
+
+
+_par_endiabrado = gp.par_endiabrado
+# folha que falta (ou sprite antigo) -> folha da dupla emprestada, só até a folha própria ser gerada
+EMPRESTADA_DUPLA = {
+    "ar_soco": "pulo", "bicicleta": "pulo", "ar_chute": "pulo", "ar_cotovelo": "pulo", "mortal": "pulo",
+    # o kit da forma (#43): raio do secador, choque da tesoura no chão, pião e agarra entram no lugar do Surto
+    "bola": "raio afastar soco", "caneta": "soco", "pente_combo": "soco", "golaco": "choque martelo soco",
+    "agarrao": "agarra_forma martelo soco", "agarra": "agarra_forma martelo soco", "joga": "piao afastar soco",
+    "especial": "raio afastar soco",
+    "kick_alto": "chute_alto chute_baixo soco", "compasso": "chute_alto chute_baixo soco",
+    "armada": "chute_alto chute_baixo soco", "gira": "piao chute_alto soco", "juliet": "chute_alto chute_baixo soco",
+    "embaixada": "chute_baixo soco",
+    "rasteira": "baixo_soco agachado", "rasteirinha": "baixo_soco agachado", "rolamento": "agachado",
+    "rola": "agachado", "provoca": "ginga", "vitoria": "ginga", "derrota": "levanta", "parado": "ginga",
+    "anda": "anda", "corre": "anda",
+    # folhas de golpe que ainda não saíram (o limite de imagens do ChatGPT, 2026-11-15): o golpe mais parecido que já há
+    "chute_alto": "chute_baixo soco", "afastar": "soco", "baixo_soco": "agachado",
+    "cabecada": "agachado",
+}
+
+
+def par_endiabrado_dupla(nome):
+    """Na dupla não há quadro do meio: o do meio vira o desenho-chave mais perto (como no Pengaró desenhado), e a ginga e
+    o andar (q_ginga_fluida, q_anda_fluida) vêm de e_ginga e e_anda, não do desenho normal."""
+    import re
+    fluido = re.fullmatch(r"q_(ginga|anda)_fluida(\d+)", nome)
+    if fluido:
+        i = int(fluido[2]) % 8
+        return QUADROS / f"e_{fluido[1]}" / f"{i:02d}.png", f"{fluido[1]}_fluida", i
+    meio = re.fullmatch(r"m_([a-z_]+?)_(\d+)_(\d+)", nome)
+    if meio and (QUADROS / f"e_{meio[1]}").exists() and not (QUADROS / f"e_{meio[1]}" / "meio").exists():
+        n = min(7, int(meio[2]) + (1 if int(meio[3]) >= 4 else 0))
+        return QUADROS / f"e_{meio[1]}" / f"{n:02d}.png", meio[1], n
+    par = _par_endiabrado(nome)
+    if par is None or not par[0].exists():
+        # folha da dupla que ainda não existe (esperando o Breno aprovar a parceira, #43) ou sprite antigo sem folha:
+        # empresta a folha da dupla mais parecida, para o cientista sem a parceira não aparecer no meio da luta
+        chave = re.fullmatch(r"(?:f_|m_)?([a-z_]+?)_?(\d*)(?:_\d+)?", nome)
+        folha = chave and next((f for f in EMPRESTADA_DUPLA.get(chave[1], "").split()
+                                if (QUADROS / f"e_{f}").exists()), None)
+        if folha:
+            n = int(chave[2] or 0) % 8
+            return QUADROS / f"e_{folha}" / f"{n:02d}.png", folha, n
+    if par is None:  # folha sem quadros do meio (ginga, anda, apanha, queda, levanta): o desenho-chave direto da dupla
+        chave = re.fullmatch(r"(?:f_|q_)([a-z_]+?)(\d+)", nome)
+        if chave and (QUADROS / f"e_{chave[1]}" / f"{int(chave[2]) % 8:02d}.png").exists():
+            n = int(chave[2]) % 8
+            return QUADROS / f"e_{chave[1]}" / f"{n:02d}.png", chave[1], n
+    return par
+
+
+gp.par_endiabrado = par_endiabrado_dupla
+_dx_chave = gp.dx_chave
+
+
+def dx_chave_dupla(pasta, n):
+    """Folha só da dupla (raio, choque, piao, agarra_forma...: o kit da forma, sem folha da forma base): não há tronco
+    da base para alinhar, fica no lugar."""
+    if pasta not in gp.LOOPS and not (QUADROS / pasta).exists():
+        return 0
+    return _dx_chave(pasta, n)
+
+
+gp.dx_chave = dx_chave_dupla
+gp.fator_endiabrado = lambda pasta: 1.0
+
+
 gp.VITORIAS = [
     "Próximo!",
     "Vai querer na régua?",
@@ -368,15 +465,30 @@ GOLPES = (gg.GOLPES
 def main():
     if "--retocar" in sys.argv:
         return retocar()
+    if "--dupla" in sys.argv:
+        return cortar_dupla(sys.argv[sys.argv.index("--dupla") + 1:])
     gg.preparar_pastas()
     SAIDA.mkdir(parents=True, exist_ok=True)
     s = gp.montar_sprites()
     faiscas = gp.carregar_faiscas(s)
     a = gp.montar_air(s, faiscas, arte_despertada=gp.arte_endiabrada(s))
     preset = gp.preset_despertado(s)
+    # o despertado (cientista e parceira) vai na paleta própria do .sff: a fixa da forma base não tem verde
+    s.paleta_propria = {(int(c), int(d)) for _, _, c, d in __import__("re").findall(r"(\d+),(\d+) = (\d+),(\d+)", preset)}
+    import aura_raiclaven  # aura grande do Blender (leque de lâminas, raios verdes), Explods 9600 e 9601 (#38)
+    aura = aura_raiclaven.ligar(s)
+    a.txt.append(aura.air())
     (SAIDA / "raiclaven.air").write_text("\n".join(a.txt), encoding="utf-8", newline="\n")
     cns = gp.super_3100_endiabrado(gp.sem_ginga_9203(gp.remapear_animelem(gp.montar_cns(), a.mapas)))
-    cns = cns.replace("add = 12, 0, 28", "add = 14, 14, 18").replace("sinadd = 10, 0, 18, 40", "sinadd = 10, 10, 14, 40")
+    assert "[Statedef -4]" not in cns, "o Raiclaven ganhou um -4: a aura entra nele com cabecalho=False"
+    aura.conferir(acoes=a.acoes, explods=__import__("re").findall(r"^\s*id\s*=\s*(\d+)", cns, __import__("re").M))
+    cns = cns.rstrip() + "\n\n" + aura.cns(cabecalho=True)
+    # nada pintado no corpo do Despertar (como no CK e no Pengaró): o cientista e a parceira já vêm desenhados, o cabelo
+    # verde não pode sair tingido, e a aura é efeito à parte. Sai também o rastro (AfterImageTime) do Despertar inteiro.
+    cns = gp.sem_tinta_do_despertar(cns)
+    import re
+    cns, k = re.subn(r"\[State -2, Rastro\]\ntype = AfterImageTime\n(?:[^\n]+\n)+\n", "", cns)
+    assert k == 1, "rastro do Despertar não encontrado"
     cns = cns.replace("[Data]", preset + "[Quotes]\n" + "".join(
         f'victory{i + 1} = "{v}"\n' for i, v in enumerate(gp.VITORIAS)) + "\n[Data]", 1)
     air = "\n".join(a.txt)
@@ -401,6 +513,10 @@ def main():
     (SAIDA / "movelist.dat").write_text(GOLPES, encoding="utf-8", newline="\n")
     import parry  # parry em cima e embaixo, faísca própria e sem a "rede de futebol" (docs/parry.md)
     parry.aplicar("raiclaven", SAIDA)
+    import caixas_dupla  # #43: no despertado a caixa de golpe vai para a arma da frente (navalha, secador, tesoura, bota)
+    caixas_dupla.aplicar("raiclaven", SAIDA)
+    import kit_raiclaven  # #43/#47: kit todo próprio do despertado com A Cliente (estados 20000+, agarrões 24100/24200)
+    kit_raiclaven.aplicar(SAIDA, com_cmd=False)
     import legibilidade  # golpes legíveis (#45): caixa no membro, congelamento, tremida, reação e preparo
     legibilidade.aplicar("raiclaven", SAIDA)
     import balanceamento  # números do item 7 (attack, defence, velocidade)
@@ -411,6 +527,13 @@ def main():
     forma_permanente.aplicar("raiclaven", SAIDA)
     import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
     destruicao.aplicar("raiclaven", SAIDA)
+    import despertados_47  # #43/#47: Cadeira Elétrica (agarrão) e Secador de Raio (poder), efeitos do Blender
+    despertados_47.aplicar("raiclaven", SAIDA)
+    kit_raiclaven.aplicar(SAIDA, so_cmd=True)  # o .cmd por último: trava os golpes do normal com var(20) = 0
+    import aura_no_corpo  # a aura grande (lâminas e raios) presa ao corpo da dupla (#51), depois de tudo que regrava o -4
+    aura_no_corpo.aplicar("raiclaven", SAIDA)
+    import aura_silhueta  # aura de anime colada na silhueta dos dois, em verde (#43/#51); sempre por último
+    aura_silhueta.aplicar("raiclaven", SAIDA)
     import luz  # issue #51: luz em todo efeito que brilha (sem aura em camadas, a luz.py não vem pelo aura_silhueta)
     luz.aplicar("raiclaven", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
