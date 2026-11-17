@@ -1,0 +1,85 @@
+{
+ "acao": 230,
+ "folha": "chute_baixo",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chute_baixo/01"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_baixo/02"
+  },
+  {
+   "desenho": 2,
+   "ticks": 1,
+   "caixa": true,
+   "de": "chute_baixo/03"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": true,
+   "de": "chute_baixo/04"
+  },
+  {
+   "desenho": 4,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chute_baixo/05"
+  },
+  {
+   "desenho": 5,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chute_baixo/06"
+  },
+  {
+   "desenho": 6,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chute_baixo/07"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "chute_baixo/01",
+   "ticks": 3,
+   "caixa": false
+  },
+  {
+   "de": "chute_baixo/02",
+   "ticks": 2,
+   "caixa": false
+  },
+  {
+   "de": "chute_baixo/03",
+   "ticks": 1,
+   "caixa": true
+  },
+  {
+   "de": "chute_baixo/04",
+   "ticks": 2,
+   "caixa": true
+  },
+  {
+   "de": "chute_baixo/05",
+   "ticks": 3,
+   "caixa": false
+  },
+  {
+   "de": "chute_baixo/06",
+   "ticks": 3,
+   "caixa": false
+  },
+  {
+   "de": "chute_baixo/07",
+   "ticks": 3,
+   "caixa": false
+  }
+ ]
+}

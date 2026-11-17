@@ -2728,3 +2728,15 @@ refazer com exatidão os golpes confusos. Esta thread ficou com o CK (branch `cl
 
 Nada foi ligado no gerador nem no `.sff`. Falta: os outros golpes confusos e o resto do CK base; o braço esticado tem
 a raiz escura embaixo do queixo; o alcance do direto ficou um pouco menor que o de hoje (conferir a caixa antes de ligar).
+
+### 2026-11-17 — CK pelo boneco de peças, 2ª leva
+- Socos refeitos na regra nova do Alisson (soco natural): o pé da frente dá o passo, o corpo vai junto e o quadril
+  gira por cima do pé da frente; no direto o calcanhar de trás gira. Poses em `SOCOS` (`soco()` em `pecas_ck.py`).
+- Peças: pescoço que as luvas tapavam agora é pele em sombra (`pintar_pescoco`, sem borrão escuro quando o braço sai);
+  lado do tronco debaixo do braço sem as pontas do antebraço (`aparar_lado`); peito com textura da camisa.
+- Novas ações com peças: agachar (agachamento fundo de verdade), chute baixo, soco agachado e rasteira (perna da frente
+  varrendo o chão, `postura` com 6º valor). Mesmos tempos e quadros ativos do `gerar_ck.py`.
+- Robô: 0 defeitos em 127 desenhos. Vídeos e folhas antes/depois em `docs/boneco-pecas/ck/`.
+- Falta (próxima leva): uppercut, overhand, Bote, agarrão, armada/compasso/rolamento sem virar de costas, ar_soco,
+  bicicleta, pulo, apanha, queda, levanta, lata, provoca, vitória, derrota. Ressalva: costurinha no joelho de trás em
+  chute alto (ver depois). Nada no .sff/mugen sem OK do Breno.
