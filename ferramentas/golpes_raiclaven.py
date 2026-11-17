@@ -31,6 +31,7 @@ import boneco_ajuste as b  # noqa: E402
 import vida_pecas as vida  # noqa: E402
 
 P = R.P
+ESP = R.ESP
 MAPA = R.DOCS / "mapa_acoes.json"
 
 # ------------------------------------------------------------------ pose-chave de cada desenho de hoje
@@ -74,6 +75,43 @@ POSE = {
     "rasteira/05": P(baixo="agachado", q=(8, 0), tronco=10, cabeca=3, mao="varre", bf=-25, bt=12),
     "rasteira/06": P(baixo="agachado", tronco=4, mao="vassoura", bf=-6, bt=6),
     "rasteira/07": P(baixo="agachado", tronco=6, cabeca=1, bt=8, bf=30),
+    # golaço: abaixa e puxa o pente para trás, ergue a tesoura, avança o pé e lança o pente com o braço todo
+    # esticado (o tronco e o quadril vão junto), e desce na base baixa com a tesoura à frente
+    "golaco/00": P(),
+    "golaco/01": P(q=(-4, 22), tronco=8, cabeca=3, bt=12, abt=-8, bf=14, abf=10),
+    "golaco/02": P(q=(-6, 16), tronco=-2, cabeca=-2, braco="alto", bf=12, abf=12),
+    "golaco/03": P(q=(14, 18), tronco=8, cabeca=3, mao="arremesso", bt=22, abt=-6, pe_frente=20),
+    "golaco/04": P(baixo="agachado", q=(6, 0), tronco=10, cabeca=3, bt=28, abt=-8, bf=-4),
+    # armada (chute girando de costas): gira no pé de apoio (desenhos de costas inteiros), a perna sobe esticada na
+    # altura da cabeça, recolhe e o pé volta ao chão na guarda
+    "armada/00": P(q=(2, 2), tronco=1, bt=2, abt=-2),
+    "armada/01": ESP("armada/01"),
+    "armada/02": ESP("armada/02"),
+    "armada/03": ESP("armada/03"),
+    "armada/04": P(q=(-10, -4), tronco=-10, cabeca=-4, bt=10, abt=-6, bf=-10, abf=-12, perna="esticada"),
+    "armada/05": P(q=(-6, -2), tronco=-5, cabeca=-2, bt=8, abt=-4, bf=-4, abf=-6, perna="baixa"),
+    "armada/06": P(q=(2, 4), tronco=1, bt=3, abt=-2, pe_frente=8),
+    "armada/07": P(q=(1, 1), bt=-2, abt=2, bf=2),
+    # agarrão: tira a toalha, passa nas duas mãos e gira por cima da cabeça (desenhos inteiros: a toalha não é peça),
+    # estica o braço agarrando, penteia o cabelo e volta à guarda
+    "agarrao/00": P(),
+    "agarrao/01": ESP("agarrao/01"),
+    "agarrao/02": ESP("agarrao/02"),
+    "agarrao/03": ESP("agarrao/03"),
+    "agarrao/04": ESP("agarrao/04"),
+    "agarrao/05": P(q=(10, 8), tronco=5, cabeca=2, mao="agarra", bt=6, abt=-4, pe_frente=14),
+    "agarrao/06": P(q=(2, 3), tronco=0, mao="cabelo", bt=2, abt=-2),
+    "agarrao/07": P(q=(1, 1), bt=-2, abt=2, bf=2),
+    # pente_combo: sai do rolamento, estoca o pente, ergue a tesoura, gira (desenho inteiro) e corta duas vezes com a
+    # tesoura à frente, e termina penteando o cabelo
+    "rolamento/05": P(baixo="agachado", tronco=6, cabeca=2, bt=8, abt=-8, bf=6),  # sai do rolamento
+    "rolamento/06": P(q=(2, 6), tronco=2, cabeca=1, bt=4, abt=-4, bf=-4),
+    "pente_combo/01": P(q=(12, 10), tronco=6, cabeca=2, mao="arremesso", bt=18, abt=-6, pe_frente=18),
+    "pente_combo/02": P(q=(-6, 8), tronco=-3, cabeca=-2, braco="alto", bf=10, abf=12),
+    "pente_combo/04": ESP("pente_combo/04"),
+    "pente_combo/05": P(q=(12, 10), tronco=5, cabeca=2, braco="frente", bt=2, bf=8, pe_frente=20),
+    "pente_combo/06": P(q=(16, 12), tronco=7, cabeca=3, braco="estocada", bt=-2, bf=10, pe_frente=24, pe_tras=6),
+    "pente_combo/07": P(q=(2, 3), tronco=0, mao="cabelo", bt=2, abt=-2),
 }
 
 
@@ -91,10 +129,14 @@ def acoes():
         for k, e in enumerate(els):
             viz = {str(d).split("/")[0] for d in firmes[max(0, k - 3):k + 4] if d}
             ok = e["iou"] > 0.85 or (e["iou"] > 0.7 and str(e["desenho"]).split("/")[0] in viz)
+            if not ok and 0.6 < e["iou"] <= 0.7 and ds and ds[-1] is not None and \
+                    str(ds[-1]).split("/")[0] in viz:
+                ds.append(ds[-1])  # quadro de meio desenhado à parte (0.6-0.7): segue o desenho anterior
+                continue
             ds.append(e["desenho"] if ok else None)
         sem = [d for d in ds if d not in POSE]
         if not sem:
-            out[num] = els
+            out[num] = [dict(e, desenho=d) for e, d in zip(els, ds)]
         elif len(sem) < len(ds):
             faltam[num] = sorted({str(d) for d in sem})
     return out, faltam

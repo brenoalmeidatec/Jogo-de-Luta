@@ -69,6 +69,19 @@ pr.VARIANTES.update({
                                  (480, 413)], "cabeca", pr.colorido),
     },
     "braco_frente": {
+        # golaço: braço do pente todo esticado à frente, o pente na ponta dos dedos (golaco/03)
+        "arremesso": ("golaco/03", [(548, 404), (565, 400), (600, 400), (625, 404), (650, 404), (680, 400),
+                                    (690, 405), (690, 416), (650, 424), (633, 435), (607, 434), (585, 438),
+                                    (563, 443), (552, 447), (546, 425)], "cabeca", None),
+        # pente_combo: mão no cabelo, penteando com o pente (pente_combo/07)
+        "cabelo": ("pente_combo/07", [(540, 292), (560, 295), (578, 299), (597, 299), (617, 318), (633, 343),
+                                      (645, 368), (642, 388), (620, 395), (596, 397), (588, 380), (593, 365),
+                                      (605, 360), (606, 338), (595, 325), (580, 323), (560, 320), (543, 312)],
+                   "cabeca", None),
+        # agarrão: braço esticado, mão aberta agarrando (agarrao/05)
+        "agarra": ("agarrao/05", [(550, 362), (580, 345), (618, 340), (636, 312), (650, 310), (662, 320),
+                                  (663, 335), (658, 352), (626, 358), (600, 376), (568, 396), (552, 402)],
+                   "cabeca", None),
         # rasteira: tira a vassoura e ergue ao lado da cabeça (rasteira/02)
         "vassoura": ("rasteira/02", [(566, 346), (630, 336), (634, 372), (614, 384), (618, 436), (636, 440),
                                      (640, 472), (628, 490), (640, 556), (662, 636), (650, 642), (628, 560),
@@ -215,8 +228,16 @@ def separar(kit):
     return kit
 
 
+def ESP(q):
+    """Quadro em que o corpo do kit não serve (de costas, girando, rolando, com a toalha nas duas mãos): fica o desenho
+    de hoje inteiro, sem meio com os vizinhos (vida_pecas não mistura `_especial`). Mesmo critério do firme.py."""
+    return {"_especial": {"var": q}}
+
+
 def plantar(pose):
     """Pernas no chão por cinemática inversa: o tornozelo fica onde está no parado (+ o passo da pose)."""
+    if "_especial" in pose:
+        return pose
     pose = {k: dict(v) for k, v in pose.items()}
     pes = pose.get("_pe", {})
     lev = pose.get("_lev", {})
@@ -286,9 +307,34 @@ def emenda_agachado(tela, w):
 def desenhar(kit, pose):
     """As peças na ordem de camada, os sapatos (reto no chão; girando com a canela no pé levantado), o laço do
     avental e o fechamento de fresta perto das juntas."""
+    if "_especial" in pose:
+        return tapar_furos(pf.sem_migalha(b.abrir(pose["_especial"]["var"])))
     tela = b.desenhar(kit, pose)
     w = b.mundo(pose)
     lev = pose.get("_lev", {})
+    if pose.get("coxa_frente", {}).get("var") not in (None, "vazio"):
+        # perna da frente levantada (desenho inteiro de outro quadro): fica NA FRENTE do avental. Na ordem do kit ela
+        # ia por baixo do quadril e o joelho e o sapato sumiam atrás do pano (chute alto e armada)
+        # (e os braços, a tesoura e a ombreira continuam na frente dela, como no desenho). O pano da coxa da frente
+        # que o quadril traz do parado (à direita do debrum do avental) sai: com a perna no ar ele virava um toco.
+        frente = np.zeros(tela.shape[:2], bool)
+        camadas = []
+        for slot in ("coxa_frente", "braco_frente", "braco_tras", "ombreira", "antebraco_tras"):
+            p = kit["pecas"][b.chave(slot, pose)]
+            pos, ang = w[slot]
+            r, x0, y0 = b.colocar(p, p["img"], p["origem"], pos, ang)
+            camadas.append((r, x0, y0))
+            h_, w_ = r.shape[:2]
+            X0, Y0 = max(0, x0), max(0, y0)
+            sub = r[Y0 - y0:min(tela.shape[0], y0 + h_) - y0, X0 - x0:min(tela.shape[1], x0 + w_) - x0, 3] > 0
+            frente[Y0:Y0 + sub.shape[0], X0:X0 + sub.shape[1]] |= sub
+        j0 = pr.OSSOS["quadril"][0]
+        ox, oy = int(round(w["quadril"][0][0] - j0[0])), int(round(w["quadril"][0][1] - j0[1]))
+        toco = np.zeros_like(frente)
+        toco[500 + oy:600 + oy, 573 + ox:] = True
+        tela[toco & ~frente] = 0
+        for r, x0, y0 in camadas:
+            b.colar(tela, r, x0, y0)
     if pose.get("_agachado"):  # o desenho agachado já traz sapatos e laço
         emenda_agachado(tela, w)
         return tapar_furos(pf.sem_migalha(pf.fechar_frestas(tela, juntas=[w[sl][0] for sl in pr.OSSOS])))

@@ -271,6 +271,60 @@
     358
    ]
   },
+  "braco_frente_arremesso": {
+   "arquivo": "braco_frente_arremesso.png",
+   "origem": [
+    578,
+    355
+   ],
+   "junta": [
+    594,
+    410
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/golaco/03.png",
+   "sobra": "braco_frente_arremesso_sobra.png",
+   "origem_sobra": [
+    569,
+    346
+   ]
+  },
+  "braco_frente_cabelo": {
+   "arquivo": "braco_frente_cabelo.png",
+   "origem": [
+    547,
+    293
+   ],
+   "junta": [
+    594,
+    410
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/pente_combo/07.png",
+   "sobra": "braco_frente_cabelo_sobra.png",
+   "origem_sobra": [
+    538,
+    284
+   ]
+  },
+  "braco_frente_agarra": {
+   "arquivo": "braco_frente_agarra.png",
+   "origem": [
+    589,
+    312
+   ],
+   "junta": [
+    594,
+    410
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/agarrao/05.png",
+   "sobra": "braco_frente_agarra_sobra.png",
+   "origem_sobra": [
+    580,
+    303
+   ]
+  },
   "braco_frente_vassoura": {
    "arquivo": "braco_frente_vassoura.png",
    "origem": [
