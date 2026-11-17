@@ -55,24 +55,18 @@
   },
   {
    "desenho": 6,
-   "ticks": 2,
+   "ticks": 5,
    "caixa": false,
    "de": "coice/06"
   },
   {
    "desenho": 7,
-   "ticks": 3,
-   "caixa": false,
-   "de": "coice/06"
-  },
-  {
-   "desenho": 8,
    "ticks": 2,
    "caixa": false,
    "de": "coice/07"
   },
   {
-   "desenho": 9,
+   "desenho": 8,
    "ticks": 3,
    "caixa": false,
    "de": "coice/07"

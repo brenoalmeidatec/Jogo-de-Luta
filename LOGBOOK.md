@@ -3035,3 +3035,12 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   (`ferramentas/video_golpes_raiclaven.py`).
 - Para ligar de novo: `git checkout 95134c46 -- chars/raiclaven` e `ligar_pecas.py raiclaven` (rodar duas vezes em cima
   do já ligado não foi testado).
+
+### 2026-11-17 — Coice do Garanhão refeito e no jogo
+- Folha nova do coice gerada no ChatGPT (Chrome do PC de casa do Alisson, 1 imagem) com o mesmo corpo do Garanhão
+  (calção preto, cinto de corda branco, vira de costas e coiceia). Os 6 quadros do meio entram como ESPECIAIS no kit.
+- Ligado com `ligar_pecas.py gutto --de garanhao --grupo 49000 --ajustar coice` (grupo 49009, ação 10240, chute forte longe).
+- A luz do poder 4750 trocou o halo fixo (ação 9815) por orbe, halo e poça que andam com o poder: é o conserto da `luz.py`
+  do commit 911e781f (poder que voa é bola, não raio), não perda.
+- Robô de luta do Gutto: 186/186, dano igual ao anterior. Vídeo: docs/boneco-pecas/no_jogo/garanhao_coice_no_jogo.mp4.
+- Falta: golpes no ar do Garanhão; pele_pecas (sem linha de corte) no Gutto e no Garanhão.
