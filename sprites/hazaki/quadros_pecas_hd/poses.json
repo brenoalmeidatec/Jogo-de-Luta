@@ -1,256 +1,511 @@
 {
- "tesoura/01": {
-  "_especial": {
-   "var": "tesoura/01"
-  }
- },
- "tesoura/02": {
-  "_especial": {
-   "var": "tesoura/02"
-  }
- },
- "tesoura/03": {
-  "_especial": {
-   "var": "tesoura/03"
-  }
- },
- "tesoura/04": {
-  "_especial": {
-   "var": "tesoura/04"
-  }
- },
- "tesoura/05": {
-  "_especial": {
-   "var": "tesoura/05"
-  }
- },
- "tesoura/06": {
-  "_especial": {
-   "var": "tesoura/06"
-  }
- },
- "tesoura/07": {
-  "quadril": {
-   "ang": 0,
-   "dx": -5,
-   "dy": 18
-  },
-  "tronco": {
-   "ang": 0
-  },
-  "braco_tras": {
-   "ang": -2,
-   "dx": 2,
-   "dy": 2,
-   "custo": 32.0
-  },
-  "antebraco_tras": {
-   "ang": 0,
-   "dx": -1,
-   "dy": -2,
-   "custo": 32.4
-  },
-  "braco_frente": {
-   "ang": -2,
-   "dx": -2,
-   "dy": -1,
-   "custo": 26.6
-  },
-  "coxa_tras": {
-   "ang": 25.6
-  },
-  "canela_tras": {
-   "ang": -63.7
-  },
-  "coxa_frente": {
-   "ang": -23.8
-  },
-  "canela_frente": {
-   "ang": 55.3
-  }
- },
- "chute_giratorio/01": {
-  "_especial": {
-   "var": "chute_giratorio/01"
-  }
- },
- "chute_giratorio/02": {
-  "_especial": {
-   "var": "chute_giratorio/02"
-  }
- },
- "chute_giratorio/03": {
-  "_especial": {
-   "var": "chute_giratorio/03"
-  }
- },
- "chute_giratorio/04": {
-  "_especial": {
-   "var": "chute_giratorio/04"
-  }
- },
- "chute_giratorio/05": {
-  "_especial": {
-   "var": "chute_giratorio/05"
-  }
- },
- "chute_giratorio/06": {
-  "_especial": {
-   "var": "chute_giratorio/06"
-  }
- },
- "chute_giratorio/07": {
-  "quadril": {
-   "ang": 0,
-   "dx": -9,
-   "dy": 26
-  },
-  "tronco": {
-   "ang": 3
-  },
-  "braco_tras": {
-   "ang": -14,
-   "dx": 2,
-   "dy": 2,
-   "custo": 41.7
-  },
-  "antebraco_tras": {
-   "ang": 3,
-   "dx": -2,
-   "dy": 2,
-   "custo": 47.4
-  },
-  "braco_frente": {
-   "ang": -5,
-   "dx": -2,
-   "dy": -4,
-   "custo": 31.8
-  },
-  "cabeca": {
-   "ang": -2
-  },
-  "coxa_tras": {
-   "ang": 30.5
-  },
-  "canela_tras": {
-   "ang": -77.5
-  },
-  "coxa_frente": {
-   "ang": -30.7
-  },
-  "canela_frente": {
-   "ang": 67.4
-  }
- },
- "giro_garagem/01": {
-  "_especial": {
-   "var": "giro_garagem/01"
-  }
- },
- "giro_garagem/02": {
-  "_especial": {
-   "var": "giro_garagem/02"
-  }
- },
- "giro_garagem/03": {
-  "_especial": {
-   "var": "giro_garagem/03"
-  }
- },
- "giro_garagem/04": {
-  "_especial": {
-   "var": "giro_garagem/04"
-  }
- },
- "giro_garagem/05": {
-  "_especial": {
-   "var": "giro_garagem/05"
-  }
- },
- "giro_garagem/06": {
+ "soco_reto/01": {
   "quadril": {
    "ang": 0,
    "dx": 0,
-   "dy": 11
+   "dy": 30
+  },
+  "tronco": {
+   "ang": -4
+  },
+  "braco_tras": {
+   "ang": 37,
+   "dx": 2,
+   "dy": -2,
+   "custo": 44.6
+  },
+  "antebraco_tras": {
+   "ang": 6,
+   "dx": -2,
+   "dy": -2,
+   "custo": 64.7
+  },
+  "braco_frente": {
+   "ang": 40,
+   "dx": -4,
+   "dy": -4,
+   "custo": 83.2
+  },
+  "cabeca": {
+   "ang": 3
+  },
+  "coxa_tras": {
+   "ang": 35.9
+  },
+  "canela_tras": {
+   "ang": -80.0
+  },
+  "coxa_frente": {
+   "ang": -34.7
+  },
+  "canela_frente": {
+   "ang": 71.9
+  }
+ },
+ "soco_reto/02": {
+  "quadril": {
+   "ang": 0,
+   "dx": 8,
+   "dy": 38
+  },
+  "tronco": {
+   "ang": 2
+  },
+  "braco_tras": {
+   "ang": 16,
+   "dx": 2,
+   "dy": -2,
+   "custo": 40.3
+  },
+  "antebraco_tras": {
+   "ang": 9,
+   "dx": 2,
+   "dy": -2,
+   "custo": 71.5
+  },
+  "braco_frente": {
+   "ang": 49,
+   "dx": -4,
+   "dy": -4,
+   "custo": 86.6
+  },
+  "cabeca": {
+   "ang": -1
+  },
+  "coxa_tras": {
+   "ang": 46.3
+  },
+  "canela_tras": {
+   "ang": -81.5
+  },
+  "coxa_frente": {
+   "ang": -44.5
+  },
+  "canela_frente": {
+   "ang": 76.2
+  }
+ },
+ "soco_reto/03": {
+  "quadril": {
+   "ang": 0,
+   "dx": 12,
+   "dy": 26
+  },
+  "tronco": {
+   "ang": 8
+  },
+  "braco_tras": {
+   "var": "cruzado",
+   "ang": -2
+  },
+  "antebraco_tras": {
+   "ang": -3,
+   "dx": 2,
+   "dy": 2,
+   "custo": 78.9
+  },
+  "braco_frente": {
+   "ang": 49,
+   "dx": -4,
+   "dy": -4,
+   "custo": 84.0
+  },
+  "cabeca": {
+   "ang": -6
+  },
+  "coxa_tras": {
+   "ang": 37.4
+  },
+  "canela_tras": {
+   "ang": -55.4
+  },
+  "coxa_frente": {
+   "ang": -36.6
+  },
+  "canela_frente": {
+   "ang": 42.6
+  }
+ },
+ "soco_reto/04": {
+  "quadril": {
+   "ang": 0,
+   "dx": 14,
+   "dy": 30
+  },
+  "tronco": {
+   "ang": 9
+  },
+  "braco_tras": {
+   "var": "cruzado",
+   "ang": -1
+  },
+  "antebraco_tras": {
+   "ang": -12,
+   "dx": 2,
+   "dy": 2,
+   "custo": 74.7
+  },
+  "braco_frente": {
+   "ang": 49,
+   "dx": -4,
+   "dy": -4,
+   "custo": 88.5
+  },
+  "cabeca": {
+   "ang": -6
+  },
+  "coxa_tras": {
+   "ang": 41.1
+  },
+  "canela_tras": {
+   "ang": -61.9
+  },
+  "coxa_frente": {
+   "ang": -40.5
+  },
+  "canela_frente": {
+   "ang": 53.3
+  }
+ },
+ "soco_reto/05": {
+  "quadril": {
+   "ang": 0,
+   "dx": 12,
+   "dy": 26
+  },
+  "tronco": {
+   "ang": 8
+  },
+  "braco_tras": {
+   "var": "cruzado",
+   "ang": 1
+  },
+  "antebraco_tras": {
+   "ang": -12,
+   "dx": -2,
+   "dy": -1,
+   "custo": 73.2
+  },
+  "braco_frente": {
+   "ang": 37,
+   "dx": -4,
+   "dy": 4,
+   "custo": 112.2
+  },
+  "cabeca": {
+   "ang": -6
+  },
+  "coxa_tras": {
+   "ang": 36.8
+  },
+  "canela_tras": {
+   "ang": -62.9
+  },
+  "coxa_frente": {
+   "ang": -35.6
+  },
+  "canela_frente": {
+   "ang": 56.7
+  }
+ },
+ "soco_reto/06": {
+  "quadril": {
+   "ang": 0,
+   "dx": 5,
+   "dy": 9
   },
   "tronco": {
    "ang": 6
   },
   "braco_tras": {
-   "ang": -17,
+   "ang": 1,
    "dx": 2,
-   "dy": -1,
-   "custo": 47.9
+   "dy": -2,
+   "custo": 25.3
   },
   "antebraco_tras": {
-   "ang": 12,
+   "ang": 3,
    "dx": -2,
-   "dy": 2,
-   "custo": 55.8
+   "dy": -2,
+   "custo": 37.5
   },
   "braco_frente": {
-   "ang": 16,
+   "ang": 13,
    "dx": -4,
    "dy": -4,
-   "custo": 65.0
+   "custo": 74.5
   },
   "cabeca": {
    "ang": -4
   },
   "coxa_tras": {
-   "ang": 11.6
+   "ang": 18.8
   },
   "canela_tras": {
-   "ang": -59.4
+   "ang": -37.8
   },
   "coxa_frente": {
-   "ang": -18.0
+   "ang": -16.6
   },
   "canela_frente": {
-   "ang": 14.0
+   "ang": 32.6
   }
  },
- "giro_garagem/07": {
+ "soco_reto/07": {
   "quadril": {
    "ang": 0,
-   "dx": -10,
-   "dy": 27
+   "dx": 0,
+   "dy": 3
+  },
+  "tronco": {
+   "ang": 0
+  },
+  "braco_tras": {
+   "ang": 1,
+   "dx": -1,
+   "dy": 0,
+   "custo": 17.0
+  },
+  "antebraco_tras": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 1,
+   "custo": 20.3
+  },
+  "braco_frente": {
+   "ang": -2,
+   "dx": -1,
+   "dy": 0,
+   "custo": 24.0
+  },
+  "coxa_tras": {
+   "ang": 9.3
+  },
+  "canela_tras": {
+   "ang": -18.2
+  },
+  "coxa_frente": {
+   "ang": -7.6
+  },
+  "canela_frente": {
+   "ang": 17.8
+  }
+ },
+ "soco/02": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 32
+  },
+  "tronco": {
+   "ang": -3
+  },
+  "braco_tras": {
+   "ang": 10,
+   "dx": -2,
+   "dy": -2,
+   "custo": 56.2
+  },
+  "antebraco_tras": {
+   "ang": -18,
+   "dx": 1,
+   "dy": -2,
+   "custo": 71.4
+  },
+  "braco_frente": {
+   "ang": -35,
+   "dx": 0,
+   "dy": -4,
+   "custo": 79.3
+  },
+  "cabeca": {
+   "ang": 2
+  },
+  "coxa_tras": {
+   "ang": 37.4
+  },
+  "canela_tras": {
+   "ang": -82.5
+  },
+  "coxa_frente": {
+   "ang": -36.2
+  },
+  "canela_frente": {
+   "ang": 74.7
+  }
+ },
+ "soco/03": {
+  "quadril": {
+   "ang": 0,
+   "dx": 5,
+   "dy": 34
+  },
+  "tronco": {
+   "ang": 8
+  },
+  "braco_tras": {
+   "ang": 10,
+   "dx": -2,
+   "dy": -2,
+   "custo": 57.9
+  },
+  "antebraco_tras": {
+   "ang": -24,
+   "dx": -2,
+   "dy": -2,
+   "custo": 70.4
+  },
+  "braco_frente": {
+   "ang": -4,
+   "dx": -4,
+   "dy": 4,
+   "var": "esticado",
+   "custo": 52.3
+  },
+  "cabeca": {
+   "ang": -6
+  },
+  "coxa_tras": {
+   "ang": 43.1
+  },
+  "canela_tras": {
+   "ang": -76.6
+  },
+  "coxa_frente": {
+   "ang": -38.8
+  },
+  "canela_frente": {
+   "ang": 75.8
+  }
+ },
+ "soco/05": {
+  "quadril": {
+   "ang": 0,
+   "dx": -6,
+   "dy": 31
+  },
+  "tronco": {
+   "ang": 16
+  },
+  "braco_tras": {
+   "ang": -14,
+   "dx": 2,
+   "dy": 2,
+   "custo": 53.5
+  },
+  "antebraco_tras": {
+   "ang": -12,
+   "dx": -2,
+   "dy": -2,
+   "custo": 70.2
+  },
+  "braco_frente": {
+   "ang": -8,
+   "dx": 0,
+   "dy": -1,
+   "var": "esticado",
+   "custo": 15.2
+  },
+  "cabeca": {
+   "ang": -11
+  },
+  "coxa_tras": {
+   "ang": 38.4
+  },
+  "canela_tras": {
+   "ang": -78.4
+  },
+  "coxa_frente": {
+   "ang": -41.4
+  },
+  "canela_frente": {
+   "ang": 54.8
+  }
+ },
+ "soco/06": {
+  "quadril": {
+   "ang": 0,
+   "dx": -14,
+   "dy": 25
+  },
+  "tronco": {
+   "ang": 13
+  },
+  "braco_tras": {
+   "ang": -20,
+   "dx": 2,
+   "dy": 2,
+   "custo": 52.5
+  },
+  "antebraco_tras": {
+   "ang": 6,
+   "dx": -2,
+   "dy": 0,
+   "custo": 55.7
+  },
+  "braco_frente": {
+   "ang": -38,
+   "dx": -4,
+   "dy": -4,
+   "custo": 66.7
+  },
+  "cabeca": {
+   "ang": -9
+  },
+  "coxa_tras": {
+   "ang": 28.5
+  },
+  "canela_tras": {
+   "ang": -77.3
+  },
+  "coxa_frente": {
+   "ang": -35.5
+  },
+  "canela_frente": {
+   "ang": 49.2
+  }
+ },
+ "soco/07": {
+  "quadril": {
+   "ang": 0,
+   "dx": -3,
+   "dy": 18
   },
   "tronco": {
    "ang": 3
   },
   "braco_tras": {
-   "ang": -11,
+   "ang": -2,
    "dx": 2,
    "dy": 2,
-   "custo": 44.5
+   "custo": 24.4
   },
   "antebraco_tras": {
-   "ang": 3,
-   "dx": -2,
-   "dy": 1,
-   "custo": 45.5
+   "ang": 0,
+   "dx": -1,
+   "dy": -2,
+   "custo": 28.7
   },
   "braco_frente": {
-   "ang": -8,
-   "dx": -3,
+   "ang": -5,
+   "dx": -2,
    "dy": -4,
-   "custo": 38.3
+   "custo": 33.4
   },
   "cabeca": {
    "ang": -2
   },
   "coxa_tras": {
-   "ang": 31.5
+   "ang": 27.4
   },
   "canela_tras": {
-   "ang": -78.6
+   "ang": -59.8
   },
   "coxa_frente": {
-   "ang": -31.5
+   "ang": -25.8
   },
   "canela_frente": {
-   "ang": 68.9
+   "ang": 51.6
   }
  }
 }

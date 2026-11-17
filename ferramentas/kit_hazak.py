@@ -155,3 +155,23 @@ ESPECIAIS.add("calcada_levantada/06")  # levantando de joelho: perna de trás ai
 # tapa de mão aberta (o kit só tem punho), braço por cima da cabeça e chute alto de lado: desenho de hoje
 ESPECIAIS.update({"tapa_costas/03", "tapa_costas/04", "tapa_costas/05", "calcada_levantada/01",
                   "chute_alto_rajada/01"})
+# regra do corpo inteiro (Alisson 17/11): no soco o quadril vai à frente, o tronco entra e o pé da frente dá o passo
+# (px na tela 3x; "frente" = quanto o pé da frente anda além do desenho de hoje)
+PASSO = {
+    "soco/02": {"quadril": -4, "tronco": -3},
+    "soco/03": {"quadril": 8, "tronco": 5, "frente": 12},
+    "soco/05": {"quadril": 10, "tronco": 7, "frente": 16},
+    "soco/06": {"quadril": 6, "tronco": 4, "frente": 10},
+    "soco_reto/01": {"quadril": -5, "tronco": -4},
+    "soco_reto/02": {"quadril": 6, "tronco": 2, "frente": 8},
+    "soco_reto/03": {"quadril": 12, "frente": 20},
+    "soco_reto/04": {"quadril": 14, "frente": 20},
+    "soco_reto/05": {"quadril": 12, "frente": 16},
+    "soco_reto/06": {"quadril": 6, "tronco": 3, "frente": 12},
+}
+# antecipação no soco: o primeiro elemento (3 ticks) vira preparo (1) + saída (2); total e ativo no mesmo tick
+ANIMS["soco"] = (200, "soco 2/1 3/2 5/3A 6/4 7/3", (16, -90, 59, -76))
+# o soco reto de hoje se joga tanto que o casamento do tronco erra (quadril ia 68 px para a frente e 109 para baixo):
+# a base do avanço fica à mão e o PASSO põe o quadril e o pé à frente
+for _q, _dy in (("soco_reto/03", 26), ("soco_reto/04", 30), ("soco_reto/05", 26)):
+    POSES[_q] = {**POSES[_q], "quadril": {"ang": 0, "dx": 0, "dy": _dy}}

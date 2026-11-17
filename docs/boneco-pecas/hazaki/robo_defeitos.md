@@ -152,11 +152,12 @@
 | rasteira_arco/08 | rasteira_arco/07 | PASS |
 | rasteira_arco/09 | rasteira_arco/07 | PASS |
 | rasteira_arco/10 | rasteira_arco/07 | PASS |
-| soco/00 | soco/03 | PASS |
-| soco/01 | soco/05 | PASS |
-| soco/02 | soco/06 | PASS |
+| soco/00 | soco/02 | PASS |
+| soco/01 | soco/03 | PASS |
+| soco/02 | soco/05 | PASS |
 | soco/03 | soco/06 | PASS |
-| soco/04 | soco/07 | PASS |
+| soco/04 | soco/06 | PASS |
+| soco/05 | soco/07 | PASS |
 | soco_reto/00 | soco_reto/01 | PASS |
 | soco_reto/01 | soco_reto/02 | PASS |
 | soco_reto/02 | soco_reto/03 | PASS |
@@ -195,4 +196,4 @@
 | voadora_pouso/00 | voadora/06 (desenho de hoje) | PASS |
 | voadora_pouso/01 | voadora/07 (desenho de hoje) | PASS |
 
-0 de 194 desenho(s) com defeito.
+0 de 195 desenho(s) com defeito.

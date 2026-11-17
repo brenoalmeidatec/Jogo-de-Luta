@@ -454,6 +454,9 @@ def ik(quadril, tornozelo, joelho_ref, quadril_ref, tornozelo_ref):
 _PES_REF = None
 
 
+_PASSO = {}
+
+
 def pernas_no_chao(pose, alvo, quais=("tras", "frente")):
     """Pernas plantadas por IK: o tornozelo vai para cima do pé do quadro de hoje."""
     global _PES_REF
@@ -464,9 +467,9 @@ def pernas_no_chao(pose, alvo, quais=("tras", "frente")):
     def alvo_tornozelo(lado):
         i = 0 if lado == "tras" else -1
         tr = K.TORNOZELO[f"canela_{lado}"]
-        dx = 0
+        dx = _PASSO.get(lado, 0)
         if agora and (len(agora) > 1 or len(quais) == 1):
-            dx = agora[i] - _PES_REF[i]
+            dx += agora[i] - _PES_REF[i]
         return (tr[0] + dx, tr[1])
 
     # perna plantada não estica além do que ela mede: se o quadril subiu demais, o corpo desce até o pé alcançar
@@ -483,6 +486,7 @@ def pernas_no_chao(pose, alvo, quais=("tras", "frente")):
         if abs(ddx) < L:
             alto = t[1] - np.sqrt(L * L - ddx * ddx)  # quadril mais alto possível
             descer = max(descer, alto - q[1])
+    descer = min(descer, 24)  # agachar mais que isso para alcançar o pé vira boneco afundado: o pé é que encurta
     if descer > 0:
         pose["quadril"] = dict(pose["quadril"], dy=pose["quadril"].get("dy", 0) + int(np.ceil(descer)))
     w = b.mundo(pose)
@@ -491,10 +495,16 @@ def pernas_no_chao(pose, alvo, quais=("tras", "frente")):
         coxa, canela = f"coxa_{lado}", f"canela_{lado}"
         qr, jr = K.OSSOS[coxa][0], K.OSSOS[canela][0]
         tr = K.TORNOZELO[canela]
-        dx = 0
+        dx = _PASSO.get(lado, 0)
         if agora and (len(agora) > 1 or len(quais) == 1):
-            dx = agora[i] - _PES_REF[i]
-        c1, c2 = ik(w[coxa][0], (tr[0] + dx, tr[1]), jr, qr, tr)
+            dx += agora[i] - _PES_REF[i]
+        # o pé não vai além do que a perna alcança (perna não estica)
+        L = np.linalg.norm(np.subtract(jr, qr)) + np.linalg.norm(np.subtract(tr, jr)) - 2
+        hq = w[coxa][0]
+        vy = tr[1] - hq[1]
+        alcance = np.sqrt(max(1.0, L * L - vy * vy))
+        tx = min(max(tr[0] + dx, hq[0] - alcance), hq[0] + alcance)
+        c1, c2 = ik(hq, (tx, tr[1]), jr, qr, tr)
         pose[coxa] = {"ang": c1}
         pose[canela] = {"ang": c2}
     return pose
@@ -568,6 +578,14 @@ def _pose_kit(kit, q):
             pose[slot] = dict(v)
     if "tronco" in mao:
         pose["cabeca"] = dict(pose.get("cabeca", {}), ang=-round(mao["tronco"]["ang"] * 0.7))
+    # passo do golpe (regra do corpo inteiro): o quadril vai à frente, o tronco inclina e o pé da frente avança
+    global _PASSO
+    _PASSO = getattr(K, "PASSO", {}).get(q, {})
+    if _PASSO:
+        pose["quadril"] = dict(pose["quadril"], dx=pose["quadril"].get("dx", 0) + _PASSO.get("quadril", 0))
+        ta = pose.get("tronco", {}).get("ang", 0) + _PASSO.get("tronco", 0)
+        pose["tronco"] = dict(pose.get("tronco", {}), ang=ta)
+        pose["cabeca"] = dict(pose.get("cabeca", {}), ang=-round(ta * 0.7))
     no_ar = getattr(K, "PERNA_NO_AR", {}).get(q)
     if pv:
         pass  # metade de baixo vem inteira do desenho dito no kit

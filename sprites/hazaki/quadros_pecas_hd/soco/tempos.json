@@ -7,6 +7,7 @@
   -228
  ],
  "origem": [
+  "soco/02",
   "soco/03",
   "soco/05",
   "soco/06",
@@ -15,21 +16,21 @@
  "elementos": [
   {
    "desenho": 0,
-   "ticks": 3,
+   "ticks": 1,
+   "caixa": false,
+   "de": "soco/02"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
    "caixa": false,
    "de": "soco/03"
   },
   {
-   "desenho": 1,
+   "desenho": 2,
    "ticks": 3,
    "caixa": true,
    "de": "soco/05"
-  },
-  {
-   "desenho": 2,
-   "ticks": 2,
-   "caixa": false,
-   "de": "soco/06"
   },
   {
    "desenho": 3,
@@ -39,6 +40,12 @@
   },
   {
    "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "soco/06"
+  },
+  {
+   "desenho": 5,
    "ticks": 3,
    "caixa": false,
    "de": "soco/07"
