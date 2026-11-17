@@ -1271,6 +1271,10 @@ ESPECIAIS = {
         1600: ("50,1", [("T4", "50,6"), ("proj", "50,7")]), 1601: ("50,1", [("T4", "50,6"), ("proj", "50,7")]),
         # Rajadona de Ki das Trevas do Diabo Loiro (#44, diabo_loiro.py): carga e o raio de 2,4 s
         1650: ("53", [("T4", "50,6"), ("proj", "50,8")]),
+        # Diabo demônio (#47, diabo_demonio.py): Bola das Trevas, Voo Infernal, Rasgo Ascendente e o Juízo Infernal
+        4500: ("53", [("T2", "50,6"), ("proj", "50,7")]), 4501: ("53", [("T2", "50,6"), ("proj", "50,7")]),
+        4513: ("53", []), 4520: ("53", [("T0", "50,2")]), 4521: ("53", [("T0", "50,2")]),
+        4650: ("53", [("T0", "50,4")]),
         1100: (None, [("T0", "50,2")]), 1101: (None, [("T0", "50,2")]),
         1200: (None, [("T0", "50,3")]), 1201: (None, [("T0", "50,3")]),
         3000: (None, [("T0", "50,3")])},

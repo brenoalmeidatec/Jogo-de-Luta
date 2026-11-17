@@ -2753,8 +2753,6 @@ O Alisson aprovou o corpo firme e pediu fluidez, vida e qualidade, sem nenhum er
 **Robô de defeitos** (`conferir` em `piloto_firme.py`): procura fresta, mancha escura a mais que o desenho de hoje,
 pedaço solto e pé fora do chão. Deu 0 de 41 desenhos (`docs/boneco-pecas/vida/robo_defeitos.md`).
 
-<<<<<<< HEAD
-=======
 ### 2026-11-16 — CK pelo boneco de peças (corpo firme + vida), 1ª leva
 
 Pedido do Alisson depois do OK no Pengaró: passar todos os lutadores para o método, com fluidez e sem erro de peça, e
@@ -2842,7 +2840,6 @@ Pedido do Alisson: "faça isso para todos", com fluidez, vida e nenhum erro de p
   sprites/pengaro/quadros_pecas/acoes/<ação>/ (+ tempos.json); o HD se refaz com `pengaro_todo.py animar`.
 - Fraco ainda: manchinhas cinza na calça perto da virilha (resto do contorno do parado), fresta pequena no ombro de
   trás quando o tronco inclina; agarrão, parry baixo e despertar ficaram fora (não são da lista base).
->>>>>>> origin/mugen
 ### 2026-11-16 — Gutto no boneco de peças (corpo firme + vida) e golpes confusos refeitos
 
 O Alisson aprovou o corpo firme do Pengaró e pediu o mesmo para todos, com vida e sem erro de peça, e os golpes
@@ -2951,7 +2948,13 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   remap do despertado para cada sprite novo e refaz as ações da aura (30000/40000 + ação).
 - Gutto: 16 golpes, 299 quadros. Robô de peças 0 defeito; robô de luta 186/186 antes e depois, dano idêntico.
 - Agachado passou a ter 48 ticks e a rasteira ganhou a volta (459, 1173, 460) para bater com o tempo do jogo.
-<<<<<<< HEAD
+- Garanhão (despertado do Gutto) no jogo: `ligar_pecas.py gutto --de garanhao --grupo 49000 --ajustar` com parado
+  (por remap do parado novo do Gutto) e 10 golpes 10xxx (chifrada, investida, pisão, patada, casco na canela, bufada,
+  garra rasteira, chifrada que sobe, raspa o casco, rabo-chicote). `--ajustar` estica/encolhe o tempo para o impacto
+  cair no tick da Clsn1 antiga; quadros de outra pasta vão em PNG RGBA (na paleta da base o brilho apagava). Depois
+  `aura_silhueta.py gutto` de novo. Robô de luta 186/186 igual; filmado no motor (docs/boneco-pecas/no_jogo/).
+- Fora por enquanto: coice (desenho da folha com outro corpo) e golpes no ar (não leem); rasga-couro, empinada,
+  corrente em X, joelho e cascos no ar não têm ação no jogo (são do #47).
 - `ferramentas/acoes_pengaro.py` lista as 154 ações base do Pengaró (194 desenhos); `ferramentas/pengaro_todo.py`
   faz poses (`poses i/n`), anima (`animar`), confere (robô), e gera `revisar`, `folha` e `video`.
 - Corpo firme em toda inclinação pequena (até 10°): girar o tronco abria fresta nas emendas.
@@ -2982,7 +2985,6 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
 - Ligado no jogo com `ligar_pecas.py`: 154 ações, 1157 sprites novos (grupos 48000+), remaps do despertado e da aura.
   Robô do boneco 0 defeito; robô de luta 189/189 antes e depois, dano idêntico. Foto e vídeo em docs/boneco-pecas/todo/.
 - Próximo: chutes com o mesmo corpo inteiro do soco; agarrão, parry baixo e despertar continuam fora da lista base.
-=======
 
 ### 2026-11-17 — CK base no jogo pelo boneco de peças
 - Pedido do Alisson (o Breno liberou auto-aprovação): pôr no jogo o que passou no robô.
