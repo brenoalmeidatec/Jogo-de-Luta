@@ -2739,6 +2739,130 @@ O Alisson aprovou o corpo firme e pediu fluidez, vida e qualidade, sem nenhum er
 **Robô de defeitos** (`conferir` em `piloto_firme.py`): procura fresta, mancha escura a mais que o desenho de hoje,
 pedaço solto e pé fora do chão. Deu 0 de 41 desenhos (`docs/boneco-pecas/vida/robo_defeitos.md`).
 
+### 2026-11-16 — CK pelo boneco de peças (corpo firme + vida), 1ª leva
+
+Pedido do Alisson depois do OK no Pengaró: passar todos os lutadores para o método, com fluidez e sem erro de peça, e
+refazer com exatidão os golpes confusos. Esta thread ficou com o CK (branch `claude/project-thread-anyey2`).
+
+- Lista dos golpes confusos do CK base em `docs/boneco-pecas/ck/golpes_confusos.png` (giros de costas da armada, compasso
+  e rolamento; braço/perna que estica no ar_soco, uppercut, chute_alto, afastar e Bote; jab agachado inflado; Gola na
+  Mão ilegível; troca de cabeça na entrada e na derrota).
+- `ferramentas/pecas_ck.py`: kit do CK a partir de `referencia_ginga/00` em `sprites/ck/pecas/` (cabeça, tronco,
+  quadril, braços inteiros, coxa e canela de cada lado, pé separado). Os furinhos transparentes que os desenhos de hoje
+  têm por dentro do boneco são fechados no kit. O peito escondido atrás das luvas é pintado em faixas chapadas com as
+  cores da camisa (ressalva: aparece liso quando o braço sai da frente).
+- Corpo achado pela cabeça (boné e rosto), só translação; no chute o quadril fica em cima do pé de apoio e o tronco
+  inclina. Pernas no chão por IK com o joelho para a frente e agachada limitada (a canela do CK é curta).
+- Poses escritas à mão (`POSES`) no jab, no direto e nos dois chutes, em vez de copiar o desenho de hoje: braço esticado
+  é o desenho do soco de hoje preso no ombro do kit, passando por baixo do queixo; perna do chute é a coxa e a canela
+  do kit giradas, sem encolher.
+- Vida pelo `vida_pecas.py` (intermediários, respiração no parado, atraso da cabeça) com os mesmos ticks e elementos de
+  acerto do `gerar_ck.py`.
+- Robô (`conferir`): peça solta, racha (vão cercado sem contorno escuro), pé fora do chão e figura mais alta que o
+  parado. As rachas e frestas são fechadas na montagem. Resultado: 0 de 69 desenhos.
+- Saída: `sprites/ck/quadros_pecas_hd|quadros_pecas/acoes/<ação>/` (com `tempos.json`) e os desenhos-chave no índice
+  de hoje em `quadros_pecas*/<folha>/`. Vídeos e folhas antes/depois em `docs/boneco-pecas/ck/`.
+
+Nada foi ligado no gerador nem no `.sff`. Falta: os outros golpes confusos e o resto do CK base; o braço esticado tem
+a raiz escura embaixo do queixo; o alcance do direto ficou um pouco menor que o de hoje (conferir a caixa antes de ligar).
+
+### 2026-11-17 — CK pelo boneco de peças, 2ª leva
+- Socos refeitos na regra nova do Alisson (soco natural): o pé da frente dá o passo, o corpo vai junto e o quadril
+  gira por cima do pé da frente; no direto o calcanhar de trás gira. Poses em `SOCOS` (`soco()` em `pecas_ck.py`).
+- Peças: pescoço que as luvas tapavam agora é pele em sombra (`pintar_pescoco`, sem borrão escuro quando o braço sai);
+  lado do tronco debaixo do braço sem as pontas do antebraço (`aparar_lado`); peito com textura da camisa.
+- Novas ações com peças: agachar (agachamento fundo de verdade), chute baixo, soco agachado e rasteira (perna da frente
+  varrendo o chão, `postura` com 6º valor). Mesmos tempos e quadros ativos do `gerar_ck.py`.
+- Robô: 0 defeitos em 127 desenhos. Vídeos e folhas antes/depois em `docs/boneco-pecas/ck/`.
+- Falta (próxima leva): uppercut, overhand, Bote, agarrão, armada/compasso/rolamento sem virar de costas, ar_soco,
+  bicicleta, pulo, apanha, queda, levanta, lata, provoca, vitória, derrota. Ressalva: costurinha no joelho de trás em
+  chute alto (ver depois). Nada no .sff/mugen sem OK do Breno.
+### 2026-11-16 — Raiclaven no boneco de peças (corpo firme + vida), piloto: parado, soco e chute alto
+
+Pedido do Alisson: passar o método aprovado no Pengaró para todos, com fluidez, vida e zero erro de animação ou de peça,
+e refazer com mais exatidão os golpes confusos. Branch `claude/project-thread-5g6lt3` (a partir da `c23bpn`), nada no
+`.sff` nem na `mugen`.
+
+- **Golpes confusos** (lista mostrada ao Alisson): soco (dois golpes misturados na folha; o jogo usa só a metade da
+  tesoura), golaço, pente_combo, armada, agarrão, rasteira (vassoura some e duplica), tesourada no ar, martelo,
+  cabeçada, levanta. Folha em `/mnt/project-files/boneco-pecas/raiclaven/golpes_confusos.png`.
+- `ferramentas/raiclaven_hd.py`: os desenhos-chave em 3x direto da folha (o Raiclaven não tinha 3x no git), mesma folha
+  que o jogo usa (8 pastas do ARCADE vêm de `folhas_arcade`, o resto de `folhas`).
+- `ferramentas/pecas_raiclaven.py`: kit do parado arcade (ginga/00) em cor cheia. Peças: cabeça, tronco, ombreira
+  (fica parada por cima), braço mecânico em duas (braço e antebraço com a tesoura, cotovelo próprio), braço do pente
+  (uma peça só: o cotovelo e o pente soltos abriam emenda e espalhavam os dentes), avental com o laço, coxas pintadas
+  por baixo do avental, canelas e sapatos. O que os braços escondem é pintado em cor cheia com contorno e debrum, e a
+  sobra das peças do corpo cobre a costura com a mãe (cintura, joelho, tornozelo). O kit remonta o parado sem nenhum
+  pixel de diferença. Variantes (membro que muda de desenho) vêm do soco/04-05 e do chute_alto/01, 02 e 04, ampliadas
+  para a escala do kit (a folha antiga tem o boneco 5 a 9% menor, medido pela cabeça) e presas pela cabeça ou pelo chão.
+- `ferramentas/piloto_raiclaven.py`: diferente do Pengaró, as poses são montadas **à mão** (ângulo por junta). O
+  encaixe automático em cima do soco e do chute de hoje saía torto porque eles vêm de outra folha, com outro corpo.
+  Mesma soma de ticks e mesmo elemento de acerto das ações 0, 200 e 240; vida pelo `vida_pecas.py`; pernas no chão
+  refeitas por cinemática inversa em todo desenho.
+- Robô de defeitos: **0 de 47 desenhos** (`docs/boneco-pecas/raiclaven/robo_defeitos.md`). A mancha agora compara com
+  o corpo sem os braços (a camisa dele é preta e o que o braço descobre não é defeito).
+- Vídeos lado a lado, tiras e folhas antes/depois em `docs/boneco-pecas/raiclaven/` (`video_raiclaven.py`).
+
+**Ainda fraco (visto no zoom):** quando a tesoura vai à frente, o lado das costas e o cinto aparecem em cor chapada
+(sem dobra); entre o canto do avental e a coxa da frente fica um vãozinho. **Não testado:** não foi aberto no motor.
+**Tempo:** ~2 h 30 de máquina; o kit e as variantes levaram quase tudo, cada golpe novo deve sair em ~20 a 30 min.
+### 2026-11-16 — Pengaró inteiro no boneco de peças (154 ações)
+
+Pedido do Alisson: "faça isso para todos", com fluidez, vida e nenhum erro de peça, e refazer os golpes confusos.
+
+- `ferramentas/acoes_pengaro.py` lista as 154 ações base do Pengaró (194 desenhos); `ferramentas/pengaro_todo.py`
+  faz poses (`poses i/n`), anima (`animar`), confere (robô), e gera `revisar`, `folha` e `video`.
+- Corpo firme em toda inclinação pequena (até 10°): girar o tronco abria fresta nas emendas.
+- Robô: pé desgrudado da canela (tornozelo estica/encolhe até 10 px), pé fora do chão (IK planta no pé de hoje,
+  inclusive nos intermediários), contorno escuro na beira cortada das peças, rosto trocado com fresta (aí o quadro
+  especial fica com a cabeça do desenho).
+- Quadro "especial" (desenho de hoje + rosto do kit + paleta travada do parado) quando o kit de frente não monta:
+  IoU < 0.65, agachado fundo/pernas encolhidas, ou braço/perna que o encaixe não alcança (> 800 px de fora).
+  59 dos 194 desenhos saem montados; o resto é especial.
+- Refeitos: andar (por código, ciclo apoio/balanço com IK; o desenho de hoje trocava a perna da joelheira),
+  cabeçada (à mão: antecipação, testa na frente, volta), defesa (punho sobe e cobre o queixo), soco no ar,
+  provocação.
+- Resultado: robô 0 defeitos nas 154 ações (1344 desenhos com intermediários). Saída 1x em
+  sprites/pengaro/quadros_pecas/acoes/<ação>/ (+ tempos.json); o HD se refaz com `pengaro_todo.py animar`.
+- Fraco ainda: manchinhas cinza na calça perto da virilha (resto do contorno do parado), fresta pequena no ombro de
+  trás quando o tronco inclina; agarrão, parry baixo e despertar ficaram fora (não são da lista base).
+### 2026-11-16 — Gutto no boneco de peças (corpo firme + vida) e golpes confusos refeitos
+
+O Alisson aprovou o corpo firme do Pengaró e pediu o mesmo para todos, com vida e sem erro de peça, e os golpes
+confusos refeitos com exatidão. Branch `claude/project-thread-zoipeb`, nada no `.sff` nem na `mugen`.
+
+- `ferramentas/extrair_hd_sff.py`: o Gutto não tem `quadros_arcade_hd` no git; os desenhos 3x saem do próprio `.sff`
+  (tela 1080x780, eixo 540,660) para `sprites/gutto/quadros_sff_hd/` (fora do git).
+- `ferramentas/boneco_gutto.py kit|animar|video`: kit do parado 94,0 com as ferramentas do Pengaró por cima.
+  Novidades: tronco achado por molde de tronco+cabeça sem os braços; peito escondido pelos braços vem aberto do 558
+  (cor casada) e nunca passa da silhueta do parado; sombra entre o cotovelo e o corpo anda com o braço; calção da
+  perna fica no quadril; perna de apoio e perna do chute são desenhos inteiros só de pele; perna que não alcança o pé
+  abaixa o quadril (joelho dobra, nunca estica). Golpes refeitos escritos na tabela `ANIM` (pose forçada por
+  elemento: `var`, `ang`, `_dy`, `_y`, `_ar`, `_base`, `_pes`), com os mesmos ticks e caixas do `.air`.
+- `vida_pecas.animar` aceita várias caixas de golpe (lista).
+- Feito: parado, soco, chute alto, soco forte (vira cotovelada limpa), cotovelo pesado (sobe e desce), coice (chute
+  reto na barriga), joelhada voadora (agacha, sobe com joelho, cai), chute de quina (baixo, na canela), chute forte
+  (com preparo). Robô de defeitos 0. Vídeos em `docs/boneco-pecas/gutto/corpo_firme/`.
+- Agachados (20b7476f): o de baixo é o desenho do agachado 359 (calção, perna de trás e pés de hoje) com o tronco
+  firme por cima; a perna do chute sai de baixo do calção. Chute alto agachado não levanta mais (chuta pra cima
+  agachado); rasteira rente ao chão.
+- Supers (c014563e): Chuva de Beijinhos (guarda, abaixa, joelho, chute alto, fica no joelho) e Bando de Chutes só de
+  frente (joelho, jab, joelhada, chute baixo, jab, chute alto...), sem as costas e a mão no chão. Caixa do Bando = a
+  maior das 9 do `.air`. `sem_pontinhos` tira manchinha de pele no calção. Robô 0/275.
+- Despertado: hoje as ações 10xxx usam os MESMOS desenhos da base com paleta trocada, então o corpo firme já cobre
+  ele. O Garanhão minotauro do conceito (e_conceito.png) não tem desenho no jogo: pede kit novo desenhado.
+- Garanhão (despertado minotauro, 17/11, Alisson apertou "Começar já o kit"): sem imagem nova. As 18 folhas do
+  ChatGPT de 16/11 (branch fm5ilj) foram para `sprites/garanhao/folhas`; `ferramentas/importar_garanhao.py` corta as 8
+  células, tira o magenta e põe na tela 3x (264 px de altura, o tamanho do endiabrado de hoje; `quadros_arcade_hd`
+  fica fora do git e sai de novo pelo importador). Motor genérico `ferramentas/firme.py` (do Hazak, thread 46qshe) +
+  `kit_garanhao.py` (corpo do rasga_couro/00, poses à mão por quadro com `_p(...)`) + `garanhao_pecas.py` (pinta por
+  baixo do braço de perto a raiz do rabo, o calção entre as pernas e a coxa escondida; crina atrás do rosto).
+  Mudanças no firme.py: `SEM_REGUA`, quadril `abs` com `pes`, cabeça e perna à mão vencem, `MANCHA_FOLGA` (o
+  Garanhão é escuro: 900). Feitos parado, chifrada, investida e pisão; robô 0/73. Vídeos em
+  `docs/boneco-pecas/garanhao/`.
+- Falta: resto dos golpes do Garanhão (15 folhas prontas). O pé do chute alto alcança ~50 px menos que a caixa (o corpo não
+  tomba); o Breno decide se a caixa encolhe. O "giratório" do cotovelo e do coice não gira: girar pede desenho de
+  costas, que o kit não tem.
 ### 2026-11-16 — Gbzin no boneco de peças: piloto (parado, soco, chute alto)
 
 O Alisson aprovou no Pengaró o "corpo firme + vida" e pediu o mesmo para todos, com fluidez e zero erro de peça, e os
@@ -2804,3 +2928,39 @@ quadro a quadro por revisores independentes.
 (9600 a 9999), não pelo número da ação. A faísca do HitDef vem em expressão (`S(ifelse(var(20) > 0, 9231, 9201))`).
 Grão de luz maior que 2 pixels e raio acima de 90 viram tabuleiro de quadrados. O PalFX no oponente pinta o corpo
 inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copiar velocity e accel.
+
+## 2026-11-17 — Gutto base no jogo pelo boneco de peças (corpo firme)
+
+- Pedido do Alisson (o Breno liberou auto-aprovação): pôr no jogo o que passou no robô.
+- `ferramentas/ligar_pecas.py <lutador> [golpe ...]`: liga os quadros de `quadros_pecas_hd/` no `.sff` (indexados na
+  paleta, grupo 48000 + n.º do golpe), reescreve a ação do `.air` partindo os quadros novos em toda fronteira antiga
+  (mesmas caixas, mesmo tick de acerto), troca AnimElem/AnimElemTime/AnimElemNo do `.cns` para os elementos novos, põe
+  remap do despertado para cada sprite novo e refaz as ações da aura (30000/40000 + ação).
+- Gutto: 16 golpes, 299 quadros. Robô de peças 0 defeito; robô de luta 186/186 antes e depois, dano idêntico.
+- Agachado passou a ter 48 ticks e a rasteira ganhou a volta (459, 1173, 460) para bater com o tempo do jogo.
+
+### 2026-11-17 — CK base no jogo pelo boneco de peças
+- Pedido do Alisson (o Breno liberou auto-aprovação): pôr no jogo o que passou no robô.
+- `pecas_ck.py` agora lê os tempos e os quadros ativos de cada ação direto do `chars/ck` (`do_jogo`: acha o desenho
+  da folha pelo formato do sprite) e grava cada ação em `sprites/ck/quadros_pecas_hd/<ação>/` (desenhos-chave em
+  `chaves/<folha>/`), que é o formato do `ligar_pecas.py`.
+- 13 ações ligadas com `python3 ferramentas/ligar_pecas.py ck`: parado (0), agachando/agachado/levantando (10/11/12),
+  jab (200), cruzado (210/215), chute baixo (230), chute alto (240/245), chute de rua (260), soco agachado (400) e
+  rasteira (440). 188 desenhos novos, mesmo tempo e mesmas caixas, despertado igual (remap).
+- Quadros do meio mantidos nos golpes (pedido de fluidez do Alisson, igual ao Gutto e ao Hazak); `SECO = True` em
+  `pecas_ck.py` liga a regra 7 seca se o Breno preferir.
+## 2026-11-17 — Raiclaven base no jogo pelo boneco de peças (parado, soco, chute alto)
+
+- Pedido do Alisson (Breno liberou auto-aprovação): pôr no jogo o que passou no robô. Regras novas dele aplicadas:
+  zero erro de animação (membro descolando, pedaço voando, silhueta grossa, movimento estranho) e golpe natural.
+- Soco refeito: peso atrás, passo à frente de ~13 px do jogo, quadril desce e entra, tronco inclina, a mão do pente
+  volta para a guarda do queixo. Antes era só o braço esticando.
+- Kit (`ferramentas/pecas_raiclaven.py`): costas da camisa pintadas com dobras em 3 tons e costura lateral (no lugar
+  da chapa preta); silhueta do tronco definida onde os braços passam (peito descendo de (596,400) para (583,484));
+  canto do quadril atrás da lâmina como descida reta até a coxa; sombra da lâmina na calça fica no corpo, e ilhas de
+  contorno soltas do braço voltam para o corpo (antes voavam junto com a tesoura).
+- Ligado com `ferramentas/ligar_pecas.py raiclaven chute_alto parado soco` (grupos 48000-48002; rodar sempre com
+  TODOS os golpes da pasta, porque o grupo é o n.º do golpe na ordem alfabética). Robô de peças 0/47; robô de luta
+  186/186 antes e depois, dano idêntico.
+- Desvio da seção 7 (combinado com o Alisson): golpes com quadros do meio (tempo total e tick da caixa iguais).
+- Falta: os 9 golpes confusos (golaço, pente_combo, armada, agarrão, rasteira, ar_soco, martelo, cabeçada, levanta).

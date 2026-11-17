@@ -26,7 +26,7 @@ ATUAL = {
                    ("chute_alto/06", 12), ("chute_alto/07", 12)],
 }
 CORTE = (400, 280, 760, 670)
-GUARDA = "ginga/00"  # o gbzin_pecas.py troca para referencia_ginga/00
+GUARDA = "ginga/00"  # desenho da guarda de hoje (o firme.py troca pelo do lutador)
 K = 2
 try:
     FONTE = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 24)
@@ -63,7 +63,10 @@ def ticks_novo(nome):
 
 
 def main():
-    saida = Path(sys.argv[1])
+    main_em(Path(sys.argv[1]))
+
+
+def main_em(saida):
     saida.mkdir(parents=True, exist_ok=True)
     for nome in ATUAL:
         a = [(p, None) for p in ticks_atual(nome)]
