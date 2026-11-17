@@ -1,0 +1,22 @@
+{
+ "acao": 1502,
+ "caixa": null,
+ "origem": [
+  "voadora/06",
+  "voadora/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 6,
+   "caixa": false,
+   "de": "voadora/06"
+  },
+  {
+   "desenho": 1,
+   "ticks": 8,
+   "caixa": false,
+   "de": "voadora/07"
+  }
+ ]
+}

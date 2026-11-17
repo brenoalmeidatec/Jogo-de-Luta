@@ -1,0 +1,29 @@
+{
+ "acao": 5300,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 8,
+   "caixa": false,
+   "de": "apanha/03|dor"
+  },
+  {
+   "desenho": 1,
+   "ticks": 8,
+   "caixa": false,
+   "de": "apanha/04|dor"
+  },
+  {
+   "desenho": 2,
+   "ticks": 8,
+   "caixa": false,
+   "de": "apanha/03|dor"
+  },
+  {
+   "desenho": 3,
+   "ticks": 8,
+   "caixa": false,
+   "de": "apanha/04|dor"
+  }
+ ]
+}

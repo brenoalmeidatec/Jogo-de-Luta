@@ -1,0 +1,19 @@
+{
+ "acao": 12,
+ "folha": "agachado",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "agachado/02"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "agachado/02",
+   "ticks": 2,
+   "caixa": false
+  }
+ ]
+}

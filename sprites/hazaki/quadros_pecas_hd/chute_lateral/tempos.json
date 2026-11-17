@@ -1,0 +1,80 @@
+{
+ "acao": 240,
+ "caixa": [
+  42,
+  -246,
+  168,
+  -174
+ ],
+ "origem": [
+  "chute_lateral/01",
+  "chute_lateral/02",
+  "chute_lateral/03",
+  "chute_lateral/04",
+  "chute_lateral/05",
+  "chute_lateral/06",
+  "chute_lateral/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_lateral/01"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chute_lateral/02"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chute_lateral/03"
+  },
+  {
+   "desenho": 3,
+   "ticks": 4,
+   "caixa": true,
+   "de": "chute_lateral/04"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_lateral/05"
+  },
+  {
+   "desenho": 5,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chute_lateral/05"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_lateral/06"
+  },
+  {
+   "desenho": 7,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chute_lateral/06"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_lateral/07"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_lateral/07"
+  }
+ ]
+}

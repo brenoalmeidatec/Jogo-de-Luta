@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Montador do boneco</title>
+<style>
+:root {
+  --fundo: #15131a; --painel: #1f1c26; --borda: #34303f; --texto: #ece8f4; --fraco: #9a93ab;
+  --acento: #f2b33d; --ok: #5fd08a; --ruim: #ff5d6c; --osso: #49c6ff; --sel: #f2b33d;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--fundo); color: var(--texto);
+  font: 13px/1.35 system-ui, -apple-system, "Segoe UI", sans-serif; }
+button, select, input { font: inherit; color: inherit; background: #2a2633; border: 1px solid var(--borda);
+  border-radius: 6px; padding: 4px 8px; }
+button { cursor: pointer; }
+button:hover { border-color: var(--acento); }
+button.forte { background: var(--acento); color: #1a1408; border-color: var(--acento); font-weight: 600; }
+input[type=number] { width: 64px; }
+input[type=range] { width: 100%; padding: 0; }
+label { color: var(--fraco); }
+#app { display: grid; grid-template-columns: 220px 1fr 280px; grid-template-rows: auto 1fr; height: 100vh; }
+header { grid-column: 1 / 4; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding: 8px 12px;
+  border-bottom: 1px solid var(--borda); background: var(--painel); }
+header h1 { font-size: 14px; margin: 0 8px 0 0; color: var(--acento); }
+header .sep { flex: 1; }
+aside { background: var(--painel); overflow: auto; padding: 10px; }
+#esq { border-right: 1px solid var(--borda); }
+#dir { border-left: 1px solid var(--borda); }
+h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--fraco); margin: 12px 0 6px; }
+h2:first-child { margin-top: 0; }
+#poses { display: flex; flex-direction: column; gap: 6px; }
+.pose { display: grid; grid-template-columns: 64px 1fr; gap: 6px; padding: 4px; border: 1px solid var(--borda);
+  border-radius: 8px; cursor: pointer; background: #24202c; }
+.pose.atual { border-color: var(--acento); }
+.pose img { width: 64px; height: 64px; image-rendering: pixelated;
+  background: #2d2936; border-radius: 4px; }
+.pose .n { font-weight: 600; }
+.pose .t { color: var(--fraco); font-size: 12px; }
+.pose .bate { color: var(--ruim); font-weight: 600; }
+.linha { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin: 6px 0; }
+#palco { position: relative; overflow: hidden; background: #0d0c11; }
+#tela { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; }
+#dica { position: absolute; left: 10px; bottom: 8px; color: var(--fraco); font-size: 12px; pointer-events: none;
+  background: #0d0c11cc; padding: 4px 8px; border-radius: 6px; }
+#estado { position: absolute; right: 10px; top: 8px; color: var(--fraco); font-size: 12px; }
+.ossos { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.ossos button { text-align: left; padding: 3px 6px; font-size: 12px; }
+.ossos button.sel { border-color: var(--sel); color: var(--sel); }
+.regua { width: 100%; border-collapse: collapse; font-size: 12px; }
+.regua td { padding: 2px 4px; border-bottom: 1px solid var(--borda); }
+.regua td:last-child { text-align: right; }
+.ruim { color: var(--ruim); font-weight: 600; }
+.bom { color: var(--ok); }
+#msg { white-space: pre-wrap; color: var(--fraco); font-size: 12px; }
+kbd { background: #2a2633; border: 1px solid var(--borda); border-radius: 4px; padding: 0 4px; font-size: 11px; }
+@media (max-width: 900px) {
+  #app { grid-template-columns: 1fr; grid-template-rows: auto 55vh auto auto; height: auto; }
+  header { grid-column: 1; }
+  #esq, #dir { border: 0; border-top: 1px solid var(--borda); }
+  #poses { flex-direction: row; overflow-x: auto; }
+  .pose { min-width: 150px; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1 id="titulo">Montador do boneco</h1>
+    <label>Golpe <input id="nome" value="novo" size="12"></label>
+    <select id="abrir"><option value="">Abrir…</option></select>
+    <label title="O último quadro volta para o primeiro (parado, andar)"><input type="checkbox" id="laco"> laço</label>
+    <label title="Grava com quadros do meio, impacto segurado e atraso da cabeça (vida_pecas.py, o mesmo do piloto)"><input type="checkbox" id="vida"> com vida</label>
+    <span class="sep"></span>
+    <button id="tocar" title="Espaço">▶ Tocar</button>
+    <label><input type="checkbox" id="um_x"> ver 1x</label>
+    <button id="gravar" class="forte">Gravar</button>
+  </header>
+
+  <aside id="esq">
+    <h2>Poses-chave</h2>
+    <div id="poses"></div>
+    <div class="linha">
+      <button id="nova" title="Copia a pose atual para depois dela">+ Duplicar</button>
+      <button id="guarda_nova" title="Pose nova na guarda (o parado do kit)">+ Guarda</button>
+    </div>
+    <div class="linha">
+      <button id="subir" title="Mover para cima">↑</button>
+      <button id="descer" title="Mover para baixo">↓</button>
+      <button id="apagar">Apagar</button>
+    </div>
+    <h2>Casca de cebola</h2>
+    <div class="linha"><label><input type="checkbox" id="cebola_ant" checked> anterior</label>
+      <label><input type="checkbox" id="cebola_prox"> próxima</label></div>
+    <div class="linha"><label>força</label><input type="range" id="cebola_forca" min="10" max="70" value="35"></div>
+    <h2>Mostrar</h2>
+    <div class="linha"><label><input type="checkbox" id="ver_ossos" checked> ossos</label>
+      <label><input type="checkbox" id="ver_caixa" checked> caixa de golpe</label></div>
+  </aside>
+
+  <main id="palco">
+    <canvas id="tela"></canvas>
+    <div id="estado"></div>
+    <div id="dica">Arraste um osso para girar · <kbd>Shift</kbd>+arrastar move (no quadril, o corpo todo) ·
+      roda do mouse: zoom · botão do meio ou <kbd>Ctrl</kbd>+arrastar: andar a tela · <kbd>←</kbd><kbd>→</kbd> giro fino ·
+      <kbd>Ctrl</kbd>+<kbd>Z</kbd> desfaz</div>
+  </main>
+
+  <aside id="dir">
+    <h2>Pose</h2>
+    <div class="linha"><label>ticks</label><input type="number" id="ticks" min="1" max="99" value="4">
+      <label><input type="checkbox" id="bate"> bate (caixa liga)</label></div>
+    <div class="linha"><label>caixa de golpe (3x, pés = 0,0)</label></div>
+    <div class="linha"><input id="caixa" placeholder="x0, y0, x1, y1" size="22"
+      title="Clsn1 do golpe no 3x, relativa aos pés. Ex.: 45, -276, 153, -192"></div>
+    <h2>Osso</h2>
+    <div class="ossos" id="lista_ossos"></div>
+    <div id="osso_edit">
+      <div class="linha"><b id="osso_nome">—</b></div>
+      <div class="linha"><label>giro</label><input type="number" id="o_ang" step="0.5"> °</div>
+      <input type="range" id="o_ang_r" min="-180" max="180" step="0.5">
+      <div class="linha"><label>dx</label><input type="number" id="o_dx"> <label>dy</label><input type="number" id="o_dy"></div>
+      <div class="linha"><label>desenho</label><select id="o_var"></select></div>
+      <div class="linha"><button id="o_zerar">Zerar osso</button><button id="o_copiar">Igual à pose anterior</button></div>
+    </div>
+    <h2>Régua</h2>
+    <table class="regua" id="regua"></table>
+    <p id="regua_nota" style="color:var(--fraco);font-size:12px;margin:6px 0">As peças são sempre o mesmo desenho:
+      osso não tem como esticar. A régua acusa a junta que escorregou mais de 5% do osso (dx/dy longe da mãe).</p>
+    <h2>Mensagens</h2>
+    <div id="msg"></div>
+  </aside>
+</div>
+
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const NOMES = { quadril: "quadril (corpo)", tronco: "tronco", cabeca: "cabeça", braco_tras: "braço de trás",
+  braco_frente: "braço da frente", coxa_tras: "coxa de trás", canela_tras: "canela de trás",
+  coxa_frente: "coxa da frente", canela_frente: "canela da frente" };
+let INFO = null;          // ossos, camadas, variantes, tela, eixo
+let proj = { nome: "novo", laco: false, vida: false, acao: null, caixa: null, quadros: [] };
+let atual = 0, osso = "braco_frente";
+const imagens = new Map(); // chave da pose -> {img, escala}
+let desfazer = [], refazer = [];
+
+// ------------------------------------------------------------ servidor
+async function api(caminho, corpo) {
+  const r = await fetch(caminho, corpo === undefined ? {} :
+    { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo) });
+  if (!r.ok) { let e = await r.text(); try { e = JSON.parse(e).erro; } catch (_) {} throw new Error(e); }
+  return r;
+}
+const chave = (pose) => JSON.stringify(pose, Object.keys(pose).sort().concat(["ang", "dx", "dy", "var", "pe"]));
+
+const pedidos = new Map();
+function imagemDe(pose) {
+  const k = chave(pose);
+  if (imagens.has(k)) return Promise.resolve(imagens.get(k));
+  if (pedidos.has(k)) return pedidos.get(k);
+  const p = api("/api/desenhar", { pose }).then((r) => r.blob()).then((b) => new Promise((ok) => {
+    const img = new Image();
+    img.onload = () => { imagens.set(k, img); pedidos.delete(k); ok(img); };
+    img.src = URL.createObjectURL(b);
+  })).catch((e) => { pedidos.delete(k); mensagem("Erro ao desenhar: " + e.message); throw e; });
+  pedidos.set(k, p);
+  return p;
+}
+
+// ------------------------------------------------------------ esqueleto (o mesmo cálculo do boneco_ajuste.mundo)
+function girar(p, piv, ang) {
+  const r = ang * Math.PI / 180, x = p[0] - piv[0], y = p[1] - piv[1];
+  return [piv[0] + x * Math.cos(r) - y * Math.sin(r), piv[1] + x * Math.sin(r) + y * Math.cos(r)];
+}
+function mundo(pose) {
+  const out = {};
+  const t = (s) => {
+    if (out[s]) return out[s];
+    const o = INFO.ossos[s], p = pose[s] || {};
+    let pos, ang;
+    if (!o.mae) { pos = [o.junta[0] + (p.dx || 0), o.junta[1] + (p.dy || 0)]; ang = p.ang || 0; }
+    else {
+      const m = t(o.mae), mj = INFO.ossos[o.mae].junta, g = girar(o.junta, mj, m.ang);
+      pos = [g[0] + m.pos[0] - mj[0] + (p.dx || 0), g[1] + m.pos[1] - mj[1] + (p.dy || 0)];
+      ang = m.ang + (p.ang || 0);
+    }
+    const pr = girar(o.ponta, o.junta, ang);
+    out[s] = { pos, ang, ponta: [pr[0] + pos[0] - o.junta[0], pr[1] + pos[1] - o.junta[1]] };
+    return out[s];
+  };
+  Object.keys(INFO.ossos).forEach(t);
+  return out;
+}
+// perna levantada (variante da coxa da frente) é um desenho só, com canela e pé: a canela some
+const escondido = (pose, s) => s === "canela_frente" && !!(pose.coxa_frente && pose.coxa_frente.var);
+function regua(pose) {
+  const linhas = [];
+  for (const [s, o] of Object.entries(INFO.ossos)) {
+    if (!o.mae) continue;
+    // a junta que escorrega muda a distância até a junta da mãe: é o "osso" que liga as duas peças
+    const p = pose[s] || {}, esc = Math.hypot(p.dx || 0, p.dy || 0), mj = INFO.ossos[o.mae].junta;
+    const ate_mae = Math.hypot(o.junta[0] - mj[0], o.junta[1] - mj[1]);
+    const meu = Math.hypot(o.ponta[0] - o.junta[0], o.ponta[1] - o.junta[1]);
+    const ref = Math.max(ate_mae, meu);
+    linhas.push({ s, frac: esc / ref, esc });
+  }
+  return linhas;
+}
+
+// ------------------------------------------------------------ desenho do palco
+const tela = $("tela"), ctx = tela.getContext("2d");
+let vista = { s: 1.2, x: 0, y: 0 };
+let tocando = null, quadroTocado = null;
+function ajustarTela() {
+  const r = tela.getBoundingClientRect(), d = window.devicePixelRatio || 1;
+  tela.width = Math.round(r.width * d); tela.height = Math.round(r.height * d);
+  desenhar();
+}
+function enquadrar() {
+  const r = tela.getBoundingClientRect();
+  vista.s = Math.min(r.width / 420, r.height / 460);
+  vista.x = r.width / 2 - 560 * vista.s; vista.y = r.height / 2 - 470 * vista.s;
+  desenhar();
+}
+const paraTela = (p) => [p[0] * vista.s + vista.x, p[1] * vista.s + vista.y];
+const paraMundo = (x, y) => [(x - vista.x) / vista.s, (y - vista.y) / vista.s];
+
+function desenharImg(img, alfa, filtro) {
+  if (!img) return;
+  ctx.save();
+  ctx.globalAlpha = alfa;
+  if (filtro) ctx.filter = filtro;
+  ctx.imageSmoothingEnabled = false;
+  const um = $("um_x").checked;
+  if (um) {
+    // 1x: o desenho como o jogo mostra, um pixel do jogo = 3 do HD
+    const c = document.createElement("canvas"); c.width = 360; c.height = 260;
+    const cc = c.getContext("2d"); cc.imageSmoothingEnabled = false; cc.drawImage(img, 0, 0, 360, 260);
+    ctx.drawImage(c, vista.x, vista.y, 1080 * vista.s, 780 * vista.s);
+  } else ctx.drawImage(img, vista.x, vista.y, 1080 * vista.s, 780 * vista.s);
+  ctx.restore();
+}
+
+function desenhar() {
+  if (!INFO) return;
+  const d = window.devicePixelRatio || 1;
+  ctx.setTransform(d, 0, 0, d, 0, 0);
+  const W = tela.width / d, H = tela.height / d;
+  ctx.clearRect(0, 0, W, H);
+  // tela do jogo e chão
+  const [x0, y0] = paraTela([0, 0]), [x1, y1] = paraTela([1080, 780]);
+  ctx.fillStyle = "#1b1922"; ctx.fillRect(x0, y0, x1 - x0, y1 - y0);
+  const chao = paraTela([0, INFO.eixo[1]])[1], eixo = paraTela([INFO.eixo[0], 0])[0];
+  ctx.strokeStyle = "#3a3545"; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(x0, chao + .5); ctx.lineTo(x1, chao + .5); ctx.stroke();
+  ctx.setLineDash([4, 4]); ctx.beginPath(); ctx.moveTo(eixo + .5, y0); ctx.lineTo(eixo + .5, y1); ctx.stroke();
+  ctx.setLineDash([]);
+
+  if (tocando) { desenharImg(quadroTocado, 1); desenharCaixa(tocando.caixa); return; }
+  const q = proj.quadros[atual]; if (!q) return;
+  const forca = $("cebola_forca").value / 100;
+  if ($("cebola_ant").checked) {
+    const a = proj.quadros[atual - 1] || (proj.laco ? proj.quadros[proj.quadros.length - 1] : null);
+    if (a && a !== q) desenharImg(imagens.get(chave(a.pose)), forca, "sepia(1) hue-rotate(160deg) saturate(3)");
+  }
+  if ($("cebola_prox").checked) {
+    const p = proj.quadros[atual + 1] || (proj.laco ? proj.quadros[0] : null);
+    if (p && p !== q) desenharImg(imagens.get(chave(p.pose)), forca * .8, "sepia(1) hue-rotate(-40deg) saturate(3)");
+  }
+  desenharImg(imagens.get(chave(q.pose)) || ultimaImg, 1);
+  if (q.caixa) desenharCaixa(true);
+  if ($("ver_ossos").checked) desenharOssos(q.pose);
+}
+function desenharCaixa(liga) {
+  if (!liga || !$("ver_caixa").checked) return;
+  const c = lerCaixa(); if (!c) return;
+  const [a, b] = [paraTela([INFO.eixo[0] + c[0], INFO.eixo[1] + c[1]]), paraTela([INFO.eixo[0] + c[2], INFO.eixo[1] + c[3]])];
+  ctx.fillStyle = "#ff3b5022"; ctx.strokeStyle = "#ff5d6c"; ctx.lineWidth = 1.5;
+  ctx.fillRect(a[0], a[1], b[0] - a[0], b[1] - a[1]); ctx.strokeRect(a[0], a[1], b[0] - a[0], b[1] - a[1]);
+}
+function desenharOssos(pose) {
+  const w = mundo(pose), ruins = new Set(regua(pose).filter((l) => l.frac > .05).map((l) => l.s));
+  for (const s of Object.keys(INFO.ossos)) {
+    if (escondido(pose, s)) continue;
+    const o = w[s], a = paraTela(o.pos), b = paraTela(o.ponta), sel = s === osso;
+    ctx.strokeStyle = ruins.has(s) ? "#ff5d6c" : sel ? "#f2b33d" : "#49c6ffaa";
+    ctx.lineWidth = sel ? 3 : 2;
+    ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke();
+    ctx.fillStyle = ctx.strokeStyle;
+    ctx.beginPath(); ctx.arc(a[0], a[1], sel ? 5 : 4, 0, 7); ctx.fill();
+    ctx.beginPath(); ctx.arc(b[0], b[1], sel ? 4 : 3, 0, 7); ctx.stroke();
+  }
+}
+
+// ------------------------------------------------------------ pose atual: mexer, desenhar, desfazer
+let ultimaImg = null, aDesenhar = false, deNovo = false;
+function pedirDesenho() {
+  const q = proj.quadros[atual]; if (!q) return;
+  if (aDesenhar) { deNovo = true; desenhar(); return; }
+  aDesenhar = true; $("estado").textContent = "desenhando…";
+  const t0 = performance.now();
+  imagemDe(q.pose).then((img) => {
+    ultimaImg = img; $("estado").textContent = Math.round(performance.now() - t0) + " ms";
+  }).catch(() => {}).finally(() => {
+    aDesenhar = false; desenhar(); atualizarMiniatura(atual);
+    if (deNovo) { deNovo = false; pedirDesenho(); }
+  });
+  desenhar();
+}
+function guardarDesfazer() {
+  desfazer.push(JSON.stringify(proj)); if (desfazer.length > 200) desfazer.shift(); refazer = [];
+}
+function mudou(semMiniaturas) {
+  pedirDesenho(); atualizarPainel();
+  if (!semMiniaturas) listarPoses();
+}
+function poseOsso(s) {
+  const q = proj.quadros[atual];
+  if (!q.pose[s]) q.pose[s] = {};
+  return q.pose[s];
+}
+function limparOsso(s) {
+  const p = proj.quadros[atual].pose[s]; if (!p) return;
+  for (const k of ["ang", "dx", "dy"]) if (!p[k]) delete p[k];
+  if (!p.var) delete p.var;
+  if (!Object.keys(p).length) delete proj.quadros[atual].pose[s];
+}
+
+// ------------------------------------------------------------ mouse
+let arrasto = null;
+tela.addEventListener("contextmenu", (e) => e.preventDefault());
+tela.addEventListener("pointerdown", (e) => {
+  if (!INFO || tocando) return;
+  tela.setPointerCapture(e.pointerId);
+  const r = tela.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top;
+  if (e.button === 1 || e.button === 2 || e.ctrlKey || e.metaKey) {
+    arrasto = { tipo: "tela", mx, my, vx: vista.x, vy: vista.y }; return;
+  }
+  const q = proj.quadros[atual]; if (!q) return;
+  const w = mundo(q.pose);
+  let melhor = null;
+  for (const s of Object.keys(INFO.ossos)) {
+    if (escondido(q.pose, s)) continue;
+    const a = paraTela(w[s].pos), b = paraTela(w[s].ponta);
+    const d = distSeg([mx, my], a, b);
+    if (d < 14 && (!melhor || d < melhor.d)) melhor = { s, d };
+  }
+  if (!melhor) return;
+  osso = melhor.s; guardarDesfazer();
+  const p = poseOsso(osso);
+  arrasto = e.shiftKey ? { tipo: "mover", s: osso, inicio: paraMundo(mx, my), dx: p.dx || 0, dy: p.dy || 0 }
+                       : { tipo: "girar", s: osso };
+  atualizarPainel(); desenhar();
+});
+tela.addEventListener("pointermove", (e) => {
+  if (!arrasto) return;
+  const r = tela.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top;
+  if (arrasto.tipo === "tela") {
+    vista.x = arrasto.vx + mx - arrasto.mx; vista.y = arrasto.vy + my - arrasto.my; desenhar(); return;
+  }
+  const q = proj.quadros[atual], p = poseOsso(arrasto.s), m = paraMundo(mx, my);
+  if (arrasto.tipo === "mover") {
+    p.dx = Math.round(arrasto.dx + m[0] - arrasto.inicio[0]); p.dy = Math.round(arrasto.dy + m[1] - arrasto.inicio[1]);
+  } else {
+    const o = INFO.ossos[arrasto.s], w = mundo(q.pose)[arrasto.s];
+    const alvo = Math.atan2(m[1] - w.pos[1], m[0] - w.pos[0]);
+    const repouso = Math.atan2(o.ponta[1] - o.junta[1], o.ponta[0] - o.junta[0]);
+    const maeAng = o.mae ? mundo(q.pose)[o.mae].ang : 0;
+    let a = (alvo - repouso) * 180 / Math.PI - maeAng;
+    a = ((a + 540) % 360) - 180;
+    p.ang = Math.round(a * 2) / 2;
+  }
+  mudou(true);
+});
+tela.addEventListener("pointerup", () => { if (arrasto && arrasto.s) { limparOsso(arrasto.s); listarPoses(); } arrasto = null; });
+tela.addEventListener("wheel", (e) => {
+  e.preventDefault();
+  const r = tela.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top;
+  const antes = paraMundo(mx, my), f = Math.exp(-e.deltaY * 0.0015);
+  vista.s = Math.min(8, Math.max(0.3, vista.s * f));
+  vista.x = mx - antes[0] * vista.s; vista.y = my - antes[1] * vista.s; desenhar();
+}, { passive: false });
+function distSeg(p, a, b) {
+  const vx = b[0] - a[0], vy = b[1] - a[1], l = vx * vx + vy * vy;
+  let t = l ? ((p[0] - a[0]) * vx + (p[1] - a[1]) * vy) / l : 0; t = Math.max(0, Math.min(1, t));
+  return Math.hypot(p[0] - a[0] - t * vx, p[1] - a[1] - t * vy);
+}
+
+// ------------------------------------------------------------ painéis
+function listarPoses() {
+  const el = $("poses"); el.innerHTML = "";
+  proj.quadros.forEach((q, i) => {
+    const d = document.createElement("div");
+    d.className = "pose" + (i === atual ? " atual" : "");
+    const img = document.createElement("img"); img.id = "mini" + i;
+    const cache = imagens.get(chave(q.pose)); if (cache) img.src = miniatura(cache);
+    const txt = document.createElement("div");
+    txt.innerHTML = `<div class="n">${i + 1}${q.de ? ` <span class="t">${q.de}</span>` : ""}</div>` +
+      `<div class="t">${q.ticks} ticks</div>` + (q.caixa ? `<div class="bate">bate</div>` : "");
+    d.append(img, txt);
+    d.onclick = () => { atual = i; listarPoses(); mudou(true); };
+    el.append(d);
+    if (!cache) imagemDe(q.pose).then(() => atualizarMiniatura(i)).catch(() => {});
+  });
+  const total = proj.quadros.reduce((s, q) => s + Number(q.ticks), 0);
+  const bate = proj.quadros.reduce((s, q, i) => s ?? (q.caixa ? proj.quadros.slice(0, i).reduce((a, b) => a + Number(b.ticks), 0) + 1 : null), null);
+  $("titulo").textContent = `Montador · ${INFO ? INFO.lutador : ""} · ${proj.quadros.length} poses · ${total} ticks` +
+    (bate ? ` · bate no tick ${bate}` : "");
+}
+const miniaturas = new Map();
+function miniatura(img) {
+  // só o boneco (recorte em volta dos pés), para a miniatura não virar um pontinho
+  if (miniaturas.has(img)) return miniaturas.get(img);
+  const c = document.createElement("canvas"); c.width = 128; c.height = 128;
+  const x = c.getContext("2d"); x.imageSmoothingEnabled = false;
+  const [ex, ey] = INFO.eixo; x.drawImage(img, ex - 210, ey - 400, 420, 420, 0, 0, 128, 128);
+  const url = c.toDataURL(); miniaturas.set(img, url); return url;
+}
+function atualizarMiniatura(i) {
+  const q = proj.quadros[i], img = $("mini" + i), c = q && imagens.get(chave(q.pose));
+  if (img && c) img.src = miniatura(c);
+}
+function atualizarPainel() {
+  const q = proj.quadros[atual];
+  $("ticks").value = q ? q.ticks : ""; $("bate").checked = !!(q && q.caixa);
+  const lo = $("lista_ossos"); lo.innerHTML = "";
+  for (const s of Object.keys(INFO.ossos)) {
+    const b = document.createElement("button"); b.textContent = NOMES[s] || s;
+    if (s === osso) b.className = "sel";
+    b.onclick = () => { osso = s; atualizarPainel(); desenhar(); };
+    lo.append(b);
+  }
+  const p = (q && q.pose[osso]) || {};
+  $("osso_nome").textContent = NOMES[osso] || osso;
+  $("o_ang").value = p.ang || 0; $("o_ang_r").value = p.ang || 0;
+  $("o_dx").value = p.dx || 0; $("o_dy").value = p.dy || 0;
+  const sv = $("o_var"); sv.innerHTML = '<option value="">normal</option>';
+  for (const v of INFO.variantes[osso] || []) sv.innerHTML += `<option value="${v}">${v}</option>`;
+  sv.value = p.var || "";
+  const rg = $("regua"); rg.innerHTML = "";
+  if (q) for (const l of regua(q.pose)) {
+    const pct = (l.frac * 100).toFixed(1), ruim = l.frac > .05;
+    rg.innerHTML += `<tr><td>${NOMES[l.s] || l.s}</td><td class="${ruim ? "ruim" : "bom"}">${ruim ? "escorregou " : ""}${pct}%</td></tr>`;
+  }
+}
+function mensagem(t) { $("msg").textContent = t; }
+
+function editarOsso(f) {
+  if (!proj.quadros[atual]) return;
+  guardarDesfazer(); f(poseOsso(osso)); limparOsso(osso); mudou();
+}
+$("o_ang").onchange = (e) => editarOsso((p) => p.ang = Number(e.target.value));
+$("o_ang_r").oninput = (e) => { const p = poseOsso(osso); p.ang = Number(e.target.value); $("o_ang").value = p.ang; mudou(true); };
+$("o_ang_r").onpointerdown = () => guardarDesfazer();
+$("o_ang_r").onchange = () => { limparOsso(osso); listarPoses(); };
+$("o_dx").onchange = (e) => editarOsso((p) => p.dx = Math.round(Number(e.target.value)));
+$("o_dy").onchange = (e) => editarOsso((p) => p.dy = Math.round(Number(e.target.value)));
+$("o_var").onchange = (e) => editarOsso((p) => p.var = e.target.value || undefined);
+$("o_zerar").onclick = () => editarOsso((p) => { delete p.ang; delete p.dx; delete p.dy; delete p.var; });
+$("o_copiar").onclick = () => {
+  const a = proj.quadros[atual - 1]; if (!a) return;
+  editarOsso((p) => { Object.keys(p).forEach((k) => delete p[k]); Object.assign(p, structuredClone(a.pose[osso] || {})); });
+};
+$("ticks").onchange = (e) => { guardarDesfazer(); proj.quadros[atual].ticks = Math.max(1, Math.round(Number(e.target.value) || 1)); listarPoses(); };
+$("bate").onchange = (e) => {
+  guardarDesfazer(); proj.quadros.forEach((q, i) => q.caixa = i === atual ? e.target.checked : false);
+  listarPoses(); desenhar();
+};
+function lerCaixa() {
+  const v = $("caixa").value.split(/[ ,;]+/).filter(Boolean).map(Number);
+  return v.length === 4 && v.every(Number.isFinite) ? v : null;
+}
+$("caixa").onchange = () => { proj.caixa = lerCaixa(); desenhar(); };
+$("laco").onchange = (e) => { proj.laco = e.target.checked; desenhar(); };
+$("vida").onchange = (e) => { proj.vida = e.target.checked; };
+$("nome").onchange = (e) => { proj.nome = e.target.value; };
+for (const id of ["cebola_ant", "cebola_prox", "cebola_forca", "ver_ossos", "ver_caixa", "um_x"]) $(id).oninput = desenhar;
+
+$("nova").onclick = () => {
+  guardarDesfazer(); const q = structuredClone(proj.quadros[atual] || { pose: {}, ticks: 4 });
+  q.caixa = false; delete q.de; proj.quadros.splice(atual + 1, 0, q); atual++; mudou();
+};
+$("guarda_nova").onclick = () => { guardarDesfazer(); proj.quadros.splice(atual + 1, 0, { pose: {}, ticks: 4, caixa: false }); atual = Math.min(atual + 1, proj.quadros.length - 1); mudou(); };
+$("apagar").onclick = () => {
+  if (proj.quadros.length <= 1) return; guardarDesfazer();
+  proj.quadros.splice(atual, 1); atual = Math.min(atual, proj.quadros.length - 1); mudou();
+};
+function mover(d) {
+  const j = atual + d; if (j < 0 || j >= proj.quadros.length) return; guardarDesfazer();
+  [proj.quadros[atual], proj.quadros[j]] = [proj.quadros[j], proj.quadros[atual]]; atual = j; mudou();
+}
+$("subir").onclick = () => mover(-1);
+$("descer").onclick = () => mover(1);
+
+// ------------------------------------------------------------ tocar
+async function tocar() {
+  if (tocando) { clearTimeout(tocando.t); tocando = null; $("tocar").textContent = "▶ Tocar"; desenhar(); return; }
+  if (!proj.quadros.length) return;
+  $("tocar").textContent = "■ Parar";
+  const imgs = await Promise.all(proj.quadros.map((q) => imagemDe(q.pose)));
+  tocando = { i: 0, caixa: false };
+  const passo = () => {
+    if (!tocando) return;
+    const i = tocando.i, q = proj.quadros[i];
+    quadroTocado = imgs[i]; tocando.caixa = q.caixa; desenhar();
+    tocando.i = (i + 1) % proj.quadros.length;
+    const fim = tocando.i === 0;
+    tocando.t = setTimeout(fim && !proj.laco ? () => setTimeout(passo, 400) : passo, q.ticks * 1000 / 60);
+  };
+  passo();
+}
+$("tocar").onclick = tocar;
+
+// ------------------------------------------------------------ teclado
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" && e.target.type !== "checkbox" && e.target.type !== "range") return;
+  const q = proj.quadros[atual];
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
+    e.preventDefault();
+    const pilha = e.shiftKey ? refazer : desfazer, outra = e.shiftKey ? desfazer : refazer;
+    if (!pilha.length) return; outra.push(JSON.stringify(proj)); proj = JSON.parse(pilha.pop());
+    atual = Math.min(atual, proj.quadros.length - 1); preencherCabecalho(); mudou(); return;
+  }
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "y") {
+    e.preventDefault(); if (!refazer.length) return; desfazer.push(JSON.stringify(proj));
+    proj = JSON.parse(refazer.pop()); preencherCabecalho(); mudou(); return;
+  }
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s") { e.preventDefault(); gravar(); return; }
+  if (e.key === " ") { e.preventDefault(); tocar(); return; }
+  if (!q) return;
+  if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+    e.preventDefault(); guardarDesfazer();
+    const p = poseOsso(osso); p.ang = Math.round(((p.ang || 0) + (e.key === "ArrowRight" ? 1 : -1) * (e.shiftKey ? 5 : 0.5)) * 2) / 2;
+    limparOsso(osso); mudou(true); return;
+  }
+  if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+    e.preventDefault(); const lista = Object.keys(INFO.ossos), i = lista.indexOf(osso);
+    osso = lista[(i + (e.key === "ArrowDown" ? 1 : -1) + lista.length) % lista.length]; atualizarPainel(); desenhar(); return;
+  }
+  if (e.key === "PageDown" || e.key === "PageUp") {
+    e.preventDefault(); atual = Math.max(0, Math.min(proj.quadros.length - 1, atual + (e.key === "PageDown" ? 1 : -1)));
+    listarPoses(); mudou(true);
+  }
+});
+
+// ------------------------------------------------------------ abrir e gravar
+let PILOTO = {};
+function preencherCabecalho() {
+  $("nome").value = proj.nome; $("laco").checked = !!proj.laco; $("vida").checked = !!proj.vida;
+  $("caixa").value = proj.caixa ? proj.caixa.join(", ") : "";
+}
+function carregar(p) {
+  proj = Object.assign({ laco: false, vida: false, acao: null, caixa: null }, structuredClone(p));
+  proj.quadros.forEach((q) => { q.pose = q.pose || {}; q.ticks = q.ticks || 4; q.caixa = !!q.caixa; });
+  atual = 0; desfazer = []; refazer = []; preencherCabecalho(); mudou();
+}
+async function listarAbrir() {
+  const sel = $("abrir");
+  const projetos = await (await api("/api/projetos")).json();
+  PILOTO = await (await api("/api/piloto")).json();
+  sel.innerHTML = '<option value="">Abrir…</option>';
+  if (projetos.length) sel.innerHTML += `<optgroup label="Gravados no montador">${projetos.map((n) => `<option value="p:${n}">${n}</option>`).join("")}</optgroup>`;
+  const pil = Object.keys(PILOTO);
+  if (pil.length) sel.innerHTML += `<optgroup label="Do piloto (quadros_pecas)">${pil.map((n) => `<option value="g:${n}">${n}</option>`).join("")}</optgroup>`;
+  sel.innerHTML += '<option value="novo">Golpe novo (guarda)</option>';
+}
+$("abrir").onchange = async (e) => {
+  const v = e.target.value; e.target.value = ""; if (!v) return;
+  try {
+    if (v === "novo") carregar({ nome: "novo", quadros: [{ pose: {}, ticks: 4, caixa: false }] });
+    else if (v.startsWith("p:")) carregar(await (await api("/api/projeto?nome=" + encodeURIComponent(v.slice(2)))).json());
+    else {
+      const g = structuredClone(PILOTO[v.slice(2)]);
+      g.nome = g.nome + "_montador"; g.vida = true; carregar(g);
+      mensagem(`Aberto do piloto: ${v.slice(2)}. Grava com outro nome, então a pasta do piloto não é mexida.`);
+    }
+  } catch (err) { mensagem("Erro ao abrir: " + err.message); }
+};
+async function gravar() {
+  proj.nome = $("nome").value; proj.caixa = lerCaixa();
+  mensagem("gravando…");
+  try {
+    const r = await (await api("/api/gravar", proj)).json();
+    proj.nome = r.nome; $("nome").value = r.nome;
+    mensagem(`Gravado: ${r.desenhos} desenhos, ${r.ticks} ticks.\n3x: ${r.pasta}\n1x: ${r.pasta_1x}\nProjeto: sprites/${INFO.lutador}/montador/${r.nome}.json`);
+    listarAbrir();
+  } catch (err) { mensagem("Erro ao gravar: " + err.message); }
+}
+$("gravar").onclick = gravar;
+
+// ------------------------------------------------------------ início
+(async () => {
+  INFO = await (await api("/api/info")).json();
+  document.title = "Montador · " + INFO.lutador;
+  new ResizeObserver(ajustarTela).observe(tela);
+  ajustarTela(); enquadrar();
+  await listarAbrir();
+  const pil = Object.keys(PILOTO);
+  if (PILOTO.soco) { const g = structuredClone(PILOTO.soco); g.nome = "soco_montador"; carregar(g); }
+  else carregar({ nome: "novo", quadros: [{ pose: {}, ticks: 4, caixa: false }] });
+  mensagem("Pronto. Abra um golpe do piloto ou comece um golpe novo na guarda.");
+})().catch((e) => mensagem("Erro ao iniciar: " + e.message));
+</script>
+</body>
+</html>

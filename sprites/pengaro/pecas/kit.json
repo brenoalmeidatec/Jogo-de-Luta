@@ -288,6 +288,42 @@
     520,
     317
    ]
+  },
+  "cabeca_dor": {
+   "arquivo": "cabeca_dor.png",
+   "origem": [
+    529,
+    326
+   ],
+   "junta": [
+    560,
+    388
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/apanha/00.png",
+   "sobra": "cabeca_sobra.png",
+   "origem_sobra": [
+    520,
+    317
+   ]
+  },
+  "cabeca_riso": {
+   "arquivo": "cabeca_riso.png",
+   "origem": [
+    529,
+    325
+   ],
+   "junta": [
+    560,
+    388
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/provoca/06.png",
+   "sobra": "cabeca_sobra.png",
+   "origem_sobra": [
+    520,
+    317
+   ]
   }
  }
 }
