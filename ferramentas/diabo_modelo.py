@@ -22,6 +22,8 @@ TELA, PE = (1080, 780), (540, 660)
 NOMES = ["agachado", "agachado_garra", "defesa", "defesa_baixa", "deitado", "apanha", "no_ar", "ajoelhado"]
 # segunda folha (mesma escala pedida): modelo/08 a 15
 NOMES2 = ["corrida", "cobranca", "vitoria", "sentado", "provoca", "agarra", "garra_sobe", "pulo_tras"]
+# folhas de poses seguintes (na mesma escala da primeira): entram depois da frente e das costas, de modelo/18 em diante
+MAIS = []  # [("folha_poses3.png", ["nome", ...]), ...]
 REF_ESCALA = 2  # a defesa em pé tem a mesma curvatura do parado
 
 
@@ -68,6 +70,10 @@ def main():
     fm = figuras(Image.open(PECAS / "folha_modelo.png"))
     e_fm = h_par / fm[0].shape[0]
     todas = [(n, f, e) for n, f in zip(NOMES + NOMES2, figs + figs2)] + [("frente", fm[1], e_fm), ("costas", fm[2], e_fm)]
+    for arq, nomes in MAIS:
+        fs = figuras(Image.open(PECAS / arq))
+        assert len(fs) == len(nomes), (arq, len(fs))
+        todas += [(n, f, e) for n, f in zip(nomes, fs)]
     for k, (nome, f, e) in enumerate(todas):
         h, w = f.shape[:2]
         im = Image.fromarray(f).resize((round(w * e), round(h * e)), Image.LANCZOS)
