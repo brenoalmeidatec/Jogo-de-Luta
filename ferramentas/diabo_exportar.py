@@ -28,9 +28,10 @@ def quadro(kit, q, guarda):
     pintado = firme.desenhar.pintado
     esp = pose.get("_especial", {}).get("var")
     if esp:
-        erros = firme.conferir(out, no_chao=firme.ys_max(firme.abrir(esp)) >= firme.EIXO[1] - 8, juntas=[],
+        # quadro inteiro (pose do modelo ou desenho de hoje): pedaço solto, buraco novo e pé onde ele mesmo pisa
+        erros = firme.conferir(out, no_chao=firme.ys_max(out) >= firme.EIXO[1] - 8, juntas=[],
                                buraco_ok=int(firme.buracos(firme.especial(esp)).sum()))
-        return out, erros, "desenho de hoje"
+        return out, erros, "modelo" if esp.startswith("modelo/") else "desenho de hoje"
     if "_ar" not in pose:
         abaixo = out[firme.EIXO[1]:, :, 3] > 0
         if 0 < abaixo.sum() <= 8:
@@ -52,10 +53,13 @@ def main():
     firme.configurar("diabo")
     kit = firme.ler_kit()
     guarda = firme.desenhar(kit, {})
-    folhas = sys.argv[1:] or sorted(p.name for p in HD.iterdir() if p.is_dir())
+    # folhas novas (sem desenho de hoje): só TROCA/POSES do kit, 8 quadros
+    novas = sorted({q.split("/")[0] for q in list(firme.K.TROCA) + list(firme.K.POSES)
+                    if not (HD / q.split("/")[0]).exists()})
+    folhas = sys.argv[1:] or sorted(p.name for p in HD.iterdir() if p.is_dir() and p.name != "modelo") + novas
     linhas, falhas = [], 0
     for folha in folhas:
-        qs = sorted(HD.glob(f"{folha}/[0-9][0-9].png"))
+        qs = sorted(HD.glob(f"{folha}/[0-9][0-9].png")) or [HD / folha / f"{i:02d}.png" for i in range(8)]
         destino = SAIDA / f"m_{folha}"
         destino.mkdir(parents=True, exist_ok=True)
         W, H = 300, 380
@@ -68,7 +72,8 @@ def main():
             linhas.append(f"| {q} | {de} | {'PASS' if not erros else 'FAIL ' + '; '.join(erros)} |")
             im = Image.fromarray(out)
             im.crop(im.getbbox()).save(destino / f.name)
-            for r, a in enumerate((Image.open(f).convert("RGBA"), im)):
+            hoje = Image.open(f).convert("RGBA") if f.exists() else Image.new("RGBA", im.size)
+            for r, a in enumerate((hoje, im)):
                 c = a.crop((390, 290, 390 + W, 290 + H))
                 bg = Image.new("RGBA", c.size, (60, 60, 70, 255))
                 bg.alpha_composite(c)
