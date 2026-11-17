@@ -2739,3 +2739,17 @@ confusos refeitos com exatidão. Branch `claude/project-thread-zoipeb`, nada no 
 - Falta: resto dos golpes do Garanhão (15 folhas prontas). O pé do chute alto alcança ~50 px menos que a caixa (o corpo não
   tomba); o Breno decide se a caixa encolhe. O "giratório" do cotovelo e do coice não gira: girar pede desenho de
   costas, que o kit não tem.
+## 2026-11-16 — Luz em todo efeito que brilha, nos 5 lutadores (issue #51, item 2) (Claude, thread do Alisson)
+
+**Pedido do Alisson:** gostou da luz do Hazak; pôr em todos os efeitos que têm luz.
+
+**Feito:** `ferramentas/luz_efeitos.py` (inventário, folha de revisão e geração) e `ferramentas/luz.py` genérica:
+luz tirada de cada efeito (cor, força e tamanho quadro a quadro), clarão no ponto de cada golpe acertado, poderes
+reconhecidos pela revisão (`ferramentas/luz_classes.json`), raio com a luz do próprio desenho. Ligada no Hazak, no
+Gutto, no Pengaró, no CK e no Raiclaven (este pelo fim do `gerar_raiclaven.py`). Quatro rodadas de filme conferidas
+quadro a quadro por revisores independentes.
+
+**Armadilhas:** a ação 47002 (raio) cai na faixa 40000+ da silhueta; a aura agora é reconhecida pelo grupo do desenho
+(9600 a 9999), não pelo número da ação. A faísca do HitDef vem em expressão (`S(ifelse(var(20) > 0, 9231, 9201))`).
+Grão de luz maior que 2 pixels e raio acima de 90 viram tabuleiro de quadrados. O PalFX no oponente pinta o corpo
+inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copiar velocity e accel.
