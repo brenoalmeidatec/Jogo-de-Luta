@@ -1,4 +1,318 @@
 {
+ "referencia_ginga/00": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 0,
+   "custo": 0.0
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 0,
+   "custo": 0.0
+  },
+  "_baixo": {
+   "var": "referencia_ginga/00",
+   "dx": 0,
+   "dy": 0
+  }
+ },
+ "referencia_ginga/01": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 8
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 2,
+   "dy": -3,
+   "custo": 24.5
+  },
+  "braco_frente": {
+   "ang": 3,
+   "dx": 0,
+   "dy": 0,
+   "custo": 21.5
+  },
+  "_baixo": {
+   "var": "referencia_ginga/01",
+   "dx": 0,
+   "dy": 8
+  }
+ },
+ "referencia_ginga/02": {
+  "quadril": {
+   "ang": 0,
+   "dx": -2,
+   "dy": 19
+  },
+  "braco_tras": {
+   "ang": 3,
+   "dx": 3,
+   "dy": -1,
+   "custo": 32.2
+  },
+  "braco_frente": {
+   "ang": 3,
+   "dx": 0,
+   "dy": 1,
+   "custo": 22.8
+  },
+  "_baixo": {
+   "var": "referencia_ginga/02",
+   "dx": -2,
+   "dy": 19
+  }
+ },
+ "referencia_ginga/03": {
+  "quadril": {
+   "ang": 0,
+   "dx": -4,
+   "dy": 33
+  },
+  "braco_tras": {
+   "ang": 3,
+   "dx": 3,
+   "dy": -3,
+   "custo": 36.9
+  },
+  "braco_frente": {
+   "ang": 3,
+   "dx": -3,
+   "dy": -3,
+   "custo": 30.4
+  },
+  "_baixo": {
+   "var": "referencia_ginga/03",
+   "dx": -4,
+   "dy": 33
+  }
+ },
+ "referencia_ginga/04": {
+  "quadril": {
+   "ang": 0,
+   "dx": -3,
+   "dy": 20
+  },
+  "braco_tras": {
+   "ang": 3,
+   "dx": 3,
+   "dy": -2,
+   "custo": 29.4
+  },
+  "braco_frente": {
+   "ang": 3,
+   "dx": -1,
+   "dy": 0,
+   "custo": 23.4
+  },
+  "_baixo": {
+   "var": "referencia_ginga/04",
+   "dx": -3,
+   "dy": 20
+  }
+ },
+ "referencia_ginga/05": {
+  "quadril": {
+   "ang": 0,
+   "dx": -4,
+   "dy": 13
+  },
+  "braco_tras": {
+   "ang": 3,
+   "dx": 3,
+   "dy": -1,
+   "custo": 27.4
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": -2,
+   "dy": 2,
+   "custo": 23.5
+  },
+  "_baixo": {
+   "var": "referencia_ginga/05",
+   "dx": -4,
+   "dy": 13
+  }
+ },
+ "referencia_ginga/06": {
+  "quadril": {
+   "ang": 0,
+   "dx": -5,
+   "dy": 6
+  },
+  "braco_tras": {
+   "ang": 3,
+   "dx": 3,
+   "dy": -2,
+   "custo": 27.8
+  },
+  "braco_frente": {
+   "ang": 3,
+   "dx": 0,
+   "dy": -2,
+   "custo": 23.0
+  },
+  "_baixo": {
+   "var": "referencia_ginga/06",
+   "dx": -5,
+   "dy": 6
+  }
+ },
+ "referencia_ginga/07": {
+  "quadril": {
+   "ang": 0,
+   "dx": -8,
+   "dy": -2
+  },
+  "braco_tras": {
+   "ang": 0,
+   "dx": 3,
+   "dy": -3,
+   "custo": 29.9
+  },
+  "braco_frente": {
+   "ang": 3,
+   "dx": 2,
+   "dy": 1,
+   "custo": 23.9
+  },
+  "_baixo": {
+   "var": "referencia_ginga/07",
+   "dx": -8,
+   "dy": -2
+  }
+ },
+ "soco/01": {
+  "quadril": {
+   "ang": 0,
+   "dx": -16,
+   "dy": 5
+  },
+  "cabeca": {
+   "ang": 1,
+   "dx": -4,
+   "dy": 1,
+   "custo": 30.1
+  },
+  "braco_tras": {
+   "ang": -6,
+   "dx": 3,
+   "dy": -3,
+   "custo": 30.6
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 0,
+   "var": "recolhido",
+   "custo": 0.0
+  },
+  "_baixo": {
+   "var": "soco/01",
+   "dx": -16,
+   "dy": 5
+  }
+ },
+ "soco/02": {
+  "quadril": {
+   "ang": 0,
+   "dx": 14,
+   "dy": 18
+  },
+  "cabeca": {
+   "ang": -5,
+   "dx": -10,
+   "dy": 1,
+   "custo": 38.0
+  },
+  "braco_tras": {
+   "ang": -3,
+   "dx": 3,
+   "dy": -1,
+   "custo": 29.9
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 0,
+   "var": "tapa",
+   "custo": 0.0
+  },
+  "_baixo": {
+   "var": "soco/04",
+   "dx": 14,
+   "dy": 18
+  }
+ },
+ "soco/03": {
+  "quadril": {
+   "ang": 0,
+   "dx": 1,
+   "dy": 7
+  },
+  "cabeca": {
+   "ang": 1,
+   "dx": -3,
+   "dy": 2,
+   "custo": 29.5
+  },
+  "braco_tras": {
+   "ang": -3,
+   "dx": 2,
+   "dy": -3,
+   "custo": 27.2
+  },
+  "braco_frente": {
+   "ang": -6,
+   "dx": -4,
+   "dy": -4,
+   "custo": 39.0
+  },
+  "_baixo": {
+   "var": "soco/06",
+   "dx": 1,
+   "dy": 7
+  }
+ },
+ "soco/07": {
+  "quadril": {
+   "ang": 0,
+   "dx": -9,
+   "dy": 5
+  },
+  "cabeca": {
+   "ang": -2,
+   "dx": -2,
+   "dy": 1,
+   "custo": 26.1
+  },
+  "braco_tras": {
+   "ang": -3,
+   "dx": 3,
+   "dy": -3,
+   "custo": 22.6
+  },
+  "braco_frente": {
+   "ang": 0,
+   "dx": -1,
+   "dy": -1,
+   "custo": 25.0
+  },
+  "_baixo": {
+   "var": "soco/07",
+   "dx": -9,
+   "dy": 5
+  }
+ },
  "chute_alto/01": {
   "quadril": {
    "ang": 0,

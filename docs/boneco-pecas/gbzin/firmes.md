@@ -40,11 +40,11 @@
 | apanha/05 | desenho + cabeça do kit | 60.4 |
 | apanha/06 | desenho + cabeça do kit | 57.9 |
 | apanha/07 | desenho + cabeça do kit | 58.0 |
-| ar_soco/00 | desenho + cabeça do kit | 57.2 |
+| ar_soco/00 | desenho + cabeça do kit; descido até o chão | 57.2 |
 | ar_soco/01 | desenho + cabeça do kit | 57.1 |
 | ar_soco/02 | desenho + cabeça do kit (conferida à mão) | 63.9 |
 | ar_soco/03 | desenho + cabeça do kit (conferida à mão) | 65.1 |
-| ar_soco/04 | desenho + cabeça do kit | 57.8 |
+| ar_soco/04 | desenho + cabeça do kit; descido até o chão | 57.8 |
 | ar_soco/05 | desenho + cabeça do kit | 57.9 |
 | ar_soco/06 | desenho + cabeça do kit | 58.5 |
 | ar_soco/07 | desenho + cabeça do kit | 58.6 |
@@ -66,9 +66,9 @@
 | baixo_soco/07 | desenho + cabeça do kit | 58.3 |
 | bicicleta/00 | desenho + cabeça do kit | 60.3 |
 | bicicleta/01 | desenho + cabeça do kit | 62.2 |
-| bicicleta/02 | desenho + cabeça do kit (conferida à mão) | 68.3 |
+| bicicleta/02 | desenho + cabeça do kit (conferida à mão); descido até o chão | 68.3 |
 | bicicleta/03 | desenho + cabeça do kit (conferida à mão) | 64.2 |
-| bicicleta/04 | desenho + cabeça do kit (conferida à mão) | 64.0 |
+| bicicleta/04 | desenho + cabeça do kit (conferida à mão); descido até o chão | 64.0 |
 | bicicleta/05 | desenho + cabeça do kit (conferida à mão) | 63.6 |
 | bicicleta/06 | desenho + cabeça do kit | 61.0 |
 | bicicleta/07 | desenho + cabeça do kit | 61.6 |
@@ -220,7 +220,7 @@
 | pulo/01 | desenho + cabeça do kit | 57.2 |
 | pulo/02 | desenho + cabeça do kit | 59.9 |
 | pulo/03 | desenho + cabeça do kit | 58.6 |
-| pulo/04 | desenho + cabeça do kit | 61.6 |
+| pulo/04 | desenho + cabeça do kit; descido até o chão | 61.6 |
 | pulo/05 | desenho + cabeça do kit | 56.7 |
 | pulo/06 | desenho + cabeça do kit | 58.8 |
 | pulo/07 | desenho + cabeça do kit | 59.0 |

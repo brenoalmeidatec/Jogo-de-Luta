@@ -520,7 +520,17 @@ def pose_de(kit, q, nome):
     # calção e pernas: o desenho de hoje (rosado, ou laranja trocado de cor), preso embaixo da faixa do kit.
     # As pernas do kit dobradas no joelho quebravam o desenho na ginga funda (joelho aberto, boca do calção abrindo).
     pose["_baixo"] = {"var": q, "dx": dx, "dy": dy}
+    if q in PASSO:  # golpe com o corpo: o quadril vai junto e o pé da frente dá o passo (pernas de outro desenho)
+        pq = PASSO[q]
+        pdx, pdy = corpo(kit, abrir(pq))
+        pose["quadril"] = dict(pose["quadril"], dx=pdx, dy=pdy)
+        pose["_baixo"] = {"var": pq, "dx": pdx, "dy": pdy}
     return pose
+
+
+# Regra do Alisson (17/11): soco não é só esticar o braço. No tapa o corpo desce e vai para a frente com o passo do
+# soco/04 (pé da frente avança, quadril gira junto); na volta passa pela base do soco/06 antes da guarda.
+PASSO = {"soco/02": "soco/04", "soco/03": "soco/06"}
 
 
 _BAIXO = {}
@@ -808,9 +818,12 @@ def trocar_cabeca(kit, src, achado=None, frente=None):
 
 # ------------------------------------------------------------------ consertos do desenho de origem (17/11/2026)
 # Desenhos de pé que vieram 80 px acima do chão (o 1º quadro de cada linha da folha): descem até o chão do jogo.
-# Os que estão no ar de verdade (pulo/04, ar_soco, afastar 03-04, golaco/01, levanta/02, queda/05) ficam.
+# Nos golpes de pulo (pulo, ar_soco, bicicleta) quem sobe é o motor: o desenho que veio mais alto fazia o boneco dar
+# um salto a mais de 100 px no meio do pulo; desce também. afastar 03-04, golaco/01, levanta/02 e queda/05 são o
+# próprio desenho saltando (o motor não sobe) e ficam.
 CHAO_ERRADO = {"apanha/00", "apanha/03", "apanha/04", "chute_baixo/00", "chute_baixo/05", "defesa/00", "defesa/04",
-               "levanta/04", "pulo/00", "queda/00"}
+               "levanta/04", "pulo/00", "queda/00",
+               "pulo/04", "ar_soco/00", "ar_soco/04", "bicicleta/02", "bicicleta/04"}
 # Gancho da bengala solto do cabo na defesa (já veio assim): direção do cabo e ponta dele, lidas à mão.
 GANCHO = {"defesa/05": ((0.963, -0.268), (597, 398)), "defesa/06": ((0.94, -0.34), (583, 387))}
 

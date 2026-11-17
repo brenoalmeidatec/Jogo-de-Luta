@@ -1147,6 +1147,305 @@
 1426,0 = 2569,0
 1427,0 = 2570,0
 1428,0 = 2571,0
+48000,0 = 1661,0
+48000,1 = 1873,0
+48000,2 = 1875,0
+48000,3 = 1877,0
+48000,4 = 1662,0
+48000,5 = 1879,0
+48000,6 = 1881,0
+48000,7 = 1883,0
+48000,8 = 1663,0
+48000,9 = 1885,0
+48000,10 = 1887,0
+48000,11 = 1889,0
+48000,12 = 1664,0
+48000,13 = 1890,0
+48000,14 = 1888,0
+48000,15 = 1886,0
+48000,16 = 1663,0
+48000,17 = 1884,0
+48000,18 = 1882,0
+48000,19 = 1880,0
+48000,20 = 1662,0
+48000,21 = 1878,0
+48000,22 = 1876,0
+48000,23 = 1874,0
+48001,0 = 1722,0
+48001,1 = 1722,0
+48001,2 = 1723,0
+48001,3 = 2129,0
+48001,4 = 2130,0
+48001,5 = 2121,0
+48001,6 = 2121,0
+48001,7 = 1726,0
+48001,8 = 1726,0
+48001,9 = 1726,0
+48001,10 = 1727,0
+48001,11 = 1727,0
+48001,12 = 1727,0
+48001,13 = 1727,0
+48001,14 = 1728,0
+48001,15 = 1728,0
+48001,16 = 1728,0
+48001,17 = 1728,0
+48002,0 = 1738,0
+48002,1 = 1739,0
+48002,2 = 2292,0
+48002,3 = 2282,0
+48002,4 = 2282,0
+48002,5 = 1742,0
+48002,6 = 1742,0
+48002,7 = 1742,0
+48002,8 = 1743,0
+48002,9 = 1743,0
+48002,10 = 1743,0
+48002,11 = 1743,0
+48002,12 = 1744,0
+48002,13 = 1744,0
+48002,14 = 1744,0
+48002,15 = 1744,0
+48003,0 = 1747,0
+48003,1 = 1747,0
+48003,2 = 2310,0
+48003,3 = 1749,0
+48003,4 = 1749,0
+48003,5 = 1750,0
+48003,6 = 1750,0
+48003,7 = 1750,0
+48003,8 = 1750,0
+48003,9 = 1752,0
+48003,10 = 1752,0
+48004,0 = 1842,0
+48004,1 = 1842,0
+48004,2 = 1842,0
+48004,3 = 1843,0
+48004,4 = 1843,0
+48004,5 = 2165,0
+48004,6 = 2166,0
+48004,7 = 2156,0
+48004,8 = 2156,0
+48004,9 = 2155,0
+48004,10 = 2155,0
+48004,11 = 1846,0
+48004,12 = 1846,0
+48004,13 = 1847,0
+48004,14 = 1847,0
+48004,15 = 1847,0
+48004,16 = 1847,0
+48004,17 = 1848,0
+48004,18 = 1848,0
+48004,19 = 1848,0
+48004,20 = 1848,0
+48005,0 = 1818,0
+48005,1 = 1818,0
+48005,2 = 1818,0
+48005,3 = 2207,0
+48005,4 = 2208,0
+48005,5 = 2177,0
+48005,6 = 2183,0
+48005,7 = 1821,0
+48005,8 = 2198,0
+48005,9 = 2198,0
+48005,10 = 2198,0
+48005,11 = 2198,0
+48005,12 = 1823,0
+48005,13 = 1823,0
+48005,14 = 1823,0
+48005,15 = 1823,0
+48005,16 = 1823,0
+48005,17 = 1824,0
+48005,18 = 1824,0
+48005,19 = 1824,0
+48005,20 = 1824,0
+48006,0 = 1850,0
+48006,1 = 1850,0
+48006,2 = 1850,0
+48006,3 = 2135,0
+48006,4 = 2136,0
+48006,5 = 1853,0
+48006,6 = 1853,0
+48006,7 = 1854,0
+48006,8 = 1854,0
+48006,9 = 1854,0
+48006,10 = 1854,0
+48006,11 = 1855,0
+48006,12 = 1855,0
+48006,13 = 1855,0
+48006,14 = 1856,0
+48006,15 = 1856,0
+48006,16 = 1856,0
+48007,0 = 1827,0
+48007,1 = 2225,0
+48007,2 = 2226,0
+48007,3 = 2226,0
+48007,4 = 2226,0
+48007,5 = 2214,0
+48007,6 = 2214,0
+48007,7 = 2209,0
+48007,8 = 2209,0
+48007,9 = 1830,0
+48007,10 = 1830,0
+48007,11 = 1831,0
+48008,0 = 1513,0
+48008,1 = 1513,0
+48008,2 = 1513,0
+48008,3 = 1513,0
+48008,4 = 1521,0
+48008,5 = 1521,0
+48008,6 = 1521,0
+48008,7 = 1521,0
+48008,8 = 1553,0
+48008,9 = 1553,0
+48008,10 = 1553,0
+48008,11 = 1553,0
+48008,12 = 1545,0
+48008,13 = 1545,0
+48008,14 = 1545,0
+48008,15 = 1545,0
+48009,0 = 1715,0
+48009,1 = 1715,0
+48009,2 = 1715,0
+48009,3 = 2099,0
+48009,4 = 2100,0
+48009,5 = 1717,0
+48009,6 = 1717,0
+48009,7 = 1718,0
+48009,8 = 1718,0
+48009,9 = 1718,0
+48009,10 = 1718,0
+48009,11 = 1719,0
+48009,12 = 1719,0
+48009,13 = 1719,0
+48009,14 = 1720,0
+48009,15 = 1720,0
+48009,16 = 1720,0
+48010,0 = 1754,0
+48010,1 = 1754,0
+48010,2 = 1755,0
+48010,3 = 2327,0
+48010,4 = 2328,0
+48010,5 = 1757,0
+48010,6 = 1757,0
+48010,7 = 2317,0
+48010,8 = 2317,0
+48010,9 = 1758,0
+48010,10 = 1758,0
+48010,11 = 1759,0
+48010,12 = 1759,0
+48010,13 = 2337,0
+48010,14 = 2337,0
+48010,15 = 1760,0
+48010,16 = 1760,0
+48010,17 = 1760,0
+48010,18 = 1760,0
+48010,19 = 1760,0
+48011,0 = 1500,0
+48011,1 = 2442,0
+48011,2 = 2416,0
+48011,3 = 2416,0
+48011,4 = 1503,0
+48011,5 = 1504,0
+48011,6 = 1504,0
+48011,7 = 1504,0
+48012,0 = 1732,0
+48012,1 = 1732,0
+48012,2 = 1732,0
+48012,3 = 1733,0
+48012,4 = 1733,0
+48012,5 = 1733,0
+48012,6 = 1735,0
+48012,7 = 1735,0
+48012,8 = 1736,0
+48012,9 = 1736,0
+48013,0 = 1850,0
+48013,1 = 1850,0
+48013,2 = 1851,0
+48013,3 = 2148,0
+48013,4 = 2134,0
+48013,5 = 2134,0
+48013,6 = 1854,0
+48013,7 = 1854,0
+48013,8 = 1854,0
+48013,9 = 1855,0
+48013,10 = 1855,0
+48013,11 = 1855,0
+48013,12 = 1855,0
+48013,13 = 1856,0
+48013,14 = 1856,0
+48013,15 = 1856,0
+48013,16 = 1856,0
+48014,0 = 1865,0
+48014,1 = 1865,0
+48014,2 = 1865,0
+48014,3 = 1865,0
+48014,4 = 1866,0
+48014,5 = 1866,0
+48014,6 = 1866,0
+48014,7 = 1866,0
+48014,8 = 1867,0
+48014,9 = 1867,0
+48014,10 = 1867,0
+48014,11 = 1867,0
+48014,12 = 1868,0
+48014,13 = 1868,0
+48014,14 = 1868,0
+48014,15 = 1868,0
+48014,16 = 1869,0
+48014,17 = 1869,0
+48014,18 = 1869,0
+48014,19 = 1869,0
+48014,20 = 1869,0
+48014,21 = 1869,0
+48014,22 = 1869,0
+48014,23 = 1869,0
+48014,24 = 1869,0
+48014,25 = 1869,0
+48014,26 = 1869,0
+48014,27 = 1869,0
+48014,28 = 1869,0
+48014,29 = 1869,0
+48014,30 = 1869,0
+48014,31 = 1869,0
+48014,32 = 1869,0
+48014,33 = 1869,0
+48014,34 = 1869,0
+48014,35 = 1869,0
+48014,36 = 1869,0
+48014,37 = 1869,0
+48014,38 = 1869,0
+48014,39 = 1869,0
+48014,40 = 1869,0
+48014,41 = 1869,0
+48014,42 = 1869,0
+48014,43 = 1869,0
+48014,44 = 1869,0
+48015,0 = 1621,0
+48015,1 = 1621,0
+48015,2 = 1621,0
+48015,3 = 1618,0
+48015,4 = 1622,0
+48015,5 = 1629,0
+48015,6 = 1619,0
+48015,7 = 1623,0
+48015,8 = 1641,0
+48015,9 = 1630,0
+48015,10 = 1644,0
+48015,11 = 1644,0
+48015,12 = 1624,0
+48015,13 = 1624,0
+48015,14 = 1624,0
+48015,15 = 1624,0
+48015,16 = 1624,0
+48015,17 = 1624,0
+48015,18 = 1624,0
+48015,19 = 1624,0
+48015,20 = 1624,0
+48015,21 = 1624,0
+48015,22 = 1624,0
+48015,23 = 1624,0
+48015,24 = 1624,0
+48015,25 = 1624,0
 
 [Quotes]
 victory1 = "Foi na ginga do Muay Thai, parceiro!"
@@ -2344,6 +2643,23 @@ scale = .75, .75
 ignorehitpause = 1
 pausemovetime = 99
 
+[State 810, Luz do efeito]
+type = Explod
+trigger1 = Time = 22
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9806, 9807))
+postype = p1
+pos = 26, -44
+removetime = -2
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 810, Pancada 1: som]
 type = PlaySnd
 trigger1 = Time = 22
@@ -2400,6 +2716,23 @@ sprpriority = 5
 scale = .75, .75
 ignorehitpause = 1
 pausemovetime = 99
+
+[State 810, Luz do efeito]
+type = Explod
+trigger1 = Time = 42
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9806, 9807))
+postype = p1
+pos = 26, -74
+removetime = -2
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 810, Pancada 2: som]
 type = PlaySnd
@@ -2458,6 +2791,23 @@ scale = .75, .75
 ignorehitpause = 1
 pausemovetime = 99
 
+[State 810, Luz do efeito]
+type = Explod
+trigger1 = Time = 62
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9806, 9807))
+postype = p1
+pos = 26, -44
+removetime = -2
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 810, Pancada 3: som]
 type = PlaySnd
 trigger1 = Time = 62
@@ -2514,6 +2864,23 @@ sprpriority = 5
 scale = .6, .6
 ignorehitpause = 1
 pausemovetime = 99
+
+[State 810, Luz do efeito]
+type = Explod
+trigger1 = Time = 86
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9804, 9805))
+postype = p1
+pos = 26, -74
+removetime = -2
+scale = .6, .6
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 810, Final: som]
 type = PlaySnd
@@ -2726,6 +3093,23 @@ scale = .75, .75
 ignorehitpause = 1
 pausemovetime = 99
 
+[State 831, Luz do efeito]
+type = Explod
+trigger1 = Time = 22
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9806, 9807))
+postype = p1
+pos = 26, -44
+removetime = -2
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 831, Pancada 1: som]
 type = PlaySnd
 trigger1 = Time = 22
@@ -2782,6 +3166,23 @@ sprpriority = 5
 scale = .75, .75
 ignorehitpause = 1
 pausemovetime = 99
+
+[State 831, Luz do efeito]
+type = Explod
+trigger1 = Time = 42
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9806, 9807))
+postype = p1
+pos = 26, -44
+removetime = -2
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 831, Pancada 2: som]
 type = PlaySnd
@@ -2840,6 +3241,23 @@ scale = .75, .75
 ignorehitpause = 1
 pausemovetime = 99
 
+[State 831, Luz do efeito]
+type = Explod
+trigger1 = Time = 62
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9806, 9807))
+postype = p1
+pos = 26, -44
+removetime = -2
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 831, Pancada 3: som]
 type = PlaySnd
 trigger1 = Time = 62
@@ -2896,6 +3314,23 @@ sprpriority = 5
 scale = .6, .6
 ignorehitpause = 1
 pausemovetime = 99
+
+[State 831, Luz do efeito]
+type = Explod
+trigger1 = Time = 86
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9804, 9805))
+postype = p1
+pos = 26, -74
+removetime = -2
+scale = .6, .6
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 831, Final: som]
 type = PlaySnd
@@ -5093,6 +5528,22 @@ sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
 
+[State 3401, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9812, 9813)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 3401, Rastro do corpo (efeitos.py)]
 type = AfterImage
 trigger1 = Time = 0
@@ -5201,6 +5652,22 @@ sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
 
+[State 1600, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9812, 9813)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 1600, Rastro do corpo (efeitos.py)]
 type = AfterImage
 trigger1 = Time = 0
@@ -5290,6 +5757,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 1601, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9812, 9813)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 1601, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -5422,6 +5905,22 @@ sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
 
+[State 1701, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9812, 9813)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 1701, Rastro do corpo (efeitos.py)]
 type = AfterImage
 trigger1 = Time = 0
@@ -5544,6 +6043,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 3402, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9812, 9813)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 3402, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -5668,6 +6183,22 @@ sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
 
+[State 3400, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9812, 9813)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 3400, Rastro do corpo (efeitos.py)]
 type = AfterImage
 trigger1 = Time = 0
@@ -5717,6 +6248,57 @@ ground.hittime = 30
 ground.velocity = -3
 air.velocity = -2,-3.5
 
+[State 3400, Luz do poder orbe]
+type = Explod
+trigger1 = Time = 25
+anim = 9730
+id = 9630
+postype = p1
+velocity = 1.8, 0.0
+accel = 0.07, 0.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+pos = 60.0, -80.8
+sprpriority = 2
+trans = add
+alpha = floor(255 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255
+
+[State 3400, Luz do poder halo]
+type = Explod
+trigger1 = Time = 25
+anim = 9731
+id = 9631
+postype = p1
+velocity = 1.8, 0.0
+accel = 0.07, 0.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+pos = 60.0, -80.8
+sprpriority = 1
+trans = addalpha
+alpha = floor(230 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255 - floor(230 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85)))
+
+[State 3400, Luz do poder poca]
+type = Explod
+trigger1 = Time = 25
+anim = 9721
+id = 9632
+postype = p1
+velocity = 1.8, 0.0
+accel = 0.07, 0.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+pos = 60.0, 0
+sprpriority = -8
+trans = addalpha
+alpha = floor(220 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255 - floor(220 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85)))
+
 [State 3400, Fim]
 type = ChangeState
 trigger1 = AnimTime = 0
@@ -5757,6 +6339,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 3403, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9812, 9813)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 3403, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -5840,6 +6438,19 @@ pos = 40, -15
 removetime = -2
 sprpriority = 4
 ownpal = 1
+
+[State 3403, Luz do efeito]
+type = Explod
+trigger1 = Pos Y >= 0 && Vel Y > 0
+anim = ifelse(var(20) > 0, 9810, 9811)
+postype = p1
+pos = 40, -15
+removetime = -2
+sprpriority = (4) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 3403, Treme]
 type = EnvShake
@@ -5948,6 +6559,23 @@ scale = .75, .75
 ignorehitpause = 1
 pausemovetime = 99
 
+[State 841, Luz do efeito]
+type = Explod
+trigger1 = Time = 22
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9806, 9807))
+postype = p1
+pos = 26, -44
+removetime = -2
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 841, Pancada 1: som]
 type = PlaySnd
 trigger1 = Time = 22
@@ -6004,6 +6632,23 @@ sprpriority = 5
 scale = .75, .75
 ignorehitpause = 1
 pausemovetime = 99
+
+[State 841, Luz do efeito]
+type = Explod
+trigger1 = Time = 42
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9806, 9807))
+postype = p1
+pos = 26, -44
+removetime = -2
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 841, Pancada 2: som]
 type = PlaySnd
@@ -6062,6 +6707,23 @@ scale = .75, .75
 ignorehitpause = 1
 pausemovetime = 99
 
+[State 841, Luz do efeito]
+type = Explod
+trigger1 = Time = 62
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9806, 9807))
+postype = p1
+pos = 26, -44
+removetime = -2
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 841, Pancada 3: som]
 type = PlaySnd
 trigger1 = Time = 62
@@ -6118,6 +6780,23 @@ sprpriority = 5
 scale = .6, .6
 ignorehitpause = 1
 pausemovetime = 99
+
+[State 841, Luz do efeito]
+type = Explod
+trigger1 = Time = 86
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9804, 9805))
+postype = p1
+pos = 26, -74
+removetime = -2
+scale = .6, .6
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 841, Final: som]
 type = PlaySnd
@@ -6204,6 +6883,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 1000, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9812, 9813)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 1000, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -6332,6 +7027,22 @@ sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
 
+[State 1001, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9812, 9813)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 1001, Rastro do corpo (efeitos.py)]
 type = AfterImage
 trigger1 = Time = 0
@@ -6453,6 +7164,22 @@ sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
 
+[State 1100, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9812, 9813)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 1100, Rastro do corpo (efeitos.py)]
 type = AfterImage
 trigger1 = Time = 0
@@ -6483,17 +7210,17 @@ value = 11100
 
 [State 1100, Avança]
 type = VelSet
-trigger1 = AnimElem = 4
+trigger1 = (ifelse(Anim = 1100, AnimElemTime(6), AnimElemTime(4)) = 0)
 x = 4
 
 [State 1100, Para]
 type = VelSet
-trigger1 = AnimElem = 8
+trigger1 = (ifelse(Anim = 1100, AnimElemTime(12), AnimElemTime(8)) = 0)
 x = 0
 
 [State 1100, Golpe]
 type = HitDef
-trigger1 = AnimElem = 4
+trigger1 = (ifelse(Anim = 1100, AnimElemTime(6), AnimElemTime(4)) = 0)
 attr = S, SA
 damage = 110, 0
 envshake.time = 16 ; (efeitos.py)
@@ -6556,6 +7283,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 1200, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9812, 9813)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 1200, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -6668,6 +7411,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 1300, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9812, 9813)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 1300, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -6934,6 +7693,22 @@ removetime = -2
 bindtime = 1
 ignorehitpause = 1
 
+[State 2000, Luz do efeito]
+type = Explod
+trigger1 = Anim = 2000 && AnimTime = 0
+anim = 9814
+id = 9272
+postype = p1
+pos = 0, 0
+removetime = -2
+bindtime = 1
+ignorehitpause = 1
+sprpriority = (-2) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 2000, Liga]
 type = VarSet
 trigger1 = Anim = 2000 && AnimTime = 0
@@ -6980,6 +7755,24 @@ ownpal = 1
 scale = 1.5, 1.5
 supermovetime = 90
 ignorehitpause = 1
+
+[State 3000, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9808, 9809)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+scale = 1.0, 1.0
+supermovetime = 90
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 3000, Fundo na cor da forma (efeitos.py)]
 type = BGPalFX
@@ -7038,13 +7831,13 @@ value = -1000
 
 [State 3000, Invencivel]
 type = NotHitBy
-trigger1 = AnimElemTime(5) < 0
+trigger1 = ifelse(Anim = 3000, AnimElemTime(17), AnimElemTime(5)) < 0
 value = SCA
 time = 1
 
 [State 3000, Bebida 1]
 type = Projectile
-trigger1 = AnimElemTime(5) = 0
+trigger1 = ifelse(Anim = 3000, AnimElemTime(17), AnimElemTime(5)) = 0
 projid = 3000
 projanim = 3010
 projhitanim = ifelse(var(20) > 0, 9230, 9200)
@@ -7079,7 +7872,7 @@ air.velocity = -2,-3
 
 [State 3000, Bebida 2]
 type = Projectile
-trigger1 = AnimElemTime(5) = 6
+trigger1 = ifelse(Anim = 3000, AnimElemTime(17), AnimElemTime(5)) = 6
 projid = 3000
 projanim = 3011
 projhitanim = ifelse(var(20) > 0, 9230, 9200)
@@ -7114,7 +7907,7 @@ air.velocity = -2,-3
 
 [State 3000, Bebida 3]
 type = Projectile
-trigger1 = AnimElemTime(5) = 12
+trigger1 = ifelse(Anim = 3000, AnimElemTime(17), AnimElemTime(5)) = 12
 projid = 3000
 projanim = 3010
 projhitanim = ifelse(var(20) > 0, 9230, 9200)
@@ -7149,7 +7942,7 @@ air.velocity = -2,-3
 
 [State 3000, Bebida 4]
 type = Projectile
-trigger1 = AnimElemTime(5) = 18
+trigger1 = ifelse(Anim = 3000, AnimElemTime(17), AnimElemTime(5)) = 18
 projid = 3000
 projanim = 3011
 projhitanim = ifelse(var(20) > 0, 9230, 9200)
@@ -7184,7 +7977,7 @@ air.velocity = -2,-3
 
 [State 3000, Bebida 5]
 type = Projectile
-trigger1 = AnimElemTime(5) = 24
+trigger1 = ifelse(Anim = 3000, AnimElemTime(17), AnimElemTime(5)) = 24
 projid = 3000
 projanim = 3010
 projhitanim = ifelse(var(20) > 0, 9230, 9200)
@@ -7219,7 +8012,7 @@ air.velocity = -2,-3
 
 [State 3000, Bebida 6]
 type = Projectile
-trigger1 = AnimElemTime(5) = 30
+trigger1 = ifelse(Anim = 3000, AnimElemTime(17), AnimElemTime(5)) = 30
 projid = 3000
 projanim = 3011
 projhitanim = ifelse(var(20) > 0, 9230, 9200)
@@ -7299,6 +8092,24 @@ ownpal = 1
 scale = 1.5, 1.5
 supermovetime = 90
 ignorehitpause = 1
+
+[State 3100, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9808, 9809)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+scale = 1.0, 1.0
+supermovetime = 90
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 3100, Fundo na cor da forma (efeitos.py)]
 type = BGPalFX
@@ -7475,6 +8286,22 @@ sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
 
+[State 1101, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9812, 9813)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 1101, Rastro do corpo (efeitos.py)]
 type = AfterImage
 trigger1 = Time = 0
@@ -7578,6 +8405,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 1201, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9812, 9813)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 1201, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -7690,6 +8533,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 1301, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9812, 9813)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 1301, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -8151,6 +9010,22 @@ sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
 
+[State 1400, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9812, 9813)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 1400, Rastro do corpo (efeitos.py)]
 type = AfterImage
 trigger1 = Time = 0
@@ -8181,17 +9056,17 @@ value = 11400
 
 [State 1400, Avanço]
 type = VelSet
-trigger1 = AnimElem = 4
+trigger1 = (ifelse(Anim = 1400, AnimElemTime(6), AnimElemTime(4)) = 0)
 x = 2.5 * ifelse(var(20) > 0, 1.22, 1)
 
 [State 1400, Freia]
 type = VelSet
-trigger1 = AnimElem = 5
+trigger1 = (ifelse(Anim = 1400, AnimElemTime(7), AnimElemTime(5)) = 0)
 x = 0
 
 [State 1400, Golpe]
 type = HitDef
-trigger1 = AnimElem = 4
+trigger1 = (ifelse(Anim = 1400, AnimElemTime(6), AnimElemTime(4)) = 0)
 attr = S, SA
 damage = 73, 0
 envshake.time = 16 ; (efeitos.py)
@@ -8252,6 +9127,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 1401, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9812, 9813)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 1401, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -8355,6 +9246,22 @@ sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
 
+[State 1500, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9812, 9813)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 1500, Rastro do corpo (efeitos.py)]
 type = AfterImage
 trigger1 = Time = 0
@@ -8385,17 +9292,17 @@ value = 11500
 
 [State 1500, Avanço]
 type = VelSet
-trigger1 = AnimElem = 4
+trigger1 = (ifelse(Anim = 1500, AnimElemTime(6), AnimElemTime(4)) = 0)
 x = 1.2 * ifelse(var(20) > 0, 1.22, 1)
 
 [State 1500, Freia]
 type = VelSet
-trigger1 = AnimElem = 5
+trigger1 = (ifelse(Anim = 1500, AnimElemTime(7), AnimElemTime(5)) = 0)
 x = 0
 
 [State 1500, Golpe]
 type = HitDef
-trigger1 = AnimElem = 4
+trigger1 = (ifelse(Anim = 1500, AnimElemTime(6), AnimElemTime(4)) = 0)
 attr = S, SA
 damage = 88, 0
 envshake.time = 16 ; (efeitos.py)
@@ -8424,7 +9331,7 @@ air.velocity = -3,-3.5
 
 [State 1500, Impacto visual]
 type = Explod
-trigger1 = AnimElem = 4
+trigger1 = (ifelse(Anim = 1500, AnimElemTime(6), AnimElemTime(4)) = 0)
 trigger1 = var(20) > 0
 anim = ifelse(var(20) > 0, 9235, 9205)
 postype = p1
@@ -8432,6 +9339,20 @@ pos = 30, -15
 removetime = -2
 sprpriority = 4
 ownpal = 1
+
+[State 1500, Luz do efeito]
+type = Explod
+trigger1 = (ifelse(Anim = 1500, AnimElemTime(6), AnimElemTime(4)) = 0)
+trigger1 = var(20) > 0
+anim = ifelse(var(20) > 0, 9810, 9811)
+postype = p1
+pos = 30, -15
+removetime = -2
+sprpriority = (4) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 1500, Fim]
 type = ChangeState
@@ -8467,6 +9388,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 1501, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9812, 9813)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 1501, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -8548,6 +9485,20 @@ removetime = -2
 sprpriority = 4
 ownpal = 1
 
+[State 1501, Luz do efeito]
+type = Explod
+trigger1 = AnimElem = 4
+trigger1 = var(20) > 0
+anim = ifelse(var(20) > 0, 9810, 9811)
+postype = p1
+pos = 30, -15
+removetime = -2
+sprpriority = (4) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 1501, Quique]
 type = TargetState
 trigger1 = MoveHit = 1 && NumTarget > 0 && var(20) > 0 && !var(24)
@@ -8588,6 +9539,24 @@ ownpal = 1
 scale = 1.5, 1.5
 supermovetime = 90
 ignorehitpause = 1
+
+[State 3200, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9808, 9809)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+scale = 1.0, 1.0
+supermovetime = 90
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 3200, Fundo na cor da forma (efeitos.py)]
 type = BGPalFX
@@ -9290,6 +10259,23 @@ scale = .75, .75
 ignorehitpause = 1
 pausemovetime = 99
 
+[State 4710, Luz do efeito]
+type = Explod
+trigger1 = Time = 26
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9806, 9807))
+postype = p1
+pos = 34, -80
+removetime = -2
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 4710, Pancada 1: som]
 type = PlaySnd
 trigger1 = Time = 26
@@ -9346,6 +10332,23 @@ sprpriority = 5
 scale = .75, .75
 ignorehitpause = 1
 pausemovetime = 99
+
+[State 4710, Luz do efeito]
+type = Explod
+trigger1 = Time = 52
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9806, 9807))
+postype = p1
+pos = 34, -82
+removetime = -2
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 4710, Pancada 2: som]
 type = PlaySnd
@@ -9404,6 +10407,23 @@ scale = .75, .75
 ignorehitpause = 1
 pausemovetime = 99
 
+[State 4710, Luz do efeito]
+type = Explod
+trigger1 = Time = 78
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9806, 9807))
+postype = p1
+pos = 34, -79
+removetime = -2
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 4710, Pancada 3: som]
 type = PlaySnd
 trigger1 = Time = 78
@@ -9460,6 +10480,23 @@ sprpriority = 5
 scale = .6, .6
 ignorehitpause = 1
 pausemovetime = 99
+
+[State 4710, Luz do efeito]
+type = Explod
+trigger1 = Time = 106
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9804, 9805))
+postype = p1
+pos = 34, -82
+removetime = -2
+scale = .6, .6
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 4710, Final: som]
 type = PlaySnd
@@ -9520,6 +10557,23 @@ sprpriority = 4
 ownpal = 1
 ignorehitpause = 1
 
+[State 4710, Luz do efeito]
+type = Explod
+trigger1 = Time = 20
+trigger1 = NumTarget
+anim = 9803
+id = 47000
+postype = p1
+pos = 34, 0
+bindtime = -1
+removetime = -1
+ignorehitpause = 1
+sprpriority = (4) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 4710, Tira o efeito (despertados_47.py)]
 type = RemoveExplod
 trigger1 = Time = 106
@@ -9538,6 +10592,22 @@ sprpriority = 6
 ownpal = 1
 pausemovetime = 12
 scale = .8, .8
+
+[State 4710, Luz do efeito]
+type = Explod
+trigger1 = Time = 106
+trigger1 = NumTarget
+anim = 9802
+postype = p1
+pos = 34, -82
+removetime = -2
+pausemovetime = 12
+scale = .8, .8
+sprpriority = (6) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 4710, Fundo escurece na cor da forma (despertados_47.py)]
 type = BGPalFX
@@ -9616,6 +10686,22 @@ ownpal = 1
 scale = 1.5, 1.5
 ignorehitpause = 1
 
+[State 4710, Luz do efeito]
+type = Explod
+trigger1 = Time = 26
+trigger1 = NumTarget
+anim = 9801
+postype = p1
+pos = 34, -80
+removetime = -2
+scale = 1.0, 1.0
+ignorehitpause = 1
+sprpriority = (6) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 4710, Pancada 2: estouro da forma (despertados_47.py)]
 type = Explod
 trigger1 = Time = 52
@@ -9629,6 +10715,22 @@ ownpal = 1
 scale = 1.5, 1.5
 ignorehitpause = 1
 
+[State 4710, Luz do efeito]
+type = Explod
+trigger1 = Time = 52
+trigger1 = NumTarget
+anim = 9801
+postype = p1
+pos = 34, -82
+removetime = -2
+scale = 1.0, 1.0
+ignorehitpause = 1
+sprpriority = (6) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 4710, Pancada 3: estouro da forma (despertados_47.py)]
 type = Explod
 trigger1 = Time = 78
@@ -9641,6 +10743,22 @@ sprpriority = 6
 ownpal = 1
 scale = 1.5, 1.5
 ignorehitpause = 1
+
+[State 4710, Luz do efeito]
+type = Explod
+trigger1 = Time = 78
+trigger1 = NumTarget
+anim = 9801
+postype = p1
+pos = 34, -79
+removetime = -2
+scale = 1.0, 1.0
+ignorehitpause = 1
+sprpriority = (6) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 4710, Final: congela no impacto (despertados_47.py)]
 type = Pause
@@ -9738,6 +10856,21 @@ sprpriority = 5
 ownpal = 1
 supermovetime = 30
 
+[State 4750, Luz do efeito]
+type = Explod
+trigger1 = Time = 5
+anim = 9800
+postype = p1
+pos = 34, -56
+bindtime = -1
+removetime = -2
+supermovetime = 30
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 4750, Carga: treme de leve (despertados_47.py)]
 type = EnvShake
 trigger1 = Time = 11
@@ -9815,6 +10948,39 @@ down.hittime = 18
 palfx.time = 14
 palfx.add = 120,20,20
 palfx.sinadd = 30,30,30,4
+
+[State 4750, Luz do poder halo]
+type = Explod
+trigger1 = Time = 25
+anim = 9815
+id = 9634
+postype = p1
+pos = 0.0, 0.0
+velocity = 3.6, 0.0
+scale = 1.0, 1.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+sprpriority = 1
+trans = addalpha
+alpha = 255, 0
+
+[State 4750, Luz do poder orbe]
+type = Explod
+trigger1 = Time = 25
+anim = 9732
+id = 9633
+postype = p1
+pos = 0.0, 0.0
+bindtime = -1
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+sprpriority = 6
+trans = add
+alpha = floor(255 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255
 
 [State 4750, Fim (despertados_47.py)]
 type = ChangeState
@@ -10050,7 +11216,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -22 -32]
 type = MapSet
-trigger1 = Anim = 3100 && AnimElemNo(0) = [9, 10]
+trigger1 = Anim = 3100 && AnimElemNo(0) = [11, 12]
 trigger2 = Anim = 13100 && AnimElemNo(0) = [9, 10]
 map = "au_garanhao_p"
 value = 6197
@@ -10058,7 +11224,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -20 -30]
 type = MapSet
-trigger1 = Anim = 1200 && AnimElemNo(0) = 6
+trigger1 = Anim = 1200 && AnimElemNo(0) = [8, 9]
 trigger2 = Anim = 1201 && AnimElemNo(0) = 6
 trigger3 = Anim = 11200 && AnimElemNo(0) = 6
 trigger4 = Anim = 11201 && AnimElemNo(0) = 6
@@ -10069,7 +11235,7 @@ ignorehitpause = 1
 [State -4, Aura garanhao no corpo: costas -18 -30]
 type = MapSet
 trigger1 = Anim = 313 && AnimElemNo(0) = [5, 6]
-trigger2 = Anim = 1200 && AnimElemNo(0) = [2, 3]
+trigger2 = Anim = 1200 && AnimElemNo(0) = [2, 5]
 trigger3 = Anim = 1201 && AnimElemNo(0) = [2, 3]
 trigger4 = Anim = 3422 && AnimElemNo(0) = [5, 6]
 trigger5 = Anim = 3423 && AnimElemNo(0) = [5, 6]
@@ -10107,7 +11273,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas +2 -24]
 type = MapSet
-trigger1 = Anim = 210 && AnimElemNo(0) = 2
+trigger1 = Anim = 210 && AnimElemNo(0) = [3, 3]
 trigger2 = Anim = 215 && AnimElemNo(0) = 2
 trigger3 = Anim = 302 && AnimElemNo(0) = 2
 trigger4 = Anim = 311 && AnimElemNo(0) = 2
@@ -10139,7 +11305,7 @@ ignorehitpause = 1
 [State -4, Aura garanhao no corpo: costas -12 -14]
 type = MapSet
 trigger1 = Anim = 313 && AnimElemNo(0) = 2
-trigger2 = Anim = 1200 && AnimElemNo(0) = 1
+trigger2 = Anim = 1200 && AnimElemNo(0) = [1, 1]
 trigger3 = Anim = 1201 && AnimElemNo(0) = 1
 trigger4 = Anim = 3422 && AnimElemNo(0) = 2
 trigger5 = Anim = 3423 && AnimElemNo(0) = 2
@@ -10176,7 +11342,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -32 -12]
 type = MapSet
-trigger1 = Anim = 3000 && AnimElemNo(0) = 4
+trigger1 = Anim = 3000 && AnimElemNo(0) = [13, 16]
 trigger2 = Anim = 3400 && AnimElemNo(0) = 3
 trigger3 = Anim = 13000 && AnimElemNo(0) = 4
 map = "au_garanhao_p"
@@ -10185,7 +11351,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -10 -12]
 type = MapSet
-trigger1 = Anim = 410 && AnimElemNo(0) = 3
+trigger1 = Anim = 410 && AnimElemNo(0) = [3, 3]
 trigger2 = Anim = 10410 && AnimElemNo(0) = 3
 map = "au_garanhao_p"
 value = 7483
@@ -10197,7 +11363,7 @@ trigger1 = Anim = 230 && AnimElemNo(0) = [1, 2]
 trigger2 = Anim = 245 && AnimElemNo(0) = 2
 trigger3 = Anim = 312 && AnimElemNo(0) = 2
 trigger4 = Anim = 321 && AnimElemNo(0) = [1, 2]
-trigger5 = Anim = 1500 && AnimElemNo(0) = 1
+trigger5 = Anim = 1500 && AnimElemNo(0) = [1, 3]
 trigger6 = Anim = 1501 && AnimElemNo(0) = 1
 trigger7 = Anim = 3411 && AnimElemNo(0) = 2
 trigger8 = Anim = 3434 && AnimElemNo(0) = 2
@@ -10273,7 +11439,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -4 -8]
 type = MapSet
-trigger1 = Anim = 410 && AnimElemNo(0) = 7
+trigger1 = Anim = 410 && AnimElemNo(0) = [7, 9]
 trigger2 = Anim = 831 && AnimElemNo(0) = 7
 trigger3 = Anim = 10410 && AnimElemNo(0) = 7
 trigger4 = Anim = 10831 && AnimElemNo(0) = 7
@@ -10308,7 +11474,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas +4 -8]
 type = MapSet
-trigger1 = Anim = 260 && AnimElemNo(0) = 11
+trigger1 = Anim = 260 && AnimElemNo(0) = [19, 22]
 trigger2 = Anim = 332 && AnimElemNo(0) = 10
 trigger3 = Anim = 345 && AnimElemNo(0) = 10
 trigger4 = Anim = 831 && AnimElemNo(0) = 14
@@ -10323,7 +11489,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = Anim = 333 && AnimElemNo(0) = [3, 7]
 trigger2 = Anim = 348 && AnimElemNo(0) = [3, 7]
-trigger3 = Anim = 1100 && AnimElemNo(0) = [4, 6]
+trigger3 = Anim = 1100 && AnimElemNo(0) = [6, 8]
 trigger4 = Anim = 1101 && AnimElemNo(0) = [4, 6]
 trigger5 = Anim = 3413 && AnimElemNo(0) = [3, 7]
 trigger6 = Anim = 11100 && AnimElemNo(0) = [4, 6]
@@ -10334,7 +11500,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -12 -6]
 type = MapSet
-trigger1 = Anim = 3100 && AnimElemNo(0) = [6, 7]
+trigger1 = Anim = 3100 && AnimElemNo(0) = [8, 9]
 trigger2 = Anim = 13100 && AnimElemNo(0) = [6, 7]
 map = "au_garanhao_p"
 value = 7866
@@ -10342,10 +11508,10 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -10 -6]
 type = MapSet
-trigger1 = Anim = 210 && AnimElemNo(0) = 1
+trigger1 = Anim = 210 && AnimElemNo(0) = [1, 2]
 trigger2 = Anim = 215 && AnimElemNo(0) = 1
 trigger3 = Anim = 216 && AnimElemNo(0) = 1
-trigger4 = Anim = 240 && AnimElemNo(0) = [3, 7]
+trigger4 = Anim = 240 && AnimElemNo(0) = [4, 8]
 trigger5 = Anim = 302 && AnimElemNo(0) = 1
 trigger6 = Anim = 311 && AnimElemNo(0) = 1
 trigger7 = Anim = 323 && AnimElemNo(0) = [3, 6]
@@ -10355,10 +11521,10 @@ trigger10 = Anim = 343 && AnimElemNo(0) = 1
 trigger11 = Anim = 344 && AnimElemNo(0) = 1
 trigger12 = Anim = 346 && AnimElemNo(0) = [3, 6]
 trigger13 = Anim = 810 && AnimElemNo(0) = [25, 29]
-trigger14 = Anim = 1400 && AnimElemNo(0) = 1
+trigger14 = Anim = 1400 && AnimElemNo(0) = [1, 3]
 trigger15 = Anim = 1401 && AnimElemNo(0) = 1
 trigger16 = Anim = 1701 && AnimElemNo(0) = [7, 10]
-trigger17 = Anim = 3100 && AnimElemNo(0) = 3
+trigger17 = Anim = 3100 && AnimElemNo(0) = [5, 5]
 trigger18 = Anim = 3200 && AnimElemNo(0) = 1
 trigger19 = Anim = 3401 && AnimElemNo(0) = [3, 7]
 trigger20 = Anim = 3410 && AnimElemNo(0) = 1
@@ -10396,7 +11562,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -4 -6]
 type = MapSet
-trigger1 = Anim = 210 && AnimElemNo(0) = 3
+trigger1 = Anim = 210 && AnimElemNo(0) = [4, 4]
 trigger2 = Anim = 215 && AnimElemNo(0) = 3
 trigger3 = Anim = 10210 && AnimElemNo(0) = 3
 trigger4 = Anim = 10215 && AnimElemNo(0) = 3
@@ -10456,7 +11622,7 @@ ignorehitpause = 1
 [State -4, Aura garanhao no corpo: costas +2 -4]
 type = MapSet
 trigger1 = Anim = 181 && AnimElemNo(0) = [32, 34]
-trigger2 = Anim = 240 && AnimElemNo(0) = 8
+trigger2 = Anim = 240 && AnimElemNo(0) = [9, 11]
 trigger3 = Anim = 246 && AnimElemNo(0) = 6
 trigger4 = Anim = 323 && AnimElemNo(0) = 7
 trigger5 = Anim = 331 && AnimElemNo(0) = 8
@@ -10464,7 +11630,7 @@ trigger6 = Anim = 341 && AnimElemNo(0) = 8
 trigger7 = Anim = 346 && AnimElemNo(0) = 7
 trigger8 = Anim = 810 && AnimElemNo(0) = 30
 trigger9 = Anim = 1701 && AnimElemNo(0) = 11
-trigger10 = Anim = 3100 && AnimElemNo(0) = 11
+trigger10 = Anim = 3100 && AnimElemNo(0) = [13, 26]
 trigger11 = Anim = 3401 && AnimElemNo(0) = 8
 trigger12 = Anim = 3420 && AnimElemNo(0) = 7
 trigger13 = Anim = 3432 && AnimElemNo(0) = 8
@@ -10502,7 +11668,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = Anim = 333 && AnimElemNo(0) = [1, 2]
 trigger2 = Anim = 348 && AnimElemNo(0) = [1, 2]
-trigger3 = Anim = 1100 && AnimElemNo(0) = [1, 3]
+trigger3 = Anim = 1100 && AnimElemNo(0) = [1, 5]
 trigger4 = Anim = 1101 && AnimElemNo(0) = [1, 3]
 trigger5 = Anim = 3413 && AnimElemNo(0) = [1, 2]
 trigger6 = Anim = 11100 && AnimElemNo(0) = [1, 3]
@@ -10514,7 +11680,7 @@ ignorehitpause = 1
 [State -4, Aura garanhao no corpo: costas -8 -2]
 type = MapSet
 trigger1 = Anim = 201 && AnimElemNo(0) = 1
-trigger2 = Anim = 240 && AnimElemNo(0) = 1
+trigger2 = Anim = 240 && AnimElemNo(0) = [1, 2]
 trigger3 = Anim = 323 && AnimElemNo(0) = 1
 trigger4 = Anim = 331 && AnimElemNo(0) = 1
 trigger5 = Anim = 341 && AnimElemNo(0) = 1
@@ -10554,7 +11720,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = Anim = 245 && AnimElemNo(0) = [7, 9]
 trigger2 = Anim = 312 && AnimElemNo(0) = [8, 10]
-trigger3 = Anim = 1500 && AnimElemNo(0) = [6, 8]
+trigger3 = Anim = 1500 && AnimElemNo(0) = [8, 17]
 trigger4 = Anim = 1501 && AnimElemNo(0) = [6, 8]
 trigger5 = Anim = 3411 && AnimElemNo(0) = [7, 9]
 trigger6 = Anim = 3434 && AnimElemNo(0) = [7, 9]
@@ -10572,7 +11738,7 @@ trigger2 = Anim = 45 && AnimElemNo(0) = [6, 11]
 trigger3 = Anim = 46 && AnimElemNo(0) = [6, 11]
 trigger4 = Anim = 152
 trigger5 = Anim = 230 && AnimElemNo(0) = [7, 9]
-trigger6 = Anim = 240 && AnimElemNo(0) = 2
+trigger6 = Anim = 240 && AnimElemNo(0) = [3, 3]
 trigger7 = Anim = 321 && AnimElemNo(0) = [7, 9]
 trigger8 = Anim = 323 && AnimElemNo(0) = 2
 trigger9 = Anim = 331 && AnimElemNo(0) = 2
@@ -10582,7 +11748,7 @@ trigger12 = Anim = 346 && AnimElemNo(0) = 2
 trigger13 = Anim = 348 && AnimElemNo(0) = 9
 trigger14 = Anim = 810 && AnimElemNo(0) = 24
 trigger15 = Anim = 1701 && AnimElemNo(0) = 6
-trigger16 = Anim = 3100 && AnimElemNo(0) = 1
+trigger16 = Anim = 3100 && AnimElemNo(0) = [1, 3]
 trigger17 = Anim = 3401 && AnimElemNo(0) = 2
 trigger18 = Anim = 3413 && AnimElemNo(0) = 9
 trigger19 = Anim = 3420 && AnimElemNo(0) = 2
@@ -10598,8 +11764,8 @@ ignorehitpause = 1
 [State -4, Aura garanhao no corpo: costas +0 -2]
 type = MapSet
 trigger1 = Anim = 764 && AnimElemNo(0) = 3
-trigger2 = Anim = 3100 && AnimElemNo(0) = 2
-trigger3 = Anim = 3100 && AnimElemNo(0) = 5
+trigger2 = Anim = 3100 && AnimElemNo(0) = [4, 4]
+trigger3 = Anim = 3100 && AnimElemNo(0) = [7, 7]
 trigger4 = Anim = 10761
 trigger5 = Anim = 10765
 trigger6 = Anim = 13100 && AnimElemNo(0) = 2
@@ -10628,7 +11794,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = Anim = 1600 && AnimElemNo(0) = 3
 trigger2 = Anim = 1601 && AnimElemNo(0) = 3
-trigger3 = Anim = 3000 && AnimElemNo(0) = 3
+trigger3 = Anim = 3000 && AnimElemNo(0) = [9, 12]
 trigger4 = Anim = 3400 && AnimElemNo(0) = 2
 trigger5 = Anim = 13000 && AnimElemNo(0) = 3
 map = "au_garanhao_p"
@@ -10694,14 +11860,14 @@ trigger3 = Anim = 43 && AnimElemNo(0) = [1, 6]
 trigger4 = Anim = 120
 trigger5 = Anim = 140
 trigger6 = Anim = 150 && AnimElemNo(0) = 3
-trigger7 = Anim = 240 && AnimElemNo(0) = [9, 10]
+trigger7 = Anim = 240 && AnimElemNo(0) = [12, 19]
 trigger8 = Anim = 246 && AnimElemNo(0) = [7, 8]
 trigger9 = Anim = 323 && AnimElemNo(0) = [8, 9]
 trigger10 = Anim = 331 && AnimElemNo(0) = [9, 10]
 trigger11 = Anim = 341 && AnimElemNo(0) = [9, 10]
 trigger12 = Anim = 346 && AnimElemNo(0) = [8, 9]
 trigger13 = Anim = 810 && AnimElemNo(0) = [31, 32]
-trigger14 = Anim = 1100 && AnimElemNo(0) = [7, 9]
+trigger14 = Anim = 1100 && AnimElemNo(0) = [9, 17]
 trigger15 = Anim = 1101 && AnimElemNo(0) = [7, 9]
 trigger16 = Anim = 1701 && AnimElemNo(0) = [12, 13]
 trigger17 = Anim = 3401 && AnimElemNo(0) = [9, 11]
@@ -10738,7 +11904,7 @@ trigger7 = Anim = 1000 && AnimElemNo(0) = 4
 trigger8 = Anim = 1001 && AnimElemNo(0) = 4
 trigger9 = Anim = 1600 && AnimElemNo(0) = 6
 trigger10 = Anim = 1601 && AnimElemNo(0) = 6
-trigger11 = Anim = 3000 && AnimElemNo(0) = 1
+trigger11 = Anim = 3000 && AnimElemNo(0) = [1, 4]
 trigger12 = Anim = 3433 && AnimElemNo(0) = [2, 6]
 trigger13 = Anim = 3433 && AnimElemNo(0) = [7, 8]
 trigger14 = Anim = 9203
@@ -10802,7 +11968,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -22 +2]
 type = MapSet
-trigger1 = Anim = 3000 && AnimElemNo(0) = [5, 7]
+trigger1 = Anim = 3000 && AnimElemNo(0) = [17, 45]
 trigger2 = Anim = 3400 && AnimElemNo(0) = 4
 trigger3 = Anim = 13000 && AnimElemNo(0) = [5, 7]
 map = "au_garanhao_p"
@@ -10811,7 +11977,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -14 +2]
 type = MapSet
-trigger1 = Anim = 1200 && AnimElemNo(0) = [4, 5]
+trigger1 = Anim = 1200 && AnimElemNo(0) = [6, 7]
 trigger2 = Anim = 1201 && AnimElemNo(0) = [4, 5]
 trigger3 = Anim = 11200 && AnimElemNo(0) = [4, 5]
 trigger4 = Anim = 11201 && AnimElemNo(0) = [4, 5]
@@ -10868,7 +12034,7 @@ type = MapSet
 trigger1 = Anim = 190 && AnimElemNo(0) = [51, 53]
 trigger2 = Anim = 191 && AnimElemNo(0) = [23, 25]
 trigger3 = Anim = 192 && AnimElemNo(0) = [23, 25]
-trigger4 = Anim = 1400 && AnimElemNo(0) = [6, 7]
+trigger4 = Anim = 1400 && AnimElemNo(0) = [8, 14]
 trigger5 = Anim = 1401 && AnimElemNo(0) = [6, 7]
 trigger6 = Anim = 3200 && AnimElemNo(0) = [6, 8]
 trigger7 = Anim = 3431 && AnimElemNo(0) = [8, 9]
@@ -10913,7 +12079,7 @@ type = MapSet
 trigger1 = Anim = 333 && AnimElemNo(0) = 10
 trigger2 = Anim = 348 && AnimElemNo(0) = 10
 trigger3 = Anim = 349 && AnimElemNo(0) = 10
-trigger4 = Anim = 1100 && AnimElemNo(0) = 10
+trigger4 = Anim = 1100 && AnimElemNo(0) = [18, 21]
 trigger5 = Anim = 1101 && AnimElemNo(0) = 10
 trigger6 = Anim = 1300 && AnimElemNo(0) = 8
 trigger7 = Anim = 1301 && AnimElemNo(0) = 8
@@ -10972,7 +12138,7 @@ ignorehitpause = 1
 [State -4, Aura garanhao no corpo: costas -2 +4]
 type = MapSet
 trigger1 = Anim = 195 && AnimElemNo(0) = [3, 4]
-trigger2 = Anim = 210 && AnimElemNo(0) = [4, 8]
+trigger2 = Anim = 210 && AnimElemNo(0) = [5, 14]
 trigger3 = Anim = 215 && AnimElemNo(0) = [4, 8]
 trigger4 = Anim = 10210 && AnimElemNo(0) = [4, 8]
 trigger5 = Anim = 10215 && AnimElemNo(0) = [4, 8]
@@ -10992,7 +12158,7 @@ ignorehitpause = 1
 [State -4, Aura garanhao no corpo: costas +2 +4]
 type = MapSet
 trigger1 = Anim = 181 && AnimElemNo(0) = [5, 8]
-trigger2 = Anim = 260 && AnimElemNo(0) = [9, 10]
+trigger2 = Anim = 260 && AnimElemNo(0) = [13, 18]
 trigger3 = Anim = 332 && AnimElemNo(0) = [8, 9]
 trigger4 = Anim = 345 && AnimElemNo(0) = [8, 9]
 trigger5 = Anim = 831 && AnimElemNo(0) = [12, 13]
@@ -11005,7 +12171,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas +4 +4]
 type = MapSet
-trigger1 = Anim = 260 && AnimElemNo(0) = 1
+trigger1 = Anim = 260 && AnimElemNo(0) = [1, 3]
 trigger2 = Anim = 332 && AnimElemNo(0) = 1
 trigger3 = Anim = 345 && AnimElemNo(0) = 1
 trigger4 = Anim = 3421 && AnimElemNo(0) = 1
@@ -11016,14 +12182,14 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas +6 +4]
 type = MapSet
-trigger1 = Anim = 210 && AnimElemNo(0) = 9
+trigger1 = Anim = 210 && AnimElemNo(0) = [15, 18]
 trigger2 = Anim = 215 && AnimElemNo(0) = 9
 trigger3 = Anim = 216 && AnimElemNo(0) = 7
 trigger4 = Anim = 302 && AnimElemNo(0) = 8
 trigger5 = Anim = 311 && AnimElemNo(0) = 9
 trigger6 = Anim = 343 && AnimElemNo(0) = 9
 trigger7 = Anim = 344 && AnimElemNo(0) = 8
-trigger8 = Anim = 1400 && AnimElemNo(0) = 8
+trigger8 = Anim = 1400 && AnimElemNo(0) = [15, 17]
 trigger9 = Anim = 1401 && AnimElemNo(0) = 8
 trigger10 = Anim = 3200 && AnimElemNo(0) = 9
 trigger11 = Anim = 3410 && AnimElemNo(0) = 8
@@ -11085,7 +12251,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -12 +8]
 type = MapSet
-trigger1 = Anim = 1200 && AnimElemNo(0) = 7
+trigger1 = Anim = 1200 && AnimElemNo(0) = [10, 11]
 trigger2 = Anim = 1201 && AnimElemNo(0) = 7
 trigger3 = Anim = 3422 && AnimElemNo(0) = [7, 8]
 trigger4 = Anim = 11200 && AnimElemNo(0) = 7
@@ -11103,7 +12269,7 @@ trigger4 = Anim = 312 && AnimElemNo(0) = [5, 7]
 trigger5 = Anim = 313 && AnimElemNo(0) = [7, 9]
 trigger6 = Anim = 321 && AnimElemNo(0) = [4, 6]
 trigger7 = Anim = 347 && AnimElemNo(0) = [1, 2]
-trigger8 = Anim = 410 && AnimElemNo(0) = 2
+trigger8 = Anim = 410 && AnimElemNo(0) = [2, 2]
 trigger9 = Anim = 810 && AnimElemNo(0) = [2, 3]
 trigger10 = Anim = 810 && AnimElemNo(0) = [9, 10]
 trigger11 = Anim = 810 && AnimElemNo(0) = [16, 17]
@@ -11126,7 +12292,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = Anim = 195 && AnimElemNo(0) = [12, 18]
 trigger2 = Anim = 231 && AnimElemNo(0) = [2, 5]
-trigger3 = Anim = 1500 && AnimElemNo(0) = [2, 5]
+trigger3 = Anim = 1500 && AnimElemNo(0) = [4, 7]
 trigger4 = Anim = 1501 && AnimElemNo(0) = [2, 5]
 trigger5 = Anim = 10231 && AnimElemNo(0) = [2, 5]
 trigger6 = Anim = 11500 && AnimElemNo(0) = [2, 5]
@@ -11226,7 +12392,7 @@ trigger5 = Anim = 302 && AnimElemNo(0) = [3, 6]
 trigger6 = Anim = 311 && AnimElemNo(0) = [3, 7]
 trigger7 = Anim = 343 && AnimElemNo(0) = [3, 7]
 trigger8 = Anim = 344 && AnimElemNo(0) = [3, 6]
-trigger9 = Anim = 1400 && AnimElemNo(0) = [2, 5]
+trigger9 = Anim = 1400 && AnimElemNo(0) = [4, 7]
 trigger10 = Anim = 1401 && AnimElemNo(0) = [2, 5]
 trigger11 = Anim = 3410 && AnimElemNo(0) = [3, 6]
 trigger12 = Anim = 3431 && AnimElemNo(0) = [3, 5]
@@ -11240,7 +12406,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas +2 +12]
 type = MapSet
-trigger1 = Anim = 260 && AnimElemNo(0) = [3, 4]
+trigger1 = Anim = 260 && AnimElemNo(0) = [6, 7]
 trigger2 = Anim = 332 && AnimElemNo(0) = [3, 4]
 trigger3 = Anim = 345 && AnimElemNo(0) = [3, 4]
 trigger4 = Anim = 3421 && AnimElemNo(0) = 3
@@ -11251,7 +12417,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -6 +14]
 type = MapSet
-trigger1 = Anim = 260 && AnimElemNo(0) = [5, 8]
+trigger1 = Anim = 260 && AnimElemNo(0) = [8, 12]
 trigger2 = Anim = 600
 trigger3 = Anim = 601 && AnimElemNo(0) = [2, 6]
 trigger4 = Anim = 10260 && AnimElemNo(0) = [5, 8]
@@ -11297,7 +12463,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -10 +16]
 type = MapSet
-trigger1 = Anim = 3000 && AnimElemNo(0) = 2
+trigger1 = Anim = 3000 && AnimElemNo(0) = [5, 8]
 trigger2 = Anim = 3400 && AnimElemNo(0) = 1
 trigger3 = Anim = 13000 && AnimElemNo(0) = 2
 map = "au_garanhao_p"
@@ -11353,7 +12519,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -4 +18]
 type = MapSet
-trigger1 = Anim = 260 && AnimElemNo(0) = 2
+trigger1 = Anim = 260 && AnimElemNo(0) = [4, 5]
 trigger2 = Anim = 332 && AnimElemNo(0) = 2
 trigger3 = Anim = 345 && AnimElemNo(0) = 2
 trigger4 = Anim = 831 && AnimElemNo(0) = 10
@@ -11400,8 +12566,8 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = Anim = 303 && AnimElemNo(0) = 9
 trigger2 = Anim = 347 && AnimElemNo(0) = 9
-trigger3 = Anim = 410 && AnimElemNo(0) = 1
-trigger4 = Anim = 410 && AnimElemNo(0) = 8
+trigger3 = Anim = 410 && AnimElemNo(0) = [1, 1]
+trigger4 = Anim = 410 && AnimElemNo(0) = [10, 13]
 trigger5 = Anim = 831 && AnimElemNo(0) = 3
 trigger6 = Anim = 831 && AnimElemNo(0) = 8
 trigger7 = Anim = 3412 && AnimElemNo(0) = 8
@@ -11450,7 +12616,7 @@ ignorehitpause = 1
 [State -4, Aura garanhao no corpo: costas -8 +24]
 type = MapSet
 trigger1 = Anim = 313 && AnimElemNo(0) = 10
-trigger2 = Anim = 1200 && AnimElemNo(0) = 8
+trigger2 = Anim = 1200 && AnimElemNo(0) = [12, 12]
 trigger3 = Anim = 1201 && AnimElemNo(0) = 8
 trigger4 = Anim = 3422 && AnimElemNo(0) = 9
 trigger5 = Anim = 3423 && AnimElemNo(0) = 10
@@ -11525,7 +12691,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -6 +28]
 type = MapSet
-trigger1 = Anim = 400 && AnimElemNo(0) = [7, 8]
+trigger1 = Anim = 400 && AnimElemNo(0) = [7, 10]
 trigger2 = Anim = 700 && AnimElemNo(0) = 4
 trigger3 = Anim = 10400 && AnimElemNo(0) = [7, 8]
 map = "au_garanhao_p"
@@ -11565,7 +12731,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = Anim = 322 && AnimElemNo(0) = [7, 9]
 trigger2 = Anim = 342 && AnimElemNo(0) = [7, 9]
-trigger3 = Anim = 430 && AnimElemNo(0) = [7, 9]
+trigger3 = Anim = 430 && AnimElemNo(0) = [7, 12]
 trigger4 = Anim = 10430 && AnimElemNo(0) = [7, 9]
 map = "au_garanhao_p"
 value = 10172
@@ -11599,7 +12765,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -18 +32]
 type = MapSet
-trigger1 = Anim = 440 && AnimElemNo(0) = 2
+trigger1 = Anim = 440 && AnimElemNo(0) = [3, 3]
 trigger2 = Anim = 841 && AnimElemNo(0) = 3
 trigger3 = Anim = 3435 && AnimElemNo(0) = 2
 trigger4 = Anim = 10440 && AnimElemNo(0) = 2
@@ -11654,7 +12820,7 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = Anim = 303 && AnimElemNo(0) = 10
 trigger2 = Anim = 347 && AnimElemNo(0) = 10
-trigger3 = Anim = 410 && AnimElemNo(0) = 9
+trigger3 = Anim = 410 && AnimElemNo(0) = [14, 17]
 trigger4 = Anim = 831 && AnimElemNo(0) = 9
 trigger5 = Anim = 3412 && AnimElemNo(0) = 9
 trigger6 = Anim = 3430 && AnimElemNo(0) = 9
@@ -11691,7 +12857,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -8 +36]
 type = MapSet
-trigger1 = Anim = 440 && AnimElemNo(0) = 1
+trigger1 = Anim = 440 && AnimElemNo(0) = [1, 2]
 trigger2 = Anim = 3435 && AnimElemNo(0) = 1
 trigger3 = Anim = 10440 && AnimElemNo(0) = 1
 map = "au_garanhao_p"
@@ -11710,8 +12876,8 @@ ignorehitpause = 1
 [State -4, Aura garanhao no corpo: costas -30 +38]
 type = MapSet
 trigger1 = Anim = 841 && AnimElemNo(0) = 5
-trigger2 = Anim = 3100 && AnimElemNo(0) = 4
-trigger3 = Anim = 3100 && AnimElemNo(0) = 8
+trigger2 = Anim = 3100 && AnimElemNo(0) = [6, 6]
+trigger3 = Anim = 3100 && AnimElemNo(0) = [10, 10]
 trigger4 = Anim = 3435 && AnimElemNo(0) = [5, 7]
 trigger5 = Anim = 13100 && AnimElemNo(0) = 4
 trigger6 = Anim = 13100 && AnimElemNo(0) = 8
@@ -11721,7 +12887,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -28 +38]
 type = MapSet
-trigger1 = Anim = 440 && AnimElemNo(0) = [5, 8]
+trigger1 = Anim = 440 && AnimElemNo(0) = [6, 10]
 trigger2 = Anim = 10440 && AnimElemNo(0) = [5, 8]
 map = "au_garanhao_p"
 value = 10674
@@ -11729,7 +12895,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -22 +38]
 type = MapSet
-trigger1 = Anim = 440 && AnimElemNo(0) = [3, 4]
+trigger1 = Anim = 440 && AnimElemNo(0) = [4, 5]
 trigger2 = Anim = 3435 && AnimElemNo(0) = [3, 4]
 trigger3 = Anim = 10440 && AnimElemNo(0) = [3, 4]
 map = "au_garanhao_p"
@@ -11745,8 +12911,8 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -4 +38]
 type = MapSet
-trigger1 = Anim = 440 && AnimElemNo(0) = 9
-trigger2 = Anim = 440 && AnimElemNo(0) = 12
+trigger1 = Anim = 440 && AnimElemNo(0) = [11, 12]
+trigger2 = Anim = 440 && AnimElemNo(0) = [17, 21]
 trigger3 = Anim = 841 && AnimElemNo(0) = 6
 trigger4 = Anim = 841 && AnimElemNo(0) = 8
 trigger5 = Anim = 3435 && AnimElemNo(0) = 8
@@ -11759,7 +12925,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas +2 +38]
 type = MapSet
-trigger1 = Anim = 440 && AnimElemNo(0) = [10, 11]
+trigger1 = Anim = 440 && AnimElemNo(0) = [13, 16]
 trigger2 = Anim = 3435 && AnimElemNo(0) = [9, 10]
 trigger3 = Anim = 10440 && AnimElemNo(0) = [10, 11]
 map = "au_garanhao_p"
@@ -13070,10 +14236,10 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: recolhe 1 de 7, centro -20, tronco -30 graus]
 type = MapSet
-trigger1 = Anim = 440 && AnimElemNo(0) = [5, 8]
+trigger1 = Anim = 440 && AnimElemNo(0) = [6, 10]
 trigger2 = Anim = 841 && AnimElemNo(0) = 5
-trigger3 = Anim = 3100 && AnimElemNo(0) = 4
-trigger4 = Anim = 3100 && AnimElemNo(0) = 8
+trigger3 = Anim = 3100 && AnimElemNo(0) = [6, 6]
+trigger4 = Anim = 3100 && AnimElemNo(0) = [10, 10]
 trigger5 = Anim = 3435 && AnimElemNo(0) = [5, 7]
 trigger6 = Anim = 10440 && AnimElemNo(0) = [5, 8]
 trigger7 = Anim = 13100 && AnimElemNo(0) = 4
@@ -13229,7 +14395,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: recolhe 0 de 7, centro -24, tronco -15 graus]
 type = MapSet
-trigger1 = Anim = 3000 && AnimElemNo(0) = 4
+trigger1 = Anim = 3000 && AnimElemNo(0) = [13, 16]
 trigger2 = Anim = 3400 && AnimElemNo(0) = 3
 trigger3 = Anim = 13000 && AnimElemNo(0) = 4
 map = "au_garanhao_q"
@@ -13249,7 +14415,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: recolhe 0 de 7, centro -4, tronco -15 graus]
 type = MapSet
-trigger1 = Anim = 240 && AnimElemNo(0) = 1
+trigger1 = Anim = 240 && AnimElemNo(0) = [1, 2]
 trigger2 = Anim = 313 && AnimElemNo(0) = 10
 trigger3 = Anim = 323 && AnimElemNo(0) = 1
 trigger4 = Anim = 331 && AnimElemNo(0) = 1
@@ -13258,9 +14424,9 @@ trigger6 = Anim = 341 && AnimElemNo(0) = 1
 trigger7 = Anim = 346 && AnimElemNo(0) = 1
 trigger8 = Anim = 348 && AnimElemNo(0) = [1, 2]
 trigger9 = Anim = 810 && AnimElemNo(0) = 23
-trigger10 = Anim = 1100 && AnimElemNo(0) = [1, 3]
+trigger10 = Anim = 1100 && AnimElemNo(0) = [1, 5]
 trigger11 = Anim = 1101 && AnimElemNo(0) = [1, 3]
-trigger12 = Anim = 1200 && AnimElemNo(0) = 8
+trigger12 = Anim = 1200 && AnimElemNo(0) = [12, 12]
 trigger13 = Anim = 1201 && AnimElemNo(0) = 8
 trigger14 = Anim = 2000 && AnimElemNo(0) = [53, 61]
 trigger15 = Anim = 3401 && AnimElemNo(0) = 1
@@ -13348,7 +14514,7 @@ trigger16 = Anim = 191 && AnimElemNo(0) = [2, 7]
 trigger17 = Anim = 191 && AnimElemNo(0) = [23, 25]
 trigger18 = Anim = 192 && AnimElemNo(0) = [2, 7]
 trigger19 = Anim = 192 && AnimElemNo(0) = [23, 25]
-trigger20 = Anim = 240 && AnimElemNo(0) = 2
+trigger20 = Anim = 240 && AnimElemNo(0) = [3, 3]
 trigger21 = Anim = 323 && AnimElemNo(0) = 2
 trigger22 = Anim = 331 && AnimElemNo(0) = 2
 trigger23 = Anim = 341 && AnimElemNo(0) = 2
@@ -13356,7 +14522,7 @@ trigger24 = Anim = 346 && AnimElemNo(0) = 2
 trigger25 = Anim = 764 && AnimElemNo(0) = 3
 trigger26 = Anim = 810 && AnimElemNo(0) = 24
 trigger27 = Anim = 1701 && AnimElemNo(0) = 6
-trigger28 = Anim = 3100 && AnimElemNo(0) = 1
+trigger28 = Anim = 3100 && AnimElemNo(0) = [1, 3]
 trigger29 = Anim = 3401 && AnimElemNo(0) = 2
 trigger30 = Anim = 3420 && AnimElemNo(0) = 2
 trigger31 = Anim = 3432 && AnimElemNo(0) = 2
@@ -13378,7 +14544,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: recolhe 1 de 7, centro +4, tronco -15 graus]
 type = MapSet
-trigger1 = Anim = 440 && AnimElemNo(0) = 9
+trigger1 = Anim = 440 && AnimElemNo(0) = [11, 12]
 trigger2 = Anim = 841 && AnimElemNo(0) = 6
 trigger3 = Anim = 3435 && AnimElemNo(0) = 8
 trigger4 = Anim = 10440 && AnimElemNo(0) = 9
@@ -13414,8 +14580,8 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: recolhe 0 de 7, centro -20, tronco -8 graus]
 type = MapSet
-trigger1 = Anim = 3000 && AnimElemNo(0) = [5, 7]
-trigger2 = Anim = 3100 && AnimElemNo(0) = [9, 10]
+trigger1 = Anim = 3000 && AnimElemNo(0) = [17, 45]
+trigger2 = Anim = 3100 && AnimElemNo(0) = [11, 12]
 trigger3 = Anim = 3400 && AnimElemNo(0) = 4
 trigger4 = Anim = 13000 && AnimElemNo(0) = [5, 7]
 trigger5 = Anim = 13100 && AnimElemNo(0) = [9, 10]
@@ -13426,8 +14592,8 @@ ignorehitpause = 1
 [State -4, Aura garanhao no corpo: recolhe 0 de 7, centro -16, tronco -8 graus]
 type = MapSet
 trigger1 = Anim = 313 && AnimElemNo(0) = [5, 6]
-trigger2 = Anim = 1200 && AnimElemNo(0) = [2, 3]
-trigger3 = Anim = 1200 && AnimElemNo(0) = 6
+trigger2 = Anim = 1200 && AnimElemNo(0) = [2, 5]
+trigger3 = Anim = 1200 && AnimElemNo(0) = [8, 9]
 trigger4 = Anim = 1201 && AnimElemNo(0) = [2, 3]
 trigger5 = Anim = 1201 && AnimElemNo(0) = 6
 trigger6 = Anim = 3422 && AnimElemNo(0) = [5, 6]
@@ -13448,9 +14614,9 @@ trigger2 = Anim = 195 && AnimElemNo(0) = [32, 34]
 trigger3 = Anim = 195 && AnimElemNo(0) = [35, 38]
 trigger4 = Anim = 333 && AnimElemNo(0) = [3, 7]
 trigger5 = Anim = 348 && AnimElemNo(0) = [3, 7]
-trigger6 = Anim = 1100 && AnimElemNo(0) = [4, 6]
+trigger6 = Anim = 1100 && AnimElemNo(0) = [6, 8]
 trigger7 = Anim = 1101 && AnimElemNo(0) = [4, 6]
-trigger8 = Anim = 3000 && AnimElemNo(0) = 3
+trigger8 = Anim = 3000 && AnimElemNo(0) = [9, 12]
 trigger9 = Anim = 3400 && AnimElemNo(0) = 2
 trigger10 = Anim = 3413 && AnimElemNo(0) = [3, 7]
 trigger11 = Anim = 11100 && AnimElemNo(0) = [4, 6]
@@ -13464,10 +14630,10 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = Anim = 195 && AnimElemNo(0) = [19, 23]
 trigger2 = Anim = 195 && AnimElemNo(0) = 39
-trigger3 = Anim = 210 && AnimElemNo(0) = 1
+trigger3 = Anim = 210 && AnimElemNo(0) = [1, 2]
 trigger4 = Anim = 215 && AnimElemNo(0) = 1
 trigger5 = Anim = 216 && AnimElemNo(0) = 1
-trigger6 = Anim = 240 && AnimElemNo(0) = [3, 7]
+trigger6 = Anim = 240 && AnimElemNo(0) = [4, 8]
 trigger7 = Anim = 246 && AnimElemNo(0) = [1, 5]
 trigger8 = Anim = 302 && AnimElemNo(0) = 1
 trigger9 = Anim = 303 && AnimElemNo(0) = [1, 2]
@@ -13481,7 +14647,7 @@ trigger16 = Anim = 343 && AnimElemNo(0) = 1
 trigger17 = Anim = 344 && AnimElemNo(0) = 1
 trigger18 = Anim = 346 && AnimElemNo(0) = [3, 6]
 trigger19 = Anim = 347 && AnimElemNo(0) = [1, 2]
-trigger20 = Anim = 410 && AnimElemNo(0) = 2
+trigger20 = Anim = 410 && AnimElemNo(0) = [2, 2]
 trigger21 = Anim = 810 && AnimElemNo(0) = [2, 3]
 trigger22 = Anim = 810 && AnimElemNo(0) = [9, 10]
 trigger23 = Anim = 810 && AnimElemNo(0) = [16, 17]
@@ -13489,14 +14655,14 @@ trigger24 = Anim = 810 && AnimElemNo(0) = [25, 29]
 trigger25 = Anim = 831 && AnimElemNo(0) = 4
 trigger26 = Anim = 1000 && AnimElemNo(0) = 1
 trigger27 = Anim = 1001 && AnimElemNo(0) = 1
-trigger28 = Anim = 1200 && AnimElemNo(0) = 1
+trigger28 = Anim = 1200 && AnimElemNo(0) = [1, 1]
 trigger29 = Anim = 1201 && AnimElemNo(0) = 1
-trigger30 = Anim = 1400 && AnimElemNo(0) = 1
+trigger30 = Anim = 1400 && AnimElemNo(0) = [1, 3]
 trigger31 = Anim = 1401 && AnimElemNo(0) = 1
 trigger32 = Anim = 1600 && AnimElemNo(0) = 2
 trigger33 = Anim = 1601 && AnimElemNo(0) = 2
 trigger34 = Anim = 1701 && AnimElemNo(0) = [7, 10]
-trigger35 = Anim = 3100 && AnimElemNo(0) = [6, 7]
+trigger35 = Anim = 3100 && AnimElemNo(0) = [8, 9]
 trigger36 = Anim = 3200 && AnimElemNo(0) = 1
 trigger37 = Anim = 3401 && AnimElemNo(0) = [3, 7]
 trigger38 = Anim = 3410 && AnimElemNo(0) = 1
@@ -13541,13 +14707,13 @@ trigger4 = Anim = 302 && AnimElemNo(0) = 7
 trigger5 = Anim = 311 && AnimElemNo(0) = 8
 trigger6 = Anim = 343 && AnimElemNo(0) = 8
 trigger7 = Anim = 344 && AnimElemNo(0) = 7
-trigger8 = Anim = 400 && AnimElemNo(0) = [7, 8]
+trigger8 = Anim = 400 && AnimElemNo(0) = [7, 10]
 trigger9 = Anim = 700 && AnimElemNo(0) = [9, 12]
 trigger10 = Anim = 830 && AnimElemNo(0) = 5
 trigger11 = Anim = 840 && AnimElemNo(0) = 5
 trigger12 = Anim = 1600 && AnimElemNo(0) = 1
 trigger13 = Anim = 1601 && AnimElemNo(0) = 1
-trigger14 = Anim = 3100 && AnimElemNo(0) = 3
+trigger14 = Anim = 3100 && AnimElemNo(0) = [5, 5]
 trigger15 = Anim = 3410 && AnimElemNo(0) = 7
 trigger16 = Anim = 10216 && AnimElemNo(0) = 6
 trigger17 = Anim = 10400 && AnimElemNo(0) = [7, 8]
@@ -13568,9 +14734,9 @@ trigger6 = Anim = 46 && AnimElemNo(0) = [12, 13]
 trigger7 = Anim = 47 && AnimElemNo(0) = [1, 2]
 trigger8 = Anim = 333 && AnimElemNo(0) = 9
 trigger9 = Anim = 348 && AnimElemNo(0) = 9
-trigger10 = Anim = 1100 && AnimElemNo(0) = [7, 9]
+trigger10 = Anim = 1100 && AnimElemNo(0) = [9, 17]
 trigger11 = Anim = 1101 && AnimElemNo(0) = [7, 9]
-trigger12 = Anim = 1400 && AnimElemNo(0) = [6, 7]
+trigger12 = Anim = 1400 && AnimElemNo(0) = [8, 14]
 trigger13 = Anim = 1401 && AnimElemNo(0) = [6, 7]
 trigger14 = Anim = 2000 && AnimElemNo(0) = [62, 63]
 trigger15 = Anim = 2000 && AnimElemNo(0) = [64, 66]
@@ -13609,9 +14775,9 @@ trigger4 = Anim = 181 && AnimElemNo(0) = [5, 8]
 trigger5 = Anim = 181 && AnimElemNo(0) = [9, 11]
 trigger6 = Anim = 181 && AnimElemNo(0) = [12, 24]
 trigger7 = Anim = 181 && AnimElemNo(0) = [32, 34]
-trigger8 = Anim = 210 && AnimElemNo(0) = 2
+trigger8 = Anim = 210 && AnimElemNo(0) = [3, 3]
 trigger9 = Anim = 215 && AnimElemNo(0) = 2
-trigger10 = Anim = 240 && AnimElemNo(0) = 8
+trigger10 = Anim = 240 && AnimElemNo(0) = [9, 11]
 trigger11 = Anim = 246 && AnimElemNo(0) = 6
 trigger12 = Anim = 302 && AnimElemNo(0) = 2
 trigger13 = Anim = 311 && AnimElemNo(0) = 2
@@ -13627,7 +14793,7 @@ trigger22 = Anim = 810 && AnimElemNo(0) = 30
 trigger23 = Anim = 1300 && AnimElemNo(0) = 6
 trigger24 = Anim = 1301 && AnimElemNo(0) = 6
 trigger25 = Anim = 1701 && AnimElemNo(0) = 11
-trigger26 = Anim = 3100 && AnimElemNo(0) = 11
+trigger26 = Anim = 3100 && AnimElemNo(0) = [13, 26]
 trigger27 = Anim = 3401 && AnimElemNo(0) = 8
 trigger28 = Anim = 3410 && AnimElemNo(0) = 2
 trigger29 = Anim = 3420 && AnimElemNo(0) = 7
@@ -13721,7 +14887,7 @@ ignorehitpause = 1
 [State -4, Aura garanhao no corpo: recolhe 0 de 7, centro -16, tronco +0 graus]
 type = MapSet
 trigger1 = Anim = 195 && AnimElemNo(0) = [7, 11]
-trigger2 = Anim = 440 && AnimElemNo(0) = 2
+trigger2 = Anim = 440 && AnimElemNo(0) = [3, 3]
 trigger3 = Anim = 841 && AnimElemNo(0) = 3
 trigger4 = Anim = 3435 && AnimElemNo(0) = 2
 trigger5 = Anim = 10440 && AnimElemNo(0) = 2
@@ -13731,8 +14897,8 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: recolhe 0 de 7, centro -12, tronco +0 graus]
 type = MapSet
-trigger1 = Anim = 1200 && AnimElemNo(0) = [4, 5]
-trigger2 = Anim = 1200 && AnimElemNo(0) = 7
+trigger1 = Anim = 1200 && AnimElemNo(0) = [6, 7]
+trigger2 = Anim = 1200 && AnimElemNo(0) = [10, 11]
 trigger3 = Anim = 1201 && AnimElemNo(0) = [4, 5]
 trigger4 = Anim = 1201 && AnimElemNo(0) = 7
 trigger5 = Anim = 1600 && AnimElemNo(0) = 3
@@ -13772,7 +14938,7 @@ trigger21 = Anim = 321 && AnimElemNo(0) = [4, 6]
 trigger22 = Anim = 347 && AnimElemNo(0) = 3
 trigger23 = Anim = 347 && AnimElemNo(0) = 4
 trigger24 = Anim = 347 && AnimElemNo(0) = [5, 7]
-trigger25 = Anim = 410 && AnimElemNo(0) = 3
+trigger25 = Anim = 410 && AnimElemNo(0) = [3, 3]
 trigger26 = Anim = 410 && AnimElemNo(0) = [4, 6]
 trigger27 = Anim = 810 && AnimElemNo(0) = 4
 trigger28 = Anim = 810 && AnimElemNo(0) = 5
@@ -13787,11 +14953,11 @@ trigger36 = Anim = 831 && AnimElemNo(0) = [1, 2]
 trigger37 = Anim = 831 && AnimElemNo(0) = 5
 trigger38 = Anim = 831 && AnimElemNo(0) = 6
 trigger39 = Anim = 840 && AnimElemNo(0) = [1, 3]
-trigger40 = Anim = 1500 && AnimElemNo(0) = 1
-trigger41 = Anim = 1500 && AnimElemNo(0) = [2, 5]
+trigger40 = Anim = 1500 && AnimElemNo(0) = [1, 3]
+trigger41 = Anim = 1500 && AnimElemNo(0) = [4, 7]
 trigger42 = Anim = 1501 && AnimElemNo(0) = 1
 trigger43 = Anim = 1501 && AnimElemNo(0) = [2, 5]
-trigger44 = Anim = 3000 && AnimElemNo(0) = 2
+trigger44 = Anim = 3000 && AnimElemNo(0) = [5, 8]
 trigger45 = Anim = 3400 && AnimElemNo(0) = 1
 trigger46 = Anim = 3411 && AnimElemNo(0) = 2
 trigger47 = Anim = 3411 && AnimElemNo(0) = 3
@@ -13834,7 +15000,7 @@ ignorehitpause = 1
 [State -4, Aura garanhao no corpo: recolhe 1 de 7, centro -8, tronco +0 graus]
 type = MapSet
 trigger1 = Anim = 400 && AnimElemNo(0) = [4, 6]
-trigger2 = Anim = 440 && AnimElemNo(0) = 1
+trigger2 = Anim = 440 && AnimElemNo(0) = [1, 2]
 trigger3 = Anim = 3435 && AnimElemNo(0) = 1
 trigger4 = Anim = 10400 && AnimElemNo(0) = [4, 6]
 trigger5 = Anim = 10440 && AnimElemNo(0) = 1
@@ -13852,13 +15018,13 @@ trigger5 = Anim = 132
 trigger6 = Anim = 142
 trigger7 = Anim = 170 && AnimElemNo(0) = 1
 trigger8 = Anim = 195 && AnimElemNo(0) = [3, 4]
-trigger9 = Anim = 210 && AnimElemNo(0) = 3
+trigger9 = Anim = 210 && AnimElemNo(0) = [4, 4]
 trigger10 = Anim = 215 && AnimElemNo(0) = 3
 trigger11 = Anim = 231 && AnimElemNo(0) = 1
 trigger12 = Anim = 231 && AnimElemNo(0) = [6, 7]
 trigger13 = Anim = 245 && AnimElemNo(0) = 1
 trigger14 = Anim = 245 && AnimElemNo(0) = [7, 9]
-trigger15 = Anim = 260 && AnimElemNo(0) = 2
+trigger15 = Anim = 260 && AnimElemNo(0) = [4, 5]
 trigger16 = Anim = 303 && AnimElemNo(0) = 8
 trigger17 = Anim = 303 && AnimElemNo(0) = 9
 trigger18 = Anim = 303 && AnimElemNo(0) = 10
@@ -13872,11 +15038,11 @@ trigger25 = Anim = 347 && AnimElemNo(0) = 8
 trigger26 = Anim = 347 && AnimElemNo(0) = 9
 trigger27 = Anim = 347 && AnimElemNo(0) = 10
 trigger28 = Anim = 349 && AnimElemNo(0) = 9
-trigger29 = Anim = 410 && AnimElemNo(0) = 1
-trigger30 = Anim = 410 && AnimElemNo(0) = 7
-trigger31 = Anim = 410 && AnimElemNo(0) = 8
-trigger32 = Anim = 410 && AnimElemNo(0) = 9
-trigger33 = Anim = 430 && AnimElemNo(0) = [7, 9]
+trigger29 = Anim = 410 && AnimElemNo(0) = [1, 1]
+trigger30 = Anim = 410 && AnimElemNo(0) = [7, 9]
+trigger31 = Anim = 410 && AnimElemNo(0) = [10, 13]
+trigger32 = Anim = 410 && AnimElemNo(0) = [14, 17]
+trigger33 = Anim = 430 && AnimElemNo(0) = [7, 12]
 trigger34 = Anim = 600
 trigger35 = Anim = 601 && AnimElemNo(0) = [2, 6]
 trigger36 = Anim = 700 && AnimElemNo(0) = 4
@@ -13891,7 +15057,7 @@ trigger44 = Anim = 831 && AnimElemNo(0) = 10
 trigger45 = Anim = 841 && AnimElemNo(0) = 1
 trigger46 = Anim = 1300 && AnimElemNo(0) = 7
 trigger47 = Anim = 1301 && AnimElemNo(0) = 7
-trigger48 = Anim = 1500 && AnimElemNo(0) = [6, 8]
+trigger48 = Anim = 1500 && AnimElemNo(0) = [8, 17]
 trigger49 = Anim = 1501 && AnimElemNo(0) = [6, 8]
 trigger50 = Anim = 3200 && AnimElemNo(0) = [2, 3]
 trigger51 = Anim = 3411 && AnimElemNo(0) = 1
@@ -13936,7 +15102,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: recolhe 1 de 7, centro +0, tronco +0 graus]
 type = MapSet
-trigger1 = Anim = 440 && AnimElemNo(0) = 12
+trigger1 = Anim = 440 && AnimElemNo(0) = [17, 21]
 trigger2 = Anim = 841 && AnimElemNo(0) = 8
 trigger3 = Anim = 3435 && AnimElemNo(0) = 11
 trigger4 = Anim = 10440 && AnimElemNo(0) = 12
@@ -13954,7 +15120,7 @@ trigger5 = Anim = 192 && AnimElemNo(0) = 15
 trigger6 = Anim = 195 && AnimElemNo(0) = [1, 2]
 trigger7 = Anim = 200
 trigger8 = Anim = 201 && AnimElemNo(0) = [2, 7]
-trigger9 = Anim = 260 && AnimElemNo(0) = 11
+trigger9 = Anim = 260 && AnimElemNo(0) = [19, 22]
 trigger10 = Anim = 301 && AnimElemNo(0) = [1, 6]
 trigger11 = Anim = 301 && AnimElemNo(0) = [7, 8]
 trigger12 = Anim = 332 && AnimElemNo(0) = 10
@@ -13967,7 +15133,7 @@ trigger18 = Anim = 349 && AnimElemNo(0) = 10
 trigger19 = Anim = 765 && AnimElemNo(0) = 3
 trigger20 = Anim = 831 && AnimElemNo(0) = 14
 trigger21 = Anim = 841 && AnimElemNo(0) = 2
-trigger22 = Anim = 1100 && AnimElemNo(0) = 10
+trigger22 = Anim = 1100 && AnimElemNo(0) = [18, 21]
 trigger23 = Anim = 1101 && AnimElemNo(0) = 10
 trigger24 = Anim = 1300 && AnimElemNo(0) = 8
 trigger25 = Anim = 1301 && AnimElemNo(0) = 8
@@ -14012,14 +15178,14 @@ trigger1 = Anim = 190 && AnimElemNo(0) = 22
 trigger2 = Anim = 190 && AnimElemNo(0) = 50
 trigger3 = Anim = 191 && AnimElemNo(0) = 22
 trigger4 = Anim = 192 && AnimElemNo(0) = 22
-trigger5 = Anim = 210 && AnimElemNo(0) = 9
+trigger5 = Anim = 210 && AnimElemNo(0) = [15, 18]
 trigger6 = Anim = 215 && AnimElemNo(0) = 9
 trigger7 = Anim = 216 && AnimElemNo(0) = 7
 trigger8 = Anim = 302 && AnimElemNo(0) = 8
 trigger9 = Anim = 311 && AnimElemNo(0) = 9
 trigger10 = Anim = 343 && AnimElemNo(0) = 9
 trigger11 = Anim = 344 && AnimElemNo(0) = 8
-trigger12 = Anim = 1400 && AnimElemNo(0) = 8
+trigger12 = Anim = 1400 && AnimElemNo(0) = [15, 17]
 trigger13 = Anim = 1401 && AnimElemNo(0) = 8
 trigger14 = Anim = 3200 && AnimElemNo(0) = 9
 trigger15 = Anim = 3410 && AnimElemNo(0) = 8
@@ -14128,7 +15294,7 @@ type = MapSet
 trigger1 = Anim = 20 && AnimElemNo(0) = 4
 trigger2 = Anim = 21 && AnimElemNo(0) = 1
 trigger3 = Anim = 100 && AnimElemNo(0) = 4
-trigger4 = Anim = 260 && AnimElemNo(0) = [9, 10]
+trigger4 = Anim = 260 && AnimElemNo(0) = [13, 18]
 trigger5 = Anim = 332 && AnimElemNo(0) = [8, 9]
 trigger6 = Anim = 345 && AnimElemNo(0) = [8, 9]
 trigger7 = Anim = 831 && AnimElemNo(0) = [12, 13]
@@ -14151,7 +15317,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: recolhe 0 de 7, centro +4, tronco +8 graus]
 type = MapSet
-trigger1 = Anim = 260 && AnimElemNo(0) = 1
+trigger1 = Anim = 260 && AnimElemNo(0) = [1, 3]
 trigger2 = Anim = 332 && AnimElemNo(0) = 1
 trigger3 = Anim = 345 && AnimElemNo(0) = 1
 trigger4 = Anim = 3421 && AnimElemNo(0) = 1
@@ -14162,7 +15328,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: recolhe 1 de 7, centro +4, tronco +8 graus]
 type = MapSet
-trigger1 = Anim = 440 && AnimElemNo(0) = [10, 11]
+trigger1 = Anim = 440 && AnimElemNo(0) = [13, 16]
 trigger2 = Anim = 841 && AnimElemNo(0) = 7
 trigger3 = Anim = 3435 && AnimElemNo(0) = [9, 10]
 trigger4 = Anim = 10440 && AnimElemNo(0) = [10, 11]
@@ -14179,7 +15345,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: recolhe 1 de 7, centro -24, tronco +15 graus]
 type = MapSet
-trigger1 = Anim = 440 && AnimElemNo(0) = [3, 4]
+trigger1 = Anim = 440 && AnimElemNo(0) = [4, 5]
 trigger2 = Anim = 841 && AnimElemNo(0) = 4
 trigger3 = Anim = 3435 && AnimElemNo(0) = [3, 4]
 trigger4 = Anim = 10440 && AnimElemNo(0) = [3, 4]
@@ -14197,7 +15363,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: recolhe 0 de 7, centro -8, tronco +15 graus]
 type = MapSet
-trigger1 = Anim = 260 && AnimElemNo(0) = [5, 8]
+trigger1 = Anim = 260 && AnimElemNo(0) = [8, 12]
 trigger2 = Anim = 332 && AnimElemNo(0) = [5, 7]
 trigger3 = Anim = 345 && AnimElemNo(0) = [5, 7]
 trigger4 = Anim = 3421 && AnimElemNo(0) = [4, 6]
@@ -14220,7 +15386,7 @@ ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: recolhe 0 de 7, centro +0, tronco +15 graus]
 type = MapSet
-trigger1 = Anim = 260 && AnimElemNo(0) = [3, 4]
+trigger1 = Anim = 260 && AnimElemNo(0) = [6, 7]
 trigger2 = Anim = 332 && AnimElemNo(0) = [3, 4]
 trigger3 = Anim = 345 && AnimElemNo(0) = [3, 4]
 trigger4 = Anim = 3421 && AnimElemNo(0) = 3
@@ -14746,6 +15912,649 @@ pausemovetime = -1
 ignorehitpause = 1
 
 ; <<< aura_silhueta.py
+; >>> luz.py: luz e brilho na base do KIKIU (issue #51). Não edite: rode python3 ferramentas/luz.py
+[State -4, Luz zera o poder]
+type = MapSet
+trigger1 = RoundState = 0
+map = "luz_p"
+value = 0
+ignorehitpause = 1
+
+[State -4, Luz do poder no ar]
+type = MapAdd
+trigger1 = 1
+map = "luz_p"
+value = 0.12 * (ifelse(NumProjID(1003) || NumProjID(4750), 1, 0) - map(luz_p))
+ignorehitpause = 1
+
+[State -4, Luz escuro nasce]
+type = Explod
+trigger1 = NumExplod(9623) = 0 && RoundState > 0
+anim = 9722
+id = 9623
+postype = p1
+pos = 0, -120
+facing = 1
+scale = 400, 120
+sprpriority = -20
+bindtime = -1
+removetime = -1
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 0, 256
+ignorehitpause = 1
+
+[State -4, Luz escuro]
+type = ModifyExplod
+trigger1 = NumExplod(9623)
+id = 9623
+trans = addalpha
+alpha = 0, 256 - floor(256 * min(0.45, 0.16 * min(1, max(0, map(au_garanhao_e))) + 0.2 * map(luz_p)))
+ignorehitpause = 1
+
+[State -4, Luz halo nasce]
+type = Explod
+trigger1 = NumExplod(9620) = 0 && map(au_garanhao_e) > 0.01
+anim = 9720
+id = 9620
+postype = p1
+pos = 0, 0
+facing = 1
+sprpriority = -7
+bindtime = -1
+removetime = -1
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 0, 256
+ignorehitpause = 1
+
+[State -4, Luz halo]
+type = ModifyExplod
+trigger1 = NumExplod(9620)
+id = 9620
+postype = p1
+pos = map(au_garanhao_bx), -49.1 * (1 - 0.7 * map(au_garanhao_g))
+trans = addalpha
+alpha = floor(255 * min(1, max(0, map(au_garanhao_e))) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.0) + 0.04 * sin(GameTime * 0.1361 + 0.00))), 255 - floor(255 * min(1, max(0, map(au_garanhao_e))) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.0) + 0.04 * sin(GameTime * 0.1361 + 0.00)))
+ignorehitpause = 1
+
+[State -4, Luz poca nasce]
+type = Explod
+trigger1 = NumExplod(9621) = 0 && map(au_garanhao_e) > 0.01
+anim = 9721
+id = 9621
+postype = p1
+pos = 0, 0
+facing = 1
+sprpriority = -8
+bindtime = -1
+removetime = -1
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 0, 256
+ignorehitpause = 1
+
+[State -4, Luz poca]
+type = ModifyExplod
+trigger1 = NumExplod(9621)
+id = 9621
+postype = p1
+pos = map(au_garanhao_bx), 0 - Pos Y
+bindtime = 0
+trans = addalpha
+alpha = floor(255 * min(1, max(0, map(au_garanhao_e))) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 1.1) + 0.04 * sin(GameTime * 0.1361 + 1.87)) * (1 - min(1, max(0, -Pos Y / 140)))), 255 - floor(255 * min(1, max(0, map(au_garanhao_e))) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 1.1) + 0.04 * sin(GameTime * 0.1361 + 1.87)) * (1 - min(1, max(0, -Pos Y / 140))))
+ignorehitpause = 1
+
+[State -4, Luz apaga 9620]
+type = RemoveExplod
+trigger1 = NumExplod(9620) && map(au_garanhao_e) <= 0.01
+id = 9620
+ignorehitpause = 1
+
+[State -4, Luz apaga 9621]
+type = RemoveExplod
+trigger1 = NumExplod(9621) && map(au_garanhao_e) <= 0.01
+id = 9621
+ignorehitpause = 1
+
+[State -4, Luz no oponente]
+type = PalFX
+trigger1 = map(au_garanhao_e) > 0.01 && NumEnemy > 0 && RoundState = 2
+trigger1 = enemynear,MoveType != H && enemynear,StateNo < 1000 && enemynear,var(20) <= 0
+trigger1 = abs(P2BodyDist X) < 110
+redirectid = enemynear,id
+time = 2
+add = floor(255 * 0.08 * min(1, max(0, map(au_garanhao_e))) * max(0, 1 - abs(P2BodyDist X) / 110) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.0) + 0.04 * sin(GameTime * 0.1361 + 0.00))), floor(140 * 0.08 * min(1, max(0, map(au_garanhao_e))) * max(0, 1 - abs(P2BodyDist X) / 110) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.0) + 0.04 * sin(GameTime * 0.1361 + 0.00))), floor(158 * 0.08 * min(1, max(0, map(au_garanhao_e))) * max(0, 1 - abs(P2BodyDist X) / 110) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.0) + 0.04 * sin(GameTime * 0.1361 + 0.00)))
+ignorehitpause = 1
+
+[State -4, Luz do poder 1003 apaga 9630]
+type = RemoveExplod
+trigger1 = NumExplod(9630) && NumProjID(1003) = 0
+id = 9630
+ignorehitpause = 1
+
+[State -4, Luz do poder 1003 apaga 9631]
+type = RemoveExplod
+trigger1 = NumExplod(9631) && NumProjID(1003) = 0
+id = 9631
+ignorehitpause = 1
+
+[State -4, Luz do poder 1003 apaga 9632]
+type = RemoveExplod
+trigger1 = NumExplod(9632) && NumProjID(1003) = 0
+id = 9632
+ignorehitpause = 1
+
+[State -4, Luz do poder 4750 apaga 9633]
+type = RemoveExplod
+trigger1 = NumExplod(9633) && NumProjID(4750) = 0
+id = 9633
+ignorehitpause = 1
+
+[State -4, Luz do poder 4750 apaga 9634]
+type = RemoveExplod
+trigger1 = NumExplod(9634) && NumProjID(4750) = 0
+id = 9634
+ignorehitpause = 1
+
+[State -4, Luz do poder 4750 apaga 9635]
+type = RemoveExplod
+trigger1 = NumExplod(9635) && NumProjID(4750) = 0
+id = 9635
+ignorehitpause = 1
+
+; <<< luz.py
+; >>> luz_efeitos.py: clarão das faíscas de golpe (issue #51). Não edite: rode python3 ferramentas/luz.py
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 440
+anim = (ifelse(var(20) > 0, 9953, 9954))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-10)
+scale = 0.900, 0.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 430
+anim = (ifelse(var(20) > 0, 9950, 9951))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-11)
+scale = 0.900, 0.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 322 || StateNo = 342
+anim = (ifelse(var(20) > 0, 9950, 9951))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-12)
+scale = 0.900, 0.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 349
+anim = (ifelse(var(20) > 0, 9953, 9954))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-12)
+scale = 0.900, 0.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 200 || StateNo = 230 || StateNo = 301 || StateNo = 321 || StateNo = 340 || StateNo = 400 || StateNo = 600
+anim = (ifelse(var(20) > 0, 9950, 9951))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 0.900, 0.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 201 || StateNo = 210 || StateNo = 215 || StateNo = 216 || StateNo = 231 || StateNo = 240 || StateNo = 245 || StateNo = 246 || StateNo = 260 || StateNo = 302 || StateNo = 311 || StateNo = 312
+trigger2 = StateNo = 331 || StateNo = 332 || StateNo = 341 || StateNo = 343 || StateNo = 344 || StateNo = 345 || StateNo = 346 || StateNo = 348 || StateNo = 410 || StateNo = 601 || StateNo = 610 || StateNo = 611
+trigger3 = StateNo = 650 || StateNo = 720
+anim = (ifelse(var(20) > 0, 9953, 9954))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 0.900, 0.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 303 || StateNo = 313 || StateNo = 323 || StateNo = 333 || StateNo = 347
+anim = (ifelse(var(20) > 0, 9955, 9956))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 0.900, 0.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 1300 || StateNo = 1301
+anim = (ifelse(var(20) > 0, 9957, 9958))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-12)
+scale = 1.300, 1.300
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 1500 || StateNo = 1501
+anim = (ifelse(var(20) > 0, 9957, 9958))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-20)
+scale = 1.300, 1.300
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 1100 || StateNo = 1101 || StateNo = 1200 || StateNo = 1201 || StateNo = 1400 || StateNo = 1401 || StateNo = 1701
+anim = (ifelse(var(20) > 0, 9957, 9958))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 1.300, 1.300
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 3435
+anim = (ifelse(var(20) > 0, 9953, 9954))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-11)
+scale = 1.900, 1.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 3410 || StateNo = 3411 || StateNo = 3412 || StateNo = 3420 || StateNo = 3421 || StateNo = 3422 || StateNo = 3430 || StateNo = 3431 || StateNo = 3432 || StateNo = 3433 || StateNo = 3434
+anim = (ifelse(var(20) > 0, 9953, 9954))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 1.900, 1.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 3413 || StateNo = 3423
+anim = (ifelse(var(20) > 0, 9955, 9956))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 1.900, 1.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 3100 || StateNo = 3200 || StateNo = 3401 || StateNo = 3402 || StateNo = 3403
+anim = (ifelse(var(20) > 0, 9957, 9958))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 1.900, 1.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 440
+anim = 9952
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-10)
+scale = 0.540, 0.540
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 430
+anim = 9952
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-11)
+scale = 0.540, 0.540
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 322 || StateNo = 342 || StateNo = 349
+anim = 9952
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-12)
+scale = 0.540, 0.540
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 200 || StateNo = 201 || StateNo = 210 || StateNo = 215 || StateNo = 216 || StateNo = 230 || StateNo = 231 || StateNo = 240 || StateNo = 245 || StateNo = 246 || StateNo = 260 || StateNo = 301
+trigger2 = StateNo = 302 || StateNo = 303 || StateNo = 311 || StateNo = 312 || StateNo = 313 || StateNo = 321 || StateNo = 323 || StateNo = 331 || StateNo = 332 || StateNo = 333 || StateNo = 340 || StateNo = 341
+trigger3 = StateNo = 343 || StateNo = 344 || StateNo = 345 || StateNo = 346 || StateNo = 347 || StateNo = 348 || StateNo = 400 || StateNo = 410 || StateNo = 600 || StateNo = 601 || StateNo = 610 || StateNo = 611
+trigger4 = StateNo = 650 || StateNo = 720
+anim = 9952
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 0.540, 0.540
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 1300 || StateNo = 1301
+anim = 9952
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-12)
+scale = 0.780, 0.780
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 1500 || StateNo = 1501
+anim = 9952
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-20)
+scale = 0.780, 0.780
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 1100 || StateNo = 1101 || StateNo = 1200 || StateNo = 1201 || StateNo = 1400 || StateNo = 1401 || StateNo = 1701
+anim = 9952
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 0.780, 0.780
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 3435
+anim = 9952
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-11)
+scale = 1.140, 1.140
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 3100 || StateNo = 3200 || StateNo = 3401 || StateNo = 3402 || StateNo = 3403 || StateNo = 3410 || StateNo = 3411 || StateNo = 3412 || StateNo = 3413 || StateNo = 3420 || StateNo = 3421 || StateNo = 3422
+trigger2 = StateNo = 3423 || StateNo = 3430 || StateNo = 3431 || StateNo = 3432 || StateNo = 3433 || StateNo = 3434
+anim = 9952
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 1.140, 1.140
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca conta golpes]
+type = MapSet
+trigger1 = 1
+map = "luz_hc"
+value = HitCount
+ignorehitpause = 1
+
+[State -4, Luz da faisca conta defesas]
+type = MapSet
+trigger1 = 1
+map = "luz_mg"
+value = MoveGuarded > 0
+ignorehitpause = 1
+
+; <<< luz_efeitos.py
 
 [State -4, Aura garanhao garanhao: nasce]
 type = Explod

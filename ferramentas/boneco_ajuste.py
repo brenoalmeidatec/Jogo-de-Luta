@@ -304,7 +304,7 @@ def desenhar(kit, pose):
     tela = np.zeros((TELA[1], TELA[0], 4), np.uint8)
     usados = []
     for slot in CAMADAS:
-        if slot == "canela_frente" and pose.get("coxa_frente", {}).get("var"):
+        if slot.startswith("canela_") and pose.get(slot.replace("canela", "coxa"), {}).get("var"):
             continue  # a perna levantada é um desenho só (coxa, canela e pé)
         p = kit["pecas"][chave(slot, pose)]
         pos, ang = w[slot]
@@ -355,7 +355,7 @@ def encaixar(kit, alvo, pose=None, ordem=ORDEM):
     pose = dict(pose or {})
     for slot in ordem:
         angs0, folga0, vars_ = BUSCA[slot]
-        if slot == "canela_frente" and pose.get("coxa_frente", {}).get("var"):
+        if slot.startswith("canela_") and pose.get(slot.replace("canela", "coxa"), {}).get("var"):
             continue
         melhor = None
         for var in vars_:

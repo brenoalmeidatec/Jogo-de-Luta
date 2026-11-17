@@ -205,8 +205,8 @@ def tabela(corpo, ids_da_aura):
     dos outros. O que dá igual ao parado não entra (é o valor de partida)."""
     tp, tq = {}, {}
     for acao, els in sorted(corpo.acoes.items()):
-        # 30000+: as ações espelho do aura_silhueta.py; 9720 a 9739: as luzes da luz.py
-        if acao in ids_da_aura or acao < 0 or acao >= 30000 or 9720 <= acao < 9740:
+        # 30000+: as ações espelho do aura_silhueta.py; 9720 a 9999: as luzes da luz.py e da luz_efeitos.py
+        if acao in ids_da_aura or acao < 0 or acao >= 30000 or 9720 <= acao < 10000:
             continue
         alvos, ultimo = [], None
         for e in range(1, len(els) + 1):

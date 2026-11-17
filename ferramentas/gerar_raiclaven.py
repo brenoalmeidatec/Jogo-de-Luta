@@ -411,6 +411,8 @@ def main():
     forma_permanente.aplicar("raiclaven", SAIDA)
     import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
     destruicao.aplicar("raiclaven", SAIDA)
+    import luz  # issue #51: luz em todo efeito que brilha (sem aura em camadas, a luz.py não vem pelo aura_silhueta)
+    luz.aplicar("raiclaven", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 
