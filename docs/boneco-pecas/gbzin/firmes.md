@@ -64,14 +64,14 @@
 | baixo_soco/05 | desenho + cabeça do kit | 57.4 |
 | baixo_soco/06 | desenho + cabeça do kit | 58.9 |
 | baixo_soco/07 | desenho + cabeça do kit | 58.3 |
-| bicicleta/00 | desenho + cabeça do kit | 60.3 |
-| bicicleta/01 | desenho + cabeça do kit | 62.2 |
-| bicicleta/02 | desenho + cabeça do kit (conferida à mão); descido até o chão | 68.3 |
-| bicicleta/03 | desenho + cabeça do kit (conferida à mão) | 64.2 |
-| bicicleta/04 | desenho + cabeça do kit (conferida à mão); descido até o chão | 64.0 |
-| bicicleta/05 | desenho + cabeça do kit (conferida à mão) | 63.6 |
-| bicicleta/06 | desenho + cabeça do kit | 61.0 |
-| bicicleta/07 | desenho + cabeça do kit | 61.6 |
+| bicicleta/00 | desenho + cabeça do kit (desenho de bicicleta_v2/00) (conferida à mão) | 64.0 |
+| bicicleta/01 | desenho + cabeça do kit (desenho de bicicleta_v2/01) (conferida à mão) | 64.5 |
+| bicicleta/02 | desenho + cabeça do kit (desenho de bicicleta_v2/02) (conferida à mão) | 64.6 |
+| bicicleta/03 | desenho + cabeça do kit (desenho de bicicleta_v2/03) (conferida à mão) | 64.4 |
+| bicicleta/04 | desenho + cabeça do kit (desenho de bicicleta_v2/04) (conferida à mão) | 63.5 |
+| bicicleta/05 | desenho + cabeça do kit (desenho de bicicleta_v2/05) (conferida à mão) | 63.8 |
+| bicicleta/06 | desenho + cabeça do kit (desenho de bicicleta_v2/06) | 62.9 |
+| bicicleta/07 | desenho + cabeça do kit (desenho de bicicleta_v2/07) (conferida à mão) | 63.8 |
 | bola/00 | desenho + cabeça do kit | 37.7 |
 | bola/01 | desenho + cabeça do kit | 47.7 |
 | bola/02 | desenho + cabeça do kit | 48.2 |
@@ -265,19 +265,19 @@
 | referencia_ginga/06 | kit |  |
 | referencia_ginga/07 | kit |  |
 | rolamento/00 | kit |  |
-| rolamento/01 | desenho + cabeça do kit | 46.1 |
-| rolamento/02 | desenho + cabeça do kit | 47.9 |
-| rolamento/03 | desenho + cabeça do kit | 47.3 |
-| rolamento/04 | desenho + cabeça do kit (conferida à mão) | 64.2 |
+| rolamento/01 | desenho + cabeça do kit (desenho de rolamento_v2/01) | 61.7 |
+| rolamento/02 | desenho + cabeça do kit (desenho de rolamento_v2/02) | 62.1 |
+| rolamento/03 | desenho + cabeça do kit (desenho de rolamento_v2/03) | 62.5 |
+| rolamento/04 | desenho + cabeça do kit (desenho de rolamento_v2/04) | 62.1 |
 | rolamento/05 | de costas: fica a nuca do desenho (na cor certa) |  |
-| rolamento/06 | desenho + cabeça do kit (guiada: giro 0°, tamanho 0.95, espelhada) | 39.5 |
+| rolamento/06 | desenho + cabeça do kit (guiada: giro 0°, tamanho 0.90, espelhada) | 64.4 |
 | rolamento/07 | kit |  |
 | soco/00 | kit |  |
 | soco/01 | kit |  |
 | soco/02 | kit |  |
 | soco/03 | kit |  |
-| soco/04 | desenho + cabeça do kit | 44.2 |
-| soco/05 | desenho + cabeça do kit (conferida à mão) | 66.0 |
+| soco/04 | desenho + cabeça do kit (desenho de soco_cotovelo/04) | 60.9 |
+| soco/05 | desenho + cabeça do kit (guiada: giro 0°) | 70.7 |
 | soco/06 | desenho + cabeça do kit | 45.9 |
 | soco/07 | kit |  |
 | vitoria/00 | desenho + cabeça do kit | 37.1 |
