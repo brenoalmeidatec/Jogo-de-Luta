@@ -1289,7 +1289,13 @@ def main():
     # Regra de criação, seção 11 (17/11/2026): os golpes do boneco de peças (parado, soco, chute alto, com os quadros
     # do meio) entram por cima do que o gerador fez, e depois a aura e o encolher. Sempre por último.
     import subprocess
-    for passo in (["ligar_pecas.py", "gbzin"], ["aura_silhueta.py", "gbzin"], ["encolher_sff.py", "gbzin"]):
+    # O Grão-Pastor (kit_grao_pastor.py: parado, chifrada e estampido do kit dele) liga depois da forma base: o parado
+    # entra pelo remap do despertado dos sprites que a base acabou de ligar, e as ações 10200 e 10240 são reescritas
+    # com os quadros dele (mesmos ticks, mesmo tick de acerto e mesmas caixas). Os desenhos dele vão em PNG e o
+    # encolher_sff indexa os grupos 49000+ numa paleta própria.
+    for passo in (["ligar_pecas.py", "gbzin"],
+                  ["ligar_pecas.py", "gbzin", "--de", "gbzin", "--pasta", "quadros_e_pecas_hd", "--grupo", "49000"],
+                  ["aura_silhueta.py", "gbzin"], ["encolher_sff.py", "gbzin", "--indexar", "49000-49099"]):
         subprocess.run([sys.executable, str(RAIZ / "ferramentas" / passo[0])] + passo[1:], check=True)
 
 

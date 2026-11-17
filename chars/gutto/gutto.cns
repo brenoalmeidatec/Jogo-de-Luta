@@ -10361,7 +10361,7 @@ map = "au_garanhao_h0"
 value = 0
 ignorehitpause = 1
 
-; >>> aura_no_corpo.py: a aura segue o corpo (issue #51). Tabelas medidas nos desenhos do .air: 296 + 115 valores, 1899 trechos. Pivô nas costas em 3, -63. Não edite: rode python3 ferramentas/aura_no_corpo.py
+; >>> aura_no_corpo.py: a aura segue o corpo (issue #51). Tabelas medidas nos desenhos do .air: 299 + 114 valores, 1901 trechos. Pivô nas costas em 3, -63. Não edite: rode python3 ferramentas/aura_no_corpo.py
 [State -4, Aura garanhao no corpo: costas de quem está em pé]
 type = MapSet
 trigger1 = 1
@@ -11829,15 +11829,15 @@ ignorehitpause = 1
 [State -4, Aura garanhao no corpo: costas -2 +0]
 type = MapSet
 trigger1 = Anim = 10200 && AnimElemNo(0) = [1, 3]
-trigger2 = Anim = 10215 && AnimElemNo(0) = [1, 6]
-trigger3 = Anim = 10260 && AnimElemNo(0) = [1, 5]
+trigger2 = Anim = 10260 && AnimElemNo(0) = [1, 5]
 map = "au_garanhao_p"
 value = 8255
 ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas +2 +0]
 type = MapSet
-trigger1 = Anim = 10240 && AnimElemNo(0) = [13, 16]
+trigger1 = Anim = 10215 && AnimElemNo(0) = [15, 18]
+trigger2 = Anim = 10240 && AnimElemNo(0) = [13, 16]
 map = "au_garanhao_p"
 value = 8257
 ignorehitpause = 1
@@ -11881,22 +11881,35 @@ map = "au_garanhao_p"
 value = 8381
 ignorehitpause = 1
 
+[State -4, Aura garanhao no corpo: costas +0 +2]
+type = MapSet
+trigger1 = Anim = 10215 && AnimElemNo(0) = [1, 6]
+map = "au_garanhao_p"
+value = 8384
+ignorehitpause = 1
+
 [State -4, Aura garanhao no corpo: costas +2 +2]
 type = MapSet
 trigger1 = Anim = 10210 && AnimElemNo(0) = [1, 4]
+trigger2 = Anim = 10210 && AnimElemNo(0) = [8, 19]
 map = "au_garanhao_p"
 value = 8385
 ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas +4 +2]
 type = MapSet
-trigger1 = Anim = 4710 && AnimElemNo(0) = 7
-trigger2 = Anim = 10200 && AnimElemNo(0) = [4, 9]
-trigger3 = Anim = 10215 && AnimElemNo(0) = 7
-trigger4 = Anim = 10215 && AnimElemNo(0) = [12, 16]
-trigger5 = Anim = 10260 && AnimElemNo(0) = [6, 13]
+trigger1 = Anim = 10200 && AnimElemNo(0) = [4, 9]
+trigger2 = Anim = 10215 && AnimElemNo(0) = [12, 14]
+trigger3 = Anim = 10260 && AnimElemNo(0) = [6, 13]
 map = "au_garanhao_p"
 value = 8386
+ignorehitpause = 1
+
+[State -4, Aura garanhao no corpo: costas +6 +2]
+type = MapSet
+trigger1 = Anim = 4710 && AnimElemNo(0) = 7
+map = "au_garanhao_p"
+value = 8387
 ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -8 +4]
@@ -11928,6 +11941,13 @@ trigger2 = Anim = 10410 && AnimElemNo(0) = 6
 trigger3 = Anim = 10440 && AnimElemNo(0) = 20
 map = "au_garanhao_p"
 value = 8512
+ignorehitpause = 1
+
+[State -4, Aura garanhao no corpo: costas +6 +4]
+type = MapSet
+trigger1 = Anim = 10215 && AnimElemNo(0) = 7
+map = "au_garanhao_p"
+value = 8515
 ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas +12 +4]
@@ -11978,25 +11998,11 @@ map = "au_garanhao_p"
 value = 8641
 ignorehitpause = 1
 
-[State -4, Aura garanhao no corpo: costas +4 +6]
-type = MapSet
-trigger1 = Anim = 10210 && AnimElemNo(0) = [5, 7]
-map = "au_garanhao_p"
-value = 8642
-ignorehitpause = 1
-
 [State -4, Aura garanhao no corpo: costas +6 +6]
 type = MapSet
 trigger1 = Anim = 10245 && AnimElemNo(0) = [8, 12]
 map = "au_garanhao_p"
 value = 8643
-ignorehitpause = 1
-
-[State -4, Aura garanhao no corpo: costas +12 +6]
-type = MapSet
-trigger1 = Anim = 10215 && AnimElemNo(0) = [8, 11]
-map = "au_garanhao_p"
-value = 8646
 ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -20 +8]
@@ -12050,6 +12056,20 @@ type = MapSet
 trigger1 = Anim = 5120 && AnimElemNo(0) = 4
 map = "au_garanhao_p"
 value = 8770
+ignorehitpause = 1
+
+[State -4, Aura garanhao no corpo: costas +6 +8]
+type = MapSet
+trigger1 = Anim = 10210 && AnimElemNo(0) = [5, 7]
+map = "au_garanhao_p"
+value = 8771
+ignorehitpause = 1
+
+[State -4, Aura garanhao no corpo: costas +12 +8]
+type = MapSet
+trigger1 = Anim = 10215 && AnimElemNo(0) = [8, 11]
+map = "au_garanhao_p"
+value = 8774
 ignorehitpause = 1
 
 [State -4, Aura garanhao no corpo: costas -24 +10]
@@ -14284,7 +14304,7 @@ trigger23 = Anim = 5120 && AnimElemNo(0) = 4
 trigger24 = Anim = 9211 && AnimElemNo(0) = [6, 8]
 trigger25 = Anim = 10200 && AnimElemNo(0) = [4, 9]
 trigger26 = Anim = 10215 && AnimElemNo(0) = 7
-trigger27 = Anim = 10215 && AnimElemNo(0) = [12, 16]
+trigger27 = Anim = 10215 && AnimElemNo(0) = [12, 14]
 trigger28 = Anim = 10216 && AnimElemNo(0) = 7
 trigger29 = Anim = 10240 && AnimElemNo(0) = [11, 12]
 trigger30 = Anim = 10260 && AnimElemNo(0) = [6, 13]
@@ -14419,13 +14439,6 @@ map = "au_garanhao_q"
 value = 8969
 ignorehitpause = 1
 
-[State -4, Aura garanhao no corpo: recolhe 0 de 7, centro +8, tronco +8 graus]
-type = MapSet
-trigger1 = Anim = 10215 && AnimElemNo(0) = [8, 11]
-map = "au_garanhao_q"
-value = 8976
-ignorehitpause = 1
-
 [State -4, Aura garanhao no corpo: recolhe 0 de 7, centro +12, tronco +8 graus]
 type = MapSet
 trigger1 = Anim = 840 && AnimElemNo(0) = [2, 5]
@@ -14433,6 +14446,7 @@ trigger2 = Anim = 841 && AnimElemNo(0) = [1, 2]
 trigger3 = Anim = 841 && AnimElemNo(0) = 4
 trigger4 = Anim = 841 && AnimElemNo(0) = 8
 trigger5 = Anim = 841 && AnimElemNo(0) = 10
+trigger6 = Anim = 10215 && AnimElemNo(0) = [8, 11]
 map = "au_garanhao_q"
 value = 8984
 ignorehitpause = 1

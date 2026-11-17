@@ -7,7 +7,7 @@ de peças (cabeça separada para trocar depois). Os rascunhos de pose do ChatGPT
 vêm do kit.
 
   python ferramentas/gbzin_e_pecas.py ref              parado de referência + paleta em sprites/gbzin/pecas_e/
-  python ferramentas/gbzin_e_pecas.py parado           parado que respira (quadros_e_pecas_hd/referencia_ginga)
+  python ferramentas/gbzin_e_pecas.py parado           parado que respira (quadros_e_firmes_hd/e_referencia_ginga)
   python ferramentas/gbzin_e_pecas.py firme e_anda ... rascunho -> quadros_e_firmes_hd (escala, paleta, chão)
 """
 import json

@@ -3180,3 +3180,21 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
 - Ligadas como reação própria de quem é agarrado (`agarrao_mk.V_PRESO..V_CAI`, ações 5940-5944 no .air do Gbzin,
   usadas por SelfAnimExist em qualquer lutador que agarre). As folhas entram no fim de `gp.FOLHAS`: o conjunto comum
   `gp.SPRITES_VITIMA` e os outros lutadores não mudam (o assert do gerador confere). Robô de luta 236/236.
+## 17/11/2026 - Gbzin: kit de peças do Grão-Pastor (despertado) e três golpes posados com ele
+- Kit próprio do despertado, recortado do `e_referencia_ginga/00` em `sprites/gbzin/pecas_e/corpo/` (cabeça, tronco
+  com manto, quadril com faixa, braços com cajado, coxas, canelas e cascos, pontas da faixa; sobra na junta, furos,
+  régua dos ossos). Código em `ferramentas/kit_grao_pastor.py` (`kit`, `animar`, `provas`), no motor do `firme.py`
+  (perna de apoio pela malha, perna no ar e juntas como pele) e do `vida_pecas.py`. O kit remonta o parado com 0 px de
+  diferença.
+- Posados só com as peças (rascunhos só de guia): parado com respiração (16 desenhos), x = `e_chifrada` (ação 10200) e
+  chute alto = `e_estampido` (pisão, ação 10240), sem quadro do meio entre antecipação e contato. Robô de defeitos
+  0/37, régua no máximo 4,5%, `gbzin_e_pecas.py conferir` 0 defeitos em 37 folhas.
+- Ligado pelo `gerar_gbzin.py`: `ligar_pecas.py gbzin --de gbzin --pasta quadros_e_pecas_hd --grupo 49000` (opção
+  `--pasta` nova), depois aura e `encolher_sff --indexar 49000-49099`. Mesma soma de ticks, mesmas caixas e mesmo
+  elemento de acerto; o parado do despertado vira remap para 49002. Robô de luta 236/236 com o dano idêntico ao de antes.
+- Provas: `docs/boneco-pecas/gbzin/grao_pastor_{kit,kit_remonta,poses,antes_depois}.png`, `grao_pastor_robo.md` e
+  `grao_pastor_lado_a_lado.mp4`.
+- Não testado: nada rodado no IKEMEN de verdade. O que os braços tapavam foi pintado por inpaint nas cores do kit (dá
+  para retocar à mão). O kit está nas 15 cores do parado do despertado (pedido desta tarefa), não em cor cheia. Os
+  outros golpes do Grão-Pastor continuam com as folhas antigas, e as folhas `quadros_e_firmes` ficaram como estavam.
+  Levou cerca de um dia de sessão.
