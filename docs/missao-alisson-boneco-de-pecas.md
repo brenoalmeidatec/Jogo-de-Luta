@@ -70,6 +70,8 @@ Só três animações, feitas com todo o capricho:
   peça e cola as peças na ordem de camada.
 - **Gire com RotSprite** (ou o algoritmo equivalente sem mistura de cor), nunca com rotação bilinear: rotação comum
   borra e cria cor nova. Depois de montar, re-quantize para a paleta fixa sem dithering.
+- **Montador (2026-11-17):** `python ferramentas/montador.py` abre uma página para montar as poses no olho, com casca
+  de cebola, régua e caixa de golpe, desenhando com o mesmo código do piloto. Veja [`montador.md`](montador.md).
 - Para achar os ângulos, vale usar como guia a folha atual do golpe, um rascunho da IA ou um esboço: **o guia só dá a
   pose, o quadro final usa só as peças do kit**.
 - Poucas poses, bem escolhidas (o estudo explica por quê):
