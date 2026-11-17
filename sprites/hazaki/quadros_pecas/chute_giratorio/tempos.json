@@ -1,0 +1,68 @@
+{
+ "acao": 331,
+ "caixa": [
+  42,
+  -222,
+  183,
+  -150
+ ],
+ "origem": [
+  "chute_giratorio/01",
+  "chute_giratorio/02",
+  "chute_giratorio/03",
+  "chute_giratorio/04",
+  "chute_giratorio/05",
+  "chute_giratorio/06",
+  "chute_giratorio/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_giratorio/01"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chute_giratorio/02"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chute_giratorio/03"
+  },
+  {
+   "desenho": 3,
+   "ticks": 4,
+   "caixa": true,
+   "de": "chute_giratorio/04"
+  },
+  {
+   "desenho": 4,
+   "ticks": 5,
+   "caixa": false,
+   "de": "chute_giratorio/05"
+  },
+  {
+   "desenho": 5,
+   "ticks": 6,
+   "caixa": false,
+   "de": "chute_giratorio/06"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_giratorio/07"
+  },
+  {
+   "desenho": 7,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chute_giratorio/07"
+  }
+ ]
+}

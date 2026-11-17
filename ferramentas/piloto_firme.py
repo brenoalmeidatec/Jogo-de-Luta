@@ -30,6 +30,7 @@ sys.path.insert(0, str(AQUI))
 import boneco_ajuste as b  # noqa: E402
 import corrigir_cabeca as cc  # noqa: E402
 import vida_pecas as vida  # noqa: E402
+import pele_pecas as pele  # noqa: E402
 from video_pecas import ATUAL  # noqa: E402
 
 SPR = b.SPR
@@ -42,6 +43,7 @@ EXPRESSAO = {"soco/03": "foco", "soco/05": "esforco", "soco/06": "esforco", "soc
 PERNA = {"ginga/06": "agachada", "ginga/02": "agachada", "chute_alto/01": "camara", "chute_alto/02": "camara", "chute_alto/04": "esticada", "chute_alto/05": "esticada",
          "chute_alto/06": "camara"}
 FOLGA_CORPO = 40
+PELE = False  # True: desenho sem linha de corte (pele que dobra nas juntas, pele_pecas.py); o Pengaró liga no pengaro_todo
 CHAO = 659  # pixel mais baixo do pé no parado (3x)
 RAIZ_DOCS = AQUI.parent / "docs/boneco-pecas/corpo_firme"
 # pé separado da canela: fica sempre reto no chão (a canela gira, o pé não), preso no tornozelo
@@ -116,13 +118,13 @@ def montar():
     pe = kit["pecas"]["coxa_frente_agachada"]
     arq = b.PECAS / pe["arquivo"]
     Image.fromarray(tirar_faixa(np.asarray(Image.open(arq).convert("RGBA")))).save(arq)
-    limpar_contorno_dos_bracos(kit, ("tronco", "quadril", "coxa_tras", "coxa_frente"))
+    limpar_contorno_dos_bracos(kit)
     base = kit["pecas"]["cabeca"]
     base_img = np.asarray(Image.open(b.PECAS / base["arquivo"]).convert("RGBA"))
     tmpl, caixa = cc.referencia()
     centro_ref = ((caixa[0] + caixa[2]) / 2, (caixa[1] + caixa[3]) / 2)
     ox, oy = base["origem"]
-    for nome in ("foco", "esforco", "dor", "riso"):
+    for nome in ("foco", "esforco"):
         rec, centro = cc.cabeca_do_kit(nome, tmpl, caixa)
         tela = np.zeros((b.TELA[1], b.TELA[0], 4), np.uint8)
         tela[oy:oy + base_img.shape[0], ox:ox + base_img.shape[1]] = base_img
@@ -199,6 +201,26 @@ def pernas_no_chao(pose, alvo, so_tras=False):
     return pose
 
 
+def calca_lisa(img, regiao, anel=4):
+    """Pinta `regiao` com a calça em volta: o contorno escuro que encosta nela (resto de bolinha, mão ou garrafa que
+    estava por cima) entra junto na pintura, e só pixel claro serve de cor (sem mancha cinza)."""
+    if not regiao.any():
+        return img
+    rgb = img[..., :3].astype(int)
+    # contorno e sombra cinza (pouca cor); a listra verde e amarela da calça não entra
+    escuro = (((rgb.sum(-1) < 420) & (np.ptp(rgb, -1) < 70)) | (rgb.sum(-1) < 150)) & (img[..., 3] > 0)
+    perto = cv2.dilate(regiao.astype(np.uint8), np.ones((2 * anel + 1, 2 * anel + 1), np.uint8)) > 0
+    alvo = regiao | (escuro & perto)
+    # a beira de fora da peça (contorno da silhueta) fica
+    borda = (img[..., 3] > 0) & (cv2.erode((img[..., 3] > 0).astype(np.uint8), np.ones((3, 3), np.uint8)) == 0)
+    alvo &= ~borda
+    fonte = (img[..., 3] == 0) | alvo
+    pint = cv2.inpaint(np.ascontiguousarray(img[..., :3]), fonte.astype(np.uint8), 5, cv2.INPAINT_TELEA)
+    out = img.copy()
+    out[alvo, :3] = pint[alvo]
+    return out
+
+
 def separar_pes(kit):
     """Tira o pé de cada canela do kit e guarda à parte (kit['pes']); separa também o cordão e as bolinhas da faixa
     (kit['bolinhas']), que vão por cima de tudo."""
@@ -207,22 +229,52 @@ def separar_pes(kit):
     laranja = (q[..., 3] > 0) & (hsv[..., 0] >= 12) & (hsv[..., 0] <= 32) & (hsv[..., 1] > 120) & (hsv[..., 2] > 110)
     laranja = cv2.dilate(laranja.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool) & (q[..., 3] > 0)
     n, lab, st, _ = cv2.connectedComponentsWithStats(laranja.astype(np.uint8))
-    grandes = [i for i in range(1, n) if st[i, 4] > 60]
+    # só o cordão e as bolinhas, que pendem do nó para a direita; a listra amarela da calça (à esquerda) fica
+    ox_q = kit["pecas"]["quadril"]["origem"][0]
+    grandes = [i for i in range(1, n) if st[i, 4] > 60 and ox_q + st[i, 0] + st[i, 2] / 2 > 560]
     bol = np.zeros_like(q)
     m = np.isin(lab, grandes)
+    # o contorno escuro do cordão e das bolinhas vai junto com elas (senão fica o fantasma no quadril)
+    rgbq = q[..., :3].astype(int)
+    verde = (hsv[..., 0] >= 40) & (hsv[..., 0] <= 95) & (hsv[..., 1] > 80)
+    escuro_q = (rgbq.sum(-1) < 330) & (q[..., 3] > 0) & ~verde
+    m = m | (cv2.dilate(m.astype(np.uint8), np.ones((7, 7), np.uint8)).astype(bool) & escuro_q)
     bol[m] = q[m]
+    sob = cv2.dilate(m.astype(np.uint8), np.ones((5, 5), np.uint8)).astype(bool) & (q[..., 3] > 0) & ~verde
     kit["bolinhas"] = bol
     # e tira do quadril, senão elas aparecem em dobro quando balançam: o que fica atrás delas vira calça (inpaint),
     # só onde o quadril continua em volta; o que pendia para fora do quadril fica vazio
     resto = (q[..., 3] > 0) & ~m
-    fechado = cv2.morphologyEx(resto.astype(np.uint8), cv2.MORPH_CLOSE, np.ones((9, 9), np.uint8)) > 0
+    fechado = cv2.morphologyEx(resto.astype(np.uint8), cv2.MORPH_CLOSE, np.ones((31, 31), np.uint8)) > 0
     vazio = q[..., 3] == 0
     pint = cv2.inpaint(np.ascontiguousarray(q[..., :3]), (m | vazio).astype(np.uint8), 4, cv2.INPAINT_TELEA)
     q2 = q.copy()
     tapa = m & fechado
     q2[tapa, :3] = pint[tapa]
+    q2[tapa, 3] = 255
     q2[m & ~fechado] = 0
+    q2 = calca_lisa(q2, tapa | (sob & ~m & fechado))
+    furo = (cv2.morphologyEx((q2[..., 3] > 0).astype(np.uint8), cv2.MORPH_CLOSE, np.ones((7, 7), np.uint8)) > 0) \
+        & (q2[..., 3] == 0) & fechado
+    if furo.any():
+        q2[furo, 3] = 255
+        q2 = calca_lisa(q2, furo)
     kit["pecas"]["quadril"]["img"] = q2
+    # a coxa da frente tem o buraco das bolinhas (elas ficavam por cima): fecha com calça
+    cf = kit["pecas"]["coxa_frente"]["img"]
+    a = (cf[..., 3] > 0).astype(np.uint8)
+    buraco = (cv2.morphologyEx(a, cv2.MORPH_CLOSE, np.ones((15, 15), np.uint8)) > 0) & (a == 0)
+    n_, lab_, st_, _ = cv2.connectedComponentsWithStats(buraco.astype(np.uint8))
+    # só buraco de dentro (não o vão que encosta na beira de cima, onde a coxa encontra o quadril)
+    dentro = np.zeros_like(buraco)
+    for i in range(1, n_):
+        x, y, w_, h_, area = st_[i]
+        if area >= 6:
+            dentro |= lab_ == i
+    if dentro.any():
+        cf = cf.copy()
+        cf[dentro, 3] = 255
+        kit["pecas"]["coxa_frente"]["img"] = calca_lisa(cf, dentro)
     ys, xs = np.nonzero(m)
     o = kit["pecas"]["quadril"]["origem"]
     kit["no_bolinhas"] = (o[0] + float(xs.mean()), o[1] + float(ys.min()))  # o cordão pende do nó, em cima
@@ -254,7 +306,7 @@ def separar_pes(kit):
 
 def desenhar(kit, pose):
     """O desenho do boneco_ajuste, com os pés retos no chão presos no tornozelo de cada canela."""
-    tela = b.desenhar(kit, pose)
+    tela = pele.desenhar(kit, pose) if PELE else b.desenhar(kit, pose)
     w = b.mundo(pose)
     # cordão e bolinhas da faixa ficam por cima da perna da frente, como no desenho
     for slot in ("canela_tras", "canela_frente"):
@@ -268,12 +320,10 @@ def desenhar(kit, pose):
         x0 = int(round(pe["origem"][0] + tx - pe["tornozelo"][0]))
         y0 = int(round(pe["origem"][1] + ty - pe["tornozelo"][1]))
         # pé perto do chão encosta no chão (o chão do parado), sem afundar nem flutuar alguns pixels
-        # o tornozelo estica ou encolhe esses pixels (o pé não desgruda da canela nem fica torto)
         fundo = pe["fundo"] + y0
-        img = pe["img"]
-        if fundo != CHAO and abs(fundo - CHAO) <= 10:
-            img = esticar_tornozelo(img, CHAO - fundo)
-        b.colar(tela, img, x0, y0, so_vazio=(slot == "canela_tras"))
+        if abs(fundo - CHAO) <= 10:
+            y0 += CHAO - fundo
+        b.colar(tela, pe["img"], x0, y0, so_vazio=(slot == "canela_tras"))
     p = kit["pecas"]["quadril"]
     bo = pose.get("_bolinhas", {})
     (qx, qy), qang = w["quadril"]
@@ -283,7 +333,10 @@ def desenhar(kit, pose):
     piv = (kit["no_bolinhas"][0] - p["origem"][0], kit["no_bolinhas"][1] - p["origem"][1])
     r, piv2 = b.rotsprite(kit["bolinhas"], qang + bo.get("ang", 0), piv)
     b.colar(tela, r, int(round(no[0] - piv2[0])), int(round(no[1] - piv2[1])))
-    return contornar(sem_migalha(fechar_frestas(tela, juntas=[w[sl][0] for sl in b.OSSOS])))
+    tela = sem_migalha(fechar_frestas(tela, juntas=[w[sl][0] for sl in b.OSSOS]))
+    if PELE:  # acabamento do Pengaró (contorno e calça dele); os outros lutadores ficam como estavam
+        tela = contornar(sem_risco_na_calca(tela))
+    return tela
 
 
 CONTORNO = np.array([33, 2, 26])  # cor do contorno de fora do parado (mediana da borda)
@@ -297,6 +350,38 @@ def contornar(tela):
     clara = beira & (tela[..., :3].astype(int).sum(-1) >= 250)
     out = tela.copy()
     out[clara, :3] = (0.25 * tela[clara, :3] + 0.75 * CONTORNO).astype(np.uint8)
+    return out
+
+
+def sem_risco_na_calca(tela, maximo=80):
+    """Risco escuro solto no meio da calça (resto do contorno de dentro da perna do parado, que boia quando as pernas
+    abrem mais): mancha escura pequena cercada de calça clara vira calça."""
+    rgb = tela[..., :3].astype(int)
+    al = tela[..., 3] > 0
+    escuro = ((rgb.sum(-1) < 360) & (np.ptp(rgb, -1) < 80) & al).astype(np.uint8)
+    n, lab, st, _ = cv2.connectedComponentsWithStats(escuro, connectivity=8)
+    if n <= 1:
+        return tela
+    calca = (rgb.min(-1) > 140) & (np.ptp(rgb, -1) < 100) & al
+    dentro = cv2.erode(al.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0
+    alvo = np.zeros(al.shape, bool)
+    for i in range(1, n):
+        if st[i, 4] > maximo:
+            continue
+        x, y, w_, h_ = st[i, :4]
+        sl = (slice(max(0, y - 4), y + h_ + 4), slice(max(0, x - 4), x + w_ + 4))
+        m = lab[sl] == i
+        anel = cv2.dilate(m.astype(np.uint8), np.ones((7, 7), np.uint8)).astype(bool) & ~m
+        if not dentro[sl][m].all():
+            continue
+        if calca[sl][anel].mean() >= 0.7:
+            alvo[sl] |= m
+    if not alvo.any():
+        return tela
+    out = tela.copy()
+    fonte = alvo | ~al
+    pint = cv2.inpaint(np.ascontiguousarray(tela[..., :3]), fonte.astype(np.uint8), 4, cv2.INPAINT_TELEA)
+    out[alvo, :3] = pint[alvo]
     return out
 
 
@@ -318,8 +403,10 @@ def esticar_tornozelo(img, d):
     return out
 
 
-def sem_migalha(tela, minimo=12):
+def sem_migalha(tela, minimo=None):
     """Some com pixel solto (migalha de borda de peça girada) separado da figura."""
+    if minimo is None:
+        minimo = 40 if PELE else 12
     al = (tela[..., 3] > 0).astype(np.uint8)
     n, lab, st, _ = cv2.connectedComponentsWithStats(al, connectivity=8)
     out = tela.copy()
@@ -351,7 +438,7 @@ def fechar_frestas(tela, raio=5, juntas=()):
     return out
 
 
-def limpar_contorno_dos_bracos(kit, nomes=("tronco", "quadril")):
+def limpar_contorno_dos_bracos(kit):
     """O contorno escuro dos braços do parado ficou pintado no tronco e no quadril (na beira de onde o braço estava).
     Quando o braço gira, ele aparece como uma mancha preta: troca pela cor de volta (inpaint), só por dentro da peça."""
     ref = b.abrir(b.REF)
@@ -359,7 +446,7 @@ def limpar_contorno_dos_bracos(kit, nomes=("tronco", "quadril")):
     perto = cv2.dilate(bracos.astype(np.uint8), np.ones((17, 17), np.uint8)) > 0
     # por dentro da figura do parado (o contorno de fora fica); a beira cortada da peça, onde o braço estava, não conta
     dentro_ref = cv2.erode((ref[..., 3] > 0).astype(np.uint8), np.ones((7, 7), np.uint8)) > 0
-    for nome in nomes:
+    for nome in ("tronco", "quadril"):
         pe = kit["pecas"][nome]
         arq = b.PECAS / pe["arquivo"]
         im = np.asarray(Image.open(arq).convert("RGBA")).copy()
@@ -371,7 +458,7 @@ def limpar_contorno_dos_bracos(kit, nomes=("tronco", "quadril")):
                                                                np.ones((3, 3), np.uint8)) > 0)) & (im[..., 3] > 0)
         dentro &= cv2.erode((im[..., 3] > 0).astype(np.uint8), np.ones((3, 3), np.uint8)) > 0
         # na calça (branca/lilás) qualquer cinza é resto do contorno da mão e da garrafa
-        limite = 190 if nome == "tronco" else 330
+        limite = 330 if nome == "quadril" else 190
         escuro = (im[..., :3].astype(int).sum(-1) < limite) & dentro & area
         escuro = cv2.dilate(escuro.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool) & dentro
         if escuro.any():
@@ -402,8 +489,8 @@ def conferir(tela, original, juntas):
                    np.ones((4, 4), np.uint8))
     yo0 = np.nonzero((original[..., 3] > 0).any(1))[0].min()
     base = max(MANCHA_REF, int(og[yo0 + 80:].sum()))  # sombra que o desenho de hoje também tem não é defeito
-    if corpo > base + 40:
-        erros.append(f"mancha {int(corpo)} px (esperado até {base + 40})")
+    if corpo > base + MANCHA_FOLGA:
+        erros.append(f"mancha {int(corpo)} px (esperado até {base + MANCHA_FOLGA})")
     yo = np.nonzero((original[..., 3] > 0).any(1))[0].max()
     if yo >= 655 and not (655 <= ys.max() <= 663):
         erros.append(f"chão: pé em y={ys.max()} (hoje {yo})")
@@ -420,6 +507,7 @@ def mancha_ref():
 
 
 MANCHA_REF = None
+MANCHA_FOLGA = 50  # a sombra entre as coxas cresce quando as pernas abrem no passo (é do desenho, não é resto de peça)
 
 
 def pose_de(kit, q):

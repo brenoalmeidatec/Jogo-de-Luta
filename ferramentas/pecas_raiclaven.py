@@ -407,7 +407,7 @@ def montar_kit():
     # peça vazia: o filho de uma variante que já traz o membro inteiro (antebraço na estocada, canela na perna)
     vazio = np.zeros((b.TELA[1], b.TELA[0], 4), np.uint8)
     vazio[0, 0] = (0, 0, 0, 1)
-    for slot in ("antebraco_tras", "canela_frente"):
+    for slot in ("antebraco_tras", "canela_frente", "ombreira"):
         guardar(f"{slot}_vazio", vazio, OSSOS[slot][0], OSSOS[slot][1])
     (P / "kit.json").write_text(json.dumps(kit, indent=1, ensure_ascii=False), encoding="utf-8")
     return partes
@@ -487,6 +487,13 @@ def claro(a):
     """Lâmina e friso do avental (cinza-lilás claro): fora da peça de calça."""
     hsv = cv2.cvtColor(np.ascontiguousarray(a[..., :3]), cv2.COLOR_RGB2HSV).astype(int)
     return (a[..., 3] > 0) & (hsv[..., 2] > 150) & (hsv[..., 1] < 80)
+
+
+def colorido(a):
+    """Pele e cor viva (a listra vermelha e azul do poste do bolso): fora da peça do braço de metal."""
+    hsv = cv2.cvtColor(np.ascontiguousarray(a[..., :3]), cv2.COLOR_RGB2HSV).astype(int)
+    m = pele(a) | ((a[..., 3] > 0) & (hsv[..., 1] > 110) & (hsv[..., 2] > 80))
+    return cv2.dilate(m.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool)
 
 
 def pele_ou_claro_perto_do_corpo(a):
