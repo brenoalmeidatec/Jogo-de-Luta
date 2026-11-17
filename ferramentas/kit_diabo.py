@@ -69,3 +69,11 @@ BURACO_MAX = 60
 MANCHA_FOLGA = 150  # o demônio é escuro (garras e calça): a mancha varia mais quando a garra gira
 FIRMES.update(f"parado/{i:02d}" for i in range(8))
 FIRMES.update(f"anda/{i:02d}" for i in range(8))
+# as garras sobem por cima da cabeça (garra cruzada) e varrem para a frente: faixa de giro maior que a do Hazak
+BUSCA = {"braco_tras": (range(-170, 61, 3), 2, [None]), "braco_frente": (range(-170, 61, 3), 4, [None])}
+# perna da frente no coice: o desenho esticado do pe_pes/05 preso no quadril
+VARIANTES["coxa_frente"] = {
+    "esticada": ("pe_pes/05", [(545, 452), (565, 447), (600, 444), (640, 442), (668, 440), (690, 435), (712, 438),
+                               (715, 470), (690, 476), (640, 480), (600, 484), (565, 492), (545, 498)], (552, 472)),
+}
+PERNA_NO_AR = {"pe_pes/01": "livre", "pe_pes/04": "livre", "pe_pes/05": "esticada"}

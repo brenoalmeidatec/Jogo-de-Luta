@@ -121,6 +121,7 @@ def configurar(nome):
         "coxa_frente": (range(-30, 31, 2), 2, [None]),
         "canela_frente": (range(-30, 31, 2), 2, [None]),
     }
+    b.BUSCA.update(getattr(K, "BUSCA", {}))  # faixa de ângulos própria do lutador (ex.: garras por cima da cabeça)
     return K
 
 
