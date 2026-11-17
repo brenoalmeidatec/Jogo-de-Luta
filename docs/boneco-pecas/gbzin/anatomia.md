@@ -29,10 +29,10 @@ Gbzin usa a ordem dele (`PELE_CAMADAS` em `gbzin_pecas.py`).
 | martelo, compasso, cajado_chao, bola, lata, ar_soco | passa | São golpes de bengala: o corpo inclina e dá o passo antes do braço estender. |
 | afastar | passa (exceção) | É um coice de dois pés sentado no chão. As duas pernas esticadas juntas são o golpe, e a regra do "golpe no ar" não vale porque ele está apoiado. |
 | armada, parry_baixo, caneta | passa (exceção) | Não são os giros de capoeira do estudo, são golpes de jiu-jitsu da ficha do Gbzin (guarda fechada, rolamento de costas, chave de braço voadora). |
-| cabecada | rever depois | No 04 e 05 o golpe é a bengala erguida, não a testa. Bate com o pedido da folha, mas não com a receita da cabeçada do estudo. Fica para o Breno decidir. |
+| cabecada | passa | O nome da pasta engana: no Gbzin este golpe não é cabeçada, é o **antiaéreo da bengala** (folha "rising crook hook anti-air"). Ele é usado como soco agachado forte (410) e nos especiais de subir (313 Levanta Comédia, 347 Sobe pro Teto, 1200 no ar). Segue a receita do **uppercut na versão de jogo**: afunda, as pernas esticam, o corpo sobe e o braço passa acima da cabeça para ler como antiaéreo. Trocar por uma testada estragaria o antiaéreo e os três especiais, então fica como está (decidido em 17/11 pela regra "melhor resultado" do Breno). |
 | demais (anda, corre, pulo, defesa, apanha, queda, levanta, provoca, vitoria, derrota, despertar_a, golaco, agarrao, agachado, recuo, rolamento, referencia_ginga, parry_alto) | passa | Não são golpes de contato, ou a pose já segue as leis 1 a 5. |
 
-Quadros do meio: vale a regra de fluidez do Alisson até ele decidir o cartão da Lei 10.
+Quadros do meio: meio-termo do Alisson (17/11): meio na guarda, na preparação e na volta; da antecipação ao contato, seco.
 
 ## Ainda falta
 
