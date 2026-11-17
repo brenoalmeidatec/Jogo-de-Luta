@@ -2647,7 +2647,7 @@ pausemovetime = 99
 type = Explod
 trigger1 = Time = 22
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9802, 9803))
+anim = (ifelse(var(20) > 0, 9806, 9807))
 postype = p1
 pos = 26, -44
 removetime = -2
@@ -2721,7 +2721,7 @@ pausemovetime = 99
 type = Explod
 trigger1 = Time = 42
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9802, 9803))
+anim = (ifelse(var(20) > 0, 9806, 9807))
 postype = p1
 pos = 26, -74
 removetime = -2
@@ -2795,7 +2795,7 @@ pausemovetime = 99
 type = Explod
 trigger1 = Time = 62
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9802, 9803))
+anim = (ifelse(var(20) > 0, 9806, 9807))
 postype = p1
 pos = 26, -44
 removetime = -2
@@ -2869,7 +2869,7 @@ pausemovetime = 99
 type = Explod
 trigger1 = Time = 86
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9800, 9801))
+anim = (ifelse(var(20) > 0, 9804, 9805))
 postype = p1
 pos = 26, -74
 removetime = -2
@@ -3097,7 +3097,7 @@ pausemovetime = 99
 type = Explod
 trigger1 = Time = 22
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9802, 9803))
+anim = (ifelse(var(20) > 0, 9806, 9807))
 postype = p1
 pos = 26, -44
 removetime = -2
@@ -3171,7 +3171,7 @@ pausemovetime = 99
 type = Explod
 trigger1 = Time = 42
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9802, 9803))
+anim = (ifelse(var(20) > 0, 9806, 9807))
 postype = p1
 pos = 26, -44
 removetime = -2
@@ -3245,7 +3245,7 @@ pausemovetime = 99
 type = Explod
 trigger1 = Time = 62
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9802, 9803))
+anim = (ifelse(var(20) > 0, 9806, 9807))
 postype = p1
 pos = 26, -44
 removetime = -2
@@ -3319,7 +3319,7 @@ pausemovetime = 99
 type = Explod
 trigger1 = Time = 86
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9800, 9801))
+anim = (ifelse(var(20) > 0, 9804, 9805))
 postype = p1
 pos = 26, -74
 removetime = -2
@@ -5531,7 +5531,7 @@ ignorehitpause = 1
 [State 3401, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9808, 9809)
+anim = ifelse(var(20) > 0, 9812, 9813)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -5655,7 +5655,7 @@ ignorehitpause = 1
 [State 1600, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9808, 9809)
+anim = ifelse(var(20) > 0, 9812, 9813)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -5761,7 +5761,7 @@ ignorehitpause = 1
 [State 1601, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9808, 9809)
+anim = ifelse(var(20) > 0, 9812, 9813)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -5908,7 +5908,7 @@ ignorehitpause = 1
 [State 1701, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9808, 9809)
+anim = ifelse(var(20) > 0, 9812, 9813)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -6047,7 +6047,7 @@ ignorehitpause = 1
 [State 3402, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9808, 9809)
+anim = ifelse(var(20) > 0, 9812, 9813)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -6186,7 +6186,7 @@ ignorehitpause = 1
 [State 3400, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9808, 9809)
+anim = ifelse(var(20) > 0, 9812, 9813)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -6343,7 +6343,7 @@ ignorehitpause = 1
 [State 3403, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9808, 9809)
+anim = ifelse(var(20) > 0, 9812, 9813)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -6442,7 +6442,7 @@ ownpal = 1
 [State 3403, Luz do efeito]
 type = Explod
 trigger1 = Pos Y >= 0 && Vel Y > 0
-anim = ifelse(var(20) > 0, 9806, 9807)
+anim = ifelse(var(20) > 0, 9810, 9811)
 postype = p1
 pos = 40, -15
 removetime = -2
@@ -6563,7 +6563,7 @@ pausemovetime = 99
 type = Explod
 trigger1 = Time = 22
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9802, 9803))
+anim = (ifelse(var(20) > 0, 9806, 9807))
 postype = p1
 pos = 26, -44
 removetime = -2
@@ -6637,7 +6637,7 @@ pausemovetime = 99
 type = Explod
 trigger1 = Time = 42
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9802, 9803))
+anim = (ifelse(var(20) > 0, 9806, 9807))
 postype = p1
 pos = 26, -44
 removetime = -2
@@ -6711,7 +6711,7 @@ pausemovetime = 99
 type = Explod
 trigger1 = Time = 62
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9802, 9803))
+anim = (ifelse(var(20) > 0, 9806, 9807))
 postype = p1
 pos = 26, -44
 removetime = -2
@@ -6785,7 +6785,7 @@ pausemovetime = 99
 type = Explod
 trigger1 = Time = 86
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9800, 9801))
+anim = (ifelse(var(20) > 0, 9804, 9805))
 postype = p1
 pos = 26, -74
 removetime = -2
@@ -6887,7 +6887,7 @@ ignorehitpause = 1
 [State 1000, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9808, 9809)
+anim = ifelse(var(20) > 0, 9812, 9813)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -7030,7 +7030,7 @@ ignorehitpause = 1
 [State 1001, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9808, 9809)
+anim = ifelse(var(20) > 0, 9812, 9813)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -7167,7 +7167,7 @@ ignorehitpause = 1
 [State 1100, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9808, 9809)
+anim = ifelse(var(20) > 0, 9812, 9813)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -7287,7 +7287,7 @@ ignorehitpause = 1
 [State 1200, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9808, 9809)
+anim = ifelse(var(20) > 0, 9812, 9813)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -7415,7 +7415,7 @@ ignorehitpause = 1
 [State 1300, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9808, 9809)
+anim = ifelse(var(20) > 0, 9812, 9813)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -7696,7 +7696,7 @@ ignorehitpause = 1
 [State 2000, Luz do efeito]
 type = Explod
 trigger1 = Anim = 2000 && AnimTime = 0
-anim = 9810
+anim = 9814
 id = 9272
 postype = p1
 pos = 0, 0
@@ -7759,7 +7759,7 @@ ignorehitpause = 1
 [State 3000, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9804, 9805)
+anim = ifelse(var(20) > 0, 9808, 9809)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -8096,7 +8096,7 @@ ignorehitpause = 1
 [State 3100, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9804, 9805)
+anim = ifelse(var(20) > 0, 9808, 9809)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -8289,7 +8289,7 @@ ignorehitpause = 1
 [State 1101, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9808, 9809)
+anim = ifelse(var(20) > 0, 9812, 9813)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -8409,7 +8409,7 @@ ignorehitpause = 1
 [State 1201, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9808, 9809)
+anim = ifelse(var(20) > 0, 9812, 9813)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -8537,7 +8537,7 @@ ignorehitpause = 1
 [State 1301, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9808, 9809)
+anim = ifelse(var(20) > 0, 9812, 9813)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -9013,7 +9013,7 @@ ignorehitpause = 1
 [State 1400, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9808, 9809)
+anim = ifelse(var(20) > 0, 9812, 9813)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -9131,7 +9131,7 @@ ignorehitpause = 1
 [State 1401, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9808, 9809)
+anim = ifelse(var(20) > 0, 9812, 9813)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -9249,7 +9249,7 @@ ignorehitpause = 1
 [State 1500, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9808, 9809)
+anim = ifelse(var(20) > 0, 9812, 9813)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -9344,7 +9344,7 @@ ownpal = 1
 type = Explod
 trigger1 = (ifelse(Anim = 1500, AnimElemTime(6), AnimElemTime(4)) = 0)
 trigger1 = var(20) > 0
-anim = ifelse(var(20) > 0, 9806, 9807)
+anim = ifelse(var(20) > 0, 9810, 9811)
 postype = p1
 pos = 30, -15
 removetime = -2
@@ -9392,7 +9392,7 @@ ignorehitpause = 1
 [State 1501, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9808, 9809)
+anim = ifelse(var(20) > 0, 9812, 9813)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -9489,7 +9489,7 @@ ownpal = 1
 type = Explod
 trigger1 = AnimElem = 4
 trigger1 = var(20) > 0
-anim = ifelse(var(20) > 0, 9806, 9807)
+anim = ifelse(var(20) > 0, 9810, 9811)
 postype = p1
 pos = 30, -15
 removetime = -2
@@ -9543,7 +9543,7 @@ ignorehitpause = 1
 [State 3200, Luz do efeito]
 type = Explod
 trigger1 = Time = 0
-anim = ifelse(var(20) > 0, 9804, 9805)
+anim = ifelse(var(20) > 0, 9808, 9809)
 id = 9243
 postype = p1
 pos = 8, -60
@@ -10263,7 +10263,7 @@ pausemovetime = 99
 type = Explod
 trigger1 = Time = 26
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9802, 9803))
+anim = (ifelse(var(20) > 0, 9806, 9807))
 postype = p1
 pos = 34, -80
 removetime = -2
@@ -10337,7 +10337,7 @@ pausemovetime = 99
 type = Explod
 trigger1 = Time = 52
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9802, 9803))
+anim = (ifelse(var(20) > 0, 9806, 9807))
 postype = p1
 pos = 34, -82
 removetime = -2
@@ -10411,7 +10411,7 @@ pausemovetime = 99
 type = Explod
 trigger1 = Time = 78
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9802, 9803))
+anim = (ifelse(var(20) > 0, 9806, 9807))
 postype = p1
 pos = 34, -79
 removetime = -2
@@ -10485,7 +10485,7 @@ pausemovetime = 99
 type = Explod
 trigger1 = Time = 106
 trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9800, 9801))
+anim = (ifelse(var(20) > 0, 9804, 9805))
 postype = p1
 pos = 34, -82
 removetime = -2
@@ -10557,6 +10557,23 @@ sprpriority = 4
 ownpal = 1
 ignorehitpause = 1
 
+[State 4710, Luz do efeito]
+type = Explod
+trigger1 = Time = 20
+trigger1 = NumTarget
+anim = 9803
+id = 47000
+postype = p1
+pos = 34, 0
+bindtime = -1
+removetime = -1
+ignorehitpause = 1
+sprpriority = (4) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 4710, Tira o efeito (despertados_47.py)]
 type = RemoveExplod
 trigger1 = Time = 106
@@ -10575,6 +10592,22 @@ sprpriority = 6
 ownpal = 1
 pausemovetime = 12
 scale = .8, .8
+
+[State 4710, Luz do efeito]
+type = Explod
+trigger1 = Time = 106
+trigger1 = NumTarget
+anim = 9802
+postype = p1
+pos = 34, -82
+removetime = -2
+pausemovetime = 12
+scale = .8, .8
+sprpriority = (6) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 4710, Fundo escurece na cor da forma (despertados_47.py)]
 type = BGPalFX
@@ -10653,6 +10686,22 @@ ownpal = 1
 scale = 1.5, 1.5
 ignorehitpause = 1
 
+[State 4710, Luz do efeito]
+type = Explod
+trigger1 = Time = 26
+trigger1 = NumTarget
+anim = 9801
+postype = p1
+pos = 34, -80
+removetime = -2
+scale = 1.0, 1.0
+ignorehitpause = 1
+sprpriority = (6) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 4710, Pancada 2: estouro da forma (despertados_47.py)]
 type = Explod
 trigger1 = Time = 52
@@ -10666,6 +10715,22 @@ ownpal = 1
 scale = 1.5, 1.5
 ignorehitpause = 1
 
+[State 4710, Luz do efeito]
+type = Explod
+trigger1 = Time = 52
+trigger1 = NumTarget
+anim = 9801
+postype = p1
+pos = 34, -82
+removetime = -2
+scale = 1.0, 1.0
+ignorehitpause = 1
+sprpriority = (6) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 4710, Pancada 3: estouro da forma (despertados_47.py)]
 type = Explod
 trigger1 = Time = 78
@@ -10678,6 +10743,22 @@ sprpriority = 6
 ownpal = 1
 scale = 1.5, 1.5
 ignorehitpause = 1
+
+[State 4710, Luz do efeito]
+type = Explod
+trigger1 = Time = 78
+trigger1 = NumTarget
+anim = 9801
+postype = p1
+pos = 34, -79
+removetime = -2
+scale = 1.0, 1.0
+ignorehitpause = 1
+sprpriority = (6) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 4710, Final: congela no impacto (despertados_47.py)]
 type = Pause
@@ -10775,6 +10856,21 @@ sprpriority = 5
 ownpal = 1
 supermovetime = 30
 
+[State 4750, Luz do efeito]
+type = Explod
+trigger1 = Time = 5
+anim = 9800
+postype = p1
+pos = 34, -56
+bindtime = -1
+removetime = -2
+supermovetime = 30
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 4750, Carga: treme de leve (despertados_47.py)]
 type = EnvShake
 trigger1 = Time = 11
@@ -10852,6 +10948,39 @@ down.hittime = 18
 palfx.time = 14
 palfx.add = 120,20,20
 palfx.sinadd = 30,30,30,4
+
+[State 4750, Luz do poder halo]
+type = Explod
+trigger1 = Time = 25
+anim = 9815
+id = 9634
+postype = p1
+pos = 0.0, 0.0
+velocity = 3.6, 0.0
+scale = 1.0, 1.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+sprpriority = 1
+trans = addalpha
+alpha = 255, 0
+
+[State 4750, Luz do poder orbe]
+type = Explod
+trigger1 = Time = 25
+anim = 9732
+id = 9633
+postype = p1
+pos = 0.0, 0.0
+bindtime = -1
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+sprpriority = 6
+trans = add
+alpha = floor(255 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255
 
 [State 4750, Fim (despertados_47.py)]
 type = ChangeState
@@ -15795,7 +15924,7 @@ ignorehitpause = 1
 type = MapAdd
 trigger1 = 1
 map = "luz_p"
-value = 0.12 * (ifelse(NumProjID(1003), 1, 0) - map(luz_p))
+value = 0.12 * (ifelse(NumProjID(1003) || NumProjID(4750), 1, 0) - map(luz_p))
 ignorehitpause = 1
 
 [State -4, Luz escuro nasce]
@@ -15923,6 +16052,24 @@ ignorehitpause = 1
 type = RemoveExplod
 trigger1 = NumExplod(9632) && NumProjID(1003) = 0
 id = 9632
+ignorehitpause = 1
+
+[State -4, Luz do poder 4750 apaga 9633]
+type = RemoveExplod
+trigger1 = NumExplod(9633) && NumProjID(4750) = 0
+id = 9633
+ignorehitpause = 1
+
+[State -4, Luz do poder 4750 apaga 9634]
+type = RemoveExplod
+trigger1 = NumExplod(9634) && NumProjID(4750) = 0
+id = 9634
+ignorehitpause = 1
+
+[State -4, Luz do poder 4750 apaga 9635]
+type = RemoveExplod
+trigger1 = NumExplod(9635) && NumProjID(4750) = 0
+id = 9635
 ignorehitpause = 1
 
 ; <<< luz.py
