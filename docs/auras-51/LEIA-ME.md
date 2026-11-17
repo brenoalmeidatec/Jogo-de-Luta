@@ -188,5 +188,46 @@ Vídeo: `hazaki_luz_antes_agora.mp4` (20 s). É o roteiro de sempre com a bola d
 esquerda fica a mugen de antes e à direita a de agora. A folha `hazaki_luz_quadros.jpg` mostra três momentos: parado
 despertado, carregando o ki e a rajadona.
 
-**Próximos passos:** a luz nos outros despertados (Gutto, Pengaró e CK precisam dos projids em `PODERES`) e a aura
-juntando na mão antes do especial.
+**Próximos passos:** a aura juntando na mão antes do especial (a luz nos outros veio na sexta volta).
+
+## Sexta volta (Alisson, 2026-11-16): luz em todo efeito que brilha, nos 5 lutadores
+
+O Alisson gostou da luz do Hazak e pediu para pôr em todos os efeitos que têm luz. Agora a luz está no Hazak, no
+Gutto, no Pengaró, no CK e no Raiclaven, feita pela `ferramentas/luz.py` com a `ferramentas/luz_efeitos.py`.
+
+- **A luz sai do próprio efeito.** Cada efeito que brilha (fogo, ki, raio, faísca, clarão de carga) ganha um Explod
+  irmão logo atrás dele, com os mesmos gatilhos, posição, ligação e id. A luz dele tem a cor média dos pixels que
+  brilham. Cada quadro do efeito vira um quadro de luz com a força (5 degraus) e o tamanho (3 tamanhos) do brilho
+  daquele quadro, no mesmo centro e com o mesmo tempo. Ela acende, pisca, cresce e apaga junto com o efeito.
+- **O que acende foi revisado.** O automático olha pixel claro e saturado, mas erra em objeto colorido (a Cliente de
+  camiseta amarela, os corações do Gutto) e em faísca branca. Cinco revisores, cada um com a folha de um lutador e
+  um segundo revisor contestando, fecharam a lista em `ferramentas/luz_classes.json`. Pedra, poeira, fumaça, garrafa,
+  latinha, coração, pente, boné, caixa de som e gente ficam apagados.
+- **Clarão do golpe.** Todo golpe que o lutador acerta solta um clarão de uns 12 tiques no ponto do impacto, na cor
+  da faísca daquele golpe (normal, forma despertada), maior no especial e na super. Na defesa, um clarão menor. Vai
+  pelo [Statedef -4] (HitCount e MoveGuarded), conferido no motor pelo log (Explod 9640).
+- **Poderes.** Bola de energia: orbe somado por cima (o miolo quente), halo e poça que andam com ela, com a mesma
+  aceleração. Raio: a luz do próprio desenho, quadro a quadro, e um orbe parado na mão.
+- **Despertado** do Gutto, do Pengaró e do CK: halo na cor da forma, poça no chão e o cenário escurecendo, como no
+  Hazak. O Raiclaven não tem aura em camadas e fica só com a luz dos efeitos e dos golpes.
+
+**Conferência.** Foram quatro rodadas de filme dos 5, cada uma conferida quadro a quadro por um revisor e
+contestada por outro. O que apareceu e foi consertado:
+- quadriculado de quadrados grandes no clarão da super (grão e raio limitados);
+- luz solta na frente dos raios (agora a luz é do desenho do raio);
+- luz da lâmina do Pengaró ficando para trás (faltava a aceleração);
+- oponente do CK pintado de verde-oliva (o PalFX ficou bem mais leve e meio branco);
+- clarão branco lavando a tela na super do Raiclaven (efeito ampliado fica com a luz no tamanho 1);
+- clarão do golpe faltando em quatro lutadores (a faísca deles é uma expressão);
+- a bola de fogo do Hazak sem o miolo quente.
+
+**Robôs:** `testar_pengaro.py --linux` sem falha nova nos 5. O que falha (o teste do raio do Hazak, que oscila, e
+asas/peças soltas no `aura_no_corpo.py --robo` do Hazak, do Gutto e do Pengaró) falha igual na `mugen` de antes.
+
+Vídeos: `<lutador>_luz_todos_antes_agora.mp4` (os 5), com a `mugen` de antes à esquerda e a de agora à direita. Cada
+um força dois poderes e um golpe que acerta. Na última rodada os 5 foram aprovados pelos revisores.
+
+**Ficou de detalhe (não quebra, anotado para depois):** o brilho do raio do Hazak e do Pengaró começa um pouco à
+frente da ponta enquanto o raio cresce; pontilhado leve no cenário escurecido do CK, visível com zoom; o clarão do
+golpe do CK é verde-claro e some um pouco no fundo; um ponto rosa no chão perto do casco do Gutto enquanto o raio dele
+carrega.
