@@ -25,6 +25,7 @@ PASTAS = {
 PARADO = {
     ("hazaki", ""): "parado",
     ("diabo", ""): "d_parado",
+    ("diabo", "m_"): "m_parado",  # Diabo demônio sem maleta (#47): forma própria, cor medida no parado dele
     ("ck", ""): "referencia_ginga", ("ck", "e_"): "e_referencia_ginga",
     ("pengaro", ""): "ginga", ("pengaro", "e_"): "e_ginga",
     ("gutto", ""): "ginga", ("gutto", "e_"): "ginga_endiabrada",
@@ -33,6 +34,7 @@ PARADO = {
 PALETA_JSON = {
     ("hazaki", ""): "hazaki/paleta_nitida.json",  # forma base nítida (#36, 40 cores)
     ("diabo", ""): "hazaki/diabo_terno/paleta.json",  # paleta única do Diabo (#51, cor entre os quadros)
+    ("diabo", "m_"): "hazaki/diabo_terno/paleta_demonio.json",  # demônio (#47): pele nua e brasa, nascida do m_parado
     ("ck", ""): "ck/paleta_arcade.json", ("ck", "e_"): "ck/paleta_arcade_ratao.json",
     ("pengaro", ""): "pengaro/paleta_arcade.json", ("pengaro", "e_"): "pengaro/paleta_arcade_endiabrado.json",
 }
@@ -56,6 +58,8 @@ class Endereco:
 
     @property
     def forma(self):
+        if self.lutador == "diabo" and self.acao.startswith("m_"):
+            return "m_"
         if PARADO.get((self.lutador, "e_")) == self.acao:  # gutto/ginga_endiabrada é o parado da forma e_
             return "e_"
         return "e_" if self.acao.startswith("e_") and self.lutador != "diabo" else ""
