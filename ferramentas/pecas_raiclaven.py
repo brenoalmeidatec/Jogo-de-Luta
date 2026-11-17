@@ -67,7 +67,7 @@ LADO_ESCONDIDO = [(474, 350), (522, 350), (522, 486), (476, 486), (470, 462), (4
                   (474, 402)]
 AVENTAL_ESCONDIDO = [(480, 440), (600, 440), (600, 510), (480, 510)]
 CINTO_ESCONDIDO = [(442, 478), (584, 482), (584, 496), (442, 496)]
-COXA_ESCONDIDA = [(596, 492), (645, 492), (645, 512), (596, 512)]
+COXA_ESCONDIDA = [(566, 484), (606, 484), (606, 514), (566, 514)]  # calça atrás da lâmina, à direita do avental
 
 # o que fica escondido debaixo do avental: a coxa continua por baixo (pintada no kit), senão abre fresta quando o
 # quadril desce ou a perna gira
@@ -178,6 +178,44 @@ def sem_farelo(img, minimo=40):
     return out
 
 
+
+def costas(t, esc, ref, visivel, m_omb, yy, xx):
+    """Lado de trás do tronco (o que o braço mecânico esconde): nada de chapa preta. Camisa pintada no jeito do
+    desenho: cor da camisa escurecendo para trás, duas dobras largas de luz (3 tons, como as do peito), costura lateral
+    no debrum apagado, sombra embaixo da ombreira e o brilho roxo da beira de trás."""
+    t = t.copy()
+    rgb = ref[..., :3].astype(int)
+    base = cor_base(t).astype(float)
+    ys, xs = np.nonzero(esc)
+    if not len(ys):
+        return t
+    x0, x1 = xs.min(), xs.max()
+    luz = np.zeros(esc.shape, np.float32)
+    for (cx, cy), (ax, ay), ang, forca in (((496, 432), (9, 30), 8, 1.0), ((478, 452), (6, 22), 4, 0.7),
+                                           ((512, 470), (10, 9), 0, 0.5)):
+        e = np.zeros(esc.shape, np.uint8)
+        cv2.ellipse(e, (cx, cy), (ax, ay), ang, 0, 360, 1, -1)
+        luz = np.maximum(luz, cv2.GaussianBlur(e.astype(np.float32), (0, 0), 4) * forca)
+    nivel = np.select([luz > 0.55, luz > 0.25], [1.9, 1.4], 1.0)  # 3 tons, sem degradê liso
+    fundo = 1.0 - 0.3 * np.clip((x1 - xx) / max(1, x1 - x0), 0, 1)
+    cor = np.clip(base[None, None] * (nivel * fundo)[..., None], 0, 255).astype(np.uint8)
+    t[esc, :3] = cor[esc]
+    claro = visivel & (rgb.sum(-1) > 450)
+    deb = np.median(rgb[claro], 0) if claro.any() else np.array([190, 167, 185])
+    linha = np.zeros(esc.shape, np.uint8)
+    cv2.line(linha, (504, 404), (508, 484), 1, 2)
+    m = (linha > 0) & esc
+    t[m, :3] = np.clip(deb * 0.4 + base * 0.6, 0, 255).astype(np.uint8)
+    sombra = (cv2.dilate(m_omb.astype(np.uint8), np.ones((9, 9), np.uint8)) > 0) & esc & (yy > 396)
+    t[sombra, :3] = np.clip(t[sombra, :3].astype(int) * 0.6, 0, 255).astype(np.uint8)
+    a = t[..., 3] > 0
+    beira = a & ~(cv2.erode(a.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0)
+    brilho = (cv2.dilate(beira.astype(np.uint8), np.ones((7, 7), np.uint8)) > 0) & esc & ~sombra & (xx < 500) & \
+        ~(cv2.dilate(beira.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0)
+    t[brilho, :3] = np.clip(base * 1.6 + (12, 0, 18), 0, 255).astype(np.uint8)
+    return t
+
+
 def montar_kit():
     P = b.PECAS
     if P.exists():
@@ -190,7 +228,15 @@ def montar_kit():
     baixo = yy >= CINTO
     m_bt = M(BRACO_TRAS) & alfa
     # o contorno escuro das lâminas fica com o braço (senão sobra uma cunha preta no cinto quando a tesoura sai)
-    m_bt |= (cv2.dilate(m_bt.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0) & alfa & (yy > 440) & ~M(AVENTAL)
+    # (só o traço de contorno, quase preto; a sombra da lâmina na calça fica na calça, senão viaja com o braço)
+    m_bt |= (cv2.dilate(m_bt.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0) & alfa & (yy > 440) & ~M(AVENTAL) & \
+        (ref[..., :3].astype(int).sum(-1) < 75)
+    # sombra escura da lâmina em cima da calça (abaixo da tesoura) não é tesoura: fica no corpo. Escuro só vai com o
+    # braço se estiver a 2 px do metal claro
+    v = ref[..., :3].max(-1).astype(int)
+    metal = m_bt & (v > 95)
+    perto_metal = cv2.dilate(metal.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0
+    m_bt &= ~((yy > 470) & ~perto_metal)
     m_omb = M(OMBREIRA) & m_bt
     m_bm = M(BRACO_MECANICO) & m_bt & ~m_omb
     m_abt = m_bt & ~m_omb & ~m_bm
@@ -230,30 +276,89 @@ def montar_kit():
     esc_t = (M(PEITO_ESCONDIDO) | M(LADO_ESCONDIDO)) & ~baixo & (m_bf | m_bt | ~alfa) & ~(t[..., 3] > 0)
     esc_t &= ~(M(CABECA) & alfa)
     t = pintar(t, esc_t)
-    # volume nas costas: sombra da ombreira (faixa escura logo abaixo dela), uma dobra de camisa descendo até o cinto
-    # e o brilho roxo da beira de trás, nas mesmas cores da camisa que aparece
-    base = cor_base(imgs["tronco"]).astype(int)
-    sombra = (cv2.dilate(m_omb.astype(np.uint8), np.ones((15, 15), np.uint8)) > 0) & esc_t & (yy > 396)
-    t[sombra, :3] = np.clip(base * 0.55, 0, 255).astype(np.uint8)
-    dobra = np.zeros(esc_t.shape, np.uint8)
-    cv2.line(dobra, (494, 420), (500, 482), 1, 2)
-    cv2.line(dobra, (486, 440), (490, 478), 1, 1)
-    t[(dobra > 0) & esc_t & ~sombra, :3] = np.clip(base * 0.6, 0, 255).astype(np.uint8)
+    # volume nas costas: a textura da camisa que aparece (dobras suaves) é espelhada para dentro do lado escondido,
+    # escurecendo para trás; costura lateral no debrum claro da camisa, sombra da ombreira e brilho roxo na beira
+    t = costas(t, esc_t, ref, alfa & ~baixo & ~m_bt & ~m_bf & ~m_cab, m_omb, yy, xx)
+    # silhueta do tronco onde os braços passam: costas em x 470, peito descendo de (600, 400) a (583, 484). Fora dela
+    # sai (sombra da lâmina, ponta de manga); dentro, o vazio vira camisa com o debrum da frente descendo até o cinto
+    zona = (cv2.dilate((m_bt | m_bf).astype(np.uint8), np.ones((9, 9), np.uint8)) > 0) & (yy >= 380) & (yy < CINTO)
+    zona &= ~M(CABECA)
+    x_dir = 596 - (yy - 400) * 0.35
+    fora_t = zona & ((xx > x_dir + 1) | (xx < 468))
+    t[fora_t] = 0
+    vazio_t = zona & (xx >= 470) & (xx <= x_dir) & ~(t[..., 3] > 0)
+    base_t = cor_base(imgs["tronco"]).astype(float)
+    t[vazio_t, :3] = np.clip(base_t * 1.25, 0, 255).astype(np.uint8)
+    t[vazio_t, 3] = 255
+    rgb_r = ref[..., :3].astype(int)
+    claro_r = alfa & ~baixo & ~m_bt & ~m_bf & ~m_cab & (rgb_r.sum(-1) > 450)
+    deb_t = np.median(rgb_r[claro_r], 0) if claro_r.any() else np.array([190, 167, 185])
+    linha = np.zeros(t.shape[:2], np.uint8)
+    cv2.line(linha, (524, 436), (527, CINTO - 1), 1, 2)
+    t[(linha > 0) & vazio_t, :3] = deb_t.astype(np.uint8)
     a = t[..., 3] > 0
-    beira = a & ~(cv2.erode(a.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0)
-    brilho = (cv2.dilate(beira.astype(np.uint8), np.ones((7, 7), np.uint8)) > 0) & ~beira & esc_t & ~sombra & \
-        (xx < 500) & ~(cv2.dilate(beira.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0)
-    t[brilho, :3] = np.clip(base * 1.6 + (12, 0, 18), 0, 255).astype(np.uint8)
+    borda = a & ~(cv2.erode(a.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0) & (vazio_t | (cv2.dilate(
+        fora_t.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0)) & zona
+    t[borda, :3] = CONTORNO
     imgs["tronco"] = t
     q = imgs["quadril"]
     esc_q = ((M(AVENTAL_ESCONDIDO) & M(AVENTAL)) | M(CINTO_ESCONDIDO)) & baixo & m_bt
+    # o cinto acaba na beira do avental: a lâmina passa da cintura, e pintar o que ela cobria lá fora fazia uma cunha
+    # escura voando do lado do corpo
+    esc_q &= xx <= 570 + (yy - 488) * 0.12  # o debrum da direita do avental (o polígono AVENTAL pega calça)
     imgs["quadril"] = pintar(q, esc_q, friso=[AVENTAL[1:3], AVENTAL[-1:] + AVENTAL[0:1]])
+    # o pano do avental que a lâmina cobria continua o que aparece logo abaixo (espelhado de baixo para cima), para não
+    # ficar uma cunha chapada com a forma da lâmina
+    qq = imgs["quadril"]
+    vis = (q[..., 3] > 0) & ~esc_q & (q[..., :3].astype(int).sum(-1) < 170)  # só pano escuro (sem pincel/pente)
+    for y, x in zip(*np.nonzero(esc_q & M(AVENTAL))):
+        amostra = [q[y2, x2, :3] for x2 in range(x - 2, x + 3) for y2 in range(y + 1, min(y + 30, q.shape[0]))
+                   if 0 <= x2 < q.shape[1] and vis[y2, x2]][:12]
+        if amostra:
+            qq[y, x, :3] = np.median(np.array(amostra), 0).astype(np.uint8)
+    imgs["quadril"] = qq
+    # contorno da lâmina que sobrou dentro do polígono do avental, à direita do debrum: é casca de tesoura, sai
+    perto_bt = cv2.dilate(m_bt.astype(np.uint8), np.ones((9, 9), np.uint8)) > 0
+    casca = perto_bt & (xx > 572 + (yy - 488) * 0.12) & (yy < 512)
+    imgs["quadril"][casca] = 0
     # as coxas continuam por baixo do avental e da tesoura (calça pintada por baixo)
     for nome, oculta, extra in (("coxa_tras", COXA_TRAS_OCULTA, None), ("coxa_frente", COXA_FRENTE_OCULTA,
                                                                      COXA_ESCONDIDA)):
         reg = M(oculta) & (baixo | (yy >= 490))
         reg &= ~(imgs[nome][..., 3] > 0) & alfa & M(AVENTAL)  # só o que o avental cobre
         imgs[nome] = b.tapar(imgs[nome], reg, imgs[nome][..., 3] > 0)
+        if False and extra:  # (substituído pelo canto do quadril mais abaixo)
+            reg2 = M(extra) & m_bt & ~(xx <= 570 + (yy - 488) * 0.12) & ~(imgs[nome][..., 3] > 0)
+            reg2 &= (xx - 572) ** 2 + (yy - 524) ** 2 <= 34 ** 2  # redondo em volta do quadril: girar não espeta
+            imgs[nome] = b.tapar(imgs[nome], reg2, imgs[nome][..., 3] > 0)
+    # canto do quadril atrás da lâmina (x > debrum do avental): o desenho não mostra, então a silhueta é uma descida
+    # reta da camisa (575, 484) até a coxa (610, 514). Fora dela sai tudo (contorno da lâmina, caixa do cinto); dentro,
+    # o que estiver vazio vira calça da coxa da frente
+    janela = (xx >= 566) & (xx <= 640) & (yy >= 476) & (yy <= 548)
+    fora = janela & ((yy - 490) * 60 < (xx - 572) * 58)
+    dentro = janela & ~fora & (xx > 570 + (yy - 488) * 0.12) & (yy >= 488) & (yy <= 514)
+    for nome in ("quadril", "coxa_frente", "tronco"):
+        imgs[nome][fora & (yy >= 482)] = 0
+    for nome in ("quadril",):
+        imgs[nome][dentro] = 0
+    cf = imgs["coxa_frente"]
+    escuro = dentro & (cf[..., :3].astype(int).sum(-1) < 70) & (cv2.dilate(m_bt.astype(np.uint8), np.ones((9, 9), np.uint8)) > 0)
+    cf[escuro] = 0
+    vazio = dentro & ~(cf[..., 3] > 0)
+    amostra = cf[(cf[..., 3] > 0) & (xx >= 585) & (xx <= 625) & (yy >= 512) & (yy <= 560)][:, :3]
+    amostra = amostra[(amostra.astype(int).sum(-1) > 60) & (amostra.astype(int).sum(-1) < 220)]
+    cf[vazio, :3] = np.median(amostra, 0).astype(np.uint8)
+    calca = np.median(amostra, 0).astype(np.uint8)
+    # o que o kit pintou por baixo do avental saiu quase preto (borrão do contorno): vira a cor da calça
+    preto = (cf[..., 3] > 0) & (cf[..., :3].astype(int).sum(-1) < 45) & M(COXA_FRENTE_OCULTA) & (xx < 572)
+    cf[preto, :3] = calca
+    cf[vazio, 3] = 255
+    # contorno de 1 px só na beira nova que dá para fora (a descida reta)
+    a = cf[..., 3] > 0
+    borda = a & ~(cv2.erode(a.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0) & janela & ~fora
+    borda &= cv2.dilate(fora.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0
+    cf[borda, :3] = CONTORNO
+    imgs["coxa_frente"] = cf
     kit = {"ref": f"quadros_arcade_hd/{b.REF}.png", "pecas": {}}
     SOB = b.SOBRA
 

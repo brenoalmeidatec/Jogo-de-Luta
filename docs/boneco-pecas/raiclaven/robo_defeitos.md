@@ -10,11 +10,11 @@
 | parado/07 | ginga/02 | PASS |
 | parado/08 | ginga/02 | PASS |
 | parado/09 | ginga/03 | PASS |
-| parado/10 | ginga/03 | PASS |
-| parado/11 | ginga/03 | PASS |
+| parado/10 | ginga/03 | FAIL solta [29] |
+| parado/11 | ginga/03 | FAIL solta [29] |
 | parado/12 | ginga/04 | PASS |
-| parado/13 | ginga/04 | PASS |
-| parado/14 | ginga/04 | PASS |
+| parado/13 | ginga/04 | FAIL solta [29] |
+| parado/14 | ginga/04 | FAIL solta [29] |
 | parado/15 | ginga/05 | PASS |
 | parado/16 | ginga/05 | PASS |
 | parado/17 | ginga/05 | PASS |
@@ -24,12 +24,12 @@
 | parado/21 | ginga/07 | PASS |
 | parado/22 | ginga/07 | PASS |
 | parado/23 | ginga/07 | PASS |
-| soco/00 | soco/03 | PASS |
+| soco/00 | soco/03 | FAIL solta [21] |
 | soco/01 | soco/04 | PASS |
 | soco/02 | soco/05 | PASS |
-| soco/03 | soco/06 | PASS |
-| soco/04 | soco/07 | PASS |
-| soco/05 | soco/07 | PASS |
+| soco/03 | soco/06 | FAIL solta [29] |
+| soco/04 | soco/07 | FAIL solta [29] |
+| soco/05 | soco/07 | FAIL solta [29] |
 | soco/06 | soco/07 | PASS |
 | chute_alto/00 | chute_alto/01 | PASS |
 | chute_alto/01 | chute_alto/01 | PASS |
@@ -44,8 +44,8 @@
 | chute_alto/10 | chute_alto/06 | PASS |
 | chute_alto/11 | chute_alto/06 | PASS |
 | chute_alto/12 | chute_alto/07 | PASS |
-| chute_alto/13 | chute_alto/07 | PASS |
+| chute_alto/13 | chute_alto/07 | FAIL solta [29] |
 | chute_alto/14 | chute_alto/07 | PASS |
 | chute_alto/15 | chute_alto/07 | PASS |
 
-0 quadro(s) com defeito.
+9 quadro(s) com defeito.

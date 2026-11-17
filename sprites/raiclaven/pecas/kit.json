@@ -94,7 +94,7 @@
   "tronco": {
    "arquivo": "tronco.png",
    "origem": [
-    452,
+    468,
     348
    ],
    "junta": [
@@ -105,7 +105,7 @@
    "fonte": "quadros_arcade_hd/ginga/00.png",
    "sobra": "tronco_sobra.png",
    "origem_sobra": [
-    443,
+    459,
     339
    ]
   },
@@ -149,7 +149,7 @@
    "arquivo": "coxa_frente.png",
    "origem": [
     548,
-    496
+    490
    ],
    "junta": [
     572,
@@ -160,7 +160,7 @@
    "sobra": "coxa_frente_sobra.png",
    "origem_sobra": [
     539,
-    487
+    481
    ]
   },
   "canela_frente": {

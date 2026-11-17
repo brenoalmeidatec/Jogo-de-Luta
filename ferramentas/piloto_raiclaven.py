@@ -108,15 +108,18 @@ POSES = {
         P(q=(0, 0), tronco=0, bt=0, abt=0, abf=1, pente=6),
     ],
     "soco": [
-        # preparo: o ombro mecânico recua, a tesoura vem para perto do corpo, o corpo gira para trás
-        P(q=(-6, 4), tronco=-3, cabeca=-2, bt=14, abt=-26, bf=6),
-        # saindo: braço mecânico à frente, tesoura abrindo; o braço do pente começa a baixar
-        P(q=(4, 5), tronco=2, cabeca=1, braco="frente", bf=36),
-        # contato: braço todo esticado, tesoura fechando lá na frente, corpo entra; o pente fica na guarda baixa
-        P(q=(10, 6), tronco=3, cabeca=1, braco="estocada", bf=66, pe_frente=6),
-        # recolhe: tesoura aberta de novo, voltando
-        P(q=(6, 4), tronco=2, cabeca=1, braco="frente", bf=40, pe_frente=6),
-        # guarda
+        # regra do Alisson (17/11): soco não é só o braço esticando. O peso vai para trás, o pé da frente dá um passo,
+        # o quadril desce e entra, o tronco inclina e o ombro leva o braço; a mão do pente volta para a guarda do queixo
+        # preparo: peso atrás, ombro mecânico recolhido, tesoura junto do corpo
+        P(q=(-8, 6), tronco=-4, cabeca=-2, bt=16, abt=-28, bf=-4, abf=-8),
+        # passo: o pé da frente sai, o quadril entra, o braço vem à frente com a tesoura abrindo
+        P(q=(10, 10), tronco=4, cabeca=2, braco="frente", bt=4, bf=-18, pe_frente=22),
+        # contato: pé da frente plantado lá na frente, o de trás gira no lugar, quadril baixo, tronco inclinado, braço
+        # todo esticado e tesoura fechando
+        P(q=(24, 14), tronco=7, cabeca=3, braco="estocada", bt=-2, bf=-28, pe_frente=38, pe_tras=8),
+        # recolhe: tesoura abre de novo, o corpo começa a voltar
+        P(q=(16, 11), tronco=4, cabeca=2, braco="frente", bt=6, bf=-18, pe_frente=38, pe_tras=8),
+        # volta para a guarda, o pé recua junto
         P(q=(1, 1), tronco=0, bt=-2, abt=2, bf=2),
     ],
     "chute_alto": [
