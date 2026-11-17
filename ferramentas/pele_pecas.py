@@ -106,6 +106,16 @@ def _transformar(w, slot, X, Y):
     return pos[0] + dx * c - dy * s, pos[1] + dx * s + dy * c
 
 
+def ordem_das_camadas(pose):
+    """Ordem das camadas nesta pose. A do kit é a do parado; em golpe, `pose["_camada"]["atras"]` ("braco_frente" ou
+    "braco_frente,perna_frente") manda essas camadas para trás de todo o resto, nessa ordem (estudo de anatomia, Parte 2:
+    membro do lado longe nasce atrás do tronco e da faixa; a mão livre fica atrás do golpe)."""
+    atras = [n for n in str(pose.get("_camada", {}).get("atras", "")).split(",") if n]
+    if not atras:
+        return CAMADAS
+    return [c for n in atras for c in CAMADAS if c[0] == n] + [c for c in CAMADAS if c[0] not in atras]
+
+
 def desenhar(kit, pose):
     w = b.mundo(pose)
     tela = np.zeros((b.TELA[1], b.TELA[0], 4), np.uint8)
@@ -115,7 +125,7 @@ def desenhar(kit, pose):
     r, x0, y0 = b.colocar(cab, cab["img"], cab["origem"], pos, ang)
     b.colar(tela, r, x0, y0)
     H, W = tela.shape[:2]
-    for _, pecas in CAMADAS:
+    for _, pecas in ordem_das_camadas(pose):
         for slot, vizinhos in pecas:
             if slot == "canela_frente" and pose.get("coxa_frente", {}).get("var"):
                 continue  # perna levantada: um desenho só (coxa, canela e pé)

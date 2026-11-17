@@ -3198,3 +3198,14 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   para retocar à mão). O kit está nas 15 cores do parado do despertado (pedido desta tarefa), não em cor cheia. Os
   outros golpes do Grão-Pastor continuam com as folhas antigas, e as folhas `quadros_e_firmes` ficaram como estavam.
   Levou cerca de um dia de sessão.
+## 2026-11-17 — Pengaró com o estudo de anatomia do Breno e a antecipação segurada (Claude, thread do Alisson)
+
+- `pele_pecas.ordem_das_camadas`: camada por pose (`pose["_camada"]["atras"]`). No soco, o braço da frente (lado longe)
+  sai de trás do peito no contato; no chute alto, perna e mão da frente nascem atrás da faixa e do tronco.
+- Soco: calcanhar de trás sobe (`_ponta_tras`, o tornozelo estica e os dedos ficam no chão), ombro anda, garrafa para
+  trás. Chute alto: câmara antes de abrir (o quadro 03 virou câmara), bacia inclina, tronco para trás.
+- `piloto_firme`: pé perto do chão estica o tornozelo em vez de descer (no passo largo do andar o pé soltava da canela).
+- 154 ações refeitas com o `vida_pecas` novo (antecipação segurada, golpe sai seco). Robô do boneco 0 defeito.
+- Religado por cima da mugen atual (despertados novos) com `--grupo 49000`, `aura_no_corpo.py pengaro` (encadeia a
+  silhueta) e `encolher_sff.py pengaro` (poda os desenhos velhos 48xxx): .sff 78,9 -> 40,7 MB. Robô de luta 189/189,
+  idêntico ao da mugen.
