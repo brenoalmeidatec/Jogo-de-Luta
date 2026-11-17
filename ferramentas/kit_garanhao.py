@@ -66,23 +66,25 @@ A = dict(dy=-40, tronco=6, coxa_frente=-60, canela_frente=95, coxa_tras=-35, can
 
 
 POSES = {
-    # chifrada: abaixa a cabeça com os chifres na frente e engancha para cima
+    # chifrada (estudo de anatomia do Breno, receita da cabeçada): antecipação curta, queixo desce e o tronco já vai
+    # para a frente; no contato passo curto, o peso vai junto e os chifres engancham para cima olhando o alvo
     "gancho_chifre/00": _p(),
-    "gancho_chifre/01": _p(dy=8, tronco=8, cabeca=8, bf=10),
-    "gancho_chifre/02": _p(dx=4, dy=18, tronco=16, cabeca=12, bf=16),
-    "gancho_chifre/03": _p(dx=8, dy=8, tronco=6, cabeca=2, pes=(0, 8)),
-    "gancho_chifre/04": _p(dx=10, dy=-4, tronco=-8, cabeca=-14, bf=-24, pes=(0, 10)),
-    "gancho_chifre/05": _p(dx=8, dy=-2, tronco=-6, cabeca=-12, bf=-18, pes=(0, 10)),
-    "gancho_chifre/06": _p(dx=4, tronco=-2, cabeca=-4, pes=(0, 6)),
+    "gancho_chifre/01": _p(dy=8, tronco=10, cabeca=12, bf=10),
+    "gancho_chifre/02": _p(dx=4, dy=20, tronco=22, cabeca=16, bf=16, bt=-8),
+    "gancho_chifre/03": _p(dx=12, dy=10, tronco=10, cabeca=6, pes=(0, 14)),
+    "gancho_chifre/04": _p(dx=16, dy=-4, tronco=-6, cabeca=-14, bf=-24, pes=(4, 18)),
+    "gancho_chifre/05": _p(dx=14, dy=-2, tronco=-4, cabeca=-12, bf=-18, pes=(4, 18)),
+    "gancho_chifre/06": _p(dx=8, tronco=-1, cabeca=-4, pes=(2, 10)),
     "gancho_chifre/07": _p(),
-    # investida: empina o peito para trás e esmaga a testa para baixo com um passo à frente
+    # investida (receita da cabeçada): não empina para trás (telegrafa); o queixo desce, os ombros sobem e o tronco
+    # recua só um pouco; no contato passo curto, o tronco dobra para a frente e a testa e os chifres batem com o peso
     "cabecada_touro/00": _p(),
-    "cabecada_touro/01": _p(dy=-6, tronco=-10, cabeca=-10, bf=-10, bt=-6),
-    "cabecada_touro/02": _p(dx=-6, dy=-8, tronco=-14, cabeca=-14, bf=-16, bt=-10, pes=(-4, 0)),
-    "cabecada_touro/03": _p(dx=12, dy=0, tronco=0, cabeca=-4, pes=(0, 22)),
-    "cabecada_touro/04": _p(dx=26, dy=16, tronco=20, cabeca=12, bf=20, pes=(10, 34)),
-    "cabecada_touro/05": _p(dx=24, dy=12, tronco=14, cabeca=10, bf=12, pes=(10, 34)),
-    "cabecada_touro/06": _p(dx=14, dy=4, tronco=6, cabeca=2, pes=(6, 20)),
+    "cabecada_touro/01": _p(dy=4, tronco=-3, cabeca=10, bf=-10, bt=-6),
+    "cabecada_touro/02": _p(dx=-2, dy=6, tronco=-4, cabeca=14, bf=-16, bt=-10, pes=(-2, 0)),
+    "cabecada_touro/03": _p(dx=12, dy=6, tronco=10, cabeca=14, pes=(0, 22)),
+    "cabecada_touro/04": _p(dx=28, dy=18, tronco=26, cabeca=14, bf=20, pes=(10, 36)),
+    "cabecada_touro/05": _p(dx=26, dy=14, tronco=22, cabeca=12, bf=12, pes=(10, 36)),
+    "cabecada_touro/06": _p(dx=14, dy=6, tronco=8, cabeca=4, pes=(6, 20)),
     "cabecada_touro/07": _p(dx=6, pes=(4, 8)),
     # pisão: joelho sobe até o peito e o casco desce rachando o chão, o corpo cai com o peso
     "pisao/00": _p(),

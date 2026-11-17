@@ -1,5 +1,35 @@
 | quadro | desenho de hoje | robô de defeitos |
 |---|---|---|
+| agachado/00 | agachado_d/00 | PASS |
+| agachado/01 | agachado_d/00 | PASS |
+| agachado/02 | agachado_d/00 | PASS |
+| agachado/03 | agachado_d/00 | PASS |
+| agachado/04 | agachado_d/00 | PASS |
+| agachado/05 | agachado_d/01 | PASS |
+| agachado/06 | agachado_d/01 | PASS |
+| agachado/07 | agachado_d/01 | PASS |
+| agachado/08 | agachado_d/01 | PASS |
+| agachado/09 | agachado_d/02 | PASS |
+| agachado/10 | agachado_d/02 | PASS |
+| agachado/11 | agachado_d/02 | PASS |
+| agachado/12 | agachado_d/02 | PASS |
+| agachado/13 | agachado_d/02 | PASS |
+| agachado/14 | agachado_d/03 | PASS |
+| agachado/15 | agachado_d/03 | PASS |
+| agachado/16 | agachado_d/03 | PASS |
+| agachado/17 | agachado_d/03 | PASS |
+| apanha/00 | apanha/00 | PASS |
+| apanha/01 | apanha/01 | PASS |
+| apanha/02 | apanha/02 | PASS |
+| apanha/03 | apanha/03 | PASS |
+| apanha/04 | apanha/04 | PASS |
+| belisco/00 | x_agd/00 | PASS |
+| belisco/01 | x_agd/01 | PASS |
+| belisco/02 | x_agd/02 | PASS |
+| belisco/03 | x_agd/03 | PASS |
+| belisco/04 | x_agd/04 | PASS |
+| belisco/05 | x_agd/04 | PASS |
+| belisco/06 | x_agd/00 | PASS |
 | bota/00 | a_pe/00 | PASS |
 | bota/01 | a_pe/01 | PASS |
 | bota/02 | a_pe/02 | PASS |
@@ -7,6 +37,14 @@
 | bota/04 | a_pe/04 | PASS |
 | bota/05 | a_pe/04 | PASS |
 | bota/06 | a_pe/00 | PASS |
+| defesa/00 | defesa/00 | PASS |
+| defesa/01 | defesa/01 | PASS |
+| defesa/02 | defesa/02 | PASS |
+| defesa/03 | defesa/02 | PASS |
+| defesa/04 | defesa/03 | PASS |
+| defesa/05 | defesa/03 | PASS |
+| defesa/06 | defesa/04 | PASS |
+| defesa/07 | defesa/05 | PASS |
 | garra/00 | x_pe/00 | PASS |
 | garra/01 | x_pe/01 | PASS |
 | garra/02 | x_pe/02 | PASS |
@@ -14,6 +52,16 @@
 | garra/04 | x_pe/04 | PASS |
 | garra/05 | x_pe/04 | PASS |
 | garra/06 | x_pe/00 | PASS |
+| mordida/00 | y_agd/00 | PASS |
+| mordida/01 | y_agd/01 | PASS |
+| mordida/02 | y_agd/02 | PASS |
+| mordida/03 | y_agd/03 | PASS |
+| mordida/04 | y_agd/04 | PASS |
+| mordida/05 | y_agd/04 | PASS |
+| mordida/06 | y_agd/04 | PASS |
+| mordida/07 | y_agd/05 | PASS |
+| mordida/08 | y_agd/05 | PASS |
+| mordida/09 | y_agd/00 | PASS |
 | navalha/00 | y_pe/00 | PASS |
 | navalha/01 | y_pe/01 | PASS |
 | navalha/02 | y_pe/01 | PASS |
@@ -57,5 +105,26 @@
 | parado/15 | ginga/06 | PASS |
 | parado/16 | ginga/06 | PASS |
 | parado/17 | ginga/06 | PASS |
+| secador_chao/00 | a_agd/00 | PASS |
+| secador_chao/01 | a_agd/01 | PASS |
+| secador_chao/02 | a_agd/01 | PASS |
+| secador_chao/03 | a_agd/02 | PASS |
+| secador_chao/04 | a_agd/03 | PASS |
+| secador_chao/05 | a_agd/04 | PASS |
+| secador_chao/06 | a_agd/04 | PASS |
+| secador_chao/07 | a_agd/00 | PASS |
+| varrida/00 | b_agd/00 | PASS |
+| varrida/01 | b_agd/01 | PASS |
+| varrida/02 | b_agd/01 | PASS |
+| varrida/03 | b_agd/02 | PASS |
+| varrida/04 | b_agd/02 | PASS |
+| varrida/05 | b_agd/03 | PASS |
+| varrida/06 | b_agd/04 | PASS |
+| varrida/07 | b_agd/05 | PASS |
+| varrida/08 | b_agd/05 | PASS |
+| varrida/09 | b_agd/05 | PASS |
+| varrida/10 | b_agd/06 | PASS |
+| varrida/11 | b_agd/06 | PASS |
+| varrida/12 | b_agd/00 | PASS |
 
-0 de 57 desenho(s) com defeito.
+0 de 126 desenho(s) com defeito.

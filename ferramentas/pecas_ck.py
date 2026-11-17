@@ -310,7 +310,7 @@ def montar_kit():
             mm = b.mascara(poli) & (f[..., 3] > 0)
             M = np.float32([[1, 0, junta[0] - junta_fonte[0]], [0, 1, junta[1] - junta_fonte[1]]])
             img = cv2.warpAffine(np.where(mm[..., None], f, 0).astype(np.uint8), M, TELA, flags=cv2.INTER_NEAREST)
-            if var in SOB_CABECA:  # raiz do braço: tira a barba e a sombra do pescoço que vieram junto (mancha escura)
+            if slot == "braco_frente" and var in SOB_CABECA:  # raiz do braço: tira a barba e a sombra do pescoço que vieram junto (mancha escura)
                 escuro = (img[..., :3].astype(int).sum(-1) < 230) & disco(junta, 18) & (img[..., 3] > 0)
                 img[escuro] = 0
             guardar(kit, f"{slot}_{var}", img, junta, mae, fonte, cv2.warpAffine(f, M, TELA, flags=cv2.INTER_NEAREST))
@@ -343,6 +343,18 @@ VARIANTES = {
                                (648, 396), (646, 410), (632, 418), (612, 418), (600, 410), (585, 408), (565, 410),
                                (548, 412), (538, 405)], (546, 398)),
     },
+}
+VARIANTES["braco_frente"]["alto"] = (  # uppercut: braço subindo na frente do rosto (cabecada/04)
+    "cabecada/04", [(528, 392), (540, 370), (556, 345), (566, 320), (568, 300), (574, 280), (590, 270), (610, 274),
+                    (614, 290), (606, 306), (592, 318), (588, 336), (580, 360), (570, 380), (560, 394), (545, 402)],
+    (540, 392))
+VARIANTES["braco_tras"] = {
+    # direto com o braço de trás (perto), pelo estudo de anatomia: o braço esticado de hoje preso no ombro de trás
+    "direto": VARIANTES["braco_frente"]["direto"],
+    # overhand: braço de trás armado lá atrás, por cima da cabeça (martelo/02)
+    "overhand": ("martelo/02", [(465, 385), (470, 360), (485, 345), (490, 330), (500, 316), (520, 310), (536, 316),
+                                (540, 334), (526, 346), (512, 352), (502, 366), (500, 380), (506, 398), (510, 412),
+                                (495, 416), (475, 410)], (500, 402)),
 }
 SOB_CABECA = {"jab", "direto"}  # variantes de braço que passam por baixo da cabeça
 
@@ -462,32 +474,41 @@ DOBRA_MAX = 0.88  # quadril até o tornozelo: no mínimo 88% da perna esticada (
 G = {"braco_tras": {"ang": 0}, "braco_frente": {"ang": 0}}  # guarda
 
 
-def chute(coxa, canela, lean=None, bt=0, bf=0, corpo=(0, 0)):
+def chute(coxa, canela, lean=None, bt=0, bf=0, corpo=(0, 0), calc=0):
+    """Chute com a perna da frente, que é a de longe (estudo de anatomia): a coxa nasce atrás da bacia (perna_longe),
+    câmara antes de abrir e antes de descer, pé de apoio girado na ponta (calc) e braço do lado da perna para trás."""
     p = {"braco_tras": {"ang": bt}, "braco_frente": {"ang": bf}, "coxa_frente": {"ang": coxa},
-         "canela_frente": {"ang": canela}, "corpo": corpo}
+         "canela_frente": {"ang": canela}, "corpo": corpo, "perna_longe": {"ang": 1}}
+    if calc:
+        p["calc_tras"] = {"ang": calc}
     if lean is not None:
         p["lean"] = lean
     return p
 
 
-def soco(corpo, passo, giro, bf=None, bt=None, cab=0):
-    """Soco de boxe: o corpo vai junto (corpo_abs), o pé da frente dá o passo, o quadril gira para a frente (giro
-    inclina o tronco por cima do pé da frente) e o pé de trás fica plantado."""
+def soco(corpo, passo, giro, bf=None, bt=None, cab=0, calc=0):
+    """Soco pelo estudo de anatomia do Breno (docs/estudo-anatomia-golpes.md): joelhos afundam na antecipação, o corpo vai
+    junto (corpo_abs), o pé da frente dá o passinho, o quadril gira por cima do pé da frente (giro), o ombro anda
+    (dx do braço) em vez de esticar a peça, a mão que não bate fica no queixo e, no direto, o calcanhar de trás gira."""
     p = {"corpo_abs": corpo, "passo": {"frente": passo, "tras": 0}, "quadril_ang": giro,
          "braco_frente": bf or {"ang": 0}, "braco_tras": bt or {"ang": 0}, "cabeca": {"ang": cab}}
+    if calc:
+        p["calc_tras"] = {"ang": calc}
     return p
 
 
 SOCOS = {
-    # jab: meio passo, ombro da frente entra, braço sai de baixo do queixo
+    # jab (receita do jab): quase não gira; o ombro leva; punho sai reto e volta pelo mesmo caminho
     "soco/00": soco((0, 0), 0, 0),
-    "soco/01": soco((8, 3), 12, 4, bf={"ang": -6}, cab=2),
-    "soco/02": soco((24, 6), 30, 10, bf={"ang": -3, "var": "jab", "dy": -10}, cab=4),
-    "soco/03": soco((12, 3), 18, 4, bf={"ang": -4}, cab=2),
-    # direto (cruzado): o quadril gira inteiro, o pé da frente avança mais e o corpo cai por cima dele
-    "soco/04": soco((2, 3), 6, -3, bt={"ang": -6}, bf={"ang": -10}, cab=-2),
-    "soco/05": soco((40, 9), 44, 15, bf={"ang": -3, "var": "direto", "dy": -10}, bt={"ang": 10}, cab=6),
-    "soco/06": soco((18, 4), 22, 6, bf={"ang": -6}, bt={"ang": 4}, cab=2),
+    "soco/01": soco((2, 3), 4, 1, bf={"ang": -4}, cab=1),
+    "soco/02": soco((10, 3), 14, 4, bf={"ang": -3, "var": "jab", "dx": 5, "dy": -10}, bt={"ang": -6}, cab=3),
+    "soco/03": soco((6, 2), 10, 2, bf={"ang": -4}, cab=2),
+    # direto (receita do direto): enrola com o peso atrás, depois quadril e tronco giram, 60% do peso na frente,
+    # joelho da frente dobra mais, calcanhar de trás gira na ponta, a outra mão volta para o rosto
+    "soco/04": soco((-6, 6), 6, -4, bt={"ang": 4}, bf={"ang": -4}, cab=-2),
+    "soco/05": soco((36, 10), 40, 14, bt={"ang": -2, "var": "direto", "dx": 36, "dy": 6}, bf={"ang": -10, "dx": -4}, cab=5,
+                    calc=22),
+    "soco/06": soco((16, 5), 20, 6, bf={"ang": -6}, bt={"ang": -2}, cab=2, calc=10),
     "soco/07": soco((3, 1), 4, 1),
 }
 
@@ -504,15 +525,17 @@ BAIXOS = {
     # chute baixo de rua: joelho sobe, canela estala na altura do joelho do outro, volta pelo mesmo caminho
     "chute_baixo/01": chute(-20, 30, lean=-2),
     "chute_baixo/02": chute(-60, 85, lean=-5, bt=2, bf=3),
-    "chute_baixo/03": chute(-55, 20, lean=-8, bt=4, bf=5),
-    "chute_baixo/04": chute(-62, 4, lean=-10, bt=5, bf=6),
+    "chute_baixo/03": chute(-55, 20, lean=-4, bt=-4, bf=6, calc=8),
+    "chute_baixo/04": chute(-62, 4, lean=-4, bt=-4, bf=8, calc=12),
     "chute_baixo/05": chute(-55, 80, lean=-6, bt=3, bf=4),
     "chute_baixo/06": chute(-25, 40, lean=-2, bt=1, bf=1),
     # soco agachado: agacha, o ombro entra e a mão sai reta na altura da cintura do outro
     **{f"baixo_soco/{i:02d}": baixo() for i in (0, 1, 7)},
-    "baixo_soco/02": baixo(qa=11, bf={"ang": -8}, cab=2),
-    "baixo_soco/03": baixo(qa=16, bf={"ang": -3, "var": "jab", "dy": -10}, cab=4),
-    "baixo_soco/04": baixo(qa=18, bf={"ang": 2, "var": "direto", "dy": -10}, bt={"ang": 6}, cab=5),
+    "baixo_soco/02": baixo(qa=11, bf={"ang": -8}, cab=2, pp=(-88, 108, -90, 106, 4)),  # afunda
+    "baixo_soco/03": baixo(qa=16, bf={"ang": -3, "var": "jab", "dy": -10}, bt={"ang": -6}, cab=4,
+                           pp=(-72, 86, -76, 88, 4)),  # sobe no soco
+    "baixo_soco/04": baixo(qa=18, bf={"ang": 2, "var": "direto", "dy": -10}, bt={"ang": -6}, cab=5,
+                           pp=(-70, 84, -74, 86, 4)),
     "baixo_soco/05": baixo(qa=13, bf={"ang": -6}, cab=3),
     "baixo_soco/06": baixo(qa=10, bf={"ang": -3}, cab=1),
     # rasteira: agacha fundo, a perna da frente sai varrendo rente ao chão e volta
@@ -527,20 +550,77 @@ BAIXOS = {
 }
 
 
+GOLPES_NOVOS = {
+    # uppercut (receita do uppercut): afunda, o corpo sobe esticando as pernas e o braço sobe na frente do rosto
+    "cabecada/01": baixo(qa=6, pp=(-50, 62, -54, 62, 4), bf={"ang": 6}, cab=2),
+    "cabecada/02": baixo(qa=10, pp=(-74, 92, -78, 92, 4), bf={"ang": 14}, bt={"ang": -6}, cab=3),
+    "cabecada/03": {"corpo_abs": (4, 2), "braco_frente": {"ang": 30, "var": "alto"}, "braco_tras": {"ang": -6}, "quadril_ang": 2,
+                    "cabeca": {"ang": -2}, "calc_tras": {"ang": 12}},
+    "cabecada/04": {"corpo_abs": (8, 0), "braco_frente": {"ang": 0, "var": "alto"}, "braco_tras": {"ang": -6}, "quadril_ang": -2,
+                    "cabeca": {"ang": -6}, "calc_tras": {"ang": 16}},
+    "cabecada/05": {"corpo_abs": (6, 0), "braco_frente": {"ang": 28, "var": "alto"}, "braco_tras": {"ang": -6}, "quadril_ang": -4,
+                    "cabeca": {"ang": -4}, "calc_tras": {"ang": 8}},
+    "cabecada/06": {"braco_frente": {"ang": 0}, "braco_tras": {"ang": -2}, "quadril_ang": -1},
+    "cabecada/07": {"braco_frente": {"ang": 0}, "braco_tras": {"ang": 0}},
+    # overhand (soco por cima): o braço de trás arma lá atrás e desce por cima, o corpo cai para a frente
+    "martelo/01": soco((-4, 4), 4, -6, bt={"ang": -20}, cab=-2),
+    "martelo/02": soco((-6, 6), 6, -8, bt={"ang": 0, "var": "overhand"}, bf={"ang": -8}, cab=-3),
+    "martelo/03": soco((28, 10), 32, 16, bt={"ang": 10, "var": "direto", "dx": 34, "dy": -10}, bf={"ang": -10, "dx": -4}, cab=6,
+                       calc=20),
+    "martelo/04": soco((34, 12), 36, 20, bt={"ang": 16, "var": "direto", "dx": 38, "dy": -6}, bf={"ang": -10, "dx": -4}, cab=7,
+                       calc=22),
+    "martelo/05": soco((16, 6), 20, 8, bt={"ang": 6}, bf={"ang": -6}, cab=3, calc=8),
+    "martelo/06": soco((6, 2), 8, 3, cab=1),
+    "martelo/07": soco((2, 1), 2, 1),
+}
+
+
+def ar(ct, kt, cf, kf, qa=0, bf=None, bt=None, cab=0):
+    """Pose no ar (estudo: uma perna estica e a outra encolhe, nunca as duas esticadas): coxas relativas ao quadril."""
+    return {"coxa_tras": {"ang": ct}, "canela_tras": {"ang": kt}, "coxa_frente": {"ang": cf},
+            "canela_frente": {"ang": kf}, "quadril_ang": qa, "braco_frente": bf or {"ang": 0},
+            "braco_tras": bt or {"ang": 0}, "cabeca": {"ang": cab}}
+
+
+GOLPES_NOVOS.update({
+    # Bote (caneta): agacha armando e sai num bote baixo, perna de trás estica, braço de trás espeta na cintura
+    "caneta/02": baixo(qa=10, pp=(-64, 80, -68, 80, 4), bt={"ang": -12}, cab=2),
+    "caneta/03": baixo(qa=16, pp=(-30, 50, -64, 74, -10), bt={"ang": -4}, cab=3),
+    "caneta/04": {**baixo(qa=22, pp=(25, 8, -66, 76, -26), bf={"ang": -10}, cab=5),
+                  "braco_tras": {"ang": -14, "var": "direto", "dx": 44, "dy": 10}},
+    "caneta/05": baixo(qa=14, pp=(-12, 32, -62, 72, -14), bt={"ang": -2}, cab=2),
+    "caneta/06": baixo(qa=8, pp=(-40, 52, -50, 56, 0), cab=1),
+    "caneta/07": baixo(qa=4, pp=(-25, 32, -28, 32, 0)),
+    # agarrão (tentativa): passo e a luva da frente vai pegar a gola
+    "agarrao/00": soco((10, 3), 16, 6, bf={"ang": 0, "var": "jab", "dx": 8, "dy": -6}, bt={"ang": -6}, cab=3),
+    # no ar: soco para baixo com as pernas encolhidas
+    "ar_soco/03": ar(-95, 120, -85, 110, qa=4, bf={"ang": -8}, cab=2),
+    "ar_soco/04": ar(-90, 118, -90, 112, qa=10, bf={"ang": 30, "var": "jab", "dx": 6, "dy": -6}, bt={"ang": -6}, cab=6),
+    "ar_soco/06": ar(-35, 55, -45, 60, qa=2),
+    # bicicleta (voadora): joelho da frente sobe, a perna estica no contato e a de trás fica encolhida
+    "bicicleta/01": ar(-30, 50, -40, 60),
+    "bicicleta/02": ar(-50, 90, -90, 120, qa=-4, bf={"ang": 6}, cab=-1),
+    "bicicleta/03": ar(-45, 95, -95, 100, qa=-6, bf={"ang": 10}, cab=-2),
+    "bicicleta/04": {**ar(-40, 100, -82, 8, qa=-10, bf={"ang": 18}, bt={"ang": -6}, cab=-3), "perna_longe": {"ang": 1}},
+    "bicicleta/06": ar(-30, 50, -35, 50),
+})
+
+
 POSES = {
     # Chute alto (Bicuda de Pedreiro / chute frontal): joelho sobe, perna estica na altura do peito, recolhe
     "chute_alto/01": chute(-45, 60, lean=-4, bt=4, bf=6),
-    "chute_alto/02": chute(-88, 105, lean=-8, bt=6, bf=8),
-    "chute_alto/03": chute(-95, 50, lean=-14, bt=8, bf=10),
-    "chute_alto/04": chute(-98, 8, lean=-18, bt=10, bf=12),
-    "chute_alto/05": chute(-88, 100, lean=-10, bt=6, bf=8),
+    "chute_alto/02": chute(-88, 105, lean=-8, bt=-4, bf=12, calc=6),
+    "chute_alto/03": chute(-95, 50, lean=-14, bt=-6, bf=24, calc=12),
+    "chute_alto/04": chute(-98, 8, lean=-18, bt=-6, bf=30, calc=15),
+    "chute_alto/05": chute(-88, 100, lean=-10, bt=-4, bf=14, calc=8),
     "chute_alto/06": chute(-40, 55, lean=-4, bt=3, bf=4),
     # Chute alto de rua / pisão (afastar): avança a mão para medir, chuta reto
     "afastar/01": {"braco_tras": {"ang": 0}, "braco_frente": {"ang": -6}},
     "afastar/02": chute(-20, 25, lean=-2, bt=0, bf=-10),
-    "afastar/03": chute(-85, 100, lean=-8, bt=4, bf=-6),
-    "afastar/04": chute(-92, 6, lean=-16, bt=8, bf=0),
-    "afastar/05": chute(-60, 70, lean=-8, bt=4, bf=4),
+    "afastar/03": chute(-85, 100, lean=-8, bt=-4, bf=10, calc=6),
+    "afastar/04": chute(-92, 6, lean=-16, bt=-6, bf=26, calc=14),
+    "afastar/05": chute(-60, 70, lean=-8, bt=-2, bf=10, calc=6),
+    "afastar/06": chute(-25, 40, lean=-2),
     # socos: o corpo entra junto com a mão (passo de boxe), o braço é o desenho esticado de hoje no tamanho do kit
     # agachado: agachamento de verdade (coxa quase deitada, canela em pé), tronco inclinado para a frente
     "agachado/01": {"postura": (-45, 55, -50, 55), "quadril_ang": 4},
@@ -550,6 +630,7 @@ POSES = {
                            "quadril_ang": 3} for i in range(2, 7)},
     **SOCOS,
     **BAIXOS,
+    **GOLPES_NOVOS,
 }
 
 
@@ -585,9 +666,14 @@ CHUTE = {"chute_alto", "afastar", "chute_baixo"}
 GUARDA = {"referencia_ginga", "anda", "agachado", "pulo", "queda"}
 
 
+AR = {"ar_soco", "bicicleta", "pulo"}  # folhas no ar: pernas escritas à mão, sem chão
+
+
 def pose_de(kit, guia, no_chao=True):
     """Pose-chave das peças em cima do desenho-guia (nome 'folha/NN')."""
     configurar()
+    if guia.split("/")[0] in AR:
+        no_chao = False
     if guia.split("/")[0] in GUARDA:
         for s_ in ("braco_tras", "braco_frente"):
             b.BUSCA[s_] = (range(-8, 9, 2), 3, [None])
@@ -638,6 +724,13 @@ def pose_de(kit, guia, no_chao=True):
             pose[s_] = dict(fixo[s_])
     if "postura" in fixo:
         pose = postura(pose, fixo["postura"])
+    for k in ("calc_tras", "calc_frente", "perna_longe"):  # pé girado na ponta e perna de longe atrás da bacia
+        if k in fixo:
+            pose[k] = dict(fixo[k])
+    if guia.split("/")[0] in AR:  # no ar: o ponto mais baixo fica onde está o do desenho de hoje (o jogo sobe o corpo)
+        ys = np.nonzero((desenhar(kit, pose)[..., 3] > 0).any(1))[0]
+        yg = np.nonzero((alvo[..., 3] > 0).any(1))[0]
+        pose["quadril"]["dy"] += int(yg.max() - ys.max())
     return pose
 
 
@@ -693,8 +786,9 @@ def separar_pes(kit):
 PELE = True  # pele que dobra nas juntas (ferramentas/pele_pecas.py): sem linha de corte entre as peças
 
 
-def colar_pe(tela, kit, slot, pos, ang):
-    """Pé no chão fica reto e apoiado (sem afundar); pé no ar gira junto com a canela."""
+def colar_pe(tela, kit, slot, pos, ang, calcanhar=0):
+    """Pé no chão fica reto e apoiado (sem afundar); pé no ar gira junto com a canela. `calcanhar` (graus): pé no chão
+    girado na ponta, calcanhar levantado (direto, chute circular, guarda do estudo de anatomia)."""
     pe = kit["pes"][slot]
     jr = OSSOS[slot][0]
     t = b.girar(pe["tornozelo"], jr, ang)
@@ -705,6 +799,15 @@ def colar_pe(tela, kit, slot, pos, ang):
     r, x1, y1 = b.colocar({"junta": pe["tornozelo"]}, pe["img"], pe["origem"], (tx, ty), ang)
     fundo_girado = y1 + int(np.nonzero(r[..., 3].any(1))[0].max())
     if abs(fundo - CHAO) <= 3 or fundo_girado > CHAO or fundo > CHAO:
+        if calcanhar:
+            a = pe["img"][..., 3] > 0
+            ys, xs = np.nonzero(a)
+            baixo = ys >= ys.max() - 3
+            ponta = (int(xs[baixo].max()) + pe["origem"][0], int(ys.max()) + pe["origem"][1])
+            dx, dy = x0 - pe["origem"][0], y0 + CHAO - fundo - pe["origem"][1]
+            r, x1, y1 = b.colocar({"junta": ponta}, pe["img"], pe["origem"], (ponta[0] + dx, ponta[1] + dy), calcanhar)
+            b.colar(tela, r, x1, y1)
+            return
         b.colar(tela, pe["img"], x0, y0 + CHAO - fundo)
     else:
         b.colar(tela, r, x1, y1)
@@ -714,11 +817,21 @@ def desenhar(kit, pose):
     if PELE:
         import pele_pecas as pele
         w = b.mundo(pose)
-        tela = pele.desenhar(kit, pose)
+        camadas = pele.CAMADAS
+        ordem = list(camadas)
+        if pose.get("perna_longe", {}).get("ang", 0) > 0.5:  # estudo de anatomia: a perna da frente é a de longe, nasce atrás da bacia
+            ordem = [ordem[0], ordem[2], ordem[1]] + ordem[3:]
+        if pose.get("braco_tras", {}).get("var"):  # braço de trás (perto) que bate passa por cima do braço da frente
+            ordem = ordem[:3] + [ordem[4], ordem[3]]
+        pele.CAMADAS = ordem
+        try:
+            tela = pele.desenhar(kit, pose)
+        finally:
+            pele.CAMADAS = camadas
         if "pes" in kit:
             for slot in ("canela_tras", "canela_frente"):
                 if not (slot == "canela_frente" and pose.get("coxa_frente", {}).get("var")):
-                    colar_pe(tela, kit, slot, *w[slot])
+                    colar_pe(tela, kit, slot, *w[slot], calcanhar=pose.get("calc_" + slot.split("_")[1], {}).get("ang", 0))
         if pose.get("braco_frente", {}).get("var") in SOB_CABECA:  # raiz do braço esticado fica debaixo do queixo
             cab = kit["pecas"][b.chave("cabeca", pose)]
             r, x0, y0 = b.colocar(cab, cab["img"], cab["origem"], *w["cabeca"])
@@ -824,7 +937,8 @@ def conferir(tela, guia):
     if yg.max() >= CHAO - 4 and not (CHAO - 4 <= ys.max() <= CHAO + 2):
         erros.append(f"chão: pé em y={ys.max()} (hoje {yg.max()})")
     ref = np.nonzero((b.abrir(REF)[..., 3] > 0).any(1))[0]
-    if ys.max() - ys.min() > (ref.max() - ref.min()) * 1.02 and yg.max() >= CHAO - 4:
+    alto = max(ref.max() - ref.min(), yg.max() - yg.min())  # braço erguido no desenho de hoje (uppercut, overhand)
+    if ys.max() - ys.min() > alto * 1.02 and yg.max() >= CHAO - 4:
         erros.append(f"tamanho {ys.max() - ys.min()} px (parado {ref.max() - ref.min()})")
     return erros
 
@@ -844,6 +958,16 @@ ACOES = {
     "chute_baixo": ("chute_baixo", (1, 2, 3, 4, 5, 6, 7), (3, 2, 1, 2, 3, 3, 3), (2, 3), 230),
     "soco_agachado": ("baixo_soco", (1, 2, 3, 4, 4, 5, 6), (2, 1, 1, 1, 2, 4, 3), (3, 4), 400),
     "rasteira": ("rasteira", (1, 2, 3, 4, 5, 6, 7), (5, 5, 1, 3, 8, 7, 7), (2, 3), 440),
+    "uppercut": ("cabecada", (), (), None, 410),
+    "levanta_comedia": ("cabecada", (), (), None, 1200),
+    "levanta_comedia_forte": ("cabecada", (), (), None, 1201),
+    "overhand": ("martelo", (), (), None, 216),
+    "bote": ("caneta", (), (), None, 1400),
+    "bote_forte": ("caneta", (), (), None, 1401),
+    "agarrao": ("agarrao", (), (), None, 800),
+    "soco_no_ar": ("ar_soco", (), (), None, 600),
+    "voadora": ("bicicleta", (), (), None, 610),
+    "voadora_rapida": ("bicicleta", (), (), None, 650),
 }
 OUT_HD, OUT_1X = SPR / "quadros_pecas_hd", SPR / "quadros_pecas"  # <ação>/ (o ligar_pecas.py lê) e chaves/<folha>/
 LACOS = {"parado", "agachado"}  # ações em laço: respiram
@@ -897,6 +1021,32 @@ def do_jogo(acao, folha):
     return tuple(des), tuple(ticks), tuple(ativos) or None
 
 
+def meio_termo(quadros, poses, elems, bate):
+    """Decisão do Alisson (17/11, meio-termo com a Lei 10 do estudo): quadros do meio na preparação, na volta e na
+    guarda; da antecipação até o contato a pose fica segurada e só entra um borrão de 1 tick antes do contato."""
+    import vida_pecas as vida
+    ini = sum(t for _, t in elems[:bate - 1])
+    fim = ini + elems[bate - 1][1]
+    a, c = poses[elems[bate - 1][0]], poses[elems[bate][0]]
+    q = elems[bate - 1][0]
+    saida, tick, feito = [], 0, False
+    for quadro in quadros:
+        t = quadro[1]
+        if ini <= tick < fim:
+            if not feito:
+                n = fim - ini
+                if n >= 2:
+                    saida += [(dict(a), n - 1, False, q), (vida.misturar(a, c, 0.6), 1, False, q)]
+                else:
+                    saida.append((dict(a), n, False, q))
+                feito = True
+        else:
+            saida.append(quadro)
+        tick += t
+    assert sum(t for _, t, *_ in saida) == sum(t for _, t, *_ in quadros)
+    return saida
+
+
 SECO = False  # True liga a regra 7 seca nos golpes (o Alisson pediu fluidez; o Breno decide na #45)
 
 
@@ -925,7 +1075,13 @@ def gerar(nomes=None):
     falhas = 0
     for nome in nomes:
         folha, des, ticks, ativos, acao = ACOES[nome]
-        if (RAIZ / "chars/ck/ck.air").exists():  # tempos e quadros ativos do jogo de hoje (têm de bater no ligar_pecas.py)
+        antes = OUT_HD / nome / "tempos.json"
+        if antes.exists():  # já ligado no jogo: os tempos e os desenhos de antes ficam guardados em "hoje"
+            hoje = json.loads(antes.read_text(encoding="utf-8"))["hoje"]
+            des = tuple(int(h["de"].split("/")[1]) for h in hoje)
+            ticks = tuple(h["ticks"] for h in hoje)
+            ativos = tuple(k for k, h in enumerate(hoje) if h["caixa"]) or None
+        elif (RAIZ / "chars/ck/ck.air").exists():  # tempos e quadros ativos do jogo (têm de bater no ligar_pecas.py)
             des, ticks, ativos = do_jogo(acao, folha)
         elems = [(f"{folha}/{d:02d}", t) for d, t in zip(des, ticks)]
         for q, _ in elems:
@@ -988,6 +1144,31 @@ def gerar(nomes=None):
     (DOCS / "robo_defeitos.md").write_text(texto, encoding="utf-8")
     print(f"robô: {falhas} desenho(s) com defeito de {len(relatorio) - 2}")
     return falhas
+
+
+def trocar_no_sff():
+    """Troca só os desenhos das ações já ligadas (grupos 48000 + n.º da ação no ligar_pecas.py), sem mexer no .air nem
+    no .cns. Serve quando a pose muda mas o número de desenhos de cada ação continua o mesmo."""
+    import conferir_sff as cs
+    import efeitos
+    import ligar_pecas as lp
+    chars = RAIZ / "chars/ck"
+    todos = sorted(p.name for p in OUT_HD.iterdir() if (p / "tempos.json").exists())
+    pal, nos, _ = cs.ler(chars / "ck.sff")
+    prgb = lp.paleta_rgb(pal)
+    novos = {(48000 + k, int(f.stem)): f for k, nome in enumerate(todos)
+             for f in sorted((OUT_HD / nome).glob("[0-9][0-9].png"))}
+    velhos = {(n["g"], n["i"]) for n in nos if 48000 <= n["g"] < 48000 + len(todos)}
+    assert velhos == set(novos), "o número de desenhos mudou: religue com o ligar_pecas.py"
+    rle, png = [], []
+    for no in nos:
+        if (no["g"], no["i"]) not in novos:
+            (png if no.get("png") else rle).append((no["g"], no["i"], no["w"], no["h"], no["x"], no["y"], no["px"]))
+    for (g, i), arq in sorted(novos.items()):
+        img, ex, ey = lp.recortar(Image.open(arq).convert("RGBA"))
+        rle.append((g, i, img.width, img.height, int(ex), int(ey), lp.indexar(img, prgb).tobytes()))
+    efeitos.gravar(chars / "ck.sff", pal, rle, png)
+    print(f"{len(novos)} desenhos trocados no ck.sff")
 
 
 DOCS = RAIZ / "docs" / "boneco-pecas" / "ck"
@@ -1063,6 +1244,8 @@ if __name__ == "__main__":
         montar_kit()
     elif cmd == "ver":
         ver(DOCS / "kit_sobre_parado.png")
+    elif cmd == "trocar":
+        trocar_no_sff()
     elif cmd == "acoes":
         gerar(sys.argv[2:] or None)
     elif cmd == "video":

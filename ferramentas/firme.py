@@ -135,6 +135,8 @@ def montar_kit():
     yy, xx = np.mgrid[:b.TELA[1], :b.TELA[0]]
     baixo = yy >= K.CINTURA
     m_bt = b.mascara(K.BRACO_TRAS) & alfa
+    if hasattr(K, "SO_DO_BRACO_TRAS"):  # dentro do polígono, só o que é do braço (o resto fica com o corpo)
+        m_bt &= K.SO_DO_BRACO_TRAS(ref)
     m_bf = b.mascara(K.BRACO_FRENTE) & alfa & ~m_bt
     # peças a mais do lutador (a criatura nas costas do Raiclaven despertado e os braços dela): cada uma com o seu
     # polígono e o seu osso em K.OSSOS; saem do corpo antes da cabeça, do tronco e das pernas
@@ -1062,7 +1064,7 @@ def gerar(nomes, so_pose=False):
         unicos = list(dict.fromkeys(q for q, _, _ in elems))
         for q in unicos:
             poses[q] = pose_de(kit, q)
-        bate = next((i for i, e in enumerate(elems) if e[2]), None)
+        bate = {i for i, e in enumerate(elems) if e[2]} or None  # todo contato (agarrão tem várias pancadas)
         laco = acao in getattr(K, "LACOS", {0})
         quadros = vida.animar(poses, [(q, t) for q, t, _ in elems], bate=bate, laco=laco,
                               guarda=None if laco else poses.get(K.REF) or pose_de(kit, K.REF))
