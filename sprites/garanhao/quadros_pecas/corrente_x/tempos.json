@@ -1,0 +1,93 @@
+{
+ "acao": 10300,
+ "caixa": [
+  36,
+  -330,
+  156,
+  -168
+ ],
+ "origem": [
+  "corrente_x/00",
+  "corrente_x/01",
+  "corrente_x/02",
+  "corrente_x/03",
+  "corrente_x/04",
+  "corrente_x/05",
+  "corrente_x/06",
+  "corrente_x/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "corrente_x/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": false,
+   "de": "corrente_x/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 4,
+   "caixa": true,
+   "de": "corrente_x/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "corrente_x/03"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "corrente_x/03"
+  },
+  {
+   "desenho": 5,
+   "ticks": 3,
+   "caixa": false,
+   "de": "corrente_x/04"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "corrente_x/05"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "corrente_x/05"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "corrente_x/06"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "corrente_x/06"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "corrente_x/07"
+  },
+  {
+   "desenho": 11,
+   "ticks": 3,
+   "caixa": false,
+   "de": "corrente_x/07"
+  }
+ ]
+}

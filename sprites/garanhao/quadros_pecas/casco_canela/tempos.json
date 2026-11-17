@@ -1,0 +1,87 @@
+{
+ "acao": 10230,
+ "caixa": [
+  36,
+  -90,
+  150,
+  -18
+ ],
+ "origem": [
+  "casco_canela/00",
+  "casco_canela/01",
+  "casco_canela/02",
+  "casco_canela/03",
+  "casco_canela/04",
+  "casco_canela/05",
+  "casco_canela/06",
+  "casco_canela/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "casco_canela/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": false,
+   "de": "casco_canela/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "casco_canela/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 4,
+   "caixa": true,
+   "de": "casco_canela/03"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "casco_canela/04"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "casco_canela/05"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "casco_canela/05"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "casco_canela/06"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "casco_canela/06"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "casco_canela/07"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "casco_canela/07"
+  }
+ ]
+}

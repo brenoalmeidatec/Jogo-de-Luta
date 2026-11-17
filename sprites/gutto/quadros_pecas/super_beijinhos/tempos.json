@@ -1,0 +1,283 @@
+{
+ "acao": 3000,
+ "caixa": null,
+ "origem": [
+  "573_0",
+  "574_0",
+  "575_0",
+  "576_0",
+  "577_0"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "573_0@super_beijinhos0"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "573_0@super_beijinhos0"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "573_0@super_beijinhos0"
+  },
+  {
+   "desenho": 3,
+   "ticks": 3,
+   "caixa": false,
+   "de": "573_0@super_beijinhos0"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "574_0@super_beijinhos1"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "574_0@super_beijinhos1"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "574_0@super_beijinhos1"
+  },
+  {
+   "desenho": 7,
+   "ticks": 3,
+   "caixa": false,
+   "de": "574_0@super_beijinhos1"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "575_0@super_beijinhos2"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "575_0@super_beijinhos2"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "575_0@super_beijinhos2"
+  },
+  {
+   "desenho": 11,
+   "ticks": 3,
+   "caixa": false,
+   "de": "575_0@super_beijinhos2"
+  },
+  {
+   "desenho": 12,
+   "ticks": 2,
+   "caixa": false,
+   "de": "576_0@super_beijinhos3"
+  },
+  {
+   "desenho": 13,
+   "ticks": 2,
+   "caixa": false,
+   "de": "576_0@super_beijinhos3"
+  },
+  {
+   "desenho": 14,
+   "ticks": 2,
+   "caixa": false,
+   "de": "576_0@super_beijinhos3"
+  },
+  {
+   "desenho": 15,
+   "ticks": 3,
+   "caixa": false,
+   "de": "576_0@super_beijinhos3"
+  },
+  {
+   "desenho": 16,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos4"
+  },
+  {
+   "desenho": 17,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos4"
+  },
+  {
+   "desenho": 18,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos4"
+  },
+  {
+   "desenho": 19,
+   "ticks": 3,
+   "caixa": false,
+   "de": "577_0@super_beijinhos4"
+  },
+  {
+   "desenho": 20,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos5"
+  },
+  {
+   "desenho": 21,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos5"
+  },
+  {
+   "desenho": 22,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos5"
+  },
+  {
+   "desenho": 23,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos5"
+  },
+  {
+   "desenho": 24,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos5"
+  },
+  {
+   "desenho": 25,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos5"
+  },
+  {
+   "desenho": 26,
+   "ticks": 3,
+   "caixa": false,
+   "de": "577_0@super_beijinhos5"
+  },
+  {
+   "desenho": 27,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos6"
+  },
+  {
+   "desenho": 28,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos6"
+  },
+  {
+   "desenho": 29,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos6"
+  },
+  {
+   "desenho": 30,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos6"
+  },
+  {
+   "desenho": 31,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos6"
+  },
+  {
+   "desenho": 32,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos6"
+  },
+  {
+   "desenho": 33,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos6"
+  },
+  {
+   "desenho": 34,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos6"
+  },
+  {
+   "desenho": 35,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos6"
+  },
+  {
+   "desenho": 36,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos6"
+  },
+  {
+   "desenho": 37,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos6"
+  },
+  {
+   "desenho": 38,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos6"
+  },
+  {
+   "desenho": 39,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos6"
+  },
+  {
+   "desenho": 40,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos6"
+  },
+  {
+   "desenho": 41,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos6"
+  },
+  {
+   "desenho": 42,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos6"
+  },
+  {
+   "desenho": 43,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos6"
+  },
+  {
+   "desenho": 44,
+   "ticks": 2,
+   "caixa": false,
+   "de": "577_0@super_beijinhos6"
+  }
+ ]
+}

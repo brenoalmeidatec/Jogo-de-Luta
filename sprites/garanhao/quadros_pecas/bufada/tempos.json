@@ -1,0 +1,99 @@
+{
+ "acao": 10260,
+ "caixa": [
+  42,
+  -300,
+  138,
+  -228
+ ],
+ "origem": [
+  "bufada/00",
+  "bufada/01",
+  "bufada/02",
+  "bufada/03",
+  "bufada/04",
+  "bufada/05",
+  "bufada/06",
+  "bufada/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "bufada/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "bufada/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": false,
+   "de": "bufada/01"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "bufada/02"
+  },
+  {
+   "desenho": 4,
+   "ticks": 3,
+   "caixa": false,
+   "de": "bufada/02"
+  },
+  {
+   "desenho": 5,
+   "ticks": 3,
+   "caixa": false,
+   "de": "bufada/03"
+  },
+  {
+   "desenho": 6,
+   "ticks": 6,
+   "caixa": true,
+   "de": "bufada/04"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "bufada/05"
+  },
+  {
+   "desenho": 8,
+   "ticks": 3,
+   "caixa": false,
+   "de": "bufada/05"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "bufada/06"
+  },
+  {
+   "desenho": 10,
+   "ticks": 3,
+   "caixa": false,
+   "de": "bufada/06"
+  },
+  {
+   "desenho": 11,
+   "ticks": 2,
+   "caixa": false,
+   "de": "bufada/07"
+  },
+  {
+   "desenho": 12,
+   "ticks": 3,
+   "caixa": false,
+   "de": "bufada/07"
+  }
+ ]
+}
