@@ -142,7 +142,10 @@ GRAO_PASTOR = {"referencia_ginga": ("e_referencia_ginga", None), "anda": ("e_and
                "apanha": ("e_apanha", None), "queda": ("e_queda", None),
                "levanta": ("e_levanta", None), "vitoria": ("e_vitoria", None), "derrota": ("e_derrota", None),
                "provoca": ("e_provoca", None), "parry_alto": ("e_parry_alto", None),
-               "parry_baixo": ("e_parry_baixo", None), "rolamento": ("e_rolamento", None)}
+               "parry_baixo": ("e_parry_baixo", None), "rolamento": ("e_rolamento", None),
+               "baixo_soco": ("e_baixo", (0, 1, 2, 2, 3, 3, 3, 0)), "rasteirinha": ("e_baixo", (4, 4, 5, 5, 6, 6, 7, 7)),
+               "rasteira": ("e_varrida", (1, 2, 3, 4, 5, 6, 6, 7)), "bicicleta": ("e_ar_chifre", (0, 1, 2, 2, 3, 4, 4, 0)),
+               "ar_soco": ("e_ar_soco", (1, 2, 3, 4, 5, 6, 7, 7)), "defesa": ("e_defesa", None)}
 GRAO_PASTOR = {k: v for k, v in GRAO_PASTOR.items() if (QUADROS_E / v[0] / "00.png").exists()}
 
 

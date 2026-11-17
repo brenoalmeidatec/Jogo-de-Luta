@@ -256,7 +256,7 @@ JUNTA_PESCOCO = (604, 352)
 REGUA_CABECA = 0.8
 NOTA_MAX = 65              # casamento pior que isto (cabeça muito virada, escondida): fica a cabeça do rascunho
 SEM_CABECA = {"e_provoca", "e_rolamento"}  # provoca: a mão passa na frente da cabeça; rolamento: de costas e de frente no giro
-SEM_CABECA_QUADRO = {"e_parry_alto": {7}}  # quadros com a mão no chifre: fica a cabeça do rascunho
+SEM_CABECA_QUADRO = {"e_parry_alto": {7}, "e_defesa": {2, 3, 4, 5, 6, 7}}  # quadros com a mão no chifre: fica a cabeça do rascunho
 DEITADO = {"e_queda", "e_levanta", "e_rolamento", "e_derrota", "e_vitima_agarrado", "e_vitima_arremessado"}
 MANTO = {(33, 26, 43), (64, 48, 71), (114, 80, 105)}
 
