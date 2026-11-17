@@ -919,7 +919,6 @@
 1306,0 = 2220,0
 1307,0 = 2221,0
 48001,23 = 26000,17
-48000,0 = 1633,0
 48000,1 = 1633,0
 48000,2 = 1633,0
 48000,3 = 1908,0
@@ -936,20 +935,6 @@
 48000,14 = 1639,0
 48000,15 = 1639,0
 48000,16 = 1639,0
-48001,0 = 1633,0
-48001,1 = 1633,0
-48001,2 = 1633,0
-48001,3 = 1633,0
-48001,4 = 1908,0
-48001,5 = 1909,0
-48001,6 = 1636,0
-48001,7 = 1636,0
-48001,8 = 1637,0
-48001,9 = 1637,0
-48001,10 = 1637,0
-48001,11 = 1637,0
-48001,12 = 1637,0
-48001,13 = 1638,0
 48001,14 = 1638,0
 48001,15 = 1638,0
 48001,16 = 1638,0
@@ -959,7 +944,6 @@
 48001,20 = 1639,0
 48001,21 = 1639,0
 48001,22 = 1639,0
-48002,0 = 1633,0
 48002,1 = 1634,0
 48002,2 = 1921,0
 48002,3 = 1921,0
@@ -975,32 +959,12 @@
 48002,13 = 1639,0
 48002,14 = 1639,0
 48002,15 = 1639,0
-48003,0 = 1633,0
-48003,1 = 1633,0
-48003,2 = 1633,0
-48003,3 = 1908,0
-48003,4 = 1909,0
-48003,5 = 1636,0
-48003,6 = 1636,0
-48003,7 = 1638,0
-48003,8 = 1638,0
-48003,9 = 1638,0
 48003,10 = 1638,0
 48003,11 = 1638,0
 48003,12 = 1639,0
 48003,13 = 1639,0
 48003,14 = 1639,0
 48003,15 = 1639,0
-48004,0 = 1522,0
-48004,1 = 1522,0
-48004,2 = 1522,0
-48004,3 = 1522,0
-48004,4 = 1523,0
-48004,5 = 2035,0
-48004,6 = 2173,0
-48004,7 = 2173,0
-48004,8 = 2173,0
-48004,9 = 2168,0
 48004,10 = 2168,0
 48004,11 = 1526,0
 48004,12 = 1526,0
@@ -1010,7 +974,6 @@
 48004,16 = 1527,0
 48004,17 = 1527,0
 48004,18 = 1527,0
-48005,0 = 1633,0
 48005,1 = 1633,0
 48005,2 = 1634,0
 48005,3 = 1908,0
@@ -1026,7 +989,6 @@
 48005,13 = 1639,0
 48005,14 = 1639,0
 48005,15 = 1639,0
-48006,0 = 1633,0
 48006,1 = 1633,0
 48006,2 = 1633,0
 48006,3 = 1633,0
@@ -1054,37 +1016,6 @@
 48006,25 = 1639,0
 48006,26 = 1639,0
 48006,27 = 1639,0
-48007,0 = 1633,0
-48007,1 = 1633,0
-48007,2 = 1634,0
-48007,3 = 1909,0
-48007,4 = 1909,0
-48007,5 = 1911,0
-48007,6 = 1911,0
-48007,7 = 1911,0
-48007,8 = 1638,0
-48007,9 = 1638,0
-48007,10 = 1638,0
-48007,11 = 1639,0
-48007,12 = 1639,0
-48007,13 = 1639,0
-48007,14 = 1639,0
-48008,0 = 1522,0
-48008,1 = 1522,0
-48008,2 = 1522,0
-48008,3 = 1523,0
-48008,4 = 2035,0
-48008,5 = 2173,0
-48008,6 = 2173,0
-48008,7 = 2173,0
-48008,8 = 1526,0
-48008,9 = 1526,0
-48008,10 = 1526,0
-48008,11 = 1527,0
-48008,12 = 1527,0
-48008,13 = 1527,0
-48008,14 = 1527,0
-48009,0 = 1522,0
 48009,1 = 1522,0
 48009,2 = 1522,0
 48009,3 = 1522,0
@@ -1102,7 +1033,6 @@
 48009,15 = 1527,0
 48009,16 = 1527,0
 48009,17 = 1527,0
-48010,0 = 1633,0
 48010,1 = 1633,0
 48010,2 = 1634,0
 48010,3 = 1908,0
@@ -1120,89 +1050,509 @@
 48010,15 = 1639,0
 48010,16 = 1639,0
 48010,17 = 1639,0
-48011,0 = 1522,0
-48011,1 = 1522,0
-48011,2 = 1522,0
-48011,3 = 1522,0
-48011,4 = 1523,0
-48011,5 = 2035,0
-48011,6 = 2173,0
-48011,7 = 2173,0
-48011,8 = 2173,0
-48011,9 = 2168,0
-48011,10 = 2168,0
-48011,11 = 1526,0
-48011,12 = 1526,0
-48011,13 = 1527,0
-48011,14 = 1527,0
-48011,15 = 1527,0
-48011,16 = 1527,0
 48011,17 = 1527,0
 48011,18 = 1527,0
-48012,0 = 1521,0
-48012,1 = 1522,0
-48012,2 = 2047,0
-48012,3 = 2041,0
-48012,4 = 2041,0
-48012,5 = 2041,0
-48012,6 = 1525,0
-48012,7 = 1525,0
-48012,8 = 1525,0
-48012,9 = 1526,0
-48012,10 = 1526,0
-48012,11 = 1526,0
-48012,12 = 1526,0
-48012,13 = 1527,0
-48012,14 = 1527,0
 48012,15 = 1527,0
 48012,16 = 1527,0
-48013,0 = 1505,0
-48013,1 = 1505,0
-48013,2 = 1506,0
-48013,3 = 1902,0
-48013,4 = 1893,0
-48013,5 = 1509,0
-48013,6 = 1509,0
-48013,7 = 1509,0
-48013,8 = 1510,0
-48013,9 = 1510,0
-48013,10 = 1510,0
-48013,11 = 1510,0
-48013,12 = 1511,0
-48013,13 = 1511,0
-48013,14 = 1511,0
-48013,15 = 1511,0
-48014,0 = 26000,0
-48014,1 = 26000,0
-48014,2 = 26000,1
-48014,3 = 26000,2
-48014,4 = 26000,3
-48014,5 = 26000,4
-48014,6 = 26000,4
-48014,7 = 26000,5
-48014,8 = 26000,6
-48014,9 = 26000,7
-48014,10 = 26000,7
-48014,11 = 26000,8
-48014,12 = 26000,9
-48014,13 = 26000,9
-48014,14 = 26000,10
-48014,15 = 26000,11
-48014,16 = 26000,12
-48014,17 = 26000,13
-48014,18 = 26000,13
-48014,19 = 26000,14
-48014,20 = 26000,15
-48014,21 = 26000,16
-48014,22 = 26000,16
-48014,23 = 26000,17
-48015,0 = 1379,0
-48015,1 = 2119,0
-48015,2 = 1381,0
-48015,3 = 1382,0
-48015,4 = 1383,0
-48015,5 = 1383,0
-48015,6 = 1383,0
+48000,0 = 1442,0
+48001,0 = 26001,0
+48001,1 = 26001,2
+48001,2 = 26001,4
+48001,3 = 26001,5
+48001,4 = 26001,6
+48001,5 = 26001,7
+48001,6 = 26001,8
+48001,7 = 26001,9
+48001,8 = 26001,8
+48001,9 = 26001,7
+48001,10 = 26001,6
+48001,11 = 26001,5
+48001,12 = 26001,4
+48001,13 = 26001,2
+48002,0 = 1442,0
+48003,0 = 1610,0
+48003,1 = 1980,0
+48003,2 = 1981,0
+48003,3 = 1966,0
+48003,4 = 1966,0
+48003,5 = 1964,0
+48003,6 = 1964,0
+48003,7 = 1613,0
+48003,8 = 1613,0
+48003,9 = 1614,0
+48004,0 = 1610,0
+48004,1 = 1980,0
+48004,2 = 1981,0
+48004,3 = 1966,0
+48004,4 = 1966,0
+48004,5 = 1964,0
+48004,6 = 1964,0
+48004,7 = 1613,0
+48004,8 = 1613,0
+48004,9 = 1614,0
+48005,0 = 1345,0
+48006,0 = 1345,0
+48007,0 = 1633,0
+48007,1 = 1633,0
+48007,2 = 1633,0
+48007,3 = 1908,0
+48007,4 = 1909,0
+48007,5 = 1636,0
+48007,6 = 1636,0
+48007,7 = 1637,0
+48007,8 = 1637,0
+48007,9 = 1637,0
+48007,10 = 1637,0
+48007,11 = 1638,0
+48007,12 = 1638,0
+48007,13 = 1638,0
+48007,14 = 1639,0
+48007,15 = 1639,0
+48007,16 = 1639,0
+48008,0 = 1633,0
+48008,1 = 1633,0
+48008,2 = 1633,0
+48008,3 = 1633,0
+48008,4 = 1908,0
+48008,5 = 1909,0
+48008,6 = 1636,0
+48008,7 = 1636,0
+48008,8 = 1637,0
+48008,9 = 1637,0
+48008,10 = 1637,0
+48008,11 = 1637,0
+48008,12 = 1637,0
+48008,13 = 1638,0
+48008,14 = 1638,0
+48008,15 = 1638,0
+48008,16 = 1638,0
+48008,17 = 1638,0
+48008,18 = 1639,0
+48008,19 = 1639,0
+48008,20 = 1639,0
+48008,21 = 1639,0
+48008,22 = 1639,0
+48009,0 = 1345,0
+48010,0 = 1345,0
+48011,0 = 1493,0
+48011,1 = 1493,0
+48011,2 = 1493,0
+48011,3 = 1493,0
+48011,4 = 1493,0
+48011,5 = 1494,0
+48011,6 = 1657,0
+48011,7 = 1658,0
+48011,8 = 2197,0
+48011,9 = 1660,0
+48011,10 = 1661,0
+48011,11 = 1661,0
+48011,12 = 1661,0
+48011,13 = 2204,0
+48011,14 = 2204,0
+48011,15 = 1663,0
+48011,16 = 1663,0
+48012,0 = 1633,0
+48012,1 = 1634,0
+48012,2 = 1921,0
+48012,3 = 1911,0
+48012,4 = 1911,0
+48012,5 = 1911,0
+48012,6 = 1637,0
+48012,7 = 1637,0
+48012,8 = 1637,0
+48012,9 = 1638,0
+48012,10 = 1638,0
+48012,11 = 1638,0
+48012,12 = 1639,0
+48012,13 = 1639,0
+48012,14 = 1639,0
+48013,0 = 1633,0
+48013,1 = 1633,0
+48013,2 = 1633,0
+48013,3 = 1908,0
+48013,4 = 1909,0
+48013,5 = 1636,0
+48013,6 = 1636,0
+48013,7 = 1638,0
+48013,8 = 1638,0
+48013,9 = 1638,0
+48013,10 = 1638,0
+48013,11 = 1638,0
+48013,12 = 1639,0
+48013,13 = 1639,0
+48013,14 = 1639,0
+48013,15 = 1639,0
+48014,0 = 1648,0
+48014,1 = 1648,0
+48014,2 = 1648,0
+48014,3 = 1648,0
+48014,4 = 1649,0
+48014,5 = 1649,0
+48014,6 = 1649,0
+48014,7 = 1649,0
+48014,8 = 1650,0
+48014,9 = 1650,0
+48014,10 = 1650,0
+48014,11 = 1650,0
+48014,12 = 1651,0
+48014,13 = 1652,0
+48014,14 = 1652,0
+48014,15 = 1652,0
+48014,16 = 1652,0
+48014,17 = 1652,0
+48014,18 = 1652,0
+48014,19 = 1652,0
+48014,20 = 1652,0
+48014,21 = 1652,0
+48014,22 = 1652,0
+48014,23 = 1652,0
+48014,24 = 1652,0
+48015,0 = 1522,0
+48015,1 = 1522,0
+48015,2 = 1522,0
+48015,3 = 1522,0
+48015,4 = 1523,0
+48015,5 = 2035,0
+48015,6 = 2173,0
+48015,7 = 2173,0
+48015,8 = 2173,0
+48015,9 = 2168,0
+48015,10 = 2168,0
+48015,11 = 1526,0
+48015,12 = 1527,0
+48016,0 = 1633,0
+48016,1 = 1633,0
+48016,2 = 1634,0
+48016,3 = 1908,0
+48016,4 = 1909,0
+48016,5 = 1911,0
+48016,6 = 1911,0
+48016,7 = 1911,0
+48016,8 = 1638,0
+48016,9 = 1638,0
+48016,10 = 1638,0
+48016,11 = 1638,0
+48016,12 = 1639,0
+48016,13 = 1639,0
+48016,14 = 1639,0
+48016,15 = 1639,0
+48017,0 = 1609,0
+48017,1 = 1610,0
+48017,2 = 1974,0
+48017,3 = 1975,0
+48017,4 = 1979,0
+48017,5 = 1966,0
+48017,6 = 1613,0
+48017,7 = 1613,0
+48017,8 = 1982,0
+48017,9 = 1982,0
+48017,10 = 1614,0
+48017,11 = 1614,0
+48017,12 = 1615,0
+48017,13 = 1615,0
+48017,14 = 1615,0
+48017,15 = 1615,0
+48017,16 = 1615,0
+48017,17 = 1615,0
+48018,0 = 1633,0
+48018,1 = 1633,0
+48018,2 = 1633,0
+48018,3 = 1633,0
+48018,4 = 1920,0
+48018,5 = 1921,0
+48018,6 = 1909,0
+48018,7 = 1636,0
+48018,8 = 1637,0
+48018,9 = 1637,0
+48018,10 = 1638,0
+48018,11 = 1638,0
+48018,12 = 1638,0
+48018,13 = 1638,0
+48018,14 = 1638,0
+48018,15 = 1638,0
+48018,16 = 1638,0
+48018,17 = 1638,0
+48018,18 = 1638,0
+48018,19 = 1639,0
+48018,20 = 1639,0
+48018,21 = 1639,0
+48018,22 = 1639,0
+48018,23 = 1639,0
+48018,24 = 1639,0
+48018,25 = 1639,0
+48018,26 = 1639,0
+48018,27 = 1639,0
+48019,0 = 1649,0
+48019,1 = 1649,0
+48019,2 = 1649,0
+48019,3 = 1649,0
+48019,4 = 1650,0
+48019,5 = 1650,0
+48019,6 = 1650,0
+48019,7 = 1650,0
+48019,8 = 1651,0
+48019,9 = 1652,0
+48020,0 = 1633,0
+48020,1 = 1633,0
+48020,2 = 1634,0
+48020,3 = 1909,0
+48020,4 = 1911,0
+48020,5 = 1911,0
+48020,6 = 1911,0
+48020,7 = 1638,0
+48020,8 = 1638,0
+48020,9 = 1638,0
+48020,10 = 1639,0
+48020,11 = 1639,0
+48020,12 = 1639,0
+48020,13 = 1639,0
+48021,0 = 1522,0
+48021,1 = 1522,0
+48021,2 = 1522,0
+48021,3 = 1523,0
+48021,4 = 2035,0
+48021,5 = 2173,0
+48021,6 = 2173,0
+48021,7 = 2173,0
+48021,8 = 1526,0
+48021,9 = 1527,0
+48022,0 = 1609,0
+48022,1 = 1610,0
+48022,2 = 1974,0
+48022,3 = 1975,0
+48022,4 = 1979,0
+48022,5 = 1966,0
+48022,6 = 1613,0
+48022,7 = 1613,0
+48022,8 = 1614,0
+48022,9 = 1614,0
+48022,10 = 1614,0
+48022,11 = 1615,0
+48022,12 = 1615,0
+48022,13 = 1615,0
+48022,14 = 1615,0
+48023,0 = 1609,0
+48023,1 = 1610,0
+48023,2 = 1974,0
+48023,3 = 1975,0
+48023,4 = 1979,0
+48023,5 = 1966,0
+48023,6 = 1613,0
+48023,7 = 1613,0
+48023,8 = 1982,0
+48023,9 = 1982,0
+48023,10 = 1614,0
+48023,11 = 1614,0
+48023,12 = 1615,0
+48023,13 = 1615,0
+48023,14 = 1615,0
+48023,15 = 1615,0
+48023,16 = 1615,0
+48023,17 = 1615,0
+48024,0 = 1522,0
+48024,1 = 1522,0
+48024,2 = 1522,0
+48024,3 = 1522,0
+48024,4 = 1523,0
+48024,5 = 2035,0
+48024,6 = 2173,0
+48024,7 = 2173,0
+48024,8 = 2173,0
+48024,9 = 1526,0
+48024,10 = 1527,0
+48025,0 = 1633,0
+48025,1 = 1633,0
+48025,2 = 1634,0
+48025,3 = 1908,0
+48025,4 = 1909,0
+48025,5 = 1636,0
+48025,6 = 1635,0
+48025,7 = 1911,0
+48025,8 = 1637,0
+48025,9 = 1637,0
+48025,10 = 1638,0
+48025,11 = 1638,0
+48025,12 = 1638,0
+48025,13 = 1638,0
+48025,14 = 1639,0
+48025,15 = 1639,0
+48025,16 = 1639,0
+48025,17 = 1639,0
+48026,0 = 1537,0
+48026,1 = 1537,0
+48026,2 = 1537,0
+48026,3 = 1538,0
+48026,4 = 2058,0
+48026,5 = 2059,0
+48026,6 = 1540,0
+48026,7 = 1540,0
+48026,8 = 1540,0
+48026,9 = 1541,0
+48026,10 = 1541,0
+48026,11 = 1541,0
+48026,12 = 1542,0
+48026,13 = 1542,0
+48026,14 = 1542,0
+48026,15 = 2062,0
+48026,16 = 2062,0
+48026,17 = 2062,0
+48026,18 = 1543,0
+48027,0 = 1522,0
+48027,1 = 1522,0
+48027,2 = 1522,0
+48027,3 = 1522,0
+48027,4 = 1523,0
+48027,5 = 2035,0
+48027,6 = 2173,0
+48027,7 = 2173,0
+48027,8 = 2173,0
+48027,9 = 2168,0
+48027,10 = 2168,0
+48027,11 = 1526,0
+48027,12 = 1527,0
+48028,0 = 1521,0
+48028,1 = 1522,0
+48028,2 = 2047,0
+48028,3 = 2041,0
+48028,4 = 2041,0
+48028,5 = 2041,0
+48028,6 = 1525,0
+48028,7 = 1525,0
+48028,8 = 1525,0
+48028,9 = 1526,0
+48028,10 = 1527,0
+48029,0 = 1537,0
+48029,1 = 1537,0
+48029,2 = 1538,0
+48029,3 = 2058,0
+48029,4 = 2059,0
+48029,5 = 1540,0
+48029,6 = 1540,0
+48029,7 = 1540,0
+48029,8 = 1541,0
+48029,9 = 1541,0
+48029,10 = 1541,0
+48029,11 = 1541,0
+48029,12 = 1541,0
+48029,13 = 1542,0
+48029,14 = 1542,0
+48029,15 = 2062,0
+48029,16 = 2062,0
+48029,17 = 1543,0
+48030,0 = 26001,0
+48030,1 = 26001,4
+48030,2 = 26001,6
+48030,3 = 26001,9
+48030,4 = 1673,0
+48030,5 = 1677,0
+48031,0 = 1421,0
+48032,0 = 1562,0
+48032,1 = 1562,0
+48032,2 = 1563,0
+48032,3 = 1564,0
+48032,4 = 1565,0
+48032,5 = 1565,0
+48032,6 = 1565,0
+48033,0 = 1561,0
+48033,1 = 1562,0
+48033,2 = 1562,0
+48033,3 = 1563,0
+48033,4 = 1563,0
+48033,5 = 1563,0
+48033,6 = 1564,0
+48033,7 = 1564,0
+48033,8 = 1565,0
+48033,9 = 1565,0
+48033,10 = 1565,0
+48033,11 = 1565,0
+48033,12 = 1565,0
+48033,13 = 1565,0
+48033,14 = 1566,0
+48033,15 = 1566,0
+48033,16 = 1566,0
+48033,17 = 1566,0
+48033,18 = 1566,0
+48033,19 = 1566,0
+48033,20 = 1567,0
+48033,21 = 1567,0
+48033,22 = 1567,0
+48033,23 = 1567,0
+48033,24 = 1567,0
+48033,25 = 1567,0
+48034,0 = 1562,0
+48034,1 = 1562,0
+48034,2 = 1563,0
+48034,3 = 1564,0
+48034,4 = 1565,0
+48034,5 = 1565,0
+48034,6 = 1565,0
+48035,0 = 1442,0
+48035,1 = 1443,0
+48035,2 = 1443,0
+48035,3 = 1538,0
+48035,4 = 1538,0
+48035,5 = 1538,0
+48035,6 = 1539,0
+48035,7 = 1539,0
+48035,8 = 1539,0
+48035,9 = 1540,0
+48035,10 = 1540,0
+48035,11 = 1540,0
+48035,12 = 1540,0
+48035,13 = 1541,0
+48035,14 = 1541,0
+48035,15 = 1541,0
+48035,16 = 1542,0
+48035,17 = 1542,0
+48035,18 = 1542,0
+48035,19 = 1543,0
+48036,0 = 1505,0
+48036,1 = 1505,0
+48036,2 = 1506,0
+48036,3 = 1902,0
+48036,4 = 1893,0
+48036,5 = 1509,0
+48036,6 = 1509,0
+48036,7 = 1509,0
+48036,8 = 1510,0
+48036,9 = 1510,0
+48036,10 = 1510,0
+48036,11 = 1510,0
+48036,12 = 1511,0
+48036,13 = 1511,0
+48036,14 = 1511,0
+48036,15 = 1511,0
+48037,0 = 26000,0
+48037,1 = 26000,0
+48037,2 = 26000,1
+48037,3 = 26000,2
+48037,4 = 26000,3
+48037,5 = 26000,4
+48037,6 = 26000,4
+48037,7 = 26000,5
+48037,8 = 26000,6
+48037,9 = 26000,7
+48037,10 = 26000,7
+48037,11 = 26000,8
+48037,12 = 26000,9
+48037,13 = 26000,9
+48037,14 = 26000,10
+48037,15 = 26000,11
+48037,16 = 26000,12
+48037,17 = 26000,13
+48037,18 = 26000,13
+48037,19 = 26000,14
+48037,20 = 26000,15
+48037,21 = 26000,16
+48037,22 = 26000,16
+48037,23 = 26000,17
+48038,0 = 1379,0
+48038,1 = 2119,0
+48038,2 = 1381,0
+48038,3 = 1382,0
+48038,4 = 1383,0
+48038,5 = 1383,0
+48038,6 = 1383,0
 
 [Quotes]
 victory1 = "Próximo!"
@@ -7157,13 +7507,13 @@ value = -1000
 
 [State 3000, Invencivel]
 type = NotHitBy
-trigger1 = AnimElemTime(5) < 0
+trigger1 = ifelse(Anim = 3000, AnimElemTime(14), AnimElemTime(5)) < 0
 value = SCA
 time = 1
 
 [State 3000, Bebida 1]
 type = Projectile
-trigger1 = AnimElemTime(5) = 0
+trigger1 = ifelse(Anim = 3000, AnimElemTime(14), AnimElemTime(5)) = 0
 projid = 3000
 projanim = 3010
 projhitanim = ifelse(var(20) > 0, 9230, 9200)
@@ -7198,7 +7548,7 @@ air.velocity = -2,-3
 
 [State 3000, Bebida 2]
 type = Projectile
-trigger1 = AnimElemTime(5) = 6
+trigger1 = ifelse(Anim = 3000, AnimElemTime(14), AnimElemTime(5)) = 6
 projid = 3000
 projanim = 3011
 projhitanim = ifelse(var(20) > 0, 9230, 9200)
@@ -7233,7 +7583,7 @@ air.velocity = -2,-3
 
 [State 3000, Bebida 3]
 type = Projectile
-trigger1 = AnimElemTime(5) = 12
+trigger1 = ifelse(Anim = 3000, AnimElemTime(14), AnimElemTime(5)) = 12
 projid = 3000
 projanim = 3010
 projhitanim = ifelse(var(20) > 0, 9230, 9200)
@@ -7268,7 +7618,7 @@ air.velocity = -2,-3
 
 [State 3000, Bebida 4]
 type = Projectile
-trigger1 = AnimElemTime(5) = 18
+trigger1 = ifelse(Anim = 3000, AnimElemTime(14), AnimElemTime(5)) = 18
 projid = 3000
 projanim = 3011
 projhitanim = ifelse(var(20) > 0, 9230, 9200)
@@ -7303,7 +7653,7 @@ air.velocity = -2,-3
 
 [State 3000, Bebida 5]
 type = Projectile
-trigger1 = AnimElemTime(5) = 24
+trigger1 = ifelse(Anim = 3000, AnimElemTime(14), AnimElemTime(5)) = 24
 projid = 3000
 projanim = 3010
 projhitanim = ifelse(var(20) > 0, 9230, 9200)
@@ -7338,7 +7688,7 @@ air.velocity = -2,-3
 
 [State 3000, Bebida 6]
 type = Projectile
-trigger1 = AnimElemTime(5) = 30
+trigger1 = ifelse(Anim = 3000, AnimElemTime(14), AnimElemTime(5)) = 30
 projid = 3000
 projanim = 3011
 projhitanim = ifelse(var(20) > 0, 9230, 9200)
@@ -9914,8 +10264,8 @@ ignorehitpause = 1
 
 [State -4, Aura raiclaven no corpo: costas +8 +8]
 type = MapSet
-trigger1 = Anim = 3000 && AnimElemNo(0) = [2, 3]
-trigger2 = Anim = 3400 && AnimElemNo(0) = [1, 2]
+trigger1 = Anim = 3000 && AnimElemNo(0) = [5, 12]
+trigger2 = Anim = 3400 && AnimElemNo(0) = [1, 8]
 trigger3 = Anim = 13000 && AnimElemNo(0) = [2, 3]
 trigger4 = Anim = 23000 && AnimElemNo(0) = [2, 3]
 map = "au_raiclaven_p"
@@ -9941,9 +10291,9 @@ ignorehitpause = 1
 [State -4, Aura raiclaven no corpo: costas +8 +10]
 type = MapSet
 trigger1 = Anim = 181 && AnimElemNo(0) = [26, 28]
-trigger2 = Anim = 830 && AnimElemNo(0) = [3, 5]
-trigger3 = Anim = 831 && AnimElemNo(0) = [4, 10]
-trigger4 = Anim = 840 && AnimElemNo(0) = [3, 5]
+trigger2 = Anim = 830 && AnimElemNo(0) = [3, 7]
+trigger3 = Anim = 831 && AnimElemNo(0) = [4, 14]
+trigger4 = Anim = 840 && AnimElemNo(0) = [3, 7]
 trigger5 = Anim = 10830 && AnimElemNo(0) = [3, 5]
 trigger6 = Anim = 10831 && AnimElemNo(0) = [4, 10]
 map = "au_raiclaven_p"
@@ -10018,7 +10368,7 @@ ignorehitpause = 1
 [State -4, Aura raiclaven no corpo: costas -2 +12]
 type = MapSet
 trigger1 = Anim = 810 && AnimElemNo(0) = [18, 20]
-trigger2 = Anim = 831 && AnimElemNo(0) = [11, 14]
+trigger2 = Anim = 831 && AnimElemNo(0) = [15, 26]
 trigger3 = Anim = 10831 && AnimElemNo(0) = [11, 14]
 map = "au_raiclaven_p"
 value = 9023
@@ -10069,8 +10419,8 @@ trigger12 = Anim = 346 && AnimElemNo(0) = [4, 6]
 trigger13 = Anim = 810 && AnimElemNo(0) = [25, 26]
 trigger14 = Anim = 1100 && AnimElemNo(0) = [3, 4]
 trigger15 = Anim = 1101 && AnimElemNo(0) = [3, 4]
-trigger16 = Anim = 1200 && AnimElemNo(0) = [2, 6]
-trigger17 = Anim = 1201 && AnimElemNo(0) = [2, 6]
+trigger16 = Anim = 1200 && AnimElemNo(0) = [2, 7]
+trigger17 = Anim = 1201 && AnimElemNo(0) = [2, 7]
 trigger18 = Anim = 1500 && AnimElemNo(0) = [2, 5]
 trigger19 = Anim = 1501 && AnimElemNo(0) = [2, 5]
 trigger20 = Anim = 3401 && AnimElemNo(0) = [5, 7]
@@ -10119,12 +10469,12 @@ trigger5 = Anim = 231 && AnimElemNo(0) = 1
 trigger6 = Anim = 245 && AnimElemNo(0) = [1, 2]
 trigger7 = Anim = 246 && AnimElemNo(0) = 1
 trigger8 = Anim = 312 && AnimElemNo(0) = [1, 2]
-trigger9 = Anim = 313 && AnimElemNo(0) = [7, 11]
+trigger9 = Anim = 313 && AnimElemNo(0) = [7, 18]
 trigger10 = Anim = 810 && AnimElemNo(0) = [27, 31]
 trigger11 = Anim = 1100 && AnimElemNo(0) = [1, 2]
 trigger12 = Anim = 1101 && AnimElemNo(0) = [1, 2]
 trigger13 = Anim = 3411 && AnimElemNo(0) = [1, 2]
-trigger14 = Anim = 3423 && AnimElemNo(0) = [7, 11]
+trigger14 = Anim = 3423 && AnimElemNo(0) = [7, 18]
 trigger15 = Anim = 3434 && AnimElemNo(0) = [1, 2]
 trigger16 = Anim = 4710 && AnimElemNo(0) = [23, 24]
 trigger17 = Anim = 10231 && AnimElemNo(0) = 1
@@ -10168,8 +10518,8 @@ trigger16 = Anim = 344 && AnimElemNo(0) = [7, 8]
 trigger17 = Anim = 346 && AnimElemNo(0) = [1, 3]
 trigger18 = Anim = 348 && AnimElemNo(0) = [1, 4]
 trigger19 = Anim = 810 && AnimElemNo(0) = [21, 24]
-trigger20 = Anim = 1200 && AnimElemNo(0) = 1
-trigger21 = Anim = 1201 && AnimElemNo(0) = 1
+trigger20 = Anim = 1200 && AnimElemNo(0) = [1, 1]
+trigger21 = Anim = 1201 && AnimElemNo(0) = [1, 1]
 trigger22 = Anim = 1500 && AnimElemNo(0) = 1
 trigger23 = Anim = 1501 && AnimElemNo(0) = 1
 trigger24 = Anim = 3200 && AnimElemNo(0) = [9, 28]
@@ -10197,7 +10547,7 @@ ignorehitpause = 1
 
 [State -4, Aura raiclaven no corpo: costas +6 +14]
 type = MapSet
-trigger1 = Anim = 3000 && AnimElemNo(0) = 1
+trigger1 = Anim = 3000 && AnimElemNo(0) = [1, 4]
 trigger2 = Anim = 13000 && AnimElemNo(0) = 1
 trigger3 = Anim = 23000 && AnimElemNo(0) = 1
 map = "au_raiclaven_p"
@@ -10239,15 +10589,15 @@ trigger10 = Anim = 346 && AnimElemNo(0) = [7, 9]
 trigger11 = Anim = 348 && AnimElemNo(0) = [8, 10]
 trigger12 = Anim = 1100 && AnimElemNo(0) = [5, 8]
 trigger13 = Anim = 1101 && AnimElemNo(0) = [5, 8]
-trigger14 = Anim = 1200 && AnimElemNo(0) = [7, 8]
-trigger15 = Anim = 1201 && AnimElemNo(0) = [7, 8]
+trigger14 = Anim = 1200 && AnimElemNo(0) = [8, 10]
+trigger15 = Anim = 1201 && AnimElemNo(0) = [8, 10]
 trigger16 = Anim = 1500 && AnimElemNo(0) = [6, 8]
 trigger17 = Anim = 1501 && AnimElemNo(0) = [6, 8]
 trigger18 = Anim = 3401 && AnimElemNo(0) = [8, 11]
 trigger19 = Anim = 3411 && AnimElemNo(0) = [7, 9]
 trigger20 = Anim = 3413 && AnimElemNo(0) = [8, 10]
 trigger21 = Anim = 3420 && AnimElemNo(0) = [7, 9]
-trigger22 = Anim = 3422 && AnimElemNo(0) = [7, 10]
+trigger22 = Anim = 3422 && AnimElemNo(0) = [7, 15]
 trigger23 = Anim = 3432 && AnimElemNo(0) = [8, 11]
 trigger24 = Anim = 3434 && AnimElemNo(0) = [7, 9]
 trigger25 = Anim = 4710 && AnimElemNo(0) = [27, 30]
@@ -10468,13 +10818,13 @@ ignorehitpause = 1
 [State -4, Aura raiclaven no corpo: costas -2 +22]
 type = MapSet
 trigger1 = Anim = 410 && AnimElemNo(0) = [1, 1]
-trigger2 = Anim = 440 && AnimElemNo(0) = 1
+trigger2 = Anim = 440 && AnimElemNo(0) = [1, 2]
 trigger3 = Anim = 700 && AnimElemNo(0) = [7, 12]
 trigger4 = Anim = 705 && AnimElemNo(0) = [29, 34]
 trigger5 = Anim = 1700 && AnimElemNo(0) = 1
 trigger6 = Anim = 3100 && AnimElemNo(0) = 4
 trigger7 = Anim = 3402 && AnimElemNo(0) = 1
-trigger8 = Anim = 3435 && AnimElemNo(0) = 1
+trigger8 = Anim = 3435 && AnimElemNo(0) = [1, 3]
 trigger9 = Anim = 5200 && AnimElemNo(0) = [4, 6]
 trigger10 = Anim = 5210 && AnimElemNo(0) = [4, 6]
 trigger11 = Anim = 10410 && AnimElemNo(0) = 1
@@ -10510,7 +10860,7 @@ trigger10 = Anim = 1300 && AnimElemNo(0) = [1, 3]
 trigger11 = Anim = 1300 && AnimElemNo(0) = [7, 8]
 trigger12 = Anim = 1301 && AnimElemNo(0) = [1, 3]
 trigger13 = Anim = 1301 && AnimElemNo(0) = [7, 8]
-trigger14 = Anim = 1701 && AnimElemNo(0) = [14, 15]
+trigger14 = Anim = 1701 && AnimElemNo(0) = [14, 17]
 trigger15 = Anim = 3421 && AnimElemNo(0) = [8, 9]
 trigger16 = Anim = 3433 && AnimElemNo(0) = [7, 8]
 trigger17 = Anim = 10200 && AnimElemNo(0) = [8, 9]
@@ -10622,8 +10972,8 @@ ignorehitpause = 1
 
 [State -4, Aura raiclaven no corpo: costas +2 +28]
 type = MapSet
-trigger1 = Anim = 3000 && AnimElemNo(0) = [4, 7]
-trigger2 = Anim = 3400 && AnimElemNo(0) = [3, 4]
+trigger1 = Anim = 3000 && AnimElemNo(0) = [13, 25]
+trigger2 = Anim = 3400 && AnimElemNo(0) = [9, 10]
 trigger3 = Anim = 13000 && AnimElemNo(0) = [4, 7]
 trigger4 = Anim = 23000 && AnimElemNo(0) = [4, 7]
 map = "au_raiclaven_p"
@@ -10666,16 +11016,16 @@ trigger6 = Anim = 342 && AnimElemNo(0) = [1, 2]
 trigger7 = Anim = 347 && AnimElemNo(0) = [1, 4]
 trigger8 = Anim = 410 && AnimElemNo(0) = [2, 3]
 trigger9 = Anim = 430 && AnimElemNo(0) = [1, 2]
-trigger10 = Anim = 440 && AnimElemNo(0) = [2, 4]
+trigger10 = Anim = 440 && AnimElemNo(0) = [3, 5]
 trigger11 = Anim = 705 && AnimElemNo(0) = [23, 28]
-trigger12 = Anim = 841 && AnimElemNo(0) = 1
-trigger13 = Anim = 841 && AnimElemNo(0) = 3
+trigger12 = Anim = 841 && AnimElemNo(0) = [1, 1]
+trigger13 = Anim = 841 && AnimElemNo(0) = [4, 6]
 trigger14 = Anim = 1700 && AnimElemNo(0) = 2
 trigger15 = Anim = 3100 && AnimElemNo(0) = 8
 trigger16 = Anim = 3402 && AnimElemNo(0) = [2, 3]
 trigger17 = Anim = 3412 && AnimElemNo(0) = [1, 3]
 trigger18 = Anim = 3430 && AnimElemNo(0) = [1, 4]
-trigger19 = Anim = 3435 && AnimElemNo(0) = [2, 4]
+trigger19 = Anim = 3435 && AnimElemNo(0) = [4, 6]
 trigger20 = Anim = 5025
 trigger21 = Anim = 5026
 trigger22 = Anim = 5027
@@ -10887,7 +11237,7 @@ ignorehitpause = 1
 
 [State -4, Aura raiclaven no corpo: costas +0 +44]
 type = MapSet
-trigger1 = Anim = 841 && AnimElemNo(0) = 2
+trigger1 = Anim = 841 && AnimElemNo(0) = [2, 3]
 map = "au_raiclaven_p"
 value = 11072
 ignorehitpause = 1
@@ -10920,7 +11270,7 @@ type = MapSet
 trigger1 = Anim = 400
 trigger2 = Anim = 700 && AnimElemNo(0) = [19, 31]
 trigger3 = Anim = 705 && AnimElemNo(0) = [10, 22]
-trigger4 = Anim = 841 && AnimElemNo(0) = [4, 6]
+trigger4 = Anim = 841 && AnimElemNo(0) = [7, 16]
 trigger5 = Anim = 1700 && AnimElemNo(0) = [3, 5]
 trigger6 = Anim = 3412 && AnimElemNo(0) = [4, 8]
 trigger7 = Anim = 3430 && AnimElemNo(0) = [5, 9]
@@ -10960,9 +11310,9 @@ trigger3 = Anim = 141
 trigger4 = Anim = 151
 trigger5 = Anim = 303 && AnimElemNo(0) = [12, 19]
 trigger6 = Anim = 347 && AnimElemNo(0) = [12, 19]
-trigger7 = Anim = 440 && AnimElemNo(0) = [5, 8]
+trigger7 = Anim = 440 && AnimElemNo(0) = [6, 13]
 trigger8 = Anim = 3402 && AnimElemNo(0) = [4, 7]
-trigger9 = Anim = 3435 && AnimElemNo(0) = [5, 8]
+trigger9 = Anim = 3435 && AnimElemNo(0) = [7, 12]
 trigger10 = Anim = 10410 && AnimElemNo(0) = [4, 7]
 trigger11 = Anim = 10440 && AnimElemNo(0) = [5, 8]
 trigger12 = Anim = 20342 && AnimElemNo(0) = [5, 8]
@@ -10974,13 +11324,13 @@ ignorehitpause = 1
 [State -4, Aura raiclaven no corpo: costas +0 +48]
 type = MapSet
 trigger1 = Anim = 410 && AnimElemNo(0) = [10, 17]
-trigger2 = Anim = 440 && AnimElemNo(0) = [9, 11]
-trigger3 = Anim = 841 && AnimElemNo(0) = [7, 8]
+trigger2 = Anim = 440 && AnimElemNo(0) = [14, 18]
+trigger3 = Anim = 841 && AnimElemNo(0) = [17, 20]
 trigger4 = Anim = 1700 && AnimElemNo(0) = [6, 7]
 trigger5 = Anim = 3402 && AnimElemNo(0) = [8, 9]
 trigger6 = Anim = 3412 && AnimElemNo(0) = [9, 15]
 trigger7 = Anim = 3430 && AnimElemNo(0) = [10, 18]
-trigger8 = Anim = 3435 && AnimElemNo(0) = [9, 11]
+trigger8 = Anim = 3435 && AnimElemNo(0) = [13, 19]
 trigger9 = Anim = 5200 && AnimElemNo(0) = [17, 21]
 trigger10 = Anim = 5210 && AnimElemNo(0) = [17, 21]
 trigger11 = Anim = 10410 && AnimElemNo(0) = [8, 9]
@@ -10996,7 +11346,7 @@ type = MapSet
 trigger1 = Anim = 6 && AnimElemNo(0) = [5, 6]
 trigger2 = Anim = 700 && AnimElemNo(0) = [32, 40]
 trigger3 = Anim = 705 && AnimElemNo(0) = [1, 9]
-trigger4 = Anim = 1701 && AnimElemNo(0) = 6
+trigger4 = Anim = 1701 && AnimElemNo(0) = [6, 6]
 map = "au_raiclaven_p"
 value = 11329
 ignorehitpause = 1
@@ -12003,8 +12353,8 @@ trigger18 = Anim = 348 && AnimElemNo(0) = [5, 7]
 trigger19 = Anim = 810 && AnimElemNo(0) = [25, 26]
 trigger20 = Anim = 1100 && AnimElemNo(0) = [3, 4]
 trigger21 = Anim = 1101 && AnimElemNo(0) = [3, 4]
-trigger22 = Anim = 1200 && AnimElemNo(0) = [2, 6]
-trigger23 = Anim = 1201 && AnimElemNo(0) = [2, 6]
+trigger22 = Anim = 1200 && AnimElemNo(0) = [2, 7]
+trigger23 = Anim = 1201 && AnimElemNo(0) = [2, 7]
 trigger24 = Anim = 1500 && AnimElemNo(0) = [2, 5]
 trigger25 = Anim = 1501 && AnimElemNo(0) = [2, 5]
 trigger26 = Anim = 3401 && AnimElemNo(0) = [5, 7]
@@ -12127,7 +12477,7 @@ trigger24 = Anim = 260 && AnimElemNo(0) = [1, 9]
 trigger25 = Anim = 301 && AnimElemNo(0) = [1, 6]
 trigger26 = Anim = 312 && AnimElemNo(0) = [1, 2]
 trigger27 = Anim = 312 && AnimElemNo(0) = [8, 10]
-trigger28 = Anim = 313 && AnimElemNo(0) = [7, 11]
+trigger28 = Anim = 313 && AnimElemNo(0) = [7, 18]
 trigger29 = Anim = 321 && AnimElemNo(0) = [7, 9]
 trigger30 = Anim = 323 && AnimElemNo(0) = [7, 9]
 trigger31 = Anim = 331 && AnimElemNo(0) = [8, 10]
@@ -12145,8 +12495,8 @@ trigger42 = Anim = 1100 && AnimElemNo(0) = [1, 2]
 trigger43 = Anim = 1100 && AnimElemNo(0) = [5, 8]
 trigger44 = Anim = 1101 && AnimElemNo(0) = [1, 2]
 trigger45 = Anim = 1101 && AnimElemNo(0) = [5, 8]
-trigger46 = Anim = 1200 && AnimElemNo(0) = [7, 8]
-trigger47 = Anim = 1201 && AnimElemNo(0) = [7, 8]
+trigger46 = Anim = 1200 && AnimElemNo(0) = [8, 10]
+trigger47 = Anim = 1201 && AnimElemNo(0) = [8, 10]
 trigger48 = Anim = 1300 && AnimElemNo(0) = [1, 3]
 trigger49 = Anim = 1301 && AnimElemNo(0) = [1, 3]
 trigger50 = Anim = 1500 && AnimElemNo(0) = [6, 8]
@@ -12162,8 +12512,8 @@ trigger59 = Anim = 3411 && AnimElemNo(0) = [7, 9]
 trigger60 = Anim = 3413 && AnimElemNo(0) = [8, 10]
 trigger61 = Anim = 3420 && AnimElemNo(0) = [7, 9]
 trigger62 = Anim = 3421 && AnimElemNo(0) = [1, 7]
-trigger63 = Anim = 3422 && AnimElemNo(0) = [7, 10]
-trigger64 = Anim = 3423 && AnimElemNo(0) = [7, 11]
+trigger63 = Anim = 3422 && AnimElemNo(0) = [7, 15]
+trigger64 = Anim = 3423 && AnimElemNo(0) = [7, 18]
 trigger65 = Anim = 3432 && AnimElemNo(0) = [8, 11]
 trigger66 = Anim = 3433 && AnimElemNo(0) = [1, 6]
 trigger67 = Anim = 3434 && AnimElemNo(0) = [1, 2]
@@ -12263,8 +12613,8 @@ trigger31 = Anim = 348 && AnimElemNo(0) = [1, 4]
 trigger32 = Anim = 810 && AnimElemNo(0) = [8, 9]
 trigger33 = Anim = 810 && AnimElemNo(0) = [14, 15]
 trigger34 = Anim = 810 && AnimElemNo(0) = [21, 24]
-trigger35 = Anim = 1200 && AnimElemNo(0) = 1
-trigger36 = Anim = 1201 && AnimElemNo(0) = 1
+trigger35 = Anim = 1200 && AnimElemNo(0) = [1, 1]
+trigger36 = Anim = 1201 && AnimElemNo(0) = [1, 1]
 trigger37 = Anim = 1300 && AnimElemNo(0) = 6
 trigger38 = Anim = 1301 && AnimElemNo(0) = 6
 trigger39 = Anim = 1400 && AnimElemNo(0) = [1, 3]
@@ -12368,7 +12718,7 @@ trigger2 = Anim = 1000
 trigger3 = Anim = 1001
 trigger4 = Anim = 1600 && AnimElemNo(0) = [2, 6]
 trigger5 = Anim = 1601 && AnimElemNo(0) = [2, 6]
-trigger6 = Anim = 3000 && AnimElemNo(0) = 1
+trigger6 = Anim = 3000 && AnimElemNo(0) = [1, 4]
 trigger7 = Anim = 9210 && AnimElemNo(0) = 19
 trigger8 = Anim = 11000
 trigger9 = Anim = 11001
@@ -12434,8 +12784,8 @@ trigger40 = Anim = 410 && AnimElemNo(0) = [2, 3]
 trigger41 = Anim = 410 && AnimElemNo(0) = [4, 9]
 trigger42 = Anim = 430 && AnimElemNo(0) = [1, 2]
 trigger43 = Anim = 430 && AnimElemNo(0) = [3, 8]
-trigger44 = Anim = 440 && AnimElemNo(0) = [2, 4]
-trigger45 = Anim = 440 && AnimElemNo(0) = [5, 8]
+trigger44 = Anim = 440 && AnimElemNo(0) = [3, 5]
+trigger45 = Anim = 440 && AnimElemNo(0) = [6, 13]
 trigger46 = Anim = 600 && AnimElemNo(0) = [1, 2]
 trigger47 = Anim = 600 && AnimElemNo(0) = [3, 4]
 trigger48 = Anim = 600 && AnimElemNo(0) = 5
@@ -12454,9 +12804,9 @@ trigger60 = Anim = 700 && AnimElemNo(0) = [19, 31]
 trigger61 = Anim = 705 && AnimElemNo(0) = [10, 22]
 trigger62 = Anim = 705 && AnimElemNo(0) = [23, 28]
 trigger63 = Anim = 705 && AnimElemNo(0) = [35, 42]
-trigger64 = Anim = 841 && AnimElemNo(0) = 1
-trigger65 = Anim = 841 && AnimElemNo(0) = 3
-trigger66 = Anim = 841 && AnimElemNo(0) = [4, 6]
+trigger64 = Anim = 841 && AnimElemNo(0) = [1, 1]
+trigger65 = Anim = 841 && AnimElemNo(0) = [4, 6]
+trigger66 = Anim = 841 && AnimElemNo(0) = [7, 16]
 trigger67 = Anim = 1300 && AnimElemNo(0) = [4, 5]
 trigger68 = Anim = 1300 && AnimElemNo(0) = [7, 8]
 trigger69 = Anim = 1301 && AnimElemNo(0) = [4, 5]
@@ -12464,7 +12814,7 @@ trigger70 = Anim = 1301 && AnimElemNo(0) = [7, 8]
 trigger71 = Anim = 1700 && AnimElemNo(0) = 2
 trigger72 = Anim = 1700 && AnimElemNo(0) = [3, 5]
 trigger73 = Anim = 1701 && AnimElemNo(0) = [1, 5]
-trigger74 = Anim = 1701 && AnimElemNo(0) = [14, 15]
+trigger74 = Anim = 1701 && AnimElemNo(0) = [14, 17]
 trigger75 = Anim = 3100 && AnimElemNo(0) = 8
 trigger76 = Anim = 3402 && AnimElemNo(0) = [2, 3]
 trigger77 = Anim = 3402 && AnimElemNo(0) = [4, 7]
@@ -12477,8 +12827,8 @@ trigger83 = Anim = 3421 && AnimElemNo(0) = [8, 9]
 trigger84 = Anim = 3430 && AnimElemNo(0) = [1, 4]
 trigger85 = Anim = 3430 && AnimElemNo(0) = [5, 9]
 trigger86 = Anim = 3433 && AnimElemNo(0) = [7, 8]
-trigger87 = Anim = 3435 && AnimElemNo(0) = [2, 4]
-trigger88 = Anim = 3435 && AnimElemNo(0) = [5, 8]
+trigger87 = Anim = 3435 && AnimElemNo(0) = [4, 6]
+trigger88 = Anim = 3435 && AnimElemNo(0) = [7, 12]
 trigger89 = Anim = 5000 && AnimElemNo(0) = 3
 trigger90 = Anim = 5001 && AnimElemNo(0) = 4
 trigger91 = Anim = 5002 && AnimElemNo(0) = 4
@@ -12571,12 +12921,12 @@ trigger4 = Anim = 181 && AnimElemNo(0) = [3, 25]
 trigger5 = Anim = 830 && AnimElemNo(0) = [1, 2]
 trigger6 = Anim = 831 && AnimElemNo(0) = [1, 3]
 trigger7 = Anim = 840 && AnimElemNo(0) = [1, 2]
-trigger8 = Anim = 1701 && AnimElemNo(0) = 6
+trigger8 = Anim = 1701 && AnimElemNo(0) = [6, 6]
 trigger9 = Anim = 2000 && AnimElemNo(0) = [1, 26]
 trigger10 = Anim = 2000 && AnimElemNo(0) = [53, 78]
-trigger11 = Anim = 3000 && AnimElemNo(0) = [4, 7]
+trigger11 = Anim = 3000 && AnimElemNo(0) = [13, 25]
 trigger12 = Anim = 3100 && AnimElemNo(0) = 11
-trigger13 = Anim = 3400 && AnimElemNo(0) = [3, 4]
+trigger13 = Anim = 3400 && AnimElemNo(0) = [9, 10]
 trigger14 = Anim = 4710 && AnimElemNo(0) = 9
 trigger15 = Anim = 9210 && AnimElemNo(0) = 3
 trigger16 = Anim = 9210 && AnimElemNo(0) = [4, 5]
@@ -12645,12 +12995,12 @@ trigger3 = Anim = 761 && AnimElemNo(0) = 3
 trigger4 = Anim = 761 && AnimElemNo(0) = 5
 trigger5 = Anim = 765 && AnimElemNo(0) = [2, 3]
 trigger6 = Anim = 765 && AnimElemNo(0) = [4, 5]
-trigger7 = Anim = 830 && AnimElemNo(0) = [3, 5]
-trigger8 = Anim = 831 && AnimElemNo(0) = [4, 10]
-trigger9 = Anim = 840 && AnimElemNo(0) = [3, 5]
-trigger10 = Anim = 3000 && AnimElemNo(0) = [2, 3]
+trigger7 = Anim = 830 && AnimElemNo(0) = [3, 7]
+trigger8 = Anim = 831 && AnimElemNo(0) = [4, 14]
+trigger9 = Anim = 840 && AnimElemNo(0) = [3, 7]
+trigger10 = Anim = 3000 && AnimElemNo(0) = [5, 12]
 trigger11 = Anim = 3100 && AnimElemNo(0) = 7
-trigger12 = Anim = 3400 && AnimElemNo(0) = [1, 2]
+trigger12 = Anim = 3400 && AnimElemNo(0) = [1, 8]
 trigger13 = Anim = 9210 && AnimElemNo(0) = 14
 trigger14 = Anim = 10830 && AnimElemNo(0) = [3, 5]
 trigger15 = Anim = 10831 && AnimElemNo(0) = [4, 10]
@@ -13932,6 +14282,7 @@ type = RemoveExplod
 trigger1 = map(au_raiclaven_f) <= 0 && NumExplod(9601)
 id = 9601
 ignorehitpause = 1
+
 
 
 

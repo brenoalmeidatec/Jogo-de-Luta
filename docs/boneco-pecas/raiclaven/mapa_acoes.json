@@ -183,7 +183,7 @@
     645,
     0
    ],
-   "ticks": 1,
+   "ticks": 2,
    "caixa": false,
    "desenho": "agachado/04",
    "iou": 0.985
@@ -193,7 +193,7 @@
     646,
     0
    ],
-   "ticks": 1,
+   "ticks": 2,
    "caixa": false,
    "desenho": "agachado/04",
    "iou": 0.98
@@ -250,290 +250,10 @@
   },
   {
    "sprite": [
-    651,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/05",
-   "iou": 0.979
-  },
-  {
-   "sprite": [
-    652,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/05",
-   "iou": 0.979
-  },
-  {
-   "sprite": [
-    653,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/05",
-   "iou": 0.976
-  },
-  {
-   "sprite": [
-    654,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/06",
-   "iou": 0.979
-  },
-  {
-   "sprite": [
-    655,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/06",
-   "iou": 0.981
-  },
-  {
-   "sprite": [
-    656,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/06",
-   "iou": 0.985
-  },
-  {
-   "sprite": [
-    363,
-    0
-   ],
-   "ticks": 2,
-   "caixa": false,
-   "desenho": "agachado/06",
-   "iou": 0.987
-  },
-  {
-   "sprite": [
-    657,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/06",
-   "iou": 0.984
-  },
-  {
-   "sprite": [
-    658,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/06",
-   "iou": 0.976
-  },
-  {
-   "sprite": [
-    659,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/06",
-   "iou": 0.966
-  },
-  {
-   "sprite": [
-    660,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/07",
-   "iou": 0.966
-  },
-  {
-   "sprite": [
-    661,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/07",
-   "iou": 0.976
-  },
-  {
-   "sprite": [
-    662,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/07",
-   "iou": 0.981
-  },
-  {
-   "sprite": [
-    364,
-    0
-   ],
-   "ticks": 2,
-   "caixa": false,
-   "desenho": "agachado/07",
-   "iou": 0.988
-  },
-  {
-   "sprite": [
-    662,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/07",
-   "iou": 0.981
-  },
-  {
-   "sprite": [
-    661,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/07",
-   "iou": 0.976
-  },
-  {
-   "sprite": [
-    660,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/07",
-   "iou": 0.966
-  },
-  {
-   "sprite": [
-    659,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/06",
-   "iou": 0.966
-  },
-  {
-   "sprite": [
-    658,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/06",
-   "iou": 0.976
-  },
-  {
-   "sprite": [
-    657,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/06",
-   "iou": 0.984
-  },
-  {
-   "sprite": [
-    363,
-    0
-   ],
-   "ticks": 2,
-   "caixa": false,
-   "desenho": "agachado/06",
-   "iou": 0.987
-  },
-  {
-   "sprite": [
-    656,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/06",
-   "iou": 0.985
-  },
-  {
-   "sprite": [
-    655,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/06",
-   "iou": 0.981
-  },
-  {
-   "sprite": [
-    654,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/06",
-   "iou": 0.979
-  },
-  {
-   "sprite": [
-    653,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/05",
-   "iou": 0.976
-  },
-  {
-   "sprite": [
-    652,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/05",
-   "iou": 0.979
-  },
-  {
-   "sprite": [
-    651,
-    0
-   ],
-   "ticks": 1,
-   "caixa": false,
-   "desenho": "agachado/05",
-   "iou": 0.979
-  },
-  {
-   "sprite": [
-    362,
-    0
-   ],
-   "ticks": 2,
-   "caixa": false,
-   "desenho": "agachado/05",
-   "iou": 0.979
-  },
-  {
-   "sprite": [
     650,
     0
    ],
-   "ticks": 1,
+   "ticks": 2,
    "caixa": false,
    "desenho": "agachado/05",
    "iou": 0.98
@@ -543,7 +263,7 @@
     649,
     0
    ],
-   "ticks": 1,
+   "ticks": 2,
    "caixa": false,
    "desenho": "agachado/05",
    "iou": 0.98
