@@ -15,33 +15,33 @@
   },
   {
    "desenho": 2,
-   "ticks": 2,
+   "ticks": 4,
    "caixa": false,
    "de": "martelo/03"
   },
   {
    "desenho": 3,
    "ticks": 2,
-   "caixa": false,
-   "de": "martelo/03"
+   "caixa": true,
+   "de": "martelo/04"
   },
   {
    "desenho": 4,
-   "ticks": 2,
+   "ticks": 3,
    "caixa": true,
    "de": "martelo/04"
   },
   {
    "desenho": 5,
-   "ticks": 3,
-   "caixa": true,
+   "ticks": 2,
+   "caixa": false,
    "de": "martelo/04"
   },
   {
    "desenho": 6,
    "ticks": 2,
    "caixa": false,
-   "de": "martelo/04"
+   "de": "martelo/05"
   },
   {
    "desenho": 7,
@@ -51,15 +51,15 @@
   },
   {
    "desenho": 8,
-   "ticks": 2,
+   "ticks": 3,
    "caixa": false,
    "de": "martelo/05"
   },
   {
    "desenho": 9,
-   "ticks": 3,
+   "ticks": 2,
    "caixa": false,
-   "de": "martelo/05"
+   "de": "martelo/07"
   },
   {
    "desenho": 10,
@@ -87,12 +87,6 @@
   },
   {
    "desenho": 14,
-   "ticks": 2,
-   "caixa": false,
-   "de": "martelo/07"
-  },
-  {
-   "desenho": 15,
    "ticks": 2,
    "caixa": false,
    "de": "martelo/07"
