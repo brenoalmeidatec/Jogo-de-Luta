@@ -51,13 +51,13 @@ def misturar(a, b_, t):
     return out
 
 
-def animar(poses, elems, bate=None, laco=False, guarda=None, fixos=frozenset()):
+def animar(poses, elems, bate=None, laco=False, guarda=None):
     """Lista de (pose, ticks, caixa, desenho_de_hoje) a partir das poses-chave.
     elems: [(desenho_de_hoje, ticks)]; bate: índice do elemento com caixa; laco: a última volta para a primeira;
-    guarda: pose para onde o golpe volta no fim (a guarda); fixos: desenhos que não se misturam (quadro especial,
-    desenhado inteiro): não ganham intermediário nem servem de destino de um."""
+    guarda: pose para onde o golpe volta no fim (a guarda)."""
     saida = []
     n = len(elems)
+    batem = set(bate) if isinstance(bate, (set, list, tuple)) else ({bate} if bate is not None else set())
     for k, (q, ticks) in enumerate(elems):
         a = poses[q]
         if k + 1 < n:
@@ -66,14 +66,14 @@ def animar(poses, elems, bate=None, laco=False, guarda=None, fixos=frozenset()):
             b_ = poses[elems[0][0]]
         else:
             b_ = guarda if guarda is not None else a
-        caixa = k == bate
-        prox = elems[k + 1][0] if k + 1 < n else (elems[0][0] if laco else None)
-        if caixa or ticks < 4 or q in fixos or prox in fixos:  # impacto segurado; elemento curto não tem espaço para meio
+        caixa = k in batem
+        if caixa or ticks < 4 or "_especial" in a or "_especial" in b_:  # impacto segurado; elemento curto
+            # não tem espaço para meio; desenho de hoje (especial) não se mistura com peças
             saida.append((dict(a), ticks, caixa, q))
             continue
-        if bate is not None and k < bate:
+        if batem and k < min(batem):
             curva = acelera
-        elif bate is not None and k > bate:
+        elif batem and k > max(batem):
             curva = desacelera
         else:
             curva = suave

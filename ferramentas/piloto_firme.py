@@ -116,13 +116,13 @@ def montar():
     pe = kit["pecas"]["coxa_frente_agachada"]
     arq = b.PECAS / pe["arquivo"]
     Image.fromarray(tirar_faixa(np.asarray(Image.open(arq).convert("RGBA")))).save(arq)
-    limpar_contorno_dos_bracos(kit, ("tronco", "quadril", "coxa_tras", "coxa_frente"))
+    limpar_contorno_dos_bracos(kit)
     base = kit["pecas"]["cabeca"]
     base_img = np.asarray(Image.open(b.PECAS / base["arquivo"]).convert("RGBA"))
     tmpl, caixa = cc.referencia()
     centro_ref = ((caixa[0] + caixa[2]) / 2, (caixa[1] + caixa[3]) / 2)
     ox, oy = base["origem"]
-    for nome in ("foco", "esforco", "dor", "riso"):
+    for nome in ("foco", "esforco"):
         rec, centro = cc.cabeca_do_kit(nome, tmpl, caixa)
         tela = np.zeros((b.TELA[1], b.TELA[0], 4), np.uint8)
         tela[oy:oy + base_img.shape[0], ox:ox + base_img.shape[1]] = base_img
@@ -268,12 +268,10 @@ def desenhar(kit, pose):
         x0 = int(round(pe["origem"][0] + tx - pe["tornozelo"][0]))
         y0 = int(round(pe["origem"][1] + ty - pe["tornozelo"][1]))
         # pé perto do chão encosta no chão (o chão do parado), sem afundar nem flutuar alguns pixels
-        # o tornozelo estica ou encolhe esses pixels (o pé não desgruda da canela nem fica torto)
         fundo = pe["fundo"] + y0
-        img = pe["img"]
-        if fundo != CHAO and abs(fundo - CHAO) <= 10:
-            img = esticar_tornozelo(img, CHAO - fundo)
-        b.colar(tela, img, x0, y0, so_vazio=(slot == "canela_tras"))
+        if abs(fundo - CHAO) <= 10:
+            y0 += CHAO - fundo
+        b.colar(tela, pe["img"], x0, y0, so_vazio=(slot == "canela_tras"))
     p = kit["pecas"]["quadril"]
     bo = pose.get("_bolinhas", {})
     (qx, qy), qang = w["quadril"]
@@ -283,39 +281,7 @@ def desenhar(kit, pose):
     piv = (kit["no_bolinhas"][0] - p["origem"][0], kit["no_bolinhas"][1] - p["origem"][1])
     r, piv2 = b.rotsprite(kit["bolinhas"], qang + bo.get("ang", 0), piv)
     b.colar(tela, r, int(round(no[0] - piv2[0])), int(round(no[1] - piv2[1])))
-    return contornar(sem_migalha(fechar_frestas(tela, juntas=[w[sl][0] for sl in b.OSSOS])))
-
-
-CONTORNO = np.array([33, 2, 26])  # cor do contorno de fora do parado (mediana da borda)
-
-
-def contornar(tela):
-    """Beira da figura sem contorno (onde uma peça girada mostra o corte dela): o pixel da beira escurece para o tom
-    do contorno do parado, como no desenho (lá 98% da beira é escura)."""
-    al = (tela[..., 3] > 0).astype(np.uint8)
-    beira = (al > 0) & (cv2.erode(al, np.ones((3, 3), np.uint8)) == 0)
-    clara = beira & (tela[..., :3].astype(int).sum(-1) >= 250)
-    out = tela.copy()
-    out[clara, :3] = (0.25 * tela[clara, :3] + 0.75 * CONTORNO).astype(np.uint8)
-    return out
-
-
-TORNOZELO_FAIXA = 14
-
-
-def esticar_tornozelo(img, d):
-    """Pé com o tornozelo (faixa de cima) d pixels mais comprido (d < 0: mais curto); a sola desce d pixels."""
-    ys = np.nonzero(img[..., 3].any(1))[0]
-    r0 = int(ys.min())
-    k = TORNOZELO_FAIXA
-    faixa = img[r0:r0 + k]
-    nova = cv2.resize(faixa, (img.shape[1], max(1, k + d)), interpolation=cv2.INTER_NEAREST)
-    out = np.zeros((img.shape[0] + max(d, 0), img.shape[1], 4), np.uint8)
-    out[:r0] = img[:r0]
-    out[r0:r0 + nova.shape[0]] = nova
-    resto = img[r0 + k:]
-    out[r0 + nova.shape[0]:r0 + nova.shape[0] + resto.shape[0]] = resto
-    return out
+    return sem_migalha(fechar_frestas(tela, juntas=[w[sl][0] for sl in b.OSSOS]))
 
 
 def sem_migalha(tela, minimo=12):
@@ -351,7 +317,7 @@ def fechar_frestas(tela, raio=5, juntas=()):
     return out
 
 
-def limpar_contorno_dos_bracos(kit, nomes=("tronco", "quadril")):
+def limpar_contorno_dos_bracos(kit):
     """O contorno escuro dos braços do parado ficou pintado no tronco e no quadril (na beira de onde o braço estava).
     Quando o braço gira, ele aparece como uma mancha preta: troca pela cor de volta (inpaint), só por dentro da peça."""
     ref = b.abrir(b.REF)
@@ -359,7 +325,7 @@ def limpar_contorno_dos_bracos(kit, nomes=("tronco", "quadril")):
     perto = cv2.dilate(bracos.astype(np.uint8), np.ones((17, 17), np.uint8)) > 0
     # por dentro da figura do parado (o contorno de fora fica); a beira cortada da peça, onde o braço estava, não conta
     dentro_ref = cv2.erode((ref[..., 3] > 0).astype(np.uint8), np.ones((7, 7), np.uint8)) > 0
-    for nome in nomes:
+    for nome in ("tronco", "quadril"):
         pe = kit["pecas"][nome]
         arq = b.PECAS / pe["arquivo"]
         im = np.asarray(Image.open(arq).convert("RGBA")).copy()
@@ -371,7 +337,7 @@ def limpar_contorno_dos_bracos(kit, nomes=("tronco", "quadril")):
                                                                np.ones((3, 3), np.uint8)) > 0)) & (im[..., 3] > 0)
         dentro &= cv2.erode((im[..., 3] > 0).astype(np.uint8), np.ones((3, 3), np.uint8)) > 0
         # na calça (branca/lilás) qualquer cinza é resto do contorno da mão e da garrafa
-        limite = 190 if nome == "tronco" else 330
+        limite = 330 if nome == "quadril" else 190
         escuro = (im[..., :3].astype(int).sum(-1) < limite) & dentro & area
         escuro = cv2.dilate(escuro.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool) & dentro
         if escuro.any():
