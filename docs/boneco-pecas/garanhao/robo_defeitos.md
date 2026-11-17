@@ -119,11 +119,10 @@
 | corrente_x/04 | corrente_x/03 | PASS |
 | corrente_x/05 | corrente_x/04 | PASS |
 | corrente_x/06 | corrente_x/05 | PASS |
-| corrente_x/07 | corrente_x/05 | PASS |
+| corrente_x/07 | corrente_x/06 | PASS |
 | corrente_x/08 | corrente_x/06 | PASS |
-| corrente_x/09 | corrente_x/06 | PASS |
+| corrente_x/09 | corrente_x/07 | PASS |
 | corrente_x/10 | corrente_x/07 | PASS |
-| corrente_x/11 | corrente_x/07 | PASS |
 | empinada/00 | empinada/00 | PASS |
 | empinada/01 | empinada/01 | PASS |
 | empinada/02 | empinada/01 | PASS |
@@ -234,15 +233,14 @@
 | rasga_couro/03 | rasga_couro/02 | PASS |
 | rasga_couro/04 | rasga_couro/03 | PASS |
 | rasga_couro/05 | rasga_couro/04 | PASS |
-| rasga_couro/06 | rasga_couro/04 | PASS |
+| rasga_couro/06 | rasga_couro/05 | PASS |
 | rasga_couro/07 | rasga_couro/05 | PASS |
 | rasga_couro/08 | rasga_couro/05 | PASS |
-| rasga_couro/09 | rasga_couro/05 | PASS |
+| rasga_couro/09 | rasga_couro/06 | PASS |
 | rasga_couro/10 | rasga_couro/06 | PASS |
 | rasga_couro/11 | rasga_couro/06 | PASS |
-| rasga_couro/12 | rasga_couro/06 | PASS |
+| rasga_couro/12 | rasga_couro/07 | PASS |
 | rasga_couro/13 | rasga_couro/07 | PASS |
 | rasga_couro/14 | rasga_couro/07 | PASS |
-| rasga_couro/15 | rasga_couro/07 | PASS |
 
-0 de 244 desenho(s) com defeito.
+0 de 242 desenho(s) com defeito.
