@@ -32,6 +32,10 @@ continuam em [`regras-dos-lutadores.md`](regras-dos-lutadores.md). Estilo e core
 - **Lutador em alta resolução é a regra** (Breno, 2026-11-12): o corpo vai para o jogo desenhado em 3x e mostrado em
   1/3, para o motor não esticar e o boneco não ficar borrado. Folha nova ou refeita ganha o gêmeo 3x antes de subir.
   Tudo em [`regra-alta-resolucao.md`](regra-alta-resolucao.md).
+- **Regra de criação de personagem** (Breno, 2026-11-17): todo lutador novo ou refeito segue a
+  [`regra-de-criacao-de-personagem.md`](regra-de-criacao-de-personagem.md), do conceito até o jogo e a revisão. O
+  boneco é desenhado uma vez, vira kit de peças, e todo quadro sai dessas peças (corpo firme com vida). Ela vale acima
+  das outras regras de arte e animação deste arquivo.
 - **Receita de lutador** (Breno, 2026-11-15): tudo o que foi aprendido criando os lutadores é regra para os próximos,
   em [`receita-de-lutador.md`](receita-de-lutador.md).
 - **Blender só deforma os sprites desenhados** para criar os quadros do meio. Nunca modela o personagem.
@@ -77,6 +81,10 @@ O atalho `Jogo de Luta.lnk` baixa a `mugen` ao abrir. Antes de concluir qual ver
 em `ikemen\chars\<lutador>`. Erros ficam em `ikemen\save\logs`.
 
 ## Como fazer um lutador ou um golpe novo
+
+> **Substituído** pela [`regra-de-criacao-de-personagem.md`](regra-de-criacao-de-personagem.md) (2026-11-17). Os
+> passos abaixo (folha de 8 quadros e 6 quadros do meio do Blender) são o método antigo e ficam só como histórico; o
+> ChatGPT agora serve para conceito, folha-modelo e peças soltas.
 
 1. **Ficha:** siga a seção 10 das regras e liste os golpes.
 2. **Folha-referência:** gere uma folha boa e confira personagem e cor. Ela fica na biblioteca do ChatGPT.

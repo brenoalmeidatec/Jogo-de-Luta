@@ -4,6 +4,10 @@ Estudo pedido pelo Breno em 2026-11-15. Cópia do relatório
 [no Claude](https://claude.ai/artifact/St9ULungSxHymy3eq4kxWy). A missão que põe isto em prática é a
 [`missao-alisson-boneco-de-pecas.md`](missao-alisson-boneco-de-pecas.md).
 
+> **Virou regra** (Breno, 2026-11-17): o método está na
+> [`regra-de-criacao-de-personagem.md`](regra-de-criacao-de-personagem.md), como ficou depois do piloto (corpo firme
+> com vida).
+
 Os bonecos deformam porque hoje cada quadro é desenhado do zero pela IA, e nenhum jogo de luta profissional trabalha
 assim: todos partem de um modelo fixo e constroem cada quadro em cima do anterior. A recomendação é trocar a unidade de
 trabalho: a IA faz o modelo e as peças, e as poses saem de um boneco de peças montado por código, retocado pixel a pixel.

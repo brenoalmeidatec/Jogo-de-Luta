@@ -9,6 +9,10 @@
 > **Receita completa, do conceito até a `mugen`:** [`receita-de-lutador.md`](receita-de-lutador.md) junta tudo o que
 > já foi aprendido criando os lutadores (conceito pelas fotos, folhas nítidas, agarrões com animação própria, aura
 > estilo anime, despertado) e vale para todo lutador novo (Breno, 2026-11-15).
+>
+> **Criação de personagem, passo a passo:** [`regra-de-criacao-de-personagem.md`](regra-de-criacao-de-personagem.md)
+> é a regra definitiva (Breno, 2026-11-17) de como o boneco é feito, posado, animado, ligado e revisado (boneco de
+> peças com corpo firme e vida). Onde as seções 6 e 7.3 abaixo falam de outro processo, vale ela.
 
 ## Sumário
 
@@ -433,6 +437,9 @@ notação deste arquivo. A lista tem que bater com o `.cmd`.
 
 ## 6. Regra das ferramentas: como se cria um lutador
 
+> O processo de hoje é o da [`regra-de-criacao-de-personagem.md`](regra-de-criacao-de-personagem.md). A tabela abaixo
+> fica para licenças e ferramentas de apoio.
+
 Todo lutador sai deste processo, usando as ferramentas de código aberto do GitHub levantadas em
 `animacao-pengaro/recursos-github.md` (pasta do projeto) e as ferramentas que já estão em `ferramentas/`. Não pule
 etapa, e não use ferramenta "sem licença" no jogo: essas servem só de referência.
@@ -540,6 +547,10 @@ Nenhum boneco entra com erro de animação. Conta como erro, e reprova o golpe:
 
 O kit continua separado em peças (`sprites/<lutador>/pecas/`): dá para trocar a cabeça ou retocar uma peça e
 remontar todos os golpes de uma vez, sem redesenhar quadro por quadro.
+
+**Quadros do meio (Alisson, 2026-11-17, meio-termo com a Lei 10 do [`estudo-anatomia-golpes.md`](estudo-anatomia-golpes.md)):** o golpe
+tem quadros do meio na guarda, na preparação e na volta, mas da antecipação até o contato vai no máximo um quadro de
+borrão, para o golpe chegar seco. Cada pose segue a lista da Parte 4 do estudo.
 
 O robô de defeitos (`firme.py`/`piloto_firme.py`) pega os três primeiros; o quarto se confere no vídeo lado a lado,
 quadro a quadro, antes de mandar. Expressões do rosto casadas com as falas vêm depois, quando as falas forem gravadas.

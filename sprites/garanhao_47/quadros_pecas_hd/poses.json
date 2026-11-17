@@ -1,0 +1,509 @@
+{
+ "levanta/00": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 1
+  },
+  "tronco": {
+   "ang": 0
+  },
+  "braco_tras": {
+   "ang": 0
+  },
+  "braco_frente": {
+   "ang": 0
+  },
+  "cabeca": {
+   "ang": 0
+  },
+  "coxa_tras": {
+   "ang": -2.1
+  },
+  "canela_tras": {
+   "ang": 5.8
+  },
+  "coxa_frente": {
+   "ang": -2.5
+  },
+  "canela_frente": {
+   "ang": 5.6
+  }
+ },
+ "levanta/01": {
+  "quadril": {
+   "ang": 0,
+   "dx": 6,
+   "dy": 3
+  },
+  "tronco": {
+   "ang": 4
+  },
+  "braco_tras": {
+   "ang": -6
+  },
+  "braco_frente": {
+   "ang": 24,
+   "var": "frente"
+  },
+  "cabeca": {
+   "ang": 2
+  },
+  "coxa_tras": {
+   "ang": 1.6
+  },
+  "canela_tras": {
+   "ang": 4.3
+  },
+  "coxa_frente": {
+   "ang": -6.2
+  },
+  "canela_frente": {
+   "ang": 10.7
+  }
+ },
+ "levanta/02": {
+  "quadril": {
+   "ang": 0,
+   "dx": 14,
+   "dy": 7
+  },
+  "tronco": {
+   "ang": 8
+  },
+  "braco_tras": {
+   "ang": -8
+  },
+  "braco_frente": {
+   "ang": 36,
+   "var": "frente"
+  },
+  "cabeca": {
+   "ang": 4
+  },
+  "coxa_tras": {
+   "ang": 6.1
+  },
+  "canela_tras": {
+   "ang": 5.1
+  },
+  "coxa_frente": {
+   "ang": -12.6
+  },
+  "canela_frente": {
+   "ang": 21.4
+  }
+ },
+ "levanta/03": {
+  "quadril": {
+   "ang": 0,
+   "dx": 10,
+   "dy": 5
+  },
+  "tronco": {
+   "ang": -6
+  },
+  "braco_tras": {
+   "ang": -4
+  },
+  "braco_frente": {
+   "ang": 22,
+   "var": "alto"
+  },
+  "cabeca": {
+   "ang": -6
+  },
+  "coxa_tras": {
+   "ang": 2.9
+  },
+  "canela_tras": {
+   "ang": 6.4
+  },
+  "coxa_frente": {
+   "ang": -8.1
+  },
+  "canela_frente": {
+   "ang": 6.3
+  }
+ },
+ "levanta/04": {
+  "quadril": {
+   "ang": 0,
+   "dx": 8,
+   "dy": 6
+  },
+  "tronco": {
+   "ang": -10
+  },
+  "braco_tras": {
+   "ang": -8
+  },
+  "braco_frente": {
+   "ang": 18,
+   "var": "alto"
+  },
+  "cabeca": {
+   "ang": -8
+  },
+  "coxa_tras": {
+   "ang": -1.4
+  },
+  "canela_tras": {
+   "ang": 14.9
+  },
+  "coxa_frente": {
+   "ang": -9.2
+  },
+  "canela_frente": {
+   "ang": 5.8
+  }
+ },
+ "levanta/05": {
+  "quadril": {
+   "ang": 0,
+   "dx": 8,
+   "dy": 6
+  },
+  "tronco": {
+   "ang": -8
+  },
+  "braco_tras": {
+   "ang": -6
+  },
+  "braco_frente": {
+   "ang": 20,
+   "var": "alto"
+  },
+  "cabeca": {
+   "ang": -6
+  },
+  "coxa_tras": {
+   "ang": -1.4
+  },
+  "canela_tras": {
+   "ang": 14.9
+  },
+  "coxa_frente": {
+   "ang": -9.2
+  },
+  "canela_frente": {
+   "ang": 5.8
+  }
+ },
+ "levanta/06": {
+  "quadril": {
+   "ang": 0,
+   "dx": 18,
+   "dy": 10
+  },
+  "tronco": {
+   "ang": 16
+  },
+  "braco_tras": {
+   "ang": -10
+  },
+  "braco_frente": {
+   "ang": 24,
+   "var": "frente"
+  },
+  "cabeca": {
+   "ang": 8
+  },
+  "coxa_tras": {
+   "ang": 5.0
+  },
+  "canela_tras": {
+   "ang": 12.4
+  },
+  "coxa_frente": {
+   "ang": -16.8
+  },
+  "canela_frente": {
+   "ang": 29.7
+  }
+ },
+ "levanta/07": {
+  "quadril": {
+   "ang": 0,
+   "dx": 10,
+   "dy": 5
+  },
+  "tronco": {
+   "ang": 6
+  },
+  "braco_tras": {
+   "ang": 0
+  },
+  "braco_frente": {
+   "ang": 0
+  },
+  "cabeca": {
+   "ang": 2
+  },
+  "coxa_tras": {
+   "ang": 2.9
+  },
+  "canela_tras": {
+   "ang": 6.4
+  },
+  "coxa_frente": {
+   "ang": -9.7
+  },
+  "canela_frente": {
+   "ang": 18.1
+  }
+ },
+ "estouro/00": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 1
+  },
+  "tronco": {
+   "ang": 0
+  },
+  "braco_tras": {
+   "ang": 0
+  },
+  "braco_frente": {
+   "ang": 0
+  },
+  "cabeca": {
+   "ang": 0
+  },
+  "coxa_tras": {
+   "ang": -2.1
+  },
+  "canela_tras": {
+   "ang": 5.8
+  },
+  "coxa_frente": {
+   "ang": -2.5
+  },
+  "canela_frente": {
+   "ang": 5.6
+  }
+ },
+ "estouro/01": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 1
+  },
+  "tronco": {
+   "ang": -8
+  },
+  "braco_tras": {
+   "ang": -6
+  },
+  "braco_frente": {
+   "ang": 22,
+   "var": "alto"
+  },
+  "cabeca": {
+   "ang": -6
+  },
+  "coxa_tras": {
+   "ang": -2.1
+  },
+  "canela_tras": {
+   "ang": 5.8
+  },
+  "coxa_frente": {
+   "ang": -2.5
+  },
+  "canela_frente": {
+   "ang": 5.6
+  }
+ },
+ "estouro/02": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 1
+  },
+  "tronco": {
+   "ang": -14
+  },
+  "braco_tras": {
+   "ang": -10
+  },
+  "braco_frente": {
+   "ang": 20,
+   "var": "alto"
+  },
+  "cabeca": {
+   "ang": -10
+  },
+  "coxa_tras": {
+   "ang": -2.1
+  },
+  "canela_tras": {
+   "ang": 5.8
+  },
+  "coxa_frente": {
+   "ang": -2.5
+  },
+  "canela_frente": {
+   "ang": 5.6
+  }
+ },
+ "estouro/03": {
+  "quadril": {
+   "ang": 0,
+   "dx": 16,
+   "dy": 12
+  },
+  "tronco": {
+   "ang": 16
+  },
+  "braco_tras": {
+   "ang": -4
+  },
+  "braco_frente": {
+   "ang": 34,
+   "var": "frente"
+  },
+  "cabeca": {
+   "ang": 8
+  },
+  "coxa_tras": {
+   "ang": 3.0
+  },
+  "canela_tras": {
+   "ang": 19.1
+  },
+  "coxa_frente": {
+   "ang": -19.3
+  },
+  "canela_frente": {
+   "ang": 34.5
+  }
+ },
+ "estouro/04": {
+  "quadril": {
+   "ang": 0,
+   "dx": 18,
+   "dy": 14
+  },
+  "tronco": {
+   "ang": 18
+  },
+  "braco_tras": {
+   "ang": -6
+  },
+  "braco_frente": {
+   "ang": 38,
+   "var": "frente"
+  },
+  "cabeca": {
+   "ang": 8
+  },
+  "coxa_tras": {
+   "ang": 4.0
+  },
+  "canela_tras": {
+   "ang": 20.9
+  },
+  "coxa_frente": {
+   "ang": -21.3
+  },
+  "canela_frente": {
+   "ang": 41.3
+  }
+ },
+ "estouro/05": {
+  "quadril": {
+   "ang": 0,
+   "dx": 14,
+   "dy": 10
+  },
+  "tronco": {
+   "ang": 12
+  },
+  "braco_tras": {
+   "ang": -4
+  },
+  "braco_frente": {
+   "ang": 36,
+   "var": "frente"
+  },
+  "cabeca": {
+   "ang": 6
+  },
+  "coxa_tras": {
+   "ang": 2.2
+  },
+  "canela_tras": {
+   "ang": 16.8
+  },
+  "coxa_frente": {
+   "ang": -16.8
+  },
+  "canela_frente": {
+   "ang": 26.9
+  }
+ },
+ "estouro/06": {
+  "quadril": {
+   "ang": 0,
+   "dx": 8,
+   "dy": 4
+  },
+  "tronco": {
+   "ang": 6
+  },
+  "braco_tras": {
+   "ang": 0
+  },
+  "braco_frente": {
+   "ang": 6
+  },
+  "cabeca": {
+   "ang": 2
+  },
+  "coxa_tras": {
+   "ang": 1.5
+  },
+  "canela_tras": {
+   "ang": 6.7
+  },
+  "coxa_frente": {
+   "ang": -7.6
+  },
+  "canela_frente": {
+   "ang": 10.9
+  }
+ },
+ "estouro/07": {
+  "quadril": {
+   "ang": 0,
+   "dx": 2,
+   "dy": 2
+  },
+  "tronco": {
+   "ang": 0
+  },
+  "braco_tras": {
+   "ang": 0
+  },
+  "braco_frente": {
+   "ang": 0
+  },
+  "cabeca": {
+   "ang": 0
+  },
+  "coxa_tras": {
+   "ang": -1.1
+  },
+  "canela_tras": {
+   "ang": 6.4
+  },
+  "coxa_frente": {
+   "ang": -4.1
+  },
+  "canela_frente": {
+   "ang": 6.2
+  }
+ }
+}
