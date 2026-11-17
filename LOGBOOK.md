@@ -3088,3 +3088,7 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
 - `efeitos.gravar` agora liga PNG repetido; `conferir_sff.ler` mantém o `png` no link.
 - Gutto: Garanhão (49000-49099) indexado; robô de luta 186/186 com o mesmo dano; filmado no despertado.
 - Ao religar o Garanhão (`ligar_pecas --de garanhao`), rode de novo o `encolher_sff.py gutto --indexar 49000-49099`.
+- Turno 4 (17/11, Chrome do PC principal): estampido, giro do manto, mãos, manto-asa, golpes de direção, juízo de
+  cima, estouro, mão do pastor, berro e puxão. Ligados no despertado: chute alto (estampido), afastar (giro do manto),
+  caneta (direção), armada (juízo de cima), cajado no chão (mãos), bola (mão do pastor), compasso (puxão). `TROCA_COR`
+  conserta cor errada de um quadro só (perna do chute oliva). Falta desenho próprio só no agarrão e no golaço.

@@ -235,6 +235,8 @@ def firme(nomes):
                 pm = cv2.resize(sub * a[..., None], (nw, nh), interpolation=cv2.INTER_AREA)
                 aa = cv2.resize(a, (nw, nh), interpolation=cv2.INTER_AREA)
                 fig = travar(pm / np.maximum(aa[..., None], 1e-3), aa >= 0.55, pal)
+                for de, para in TROCA_COR.get(nome, {}).get(i, {}).items():
+                    fig[(fig[..., :3] == de).all(-1) & (fig[..., 3] > 0), :3] = para
                 # meio da célula vai para o eixo; o chão da folha vai para o chão do jogo
                 meio = (i + 0.5) * CELULA + desvio
                 X = round(EIXO + (x0 - meio) * esc)
@@ -256,7 +258,10 @@ JUNTA_PESCOCO = (604, 352)
 REGUA_CABECA = 0.8
 NOTA_MAX = 65              # casamento pior que isto (cabeça muito virada, escondida): fica a cabeça do rascunho
 SEM_CABECA = {"e_provoca", "e_rolamento"}  # provoca: a mão passa na frente da cabeça; rolamento: de costas e de frente no giro
-SEM_CABECA_QUADRO = {"e_parry_alto": {7}, "e_defesa": {2, 3, 4, 5, 6, 7}}  # quadros com a mão no chifre: fica a cabeça do rascunho
+# cor errada do rascunho num quadro só (ex.: perna do chute pintada de oliva, que trava no verde escuro das chamas)
+TROCA_COR = {"e_dir_tras": {5: {(77, 105, 32): (64, 48, 71)}}}
+SEM_CABECA_QUADRO = {"e_parry_alto": {7}, "e_defesa": {2, 3, 4, 5, 6, 7},
+                     "e_berro": {1, 2, 3, 4, 5}}  # quadros com a mão no chifre: fica a cabeça do rascunho
 DEITADO = {"e_queda", "e_levanta", "e_rolamento", "e_derrota", "e_vitima_agarrado", "e_vitima_arremessado"}
 MANTO = {(33, 26, 43), (64, 48, 71), (114, 80, 105)}
 
