@@ -3109,8 +3109,11 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   .sff os desenhos órfãos (o .sff estava a caminho dos 100 MB do GitHub).
 - Regerado com a decisão do Alisson (meio-termo, `MEIO_NO_BOTE = False` do `vida_pecas` da mugen 448b9158): a
   antecipação fica segurada e o golpe chega seco no contato.
-- Falta: soco no ar (600/601), levantar, as ações que usam desenho que ninguém reconhece (210, 302, 343, 344) e testar
-  a `pele_pecas.py` do Pengaró no lugar do desenho por peças rígidas.
+- Depois (Breno mandou escolher a opção de mais vantagem): martelo forte (210, 302, 343, 344) com o contato do
+  martelo/04 (os sprites 893/894 eram o passo longo do martelo, `SPRITE_E`); soco no ar (600, 601) e levantar (5120) com
+  os desenhos de hoje inteiros da mesma folha do kit (no ar e no chão o kit de pé não serve) e o fim do levantar na
+  guarda do kit. 43 ações no total, robô de luta 216/216 com o dano igual ao da mugen.
+- Falta testar a `pele_pecas.py` do Pengaró no lugar do desenho por peças rígidas.
 
 ## 17/11/2026 - Gbzin: estudo de anatomia do Breno aplicado
 - Conferência dos 36 golpes contra a Parte 4 do estudo: `docs/boneco-pecas/gbzin/anatomia.md` (ficha perto/longe,
