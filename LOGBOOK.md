@@ -2851,3 +2851,10 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   remap do despertado para cada sprite novo e refaz as ações da aura (30000/40000 + ação).
 - Gutto: 16 golpes, 299 quadros. Robô de peças 0 defeito; robô de luta 186/186 antes e depois, dano idêntico.
 - Agachado passou a ter 48 ticks e a rasteira ganhou a volta (459, 1173, 460) para bater com o tempo do jogo.
+- Garanhão (despertado do Gutto) no jogo: `ligar_pecas.py gutto --de garanhao --grupo 49000 --ajustar` com parado
+  (por remap do parado novo do Gutto) e 10 golpes 10xxx (chifrada, investida, pisão, patada, casco na canela, bufada,
+  garra rasteira, chifrada que sobe, raspa o casco, rabo-chicote). `--ajustar` estica/encolhe o tempo para o impacto
+  cair no tick da Clsn1 antiga; quadros de outra pasta vão em PNG RGBA (na paleta da base o brilho apagava). Depois
+  `aura_silhueta.py gutto` de novo. Robô de luta 186/186 igual; filmado no motor (docs/boneco-pecas/no_jogo/).
+- Fora por enquanto: coice (desenho da folha com outro corpo) e golpes no ar (não leem); rasga-couro, empinada,
+  corrente em X, joelho e cascos no ar não têm ação no jogo (são do #47).
