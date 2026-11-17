@@ -435,6 +435,19 @@ def desenhar(kit, pose):
     return _acabar(kit, pose, w, tela, usados, bx)
 
 
+# Ordem das camadas da pele no Gbzin (a mesma do CAMADAS dele, não a do Pengaró). Estudo de anatomia do Breno (Parte 2):
+# na guarda aberta o lado da frente (punho em garra, perna da frente) é o LONGE da câmera, então a coxa da frente nasce
+# ATRÁS do quadril e da faixa; senão, no chute alto, a perna parece sair do mesmo quadril da perna de apoio.
+PELE_CAMADAS = [
+    ("tronco", [("tronco", ("quadril", "braco_tras", "braco_frente"))]),
+    ("perna_tras", [("canela_tras", ("coxa_tras",)), ("coxa_tras", ("quadril", "canela_tras"))]),
+    ("perna_frente", [("canela_frente", ("coxa_frente",)), ("coxa_frente", ("quadril", "canela_frente"))]),
+    ("quadril", [("quadril", ("tronco", "coxa_tras", "coxa_frente"))]),
+    ("braco_tras", [("braco_tras", ("tronco",))]),
+    ("braco_frente", [("braco_frente", ("tronco",))]),
+]
+
+
 def desenhar_pele(kit, pose):
     """Como desenhar(), mas as peças viram pele que dobra nas juntas (pele_pecas.py, da thread do Pengaró): sem linha de
     corte entre quadril, coxa, canela e braço. Sobra, pés, cabeça por cima, furos e pontas da faixa iguais."""
@@ -442,7 +455,11 @@ def desenhar_pele(kit, pose):
         return desenhar(kit, pose)
     import pele_pecas as pele
     w = b.mundo(pose)
-    tela = pele.desenhar(kit, pose)
+    antes, pele.CAMADAS = pele.CAMADAS, PELE_CAMADAS
+    try:
+        tela = pele.desenhar(kit, pose)
+    finally:
+        pele.CAMADAS = antes
     usados = []
     for slot in CAMADAS:
         usados.append((kit["pecas"][b.chave(slot, pose)],) + tuple(w[slot]))
