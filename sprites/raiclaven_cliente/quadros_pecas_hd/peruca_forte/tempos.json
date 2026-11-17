@@ -1,0 +1,85 @@
+{
+ "acao": 21001,
+ "caixa": null,
+ "origem": [
+  "peruca/00",
+  "peruca/01",
+  "peruca/02",
+  "peruca/03",
+  "peruca/04"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "peruca/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "peruca/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": false,
+   "de": "peruca/01"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "peruca/02"
+  },
+  {
+   "desenho": 4,
+   "ticks": 3,
+   "caixa": false,
+   "de": "peruca/02"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "peruca/03"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "peruca/03"
+  },
+  {
+   "desenho": 7,
+   "ticks": 3,
+   "caixa": false,
+   "de": "peruca/03"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "peruca/04"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "peruca/04"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "peruca/04"
+  },
+  {
+   "desenho": 11,
+   "ticks": 3,
+   "caixa": false,
+   "de": "peruca/00"
+  }
+ ]
+}

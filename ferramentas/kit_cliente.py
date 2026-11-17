@@ -230,7 +230,7 @@ ANIMS = {
     "parado": (0, "ginga 0/10 2/8 4/10 6/8", None),
     "agachado": (11, "agachado_d 0/10 1/8 2/10 3/8", None),
     "belisco": (20400, "x_agd 0/2 1/3 2/2 3/4A 4/4 0/3", (32, -72, 58, -48)),
-    "mordida": (20410, "y_agd 0/2 1/3 2/2 3/5A 4/6 5/4 0/3", (-6, -142, 28, -108)),
+    "mordida": (20410, "y_agd 0/2 1/3 2/2 3/5A 4/6 5/4 0/3", (0, -140, 46, -70)),
     "secador_chao": (20430, "a_agd 0/2 1/4 2/2 3/4A 4/5 0/3", (40, -82, 64, -56)),
     "varrida": (20440, "b_agd 0/2 1/4 2/4 3/2 4/5A 5/6 6/5 0/3", (26, -84, 66, -54)),
     "pulo": (41, "pulo_d 0/4 1/4 2/6 3/4 4/4", None),
@@ -241,6 +241,8 @@ ANIMS = {
     "anda": (20, "anda 0/6 1/6 2/6 3/6 4/6 5/6 6/6 7/6", None),
     "defesa": (150, "defesa 0/3 1/3 2/4 3/4 4/3 5/3", None),
     "apanha": (5000, "apanha 0/3 1/3 2/3 3/3 4/3", None),
+    # queda: desenhos inteiros do doador (no ar, deitado, de joelho); o corpo do kit não deita
+    "queda": (5100, "queda_d 1/6 0/10 2/8", None),
     "garra": (20200, "x_pe 0/2 1/3 2/1 3/4A 4/4 0/3", (40, -116, 76, -84)),
     "navalha": (20210, "y_pe 0/2 1/4 2/5 3/2 4/5A 5/6 0/5", (34, -128, 80, -96)),
     "bota": (20230, "a_pe 0/2 1/3 2/2 3/4A 4/4 0/3", (20, -50, 62, -20)),
@@ -248,7 +250,7 @@ ANIMS = {
 }
 AUTO_ESPECIAL = set()
 FIRMES = set()
-ESPECIAIS = set()
+ESPECIAIS = {"queda_d/00", "queda_d/01", "queda_d/02"}
 EXPRESSOES = {}
 PERNA_NO_AR = {f"a_pe/{i:02d}": "livre" for i in (1, 2, 3, 4)}
 LACOS = {0, 11}
@@ -275,6 +277,12 @@ REMAP = {
     5001: ["apanha/02", "apanha/03", "apanha/04", "apanha/00"],
     5002: ["apanha/03", "apanha/04", "apanha/02", "apanha/00"],
     5005: ["apanha/02", "apanha/00"],
+    5020: ["apanha/03", "apanha/03", "queda_d/01"], 5021: ["apanha/03", "apanha/03", "queda_d/01", "queda_d/01"],
+    5022: ["apanha/03", "apanha/03", "queda_d/01", "queda_d/01"],
+    5030: ["queda_d/01"], 5035: ["queda_d/01"], 5040: ["queda_d/01"], 5050: ["queda_d/01", "queda_d/01", "queda_d/01"], 5051: ["queda_d/01", "queda_d/01"], 5061: ["queda_d/01"],
+    5070: ["queda_d/01", "queda_d/01"], 5080: ["queda_d/01", "queda_d/01", "queda_d/00"], 5090: ["queda_d/00"], 5100: ["queda_d/00", "queda_d/00", "queda_d/00"], 5101: ["queda_d/00", "queda_d/00"],
+    5110: ["queda_d/00"], 5160: ["queda_d/00", "queda_d/00"], 5170: ["queda_d/00", "queda_d/00"], 5150: ["queda_d/00"],
+    5120: ["queda_d/00", "queda_d/00", "queda_d/02", "queda_d/02", "queda_d/02", "queda_d/02", "ginga/00"],
 }
 
 # metade de baixo inteira de um desenho doador (a saia esconde as pernas do kit: dobrar coxa e canela deixava linha de
@@ -283,3 +291,152 @@ PERNAS_VAR = {"agachado": "doador/agachado", "pulo": "doador/pulo"}
 PERNAS_DE = {f"{f}/{i:02d}": "agachado" for f in ("agachado_d", "x_agd", "y_agd", "a_agd", "b_agd") for i in range(8)}
 PERNAS_NO_AR = {"pulo"}  # o doador do pulo fica no ar (o robô não cobra pé no chão)
 PERNAS_DE.update({f"{f}/{i:02d}": "pulo" for f in ("pulo_d", "x_ard", "y_ard", "a_ard", "b_ard") for i in range(8)})
+
+
+# ------------------------------------------------------------------------------------------- lote 3 (17/11)
+# golpes de pé que faltavam: direcionais, correntes, kombo, especiais e super. Pastas novas = cópias do ginga/00
+# (ferramentas/doador_cliente.py, PASTAS_DE_PE); a pose vem toda daqui. Regras: corpo inteiro vai junto (passo, quadril,
+# tronco), um quadro de contato seco depois da preparação (meio-termo), borracha só no Pescoço e na família da Navalhada.
+def _seq(pasta, *poses):
+    for i, p in enumerate(poses):
+        POSES[f"{pasta}/{i:02d}"] = p
+
+
+R0 = dict()  # parado
+_seq("f_y",  # Mordida por Cima: a Cliente empina por cima da cabeça do Raiclaven e desce mordendo
+     _p(), _p(dx=-4, dy=2, tronco=-6, cabeca=2, cri=-14, cx=-6, cy=-6, cc=-14, nav=-20, sec=-10, gar=-20),
+     _p(dx=-5, dy=3, tronco=-8, cabeca=3, cri=-18, cx=-8, cy=-6, cc=-22, nav=-26, sec=-14, gar=-26),
+     _p(dx=10, dy=6, tronco=14, cri=24, cx=8, cy=6, cc=20, nav=10, sec=14, gar=20, pes=(0, 8)),
+     _p(dx=8, dy=4, tronco=8, cri=14, cx=6, cy=4, cc=10, nav=4, sec=8, gar=10, pes=(0, 8)))
+_seq("f_b",  # Pisão de Choque: ergue a bota de aço e pisa com o peso do corpo
+     _p(), _p(dy=-4, tronco=-4, cri=-4, cy=-4, gar=-10, sec=-10, coxa_frente=-50, canela_frente=50),
+     _p(dy=-5, tronco=-5, cabeca=2, cri=-6, cy=-5, gar=-14, sec=-14, coxa_frente=-62, canela_frente=58),
+     _p(dx=8, dy=6, tronco=8, cri=8, cx=6, cy=4, gar=10, sec=10, pes=(0, 14)),
+     _p(dx=8, dy=5, tronco=6, cri=6, cx=4, cy=3, gar=6, sec=6, pes=(0, 14)))
+_seq("t_x",  # Bafo do Secador: a Cliente aponta o secador na cara e sopra (o Raiclaven firma o pé de trás)
+     _p(), _p(dx=-3, dy=2, tronco=-4, cri=-6, cx=-4, cy=-2, sec=-30, gar=-10),
+     _p(dx=4, dy=3, tronco=4, cri=10, cx=10, cy=-2, sec=50, gar=-14, pes=(0, 4)),
+     _p(dx=4, dy=3, tronco=5, cri=11, cx=10, cy=-1, sec=46, gar=-12, pes=(0, 4)),
+     _p(dx=2, dy=1, tronco=2, cri=4, cx=4, sec=20, gar=-4, pes=(0, 2)))
+_seq("t_a",  # Puxa pela Gola: a garra agarra na frente e o corpo todo puxa para trás
+     _p(), _p(dx=-3, dy=2, tronco=-4, cri=-6, cx=-4, gar=-24, sec=-6),
+     _p(dx=8, dy=4, tronco=8, cri=14, cx=10, gar=40, sec=8, pes=(0, 8)),
+     _p(dx=-6, dy=3, tronco=-8, cabeca=2, cri=-8, cx=-6, gar=10, sec=-4, pes=(0, 0)),
+     _p(dx=-2, dy=1, tronco=-3, cri=-3, cx=-2, gar=0))
+# correntes: o 1º quadro já é a guarda (vem do golpe anterior); um de preparação e o contato
+_seq("c_x1",  # Tesourinha: garra de costas de mão
+     _p(), _p(dx=-2, dy=2, tronco=-4, cri=-6, cx=-6, cy=-2, gar=-36, sec=-4),
+     _p(dx=10, dy=4, tronco=6, cri=8, cx=12, gar=34, sec=6, pes=(0, 10)),
+     _p(dx=6, dy=2, tronco=3, cri=4, cx=6, gar=14, pes=(0, 6)))
+_seq("c_x2",  # Tesourinha: mordida
+     _p(), _p(dx=-2, dy=2, tronco=-4, cri=-8, cx=-6, cy=-2, cc=-12, gar=-10),
+     _p(dx=12, dy=5, tronco=10, cri=16, cx=14, cy=2, cc=14, gar=12, sec=8, pes=(0, 10)),
+     _p(dx=6, dy=3, tronco=5, cri=8, cx=6, cc=6, gar=6, pes=(0, 6)))
+_seq("c_x3",  # Tesourinha: dentes e chacoalha (3 acertos)
+     _p(), _p(dx=-3, dy=3, tronco=-6, cabeca=2, cri=-10, cx=-8, cy=-4, cc=-14, gar=-20, sec=-10),
+     _p(dx=12, dy=5, tronco=10, cri=18, cx=14, cy=2, cc=16, gar=16, sec=10, pes=(0, 10)),
+     _p(dx=12, dy=6, tronco=12, cri=12, cx=10, cy=4, cc=-4, gar=24, sec=4, pes=(0, 10)),
+     _p(dx=12, dy=5, tronco=9, cri=20, cx=14, cy=2, cc=20, gar=10, sec=14, pes=(0, 10)),
+     _p(dx=6, dy=3, tronco=4, cri=6, cx=6, cc=4, gar=6, pes=(0, 6)))
+_seq("c_y1",  # Navalha Comprida 2 (borracha da Navalhada): corta de cima para baixo
+     _p(), _p(dx=-4, dy=2, tronco=-5, cabeca=2, cri=-6, cx=-6, cy=-4, nav=-40, gar=-6),
+     _p(dx=12, dy=8, tronco=18, cri=4, cx=8, cy=-2, nav=62, sec=10, gar=10, en=2.2, pes=(0, 10)),
+     _p(dx=6, dy=4, tronco=6, cri=2, cx=4, nav=20, en=1.3, pes=(0, 6)))
+_seq("c_y2",  # Navalha Comprida 3: volta de baixo para cima
+     _p(), _p(dx=-2, dy=4, tronco=6, cri=4, cx=2, cy=2, nav=95, gar=4),
+     _p(dx=12, dy=5, tronco=8, cri=4, cx=8, cy=-2, nav=42, sec=8, gar=8, en=2.4, pes=(0, 12)),
+     _p(dx=6, dy=3, tronco=4, cri=2, cx=4, nav=20, en=1.3, pes=(0, 6)))
+_seq("c_y3",  # Corte em X: a navalha desce e a garra cruza junto
+     _p(), _p(dx=-5, dy=3, tronco=-8, cabeca=3, cri=-10, cx=-8, cy=-6, nav=-50, gar=-40, sec=-12),
+     _p(dx=14, dy=7, tronco=16, cri=10, cx=12, cy=0, nav=60, gar=46, sec=12, en=2.4, pes=(0, 14)),
+     _p(dx=8, dy=4, tronco=8, cri=4, cx=6, nav=24, gar=18, en=1.4, pes=(0, 8)))
+_seq("c_a1",  # Tubo Chicote baixo: chute baixo da bota
+     _p(), _p(dy=-4, tronco=-3, cri=-2, cy=-2, coxa_frente=-35, canela_frente=40),
+     _p(dx=4, dy=-2, tronco=-5, cri=3, cx=10, gar=6, sec=10, coxa_frente=-50, canela_frente=10),
+     _p(dx=3, dy=-2, tronco=-2, cri=1, cx=4, coxa_frente=-30, canela_frente=35))
+_seq("c_a2",  # Tubo Chicote alto: a Cliente desce o secador por cima, com passo
+     _p(), _p(dx=-3, dy=2, tronco=-5, cri=-10, cx=-6, cy=-6, sec=-46, gar=-10),
+     _p(dx=10, dy=5, tronco=10, cri=16, cx=12, cy=2, sec=60, gar=10, pes=(0, 10)),
+     _p(dx=6, dy=3, tronco=4, cri=6, cx=6, sec=24, pes=(0, 6)))
+_seq("c_a3",  # Tubo Laça o Pé: o corpo desce e a garra fisga o tornozelo
+     _p(), _p(dx=-3, dy=4, tronco=-4, cri=-8, cx=-6, gar=-30, sec=-10),
+     _p(dx=12, dy=10, tronco=16, cri=26, cx=12, cy=6, gar=60, sec=16, nav=10, pes=(0, 12)),
+     _p(dx=4, dy=6, tronco=6, cri=10, cx=4, cy=2, gar=20, sec=4, pes=(0, 6)))
+_seq("c_b1",  # Pião da Cadeira 1: torce o tronco para um lado e os três braços varrem
+     _p(), _p(dx=-4, dy=4, tronco=-10, cabeca=4, cri=-12, cx=-8, cy=-4, nav=-40, sec=-30, gar=-44),
+     _p(dx=10, dy=5, tronco=10, cri=12, cx=12, cy=-2, nav=50, sec=20, gar=30, pes=(0, 10)),
+     _p(dx=6, dy=3, tronco=4, cri=4, cx=6, nav=20, sec=8, gar=10, pes=(0, 6)))
+_seq("c_b2",  # Pião da Cadeira 2: torce de volta
+     _p(), _p(dx=4, dy=4, tronco=10, cri=10, cx=8, nav=50, sec=24, gar=30, pes=(0, 6)),
+     _p(dx=10, dy=5, tronco=-6, cabeca=-2, cri=-4, cx=10, cy=-4, nav=-30, sec=-20, gar=-20, pes=(0, 10)),
+     _p(dx=6, dy=3, tronco=-2, cri=0, cx=6, nav=-10, sec=-6, gar=-6, pes=(0, 6)))
+_seq("c_b3",  # Choque em Círculo: agacha, abre tudo e solta o choque em volta
+     _p(), _p(dy=8, tronco=8, cri=10, cy=6, nav=-30, sec=-30, gar=-30),
+     _p(dy=-2, tronco=-6, cabeca=-4, cri=-14, cy=-6, nav=70, sec=60, gar=70),
+     _p(dy=-1, tronco=-4, cabeca=-3, cri=-10, cy=-5, nav=64, sec=54, gar=64),
+     _p(dy=3, tronco=2, cri=2, cy=2, nav=20, sec=20, gar=20))
+_seq("k_nav",  # Cobaia: navalha (a vítima está presa pela gola: a navalha entra curta)
+     _p(), _p(dx=-4, dy=2, tronco=-5, cabeca=2, cri=-6, cx=-6, cy=-4, nav=-34, gar=20),
+     _p(dx=12, dy=8, tronco=18, cri=4, cx=8, cy=-2, nav=62, sec=8, gar=26, en=2.0, pes=(0, 10)),
+     _p(dx=6, dy=4, tronco=6, cri=2, cx=4, nav=20, gar=12, en=1.2, pes=(0, 6)))
+_seq("peruca",  # Peruca Viva: a Cliente arranca o topete verde e arremessa
+     _p(), _p(dx=-3, dy=2, tronco=-5, cri=-12, cx=-6, cy=-4, cc=-10, gar=-50, sec=-6),
+     _p(dx=-4, dy=3, tronco=-6, cabeca=2, cri=-14, cx=-8, cy=-6, cc=-12, gar=-64, sec=-8),
+     _p(dx=8, dy=4, tronco=8, cri=12, cx=10, cy=2, cc=8, gar=50, sec=8, pes=(0, 8)),
+     _p(dx=6, dy=3, tronco=4, cri=6, cx=6, cc=4, gar=24, pes=(0, 6)))
+_seq("pescoco",  # Pescoço de Borracha: a Cliente se joga para a frente e morde (o esticão do kit borrava o corpo dela: a borracha
+# de verdade pede um desenho do pescoço esticado, ver docs/raiclaven-despertado-43.md)
+     _p(), _p(dx=-4, dy=3, tronco=-6, cabeca=2, cri=-10, cx=-6, cy=-4, cc=-10, gar=-10, sec=-10),
+     _p(dx=6, dy=4, tronco=8, cri=36, cx=8, cy=6, cc=-24, gar=-16, sec=-16, pes=(0, 6)),
+     _p(dx=6, dy=4, tronco=8, cri=40, cx=8, cy=6, cc=-26, gar=-18, sec=-18, pes=(0, 6)),
+     _p(dx=3, dy=2, tronco=4, cri=16, cx=4, cy=2, cc=-10, gar=-6, sec=-6, pes=(0, 4)))
+_seq("tanque",  # Tanque Estourado: encolhe e estoura o tanque das costas, a Cliente abre os três braços
+     _p(), _p(dy=6, tronco=10, cri=-6, cy=6, nav=-10, sec=-10, gar=-10),
+     _p(dy=8, tronco=12, cabeca=2, cri=-8, cy=6, nav=-14, sec=-14, gar=-14),
+     _p(dy=-2, tronco=-8, cabeca=-6, cri=-16, cy=-6, nav=-40, sec=40, gar=-50),
+     _p(dy=-1, tronco=-6, cabeca=-5, cri=-14, cy=-5, nav=-36, sec=36, gar=-46),
+     _p(dy=2, tronco=0, cri=-4, nav=-10, sec=10, gar=-10))
+_seq("bigodes",  # Bigodes Carnívoros: a Cliente escancara a boca para a frente e cospe os bigodes
+     _p(), _p(dx=-2, dy=2, tronco=-4, cri=-10, cx=-6, cy=-4, cc=-14, gar=-10, sec=-10),
+     _p(dx=6, dy=4, tronco=6, cri=16, cx=12, cy=2, cc=12, gar=16, sec=16, pes=(0, 6)),
+     _p(dx=6, dy=4, tronco=7, cri=18, cx=12, cy=2, cc=14, gar=18, sec=18, pes=(0, 6)),
+     _p(dx=3, dy=2, tronco=3, cri=6, cx=4, cc=4, gar=6, sec=6, pes=(0, 4)))
+_seq("cir",  # Sala de Cirurgia: avança e a Cliente opera com tudo (navalha, garra, secador), arremate com o corpo
+     _p(), _p(dx=-5, dy=4, tronco=-8, cabeca=3, cri=-12, cx=-8, cy=-6, nav=-40, sec=-30, gar=-40),
+     _p(dx=12, dy=5, tronco=10, cri=12, cx=12, nav=50, sec=-10, gar=-10, pes=(0, 12)),
+     _p(dx=12, dy=5, tronco=8, cri=14, cx=12, cy=2, nav=-10, sec=10, gar=50, pes=(0, 12)),
+     _p(dx=12, dy=5, tronco=10, cri=10, cx=10, cy=-2, nav=10, sec=50, gar=0, pes=(0, 12)),
+     _p(dx=12, dy=6, tronco=12, cri=16, cx=14, cy=2, cc=14, nav=40, sec=20, gar=30, pes=(0, 12)),
+     _p(dx=16, dy=8, tronco=16, cri=22, cx=14, cy=4, cc=16, nav=64, sec=40, gar=60, pes=(0, 16)),
+     _p(dx=8, dy=4, tronco=6, cri=8, cx=6, nav=24, sec=14, gar=20, pes=(0, 8)))
+PERNA_NO_AR.update({f"f_b/{i:02d}": "livre" for i in (1, 2)})
+PERNA_NO_AR.update({f"c_a1/{i:02d}": "livre" for i in (1, 2, 3)})
+PASTAS_DE_PE = ("f_y", "f_b", "t_x", "t_a", "c_x1", "c_x2", "c_x3", "c_y1", "c_y2", "c_y3", "c_a1", "c_a2", "c_a3",
+                "c_b1", "c_b2", "c_b3", "k_nav", "peruca", "pescoco", "tanque", "bigodes", "cir")
+ANIMS.update({
+    "mordida_cima": (20250, "f_y 0/2 1/4 2/5 3/5A 4/6 0/4", (30, -124, 80, -80)),
+    "pisao": (20260, "f_b 0/2 1/4 2/5 3/5A 4/6 0/4", (14, -26, 66, 0)),
+    "bafo": (20270, "t_x 0/2 1/4 2/5A 3/6 4/4 0/3", (40, -136, 100, -96)),
+    "puxa_gola": (20280, "t_a 0/2 1/3 2/4A 3/6 4/3 0/2", (30, -124, 80, -84)),
+    "tesoura_1": (20301, "c_x1 0/1 1/3 2/4A 3/5 0/2", (34, -120, 78, -84)),
+    "tesoura_2": (20302, "c_x2 0/1 1/3 2/5A 3/5 0/2", (30, -150, 92, -100)),
+    "tesoura_3": (20303, "c_x3 0/1 1/4 2/4A 3/4A 4/4A 5/6 0/3", (30, -150, 92, -90)),
+    "navalha_2": (20311, "c_y1 0/1 1/3 2/5A 3/5 0/2", (34, -140, 84, -100)),
+    "navalha_3": (20312, "c_y2 0/1 1/3 2/5A 3/5 0/2", (30, -156, 82, -112)),
+    "corte_x": (20313, "c_y3 0/1 1/5 2/6A 3/8 0/3", (30, -120, 120, -60)),
+    "chicote_baixo": (20321, "c_a1 0/1 1/3 2/4A 3/4 0/2", (20, -50, 66, -16)),
+    "chicote_alto": (20322, "c_a2 0/1 1/3 2/5A 3/5 0/2", (36, -150, 96, -90)),
+    "laca_pe": (20323, "c_a3 0/1 1/4 2/6A 3/7 0/3", (30, -60, 100, 0)),
+    "piao_1": (20331, "c_b1 0/1 1/3 2/5A 3/5 0/2", (24, -150, 84, -80)),
+    "piao_2": (20332, "c_b2 0/1 1/3 2/5A 3/5 0/2", (24, -150, 84, -80)),
+    "choque_circulo": (20333, "c_b3 0/2 1/5 2/6A 3/6A 4/6 0/3", (-60, -110, 70, 0)),
+    "cobaia_navalha": (20341, "k_nav 0/1 1/3 2/5A 3/5 0/2", (34, -140, 84, -100)),
+    "cobaia_varre": (20342, "b_agd 0/2 1/3 2/3 4/6A 5/6 6/5 0/3", (26, -84, 70, -50)),
+    "peruca_fraca": (21000, "peruca 0/2 1/4 2/4 3/6 4/6 0/3", None),
+    "peruca_forte": (21001, "peruca 0/2 1/5 2/5 3/7 4/6 0/3", None),
+    "pescoco": (21100, "pescoco 0/2 1/5 2/4A 3/8A 4/6 0/4", (20, -164, 74, -108)),
+    "pescoco_puxa": (21101, "pescoco 0/2 1/5 2/4A 3/8A 4/6 0/4", (20, -164, 74, -108)),
+    "tanque": (21200, "tanque 0/2 1/4 2/6 3/6A 4/8A 5/6 0/3", (-75, -120, 80, 0)),
+    "bigodes": (21300, "bigodes 0/2 1/5 2/5 3/8 4/6 0/3", None),
+    "cirurgia": (23000, "cir 0/3 1/8 2/5A 3/4A 4/5A 3/4A 2/5A 4/4A 5/5A 6/10A 7/10 0/4", (10, -130, 90, -30)),
+})

@@ -1,0 +1,72 @@
+{
+ "acao": 21101,
+ "caixa": [
+  60,
+  -492,
+  222,
+  -324
+ ],
+ "origem": [
+  "pescoco/00",
+  "pescoco/01",
+  "pescoco/02",
+  "pescoco/03",
+  "pescoco/04"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pescoco/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 5,
+   "caixa": false,
+   "de": "pescoco/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 4,
+   "caixa": true,
+   "de": "pescoco/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 8,
+   "caixa": true,
+   "de": "pescoco/03"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pescoco/04"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pescoco/04"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pescoco/04"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pescoco/00"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pescoco/00"
+  }
+ ]
+}

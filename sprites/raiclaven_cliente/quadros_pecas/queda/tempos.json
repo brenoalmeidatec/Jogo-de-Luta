@@ -1,0 +1,29 @@
+{
+ "acao": 5100,
+ "caixa": null,
+ "origem": [
+  "queda_d/01",
+  "queda_d/00",
+  "queda_d/02"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 6,
+   "caixa": false,
+   "de": "queda_d/01"
+  },
+  {
+   "desenho": 1,
+   "ticks": 10,
+   "caixa": false,
+   "de": "queda_d/00"
+  },
+  {
+   "desenho": 2,
+   "ticks": 8,
+   "caixa": false,
+   "de": "queda_d/02"
+  }
+ ]
+}

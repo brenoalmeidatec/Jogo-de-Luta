@@ -74,6 +74,11 @@ def escala_e_cor(orig, ref):
 def main():
     ref = np.array(Image.open(REF).convert("RGBA"))
     SAIDA.mkdir(parents=True, exist_ok=True)
+    import kit_cliente as kc  # pastas dos golpes de pé feitos só com o kit: cópias do ginga/00 (a pose vem do POSES)
+    for p in getattr(kc, "PASTAS_DE_PE", ()):
+        (SAIDA.parent / p).mkdir(exist_ok=True)
+        for k in range(8):
+            Image.open(REF).save(SAIDA.parent / p / f"{k:02d}.png")
     for nome, de in DOADORES.items():
         cap = PASTA / f"{nome}_cap.png"
         if not cap.exists():

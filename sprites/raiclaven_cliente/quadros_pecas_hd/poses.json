@@ -1,5 +1,5 @@
 {
- "y_ard/00": {
+ "pescoco/00": {
   "quadril": {
    "ang": 0,
    "dx": 0,
@@ -17,9 +17,6 @@
   },
   "cabeca": {
    "ang": 0
-  },
-  "_pernas": {
-   "var": "pulo"
   },
   "criatura": {
    "ang": 0,
@@ -31,7 +28,7 @@
    "ang": 0
   },
   "navalha": {
-   "ang": -4,
+   "ang": 0,
    "estica": 1
   },
   "secador": {
@@ -39,210 +36,31 @@
    "estica": 1
   },
   "garra": {
-   "ang": -2,
+   "ang": 0,
    "estica": 1
   },
-  "_ar": {
-   "sim": 1
+  "coxa_tras": {
+   "ang": 0.0
+  },
+  "canela_tras": {
+   "ang": -0.0
+  },
+  "coxa_frente": {
+   "ang": -0.6
+  },
+  "canela_frente": {
+   "ang": 2.5
   }
  },
- "y_ard/01": {
+ "pescoco/01": {
   "quadril": {
    "ang": 0,
-   "dx": 0,
-   "dy": 0
-  },
-  "tronco": {
-   "ang": -6,
-   "dy": -1
-  },
-  "braco_tras": {
-   "ang": 0
-  },
-  "braco_frente": {
-   "ang": 0
-  },
-  "cabeca": {
-   "ang": 3
-  },
-  "_pernas": {
-   "var": "pulo"
-  },
-  "criatura": {
-   "ang": -8,
    "dx": -4,
-   "dy": -4,
-   "estica": 1
-  },
-  "cri_cabeca": {
-   "ang": 0
-  },
-  "navalha": {
-   "ang": -40,
-   "estica": 1
-  },
-  "secador": {
-   "ang": -6,
-   "estica": 1
-  },
-  "garra": {
-   "ang": -8,
-   "estica": 1
-  },
-  "_ar": {
-   "sim": 1
-  }
- },
- "y_ard/02": {
-  "quadril": {
-   "ang": 0,
-   "dx": 0,
-   "dy": 0
-  },
-  "tronco": {
-   "ang": 10,
-   "dy": 2
-  },
-  "braco_tras": {
-   "ang": 0
-  },
-  "braco_frente": {
-   "ang": 0
-  },
-  "cabeca": {
-   "ang": 0
-  },
-  "_pernas": {
-   "var": "pulo"
-  },
-  "criatura": {
-   "ang": 12,
-   "dx": 8,
-   "dy": 2,
-   "estica": 1
-  },
-  "cri_cabeca": {
-   "ang": 0
-  },
-  "navalha": {
-   "ang": 70,
-   "estica": 1.9
-  },
-  "secador": {
-   "ang": 8,
-   "estica": 1
-  },
-  "garra": {
-   "ang": 8,
-   "estica": 1
-  },
-  "_ar": {
-   "sim": 1
-  }
- },
- "y_ard/03": {
-  "quadril": {
-   "ang": 0,
-   "dx": 0,
-   "dy": 0
-  },
-  "tronco": {
-   "ang": 5,
-   "dy": 1
-  },
-  "braco_tras": {
-   "ang": 0
-  },
-  "braco_frente": {
-   "ang": 0
-  },
-  "cabeca": {
-   "ang": 0
-  },
-  "_pernas": {
-   "var": "pulo"
-  },
-  "criatura": {
-   "ang": 6,
-   "dx": 4,
-   "dy": 0,
-   "estica": 1
-  },
-  "cri_cabeca": {
-   "ang": 0
-  },
-  "navalha": {
-   "ang": 40,
-   "estica": 1.3
-  },
-  "secador": {
-   "ang": 4,
-   "estica": 1
-  },
-  "garra": {
-   "ang": 4,
-   "estica": 1
-  },
-  "_ar": {
-   "sim": 1
-  }
- },
- "b_ard/00": {
-  "quadril": {
-   "ang": 0,
-   "dx": 0,
-   "dy": 0
-  },
-  "tronco": {
-   "ang": 0,
-   "dy": 0
-  },
-  "braco_tras": {
-   "ang": 0
-  },
-  "braco_frente": {
-   "ang": 0
-  },
-  "cabeca": {
-   "ang": 0
-  },
-  "_pernas": {
-   "var": "pulo"
-  },
-  "criatura": {
-   "ang": 0,
-   "dx": 0,
-   "dy": 0,
-   "estica": 1
-  },
-  "cri_cabeca": {
-   "ang": 0
-  },
-  "navalha": {
-   "ang": -4,
-   "estica": 1
-  },
-  "secador": {
-   "ang": 0,
-   "estica": 1
-  },
-  "garra": {
-   "ang": -2,
-   "estica": 1
-  },
-  "_ar": {
-   "sim": 1
-  }
- },
- "b_ard/01": {
-  "quadril": {
-   "ang": 0,
-   "dx": 0,
-   "dy": 0
+   "dy": 3
   },
   "tronco": {
    "ang": -6,
-   "dy": -2
+   "dy": 0
   },
   "braco_tras": {
    "ang": 0
@@ -251,45 +69,51 @@
    "ang": 0
   },
   "cabeca": {
-   "ang": 3
-  },
-  "_pernas": {
-   "var": "pulo"
+   "ang": 2
   },
   "criatura": {
    "ang": -10,
    "dx": -6,
-   "dy": -6,
+   "dy": -4,
    "estica": 1
   },
   "cri_cabeca": {
-   "ang": 0
+   "ang": -10
   },
   "navalha": {
-   "ang": -24,
+   "ang": 0,
    "estica": 1
   },
   "secador": {
-   "ang": -20,
+   "ang": -10,
    "estica": 1
   },
   "garra": {
-   "ang": -30,
+   "ang": -10,
    "estica": 1
   },
-  "_ar": {
-   "sim": 1
+  "coxa_tras": {
+   "ang": 4.2
+  },
+  "canela_tras": {
+   "ang": -16.3
+  },
+  "coxa_frente": {
+   "ang": -4.0
+  },
+  "canela_frente": {
+   "ang": 2.8
   }
  },
- "b_ard/02": {
+ "pescoco/02": {
   "quadril": {
    "ang": 0,
-   "dx": 0,
-   "dy": 0
+   "dx": 6,
+   "dy": 4
   },
   "tronco": {
-   "ang": 14,
-   "dy": 3
+   "ang": 8,
+   "dy": 0
   },
   "braco_tras": {
    "ang": 0
@@ -300,43 +124,49 @@
   "cabeca": {
    "ang": 0
   },
-  "_pernas": {
-   "var": "pulo"
-  },
   "criatura": {
-   "ang": 30,
+   "ang": 36,
    "dx": 8,
    "dy": 6,
    "estica": 1
   },
   "cri_cabeca": {
-   "ang": 0
+   "ang": -24
   },
   "navalha": {
-   "ang": 30,
+   "ang": 0,
    "estica": 1
   },
   "secador": {
-   "ang": 40,
+   "ang": -16,
    "estica": 1
   },
   "garra": {
-   "ang": 50,
+   "ang": -16,
    "estica": 1
   },
-  "_ar": {
-   "sim": 1
+  "coxa_tras": {
+   "ang": 6.2
+  },
+  "canela_tras": {
+   "ang": -4.9
+  },
+  "coxa_frente": {
+   "ang": -7.5
+  },
+  "canela_frente": {
+   "ang": 16.3
   }
  },
- "b_ard/03": {
+ "pescoco/03": {
   "quadril": {
    "ang": 0,
-   "dx": 0,
-   "dy": 0
+   "dx": 6,
+   "dy": 4
   },
   "tronco": {
    "ang": 8,
-   "dy": 2
+   "dy": 0
   },
   "braco_tras": {
    "ang": 0
@@ -347,32 +177,91 @@
   "cabeca": {
    "ang": 0
   },
-  "_pernas": {
-   "var": "pulo"
-  },
   "criatura": {
-   "ang": 16,
-   "dx": 6,
-   "dy": 4,
+   "ang": 40,
+   "dx": 8,
+   "dy": 6,
    "estica": 1
   },
   "cri_cabeca": {
-   "ang": 0
+   "ang": -26
   },
   "navalha": {
-   "ang": 14,
+   "ang": 0,
    "estica": 1
   },
   "secador": {
-   "ang": 20,
+   "ang": -18,
    "estica": 1
   },
   "garra": {
-   "ang": 26,
+   "ang": -18,
    "estica": 1
   },
-  "_ar": {
-   "sim": 1
+  "coxa_tras": {
+   "ang": 6.2
+  },
+  "canela_tras": {
+   "ang": -4.9
+  },
+  "coxa_frente": {
+   "ang": -7.5
+  },
+  "canela_frente": {
+   "ang": 16.3
+  }
+ },
+ "pescoco/04": {
+  "quadril": {
+   "ang": 0,
+   "dx": 3,
+   "dy": 2
+  },
+  "tronco": {
+   "ang": 4,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0
+  },
+  "braco_frente": {
+   "ang": 0
+  },
+  "cabeca": {
+   "ang": 0
+  },
+  "criatura": {
+   "ang": 16,
+   "dx": 4,
+   "dy": 2,
+   "estica": 1
+  },
+  "cri_cabeca": {
+   "ang": -10
+  },
+  "navalha": {
+   "ang": 0,
+   "estica": 1
+  },
+  "secador": {
+   "ang": -6,
+   "estica": 1
+  },
+  "garra": {
+   "ang": -6,
+   "estica": 1
+  },
+  "coxa_tras": {
+   "ang": 3.2
+  },
+  "canela_tras": {
+   "ang": -2.8
+  },
+  "coxa_frente": {
+   "ang": -3.8
+  },
+  "canela_frente": {
+   "ang": 6.8
   }
  }
 }

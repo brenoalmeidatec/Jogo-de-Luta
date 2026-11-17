@@ -1,0 +1,53 @@
+{
+ "acao": 20341,
+ "caixa": [
+  102,
+  -420,
+  252,
+  -300
+ ],
+ "origem": [
+  "k_nav/00",
+  "k_nav/01",
+  "k_nav/02",
+  "k_nav/03"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 1,
+   "caixa": false,
+   "de": "k_nav/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": false,
+   "de": "k_nav/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 5,
+   "caixa": true,
+   "de": "k_nav/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "k_nav/03"
+  },
+  {
+   "desenho": 4,
+   "ticks": 3,
+   "caixa": false,
+   "de": "k_nav/03"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "k_nav/00"
+  }
+ ]
+}

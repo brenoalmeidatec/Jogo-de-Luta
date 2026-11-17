@@ -1,0 +1,91 @@
+{
+ "acao": 21300,
+ "caixa": null,
+ "origem": [
+  "bigodes/00",
+  "bigodes/01",
+  "bigodes/02",
+  "bigodes/03",
+  "bigodes/04"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "bigodes/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "bigodes/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": false,
+   "de": "bigodes/01"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "bigodes/02"
+  },
+  {
+   "desenho": 4,
+   "ticks": 3,
+   "caixa": false,
+   "de": "bigodes/02"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "bigodes/03"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "bigodes/03"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "bigodes/03"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "bigodes/03"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "bigodes/04"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "bigodes/04"
+  },
+  {
+   "desenho": 11,
+   "ticks": 2,
+   "caixa": false,
+   "de": "bigodes/04"
+  },
+  {
+   "desenho": 12,
+   "ticks": 3,
+   "caixa": false,
+   "de": "bigodes/00"
+  }
+ ]
+}

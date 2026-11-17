@@ -10,6 +10,25 @@ do assento. Ele usa o corpo todo para levar a parceira até o alvo, e ela ataca 
 a dupla é mandona, e o humor vem da dupla, nunca da deficiência dela. O cabelo continua verde. O Breno quer o despertado
 louco, caótico e rápido, com raio verde e aço estourando.
 
+## Fase 6 (17/11 noite): tudo o que faltava, despertado inteiro no corpo firme
+
+Pedido do Alisson: terminar o que estava parado (pulo, andar, queda, especiais, super e agarrões), robôs passando,
+`.sff` abaixo de 100 MB e tudo na mugen.
+
+- **Andar** (20/21): arrastado pesado, sem levantar a perna (o joelho do kit abria linha de corte ao dobrar).
+- **Pulo** (40-47) e **golpes no ar** (20600-20640): metade de baixo inteira de um doador do ChatGPT (`PERNAS_VAR`
+  "pulo", `PERNAS_NO_AR`), em cima o kit.
+- **Queda, levanta e apanha no ar** (5020-5170): três desenhos inteiros do ChatGPT (`queda_d/00` deitado, `01` jogado
+  para trás no ar, `02` de joelho levantando), como `ESPECIAIS` do kit. `ferramentas/doador_cliente.py` (lista
+  `INTEIROS`) acerta escala e cor pela cópia do ginga/00 que vem na mesma imagem.
+- **Golpes de pé**: direcionais (20250-20280), as quatro correntes (20301-20333), o kombo Cobaia (20341/20342), os
+  especiais (Peruca Viva, Pescoço de Borracha, Tanque Estourado, Bigodes) e o super Sala de Cirurgia (23000, 6 acertos
+  em sequência), todos com poses à mão em `kit_cliente.py` (`_seq`). Os agarrões 24100/24200 usam a arte desses golpes.
+- **Caixas** conferidas no quadro de contato de cada golpe (a Mordida Antiaérea 20410 voltou a acertar quem está de pé).
+- **Pendência honesta**: o Pescoço de Borracha está sem o esticão. Esticar a peça da criatura borrava o corpo dela
+  (regra 7.2.1), então ela se joga para a frente e morde. A borracha de verdade pede um desenho doador do pescoço
+  esticado (ChatGPT), no próximo lote.
+
 ## Fase 5 (17/11 tarde): agachado, golpes agachados, defesa e apanha
 
 - **Agachado (ação 11)**: a saia esconde as pernas do kit, e dobrar coxa e canela dava linha de corte e pedaço solto.
