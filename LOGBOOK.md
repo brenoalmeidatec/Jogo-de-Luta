@@ -3035,7 +3035,12 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   (`ferramentas/video_golpes_raiclaven.py`).
 - Para ligar de novo: `git checkout 95134c46 -- chars/raiclaven` e `ligar_pecas.py raiclaven` (rodar duas vezes em cima
   do já ligado não foi testado).
->>>>>>> origin/mugen
+
+## 17/11/2026 - Gbzin: pele nas juntas (pele_pecas.py da thread do Pengaró)
+- Os quadros feitos pelo kit (parado, soco 00-03/07, chute alto, rolamento 00/07) agora saem por `desenhar_pele`: as
+  peças viram pele que dobra nas juntas (`pele_pecas.py`), com sobra, pés retos, cabeça por cima, furos e pontas da
+  faixa iguais ao `desenhar` de antes. Some o caco branco do calção e a linha de corte no chute alto.
+- Robô de peças 0 defeitos, robô do jogo 236/236. Antes e depois: `docs/boneco-pecas/gbzin/pele_antes_depois.{mp4,png}`.
 - 17/11 (tarde): o CK passou a ser desenhado com a pele do `pele_pecas.py` (`PELE = True` em `pecas_ck.py`): as
   juntas dobram sem linha de corte (regra do Alisson); pés continuam apoiados no chão (`colar_pe`) e o braço esticado
   continua saindo de baixo do queixo. Religado a partir do `chars/ck` sem peças (4b54d61f), robô de peças 0/206.
@@ -3049,3 +3054,17 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   sai (sobrava um pedaço de calça cinza pendurado embaixo da perna).
 - 20 ações refeitas, robô do boneco 0 defeito; religado a partir do Pengaró antes da ligação (ba260cd9), robô de luta
   189/189 igual. Antes/depois em docs/boneco-pecas/todo/chute_alto_antes_depois.png.
+
+## 17/11/2026 - Gbzin: Grão-Pastor (despertado) com folhas próprias no jogo
+- Rascunhos de pose no ChatGPT (3 turnos, pedidos em `ferramentas/folhas_gbzin.py`), folhas em
+  `sprites/gbzin/quadros/folhas_arcade/e_*.png`. `ferramentas/gbzin_e_pecas.py firme NOMES` corta as células por costura
+  de menos tinta, trava a paleta do kit (`sprites/gbzin/pecas_e/paleta.json`, 15 cores), usa a cabeça como régua do
+  tamanho do corpo e cola a cabeça do kit (`pecas_e/cabeca.png`, presa na junta do pescoço) em todo quadro onde ela
+  não tapa mão ou nuca; resultado em `quadros_e_firmes(_hd)`. `conferir` grava
+  `docs/boneco-pecas/gbzin/grao_pastor_conferencia.md` (0 defeitos em 25 folhas).
+- `gerar_gbzin.py` (`GRAO_PASTOR`): 23 estados do despertado com desenho próprio: parado (respiração sem emenda),
+  andar, x, y, a, agachado, golpe baixo, rasteirinha, rasteira, anti-aéreo, pulo, golpes no ar (bicicleta e soco),
+  defesa, defesa alta/baixa, apanha, queda, levanta, rolamento, vitória, derrota, provocação. O resto do despertado
+  segue no desenho da base até as próximas folhas (estampido, giro do manto, mãos, juízo, especiais, agarrões).
+- Breno liberou auto-aprovação (17/11); robô 236/0 no estado juntado. Também tirei marcadores de conflito que tinham
+  ficado commitados neste LOGBOOK.
