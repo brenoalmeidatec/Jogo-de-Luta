@@ -12,13 +12,37 @@ CINTURA = 445  # linha do cinto
 
 CABECA = [(524, 300), (545, 284), (575, 282), (598, 294), (606, 316), (600, 346), (590, 370), (570, 386), (545, 386),
           (530, 372), (522, 340)]
-BRACO_TRAS = [(450, 366), (505, 364), (518, 392), (512, 420), (530, 444), (598, 446), (600, 468), (592, 512),
-              (560, 502), (520, 480), (480, 492), (452, 484), (418, 466), (410, 430), (424, 404), (444, 384)]
+BRACO_TRAS = [(450, 366), (505, 364), (518, 392), (512, 420), (530, 444), (598, 446), (602, 470), (597, 504),
+              (588, 516), (560, 506), (520, 490), (480, 496), (452, 488), (418, 466), (410, 430), (424, 404), (444, 384)]
+
+
+def SO_DO_BRACO_TRAS(ref):
+    """Dentro do polígono do braço mecânico, só o metal e a luz verde: o cinto marrom e o avental entre as lâminas
+    ficam com o corpo (assim o braço sobe sem levar pedaço do cinto e sem deixar buraco)."""
+    import cv2
+    import numpy as np
+    hsv = cv2.cvtColor(ref[..., :3], cv2.COLOR_RGB2HSV)
+    h, s, v = (hsv[..., i].astype(int) for i in range(3))
+    quente = (h >= 4) & (h <= 35) & (s > 70) & (v > 45)
+    m = np.zeros(ref.shape[:2], np.uint8)
+    cv2.fillPoly(m, [np.int32(BRACO_TRAS)], 1)
+    m = (m > 0) & (ref[..., 3] > 0) & ~quente
+    n, rot, est, _ = cv2.connectedComponentsWithStats(m.astype(np.uint8), connectivity=4)
+    m = rot == (np.argmax(est[1:, 4]) + 1)
+    m = cv2.morphologyEx(m.astype(np.uint8), cv2.MORPH_CLOSE, np.ones((3, 3), np.uint8))
+    cs, _ = cv2.findContours(m, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    cheio = np.zeros_like(m)
+    cv2.drawContours(cheio, cs, -1, 1, -1)  # sem furo dentro (o brilho escuro da luz verde)
+    return cheio > 0
+
+
 BRACO_FRENTE = [(598, 394), (624, 374), (624, 334), (646, 322), (670, 334), (674, 372), (666, 412), (652, 442),
                 (630, 452), (604, 446), (594, 420)]
 PERNA_TRAS = [(428, 556), (506, 556), (508, 600), (494, 630), (502, 662), (388, 662), (394, 630), (412, 600)]
 PERNA_FRENTE = [(564, 556), (642, 556), (652, 600), (678, 640), (682, 662), (568, 662), (576, 630), (570, 600)]
+# o lado do tronco e o avental que o braço mecânico esconde (aparecem quando ele sobe na defesa ou recua no apanha)
 TRONCO_ESCONDIDO = [(0, 0), (1, 0), (0, 1)]  # o peito sob o braço mecânico sai da faixa do TAPAR (não conta como pintado)
+QUADRIL_ESCONDIDO = [(430, 444), (600, 444), (600, 516), (560, 508), (520, 494), (470, 498), (436, 486), (424, 466)]
 # a criatura e os braços dela (ordem = prioridade do recorte)
 EXTRAS = {
     "navalha": [(476, 166), (500, 148), (568, 136), (580, 150), (516, 192), (502, 204), (480, 198)],
@@ -106,11 +130,35 @@ POSES = {
     "b_pe/04": _p(dx=18, dy=8, tronco=10, cri=6, cx=20, cy=-6, nav=60, sec=22, gar=18, bt=2, bf=3, pes=(0, 16)),
     "b_pe/05": _p(dx=10, dy=4, tronco=4, cri=2, cx=8, nav=26, sec=8, gar=6, pes=(0, 10)),
     "b_pe/06": _p(dx=4, dy=2, tronco=1, cri=1, cx=2, pes=(0, 4)),
+    # agachado: o Raiclaven abre os pés e afunda o quadril (joelhos para fora), a criatura se encolhe junto
+    "agachado/00": _p(dy=40, tronco=3, cri=4, cy=2, nav=-6, sec=6, gar=10, pes=(-16, 16)),
+    "agachado/01": _p(dy=42, tronco=4, cri=3, cy=3, nav=-8, sec=8, gar=12, pes=(-16, 16)),
+    "agachado/02": _p(dy=44, tronco=5, cabeca=1, cri=2, cy=4, nav=-10, sec=10, gar=14, pes=(-16, 16)),
+    "agachado/03": _p(dy=42, tronco=4, cri=3, cy=3, nav=-8, sec=8, gar=12, pes=(-16, 16)),
+    # defesa: o Raiclaven se encolhe (ombro para a frente, queixo para baixo, braço mecânico fechado na frente do
+    # corpo) e a Cliente se debruça por cima dele, recolhendo a garra e o secador junto do corpo
+    "defesa/00": _p(dx=-2, dy=2, tronco=3, cabeca=4, bt=-4, bf=-4, cri=6, cx=4, cy=2, nav=-10, sec=20, gar=24),
+    "defesa/01": _p(dx=-3, dy=4, tronco=5, cabeca=6, bt=-6, bf=-8, cri=10, cx=6, cy=4, nav=-16, sec=34, gar=40),
+    "defesa/02": _p(dx=-4, dy=5, tronco=6, cabeca=7, bt=-7, bf=-10, cri=12, cx=7, cy=5, nav=-20, sec=42, gar=50),
+    "defesa/03": _p(dx=-4, dy=6, tronco=6, cabeca=7, bt=-7, bf=-10, cri=13, cx=7, cy=6, nav=-22, sec=44, gar=52),
+    "defesa/04": _p(dx=-8, dy=6, tronco=4, cabeca=6, bt=-6, bf=-12, cri=10, cx=4, cy=6, nav=-26, sec=38, gar=44),
+    "defesa/05": _p(dx=-10, dy=6, tronco=3, cabeca=5, bt=-5, bf=-12, cri=9, cx=3, cy=6, nav=-28, sec=36, gar=42),
+    # apanha: o golpe empurra o quadril para trás e o tronco tomba, a cabeça vai junto e a criatura chicoteia
+    "apanha/00": _p(dx=-2, dy=2, tronco=-3, cabeca=-3, cri=2, nav=4, sec=-4, gar=-6, bf=-4),
+    "apanha/01": _p(dx=-6, dy=3, tronco=-8, cabeca=-8, cri=6, cx=4, nav=10, sec=-10, gar=-14, bf=-12, bt=-1),
+    "apanha/02": _p(dx=-9, dy=4, tronco=-12, cabeca=-10, cri=10, cx=6, cy=2, nav=16, sec=-16, gar=-20, bf=-18, bt=-2),
+    "apanha/03": _p(dx=-12, dy=5, tronco=-16, cabeca=-12, cri=14, cx=8, cy=3, nav=22, sec=-22, gar=-28, bf=-24, bt=-2),
+    "apanha/04": _p(dx=-14, dy=6, tronco=-18, cabeca=-14, cri=-6, cx=-6, cy=-4, nav=-20, sec=14, gar=20, bf=-28,
+                    bt=-3),
 }
 BRACO_VAR = {}
 VARIANTES = {}
 ANIMS = {
     "parado": (0, "ginga 0/10 2/8 4/10 6/8", None),
+    # "agachado": (11, "agachado 0/10 1/8 2/10 3/8", None),  # espera o desenho das pernas agachadas (a saia esconde
+    # as pernas do kit: dobrar coxa e canela deixa linha de corte e pedaço solto)
+    "defesa": (150, "defesa 0/3 1/3 2/4 3/4 4/3 5/3", None),
+    "apanha": (5000, "apanha 0/3 1/3 2/3 3/3 4/3", None),
     "garra": (20200, "x_pe 0/2 1/3 2/1 3/4A 4/4 0/3", (40, -116, 76, -84)),
     "navalha": (20210, "y_pe 0/2 1/4 2/5 3/2 4/5A 5/6 0/5", (34, -128, 80, -96)),
     "bota": (20230, "a_pe 0/2 1/3 2/2 3/4A 4/4 0/3", (20, -50, 62, -20)),
@@ -121,6 +169,20 @@ FIRMES = set()
 ESPECIAIS = set()
 EXPRESSOES = {}
 PERNA_NO_AR = {f"a_pe/{i:02d}": "livre" for i in (1, 2, 3, 4)}
-LACOS = {0}
+LACOS = {0, 11}
 NO_DA_FAIXA = [(0, 0), (1, 0), (0, 1)]  # sem nó de faixa
 MANCHA_FOLGA = 1500  # calça e botas escuras
+
+# ações da base que o despertado mostra com o corpo firme (remap de sprite): nome da animação (a linha do tempo dela
+# inteira, para laços) ou a lista de poses-chave, uma por elemento da ação da base (ou espalhadas pelo tempo)
+REMAP = {
+    0: "parado",
+    120: ["defesa/00", "defesa/01", "defesa/01", "defesa/02"],
+    130: ["defesa/02", "defesa/03"],
+    140: ["defesa/01", "defesa/01", "defesa/00"],
+    150: ["defesa/04", "defesa/05", "defesa/02"],
+    5000: ["apanha/01", "apanha/02", "apanha/00"],
+    5001: ["apanha/02", "apanha/03", "apanha/04", "apanha/00"],
+    5002: ["apanha/03", "apanha/04", "apanha/02", "apanha/00"],
+    5005: ["apanha/02", "apanha/00"],
+}

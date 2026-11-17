@@ -1,5 +1,28 @@
 | quadro | desenho de hoje | robô de defeitos |
 |---|---|---|
+| agachado/00 | agachado/00 | PASS |
+| agachado/01 | agachado/00 | PASS |
+| agachado/02 | agachado/00 | PASS |
+| agachado/03 | agachado/00 | PASS |
+| agachado/04 | agachado/00 | PASS |
+| agachado/05 | agachado/01 | PASS |
+| agachado/06 | agachado/01 | PASS |
+| agachado/07 | agachado/01 | PASS |
+| agachado/08 | agachado/01 | PASS |
+| agachado/09 | agachado/02 | PASS |
+| agachado/10 | agachado/02 | PASS |
+| agachado/11 | agachado/02 | PASS |
+| agachado/12 | agachado/02 | PASS |
+| agachado/13 | agachado/02 | PASS |
+| agachado/14 | agachado/03 | PASS |
+| agachado/15 | agachado/03 | PASS |
+| agachado/16 | agachado/03 | PASS |
+| agachado/17 | agachado/03 | PASS |
+| apanha/00 | apanha/00 | PASS |
+| apanha/01 | apanha/01 | PASS |
+| apanha/02 | apanha/02 | PASS |
+| apanha/03 | apanha/03 | PASS |
+| apanha/04 | apanha/04 | PASS |
 | bota/00 | a_pe/00 | PASS |
 | bota/01 | a_pe/01 | PASS |
 | bota/02 | a_pe/02 | PASS |
@@ -7,6 +30,14 @@
 | bota/04 | a_pe/04 | PASS |
 | bota/05 | a_pe/04 | PASS |
 | bota/06 | a_pe/00 | PASS |
+| defesa/00 | defesa/00 | PASS |
+| defesa/01 | defesa/01 | PASS |
+| defesa/02 | defesa/02 | PASS |
+| defesa/03 | defesa/02 | PASS |
+| defesa/04 | defesa/03 | PASS |
+| defesa/05 | defesa/03 | PASS |
+| defesa/06 | defesa/04 | PASS |
+| defesa/07 | defesa/05 | PASS |
 | garra/00 | x_pe/00 | PASS |
 | garra/01 | x_pe/01 | PASS |
 | garra/02 | x_pe/02 | PASS |
@@ -58,4 +89,4 @@
 | parado/16 | ginga/06 | PASS |
 | parado/17 | ginga/06 | PASS |
 
-0 de 57 desenho(s) com defeito.
+0 de 88 desenho(s) com defeito.
