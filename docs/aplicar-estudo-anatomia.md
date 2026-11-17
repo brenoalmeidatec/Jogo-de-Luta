@@ -45,7 +45,7 @@ A Lei 10 do estudo diz: **entre a antecipação e o contato não vai quadro do m
 mais ali faz o golpe parecer lento. A regra do Alisson pede quadros do meio para fluidez. As duas cabem juntas assim:
 quadros do meio **na volta, na guarda e entre guarda e antecipação**, e no trecho antecipação → contato só um borrão (ou
 nada). Hoje o `vida_pecas.py` põe meio em todo elemento com 4 ticks ou mais, então a antecipação do direto (3 a 5 ticks)
-e do uppercut (5 a 8) ganha meio. Essa escolha ficou com o Alisson (cartão na thread); até lá, vale a regra dele.
+e do uppercut (5 a 8) ganha meio. **Decidido (Breno, 2026-11-17):** nada de meio entre a antecipação e o contato (no máximo 1 borrão); a fluidez vem dos outros trechos. Ver a [regra de criação](regra-de-criacao-de-personagem.md#7-vida-e-fluidez).
 
 ## O que cada lutador faz
 
