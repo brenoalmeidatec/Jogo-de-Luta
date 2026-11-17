@@ -2900,3 +2900,19 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   remap do despertado para cada sprite novo e refaz as ações da aura (30000/40000 + ação).
 - Gutto: 16 golpes, 299 quadros. Robô de peças 0 defeito; robô de luta 186/186 antes e depois, dano idêntico.
 - Agachado passou a ter 48 ticks e a rasteira ganhou a volta (459, 1173, 460) para bater com o tempo do jogo.
+
+## 2026-11-17 — Raiclaven base no jogo pelo boneco de peças (parado, soco, chute alto)
+
+- Pedido do Alisson (Breno liberou auto-aprovação): pôr no jogo o que passou no robô. Regras novas dele aplicadas:
+  zero erro de animação (membro descolando, pedaço voando, silhueta grossa, movimento estranho) e golpe natural.
+- Soco refeito: peso atrás, passo à frente de ~13 px do jogo, quadril desce e entra, tronco inclina, a mão do pente
+  volta para a guarda do queixo. Antes era só o braço esticando.
+- Kit (`ferramentas/pecas_raiclaven.py`): costas da camisa pintadas com dobras em 3 tons e costura lateral (no lugar
+  da chapa preta); silhueta do tronco definida onde os braços passam (peito descendo de (596,400) para (583,484));
+  canto do quadril atrás da lâmina como descida reta até a coxa; sombra da lâmina na calça fica no corpo, e ilhas de
+  contorno soltas do braço voltam para o corpo (antes voavam junto com a tesoura).
+- Ligado com `ferramentas/ligar_pecas.py raiclaven chute_alto parado soco` (grupos 48000-48002; rodar sempre com
+  TODOS os golpes da pasta, porque o grupo é o n.º do golpe na ordem alfabética). Robô de peças 0/47; robô de luta
+  186/186 antes e depois, dano idêntico.
+- Desvio da seção 7 (combinado com o Alisson): golpes com quadros do meio (tempo total e tick da caixa iguais).
+- Falta: os 9 golpes confusos (golaço, pente_combo, armada, agarrão, rasteira, ar_soco, martelo, cabeçada, levanta).

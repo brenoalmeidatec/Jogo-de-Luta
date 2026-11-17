@@ -237,6 +237,11 @@ def montar_kit():
     metal = m_bt & (v > 95)
     perto_metal = cv2.dilate(metal.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0
     m_bt &= ~((yy > 470) & ~perto_metal)
+    # o corte acima deixa ilhas de contorno soltas do braço: voltam para o corpo (senão voam junto com a tesoura)
+    nc, lab, st, _ = cv2.connectedComponentsWithStats(m_bt.astype(np.uint8), connectivity=8)
+    for c in range(1, nc):
+        if st[c, 4] < 300:
+            m_bt[lab == c] = False
     m_omb = M(OMBREIRA) & m_bt
     m_bm = M(BRACO_MECANICO) & m_bt & ~m_omb
     m_abt = m_bt & ~m_omb & ~m_bm
