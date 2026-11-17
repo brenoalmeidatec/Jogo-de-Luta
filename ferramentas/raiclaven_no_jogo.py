@@ -6,8 +6,9 @@
 1. kit do despertado com A Cliente (kit_raiclaven: golpes 20xxx+, desenhos do corpo firme no .sff, parado pelo remap);
 2. legibilidade, Cadeira Elétrica/Secador (despertados_47) e a trava do .cmd;
 3. aura presa ao corpo, aura de silhueta e luz (quem regrava o .sff ou o .air roda de novo);
-4. por último, o Raiclaven base no boneco de peças (ligar_pecas.py com TODOS os golpes de
-   sprites/raiclaven/quadros_pecas_hd, em ordem alfabética, como pede o ligar_pecas): o despertado herda dele o remap.
+4. o Raiclaven base no boneco de peças (ligar_pecas.py com TODOS os golpes de
+   sprites/raiclaven/quadros_pecas_hd, em ordem alfabética, como pede o ligar_pecas): o despertado herda dele o remap;
+5. encolher_sff.py por último (poda e recompressão).
 Depois rode o robô: python3 ferramentas/testar_pengaro.py --linux --lutador raiclaven
 """
 import subprocess
@@ -38,6 +39,9 @@ def main():
     golpes = sorted(d.name for d in base.iterdir() if (d / "tempos.json").exists()) if base.exists() else []
     if golpes:
         subprocess.run([sys.executable, str(AQUI / "ligar_pecas.py"), "raiclaven", *golpes], check=True)
+    # por último de tudo (regra de criação, seção 11): poda o que nada desenha e recomprime sem perda; o corpo firme do
+    # despertado (26000+) já vem indexado na paleta dele pelo kit_raiclaven.sprites_pecas
+    subprocess.run([sys.executable, str(AQUI / "encolher_sff.py"), "raiclaven"], check=True)
 
 
 if __name__ == "__main__":
