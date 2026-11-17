@@ -3109,3 +3109,11 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   soco agachado afunda e sobe. `vida_pecas.py` da mugen com o meio-termo do Alisson (antecipação segurada até o
   contato). `pecas_ck.py trocar` troca só os desenhos no .sff quando o número de desenhos não muda; quando muda,
   `ligar_pecas.py ck` religa por cima. Robô de peças 0/201.
+
+## 2026-11-17 — CK: golpes que faltavam pelo boneco de peças
+
+- Novos no jogo: uppercut (410), levanta_comedia/forte (1200/1201), overhand (216, sai do braço de trás), Bote/Bote forte (1400/1401), agarrão (800, entrada), soco no ar (600), voadora (610), voadora rápida (650).
+- Soco direto (soco/05) agora sai do braço de trás, com giro de quadril e passo.
+- Meio-termo nos quadros do meio (vida_pecas da mugen), estudo de anatomia do Breno.
+- Robô de peças: 0 defeitos em 347 desenhos. Robô de luta: 226/226, dano idêntico ao de antes.
+- Falta: agarrão completo (830), pulo, apanha, queda, levanta, provoca, vitória, derrota, armada/compasso/rolamento.
