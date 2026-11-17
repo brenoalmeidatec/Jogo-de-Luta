@@ -176,3 +176,6 @@ ANIMS["soco"] = (200, "soco 2/1 3/2 5/3A 6/4 7/3", (16, -90, 59, -76))
 # a base do avanço fica à mão e o PASSO põe o quadril e o pé à frente
 for _q, _dy in (("soco_reto/03", 26), ("soco_reto/04", 30), ("soco_reto/05", 26)):
     POSES[_q] = {**POSES[_q], "quadril": {"ang": 0, "dx": 0, "dy": _dy}}
+# pele nas juntas (regra de criação, passo 8.4): ombro e cotovelo dobram como pele, sem linha de corte
+PELE = ("braco_tras", "antebraco_tras", "braco_frente")
+PELE_VIZINHOS = {"antebraco_tras": ("braco_tras",)}
