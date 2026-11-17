@@ -270,6 +270,28 @@
     409,
     167
    ]
+  },
+  "pernas_agachado": {
+   "arquivo": "pernas_agachado.png",
+   "origem": [
+    335,
+    377
+   ],
+   "junta": [
+    530,
+    466
+   ],
+   "mae": null,
+   "fonte": "doador/agachado",
+   "sobra": "pernas_agachado_sobra.png",
+   "origem_sobra": [
+    326,
+    368
+   ],
+   "corpo": [
+    0,
+    56
+   ]
   }
  }
 }
