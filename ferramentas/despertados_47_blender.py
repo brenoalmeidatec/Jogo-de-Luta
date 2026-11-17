@@ -69,7 +69,10 @@ EFEITOS = {
     # só o agarrão do Diabo Loiro: o fogo que toma conta do oponente preso (laço), o estouro de cada pancada e a
     # explosão de fogo do final, grande (o oponente queimando nas mãos dele até explodir)
     "hazaki": {"agarrao": ((140, 220), 12, 2, "chao", 0), "final": ((260, 260), 14, 3, "centro", -1),
-               "pancada": ((110, 110), 8, 2, "centro", -1)},
+               "pancada": ((110, 110), 8, 2, "centro", -1),
+               # Bola das Trevas do demônio (#47): bola de fogo das trevas lançada da garra (a cauda fica atrás) e o
+               # brilho que junta na garra antes de soltar
+               "poder": ((190, 100), 12, 2, "cabeca", 0), "carga": ((90, 90), 10, 2, "centro", -1)},
 }
 CABECA = 0.95   # o centro da cabeça do projétil fica a CABECA x meia altura da borda direita
 
@@ -685,7 +688,8 @@ RECEITAS = {
            "pancada": ["miolo", "anel", "anel2"]},
     "hazaki": {"agarrao": ["coluna_sombra", "brasas_sobem", "brilho_chao"],
                "final": ["bola", "anel", "anel2", "anel3", "fumaca", "raios"],
-               "pancada": ["miolo", "fumaca", "raios"]},
+               "pancada": ["miolo", "fumaca", "raios"],
+               "poder": ["torrente"], "carga": ["converge", "anel"]},
 }
 
 

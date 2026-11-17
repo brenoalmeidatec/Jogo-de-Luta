@@ -35,7 +35,15 @@ CMDS = ["x", "y", "a", "b", "c", "holdfwd", "holdback", "holdup", "holddown", "a
 # comandos de toque do Hazak (ferramentas/gerar_hazaki.py). Só são injetados no .cmd que os define: os outros não mudam.
 CMDS += ["bfd_a", "bfd_b", "bfd_x", "bfd_y", "df_x", "df_y", "fb_x", "fb_y", "fd_x", "fd_y", "df_a", "df_b", "db_a",
          "db_b", "bf_a", "bf_b", "bd_a", "bd_b", "db_x", "db_y", "bf_y"]
+CMDS += ["dd_a", "dd_b", "dfdf_x", "dfdf_y"]  # Diabo demônio (#47): Voo Infernal e Juízo Infernal
 CMDS += ["baile", "caneta_x", "compasso_a"]  # CK: super do Ratão, Contragolpe e Pêndulo
+
+
+def demonio_lua():
+    """Estados próprios do Diabo demônio (#47) que estão no .cns do Hazak, para o robô pular os que ainda não têm arte."""
+    cns = RAIZ / "chars/hazaki/hazaki.cns"
+    txt = cns.read_text(encoding="utf-8") if cns.exists() else ""
+    return ", ".join(sorted(set(re.findall(r"^\[Statedef (4[2-6]\d\d)\]", txt, re.M))))
 
 
 def injetar(arq, hazaki):
@@ -54,6 +62,8 @@ def injetar(arq, hazaki):
     if hazaki:
         b += ('[State -1, T_agacha]\ntype = ChangeState\nvalue = 11\ntriggerall = map(t_agacha) = 1\n'
               'trigger1 = statetype = S && ctrl\n\n')
+        b += ('[State -1, T_pulo]\ntype = ChangeState\nvalue = 40\ntriggerall = map(t_pulo) = 1\n'
+              'trigger1 = statetype = S && ctrl\n\n')  # pulo de verdade (o holdup do AssertCommand não pula)
         # defesa de verdade: com um golpe vindo (inguarddist) entra na guarda do motor (120) e o robô segura
         # "holdback"; com t_agacha, defende agachado
         b += ('[State -1, T_defende]\ntype = ChangeState\nvalue = 120\ntriggerall = map(t_defende) = 1\n'
@@ -110,7 +120,8 @@ def preparar(destino, motor, lutador, saida_lua, filtro="", acelera=4):
     debug.write_text((motor / "external/script/debug.lua").read_text(encoding="utf-8") + "\n" +
                      (RAIZ / "ferramentas/robo/robo.lua").read_text(encoding="utf-8").replace("@SAIDA@", saida_lua)
                      .replace("@LUTADOR@", lutador)
-                     .replace("@FILTRO@", filtro).replace("@ACCEL@", str(acelera)),
+                     .replace("@FILTRO@", filtro).replace("@ACCEL@", str(acelera))
+                     .replace("@DEMONIO@", demonio_lua()),
                      encoding="utf-8")
 
 

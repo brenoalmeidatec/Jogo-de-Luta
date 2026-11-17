@@ -14,6 +14,7 @@ As folhas ficam em sprites/hazaki/quadros/folhas_demonio/<nome>.png; os quadros 
 Diabo) em sprites/hazaki/demonio/<nome>/NN.png.
 """
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -432,9 +433,12 @@ GRUPO = 60000
 PESO = {"Light": (7, "S9200", "S51,0", 5, 15, -2.5), "Medium": (11, "S9207", "S51,1", 8, 18, -4),
         "Heavy": (13, "S9207", "S51,2", 10, 20, -6)}
 
-# Cada golpe: folha e quadros (de 0 a 7), ticks por quadro, quadros com caixa de golpe, de onde sai a ponta (frente,
-# cima), dano, peso, guarda (MA, L, H), tipo do chão (High, Low, Trip), avanço [(tick, vel x)], cai (derruba).
+# Cada golpe: folha e quadros (de 0 a 7), ticks por quadro (-1 = segura até cair no chão), quadros com caixa de golpe,
+# de onde sai a ponta (frente, cima, baixo), dano, peso, guarda (MA, L, HA), tipo do chão (High, Low, Trip), avanço
+# [(tick, vel x)], cai (derruba), voa (vel x, y de quem cai longe), fogo (fica queimando) e sobe (antiaéreo).
+# A lista é a proposta aprovada pelo Breno na #47 (comentário 6898251397).
 GOLPES = {
+    # 16 normais: em pé
     4200: dict(nome="Arranhão", folha="pe_maos", q=[0, 1, 2, 3], t=[3, 3, 4, 5], ativo=[1], dano=25, peso="Light"),
     4201: dict(nome="Garra Cruzada", folha="pe_maos", q=[4, 5, 6, 7], t=[6, 4, 6, 10], ativo=[1], dano=62,
                peso="Medium", avanca=[(2, 1.5), (10, 0)]),
@@ -442,6 +446,7 @@ GOLPES = {
                peso="Light"),
     4203: dict(nome="Coice com Garra", folha="pe_pes", q=[4, 5, 6, 7], t=[6, 5, 6, 10], ativo=[1], dano=72,
                peso="Heavy"),
+    # agachado
     4400: dict(nome="Arranhão Baixo", folha="agachado_maos", q=[0, 1, 2, 3], t=[3, 3, 4, 5], ativo=[1], dano=22,
                peso="Light", tipo="C", chao="Low"),
     4401: dict(nome="Garra Subindo", folha="agachado_maos", q=[4, 5, 6, 7], t=[4, 4, 7, 9], ativo=[1, 2], dano=60,
@@ -450,15 +455,113 @@ GOLPES = {
                peso="Light", tipo="C", guarda="L", chao="Low"),
     4403: dict(nome="Varrida de Garras", folha="agachado_pes", q=[4, 5, 6, 7], t=[6, 4, 8, 10], ativo=[1, 2], dano=65,
                peso="Heavy", tipo="C", guarda="L", chao="Trip", cai=True),
+    # no ar (o último quadro segura até cair no chão; quem pousa é o motor, estado 52)
+    4600: dict(nome="Garra no Ar", folha="ar_maos", q=[0, 1, 2, 3], t=[3, 4, 5, -1], ativo=[1], dano=28,
+               peso="Light", tipo="A", guarda="HA"),
+    4601: dict(nome="Mergulho de Garras", folha="ar_maos", q=[4, 5, 6, 7], t=[5, 4, 6, -1], ativo=[1, 2], dano=55,
+               peso="Medium", tipo="A", guarda="HA"),
+    4602: dict(nome="Joelhada Aérea", folha="ar_pes", q=[0, 1, 2, 3], t=[3, 4, 5, -1], ativo=[1], dano=30,
+               peso="Light", tipo="A", guarda="HA"),
+    4603: dict(nome="Pisão de Garras", folha="ar_pes", q=[4, 5, 6, 7], t=[5, 4, 6, -1], ativo=[1, 2], dano=58,
+               peso="Medium", tipo="A", guarda="HA", ponta="baixo"),
+    # direcionais
+    4210: dict(nome="Martelo Infernal", folha="direcionais_a", q=[0, 1, 2, 3], t=[6, 5, 4, 10], ativo=[2], dano=55,
+               peso="Medium", guarda="HA", avanca=[(2, 1.2), (11, 0)]),
+    4211: dict(nome="Estocada de Garra", folha="direcionais_a", q=[4, 5, 6, 7], t=[5, 3, 5, 9], ativo=[1, 2], dano=50,
+               peso="Medium", avanca=[(2, 5), (8, 0)]),
+    4212: dict(nome="Chicote de Rabo", folha="direcionais_b", q=[0, 1, 2, 3], t=[6, 4, 6, 10], ativo=[1, 2], dano=48,
+               peso="Medium"),
+    4213: dict(nome="Mordida", folha="direcionais_b", q=[4, 5, 6, 7], t=[3, 3, 4, 6], ativo=[1], dano=30,
+               peso="Light"),
+    # 4 correntes: o 2º e o 3º saem no contato do anterior, o finalizador só com os 3 primeiros acertando de verdade
+    4301: dict(nome="Fúria das Garras 2", folha="pe_maos", q=[2, 1, 3], t=[3, 3, 5], ativo=[1], dano=26,
+               peso="Light", avanca=[(1, 2.5), (7, 0)]),
+    4302: dict(nome="Fúria das Garras 3", folha="pe_maos", q=[0, 1, 2, 3], t=[3, 3, 4, 6], ativo=[1], dano=28,
+               peso="Light", avanca=[(1, 2.5), (7, 0)]),
+    4303: dict(nome="Fúria das Garras: rasgo", folha="fins_maos", q=[0, 1, 2, 3], t=[5, 4, 6, 12], ativo=[1, 2],
+               dano=70, peso="Heavy", cai=True, voa=(-8, -7), avanca=[(1, 2.5), (7, 0)]),
+    4311: dict(nome="Dilacerar 2", folha="pe_maos", q=[4, 5, 6, 7], t=[5, 4, 5, 8], ativo=[1], dano=40,
+               peso="Medium", avanca=[(1, 2.5), (7, 0)]),
+    4312: dict(nome="Dilacerar 3", folha="pe_pes", q=[0, 1, 2, 3], t=[4, 4, 5, 7], ativo=[1], dano=34,
+               peso="Light", avanca=[(1, 4), (8, 0)]),
+    4313: dict(nome="Dilacerar: rasgo de fogo", folha="fins_maos", q=[4, 5, 6, 7], t=[6, 4, 6, 12], ativo=[1, 2],
+               dano=75, peso="Heavy", cai=True, fogo=True, avanca=[(1, 2.5), (7, 0)]),
+    4321: dict(nome="Dança do Rabo 2", folha="direcionais_b", q=[0, 1, 2, 3], t=[5, 4, 5, 8], ativo=[1], dano=32,
+               peso="Medium", avanca=[(1, 4), (8, 0)]),
+    4322: dict(nome="Dança do Rabo 3", folha="fins_pes", q=[0, 1, 2], t=[3, 4, 6], ativo=[1], dano=30,
+               peso="Light", guarda="L", chao="Low", avanca=[(1, 2.5), (7, 0)]),
+    4323: dict(nome="Dança do Rabo: chicotada", folha="fins_pes", q=[0, 1, 2, 3], t=[5, 4, 6, 12], ativo=[1],
+               dano=68, peso="Heavy", guarda="L", chao="Trip", cai=True, avanca=[(1, 2.5), (7, 0)]),
+    4331: dict(nome="Pisoteio 2", folha="pe_pes", q=[4, 5, 6, 7], t=[5, 4, 5, 8], ativo=[1], dano=40,
+               peso="Medium", avanca=[(1, 2.5), (7, 0)]),
+    4332: dict(nome="Pisoteio 3", folha="pe_pes", q=[0, 1, 2, 3], t=[4, 4, 5, 7], ativo=[1], dano=32,
+               peso="Light", avanca=[(1, 4), (8, 0)]),
+    4333: dict(nome="Pisoteio: pisão voador", folha="fins_pes", q=[4, 5, 6, 7], t=[6, 6, 5, 12], ativo=[1, 2],
+               dano=70, peso="Heavy", guarda="HA", cai=True, avanca=[(3, 3.5), (17, 0)]),
 }
 LEVES = (4200, 4202, 4400, 4402)
-# rota: estado -> (botão, segurando para baixo?, de quais estados cancela no contato)
-ROTAS = {4400: ("x", True, LEVES), 4401: ("y", True, ()), 4200: ("x", False, LEVES), 4201: ("y", False, ()),
-         4202: ("a", False, ()), 4203: ("b", False, ()), 4402: ("a", True, ()), 4403: ("b", True, ())}
+# rota: estado -> (botão, direção, de quais estados sai no contato). Direção: None (sem baixo), "baixo", "frente",
+# "tras" ou "ar". Os normais em pé e agachados saem também de um fraco (var(5) < 4).
+ROTAS = {4400: ("x", "baixo", LEVES), 4401: ("y", "baixo", ()), 4402: ("a", "baixo", ()), 4403: ("b", "baixo", ()),
+         4200: ("x", None, LEVES), 4201: ("y", None, ()), 4202: ("a", None, ()), 4203: ("b", None, ()),
+         4210: ("x", "frente", ()), 4211: ("y", "frente", (4301,)),  # Banquete do Diabo: x, x, → y, ↘ b
+         4212: ("b", "frente", ()), 4213: ("y", "tras", ()),
+         4600: ("x", "ar", ()), 4601: ("y", "ar", ()), 4602: ("a", "ar", ()), 4603: ("b", "ar", ())}
+# correntes: estado -> (botão, de quais estados, finalizador?)
+CORRENTES = {4301: ("x", (4200,), False), 4302: ("x", (4301,), False), 4303: ("x", (4302,), True),
+             4311: ("y", (4201,), False), 4312: ("y", (4311,), False), 4313: ("y", (4312,), True),
+             4321: ("a", (4202, 4402), False), 4322: ("a", (4321,), False), 4323: ("a", (4322,), True),
+             4331: ("b", (4203,), False), 4332: ("b", (4331,), False), 4333: ("b", (4332,), True)}
+
+# Especiais e super: as animações (sem dano na ação; o dano está nos estados de ESPECIAIS_CNS), {ação: desenho}.
+ANIMS = {
+    4500: dict(folha="bola_trevas", q=[0, 1, 2, 3, 4, 5, 6, 7], t=[4, 4, 3, 3, 10, 5, 5, 6], ativo=[]),
+    4510: dict(folha="voo", q=[0, 1, 2], t=[6, 4, -1], ativo=[]),
+    4512: dict(folha="voo", q=[3, 4], t=[6, 6], ativo=[], laco=0),
+    4513: dict(folha="voo", q=[5, 6], t=[4, -1], ativo=[0, 1]),
+    4514: dict(folha="voo", q=[7], t=[12], ativo=[]),
+    4520: dict(folha="rasgo", q=[0, 1, 2, 3, 4, 5], t=[3, 4, 4, 4, 5, -1], ativo=[1, 2, 3], ponta="cima"),
+    4522: dict(folha="rasgo", q=[6, 7], t=[8, 12], ativo=[]),
+    4650: dict(folha="juizo_a", q=[0, 1, 2], t=[10, 4, -1], ativo=[1, 2]),
+    4651: dict(folha="juizo_a", q=[3, 4, 5, 6, 7], t=[4, 6, 6, 6, -1], ativo=[]),
+    4652: dict(folha="juizo_b", q=[0, 1, 2], t=[5, 5, -1], ativo=[]),
+    4653: dict(folha="juizo_b", q=[3, 4, 5, 6, 7], t=[8, 10, 8, 10, 10], ativo=[]),
+    4654: dict(folha="juizo_b", q=[3, 7], t=[12, 10], ativo=[]),
+}
+# especial -> as folhas que ele precisa (só entra no jogo com todas prontas)
+ESPECIAIS = {"bola": ("bola_trevas",), "voo": ("voo",), "rasgo": ("rasgo",), "juizo": ("juizo_a", "juizo_b")}
+BOLA = {"projanim": 4580, "carga": 4582, "grupo": 7480, "grupo_carga": 7481, "escala": 0.5,
+        "clsn": (-22, -16, 12, 16), "sai": 11}
+
+
+# Só para testar o motor antes da arte do boneco de peças chegar (NAZA_DEMONIO_PROVISORIO=1): a folha que ainda não
+# existe usa uma que já existe, do mesmo jeito de corpo. Nunca vai para a mugen: o vídeo e o merge usam só arte de verdade.
+PROVISORIO = {"ar_maos": "pulo", "ar_pes": "pulo", "direcionais_a": "pe_maos", "direcionais_b": "pe_pes",
+              "fins_maos": "pe_maos", "fins_pes": "pe_pes", "bola_trevas": "pe_maos", "voo": "pulo",
+              "rasgo": "agachado_maos", "juizo_a": "cobranca_garras", "juizo_b": "pulo"}
+
+
+def pasta(folha):
+    """Pasta m_ da folha (Path) ou None se ainda não existe."""
+    if (SAIDA / f"m_{folha}" / "07.png").exists():
+        return SAIDA / f"m_{folha}"
+    if os.environ.get("NAZA_DEMONIO_PROVISORIO") and folha in PROVISORIO:
+        return SAIDA / f"m_{PROVISORIO[folha]}"
+    return None
 
 
 def disponiveis():
-    return {n: g for n, g in GOLPES.items() if (SAIDA / f"m_{g['folha']}" / "07.png").exists()}
+    """Golpes com folha pronta; um golpe de corrente só entra se o anterior também entrou."""
+    ok = {n: g for n, g in GOLPES.items() if pasta(g["folha"])}
+    for n in sorted(CORRENTES):
+        if n in ok and not any(d in ok for d in CORRENTES[n][1]):
+            del ok[n]
+    return ok
+
+
+def especiais():
+    """Especiais e super com todas as folhas prontas: {'bola', 'voo', 'rasgo', 'juizo'}."""
+    return {e for e, folhas in ESPECIAIS.items() if all(pasta(f) for f in folhas)}
 
 
 def _caixas(m, ex, ey, ponta, ativo):
@@ -484,6 +587,15 @@ def _caixas(m, ex, ey, ponta, ativo):
         fy, fx = np.nonzero(rot == alvo)
         golpe = (int(fx.min()) - 6 - ex, a - 6 - ey, int(fx.max()) + 6 - ex, a + int(fy.max()) + 6 - ey)
         return corpo, golpe, golpe
+    if ponta == "baixo":
+        # pisão: a parte ligada ao pixel mais baixo, na faixa de 75 px de baixo (os pés em garra)
+        a = max(0, y1 - 75)
+        faixa = m[a:y1 + 1].astype(np.uint8)
+        _, rot = cv2.connectedComponents(faixa, connectivity=8)
+        alvo = rot[faixa.shape[0] - 1, int(np.flatnonzero(faixa[-1])[-1])]
+        fy, fx = np.nonzero(rot == alvo)
+        golpe = (int(fx.min()) - 6 - ex, a + int(fy.min()) - 6 - ey, int(fx.max()) + 6 - ex, y1 + 6 - ey)
+        return corpo, golpe, golpe
     a = max(0, x1 - 75)
     faixa = m[:, a:x1 + 1].astype(np.uint8)
     _, rot = cv2.connectedComponents(faixa, connectivity=8)
@@ -501,7 +613,7 @@ def acao(n, g):
     import diabo_terno as dt
     quadros, linhas, faisca = [], [], None
     for j, (k, t) in enumerate(zip(g["q"], g["t"])):
-        img = Image.open(SAIDA / f"m_{g['folha']}" / f"{k:02d}.png").convert("RGBA")
+        img = Image.open(pasta(g["folha"]) / f"{k:02d}.png").convert("RGBA")
         m = np.array(img)[..., 3] > 0
         ax, ay = dt.ancora_demonio(m)
         ex, ey = round(ax), int(ay)
@@ -515,6 +627,8 @@ def acao(n, g):
             if faisca is None:
                 # x da faísca conta da frente do P2 (negativo entra nele), como os -10 do resto do Hazak
                 faisca = (-10, max(-95, min(-10, round((golpe[1] + golpe[3]) / 6))))
+        if g.get("laco") == j:
+            linhas.append("LoopStart")
         linhas.append(f"{GRUPO + n},{j}, 0,0, {t}")
     return quadros, "\n".join(linhas), faisca
 
@@ -527,7 +641,7 @@ def cns(n, g, faisca):
     tipo = g.get("tipo", "S")
     fis = {"S": "S", "C": "C", "A": "A"}[tipo]
     pausa, spark, som, desl, atord, emp = PESO[g["peso"]]
-    if ROTAS.get(n, ("",))[0] in ("a", "b"):
+    if (ROTAS.get(n) or CORRENTES.get(n) or ("",))[0] in ("a", "b"):
         som = som.replace("S51,", "S52,")  # chute: o som de acerto dos chutes do Hazak
     sai = sum(g["t"][:g["ativo"][0]])
     c = [f"[Statedef {n}]\ntype = {tipo}\nmovetype = A\nphysics = {fis}\nctrl = 0\nsprpriority = 2\n"
@@ -545,8 +659,11 @@ def cns(n, g, faisca):
                       "time = 1"))
         c.append(_ctl(n, "Sobe: muda para em pé", "StateTypeSet", f"trigger1 = Time = {sai}", "statetype = S",
                       "physics = S"))
-    queda = ["fall = 1", "fall.recover = 0", "ground.velocity = -4, -4", "air.velocity = -3, -4"] if g.get("cai") \
-        else [f"ground.velocity = {emp}", "air.velocity = -2, -4" if g.get("sobe") else "air.velocity = -1.4, -3"]
+    if n in CORRENTES and not CORRENTES[n][2] or n in (4201, 4203, 4202, 4402):
+        emp = max(emp, -2)  # golpe que abre ou continua corrente: o oponente fica no alcance do próximo
+    vx, vy = g.get("voa", (-4, -4))
+    queda = ["fall = 1", "fall.recover = 0", f"ground.velocity = {vx}, {vy}", f"air.velocity = {min(vx, -3)}, {vy}"] \
+        if g.get("cai") else [f"ground.velocity = {emp}", "air.velocity = -2, -4" if g.get("sobe") else "air.velocity = -1.4, -3"]
     fx, fy = faisca or (-10, -70)
     c.append(_ctl(n, g["nome"], "HitDef", f"trigger1 = Time = {sai}", f"attr = {'S' if g.get('sobe') else tipo}, NA",
                   f"damage = {g['dano']}, 0", f"animtype = {g['peso']}", f"guardflag = {g.get('guarda', 'MA')}",
@@ -554,38 +671,283 @@ def cns(n, g, faisca):
                   f"guard.pausetime = {pausa - 1}, {pausa - 1}", f"sparkxy = {fx}, {fy}", f"sparkno = {spark}",
                   "guard.sparkno = S9216", f"hitsound = {som}", "guardsound = F6,0",
                   f"ground.type = {g.get('chao', 'High')}", f"ground.slidetime = {desl}",
-                  f"ground.hittime = {atord}", *queda))
+                  f"ground.hittime = {atord}", *queda,
+                  *(["palfx.time = 70", "palfx.add = 150, 40, 0", "palfx.sinadd = 60, 20, 0, 6"] if g.get("fogo")
+                    else [])))
+    if g.get("fogo"):  # fica queimando: o fogo das trevas do agarrão (#45) preso no corpo de quem apanhou
+        c.append(_ctl(n, "Fogo das trevas no oponente", "Explod", "trigger1 = MoveHit = 1", "anim = 7470",
+                      "id = 4313", "postype = p2", "pos = 0, -55", "bindtime = 70", "removetime = 70",
+                      "sprpriority = 5", "ownpal = 1"))
+        c.append(_ctl(n, "Estouro do fogo", "Explod", "trigger1 = MoveHit = 1", "anim = 7472", "postype = p2",
+                      "pos = -10, -60", "sprpriority = 6", "ownpal = 1", "removetime = -2"))
     if tipo != "A":
         volta = 11 if tipo == "C" and not g.get("sobe") else 0
         c.append(_ctl(n, "Fim", "ChangeState", "trigger1 = AnimTime = 0", f"value = {volta}", "ctrl = 1"))
     return "".join(c)
 
 
-def rotas(n_ok):
-    """Rotas do .cmd do demônio (no fim do [Statedef -1]): cancelamento dos golpes dele e os botões."""
+def _rota(titulo, valor, *linhas):
+    return (f"[State -1, Demônio: {titulo}]\ntype = ChangeState\nvalue = {valor}\ntriggerall = var(20) > 0\n"
+            + "".join(f"{x}\n" for x in linhas) + "\n")
+
+
+DIRECAO = {None: ['triggerall = command != "holddown"'], "baixo": ['triggerall = command = "holddown"'],
+           "frente": ['triggerall = command = "holdfwd"', 'triggerall = command != "holddown"'],
+           "tras": ['triggerall = command = "holdback"', 'triggerall = command != "holddown"'], "ar": []}
+
+
+def rotas(n_ok, esp=()):
+    """Rotas do .cmd do demônio (no fim do [Statedef -1]): cancelamento, super, especiais, correntes, direcionais,
+    agachados, em pé e no ar, nessa ordem (o primeiro que vale ganha: o toque do especial antes do botão sozinho)."""
     lista = " || ".join(f"stateno = {n}" for n in sorted(n_ok))
     r = [f"[State -1, Demônio: pode cancelar]\ntype = VarSet\ntriggerall = var(20) > 0\n"
          f"trigger1 = ({lista}) && movecontact && movecontact <= 8\nvar(1) = 1\n\n"]
-    for n, (botao, baixo, de) in ROTAS.items():
+    chao = ["triggerall = statetype != A", "trigger1 = ctrl || var(1)"]
+    if "juizo" in esp:
+        r.append(_rota("Juízo Infernal (super)", 4650, 'triggerall = command = "dfdf_x" || command = "dfdf_y"',
+                       "triggerall = power >= 1000", *chao))
+    if "rasgo" in esp:
+        r.append(_rota("Rasgo Ascendente", 'ifelse(command = "fd_y", 4521, 4520)',
+                       'triggerall = command = "fd_x" || command = "fd_y"', *chao))
+    if "bola" in esp:
+        r.append(_rota("Bola das Trevas", 'ifelse(command = "df_y", 4501, 4500)',
+                       'triggerall = command = "df_x" || command = "df_y"',
+                       "triggerall = numprojid(4500) = 0 && numprojid(4501) = 0", *chao))
+    if "voo" in esp:
+        r.append(_rota("Voo Infernal", 'ifelse(command = "dd_b", 4511, 4510)',
+                       'triggerall = command = "dd_a" || command = "dd_b"', *chao))
+    # correntes: finalizadores, 3º e 2º (do fim para o começo: o 3º não pode cair na rota do 2º)
+    for final in (True, False):
+        for n in sorted(CORRENTES, reverse=True):
+            botao, de, fin = CORRENTES[n]
+            de = [d for d in de if d in n_ok]
+            if fin != final or n not in n_ok or not de:
+                continue
+            quando = "movehit && var(10) >= 3" if fin else "movecontact"
+            r.append(_rota(GOLPES[n]["nome"], n, f'triggerall = command = "{botao}"',
+                           'triggerall = command != "holddown"',
+                           "trigger1 = (" + " || ".join(f"stateno = {d}" for d in de) + f") && {quando}"))
+    ordem = {"frente": 0, "tras": 0, "baixo": 1, None: 2, "ar": 3}
+    for n, (botao, direcao, de) in sorted(ROTAS.items(), key=lambda kv: (ordem[kv[1][1]], kv[0])):
         if n not in n_ok:
             continue
         tipo = GOLPES[n].get("tipo", "S")
-        r.append(f"[State -1, Demônio: {GOLPES[n]['nome']}]\ntype = ChangeState\nvalue = {n}\n"
-                 f"triggerall = var(20) > 0\ntriggerall = command = \"{botao}\"\n"
-                 f"triggerall = command {'=' if baixo else '!='} \"holddown\"\n"
-                 f"trigger1 = ctrl\ntrigger1 = statetype {'!= A' if tipo == 'C' else '= S'}\n")
+        quando = {"C": "statetype != A", "A": "statetype = A"}.get(tipo, "statetype = S")
+        linhas = [f'triggerall = command = "{botao}"', *DIRECAO[direcao], "trigger1 = ctrl", f"trigger1 = {quando}"]
         de = [d for d in de if d in n_ok]
         if de:
-            r.append("trigger2 = (" + " || ".join(f"stateno = {d}" for d in de) + ") && movecontact && var(5) < 4\n")
-        r.append("\n")
+            linhas.append("trigger2 = (" + " || ".join(f"stateno = {d}" for d in de) + ") && movecontact"
+                          + (" && var(5) < 4" if set(de) <= set(LEVES) else ""))
+        r.append(_rota(GOLPES[n]["nome"], n, *linhas))
     return "".join(r)
+
+
+COMANDOS = [("dd_a", "~D, D, a"), ("dd_b", "~D, D, b"), ("dfdf_x", "~D, F, D, F, x"), ("dfdf_y", "~D, F, D, F, y")]
+
+
+def comandos(cmd):
+    """Os toques novos do demônio (Voo Infernal ↓↓ e Juízo Infernal ↓↘→↓↘→), antes do [Statedef -1]."""
+    cab = "[Statedef -1]\n\n"
+    novos = "".join(f'[Command]\nname = "{n}"\ncommand = {c}\ntime = {25 if n.startswith("dfdf") else 15}\n\n'
+                    for n, c in COMANDOS if f'name = "{n}"' not in cmd)
+    assert cmd.count(cab) == 1
+    return cmd.replace(cab, novos + cab, 1)
+
+
+def _st(n, tipo, fis, anim, *extra, mov="A"):
+    return (f"[Statedef {n}]\ntype = {tipo}\nmovetype = {mov}\nphysics = {fis}\nctrl = 0\nsprpriority = 2\n"
+            f"anim = {anim}\n" + "".join(f"{x}\n" for x in extra) + "\n")
+
+
+def _hit(n, titulo, quando, dano, peso, *extra, attr="S, SA", guarda="MA"):
+    pausa, spark, _, desl, atord, _ = PESO[peso]
+    pausas = [] if any(x.startswith("pausetime") for x in extra) else [f"pausetime = {pausa}, {pausa}",
+                                                                      f"guard.pausetime = {pausa - 1}, {pausa - 1}"]
+    return _ctl(n, titulo, "HitDef", quando, f"attr = {attr}", f"damage = {dano}, 4", f"animtype = {peso}",
+                f"guardflag = {guarda}", "hitflag = MAF", "priority = 5, Hit", *pausas, "sparkxy = -10, -70", f"sparkno = {spark}",
+                "guard.sparkno = S9216", "hitsound = S53,0", "guardsound = F6,0", f"ground.slidetime = {desl}",
+                f"ground.hittime = {atord}", *extra)
+
+
+def _fim(n, valor=0, quando="trigger1 = AnimTime = 0"):
+    return _ctl(n, "Fim", "ChangeState", quando, f"value = {valor}", "ctrl = 1")
+
+
+def cns_bola(n, forte, boca):
+    """Bola das Trevas (↓↘→ soco): a fraca vai reta, a forte faz arco. boca = (x, y) da garra em px do jogo."""
+    b = BOLA
+    c = [_st(n, "S", "S", 4500, "velset = 0,0", "juggle = 0")]
+    c.append(_ctl(n, "Vento", "PlaySnd", "trigger1 = Time = 0", "value = F40,1"))
+    c.append(_ctl(n, "Carga na garra", "Explod", "trigger1 = Time = 2", f"anim = {b['carga']}", "id = 4582",
+                  "postype = p1", f"pos = {boca[0] - 30}, {boca[1] + 10}", f"removetime = {b['sai'] - 2}",
+                  "bindtime = -1", "sprpriority = 4", "ownpal = 1"))
+    c.append(_ctl(n, "Carga: treme de leve", "EnvShake", "trigger1 = Time = 4", f"time = {b['sai'] - 4}",
+                  "freq = 180", "ampl = -2"))
+    c.append(_ctl(n, "Solta: tremida", "EnvShake", f"trigger1 = Time = {b['sai']}", "time = 10", "freq = 100",
+                  "ampl = -5"))
+    vel = ["velocity = 4.6, -4.4", "accel = 0, .2"] if forte else ["velocity = 6, 0"]
+    c.append(_ctl(n, "Projétil", "Projectile", f"trigger1 = Time = {b['sai']}", f"projid = {4500 + forte}",
+                  f"projanim = {b['projanim']}", "projhitanim = 7472", "projremanim = 7472", "projcancelanim = 7472",
+                  "projremovetime = 160", "projpriority = 2", f"offset = {boca[0]}, {boca[1]}", *vel,
+                  "attr = S, SP", f"damage = {80 if forte else 70}, 8", "animtype = Heavy", "guardflag = MA",
+                  "hitflag = MAF", "pausetime = 0, 14", "sparkno = -1", "guard.sparkno = S9216",
+                  "hitsound = S53,0", "guardsound = F6,0", "ground.type = High", "ground.slidetime = 10",
+                  "ground.hittime = 18", "ground.velocity = -5", "air.velocity = -3, -4",
+                  *(["fall = 1", "fall.recover = 0", "ground.velocity = -4, -5"] if forte else []),
+                  "palfx.time = 14", "palfx.add = 150, 30, 0", "palfx.sinadd = 40, 20, 0, 4"))
+    c.append(_ctl(n, "Impacto: tremida", "EnvShake", f"trigger1 = ProjHitTime({4500 + forte}) = 0", "time = 14",
+                  "freq = 100", "ampl = -7"))
+    c.append(_ctl(n, "Impacto: fundo pisca", "BGPalFX", f"trigger1 = ProjHitTime({4500 + forte}) = 0", "time = 6",
+                  "add = 100, 20, 0"))
+    c.append(_fim(n))
+    return "".join(c)
+
+
+def cns_voo():
+    """Voo Infernal (↓↓ chute): sobe com as asas e paira; soco no ar mergulha de garras. a sobe menos, b mais alto
+    e paira mais tempo."""
+    c = []
+    for n, vy in ((4510, -8), (4511, -10)):
+        c.append(_st(n, "S", "N", 4510, "velset = 0,0", "juggle = 4"))
+        c.append(_ctl(n, "Vento", "PlaySnd", "trigger1 = Time = 0", "value = F40,2"))
+        c.append(_ctl(n, "Sobe", "VelSet", "trigger1 = Time = 6", f"y = {vy}", "x = 1"))
+        c.append(_ctl(n, "No ar", "StateTypeSet", "trigger1 = Time = 6", "statetype = A", "movetype = I"))
+        c.append(_ctl(n, "Gravidade", "VelAdd", "trigger1 = Time > 6", "y = .45"))
+        c.append(_ctl(n, "Paira no alto", "ChangeState", "trigger1 = Time > 6 && Vel Y >= -.5", "value = 4512"))
+    n = 4512
+    c.append(_st(n, "A", "N", 4512, "velset = 0,0", mov="I"))
+    c.append(_ctl(n, "Asas batendo: sobe e desce de leve", "VelSet", "trigger1 = 1", "y = .35 * sin(Time * .3)"))
+    c.append(_ctl(n, "Mergulho", "ChangeState", "trigger1 = Time > 3", 'trigger1 = command = "x" || command = "y"',
+                  "value = 4513"))
+    c.append(_ctl(n, "Cansou de pairar", "ChangeState", "trigger1 = Time >= ifelse(PrevStateNo = 4511, 46, 28)",
+                  "value = 50", "ctrl = 1"))
+    n = 4513
+    c.append(_st(n, "A", "N", 4513, "velset = 6.5, 8", "juggle = 4"))
+    c.append(_ctl(n, "Vento", "PlaySnd", "trigger1 = Time = 0", "value = F40,2"))
+    c.append(_ctl(n, "Rastro", "AfterImage", "trigger1 = Time = 0", "time = 20", "length = 6", "timegap = 2",
+                  "framegap = 2", "trans = add", "paladd = 120, 40, 0", "palmul = .5, .5, .5"))
+    c.append(_hit(n, "Mergulho de garras", "trigger1 = Time = 0", 75, "Heavy", "ground.type = High", "fall = 1",
+                  "fall.recover = 0", "ground.velocity = -5, -4", "air.velocity = -4, -4", attr="A, SA",
+                  guarda="HA"))
+    c.append(_ctl(n, "Chão", "ChangeState", "trigger1 = Vel Y > 0 && Pos Y >= 0", "value = 4514"))
+    n = 4514
+    c.append(_st(n, "S", "S", 4514, "velset = 0,0"))
+    c.append(_ctl(n, "No chão", "PosSet", "trigger1 = Time = 0", "y = 0"))
+    c.append(_ctl(n, "Pouso", "EnvShake", "trigger1 = Time = 0", "time = 6", "ampl = -3", "freq = 120"))
+    c.append(_fim(n))
+    return "".join(c)
+
+
+def cns_rasgo():
+    """Rasgo Ascendente (→↓↘ soco): antiaéreo que sobe girando com as garras em chamas, 2 acertos. Invencível no
+    começo (a fraca só contra quem vem do ar; a forte contra tudo, por menos tempo)."""
+    c = []
+    for n, (vx, vy, inv, d1, d2) in ((4520, (1.6, -8.5, "A", 45, 40)), (4521, (2, -10.5, "SCA", 55, 50))):
+        c.append(_st(n, "S", "N", 4520, "velset = 0,0", "juggle = 4"))
+        c.append(_ctl(n, "Vento", "PlaySnd", "trigger1 = Time = 0", "value = F40,2"))
+        c.append(_ctl(n, "Invencível no começo", "NotHitBy", f"trigger1 = Time <= {10 if inv == 'A' else 7}",
+                      f"value = {inv}", "time = 1"))
+        c.append(_ctl(n, "Sobe", "VelSet", "trigger1 = Time = 3", f"x = {vx}", f"y = {vy}"))
+        c.append(_ctl(n, "No ar", "StateTypeSet", "trigger1 = Time = 3", "statetype = A"))
+        c.append(_ctl(n, "Gravidade", "VelAdd", "trigger1 = Time > 3", "y = .5"))
+        c.append(_ctl(n, "Garras em chamas", "AfterImage", "trigger1 = Time = 2", "time = 16", "length = 5",
+                      "timegap = 2", "framegap = 2", "trans = add", "paladd = 130, 40, 0", "palmul = .5, .5, .5"))
+        c.append(_hit(n, "Rasgo 1", "trigger1 = Time = 3", d1, "Medium", "ground.type = High",
+                      "ground.velocity = -1.5, -6", "air.velocity = -1.5, -6", "air.juggle = 2"))
+        c.append(_hit(n, "Rasgo 2", "trigger1 = Time = 11", d2, "Heavy", "ground.type = High", "fall = 1",
+                      "fall.recover = 0", "ground.velocity = -3, -7", "air.velocity = -3, -7"))
+        c.append(_ctl(n, "Chão", "ChangeState", "trigger1 = Time > 5 && Vel Y > 0 && Pos Y >= 0", "value = 4522"))
+    n = 4522
+    c.append(_st(n, "S", "S", 4522, "velset = 0,0"))
+    c.append(_ctl(n, "No chão", "PosSet", "trigger1 = Time = 0", "y = 0"))
+    c.append(_fim(n))
+    return "".join(c)
+
+
+def cns_juizo():
+    """Juízo Infernal (↓↘→↓↘→ soco, 1 estoque): voa para cima do oponente, crava as garras e sobe com ele, gira lá
+    em cima e o atira no chão, que explode em fogo das trevas. Quem apanha usa os estados 4660 e 4661 do Hazak."""
+    c = []
+    n = 4650
+    c.append(_st(n, "S", "N", 4650, "velset = 0,0", "juggle = 0", "poweradd = 0"))
+    c.append(_ctl(n, "Pausa", "SuperPause", "trigger1 = Time = 0", "time = 25", "anim = S9271", "pos = 10, -60",
+                  "movetime = 0", "darken = 1"))
+    c.append(_ctl(n, "Gasta", "PowerAdd", "trigger1 = Time = 0", "value = -1000"))
+    c.append(_ctl(n, "Invencível na saída", "NotHitBy", "trigger1 = Time < 14", "value = SCA", "time = 1"))
+    c.append(_ctl(n, "Rastro", "AfterImage", "trigger1 = Time = 0", "time = 60", "length = 8", "timegap = 2",
+                  "framegap = 2", "trans = add", "paladd = 120, 50, 0", "palmul = .55, .55, .55"))
+    c.append(_ctl(n, "Fundo escurece em vermelho", "BGPalFX", "trigger1 = Time = 1", "time = 100",
+                  "mul = 120, 55, 50"))
+    c.append(_ctl(n, "Voa", "VelSet", "trigger1 = Time = 10", "x = 11"))
+    c.append(_ctl(n, "Vento", "PlaySnd", "trigger1 = Time = 10", "value = F40,2"))
+    c.append(_hit(n, "Crava as garras", "trigger1 = Time = 10", 30, "Heavy", "ground.type = High", "pausetime = 4, 4",
+                  "p2stateno = 4660", "p2getp1state = 1", "air.velocity = 0, 0", "ground.velocity = 0, 0",
+                  attr="S, HA"))
+    c.append(_ctl(n, "Pegou: já segura na pausa do acerto", "TargetBind", "trigger1 = MoveHit", "pos = 42, -24",
+                  "time = 1", "ignorehitpause = 1"))
+    c.append(_ctl(n, "Pegou", "ChangeState", "trigger1 = MoveHit", "value = 4651"))
+    c.append(_ctl(n, "Errou ou defendeu", "ChangeState", "trigger1 = MoveGuarded || Time >= 32", "value = 4654"))
+    n = 4651
+    c.append(_st(n, "A", "N", 4651, "velset = 0, -6"))
+    c.append(_ctl(n, "Sobe", "VelAdd", "trigger1 = 1", "y = .18"))
+    c.append(_ctl(n, "Segura", "TargetBind", "trigger1 = 1", "pos = 42, -24", "time = 1"))
+    for k, t in enumerate((6, 14, 22)):
+        c.append(_ctl(n, f"Garra {k + 1}", "TargetLifeAdd", f"trigger1 = Time = {t}", "value = -20", "kill = 0"))
+        c.append(_ctl(n, f"Garra {k + 1}: estouro", "Explod", f"trigger1 = Time = {t}", "anim = 7472",
+                      "postype = p2", "pos = 0, -50", "sprpriority = 6", "ownpal = 1", "removetime = -2"))
+        c.append(_ctl(n, f"Garra {k + 1}: som", "PlaySnd", f"trigger1 = Time = {t}", "value = S53,0"))
+        c.append(_ctl(n, f"Garra {k + 1}: tremida", "EnvShake", f"trigger1 = Time = {t}", "time = 5", "ampl = -3",
+                      "freq = 140"))
+    c.append(_ctl(n, "Lá em cima", "ChangeState", "trigger1 = Time >= 30", "value = 4652"))
+    n = 4652
+    c.append(_st(n, "A", "N", 4652, "velset = 0, -1"))
+    c.append(_ctl(n, "Segura", "TargetBind", "trigger1 = Time < 5", "pos = 30, -10", "time = 1"))
+    c.append(_ctl(n, "Atira no chão", "TargetState", "trigger1 = Time = 5", "value = 4661"))
+    c.append(_ctl(n, "Atira no chão: velocidade", "TargetVelSet", "trigger1 = Time = 5", "x = -2", "y = 12"))
+    c.append(_ctl(n, "Atira no chão: dano", "TargetLifeAdd", "trigger1 = Time = 5", "value = -50", "kill = 0"))
+    c.append(_ctl(n, "Cai", "VelAdd", "trigger1 = Time > 5", "y = .4"))
+    # o Explod por último: o NumExplod(4670) = 0 dos outros vale no mesmo tique só antes dele nascer
+    explosao = [("O chão explode: dano", "TargetLifeAdd", "value = -120"),
+                ("O chão explode: tremida", "EnvShake", "time = 30", "ampl = -10", "freq = 100"),
+                ("O chão explode: clarão", "BGPalFX", "time = 20", "add = 130, 40, 0"),
+                ("O chão explode: som", "PlaySnd", "value = S53,0"),
+                ("O chão explode", "Explod", "anim = 7471", "id = 4670", "postype = p2", "pos = 0, 0",
+                 "scale = 1.5, 1.5", "sprpriority = 6", "ownpal = 1", "removetime = -2")]
+    for titulo, tipo, *linhas in explosao:
+        c.append(_ctl(n, titulo, tipo, "trigger1 = Time > 5 && NumTarget > 0 && NumExplod(4670) = 0",
+                      "trigger1 = target, Pos Y >= -10", "persistent = 0", *linhas))
+    c.append(_ctl(n, "Chão", "ChangeState", "trigger1 = Time > 5 && Vel Y > 0 && Pos Y >= 0", "value = 4653"))
+    n = 4653
+    c.append(_st(n, "S", "S", 4653, "velset = 0,0"))
+    c.append(_ctl(n, "No chão", "PosSet", "trigger1 = Time = 0", "y = 0"))
+    for titulo, tipo, *linhas in explosao:  # se ele chegou antes de quem foi atirado, explode na hora
+        c.append(_ctl(n, titulo, tipo, "trigger1 = Time = 0 && NumTarget > 0 && NumExplod(4670) = 0", *linhas))
+    c.append(_fim(n))
+    n = 4654
+    c.append(_st(n, "S", "S", 4654))
+    c.append(_fim(n))
+    # quem apanha (estados do Hazak, p2getp1state)
+    n = 4660
+    c.append(_st(n, "A", "N", 5000, "velset = 0,0", mov="H"))
+    for anim, cond in ((5943, "SelfAnimExist(5943)"), (5940, "!SelfAnimExist(5943) && SelfAnimExist(5940)")):
+        c.append(_ctl(n, "Preso: pose própria", "ChangeAnim", "trigger1 = Time = 0", f"trigger1 = {cond}",
+                      f"value = {anim}"))
+    c.append(_ctl(n, "Solto", "HitFallSet", "trigger1 = Time > 6 && !gethitvar(isbound)", "value = 1"))
+    c.append(_ctl(n, "Solto", "SelfState", "trigger1 = Time > 6 && !gethitvar(isbound)", "value = 5050"))
+    n = 4661
+    c.append(_st(n, "A", "N", 5030, mov="H"))
+    c.append(_ctl(n, "Caindo", "ChangeAnim", "trigger1 = Time = 0 && SelfAnimExist(5944)", "value = 5944"))
+    c.append(_ctl(n, "Cai de verdade", "HitFallSet", "trigger1 = Time = 0", "value = 1"))
+    c.append(_ctl(n, "Queda", "VelAdd", "trigger1 = 1", "y = .5"))
+    c.append(_ctl(n, "Chão", "SelfState", "trigger1 = Vel Y > 0 && Pos Y >= 0", "value = 5100"))
+    return "".join(c)
 
 
 MENOS_2 = """[State -2, Demônio: conta acerto da corrente]
 type = VarAdd
 trigger1 = MoveHit
 trigger1 = var(11) = 0
-trigger1 = stateno = [4200,4349]
+trigger1 = stateno = [4200,4449]
 var(10) = 1
 
 """
@@ -615,11 +977,39 @@ def bloquear_base(cmd):
     return re.sub(r"^\[State -1, [^\n]*\n(?:[^\n]+\n)*", troca, cmd, flags=re.M)
 
 
+def _boca(quadros, j=3):
+    """(x, y) em px do jogo, do eixo do quadro j até a ponta da garra (pixel mais à frente, na altura dele)."""
+    import numpy as np
+    img, ex, ey = quadros[j]
+    m = np.array(img)[..., 3] > 0
+    ys, xs = np.nonzero(m)
+    x1 = xs.max()
+    y = int(np.median(ys[xs >= x1 - 6]))
+    return round((x1 - ex) / 3), round((y - ey) / 3)
+
+
+def acoes_da_bola():
+    """{ação: texto}, {grupo: quadros} da bola de fogo das trevas (Blender, d47_poder) e da carga na garra (d47_carga)."""
+    import diabo_loiro as dl
+    b, texto, sprites = BOLA, {}, {}
+    s = dl.E * b["escala"]
+    for acao, grupo, nome, clsn in ((b["projanim"], b["grupo"], "d47_poder", b["clsn"]),
+                                    (b["carga"], b["grupo_carga"], "d47_carga", None)):
+        quadros, ticks = dl.render(nome)
+        linhas = [dl.caixa("Clsn2", *clsn), dl.caixa("Clsn1", *clsn)] if clsn else []
+        for i in range(len(quadros)):
+            if clsn and i == 0:
+                linhas.append("LoopStart")
+            linhas.append(f"{grupo},{i}, 0,0, {ticks}, , , {s:g}, {s:g}")
+        texto[acao], sprites[grupo] = "\n".join(linhas), quadros
+    return texto, sprites
+
+
 def ligar(air, cmd):
     """-> (air, cmd, cns dos estados, linhas do [Statedef -2], {grupo: quadros}) com os golpes que já têm folha."""
     import efeitos
-    ok = disponiveis()
-    if not ok:
+    ok, esp = disponiveis(), especiais()
+    if not ok and not esp:
         return air, cmd, "", "", {}
     sprites, estados = {}, []
     for n, g in ok.items():
@@ -627,10 +1017,32 @@ def ligar(air, cmd):
         air = efeitos.por_acao(air, n, texto)
         sprites[GRUPO + n] = quadros
         estados.append(cns(n, g, faisca))
+    precisa = {"bola": (4500,), "voo": (4510, 4512, 4513, 4514), "rasgo": (4520, 4522),
+               "juizo": (4650, 4651, 4652, 4653, 4654)}
+    feitos = {}
+    for e in sorted(esp):
+        for n in precisa[e]:
+            quadros, texto, _ = acao(n, ANIMS[n])
+            air = efeitos.por_acao(air, n, texto)
+            sprites[GRUPO + n] = feitos[n] = quadros
+    if "bola" in esp:
+        textos, spr = acoes_da_bola()
+        for a, t in textos.items():
+            air = efeitos.por_acao(air, a, t)
+        sprites.update(spr)
+        boca = _boca(feitos[4500])
+        estados += [cns_bola(4500, 0, boca), cns_bola(4501, 1, boca)]
+    if "voo" in esp:
+        estados.append(cns_voo())
+    if "rasgo" in esp:
+        estados.append(cns_rasgo())
+    if "juizo" in esp:
+        estados.append(cns_juizo())
     # no fim do [Statedef -1]: depois do "Pode cancelar" (que reescreve o var(1)) e dos agarrões (frente + y colado
     # continua sendo agarrão); os golpes do Hazak que viriam antes estão travados na forma
-    cmd = bloquear_base(cmd).rstrip() + "\n\n" + rotas(set(ok))
-    print(f"demônio: {len(ok)} golpes próprios ({', '.join(g['nome'] for g in ok.values())})")
+    cmd = comandos(bloquear_base(cmd)).rstrip() + "\n\n" + rotas(set(ok), esp)
+    print(f"demônio: {len(ok)} golpes próprios ({', '.join(g['nome'] for g in ok.values())}); especiais: "
+          f"{', '.join(sorted(esp)) or 'nenhum'}")
     return air, cmd, "".join(estados), MENOS_2, sprites
 
 

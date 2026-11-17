@@ -33,19 +33,32 @@ python3 ferramentas/gerar_hazaki.py                         # liga tudo no jogo 
 Os golpes que ainda não têm folha não saem na forma (o botão não faz nada): o jogo só vai para a `mugen` com as 37
 folhas prontas, o robô passando e o vídeo na #47.
 
-## Situação (16/11, 01:20Z)
+## Situação (17/11)
 
-- Folhas prontas (26 de 37): parado, anda, pe_maos, pe_pes, cobranca_garras, agachado_maos (Gemini); agachado, pulo,
-  defesa, defesa_baixa, apanha, queda, levanta, recuo, provoca, agachado_pes (ChatGPT, 15-16/11); agarrao_abraco,
-  agarrao_perna, agarrao_cutucao, vira, corrida, vitoria, intro, derrota_sirene, parry_alto, parry_baixo (ChatGPT,
-  16/11 01h). Todos os básicos e os 3 agarrões já saem com a arte do demônio (`agarroes_extras.png`: 810, 841 e 831
-  na forma, sem nenhum quadro de sobretudo).
-- Golpes ligados: Arranhão (x), Garra Cruzada (y), Joelhada Selvagem (a), Coice com Garra (b), Arranhão Baixo (↓x),
-  Garra Subindo (↓y), Rabo Rasteiro (↓a), Varrida de Garras (↓b), Cobrança das Garras (↘a/↘b) e os 3 agarrões.
-- Faltam 11 folhas: ar_maos, ar_pes, direcionais_a/b, fins_maos/pes, bola_trevas, voo, rasgo, juizo_a, juizo_b.
-  Próximo turno do ChatGPT (`imagens/fila-chatgpt.md`).
-- ChatGPT: `ferramentas/chatgpt_demonio.js` (troque os pedidos; o `__cap` diz a largura em px CSS da imagem reduzida,
-  use-a no zoom: [0,0,745,497] no Chrome de casa em 16/11, [0,0,628,420] antes).
+- **Arte:** desde 17/11 a thread do boneco de peças (branch `claude/project-thread-46qshe`) faz toda a arte do
+  demônio pelo método novo (kit de peças + poses por código, zero erro de animação): refaz as 26 folhas e faz as 11
+  que faltam, direto em `sprites/hazaki/diabo_terno/m_NOME/00..07.png`, com o quadro k no papel do quadro k do
+  `FOLHAS_DEMONIO`. Quem mudar o papel de um quadro avisa a outra thread.
+- **Motor: completo.** Toda a lista aprovada já está no `diabo_demonio.py`, e cada golpe liga sozinho quando a pasta
+  `m_` dele aparece (`disponiveis()` e `especiais()`):
+
+| golpe | estados | comando | folha |
+|---|---|---|---|
+| 8 normais em pé e agachado | 4200-4203, 4400-4403 | x y a b, ↓ | pe_maos, pe_pes, agachado_maos, agachado_pes |
+| 4 no ar | 4600-4603 | x y a b no ar | ar_maos, ar_pes |
+| Martelo Infernal (por cima), Estocada, Chicote de Rabo, Mordida | 4210-4213 | → x, → y, → b, ← y | direcionais_a/b |
+| Fúria das Garras, Dilacerar (queima), Dança do Rabo, Pisoteio (por cima) | 4301-4333 | x x x x, y y y y, ↓a a a a, b b b b | pe_*, direcionais_b, fins_maos/pes |
+| Banquete do Diabo (kombo) | 4200 → 4301 → 4211 → 1661 | x, x, → y, ↘ b | |
+| Bola das Trevas (reta / arco) | 4500/4501, projétil 4580, carga 4582 | ↓↘→ x / y | bola_trevas + Blender `d47_poder`, `d47_carga` |
+| Voo Infernal (paira, soco mergulha) | 4510-4514 | ↓↓ a / b | voo |
+| Rasgo Ascendente (antiaéreo, 2 acertos) | 4520-4522 | →↓↘ x / y | rasgo |
+| Juízo Infernal (super, 1 estoque) | 4650-4654, vítima 4660/4661 | ↓↘→↓↘→ x / y | juizo_a, juizo_b |
+
+  A Rajadona de Ki das Trevas (→← soco, `fb_x`) continua como o poder de longe da forma, como nos outros despertados.
+- **Teste sem a arte:** `NAZA_DEMONIO_PROVISORIO=1 python3 ferramentas/gerar_hazaki.py` usa uma folha parecida no
+  lugar da que falta (`PROVISORIO`), só para o robô. Nunca vai para a `mugen` assim. O robô pula sozinho o roteiro
+  de golpe que não está no .cns (`@DEMONIO@` no `testar_pengaro.py`). Para pular, o robô usa o `T_pulo` (o holdup do AssertCommand
+  não pula).
 
 ## Lições
 
