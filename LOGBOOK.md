@@ -3142,3 +3142,7 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   soco agachado afunda e sobe. `vida_pecas.py` da mugen com o meio-termo do Alisson (antecipação segurada até o
   contato). `pecas_ck.py trocar` troca só os desenhos no .sff quando o número de desenhos não muda; quando muda,
   `ligar_pecas.py ck` religa por cima. Robô de peças 0/201.
+- Turno 5 (17/11): juízo (golaço do despertado, cajado preso na faixa no mata-leão), agarrão do Grão-Pastor refeito (um
+  cajado só; ainda não ligado: a vítima é posicionada pelo `agarrao_mk` da base) e as folhas de vítima da forma base
+  (`vitima_agarrado`, `vitima_arremessado`, para a thread da base ligar). `verde_solto()` no `gbzin_e_pecas.py`: verde
+  escuro longe das chamas (calça pintada de oliva num quadro) volta ao roxo da calça. Robô 236/0.
