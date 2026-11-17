@@ -1,0 +1,99 @@
+{
+ "acao": 4710,
+ "caixa": [
+  60,
+  -330,
+  180,
+  -210
+ ],
+ "origem": [
+  "algema/00",
+  "algema/01",
+  "algema/02",
+  "algema/03",
+  "algema/04",
+  "algema/05",
+  "algema/06",
+  "algema/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "algema/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 4,
+   "caixa": false,
+   "de": "algema/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": true,
+   "de": "algema/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "algema/03"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "algema/03"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "algema/03"
+  },
+  {
+   "desenho": 6,
+   "ticks": 8,
+   "caixa": false,
+   "de": "algema/04"
+  },
+  {
+   "desenho": 7,
+   "ticks": 6,
+   "caixa": true,
+   "de": "algema/05"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "algema/06"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "algema/06"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "algema/06"
+  },
+  {
+   "desenho": 11,
+   "ticks": 2,
+   "caixa": false,
+   "de": "algema/07"
+  },
+  {
+   "desenho": 12,
+   "ticks": 3,
+   "caixa": false,
+   "de": "algema/07"
+  }
+ ]
+}

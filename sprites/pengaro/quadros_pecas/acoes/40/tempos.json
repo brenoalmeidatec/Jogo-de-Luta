@@ -1,0 +1,11 @@
+{
+ "acao": 40,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 4,
+   "caixa": false,
+   "de": "pulo/00|None"
+  }
+ ]
+}

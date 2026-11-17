@@ -1,0 +1,55 @@
+{
+ "acao": 1500,
+ "caixa": [
+  30,
+  -132,
+  171,
+  -30
+ ],
+ "origem": [
+  "corrida/00",
+  "corrida/01",
+  "voadora/01",
+  "voadora/02",
+  "voadora/04",
+  "voadora/05"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "corrida/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": false,
+   "de": "corrida/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": false,
+   "de": "voadora/01"
+  },
+  {
+   "desenho": 3,
+   "ticks": 3,
+   "caixa": false,
+   "de": "voadora/02"
+  },
+  {
+   "desenho": 4,
+   "ticks": 12,
+   "caixa": true,
+   "de": "voadora/04"
+  },
+  {
+   "desenho": 5,
+   "ticks": 1,
+   "caixa": false,
+   "de": "voadora/05"
+  }
+ ]
+}

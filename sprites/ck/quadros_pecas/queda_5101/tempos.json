@@ -1,0 +1,30 @@
+{
+ "acao": 5101,
+ "folha": "queda",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "queda/05"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": false,
+   "de": "queda/06"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "queda/05",
+   "ticks": 3,
+   "caixa": false
+  },
+  {
+   "de": "queda/06",
+   "ticks": 3,
+   "caixa": false
+  }
+ ]
+}

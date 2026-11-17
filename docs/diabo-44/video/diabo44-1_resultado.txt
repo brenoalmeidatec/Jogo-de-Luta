@@ -1,0 +1,34 @@
+robo carregado: 2 roteiros
+
+=== 1 [Diabo Loiro] Cobranca do Diabo (df_a): desliza, bate e cobra 150 de barra
+  [  1] P1 estado 0 (vida 900)
+  [  1] P2 estado 0 (vida 900)
+  [ 24] P1 estado 1660 (vida 900)
+  PASS entrou em 1660 (e nao no Giro de Garagem)
+  [ 40] P2 estado 5000 (vida 900)
+  PASS a ombrada acertou
+  [ 55] P2 estado 5001 (vida 806)
+  [ 76] P2 estado 0 (vida 806)
+  [ 82] P1 estado 0 (vida 900)
+  PASS acabou
+  dano 94; andou 39; barra P1 192 P2 886
+  PASS dano >= 60
+  PASS cobrou a barra (P2 perdeu, P1 ganhou >= 150)
+  PASS P1 voltou ao controle
+
+=== 2 [Diabo Loiro] Cobranca do Diabo forte (df_b): vai mais longe e derruba
+  [  1] P1 estado 0 (vida 900)
+  [  1] P2 estado 0 (vida 900)
+  [ 24] P1 estado 1661 (vida 900)
+  PASS entrou em 1661
+  [ 42] P2 estado 5000 (vida 900)
+  PASS acertou de longe
+  [ 57] P2 estado 5030 (vida 775)
+  [ 78] P2 estado 5050 (vida 775)
+  PASS o P2 caiu
+  [ 82] P1 estado 0 (vida 900)
+  PASS acabou
+  PASS P1 voltou ao controle
+  [ 84] P2 estado 5100 (vida 775)
+
+FIM: 2 roteiros

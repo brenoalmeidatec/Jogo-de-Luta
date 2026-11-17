@@ -1,0 +1,25 @@
+{
+ "acao": 40,
+ "folha": "pulo",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pulo/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pulo/00"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "pulo/00",
+   "ticks": 4,
+   "caixa": false
+  }
+ ]
+}

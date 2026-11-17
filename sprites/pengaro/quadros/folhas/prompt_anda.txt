@@ -1,0 +1,9 @@
+Generate ONE image with your image generation tool. Do not write code and do not edit any file.
+
+The attached sprite sheet shows the exact character and art style to keep: same man, same face, hair, skin, muscles, white capoeira pants with green and yellow side stripes, yellow cord belt, teal sash, the same dark green shin guard on the same leg, barefoot. Same detailed 90s arcade pixel art.
+
+Make a sprite sheet of an 8-frame looping walk-forward cycle for a 2D fighting game: a guarded fighter walk, hands up in front of the chest, walking in place, side view.
+
+Layout: one single row of 8 frames, evenly spaced, wide image, always facing right, same size and same scale as the attached sheet, feet on the same ground line. Flat solid magenta background (#FF00FF) everywhere, with no shadow, no ground, no text, no numbers, no borders and no effects.
+
+Motion: a full two-step cycle. Frame 1 contact, front leg forward and rear leg back. Frame 2 weight goes on the front leg. Frame 3 rear leg passes under the body. Frame 4 that leg reaches forward. Frame 5 contact with legs swapped. Frame 6 weight on the new front leg. Frame 7 the other leg passes under the body. Frame 8 it reaches forward and flows back into frame 1. The body rises slightly on the passing frames. Consecutive frames differ by a small amount, so the loop looks smooth.

@@ -1,0 +1,53 @@
+{
+ "acao": 10200,
+ "caixa": [
+  30,
+  -360,
+  150,
+  -225
+ ],
+ "origem": [
+  "e_chifrada/01",
+  "e_chifrada/02",
+  "e_chifrada/03",
+  "e_chifrada/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 4,
+   "caixa": false,
+   "de": "e_chifrada/01"
+  },
+  {
+   "desenho": 1,
+   "ticks": 6,
+   "caixa": true,
+   "de": "e_chifrada/02"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": false,
+   "de": "e_chifrada/03"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "e_chifrada/07"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "e_chifrada/07"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "e_chifrada/07"
+  }
+ ]
+}

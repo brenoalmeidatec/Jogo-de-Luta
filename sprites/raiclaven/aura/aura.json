@@ -1,0 +1,131 @@
+{
+ "formato": 1,
+ "lutador": "raiclaven",
+ "aura": "leque_de_laminas",
+ "tela": [
+  360,
+  200
+ ],
+ "pe": [
+  180,
+  190
+ ],
+ "tiques_por_quadro": 2,
+ "alfa": "0 ou 255",
+ "arquivo": "{nome}_{quadro:02d}.png",
+ "camadas": [
+  {
+   "nome": "leque",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "leque duplo de lâminas, aberto embaixo: duas asas de 9 lâminas (tesouras cortando, pentes, facas, navalhas) e a adaga do meio; cada asa abre e fecha em cascata, de cima para baixo, e as lâminas estocam em onda; atrás, pontas e o miolo"
+  },
+  {
+   "nome": "foices",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "coração de 12 foices em volta do corpo (6 de cada lado), cada uma abre como garra, a de cima primeiro"
+  },
+  {
+   "nome": "raios",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "moldura de raio branco com clarão azul-gelo por fora das pontas das duas asas, do chão à fenda do alto, mais arcos entre as foices e entre as lascas"
+  },
+  {
+   "nome": "lascas",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "lascas de aço cravadas no chão, tremendo"
+  },
+  {
+   "nome": "limalha",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "limalha de aço subindo e piscando"
+  }
+ ],
+ "paleta": [
+  [
+   26,
+   28,
+   34
+  ],
+  [
+   52,
+   54,
+   60
+  ],
+  [
+   67,
+   69,
+   75
+  ],
+  [
+   81,
+   83,
+   90
+  ],
+  [
+   97,
+   99,
+   107
+  ],
+  [
+   114,
+   117,
+   126
+  ],
+  [
+   133,
+   136,
+   145
+  ],
+  [
+   152,
+   155,
+   165
+  ],
+  [
+   172,
+   176,
+   186
+  ],
+  [
+   150,
+   196,
+   236
+  ],
+  [
+   191,
+   195,
+   205
+  ],
+  [
+   208,
+   213,
+   225
+  ],
+  [
+   222,
+   227,
+   240
+  ],
+  [
+   237,
+   241,
+   252
+  ],
+  [
+   250,
+   252,
+   255
+  ]
+ ],
+ "gerado_por": "ferramentas/aura_blender/raiclaven_aura.py",
+ "centro_do_leque": [
+  182.6,
+  97.2
+ ],
+ "nota": "Todas as camadas têm 96 quadros e rodam juntas (o raio acompanha as pontas das lâminas quadro a quadro): não rode uma camada em laço diferente das outras."
+}

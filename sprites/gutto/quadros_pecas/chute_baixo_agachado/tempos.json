@@ -1,0 +1,84 @@
+{
+ "acao": 430,
+ "caixa": [
+  36,
+  -54,
+  186,
+  -12
+ ],
+ "origem": [
+  "447_0",
+  "1146_0",
+  "449_0",
+  "450_0",
+  "452_0"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "447_0@chute_baixo_agachado0"
+  },
+  {
+   "desenho": 1,
+   "ticks": 1,
+   "caixa": false,
+   "de": "447_0@chute_baixo_agachado1"
+  },
+  {
+   "desenho": 2,
+   "ticks": 1,
+   "caixa": false,
+   "de": "1146_0@chute_baixo_agachado2"
+  },
+  {
+   "desenho": 3,
+   "ticks": 5,
+   "caixa": true,
+   "de": "449_0@chute_baixo_agachado3"
+  },
+  {
+   "desenho": 4,
+   "ticks": 1,
+   "caixa": false,
+   "de": "449_0@chute_baixo_agachado4"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "450_0@chute_baixo_agachado5"
+  },
+  {
+   "desenho": 6,
+   "ticks": 3,
+   "caixa": false,
+   "de": "450_0@chute_baixo_agachado5"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "450_0@chute_baixo_agachado6"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "450_0@chute_baixo_agachado6"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "452_0@chute_baixo_agachado7"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "452_0@chute_baixo_agachado7"
+  }
+ ]
+}

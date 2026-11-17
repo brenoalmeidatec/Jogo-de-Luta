@@ -1,0 +1,127 @@
+{
+ "formato": 1,
+ "lutador": "ck",
+ "aura": "paredao",
+ "tela": [
+  360,
+  200
+ ],
+ "pe": [
+  180,
+  190
+ ],
+ "tiques_por_quadro": 2,
+ "alfa": "0 ou 255",
+ "arquivo": "{nome}_{quadro:02d}.png",
+ "camadas": [
+  {
+   "nome": "paredao",
+   "quadros": 48,
+   "plano": "atras",
+   "o_que": "parede de caixas de som de fumaça: cones pulsando no grave, topo desfiando"
+  },
+  {
+   "nome": "aneis",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "anéis de fumaça que saem dos cones, crescem, se afastam e se desfazem"
+  },
+  {
+   "nome": "nevoa",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "névoa baixa deslizando no chão"
+  },
+  {
+   "nome": "cacos",
+   "quadros": 48,
+   "plano": "atras",
+   "o_que": "cacos de vidro verde e tampinhas pulando a cada grave"
+  },
+  {
+   "nome": "fagulhas",
+   "quadros": 96,
+   "plano": "atras",
+   "o_que": "fagulhas laranja em forma de folha subindo"
+  }
+ ],
+ "paleta": [
+  [
+   20,
+   26,
+   20
+  ],
+  [
+   41,
+   51,
+   34
+  ],
+  [
+   58,
+   68,
+   46
+  ],
+  [
+   53,
+   96,
+   19
+  ],
+  [
+   75,
+   85,
+   59
+  ],
+  [
+   95,
+   104,
+   75
+  ],
+  [
+   118,
+   126,
+   92
+  ],
+  [
+   98,
+   159,
+   16
+  ],
+  [
+   221,
+   107,
+   23
+  ],
+  [
+   141,
+   147,
+   109
+  ],
+  [
+   248,
+   133,
+   12
+  ],
+  [
+   169,
+   173,
+   134
+  ],
+  [
+   155,
+   188,
+   100
+  ],
+  [
+   198,
+   199,
+   159
+  ],
+  [
+   218,
+   217,
+   178
+  ]
+ ],
+ "nota": "Compasso de 4 tempos em 48 quadros (12 por tempo, 150 bpm a 2 tiques). Tudo atrás do corpo. O miolo da parede (atrás do corpo) é remendo: caixas dos lados copiadas.",
+ "gerado_por": "ferramentas/aura_blender/ck_aura.py"
+}

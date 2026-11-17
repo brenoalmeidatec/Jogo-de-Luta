@@ -1,0 +1,81 @@
+{
+ "acao": 4710,
+ "caixa": [
+  60,
+  -330,
+  180,
+  -210
+ ],
+ "origem": [
+  "paredao/00",
+  "paredao/01",
+  "paredao/02",
+  "paredao/03",
+  "paredao/04",
+  "paredao/05",
+  "paredao/06",
+  "paredao/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "paredao/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 4,
+   "caixa": false,
+   "de": "paredao/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": true,
+   "de": "paredao/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 6,
+   "caixa": false,
+   "de": "paredao/03"
+  },
+  {
+   "desenho": 4,
+   "ticks": 6,
+   "caixa": true,
+   "de": "paredao/04"
+  },
+  {
+   "desenho": 5,
+   "ticks": 8,
+   "caixa": false,
+   "de": "paredao/05"
+  },
+  {
+   "desenho": 6,
+   "ticks": 8,
+   "caixa": true,
+   "de": "paredao/06"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/07"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/07"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/07"
+  }
+ ]
+}

@@ -1,0 +1,19 @@
+Generate ONE image with your image generation tool, using the attached picture as the exact character reference. Do not write code and do not edit any file.
+
+The attached picture shows the same fighter in two key poses: left = fighting stance, right = straight punch.
+
+Make a sprite sheet of an 8-frame punch animation for a 2D fighting game, in the same detailed 90s arcade pixel art, showing this exact same man: same face, hair, skin, muscles, white capoeira pants with green and yellow side stripes, yellow cord belt, teal sash, the same dark green shin guard on the same leg, barefoot.
+
+Layout: one single row of 8 frames, evenly spaced, wide image, side view, always facing right, same size and same scale in all frames, feet on the same ground line. Flat solid magenta background (#FF00FF) everywhere, with no shadow, no ground, no text, no numbers, no borders and no effects.
+
+Motion, one frame each:
+1 fighting stance, as in the left pose
+2 hips drop slightly, shoulder pulls back, fist starts to load at the chest
+3 weight shifts to the front foot, torso starts to rotate
+4 arm halfway out, elbow still bent, hips turning
+5 arm almost straight, torso leaning forward
+6 full extension, as in the right pose, arm fully straight
+7 arm starts to come back, elbow bending
+8 almost back to the fighting stance
+
+Consecutive frames must differ by a small amount, so the motion looks smooth when played in sequence.

@@ -1,0 +1,81 @@
+{
+ "acao": 600,
+ "folha": "ar_soco",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "ar_soco/03"
+  },
+  {
+   "desenho": 1,
+   "ticks": 5,
+   "caixa": false,
+   "de": "ar_soco/03"
+  },
+  {
+   "desenho": 2,
+   "ticks": 12,
+   "caixa": true,
+   "de": "ar_soco/04"
+  },
+  {
+   "desenho": 3,
+   "ticks": 1,
+   "caixa": false,
+   "de": "ar_soco/04"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "ar_soco/06"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "ar_soco/06"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "ar_soco/06"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "ar_soco/06"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "ar_soco/03",
+   "ticks": 2,
+   "caixa": false
+  },
+  {
+   "de": "ar_soco/03",
+   "ticks": 5,
+   "caixa": false
+  },
+  {
+   "de": "ar_soco/04",
+   "ticks": 12,
+   "caixa": true
+  },
+  {
+   "de": "ar_soco/04",
+   "ticks": 1,
+   "caixa": false
+  },
+  {
+   "de": "ar_soco/06",
+   "ticks": 8,
+   "caixa": false
+  }
+ ]
+}

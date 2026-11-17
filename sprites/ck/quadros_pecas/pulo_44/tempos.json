@@ -1,0 +1,83 @@
+{
+ "acao": 44,
+ "folha": "pulo",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pulo/04"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pulo/04"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pulo/04"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pulo/05"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pulo/05"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pulo/05"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pulo/06"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pulo/06"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pulo/06"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pulo/06"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "pulo/04",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "pulo/05",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "pulo/06",
+   "ticks": 8,
+   "caixa": false
+  }
+ ]
+}

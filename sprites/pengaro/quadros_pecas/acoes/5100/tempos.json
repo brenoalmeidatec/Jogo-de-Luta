@@ -1,0 +1,23 @@
+{
+ "acao": 5100,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "queda/04|dor"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": false,
+   "de": "queda/05|dor"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": false,
+   "de": "queda/06|dor"
+  }
+ ]
+}

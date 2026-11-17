@@ -1,0 +1,96 @@
+{
+ "acao": 170,
+ "folha": "derrota",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 6,
+   "caixa": false,
+   "de": "derrota/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 6,
+   "caixa": false,
+   "de": "derrota/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 6,
+   "caixa": false,
+   "de": "derrota/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 6,
+   "caixa": false,
+   "de": "derrota/03"
+  },
+  {
+   "desenho": 4,
+   "ticks": 6,
+   "caixa": false,
+   "de": "derrota/04"
+  },
+  {
+   "desenho": 5,
+   "ticks": 6,
+   "caixa": false,
+   "de": "derrota/05"
+  },
+  {
+   "desenho": 6,
+   "ticks": 6,
+   "caixa": false,
+   "de": "derrota/06"
+  },
+  {
+   "desenho": 7,
+   "ticks": 8,
+   "caixa": false,
+   "de": "derrota/07"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "derrota/00",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "derrota/01",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "derrota/02",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "derrota/03",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "derrota/04",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "derrota/05",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "derrota/06",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "derrota/07",
+   "ticks": 8,
+   "caixa": false
+  }
+ ]
+}

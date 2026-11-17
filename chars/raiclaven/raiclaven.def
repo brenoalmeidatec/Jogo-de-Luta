@@ -1,0 +1,22 @@
+; Gerado por ferramentas/gerar_raiclaven.py. Edite lá, não aqui.
+[Info]
+name = "Raiclaven"
+displayname = "Raiclaven"
+versiondate = 11,10,2026
+mugenversion = 1.1
+author = "Breno"
+pal.defaults = 1
+localcoord = 320,240
+
+[Files]
+cmd = raiclaven.cmd
+cns = raiclaven.cns
+st = raiclaven.cns
+stcommon = common1.cns
+sprite = raiclaven.sff
+anim = raiclaven.air
+sound = raiclaven.snd
+movelist = movelist.dat
+
+[Palette Keymap]
+x = 1
