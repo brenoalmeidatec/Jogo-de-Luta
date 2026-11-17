@@ -163,6 +163,24 @@
     466
    ]
   },
+  "braco_frente_atras": {
+   "arquivo": "braco_frente_atras.png",
+   "origem": [
+    479,
+    454
+   ],
+   "junta": [
+    588,
+    418
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/9902_0.png",
+   "sobra": "braco_frente_atras_sobra.png",
+   "origem_sobra": [
+    470,
+    445
+   ]
+  },
   "braco_frente_cotovelo": {
    "arquivo": "braco_frente_cotovelo.png",
    "origem": [
@@ -197,6 +215,42 @@
    "origem_sobra": [
     561,
     389
+   ]
+  },
+  "braco_tras_direto": {
+   "arquivo": "braco_tras_direto.png",
+   "origem": [
+    493,
+    380
+   ],
+   "junta": [
+    496,
+    400
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/9901_0.png",
+   "sobra": "braco_tras_direto_sobra.png",
+   "origem_sobra": [
+    484,
+    371
+   ]
+  },
+  "tronco_direto": {
+   "arquivo": "tronco_direto.png",
+   "origem": [
+    491,
+    380
+   ],
+   "junta": [
+    540,
+    478
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_arcade_hd/9901_0.png",
+   "sobra": "tronco_direto_sobra.png",
+   "origem_sobra": [
+    482,
+    371
    ]
   },
   "coxa_tras_apoio": {
