@@ -385,28 +385,28 @@
 48000,14 = 832,0
 48000,15 = 832,0
 48000,16 = 832,0
-48001,0 = 705,0
-48001,1 = 705,0
-48001,2 = 706,0
-48001,3 = 706,0
-48001,4 = 707,0
-48001,5 = 707,0
-48001,6 = 708,0
-48001,7 = 708,0
-48001,8 = 709,0
-48001,9 = 709,0
-48001,10 = 710,0
-48001,11 = 710,0
-48001,12 = 711,0
-48001,13 = 711,0
-48001,14 = 712,0
-48001,15 = 712,0
 48002,0 = 970,0
 48002,1 = 971,0
 48002,2 = 972,0
 48002,3 = 976,0
 48002,4 = 976,0
 48002,5 = 976,0
+48001,0 = 49002,0
+48001,1 = 49002,1
+48001,2 = 49002,2
+48001,3 = 49002,3
+48001,4 = 49002,4
+48001,5 = 49002,5
+48001,6 = 49002,6
+48001,7 = 49002,7
+48001,8 = 49002,8
+48001,9 = 49002,9
+48001,10 = 49002,10
+48001,11 = 49002,11
+48001,12 = 49002,12
+48001,13 = 49002,13
+48001,14 = 49002,14
+48001,15 = 49002,15
 
 [Quotes]
 victory1 = "Volta pro curral, cabrito."
@@ -10490,7 +10490,7 @@ trigger20 = Anim = 3411 && AnimElemNo(0) = [2, 4]
 trigger21 = Anim = 3411 && AnimElemNo(0) = 6
 trigger22 = Anim = 3412 && AnimElemNo(0) = 1
 trigger23 = Anim = 3412 && AnimElemNo(0) = 7
-trigger24 = Anim = 10200 && AnimElemNo(0) = [7, 8]
+trigger24 = Anim = 10200 && AnimElemNo(0) = [7, 10]
 trigger25 = Anim = 10210 && AnimElemNo(0) = 1
 trigger26 = Anim = 10210 && AnimElemNo(0) = 8
 trigger27 = Anim = 10215 && AnimElemNo(0) = 1
@@ -10550,7 +10550,7 @@ trigger6 = Anim = 349 && AnimElemNo(0) = 1
 trigger7 = Anim = 810 && AnimElemNo(0) = [11, 12]
 trigger8 = Anim = 841 && AnimElemNo(0) = 4
 trigger9 = Anim = 3420 && AnimElemNo(0) = 1
-trigger10 = Anim = 10240 && AnimElemNo(0) = 1
+trigger10 = Anim = 10240 && AnimElemNo(0) = [1, 1]
 trigger11 = Anim = 10245 && AnimElemNo(0) = 1
 trigger12 = Anim = 10323 && AnimElemNo(0) = 1
 trigger13 = Anim = 10341 && AnimElemNo(0) = 1
@@ -10620,7 +10620,7 @@ trigger6 = Anim = 349 && AnimElemNo(0) = [7, 8]
 trigger7 = Anim = 831 && AnimElemNo(0) = 14
 trigger8 = Anim = 841 && AnimElemNo(0) = [7, 8]
 trigger9 = Anim = 3420 && AnimElemNo(0) = [7, 8]
-trigger10 = Anim = 10240 && AnimElemNo(0) = [6, 7]
+trigger10 = Anim = 10240 && AnimElemNo(0) = [6, 17]
 trigger11 = Anim = 10245 && AnimElemNo(0) = [7, 8]
 trigger12 = Anim = 10323 && AnimElemNo(0) = [7, 8]
 trigger13 = Anim = 10341 && AnimElemNo(0) = [7, 8]
@@ -12783,7 +12783,7 @@ trigger67 = Anim = 5210 && AnimElemNo(0) = 6
 trigger68 = Anim = 10200 && AnimElemNo(0) = [1, 3]
 trigger69 = Anim = 10210 && AnimElemNo(0) = 2
 trigger70 = Anim = 10215 && AnimElemNo(0) = 2
-trigger71 = Anim = 10240 && AnimElemNo(0) = 1
+trigger71 = Anim = 10240 && AnimElemNo(0) = [1, 1]
 trigger72 = Anim = 10245 && AnimElemNo(0) = 1
 trigger73 = Anim = 10301 && AnimElemNo(0) = 1
 trigger74 = Anim = 10302 && AnimElemNo(0) = 2
@@ -13042,7 +13042,7 @@ trigger93 = Anim = 5007
 trigger94 = Anim = 5015
 trigger95 = Anim = 5016
 trigger96 = Anim = 5017
-trigger97 = Anim = 10200 && AnimElemNo(0) = [7, 8]
+trigger97 = Anim = 10200 && AnimElemNo(0) = [7, 10]
 trigger98 = Anim = 10210 && AnimElemNo(0) = 1
 trigger99 = Anim = 10210 && AnimElemNo(0) = [3, 7]
 trigger100 = Anim = 10210 && AnimElemNo(0) = 8
@@ -13052,7 +13052,7 @@ trigger103 = Anim = 10215 && AnimElemNo(0) = 8
 trigger104 = Anim = 10230
 trigger105 = Anim = 10231
 trigger106 = Anim = 10240 && AnimElemNo(0) = [2, 5]
-trigger107 = Anim = 10240 && AnimElemNo(0) = [6, 7]
+trigger107 = Anim = 10240 && AnimElemNo(0) = [6, 17]
 trigger108 = Anim = 10245 && AnimElemNo(0) = [2, 6]
 trigger109 = Anim = 10245 && AnimElemNo(0) = [7, 8]
 trigger110 = Anim = 10301 && AnimElemNo(0) = 3
