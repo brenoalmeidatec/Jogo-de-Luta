@@ -1,0 +1,266 @@
+{
+ "nome": "chute_alto",
+ "acao": 240,
+ "caixa": [
+  36,
+  -300,
+  159,
+  -174
+ ],
+ "laco": false,
+ "quadros": [
+  {
+   "de": "chute_alto/01",
+   "ticks": 5,
+   "caixa": false,
+   "pose": {
+    "quadril": {
+     "ang": 0,
+     "dx": -17,
+     "dy": 7
+    },
+    "cabeca": {
+     "ang": 0,
+     "var": "foco"
+    },
+    "braco_tras": {
+     "ang": -9,
+     "dx": -3,
+     "dy": 3,
+     "custo": 34.5
+    },
+    "braco_frente": {
+     "ang": 8,
+     "dx": -3,
+     "dy": -3,
+     "custo": 65.7,
+     "camada": "atras"
+    },
+    "coxa_frente": {
+     "ang": 6,
+     "dx": 3,
+     "dy": 3,
+     "var": "camara",
+     "custo": 89.7,
+     "camada": "atras"
+    },
+    "coxa_tras": {
+     "ang": 9.6
+    },
+    "canela_tras": {
+     "ang": -46.5
+    }
+   }
+  },
+  {
+   "de": "chute_alto/02",
+   "ticks": 4,
+   "caixa": false,
+   "pose": {
+    "quadril": {
+     "ang": 0,
+     "dx": -10,
+     "dy": -6
+    },
+    "cabeca": {
+     "ang": 0,
+     "var": "foco"
+    },
+    "braco_tras": {
+     "ang": -12,
+     "dx": 0,
+     "dy": 3,
+     "custo": 50.9
+    },
+    "braco_frente": {
+     "ang": 20,
+     "dx": -3,
+     "dy": -3,
+     "custo": 74.6,
+     "camada": "atras"
+    },
+    "coxa_frente": {
+     "ang": 0,
+     "dx": 0,
+     "dy": 0,
+     "var": "camara",
+     "custo": 0.0,
+     "camada": "atras"
+    },
+    "coxa_tras": {
+     "ang": -18.3
+    },
+    "canela_tras": {
+     "ang": -6.0
+    }
+   }
+  },
+  {
+   "de": "chute_alto/04",
+   "ticks": 6,
+   "caixa": true,
+   "pose": {
+    "quadril": {
+     "ang": 0,
+     "dx": -17,
+     "dy": -5
+    },
+    "cabeca": {
+     "ang": 0,
+     "var": "esforco"
+    },
+    "braco_tras": {
+     "ang": -6,
+     "dx": 0,
+     "dy": 3,
+     "custo": 38.3
+    },
+    "braco_frente": {
+     "ang": -14,
+     "dx": 3,
+     "dy": -3,
+     "custo": 79.5,
+     "camada": "atras"
+    },
+    "coxa_frente": {
+     "ang": 0,
+     "dx": -3,
+     "dy": -1,
+     "var": "esticada",
+     "custo": 0.0,
+     "camada": "atras"
+    },
+    "coxa_tras": {
+     "ang": -15.9
+    },
+    "canela_tras": {
+     "ang": -6.2
+    }
+   }
+  },
+  {
+   "de": "chute_alto/05",
+   "ticks": 3,
+   "caixa": false,
+   "pose": {
+    "quadril": {
+     "ang": 0,
+     "dx": -12,
+     "dy": -11
+    },
+    "cabeca": {
+     "ang": 0,
+     "var": "esforco"
+    },
+    "braco_tras": {
+     "ang": -9,
+     "dx": 2,
+     "dy": 3,
+     "custo": 41.6
+    },
+    "braco_frente": {
+     "ang": -18,
+     "dx": -3,
+     "dy": -3,
+     "custo": 85.6,
+     "camada": "atras"
+    },
+    "coxa_frente": {
+     "ang": -6,
+     "dx": 3,
+     "dy": -2,
+     "var": "esticada",
+     "custo": 22.2,
+     "camada": "atras"
+    },
+    "coxa_tras": {
+     "ang": -17.4
+    },
+    "canela_tras": {
+     "ang": -5.5
+    }
+   }
+  },
+  {
+   "de": "chute_alto/06",
+   "ticks": 12,
+   "caixa": false,
+   "pose": {
+    "quadril": {
+     "ang": 0,
+     "dx": -23,
+     "dy": 8
+    },
+    "cabeca": {
+     "ang": 0,
+     "var": "foco"
+    },
+    "braco_tras": {
+     "ang": -3,
+     "dx": 3,
+     "dy": 3,
+     "custo": 38.5
+    },
+    "braco_frente": {
+     "ang": 14,
+     "dx": -2,
+     "dy": -3,
+     "custo": 73.2,
+     "camada": "atras"
+    },
+    "coxa_frente": {
+     "ang": 12,
+     "dx": -3,
+     "dy": -1,
+     "var": "camara",
+     "custo": 32.8,
+     "camada": "atras"
+    },
+    "coxa_tras": {
+     "ang": 6.4
+    },
+    "canela_tras": {
+     "ang": -50.4
+    }
+   }
+  },
+  {
+   "de": "chute_alto/07",
+   "ticks": 12,
+   "caixa": false,
+   "pose": {
+    "quadril": {
+     "ang": 0,
+     "dx": 2,
+     "dy": 1
+    },
+    "braco_tras": {
+     "ang": 0,
+     "dx": -3,
+     "dy": 2,
+     "custo": 26.6
+    },
+    "braco_frente": {
+     "ang": -2,
+     "dx": 3,
+     "dy": -3,
+     "custo": 36.1
+    },
+    "coxa_tras": {
+     "ang": 5.1
+    },
+    "canela_tras": {
+     "ang": -13.0
+    },
+    "coxa_frente": {
+     "ang": -10.0
+    },
+    "canela_frente": {
+     "ang": -9.6
+    }
+   }
+  }
+ ],
+ "vida": true,
+ "lutador": "pengaro"
+}
