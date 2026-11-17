@@ -3036,6 +3036,14 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
 - Para ligar de novo: `git checkout 95134c46 -- chars/raiclaven` e `ligar_pecas.py raiclaven` (rodar duas vezes em cima
   do já ligado não foi testado).
 
+### 2026-11-17 — Coice do Garanhão refeito e no jogo
+- Folha nova do coice gerada no ChatGPT (Chrome do PC de casa do Alisson, 1 imagem) com o mesmo corpo do Garanhão
+  (calção preto, cinto de corda branco, vira de costas e coiceia). Os 6 quadros do meio entram como ESPECIAIS no kit.
+- Ligado com `ligar_pecas.py gutto --de garanhao --grupo 49000 --ajustar coice` (grupo 49009, ação 10240, chute forte longe).
+- A luz do poder 4750 trocou o halo fixo (ação 9815) por orbe, halo e poça que andam com o poder: é o conserto da `luz.py`
+  do commit 911e781f (poder que voa é bola, não raio), não perda.
+- Robô de luta do Gutto: 186/186, dano igual ao anterior. Vídeo: docs/boneco-pecas/no_jogo/garanhao_coice_no_jogo.mp4.
+- Falta: golpes no ar do Garanhão; pele_pecas (sem linha de corte) no Gutto e no Garanhão.
 ## 17/11/2026 - Gbzin: pele nas juntas (pele_pecas.py da thread do Pengaró)
 - Os quadros feitos pelo kit (parado, soco 00-03/07, chute alto, rolamento 00/07) agora saem por `desenhar_pele`: as
   peças viram pele que dobra nas juntas (`pele_pecas.py`), com sobra, pés retos, cabeça por cima, furos e pontas da
@@ -3044,3 +3052,54 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
 - 17/11 (tarde): o CK passou a ser desenhado com a pele do `pele_pecas.py` (`PELE = True` em `pecas_ck.py`): as
   juntas dobram sem linha de corte (regra do Alisson); pés continuam apoiados no chão (`colar_pe`) e o braço esticado
   continua saindo de baixo do queixo. Religado a partir do `chars/ck` sem peças (4b54d61f), robô de peças 0/206.
+
+## 2026-11-17 — Pengaró: chute alto com o corpo inteiro (Claude, thread do Alisson)
+
+- `CORPO` em `ferramentas/pengaro_todo.py`: no chute alto montado, o quadril entra e sobe na ponta do pé de apoio, o
+  tronco deita para trás (até 12°), a cabeça olha o alvo e o braço de trás abre de contrapeso; o pé de apoio volta a
+  plantar por IK. O chute baixo e os golpes de impacto que ficaram "especiais" já vêm do desenho com o corpo junto.
+- `pele_pecas.py`: com a perna da frente erguida (câmara/esticada), a parte do quadril que é o alto da coxa no parado
+  sai (sobrava um pedaço de calça cinza pendurado embaixo da perna).
+- 20 ações refeitas, robô do boneco 0 defeito; religado a partir do Pengaró antes da ligação (ba260cd9), robô de luta
+  189/189 igual. Antes/depois em docs/boneco-pecas/todo/chute_alto_antes_depois.png.
+
+## 17/11/2026 - Gbzin: Grão-Pastor (despertado) com folhas próprias no jogo
+- Rascunhos de pose no ChatGPT (3 turnos, pedidos em `ferramentas/folhas_gbzin.py`), folhas em
+  `sprites/gbzin/quadros/folhas_arcade/e_*.png`. `ferramentas/gbzin_e_pecas.py firme NOMES` corta as células por costura
+  de menos tinta, trava a paleta do kit (`sprites/gbzin/pecas_e/paleta.json`, 15 cores), usa a cabeça como régua do
+  tamanho do corpo e cola a cabeça do kit (`pecas_e/cabeca.png`, presa na junta do pescoço) em todo quadro onde ela
+  não tapa mão ou nuca; resultado em `quadros_e_firmes(_hd)`. `conferir` grava
+  `docs/boneco-pecas/gbzin/grao_pastor_conferencia.md` (0 defeitos em 25 folhas).
+- `gerar_gbzin.py` (`GRAO_PASTOR`): 23 estados do despertado com desenho próprio: parado (respiração sem emenda),
+  andar, x, y, a, agachado, golpe baixo, rasteirinha, rasteira, anti-aéreo, pulo, golpes no ar (bicicleta e soco),
+  defesa, defesa alta/baixa, apanha, queda, levanta, rolamento, vitória, derrota, provocação. O resto do despertado
+  segue no desenho da base até as próximas folhas (estampido, giro do manto, mãos, juízo, especiais, agarrões).
+- Breno liberou auto-aprovação (17/11); robô 236/0 no estado juntado. Também tirei marcadores de conflito que tinham
+  ficado commitados neste LOGBOOK.
+
+### 2026-11-17 — gutto.sff encolhido: 91,5 MB -> 74,1 MB (ferramentas/encolher_sff.py)
+- Ferramenta nova e comum a todos os lutadores: `python3 ferramentas/encolher_sff.py <lutador> [--indexar 49000-49099]`.
+  Rode por último, depois de ligar_pecas, aura_silhueta e luz. Faz três coisas:
+  1. tira os desenhos que nada desenha (203 no Gutto);
+  2. passa os PNG do corpo firme (alfa 0/255) para uma paleta própria de 255 cores, pelo método da thread do Raiclaven
+     despertado (a paleta fica em sprites/<l>/paleta_<grupo>.bin e é trocada a cada rodada);
+  3. recomprime os outros PNG sem perda (filtros do Pillow) e liga os repetidos (2577 links).
+- Confere no fim: todo desenho que ficou sai pixel a pixel igual (os indexados têm erro médio de cor < 3/255).
+- `efeitos.gravar` agora liga PNG repetido; `conferir_sff.ler` mantém o `png` no link.
+- Gutto: Garanhão (49000-49099) indexado; robô de luta 186/186 com o mesmo dano; filmado no despertado.
+- Ao religar o Garanhão (`ligar_pecas --de garanhao`), rode de novo o `encolher_sff.py gutto --indexar 49000-49099`.
+- Turno 4 (17/11, Chrome do PC principal): estampido, giro do manto, mãos, manto-asa, golpes de direção, juízo de
+  cima, estouro, mão do pastor, berro e puxão. Ligados no despertado: chute alto (estampido), afastar (giro do manto),
+  caneta (direção), armada (juízo de cima), cajado no chão (mãos), bola (mão do pastor), compasso (puxão). `TROCA_COR`
+  conserta cor errada de um quadro só (perna do chute oliva). Falta desenho próprio só no agarrão e no golaço.
+
+## 2026-11-17 — Regra definitiva de criação de personagem (Claude, thread do Breno)
+- Pedido do Breno: uma regra só, juntando tudo. Nova `docs/regra-de-criacao-de-personagem.md`: ficha, conceitos,
+  folha-modelo, kit de peças (corpo firme, paleta travada do kit, régua de ossos), posar pelas 12 leis e pela regra de
+  camadas perto/longe, tempo e caixas iguais, vida, zero erro de animação, 3x, ligar no jogo (`ligar_pecas` → aura →
+  retratos → `encolher_sff`) e revisão (robôs, vídeo lado a lado, foto, issue, checklist).
+- CLAUDE.md, AGENTS.md, como-trabalhar, receita, regras dos lutadores, bíblia, estudos, missão e montador apontam para
+  ela em vez de repetir. O passo a passo antigo (folha de 8 quadros + 6 do meio do Blender) ficou marcado como histórico.
+- Decidido depois (Breno deixou a escolha com o Claude): sem quadro do meio entre antecipação e contato, no máximo 1
+  borrão; a fluidez vem da antecipação, da volta, da guarda, do parado e das transições. Os kits já ligados ainda
+  põem meio nesse trecho: ajustar o `vida_pecas.py` e religar é trabalho à parte.

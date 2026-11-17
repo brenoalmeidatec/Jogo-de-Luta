@@ -202,8 +202,6 @@ POSES.update({
     "ar_cascos/05": _m(A, coxa_frente=-40, canela_frente=60, coxa_tras=-20, canela_tras=60),
     # coice: abaixa com as garras no chão, vira de costas e escoiceia (de costas = desenho da folha)
     "coice/00": _p(), "coice/07": _p(),
-    "coice/01": _p(dx=-2, dy=20, tronco=26, cabeca=-14, bf=-20, bt=-20),
-    "coice/06": _p(dx=-2, dy=20, tronco=26, cabeca=-14, bf=-20, bt=-20),
 })
 BRACO_VAR = {}
 VARIANTES = {}
@@ -234,7 +232,7 @@ ANIMS = {
 }
 AUTO_ESPECIAL = set()
 FIRMES = set()
-ESPECIAIS = {"coice/02", "coice/03", "coice/04", "coice/05"}  # de costas: desenho da folha
+ESPECIAIS = {f"coice/{i:02d}" for i in range(1, 7)}  # vira de costas e coice: desenho da folha nova (17/11, mesmo corpo)
 EXPRESSOES = {}
 PERNA_NO_AR = {"pisao/01": "livre", "pisao/02": "livre", "pisao/03": "livre",
                **{f"casco_canela/{i:02d}": "livre" for i in range(1, 6)},
