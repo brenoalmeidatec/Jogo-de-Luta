@@ -108,11 +108,13 @@ PERNA_NO_AR = {"pe_pes/00": "camara", "pe_pes/01": "camara", "pe_pes/04": "camar
 FIRMES.update(f"pe_maos/{i:02d}" for i in range(8))
 FIRMES.update(f"pe_pes/{i:02d}" for i in range(8))
 POSES.update({
-    "pe_maos/00": {"braco_tras": {"var": "alto", "ang": 0}, "tronco": {"ang": -4}},
+    "pe_maos/00": {"braco_tras": {"var": "alto", "ang": 0}, "tronco": {"ang": -4},
+                   # gancho (estudo de anatomia): a garra da frente arma para trás, atrás do tronco, até o contato
+                   "braco_frente": {"ang": 34}, "_atras": {"slots": ["braco_frente"]}},
     "pe_maos/01": {"braco_frente": {"var": "esticado", "ang": 0}},
     "pe_maos/02": {"braco_frente": {"var": "esticado", "ang": 22}},
     "pe_maos/04": {"braco_tras": {"var": "erguido", "ang": 0}, "braco_frente": {"var": "erguido", "ang": 0},
-                   "tronco": {"ang": -5}},
+                   "tronco": {"ang": -5}, "_atras": {"slots": ["braco_frente"]}},
     "pe_maos/05": {"braco_frente": {"var": "esticado", "ang": -18}, "braco_tras": {"var": "esticado", "ang": 24}},
     "pe_maos/06": {"braco_frente": {"var": "esticado", "ang": 36}, "braco_tras": {"var": "esticado", "ang": 52}},
 })
@@ -130,7 +132,8 @@ _GUARDA = {"quadril": {"abs": 1, "dx": 0, "dy": 0, "pes": (0, 0)}, "braco_tras":
            "braco_frente": {"ang": -12}}
 POSES.update({
     "pe_pes/00": {**_GUARDA, "coxa_frente": {"var": "camara", "ang": 0}, "tronco": {"ang": -2}},
-    "pe_pes/01": {**_GUARDA, "coxa_frente": {"var": "camara", "ang": -6}, "tronco": {"ang": -4}},
+    "pe_pes/01": {**_GUARDA, "quadril": {"abs": 1, "dx": 10, "dy": 0, "pes": (0, 0)},  # o quadril empurra o joelho
+                  "coxa_frente": {"var": "camara", "ang": -10}, "tronco": {"ang": -9}},
     "pe_pes/04": {**_GUARDA, "coxa_frente": {"var": "camara", "ang": -4}, "tronco": {"ang": -3}},
     "pe_pes/05": {**_GUARDA, "coxa_frente": {"var": "esticada", "ang": -8}, "tronco": {"ang": -8},
                   "braco_frente": {"ang": -30}, "braco_tras": {"ang": 12}},

@@ -829,6 +829,10 @@ def desenhar(kit, pose):
         if X1 > X0 and Y1 > Y0:
             pint[Y0:Y1, X0:X1] &= ~(r[Y0 - y0:Y1 - y0, X0 - x0:X1 - x0, 3] > 0)
         b.colar(tela, r, x0, y0)
+    for slot in pose.get("_atras", {}).get("slots", ()):  # membro longe nesta pose: nasce atrás do tronco (estudo)
+        if slot in camadas and "tronco" in camadas:
+            camadas.remove(slot)
+            camadas.insert(camadas.index("tronco") if slot.startswith("braco") else 0, slot)
     pernas = pose.get("_pernas", {}).get("var")
     for slot in camadas:
         lado = slot.split("_")[-1]
