@@ -173,10 +173,10 @@
    "ang": -1
   },
   "coxa_tras": {
-   "ang": -0.6
+   "ang": -0.8
   },
   "canela_tras": {
-   "ang": 2.8
+   "ang": 3.0
   },
   "coxa_frente": {
    "ang": 2.7
@@ -204,10 +204,10 @@
    "ang": -2
   },
   "coxa_tras": {
-   "ang": -0.6
+   "ang": -0.8
   },
   "canela_tras": {
-   "ang": 2.8
+   "ang": 3.0
   },
   "coxa_frente": {
    "ang": 2.7
@@ -298,10 +298,10 @@
    "ang": -2
   },
   "coxa_tras": {
-   "ang": 1.1
+   "ang": 0.2
   },
   "canela_tras": {
-   "ang": 1.5
+   "ang": 3.0
   },
   "coxa_frente": {
    "ang": 1.2
@@ -330,10 +330,10 @@
    "ang": -4
   },
   "coxa_tras": {
-   "ang": 3.3
+   "ang": 3.0
   },
   "canela_tras": {
-   "ang": 2.4
+   "ang": 3.0
   },
   "coxa_frente": {
    "ang": 3.0
@@ -489,16 +489,16 @@
    "ang": 0
   },
   "coxa_tras": {
-   "ang": 0.5
+   "ang": -0.8
   },
   "canela_tras": {
-   "ang": 0.9
+   "ang": 3.0
   },
   "coxa_frente": {
-   "ang": -0.4
+   "ang": 0.3
   },
   "canela_frente": {
-   "ang": -1.1
+   "ang": -2.2
   }
  },
  "mare/00": {
@@ -557,10 +557,10 @@
    "ang": 11.0
   },
   "coxa_frente": {
-   "ang": -0.9
+   "ang": -0.8
   },
   "canela_frente": {
-   "ang": -1.9
+   "ang": -2.2
   }
  },
  "mare/02": {
@@ -614,10 +614,10 @@
    "ang": -5
   },
   "coxa_tras": {
-   "ang": 4.2
+   "ang": 3.8
   },
   "canela_tras": {
-   "ang": 2.3
+   "ang": 3.0
   },
   "coxa_frente": {
    "ang": 4.0
@@ -646,10 +646,10 @@
    "ang": -6
   },
   "coxa_tras": {
-   "ang": 5.2
+   "ang": 4.7
   },
   "canela_tras": {
-   "ang": 2.1
+   "ang": 3.0
   },
   "coxa_frente": {
    "ang": 6.6
@@ -678,10 +678,10 @@
    "ang": -3
   },
   "coxa_tras": {
-   "ang": 3.3
+   "ang": 3.0
   },
   "canela_tras": {
-   "ang": 2.4
+   "ang": 3.0
   },
   "coxa_frente": {
    "ang": 1.2
