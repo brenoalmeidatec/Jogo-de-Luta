@@ -667,15 +667,70 @@ def video(saida=None):
 
 # ------------------------------------------------------------------ quadro especial: desenho de hoje + cabeça do kit
 CABELO = {(149, 44, 65), (101, 29, 53), (76, 23, 53), (22, 20, 36)}
+CENTRO_CABECA = (569, 365)   # meio da cabeça no referencia_ginga/00 (a junta do pescoço fica 27 px abaixo)
 
 
-def _cabeca_girada(kit, ang):
+def _cabeca_girada(kit, ang, esc=1.0):
+    """Cabeça do kit girada (horário na tela) em volta da junta do pescoço. `esc` < 1 só nos desenhos de deitado, que
+    vieram menores que o parado (a cabeça acompanha o tamanho do corpo daquele desenho)."""
     cab = kit["pecas"]["cabeca"]
     junta = cab["junta"]
     piv = (junta[0] - cab["origem"][0], junta[1] - cab["origem"][1])
-    r, p = b.rotsprite(cab["img"], ang, piv)
-    t, _ = b.rotsprite(kit["topo"], ang, piv)
+    img, topo = cab["img"], kit["topo"]
+    if esc != 1.0:
+        h, w = img.shape[:2]
+        tam = (max(1, round(w * esc)), max(1, round(h * esc)))
+        img = np.asarray(Image.fromarray(np.ascontiguousarray(img)).resize(tam, Image.NEAREST))
+        topo = np.asarray(Image.fromarray(np.ascontiguousarray(topo)).resize(tam, Image.NEAREST))
+        piv = (piv[0] * esc, piv[1] * esc)
+    r, p = b.rotsprite(img, ang, piv)
+    t, _ = b.rotsprite(topo, ang, piv)
     return r, t, p
+
+
+def achar_por_centro(kit, src, centro, ang0, abertura, raio=15, escalas=(1.0,), frente=None, passo=5):
+    """Busca guiada para os quadros em que a busca livre erra (deitado, de ponta-cabeça, braço na frente): o centro da
+    cabeça no desenho é dado à mão (± raio), o giro corre ang0 ± abertura e o que está na frente (`frente`) não conta."""
+    cab = kit["pecas"]["cabeca"]
+    jx, jy = cab["junta"][0] - CENTRO_CABECA[0], cab["junta"][1] - CENTRO_CABECA[1]
+    cinza = pf.cinza(src)
+    melhor = None
+    for esc in escalas:
+        for ang in range(ang0 - abertura, ang0 + abertura + 1, passo):
+            r, t, p = _cabeca_girada(kit, ang, esc)
+            a = np.radians(ang)
+            vx = (jx * np.cos(a) - jy * np.sin(a)) * esc
+            vy = (jx * np.sin(a) + jy * np.cos(a)) * esc
+            h, w = r.shape[:2]
+            X0 = int(centro[0] - (p[0] - vx) - raio)
+            Y0 = int(centro[1] - (p[1] - vy) - raio)
+            Xc, Yc = max(0, X0), max(0, Y0)
+            reg = cinza[Yc:Y0 + h + 2 * raio, Xc:X0 + w + 2 * raio]
+            if reg.shape[0] <= h or reg.shape[1] <= w:
+                continue
+            m = (t[..., 3] > 0).astype(np.float32)
+            if frente is not None:  # o que está na frente da cabeça não conta: busca com a máscara furada por posição
+                res = np.full((reg.shape[0] - h + 1, reg.shape[1] - w + 1), np.inf, np.float32)
+                fr = frente[Yc:Yc + reg.shape[0], Xc:Xc + reg.shape[1]]
+                for yy in range(res.shape[0]):
+                    for xx in range(res.shape[1]):
+                        mm = m * (~fr[yy:yy + h, xx:xx + w])
+                        n = mm.sum()
+                        if n < 0.4 * m.sum():
+                            continue
+                        d = ((reg[yy:yy + h, xx:xx + w] - pf.cinza(r)) ** 2).sum(-1) * mm
+                        res[yy, xx] = d.sum() / (n * 3)
+                v, _, pm, _ = cv2.minMaxLoc(res)
+                nota = np.sqrt(v)
+            else:
+                res = cv2.matchTemplate(reg, pf.cinza(r), cv2.TM_SQDIFF,
+                                        mask=np.ascontiguousarray(np.repeat(m[..., None], 3, -1)))
+                res = np.nan_to_num(res, nan=1e18, posinf=1e18)
+                v, _, pm, _ = cv2.minMaxLoc(res)
+                nota = np.sqrt(v / (m.sum() * 3))
+            if melhor is None or nota < melhor[0]:
+                melhor = (nota, ang, (pm[0] + Xc + p[0], pm[1] + Yc + p[1]), esc)
+    return melhor
 
 
 def achar_cabeca(kit, src, angulos=range(-60, 61, 5), regiao=None):
@@ -703,10 +758,13 @@ def achar_cabeca(kit, src, angulos=range(-60, 61, 5), regiao=None):
     return melhor
 
 
-def trocar_cabeca(kit, src, achado=None):
-    """Tira a cabeça do desenho e põe a do kit no mesmo lugar e giro. Devolve (quadro, nota do casamento)."""
-    nota, ang, junta = achado or achar_cabeca(kit, src)
-    r, t, p = _cabeca_girada(kit, ang)
+def trocar_cabeca(kit, src, achado=None, frente=None):
+    """Tira a cabeça do desenho e põe a do kit no mesmo lugar e giro. `frente` (máscara) é o que o desenho tem na
+    frente da cabeça (braço, punho, bengala): volta por cima no fim. Devolve (quadro, nota do casamento)."""
+    achado = achado or achar_cabeca(kit, src)
+    nota, ang, junta = achado[:3]
+    esc = achado[3] if len(achado) > 3 else 1.0
+    r, t, p = _cabeca_girada(kit, ang, esc)
     x0, y0 = int(round(junta[0] - p[0])), int(round(junta[1] - p[1]))
     lugar_t = np.zeros_like(src)
     b.colar(lugar_t, t, x0, y0)
@@ -736,10 +794,89 @@ def trocar_cabeca(kit, src, achado=None):
             era_solto = any(r != 0 and (solto_antes == r).sum() < 2000 for r in rot)
             if not era_solto:
                 out[m] = 0
+    if frente is not None:
+        out[frente] = src[frente]
+    # fresta entre a cabeça nova e o ombro/braço (onde a cabeça velha era maior que a nova): fecha perto do pescoço
+    ys_c, xs_c = np.nonzero(mt)
+    perto_antes, pf.PERTO_DA_JUNTA = pf.PERTO_DA_JUNTA, 40
+    try:
+        out = pf.fechar_frestas(out, raio=4, juntas=[junta, (xs_c.mean(), ys_c.mean())])
+    finally:
+        pf.PERTO_DA_JUNTA = perto_antes
     return quantizar(pf.sem_migalha(out, minimo=30)), nota
 
 
 LIMITE_CABECA = 63   # nota do casamento da cabeça: acima disso o quadro vai para a revisão (cabeça escondida ou girada)
+
+# Os 41 quadros que passaram do limite, olhados um a um (17/11/2026):
+# 1) a busca livre acertou o lugar e o giro; a nota só passou porque o desenho tem a cabeça laranja de franja.
+CABECA_CONFERIDA = {"agarrao/05", "apanha/02", "apanha/03", "apanha/04", "ar_soco/02", "ar_soco/03", "baixo_soco/04",
+                    "bicicleta/02", "bicicleta/03", "bicicleta/04", "bicicleta/05", "cabecada/02", "cabecada/03",
+                    "compasso/04", "lata/02", "levanta/03", "levanta/04", "parry_alto/04", "queda/01", "rasteira/03",
+                    "rasteira/04", "rasteira/05", "rolamento/04", "soco/05"}
+# 2) de costas: não tem rosto para trocar, fica a nuca do desenho (na cor certa).
+COSTAS = {"rolamento/05"}
+# 3) busca guiada: centro da cabeça no desenho (lido à mão), giro inicial (horário +, 180 = de ponta-cabeça),
+#    abertura do giro, tamanhos tentados, espelho (virado para a esquerda) e o que fica na frente da cabeça.
+_DEITADO = (0.65, 0.7, 0.75, 0.8, 0.85, 0.9)
+CABECA_GUIA = {
+    "agarrao/04": dict(centro=(452, 418), ang=-70, abertura=15),
+    "cabecada/04": dict(centro=(560, 400), ang=0, abertura=25, escalas=(0.9, 0.95, 1.0)),
+    "levanta/00": dict(centro=(470, 615), ang=-90, abertura=40, escalas=_DEITADO),
+    "parry_baixo/03": dict(centro=(562, 630), ang=180, abertura=40, escalas=(0.85, 0.9, 0.95, 1.0)),
+    "parry_baixo/04": dict(centro=(490, 625), ang=-135, abertura=45, escalas=_DEITADO),
+    "queda/03": dict(centro=(410, 550), ang=-90, abertura=45, escalas=_DEITADO),
+    "queda/04": dict(centro=(405, 570), ang=-90, abertura=40, escalas=_DEITADO),
+    "queda/05": dict(centro=(420, 500), ang=-90, abertura=40, escalas=_DEITADO),
+    "queda/06": dict(centro=(425, 620), ang=-90, abertura=40, escalas=_DEITADO),
+    "queda/07": dict(centro=(440, 625), ang=-90, abertura=40, escalas=_DEITADO),
+    "rolamento/06": dict(centro=(512, 375), ang=0, abertura=25, escalas=(0.9, 0.95, 1.0), espelho=True),
+}
+# Defesa: punho, antebraço e bengala cruzam na frente do rosto. A cabeça do kit entra por baixo deles.
+_FRENTE_DEFESA = {
+    1: [(577, 380), (590, 376), (600, 372), (640, 370), (640, 440), (470, 440), (470, 390), (500, 385), (525, 388),
+        (530, 400), (560, 402), (575, 398)],
+    2: [(560, 375), (575, 370), (590, 367), (640, 360), (640, 440), (470, 440), (470, 385), (515, 385), (525, 393),
+        (555, 397)],
+    3: [(562, 378), (580, 375), (590, 368), (640, 365), (640, 440), (470, 440), (470, 385), (515, 385), (525, 393),
+        (560, 392)],
+    4: [(560, 298), (575, 295), (588, 292), (640, 288), (640, 360), (470, 360), (470, 302), (510, 303), (525, 310),
+        (560, 312)],
+    5: [(545, 384), (560, 380), (575, 375), (620, 370), (640, 440), (470, 440), (470, 400), (505, 400), (525, 404),
+        (545, 402)],
+    6: [(532, 378), (545, 373), (565, 365), (620, 360), (630, 440), (460, 440), (460, 398), (500, 396), (520, 398),
+        (532, 395)],
+    7: [(560, 380), (575, 377), (587, 372), (640, 365), (640, 440), (470, 440), (470, 383), (510, 385), (525, 392),
+        (560, 393)],
+}
+_CENTRO_DEFESA = {1: (548, 372), 2: (545, 372), 3: (545, 372), 4: (545, 292), 5: (525, 382), 6: (515, 378),
+                  7: (548, 372)}
+for _i, _pol in _FRENTE_DEFESA.items():
+    CABECA_GUIA[f"defesa/{_i:02d}"] = dict(centro=_CENTRO_DEFESA[_i], ang=0, abertura=15, raio=20,
+                                            escalas=(1.0,), frente=_pol)
+
+
+def _mascara(pol, forma):
+    m = np.zeros(forma[:2], np.uint8)
+    cv2.fillPoly(m, [np.array(pol, np.int32)], 1)
+    return m > 0
+
+
+def cabeca_guiada(kit, src, guia):
+    """Troca de cabeça pela busca guiada (CABECA_GUIA). Devolve (quadro, nota, achado)."""
+    esp = guia.get("espelho", False)
+    centro = guia["centro"]
+    frente = _mascara(guia["frente"], src.shape) & (src[..., 3] > 0) if "frente" in guia else None
+    if esp:
+        src = np.ascontiguousarray(src[:, ::-1])
+        centro = (src.shape[1] - 1 - centro[0], centro[1])
+        frente = None if frente is None else np.ascontiguousarray(frente[:, ::-1])
+    achado = achar_por_centro(kit, src, centro, guia["ang"], guia["abertura"], raio=guia.get("raio", 15),
+                              escalas=guia.get("escalas", (1.0,)), frente=frente)
+    out, nota = trocar_cabeca(kit, src, achado, frente=frente)
+    if esp:
+        out = np.ascontiguousarray(out[:, ::-1])
+    return out, nota, achado
 FIRMES = SPR / "quadros_firmes_hd"
 
 
@@ -767,12 +904,22 @@ def firmes(golpes=None):
                 if gn in NO_AR:
                     ys = np.nonzero(out[..., 3].any(1))[0]
                     out = np.roll(out, 659 - ys.max(), 0)
+            elif q in CABECA_GUIA:
+                out, nota, ach = cabeca_guiada(kit, abrir(q), CABECA_GUIA[q])
+                como = (f"desenho + cabeça do kit (guiada: giro {ach[1]}°"
+                        + (f", tamanho {ach[3]:.2f}" if ach[3] != 1.0 else "")
+                        + (", espelhada" if CABECA_GUIA[q].get("espelho") else "")
+                        + (", braço e bengala por cima" if "frente" in CABECA_GUIA[q] else "") + ")")
+            elif q in COSTAS:
+                out, nota, como = quantizar(abrir(q)), None, "de costas: fica a nuca do desenho (na cor certa)"
             else:
                 src = abrir(TROCA_QUADRO.get(q, q))
                 achado = achar_cabeca(kit, src)
-                if achado[0] <= LIMITE_CABECA:
+                if achado[0] <= LIMITE_CABECA or q in CABECA_CONFERIDA:
                     out, nota = trocar_cabeca(kit, src, achado)
                     como = "desenho + cabeça do kit" + (f" (desenho de {TROCA_QUADRO[q]})" if q in TROCA_QUADRO else "")
+                    if achado[0] > LIMITE_CABECA:
+                        como += " (conferida à mão)"
                 else:
                     out, nota, como = quantizar(src), achado[0], "REVISAR: cabeça não achada (fica a do desenho, na cor certa)"
             Image.fromarray(out).save(FIRMES / gn / f"{i:02d}.png")

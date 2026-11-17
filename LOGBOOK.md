@@ -2776,3 +2776,11 @@ ficam com a cabeça do próprio desenho, só na cor certa: pedem encaixe à mão
 Passinho de Pinguim: girar o parado de três quartos nesses ângulos rasga coxa e calção (tentativas no código:
 BICICLETA, _cotovelada, PINGUIM); pedem peças novas desenhadas (perna esticada de lado, braço da cotovelada, braços
 abertos). Golaço e arm-lock voador seguem como estão. Nada ligado no gerador nem no `.sff`.
+
+## 2026-11-17 — Gbzin: as 41 cabeças escondidas
+- Os 41 quadros que ficaram em REVISAR agora têm a cabeça do kit. 24 casaram na busca livre e foram conferidos à mão
+  (CABECA_CONFERIDA). Busca guiada (CABECA_GUIA) para deitado, ponta-cabeça (giro até 180°, tamanho 0.65–0.9 do desenho
+  menor), agarrão e cabeçada; rolamento/06 com a cabeça espelhada; rolamento/05 é de costas e fica a nuca.
+- Defesa 01–07: punho, antebraço e bengala voltam por cima da cabeça nova (polígonos _FRENTE_DEFESA).
+- Frestas entre a cabeça nova e o ombro fecham perto do pescoço. Robô: só defesa/05 e 06 (gancho já solto no desenho).
+- Achado para depois: defesa/00 e 04 estão 80 px acima do chão no desenho de origem (conferir alinhamento no gerador).
