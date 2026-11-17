@@ -44,9 +44,11 @@ def misturar(a, b_, t):
         if pa.get("var") != pb.get("var"):
             out[slot] = dict(pa)
             continue
-        p = {k: v for k, v in pa.items() if k not in ("ang", "dx", "dy", "custo")}
+        p = {k: v for k, v in pa.items() if k not in ("ang", "dx", "dy", "custo", "estica")}
         for k in ("ang", "dx", "dy"):
             p[k] = pa.get(k, 0) + (pb.get(k, 0) - pa.get(k, 0)) * t
+        if "estica" in pa or "estica" in pb:  # membro que estica (borracha): estica e volta junto com o giro
+            p["estica"] = pa.get("estica", 1) + (pb.get("estica", 1) - pa.get("estica", 1)) * t
         out[slot] = p
     return out
 

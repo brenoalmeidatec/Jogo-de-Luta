@@ -15,6 +15,61 @@ command.time = 15
 command.buffer.time = 3
 
 [Command]
+name = "k_peruca_x"
+command = ~D, DF, F, x
+time = 20
+
+[Command]
+name = "k_peruca_y"
+command = ~D, DF, F, y
+time = 20
+
+[Command]
+name = "k_pescoco_x"
+command = ~D, DB, B, x
+time = 20
+
+[Command]
+name = "k_pescoco_y"
+command = ~D, DB, B, y
+time = 20
+
+[Command]
+name = "k_tanque_a"
+command = ~F, D, DF, a
+time = 20
+
+[Command]
+name = "k_tanque_b"
+command = ~F, D, DF, b
+time = 20
+
+[Command]
+name = "k_bigodes"
+command = ~B, F, b
+time = 20
+
+[Command]
+name = "k_cirurgia"
+command = ~B, F, D, y
+time = 30
+
+[Command]
+name = "k_transplante"
+command = ~F, D, F, y
+time = 20
+
+[Command]
+name = "poder47"
+command = ~D, F, D, F, x
+time = 30
+
+[Command]
+name = "poder47"
+command = ~D, F, D, F, y
+time = 30
+
+[Command]
 name = "golaco"
 command = ~B, F, D, a
 time = 24
@@ -263,6 +318,388 @@ time = 1
 
 [Statedef -1]
 
+[State -1, Poder de longe do despertado (despertados_47.py)]
+type = ChangeState
+value = 4750
+triggerall = command = "poder47"
+triggerall = var(20) > 0
+triggerall = statetype != A
+triggerall = NumProjID(4750) = 0
+trigger1 = ctrl
+
+[State -1, Desp Sala de Cirurgia (kit_raiclaven.py)]
+type = ChangeState
+value = 23000
+triggerall = var(20) > 0
+triggerall = command = "k_cirurgia"
+triggerall = power >= 2000
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = (stateno = 20200 || stateno = 20210 || stateno = 20230 || stateno = 20240 || stateno = 20400 || stateno = 20410 || stateno = 20430 || stateno = 20440 || stateno = 20250 || stateno = 20260 || stateno = 20270 || stateno = 20280 || stateno = 20301 || stateno = 20302 || stateno = 20311 || stateno = 20312 || stateno = 20321 || stateno = 20322 || stateno = 20331 || stateno = 20332 || stateno = 20341 || stateno = 21100 || stateno = 21101 || stateno = 21200) && movehit
+
+[State -1, Desp Transplante (kit_raiclaven.py)]
+type = ChangeState
+value = 24200
+triggerall = var(20) > 0
+triggerall = command = "k_transplante"
+triggerall = statetype = S
+triggerall = p2bodydist x < 10
+triggerall = p2statetype != A
+triggerall = p2movetype != H
+triggerall = stateno != 100
+triggerall = ctrl
+trigger1 = 1
+
+[State -1, Desp Peruca Viva x (kit_raiclaven.py)]
+type = ChangeState
+value = 21000
+triggerall = var(20) > 0
+triggerall = command = "k_peruca_x"
+triggerall = statetype != A
+triggerall = NumProjID(21000) = 0
+trigger1 = ctrl
+trigger2 = (stateno = 20200 || stateno = 20210 || stateno = 20230 || stateno = 20240 || stateno = 20400 || stateno = 20410 || stateno = 20430 || stateno = 20440 || stateno = 20250 || stateno = 20260 || stateno = 20270 || stateno = 20280 || stateno = 20301 || stateno = 20302 || stateno = 20311 || stateno = 20312 || stateno = 20321 || stateno = 20322 || stateno = 20331 || stateno = 20332 || stateno = 20341) && movecontact
+
+[State -1, Desp Pescoço x (kit_raiclaven.py)]
+type = ChangeState
+value = 21100
+triggerall = var(20) > 0
+triggerall = command = "k_pescoco_x"
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = (stateno = 20200 || stateno = 20210 || stateno = 20230 || stateno = 20240 || stateno = 20400 || stateno = 20410 || stateno = 20430 || stateno = 20440 || stateno = 20250 || stateno = 20260 || stateno = 20270 || stateno = 20280 || stateno = 20301 || stateno = 20302 || stateno = 20311 || stateno = 20312 || stateno = 20321 || stateno = 20322 || stateno = 20331 || stateno = 20332 || stateno = 20341) && movecontact
+
+[State -1, Desp Peruca Viva y (kit_raiclaven.py)]
+type = ChangeState
+value = 21001
+triggerall = var(20) > 0
+triggerall = command = "k_peruca_y"
+triggerall = statetype != A
+triggerall = NumProjID(21000) = 0
+trigger1 = ctrl
+trigger2 = (stateno = 20200 || stateno = 20210 || stateno = 20230 || stateno = 20240 || stateno = 20400 || stateno = 20410 || stateno = 20430 || stateno = 20440 || stateno = 20250 || stateno = 20260 || stateno = 20270 || stateno = 20280 || stateno = 20301 || stateno = 20302 || stateno = 20311 || stateno = 20312 || stateno = 20321 || stateno = 20322 || stateno = 20331 || stateno = 20332 || stateno = 20341) && movecontact
+
+[State -1, Desp Pescoço y (kit_raiclaven.py)]
+type = ChangeState
+value = 21101
+triggerall = var(20) > 0
+triggerall = command = "k_pescoco_y"
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = (stateno = 20200 || stateno = 20210 || stateno = 20230 || stateno = 20240 || stateno = 20400 || stateno = 20410 || stateno = 20430 || stateno = 20440 || stateno = 20250 || stateno = 20260 || stateno = 20270 || stateno = 20280 || stateno = 20301 || stateno = 20302 || stateno = 20311 || stateno = 20312 || stateno = 20321 || stateno = 20322 || stateno = 20331 || stateno = 20332 || stateno = 20341) && movecontact
+
+[State -1, Desp Tanque Estourado a (kit_raiclaven.py)]
+type = ChangeState
+value = 21200
+triggerall = var(20) > 0
+triggerall = command = "k_tanque_a"
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = (stateno = 20200 || stateno = 20210 || stateno = 20230 || stateno = 20240 || stateno = 20400 || stateno = 20410 || stateno = 20430 || stateno = 20440 || stateno = 20250 || stateno = 20260 || stateno = 20270 || stateno = 20280 || stateno = 20301 || stateno = 20302 || stateno = 20311 || stateno = 20312 || stateno = 20321 || stateno = 20322 || stateno = 20331 || stateno = 20332 || stateno = 20341) && movecontact
+
+[State -1, Desp Tanque Estourado b (kit_raiclaven.py)]
+type = ChangeState
+value = 21200
+triggerall = var(20) > 0
+triggerall = command = "k_tanque_b"
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = (stateno = 20200 || stateno = 20210 || stateno = 20230 || stateno = 20240 || stateno = 20400 || stateno = 20410 || stateno = 20430 || stateno = 20440 || stateno = 20250 || stateno = 20260 || stateno = 20270 || stateno = 20280 || stateno = 20301 || stateno = 20302 || stateno = 20311 || stateno = 20312 || stateno = 20321 || stateno = 20322 || stateno = 20331 || stateno = 20332 || stateno = 20341) && movecontact
+
+[State -1, Desp Bigodes Carnívoros (kit_raiclaven.py)]
+type = ChangeState
+value = 21300
+triggerall = var(20) > 0
+triggerall = command = "k_bigodes"
+triggerall = statetype != A
+triggerall = NumProjID(21300) = 0
+trigger1 = ctrl
+trigger2 = (stateno = 20200 || stateno = 20210 || stateno = 20230 || stateno = 20240 || stateno = 20400 || stateno = 20410 || stateno = 20430 || stateno = 20440 || stateno = 20250 || stateno = 20260 || stateno = 20270 || stateno = 20280 || stateno = 20301 || stateno = 20302 || stateno = 20311 || stateno = 20312 || stateno = 20321 || stateno = 20322 || stateno = 20331 || stateno = 20332 || stateno = 20341) && movecontact
+
+[State -1, Desp Lavagem (kit_raiclaven.py)]
+type = ChangeState
+value = 24100
+triggerall = var(20) > 0
+triggerall = command = "y"
+triggerall = command = "holddown"
+triggerall = statetype != A
+triggerall = p2bodydist x < 10
+triggerall = p2statetype != A
+triggerall = p2movetype != H
+triggerall = stateno != 100
+triggerall = ctrl
+trigger1 = 1
+
+[State -1, Desp Cobaia 3 (kit_raiclaven.py)]
+type = ChangeState
+value = 20342
+triggerall = var(20) > 0
+triggerall = command = "b"
+triggerall = command = "holddown"
+triggerall = statetype != A
+trigger1 = stateno = 20341 && movecontact
+
+[State -1, Desp Cobaia 2 (kit_raiclaven.py)]
+type = ChangeState
+value = 20341
+triggerall = var(20) > 0
+triggerall = command = "y"
+triggerall = command != "holddown"
+triggerall = statetype != A
+trigger1 = stateno = 20280 && movecontact
+
+[State -1, Desp corrente x final (kit_raiclaven.py)]
+type = ChangeState
+value = 20303
+triggerall = var(20) > 0
+triggerall = command = "x"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 20302 && movehit
+
+[State -1, Desp corrente x 3 (kit_raiclaven.py)]
+type = ChangeState
+value = 20302
+triggerall = var(20) > 0
+triggerall = command = "x"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 20301 && movecontact
+
+[State -1, Desp corrente x 2 (kit_raiclaven.py)]
+type = ChangeState
+value = 20301
+triggerall = var(20) > 0
+triggerall = command = "x"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 20200 && movecontact
+
+[State -1, Desp corrente y final (kit_raiclaven.py)]
+type = ChangeState
+value = 20313
+triggerall = var(20) > 0
+triggerall = command = "y"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 20312 && movehit
+
+[State -1, Desp corrente y 3 (kit_raiclaven.py)]
+type = ChangeState
+value = 20312
+triggerall = var(20) > 0
+triggerall = command = "y"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 20311 && movecontact
+
+[State -1, Desp corrente y 2 (kit_raiclaven.py)]
+type = ChangeState
+value = 20311
+triggerall = var(20) > 0
+triggerall = command = "y"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 20210 && movecontact
+
+[State -1, Desp corrente a final (kit_raiclaven.py)]
+type = ChangeState
+value = 20323
+triggerall = var(20) > 0
+triggerall = command = "a"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 20322 && movehit
+
+[State -1, Desp corrente a 3 (kit_raiclaven.py)]
+type = ChangeState
+value = 20322
+triggerall = var(20) > 0
+triggerall = command = "a"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 20321 && movecontact
+
+[State -1, Desp corrente a 2 (kit_raiclaven.py)]
+type = ChangeState
+value = 20321
+triggerall = var(20) > 0
+triggerall = command = "a"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 20230 && movecontact
+
+[State -1, Desp corrente b final (kit_raiclaven.py)]
+type = ChangeState
+value = 20333
+triggerall = var(20) > 0
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 20332 && movehit
+
+[State -1, Desp corrente b 3 (kit_raiclaven.py)]
+type = ChangeState
+value = 20332
+triggerall = var(20) > 0
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 20331 && movecontact
+
+[State -1, Desp corrente b 2 (kit_raiclaven.py)]
+type = ChangeState
+value = 20331
+triggerall = var(20) > 0
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = stateno = 20240 && movecontact
+
+[State -1, Desp Mordida por Cima (kit_raiclaven.py)]
+type = ChangeState
+value = 20250
+triggerall = var(20) > 0
+triggerall = command = "y"
+triggerall = command = "holdfwd"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = ctrl
+
+[State -1, Desp Pisão de Choque (kit_raiclaven.py)]
+type = ChangeState
+value = 20260
+triggerall = var(20) > 0
+triggerall = command = "b"
+triggerall = command = "holdfwd"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = ctrl
+
+[State -1, Desp Bafo do Secador (kit_raiclaven.py)]
+type = ChangeState
+value = 20270
+triggerall = var(20) > 0
+triggerall = command = "x"
+triggerall = command = "holdback"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = ctrl
+
+[State -1, Desp Puxa pela Gola (kit_raiclaven.py)]
+type = ChangeState
+value = 20280
+triggerall = var(20) > 0
+triggerall = command = "a"
+triggerall = command = "holdback"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = ctrl
+
+[State -1, Desp Tapa de Garra (kit_raiclaven.py)]
+type = ChangeState
+value = 20200
+triggerall = var(20) > 0
+triggerall = command = "x"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = ctrl
+
+[State -1, Desp Navalha Comprida (kit_raiclaven.py)]
+type = ChangeState
+value = 20210
+triggerall = var(20) > 0
+triggerall = command = "y"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = ctrl
+
+[State -1, Desp Bota e Gosma (kit_raiclaven.py)]
+type = ChangeState
+value = 20230
+triggerall = var(20) > 0
+triggerall = command = "a"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = ctrl
+
+[State -1, Desp Três Braços (kit_raiclaven.py)]
+type = ChangeState
+value = 20240
+triggerall = var(20) > 0
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = ctrl
+
+[State -1, Desp Belisco no Tornozelo (kit_raiclaven.py)]
+type = ChangeState
+value = 20400
+triggerall = var(20) > 0
+triggerall = command = "x"
+triggerall = command = "holddown"
+triggerall = statetype != A
+trigger1 = ctrl
+
+[State -1, Desp Mordida Antiaérea (kit_raiclaven.py)]
+type = ChangeState
+value = 20410
+triggerall = var(20) > 0
+triggerall = command = "y"
+triggerall = command = "holddown"
+triggerall = statetype != A
+trigger1 = ctrl
+
+[State -1, Desp Tubo no Chão (kit_raiclaven.py)]
+type = ChangeState
+value = 20430
+triggerall = var(20) > 0
+triggerall = command = "a"
+triggerall = command = "holddown"
+triggerall = statetype != A
+trigger1 = ctrl
+
+[State -1, Desp Varrida de Garra (kit_raiclaven.py)]
+type = ChangeState
+value = 20440
+triggerall = var(20) > 0
+triggerall = command = "b"
+triggerall = command = "holddown"
+triggerall = statetype != A
+trigger1 = ctrl
+
+[State -1, Desp Arranhão de Cima (kit_raiclaven.py)]
+type = ChangeState
+value = 20600
+triggerall = var(20) > 0
+triggerall = command = "x"
+triggerall = statetype = A
+trigger1 = ctrl
+
+[State -1, Desp Navalha em Arco (kit_raiclaven.py)]
+type = ChangeState
+value = 20610
+triggerall = var(20) > 0
+triggerall = command = "y"
+triggerall = statetype = A
+trigger1 = ctrl
+
+[State -1, Desp Joelhada e Mordida (kit_raiclaven.py)]
+type = ChangeState
+value = 20630
+triggerall = var(20) > 0
+triggerall = command = "a"
+triggerall = statetype = A
+trigger1 = ctrl
+
+[State -1, Desp Por Baixo Mordendo (kit_raiclaven.py)]
+type = ChangeState
+value = 20640
+triggerall = var(20) > 0
+triggerall = command = "b"
+triggerall = statetype = A
+trigger1 = ctrl
+
 [State -1, Pode cancelar]
 type = VarSet
 trigger1 = 1
@@ -274,6 +711,7 @@ value = 3200
 triggerall = command = "golpe_3200"
 triggerall = statetype != A
 triggerall = power >= 2000
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = var(1)
 trigger2 = (stateno = [1000,1501]) && movehit && movehit <= 8
 
@@ -282,6 +720,7 @@ type = ChangeState
 value = 1400
 triggerall = command = "golpe_1400"
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = var(1)
 
 [State -1, Mão de Chimpá]
@@ -289,6 +728,7 @@ type = ChangeState
 value = 1401
 triggerall = command = "golpe_1401"
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = var(1)
 
 [State -1, Sola de Várzea]
@@ -296,6 +736,7 @@ type = ChangeState
 value = 1500
 triggerall = command = "golpe_1500"
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = var(1)
 
 [State -1, Sola de Várzea]
@@ -303,6 +744,7 @@ type = ChangeState
 value = 1501
 triggerall = command = "golpe_1501"
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = var(1)
 
 [State -1, Saideira Sombria]
@@ -312,6 +754,7 @@ triggerall = command = "golaco"
 triggerall = power >= 2000
 triggerall = ((var(20) > 0) || (life <= 200 && power >= 2000))
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = var(1)
 trigger2 = (stateno = [1000,1501]) && movehit && movehit <= 8
 
@@ -321,6 +764,7 @@ value = 3000
 triggerall = command = "golaco"
 triggerall = power >= 1000
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = var(1)
 trigger2 = (stateno = [1000,1501]) && movehit && movehit <= 8
 
@@ -338,6 +782,7 @@ type = ChangeState
 value = 1200
 triggerall = command = "armada_x"
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = var(1)
 
 [State -1, armada]
@@ -345,6 +790,7 @@ type = ChangeState
 value = 1201
 triggerall = command = "armada_y"
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = var(1)
 
 [State -1, caneta]
@@ -352,6 +798,7 @@ type = ChangeState
 value = 1300
 triggerall = command = "caneta_x"
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = var(1)
 
 [State -1, caneta]
@@ -359,6 +806,7 @@ type = ChangeState
 value = 1301
 triggerall = command = "caneta_y"
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = var(1)
 
 [State -1, compasso]
@@ -366,6 +814,7 @@ type = ChangeState
 value = 1100
 triggerall = command = "compasso_a"
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = var(1)
 
 [State -1, compasso]
@@ -373,6 +822,7 @@ type = ChangeState
 value = 1101
 triggerall = command = "compasso_b"
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = var(1)
 
 [State -1, Bola forte]
@@ -381,6 +831,7 @@ value = 1001
 triggerall = command = "bola_forte"
 triggerall = numprojid(1000) + numprojid(1001) + numprojid(1002) + numprojid(1003) = 0
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = var(1)
 
 [State -1, Bola fraca]
@@ -389,6 +840,7 @@ value = 1000
 triggerall = command = "bola_fraca"
 triggerall = numprojid(1000) + numprojid(1001) + numprojid(1002) + numprojid(1003) = 0
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = var(1)
 
 [State -1, Garrafada forte]
@@ -415,6 +867,7 @@ value = 1701
 triggerall = command = "role_b"
 triggerall = p2dist x > 0
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = var(1)
 
 [State -1, Role por tras]
@@ -423,40 +876,7 @@ value = 1700
 triggerall = command = "role_a"
 triggerall = p2dist x > 0
 triggerall = statetype != A
-trigger1 = var(1)
-
-[State -1, Mao de Sombra]
-type = ChangeState
-value = 3400
-triggerall = command = "sombra_x"
-triggerall = numprojid(1000) + numprojid(1001) + numprojid(1002) + numprojid(1003) = 0
-triggerall = var(20) > 0
-triggerall = statetype != A
-trigger1 = var(1)
-
-[State -1, Chute da Corrente]
-type = ChangeState
-value = 3401
-triggerall = command = "sombra_y"
-triggerall = var(20) > 0
-triggerall = statetype != A
-trigger1 = var(1)
-
-[State -1, Sombra Atravessada]
-type = ChangeState
-value = 3402
-triggerall = command = "sombra_a"
-triggerall = p2dist x > 0
-triggerall = var(20) > 0
-triggerall = statetype != A
-trigger1 = var(1)
-
-[State -1, Queda Escura]
-type = ChangeState
-value = 3403
-triggerall = command = "sombra_b"
-triggerall = var(20) > 0
-triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = var(1)
 
 [State -1, Parry embaixo]
@@ -556,6 +976,7 @@ triggerall = stateno != 100
 triggerall = p2bodydist x < 12
 triggerall = p2statetype != A
 triggerall = p2movetype != H
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 
 [State -1, Agarrao agachado]
@@ -569,12 +990,42 @@ triggerall = stateno != 100
 triggerall = p2bodydist x < 8
 triggerall = p2statetype = C
 triggerall = p2movetype != H
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
+trigger1 = 1
+
+[State -1, Agarrao do despertado (despertados_47.py)]
+type = ChangeState
+value = 4700
+triggerall = var(20) > 0
+triggerall = command = "y"
+triggerall = statetype = S
+triggerall = ctrl
+triggerall = stateno != 100
+triggerall = p2bodydist x < 8
+triggerall = p2statetype != A
+triggerall = p2movetype != H
+triggerall = (command = "holdfwd" || command = "holdback")
 trigger1 = 1
 
 [State -1, Agarrao]
 type = ChangeState
 value = 800
 triggerall = command = "y"
+triggerall = statetype = S
+triggerall = ctrl
+triggerall = stateno != 100
+triggerall = p2bodydist x < 8
+triggerall = p2statetype != A
+triggerall = p2movetype != H
+triggerall = (command = "holdfwd" || command = "holdback")
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
+trigger1 = 1
+
+[State -1, Agarrao do despertado (despertados_47.py)]
+type = ChangeState
+value = 4700
+triggerall = var(20) > 0
+triggerall = command = "b"
 triggerall = statetype = S
 triggerall = ctrl
 triggerall = stateno != 100
@@ -595,155 +1046,8 @@ triggerall = p2bodydist x < 8
 triggerall = p2statetype != A
 triggerall = p2movetype != H
 triggerall = (command = "holdfwd" || command = "holdback")
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = 1
-
-[State -1, Desp: Mao de Chao Possuida]
-type = ChangeState
-value = 3430
-triggerall = command = "y"
-triggerall = command = "holddown"
-triggerall = statetype != A
-triggerall = var(20) > 0
-trigger1 = ctrl
-
-[State -1, Desp: Foice Escura]
-type = ChangeState
-value = 3435
-triggerall = command = "b"
-triggerall = command = "holddown"
-triggerall = statetype != A
-triggerall = var(20) > 0
-trigger1 = ctrl
-
-[State -1, Desp: Tranco Possuido]
-type = ChangeState
-value = 3431
-triggerall = command = "y"
-triggerall = command = "holdfwd"
-triggerall = statetype = S
-triggerall = var(20) > 0
-trigger1 = ctrl
-trigger2 = (stateno = 200 || stateno = 230) && movehit && movehit <= 8
-
-[State -1, Desp: Passo de Sombra]
-type = ChangeState
-value = 3432
-triggerall = command = "b"
-triggerall = command = "holdfwd"
-triggerall = statetype = S
-triggerall = var(20) > 0
-trigger1 = ctrl
-
-[State -1, Desp: Palma Torta]
-type = ChangeState
-value = 3433
-triggerall = command = "x"
-triggerall = command = "holdback"
-triggerall = statetype = S
-triggerall = var(20) > 0
-trigger1 = ctrl
-
-[State -1, Desp: Puxada Sombria]
-type = ChangeState
-value = 3434
-triggerall = command = "a"
-triggerall = command = "holdback"
-triggerall = statetype = S
-triggerall = var(20) > 0
-trigger1 = ctrl
-
-[State -1, Desp: Kombo 3]
-type = ChangeState
-value = 349
-triggerall = command = "x"
-triggerall = statetype = S
-triggerall = var(20) > 0
-trigger1 = stateno = 348 && movecontact
-
-[State -1, Desp: Kombo 2]
-type = ChangeState
-value = 348
-triggerall = command = "a"
-triggerall = command != "holddown"
-triggerall = statetype = S
-triggerall = var(20) > 0
-trigger1 = stateno = 3420 && movecontact
-
-[State -1, Desp: corrente y final]
-type = ChangeState
-value = 3413
-triggerall = command = "y"
-triggerall = command != "holddown"
-triggerall = statetype = S
-triggerall = var(20) > 0
-trigger1 = stateno = 3412 && movehit && var(10) >= 3
-
-[State -1, Desp: corrente y 3]
-type = ChangeState
-value = 3412
-triggerall = command = "y"
-triggerall = command != "holddown"
-triggerall = statetype = S
-triggerall = var(20) > 0
-trigger1 = stateno = 3411 && movecontact
-
-[State -1, Desp: corrente y 2]
-type = ChangeState
-value = 3411
-triggerall = command = "y"
-triggerall = command != "holddown"
-triggerall = statetype = S
-triggerall = var(20) > 0
-trigger1 = stateno = 3410 && movecontact
-
-[State -1, Desp: corrente y 1]
-type = ChangeState
-value = 3410
-triggerall = command = "y"
-triggerall = command != "holddown"
-triggerall = command != "holdfwd"
-triggerall = command != "holdback"
-triggerall = statetype = S
-triggerall = var(20) > 0
-trigger1 = ctrl
-
-[State -1, Desp: corrente b final]
-type = ChangeState
-value = 3423
-triggerall = command = "b"
-triggerall = command != "holddown"
-triggerall = statetype = S
-triggerall = var(20) > 0
-trigger1 = stateno = 3422 && movehit && var(10) >= 3
-
-[State -1, Desp: corrente b 3]
-type = ChangeState
-value = 3422
-triggerall = command = "b"
-triggerall = command != "holddown"
-triggerall = statetype = S
-triggerall = var(20) > 0
-trigger1 = stateno = 3421 && movecontact
-
-[State -1, Desp: corrente b 2]
-type = ChangeState
-value = 3421
-triggerall = command = "b"
-triggerall = command != "holddown"
-triggerall = statetype = S
-triggerall = var(20) > 0
-trigger1 = stateno = 3420 && movecontact
-
-[State -1, Desp: corrente b 1]
-type = ChangeState
-value = 3420
-triggerall = command = "b"
-triggerall = command != "holddown"
-triggerall = command != "holdfwd"
-triggerall = command != "holdback"
-triggerall = statetype = S
-triggerall = var(20) > 0
-trigger1 = ctrl
 
 [State -1, Kombo 1: x]
 type = ChangeState
@@ -751,6 +1055,7 @@ value = 340
 triggerall = command = "x"
 triggerall = command != "holddown"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = stateno = 216 && movecontact
 
 [State -1, Kombo 1: b]
@@ -759,6 +1064,7 @@ value = 341
 triggerall = command = "b"
 triggerall = command != "holddown"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = stateno = 340 && movecontact
 
 [State -1, Kombo 2: baixo a]
@@ -767,6 +1073,7 @@ value = 342
 triggerall = command = "a"
 triggerall = command = "holddown"
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = stateno = 200 && movecontact
 
 [State -1, Kombo 2: y]
@@ -775,6 +1082,7 @@ value = 343
 triggerall = command = "y"
 triggerall = command != "holddown"
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = stateno = 342 && movecontact
 
 [State -1, Kombo 3: y]
@@ -784,6 +1092,7 @@ triggerall = command = "y"
 triggerall = command != "holddown"
 triggerall = statetype = S
 triggerall = command != "holdfwd"
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = stateno = 201 && movecontact
 
 [State -1, Kombo 3: frente b]
@@ -792,6 +1101,7 @@ value = 345
 triggerall = command = "b"
 triggerall = command = "holdfwd"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = stateno = 344 && movecontact
 
 [State -1, Kombo 4: b]
@@ -800,6 +1110,7 @@ value = 346
 triggerall = command = "b"
 triggerall = command != "holddown"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = stateno = 230 && movecontact
 
 [State -1, Kombo 4: baixo y]
@@ -808,6 +1119,7 @@ value = 347
 triggerall = command = "y"
 triggerall = command = "holddown"
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = stateno = 346 && movecontact
 
 [State -1, Corrente x: final]
@@ -816,6 +1128,7 @@ value = 303
 triggerall = command = "x"
 triggerall = command != "holddown"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = stateno = 302 && movehit && var(10) >= 3
 
 [State -1, Corrente x: 3o]
@@ -824,6 +1137,7 @@ value = 302
 triggerall = command = "x"
 triggerall = command != "holddown"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = stateno = 301 && movecontact
 
 [State -1, Corrente x: 2o]
@@ -832,6 +1146,7 @@ value = 301
 triggerall = command = "x"
 triggerall = command != "holddown"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = (stateno = 200) && movecontact
 
 [State -1, Corrente y: final]
@@ -840,6 +1155,7 @@ value = 313
 triggerall = command = "y"
 triggerall = command != "holddown"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = stateno = 312 && movehit && var(10) >= 3
 
 [State -1, Corrente y: 3o]
@@ -848,6 +1164,7 @@ value = 312
 triggerall = command = "y"
 triggerall = command != "holddown"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = stateno = 311 && movecontact
 
 [State -1, Corrente y: 2o]
@@ -856,6 +1173,7 @@ value = 311
 triggerall = command = "y"
 triggerall = command != "holddown"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = (stateno = 210 || stateno = 215) && movecontact
 
 [State -1, Corrente a: final]
@@ -864,6 +1182,7 @@ value = 323
 triggerall = command = "a"
 triggerall = command != "holddown"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = stateno = 322 && movehit && var(10) >= 3
 
 [State -1, Corrente a: 3o]
@@ -872,6 +1191,7 @@ value = 322
 triggerall = command = "a"
 triggerall = command != "holddown"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = stateno = 321 && movecontact
 
 [State -1, Corrente a: 2o]
@@ -880,6 +1200,7 @@ value = 321
 triggerall = command = "a"
 triggerall = command != "holddown"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = (stateno = 230) && movecontact
 
 [State -1, Corrente b: final]
@@ -888,6 +1209,7 @@ value = 333
 triggerall = command = "b"
 triggerall = command != "holddown"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = stateno = 332 && movehit && var(10) >= 3
 
 [State -1, Corrente b: 3o]
@@ -896,6 +1218,7 @@ value = 332
 triggerall = command = "b"
 triggerall = command != "holddown"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = stateno = 331 && movecontact
 
 [State -1, Corrente b: 2o]
@@ -904,6 +1227,7 @@ value = 331
 triggerall = command = "b"
 triggerall = command != "holddown"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = (stateno = 240 || stateno = 245) && movecontact
 
 [State -1, Tranco de Ombro]
@@ -911,6 +1235,7 @@ type = ChangeState
 value = 216
 triggerall = command = "golpe_216"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 trigger2 = (stateno = 200 || stateno = 230) && movehit && movehit <= 8
 
@@ -919,6 +1244,7 @@ type = ChangeState
 value = 246
 triggerall = command = "golpe_246"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 
 [State -1, Mão de Ginga]
@@ -926,6 +1252,7 @@ type = ChangeState
 value = 201
 triggerall = command = "golpe_201"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 
 [State -1, Puxada de Sola]
@@ -933,6 +1260,7 @@ type = ChangeState
 value = 231
 triggerall = command = "golpe_231"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 
 [State -1, Corre]
@@ -940,6 +1268,7 @@ type = ChangeState
 value = 100
 triggerall = command = "FF"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 
 [State -1, Recua]
@@ -947,6 +1276,7 @@ type = ChangeState
 value = 105
 triggerall = command = "BB"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 
 [State -1, Provocacao]
@@ -954,6 +1284,7 @@ type = ChangeState
 value = 195
 triggerall = command = "c"
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 
 [State -1, Agachado soco fraco]
@@ -962,6 +1293,7 @@ value = 400
 triggerall = command = "x"
 triggerall = command = "holddown"
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 trigger2 = (stateno = 200 || stateno = 400 || stateno = 430 || stateno = 230) && movecontact && var(5) < 4
 
@@ -971,6 +1303,7 @@ value = 430
 triggerall = command = "a"
 triggerall = command = "holddown"
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 trigger2 = stateno = 430 && movecontact && var(5) < 4
 
@@ -980,6 +1313,7 @@ value = 410
 triggerall = command = "y"
 triggerall = command = "holddown"
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 
 [State -1, Agachado chute forte]
@@ -988,6 +1322,7 @@ value = 440
 triggerall = command = "b"
 triggerall = command = "holddown"
 triggerall = statetype != A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 
 [State -1, Soco fraco]
@@ -996,6 +1331,7 @@ value = 200
 triggerall = command = "x"
 triggerall = command != "holddown"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 trigger2 = (stateno = 200 || stateno = 400 || stateno = 430 || stateno = 230) && movecontact && var(5) < 4
 
@@ -1005,6 +1341,7 @@ value = 230
 triggerall = command = "a"
 triggerall = command != "holddown"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 
 [State -1, Soco forte perto]
@@ -1013,6 +1350,7 @@ value = 215
 triggerall = command = "y"
 triggerall = statetype = S
 triggerall = p2bodydist x < 30
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 
 [State -1, Soco forte longe]
@@ -1020,6 +1358,7 @@ type = ChangeState
 value = 210
 triggerall = command = "y"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 
 [State -1, Chute forte perto]
@@ -1028,6 +1367,7 @@ value = 245
 triggerall = command = "b"
 triggerall = statetype = S
 triggerall = p2bodydist x < 30
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 
 [State -1, Chute forte longe]
@@ -1035,6 +1375,7 @@ type = ChangeState
 value = 240
 triggerall = command = "b"
 triggerall = statetype = S
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 
 [State -1, Golpe no ar]
@@ -1042,6 +1383,7 @@ type = ChangeState
 value = 600
 triggerall = command = "x"
 triggerall = statetype = A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 
 [State -1, Golpe no ar]
@@ -1049,6 +1391,7 @@ type = ChangeState
 value = 601
 triggerall = command = "y"
 triggerall = statetype = A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 trigger2 = (stateno = 600 || stateno = 610) && movehit && movehit <= 8
 
@@ -1057,6 +1400,7 @@ type = ChangeState
 value = 610
 triggerall = command = "a"
 triggerall = statetype = A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 
 [State -1, Golpe no ar]
@@ -1064,6 +1408,7 @@ type = ChangeState
 value = 611
 triggerall = command = "b"
 triggerall = statetype = A
+triggerall = var(20) = 0 ; só no modo normal (kit_raiclaven.py)
 trigger1 = ctrl
 trigger2 = (stateno = 600 || stateno = 610) && movehit && movehit <= 8
 

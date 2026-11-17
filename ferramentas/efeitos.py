@@ -571,32 +571,49 @@ def ligar_cns(cns, acoes, hazak, lutador=None):
 NO = "<HHHHhhHBBIIHH"
 
 
-def gravar(destino, pal, rle, png):
-    """SFF v2.01: rle = [(g, i, w, h, x, y, pixels indexados)] no ldata (duplicata vira link, como o gravar_sff do
-    gerador); png = [(g, i, w, h, x, y, blob com o tamanho na frente)] no tdata, formato 12 (PNG RGBA)."""
+def gravar(destino, pal, rle, png, extras=None):
+    """SFF v2.01: rle = [(g, i, w, h, x, y, pixels indexados[, índice de paleta])] no ldata (duplicata vira link, como
+    o gravar_sff do gerador); png = [(g, i, w, h, x, y, blob com o tamanho na frente)] no tdata, formato 12 (PNG RGBA).
+
+    Paletas a mais (a 3ª paleta, própria do Raiclaven despertado, #43) e o índice de paleta de cada sprite: se não vêm
+    na chamada, saem do último conferir_sff.ler() deste mesmo arquivo (EXTRAS e PI). Antes eles se perdiam aqui e o
+    cabelo verde do despertado voltava cinza."""
+    import conferir_sff as cs
+    chave_arq = str(Path(destino).resolve())
+    if extras is None:
+        extras = cs.EXTRAS.get(chave_arq, [])
+    pis = cs.PI.get(chave_arq, {})
     ldata, tdata, nos, vistos = bytearray(pal), bytearray(), bytearray(), {}
+    ofs_extras = []
+    for e in extras:
+        ofs_extras.append(len(ldata))
+        ldata += e
     from gerar_pengaro import rle8
-    for k, (g, i, w, h, x, y, px) in enumerate(rle):
-        chave = (w, h, px)
+    for k, (g, i, w, h, x, y, px, *pi) in enumerate(rle):
+        pi = pi[0] if pi else pis.get((g, i), 0)
+        chave = (w, h, px, pi)
         if chave in vistos:
-            nos += struct.pack(NO, g, i, w, h, x, y, vistos[chave], 2, 8, 0, 0, 0, 0)
+            nos += struct.pack(NO, g, i, w, h, x, y, vistos[chave], 2, 8, 0, 0, pi, 0)
             continue
         vistos[chave] = k
         corpo = struct.pack("<I", len(px)) + rle8(px)
-        nos += struct.pack(NO, g, i, w, h, x, y, 0, 2, 8, len(ldata), len(corpo), 0, 0)
+        nos += struct.pack(NO, g, i, w, h, x, y, 0, 2, 8, len(ldata), len(corpo), pi, 0)
         ldata += corpo
     for g, i, w, h, x, y, blob in png:
         nos += struct.pack(NO, g, i, w, h, x, y, 0, 12, 32, len(tdata), len(blob), 0, 1)
         tdata += blob
     n = len(rle) + len(png)
-    ofs_pal, ofs_spr = 512, 512 + 32
+    npal = 2 + len(extras)
+    ofs_pal, ofs_spr = 512, 512 + 16 * npal
     ofs_l = ofs_spr + len(nos)
     cab = bytearray(512)
     cab[0:12] = b"ElecbyteSpr\x00"
     cab[12:16] = bytes((0, 1, 0, 2))
     cab[24:28] = bytes((0, 1, 0, 2))
-    struct.pack_into("<8I", cab, 36, ofs_spr, n, ofs_pal, 2, ofs_l, len(ldata), ofs_l + len(ldata), len(tdata))
+    struct.pack_into("<8I", cab, 36, ofs_spr, n, ofs_pal, npal, ofs_l, len(ldata), ofs_l + len(ldata), len(tdata))
     no_pal = struct.pack("<HHHHII", 1, 1, 256, 0, 0, 1024) + struct.pack("<HHHHII", 1, 2, 256, 0, 0, 1024)
+    for j, off in enumerate(ofs_extras):
+        no_pal += struct.pack("<HHHHII", 2, j + 1, 256, 0, off, len(extras[j]))
     Path(destino).write_bytes(bytes(cab) + no_pal + bytes(nos) + bytes(ldata) + bytes(tdata))
 
 

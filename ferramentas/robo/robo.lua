@@ -13,6 +13,8 @@ do
     "db_b","bf_a","bf_b","bd_a","bd_b","db_x","db_y","bf_y"}) do CMDS[#CMDS + 1] = nome end  -- toques do Hazak
   CMDS[#CMDS + 1] = "defende"  -- so o .cmd do Hazak tem o controlador (testar_pengaro.py); nos outros o mapa nao faz nada
   for _, nome in ipairs({"baile", "caneta_x", "compasso_a"}) do CMDS[#CMDS + 1] = nome end  -- CK
+  for _, nome in ipairs({"k_peruca_x", "k_peruca_y", "k_pescoco_x", "k_pescoco_y", "k_tanque_a", "k_tanque_b", "k_bigodes",
+    "k_cirurgia", "k_transplante"}) do CMDS[#CMDS + 1] = nome end  -- Raiclaven despertado (kit_raiclaven.py)
 
   local function com(n, fn)
     local old = id()
@@ -389,10 +391,12 @@ do
       need(livre, 100, "voltou ao controle", false)
     end)
   end
+  if LUTADOR ~= "raiclaven" then  -- o Raiclaven despertado tem kit todo proprio (kit_raiclaven.py), roteiros no fim
   exclusivo("Mao de Sombra", "sombra_x", 3400, 60)
   exclusivo("Chute da Corrente", "sombra_y", 3401, 90)
   exclusivo("Sombra Atravessada", "sombra_a", 3402, 40)
   exclusivo("Queda Escura", "sombra_b", 3403, 50)
+  end
 
   local function normalDesp(nome, botoes, est, dist)
     desperto("normal " .. nome, function()
@@ -404,12 +408,14 @@ do
       note(function() return "dano " .. (c.vida0 - lifeP2()) .. "; P2 estado " .. snap(2).st end)
     end)
   end
+  if LUTADOR ~= "raiclaven" then
   normalDesp("baixo+y", {"holddown", "y"}, 3430, 22)
   normalDesp("baixo+b", {"holddown", "b"}, 3435, 40)
   normalDesp("frente+y", {"holdfwd", "y"}, 3431, 38)
   normalDesp("frente+b", {"holdfwd", "b"}, 3432, 50)
   normalDesp("tras+x", {"holdback", "x"}, 3433, 38)
   normalDesp("tras+a", {"holdback", "a"}, 3434, 38)
+  end
 
   local function correnteDesp(nome, botao, seq)
     desperto("corrente " .. nome, function()
@@ -426,8 +432,83 @@ do
       note(function() return "dano total " .. (c.vida0 - lifeP2()) .. "; P2 estado " .. snap(2).st .. "; v10=" .. snap(1).v10 end)
     end)
   end
+  if LUTADOR ~= "raiclaven" then
   correnteDesp("y", "y", {3410, 3411, 3412, 3413})
   correnteDesp("b", "b", {3420, 3421, 3422, 3423})
+  end
+  if LUTADOR == "raiclaven" then
+  -- ================================================================ RAICLAVEN DESPERTADO: kit todo proprio (#43/#47)
+  -- ferramentas/kit_raiclaven.py: nada do normal entra (regra da secao 4). Estados 20xxx, 21xxx, 23000 e 24xxx.
+  exclusivo("Peruca Viva (projetil)", "k_peruca_x", 21000, 90)
+  exclusivo("Pescoco de Borracha", "k_pescoco_x", 21100, 70)
+  exclusivo("Pescoco de Borracha que puxa", "k_pescoco_y", 21101, 70)
+  exclusivo("Tanque Estourado", "k_tanque_a", 21200, 30)
+  exclusivo("Bigodes Carnivoros", "k_bigodes", 21300, 80)
+  normalDesp("x", {"x"}, 20200, 28)
+  normalDesp("y", {"y"}, 20210, 34)
+  normalDesp("a", {"a"}, 20230, 30)
+  normalDesp("b", {"b"}, 20240, 30)
+  normalDesp("baixo+x", {"holddown", "x"}, 20400, 26)
+  normalDesp("baixo+y", {"holddown", "y"}, 20410, 30)
+  normalDesp("baixo+a", {"holddown", "a"}, 20430, 30)
+  normalDesp("baixo+b", {"holddown", "b"}, 20440, 36)
+  normalDesp("frente+y (por cima)", {"holdfwd", "y"}, 20250, 34)
+  normalDesp("frente+b", {"holdfwd", "b"}, 20260, 32)
+  normalDesp("tras+x (afasta)", {"holdback", "x"}, 20270, 34)
+  normalDesp("tras+a (puxa)", {"holdback", "a"}, 20280, 34)
+  correnteDesp("x Tesourinha", "x", {20200, 20301, 20302, 20303})
+  correnteDesp("y Navalha Comprida", "y", {20210, 20311, 20312, 20313})
+  correnteDesp("a Tubo Chicote", "a", {20230, 20321, 20322, 20323})
+  correnteDesp("b Piao da Cadeira", "b", {20240, 20331, 20332, 20333})
+  desperto("kombo Cobaia (tras+a, y, baixo+b)", function()
+    approach(30)
+    acao(function() c.vida0 = lifeP2() end)
+    press(1, {"holdback", "a"}, 2); need(estadoEm(20280), 14, "20280")
+    need(contatoEm(20280), 60, "20280 encostou")
+    press(1, {"y"}, 2); need(estadoEm(20341), 20, "20341")
+    need(contatoEm(20341), 80, "20341 encostou")
+    press(1, {"holddown", "b"}, 2); need(estadoEm(20342), 20, "20342")
+    wait(70)
+    note(function() return "dano " .. (c.vida0 - lifeP2()) end)
+  end)
+  desperto("agarrao baixo: Lavagem", function()
+    approach(4)
+    acao(function() c.vida0 = lifeP2() end)
+    press(1, {"holddown", "y"}, 2)
+    need(estadoEm(24110), 20, "pegou (24110)")
+    need(function() return st1() == 0 end, 300, "terminou", false)
+    note(function() return "dano " .. (c.vida0 - lifeP2()) end)
+    need(function() return c.vida0 - lifeP2() > 60 end, 1, "a Lavagem bateu (dano > 60)", false)
+  end)
+  desperto("agarrao de comando: Transplante", function()
+    approach(4)
+    acao(function() c.vida0 = lifeP2() end)
+    press(1, {"k_transplante"}, 2)
+    need(estadoEm(24210), 20, "pegou (24210)")
+    need(function() return st1() == 0 end, 300, "terminou", false)
+    note(function() return "dano " .. (c.vida0 - lifeP2()) end)
+    need(function() return c.vida0 - lifeP2() > 60 end, 1, "o Transplante bateu (dano > 60)", false)
+  end)
+  desperto("super: Sala de Cirurgia (2 estoques)", function()
+    approach(40)
+    acao(function() com(1, function() setPower(2000); return 0 end); c.vida0 = lifeP2() end)
+    wait(3)
+    press(1, {"k_cirurgia"}, 3)
+    need(estadoEm(23000), 14, "entrou em 23000")
+    need(function() return st1() == 0 end, 300, "terminou", false)
+    need(function() local v = snap(1); return v.v20 > 0 end, 2, "continua na forma depois do super", false)
+    note(function() return "dano " .. (c.vida0 - lifeP2()) .. "; barra " .. snap(1).pow end)
+    need(function() return c.vida0 - lifeP2() > 150 end, 1, "o super acertou (dano > 150)", false)
+  end)
+  desperto("nada do normal: golaco nao sai no despertado", function()
+    approach(60)
+    acao(function() com(1, function() setPower(2000); return 0 end) end)
+    wait(3)
+    press(1, {"golaco"}, 3)
+    wait(20)
+    need(function() local s = st1(); return s ~= 3000 and s ~= 3100 end, 1, "o super do normal nao entrou")
+  end)
+  else
   if KIT ~= "ck" then
   desperto("kombo Possessao (b, a, x)", function()
     approach(28)
@@ -454,6 +535,8 @@ do
   end)
   end
 
+  end  -- fim do else (kombos dos outros)
+
   S("super 1: Chuva de Bebidas (1 estoque)", function()
     approach(80)
     acao(function() com(1, function() setPower(1000); return 0 end); c.vida0 = lifeP2() end)
@@ -467,6 +550,7 @@ do
     need(function() return snap(1).pow == 0 end, 1, "gastou o estoque", false)
   end)
 
+  if LUTADOR ~= "raiclaven" then
   desperto("super: Saideira Sombria (3100) fica endiabrado do comeco ao fim", function()
     approach(60)
     acao(function() com(1, function() setPower(2000); return 0 end); c.vida0 = lifeP2() end)
@@ -480,6 +564,7 @@ do
     note(function() local s = snap(1); return "dano " .. (c.vida0 - lifeP2()) .. "; var20=" .. s.v20 .. " var37=" .. s.v37 end)
     need(function() return c.vida0 - lifeP2() > 150 end, 1, "o super acertou (dano > 150)", false)
   end)
+  end  -- fim do kit antigo do despertado (todos menos o Raiclaven)
 
   local function golpeSimples(nome, cmd, est, dist)
     S(nome, function()
