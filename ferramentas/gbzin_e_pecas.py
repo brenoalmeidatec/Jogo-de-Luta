@@ -98,37 +98,41 @@ def _passo(y, a, b_):
     return t * t * (3 - 2 * t)
 
 
-def _quadro_parado(base, t, n):
+def _quadro_parado(base, t, n, o=0):
     fase = lambda k: (1 - math.cos(2 * math.pi * k / n)) / 2  # noqa: E731
     corpo, cabeca = RESPIRA * fase(t), RESPIRA * 1.15 * fase(t - 0.7)
     yy, xx = np.mgrid[:TELA[1], :TELA[0]].astype(np.float32)
-    peso_corpo = 1 - _passo(yy, CINTURA, COXA)           # 1 em cima da cintura, 0 na coxa
-    peso_peito = 1 + 0.3 * (1 - _passo(yy, 380, CINTURA))  # o peito sobe mais que a cintura
-    peso_cab = 1 - _passo(yy, PESCOCO - 25, PESCOCO + 15)
+    peso_corpo = 1 - _passo(yy, CINTURA + o, COXA + o)           # 1 em cima da cintura, 0 na coxa
+    peso_peito = 1 + 0.3 * (1 - _passo(yy, 380 + o, CINTURA + o))  # o peito sobe mais que a cintura
+    peso_cab = 1 - _passo(yy, PESCOCO - 25 + o, PESCOCO + 15 + o)
     dy = corpo * peso_corpo * peso_peito * (1 - peso_cab) + cabeca * peso_cab
     # a pele do manto nos lados balança meio pixel do jogo, atrasada (sobreposição de movimento)
-    lado = _passo(np.abs(xx - EIXO), 110, 170) * _passo(yy, 330, 420) * (1 - _passo(yy, 560, 600))
+    lado = _passo(np.abs(xx - EIXO), 110, 170) * _passo(yy, 330 + o, 420 + o) * (1 - _passo(yy, 560 + o, 600 + o))
     dx = 1.5 * math.sin(2 * math.pi * (t - 1.5) / n) * lado * np.sign(xx - EIXO)
     mapa_x, mapa_y = xx - dx, yy - dy
     return cv2.remap(base, mapa_x, mapa_y, cv2.INTER_NEAREST, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
 
 
 def parado(n=8):
-    base = np.asarray(Image.open(PECAS / "ref.png"))
-    saida = SPR / "quadros_e_pecas_hd" / "referencia_ginga"
-    saida.mkdir(parents=True, exist_ok=True)
-    quadros = [_quadro_parado(base, t, n) for t in range(n)]
+    """O parado do jogo: o 1º desenho da e_referencia_ginga (pose do rascunho, cabeça do kit, cor travada) respirando
+    pelo campo de deslocamento. Um desenho só, então nada muda de um quadro para o outro além da respiração."""
+    pasta = FIRMES / "e_referencia_ginga"
+    base = np.asarray(Image.open(pasta / "00.png"))
+    ys, xs = np.nonzero(base[..., 3])
+    o = int(ys.min()) - 254  # as linhas de cintura, coxa e pescoço foram medidas no ref.png (topo do chifre em 254)
+    quadros = [_quadro_parado(base, t, n, o) for t in range(n)]
     for i, q in enumerate(quadros):
-        Image.fromarray(q).save(saida / f"{i:02d}.png")
-    print(f"parado: {n} quadros em {saida.relative_to(RAIZ)}")
+        Image.fromarray(q).save(pasta / f"{i:02d}.png")
+    um_x(["e_referencia_ginga"])
+    print(f"parado: {n} quadros em {pasta.relative_to(RAIZ)}")
     return quadros
-
 
 # ------------------------------------------------------------------ rascunho do ChatGPT -> quadros firmes
 # O rascunho só dá a pose. Cada célula vira um quadro 3x do mesmo tamanho do parado de referência (a escala da folha
 # sai do quadro mais alto, que é o de pé), com as 15 cores da paleta travadas e os cascos no chão do jogo.
 FOLHAS = SPR / "quadros/folhas_arcade"
 FIRMES = SPR / "quadros_e_firmes_hd"
+FIRMES_1X = SPR / "quadros_e_firmes"   # o gêmeo 1x (360x260) que o gerador lê: o pixel do meio de cada 3x3
 ALTURA_REF = 406           # altura do Grão-Pastor de pé no 3x (ref.png, chifre ao casco)
 AJUSTE = {}                # folha: fator extra quando o quadro mais alto não é o de pé (pulo, chifre erguido)
 CELULA = 2172 / 8
@@ -231,7 +235,7 @@ def firme(nomes):
                 # meio da célula vai para o eixo; o chão da folha vai para o chão do jogo
                 meio = (i + 0.5) * CELULA + desvio
                 X = round(EIXO + (x0 - meio) * esc)
-                Y = round(CHAO - (chao - y0) * esc)
+                Y = round(CHAO - 1 - (chao - y0) * esc)  # o casco no pixel 659, como a base
                 xa, ya = max(0, X), max(0, Y)
                 xb, yb = min(TELA[0], X + nw), min(TELA[1], Y + nh)
                 tela[ya:yb, xa:xb] = fig[ya - Y:yb - Y, xa - X:xb - X]
@@ -358,6 +362,14 @@ def trocar_cabeca(q, achado):
     return out
 
 
+def um_x(nomes):
+    for nome in nomes:
+        (FIRMES_1X / nome).mkdir(parents=True, exist_ok=True)
+        for arq in sorted((FIRMES / nome).glob("*.png")):
+            a = np.asarray(Image.open(arq))
+            Image.fromarray(np.ascontiguousarray(a[1::3, 1::3])).save(FIRMES_1X / nome / arq.name)
+
+
 def cabecas(nomes):
     for nome in nomes:
         pasta = FIRMES / nome
@@ -385,5 +397,8 @@ if __name__ == "__main__":
     if sys.argv[1] == "firme":
         firme(sys.argv[2:])
         cabecas(sys.argv[2:])
+        um_x(sys.argv[2:])
+        if "e_referencia_ginga" in sys.argv[2:]:
+            parado()
     else:
         {"ref": ref, "parado": parado, "kit": kit_cabeca}[sys.argv[1]]()
