@@ -80,6 +80,8 @@ _ESC = {}
 def escala(q):
     """Tamanho do quadro `q` contra o parado, medido pela cabeça (1.0 = igual)."""
     global _CAB
+    if getattr(K, "ESCALA_FIXA", False):
+        return 1.0
     if q not in _ESC:
         if _CAB is None:
             _CAB, _ = reguas.cabeca_do_parado(abrir(K.REF))
@@ -138,6 +140,10 @@ def montar_kit():
     # só o marrom do nó fica no quadril; a calça atrás dele é das pernas
     no = (b.mascara(K.NO_DA_FAIXA) & faixa_marrom(ref)) if hasattr(K, "NO_DA_FAIXA") else np.zeros_like(alfa)
     no = cv2.dilate(no.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool) & b.mascara(K.NO_DA_FAIXA)
+    # rabo (demônio): peça própria presa no quadril, por cima das pernas
+    m_cauda = (b.mascara(K.CAUDA) & alfa & ~bracos & (yy >= K.CINTURA - 20)) if hasattr(K, "CAUDA") \
+        else np.zeros_like(alfa)
+    no |= m_cauda
     pt = b.mascara(K.PERNA_TRAS) & alfa & ~bracos & baixo & ~no
     pf = b.mascara(K.PERNA_FRENTE) & alfa & ~bracos & baixo & ~pt & ~no
     jt, jf = K.JOELHO_TRAS[1], K.JOELHO_FRENTE[1]
@@ -152,7 +158,8 @@ def montar_kit():
         "braco_frente": m_bf,
         **({"antebraco_tras": m_ant} if m_ant.any() else {}),
         "tronco": ~baixo & alfa & ~m_cab & ~bracos,
-        "quadril": baixo & alfa & ~pt & ~pf & ~bracos,
+        "quadril": baixo & alfa & ~pt & ~pf & ~bracos & ~m_cauda,
+        **({"cauda": m_cauda} if m_cauda.any() else {}),
         "coxa_tras": pt & (yy < jt),
         "canela_tras": pt & (yy >= jt - 12),  # 12 linhas por baixo da coxa: tapa a fresta quando o joelho dobra
         "coxa_frente": pf & (yy < jf),
@@ -761,7 +768,7 @@ def buracos(tela, maximo=900):
 
 
 def tapar_buracos(tela):
-    m = buracos(tela)
+    m = buracos(tela, getattr(K, "BURACO_MAX", 900))
     if not m.any():
         return tela
     out = tela.copy()
@@ -820,7 +827,7 @@ def conferir(tela, juntas, no_chao=True, buraco_ok=0):
             erros.append(f"fresta em {int(x)},{int(y)}")
     if no_chao and ys_max(tela) < EIXO[1] - 8:
         erros.append(f"pé flutuando (y={ys_max(tela)})")
-    nb = int(buracos(tela).sum())
+    nb = int(buracos(tela, getattr(K, "BURACO_MAX", 900)).sum())
     if nb > buraco_ok:
         erros.append(f"buraco {nb} px")
     ys = np.nonzero(al.any(1))[0]

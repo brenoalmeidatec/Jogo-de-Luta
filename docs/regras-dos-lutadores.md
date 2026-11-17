@@ -520,6 +520,26 @@ um assert que confere soma de ticks, caixa por tick e os `AnimElem` do .cns.
 5. **Contato segurado:** o quadro de contato é o mais forte da animação (o de maior alcance), fica parado o ativo
    inteiro e mais 1–2 ticks, e é nele que entram a caixa de acerto, o efeito e o congelamento.
 
+6. **Corpo inteiro no golpe (regra do Alisson, 17/11):** golpe é movimento natural do corpo todo. Soco gira o
+   quadril, o ombro vai junto e o pé dá um passo à frente; não vale só esticar o braço com o resto parado. Chute
+   transfere o peso para a perna de apoio e o tronco compensa.
+
+### 7.2.1 Zero erro de animação (regra do Alisson, 17/11)
+
+Nenhum quadro sai com:
+
+- **membro descolando** (fresta ou vão entre a peça e o corpo, braço ou perna "solto" da junta);
+- **silhueta grossa demais** (contorno inchado, membro mais largo que no parado, mancha escura de peça sobrando);
+- **linha de corte aparecendo** entre as peças (emenda, degrau de cor ou contorno escuro onde uma peça encontra a
+  outra): o boneco tem que parecer sempre inteiro, desenhado de uma vez;
+- **pedaço de sprite voando** junto com o boneco (lasca, migalha, resto de outra pose);
+- **movimento fisicamente errado ou estranho** (membro que estica além do tamanho, junta que dobra para o lado
+  errado, pé que escorrega ou afunda no chão, corpo que muda de tamanho entre quadros).
+
+O robô de defeitos do boneco de peças (`ferramentas/firme.py`) reprova fresta, lasca solta e mancha grossa; emenda e
+movimento estranho são conferidos no
+olho no vídeo lado a lado antes de mandar para o Breno.
+
 ### 7.3 Como produzir isso sem desenhar um por um
 
 Mesmo o mínimo é muito desenho para fazer na mão. Todo lutador é feito com **esqueleto / recorte (cutout)**: corpo separado em partes
