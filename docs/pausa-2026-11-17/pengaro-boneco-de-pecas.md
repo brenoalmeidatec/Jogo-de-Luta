@@ -12,8 +12,8 @@
 Pedido: no soco direto o pé de trás gira (calcanhar para fora, apoiado na ponta). Hoje o kit só tem esse pé de frente.
 - Feito: 1 imagem gerada no ChatGPT (Browser 2, chat "Gerar pé pixel art"), salva em
   `docs/boneco-pecas/pe_girado/chatgpt_pe_girado.png`. É um pé direito de lado, com o calcanhar alto e os dedos para a
-  direita, e serve. A referência enviada está em `referencia_pes.png`. **Imagens geradas: 1. O chat ainda NÃO foi
-  apagado**: apagar quando voltar.
+  direita, e serve. A referência enviada está em `referencia_pes.png`. **Imagens geradas: 1.** O chat foi apagado em
+  17/11, junto com os arquivos dele.
 - Falta, nesta ordem:
   1. Recortar o fundo branco (flood fill pela borda), cortar o topo reto na altura do tornozelo (~20% de cima), reduzir
      até ~45 px do corte ao chão (~61 px de largura, no HD 3x) e pintar com a paleta do pé de trás atual
