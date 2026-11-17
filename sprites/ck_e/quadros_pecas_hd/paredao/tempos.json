@@ -1,0 +1,147 @@
+{
+ "acao": 4710,
+ "caixa": [
+  60,
+  -330,
+  180,
+  -210
+ ],
+ "origem": [
+  "paredao/00",
+  "paredao/01",
+  "paredao/02",
+  "paredao/03",
+  "paredao/04",
+  "paredao/05",
+  "paredao/06",
+  "paredao/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "paredao/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/01"
+  },
+  {
+   "desenho": 3,
+   "ticks": 3,
+   "caixa": true,
+   "de": "paredao/02"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/03"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/03"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/03"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/04"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/04"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/04"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/05"
+  },
+  {
+   "desenho": 11,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/05"
+  },
+  {
+   "desenho": 12,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/05"
+  },
+  {
+   "desenho": 13,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/05"
+  },
+  {
+   "desenho": 14,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/06"
+  },
+  {
+   "desenho": 15,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/06"
+  },
+  {
+   "desenho": 16,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/06"
+  },
+  {
+   "desenho": 17,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/06"
+  },
+  {
+   "desenho": 18,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/07"
+  },
+  {
+   "desenho": 19,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/07"
+  },
+  {
+   "desenho": 20,
+   "ticks": 2,
+   "caixa": false,
+   "de": "paredao/07"
+  }
+ ]
+}
