@@ -3127,3 +3127,15 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   cajado só; ainda não ligado: a vítima é posicionada pelo `agarrao_mk` da base) e as folhas de vítima da forma base
   (`vitima_agarrado`, `vitima_arremessado`, para a thread da base ligar). `verde_solto()` no `gbzin_e_pecas.py`: verde
   escuro longe das chamas (calça pintada de oliva num quadro) volta ao roxo da calça. Robô 236/0.
+
+## 2026-11-17 — Pengaró com o estudo de anatomia do Breno e a antecipação segurada (Claude, thread do Alisson)
+
+- `pele_pecas.ordem_das_camadas`: camada por pose (`pose["_camada"]["atras"]`). No soco, o braço da frente (lado longe)
+  sai de trás do peito no contato; no chute alto, perna e mão da frente nascem atrás da faixa e do tronco.
+- Soco: calcanhar de trás sobe (`_ponta_tras`, o tornozelo estica e os dedos ficam no chão), ombro anda, garrafa para
+  trás. Chute alto: câmara antes de abrir (o quadro 03 virou câmara), bacia inclina, tronco para trás.
+- `piloto_firme`: pé perto do chão estica o tornozelo em vez de descer (no passo largo do andar o pé soltava da canela).
+- 154 ações refeitas com o `vida_pecas` novo (antecipação segurada, golpe sai seco). Robô do boneco 0 defeito.
+- Religado por cima da mugen atual (despertados novos) com `--grupo 49000`, `aura_no_corpo.py pengaro` (encadeia a
+  silhueta) e `encolher_sff.py pengaro` (poda os desenhos velhos 48xxx): .sff 78,9 -> 40,7 MB. Robô de luta 189/189,
+  idêntico ao da mugen.
