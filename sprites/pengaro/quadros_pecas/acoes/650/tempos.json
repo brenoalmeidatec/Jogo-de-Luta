@@ -1,0 +1,35 @@
+{
+ "acao": 650,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "bicicleta/02|foco"
+  },
+  {
+   "desenho": 1,
+   "ticks": 7,
+   "caixa": false,
+   "de": "bicicleta/03|foco"
+  },
+  {
+   "desenho": 2,
+   "ticks": 9,
+   "caixa": true,
+   "de": "bicicleta/04|esforco"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "bicicleta/04|foco"
+  },
+  {
+   "desenho": 4,
+   "ticks": 1,
+   "caixa": false,
+   "de": "bicicleta/06|foco"
+  }
+ ]
+}
