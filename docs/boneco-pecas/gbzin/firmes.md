@@ -32,11 +32,11 @@
 | anda/05 | desenho + cabeça do kit | 45.8 |
 | anda/06 | desenho + cabeça do kit | 46.4 |
 | anda/07 | desenho + cabeça do kit | 47.2 |
-| apanha/00 | desenho + cabeça do kit | 55.7 |
+| apanha/00 | desenho + cabeça do kit; descido até o chão | 55.7 |
 | apanha/01 | desenho + cabeça do kit | 58.7 |
 | apanha/02 | desenho + cabeça do kit (conferida à mão) | 63.7 |
-| apanha/03 | desenho + cabeça do kit (conferida à mão) | 65.8 |
-| apanha/04 | desenho + cabeça do kit (conferida à mão) | 65.1 |
+| apanha/03 | desenho + cabeça do kit (conferida à mão); descido até o chão | 65.8 |
+| apanha/04 | desenho + cabeça do kit (conferida à mão); descido até o chão | 65.1 |
 | apanha/05 | desenho + cabeça do kit | 60.4 |
 | apanha/06 | desenho + cabeça do kit | 57.9 |
 | apanha/07 | desenho + cabeça do kit | 58.0 |
@@ -112,12 +112,12 @@
 | chute_alto/05 | kit |  |
 | chute_alto/06 | kit |  |
 | chute_alto/07 | kit |  |
-| chute_baixo/00 | desenho + cabeça do kit | 56.3 |
+| chute_baixo/00 | desenho + cabeça do kit; descido até o chão | 56.3 |
 | chute_baixo/01 | desenho + cabeça do kit | 56.7 |
 | chute_baixo/02 | desenho + cabeça do kit | 57.2 |
 | chute_baixo/03 | desenho + cabeça do kit | 56.6 |
 | chute_baixo/04 | desenho + cabeça do kit | 56.6 |
-| chute_baixo/05 | desenho + cabeça do kit | 58.3 |
+| chute_baixo/05 | desenho + cabeça do kit; descido até o chão | 58.3 |
 | chute_baixo/06 | desenho + cabeça do kit | 55.9 |
 | chute_baixo/07 | desenho + cabeça do kit | 57.2 |
 | compasso/00 | desenho + cabeça do kit | 37.2 |
@@ -136,13 +136,13 @@
 | corre/05 | desenho + cabeça do kit | 49.7 |
 | corre/06 | desenho + cabeça do kit | 50.3 |
 | corre/07 | desenho + cabeça do kit | 47.9 |
-| defesa/00 | desenho + cabeça do kit | 55.5 |
+| defesa/00 | desenho + cabeça do kit; descido até o chão | 55.5 |
 | defesa/01 | desenho + cabeça do kit (guiada: giro 0°, braço e bengala por cima) | 54.5 |
 | defesa/02 | desenho + cabeça do kit (guiada: giro 5°, braço e bengala por cima) | 54.1 |
 | defesa/03 | desenho + cabeça do kit (guiada: giro 5°, braço e bengala por cima) | 57.6 |
-| defesa/04 | desenho + cabeça do kit (guiada: giro 0°, braço e bengala por cima) | 56.2 |
-| defesa/05 | desenho + cabeça do kit (guiada: giro 0°, braço e bengala por cima) | 55.1 |
-| defesa/06 | desenho + cabeça do kit (guiada: giro 0°, braço e bengala por cima) | 53.6 |
+| defesa/04 | desenho + cabeça do kit (guiada: giro 0°, braço e bengala por cima); descido até o chão | 56.2 |
+| defesa/05 | desenho + cabeça do kit (guiada: giro 0°, braço e bengala por cima); gancho da bengala preso no cabo | 55.1 |
+| defesa/06 | desenho + cabeça do kit (guiada: giro 0°, braço e bengala por cima); gancho da bengala preso no cabo | 53.6 |
 | defesa/07 | desenho + cabeça do kit (guiada: giro 5°, braço e bengala por cima) | 58.1 |
 | derrota/00 | desenho + cabeça do kit | 31.1 |
 | derrota/01 | desenho + cabeça do kit | 42.6 |
@@ -180,7 +180,7 @@
 | levanta/01 | desenho + cabeça do kit | 61.0 |
 | levanta/02 | desenho + cabeça do kit | 62.1 |
 | levanta/03 | desenho + cabeça do kit (conferida à mão) | 68.4 |
-| levanta/04 | desenho + cabeça do kit (conferida à mão) | 63.6 |
+| levanta/04 | desenho + cabeça do kit (conferida à mão); descido até o chão | 63.6 |
 | levanta/05 | desenho + cabeça do kit | 62.3 |
 | levanta/06 | desenho + cabeça do kit | 62.9 |
 | levanta/07 | desenho + cabeça do kit | 58.6 |
@@ -216,7 +216,7 @@
 | provoca/05 | desenho + cabeça do kit | 58.2 |
 | provoca/06 | desenho + cabeça do kit | 55.8 |
 | provoca/07 | desenho + cabeça do kit | 61.0 |
-| pulo/00 | desenho + cabeça do kit | 55.3 |
+| pulo/00 | desenho + cabeça do kit; descido até o chão | 55.3 |
 | pulo/01 | desenho + cabeça do kit | 57.2 |
 | pulo/02 | desenho + cabeça do kit | 59.9 |
 | pulo/03 | desenho + cabeça do kit | 58.6 |
@@ -224,7 +224,7 @@
 | pulo/05 | desenho + cabeça do kit | 56.7 |
 | pulo/06 | desenho + cabeça do kit | 58.8 |
 | pulo/07 | desenho + cabeça do kit | 59.0 |
-| queda/00 | desenho + cabeça do kit | 62.1 |
+| queda/00 | desenho + cabeça do kit; descido até o chão | 62.1 |
 | queda/01 | desenho + cabeça do kit (conferida à mão) | 63.6 |
 | queda/02 | desenho + cabeça do kit | 62.5 |
 | queda/03 | desenho + cabeça do kit (guiada: giro -45°, tamanho 0.65) | 63.6 |

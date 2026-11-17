@@ -806,6 +806,57 @@ def trocar_cabeca(kit, src, achado=None, frente=None):
     return quantizar(pf.sem_migalha(out, minimo=30)), nota
 
 
+# ------------------------------------------------------------------ consertos do desenho de origem (17/11/2026)
+# Desenhos de pé que vieram 80 px acima do chão (o 1º quadro de cada linha da folha): descem até o chão do jogo.
+# Os que estão no ar de verdade (pulo/04, ar_soco, afastar 03-04, golaco/01, levanta/02, queda/05) ficam.
+CHAO_ERRADO = {"apanha/00", "apanha/03", "apanha/04", "chute_baixo/00", "chute_baixo/05", "defesa/00", "defesa/04",
+               "levanta/04", "pulo/00", "queda/00"}
+# Gancho da bengala solto do cabo na defesa (já veio assim): direção do cabo e ponta dele, lidas à mão.
+GANCHO = {"defesa/05": ((0.963, -0.268), (597, 398)), "defesa/06": ((0.94, -0.34), (583, 387))}
+
+
+def assentar(out):
+    """Desce o desenho até o pixel mais baixo encostar no chão (CHAO)."""
+    ys = np.nonzero(out[..., 3].any(1))[0]
+    return np.roll(out, CHAO - ys.max(), 0)
+
+def prender_gancho(a, dirx, diry, ponta, passo_max=25, folga=3):
+    """Gancho da bengala solto do cabo (já veio assim no desenho): estica a ponta do cabo na direção dele, copiando os
+    últimos 10 px do próprio cabo para a frente (mesmas cores e sombra), até grudar firme no gancho (+ folga)."""
+    a = a.copy()
+    n, lab, st, _ = cv2.connectedComponentsWithStats((a[..., 3] > 0).astype(np.uint8), connectivity=8)
+    big = 1 + int(np.argmax(st[1:, 4]))
+    solto = [k for k in range(1, n) if k != big and st[k, 4] > 300]
+    if not solto:
+        return a, 0
+    g = lab == solto[0]
+    cores = {tuple(c) for c in a[g][:, :3]}
+    ys, xs = np.nonzero(lab == big)
+    eh = np.array([tuple(c) in cores for c in a[ys, xs, :3]])
+    gy, gx = np.nonzero(g)
+    # só o cabo: perto da ponta dada à mão (a pele do braço tem as mesmas cores)
+    perp = np.abs((xs - ponta[0]) * -diry + (ys - ponta[1]) * dirx)
+    ao_longo = (xs - ponta[0]) * dirx + (ys - ponta[1]) * diry
+    m = eh & (perp < 6) & (ao_longo > -14) & (ao_longo < 6)
+    yy, xx = ys[m], xs[m]
+    proj = xx * dirx + yy * diry
+    tras = proj > proj.max() - 10
+    sy, sx = yy[tras], xx[tras]
+    py, px = gy[0], gx[0]
+    preso = None
+    for k in range(1, passo_max + 1):
+        ox, oy = int(round(k * dirx)), int(round(k * diry))
+        for y, x in zip(sy + oy, sx + ox):
+            if a[y, x, 3] == 0:
+                a[y, x] = a[y - oy, x - ox]
+        l4 = cv2.connectedComponents((a[..., 3] > 0).astype(np.uint8), connectivity=4)[1]
+        if preso is None and l4[py, px] == l4[sy[0], sx[0]]:
+            preso = k
+        if preso is not None and k >= preso + folga:
+            return a, k
+    return a, -1
+
+
 LIMITE_CABECA = 63   # nota do casamento da cabeça: acima disso o quadro vai para a revisão (cabeça escondida ou girada)
 
 # Os 41 quadros que passaram do limite, olhados um a um (17/11/2026):
@@ -922,6 +973,12 @@ def firmes(golpes=None):
                         como += " (conferida à mão)"
                 else:
                     out, nota, como = quantizar(src), achado[0], "REVISAR: cabeça não achada (fica a do desenho, na cor certa)"
+            if q in GANCHO:
+                out, _ = prender_gancho(out, *GANCHO[q][0], GANCHO[q][1])
+                como += "; gancho da bengala preso no cabo"
+            if q in CHAO_ERRADO:
+                out = assentar(out)
+                como += "; descido até o chão"
             Image.fromarray(out).save(FIRMES / gn / f"{i:02d}.png")
             Image.fromarray(np.ascontiguousarray(out[1::3, 1::3])).save(FIRMES.parent / "quadros_firmes" / gn /
                                                                          f"{i:02d}.png")

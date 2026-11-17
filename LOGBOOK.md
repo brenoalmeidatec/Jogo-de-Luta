@@ -2784,3 +2784,5 @@ abertos). Golaço e arm-lock voador seguem como estão. Nada ligado no gerador n
 - Defesa 01–07: punho, antebraço e bengala voltam por cima da cabeça nova (polígonos _FRENTE_DEFESA).
 - Frestas entre a cabeça nova e o ombro fecham perto do pescoço. Robô: só defesa/05 e 06 (gancho já solto no desenho).
 - Achado para depois: defesa/00 e 04 estão 80 px acima do chão no desenho de origem (conferir alinhamento no gerador).
+- (17/11, tarde) Chão: 10 desenhos de pé vieram 80 px acima do chão (1º quadro de linha da folha): CHAO_ERRADO desce
+  até CHAO. Gancho da defesa/05 e 06 preso no cabo (prender_gancho estica a ponta do cabo com as cores dele). Robô 0/288.
