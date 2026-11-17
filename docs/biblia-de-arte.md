@@ -52,6 +52,9 @@ novas: acima de 26° ele está desviando para o amarelo.
 
 ## Lutador novo
 
+O passo a passo completo é a [`regra-de-criacao-de-personagem.md`](regra-de-criacao-de-personagem.md). Aqui fica só o
+que é de cor e estilo.
+
 1. Defina na ficha a tabela de cima: pele, roupa, objeto, cor dos efeitos de cada forma.
 2. Gere a folha-referência e guarde na biblioteca do ChatGPT com um nome fácil de buscar.
 3. Escolha a rampa de cor dos efeitos dele, diferente das que já existem.
@@ -91,6 +94,10 @@ antes de re-quantizar). As faixas de matiz da regra 3 são as do Pengaró; cada 
 | 10 | Contato alonga: punho ou pé 10–20% maior, ombro ou quadril à frente, tronco gira | ponta do membro no contato x quadro 1 | +10% a +20% | `conferir_arte.py` (grosseiro: o antebraço em guarda entra na altura) |
 | 11 | Antecipação visível no quadro 2; recuperação mais longa que o ativo | silhueta e contagem de desenhos | quadro 2 muda > 5%; volta >= 3 desenhos no forte | `conferir_arte.py` (`--forte`) |
 | 12 | Roupa reage: calça abre no chute, pontas de faixa ou cordão atrasam 1–2 quadros | quadros vizinhos | dobra e atraso presentes | olho |
+
+**Boneco de peças (2026-11-17):** no corpo firme a paleta travada é a do **kit** do lutador, em cor cheia; a redução
+para 15 cores foi reprovada no piloto porque tirou a nitidez, e a paleta indexada sai no fim pelo `encolher_sff.py`
+([regra de criação](regra-de-criacao-de-personagem.md#4-kit-de-peças)). As regras 3 a 12 continuam valendo.
 
 O ChatGPT não entrega 15 cores: entrega pose e volume. A paleta entra depois, por quantização sem dithering para a
 paleta fixa, com retoque à mão onde sobrar chiado. Transformações (Surto, Diabo Loiro): troca de paleta sobre

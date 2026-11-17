@@ -9,6 +9,10 @@
 > **Receita completa, do conceito até a `mugen`:** [`receita-de-lutador.md`](receita-de-lutador.md) junta tudo o que
 > já foi aprendido criando os lutadores (conceito pelas fotos, folhas nítidas, agarrões com animação própria, aura
 > estilo anime, despertado) e vale para todo lutador novo (Breno, 2026-11-15).
+>
+> **Criação de personagem, passo a passo:** [`regra-de-criacao-de-personagem.md`](regra-de-criacao-de-personagem.md)
+> é a regra definitiva (Breno, 2026-11-17) de como o boneco é feito, posado, animado, ligado e revisado (boneco de
+> peças com corpo firme e vida). Onde as seções 6 e 7.3 abaixo falam de outro processo, vale ela.
 
 ## Sumário
 
@@ -432,6 +436,9 @@ notação deste arquivo. A lista tem que bater com o `.cmd`.
 ---
 
 ## 6. Regra das ferramentas: como se cria um lutador
+
+> O processo de hoje é o da [`regra-de-criacao-de-personagem.md`](regra-de-criacao-de-personagem.md). A tabela abaixo
+> fica para licenças e ferramentas de apoio.
 
 Todo lutador sai deste processo, usando as ferramentas de código aberto do GitHub levantadas em
 `animacao-pengaro/recursos-github.md` (pasta do projeto) e as ferramentas que já estão em `ferramentas/`. Não pule

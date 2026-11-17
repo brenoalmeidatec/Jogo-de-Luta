@@ -6,6 +6,11 @@ ordem, do conceito até a `mugen`. Ele vale junto com [`regras-dos-lutadores.md`
 kit mínimo e o checklist da seção 9, e com [`como-trabalhar.md`](como-trabalhar.md). Se os dois disserem coisas
 diferentes, vale o mais novo do Breno.
 
+> **A regra que manda agora é a [`regra-de-criacao-de-personagem.md`](regra-de-criacao-de-personagem.md)** (Breno,
+> 2026-11-17). Ela junta esta receita com o método do boneco de peças e o estudo de anatomia, na ordem certa. Este
+> arquivo continua como o detalhe de conceito, despertado, aura, luz e agarrões; onde ele falar de folhas de 8
+> quadros, vale o kit de peças.
+
 Cada item diz de onde veio, para quem quiser ver o caso real.
 
 ## 1. Quem faz o quê

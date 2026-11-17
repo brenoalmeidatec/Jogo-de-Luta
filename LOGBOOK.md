@@ -3092,3 +3092,13 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   cima, estouro, mão do pastor, berro e puxão. Ligados no despertado: chute alto (estampido), afastar (giro do manto),
   caneta (direção), armada (juízo de cima), cajado no chão (mãos), bola (mão do pastor), compasso (puxão). `TROCA_COR`
   conserta cor errada de um quadro só (perna do chute oliva). Falta desenho próprio só no agarrão e no golaço.
+
+## 2026-11-17 — Regra definitiva de criação de personagem (Claude, thread do Breno)
+- Pedido do Breno: uma regra só, juntando tudo. Nova `docs/regra-de-criacao-de-personagem.md`: ficha, conceitos,
+  folha-modelo, kit de peças (corpo firme, paleta travada do kit, régua de ossos), posar pelas 12 leis e pela regra de
+  camadas perto/longe, tempo e caixas iguais, vida, zero erro de animação, 3x, ligar no jogo (`ligar_pecas` → aura →
+  retratos → `encolher_sff`) e revisão (robôs, vídeo lado a lado, foto, issue, checklist).
+- CLAUDE.md, AGENTS.md, como-trabalhar, receita, regras dos lutadores, bíblia, estudos, missão e montador apontam para
+  ela em vez de repetir. O passo a passo antigo (folha de 8 quadros + 6 do meio do Blender) ficou marcado como histórico.
+- Em aberto (não decidido): quadro do meio entre antecipação e contato. Vale a fluidez do Alisson até ele ou o Breno
+  escolherem o "seco antes do contato" do estudo.
