@@ -21,14 +21,14 @@
   },
   {
    "desenho": 3,
-   "ticks": 2,
+   "ticks": 4,
    "caixa": false,
    "de": "martelo/04"
   },
   {
    "desenho": 4,
-   "ticks": 2,
-   "caixa": false,
+   "ticks": 4,
+   "caixa": true,
    "de": "martelo/04"
   },
   {
@@ -39,15 +39,15 @@
   },
   {
    "desenho": 6,
-   "ticks": 4,
-   "caixa": true,
+   "ticks": 2,
+   "caixa": false,
    "de": "martelo/04"
   },
   {
    "desenho": 7,
    "ticks": 2,
    "caixa": false,
-   "de": "martelo/04"
+   "de": "martelo/07"
   },
   {
    "desenho": 8,
@@ -81,12 +81,6 @@
   },
   {
    "desenho": 13,
-   "ticks": 2,
-   "caixa": false,
-   "de": "martelo/07"
-  },
-  {
-   "desenho": 14,
    "ticks": 2,
    "caixa": false,
    "de": "martelo/07"

@@ -80,8 +80,11 @@ def animar(poses, elems, bate=None, laco=False, guarda=None, fixos=frozenset(), 
         caixa = k in batem
         prox = elems[k + 1][0] if k + 1 < n else (elems[0][0] if laco else None)
         bote = not meio_no_bote and (k + 1) in batem
-        if caixa or bote or ticks < 4 or q in fixos or prox in fixos or "_especial" in a or "_especial" in b_:
-            # impacto segurado; antecipação segurada (sai seco até o contato); elemento curto não tem espaço para meio; desenho de hoje (especial) não se mistura
+        if caixa or bote or ticks < 4 or q in fixos or prox in fixos or "_especial" in a or "_especial" in b_ \
+                or ("_agachado" in a) != ("_agachado" in b_):
+            # impacto segurado; antecipação segurada (sai seco até o contato); elemento curto não tem espaço para meio;
+            # desenho de hoje (especial) não se mistura; de pé para agachado (metade de baixo trocada inteira) não tem
+            # meio: o meio deslizaria o tronco sobre as pernas de pé
             saida.append((dict(a), ticks, caixa, q))
             continue
         if batem and k < min(batem):

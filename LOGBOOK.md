@@ -3093,6 +3093,25 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   caneta (direção), armada (juízo de cima), cajado no chão (mãos), bola (mão do pastor), compasso (puxão). `TROCA_COR`
   conserta cor errada de um quadro só (perna do chute oliva). Falta desenho próprio só no agarrão e no golaço.
 
+## 2026-11-17 — Raiclaven: agachar, rasteira, golaço, armada, agarrão e pente combo no boneco de peças
+- `golpes_raiclaven.py` monta 36 ações (robô do boneco 0 defeito). Novidades no kit (`piloto_raiclaven.py`):
+  metade de baixo agachada inteira (`baixo="agachado"`, do agachado/04), braço da vassoura (vassoura/varre), braço do
+  pente esticado (`arremesso`), mão agarrando (`agarra`), mão no cabelo (`cabelo`) e `ESP(q)`: quadro especial com o
+  desenho de hoje inteiro onde o kit não serve (de costas na armada, toalha nas duas mãos no agarrão, giro do pente
+  combo), sem meio com os vizinhos, mesmo critério do `firme.py`.
+- Erros de animação achados de olho e consertados: a perna levantada do chute alto (já no jogo) sumia atrás do avental
+  e sobrava um toco de calça (agora vai na frente do avental, com braço e tesoura na frente dela, e o toco sai);
+  41 furinhos transparentes por quadro deixavam o cenário aparecer (`tapar_furos`); fresta entre o tronco e a metade
+  agachada (`emenda_agachado`); de pé para agachado não tem quadro de meio (o meio deslizava o tronco sobre as pernas).
+- O mapa aceita casamento 0.7-0.85 quando a pasta bate com a de um vizinho firme, e 0.6-0.7 segue o desenho anterior
+  (quadro de meio desenhado à parte); a ação 11 foi remapeada no tempo da mugen (20 ticks).
+- Religado com `raiclaven_no_jogo.py` (preserva o despertado com A Cliente), que agora termina com `podar()`: tira do
+  .sff os desenhos órfãos (o .sff estava a caminho dos 100 MB do GitHub).
+- Regerado com a decisão do Alisson (meio-termo, `MEIO_NO_BOTE = False` do `vida_pecas` da mugen 448b9158): a
+  antecipação fica segurada e o golpe chega seco no contato.
+- Falta: soco no ar (600/601), levantar, as ações que usam desenho que ninguém reconhece (210, 302, 343, 344) e testar
+  a `pele_pecas.py` do Pengaró no lugar do desenho por peças rígidas.
+
 ## 17/11/2026 - Gbzin: estudo de anatomia do Breno aplicado
 - Conferência dos 36 golpes contra a Parte 4 do estudo: `docs/boneco-pecas/gbzin/anatomia.md` (ficha perto/longe,
   marcas de roupa, golpe a golpe). Cabeçada fica para o Breno decidir (bate com a bengala, não com a testa).
@@ -3109,6 +3128,25 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   borrão; a fluidez vem da antecipação, da volta, da guarda, do parado e das transições. Os kits já ligados ainda
   põem meio nesse trecho: ajustar o `vida_pecas.py` e religar é trabalho à parte.
 
+### 2026-11-17 — Estudo de anatomia do Breno no Gutto e no Garanhão; quadros do meio no meio-termo do Alisson
+- Gutto (boneco_gutto.py): a perna da frente é a do lado LONGE. Quando ela sobe (variante de coxa), nasce atrás da faixa e do
+  tronco (camada por pose). Vale em todo chute: chute alto, chute forte, coice, joelhada, quina e os dois supers. No chute
+  alto o tronco vai 4-8° para trás e o braço da frente desce um pouco, sem tapar o chute. Mandar o braço da guarda para trás
+  do tronco deixou uma aba de ombro solta; isso pede desenho novo e ficou de fora.
+- Garanhão (kit_garanhao.py): a investida segue a receita da cabeçada. Não empina para trás (isso telegrafava): o queixo
+  desce, o tronco recua 3-4° e no contato dobra 26° com passo curto e o peso junto. Na chifrada o tronco dobra antes de
+  enganchar, com passo e peso.
+- vida_pecas novo (448b9158): os dois foram regerados. O tempo do Gutto e o dos golpes do Garanhão que estão no jogo não
+  mudaram; mudaram só ar_cabecada, ar_cascos, empinada e rasga_couro, que não estão no jogo.
+- `ferramentas/trocar_desenhos.py <lutador> <golpes> [--de pasta --grupo G]`: troca só os desenhos de golpe já ligado,
+  quando o tempo não mudou. Ação, caixas, AnimElem e remap ficam como estão.
+- `ligar_pecas.py` agora religa sem estragar o .cns: o ifelse da ligação anterior só troca o elemento da ação.
+- `encolher_sff.py`: fica o PNG menor entre o que já está no .sff e o do Pillow (na aura o filtro 0 é menor). Ao trocar a
+  paleta própria, o que estava nela é reindexado.
+- Robô de peças 0 defeito; robô de luta 186/186 com o mesmo dano. Vídeo:
+  docs/boneco-pecas/no_jogo/gutto_anatomia_antes_depois.mp4.
+- Ainda falta: o soco forte pela receita do direto (braço de trás esticado) e o braço da frente indo para trás no chute
+  alto pedem desenho novo de braço.
 ## 17/11/2026 - Gbzin: golpes do boneco de peças ligados no jogo (regra de criação, seção 11)
 - Parado, soco e chute alto do boneco de peças (com quadros do meio no meio-termo do Alisson: preparação segurada e
   seca até o contato, meio na volta e na guarda, `vida_pecas.py` da mugen 448b9158) ligados com `ligar_pecas.py gbzin`
@@ -3123,11 +3161,37 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   soco agachado afunda e sobe. `vida_pecas.py` da mugen com o meio-termo do Alisson (antecipação segurada até o
   contato). `pecas_ck.py trocar` troca só os desenhos no .sff quando o número de desenhos não muda; quando muda,
   `ligar_pecas.py ck` religa por cima. Robô de peças 0/201.
+
+## 2026-11-17 — CK: golpes que faltavam pelo boneco de peças
+
+- Novos no jogo: uppercut (410), levanta_comedia/forte (1200/1201), overhand (216, sai do braço de trás), Bote/Bote forte (1400/1401), agarrão (800, entrada), soco no ar (600), voadora (610), voadora rápida (650).
+- Soco direto (soco/05) agora sai do braço de trás, com giro de quadril e passo.
+- Meio-termo nos quadros do meio (vida_pecas da mugen), estudo de anatomia do Breno.
+- Robô de peças: 0 defeitos em 347 desenhos. Robô de luta: 226/226, dano idêntico ao de antes.
+- Falta: agarrão completo (830), pulo, apanha, queda, levanta, provoca, vitória, derrota, armada/compasso/rolamento.
 - Turno 5 (17/11): juízo (golaço do despertado, cajado preso na faixa no mata-leão), agarrão do Grão-Pastor refeito (um
   cajado só; ainda não ligado: a vítima é posicionada pelo `agarrao_mk` da base) e as folhas de vítima da forma base
   (`vitima_agarrado`, `vitima_arremessado`, para a thread da base ligar). `verde_solto()` no `gbzin_e_pecas.py`: verde
   escuro longe das chamas (calça pintada de oliva num quadro) volta ao roxo da calça. Robô 236/0.
 
+## 17/11/2026 - Gbzin: kit de peças do Grão-Pastor (despertado) e três golpes posados com ele
+- Kit próprio do despertado, recortado do `e_referencia_ginga/00` em `sprites/gbzin/pecas_e/corpo/` (cabeça, tronco
+  com manto, quadril com faixa, braços com cajado, coxas, canelas e cascos, pontas da faixa; sobra na junta, furos,
+  régua dos ossos). Código em `ferramentas/kit_grao_pastor.py` (`kit`, `animar`, `provas`), no motor do `firme.py`
+  (perna de apoio pela malha, perna no ar e juntas como pele) e do `vida_pecas.py`. O kit remonta o parado com 0 px de
+  diferença.
+- Posados só com as peças (rascunhos só de guia): parado com respiração (16 desenhos), x = `e_chifrada` (ação 10200) e
+  chute alto = `e_estampido` (pisão, ação 10240), sem quadro do meio entre antecipação e contato. Robô de defeitos
+  0/37, régua no máximo 4,5%, `gbzin_e_pecas.py conferir` 0 defeitos em 37 folhas.
+- Ligado pelo `gerar_gbzin.py`: `ligar_pecas.py gbzin --de gbzin --pasta quadros_e_pecas_hd --grupo 49000` (opção
+  `--pasta` nova), depois aura e `encolher_sff --indexar 49000-49099`. Mesma soma de ticks, mesmas caixas e mesmo
+  elemento de acerto; o parado do despertado vira remap para 49002. Robô de luta 236/236 com o dano idêntico ao de antes.
+- Provas: `docs/boneco-pecas/gbzin/grao_pastor_{kit,kit_remonta,poses,antes_depois}.png`, `grao_pastor_robo.md` e
+  `grao_pastor_lado_a_lado.mp4`.
+- Não testado: nada rodado no IKEMEN de verdade. O que os braços tapavam foi pintado por inpaint nas cores do kit (dá
+  para retocar à mão). O kit está nas 15 cores do parado do despertado (pedido desta tarefa), não em cor cheia. Os
+  outros golpes do Grão-Pastor continuam com as folhas antigas, e as folhas `quadros_e_firmes` ficaram como estavam.
+  Levou cerca de um dia de sessão.
 ## 2026-11-17 — Pengaró com o estudo de anatomia do Breno e a antecipação segurada (Claude, thread do Alisson)
 
 - `pele_pecas.ordem_das_camadas`: camada por pose (`pose["_camada"]["atras"]`). No soco, o braço da frente (lado longe)
