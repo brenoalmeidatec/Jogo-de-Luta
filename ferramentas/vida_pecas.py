@@ -53,11 +53,13 @@ def misturar(a, b_, t):
     return out
 
 
-def animar(poses, elems, bate=None, laco=False, guarda=None, fixos=frozenset()):
+def animar(poses, elems, bate=None, laco=False, guarda=None, fixos=frozenset(), seco=False):
     """Lista de (pose, ticks, caixa, desenho_de_hoje) a partir das poses-chave.
     elems: [(desenho_de_hoje, ticks)]; bate: índice do elemento com caixa; laco: a última volta para a primeira;
     guarda: pose para onde o golpe volta no fim (a guarda); fixos: desenhos que não se misturam (quadro especial,
-    desenhado inteiro): não ganham intermediário nem servem de destino de um."""
+    desenhado inteiro): não ganham intermediário nem servem de destino de um. seco: o elemento logo antes do acerto
+    (antecipação -> contato) não ganha meio: a troca é seca e o golpe chega com impacto (Lei 10 do estudo de anatomia;
+    regra de criação, Breno e Alisson 17/11). O meio continua na preparação, na volta e na guarda."""
     saida = []
     n = len(elems)
     batem = set(bate) if isinstance(bate, (set, list, tuple)) else ({bate} if bate is not None else set())
@@ -71,7 +73,8 @@ def animar(poses, elems, bate=None, laco=False, guarda=None, fixos=frozenset()):
             b_ = guarda if guarda is not None else a
         caixa = k in batem
         prox = elems[k + 1][0] if k + 1 < n else (elems[0][0] if laco else None)
-        if caixa or ticks < 4 or q in fixos or prox in fixos or "_especial" in a or "_especial" in b_:
+        seco_aqui = seco and (k + 1) in batem
+        if caixa or seco_aqui or ticks < 4 or q in fixos or prox in fixos or "_especial" in a or "_especial" in b_:
             # impacto segurado; elemento curto não tem espaço para meio; desenho de hoje (especial) não se mistura
             saida.append((dict(a), ticks, caixa, q))
             continue
