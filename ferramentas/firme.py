@@ -649,8 +649,9 @@ def _pose_kit(kit, q):
         for slot in ("coxa_tras", "canela_tras", "coxa_frente", "canela_frente"):
             pose[slot] = dict(mao.get(slot, {"ang": 0}))
         return pose
-    if pv:
-        pass  # metade de baixo vem inteira do desenho dito no kit
+    if pv:  # metade de baixo vem inteira do desenho dito no kit
+        if pv in getattr(K, "PERNAS_NO_AR", ()):  # metade de baixo de pulo: os pés não encostam no chão
+            pose["_ar"] = {"sim": 1}
     elif no_ar is None:
         pose = pernas_no_chao(pose, alvo)
     else:  # perna da frente no ar: a de trás fica plantada e a da frente é casada com o desenho dito no kit

@@ -13,6 +13,7 @@
   python ferramentas/boneco_ajuste.py animar [NOMES]      parado, soco e chute_alto em quadros_pecas_hd/ e quadros_pecas/
 """
 import json
+import math
 import shutil
 import sys
 from pathlib import Path
@@ -267,6 +268,14 @@ def mundo(pose):
         else:
             mpos, mang = t(mae)
             mjunta = OSSOS[mae][0]
+            est = pose.get(mae, {}).get("estica", 1)
+            if abs(est - 1) > 0.01:  # mãe de borracha esticada: a junta do filho vai junto, na linha do osso da mãe
+                ponta = OSSOS[mae][2]
+                th = math.atan2(ponta[1] - mjunta[1], ponta[0] - mjunta[0])
+                ux, uy = math.cos(th), math.sin(th)
+                rx, ry = junta[0] - mjunta[0], junta[1] - mjunta[1]
+                ao_longo = (rx * ux + ry * uy) * (est - 1)
+                junta = (junta[0] + ux * ao_longo, junta[1] + uy * ao_longo)
             g = girar(junta, mjunta, mang)
             pos = (g[0] + mpos[0] - mjunta[0] + p.get("dx", 0), g[1] + mpos[1] - mjunta[1] + p.get("dy", 0))
             ang = mang + p.get("ang", 0)

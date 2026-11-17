@@ -25,11 +25,15 @@ PASTA = RAIZ / "sprites/raiclaven_cliente/doadores"
 REF = RAIZ / "sprites/raiclaven_cliente/quadros_arcade_hd/ginga/00.png"
 SAIDA = RAIZ / "sprites/raiclaven_cliente/quadros_arcade_hd/doador"
 TELA, EIXO = (1080, 780), (540, 660)
-DOADORES = {"agachado": "original", "defesa": "original"}  # figura nova -> cópia do ginga da mesma imagem
+DOADORES = {"agachado": "original", "defesa": "original", "pulo": "original3", "caido": "original5",
+            "voo": "original6", "levanta": "original7"}  # figura nova -> cópia do ginga da mesma imagem
 # o doador vira folhas de quadros iguais (o kit mexe o tronco, a criatura e os braços em cima da metade de baixo dele)
-COPIAS = {"agachado": (("agachado_d", "x_agd", "y_agd", "a_agd", "b_agd"), 8)}
+COPIAS = {"agachado": (("agachado_d", "x_agd", "y_agd", "a_agd", "b_agd"), 8),
+          "pulo": (("pulo_d", "x_ard", "y_ard", "a_ard", "b_ard"), 8)}
 # deslocamento na tela para o tronco do doador cair em cima do tronco do parado (sem pulo de lado ao agachar)
-AJUSTE = {"agachado": (-15, 0)}  # o doador vira uma folha de N quadros iguais (o kit respira em cima dela)
+AJUSTE = {"agachado": (-15, 0), "pulo": (-5, -50), "voo": (0, -40)}
+# desenho inteiro (ESPECIAIS do kit): a queda não usa peças, o boneco deitado/no ar/de joelho é o doador todo
+INTEIROS = {"caido": "queda_d/00", "voo": "queda_d/01", "levanta": "queda_d/02"}  # pulo: o tronco fica na altura do parado e os pés sobem
 
 
 def recorte(caminho):
@@ -59,13 +63,11 @@ def escala_e_cor(orig, ref):
     p2 = np.float32([k2[m.trainIdx].pt for m in bons])
     M, inl = cv2.estimateAffinePartial2D(p1, p2, method=cv2.RANSAC, ransacReprojThreshold=4)
     s = float(np.hypot(M[0, 0], M[1, 0]))
-    # cor: a cópia levada ao ginga, pixel a pixel onde os dois têm boneco, ajuste linear por canal
-    w = cv2.warpAffine(orig, M, TELA, flags=cv2.INTER_LINEAR)
-    junto = (w[..., 3] == 255) & (ref[..., 3] == 255)
-    cor = []
-    for c in range(3):
-        x, y = w[..., c][junto].astype(float), ref[..., c][junto].astype(float)
-        cor.append(np.polyfit(x, y, 1))
+    # cor: os quantis de cada canal da cópia casados com os do ginga/00 (robusto a encaixe imperfeito: não compara
+    # pixel com pixel), ajuste linear por canal
+    a1, a2 = orig[..., 3] == 255, ref[..., 3] == 255
+    q = np.arange(2, 99)
+    cor = [np.polyfit(np.percentile(orig[..., c][a1], q), np.percentile(ref[..., c][a2], q), 1) for c in range(3)]
     return s, cor, int(inl.sum()), len(bons)
 
 
@@ -76,7 +78,7 @@ def main():
         cap = PASTA / f"{nome}_cap.png"
         if not cap.exists():
             continue
-        s, cor, inl, n = escala_e_cor(recorte(PASTA / f"{de}_cap.png"), ref)
+        s, cor, inl, nb = escala_e_cor(recorte(PASTA / f"{de}_cap.png"), ref)
         a = recorte(cap)
         for c in range(3):
             a[..., c] = np.clip(np.polyval(cor[c], a[..., c].astype(float)), 0, 255).astype(np.uint8)
@@ -91,16 +93,20 @@ def main():
         ys, xs = np.nonzero(p[..., 3])
         chao, meio = ys.max(), (xs.min() + xs.max()) / 2
         tela = np.zeros((TELA[1], TELA[0], 4), np.uint8)
-        ox, oy = int(round(EIXO[0] - meio)) + AJUSTE.get(nome, (0, 0))[0], int(EIXO[1] - 1 - chao)
+        aj = AJUSTE.get(nome, (0, 0))
+        ox, oy = int(round(EIXO[0] - meio)) + aj[0], int(EIXO[1] - 1 - chao) + aj[1]
         t = Image.fromarray(tela)
         t.alpha_composite(Image.fromarray(p), (max(0, ox), max(0, oy)))
         t.save(SAIDA / f"{nome}.png")
+        if nome in INTEIROS:
+            (SAIDA.parent / INTEIROS[nome]).parent.mkdir(exist_ok=True)
+            t.save(SAIDA.parent / f"{INTEIROS[nome]}.png")
         folhas, n = COPIAS.get(nome, ((), 0))
         for f in folhas:
             (SAIDA.parent / f).mkdir(exist_ok=True)
             for k in range(n):
                 t.save(SAIDA.parent / f / f"{k:02d}.png")
-        print(f"{nome}: escala {s:.3f} ({inl}/{n} pontos), cor {[np.round(c, 2).tolist() for c in cor]}")
+        print(f"{nome}: escala {s:.3f} ({inl}/{nb} pontos), cor {[np.round(c, 2).tolist() for c in cor]}")
 
 
 if __name__ == "__main__":

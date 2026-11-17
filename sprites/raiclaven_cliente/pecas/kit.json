@@ -253,6 +253,24 @@
     248
    ]
   },
+  "cri_cabeca": {
+   "arquivo": "cri_cabeca.png",
+   "origem": [
+    494,
+    180
+   ],
+   "junta": [
+    540,
+    270
+   ],
+   "mae": "criatura",
+   "fonte": "ginga/00",
+   "sobra": "cri_cabeca_sobra.png",
+   "origem_sobra": [
+    485,
+    171
+   ]
+  },
   "criatura": {
    "arquivo": "criatura.png",
    "origem": [
@@ -291,6 +309,28 @@
    "corpo": [
     0,
     56
+   ]
+  },
+  "pernas_pulo": {
+   "arquivo": "pernas_pulo.png",
+   "origem": [
+    357,
+    377
+   ],
+   "junta": [
+    530,
+    466
+   ],
+   "mae": null,
+   "fonte": "doador/pulo",
+   "sobra": "pernas_pulo_sobra.png",
+   "origem_sobra": [
+    348,
+    368
+   ],
+   "corpo": [
+    0,
+    0
    ]
   }
  }

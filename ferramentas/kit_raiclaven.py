@@ -280,18 +280,15 @@ def remap_parado(cns, air):
             for e in tempos["elementos"]:
                 linha += [(grupo, e["desenho"])] * e["ticks"]
         else:
-            nome = alvo[0].split("/")[0]
-            if nome not in anims:
-                continue
-            _a, grupo, tempos = anims[nome]
+            # a pose-chave pode estar em qualquer animação do corpo firme (o pulo pousa no agachado, por exemplo)
             primeiro = {}
-            for e in tempos["elementos"]:
-                primeiro.setdefault(e["de"], e["desenho"])
-            chaves = [(grupo, primeiro[k]) for k in alvo]
-            if len(chaves) == len(els):
-                linha = None
-            else:
-                linha = chaves
+            for _n, (_a, grupo, tempos) in anims.items():
+                for e in tempos["elementos"]:
+                    primeiro.setdefault(e["de"], (grupo, e["desenho"]))
+            if any(k not in primeiro for k in alvo):
+                continue
+            chaves = [primeiro[k] for k in alvo]
+            linha = None if len(chaves) == len(els) else chaves
         total = sum(max(t, 1) for _e, t, *_ in els)
         t = 0
         for n, (el, d, *_r) in enumerate(els):

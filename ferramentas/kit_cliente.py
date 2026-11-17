@@ -50,6 +50,9 @@ EXTRAS = {
                 (660, 238), (640, 248), (632, 268), (618, 290), (610, 306), (594, 310), (584, 296)],
     "garra": [(606, 314), (625, 300), (640, 290), (652, 262), (675, 254), (700, 268), (710, 300), (704, 332),
               (680, 338), (660, 338), (640, 332), (628, 346), (612, 348), (606, 332)],
+    # a cabeça da Cliente é peça própria (presa no pescoço): no Pescoço de Borracha o corpo dela estica e a cara não
+    "cri_cabeca": [(498, 206), (510, 192), (530, 184), (560, 180), (584, 192), (590, 214), (586, 240), (576, 262),
+                   (556, 272), (530, 272), (512, 262), (500, 240), (494, 222)],
     "criatura": [(432, 214), (468, 194), (500, 168), (540, 172), (584, 178), (592, 214), (590, 262), (572, 290),
                  (546, 300), (534, 332), (500, 332), (468, 322), (440, 292), (428, 252)],
 }
@@ -67,22 +70,23 @@ OSSOS = {  # junta no parado, mãe, ponta
     "coxa_frente": ((582, 546), "quadril", JOELHO_FRENTE),
     "canela_frente": (JOELHO_FRENTE, "coxa_frente", TORNOZELO["canela_frente"]),
     "criatura": ((522, 302), "tronco", (530, 190)),
+    "cri_cabeca": ((540, 270), "criatura", (545, 186)),
     "navalha": ((498, 196), "criatura", (572, 142)),
     "secador": ((592, 292), "criatura", (684, 198)),
     "garra": ((614, 334), "criatura", (704, 300)),
 }
 # de trás para a frente: a criatura atrás do Raiclaven, o quadril (pintado por baixo das pernas) atrás delas, a tesoura na frente
-CAMADAS = ["navalha", "criatura", "secador", "garra", "quadril", "coxa_frente", "canela_frente", "coxa_tras",
+CAMADAS = ["navalha", "criatura", "cri_cabeca", "secador", "garra", "quadril", "coxa_frente", "canela_frente", "coxa_tras",
            "canela_tras", "tronco", "cabeca", "braco_frente", "braco_tras"]
 # o tronco, o quadril e a criatura são pintados por baixo das peças que os cobrem (até 10 px para dentro da beirada):
 # quando a peça de cima respira ou gira um pouco, aparece pano e pele, e não buraco com contorno
 TAPAR_FAIXA = 10
-TAPAR = ("tronco", "quadril", "criatura")
+TAPAR = ("tronco", "quadril", "criatura")  # (o pescoço da Cliente fica pintado por baixo da cabeça dela)
 SEM_REGUA = True  # as folhas já vêm na mesma escala (importar_cliente.py)
 
 
 def _p(dx=0, dy=0, tronco=0, cabeca=0, bf=0, bt=0, cri=0, nav=0, sec=0, gar=0, pes=(0, 0), cx=0, cy=0, en=1, es=1,
-       eg=1, td=0, **pernas):
+       eg=1, td=0, ec=1, cc=0, **pernas):
     """Pose à mão: corpo (dx, dy a partir do parado), inclinação do tronco, cabeça do Raiclaven, luva (bf), braço
     mecânico (bt); criatura (cri, relativa ao tronco) e os braços dela: navalha, secador, garra (relativos à criatura).
     + = horário na tela. cx, cy: a criatura escorrega no assento (para a frente e para cima). en/es/eg: quanto a navalha,
@@ -91,7 +95,8 @@ def _p(dx=0, dy=0, tronco=0, cabeca=0, bf=0, bt=0, cri=0, nav=0, sec=0, gar=0, p
     cx, cy = max(-8, min(8, cx)), max(-6, min(6, cy))
     out = {"quadril": {"ang": 0, "dx": dx, "dy": dy, "abs": 1, "pes": pes}, "tronco": {"ang": tronco, "dy": td},
            "cabeca": {"ang": cabeca}, "braco_frente": {"ang": bf}, "braco_tras": {"ang": bt},
-           "criatura": {"ang": cri, "dx": cx, "dy": cy}, "navalha": {"ang": nav, "estica": en},
+           "criatura": {"ang": cri, "dx": cx, "dy": cy, "estica": ec}, "cri_cabeca": {"ang": cc},
+           "navalha": {"ang": nav, "estica": en},
            "secador": {"ang": sec, "estica": es}, "garra": {"ang": gar, "estica": eg}}
     for k, v in pernas.items():
         out[k] = {"ang": v}
@@ -165,6 +170,44 @@ POSES = {
     "b_agd/04": _p(dx=None, td=4, tronco=14, cri=24, cx=8, cy=6, nav=34, sec=46, gar=56),
     "b_agd/05": _p(dx=None, td=3, tronco=9, cri=14, cx=6, cy=4, nav=18, sec=26, gar=34),
     "b_agd/06": _p(dx=None, td=1, tronco=5, cri=6, cx=2, cy=3, nav=4, sec=12, gar=18),
+    # andar (pesado, com a Cliente nas costas): o pé da frente sobe e pisa à frente, o peso passa para ele e o pé de
+    # trás vem arrastado; o corpo sobe e desce e a criatura balança ao contrário do passo
+    "anda/00": _p(tronco=2, cri=-1, nav=-2, sec=2, gar=-2),
+    "anda/01": _p(dx=2, dy=-3, tronco=3, cri=-4, cy=-2, nav=-6, sec=-2, gar=-8, pes=(-2, 4)),
+    "anda/02": _p(dx=4, dy=2, tronco=4, cri=2, cy=2, nav=2, sec=6, gar=4, pes=(-4, 8)),
+    "anda/03": _p(dx=4, dy=1, tronco=3, cri=3, cy=2, nav=4, sec=6, gar=6, pes=(-6, 6)),
+    "anda/04": _p(dx=3, dy=-3, tronco=2, cri=-2, cy=-1, nav=-4, sec=0, gar=-4, pes=(-2, 4)),
+    "anda/05": _p(dx=2, dy=1, tronco=2, cri=-3, cy=-2, nav=-6, sec=-2, gar=-6, pes=(2, 2)),
+    "anda/06": _p(dx=1, dy=2, tronco=2, cri=0, nav=-2, sec=2, gar=0, pes=(1, 1)),
+    "anda/07": _p(dy=0, tronco=2, cri=1, nav=0, sec=3, gar=1, pes=(0, 0)),
+    # pulo: joelhos encolhidos (metade de baixo do doador); subindo, os braços da Cliente ficam para baixo (arrasto);
+    # no alto ficam soltos; descendo, sobem
+    "pulo_d/00": _p(dx=None, tronco=2, cri=4, cy=3, nav=6, sec=10, gar=12),
+    "pulo_d/01": _p(dx=None, tronco=1, cri=2, cy=1, nav=0, sec=4, gar=4),
+    "pulo_d/02": _p(dx=None, tronco=0, cri=0, nav=-4, sec=0, gar=-2),
+    "pulo_d/03": _p(dx=None, td=-1, tronco=-2, cri=-4, cy=-4, nav=-12, sec=-10, gar=-14),
+    "pulo_d/04": _p(dx=None, td=-2, tronco=-3, cri=-6, cy=-6, nav=-16, sec=-14, gar=-20),
+    # x no ar (Arranhão de Cima): a Cliente se debruça e a garra rasga de cima para baixo na frente
+    "x_ard/00": _p(dx=None, tronco=0, cri=0, nav=-4, sec=0, gar=-2),
+    "x_ard/01": _p(dx=None, tronco=-4, cabeca=2, cri=-6, cy=-4, nav=-10, sec=-6, gar=-46),
+    "x_ard/02": _p(dx=None, td=2, tronco=8, cri=14, cx=8, cy=4, nav=4, sec=8, gar=40),
+    "x_ard/03": _p(dx=None, td=1, tronco=4, cri=6, cx=4, cy=2, nav=0, sec=4, gar=16),
+    # y no ar (Navalha em Arco, da família da Navalhada: a navalha de borracha estica, escolha do Alisson): sai de trás
+    # por cima da cabeça e corta na frente, para baixo
+    "y_ard/00": _p(dx=None, tronco=0, cri=0, nav=-4, sec=0, gar=-2),
+    "y_ard/01": _p(dx=None, td=-1, tronco=-6, cabeca=3, cri=-8, cx=-4, cy=-4, nav=-40, sec=-6, gar=-8),
+    "y_ard/02": _p(dx=None, td=2, tronco=10, cri=12, cx=8, cy=2, nav=70, sec=8, gar=8, en=1.9),
+    "y_ard/03": _p(dx=None, td=1, tronco=5, cri=6, cx=4, nav=40, sec=4, gar=4, en=1.3),
+    # a no ar (Joelhada e Mordida): os joelhos já vêm na frente e a Cliente desce mordendo por cima do ombro
+    "a_ard/00": _p(dx=None, tronco=0, cri=0, nav=-4, sec=0, gar=-2),
+    "a_ard/01": _p(dx=None, td=-1, tronco=-5, cabeca=2, cri=-8, cx=-6, cy=-4, nav=-10, sec=-8, gar=-10),
+    "a_ard/02": _p(dx=None, td=2, tronco=8, cri=22, cx=8, cy=6, nav=6, sec=16, gar=20),
+    "a_ard/03": _p(dx=None, td=1, tronco=4, cri=10, cx=4, cy=3, nav=0, sec=8, gar=10),
+    # b no ar (Por Baixo Mordendo): o corpo se inclina para a frente e a Cliente mergulha por baixo com os três braços
+    "b_ard/00": _p(dx=None, tronco=0, cri=0, nav=-4, sec=0, gar=-2),
+    "b_ard/01": _p(dx=None, td=-2, tronco=-6, cabeca=3, cri=-10, cx=-6, cy=-6, nav=-24, sec=-20, gar=-30),
+    "b_ard/02": _p(dx=None, td=3, tronco=14, cri=30, cx=8, cy=6, nav=30, sec=40, gar=50),
+    "b_ard/03": _p(dx=None, td=2, tronco=8, cri=16, cx=6, cy=4, nav=14, sec=20, gar=26),
     # defesa: o Raiclaven se encolhe (ombro para a frente, queixo para baixo, braço mecânico fechado na frente do
     # corpo) e a Cliente se debruça por cima dele, recolhendo a garra e o secador junto do corpo
     "defesa/00": _p(dx=-2, dy=2, tronco=3, cabeca=4, bt=-4, bf=-4, cri=6, cx=4, cy=2, nav=-10, sec=20, gar=24),
@@ -190,6 +233,12 @@ ANIMS = {
     "mordida": (20410, "y_agd 0/2 1/3 2/2 3/5A 4/6 5/4 0/3", (-6, -142, 28, -108)),
     "secador_chao": (20430, "a_agd 0/2 1/4 2/2 3/4A 4/5 0/3", (40, -82, 64, -56)),
     "varrida": (20440, "b_agd 0/2 1/4 2/4 3/2 4/5A 5/6 6/5 0/3", (26, -84, 66, -54)),
+    "pulo": (41, "pulo_d 0/4 1/4 2/6 3/4 4/4", None),
+    "arranhao_ar": (20600, "x_ard 0/2 1/3 2/5A 3/5 0/3", (28, -100, 62, -68)),
+    "navalha_ar": (20610, "y_ard 0/2 1/4 2/5A 3/6 0/3", (20, -110, 70, -40)),
+    "mordida_ar": (20630, "a_ard 0/2 1/4 2/5A 3/6 0/3", (8, -144, 40, -108)),
+    "por_baixo": (20640, "b_ard 0/2 1/4 2/2 2/4A 3/6 0/3", (10, -100, 62, -45)),
+    "anda": (20, "anda 0/6 1/6 2/6 3/6 4/6 5/6 6/6 7/6", None),
     "defesa": (150, "defesa 0/3 1/3 2/4 3/4 4/3 5/3", None),
     "apanha": (5000, "apanha 0/3 1/3 2/3 3/3 4/3", None),
     "garra": (20200, "x_pe 0/2 1/3 2/1 3/4A 4/4 0/3", (40, -116, 76, -84)),
@@ -210,6 +259,14 @@ MANCHA_FOLGA = 1500  # calça e botas escuras
 # inteira, para laços) ou a lista de poses-chave, uma por elemento da ação da base (ou espalhadas pelo tempo)
 REMAP = {
     0: "parado", 11: "agachado",
+    20: ["anda/00", "anda/01", "anda/02", "anda/03", "anda/04", "anda/05", "anda/06", "anda/07"],
+    21: ["anda/07", "anda/06", "anda/05", "anda/04", "anda/03", "anda/02", "anda/01", "anda/00"],
+    40: ["agachado_d/00", "agachado_d/01", "pulo_d/00", "pulo_d/00"],
+    41: ["pulo_d/00", "pulo_d/01", "pulo_d/02"], 42: ["pulo_d/00", "pulo_d/01", "pulo_d/02"],
+    43: ["pulo_d/00", "pulo_d/01", "pulo_d/02"],
+    44: ["pulo_d/02", "pulo_d/03", "pulo_d/04"], 45: ["pulo_d/02", "pulo_d/03", "pulo_d/04"],
+    46: ["pulo_d/02", "pulo_d/03", "pulo_d/04"],
+    47: ["pulo_d/04", "agachado_d/00", "agachado_d/00", "ginga/00"],
     120: ["defesa/00", "defesa/01", "defesa/01", "defesa/02"],
     130: ["defesa/02", "defesa/03"],
     140: ["defesa/01", "defesa/01", "defesa/00"],
@@ -222,5 +279,7 @@ REMAP = {
 
 # metade de baixo inteira de um desenho doador (a saia esconde as pernas do kit: dobrar coxa e canela deixava linha de
 # corte e pedaço solto). Doadores: ferramentas/doador_cliente.py
-PERNAS_VAR = {"agachado": "doador/agachado"}
+PERNAS_VAR = {"agachado": "doador/agachado", "pulo": "doador/pulo"}
 PERNAS_DE = {f"{f}/{i:02d}": "agachado" for f in ("agachado_d", "x_agd", "y_agd", "a_agd", "b_agd") for i in range(8)}
+PERNAS_NO_AR = {"pulo"}  # o doador do pulo fica no ar (o robô não cobra pé no chão)
+PERNAS_DE.update({f"{f}/{i:02d}": "pulo" for f in ("pulo_d", "x_ard", "y_ard", "a_ard", "b_ard") for i in range(8)})
