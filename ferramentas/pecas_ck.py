@@ -13,6 +13,7 @@ desenho bom ou é escrita à mão, em vez de copiar o erro.
 
 Nada daqui entra no .sff nem no gerador: é a prova para o Breno.
 """
+import functools
 import json
 import shutil
 import sys
@@ -802,12 +803,84 @@ ACOES = {
     "cruzado": ("soco", (3, 4, 5, 5, 6, 6, 7), (4, 3, 1, 3, 6, 5, 5), (2, 3), 210),
     "chute_alto": ("chute_alto", (1, 2, 3, 4, 5, 6, 7), (5, 4, 1, 3, 2, 8, 8), (2, 3), 240),
     "chute_de_rua": ("afastar", (1, 2, 3, 4, 4, 5, 6, 7), (4, 4, 4, 1, 3, 8, 6, 6), (3, 4), 260),
-    "agachar": ("agachado", (0, 1, 2, 4, 5, 6, 7, 6, 5), (2, 2, 2, 8, 8, 8, 8, 8, 8), None, 11),
+    "agachando": ("agachado", (2,), (2,), None, 10),
+    "agachado": ("agachado", (4, 5, 6, 7, 6, 5), (8,) * 6, None, 11),
+    "levantando": ("agachado", (2,), (2,), None, 12),
+    "cruzado_rapido": ("soco", (3, 4, 5, 5, 6, 6, 7), (2, 2, 1, 2, 6, 4, 4), (2, 3), 215),
+    "chute_alto_rapido": ("chute_alto", (1, 2, 3, 4, 5, 6, 7), (3, 2, 1, 2, 6, 5, 5), (2, 3), 245),
     "chute_baixo": ("chute_baixo", (1, 2, 3, 4, 5, 6, 7), (3, 2, 1, 2, 3, 3, 3), (2, 3), 230),
     "soco_agachado": ("baixo_soco", (1, 2, 3, 4, 4, 5, 6), (2, 1, 1, 1, 2, 4, 3), (3, 4), 400),
     "rasteira": ("rasteira", (1, 2, 3, 4, 5, 6, 7), (5, 5, 1, 3, 8, 7, 7), (2, 3), 440),
 }
-OUT_HD, OUT_1X = SPR / "quadros_pecas_hd", SPR / "quadros_pecas"
+OUT_HD, OUT_1X = SPR / "quadros_pecas_hd", SPR / "quadros_pecas"  # <ação>/ (o ligar_pecas.py lê) e chaves/<folha>/
+LACOS = {"parado", "agachado"}  # ações em laço: respiram
+
+
+@functools.lru_cache(None)
+def _sff_ck():
+    import conferir_sff as cs
+    _, nos, _ = cs.ler(RAIZ / "chars/ck/ck.sff")
+    return {(n["g"], n["i"]): n for n in nos}
+
+
+def do_jogo(acao, folha):
+    """Elementos da ação como estão hoje no chars/ck (o .air já passou pela pose segurada e pelos ajustes de tempo):
+    [(desenho da folha, ticks)] e os índices com Clsn1. O desenho é achado pelo formato (alfa) do sprite HD."""
+    import re as _re
+    air = (RAIZ / "chars/ck/ck.air").read_text(encoding="utf-8", errors="replace")
+    m = _re.search(rf"^\[Begin Action {acao}\][^\n]*\n(.*?)(?=^\[Begin Action|\Z)", air, _re.M | _re.S)
+    sff = _sff_ck()
+    def recorte(a):
+        ys, xs = np.nonzero(a)
+        return a[ys.min():ys.max() + 1, xs.min():xs.max() + 1]
+
+    def iou_(a, m):  # formato contra formato, alinhados pelo canto da caixa (o jogo desloca o desenho: ANCORA)
+        H, W = max(a.shape[0], m.shape[0]), max(a.shape[1], m.shape[1])
+        A, M = np.zeros((H, W), bool), np.zeros((H, W), bool)
+        A[:a.shape[0], :a.shape[1]], M[:m.shape[0], :m.shape[1]] = a, m
+        return (A & M).sum() / (A | M).sum()
+
+    cands = {k: recorte(b.abrir(f"{folha}/{k:02d}")[..., 3] > 0) for k in range(8)}
+    des, ticks, ativos, clsn1 = [], [], [], False
+    for linha in m.group(1).splitlines():
+        t = linha.strip()
+        if t.lower().startswith("clsn1:"):
+            clsn1 = True
+            continue
+        el = _re.match(r"^(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)", t)
+        if not el:
+            continue
+        g, i, _, _, tk = map(int, el.groups())
+        n = sff[(g, i)]
+        mask = recorte(np.frombuffer(n["px"], np.uint8).reshape(n["h"], n["w"]) != 0)
+        iou = {k: iou_(c, mask) for k, c in cands.items()}
+        best = max(iou, key=iou.get)
+        assert iou[best] > 0.6, f"ação {acao}: sprite {g},{i} não é da folha {folha} ({iou[best]:.2f})"
+        if clsn1:
+            ativos.append(len(des))
+        des.append(best)
+        ticks.append(max(tk, 0) if tk >= 0 else 8)
+        clsn1 = False
+    return tuple(des), tuple(ticks), tuple(ativos) or None
+
+
+SECO = False  # True liga a regra 7 seca nos golpes (o Alisson pediu fluidez; o Breno decide na #45)
+
+
+def segurado(poses, elems, bate):
+    """Golpes, reações, defesa e agachar (regras-dos-lutadores, seção 7): pose segurada e troca seca. Só antes do
+    contato entram no máximo 2 quadros de smear a 1 tick, tirados do fim da antecipação (o tempo total não muda)."""
+    import vida_pecas as vida
+    saida = []
+    for k, (q, t) in enumerate(elems):
+        a = poses[q]
+        if bate is not None and k == bate - 1 and t >= 3:
+            c = poses[elems[bate][0]]
+            saida.append((dict(a), t - 2, False, q))
+            saida += [(vida.misturar(a, c, f), 1, False, q) for f in (0.4, 0.75)]
+        else:
+            saida.append((dict(a), t, k == bate, q))
+    return saida
 
 
 def gerar(nomes=None):
@@ -819,19 +892,24 @@ def gerar(nomes=None):
     falhas = 0
     for nome in nomes:
         folha, des, ticks, ativos, acao = ACOES[nome]
+        if (RAIZ / "chars/ck/ck.air").exists():  # tempos e quadros ativos do jogo de hoje (têm de bater no ligar_pecas.py)
+            des, ticks, ativos = do_jogo(acao, folha)
         elems = [(f"{folha}/{d:02d}", t) for d, t in zip(des, ticks)]
         for q, _ in elems:
             if q not in poses:
                 poses[q] = pose_de(kit, q)
-        laco = nome == "parado"
+        laco = nome in LACOS
         bate = ativos[0] if ativos else None
-        quadros = vida.animar(poses, elems, bate=bate, laco=laco, guarda=poses.get(f"{folha}/00"))
-        if laco:
-            quadros = vida.respirar(quadros)
-        quadros = vida.atrasar(quadros, laco=laco)
+        if SECO and not laco:  # regra 7 ao pé da letra: pose segurada e troca seca
+            quadros = segurado(poses, elems, bate)
+        else:  # pedido do Alisson (fluidez e vida): quadros do meio, mesmo tempo total e caixa no mesmo tick
+            quadros = vida.animar(poses, elems, bate=bate, laco=laco, guarda=poses.get(f"{folha}/00"))
+            if laco:
+                quadros = vida.respirar(quadros)
+            quadros = vida.atrasar(quadros, laco=laco)
         for pasta in (OUT_HD, OUT_1X):
-            shutil.rmtree(pasta / "acoes" / nome, ignore_errors=True)
-            (pasta / "acoes" / nome).mkdir(parents=True)
+            shutil.rmtree(pasta / nome, ignore_errors=True)
+            (pasta / nome).mkdir(parents=True)
         caixa_k = set(ativos or ())
         elementos, k_el, tick = [], 0, 0
         lim = np.cumsum(ticks)
@@ -840,8 +918,8 @@ def gerar(nomes=None):
             erros = conferir(out, q)
             falhas += bool(erros)
             relatorio.append(f"| {nome}/{i:02d} | {q} | {'PASS' if not erros else 'FAIL ' + '; '.join(erros)} |")
-            Image.fromarray(out).save(OUT_HD / "acoes" / nome / f"{i:02d}.png")
-            Image.fromarray(np.ascontiguousarray(out[1::3, 1::3])).save(OUT_1X / "acoes" / nome / f"{i:02d}.png")
+            Image.fromarray(out).save(OUT_HD / nome / f"{i:02d}.png")
+            Image.fromarray(np.ascontiguousarray(out[1::3, 1::3])).save(OUT_1X / nome / f"{i:02d}.png")
             while tick >= lim[k_el]:
                 k_el += 1
             elementos.append({"desenho": i, "ticks": t, "caixa": k_el in caixa_k, "de": q})
@@ -850,17 +928,25 @@ def gerar(nomes=None):
         tempos = {"acao": acao, "folha": folha, "elementos": elementos,
                   "hoje": [{"de": q, "ticks": t, "caixa": k in caixa_k} for k, (q, t) in enumerate(elems)]}
         for pasta in (OUT_HD, OUT_1X):
-            (pasta / "acoes" / nome / "tempos.json").write_text(json.dumps(tempos, indent=1, ensure_ascii=False),
+            (pasta / nome / "tempos.json").write_text(json.dumps(tempos, indent=1, ensure_ascii=False),
                                                                encoding="utf-8")
         print(nome, len(set(q for q, _ in elems)), "poses-chave ->", len(quadros), "desenhos")
-    # os 8 desenhos-chave de cada folha usada, no mesmo índice que o gerador lê hoje
+    # os 8 desenhos-chave de cada folha usada, no mesmo índice que o gerador lê hoje (o jogo troca a folha inteira)
+    for folha in sorted({q.split("/")[0] for q in poses}):
+        for i in range(8):
+            q = f"{folha}/{i:02d}"
+            if q not in poses:
+                poses[q] = pose_de(kit, q)
+                erros = conferir(limpar(desenhar(kit, poses[q]), poses[q]), q)
+                falhas += bool(erros)
+                relatorio.append(f"| {q} (folha) | {q} | {'PASS' if not erros else 'FAIL ' + '; '.join(erros)} |")
     for q, pose in poses.items():
         folha, i = q.split("/")
         for pasta in (OUT_HD, OUT_1X):
-            (pasta / folha).mkdir(parents=True, exist_ok=True)
+            (pasta / "chaves" / folha).mkdir(parents=True, exist_ok=True)
         out = limpar(desenhar(kit, pose), pose)
-        Image.fromarray(out).save(OUT_HD / folha / f"{i}.png")
-        Image.fromarray(np.ascontiguousarray(out[1::3, 1::3])).save(OUT_1X / folha / f"{i}.png")
+        Image.fromarray(out).save(OUT_HD / "chaves" / folha / f"{i}.png")
+        Image.fromarray(np.ascontiguousarray(out[1::3, 1::3])).save(OUT_1X / "chaves" / folha / f"{i}.png")
     guarda = limpar(desenhar(kit, {}), {})
     Image.fromarray(guarda).save(OUT_HD / "guarda.png")
     (b.PECAS / "poses.json").write_text(json.dumps(poses, indent=1, default=float), encoding="utf-8")
@@ -895,9 +981,9 @@ def video(saida=None):
 
     w, h = (corte[2] - corte[0]) * k, (corte[3] - corte[1]) * k
     for nome in ACOES:
-        tempos = json.loads((OUT_HD / "acoes" / nome / "tempos.json").read_text(encoding="utf-8"))
+        tempos = json.loads((OUT_HD / nome / "tempos.json").read_text(encoding="utf-8"))
         a = [b.HD / f"{e['de']}.png" for e in tempos["hoje"] for _ in range(e["ticks"])]
-        n = [OUT_HD / "acoes" / nome / f"{e['desenho']:02d}.png" for e in tempos["elementos"] for _ in range(e["ticks"])]
+        n = [OUT_HD / nome / f"{e['desenho']:02d}.png" for e in tempos["elementos"] for _ in range(e["ticks"])]
         if nome != "parado":
             ga, gn = b.HD / f"{REF}.png", OUT_HD / "guarda.png"
             a, n = [ga] * 20 + a + [ga] * 20, [gn] * 20 + n + [gn] * 20
@@ -923,7 +1009,7 @@ def video(saida=None):
         shutil.rmtree(tmp)
         # antes (desenhos de hoje, sem repetir) em cima e depois (todos os desenhos novos) embaixo
         antes = list(dict.fromkeys(e["de"] for e in tempos["hoje"]))
-        depois = sorted((OUT_HD / "acoes" / nome).glob("[0-9][0-9].png"))
+        depois = sorted((OUT_HD / nome).glob("[0-9][0-9].png"))
         tw, th = w // 2, h // 2
         col = max(len(antes), len(depois))
         folha = Image.new("RGB", (tw * col, th * 2 + 80), (40, 40, 48))

@@ -2889,3 +2889,14 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   remap do despertado para cada sprite novo e refaz as ações da aura (30000/40000 + ação).
 - Gutto: 16 golpes, 299 quadros. Robô de peças 0 defeito; robô de luta 186/186 antes e depois, dano idêntico.
 - Agachado passou a ter 48 ticks e a rasteira ganhou a volta (459, 1173, 460) para bater com o tempo do jogo.
+
+### 2026-11-17 — CK base no jogo pelo boneco de peças
+- Pedido do Alisson (o Breno liberou auto-aprovação): pôr no jogo o que passou no robô.
+- `pecas_ck.py` agora lê os tempos e os quadros ativos de cada ação direto do `chars/ck` (`do_jogo`: acha o desenho
+  da folha pelo formato do sprite) e grava cada ação em `sprites/ck/quadros_pecas_hd/<ação>/` (desenhos-chave em
+  `chaves/<folha>/`), que é o formato do `ligar_pecas.py`.
+- 13 ações ligadas com `python3 ferramentas/ligar_pecas.py ck`: parado (0), agachando/agachado/levantando (10/11/12),
+  jab (200), cruzado (210/215), chute baixo (230), chute alto (240/245), chute de rua (260), soco agachado (400) e
+  rasteira (440). 188 desenhos novos, mesmo tempo e mesmas caixas, despertado igual (remap).
+- Quadros do meio mantidos nos golpes (pedido de fluidez do Alisson, igual ao Gutto e ao Hazak); `SECO = True` em
+  `pecas_ck.py` liga a regra 7 seca se o Breno preferir.
