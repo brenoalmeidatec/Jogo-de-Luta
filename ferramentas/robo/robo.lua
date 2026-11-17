@@ -1323,7 +1323,7 @@ do
     note(function() return "dano " .. (c.vida0 - lifeP2()) .. "; P2 estado " .. snap(2).st end)
   end)
   diaboD(4500, "demonio: so uma Bola das Trevas por vez", function()
-    approach(180)
+    approach(190)
     press(1, {"df_x"}, 3)
     need(estadoEm(4500), 14, "entrou em 4500")
     need(function() return snap(1).proj > 0 end, 30, "a 1a bola saiu")
@@ -1333,7 +1333,14 @@ do
       if s.st == 0 and s.ctrl then held[1].df_x = clock() + 2; return true end
       pendingPos[2] = o.x + (o.x > s.x and 5 or -5)
     end, 70, "P1 livre com a 1a bola na tela")
-    wait(3)
+    -- o P2 segue recuando enquanto o comando chega (a bola sai mais à frente com a garra esticada da arte nova)
+    acao(function() c.k = 0 end)
+    need(function()
+      local s, o = snap(1), snap(2)
+      pendingPos[2] = o.x + (o.x > s.x and 5 or -5)
+      c.k = c.k + 1
+      return c.k >= 2
+    end, 5, "P2 recuou junto com a bola")
     note(function() local s = snap(1); return "estado " .. s.st .. ", projeteis " .. s.proj end)
     need(function() local s = snap(1); return s.st ~= 4500 and s.proj > 0 end, 1, "com a 1a bola na tela a 2a nao sai", false)
   end)

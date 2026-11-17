@@ -54,6 +54,13 @@ folhas prontas, o robô passando e o vídeo na #47.
 | Rasgo Ascendente (antiaéreo, 2 acertos) | 4520-4522 | →↓↘ x / y | rasgo |
 | Juízo Infernal (super, 1 estoque) | 4650-4654, vítima 4660/4661 | ↓↘→↓↘→ x / y | juizo_a, juizo_b |
 
+- **Especiais no jogo com arte de verdade (17/11):** `m_bola_trevas`, `m_voo`, `m_rasgo`, `m_juizo_a` e `m_juizo_b`
+  feitas no boneco de peças por esta thread (`ferramentas/kit_diabo_especiais.py`, lido pelo fim do `kit_diabo.py` da
+  thread da arte; só `TROCA`: poses inteiras da folha-modelo, giradas no ar, e golpes/guarda do kit). Robô de defeitos
+  40/0, robô de luta 327/0. Vídeo: `video/especiais-arte.mp4` (Bola, Voo, Rasgo e Juízo), quadros em
+  `video/juizo_arte.jpg`. Faltam as 6 folhas da thread da arte (ar_maos, ar_pes, direcionais_a/b, fins_maos/pes), que
+  ligam o resto dos golpes quando entrarem.
+
   A Rajadona de Ki das Trevas (→← soco, `fb_x`) continua como o poder de longe da forma, como nos outros despertados.
 - **Teste sem a arte:** `NAZA_DEMONIO_PROVISORIO=1 python3 ferramentas/gerar_hazaki.py` usa uma folha parecida no
   lugar da que falta (`PROVISORIO`), só para o robô. Nunca vai para a `mugen` assim. O robô pula sozinho o roteiro
