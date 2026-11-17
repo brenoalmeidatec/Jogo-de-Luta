@@ -136,7 +136,14 @@ def montar_kit():
     baixo = yy >= K.CINTURA
     m_bt = b.mascara(K.BRACO_TRAS) & alfa
     m_bf = b.mascara(K.BRACO_FRENTE) & alfa & ~m_bt
+    # peças a mais do lutador (a criatura nas costas do Raiclaven despertado e os braços dela): cada uma com o seu
+    # polígono e o seu osso em K.OSSOS; saem do corpo antes da cabeça, do tronco e das pernas
+    extras = {}
+    for nome, poli in getattr(K, "EXTRAS", {}).items():
+        extras[nome] = b.mascara(poli) & alfa & ~(m_bt | m_bf) & ~np.any(list(extras.values()) or [np.zeros_like(alfa)], 0)
     bracos = m_bt | m_bf
+    for m_ in extras.values():
+        bracos = bracos | m_
     m_cab = b.mascara(K.CABECA) & alfa & ~bracos
     # só o marrom do nó fica no quadril; a calça atrás dele é das pernas
     no = (b.mascara(K.NO_DA_FAIXA) & faixa_marrom(ref)) if hasattr(K, "NO_DA_FAIXA") else np.zeros_like(alfa)
@@ -179,6 +186,7 @@ def montar_kit():
         "canela_frente": pf & (yy >= jf - 12),
         "perna_tras": pt,
         "perna_frente": pf,
+        **extras,
     }
     imgs = {k: np.where(m[..., None], ref, 0).astype(np.uint8) for k, m in partes.items()}
     if "cauda" in imgs and cauda_falta.any():
@@ -200,6 +208,20 @@ def montar_kit():
         escq = b.mascara(K.QUADRIL_ESCONDIDO) & m_bt & baixo
         imgs["quadril"] = b.tapar(np.where((partes["quadril"] | escq)[..., None], ref, 0).astype(np.uint8), escq,
                                   partes["quadril"])
+    faixa = getattr(K, "TAPAR_FAIXA", 0)
+    if faixa:  # pinta por baixo de quem cobre a peça, numa faixa junto da beirada (respirar não abre buraco)
+        k_ = np.ones((2 * faixa + 1, 2 * faixa + 1), np.uint8)
+        for nome in getattr(K, "TAPAR", ("tronco", "quadril")):
+            dono = imgs[nome][..., 3] > 0
+            # só onde a peça de cima fica por cima dela (pela ordem das camadas): o que fica atrás não é tapado
+            i_dono = K.CAMADAS.index(nome)
+            em_cima = np.zeros_like(alfa)
+            for outro, m_ in partes.items():
+                cam = outro.replace("perna", "coxa")
+                if outro != nome and cam in K.CAMADAS and K.CAMADAS.index(cam) > i_dono:
+                    em_cima |= m_
+            cobre = em_cima & ~dono & (cv2.dilate(dono.astype(np.uint8), k_) > 0)
+            imgs[nome] = b.tapar(imgs[nome], cobre, dono)
     # cada peça fica só com o pedaço ligado a ela (sem lasca de outra peça que caiu dentro do polígono)
     imgs = {k: so_o_grosso(v) for k, v in imgs.items()}
     kit = {"ref": f"quadros_arcade_hd/{K.REF}.png", "pecas": {}}
@@ -740,6 +762,28 @@ def malha_perna(lado, w):
     return ts, td
 
 
+def esticar(p, est, slot=None):
+    """A peça esticada `est` vezes na linha do osso (da junta para a ponta, K.OSSOS), em volta da junta, por vizinho
+    mais próximo: não cria cor nova. É o braço de borracha da criatura do Raiclaven."""
+    img, (ox, oy), (jx, jy) = p["img"], p["origem"], p["junta"]
+    ponta = K.OSSOS[slot][2] if slot in K.OSSOS else (jx + 1, jy)
+    th = np.arctan2(ponta[1] - jy, ponta[0] - jx)
+    c, s_ = np.cos(th), np.sin(th)
+    R = np.array([[c, -s_], [s_, c]])
+    M = R @ np.diag([est, 1.0]) @ R.T  # estica só na direção do osso
+    h, w = img.shape[:2]
+    cantos = np.array([[0, 0], [w, 0], [0, h], [w, h]], float) - (jx - ox, jy - oy)
+    novos = cantos @ M.T
+    x0, y0 = np.floor(novos.min(0)).astype(int)
+    x1, y1 = np.ceil(novos.max(0)).astype(int)
+    # saída (u, v) relativa à junta = M (x - j); o cv2 quer a matriz direta da peça para a saída
+    A = np.zeros((2, 3))
+    A[:, :2] = M
+    A[:, 2] = -M @ np.array([jx - ox, jy - oy]) - (x0, y0)
+    out = cv2.warpAffine(img, A, (int(x1 - x0), int(y1 - y0)), flags=cv2.INTER_NEAREST, borderValue=(0, 0, 0, 0))
+    return dict(p, img=out, origem=[int(jx + x0), int(jy + y0)])
+
+
 def desenhar(kit, pose):
     """Peças rígidas giradas nas juntas; pernas no chão deformadas por malha (calça larga dobra sem emenda);
     perna levantada com o desenho de câmara ou esticada preso no quadril."""
@@ -797,6 +841,9 @@ def desenhar(kit, pose):
             continue
         p = kit["pecas"][b.chave(slot, pose)]
         pos, ang = w[slot]
+        est = pose.get(slot, {}).get("estica", 1)
+        if abs(est - 1) > 0.01:  # membro de borracha (a criatura do Raiclaven): estica na linha do osso
+            p = esticar(p, est, slot)
         r, x0, y0 = b.colocar(p, p["img"], p["origem"], pos, ang)
         por(r, x0, y0)
         if slot == "tronco":
