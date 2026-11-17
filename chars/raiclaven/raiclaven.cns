@@ -2114,6 +2114,23 @@ scale = .75, .75
 ignorehitpause = 1
 pausemovetime = 99
 
+[State 810, Luz do efeito]
+type = Explod
+trigger1 = Time = 23
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9809, 9810))
+postype = p1
+pos = 34, -82
+removetime = -2
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 810, Pancada 1: som]
 type = PlaySnd
 trigger1 = Time = 23
@@ -2170,6 +2187,23 @@ sprpriority = 5
 scale = .75, .75
 ignorehitpause = 1
 pausemovetime = 99
+
+[State 810, Luz do efeito]
+type = Explod
+trigger1 = Time = 47
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9809, 9810))
+postype = p1
+pos = 34, -79
+removetime = -2
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 810, Pancada 2: som]
 type = PlaySnd
@@ -2228,6 +2262,23 @@ scale = .75, .75
 ignorehitpause = 1
 pausemovetime = 99
 
+[State 810, Luz do efeito]
+type = Explod
+trigger1 = Time = 74
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9809, 9810))
+postype = p1
+pos = 34, -85
+removetime = -2
+scale = .75, .75
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 810, Pancada 3: som]
 type = PlaySnd
 trigger1 = Time = 74
@@ -2284,6 +2335,23 @@ sprpriority = 5
 scale = .6, .6
 ignorehitpause = 1
 pausemovetime = 99
+
+[State 810, Luz do efeito]
+type = Explod
+trigger1 = Time = 102
+trigger1 = NumTarget
+anim = (ifelse(var(20) > 0, 9807, 9808))
+postype = p1
+pos = 34, -81
+removetime = -2
+scale = .6, .6
+ignorehitpause = 1
+pausemovetime = 99
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 810, Final: som]
 type = PlaySnd
@@ -2489,6 +2557,19 @@ removetime = -2
 sprpriority = 4
 ownpal = 1
 
+[State 831, Luz do efeito]
+type = Explod
+trigger1 = Time = 26
+anim = ifelse(var(20) > 0, 9807, 9808)
+postype = p1
+pos = 62, -80
+removetime = -2
+sprpriority = (4) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 831, Capoeira som]
 type = PlaySnd
 trigger1 = Time = 26
@@ -2509,6 +2590,19 @@ pos = 38, -60
 removetime = -2
 sprpriority = 5
 ownpal = 1
+
+[State 831, Luz do efeito]
+type = Explod
+trigger1 = Time = 67
+anim = ifelse(var(20) > 0, 9807, 9808)
+postype = p1
+pos = 38, -60
+removetime = -2
+sprpriority = (5) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 831, Whisky treme]
 type = EnvShake
@@ -4667,6 +4761,22 @@ sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
 
+[State 3401, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9804, 9805)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 3401, Rastro do corpo (efeitos.py)]
 type = AfterImage
 trigger1 = Time = 0
@@ -4769,6 +4879,22 @@ sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
 
+[State 1600, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9804, 9805)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 1600, Rastro do corpo (efeitos.py)]
 type = AfterImage
 trigger1 = Time = 0
@@ -4858,6 +4984,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 1601, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9804, 9805)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 1601, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -5001,6 +5143,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 1701, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9804, 9805)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 1701, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -5183,6 +5341,22 @@ sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
 
+[State 3402, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9804, 9805)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 3402, Rastro do corpo (efeitos.py)]
 type = AfterImage
 trigger1 = Time = 0
@@ -5306,6 +5480,22 @@ sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
 
+[State 3400, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9804, 9805)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 3400, Rastro do corpo (efeitos.py)]
 type = AfterImage
 trigger1 = Time = 0
@@ -5367,6 +5557,57 @@ ground.hittime = 30
 ground.velocity = -3
 air.velocity = -2,-3.5
 
+[State 3400, Luz do poder orbe]
+type = Explod
+trigger1 = Time = 25
+anim = 9730
+id = 9630
+postype = p1
+velocity = 1.8, 0.0
+accel = 0.07, 0.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+pos = 60.0, -80.3
+sprpriority = 2
+trans = add
+alpha = floor(255 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255
+
+[State 3400, Luz do poder halo]
+type = Explod
+trigger1 = Time = 25
+anim = 9731
+id = 9631
+postype = p1
+velocity = 1.8, 0.0
+accel = 0.07, 0.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+pos = 60.0, -80.3
+sprpriority = 1
+trans = addalpha
+alpha = floor(230 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255 - floor(230 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85)))
+
+[State 3400, Luz do poder poca]
+type = Explod
+trigger1 = Time = 25
+anim = 9721
+id = 9632
+postype = p1
+velocity = 1.8, 0.0
+accel = 0.07, 0.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+pos = 60.0, 0
+sprpriority = -8
+trans = addalpha
+alpha = floor(220 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255 - floor(220 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85)))
+
 [State 3400, Fim]
 type = ChangeState
 trigger1 = AnimTime = 0
@@ -5395,6 +5636,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 3403, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9804, 9805)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 3403, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -5490,6 +5747,19 @@ pos = 40, -15
 removetime = -2
 sprpriority = 4
 ownpal = 1
+
+[State 3403, Luz do efeito]
+type = Explod
+trigger1 = Pos Y >= 0 && Vel Y > 0
+anim = ifelse(var(20) > 0, 9802, 9803)
+postype = p1
+pos = 40, -15
+removetime = -2
+sprpriority = (4) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 3403, Treme]
 type = EnvShake
@@ -5616,6 +5886,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 1000, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9804, 9805)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 1000, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -5744,6 +6030,22 @@ sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
 
+[State 1001, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9804, 9805)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 1001, Rastro do corpo (efeitos.py)]
 type = AfterImage
 trigger1 = Time = 0
@@ -5871,6 +6173,22 @@ sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
 
+[State 1100, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9804, 9805)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 1100, Rastro do corpo (efeitos.py)]
 type = AfterImage
 trigger1 = Time = 0
@@ -5980,6 +6298,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 1200, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9804, 9805)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 1200, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -6098,6 +6432,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 1300, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9804, 9805)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 1300, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -6370,6 +6720,22 @@ removetime = -2
 bindtime = 1
 ignorehitpause = 1
 
+[State 2000, Luz do efeito]
+type = Explod
+trigger1 = Anim = 2000 && AnimTime = 0
+anim = 9806
+id = 9272
+postype = p1
+pos = 0, 0
+removetime = -2
+bindtime = 1
+ignorehitpause = 1
+sprpriority = (-2) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 2000, Liga]
 type = VarSet
 trigger1 = Anim = 2000 && AnimTime = 0
@@ -6410,6 +6776,24 @@ ownpal = 1
 scale = 1.5, 1.5
 supermovetime = 90
 ignorehitpause = 1
+
+[State 3000, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9800, 9801)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+scale = 1.0, 1.0
+supermovetime = 90
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 3000, Fundo na cor da forma (efeitos.py)]
 type = BGPalFX
@@ -6724,6 +7108,24 @@ scale = 1.5, 1.5
 supermovetime = 90
 ignorehitpause = 1
 
+[State 3100, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9800, 9801)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+scale = 1.0, 1.0
+supermovetime = 90
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 3100, Fundo na cor da forma (efeitos.py)]
 type = BGPalFX
 trigger1 = Time >= 1
@@ -6899,6 +7301,22 @@ sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
 
+[State 1101, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9804, 9805)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 1101, Rastro do corpo (efeitos.py)]
 type = AfterImage
 trigger1 = Time = 0
@@ -7008,6 +7426,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 1201, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9804, 9805)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 1201, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -7126,6 +7560,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 1301, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9804, 9805)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 1301, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -7593,6 +8043,22 @@ sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
 
+[State 1400, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9804, 9805)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 1400, Rastro do corpo (efeitos.py)]
 type = AfterImage
 trigger1 = Time = 0
@@ -7694,6 +8160,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 1401, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9804, 9805)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 1401, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -7797,6 +8279,22 @@ sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
 
+[State 1500, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9804, 9805)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 1500, Rastro do corpo (efeitos.py)]
 type = AfterImage
 trigger1 = Time = 0
@@ -7887,6 +8385,20 @@ removetime = -2
 sprpriority = 4
 ownpal = 1
 
+[State 1500, Luz do efeito]
+type = Explod
+trigger1 = AnimElem = 4
+trigger1 = var(20) > 0
+anim = ifelse(var(20) > 0, 9802, 9803)
+postype = p1
+pos = 30, -15
+removetime = -2
+sprpriority = (4) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 1500, Fim]
 type = ChangeState
 trigger1 = AnimTime = 0
@@ -7915,6 +8427,22 @@ removetime = -2
 sprpriority = 3
 ownpal = 1
 ignorehitpause = 1
+
+[State 1501, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9804, 9805)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 1501, Rastro do corpo (efeitos.py)]
 type = AfterImage
@@ -8008,6 +8536,20 @@ removetime = -2
 sprpriority = 4
 ownpal = 1
 
+[State 1501, Luz do efeito]
+type = Explod
+trigger1 = AnimElem = 4
+trigger1 = var(20) > 0
+anim = ifelse(var(20) > 0, 9802, 9803)
+postype = p1
+pos = 30, -15
+removetime = -2
+sprpriority = (4) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
+
 [State 1501, Quique]
 type = TargetState
 trigger1 = MoveHit = 1 && NumTarget > 0 && var(20) > 0 && !var(24)
@@ -8048,6 +8590,24 @@ ownpal = 1
 scale = 1.5, 1.5
 supermovetime = 90
 ignorehitpause = 1
+
+[State 3200, Luz do efeito]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(20) > 0, 9800, 9801)
+id = 9243
+postype = p1
+pos = 8, -60
+bindtime = -1
+removetime = -2
+scale = 1.0, 1.0
+supermovetime = 90
+ignorehitpause = 1
+sprpriority = (3) - 1
+ownpal = 1
+trans = addalpha
+alpha = 255, 0
+
 
 [State 3200, Fundo na cor da forma (efeitos.py)]
 type = BGPalFX
@@ -8870,3 +9430,631 @@ type = SelfState
 trigger1 = Vel Y > 0
 trigger1 = Pos Y >= 0
 value = 5100
+
+[Statedef -4]
+; >>> luz.py: luz e brilho na base do KIKIU (issue #51). Não edite: rode python3 ferramentas/luz.py
+[State -4, Luz zera o poder]
+type = MapSet
+trigger1 = RoundState = 0
+map = "luz_p"
+value = 0
+ignorehitpause = 1
+
+[State -4, Luz do poder no ar]
+type = MapAdd
+trigger1 = 1
+map = "luz_p"
+value = 0.12 * (ifelse(NumProjID(1003), 1, 0) - map(luz_p))
+ignorehitpause = 1
+
+[State -4, Luz escuro nasce]
+type = Explod
+trigger1 = NumExplod(9623) = 0 && RoundState > 0
+anim = 9722
+id = 9623
+postype = p1
+pos = 0, -120
+facing = 1
+scale = 400, 120
+sprpriority = -20
+bindtime = -1
+removetime = -1
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 0, 256
+ignorehitpause = 1
+
+[State -4, Luz escuro]
+type = ModifyExplod
+trigger1 = NumExplod(9623)
+id = 9623
+trans = addalpha
+alpha = 0, 256 - floor(256 * min(0.45, 0.16 * min(1, max(0, 0)) + 0.2 * map(luz_p)))
+ignorehitpause = 1
+
+[State -4, Luz halo nasce]
+type = Explod
+trigger1 = NumExplod(9620) = 0 && 0 > 0.01
+anim = 9720
+id = 9620
+postype = p1
+pos = 0, 0
+facing = 1
+sprpriority = -7
+bindtime = -1
+removetime = -1
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 0, 256
+ignorehitpause = 1
+
+[State -4, Luz halo]
+type = ModifyExplod
+trigger1 = NumExplod(9620)
+id = 9620
+postype = p1
+pos = 0, -0.0 * (1 - 0.7 * 0)
+trans = addalpha
+alpha = floor(255 * min(1, max(0, 0)) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.0) + 0.04 * sin(GameTime * 0.1361 + 0.00))), 255 - floor(255 * min(1, max(0, 0)) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.0) + 0.04 * sin(GameTime * 0.1361 + 0.00)))
+ignorehitpause = 1
+
+[State -4, Luz poca nasce]
+type = Explod
+trigger1 = NumExplod(9621) = 0 && 0 > 0.01
+anim = 9721
+id = 9621
+postype = p1
+pos = 0, 0
+facing = 1
+sprpriority = -8
+bindtime = -1
+removetime = -1
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 0, 256
+ignorehitpause = 1
+
+[State -4, Luz poca]
+type = ModifyExplod
+trigger1 = NumExplod(9621)
+id = 9621
+postype = p1
+pos = 0, 0 - Pos Y
+bindtime = 0
+trans = addalpha
+alpha = floor(255 * min(1, max(0, 0)) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 1.1) + 0.04 * sin(GameTime * 0.1361 + 1.87)) * (1 - min(1, max(0, -Pos Y / 140)))), 255 - floor(255 * min(1, max(0, 0)) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 1.1) + 0.04 * sin(GameTime * 0.1361 + 1.87)) * (1 - min(1, max(0, -Pos Y / 140))))
+ignorehitpause = 1
+
+[State -4, Luz apaga 9620]
+type = RemoveExplod
+trigger1 = NumExplod(9620) && 0 <= 0.01
+id = 9620
+ignorehitpause = 1
+
+[State -4, Luz apaga 9621]
+type = RemoveExplod
+trigger1 = NumExplod(9621) && 0 <= 0.01
+id = 9621
+ignorehitpause = 1
+
+[State -4, Luz no oponente]
+type = PalFX
+trigger1 = 0 > 0.01 && NumEnemy > 0 && RoundState = 2
+trigger1 = enemynear,MoveType != H && enemynear,StateNo < 1000 && enemynear,var(20) <= 0
+trigger1 = abs(P2BodyDist X) < 110
+redirectid = enemynear,id
+time = 2
+add = floor(255 * 0.08 * min(1, max(0, 0)) * max(0, 1 - abs(P2BodyDist X) / 110) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.0) + 0.04 * sin(GameTime * 0.1361 + 0.00))), floor(242 * 0.08 * min(1, max(0, 0)) * max(0, 1 - abs(P2BodyDist X) / 110) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.0) + 0.04 * sin(GameTime * 0.1361 + 0.00))), floor(222 * 0.08 * min(1, max(0, 0)) * max(0, 1 - abs(P2BodyDist X) / 110) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.0) + 0.04 * sin(GameTime * 0.1361 + 0.00)))
+ignorehitpause = 1
+
+[State -4, Luz do poder 1003 apaga 9630]
+type = RemoveExplod
+trigger1 = NumExplod(9630) && NumProjID(1003) = 0
+id = 9630
+ignorehitpause = 1
+
+[State -4, Luz do poder 1003 apaga 9631]
+type = RemoveExplod
+trigger1 = NumExplod(9631) && NumProjID(1003) = 0
+id = 9631
+ignorehitpause = 1
+
+[State -4, Luz do poder 1003 apaga 9632]
+type = RemoveExplod
+trigger1 = NumExplod(9632) && NumProjID(1003) = 0
+id = 9632
+ignorehitpause = 1
+
+; <<< luz.py
+; >>> luz_efeitos.py: clarão das faíscas de golpe (issue #51). Não edite: rode python3 ferramentas/luz.py
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 440
+anim = (ifelse(var(20) > 0, 9952, 9951))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-10)
+scale = 0.900, 0.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 430
+anim = (ifelse(var(20) > 0, 9950, 9951))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-11)
+scale = 0.900, 0.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 322 || StateNo = 342
+anim = (ifelse(var(20) > 0, 9950, 9951))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-12)
+scale = 0.900, 0.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 349
+anim = (ifelse(var(20) > 0, 9952, 9951))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-12)
+scale = 0.900, 0.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 200 || StateNo = 230 || StateNo = 301 || StateNo = 321 || StateNo = 340 || StateNo = 400 || StateNo = 600
+anim = (ifelse(var(20) > 0, 9950, 9951))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 0.900, 0.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 201 || StateNo = 210 || StateNo = 215 || StateNo = 216 || StateNo = 231 || StateNo = 240 || StateNo = 245 || StateNo = 246 || StateNo = 260 || StateNo = 302 || StateNo = 311 || StateNo = 312
+trigger2 = StateNo = 331 || StateNo = 332 || StateNo = 341 || StateNo = 343 || StateNo = 344 || StateNo = 345 || StateNo = 346 || StateNo = 348 || StateNo = 410 || StateNo = 601 || StateNo = 610 || StateNo = 611
+trigger3 = StateNo = 650 || StateNo = 720
+anim = (ifelse(var(20) > 0, 9952, 9951))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 0.900, 0.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 303 || StateNo = 313 || StateNo = 323 || StateNo = 333 || StateNo = 347
+anim = (ifelse(var(20) > 0, 9953, 9951))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 0.900, 0.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 1300 || StateNo = 1301
+anim = (ifelse(var(20) > 0, 9954, 9955))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-12)
+scale = 1.300, 1.300
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 1500 || StateNo = 1501
+anim = (ifelse(var(20) > 0, 9954, 9955))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-20)
+scale = 1.300, 1.300
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 1100 || StateNo = 1101 || StateNo = 1200 || StateNo = 1201 || StateNo = 1400 || StateNo = 1401 || StateNo = 1701
+anim = (ifelse(var(20) > 0, 9954, 9955))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 1.300, 1.300
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 3435
+anim = (ifelse(var(20) > 0, 9952, 9951))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-11)
+scale = 1.900, 1.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 3410 || StateNo = 3411 || StateNo = 3412 || StateNo = 3420 || StateNo = 3421 || StateNo = 3422 || StateNo = 3430 || StateNo = 3431 || StateNo = 3432 || StateNo = 3433 || StateNo = 3434
+anim = (ifelse(var(20) > 0, 9952, 9951))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 1.900, 1.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 3413 || StateNo = 3423
+anim = (ifelse(var(20) > 0, 9953, 9951))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 1.900, 1.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca golpe]
+type = Explod
+triggerall = HitCount > map(luz_hc) && MoveHit > 0 && NumEnemy > 0
+trigger1 = StateNo = 3100 || StateNo = 3200 || StateNo = 3401 || StateNo = 3402 || StateNo = 3403
+anim = (ifelse(var(20) > 0, 9954, 9955))
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 1.900, 1.900
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 440
+anim = 9951
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-10)
+scale = 0.540, 0.540
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 430
+anim = 9951
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-11)
+scale = 0.540, 0.540
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 322 || StateNo = 342 || StateNo = 349
+anim = 9951
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-12)
+scale = 0.540, 0.540
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 200 || StateNo = 201 || StateNo = 210 || StateNo = 215 || StateNo = 216 || StateNo = 230 || StateNo = 231 || StateNo = 240 || StateNo = 245 || StateNo = 246 || StateNo = 260 || StateNo = 301
+trigger2 = StateNo = 302 || StateNo = 303 || StateNo = 311 || StateNo = 312 || StateNo = 313 || StateNo = 321 || StateNo = 323 || StateNo = 331 || StateNo = 332 || StateNo = 333 || StateNo = 340 || StateNo = 341
+trigger3 = StateNo = 343 || StateNo = 344 || StateNo = 345 || StateNo = 346 || StateNo = 347 || StateNo = 348 || StateNo = 400 || StateNo = 410 || StateNo = 600 || StateNo = 601 || StateNo = 610 || StateNo = 611
+trigger4 = StateNo = 650 || StateNo = 720
+anim = 9951
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 0.540, 0.540
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 1300 || StateNo = 1301
+anim = 9951
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-12)
+scale = 0.780, 0.780
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 1500 || StateNo = 1501
+anim = 9951
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-20)
+scale = 0.780, 0.780
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 1100 || StateNo = 1101 || StateNo = 1200 || StateNo = 1201 || StateNo = 1400 || StateNo = 1401 || StateNo = 1701
+anim = 9951
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 0.780, 0.780
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 3435
+anim = 9951
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-11)
+scale = 1.140, 1.140
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca guarda]
+type = Explod
+triggerall = MoveGuarded > 0 && map(luz_mg) = 0 && NumEnemy > 0
+trigger1 = StateNo = 3100 || StateNo = 3200 || StateNo = 3401 || StateNo = 3402 || StateNo = 3403 || StateNo = 3410 || StateNo = 3411 || StateNo = 3412 || StateNo = 3413 || StateNo = 3420 || StateNo = 3421 || StateNo = 3422
+trigger2 = StateNo = 3423 || StateNo = 3430 || StateNo = 3431 || StateNo = 3432 || StateNo = 3433 || StateNo = 3434
+anim = 9951
+pos = const(size.ground.front) + P2BodyDist X + (-10), (-70)
+scale = 1.140, 1.140
+id = 9640
+sprpriority = 4
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = 255, 0
+ignorehitpause = 1
+
+[State -4, Luz da faisca conta golpes]
+type = MapSet
+trigger1 = 1
+map = "luz_hc"
+value = HitCount
+ignorehitpause = 1
+
+[State -4, Luz da faisca conta defesas]
+type = MapSet
+trigger1 = 1
+map = "luz_mg"
+value = MoveGuarded > 0
+ignorehitpause = 1
+
+; <<< luz_efeitos.py
+
