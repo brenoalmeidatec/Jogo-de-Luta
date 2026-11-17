@@ -931,6 +931,14 @@ CABECA_GUIA = {
     "queda/07": dict(centro=(440, 625), ang=-90, abertura=40, escalas=_DEITADO),
     "rolamento/06": dict(centro=(507, 400), ang=0, abertura=25, escalas=(0.9, 0.95, 1.0), espelho=True),
     "soco/05": dict(centro=(565, 381), ang=0, abertura=25),
+    # folhas de vítima (feitas pela thread do Grão-Pastor, 17/11): preso, levantado, girando e caindo
+    "vitima_agarrado/00": dict(centro=(572, 443), ang=0, abertura=30, escalas=(0.85, 0.9, 0.95, 1.0)),
+    "vitima_agarrado/01": dict(centro=(503, 432), ang=-15, abertura=35, escalas=(0.85, 0.9, 0.95, 1.0)),
+    "vitima_agarrado/02": dict(centro=(447, 464), ang=-35, abertura=40, escalas=(0.85, 0.9, 0.95, 1.0)),
+    "vitima_agarrado/03": dict(centro=(432, 626), ang=180, abertura=40, escalas=(0.85, 0.9, 0.95, 1.0)),
+    "vitima_agarrado/04": dict(centro=(384, 538), ang=-90, abertura=45, escalas=(0.8, 0.85, 0.9, 0.95, 1.0)),
+    "vitima_agarrado/05": dict(centro=(578, 566), ang=40, abertura=35, escalas=(0.8, 0.85, 0.9, 0.95, 1.0)),
+    "vitima_arremessado/00": dict(centro=(583, 581), ang=120, abertura=45, escalas=(0.8, 0.85, 0.9, 0.95, 1.0)),
 }
 # Defesa: punho, antebraço e bengala cruzam na frente do rosto. A cabeça do kit entra por baixo deles.
 _FRENTE_DEFESA = {

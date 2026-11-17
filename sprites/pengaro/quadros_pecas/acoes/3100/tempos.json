@@ -3,39 +3,39 @@
  "elementos": [
   {
    "desenho": 0,
-   "ticks": 2,
+   "ticks": 7,
    "caixa": false,
    "de": "chute_alto/02|foco"
   },
   {
    "desenho": 1,
-   "ticks": 2,
-   "caixa": false,
-   "de": "chute_alto/02|foco"
-  },
-  {
-   "desenho": 2,
-   "ticks": 3,
-   "caixa": false,
-   "de": "chute_alto/02|foco"
-  },
-  {
-   "desenho": 3,
    "ticks": 6,
    "caixa": true,
    "de": "soco/05|esforco"
   },
   {
-   "desenho": 4,
+   "desenho": 2,
    "ticks": 6,
    "caixa": false,
    "de": "chute_alto/03|esforco"
   },
   {
-   "desenho": 5,
+   "desenho": 3,
    "ticks": 6,
    "caixa": false,
    "de": "rasteira/04|esforco"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "soco/05|esforco"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "soco/05|esforco"
   },
   {
    "desenho": 6,
@@ -45,45 +45,45 @@
   },
   {
    "desenho": 7,
-   "ticks": 2,
-   "caixa": false,
-   "de": "soco/05|esforco"
-  },
-  {
-   "desenho": 8,
-   "ticks": 2,
-   "caixa": false,
-   "de": "soco/05|esforco"
-  },
-  {
-   "desenho": 9,
    "ticks": 6,
    "caixa": false,
    "de": "chute_alto/04|esforco"
   },
   {
-   "desenho": 10,
+   "desenho": 8,
    "ticks": 6,
    "caixa": false,
    "de": "compasso/04|esforco"
   },
   {
-   "desenho": 11,
+   "desenho": 9,
    "ticks": 6,
    "caixa": false,
    "de": "rasteira/04|esforco"
   },
   {
-   "desenho": 12,
+   "desenho": 10,
    "ticks": 6,
    "caixa": false,
    "de": "armada/04|esforco"
   },
   {
-   "desenho": 13,
+   "desenho": 11,
    "ticks": 2,
    "caixa": false,
    "de": "armada/04|foco"
+  },
+  {
+   "desenho": 12,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto/05|foco"
+  },
+  {
+   "desenho": 13,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto/05|foco"
   },
   {
    "desenho": 14,
@@ -153,18 +153,6 @@
   },
   {
    "desenho": 25,
-   "ticks": 2,
-   "caixa": false,
-   "de": "chute_alto/05|foco"
-  },
-  {
-   "desenho": 26,
-   "ticks": 2,
-   "caixa": false,
-   "de": "chute_alto/05|foco"
-  },
-  {
-   "desenho": 27,
    "ticks": 2,
    "caixa": false,
    "de": "chute_alto/05|foco"

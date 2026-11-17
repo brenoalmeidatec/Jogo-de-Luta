@@ -39,7 +39,19 @@
   },
   {
    "desenho": 6,
-   "ticks": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_baixo/07|foco"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_baixo/07|foco"
+  },
+  {
+   "desenho": 8,
+   "ticks": 3,
    "caixa": false,
    "de": "chute_baixo/07|foco"
   }

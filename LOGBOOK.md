@@ -3109,8 +3109,11 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   .sff os desenhos órfãos (o .sff estava a caminho dos 100 MB do GitHub).
 - Regerado com a decisão do Alisson (meio-termo, `MEIO_NO_BOTE = False` do `vida_pecas` da mugen 448b9158): a
   antecipação fica segurada e o golpe chega seco no contato.
-- Falta: soco no ar (600/601), levantar, as ações que usam desenho que ninguém reconhece (210, 302, 343, 344) e testar
-  a `pele_pecas.py` do Pengaró no lugar do desenho por peças rígidas.
+- Depois (Breno mandou escolher a opção de mais vantagem): martelo forte (210, 302, 343, 344) com o contato do
+  martelo/04 (os sprites 893/894 eram o passo longo do martelo, `SPRITE_E`); soco no ar (600, 601) e levantar (5120) com
+  os desenhos de hoje inteiros da mesma folha do kit (no ar e no chão o kit de pé não serve) e o fim do levantar na
+  guarda do kit. 43 ações no total, robô de luta 216/216 com o dano igual ao da mugen.
+- Falta testar a `pele_pecas.py` do Pengaró no lugar do desenho por peças rígidas.
 
 ## 17/11/2026 - Gbzin: estudo de anatomia do Breno aplicado
 - Conferência dos 36 golpes contra a Parte 4 do estudo: `docs/boneco-pecas/gbzin/anatomia.md` (ficha perto/longe,
@@ -3177,3 +3180,40 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
 ## 2026-11-17 — CK: 3ª leva pelo boneco de peças (pausa)
 - Entraram andar, pulo, defesa, apanha, queda, levanta, rolamento, armada, compasso, provoca, vitória e derrota (87 ações, 667 desenhos). Robô de peças 0/778, robô de luta 226/226 com dano igual.
 - Deitado, sentado, de costas e braço caído ficam como quadro especial (desenho de hoje), por enquanto. Detalhes e próximos passos em docs/pausa-2026-11-17/ck-base-pecas.md.
+## 17/11/2026 - Gbzin: folhas de vítima da base ligadas só no Gbzin
+- `vitima_agarrado` e `vitima_arremessado` (desenhadas pela thread do Grão-Pastor) convertidas (HD=3) e passadas pelo
+  corpo firme com a cabeça do kit (busca guiada em 7 quadros; robô de defeitos 0/16).
+- Ligadas como reação própria de quem é agarrado (`agarrao_mk.V_PRESO..V_CAI`, ações 5940-5944 no .air do Gbzin,
+  usadas por SelfAnimExist em qualquer lutador que agarre). As folhas entram no fim de `gp.FOLHAS`: o conjunto comum
+  `gp.SPRITES_VITIMA` e os outros lutadores não mudam (o assert do gerador confere). Robô de luta 236/236.
+## 17/11/2026 - Gbzin: kit de peças do Grão-Pastor (despertado) e três golpes posados com ele
+- Kit próprio do despertado, recortado do `e_referencia_ginga/00` em `sprites/gbzin/pecas_e/corpo/` (cabeça, tronco
+  com manto, quadril com faixa, braços com cajado, coxas, canelas e cascos, pontas da faixa; sobra na junta, furos,
+  régua dos ossos). Código em `ferramentas/kit_grao_pastor.py` (`kit`, `animar`, `provas`), no motor do `firme.py`
+  (perna de apoio pela malha, perna no ar e juntas como pele) e do `vida_pecas.py`. O kit remonta o parado com 0 px de
+  diferença.
+- Posados só com as peças (rascunhos só de guia): parado com respiração (16 desenhos), x = `e_chifrada` (ação 10200) e
+  chute alto = `e_estampido` (pisão, ação 10240), sem quadro do meio entre antecipação e contato. Robô de defeitos
+  0/37, régua no máximo 4,5%, `gbzin_e_pecas.py conferir` 0 defeitos em 37 folhas.
+- Ligado pelo `gerar_gbzin.py`: `ligar_pecas.py gbzin --de gbzin --pasta quadros_e_pecas_hd --grupo 49000` (opção
+  `--pasta` nova), depois aura e `encolher_sff --indexar 49000-49099`. Mesma soma de ticks, mesmas caixas e mesmo
+  elemento de acerto; o parado do despertado vira remap para 49002. Robô de luta 236/236 com o dano idêntico ao de antes.
+- Provas: `docs/boneco-pecas/gbzin/grao_pastor_{kit,kit_remonta,poses,antes_depois}.png`, `grao_pastor_robo.md` e
+  `grao_pastor_lado_a_lado.mp4`.
+- Não testado: nada rodado no IKEMEN de verdade. O que os braços tapavam foi pintado por inpaint nas cores do kit (dá
+  para retocar à mão). O kit está nas 15 cores do parado do despertado (pedido desta tarefa), não em cor cheia. Os
+  outros golpes do Grão-Pastor continuam com as folhas antigas, e as folhas `quadros_e_firmes` ficaram como estavam.
+  Levou cerca de um dia de sessão.
+## 2026-11-17 — Pengaró com o estudo de anatomia do Breno e a antecipação segurada (Claude, thread do Alisson)
+
+- `pele_pecas.ordem_das_camadas`: camada por pose (`pose["_camada"]["atras"]`). No soco, o braço da frente (lado longe)
+  sai de trás do peito no contato; no chute alto, perna e mão da frente nascem atrás da faixa e do tronco.
+- Soco: calcanhar de trás sobe (`_ponta_tras`, o tornozelo estica e os dedos ficam no chão), ombro anda, garrafa para
+  trás. Chute alto: câmara antes de abrir (o quadro 03 virou câmara), bacia inclina, tronco para trás.
+- `piloto_firme`: pé perto do chão estica o tornozelo em vez de descer (no passo largo do andar o pé soltava da canela).
+- 154 ações refeitas com o `vida_pecas` novo (antecipação segurada, golpe sai seco). Robô do boneco 0 defeito.
+- Religado por cima da mugen atual (despertados novos) com `--grupo 49000`, `aura_no_corpo.py pengaro` (encadeia a
+  silhueta) e `encolher_sff.py pengaro` (poda os desenhos velhos 48xxx): .sff 78,9 -> 40,7 MB. Robô de luta 189/189,
+  idêntico ao da mugen.
+- Cabeçada do Gbzin: a pasta `cabecada` é o antiaéreo da bengala (410, 313, 347, 1200), não uma testada. Confere
+  com a receita do uppercut versão de jogo; fica como está (anatomia.md).
