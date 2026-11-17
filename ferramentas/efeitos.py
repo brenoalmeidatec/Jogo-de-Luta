@@ -54,6 +54,8 @@ CORES = {
                   "desperto": ["#021404", "#06380e", "#0e6a1c", "#1aa030", "#3cd84c", "#8cff7c", "#e4ffd8"]},  # verde
     "ck": {"base": ["#0e120e", "#222a22", "#3a463a", "#58665a", "#7e8e7e", "#aebcaa", "#e2ecdc"],        # cinza-esverdeado
            "desperto": ["#061008", "#10261a", "#1e4430", "#2e6a48", "#4c9466", "#86c898", "#d4f4dc"]},     # Ratão
+    "gbzin": {"base": ["#1c1008", "#3e2412", "#6a3f1c", "#9a6630", "#c89a4c", "#e8c878", "#fff0c0"],     # poeira e palha
+              "desperto": ["#04140c", "#0a301c", "#0f5a32", "#179050", "#2cc878", "#84f4b0", "#dcfff0"]},  # Grão-Pastor
 }
 
 
@@ -217,6 +219,7 @@ TEMA = {  # a camada que dá o jeito de cada lutador ao estouro
     "gutto": ("blunt-hit", (None, None, 0, 1, 2, 3, 4, 5), 1, (26, -22)),  # segunda pancada (o chute dobrado)
     "raiclaven": ("zap-hit", (2, 3, 4, 5, 6, 7, 8), 2, None),        # relâmpago
     "ck": ("heavy-landing", (2, 3, 5, 7, 9, 11), 2, None),           # onda baixa de poeira (o grave do paredão)
+    "gbzin": ("ground-slam", (20, 26, 32, 38, 44, 50), 1, None),      # terra e palha do cajado no chão
 }
 
 
@@ -327,6 +330,10 @@ PROJETEIS = {
     "ck": {1005: ("ground-slam", (20, 26, 32, 38, 44), 1, "fumaca", 1.0, 70),
            1006: ("ground-slam", (50, 56, 62), 1, "fumaca", 1.0, 50),
            9253: ("ground-slam", (26, 32, 38, 44, 50, 56), 1, "fumaca", 1.0, 60)},
+    # Gbzin: a poeira da Cabra Solta (até a folha fx_cabra) e a onda rasteira do Cajado no Chão (1505)
+    "gbzin": {1005: ("ground-slam", (20, 26, 32, 38, 44), 1, "fumaca", 1.0, 70),
+              1006: ("ground-slam", (50, 56, 62), 1, "fumaca", 1.0, 50),
+              1505: ("ground-slam", (14, 20, 26, 20), 1, "fumaca", 1.0, 70)},
 }
 
 

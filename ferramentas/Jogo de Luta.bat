@@ -150,7 +150,7 @@ if (Test-Path (Join-Path $game 'stages\maria_fumaca.def')) {
     robocopy (Join-Path $game 'stages') (Join-Path $motor 'stages') /E /NFL /NDL /NJH /NJS /NP | Out-Null
     if ($LASTEXITCODE -ge 8) { Fechar 'Nao consegui instalar os cenarios.' }
     $cenario = 'stages/maria_fumaca.def'
-    $texto = [regex]::Replace($texto, '(?m)^(\s*(?:pengaro|hazaki|gutto|raiclaven|ck)\s*,\s*)stages/stage0[-\w]*\.def', "`$1$cenario")
+    $texto = [regex]::Replace($texto, '(?m)^(\s*(?:pengaro|hazaki|gutto|raiclaven|ck|gbzin)\s*,\s*)stages/stage0[-\w]*\.def', "`$1$cenario")
     # Todo cenario Nazafights (menos o de teste da branch cenarios) entra na tela de escolha de mapa (issue #35).
     foreach ($def in @(Get-ChildItem (Join-Path $game 'stages') -Filter '*.def' | Where-Object { $_.BaseName -ne 'teste' } | Sort-Object Name -Descending)) {
         $linha = "stages/$($def.Name)"
@@ -160,7 +160,7 @@ if (Test-Path (Join-Path $game 'stages\maria_fumaca.def')) {
         }
     }
 }
-foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven', 'ck')) {
+foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven', 'ck', 'gbzin')) {
     $origem = Join-Path $game "chars\$lutador"
     if (-not (Test-Path (Join-Path $origem "$lutador.def"))) { continue }
     robocopy $origem (Join-Path $motor "chars\$lutador") /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
