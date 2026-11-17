@@ -48,10 +48,10 @@
 | chute_canela/04 | chute_canela/05 | PASS |
 | chute_canela/05 | chute_canela/06 | PASS |
 | chute_giratorio/00 | chute_giratorio/01 (desenho de hoje) | PASS |
-| chute_giratorio/01 | chute_giratorio/02 (desenho de hoje) | PASS |
-| chute_giratorio/02 | chute_giratorio/03 (desenho de hoje) | PASS |
-| chute_giratorio/03 | chute_giratorio/04 (desenho de hoje) | PASS |
-| chute_giratorio/04 | chute_giratorio/05 (desenho de hoje) | PASS |
+| chute_giratorio/01 | chute_giratorio/02 (kit de lado) | PASS |
+| chute_giratorio/02 | chute_giratorio/03 (kit de lado) | PASS |
+| chute_giratorio/03 | chute_giratorio/04 (kit de lado) | PASS |
+| chute_giratorio/04 | chute_giratorio/05 (kit de lado) | PASS |
 | chute_giratorio/05 | chute_giratorio/06 (desenho de hoje) | PASS |
 | chute_giratorio/06 | chute_giratorio/07 | PASS |
 | chute_giratorio/07 | chute_giratorio/07 | PASS |
@@ -66,10 +66,10 @@
 | chute_lateral/08 | chute_lateral/07 | PASS |
 | chute_lateral/09 | chute_lateral/07 | PASS |
 | giro_garagem/00 | giro_garagem/01 (desenho de hoje) | PASS |
-| giro_garagem/01 | giro_garagem/02 (desenho de hoje) | PASS |
-| giro_garagem/02 | giro_garagem/03 (desenho de hoje) | PASS |
-| giro_garagem/03 | giro_garagem/04 (desenho de hoje) | PASS |
-| giro_garagem/04 | giro_garagem/05 (desenho de hoje) | PASS |
+| giro_garagem/01 | giro_garagem/02 (kit de lado) | PASS |
+| giro_garagem/02 | giro_garagem/03 (kit de lado) | PASS |
+| giro_garagem/03 | giro_garagem/04 (kit de lado) | PASS |
+| giro_garagem/04 | giro_garagem/05 (kit de lado) | PASS |
 | giro_garagem/05 | giro_garagem/06 | PASS |
 | giro_garagem/06 | giro_garagem/06 | PASS |
 | giro_garagem/07 | giro_garagem/06 | PASS |
@@ -178,10 +178,10 @@
 | tapa_costas/08 | tapa_costas/07 | PASS |
 | tapa_costas/09 | tapa_costas/07 | PASS |
 | tesoura/00 | tesoura/01 (desenho de hoje) | PASS |
-| tesoura/01 | tesoura/02 (desenho de hoje) | PASS |
+| tesoura/01 | tesoura/02 (kit de lado) | PASS |
 | tesoura/02 | tesoura/03 (desenho de hoje) | PASS |
-| tesoura/03 | tesoura/04 (desenho de hoje) | PASS |
-| tesoura/04 | tesoura/05 (desenho de hoje) | PASS |
+| tesoura/03 | tesoura/04 (kit de lado) | PASS |
+| tesoura/04 | tesoura/05 (kit de lado) | PASS |
 | tesoura/05 | tesoura/06 (desenho de hoje) | PASS |
 | tesoura/06 | tesoura/07 | PASS |
 | tesoura/07 | tesoura/07 | PASS |

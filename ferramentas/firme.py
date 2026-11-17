@@ -520,7 +520,8 @@ def especial(q):
     if q not in _ESP:
         # sem reescala: a régua da cabeça erra de lado e de costas (aumentaria o boneco); os desenhos de hoje já têm o
         # tamanho do parado (conferido no lote 4)
-        a = sem_migalha(abrir(q))
+        lado = b.SPR / "pecas_lado" / f"{q}.png"  # kit de lado/costas (hazak_lado.py) vence o desenho de hoje
+        a = sem_migalha(np.array(Image.open(lado).convert("RGBA")) if lado.exists() else abrir(q))
         # furinho de 1 a 40 px é erro do desenho; vão maior (entre o braço e o corpo) é desenhado de propósito
         fundo = (a[..., 3] == 0).astype(np.uint8)
         n, lab, st, _ = cv2.connectedComponentsWithStats(fundo, connectivity=4)
@@ -894,8 +895,9 @@ def gerar(nomes, so_pose=False):
             esp = pose.get("_especial", {}).get("var")
             if esp:  # desenho de hoje: só pedaço solto, fora da tela e pé onde o desenho de hoje pisa
                 erros = conferir(out, no_chao=ys_max(abrir(esp)) >= EIXO[1] - 8, juntas=[],
-                                 buraco_ok=int(buracos(especial(esp)).sum()))
-                linhas[f"{nome}/{i:02d}"] = f"| {nome}/{i:02d} | {q} (desenho de hoje) | {'PASS' if not erros else 'FAIL ' + '; '.join(erros)} |"
+                                 buraco_ok=0 if (b.SPR / "pecas_lado" / f"{esp}.png").exists()
+                                 else int(buracos(especial(esp)).sum()))
+                linhas[f"{nome}/{i:02d}"] = f"| {nome}/{i:02d} | {q} ({'kit de lado' if (b.SPR / 'pecas_lado' / f'{esp}.png').exists() else 'desenho de hoje'}) | {'PASS' if not erros else 'FAIL ' + '; '.join(erros)} |"
                 Image.fromarray(out).save(b.SPR / "quadros_pecas_hd" / nome / f"{i:02d}.png")
                 Image.fromarray(np.ascontiguousarray(out[1::3, 1::3])).save(b.SPR / "quadros_pecas" / nome / f"{i:02d}.png")
                 continue
