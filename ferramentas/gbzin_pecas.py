@@ -823,7 +823,7 @@ def trocar_cabeca(kit, src, achado=None, frente=None):
 # próprio desenho saltando (o motor não sobe) e ficam.
 CHAO_ERRADO = {"apanha/00", "apanha/03", "apanha/04", "chute_baixo/00", "chute_baixo/05", "defesa/00", "defesa/04",
                "levanta/04", "pulo/00", "queda/00",
-               "pulo/04", "ar_soco/00", "ar_soco/04", "bicicleta/02", "bicicleta/04"}
+               "pulo/04", "ar_soco/00", "ar_soco/04"}
 # Gancho da bengala solto do cabo na defesa (já veio assim): direção do cabo e ponta dele, lidas à mão.
 GANCHO = {"defesa/05": ((0.963, -0.268), (597, 398)), "defesa/06": ((0.94, -0.34), (583, 387))}
 
@@ -875,9 +875,9 @@ LIMITE_CABECA = 63   # nota do casamento da cabeça: acima disso o quadro vai pa
 # Os 41 quadros que passaram do limite, olhados um a um (17/11/2026):
 # 1) a busca livre acertou o lugar e o giro; a nota só passou porque o desenho tem a cabeça laranja de franja.
 CABECA_CONFERIDA = {"agarrao/05", "apanha/02", "apanha/03", "apanha/04", "ar_soco/02", "ar_soco/03", "baixo_soco/04",
-                    "bicicleta/02", "bicicleta/03", "bicicleta/04", "bicicleta/05", "cabecada/02", "cabecada/03",
+                    "cabecada/02", "cabecada/03",
                     "compasso/04", "lata/02", "levanta/03", "levanta/04", "parry_alto/04", "queda/01", "rasteira/03",
-                    "rasteira/04", "rasteira/05", "rolamento/04", "soco/05"}
+                    "rasteira/04", "rasteira/05"} | {f"bicicleta/{i:02d}" for i in range(8)}
 # 2) de costas: não tem rosto para trocar, fica a nuca do desenho (na cor certa).
 COSTAS = {"rolamento/05"}
 # 3) busca guiada: centro da cabeça no desenho (lido à mão), giro inicial (horário +, 180 = de ponta-cabeça),
@@ -894,7 +894,8 @@ CABECA_GUIA = {
     "queda/05": dict(centro=(420, 500), ang=-90, abertura=40, escalas=_DEITADO),
     "queda/06": dict(centro=(425, 620), ang=-90, abertura=40, escalas=_DEITADO),
     "queda/07": dict(centro=(440, 625), ang=-90, abertura=40, escalas=_DEITADO),
-    "rolamento/06": dict(centro=(512, 375), ang=0, abertura=25, escalas=(0.9, 0.95, 1.0), espelho=True),
+    "rolamento/06": dict(centro=(507, 400), ang=0, abertura=25, escalas=(0.9, 0.95, 1.0), espelho=True),
+    "soco/05": dict(centro=(565, 381), ang=0, abertura=25),
 }
 # Defesa: punho, antebraço e bengala cruzam na frente do rosto. A cabeça do kit entra por baixo deles.
 _FRENTE_DEFESA = {
@@ -949,7 +950,8 @@ def firmes(golpes=None):
     cor do Gbzin certo, sem grade e com a cabeça do kit. Os golpes montados pelo kit (POSES_QUADRO) saem do kit."""
     kit = ler_kit()
     linhas = ["| quadro | como saiu | nota da cabeça |", "|---|---|---|"]
-    golpes = golpes or sorted(p.name for p in (SPR / "quadros_arcade_hd").iterdir() if p.is_dir())
+    golpes = golpes or sorted(p.name for p in (SPR / "quadros_arcade_hd").iterdir()
+                              if p.is_dir() and p.name not in SO_DESENHO)
     for gn in golpes:
         (FIRMES / gn).mkdir(parents=True, exist_ok=True)
         (FIRMES.parent / "quadros_firmes" / gn).mkdir(parents=True, exist_ok=True)
@@ -969,13 +971,13 @@ def firmes(golpes=None):
                     ys = np.nonzero(out[..., 3].any(1))[0]
                     out = np.roll(out, 659 - ys.max(), 0)
             elif q in CABECA_GUIA:
-                out, nota, ach = cabeca_guiada(kit, abrir(q), CABECA_GUIA[q])
+                out, nota, ach = cabeca_guiada(kit, abrir(TROCA_QUADRO.get(q, q)), CABECA_GUIA[q])
                 como = (f"desenho + cabeça do kit (guiada: giro {ach[1]}°"
                         + (f", tamanho {ach[3]:.2f}" if ach[3] != 1.0 else "")
                         + (", espelhada" if CABECA_GUIA[q].get("espelho") else "")
                         + (", braço e bengala por cima" if "frente" in CABECA_GUIA[q] else "") + ")")
             elif q in COSTAS:
-                out, nota, como = quantizar(abrir(q)), None, "de costas: fica a nuca do desenho (na cor certa)"
+                out, nota, como = quantizar(abrir(TROCA_QUADRO.get(q, q))), None, "de costas: fica a nuca do desenho (na cor certa)"
             else:
                 src = abrir(TROCA_QUADRO.get(q, q))
                 achado = achar_cabeca(kit, src)
@@ -1019,6 +1021,13 @@ TROCA_QUADRO = {
     "despertar_a/05": "cajado_chao/02",   # cajado no alto
     "despertar_a/06": "cajado_chao/04",   # 3ª pancada, com o corpo todo
 }
+# Folhas novas pedidas ao ChatGPT em 17/11/2026 (pedidos em docs/boneco-pecas/gbzin/pedidos_chatgpt.json): as velhas
+# tinham a bicicleta de joelho dobrado (não era chute), o soco sem cotovelada de verdade e o pinguim de braço mole.
+SO_DESENHO = {"bicicleta_v2", "soco_cotovelo", "rolamento_v2"}  # folhas que só emprestam desenhos (não viram golpe)
+TROCA_QUADRO.update({f"bicicleta/{i:02d}": f"bicicleta_v2/{i:02d}" for i in range(8)})   # pernas retas, 3 chutes
+TROCA_QUADRO.update({"soco/04": "soco_cotovelo/04",    # cotovelo armado, pé de trás já vindo
+                     "soco/05": "soco_cotovelo/05"})   # cotovelada com o quadril girado
+TROCA_QUADRO.update({f"rolamento/{i:02d}": f"rolamento_v2/{i:02d}" for i in range(1, 7)})  # braços duros de pinguim
 SILHUETA = {"despertar_a/07": ("despertar_a", 6)}
 
 

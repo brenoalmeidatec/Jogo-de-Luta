@@ -520,6 +520,10 @@ um assert que confere soma de ticks, caixa por tick e os `AnimElem` do .cns.
 5. **Contato segurado:** o quadro de contato é o mais forte da animação (o de maior alcance), fica parado o ativo
    inteiro e mais 1–2 ticks, e é nele que entram a caixa de acerto, o efeito e o congelamento.
 
+6. **Corpo inteiro no golpe (regra do Alisson, 17/11):** golpe é movimento natural do corpo todo. Soco gira o
+   quadril, o ombro vai junto e o pé dá um passo à frente; não vale só esticar o braço com o resto parado. Chute
+   transfere o peso para a perna de apoio e o tronco compensa.
+
 ### 7.2.1 Zero erro de animação (regra do Alisson, 2026-11-17)
 
 Nenhum boneco entra com erro de animação. Conta como erro, e reprova o golpe:

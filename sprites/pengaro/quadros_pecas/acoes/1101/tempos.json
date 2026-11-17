@@ -1,0 +1,53 @@
+{
+ "acao": 1101,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 10,
+   "caixa": false,
+   "de": "compasso/01|foco"
+  },
+  {
+   "desenho": 1,
+   "ticks": 6,
+   "caixa": true,
+   "de": "compasso/02|esforco"
+  },
+  {
+   "desenho": 2,
+   "ticks": 6,
+   "caixa": false,
+   "de": "compasso/03|esforco"
+  },
+  {
+   "desenho": 3,
+   "ticks": 6,
+   "caixa": false,
+   "de": "compasso/04|esforco"
+  },
+  {
+   "desenho": 4,
+   "ticks": 6,
+   "caixa": false,
+   "de": "compasso/05|esforco"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "compasso/05|foco"
+  },
+  {
+   "desenho": 6,
+   "ticks": 14,
+   "caixa": false,
+   "de": "compasso/06|foco"
+  },
+  {
+   "desenho": 7,
+   "ticks": 14,
+   "caixa": false,
+   "de": "compasso/07|foco"
+  }
+ ]
+}

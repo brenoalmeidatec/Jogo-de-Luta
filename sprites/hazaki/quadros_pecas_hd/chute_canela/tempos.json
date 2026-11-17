@@ -1,0 +1,54 @@
+{
+ "acao": 430,
+ "caixa": [
+  42,
+  -66,
+  174,
+  -12
+ ],
+ "origem": [
+  "chute_canela/01",
+  "chute_canela/02",
+  "chute_canela/04",
+  "chute_canela/05",
+  "chute_canela/06"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_canela/01"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_canela/02"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": true,
+   "de": "chute_canela/04"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_canela/05"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_canela/05"
+  },
+  {
+   "desenho": 5,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chute_canela/06"
+  }
+ ]
+}

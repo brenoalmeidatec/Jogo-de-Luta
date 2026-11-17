@@ -1,0 +1,41 @@
+{
+ "acao": 600,
+ "caixa": [
+  30,
+  -126,
+  162,
+  -36
+ ],
+ "origem": [
+  "ar_soco/02",
+  "ar_soco/03",
+  "ar_soco/04",
+  "ar_soco/06"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 1,
+   "caixa": false,
+   "de": "ar_soco/02"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "ar_soco/03"
+  },
+  {
+   "desenho": 2,
+   "ticks": 8,
+   "caixa": true,
+   "de": "ar_soco/04"
+  },
+  {
+   "desenho": 3,
+   "ticks": 1,
+   "caixa": false,
+   "de": "ar_soco/06"
+  }
+ ]
+}
