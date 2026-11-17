@@ -4,6 +4,9 @@ Pedido do Breno em 2026-11-17. Página no navegador para montar as poses-chave d
 em vez de digitar ângulos no código. É o passo 4 da [missão do boneco de peças](missao-alisson-boneco-de-pecas.md) com
 interface.
 
+Para posar cada golpe (qual membro bate, camadas perto e longe, base, juntas e as poses de cada golpe), siga o
+[`estudo-anatomia-golpes.md`](estudo-anatomia-golpes.md).
+
 ```bash
 python ferramentas/montador.py                  # Pengaró
 python ferramentas/montador.py --lutador gbzin  # Gbzin
