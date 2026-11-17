@@ -3173,3 +3173,10 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   cajado só; ainda não ligado: a vítima é posicionada pelo `agarrao_mk` da base) e as folhas de vítima da forma base
   (`vitima_agarrado`, `vitima_arremessado`, para a thread da base ligar). `verde_solto()` no `gbzin_e_pecas.py`: verde
   escuro longe das chamas (calça pintada de oliva num quadro) volta ao roxo da calça. Robô 236/0.
+
+## 17/11/2026 - Gbzin: folhas de vítima da base ligadas só no Gbzin
+- `vitima_agarrado` e `vitima_arremessado` (desenhadas pela thread do Grão-Pastor) convertidas (HD=3) e passadas pelo
+  corpo firme com a cabeça do kit (busca guiada em 7 quadros; robô de defeitos 0/16).
+- Ligadas como reação própria de quem é agarrado (`agarrao_mk.V_PRESO..V_CAI`, ações 5940-5944 no .air do Gbzin,
+  usadas por SelfAnimExist em qualquer lutador que agarre). As folhas entram no fim de `gp.FOLHAS`: o conjunto comum
+  `gp.SPRITES_VITIMA` e os outros lutadores não mudam (o assert do gerador confere). Robô de luta 236/236.
