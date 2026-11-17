@@ -71,6 +71,12 @@ FOLHA = {
 # existe, a ação usa ela no lugar da mais parecida (ou, na estatueta_arremesso, no lugar do chapéu, que saiu)
 PROPRIAS = {acao for acao in FOLHA if (SAIDA / f"d_{acao}").is_dir() and FOLHA[acao] != f"d_{acao}"}
 FOLHA.update({acao: f"d_{acao}" for acao in PROPRIAS})
+# Diabo demônio sem maleta (#47, Breno 2026-11-15): onde a folha do demônio já existe (ferramentas/diabo_demonio.py,
+# pastas m_*), o básico usa ela no lugar da roupa do sobretudo
+from diabo_demonio import BASICOS, QUADROS_EXTRAS  # noqa: E402
+FOLHA.update({acao: f"m_{m}" for acao, m in BASICOS.items() if (SAIDA / f"m_{m}" / "07.png").exists()})
+# quadro a quadro (pancadas extras dos agarrões): (folha, k) do Hazak -> (pasta m_, k) do demônio, quando existe
+QUADRO = {fk: (f"m_{m}", j) for fk, (m, j) in QUADROS_EXTRAS.items() if (SAIDA / f"m_{m}" / f"{j:02d}.png").exists()}
 
 PARECIDA = {"ar_chute", "ascensao", "chute_alto_rajada", "chute_gancho", "cutucao", "jab_duplo", "guarda_aco",
             "passagem_rapida", "provoca", "rasteira", "sobe_chutando", "tapa_costas", "tesoura", "derrota_sirene",
@@ -166,7 +172,7 @@ def fator_da_folha(folha_d):
 
 
 def montar(pasta=None):
-    for folha_d in sorted(set(FOLHA.values()) - {f"d_{a}" for a in PROPRIAS}):
+    for folha_d in sorted(set(FOLHA.values()) - {f"d_{a}" for a in PROPRIAS} - {f for f in FOLHA.values() if f.startswith("m_")}):
         figs = hd_guiado.figuras(abrir_folha(folha_d, pasta))
         assert len(figs) == 8, f"{folha_d}: {len(figs)} figuras (esperava 8)"
         fat = fator_da_folha(folha_d)
@@ -208,6 +214,16 @@ def ancora(m):
     return float(np.median(xs)), h - 1
 
 
+def ancora_demonio(m):
+    """(x, y) do demônio (pastas m_*, #47): x é a mediana das colunas do tronco (25% a 60% da altura), que não puxa
+    para o pé de apoio, o rabo no chão nem a garra esticada; y é a base."""
+    h = m.shape[0]
+    xs = np.nonzero(m[int(h * 0.25):max(int(h * 0.25) + 1, int(h * 0.6))])[1]
+    if not len(xs):
+        xs = np.nonzero(m)[1]
+    return float(np.median(xs)), h - 1
+
+
 class Terno:
     def __init__(self):
         assert SAIDA.exists(), f"faltam os quadros do terno em {SAIDA}: rode ferramentas/diabo_terno.py --montar"
@@ -245,14 +261,15 @@ class Terno:
         if par is None:
             return None  # não é desenho do corpo (objeto, efeito): quem chama decide
         folha, k, esp = par
-        fig = self.figura(FOLHA[folha], k)
+        pasta, k = QUADRO.get((folha, k), (FOLHA[folha], k))
+        fig = self.figura(pasta, k)
         if esp:
             fig = fig[:, ::-1]
             m = m[:, ::-1]
         ax, ay = ancora(m)
         if esp:
             ax = m.shape[1] - 1 - ax
-        dx, dy = ancora(fig[..., 3] > 0)
+        dx, dy = (ancora_demonio if pasta.startswith("m_") else ancora)(fig[..., 3] > 0)
         if esp:
             pass  # a figura já está espelhada: a âncora dela foi medida espelhada
         # eixo do Hazak em relação à âncora dele; o Diabo põe a âncora dele no mesmo lugar

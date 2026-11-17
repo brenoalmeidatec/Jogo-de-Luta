@@ -59,6 +59,13 @@ GRAD_VAL = (1.0, 0.5, 0.1, 0.0)
 GRUPO = 9720                     # 9720,0 halo; 9720,1 poça; 9720,2 escuro; 9721,k orbe e 9722,k halo do poder k
 ID_HALO, ID_POCA, ID_ESCURO = 9620, 9621, 9623
 ID_PODER = 9630                  # 9630 + 3k: orbe, halo e poça do poder k
+
+
+def id_poder(k):
+    """1º id (orbe; +1 halo, +2 poça) da luz do poder k: 9630 + 3k, pulando o 9640 da luz da faísca dos golpes
+    (luz_efeitos.ID_FAISCA): com 4 poderes acesos o 4º caía em 9639-9641 e o -4 apagava a luz de toda faísca."""
+    base = ID_PODER + 3 * k
+    return base if base + 2 < 9640 else 9641 + 3 * (k - 3)
 ACAO = 9720                      # ações 9720.. (halo, poça, escuro) e 9730 + 2k (orbe e halo do poder k)
 R_HALO, R_POCA, R_ORBE, R_HALO_PODER = 170, 120, 20, 115
 ESCURO_DESPERTO, ESCURO_PODER = 0.16, 0.2   # quanto o cenário escurece (fração)
@@ -197,7 +204,7 @@ def bloco_menos4(nome, altura, cor, poderes):
     # 5. poder some: a luz dele também
     for k_, (pid, _) in enumerate(poderes):
         for d in range(3):
-            ident = ID_PODER + 3 * k_ + d
+            ident = id_poder(k_) + d
             out.append(ctl(-4, f"Luz do poder {pid} apaga {ident}", "RemoveExplod",
                            f"trigger1 = NumExplod({ident}) && NumProjID({pid}) = 0", f"id = {ident}"))
     out.append(FIM)
@@ -210,11 +217,11 @@ def explod_do_feixe(estado, gatilhos, proj, k_, acao_luz):
     vx, vy = proj["velocity"]
     esc = proj.get("escala", 1.0)
     return "\n".join([f"[State {estado}, Luz do poder halo]", "type = Explod", *gatilhos, f"anim = {acao_luz}",
-                      f"id = {ID_PODER + 3 * k_ + 1}", "postype = p1", f"pos = {ox}, {oy}", f"velocity = {vx}, {vy}",
+                      f"id = {id_poder(k_) + 1}", "postype = p1", f"pos = {ox}, {oy}", f"velocity = {vx}, {vy}",
                       f"scale = {esc}, {esc}", "removetime = -1", "ownpal = 1", "removeongethit = 0",
                       "ignorehitpause = 1", "sprpriority = 1", "trans = addalpha", "alpha = 255, 0", "",
                       f"[State {estado}, Luz do poder orbe]", "type = Explod", *gatilhos, f"anim = {ACAO + 10 + 2 * k_}",
-                      f"id = {ID_PODER + 3 * k_}", "postype = p1", f"pos = {ox}, {oy}", "bindtime = -1",
+                      f"id = {id_poder(k_)}", "postype = p1", f"pos = {ox}, {oy}", "bindtime = -1",
                       "removetime = -1", "ownpal = 1", "removeongethit = 0", "ignorehitpause = 1", "sprpriority = 6",
                       "trans = add", f"alpha = floor(255 * {tremor(0.5)}), 255", ""])
 
@@ -228,7 +235,7 @@ def explods_do_poder(estado, gatilhos, proj, k_, cor_poder, centro=(0, 0), raio=
     oy = round(oy + centro[1], 1)
     ax, ay = proj.get("accel", (0.0, 0.0))   # só a altura: no x, o centro do brilho cai no rastro (bola) ou no meio (raio)
     vx, vy = proj["velocity"]
-    base = ID_PODER + 3 * k_
+    base = id_poder(k_)
     comum = [*gatilhos, "postype = p1", f"velocity = {vx}, {vy}", f"accel = {ax}, {ay}", "removetime = -1", "ownpal = 1",
              "removeongethit = 0", "ignorehitpause = 1"]
     out = []
@@ -346,7 +353,10 @@ def aplicar(lutador, pasta=None):
     cores_poder = [cor_do_poder(nos, paleta, air_acoes, o[1]) for o in ordem]
     tamanhos = [min(1.15, max(0.45, o[2] * 2.9 / R_HALO_PODER)) for o in ordem]
     # a luz de todo efeito que brilha (Explods e faíscas de golpe); os raios ganham a luz do próprio desenho
-    feixes = {o[1] for o in ordem if o[2] > FEIXE}
+    # raio = fica preso na boca (velocidade 0); a bola que voa, mesmo com brilho grande, leva orbe/halo/poça que andam
+    # com ela (Bola das Trevas do Diabo demônio: o orbe ficava grudado na garra e o halo não seguia o arco)
+    voam = {d["projanim"] for *_, d in projeteis(cns) if any(abs(float(v)) > 0 for v in d["velocity"])}
+    feixes = {o[1] for o in ordem if o[2] > FEIXE and o[1] not in voam}
     cns, air_ef, sp_ef, bloco_ef, resumo = le.gerar(lutador, cns, air, pasta, extras=sorted(feixes))
     # explods dos poderes logo depois de cada Projectile (de trás para a frente, para os índices valerem)
     projs = [p for p in projeteis(cns) if p[4]["projid"] in quer]
