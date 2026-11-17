@@ -1,0 +1,53 @@
+{
+ "acao": 322,
+ "caixa": [
+  42,
+  -312,
+  177,
+  -222
+ ],
+ "origem": [
+  "chute_alto_rajada/00",
+  "chute_alto_rajada/01",
+  "chute_alto_rajada/06",
+  "chute_alto_rajada/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 5,
+   "caixa": false,
+   "de": "chute_alto_rajada/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": true,
+   "de": "chute_alto_rajada/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto_rajada/06"
+  },
+  {
+   "desenho": 3,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chute_alto_rajada/06"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto_rajada/07"
+  },
+  {
+   "desenho": 5,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chute_alto_rajada/07"
+  }
+ ]
+}

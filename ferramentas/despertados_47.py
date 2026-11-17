@@ -69,6 +69,84 @@ class Cfg:
 TINTA = {"pengaro": ("120,96,150", "70,20,110"), "gutto": ("150,90,90", "120,20,20"),
          "ck": ("110,130,115", "40,90,60")}   # (BGPalFX mul do fundo, PalFX add no oponente atingido)
 
+# Desenhos próprios do despertado, feitos pelo boneco de peças (firme.py + kit_<lutador>_e, 2026-11-17): o agarrão
+# e o poder param de emprestar golpes do modo antigo (regra do Breno: o despertado não reaproveita nada).
+#   agarrao: pasta em sprites/<pecas>/quadros_pecas_hd/ com os desenhos e o tempos.json; vira o grupo grupo_agarrao
+#            (só os desenhos-chave, na ordem da folha), e o roteiro do agarrão é o `proprio` (agarrao_mk.Proprio)
+#   poder:   a animação inteira (com os quadros do meio) vira o grupo grupo_poder e a ação dele; a torrente sai no
+#            tick em que começa o desenho-chave `solta_chave`
+B = mk.Batida
+PECAS47 = {
+    "pengaro": {
+        "pecas": "pengaro_e", "agarrao": "algema", "grupo_agarrao": 47100, "poder": "mare", "grupo_poder": 47150,
+        "solta_chave": "mare/03",
+        # 0 guarda, 1 a mão aberta avança, 2 alcança o pescoço, 3 aperta (corrente enrola), 4 ergue no alto,
+        # 5 bate no chão, 6 e 7 volta
+        "proprio": mk.Proprio("Algema das Sombras", segura=3,
+                              batidas=(B(prep=(3,), bate=4, dano=34, alto=True, som="S53,2"),),
+                              final=B(prep=(4,), bate=5, dano=62, alto=False, som="S53,2"),
+                              solta=(6, 7), alcanca=(1, 2), bind=50, fim="derruba"),
+    },
+}
+EIXO_HD = (540, 660)  # pés na tela 3x do boneco de peças
+
+
+def pecas_tempos(lutador, anim):
+    c = PECAS47[lutador]
+    pasta = RAIZ / "sprites" / c["pecas"] / "quadros_pecas_hd" / anim
+    return pasta, json.loads((pasta / "tempos.json").read_text(encoding="utf-8"))
+
+
+def pecas_chaves(lutador):
+    """Índice do primeiro desenho de cada desenho-chave do agarrão, na ordem da folha."""
+    pasta, t = pecas_tempos(lutador, PECAS47[lutador]["agarrao"])
+    vistos = {}
+    for e in t["elementos"]:
+        vistos.setdefault(e["de"], e["desenho"])
+    return pasta, [vistos[k] for k in sorted(vistos)]
+
+
+def pecas_sprites(lutador):
+    """[(grupo, índice, Image, eixo x, eixo y)] dos desenhos do boneco de peças (tela 3x, pés em 540,660)."""
+    if lutador not in PECAS47:
+        return []
+    c = PECAS47[lutador]
+    out = []
+    pasta, chaves = pecas_chaves(lutador)
+    pp, tp = pecas_tempos(lutador, c["poder"])
+    lista = [(c["grupo_agarrao"], k, pasta / f"{d:02d}.png") for k, d in enumerate(chaves)]
+    lista += [(c["grupo_poder"], e["desenho"], pp / f"{e['desenho']:02d}.png") for e in tp["elementos"]]
+    for g, i, arq in lista:
+        im = Image.open(arq).convert("RGBA")
+        x0, y0, x1, y1 = im.getbbox()
+        out.append((g, i, im.crop((x0, y0, x1, y1)), EIXO_HD[0] - x0, EIXO_HD[1] - y0))
+    return out
+
+
+def acao_poder_corpo(lutador):
+    """Ação do corpo no poder (os desenhos do boneco de peças, com os quadros do meio, no tempo do kit)."""
+    c = PECAS47[lutador]
+    _, t = pecas_tempos(lutador, c["poder"])
+    linhas = [f"; {CFG[lutador].nome_poder}: corpo do boneco de peças {MARCA}", "Clsn2Default: 1",
+              " Clsn2[0] = -72, 0, 72, -312"]
+    linhas += [f"{c['grupo_poder']},{e['desenho']}, 0,0, {e['ticks']}" for e in t["elementos"]]
+    return "\n".join(linhas)
+
+
+def solta_poder(lutador):
+    """Tick em que a torrente sai: o começo do desenho-chave da mão empurrando."""
+    if lutador not in PECAS47:
+        return CFG[lutador].solta
+    c = PECAS47[lutador]
+    _, t = pecas_tempos(lutador, c["poder"])
+    tick = 0
+    for e in t["elementos"]:
+        if e["de"] == c["solta_chave"]:
+            return tick
+        tick += e["ticks"]
+    raise SystemExit(f"{lutador}: {c['solta_chave']} não está no {c['poder']}")
+
+
 G = mk.Golpe
 CFG = {
     "pengaro": Cfg("Algema das Sombras", (G(3433, 26, "palma torta"), G(3410, 26, "revolta de corrente"),
@@ -94,7 +172,8 @@ def gravar_sff(sff, lutador, aura=None):
     rle, png, vistos = [], [], set()
     for n in nos:
         k = (n["g"], n["i"])
-        if k in vistos or n["g"] in GRUPOS.values() or (aura and n["g"] in aura.ids()):
+        proprios = {PECAS47[lutador][x] for x in ("grupo_agarrao", "grupo_poder")} if lutador in PECAS47 else set()
+        if k in vistos or n["g"] in GRUPOS.values() or n["g"] in proprios or (aura and n["g"] in aura.ids()):
             continue
         vistos.add(k)
         (png if n.get("png") else rle).append((n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], n["px"]))
@@ -106,6 +185,8 @@ def gravar_sff(sff, lutador, aura=None):
         if efeito == "poder":
             for j, img in enumerate(nascendo(lutador)):
                 png.append((g, 100 + j, img.width, img.height, int(px), int(py), efeitos.blob_png(img)))
+    for g, k, img, ex, ey in pecas_sprites(lutador):
+        png.append((g, k, img.width, img.height, int(ex), int(ey), efeitos.blob_png(img)))
     if aura:
         for g, k, img, ex, ey in aura.sprites():
             png.append((g, k, img.width, img.height, int(ex), int(ey), efeitos.blob_png(img)))
@@ -234,7 +315,9 @@ def statedef(cns, n):
 
 def tirar_estados(cns, numeros):
     for n in numeros:
-        m = re.search(rf"^\[Statedef {n}\]\n.*?(?=^\[Statedef|^; ---- |\Z)", cns, re.M | re.S)
+        # para também nos marcadores de bloco de outras ferramentas (o "; >>> aura_silhueta.py estado" logo depois do
+        # 4750 ia junto, e a aura de silhueta duplicava o helper 9610)
+        m = re.search(rf"^\[Statedef {n}\]\n.*?(?=^\[Statedef|^; ---- |^; >>> |^; <<< |\Z)", cns, re.M | re.S)
         if m:
             cns = cns[:m.start()] + cns[m.end():]
     return cns
@@ -242,15 +325,33 @@ def tirar_estados(cns, numeros):
 
 def estados_agarrao(lutador, air, cns):
     c = CFG[lutador]
-    chave = f"{lutador}_47"
-    base = mk.ROTEIROS[lutador]
-    mk.ROTEIROS[chave] = mk.Roteiro(c.nome_agarrao, c.golpes, c.final, base.pega, base.bind)
-    try:
-        r, quadros, contatos, _ = mk.montar(chave, air, cns)
-    finally:
-        del mk.ROTEIROS[chave]
+    alcance = None
+    if lutador in PECAS47:  # desenhos próprios (boneco de peças): roteiro Proprio, como os agarrões da #45
+        r = PECAS47[lutador]["proprio"]
+        g = PECAS47[lutador]["grupo_agarrao"]
+        refs = [f"{g},{k}" for k in range(len(pecas_chaves(lutador)[1]))]
+        tabela = mk.acoes(air)
+        els = mk.elementos(tabela[800])
+        pega_el = next((e for e in els if e[4]), els[0])
+        quadros, contatos = mk.montar_proprio(r, refs, pega_el[3])
+        # a tentativa (4700) com os desenhos da mão avançando, na caixa de acerto da 800 de hoje
+        cx = pega_el[4]
+        alcance = ("[Begin Action 4700]\n" + f"; {r.nome}: a mão avança (boneco de peças) {MARCA}\n"
+                   + "Clsn2Default: 1\n" + "".join(f" {b}\n" for b in pega_el[3])
+                   + f"{refs[r.alcanca[0]]}, 0,0, 3\n"
+                   + ("Clsn1: 1\n" + f" Clsn1[0] = {cx[0]}, {cx[1]}, {cx[2]}, {cx[3]}\n" if cx else "")
+                   + f"{refs[r.alcanca[-1]]}, 0,0, 6\n\n")
+        texto, _ = mk.estados(r, contatos, None, 820, r.fim)
+    else:
+        chave = f"{lutador}_47"
+        base = mk.ROTEIROS[lutador]
+        mk.ROTEIROS[chave] = mk.Roteiro(c.nome_agarrao, c.golpes, c.final, base.pega, base.bind)
+        try:
+            r, quadros, contatos, _ = mk.montar(chave, air, cns)
+        finally:
+            del mk.ROTEIROS[chave]
+        texto, _ = mk.estados(r, contatos, None, 820)  # só o 810; os estados do oponente são os do agarrão básico
     acao = mk.acao_810(quadros, r).replace("[Begin Action 810]", "[Begin Action 4710]")
-    texto, _ = mk.estados(r, contatos, None, 820)  # só o 810; os estados do oponente são os do agarrão básico
     texto = (texto.replace("[Statedef 810]", "[Statedef 4710]").replace("anim = 810", "anim = 4710")
              .replace("[State 810,", "[State 4710,"))
     fim = contatos[-1][0]
@@ -294,16 +395,20 @@ def estados_agarrao(lutador, air, cns):
     assert pega and "p1stateno = 810" in pega, f"{lutador}: [Statedef 800] sem p1stateno = 810"
     pega = (pega.replace("[Statedef 800]", "[Statedef 4700]").replace("[State 800,", "[State 4700,")
             .replace("p1stateno = 810", "p1stateno = 4710"))
+    if alcance:
+        pega = re.sub(r"(?m)^anim\s*=\s*800\b", "anim = 4700", pega)
+        acao = alcance + acao
     pega = f"; Agarrão do despertado: {c.nome_agarrao} (issue #47) {MARCA}\n" + pega
     return acao, pega.rstrip() + "\n\n" + texto, r, contatos
 
 
 def estado_poder(lutador):
     c = CFG[lutador]
-    s = c.solta
+    s = solta_poder(lutador)
     ox, oy = c.offset
+    anim = PECAS47[lutador]["grupo_poder"] if lutador in PECAS47 else 3400
     t = [f"; Poder de longe do despertado: {c.nome_poder} (issue #47) {MARCA}\n",
-         "[Statedef 4750]\ntype = S\nmovetype = A\nphysics = S\nctrl = 0\nsprpriority = 2\nanim = 3400\n"
+         "[Statedef 4750]\ntype = S\nmovetype = A\nphysics = S\nctrl = 0\nsprpriority = 2\n" f"anim = {anim}\n"
          "juggle = 4\nvelset = 0,0\npoweradd = 0\n\n"]
     esc = escala_poder(lutador)
     t.append(ctl(4750, "Som da carga", "PlaySnd", "trigger1 = Time = 0", f"value = {c.som_carga}"))
@@ -342,6 +447,10 @@ def estado_poder(lutador):
 
 def ligar_cns(lutador, air, cns):
     cns = tirar_estados(cns, (4700, 4710, 4750))
+    # conserto: uma rodada antiga levou o marcador de início do helper da aura de silhueta (9610) junto com o 4750;
+    # sem ele o aura_silhueta.py não acha o bloco e põe outro 9610. Tira o bloco órfão (o aura_silhueta.py refaz)
+    if "; >>> aura_silhueta.py estado" not in cns:
+        cns = re.sub(r"^\[Statedef 9610\]\n.*?^; <<< aura_silhueta\.py[^\n]*\n", "", cns, count=1, flags=re.M | re.S)
     cns = re.sub(rf"^; (Agarrão|Poder de longe) do despertado:[^\n]*{re.escape(MARCA)}\n", "", cns, flags=re.M)
     acao, texto, r, contatos = estados_agarrao(lutador, air, cns)
     bloco = texto + "\n" + estado_poder(lutador)
@@ -404,7 +513,13 @@ def aplicar(lutador, pasta=None):
     cns = arq["cns"].read_text(encoding="utf-8")
     cmd = arq["cmd"].read_bytes().decode("utf-8")
     acao, cns, r, contatos = ligar_cns(lutador, air, cns)
+    if acao.startswith("[Begin Action 4700]"):
+        a4700, acao = acao.split("[Begin Action 4710]", 1)
+        acao = "[Begin Action 4710]" + acao
+        air = efeitos.por_acao(air, 4700, a4700.split("\n", 1)[1])
     air = efeitos.por_acao(air, 4710, acao.split("\n", 1)[1])
+    if lutador in PECAS47:
+        air = efeitos.por_acao(air, PECAS47[lutador]["grupo_poder"], acao_poder_corpo(lutador))
     for efeito in ("agarrao", "final", "carga", "pancada"):
         air = efeitos.por_acao(air, GRUPOS[efeito], acao_efeito(lutador, efeito).split("\n", 1)[1])
     air = efeitos.por_acao(air, GRUPOS["poder"], acao_poder(lutador).split("\n", 1)[1])

@@ -1,0 +1,116 @@
+{
+ "acao": 240,
+ "caixa": [
+  36,
+  -300,
+  171,
+  -174
+ ],
+ "origem": [
+  "chute_alto/01",
+  "chute_alto/02",
+  "chute_alto/03",
+  "chute_alto/04",
+  "chute_alto/05",
+  "chute_alto/06",
+  "chute_alto/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto/01"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chute_alto/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto/03"
+  },
+  {
+   "desenho": 4,
+   "ticks": 8,
+   "caixa": true,
+   "de": "chute_alto/04"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto/05"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto/05"
+  },
+  {
+   "desenho": 7,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chute_alto/05"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto/06"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto/06"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto/06"
+  },
+  {
+   "desenho": 11,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chute_alto/06"
+  },
+  {
+   "desenho": 12,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto/07"
+  },
+  {
+   "desenho": 13,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto/07"
+  },
+  {
+   "desenho": 14,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto/07"
+  },
+  {
+   "desenho": 15,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chute_alto/07"
+  }
+ ]
+}

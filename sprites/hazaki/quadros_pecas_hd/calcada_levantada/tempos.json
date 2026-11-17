@@ -1,0 +1,74 @@
+{
+ "acao": 313,
+ "caixa": [
+  36,
+  -108,
+  123,
+  0
+ ],
+ "origem": [
+  "calcada_levantada/01",
+  "calcada_levantada/02",
+  "calcada_levantada/03",
+  "calcada_levantada/04",
+  "calcada_levantada/05",
+  "calcada_levantada/06",
+  "calcada_levantada/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 4,
+   "caixa": false,
+   "de": "calcada_levantada/01"
+  },
+  {
+   "desenho": 1,
+   "ticks": 4,
+   "caixa": false,
+   "de": "calcada_levantada/02"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": false,
+   "de": "calcada_levantada/03"
+  },
+  {
+   "desenho": 3,
+   "ticks": 4,
+   "caixa": true,
+   "de": "calcada_levantada/04"
+  },
+  {
+   "desenho": 4,
+   "ticks": 5,
+   "caixa": false,
+   "de": "calcada_levantada/05"
+  },
+  {
+   "desenho": 5,
+   "ticks": 8,
+   "caixa": false,
+   "de": "calcada_levantada/06"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "calcada_levantada/07"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "calcada_levantada/07"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "calcada_levantada/07"
+  }
+ ]
+}

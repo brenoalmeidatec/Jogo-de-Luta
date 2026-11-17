@@ -19774,7 +19774,7 @@ movetype = A
 physics = S
 ctrl = 0
 sprpriority = 2
-anim = 800
+anim = 4700
 juggle = 0
 velset = 0,0
 
@@ -19808,7 +19808,7 @@ velset = 0,0
 ctrl = 0
 sprpriority = 2
 
-; Algema das Sombras: pega, segura, 3 pancadas e arremessa. Escape: y ou b no começo.
+; Algema das Sombras: pega, segura, 1 pancadas e arremessa. Escape: y ou b no começo.
 [State 4710, Lado]
 type = VarSet
 trigger1 = Time = 0
@@ -19816,39 +19816,39 @@ var(2) = command = "holdback"
 
 [State 4710, Segura]
 type = TargetBind
-trigger1 = Time < 105
+trigger1 = Time < 46
 trigger1 = NumTarget
-pos = 34, 0
+pos = 50, 0
 
 [State 4710, Escapou]
 type = ChangeState
 trigger1 = Time > 1
-trigger1 = Time < 26
+trigger1 = Time < 22
 trigger1 = enemynear,stateno != 820
 value = 0
 ctrl = 1
 
 [State 4710, Perdeu]
 type = ChangeState
-trigger1 = Time > 26
-trigger1 = Time < 105
+trigger1 = Time > 22
+trigger1 = Time < 46
 trigger1 = !NumTarget
 value = 0
 ctrl = 1
 
 [State 4710, Pancada 1: dano]
 type = TargetLifeAdd
-trigger1 = Time = 26
+trigger1 = Time = 22
 trigger1 = NumTarget
-value = -26
+value = -34
 
 [State 4710, Pancada 1: faísca]
 type = Explod
-trigger1 = Time = 26
+trigger1 = Time = 22
 trigger1 = NumTarget
 anim = (ifelse(var(20) > 0, 9230, 9200))
 postype = p1
-pos = 34, -80
+pos = 42, -74
 removetime = -2
 sprpriority = 5
 scale = .75, .75
@@ -19857,11 +19857,11 @@ pausemovetime = 99
 
 [State 4710, Luz do efeito]
 type = Explod
-trigger1 = Time = 26
+trigger1 = Time = 22
 trigger1 = NumTarget
 anim = (ifelse(var(20) > 0, 9806, 9807))
 postype = p1
-pos = 34, -80
+pos = 42, -74
 removetime = -2
 scale = .75, .75
 ignorehitpause = 1
@@ -19874,185 +19874,37 @@ alpha = 255, 0
 
 [State 4710, Pancada 1: som]
 type = PlaySnd
-trigger1 = Time = 26
-value = S53,1
+trigger1 = Time = 22
+value = S53,2
 
 [State 4710, Pancada 1: tranco]
 type = TargetBind
-trigger1 = Time = [26, 31]
+trigger1 = Time = [22, 27]
 trigger1 = NumTarget
-pos = 39, 0
+pos = 55, 0
 
 [State 4710, Pancada 1: barra]
 type = PowerAdd
-trigger1 = Time = 26
+trigger1 = Time = 22
 trigger1 = NumTarget
-value = 13
+value = 17
 
 [State 4710, Pancada 1: reage]
 type = TargetState
-trigger1 = Time = 26
+trigger1 = Time = 22
 trigger1 = NumTarget
 value = 822
 
 [State 4710, Pancada 1: congela]
 type = Pause
-trigger1 = Time = 26
+trigger1 = Time = 22
 trigger1 = NumTarget
 time = 7
 movetime = 0
 
 [State 4710, Pancada 1: treme]
 type = EnvShake
-trigger1 = Time = 26
-trigger1 = NumTarget
-time = 6
-freq = 150
-ampl = -2
-
-[State 4710, Pancada 2: dano]
-type = TargetLifeAdd
-trigger1 = Time = 52
-trigger1 = NumTarget
-value = -26
-
-[State 4710, Pancada 2: faísca]
-type = Explod
-trigger1 = Time = 52
-trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9230, 9200))
-postype = p1
-pos = 34, -79
-removetime = -2
-sprpriority = 5
-scale = .75, .75
-ignorehitpause = 1
-pausemovetime = 99
-
-[State 4710, Luz do efeito]
-type = Explod
-trigger1 = Time = 52
-trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9806, 9807))
-postype = p1
-pos = 34, -79
-removetime = -2
-scale = .75, .75
-ignorehitpause = 1
-pausemovetime = 99
-sprpriority = (5) - 1
-ownpal = 1
-trans = addalpha
-alpha = 255, 0
-
-
-[State 4710, Pancada 2: som]
-type = PlaySnd
-trigger1 = Time = 52
-value = S53,1
-
-[State 4710, Pancada 2: tranco]
-type = TargetBind
-trigger1 = Time = [52, 57]
-trigger1 = NumTarget
-pos = 39, 0
-
-[State 4710, Pancada 2: barra]
-type = PowerAdd
-trigger1 = Time = 52
-trigger1 = NumTarget
-value = 13
-
-[State 4710, Pancada 2: reage]
-type = TargetState
-trigger1 = Time = 52
-trigger1 = NumTarget
-value = 825
-
-[State 4710, Pancada 2: congela]
-type = Pause
-trigger1 = Time = 52
-trigger1 = NumTarget
-time = 7
-movetime = 0
-
-[State 4710, Pancada 2: treme]
-type = EnvShake
-trigger1 = Time = 52
-trigger1 = NumTarget
-time = 6
-freq = 150
-ampl = -2
-
-[State 4710, Pancada 3: dano]
-type = TargetLifeAdd
-trigger1 = Time = 79
-trigger1 = NumTarget
-value = -26
-
-[State 4710, Pancada 3: faísca]
-type = Explod
-trigger1 = Time = 79
-trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9230, 9200))
-postype = p1
-pos = 34, -94
-removetime = -2
-sprpriority = 5
-scale = .75, .75
-ignorehitpause = 1
-pausemovetime = 99
-
-[State 4710, Luz do efeito]
-type = Explod
-trigger1 = Time = 79
-trigger1 = NumTarget
-anim = (ifelse(var(20) > 0, 9806, 9807))
-postype = p1
-pos = 34, -94
-removetime = -2
-scale = .75, .75
-ignorehitpause = 1
-pausemovetime = 99
-sprpriority = (5) - 1
-ownpal = 1
-trans = addalpha
-alpha = 255, 0
-
-
-[State 4710, Pancada 3: som]
-type = PlaySnd
-trigger1 = Time = 79
-value = S53,2
-
-[State 4710, Pancada 3: tranco]
-type = TargetBind
-trigger1 = Time = [79, 84]
-trigger1 = NumTarget
-pos = 39, 0
-
-[State 4710, Pancada 3: barra]
-type = PowerAdd
-trigger1 = Time = 79
-trigger1 = NumTarget
-value = 13
-
-[State 4710, Pancada 3: reage]
-type = TargetState
-trigger1 = Time = 79
-trigger1 = NumTarget
-value = 826
-
-[State 4710, Pancada 3: congela]
-type = Pause
-trigger1 = Time = 79
-trigger1 = NumTarget
-time = 7
-movetime = 0
-
-[State 4710, Pancada 3: treme]
-type = EnvShake
-trigger1 = Time = 79
+trigger1 = Time = 22
 trigger1 = NumTarget
 time = 6
 freq = 150
@@ -20060,17 +19912,17 @@ ampl = -2
 
 [State 4710, Final: dano]
 type = TargetLifeAdd
-trigger1 = Time = 105
+trigger1 = Time = 46
 trigger1 = NumTarget
 value = -62
 
 [State 4710, Final: faísca]
 type = Explod
-trigger1 = Time = 105
+trigger1 = Time = 46
 trigger1 = NumTarget
 anim = (ifelse(var(20) > 0, 9231, 9201))
 postype = p1
-pos = 34, -67
+pos = 42, -44
 removetime = -2
 sprpriority = 5
 scale = .6, .6
@@ -20079,11 +19931,11 @@ pausemovetime = 99
 
 [State 4710, Luz do efeito]
 type = Explod
-trigger1 = Time = 105
+trigger1 = Time = 46
 trigger1 = NumTarget
 anim = (ifelse(var(20) > 0, 9804, 9805))
 postype = p1
-pos = 34, -67
+pos = 42, -44
 removetime = -2
 scale = .6, .6
 ignorehitpause = 1
@@ -20096,57 +19948,44 @@ alpha = 255, 0
 
 [State 4710, Final: som]
 type = PlaySnd
-trigger1 = Time = 105
-value = S53,3
+trigger1 = Time = 46
+value = S53,2
 
 [State 4710, Final: barra]
 type = PowerAdd
-trigger1 = Time = 105
+trigger1 = Time = 46
 trigger1 = NumTarget
 value = 31
 
 [State 4710, Final: congela]
 type = Pause
-trigger1 = Time = 105
+trigger1 = Time = 46
 trigger1 = NumTarget
 time = 14
 movetime = 0
 
 [State 4710, Final: treme]
 type = EnvShake
-trigger1 = Time = 105
+trigger1 = Time = 46
 trigger1 = NumTarget
 time = 16
 freq = 150
 ampl = -5
 
-[State 4710, Joga para trás]
+[State 4710, Derruba]
 type = TargetState
-trigger1 = Time = 105
+trigger1 = Time = 46
 trigger1 = NumTarget
-trigger1 = var(2)
-value = 824
-
-[State 4710, Joga]
-type = TargetState
-trigger1 = Time = 105
-trigger1 = NumTarget
-trigger1 = !var(2)
-value = 823
-
-[State 4710, Vira]
-type = Turn
-trigger1 = Time = 115
-trigger1 = var(2)
+value = 835
 
 [State 4710, Efeito da forma no oponente (despertados_47.py)]
 type = Explod
-trigger1 = Time = 20
+trigger1 = Time = 16
 trigger1 = NumTarget
 anim = 47000
 id = 47000
 postype = p1
-pos = 34, 0
+pos = 50, 0
 bindtime = -1
 removetime = -1
 sprpriority = -1
@@ -20155,12 +19994,12 @@ ignorehitpause = 1
 
 [State 4710, Luz do efeito]
 type = Explod
-trigger1 = Time = 20
+trigger1 = Time = 16
 trigger1 = NumTarget
 anim = 9803
 id = 47000
 postype = p1
-pos = 34, 0
+pos = 50, 0
 bindtime = -1
 removetime = -1
 ignorehitpause = 1
@@ -20172,17 +20011,17 @@ alpha = 255, 0
 
 [State 4710, Tira o efeito (despertados_47.py)]
 type = RemoveExplod
-trigger1 = Time = 105
+trigger1 = Time = 46
 trigger2 = !NumTarget
 id = 47000
 
 [State 4710, Estouro do final (despertados_47.py)]
 type = Explod
-trigger1 = Time = 105
+trigger1 = Time = 46
 trigger1 = NumTarget
 anim = 47001
 postype = p1
-pos = 34, -67
+pos = 42, -44
 removetime = -2
 sprpriority = 6
 ownpal = 1
@@ -20191,11 +20030,11 @@ scale = .8, .8
 
 [State 4710, Luz do efeito]
 type = Explod
-trigger1 = Time = 105
+trigger1 = Time = 46
 trigger1 = NumTarget
 anim = 9802
 postype = p1
-pos = 34, -67
+pos = 42, -44
 removetime = -2
 pausemovetime = 12
 scale = .8, .8
@@ -20209,29 +20048,13 @@ alpha = 255, 0
 type = BGPalFX
 trigger1 = Time = 1
 trigger1 = NumTarget
-time = 125
+time = 66
 mul = 120,96,150
 sinadd = 0,0,0,0
 
 [State 4710, Pancada 1: tremida (despertados_47.py)]
 type = EnvShake
-trigger1 = Time = 26
-trigger1 = NumTarget
-time = 8
-freq = 140
-ampl = -4
-
-[State 4710, Pancada 2: tremida (despertados_47.py)]
-type = EnvShake
-trigger1 = Time = 52
-trigger1 = NumTarget
-time = 8
-freq = 140
-ampl = -4
-
-[State 4710, Pancada 3: tremida (despertados_47.py)]
-type = EnvShake
-trigger1 = Time = 79
+trigger1 = Time = 22
 trigger1 = NumTarget
 time = 8
 freq = 140
@@ -20239,7 +20062,7 @@ ampl = -4
 
 [State 4710, Pancada 1: oponente pisca (despertados_47.py)]
 type = PalFX
-trigger1 = Time = 26
+trigger1 = Time = 22
 trigger1 = NumTarget
 redirectid = target,id
 time = 6
@@ -20247,23 +20070,7 @@ add = 70,20,110
 
 [State 4710, Pancada 2: oponente pisca (despertados_47.py)]
 type = PalFX
-trigger1 = Time = 52
-trigger1 = NumTarget
-redirectid = target,id
-time = 6
-add = 70,20,110
-
-[State 4710, Pancada 3: oponente pisca (despertados_47.py)]
-type = PalFX
-trigger1 = Time = 79
-trigger1 = NumTarget
-redirectid = target,id
-time = 6
-add = 70,20,110
-
-[State 4710, Pancada 4: oponente pisca (despertados_47.py)]
-type = PalFX
-trigger1 = Time = 105
+trigger1 = Time = 46
 trigger1 = NumTarget
 redirectid = target,id
 time = 6
@@ -20271,11 +20078,11 @@ add = 70,20,110
 
 [State 4710, Pancada 1: estouro da forma (despertados_47.py)]
 type = Explod
-trigger1 = Time = 26
+trigger1 = Time = 22
 trigger1 = NumTarget
 anim = 47004
 postype = p1
-pos = 34, -80
+pos = 42, -74
 removetime = -2
 sprpriority = 6
 ownpal = 1
@@ -20284,69 +20091,11 @@ ignorehitpause = 1
 
 [State 4710, Luz do efeito]
 type = Explod
-trigger1 = Time = 26
+trigger1 = Time = 22
 trigger1 = NumTarget
 anim = 9801
 postype = p1
-pos = 34, -80
-removetime = -2
-scale = 1.0, 1.0
-ignorehitpause = 1
-sprpriority = (6) - 1
-ownpal = 1
-trans = addalpha
-alpha = 255, 0
-
-
-[State 4710, Pancada 2: estouro da forma (despertados_47.py)]
-type = Explod
-trigger1 = Time = 52
-trigger1 = NumTarget
-anim = 47004
-postype = p1
-pos = 34, -79
-removetime = -2
-sprpriority = 6
-ownpal = 1
-scale = 1.5, 1.5
-ignorehitpause = 1
-
-[State 4710, Luz do efeito]
-type = Explod
-trigger1 = Time = 52
-trigger1 = NumTarget
-anim = 9801
-postype = p1
-pos = 34, -79
-removetime = -2
-scale = 1.0, 1.0
-ignorehitpause = 1
-sprpriority = (6) - 1
-ownpal = 1
-trans = addalpha
-alpha = 255, 0
-
-
-[State 4710, Pancada 3: estouro da forma (despertados_47.py)]
-type = Explod
-trigger1 = Time = 79
-trigger1 = NumTarget
-anim = 47004
-postype = p1
-pos = 34, -94
-removetime = -2
-sprpriority = 6
-ownpal = 1
-scale = 1.5, 1.5
-ignorehitpause = 1
-
-[State 4710, Luz do efeito]
-type = Explod
-trigger1 = Time = 79
-trigger1 = NumTarget
-anim = 9801
-postype = p1
-pos = 34, -94
+pos = 42, -74
 removetime = -2
 scale = 1.0, 1.0
 ignorehitpause = 1
@@ -20358,28 +20107,28 @@ alpha = 255, 0
 
 [State 4710, Final: congela no impacto (despertados_47.py)]
 type = Pause
-trigger1 = Time = 105
+trigger1 = Time = 46
 trigger1 = NumTarget
 time = 12
 movetime = 0
 
 [State 4710, Final: clarão (despertados_47.py)]
 type = BGPalFX
-trigger1 = Time = 105
+trigger1 = Time = 46
 time = 6
 add = 120,120,120
 mul = 120,96,150
 
 [State 4710, Final: tremida forte (despertados_47.py)]
 type = EnvShake
-trigger1 = Time = 105
+trigger1 = Time = 46
 time = 30
 freq = 90
 ampl = -11
 
 [State 4710, Som do final (despertados_47.py)]
 type = PlaySnd
-trigger1 = Time = 105
+trigger1 = Time = 46
 value = 50,7
 
 [State 4710, Som de pegar (despertados_47.py)]
@@ -20389,7 +20138,7 @@ value = F35,0
 
 [State 4710, Som da forma (despertados_47.py)]
 type = PlaySnd
-trigger1 = Time = 20
+trigger1 = Time = 16
 trigger1 = NumTarget
 value = 50,7
 channel = 3
@@ -20408,7 +20157,7 @@ movetype = A
 physics = S
 ctrl = 0
 sprpriority = 2
-anim = 3400
+anim = 47150
 juggle = 4
 velset = 0,0
 poweradd = 0
@@ -20421,8 +20170,8 @@ value = F40,4
 [State 4750, Carga: tudo para e escurece (despertados_47.py)]
 type = SuperPause
 trigger1 = Time = 0
-time = 25
-movetime = 25
+time = 14
+movetime = 14
 anim = -1
 darken = 1
 poweradd = 0
@@ -20431,7 +20180,7 @@ unhittable = 0
 [State 4750, Carga: rastro do corpo (despertados_47.py)]
 type = AfterImage
 trigger1 = Time = 0
-time = 39
+time = 28
 length = 8
 timegap = 2
 framegap = 2
@@ -20442,7 +20191,7 @@ palmul = .55,.55,.55
 
 [State 4750, Carga na mão (despertados_47.py)]
 type = Explod
-trigger1 = Time = 5
+trigger1 = Time = 0
 anim = 47003
 postype = p1
 pos = 54, -52
@@ -20454,7 +20203,7 @@ supermovetime = 30
 
 [State 4750, Luz do efeito]
 type = Explod
-trigger1 = Time = 5
+trigger1 = Time = 0
 anim = 9800
 postype = p1
 pos = 54, -52
@@ -20469,42 +20218,42 @@ alpha = 255, 0
 
 [State 4750, Carga: treme de leve (despertados_47.py)]
 type = EnvShake
-trigger1 = Time = 11
+trigger1 = Time = 0
 time = 14
 freq = 180
 ampl = -2
 
 [State 4750, Som de soltar (despertados_47.py)]
 type = PlaySnd
-trigger1 = Time = 25
+trigger1 = Time = 14
 value = 50,7
 
 [State 4750, Solta: tremida forte (despertados_47.py)]
 type = EnvShake
-trigger1 = Time = 25
+trigger1 = Time = 14
 time = 26
 freq = 100
 ampl = -7
 
 [State 4750, Solta: fundo na cor da forma (despertados_47.py)]
 type = BGPalFX
-trigger1 = Time = 25
+trigger1 = Time = 14
 time = 70
 mul = 120,96,150
 
 [State 4750, Solta: recuo (despertados_47.py)]
 type = VelSet
-trigger1 = Time = 25
+trigger1 = Time = 14
 x = -2.2
 
 [State 4750, Solta: freia (despertados_47.py)]
 type = VelMul
-trigger1 = Time > 25
+trigger1 = Time > 14
 x = .8
 
 [State 4750, Maré das Correntes (despertados_47.py)]
 type = Projectile
-trigger1 = Time = 25
+trigger1 = Time = 14
 projid = 4750
 projanim = 47002
 projhitanim = 47004
@@ -20547,7 +20296,7 @@ palfx.sinadd = 30,30,30,4
 
 [State 4750, Luz do poder halo]
 type = Explod
-trigger1 = Time = 25
+trigger1 = Time = 14
 anim = 9817
 id = 9634
 postype = p1
@@ -20564,7 +20313,7 @@ alpha = 255, 0
 
 [State 4750, Luz do poder orbe]
 type = Explod
-trigger1 = Time = 25
+trigger1 = Time = 14
 anim = 9732
 id = 9633
 postype = p1
@@ -20583,68 +20332,6 @@ type = ChangeState
 trigger1 = AnimTime = 0
 value = 0
 ctrl = 1
-
-[Statedef 9610]
-type = A
-movetype = I
-physics = N
-anim = 30000
-ctrl = 0
-velset = 0, 0
-sprpriority = -3
-
-[State 9610, cola no corpo]
-type = BindToParent
-trigger1 = 1
-pos = 0, 0
-facing = 1
-time = 1
-ignorehitpause = 1
-
-[State 9610, mesmo quadro do corpo]
-type = ChangeAnim
-trigger1 = SelfAnimExist(30000 + parent,Anim) && parent,AnimElemNo(0) > 0
-value = 30000 + parent,Anim
-elem = (parent,AnimElemNo(0) - 1) * 6 + 1 + (floor(GameTime / 2) % 6)
-ignorehitpause = 1
-
-[State 9610, brilho]
-type = Trans
-trigger1 = 1
-trans = add
-alpha = ifelse(SelfAnimExist(30000 + parent,Anim) && parent,AnimElemNo(0) > 0, floor(170 * floor(255 * min(1, max(0, root,map(au_pengaro_e)))) / 255), 0), 255
-ignorehitpause = 1
-
-[State 9610, sem sombra]
-type = AssertSpecial
-trigger1 = 1
-flag = noshadow
-ignorehitpause = 1
-
-[State 9610, chama]
-type = Explod
-trigger1 = SelfAnimExist(30000 + parent,Anim) && parent,AnimElemNo(0) > 0 && root,map(au_pengaro_e) > 0.02
-anim = 40000 + parent,Anim
-id = 9611
-animelem = (parent,AnimElemNo(0) - 1) * 6 + 1 + (floor(GameTime / 2) % 6)
-animfreeze = 1
-postype = p1
-pos = 0, 0
-facing = 1
-bindtime = 1
-removetime = 1
-sprpriority = -4
-ownpal = 1
-removeongethit = 0
-supermovetime = -1
-pausemovetime = -1
-trans = addalpha
-alpha = floor(255 * min(1, max(0, root,map(au_pengaro_e)))), 255 - floor(255 * min(1, max(0, root,map(au_pengaro_e))))
-scale = 0.666666, 0.666666 * (1 + 0.04 * max(-3, min(6, root,map(au_sil_y))))
-xshear = -0.02 * max(-5, min(5, root,map(au_sil_x)))
-ignorehitpause = 1
-
-; <<< aura_silhueta.py
 
 ; ---- agarrão segura-e-bate (ferramentas/agarrao_mk.py) ----
 
@@ -20997,3 +20684,66 @@ type = SelfState
 trigger1 = Vel Y > 0
 trigger1 = Pos Y >= 0
 value = 5100
+
+; >>> aura_silhueta.py estado: o helper da aura de silhueta
+[Statedef 9610]
+type = A
+movetype = I
+physics = N
+anim = 30000
+ctrl = 0
+velset = 0, 0
+sprpriority = -3
+
+[State 9610, cola no corpo]
+type = BindToParent
+trigger1 = 1
+pos = 0, 0
+facing = 1
+time = 1
+ignorehitpause = 1
+
+[State 9610, mesmo quadro do corpo]
+type = ChangeAnim
+trigger1 = SelfAnimExist(30000 + parent,Anim) && parent,AnimElemNo(0) > 0
+value = 30000 + parent,Anim
+elem = (parent,AnimElemNo(0) - 1) * 6 + 1 + (floor(GameTime / 2) % 6)
+ignorehitpause = 1
+
+[State 9610, brilho]
+type = Trans
+trigger1 = 1
+trans = add
+alpha = ifelse(SelfAnimExist(30000 + parent,Anim) && parent,AnimElemNo(0) > 0, floor(170 * floor(255 * min(1, max(0, root,map(au_pengaro_e)))) / 255), 0), 255
+ignorehitpause = 1
+
+[State 9610, sem sombra]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+
+[State 9610, chama]
+type = Explod
+trigger1 = SelfAnimExist(30000 + parent,Anim) && parent,AnimElemNo(0) > 0 && root,map(au_pengaro_e) > 0.02
+anim = 40000 + parent,Anim
+id = 9611
+animelem = (parent,AnimElemNo(0) - 1) * 6 + 1 + (floor(GameTime / 2) % 6)
+animfreeze = 1
+postype = p1
+pos = 0, 0
+facing = 1
+bindtime = 1
+removetime = 1
+sprpriority = -4
+ownpal = 1
+removeongethit = 0
+supermovetime = -1
+pausemovetime = -1
+trans = addalpha
+alpha = floor(255 * min(1, max(0, root,map(au_pengaro_e)))), 255 - floor(255 * min(1, max(0, root,map(au_pengaro_e))))
+scale = 0.666666, 0.666666 * (1 + 0.04 * max(-3, min(6, root,map(au_sil_y))))
+xshear = -0.02 * max(-5, min(5, root,map(au_sil_x)))
+ignorehitpause = 1
+
+; <<< aura_silhueta.py
