@@ -59,7 +59,11 @@ Regra do Breno (2026-11-15): **todo agarrão tem animação própria, e quem é 
   ([`cena-transformacao.md`](cena-transformacao.md), #49).
 - **Agarrão da forma e poder de longe** no padrão do Diabo Loiro do Hazak: grande, sombrio e pesado. Carga com o mundo
   parado, tremida forte ao soltar, fundo tingido na cor da forma e impacto que congela (#44, #47).
-- Os golpes novos da seção 4 das regras, no tema da forma.
+- **Luta totalmente diferente do normal** (Breno, 2026-11-15): nada do modo normal é reaproveitado no despertado,
+  nem golpe, nem folha, nem movimento com a roupa nova por cima. Todos os golpes (normais, correntes, especiais, super e
+  agarrões) são novos e no estilo da forma: o Diabo Loiro luta como demônio descontrolado e sem maleta, o Garanhão
+  como minotauro, o Pengaró endiabrado com os poderes sombrios, o Cientista Louco com a criatura dele. Tabela e mínimos
+  na seção 4 das regras. Lista de golpes e conceito vão para o Breno aprovar antes de desenhar (#47).
 
 ## 6. Aura
 
@@ -82,8 +86,14 @@ Regra do Breno (2026-11-15): **todo agarrão tem animação própria, e quem é 
   - o oponente perto clareia de leve na cor da luz (PalFX), menos quando apanha, está agarrado ou despertado;
   - tremor leve da luz, no máximo 2 a 3 Hz, sem piscar;
   - no fundo azul, a luz quente vai por alfa de pixel (`addalpha`); somada pura ela fica rosa.
-  A ferramenta é a `ferramentas/luz.py`. Ela roda sozinha no fim do `aura_silhueta.py` para quem está em `LIGADOS`. Os
-  poderes de energia de cada um ficam em `PODERES` (projid do Projectile; pedra e objeto não acendem).
+  - **todo efeito que brilha acende** (Alisson, 2026-11-16): fogo, ki, raio, faísca e clarão ganham uma luz tirada do
+    próprio efeito, com a cor dele, do tamanho dele e piscando junto com ele, quadro a quadro. Cada golpe que entra
+    solta um clarão no ponto do impacto, na cor da faísca. Pedra, poeira, fumaça, garrafa, latinha, coração, pente e
+    gente não acendem;
+  A ferramenta é a `ferramentas/luz.py` (com a `ferramentas/luz_efeitos.py`). Ela roda sozinha no fim do
+  `aura_silhueta.py` para quem está em `LIGADOS`; o Raiclaven, sem aura em camadas, chama no fim do gerador. **Efeito
+  novo:** rode `python3 ferramentas/luz_efeitos.py --inventario PASTA <id>`, olhe a folha e anote em
+  `ferramentas/luz_classes.json` se ele acende ou não (o automático erra em objeto colorido e em faísca branca).
 
 ## 7. Efeitos, parry e sons
 

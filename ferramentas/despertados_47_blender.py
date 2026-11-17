@@ -51,6 +51,8 @@ PALETA = {
     "ck": "#020603,#0a1a10,#143424,#24583c,#3c8a5c,#70c090,#b8f0c8,#f4fff6",        # preto, verde de vidro, menta
     # Cientista Louco (#43): aço escuro da tesoura e raio verde dos tanques, do preto ao branco
     "raiclaven": "#030504,#121a17,#34403c,#6a7a74,#2f9a2c,#62e030,#c8ffa0,#ffffff",
+    # Diabo Loiro (Hazak): o agarrão vira poder que queima (#45, 2026-11-15), fogo das trevas vermelho e ouro
+    "hazaki": "#060202,#2a0606,#6e0a0a,#c0180e,#f05a10,#ffb020,#ffe27a,#fffbe8",
 }
 GAMA = {"poder": 1.35, "rastro": 1.35, "final": 1.3, "agarrao": 1.25, "carga": 1.2, "pancada": 1.2}
 
@@ -69,6 +71,10 @@ EFEITOS = {
     "raiclaven": {"agarrao": ((110, 190), 12, 2, "chao", 0), "final": ((200, 200), 12, 3, "centro", -1),
                   "poder": ((300, 130), 12, 2, "cabeca", 0), "carga": ((96, 96), 10, 2, "centro", -1),
                   "pancada": ((96, 96), 8, 2, "centro", -1)},
+    # só o agarrão do Diabo Loiro: o fogo que toma conta do oponente preso (laço), o estouro de cada pancada e a
+    # explosão de fogo do final, grande (o oponente queimando nas mãos dele até explodir)
+    "hazaki": {"agarrao": ((140, 220), 12, 2, "chao", 0), "final": ((260, 260), 14, 3, "centro", -1),
+               "pancada": ((110, 110), 8, 2, "centro", -1)},
 }
 CABECA = 0.95   # o centro da cabeça do projétil fica a CABECA x meia altura da borda direita
 
@@ -688,6 +694,9 @@ RECEITAS = {
                   "final": ["bola", "anel", "anel2", "elos_voando", "relampago", "raios"],
                   "poder": ["torrente_raio", "fluxo"], "carga": ["crepita", "converge", "anel"],
                   "pancada": ["miolo", "relampago", "raios"]},
+    "hazaki": {"agarrao": ["coluna_sombra", "brasas_sobem", "brilho_chao"],
+               "final": ["bola", "anel", "anel2", "anel3", "fumaca", "raios"],
+               "pancada": ["miolo", "fumaca", "raios"]},
 }
 
 
@@ -856,9 +865,9 @@ def main():
             with tempfile.TemporaryDirectory() as td:
                 quadros, ticks, pivo, laco = renderizar(lutador, render, a.amostras, Path(td))
             sprites, tam = pixelar(lutador, render, quadros)
-            if render in ("poder", "rastro"):
-                sprites = fumaca_preta(sprites, lutador)
-            if lutador in ("gutto", "raiclaven") and render in ("agarrao", "carga", "pancada"):
+            if render in ("poder", "rastro") or (lutador == "hazaki" and render in ("agarrao", "final")):
+                sprites = fumaca_preta(sprites, lutador)  # o fogo do Diabo é das trevas: fumaça preta por fora
+            if lutador in ("gutto", "raiclaven", "hazaki") and render in ("agarrao", "carga", "pancada"):
                 sprites = brasa(sprites, lutador)
             if render == "rastro":
                 compor_garanhao(sprites)

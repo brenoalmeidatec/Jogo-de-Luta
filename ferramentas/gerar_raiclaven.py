@@ -534,6 +534,8 @@ def main():
     aura_no_corpo.aplicar("raiclaven", SAIDA)
     import aura_silhueta  # aura de anime colada na silhueta dos dois, em verde (#43/#51); sempre por último
     aura_silhueta.aplicar("raiclaven", SAIDA)
+    import luz  # issue #51: luz em todo efeito que brilha (sem aura em camadas, a luz.py não vem pelo aura_silhueta)
+    luz.aplicar("raiclaven", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

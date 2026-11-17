@@ -55,9 +55,9 @@ QUEM = {
     "ck": ("CK, the cheeky street boxer: young Black man, slim athletic build, short black hair, thin mustache and goatee, white polo shirt with green collar, black cap, black-and-white wavy basketball shorts, white sneakers, red boxing gloves with white wraps.",
            "CK in RATAO MODE (awakened): same young Black man, short bleached platinum hair, mirrored sunglasses pushed up on the head, a lit joint between the lips, thick gold chain, patterned navy-and-white open shirt over a white tank top, board shorts, white socks with dark slides, white hand wraps, a broken green glass bottle always held by the neck in the near (front) hand."),
     "gutto": ("Gutto, the Muay Thai fighter: deep dark brown skin, thick mustache, short curly black hair, strong muscular build, shirtless, black satin Muay Thai trunks with a white waistband, white hand wraps, rope armbands on both biceps, barefoot.",
-              "Gutto in his AWAKENED horse form: the same muscular Muay Thai fighter body and trunks, but with a black horse head, long snout, flowing dark mane and glowing red eyes, red glowing veins on the arms."),
-    "pengaro": ("Pengaró, the drunk capoeirista: same man, face, hair and muscles, white capoeira pants with green and yellow side stripes, yellow cord belt, teal sash, dark green shin guard, barefoot. In EVERY frame he holds a whisky bottle (amber glass, black cap, plain cream label without text) by the neck in his back hand and never lets go.",
-                "Pengaró in his AWAKENED shadow form: the same capoeirista body, outfit and whisky bottle in the back hand, recolored with the dark violet shadow colors of the attached sheet."),
+              "Gutto in his AWAKENED form, the Garanhao: a huge hunched horse-man with a horse head and long snout, short curved black horns, glowing orange-red eyes, a thick black mustache, a long wild black mane down the back, a dark reddish-brown muscular body with darker burnt stripe markings, rope armbands on the biceps, a white waistband over torn black trunks, a black horse tail, furry dark legs ending in black hooves, clawed hands. No armor, no chains, no headband."),
+    "pengaro": ("Pengaró, the drunk capoeirista: young Black man with dark brown skin, short black high-top fade haircut with a shaved line, very muscular and shirtless, white capoeira pants with green and yellow side stripes, yellow cord belt, teal sash, dark green shin guard, barefoot. In EVERY frame he holds a whisky bottle (amber glass, black cap, plain cream label without text) by the neck in his back hand and never lets go.",
+                "Pengaró in his ENDIABRADO (awakened demon) form: dark violet-brown skin, long wild black dreadlocks standing up like flames, glowing eyes, muscular and shirtless with a dark open vest, gold bands on the forearms and biceps, torn black-and-purple baggy pants with a gold-and-purple rope belt and hanging gold tassels, broken iron shackles with chain links on wrists and ankles, barefoot, both hands free (no bottle)."),
 }
 
 # nome -> movimento, por lutador. Formato das folhas de agarrão: ver o docstring.
@@ -79,6 +79,20 @@ MOVIMENTOS = {
     },
 }
 
+# Despertados pela regra de 2026-11-15 (#47, 1ccb9fd3): nada do normal no despertado, os agarrões são novos e no
+# estilo da forma. Conceitos da lista da #47 (comentário 6898286969). Mesmo formato de 8 desenhos do `padrao` (o jogo
+# troca os desenhos pelo [RemapPreset despertado]). O em pé dos despertados é o agarrão da forma da #47 (4700).
+MOVIMENTOS_E = {
+    "gutto": {
+        "agarrao_baixo": "Pisoteio (Stampede), a minotaur stomp on a CROUCHING opponent: he knocks him down and tramples him with his hooves. 1 hunched forward like a bull, one clawed hand reaching down to waist height. 2 the clawed hand slams down at waist height, pinning the invisible crouching opponent to the ground, the other arm up for balance. 3 still pinning him, he rears up and lifts one hoof high, knee to the chest. 4 the hoof stomps straight down at ground level in front of him, the whole leg driving down. 5 still pinning him, he lifts the other hoof high. 6 the other hoof stomps straight down at ground level. 7 he rears up on his hind legs, both clawed arms raised above his head, mane flying, snorting. 8 he crashes down with both front hooves (fists) together onto the ground in front of him at ground level, body bent low, a heavy final stomp.",
+        "agarrao_comando": "Mordida do Garanhao (Stallion Bite), a beast bite grab at close range. 1 hunched forward like a bull, both clawed hands reaching forward at chest height. 2 both clawed hands grab the invisible opponent's shoulders at chest height and yank him close. 3 still holding, his horse head draws back and the long jaws open wide, teeth bared. 4 he bites down hard on the shoulder at chest height, jaws clamped, eyes glowing. 5 still biting, he wrenches his head to one side, shaking the prey. 6 still biting, he wrenches his head to the other side, shaking harder. 7 he lets go and spins around, his back toward the right, crouching on his front hands like a horse about to kick. 8 a double back-kick (coice): both hind hooves blast straight out to the RIGHT at chest height, legs fully extended, body low and facing away.",
+    },
+    "pengaro": {
+        "agarrao_baixo": "Enterro (Burial), a dark shadow-magic grab on a CROUCHING opponent: no punches, the shadows do the work. 1 floating slightly, hunched, one clawed hand stretched down toward the ground in front of him, dark violet smoke curling from the fingers. 2 the hand presses down at waist height, palm open, fingers spread, as if pushing the invisible opponent down into the ground; his eyes glow. 3 still pressing down, the other hand rises, fingers curling, chains on the wrist rattling. 4 both hands push down hard at waist height, the body leaning over them. 5 he twists both hands as if turning a key in the ground, grinning. 6 he pulls both hands down to the ground at ground level, almost kneeling, dragging the opponent under. 7 he rises and lifts both arms high above his head, palms up, summoning. 8 he swings both arms down in front of him, palms down at waist height, dropping the opponent from above.",
+        "agarrao_comando": "Mao no Peito (Hand in the Chest), a soul-ripping grab at close range: no punches. 1 floating slightly, hunched, the front clawed hand reaching forward at chest height. 2 the open palm presses flat on the invisible opponent's chest at chest height, fingers spread. 3 the fingers sink into the chest, his arm tense, dark violet smoke around the wrist. 4 he pushes the hand deeper, leaning in, eyes glowing, grinning. 5 he grips inside and starts to pull back, the arm bending. 6 he rips the hand back out toward himself, holding a glowing pale violet ghostly soul-shape in his fist. 7 he holds the glowing soul up at face height, admiring it, the chains on his wrist swinging. 8 he slams the open palm forward at chest height, shoving the soul back into the opponent with a jolt, the arm fully extended.",
+    },
+}
+
 EXTRA_VITIMA = {
     "pengaro": "The whisky bottle stays in his back hand in all 8 frames.",
     "ck": "His red gloves stay on in all 8 frames." ,
@@ -89,7 +103,37 @@ NOMES = ("agarrao_pe", "agarrao_baixo", "agarrao_comando", "vitima")
 
 
 def referencia(lutador, desperto):
+    # Pengaró: a folhas_arcade/agarrao.png é o desenho ANTIGO (o Breno barrou na #45); a referência é a faixa da arte
+    # atual (quadros_arcade_hd), montada em docs/agarroes-45/ref/
+    if lutador == "pengaro":
+        return f"docs/agarroes-45/ref/pengaro{'_e' if desperto else ''}.png"
+    if lutador == "gutto" and desperto:  # o Garanhão como está no jogo (desenhos do .sff); o e_conceito.png é um
+        return "docs/agarroes-45/ref/gutto_e.png"  # minotauro de armadura que NÃO é o do jogo (deu folha errada)
     return f"sprites/{lutador}/quadros/folhas_arcade/{'e_' if desperto else ''}agarrao.png"
+
+
+SEM_GARRAFA = (  # o Pengaró endiabrado não leva a garrafa: as pancadas de garrafa viram pancadas de mão
+    ("the whisky bottle is raised behind his head", "the back fist is raised behind his head"),
+    ("the whisky bottle raised behind his head", "the back fist raised behind his head"),
+    ("the whisky bottle raised high", "the back fist raised high"),
+    ("the bottle bonks down on the head at head height (the bottle does not break)", "a hammer fist smashes down on the head at head height"),
+    ("the bottle bonks the head at waist height (the bottle does not break)", "a hammer fist smashes the head at waist height"),
+    ("the bottle smashes on the head at head height", "a clawed hammer fist smashes on the head at head height"),
+    (", the bottle still in the back hand", ""),
+)
+
+
+def sem_garrafa(texto):
+    for a, b in SEM_GARRAFA:
+        texto = texto.replace(a, b)
+    assert "bottle" not in texto, texto
+    return texto
+
+
+def movimento(lutador, base, desperto):
+    if desperto and base in MOVIMENTOS_E.get(lutador, {}):
+        return MOVIMENTOS_E[lutador][base]
+    return MOVIMENTOS[lutador][base]
 
 
 def pedido(lutador, nome):
@@ -101,7 +145,7 @@ def pedido(lutador, nome):
     if base == "vitima":
         texto = VITIMA.format(quem=quem, extra=EXTRA_VITIMA[lutador])
     else:
-        texto = CABECA.format(quem=quem) + MOVIMENTOS[lutador][base]
+        texto = CABECA.format(quem=quem) + movimento(lutador, base, desperto)
     return texto.replace("’", "'")
 
 
@@ -123,11 +167,12 @@ def pedido_gemini(lutador, nome):
     desperto = nome.startswith("e_")
     base = nome[2:] if desperto else nome
     quem = QUEM[lutador][desperto]
+    sem = lutador == "pengaro" and desperto
     if base == "vitima":
-        mov = VITIMA.split("Frames: ", 1)[1].split(" {extra}")[0] + " " + EXTRA_VITIMA[lutador]
+        mov = VITIMA.split("Frames: ", 1)[1].split(" {extra}")[0] + " " + ("" if sem else EXTRA_VITIMA[lutador])
         return GEMINI.format(quem=quem, papel=PAPEL_VITIMA, movimento=mov.strip())
-    mov = MOVIMENTOS[lutador][base]
-    return GEMINI.format(quem=quem, papel=PAPEL_AGARRA, movimento=mov)
+    mov = movimento(lutador, base, desperto)
+    return GEMINI.format(quem=quem, papel=PAPEL_AGARRA, movimento=sem_garrafa(mov) if sem else mov)
 
 
 def destino(lutador, nome):

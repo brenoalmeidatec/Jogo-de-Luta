@@ -48,7 +48,7 @@ OSSOS = {  # junta no parado, mãe, ponta
     "garra": ((614, 334), "criatura", (704, 300)),
 }
 # de trás para a frente: a criatura atrás do Raiclaven, o quadril (pintado por baixo das pernas) atrás delas, a tesoura na frente
-CAMADAS = ["criatura", "navalha", "secador", "garra", "quadril", "coxa_frente", "canela_frente", "coxa_tras",
+CAMADAS = ["navalha", "criatura", "secador", "garra", "quadril", "coxa_frente", "canela_frente", "coxa_tras",
            "canela_tras", "tronco", "cabeca", "braco_frente", "braco_tras"]
 # o tronco, o quadril e a criatura são pintados por baixo das peças que os cobrem (até 10 px para dentro da beirada):
 # quando a peça de cima respira ou gira um pouco, aparece pano e pele, e não buraco com contorno
@@ -63,6 +63,8 @@ def _p(dx=0, dy=0, tronco=0, cabeca=0, bf=0, bt=0, cri=0, nav=0, sec=0, gar=0, p
     mecânico (bt); criatura (cri, relativa ao tronco) e os braços dela: navalha, secador, garra (relativos à criatura).
     + = horário na tela. cx, cy: a criatura escorrega no assento (para a frente e para cima). en/es/eg: quanto a navalha,
     o secador e a garra esticam (borracha, 1 = normal). Pernas: coxa_frente/canela_frente/coxa_tras/canela_tras."""
+    # a criatura só escorrega um pouco no assento: mais que isso abre vão entre ela e as mangueiras das costas
+    cx, cy = max(-8, min(8, cx)), max(-6, min(6, cy))
     out = {"quadril": {"ang": 0, "dx": dx, "dy": dy, "abs": 1, "pes": pes}, "tronco": {"ang": tronco},
            "cabeca": {"ang": cabeca}, "braco_frente": {"ang": bf}, "braco_tras": {"ang": bt},
            "criatura": {"ang": cri, "dx": cx, "dy": cy}, "navalha": {"ang": nav, "estica": en},
@@ -80,16 +82,16 @@ POSES = {
     # x de pé (Tapa de Garra): o Raiclaven gira o ombro e dá meio passo, a criatura se debruça e a garra estala na cara
     "x_pe/00": _p(),
     "x_pe/01": _p(dx=-2, dy=3, tronco=-3, cabeca=1, cri=-4, cx=-4, cy=-4, gar=-30, sec=-6, bf=-2),
-    "x_pe/02": _p(dx=6, dy=3, tronco=3, cri=2, cx=6, gar=-4, sec=4, pes=(0, 6)),
-    "x_pe/03": _p(dx=12, dy=5, tronco=6, cri=4, cx=12, cy=-2, gar=8, sec=6, nav=6, bf=2, pes=(0, 12)),
-    "x_pe/04": _p(dx=6, dy=3, tronco=3, cri=1, cx=4, gar=2, pes=(0, 6)),
+    "x_pe/02": _p(dx=6, dy=3, tronco=3, cri=3, cx=10, gar=6, sec=4, pes=(0, 6)),
+    "x_pe/03": _p(dx=12, dy=5, tronco=6, cri=6, cx=4, cy=2, gar=26, sec=6, nav=6, bf=2, pes=(0, 12)),
+    "x_pe/04": _p(dx=6, dy=3, tronco=3, cri=2, cx=8, gar=10, pes=(0, 6)),
     # y de pé (Navalhada): arma a navalha atrás e a navalha de borracha corta longe, com o corpo indo junto
     "y_pe/00": _p(),
     "y_pe/01": _p(dx=-4, dy=2, tronco=-5, cabeca=2, cri=-6, cx=-6, cy=-4, nav=-30, gar=-6, bf=-4),
     "y_pe/02": _p(dx=-6, dy=3, tronco=-7, cabeca=3, cri=-8, cx=-8, cy=-6, nav=-44, gar=-10, bf=-5),
-    "y_pe/03": _p(dx=8, dy=4, tronco=6, cri=4, cx=14, cy=-4, nav=60, sec=8, gar=8, bf=3, en=1.6),
-    "y_pe/04": _p(dx=10, dy=5, tronco=8, cri=6, cx=18, cy=-4, nav=74, sec=10, gar=10, bf=4, en=2.0),
-    "y_pe/05": _p(dx=5, dy=3, tronco=3, cri=2, cx=6, nav=24, gar=2, en=1.2),
+    "y_pe/03": _p(dx=8, dy=6, tronco=12, cri=3, cx=6, cy=-2, nav=40, sec=8, gar=8, bf=3, en=1.8, pes=(0, 6)),
+    "y_pe/04": _p(dx=12, dy=8, tronco=18, cri=4, cx=8, cy=-2, nav=60, sec=10, gar=10, bf=4, en=2.2, pes=(0, 12)),
+    "y_pe/05": _p(dx=6, dy=4, tronco=6, cri=2, cx=4, nav=20, gar=2, en=1.3, pes=(0, 6)),
     # a de pé (Bota e Cuspe): a bota de aço chuta baixo e a criatura se debruça para a frente
     "a_pe/00": _p(),
     "a_pe/01": _p(dy=-4, tronco=-3, cri=-2, cy=-2, coxa_frente=-35, canela_frente=40),
@@ -109,8 +111,8 @@ BRACO_VAR = {}
 VARIANTES = {}
 ANIMS = {
     "parado": (0, "ginga 0/10 2/8 4/10 6/8", None),
-    "garra": (20200, "x_pe 0/2 1/3 2/1 3/4A 4/4 0/3", (36, -126, 70, -96)),
-    "navalha": (20210, "y_pe 0/2 1/4 2/5 3/2 4/5A 5/6 0/5", (30, -150, 82, -112)),
+    "garra": (20200, "x_pe 0/2 1/3 2/1 3/4A 4/4 0/3", (40, -116, 76, -84)),
+    "navalha": (20210, "y_pe 0/2 1/4 2/5 3/2 4/5A 5/6 0/5", (34, -128, 80, -96)),
     "bota": (20230, "a_pe 0/2 1/3 2/2 3/4A 4/4 0/3", (20, -50, 62, -20)),
     "pancada": (20240, "b_pe 0/2 1/4 2/5 3/2 4/5A 5/6 6/5 0/3", (24, -150, 80, -96)),
 }

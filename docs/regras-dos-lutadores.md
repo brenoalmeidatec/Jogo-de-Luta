@@ -87,7 +87,7 @@ que conseguir variar e montar combo, não ganhar apertando dois botões.
 | H | Supers | 2 | 2 |
 | I | Despertar | 1 | 1 |
 | | **Total na forma base** | | **50 golpes** |
-| | **Forma despertada** (seção 4) | +20 novos no mínimo | **70+ no total** |
+| | **Forma despertada** (seção 4) | todos novos, nada do normal | **70+ no total** |
 
 Mais o sistema que todo lutador herda: andar, corrida (→ →), passo para trás (← ←), pulos, defesa alta e baixa,
 rolamento (x + a), golpe de afastar (y + b), parry (→ + c), levantar rápido e provocação (c).
@@ -253,18 +253,33 @@ só um brilho genérico.
 
 ### O que muda: golpes **novos**, não só mais fortes
 
-Transformou, ganhou coisa que não tinha. Pode reaproveitar parte do personagem base, mas o mínimo novo é:
+Transformou, ganhou coisa que não tinha. **Regra do Breno (2026-11-15): o despertado luta de um jeito totalmente
+diferente, e nada do modo normal é reaproveitado.** Nenhum golpe, folha ou movimento da forma base entra no despertado,
+nem com a roupa nova por cima (exemplo do que não pode: o chute de lado do Gutto igual ao do normal, só aparecendo o
+rabo). Cada despertado luta **no estilo da forma dele**, com golpes pensados para ela:
+
+| Lutador | Como o despertado luta |
+|---|---|
+| Hazak (Diabo Loiro) | demônio descontrolado: garras, investidas, voo e fogo das trevas, **sem maleta** (as asas ficam) |
+| Gutto (Garanhão) | como um minotauro: chifrada, investida de touro, pisão que racha o chão, cabeçada, cascos |
+| Pengaró (Endiabrado) | poderes sombrios: sombras, correntes, mãos saindo do chão, teleporte pela sombra |
+| Raiclaven (Cientista Louco) | com a criatura e os experimentos dele (#43): ela agarra, morde, estica e solta choque |
+| CK (Ratão), Gbzin (Grão-Pastor) e os próximos | no estilo da forma, pela mesma regra |
+
+O mínimo de golpes novos é:
 
 | O que | Mínimo na forma despertada |
 |---|---|
-| Correntes | pelo menos **2 das 4** com golpes e finalizador novos (exemplo: o chute forte vira um chute que dá 3 voltas antes de bater) |
-| Normais | pelo menos **6 dos 16** com animação e função novas |
+| Correntes | **as 4**, com golpes e finalizador próprios do despertado |
+| Normais | **os 16**, com animação e função próprias do despertado |
 | Especiais exclusivos | **4** que não existem na forma base |
 | Projétil novo | **1** (é um dos 4 exclusivos) |
 | Kombo novo | **1** |
 | Super exclusivo | **1**, que só sai no Despertar |
-| Especiais da base | os que ficam mudam de pose ou de função (não só cor e dano) |
-| **Total novo** | **8 (correntes) + 6 + 4 + 1 + 1 = 20 golpes novos** |
+| Agarrões | **todos** próprios da forma (#47) |
+| Especiais da base | não entram: o despertado tem só os golpes dele |
+
+Antes de desenhar, a lista de golpes do despertado e o conceito vão para o Breno aprovar.
 
 Também muda o jeito de bater: ritmo, alcance, quais golpes cancelam em quê. A ficha diz o que é ganho e o que é
 perda (exemplo do Pengaró de Juliete: mais potência, menos precisão).

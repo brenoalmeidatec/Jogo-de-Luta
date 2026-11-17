@@ -10,6 +10,33 @@ do assento. Ele usa o corpo todo para levar a parceira até o alvo, e ela ataca 
 a dupla é mandona, e o humor vem da dupla, nunca da deficiência dela. O cabelo continua verde. O Breno quer o despertado
 louco, caótico e rápido, com raio verde e aço estourando.
 
+## Fase 4 (17/11): corpo firme com vida, no jogo
+
+O Alisson aprovou o método do boneco de peças ("corpo firme com vida") e pediu tudo no jogo; o Breno liberou
+auto-aprovação. Regra nova 7.2.1 (zero erro de animação) e decisão do Alisson: a borracha (braço que estica) só no
+Pescoço de Borracha e na Navalhada, sempre com o corpo do Raiclaven indo junto.
+
+- **Folhas -> quadros**: `ferramentas/importar_cliente.py` corta as 20 folhas `c_*` em
+  `sprites/raiclaven_cliente/quadros_arcade_hd/` (fora do git). Cada folha tem a sua escala, medida pelo tanque verde.
+- **Kit**: `ferramentas/kit_cliente.py` (lutador `raiclaven_cliente`, referência `ginga/00`). Além do corpo de sempre, a
+  criatura e os três braços dela (navalha, secador, garra) são peças (`EXTRAS`). O `firme.py` ganhou:
+  - `EXTRAS`: peças a mais com polígono e osso próprios;
+  - `TAPAR_FAIXA`/`TAPAR`: pinta por baixo só das peças que ficam por cima (respirar não abre buraco nem emenda);
+  - `estica`: braço de borracha na linha do osso (vizinho mais próximo, sem cor nova).
+- **Golpes feitos**: parado com vida, Tapa de Garra (20200), Navalhada (20210), Bota e Cuspe (20230), Pancada Tripla
+  (20240). Robô de defeitos 0 de 57 (`docs/boneco-pecas/raiclaven_cliente/robo_defeitos.md`); vídeos lado a lado
+  (folha do ChatGPT x corpo firme) na mesma pasta.
+- **No jogo**: `kit_raiclaven.py` põe os desenhos no `.sff` como PNG (grupos 26000+, `sprites_pecas`), usa os ticks e
+  a caixa do `tempos.json` nos golpes que já têm arte nova e troca o parado do despertado pelo remap (86..93 ->
+  26000). O resto continua com a arte provisória até o próximo lote.
+
+Refazer: `python3 ferramentas/importar_cliente.py`, `python3 ferramentas/firme.py cliente`, depois
+`kit_raiclaven.aplicar` -> `legibilidade` -> `despertados_47` -> `kit_raiclaven --cmd` -> `aura_no_corpo` ->
+`aura_silhueta` -> `luz` em `chars/raiclaven` (ou o `gerar_raiclaven.py` inteiro, com o HD do Blender).
+
+Falta (próximo lote): agachados (x/y/a/b), aéreos, defesa, apanha, queda, levanta, andar, pulo, especiais, super e
+agarrões; mancha escura atrás das costas da criatura (mangueira), correntes e kombo com a arte nova.
+
 ## Fase 3 (Breno, 15/11 19:23Z): A Cliente vira criatura de terror e o kit é todo próprio
 
 O Breno aprovou o conceito B da criatura (`docs/previas/raiclaven-dupla/conceito-criatura-b.jpg`) e a lista de golpes
