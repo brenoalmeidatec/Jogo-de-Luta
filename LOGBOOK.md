@@ -3036,6 +3036,14 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
 - Para ligar de novo: `git checkout 95134c46 -- chars/raiclaven` e `ligar_pecas.py raiclaven` (rodar duas vezes em cima
   do já ligado não foi testado).
 
+### 2026-11-17 — Coice do Garanhão refeito e no jogo
+- Folha nova do coice gerada no ChatGPT (Chrome do PC de casa do Alisson, 1 imagem) com o mesmo corpo do Garanhão
+  (calção preto, cinto de corda branco, vira de costas e coiceia). Os 6 quadros do meio entram como ESPECIAIS no kit.
+- Ligado com `ligar_pecas.py gutto --de garanhao --grupo 49000 --ajustar coice` (grupo 49009, ação 10240, chute forte longe).
+- A luz do poder 4750 trocou o halo fixo (ação 9815) por orbe, halo e poça que andam com o poder: é o conserto da `luz.py`
+  do commit 911e781f (poder que voa é bola, não raio), não perda.
+- Robô de luta do Gutto: 186/186, dano igual ao anterior. Vídeo: docs/boneco-pecas/no_jogo/garanhao_coice_no_jogo.mp4.
+- Falta: golpes no ar do Garanhão; pele_pecas (sem linha de corte) no Gutto e no Garanhão.
 ## 17/11/2026 - Gbzin: pele nas juntas (pele_pecas.py da thread do Pengaró)
 - Os quadros feitos pelo kit (parado, soco 00-03/07, chute alto, rolamento 00/07) agora saem por `desenhar_pele`: as
   peças viram pele que dobra nas juntas (`pele_pecas.py`), com sobra, pés retos, cabeça por cima, furos e pontas da
@@ -3068,3 +3076,7 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   segue no desenho da base até as próximas folhas (estampido, giro do manto, mãos, juízo, especiais, agarrões).
 - Breno liberou auto-aprovação (17/11); robô 236/0 no estado juntado. Também tirei marcadores de conflito que tinham
   ficado commitados neste LOGBOOK.
+- Turno 4 (17/11, Chrome do PC principal): estampido, giro do manto, mãos, manto-asa, golpes de direção, juízo de
+  cima, estouro, mão do pastor, berro e puxão. Ligados no despertado: chute alto (estampido), afastar (giro do manto),
+  caneta (direção), armada (juízo de cima), cajado no chão (mãos), bola (mão do pastor), compasso (puxão). `TROCA_COR`
+  conserta cor errada de um quadro só (perna do chute oliva). Falta desenho próprio só no agarrão e no golaço.
