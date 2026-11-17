@@ -31,51 +31,51 @@
   },
   {
    "desenho": 2,
-   "ticks": 2,
+   "ticks": 5,
    "caixa": false,
    "de": "rasteira/01"
   },
   {
    "desenho": 3,
    "ticks": 3,
-   "caixa": false,
-   "de": "rasteira/01"
+   "caixa": true,
+   "de": "rasteira/02"
   },
   {
    "desenho": 4,
    "ticks": 3,
    "caixa": true,
-   "de": "rasteira/02"
-  },
-  {
-   "desenho": 5,
-   "ticks": 3,
-   "caixa": false,
    "de": "rasteira/03"
   },
   {
-   "desenho": 6,
-   "ticks": 2,
-   "caixa": false,
+   "desenho": 5,
+   "ticks": 4,
+   "caixa": true,
    "de": "rasteira/04"
+  },
+  {
+   "desenho": 6,
+   "ticks": 4,
+   "caixa": true,
+   "de": "rasteira/05"
   },
   {
    "desenho": 7,
    "ticks": 2,
    "caixa": false,
-   "de": "rasteira/04"
+   "de": "rasteira/06"
   },
   {
    "desenho": 8,
    "ticks": 2,
    "caixa": false,
-   "de": "rasteira/05"
+   "de": "rasteira/06"
   },
   {
    "desenho": 9,
    "ticks": 2,
    "caixa": false,
-   "de": "rasteira/05"
+   "de": "rasteira/06"
   },
   {
    "desenho": 10,
@@ -87,34 +87,16 @@
    "desenho": 11,
    "ticks": 2,
    "caixa": false,
-   "de": "rasteira/06"
+   "de": "rasteira/07"
   },
   {
    "desenho": 12,
    "ticks": 2,
    "caixa": false,
-   "de": "rasteira/06"
+   "de": "rasteira/07"
   },
   {
    "desenho": 13,
-   "ticks": 2,
-   "caixa": false,
-   "de": "rasteira/06"
-  },
-  {
-   "desenho": 14,
-   "ticks": 2,
-   "caixa": false,
-   "de": "rasteira/07"
-  },
-  {
-   "desenho": 15,
-   "ticks": 2,
-   "caixa": false,
-   "de": "rasteira/07"
-  },
-  {
-   "desenho": 16,
    "ticks": 2,
    "caixa": false,
    "de": "rasteira/07"

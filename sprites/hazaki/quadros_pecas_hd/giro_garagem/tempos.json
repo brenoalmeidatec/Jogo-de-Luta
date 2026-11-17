@@ -43,7 +43,7 @@
   {
    "desenho": 4,
    "ticks": 3,
-   "caixa": false,
+   "caixa": true,
    "de": "giro_garagem/05"
   },
   {
