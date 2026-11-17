@@ -524,21 +524,25 @@ um assert que confere soma de ticks, caixa por tick e os `AnimElem` do .cns.
    quadril, o ombro vai junto e o pé dá um passo à frente; não vale só esticar o braço com o resto parado. Chute
    transfere o peso para a perna de apoio e o tronco compensa.
 
-### 7.2.1 Zero erro de animação (regra do Alisson, 17/11)
+### 7.2.1 Zero erro de animação (regra do Alisson, 2026-11-17)
 
-Nenhum quadro sai com:
+Nenhum boneco entra com erro de animação. Conta como erro, e reprova o golpe:
 
-- **membro descolando** (fresta ou vão entre a peça e o corpo, braço ou perna "solto" da junta);
-- **silhueta grossa demais** (contorno inchado, membro mais largo que no parado, mancha escura de peça sobrando);
-- **linha de corte aparecendo** entre as peças (emenda, degrau de cor ou contorno escuro onde uma peça encontra a
-  outra): o boneco tem que parecer sempre inteiro, desenhado de uma vez;
-- **pedaço de sprite voando** junto com o boneco (lasca, migalha, resto de outra pose);
-- **movimento fisicamente errado ou estranho** (membro que estica além do tamanho, junta que dobra para o lado
-  errado, pé que escorrega ou afunda no chão, corpo que muda de tamanho entre quadros).
+1. **Membro descolando:** braço, perna, cabeça ou rabo que se solta do corpo ou abre fresta na junta.
+2. **Silhueta grossa demais:** contorno inchado ou mancha escura grossa que não é desenho.
+3. **Pedaço de sprite voando junto:** lasca, resto de outro quadro ou pedaço solto que anda com o boneco.
+4. **Movimento fisicamente errado ou estranho:** o golpe é feito pelo corpo inteiro. Soco não é só o braço
+   esticando: o quadril gira, o pé dá um passo à frente, o ombro vai junto e o corpo volta. Chute tira o peso da
+   perna de apoio; cabeçada leva o tronco; pisão sobe o joelho e o corpo cai com o peso.
 
-O robô de defeitos do boneco de peças (`ferramentas/firme.py`) reprova fresta, lasca solta e mancha grossa; emenda e
-movimento estranho são conferidos no
-olho no vídeo lado a lado antes de mandar para o Breno.
+5. **Linha de corte à vista:** o boneco é feito de peças, mas tem que parecer sempre um desenho inteiro. Não pode
+   aparecer emenda, degrau de cor, contorno de peça por dentro do corpo nem vão no ombro, no quadril ou no pescoço.
+
+O kit continua separado em peças (`sprites/<lutador>/pecas/`): dá para trocar a cabeça ou retocar uma peça e
+remontar todos os golpes de uma vez, sem redesenhar quadro por quadro.
+
+O robô de defeitos (`firme.py`/`piloto_firme.py`) pega os três primeiros; o quarto se confere no vídeo lado a lado,
+quadro a quadro, antes de mandar. Expressões do rosto casadas com as falas vêm depois, quando as falas forem gravadas.
 
 ### 7.3 Como produzir isso sem desenhar um por um
 

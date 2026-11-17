@@ -80,7 +80,7 @@ _ESC = {}
 def escala(q):
     """Tamanho do quadro `q` contra o parado, medido pela cabeça (1.0 = igual)."""
     global _CAB
-    if getattr(K, "ESCALA_FIXA", False):
+    if getattr(K, "ESCALA_FIXA", False) or getattr(K, "SEM_REGUA", False):  # desenhos já no tamanho do parado
         return 1.0
     if q not in _ESC:
         if _CAB is None:
@@ -489,6 +489,9 @@ def pernas_no_chao(pose, alvo, quais=("tras", "frente")):
     if _PES_REF is None:
         _PES_REF = pes_no_chao(abrir(K.REF))
     agora = pes_no_chao(alvo)
+    if "_pes" in pose:  # pés postos à mão: deslocamento (trás, frente) a partir dos pés do parado
+        pt, pf_ = pose.pop("_pes")["d"]
+        agora = [_PES_REF[0] + pt, _PES_REF[-1] + pf_]
 
     def alvo_tornozelo(lado):
         i = 0 if lado == "tras" else -1
@@ -600,9 +603,12 @@ def _pose_kit(kit, q):
     for slot, v in mao.items():
         if slot == "quadril" and v.get("so_dy"):
             pose["quadril"] = dict(pose["quadril"], dy=v["dy"])
-        elif slot != "coxa_frente":
+        elif slot == "quadril" and v.get("abs"):  # corpo inteiro posto à mão (desenho de hoje confuso demais)
+            pose["quadril"] = {"ang": 0, "dx": v.get("dx", 0), "dy": v.get("dy", 0)}
+            pose["_pes"] = {"d": tuple(v.get("pes", (0, 0)))}
+        elif slot != "coxa_frente" and slot != "_ar":
             pose[slot] = dict(v)
-    if "tronco" in mao:
+    if "tronco" in mao and "cabeca" not in mao:
         pose["cabeca"] = dict(pose.get("cabeca", {}), ang=-round(mao["tronco"]["ang"] * 0.7))
     # passo do golpe (regra do corpo inteiro): o quadril vai à frente, o tronco inclina e o pé da frente avança
     global _PASSO
@@ -613,6 +619,12 @@ def _pose_kit(kit, q):
         pose["tronco"] = dict(pose.get("tronco", {}), ang=ta)
         pose["cabeca"] = dict(pose.get("cabeca", {}), ang=-round(ta * 0.7))
     no_ar = getattr(K, "PERNA_NO_AR", {}).get(q)
+    if "_ar" in mao:  # no ar: as duas pernas nos ângulos dados à mão, sem pé plantado
+        pose.pop("_pes", None)
+        pose["_ar"] = {"sim": 1}
+        for slot in ("coxa_tras", "canela_tras", "coxa_frente", "canela_frente"):
+            pose[slot] = dict(mao.get(slot, {"ang": 0}))
+        return pose
     if pv:
         pass  # metade de baixo vem inteira do desenho dito no kit
     elif no_ar is None:
@@ -630,6 +642,9 @@ def _pose_kit(kit, q):
             pose = b.encaixar(kit, alvo, pose, ordem=["canela_frente"])
             pose["_chute_livre"] = {"sim": 1}
         b.BUSCA["coxa_frente"] = (range(-30, 31, 2), 2, [None])
+    for slot in ("coxa_frente", "canela_frente"):  # perna dada à mão vence o encaixe
+        if slot in mao and no_ar is not None:
+            pose[slot] = dict(mao[slot])
     return pose
 
 
@@ -952,7 +967,7 @@ def gerar(nomes, so_pose=False):
                 Image.fromarray(out).save(b.SPR / "quadros_pecas_hd" / nome / f"{i:02d}.png")
                 Image.fromarray(np.ascontiguousarray(out[1::3, 1::3])).save(b.SPR / "quadros_pecas" / nome / f"{i:02d}.png")
                 continue
-            erros = conferir(out, no_chao=True, juntas=[w[s][0] for s in ("braco_tras", "braco_frente", *(("antebraco_tras",) if "antebraco_tras" in w else ()), "cabeca",
+            erros = conferir(out, no_chao="_ar" not in pose, juntas=[w[s][0] for s in ("braco_tras", "braco_frente", *(("antebraco_tras",) if "antebraco_tras" in w else ()), "cabeca",
                                                      # metade de baixo inteira de um desenho: as juntas das pernas não valem
                                                      *(() if pose.get("_pernas") else ("coxa_tras", "coxa_frente", "canela_tras", "canela_frente")))])
             m_novo, m_hoje = mancha(out, guarda)
