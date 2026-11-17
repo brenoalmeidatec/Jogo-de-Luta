@@ -37,90 +37,72 @@
   },
   {
    "desenho": 3,
-   "ticks": 2,
+   "ticks": 6,
    "caixa": false,
    "de": "rasga_couro/02"
   },
   {
    "desenho": 4,
-   "ticks": 2,
-   "caixa": false,
-   "de": "rasga_couro/02"
-  },
-  {
-   "desenho": 5,
-   "ticks": 2,
-   "caixa": false,
-   "de": "rasga_couro/02"
-  },
-  {
-   "desenho": 6,
    "ticks": 3,
    "caixa": true,
    "de": "rasga_couro/03"
   },
   {
-   "desenho": 7,
-   "ticks": 2,
-   "caixa": false,
+   "desenho": 5,
+   "ticks": 5,
+   "caixa": true,
    "de": "rasga_couro/04"
   },
   {
-   "desenho": 8,
-   "ticks": 3,
+   "desenho": 6,
+   "ticks": 2,
    "caixa": false,
-   "de": "rasga_couro/04"
+   "de": "rasga_couro/05"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rasga_couro/05"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rasga_couro/05"
   },
   {
    "desenho": 9,
    "ticks": 2,
    "caixa": false,
-   "de": "rasga_couro/05"
+   "de": "rasga_couro/06"
   },
   {
    "desenho": 10,
    "ticks": 2,
    "caixa": false,
-   "de": "rasga_couro/05"
+   "de": "rasga_couro/06"
   },
   {
    "desenho": 11,
    "ticks": 2,
    "caixa": false,
-   "de": "rasga_couro/05"
+   "de": "rasga_couro/06"
   },
   {
    "desenho": 12,
    "ticks": 2,
    "caixa": false,
-   "de": "rasga_couro/06"
+   "de": "rasga_couro/07"
   },
   {
    "desenho": 13,
    "ticks": 2,
    "caixa": false,
-   "de": "rasga_couro/06"
+   "de": "rasga_couro/07"
   },
   {
    "desenho": 14,
-   "ticks": 2,
-   "caixa": false,
-   "de": "rasga_couro/06"
-  },
-  {
-   "desenho": 15,
-   "ticks": 2,
-   "caixa": false,
-   "de": "rasga_couro/07"
-  },
-  {
-   "desenho": 16,
-   "ticks": 2,
-   "caixa": false,
-   "de": "rasga_couro/07"
-  },
-  {
-   "desenho": 17,
    "ticks": 2,
    "caixa": false,
    "de": "rasga_couro/07"

@@ -151,13 +151,24 @@ VARIANTES = {
     },
 }
 
+TR_CAMARA, TR_ALTO = -4, -8     # tronco para trás na câmara e no chute alto (graus)
+BF_CAMARA, BF_ALTO = 10, 25     # braço da frente descendo para trás da perna
+
 # as animações: (ação do .air, elementos [(sprite, ticks, caixa?)], caixa de golpe)
 ANIM = {
     "parado": (0, [("94_0", 9, 0), ("102_0", 9, 0), ("134_0", 9, 0), ("126_0", 9, 0)], None),
     "soco": (200, [("81_0", 3, 0), ("1278_0", 1, 0), ("1252_0", 5, 1), ("1252_0", 1, 0), ("84_0", 3, 0),
                    ("85_0", 6, 0)], (45, -276, 222, -192)),
-    "chute_alto": (240, [("422_0", 5, 0), ("423_0", 2, 0), ("965_0", 1, 0), ("966_0", 1, 0), ("957_0", 6, 1),
-                         ("957_0", 2, 0), ("426_0", 7, 0), ("427_0", 9, 0), ("428_0", 9, 0)],
+    # estudo de anatomia (Breno, 17/11): perna da frente (longe) nasce atrás da faixa; na coxa alta o tronco vai para
+    # trás e o braço do lado da perna (o da frente) desce um pouco, sem tapar o chute; a mão de trás fica no rosto.
+    # (mandar o braço da guarda para trás do tronco com `_atras` deixou uma aba de ombro solta: pede desenho novo)
+    "chute_alto": (240, [("422_0", 5, 0), ("423_0", 2, 0),
+                         ("965_0", 1, 0, {"tronco": {"ang": TR_CAMARA}, "braco_frente": {"ang": BF_CAMARA}}),
+                         ("966_0", 1, 0, {"tronco": {"ang": TR_CAMARA}, "braco_frente": {"ang": BF_CAMARA}}),
+                         ("957_0", 6, 1, {"tronco": {"ang": TR_ALTO}, "braco_frente": {"ang": BF_ALTO}}),
+                         ("957_0", 2, 0, {"tronco": {"ang": TR_ALTO}, "braco_frente": {"ang": BF_ALTO}}),
+                         ("426_0", 7, 0, {"tronco": {"ang": TR_CAMARA}, "braco_frente": {"ang": BF_CAMARA}}),
+                         ("427_0", 9, 0), ("428_0", 9, 0)],
                    (36, -300, 208, -174)),
     # golpes refeitos (lista dos confusos): o 4º campo força a pose de uma peça no lugar do encaixe
     # 1) soco forte: era mão atrás da cabeça + cotovelo + soco; agora é uma cotovelada só, com preparo e volta
@@ -670,7 +681,22 @@ def desenhar(pf, kit, pose):
 def _desenhar(pf, kit, pose):
     if "_agachado" in pose:
         return desenhar_agachado(pf, kit, pose)
-    tela = b.desenhar(kit, pose)
+    atras = ["braco_frente"] if "_atras" in pose else []
+    if pose.get("coxa_frente", {}).get("var"):
+        # estudo de anatomia do Breno (Parte 2): a perna da frente é a do lado LONGE da câmera. Levantada, ela nasce
+        # atrás da faixa e do tronco; só aparece o que sai da silhueta (antes passava por cima e lia "duas pernas
+        # direitas")
+        atras = ["coxa_frente", "canela_frente"] + atras
+    if atras:
+        # `_atras` na pose: o braço da frente (longe) vai para trás do tronco nesta pose (camada por pose do estudo)
+        antes = b.CAMADAS
+        b.CAMADAS = atras + [c for c in CAMADAS if c not in atras]
+        try:
+            tela = b.desenhar(kit, pose)
+        finally:
+            b.CAMADAS = antes
+    else:
+        tela = b.desenhar(kit, pose)
     w = b.mundo(pose)
     for slot in ("canela_tras", "canela_frente"):
         if pose.get(slot.replace("canela", "coxa"), {}).get("var"):
@@ -804,7 +830,7 @@ def animar():
                         # no agachado o quadril da frente fica dentro da perna do calção (o 359 é mais baixo)
                         forca["coxa_frente"] = {"dx": -3, "dy": -22, **forca["coxa_frente"]}
                 for slot, v in forca.items():
-                    if slot in ("_pes", "_ar", "_base", "_sem_apoio"):
+                    if slot in ("_pes", "_ar", "_base", "_sem_apoio"):  # (_atras vai para a pose)
                         continue
                     if slot == "_y":  # altura do quadril escrita à mão (no ar o desenho de hoje pula de altura)
                         pose["quadril"]["dy"] = v
