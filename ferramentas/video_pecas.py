@@ -26,6 +26,7 @@ ATUAL = {
                    ("chute_alto/06", 12), ("chute_alto/07", 12)],
 }
 CORTE = (400, 280, 760, 670)
+GUARDA = "ginga/00"  # o gbzin_pecas.py troca para referencia_ginga/00
 K = 2
 try:
     FONTE = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 24)
@@ -67,7 +68,7 @@ def main():
     for nome in ATUAL:
         a = [(p, None) for p in ticks_atual(nome)]
         n = ticks_novo(nome)
-        guarda_a = (SPR / "quadros_arcade_hd/ginga/00.png", None)
+        guarda_a = (SPR / f"quadros_arcade_hd/{GUARDA}.png", None)
         guarda_n = (SPR / "quadros_pecas_hd/guarda.png", None)
         if nome != "parado":  # o golpe sai da guarda e volta para ela, em loop
             a, n = [guarda_a] * 20 + a + [guarda_a] * 20, [guarda_n] * 20 + n + [guarda_n] * 20
