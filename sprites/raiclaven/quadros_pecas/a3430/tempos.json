@@ -57,55 +57,13 @@
   },
   {
    "desenho": 9,
-   "ticks": 2,
+   "ticks": 8,
    "caixa": false,
    "de": "cabecada/06"
   },
   {
    "desenho": 10,
-   "ticks": 2,
-   "caixa": false,
-   "de": "cabecada/06"
-  },
-  {
-   "desenho": 11,
-   "ticks": 2,
-   "caixa": false,
-   "de": "cabecada/06"
-  },
-  {
-   "desenho": 12,
-   "ticks": 2,
-   "caixa": false,
-   "de": "cabecada/06"
-  },
-  {
-   "desenho": 13,
-   "ticks": 2,
-   "caixa": false,
-   "de": "cabecada/07"
-  },
-  {
-   "desenho": 14,
-   "ticks": 2,
-   "caixa": false,
-   "de": "cabecada/07"
-  },
-  {
-   "desenho": 15,
-   "ticks": 2,
-   "caixa": false,
-   "de": "cabecada/07"
-  },
-  {
-   "desenho": 16,
-   "ticks": 2,
-   "caixa": false,
-   "de": "cabecada/07"
-  },
-  {
-   "desenho": 17,
-   "ticks": 2,
+   "ticks": 10,
    "caixa": false,
    "de": "cabecada/07"
   }
