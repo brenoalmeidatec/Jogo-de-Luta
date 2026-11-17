@@ -1,0 +1,203 @@
+{
+ "ref": "quadros_arcade_hd/rasga_couro/00.png",
+ "pecas": {
+  "cabeca": {
+   "arquivo": "cabeca.png",
+   "origem": [
+    568,
+    412
+   ],
+   "junta": [
+    566,
+    492
+   ],
+   "mae": "tronco",
+   "fonte": "rasga_couro/00",
+   "sobra": "cabeca_sobra.png",
+   "origem_sobra": [
+    559,
+    403
+   ]
+  },
+  "braco_tras": {
+   "arquivo": "braco_tras.png",
+   "origem": [
+    449,
+    484
+   ],
+   "junta": [
+    486,
+    500
+   ],
+   "mae": "tronco",
+   "fonte": "rasga_couro/00",
+   "sobra": "braco_tras_sobra.png",
+   "origem_sobra": [
+    440,
+    475
+   ]
+  },
+  "braco_frente": {
+   "arquivo": "braco_frente.png",
+   "origem": [
+    570,
+    498
+   ],
+   "junta": [
+    586,
+    510
+   ],
+   "mae": "tronco",
+   "fonte": "rasga_couro/00",
+   "sobra": "braco_frente_sobra.png",
+   "origem_sobra": [
+    561,
+    489
+   ]
+  },
+  "tronco": {
+   "arquivo": "tronco.png",
+   "origem": [
+    456,
+    398
+   ],
+   "junta": [
+    530,
+    528
+   ],
+   "mae": "quadril",
+   "fonte": "rasga_couro/00",
+   "sobra": "tronco_sobra.png",
+   "origem_sobra": [
+    447,
+    389
+   ]
+  },
+  "quadril": {
+   "arquivo": "quadril.png",
+   "origem": [
+    422,
+    528
+   ],
+   "junta": [
+    530,
+    540
+   ],
+   "mae": null,
+   "fonte": "rasga_couro/00",
+   "sobra": "quadril_sobra.png",
+   "origem_sobra": [
+    413,
+    519
+   ]
+  },
+  "coxa_tras": {
+   "arquivo": "coxa_tras.png",
+   "origem": [
+    461,
+    514
+   ],
+   "junta": [
+    508,
+    552
+   ],
+   "mae": "quadril",
+   "fonte": "rasga_couro/00",
+   "sobra": "coxa_tras_sobra.png",
+   "origem_sobra": [
+    454,
+    533
+   ]
+  },
+  "canela_tras": {
+   "arquivo": "canela_tras.png",
+   "origem": [
+    446,
+    596
+   ],
+   "junta": [
+    493,
+    608
+   ],
+   "mae": "coxa_tras",
+   "fonte": "rasga_couro/00",
+   "sobra": "canela_tras_sobra.png",
+   "origem_sobra": [
+    436,
+    587
+   ]
+  },
+  "coxa_frente": {
+   "arquivo": "coxa_frente.png",
+   "origem": [
+    538,
+    540
+   ],
+   "junta": [
+    566,
+    552
+   ],
+   "mae": "quadril",
+   "fonte": "rasga_couro/00",
+   "sobra": "coxa_frente_sobra.png",
+   "origem_sobra": [
+    529,
+    531
+   ]
+  },
+  "canela_frente": {
+   "arquivo": "canela_frente.png",
+   "origem": [
+    560,
+    590
+   ],
+   "junta": [
+    596,
+    602
+   ],
+   "mae": "coxa_frente",
+   "fonte": "rasga_couro/00",
+   "sobra": "canela_frente_sobra.png",
+   "origem_sobra": [
+    551,
+    581
+   ]
+  },
+  "perna_tras": {
+   "arquivo": "perna_tras.png",
+   "origem": [
+    446,
+    514
+   ],
+   "junta": [
+    508,
+    552
+   ],
+   "mae": "quadril",
+   "fonte": "rasga_couro/00",
+   "sobra": "perna_tras_sobra.png",
+   "origem_sobra": [
+    436,
+    533
+   ]
+  },
+  "perna_frente": {
+   "arquivo": "perna_frente.png",
+   "origem": [
+    538,
+    540
+   ],
+   "junta": [
+    566,
+    552
+   ],
+   "mae": "quadril",
+   "fonte": "rasga_couro/00",
+   "sobra": "perna_frente_sobra.png",
+   "origem_sobra": [
+    529,
+    531
+   ]
+  }
+ }
+}
