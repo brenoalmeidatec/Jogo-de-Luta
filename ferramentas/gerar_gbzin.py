@@ -45,6 +45,8 @@ gp.SAIDA = SAIDA
 gp.QUADROS = gp.QUADROS_PENGARO = gp.QUADROS_ARCADE = QUADROS  # desenhado() verdadeiro: ginga e andar sem fluxo
 # no fim: os números dos sprites de antes não andam. corre e recuo (Lote 7) são folhas do Pengaró que o CK não tem.
 gp.FOLHAS = tuple(f for f in gp.FOLHAS if f not in ("corre", "recuo"))  # como o CK, sem o bone_voador e o e_beck dele
+# folhas de vítima da base (17/11/2026): por último, para nenhum grupo de antes mudar de número (gp.SPRITES_VITIMA)
+gp.FOLHAS = gp.FOLHAS + ("vitima_agarrado", "vitima_arremessado")
 gp.ARCADE = set(gp.FOLHAS)
 # retoques que são do desenho do Pengaró: nada disso vale para as folhas do CK
 gp.PASTA_ARCADE, gp.DESLOCA_ARCADE, gp.DESENHOS_ARCADE_DO_GOLPE = {}, {}, {}
@@ -659,6 +661,15 @@ def acoes_ck(Q):
     Q(9250, [(f"ck_paredao{i}", 4) for i in range(8)], [])
     Q(9251, [("ck_pod", -1)], [])
     Q(9253, [(f"ck_fumaca{i}", 3) for i in range(2, 8)], [])
+    # Reação própria de quando o GBZIN é agarrado (#45): o agarrao_mk.py usa estas ações do .air dele quando existem
+    # (SelfAnimExist), em qualquer lutador que agarre. Só o Gbzin muda; o conjunto comum gp.SPRITES_VITIMA fica igual.
+    f = lambda folha, i: f"f_{folha}{i}"
+    Q(agarrao_mk.V_PRESO, [(f("vitima_agarrado", 1), -1)])
+    Q(agarrao_mk.V_ALTO, [(f("apanha", 1), 5), (f("apanha", 0), 5), (f("vitima_agarrado", 1), -1)])
+    Q(agarrao_mk.V_BAIXO, [(f("vitima_agarrado", 0), 10), (f("vitima_agarrado", 1), -1)])
+    Q(agarrao_mk.V_SOBE, [(f("vitima_agarrado", 2), 6), (f("vitima_agarrado", 3), 6), (f("vitima_agarrado", 4), -1)],
+      gp.NO_AR)
+    Q(agarrao_mk.V_CAI, [(f("vitima_agarrado", 5), 6), (f("vitima_arremessado", 0), -1)], gp.NO_AR)
     _acoes_do_kit(Q)
 
 

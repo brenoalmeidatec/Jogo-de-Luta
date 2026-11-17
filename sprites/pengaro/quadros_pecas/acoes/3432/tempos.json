@@ -9,27 +9,27 @@
   },
   {
    "desenho": 1,
-   "ticks": 2,
+   "ticks": 5,
    "caixa": false,
    "de": "chute_alto/02|foco"
   },
   {
    "desenho": 2,
-   "ticks": 3,
-   "caixa": false,
-   "de": "chute_alto/02|foco"
-  },
-  {
-   "desenho": 3,
    "ticks": 10,
    "caixa": true,
    "de": "chute_alto/04|esforco"
   },
   {
-   "desenho": 4,
+   "desenho": 3,
    "ticks": 2,
    "caixa": false,
    "de": "chute_alto/04|foco"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto/05|foco"
   },
   {
    "desenho": 5,
@@ -53,7 +53,7 @@
    "desenho": 8,
    "ticks": 2,
    "caixa": false,
-   "de": "chute_alto/05|foco"
+   "de": "chute_alto/06|foco"
   },
   {
    "desenho": 9,
@@ -83,7 +83,7 @@
    "desenho": 13,
    "ticks": 2,
    "caixa": false,
-   "de": "chute_alto/06|foco"
+   "de": "chute_alto/07|foco"
   },
   {
    "desenho": 14,
@@ -105,12 +105,6 @@
   },
   {
    "desenho": 17,
-   "ticks": 2,
-   "caixa": false,
-   "de": "chute_alto/07|foco"
-  },
-  {
-   "desenho": 18,
    "ticks": 2,
    "caixa": false,
    "de": "chute_alto/07|foco"

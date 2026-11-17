@@ -27,7 +27,13 @@
   },
   {
    "desenho": 4,
-   "ticks": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_baixo/07|foco"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
    "caixa": false,
    "de": "chute_baixo/07|foco"
   }
