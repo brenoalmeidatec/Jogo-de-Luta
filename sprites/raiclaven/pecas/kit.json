@@ -1,0 +1,329 @@
+{
+ "ref": "quadros_arcade_hd/ginga/00.png",
+ "pecas": {
+  "cabeca": {
+   "arquivo": "cabeca.png",
+   "origem": [
+    521,
+    306
+   ],
+   "junta": [
+    560,
+    388
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/ginga/00.png",
+   "sobra": "cabeca_sobra.png",
+   "origem_sobra": [
+    512,
+    297
+   ]
+  },
+  "ombreira": {
+   "arquivo": "ombreira.png",
+   "origem": [
+    439,
+    350
+   ],
+   "junta": [
+    470,
+    392
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/ginga/00.png",
+   "sobra": "ombreira_sobra.png",
+   "origem_sobra": [
+    430,
+    341
+   ]
+  },
+  "braco_tras": {
+   "arquivo": "braco_tras.png",
+   "origem": [
+    435,
+    398
+   ],
+   "junta": [
+    462,
+    398
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/ginga/00.png",
+   "sobra": "braco_tras_sobra.png",
+   "origem_sobra": [
+    426,
+    389
+   ]
+  },
+  "antebraco_tras": {
+   "arquivo": "antebraco_tras.png",
+   "origem": [
+    428,
+    390
+   ],
+   "junta": [
+    447,
+    448
+   ],
+   "mae": "braco_tras",
+   "fonte": "quadros_arcade_hd/ginga/00.png",
+   "sobra": "antebraco_tras_sobra.png",
+   "origem_sobra": [
+    419,
+    381
+   ]
+  },
+  "braco_frente": {
+   "arquivo": "braco_frente.png",
+   "origem": [
+    580,
+    303
+   ],
+   "junta": [
+    594,
+    410
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/ginga/00.png",
+   "sobra": "braco_frente_sobra.png",
+   "origem_sobra": [
+    571,
+    294
+   ]
+  },
+  "tronco": {
+   "arquivo": "tronco.png",
+   "origem": [
+    452,
+    348
+   ],
+   "junta": [
+    530,
+    484
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_arcade_hd/ginga/00.png",
+   "sobra": "tronco_sobra.png",
+   "origem_sobra": [
+    443,
+    339
+   ]
+  },
+  "coxa_tras": {
+   "arquivo": "coxa_tras.png",
+   "origem": [
+    427,
+    492
+   ],
+   "junta": [
+    490,
+    520
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_arcade_hd/ginga/00.png",
+   "sobra": "coxa_tras_sobra.png",
+   "origem_sobra": [
+    418,
+    483
+   ]
+  },
+  "canela_tras": {
+   "arquivo": "canela_tras.png",
+   "origem": [
+    414,
+    586
+   ],
+   "junta": [
+    456,
+    598
+   ],
+   "mae": "coxa_tras",
+   "fonte": "quadros_arcade_hd/ginga/00.png",
+   "sobra": "canela_tras_sobra.png",
+   "origem_sobra": [
+    405,
+    577
+   ]
+  },
+  "coxa_frente": {
+   "arquivo": "coxa_frente.png",
+   "origem": [
+    548,
+    490
+   ],
+   "junta": [
+    572,
+    524
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_arcade_hd/ginga/00.png",
+   "sobra": "coxa_frente_sobra.png",
+   "origem_sobra": [
+    539,
+    481
+   ]
+  },
+  "canela_frente": {
+   "arquivo": "canela_frente.png",
+   "origem": [
+    565,
+    574
+   ],
+   "junta": [
+    630,
+    586
+   ],
+   "mae": "coxa_frente",
+   "fonte": "quadros_arcade_hd/ginga/00.png",
+   "sobra": "canela_frente_sobra.png",
+   "origem_sobra": [
+    556,
+    565
+   ]
+  },
+  "quadril": {
+   "arquivo": "quadril.png",
+   "origem": [
+    430,
+    486
+   ],
+   "junta": [
+    530,
+    510
+   ],
+   "mae": null,
+   "fonte": "quadros_arcade_hd/ginga/00.png",
+   "sobra": "quadril_sobra.png",
+   "origem_sobra": [
+    421,
+    477
+   ]
+  },
+  "braco_tras_frente": {
+   "arquivo": "braco_tras_frente.png",
+   "origem": [
+    491,
+    358
+   ],
+   "junta": [
+    462,
+    398
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/soco/04.png",
+   "sobra": "braco_tras_frente_sobra.png",
+   "origem_sobra": [
+    482,
+    349
+   ]
+  },
+  "braco_tras_estocada": {
+   "arquivo": "braco_tras_estocada.png",
+   "origem": [
+    476,
+    366
+   ],
+   "junta": [
+    462,
+    398
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/soco/05.png",
+   "sobra": "braco_tras_estocada_sobra.png",
+   "origem_sobra": [
+    467,
+    357
+   ]
+  },
+  "coxa_frente_baixa": {
+   "arquivo": "coxa_frente_baixa.png",
+   "origem": [
+    570,
+    434
+   ],
+   "junta": [
+    572,
+    524
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_arcade_hd/chute_alto/01.png",
+   "sobra": "coxa_frente_baixa_sobra.png",
+   "origem_sobra": [
+    561,
+    425
+   ]
+  },
+  "coxa_frente_camara": {
+   "arquivo": "coxa_frente_camara.png",
+   "origem": [
+    545,
+    398
+   ],
+   "junta": [
+    572,
+    524
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_arcade_hd/chute_alto/02.png",
+   "sobra": "coxa_frente_camara_sobra.png",
+   "origem_sobra": [
+    536,
+    389
+   ]
+  },
+  "coxa_frente_esticada": {
+   "arquivo": "coxa_frente_esticada.png",
+   "origem": [
+    529,
+    318
+   ],
+   "junta": [
+    572,
+    524
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_arcade_hd/chute_alto/04.png",
+   "sobra": "coxa_frente_esticada_sobra.png",
+   "origem_sobra": [
+    520,
+    309
+   ]
+  },
+  "antebraco_tras_vazio": {
+   "arquivo": "antebraco_tras_vazio.png",
+   "origem": [
+    0,
+    0
+   ],
+   "junta": [
+    447,
+    448
+   ],
+   "mae": "braco_tras",
+   "fonte": "quadros_arcade_hd/ginga/00.png",
+   "sobra": "antebraco_tras_vazio_sobra.png",
+   "origem_sobra": [
+    -9,
+    -9
+   ]
+  },
+  "canela_frente_vazio": {
+   "arquivo": "canela_frente_vazio.png",
+   "origem": [
+    0,
+    0
+   ],
+   "junta": [
+    630,
+    586
+   ],
+   "mae": "coxa_frente",
+   "fonte": "quadros_arcade_hd/ginga/00.png",
+   "sobra": "canela_frente_vazio_sobra.png",
+   "origem_sobra": [
+    -9,
+    -9
+   ]
+  }
+ }
+}
