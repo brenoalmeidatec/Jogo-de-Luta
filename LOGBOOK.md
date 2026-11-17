@@ -2788,6 +2788,43 @@ Pedido do Alisson: "faça isso para todos", com fluidez, vida e nenhum erro de p
   sprites/pengaro/quadros_pecas/acoes/<ação>/ (+ tempos.json); o HD se refaz com `pengaro_todo.py animar`.
 - Fraco ainda: manchinhas cinza na calça perto da virilha (resto do contorno do parado), fresta pequena no ombro de
   trás quando o tronco inclina; agarrão, parry baixo e despertar ficaram fora (não são da lista base).
+### 2026-11-16 — Gutto no boneco de peças (corpo firme + vida) e golpes confusos refeitos
+
+O Alisson aprovou o corpo firme do Pengaró e pediu o mesmo para todos, com vida e sem erro de peça, e os golpes
+confusos refeitos com exatidão. Branch `claude/project-thread-zoipeb`, nada no `.sff` nem na `mugen`.
+
+- `ferramentas/extrair_hd_sff.py`: o Gutto não tem `quadros_arcade_hd` no git; os desenhos 3x saem do próprio `.sff`
+  (tela 1080x780, eixo 540,660) para `sprites/gutto/quadros_sff_hd/` (fora do git).
+- `ferramentas/boneco_gutto.py kit|animar|video`: kit do parado 94,0 com as ferramentas do Pengaró por cima.
+  Novidades: tronco achado por molde de tronco+cabeça sem os braços; peito escondido pelos braços vem aberto do 558
+  (cor casada) e nunca passa da silhueta do parado; sombra entre o cotovelo e o corpo anda com o braço; calção da
+  perna fica no quadril; perna de apoio e perna do chute são desenhos inteiros só de pele; perna que não alcança o pé
+  abaixa o quadril (joelho dobra, nunca estica). Golpes refeitos escritos na tabela `ANIM` (pose forçada por
+  elemento: `var`, `ang`, `_dy`, `_y`, `_ar`, `_base`, `_pes`), com os mesmos ticks e caixas do `.air`.
+- `vida_pecas.animar` aceita várias caixas de golpe (lista).
+- Feito: parado, soco, chute alto, soco forte (vira cotovelada limpa), cotovelo pesado (sobe e desce), coice (chute
+  reto na barriga), joelhada voadora (agacha, sobe com joelho, cai), chute de quina (baixo, na canela), chute forte
+  (com preparo). Robô de defeitos 0. Vídeos em `docs/boneco-pecas/gutto/corpo_firme/`.
+- Agachados (20b7476f): o de baixo é o desenho do agachado 359 (calção, perna de trás e pés de hoje) com o tronco
+  firme por cima; a perna do chute sai de baixo do calção. Chute alto agachado não levanta mais (chuta pra cima
+  agachado); rasteira rente ao chão.
+- Supers (c014563e): Chuva de Beijinhos (guarda, abaixa, joelho, chute alto, fica no joelho) e Bando de Chutes só de
+  frente (joelho, jab, joelhada, chute baixo, jab, chute alto...), sem as costas e a mão no chão. Caixa do Bando = a
+  maior das 9 do `.air`. `sem_pontinhos` tira manchinha de pele no calção. Robô 0/275.
+- Despertado: hoje as ações 10xxx usam os MESMOS desenhos da base com paleta trocada, então o corpo firme já cobre
+  ele. O Garanhão minotauro do conceito (e_conceito.png) não tem desenho no jogo: pede kit novo desenhado.
+- Garanhão (despertado minotauro, 17/11, Alisson apertou "Começar já o kit"): sem imagem nova. As 18 folhas do
+  ChatGPT de 16/11 (branch fm5ilj) foram para `sprites/garanhao/folhas`; `ferramentas/importar_garanhao.py` corta as 8
+  células, tira o magenta e põe na tela 3x (264 px de altura, o tamanho do endiabrado de hoje; `quadros_arcade_hd`
+  fica fora do git e sai de novo pelo importador). Motor genérico `ferramentas/firme.py` (do Hazak, thread 46qshe) +
+  `kit_garanhao.py` (corpo do rasga_couro/00, poses à mão por quadro com `_p(...)`) + `garanhao_pecas.py` (pinta por
+  baixo do braço de perto a raiz do rabo, o calção entre as pernas e a coxa escondida; crina atrás do rosto).
+  Mudanças no firme.py: `SEM_REGUA`, quadril `abs` com `pes`, cabeça e perna à mão vencem, `MANCHA_FOLGA` (o
+  Garanhão é escuro: 900). Feitos parado, chifrada, investida e pisão; robô 0/73. Vídeos em
+  `docs/boneco-pecas/garanhao/`.
+- Falta: resto dos golpes do Garanhão (15 folhas prontas). O pé do chute alto alcança ~50 px menos que a caixa (o corpo não
+  tomba); o Breno decide se a caixa encolhe. O "giratório" do cotovelo e do coice não gira: girar pede desenho de
+  costas, que o kit não tem.
 ### 2026-11-16 — Gbzin no boneco de peças: piloto (parado, soco, chute alto)
 
 O Alisson aprovou no Pengaró o "corpo firme + vida" e pediu o mesmo para todos, com fluidez e zero erro de peça, e os
@@ -2853,3 +2890,13 @@ quadro a quadro por revisores independentes.
 (9600 a 9999), não pelo número da ação. A faísca do HitDef vem em expressão (`S(ifelse(var(20) > 0, 9231, 9201))`).
 Grão de luz maior que 2 pixels e raio acima de 90 viram tabuleiro de quadrados. O PalFX no oponente pinta o corpo
 inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copiar velocity e accel.
+
+## 2026-11-17 — Gutto base no jogo pelo boneco de peças (corpo firme)
+
+- Pedido do Alisson (o Breno liberou auto-aprovação): pôr no jogo o que passou no robô.
+- `ferramentas/ligar_pecas.py <lutador> [golpe ...]`: liga os quadros de `quadros_pecas_hd/` no `.sff` (indexados na
+  paleta, grupo 48000 + n.º do golpe), reescreve a ação do `.air` partindo os quadros novos em toda fronteira antiga
+  (mesmas caixas, mesmo tick de acerto), troca AnimElem/AnimElemTime/AnimElemNo do `.cns` para os elementos novos, põe
+  remap do despertado para cada sprite novo e refaz as ações da aura (30000/40000 + ação).
+- Gutto: 16 golpes, 299 quadros. Robô de peças 0 defeito; robô de luta 186/186 antes e depois, dano idêntico.
+- Agachado passou a ter 48 ticks e a rasteira ganhou a volta (459, 1173, 460) para bater com o tempo do jogo.

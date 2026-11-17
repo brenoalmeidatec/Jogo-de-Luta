@@ -1,0 +1,99 @@
+{
+ "acao": 10410,
+ "caixa": [
+  18,
+  -360,
+  120,
+  -120
+ ],
+ "origem": [
+  "chifrada_sobe/00",
+  "chifrada_sobe/01",
+  "chifrada_sobe/02",
+  "chifrada_sobe/03",
+  "chifrada_sobe/04",
+  "chifrada_sobe/05",
+  "chifrada_sobe/06",
+  "chifrada_sobe/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chifrada_sobe/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chifrada_sobe/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chifrada_sobe/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chifrada_sobe/02"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chifrada_sobe/03"
+  },
+  {
+   "desenho": 5,
+   "ticks": 6,
+   "caixa": true,
+   "de": "chifrada_sobe/04"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chifrada_sobe/05"
+  },
+  {
+   "desenho": 7,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chifrada_sobe/05"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chifrada_sobe/06"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chifrada_sobe/06"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chifrada_sobe/06"
+  },
+  {
+   "desenho": 11,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chifrada_sobe/07"
+  },
+  {
+   "desenho": 12,
+   "ticks": 3,
+   "caixa": false,
+   "de": "chifrada_sobe/07"
+  }
+ ]
+}
