@@ -51,8 +51,10 @@ O montador lê `OSSOS`, `CAMADAS` e a função de desenho de cada lutador na cla
 
 ## Primeiro uso: chute alto do Pengaró (2026-11-17)
 
-`sprites/pengaro/montador/chute_alto.json`, gravado em `quadros_montador_hd/chute_alto/`. Correção pedida pelo Breno:
-nas duas poses de perna esticada a mão da frente ficava solta na frente da perna (foi para trás do corpo) e a perna de
-apoio tinha a mesma listra verde e amarela da perna que chuta, parecendo duas pernas direitas (a listra saiu da coxa de
-trás e do quadril abaixo da faixa, como no desenho original). Antes e depois: original, piloto e consertado em
+`sprites/pengaro/montador/chute_alto.json`, gravado em `quadros_montador_hd/chute_alto/`. Correção pedida pelo Breno
+("duas pernas direitas" e mão solta), feita pela Parte 2 do [`estudo-anatomia-golpes.md`](estudo-anatomia-golpes.md):
+nas poses de perna levantada, a perna da frente (calça branca, lado longe) foi para **atrás do corpo**, então ela nasce
+atrás da faixa e do tronco e não parece sair do quadril da perna de apoio; o braço da frente também foi para trás do
+corpo e não tapa mais o chute. Nenhum pixel foi repintado (uma primeira tentativa tirava a listra da perna de apoio, mas
+a listra é dela e o erro era de camada). Antes e depois (original, piloto, consertado):
 `docs/boneco-pecas/montador_chute_antes_depois.png`.
