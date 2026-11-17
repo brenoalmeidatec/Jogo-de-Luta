@@ -1,0 +1,275 @@
+{
+ "ref": "quadros_arcade_hd/ginga/00.png",
+ "pecas": {
+  "cabeca": {
+   "arquivo": "cabeca.png",
+   "origem": [
+    522,
+    283
+   ],
+   "junta": [
+    560,
+    382
+   ],
+   "mae": "tronco",
+   "fonte": "ginga/00",
+   "sobra": "cabeca_sobra.png",
+   "origem_sobra": [
+    513,
+    274
+   ]
+  },
+  "braco_tras": {
+   "arquivo": "braco_tras.png",
+   "origem": [
+    410,
+    364
+   ],
+   "junta": [
+    480,
+    386
+   ],
+   "mae": "tronco",
+   "fonte": "ginga/00",
+   "sobra": "braco_tras_sobra.png",
+   "origem_sobra": [
+    401,
+    355
+   ]
+  },
+  "braco_frente": {
+   "arquivo": "braco_frente.png",
+   "origem": [
+    594,
+    331
+   ],
+   "junta": [
+    604,
+    410
+   ],
+   "mae": "tronco",
+   "fonte": "ginga/00",
+   "sobra": "braco_frente_sobra.png",
+   "origem_sobra": [
+    585,
+    322
+   ]
+  },
+  "tronco": {
+   "arquivo": "tronco.png",
+   "origem": [
+    376,
+    176
+   ],
+   "junta": [
+    530,
+    446
+   ],
+   "mae": "quadril",
+   "fonte": "ginga/00",
+   "sobra": "tronco_sobra.png",
+   "origem_sobra": [
+    367,
+    167
+   ]
+  },
+  "quadril": {
+   "arquivo": "quadril.png",
+   "origem": [
+    382,
+    435
+   ],
+   "junta": [
+    530,
+    466
+   ],
+   "mae": null,
+   "fonte": "ginga/00",
+   "sobra": "quadril_sobra.png",
+   "origem_sobra": [
+    373,
+    426
+   ]
+  },
+  "coxa_tras": {
+   "arquivo": "coxa_tras.png",
+   "origem": [
+    416,
+    556
+   ],
+   "junta": [
+    472,
+    546
+   ],
+   "mae": "quadril",
+   "fonte": "ginga/00",
+   "sobra": "coxa_tras_sobra.png",
+   "origem_sobra": [
+    407,
+    547
+   ]
+  },
+  "canela_tras": {
+   "arquivo": "canela_tras.png",
+   "origem": [
+    398,
+    584
+   ],
+   "junta": [
+    438,
+    596
+   ],
+   "mae": "coxa_tras",
+   "fonte": "ginga/00",
+   "sobra": "canela_tras_sobra.png",
+   "origem_sobra": [
+    389,
+    575
+   ]
+  },
+  "coxa_frente": {
+   "arquivo": "coxa_frente.png",
+   "origem": [
+    564,
+    556
+   ],
+   "junta": [
+    582,
+    546
+   ],
+   "mae": "quadril",
+   "fonte": "ginga/00",
+   "sobra": "coxa_frente_sobra.png",
+   "origem_sobra": [
+    555,
+    547
+   ]
+  },
+  "canela_frente": {
+   "arquivo": "canela_frente.png",
+   "origem": [
+    568,
+    582
+   ],
+   "junta": [
+    620,
+    594
+   ],
+   "mae": "coxa_frente",
+   "fonte": "ginga/00",
+   "sobra": "canela_frente_sobra.png",
+   "origem_sobra": [
+    559,
+    573
+   ]
+  },
+  "perna_tras": {
+   "arquivo": "perna_tras.png",
+   "origem": [
+    398,
+    556
+   ],
+   "junta": [
+    472,
+    546
+   ],
+   "mae": "quadril",
+   "fonte": "ginga/00",
+   "sobra": "perna_tras_sobra.png",
+   "origem_sobra": [
+    389,
+    547
+   ]
+  },
+  "perna_frente": {
+   "arquivo": "perna_frente.png",
+   "origem": [
+    564,
+    556
+   ],
+   "junta": [
+    582,
+    546
+   ],
+   "mae": "quadril",
+   "fonte": "ginga/00",
+   "sobra": "perna_frente_sobra.png",
+   "origem_sobra": [
+    555,
+    547
+   ]
+  },
+  "navalha": {
+   "arquivo": "navalha.png",
+   "origem": [
+    477,
+    139
+   ],
+   "junta": [
+    498,
+    196
+   ],
+   "mae": "criatura",
+   "fonte": "ginga/00",
+   "sobra": "navalha_sobra.png",
+   "origem_sobra": [
+    468,
+    130
+   ]
+  },
+  "secador": {
+   "arquivo": "secador.png",
+   "origem": [
+    584,
+    196
+   ],
+   "junta": [
+    592,
+    292
+   ],
+   "mae": "criatura",
+   "fonte": "ginga/00",
+   "sobra": "secador_sobra.png",
+   "origem_sobra": [
+    575,
+    187
+   ]
+  },
+  "garra": {
+   "arquivo": "garra.png",
+   "origem": [
+    606,
+    257
+   ],
+   "junta": [
+    614,
+    334
+   ],
+   "mae": "criatura",
+   "fonte": "ginga/00",
+   "sobra": "garra_sobra.png",
+   "origem_sobra": [
+    597,
+    248
+   ]
+  },
+  "criatura": {
+   "arquivo": "criatura.png",
+   "origem": [
+    418,
+    176
+   ],
+   "junta": [
+    522,
+    302
+   ],
+   "mae": "tronco",
+   "fonte": "ginga/00",
+   "sobra": "criatura_sobra.png",
+   "origem_sobra": [
+    409,
+    167
+   ]
+  }
+ }
+}
