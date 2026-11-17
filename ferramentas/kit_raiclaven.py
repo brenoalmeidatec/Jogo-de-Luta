@@ -178,31 +178,85 @@ def pecas_da_acao(estado):
     return None
 
 
+PALETA_PECAS = RAIZ / "sprites/raiclaven_cliente/paleta_sff.bin"
+
+
+def paleta_pecas(quadros):
+    """Paleta travada do despertado com A Cliente: 255 cores tiradas de todos os desenhos do corpo firme (corte pela
+    mediana) + o 0 transparente. Cor fora dela não entra no .sff (regra da paleta indexada)."""
+    from PIL import Image
+    import numpy as np
+    amostra = np.concatenate([q[q[..., 3] > 0][::3, :3] for q in quadros])
+    lado = int(np.ceil(np.sqrt(len(amostra))))
+    tira = np.zeros((lado * lado, 3), np.uint8)
+    tira[:len(amostra)] = amostra
+    tira[len(amostra):] = amostra[0]
+    q = Image.fromarray(tira.reshape(lado, lado, 3)).quantize(255, method=Image.Quantize.MEDIANCUT,
+                                                               dither=Image.Dither.NONE)
+    cores = np.array(q.getpalette()[:255 * 3], np.uint8).reshape(-1, 3)
+    pal = np.zeros((256, 4), np.uint8)
+    pal[1:1 + len(cores), :3] = cores
+    pal[1:, 3] = 255
+    return pal
+
+
+def indexar(rgba, pal):
+    """Índices na paleta travada (cor mais próxima, sem pontilhado); transparente = 0."""
+    import numpy as np
+    al = rgba[..., 3] > 0
+    px = rgba[al][:, :3].astype(np.int32)
+    cores = pal[1:, :3].astype(np.int32)
+    idx = np.empty(len(px), np.uint8)
+    for i in range(0, len(px), 20000):
+        d = ((px[i:i + 20000, None, :] - cores[None]) ** 2).sum(-1)
+        idx[i:i + 20000] = d.argmin(1) + 1
+    out = np.zeros(rgba.shape[:2], np.uint8)
+    out[al] = idx
+    return out
+
+
 def sprites_pecas(sff):
-    """Põe no .sff os desenhos do corpo firme (some o que havia nos grupos GRUPO_PECAS..+99)."""
+    """Põe no .sff os desenhos do corpo firme (some o que havia nos grupos GRUPO_PECAS..+99), indexados na paleta
+    travada da dupla (uma paleta a mais no .sff, PALETA_PECAS), em RLE como o resto do corpo."""
     import conferir_sff as cs
     from PIL import Image
     import numpy as np
     pal, nos, _ = cs.ler(sff)
+    extras = list(cs.EXTRAS.get(str(Path(sff).resolve()), []))
+    antiga = PALETA_PECAS.read_bytes() if PALETA_PECAS.exists() else None
+    pis = {}
     rle, png, vistos = [], [], set()
     for n in nos:
         k = (n["g"], n["i"])
         if k in vistos or GRUPO_PECAS <= n["g"] < GRUPO_PECAS + 100:
             continue
         vistos.add(k)
-        (png if n.get("png") else rle).append((n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], n["px"]))
-    novos = 0
+        if n.get("png"):
+            png.append((n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], n["px"]))
+        else:
+            rle.append((n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], n["px"], n.get("pi", 0)))
+    quadros = []
     for nome, (_a, grupo, tempos) in anims_pecas().items():
         for i in sorted({e["desenho"] for e in tempos["elementos"]}):
             a = np.array(Image.open(PECAS / nome / f"{i:02d}.png").convert("RGBA"))
             ys, xs = np.nonzero(a[..., 3])
             y0, y1, x0, x1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
-            img = Image.fromarray(np.ascontiguousarray(a[y0:y1, x0:x1]))
-            png.append((grupo, i, img.width, img.height, int(EIXO_PECAS[0] - x0), int(EIXO_PECAS[1] - y0),
-                        efeitos.blob_png(img)))
-            novos += 1
-    efeitos.gravar(sff, pal, rle, png)
-    return novos
+            quadros.append((grupo, i, np.ascontiguousarray(a[y0:y1, x0:x1]), int(EIXO_PECAS[0] - x0),
+                            int(EIXO_PECAS[1] - y0)))
+    nova = paleta_pecas([q[2] for q in quadros])
+    bnova = nova.tobytes()
+    if antiga is not None and antiga in extras:  # a paleta da rodada anterior sai (só os desenhos dela a usavam)
+        j = extras.index(antiga)
+        extras.pop(j)
+        rle = [r[:7] + ((r[7] - 1 if r[7] > 2 + j else r[7]),) for r in rle]
+    extras.append(bnova)
+    pi = 2 + len(extras) - 1
+    for grupo, i, a, ex, ey in quadros:
+        px = indexar(a, nova)
+        rle.append((grupo, i, a.shape[1], a.shape[0], ex, ey, px.tobytes(), pi))
+    efeitos.gravar(sff, pal, rle, png, extras)
+    PALETA_PECAS.write_bytes(bnova)
+    return len(quadros)
 
 
 def remap_parado(cns, air):

@@ -2753,8 +2753,6 @@ O Alisson aprovou o corpo firme e pediu fluidez, vida e qualidade, sem nenhum er
 **Robô de defeitos** (`conferir` em `piloto_firme.py`): procura fresta, mancha escura a mais que o desenho de hoje,
 pedaço solto e pé fora do chão. Deu 0 de 41 desenhos (`docs/boneco-pecas/vida/robo_defeitos.md`).
 
-<<<<<<< HEAD
-=======
 ### 2026-11-16 — CK pelo boneco de peças (corpo firme + vida), 1ª leva
 
 Pedido do Alisson depois do OK no Pengaró: passar todos os lutadores para o método, com fluidez e sem erro de peça, e
@@ -2842,7 +2840,6 @@ Pedido do Alisson: "faça isso para todos", com fluidez, vida e nenhum erro de p
   sprites/pengaro/quadros_pecas/acoes/<ação>/ (+ tempos.json); o HD se refaz com `pengaro_todo.py animar`.
 - Fraco ainda: manchinhas cinza na calça perto da virilha (resto do contorno do parado), fresta pequena no ombro de
   trás quando o tronco inclina; agarrão, parry baixo e despertar ficaram fora (não são da lista base).
->>>>>>> origin/mugen
 ### 2026-11-16 — Gutto no boneco de peças (corpo firme + vida) e golpes confusos refeitos
 
 O Alisson aprovou o corpo firme do Pengaró e pediu o mesmo para todos, com vida e sem erro de peça, e os golpes
@@ -2951,7 +2948,13 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   remap do despertado para cada sprite novo e refaz as ações da aura (30000/40000 + ação).
 - Gutto: 16 golpes, 299 quadros. Robô de peças 0 defeito; robô de luta 186/186 antes e depois, dano idêntico.
 - Agachado passou a ter 48 ticks e a rasteira ganhou a volta (459, 1173, 460) para bater com o tempo do jogo.
-<<<<<<< HEAD
+- Garanhão (despertado do Gutto) no jogo: `ligar_pecas.py gutto --de garanhao --grupo 49000 --ajustar` com parado
+  (por remap do parado novo do Gutto) e 10 golpes 10xxx (chifrada, investida, pisão, patada, casco na canela, bufada,
+  garra rasteira, chifrada que sobe, raspa o casco, rabo-chicote). `--ajustar` estica/encolhe o tempo para o impacto
+  cair no tick da Clsn1 antiga; quadros de outra pasta vão em PNG RGBA (na paleta da base o brilho apagava). Depois
+  `aura_silhueta.py gutto` de novo. Robô de luta 186/186 igual; filmado no motor (docs/boneco-pecas/no_jogo/).
+- Fora por enquanto: coice (desenho da folha com outro corpo) e golpes no ar (não leem); rasga-couro, empinada,
+  corrente em X, joelho e cascos no ar não têm ação no jogo (são do #47).
 - `ferramentas/acoes_pengaro.py` lista as 154 ações base do Pengaró (194 desenhos); `ferramentas/pengaro_todo.py`
   faz poses (`poses i/n`), anima (`animar`), confere (robô), e gera `revisar`, `folha` e `video`.
 - Corpo firme em toda inclinação pequena (até 10°): girar o tronco abria fresta nas emendas.
@@ -2982,7 +2985,6 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
 - Ligado no jogo com `ligar_pecas.py`: 154 ações, 1157 sprites novos (grupos 48000+), remaps do despertado e da aura.
   Robô do boneco 0 defeito; robô de luta 189/189 antes e depois, dano idêntico. Foto e vídeo em docs/boneco-pecas/todo/.
 - Próximo: chutes com o mesmo corpo inteiro do soco; agarrão, parry baixo e despertar continuam fora da lista base.
-=======
 
 ### 2026-11-17 — CK base no jogo pelo boneco de peças
 - Pedido do Alisson (o Breno liberou auto-aprovação): pôr no jogo o que passou no robô.
@@ -3033,4 +3035,44 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   (`ferramentas/video_golpes_raiclaven.py`).
 - Para ligar de novo: `git checkout 95134c46 -- chars/raiclaven` e `ligar_pecas.py raiclaven` (rodar duas vezes em cima
   do já ligado não foi testado).
->>>>>>> origin/mugen
+
+### 2026-11-17 — Coice do Garanhão refeito e no jogo
+- Folha nova do coice gerada no ChatGPT (Chrome do PC de casa do Alisson, 1 imagem) com o mesmo corpo do Garanhão
+  (calção preto, cinto de corda branco, vira de costas e coiceia). Os 6 quadros do meio entram como ESPECIAIS no kit.
+- Ligado com `ligar_pecas.py gutto --de garanhao --grupo 49000 --ajustar coice` (grupo 49009, ação 10240, chute forte longe).
+- A luz do poder 4750 trocou o halo fixo (ação 9815) por orbe, halo e poça que andam com o poder: é o conserto da `luz.py`
+  do commit 911e781f (poder que voa é bola, não raio), não perda.
+- Robô de luta do Gutto: 186/186, dano igual ao anterior. Vídeo: docs/boneco-pecas/no_jogo/garanhao_coice_no_jogo.mp4.
+- Falta: golpes no ar do Garanhão; pele_pecas (sem linha de corte) no Gutto e no Garanhão.
+## 17/11/2026 - Gbzin: pele nas juntas (pele_pecas.py da thread do Pengaró)
+- Os quadros feitos pelo kit (parado, soco 00-03/07, chute alto, rolamento 00/07) agora saem por `desenhar_pele`: as
+  peças viram pele que dobra nas juntas (`pele_pecas.py`), com sobra, pés retos, cabeça por cima, furos e pontas da
+  faixa iguais ao `desenhar` de antes. Some o caco branco do calção e a linha de corte no chute alto.
+- Robô de peças 0 defeitos, robô do jogo 236/236. Antes e depois: `docs/boneco-pecas/gbzin/pele_antes_depois.{mp4,png}`.
+- 17/11 (tarde): o CK passou a ser desenhado com a pele do `pele_pecas.py` (`PELE = True` em `pecas_ck.py`): as
+  juntas dobram sem linha de corte (regra do Alisson); pés continuam apoiados no chão (`colar_pe`) e o braço esticado
+  continua saindo de baixo do queixo. Religado a partir do `chars/ck` sem peças (4b54d61f), robô de peças 0/206.
+
+## 2026-11-17 — Pengaró: chute alto com o corpo inteiro (Claude, thread do Alisson)
+
+- `CORPO` em `ferramentas/pengaro_todo.py`: no chute alto montado, o quadril entra e sobe na ponta do pé de apoio, o
+  tronco deita para trás (até 12°), a cabeça olha o alvo e o braço de trás abre de contrapeso; o pé de apoio volta a
+  plantar por IK. O chute baixo e os golpes de impacto que ficaram "especiais" já vêm do desenho com o corpo junto.
+- `pele_pecas.py`: com a perna da frente erguida (câmara/esticada), a parte do quadril que é o alto da coxa no parado
+  sai (sobrava um pedaço de calça cinza pendurado embaixo da perna).
+- 20 ações refeitas, robô do boneco 0 defeito; religado a partir do Pengaró antes da ligação (ba260cd9), robô de luta
+  189/189 igual. Antes/depois em docs/boneco-pecas/todo/chute_alto_antes_depois.png.
+
+## 17/11/2026 - Gbzin: Grão-Pastor (despertado) com folhas próprias no jogo
+- Rascunhos de pose no ChatGPT (3 turnos, pedidos em `ferramentas/folhas_gbzin.py`), folhas em
+  `sprites/gbzin/quadros/folhas_arcade/e_*.png`. `ferramentas/gbzin_e_pecas.py firme NOMES` corta as células por costura
+  de menos tinta, trava a paleta do kit (`sprites/gbzin/pecas_e/paleta.json`, 15 cores), usa a cabeça como régua do
+  tamanho do corpo e cola a cabeça do kit (`pecas_e/cabeca.png`, presa na junta do pescoço) em todo quadro onde ela
+  não tapa mão ou nuca; resultado em `quadros_e_firmes(_hd)`. `conferir` grava
+  `docs/boneco-pecas/gbzin/grao_pastor_conferencia.md` (0 defeitos em 25 folhas).
+- `gerar_gbzin.py` (`GRAO_PASTOR`): 23 estados do despertado com desenho próprio: parado (respiração sem emenda),
+  andar, x, y, a, agachado, golpe baixo, rasteirinha, rasteira, anti-aéreo, pulo, golpes no ar (bicicleta e soco),
+  defesa, defesa alta/baixa, apanha, queda, levanta, rolamento, vitória, derrota, provocação. O resto do despertado
+  segue no desenho da base até as próximas folhas (estampido, giro do manto, mãos, juízo, especiais, agarrões).
+- Breno liberou auto-aprovação (17/11); robô 236/0 no estado juntado. Também tirei marcadores de conflito que tinham
+  ficado commitados neste LOGBOOK.

@@ -23,8 +23,8 @@
 | ar_cascos/09 | ar_cascos/06 | PASS |
 | ar_cascos/10 | ar_cascos/07 | PASS |
 | ar_garras/00 | ar_garras/00 | PASS |
-| ar_garras/01 | ar_garras/01 | FAIL peito pintado à vista 55 px |
-| ar_garras/02 | ar_garras/02 | FAIL peito pintado à vista 195 px |
+| ar_garras/01 | ar_garras/01 | PASS |
+| ar_garras/02 | ar_garras/02 | PASS |
 | ar_garras/03 | ar_garras/03 | PASS |
 | ar_garras/04 | ar_garras/04 | PASS |
 | ar_garras/05 | ar_garras/05 | PASS |
@@ -65,14 +65,14 @@
 | casco_canela/09 | casco_canela/07 | PASS |
 | casco_canela/10 | casco_canela/07 | PASS |
 | casco_raspa/00 | casco_raspa/00 | PASS |
-| casco_raspa/01 | casco_raspa/01 | FAIL pé enterrado (y=703) |
-| casco_raspa/02 | casco_raspa/01 | FAIL pé enterrado (y=703) |
-| casco_raspa/03 | casco_raspa/02 | FAIL pé enterrado (y=700) |
-| casco_raspa/04 | casco_raspa/02 | FAIL pé enterrado (y=700) |
+| casco_raspa/01 | casco_raspa/01 | PASS |
+| casco_raspa/02 | casco_raspa/01 | PASS |
+| casco_raspa/03 | casco_raspa/02 | PASS |
+| casco_raspa/04 | casco_raspa/02 | PASS |
 | casco_raspa/05 | casco_raspa/03 | PASS |
 | casco_raspa/06 | casco_raspa/04 | PASS |
-| casco_raspa/07 | casco_raspa/05 | FAIL pé enterrado (y=676) |
-| casco_raspa/08 | casco_raspa/05 | FAIL pé enterrado (y=666) |
+| casco_raspa/07 | casco_raspa/05 | PASS |
+| casco_raspa/08 | casco_raspa/05 | PASS |
 | casco_raspa/09 | casco_raspa/06 | PASS |
 | casco_raspa/10 | casco_raspa/06 | PASS |
 | casco_raspa/11 | casco_raspa/07 | PASS |
@@ -93,8 +93,8 @@
 | chifrada/14 | gancho_chifre/07 | PASS |
 | chifrada/15 | gancho_chifre/07 | PASS |
 | chifrada_sobe/00 | chifrada_sobe/00 | PASS |
-| chifrada_sobe/01 | chifrada_sobe/01 | FAIL pé enterrado (y=661) |
-| chifrada_sobe/02 | chifrada_sobe/02 | FAIL pé enterrado (y=661) |
+| chifrada_sobe/01 | chifrada_sobe/01 | PASS |
+| chifrada_sobe/02 | chifrada_sobe/02 | PASS |
 | chifrada_sobe/03 | chifrada_sobe/02 | PASS |
 | chifrada_sobe/04 | chifrada_sobe/03 | PASS |
 | chifrada_sobe/05 | chifrada_sobe/04 | PASS |
@@ -106,20 +106,19 @@
 | chifrada_sobe/11 | chifrada_sobe/07 | PASS |
 | chifrada_sobe/12 | chifrada_sobe/07 | PASS |
 | coice/00 | coice/00 | PASS |
-| coice/01 | coice/01 | PASS |
-| coice/02 | coice/02 (desenho de hoje) | FAIL solta [81] |
-| coice/03 | coice/03 (desenho de hoje) | FAIL pé enterrado (y=660) |
-| coice/04 | coice/04 (desenho de hoje) | FAIL pé enterrado (y=660) |
-| coice/05 | coice/05 (desenho de hoje) | FAIL solta [100] |
-| coice/06 | coice/06 | PASS |
-| coice/07 | coice/06 | PASS |
+| coice/01 | coice/01 (desenho de hoje) | PASS |
+| coice/02 | coice/02 (desenho de hoje) | PASS |
+| coice/03 | coice/03 (desenho de hoje) | PASS |
+| coice/04 | coice/04 (desenho de hoje) | PASS |
+| coice/05 | coice/05 (desenho de hoje) | PASS |
+| coice/06 | coice/06 (desenho de hoje) | PASS |
+| coice/07 | coice/07 | PASS |
 | coice/08 | coice/07 | PASS |
-| coice/09 | coice/07 | PASS |
 | corrente_x/00 | corrente_x/00 | PASS |
 | corrente_x/01 | corrente_x/01 | PASS |
 | corrente_x/02 | corrente_x/02 | PASS |
 | corrente_x/03 | corrente_x/03 | PASS |
-| corrente_x/04 | corrente_x/03 | FAIL peito pintado à vista 32 px |
+| corrente_x/04 | corrente_x/03 | PASS |
 | corrente_x/05 | corrente_x/04 | PASS |
 | corrente_x/06 | corrente_x/05 | PASS |
 | corrente_x/07 | corrente_x/05 | PASS |
@@ -130,12 +129,12 @@
 | empinada/00 | empinada/00 | PASS |
 | empinada/01 | empinada/01 | PASS |
 | empinada/02 | empinada/01 | PASS |
-| empinada/03 | empinada/02 | FAIL peito pintado à vista 66 px |
-| empinada/04 | empinada/02 | FAIL peito pintado à vista 134 px |
-| empinada/05 | empinada/03 | FAIL peito pintado à vista 222 px |
-| empinada/06 | empinada/03 | FAIL peito pintado à vista 222 px |
-| empinada/07 | empinada/04 | FAIL peito pintado à vista 222 px |
-| empinada/08 | empinada/04 | FAIL peito pintado à vista 185 px |
+| empinada/03 | empinada/02 | PASS |
+| empinada/04 | empinada/02 | PASS |
+| empinada/05 | empinada/03 | PASS |
+| empinada/06 | empinada/03 | PASS |
+| empinada/07 | empinada/04 | PASS |
+| empinada/08 | empinada/04 | PASS |
 | empinada/09 | empinada/05 | PASS |
 | empinada/10 | empinada/06 | PASS |
 | empinada/11 | empinada/06 | PASS |
@@ -222,28 +221,28 @@
 | pisao/15 | pisao/07 | PASS |
 | pisao/16 | pisao/07 | PASS |
 | rabo_chicote/00 | rabo_chicote/00 | PASS |
-| rabo_chicote/01 | rabo_chicote/01 | FAIL pé enterrado (y=661) |
-| rabo_chicote/02 | rabo_chicote/02 | FAIL pé enterrado (y=661) |
-| rabo_chicote/03 | rabo_chicote/03 | FAIL pé enterrado (y=661) |
-| rabo_chicote/04 | rabo_chicote/04 | FAIL pé enterrado (y=661) |
-| rabo_chicote/05 | rabo_chicote/05 | FAIL pé enterrado (y=672) |
-| rabo_chicote/06 | rabo_chicote/05 | FAIL pé enterrado (y=664) |
+| rabo_chicote/01 | rabo_chicote/01 | PASS |
+| rabo_chicote/02 | rabo_chicote/02 | PASS |
+| rabo_chicote/03 | rabo_chicote/03 | PASS |
+| rabo_chicote/04 | rabo_chicote/04 | PASS |
+| rabo_chicote/05 | rabo_chicote/05 | PASS |
+| rabo_chicote/06 | rabo_chicote/05 | PASS |
 | rabo_chicote/07 | rabo_chicote/06 | PASS |
 | rabo_chicote/08 | rabo_chicote/06 | PASS |
 | rabo_chicote/09 | rabo_chicote/07 | PASS |
 | rabo_chicote/10 | rabo_chicote/07 | PASS |
 | rasga_couro/00 | rasga_couro/00 | PASS |
-| rasga_couro/01 | rasga_couro/01 | FAIL peito pintado à vista 138 px |
-| rasga_couro/02 | rasga_couro/01 | FAIL peito pintado à vista 199 px |
-| rasga_couro/03 | rasga_couro/02 | FAIL peito pintado à vista 245 px |
-| rasga_couro/04 | rasga_couro/02 | FAIL peito pintado à vista 222 px |
-| rasga_couro/05 | rasga_couro/02 | FAIL peito pintado à vista 116 px |
+| rasga_couro/01 | rasga_couro/01 | PASS |
+| rasga_couro/02 | rasga_couro/01 | PASS |
+| rasga_couro/03 | rasga_couro/02 | PASS |
+| rasga_couro/04 | rasga_couro/02 | PASS |
+| rasga_couro/05 | rasga_couro/02 | PASS |
 | rasga_couro/06 | rasga_couro/03 | PASS |
 | rasga_couro/07 | rasga_couro/04 | PASS |
-| rasga_couro/08 | rasga_couro/04 | FAIL peito pintado à vista 54 px |
-| rasga_couro/09 | rasga_couro/05 | FAIL peito pintado à vista 70 px |
-| rasga_couro/10 | rasga_couro/05 | FAIL peito pintado à vista 54 px |
-| rasga_couro/11 | rasga_couro/05 | FAIL peito pintado à vista 35 px |
+| rasga_couro/08 | rasga_couro/04 | PASS |
+| rasga_couro/09 | rasga_couro/05 | PASS |
+| rasga_couro/10 | rasga_couro/05 | PASS |
+| rasga_couro/11 | rasga_couro/05 | PASS |
 | rasga_couro/12 | rasga_couro/06 | PASS |
 | rasga_couro/13 | rasga_couro/06 | PASS |
 | rasga_couro/14 | rasga_couro/06 | PASS |
@@ -251,4 +250,4 @@
 | rasga_couro/16 | rasga_couro/07 | PASS |
 | rasga_couro/17 | rasga_couro/07 | PASS |
 
-36 de 250 desenho(s) com defeito.
+0 de 249 desenho(s) com defeito.

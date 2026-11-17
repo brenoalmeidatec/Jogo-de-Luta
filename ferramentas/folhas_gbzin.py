@@ -46,7 +46,7 @@ GRAO_PASTOR = """Gbzin awakened as the GRAND SHEPHERD (Grao-Pastor), the Lord of
 
 CABECA_GP = """Generate ONE image with your image generation tool. Do not write code and do not edit any file.
 
-The attached sprite sheet shows the exact character to keep: """ + GRAO_PASTOR + """ Same face, same colors and same size as the attached sheet. He is the final boss version of the jiu-jitsu shepherd: slow, heavy and overwhelming, every move must look far too powerful; he grabs, lifts and slams. CROOK RULE: the bone crook is always in the same hand (the back hand, the arm drawn behind the torso) in all 8 frames unless the motion says otherwise; it never changes hands and never disappears. The goat-skull chest plate and the hooves stay visible in every frame; the fur cape follows the motion and never hides the chest plate. Do NOT draw the aura, the goat shadow or the giant green hands: they are separate effects.
+The attached sprite sheet shows the exact character to keep: """ + GRAO_PASTOR + """ Same face, same colors and same size as the attached sheet. He is the final boss version of the jiu-jitsu shepherd: slow, heavy and overwhelming, every move must look far too powerful; he grabs, lifts and slams. CROOK RULE: the bone crook is always in the same hand (the back hand, the arm drawn behind the torso) in all 8 frames unless the motion says otherwise; it never changes hands and never disappears. The goat-skull chest plate and the hooves stay visible in every frame; the fur cape follows the motion and never hides the chest plate. Do NOT draw the aura, the goat shadow or the giant green hands: they are separate effects. MOTION RULE (no animation errors): every move uses the whole body like a real heavyweight fighter. On a punch or a crook strike the hips and shoulders turn into the blow and the front hoof steps forward; on a kick the standing leg pivots and the torso leans back to balance; on a grab the weight shifts onto the front leg. Arms and legs never stretch longer than in the stance, the body never gets thicker or thinner between frames, nothing floats loose from the body. Wind-up, contact and recovery are three clearly different, physically natural poses.
 
 """ + ESTILO
 
@@ -144,7 +144,7 @@ FOLHAS_GP = {
     "marrada": 'x chain, rising head butt then the Ram finisher: 1 he dips the head low, 2 he drives the horns up and forward at chin height (rising head butt), 3 he lands back low, 4 he lowers the horns at belly height and charges one step, 5 the horns dig in at belly height as if goring an invisible opponent, 6 he lifts the head and rises, lifting upward, 7 he throws the head back and over his shoulder (the throw, clearly backward over the head), 8 stance.',
     "arco_osso": 'y, the bone crook arcs: 1 stance, 2 the bone crook swings back behind him, 3 a wide horizontal arc of the bone crook forward at chest height, arm fully extended, 4 follow-through, 5 he raises the crook and starts to spin it, 6 and 7 the crook spins in a full circle in front of him at chest height, green flame on the hook tip, 8 stance.',
     "martelada": 'y chain hammer: 1 stance, 2 and 3 he lifts the bone crook high over his head with both hands, 4 and 5 he hammers it down hard in front of him at head height, body bending forward, 6 the hook touches the ground, 7 he straightens, 8 stance.',
-    "tosquia": 'the Shearing finisher: 1 stance, 2 and 3 he opens both arms wide to the sides, 4 and 5 he claps both hands together hard in front of him at chest height, 6 he holds the clap, 7 he opens the hands, 8 stance. (The giant green hands that copy the clap are a separate effect.)',
+    "tosquia": 'the Shearing finisher: 1 stance, 2 he hooks the bone crook on his red sash at the hip (the crook stays visible hanging there), 3 he opens both arms wide to the sides with a step forward, 4 and 5 he claps both hands together hard in front of him at chest height, hips turned into the clap, 6 he holds the clap, 7 he opens the hands and grabs the crook back from the sash, 8 stance with the crook in the back hand. The crook is visible in EVERY frame. (The giant green hands that copy the clap are a separate effect.)',
     "casco": 'a, hooves: 1 stance, 2 the front hoof lifts low, 3 a quick hoof kick forward at shin height, 4 back, 5 the front knee rises high, 6 a heavy hoof stomp forward and down at knee height, 7 the hoof lands heavily, 8 stance.',
     "estampido": 'a chain, hoof scrape then the Stamp finisher: 1 stance, 2 the front hoof scrapes back along the floor like an angry goat, 3 it scrapes again, 4 he raises the front hoof high, 5 first stomp straight down, 6 he raises it again, 7 second and third stomps, the body dropping with weight, 8 stance. (The cracks and the eruption under the opponent are a separate effect.)',
     "giro_manto": 'b, Cape Spin: 1 stance, 2 he turns his back starting a spin, 3 back to the viewer, the black fur cape flaring out wide, 4 he completes the spin and the cape whips forward at chest height like a heavy blade, 5 the cape wraps forward fully extended, 6 the cape falls back, 7 recovering, 8 stance.',
@@ -159,7 +159,7 @@ FOLHAS_GP = {
     "manto_asa": 'Cape Wings in the air, all frames in the air: 1 tucked, 2 he opens the black fur cape wide like wings, 3 and 4 he spins horizontally once with the cape spread, hitting both sides, 5 the spin ends, 6 the cape closes, 7 and 8 back to tucked.',
     "dir_tras": 'two direction attacks: 1 stance, 2 he raises the back open hand behind him, 3 he swats forward and upward with the open hand at head height (the giant green hand that copies it is a separate effect), 4 back to stance, 5 he turns slightly, 6 a back kick with the hoof straight behind him at belly height, 7 he turns back, 8 stance.',
     "juizo_cima": 'two direction attacks: 1 stance, 2 a small hop forward lifting the bone crook over the head, 3 he comes down smashing the crook from above at head height (overhead), 4 landing, 5 he raises the front knee very high, 6 a huge stomp forward and down that shakes the ground, knees bent, 7 he stays low after the stomp, 8 stance. (Cracks and fire are a separate effect.)',
-    "defesa": 'blocking: 1 stance, 2 and 3 he crosses the bone bracers in front of the face, 4 and 5 holding, 6 and 7 pushed back a little, hooves sliding, 8 still blocking.',
+    "defesa": 'blocking: 1 stance, 2 and 3 he crosses the bone bracers in front of his chest, just under the chin, so the face stays fully visible above them, the bone crook still gripped in the back hand and held upright beside the guard, 4 and 5 holding, 6 and 7 pushed back a little, hooves sliding, 8 still blocking. The crook is visible in EVERY frame.',
     "apanha": 'getting hit: 1 stance, 2 and 3 the head snaps back, horns tilting, 4 and 5 the torso bends back, crook still in the back hand, 6 to 8 he straightens, angry, back to the stance.',
     "queda": 'being knocked down, 8 clearly SEPARATED figures: 1 hit, 2 hooves leaving the ground, 3 and 4 flying backward, 5 body horizontal, 6 landing on his back on the cape, 7 bouncing, 8 lying flat, head on the left. The crook stays in the hand.',
     "levanta": 'getting up: 1 flat on his back, 2 and 3 he rolls to the side, 4 and 5 he pushes up with the crook planted, 6 and 7 standing and throwing the cape back, 8 stance.',
@@ -220,8 +220,9 @@ def anexos(nome):
     if nome == "despertar_b":
         return "e_referencia_ginga.png + despertar_a.png"
     if nome.startswith("e_"):
+        # boneco de peças (17/11): o parado do Grão-Pastor sai do kit, então o anexo é o conceito aprovado
         normal = nome[2:]
-        return "e_referencia_ginga.png" + (f" + {normal}.png" if normal in ANEXA_BASE else "")
+        return "e_conceito.png" + (f" + {normal}.png" if normal in ANEXA_BASE else "")
     if nome.startswith("fx_"):
         return "nenhum"
     return "referencia_ginga.png"
@@ -230,7 +231,11 @@ def anexos(nome):
 # Receita, seção 3: boneco grande na folha (~545 px como o CK), para o 3x sair nítido direto da folha.
 TAMANHO = "\n\nSIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair, soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds."
 TAMANHO_REF = TAMANHO.replace("at exactly the same pixel size as the attached sheet: ", "")
-TAMANHO_GP = TAMANHO.replace("top of the hair", "top of the hair (the horns go above that)")
+TAMANHO_GP = TAMANHO.replace("at exactly the same pixel size as the attached sheet: standing, about 545 pixels",
+                             "standing, about 430 pixels").replace("top of the hair", "top of the hair (the horns go above "
+                             "that)") + " The attached image is a model sheet (front, 3/4, back, face): draw him in the " \
+    "3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so " \
+    "each frame fits inside its own 271-pixel cell."
 
 
 def pedido(nome):

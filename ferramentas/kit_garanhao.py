@@ -131,19 +131,19 @@ POSES.update({
     "corrente_x/07": _p(dx=4, pes=(0, 6)),
     # rasga-couro: as duas patas sobem e descem em X, o corpo cai com o peso e avança
     "rasga_couro/07": _p(),
-    "rasga_couro/01": _p(dy=-6, tronco=-10, cabeca=-8, bf=-120, bt=-110),
-    "rasga_couro/02": _p(dy=-10, tronco=-14, cabeca=-12, bf=-160, bt=-150),
-    "rasga_couro/03": _p(dx=10, dy=8, tronco=14, cabeca=6, bf=-40, bt=-50, pes=(0, 16)),
-    "rasga_couro/04": _p(dx=14, dy=14, tronco=20, cabeca=10, bf=10, pes=(2, 20)),
-    "rasga_couro/05": _p(dx=12, dy=12, tronco=16, cabeca=8, bf=20, bt=10, pes=(2, 20)),
+    "rasga_couro/01": _p(dy=-4, tronco=-8, cabeca=-6, bf=-60, bt=60),
+    "rasga_couro/02": _p(dy=-8, tronco=-12, cabeca=-10, bf=-90, bt=130),
+    "rasga_couro/03": _p(dx=10, dy=8, tronco=14, cabeca=6, bf=-20, bt=-20, pes=(0, 16)),
+    "rasga_couro/04": _p(dx=14, dy=14, tronco=20, cabeca=10, bf=10, bt=-50, pes=(2, 20)),
+    "rasga_couro/05": _p(dx=12, dy=12, tronco=16, cabeca=8, bf=20, bt=-30, pes=(2, 20)),
     "rasga_couro/06": _p(dx=6, dy=4, tronco=6, pes=(0, 10)),
     # empinada: sobe nas patas de trás com as garras no alto e despenca para a frente
     "empinada/00": _p(),
-    "empinada/01": _p(dy=-10, tronco=-12, cabeca=-10, bf=-80, bt=-60),
-    "empinada/02": _p(dy=-18, tronco=-18, cabeca=-14, bf=-120, bt=-100),
-    "empinada/03": _p(dy=-24, tronco=-22, cabeca=-18, bf=-150, bt=-140),
-    "empinada/04": _p(dy=-24, tronco=-22, cabeca=-18, bf=-150, bt=-140),
-    "empinada/05": _p(dx=18, dy=16, tronco=22, cabeca=10, bf=-30, bt=-20, pes=(4, 24)),
+    "empinada/01": _p(dy=-10, tronco=-12, cabeca=-10, bf=-70, bt=70),
+    "empinada/02": _p(dy=-18, tronco=-18, cabeca=-14, bf=-100, bt=110),
+    "empinada/03": _p(dy=-24, tronco=-22, cabeca=-18, bf=-120, bt=140),
+    "empinada/04": _p(dy=-24, tronco=-22, cabeca=-18, bf=-120, bt=140),
+    "empinada/05": _p(dx=18, dy=16, tronco=22, cabeca=10, bf=-20, bt=-30, pes=(4, 24)),
     "empinada/06": _p(dx=12, dy=8, tronco=10, pes=(2, 16)),
     "empinada/07": _p(dx=4, pes=(0, 6)),
     # garra rasteira: de quatro, puxa a pata e rasga rente ao chão avançando
@@ -155,30 +155,31 @@ POSES.update({
     "garra_rasteira/05": _m(C, dx=6, bf=-30, pes=(-6, 14)),
     # chifrada que sobe: de quatro, abaixa a cabeça e explode para cima com os chifres
     **{f"chifrada_sobe/{i:02d}": _p(**C) for i in (0, 6, 7)},
-    "chifrada_sobe/01": _m(C, dy=32, tronco=26, cabeca=-8),
-    "chifrada_sobe/02": _m(C, dy=32, tronco=28, cabeca=-2, bf=-24, bt=-28),
+    "chifrada_sobe/01": _m(C, tronco=26, cabeca=-8),
+    "chifrada_sobe/02": _m(C, tronco=28, cabeca=-2, bf=-24, bt=-28),
     "chifrada_sobe/03": _p(dy=10, tronco=4, cabeca=-16, bf=-30, bt=-20, pes=(0, 6)),
     "chifrada_sobe/04": _p(dy=-20, tronco=-14, cabeca=-32, bf=-70, bt=-50, pes=(0, 8)),
     "chifrada_sobe/05": _p(dy=-14, tronco=-10, cabeca=-24, bf=-50, bt=-30, pes=(0, 8)),
     # casco raspa: de quatro, raspa o casco para trás como touro bravo e chuta rente ao chão
     **{f"casco_raspa/{i:02d}": _p(**C) for i in (0, 6, 7)},
-    "casco_raspa/01": _m(C, coxa_frente=15, canela_frente=15),
-    "casco_raspa/02": _m(C, coxa_frente=25, canela_frente=25),
-    "casco_raspa/03": _m(C, dx=4, coxa_frente=-35, canela_frente=-20),
-    "casco_raspa/04": _m(C, dx=6, coxa_frente=-50, canela_frente=-30),
-    "casco_raspa/05": _m(C, coxa_frente=-20, canela_frente=5),
+    # raspa o casco: o casco da frente arrasta para trás no chão (touro antes de investir), sem sair do chão
+    "casco_raspa/01": _m(C, pes=(-12, 4)),
+    "casco_raspa/02": _m(C, dx=-2, pes=(-12, -14)),
+    "casco_raspa/03": _m(C, dx=-4, tronco=26, pes=(-12, -30)),
+    "casco_raspa/04": _m(C, dx=-2, pes=(-12, -6)),
+    "casco_raspa/05": _m(C, dx=-4, tronco=26, pes=(-12, -30)),
     # rabo-chicote: bem baixo, a perna da frente varre o chão esticada
     **{f"rabo_chicote/{i:02d}": _p(**C) for i in (0, 6, 7)},
-    "rabo_chicote/01": _m(C, dy=32),
-    "rabo_chicote/02": _m(C, dy=32, coxa_frente=-40, canela_frente=-20),
-    "rabo_chicote/03": _m(C, dy=32, dx=8, coxa_frente=-65, canela_frente=-35),
-    "rabo_chicote/04": _m(C, dy=32, dx=8, coxa_frente=-65, canela_frente=-35),
-    "rabo_chicote/05": _m(C, dy=32, coxa_frente=-25, canela_frente=0),
+    "rabo_chicote/01": _p(**C),
+    "rabo_chicote/02": _m(C, coxa_frente=-40, canela_frente=-20),
+    "rabo_chicote/03": _m(C, dx=8, coxa_frente=-65, canela_frente=-35),
+    "rabo_chicote/04": _m(C, dx=8, coxa_frente=-65, canela_frente=-35),
+    "rabo_chicote/05": _p(**C),
     # no ar
     **{f"ar_garras/{i:02d}": _p(**A) for i in (0, 6, 7)},
-    "ar_garras/01": _m(A, bf=-120, bt=-100),
-    "ar_garras/02": _m(A, tronco=0, bf=-140, bt=-120),
-    "ar_garras/03": _m(A, tronco=12, bf=-40, bt=-40),
+    "ar_garras/01": _m(A, bf=-90, bt=110),
+    "ar_garras/02": _m(A, tronco=0, bf=-110, bt=140),
+    "ar_garras/03": _m(A, tronco=12, bf=-30, bt=-30),
     "ar_garras/04": _m(A, tronco=14, bf=0, bt=0),
     "ar_garras/05": _m(A, tronco=8, bf=-10),
     **{f"ar_joelho/{i:02d}": _p(**A) for i in (0, 6, 7)},
@@ -201,8 +202,6 @@ POSES.update({
     "ar_cascos/05": _m(A, coxa_frente=-40, canela_frente=60, coxa_tras=-20, canela_tras=60),
     # coice: abaixa com as garras no chão, vira de costas e escoiceia (de costas = desenho da folha)
     "coice/00": _p(), "coice/07": _p(),
-    "coice/01": _p(dx=-2, dy=20, tronco=26, cabeca=-14, bf=-20, bt=-20),
-    "coice/06": _p(dx=-2, dy=20, tronco=26, cabeca=-14, bf=-20, bt=-20),
 })
 BRACO_VAR = {}
 VARIANTES = {}
@@ -233,12 +232,12 @@ ANIMS = {
 }
 AUTO_ESPECIAL = set()
 FIRMES = set()
-ESPECIAIS = {"coice/02", "coice/03", "coice/04", "coice/05"}  # de costas: desenho da folha
+ESPECIAIS = {f"coice/{i:02d}" for i in range(1, 7)}  # vira de costas e coice: desenho da folha nova (17/11, mesmo corpo)
 EXPRESSOES = {}
 PERNA_NO_AR = {"pisao/01": "livre", "pisao/02": "livre", "pisao/03": "livre",
                **{f"casco_canela/{i:02d}": "livre" for i in range(1, 6)},
-               **{f"casco_raspa/{i:02d}": "livre" for i in range(1, 6)},
-               **{f"rabo_chicote/{i:02d}": "livre" for i in range(2, 6)}}
+               
+               **{f"rabo_chicote/{i:02d}": "livre" for i in range(2, 5)}}
 LACOS = {0}
 NO_DA_FAIXA = [(0, 0), (1, 0), (0, 1)]  # o Garanhão não tem nó de faixa
 # o Garanhão é escuro (calção, crina, cascos): quando as pernas abrem e o corpo abaixa aparece mais calção escuro entre

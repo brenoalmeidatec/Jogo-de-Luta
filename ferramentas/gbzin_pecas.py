@@ -432,6 +432,24 @@ def desenhar(kit, pose):
         usados.append((p, pos, ang))
         if slot == "canela_frente":  # o tênis de trás vai antes da perna da frente
             pass
+    return _acabar(kit, pose, w, tela, usados, bx)
+
+
+def desenhar_pele(kit, pose):
+    """Como desenhar(), mas as peças viram pele que dobra nas juntas (pele_pecas.py, da thread do Pengaró): sem linha de
+    corte entre quadril, coxa, canela e braço. Sobra, pés, cabeça por cima, furos e pontas da faixa iguais."""
+    if pose.get("_baixo"):
+        return desenhar(kit, pose)
+    import pele_pecas as pele
+    w = b.mundo(pose)
+    tela = pele.desenhar(kit, pose)
+    usados = []
+    for slot in CAMADAS:
+        usados.append((kit["pecas"][b.chave(slot, pose)],) + tuple(w[slot]))
+    return _acabar(kit, pose, w, tela, usados, None)
+
+
+def _acabar(kit, pose, w, tela, usados, bx):
     for p, pos, ang in usados:
         r, x0, y0 = b.colocar(p, p["sob"], p["origem_sobra"], pos, ang)
         b.colar(tela, r, x0, y0, so_vazio=True)
@@ -580,7 +598,7 @@ def gravar(kit, nome, quadros, cx):
     relatorio = []
     originais = {}
     for i, (pose, t, caixa_on, q) in enumerate(quadros):
-        out = desenhar(kit, pose)
+        out = desenhar_pele(kit, pose)
         if q not in originais:
             originais[q] = abrir(q)
         erros = pf.conferir(out, originais[q], None)
@@ -622,7 +640,7 @@ def animar(nomes):
         quadros = vida.atrasar(quadros, laco=laco)
         relatorio += gravar(kit, nome, quadros, cx)
         print(nome, len(dict.fromkeys(q for q, _ in elems)), "poses-chave ->", len(quadros), "desenhos")
-    Image.fromarray(desenhar(kit, {})).save(SPR / "quadros_pecas_hd" / "guarda.png")
+    Image.fromarray(desenhar_pele(kit, {})).save(SPR / "quadros_pecas_hd" / "guarda.png")
     falhas = sum("FAIL" in l for l in relatorio)
     texto = "\n".join(relatorio) + f"\n\n{falhas} quadro(s) com defeito.\n"
     DOCS.mkdir(parents=True, exist_ok=True)
@@ -966,7 +984,7 @@ def firmes(golpes=None):
                 ys, xs = np.nonzero(out[..., 3] > 0)
                 out = np.roll(out, 1080 - 2 * 540 + (540 - (xs.min() + xs.max()) // 2) * 0, 1)
             elif q in POSES_QUADRO:
-                out, como, nota = desenhar(kit, POSES_QUADRO[q](kit)), "kit", None
+                out, como, nota = desenhar_pele(kit, POSES_QUADRO[q](kit)), "kit", None
                 if gn in NO_AR:
                     ys = np.nonzero(out[..., 3].any(1))[0]
                     out = np.roll(out, 659 - ys.max(), 0)
