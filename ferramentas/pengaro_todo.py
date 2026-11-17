@@ -64,6 +64,9 @@ AJUSTE = {
     "provoca/03": {"braco_frente": {"ang": -10, "dx": 0, "dy": 0}, "cabeca": {"ang": 0, "var": "riso"}},
     "provoca/04": {"braco_frente": {"ang": -35, "dx": 0, "dy": 0}, "cabeca": {"ang": 0, "var": "riso"}},
     "provoca/05": {"braco_frente": {"ang": -10, "dx": 0, "dy": 0}, "cabeca": {"ang": 0, "var": "riso"}},
+    # chute alto: o encaixe punha a perna caída para trás no quadro em que ela sobe; vira a câmara com o joelho mais
+    # alto, abrindo (estudo de anatomia, Lei 8: joelho primeiro, pé depois)
+    "chute_alto/03": {"coxa_frente": {"var": "camara", "ang": -18, "dx": 0, "dy": 0}},
 }
 
 
@@ -84,24 +87,30 @@ CABECADA = {
     "cabecada/06": {"quadril": {"dx": 6, "dy": 2}, "tronco": {"ang": 5}, "cabeca": {"ang": 4, "var": "foco"},
                     "braco_frente": {"ang": 10, "var": "punho"}, "braco_tras": {"ang": 0}},
 }
-# Soco natural (regra do Alisson, 17/11): o quadril vai para a frente e gira (o tronco inclina para o soco), o pé da
-# frente dá um passo, o ombro e o braço chegam juntos e o braço de trás recua (contrapeso). "_pes": quanto cada pé
-# anda no chão (px HD, trás e frente) em relação ao parado.
+# Soco natural (regra do Alisson, 17/11) com a receita do estudo de anatomia (docs/estudo-anatomia-golpes.md, jab e
+# direto): o quadril vai para a frente e o tronco inclina para o soco, o pé da frente dá um passo, o OMBRO anda para a
+# frente (o alcance vem dele, nunca de esticar a peça), o braço da frente (lado longe) sai de trás do peito no contato
+# ("_camada"), o calcanhar de trás levanta ("_ponta_tras", px) e o braço da garrafa vai para trás, longe do golpe.
+# "_pes": quanto cada pé anda no chão (px HD, trás e frente) em relação ao parado.
+ATRAS_BRACO = {"atras": "braco_frente"}
 SOCO = {
     "soco/01": {"quadril": {"dx": 0, "dy": 2}, "cabeca": {"ang": 0, "var": "foco"},
                 "braco_frente": {"ang": -8, "var": "punho"}, "_pes": (0, 0)},
-    # antecipação: o peso vai para trás, o punho recua junto do rosto
-    "soco/02": {"quadril": {"dx": -6, "dy": 5}, "tronco": {"ang": -5}, "cabeca": {"ang": -3, "var": "foco"},
+    # antecipação: joelhos afundam, o peso vai para trás, o punho sai reto da guarda (sem descer)
+    "soco/02": {"quadril": {"dx": -6, "dy": 6}, "tronco": {"ang": -5}, "cabeca": {"ang": -3, "var": "foco"},
                 "braco_frente": {"ang": -24, "dx": -4, "var": "punho"}, "braco_tras": {"ang": 4}, "_pes": (0, 0)},
-    "soco/03": {"quadril": {"dx": -4, "dy": 5}, "tronco": {"ang": -4}, "cabeca": {"ang": -3, "var": "foco"},
+    "soco/03": {"quadril": {"dx": -4, "dy": 6}, "tronco": {"ang": -4}, "cabeca": {"ang": -3, "var": "foco"},
                 "braco_frente": {"ang": -20, "dx": -4, "var": "punho"}, "braco_tras": {"ang": 4}, "_pes": (0, 0)},
-    # contato: passo à frente, quadril e ombro entram, braço inteiro esticado na altura do ombro
-    "soco/05": {"quadril": {"dx": 22, "dy": 7}, "tronco": {"ang": 8}, "cabeca": {"ang": 6, "dx": 2, "var": "esforco"},
-                "braco_frente": {"ang": -8, "var": "esticado"}, "braco_tras": {"ang": -16}, "_pes": (6, 30)},
-    # recolhe: o punho volta, o corpo ainda na frente
-    "soco/06": {"quadril": {"dx": 14, "dy": 5}, "tronco": {"ang": 4}, "cabeca": {"ang": 3, "var": "foco"},
-                "braco_frente": {"ang": -14, "var": "punho"}, "braco_tras": {"ang": -8}, "_pes": (6, 30)},
-    # volta para a guarda trazendo o pé
+    # contato: passo à frente, quadril e ombro entram (ombro anda 6 px; o resto vem do quadril e do tronco), braço esticado na altura do ombro saindo de
+    # trás do peito, calcanhar de trás no ar, garrafa para trás, queixo atrás do ombro
+    "soco/05": {"quadril": {"dx": 22, "dy": 8}, "tronco": {"ang": 8}, "cabeca": {"ang": 6, "dx": 2, "var": "esforco"},
+                "braco_frente": {"ang": -8, "dx": 6, "dy": 1, "var": "esticado"}, "braco_tras": {"ang": -18},
+                "_pes": (6, 30), "_camada": ATRAS_BRACO, "_ponta_tras": {"dy": 10}},
+    # recolhe pelo mesmo caminho: o punho volta, o corpo ainda na frente
+    "soco/06": {"quadril": {"dx": 14, "dy": 6}, "tronco": {"ang": 4}, "cabeca": {"ang": 3, "var": "foco"},
+                "braco_frente": {"ang": -14, "dx": 3, "var": "punho"}, "braco_tras": {"ang": -8}, "_pes": (6, 30),
+                "_ponta_tras": {"dy": 6}},
+    # volta para a guarda trazendo o pé; o calcanhar assenta
     "soco/07": {"quadril": {"dx": 5, "dy": 2}, "tronco": {"ang": 1}, "cabeca": {"ang": 0, "var": "foco"},
                 "braco_frente": {"ang": -8, "var": "punho"}, "braco_tras": {"ang": -2}, "_pes": (2, 12)},
 }
@@ -111,18 +120,27 @@ FEITAS = {**CABECADA, **SOCO}
 # entra na direção do chute e sobe na ponta do pé de apoio, o tronco inclina para trás (contrapeso), a cabeça fica
 # olhando o alvo, o braço de trás abre para equilibrar e o da frente guarda o rosto. Valores SOMADOS à pose encaixada
 # (dx/dy em px HD, ang em graus); o pé de apoio volta a plantar por IK onde estava no desenho de hoje.
-def _corpo(qdx, qdy, tronco, cabeca, btras, bfrente=0):
-    return {"quadril": {"dx": qdx, "dy": qdy}, "tronco": {"ang": tronco}, "cabeca": {"ang": cabeca},
-            "braco_tras": {"ang": btras}, "braco_frente": {"ang": bfrente}}
+def _corpo(qdx, qdy, tronco, cabeca, btras, bfrente=0, bacia=0, atras=None):
+    c = {"quadril": {"dx": qdx, "dy": qdy, "ang": bacia}, "tronco": {"ang": tronco}, "cabeca": {"ang": cabeca},
+         "braco_tras": {"ang": btras}, "braco_frente": {"ang": bfrente}}
+    if atras:
+        c["_camada"] = {"atras": atras}
+    return c
+
+
+# estudo de anatomia (Parte 2): a perna do chute alto é a da frente, lado LONGE: a coxa nasce atrás da faixa e do
+# tronco, e a mão da frente desce para trás da perna (a mão livre nunca tapa o golpe). Coxa acima da horizontal pede a
+# bacia inclinada (o lado da perna sobe) e o tronco para trás.
+LONGE = "braco_frente,perna_frente"
 
 
 CORPO = {
     # chute alto: carrega (peso atrás), sobe o joelho, estica com o quadril entrando e o tronco deitando para trás
-    "chute_alto/02": _corpo(-4, 2, -4, 2, -6, -6),
-    "chute_alto/03": _corpo(4, 0, -8, 4, -14, -8),
-    "chute_alto/04": _corpo(12, -3, -12, 6, -24, -10),
-    "chute_alto/05": _corpo(9, -2, -10, 5, -18, -8),
-    "chute_alto/06": _corpo(3, 2, -5, 2, -8, -4),
+    "chute_alto/02": _corpo(-4, 2, -4, 2, -6, -6, atras=LONGE),
+    "chute_alto/03": _corpo(4, 0, -6, 4, -14, 10, bacia=-2, atras=LONGE),
+    "chute_alto/04": _corpo(12, -3, -7, 6, -20, 25, bacia=-5, atras=LONGE),
+    "chute_alto/05": _corpo(9, -2, -6, 5, -16, 20, bacia=-4, atras=LONGE),
+    "chute_alto/06": _corpo(3, 2, -5, 2, -8, -4, atras=LONGE),
     "chute_alto/07": _corpo(0, 0, -1, 0, -2),
     # chute baixo (de frente): o quadril empurra a perna, o tronco recua um pouco
     "chute_baixo/02": _corpo(8, -1, -7, 3, -14, -6),
@@ -136,6 +154,9 @@ CORPO = {
 def corpo_inteiro(p, q):
     """Soma o movimento do corpo (CORPO) na pose e planta de novo o pé de apoio."""
     for slot, d in CORPO[q].items():
+        if slot.startswith("_"):
+            p[slot] = dict(d)
+            continue
         o = p.setdefault(slot, {"ang": 0})
         for k, v in d.items():
             o[k] = o.get(k, 0) + v
@@ -143,11 +164,12 @@ def corpo_inteiro(p, q):
 
 
 def plantar_pes(pose, dx_tras=0, dx_frente=0):
-    """Pernas por IK com cada pé no chão, deslocado dx do pé do parado."""
+    """Pernas por IK com cada pé no chão, deslocado dx do pé do parado (o tornozelo de trás sobe com o calcanhar)."""
     w = b.mundo(pose)
-    for coxa, canela, dx in (("coxa_tras", "canela_tras", dx_tras), ("coxa_frente", "canela_frente", dx_frente)):
+    ponta = pose.get("_ponta_tras", {}).get("dy", 0)
+    for coxa, canela, dx, dy in (("coxa_tras", "canela_tras", dx_tras, ponta), ("coxa_frente", "canela_frente", dx_frente, 0)):
         tr = pf.TORNOZELO[canela]
-        c1, c2 = pf.ik(w[coxa][0], (tr[0] + dx, tr[1]), b.OSSOS[canela][0], b.OSSOS[coxa][0], tr)
+        c1, c2 = pf.ik(w[coxa][0], (tr[0] + dx, tr[1] - dy), b.OSSOS[canela][0], b.OSSOS[coxa][0], tr)
         pose[coxa] = {"ang": c1}
         pose[canela] = {"ang": c2}
     return pose
@@ -157,7 +179,9 @@ def feita(q):
     pose = {"quadril": {"ang": 0, "dx": 0, "dy": 0}}
     pes = FEITAS[q].get("_pes", (0, 0))
     for slot, v in FEITAS[q].items():
-        if not slot.startswith("_"):
+        if slot in ("_camada", "_ponta_tras"):
+            pose[slot] = dict(v)
+        elif not slot.startswith("_"):
             pose[slot] = dict({"ang": 0}, **v)
     return plantar_pes(pose, *pes)
 

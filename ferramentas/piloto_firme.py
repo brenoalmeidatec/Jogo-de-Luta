@@ -319,11 +319,18 @@ def desenhar(kit, pose):
         tx, ty = t[0] + joelho[0] - jr[0], t[1] + joelho[1] - jr[1]
         x0 = int(round(pe["origem"][0] + tx - pe["tornozelo"][0]))
         y0 = int(round(pe["origem"][1] + ty - pe["tornozelo"][1]))
+        img_pe, fundo_pe = pe["img"], pe["fundo"]
+        ponta = int(round(pose.get("_ponta_tras", {}).get("dy", 0))) if slot == "canela_tras" else 0
+        if ponta > 0:
+            # calcanhar levantado (pé de trás na ponta, estudo de anatomia): o peito do pé fica mais em pé, o tornozelo
+            # sobe `ponta` px e os dedos continuam no chão (o IK já subiu o tornozelo)
+            img_pe = esticar_tornozelo(img_pe, ponta)
+            fundo_pe += ponta
         # pé perto do chão encosta no chão (o chão do parado), sem afundar nem flutuar alguns pixels
-        fundo = pe["fundo"] + y0
+        fundo = fundo_pe + y0
         if abs(fundo - CHAO) <= 10:
             y0 += CHAO - fundo
-        b.colar(tela, pe["img"], x0, y0, so_vazio=(slot == "canela_tras"))
+        b.colar(tela, img_pe, x0, y0, so_vazio=(slot == "canela_tras"))
     p = kit["pecas"]["quadril"]
     bo = pose.get("_bolinhas", {})
     (qx, qy), qang = w["quadril"]

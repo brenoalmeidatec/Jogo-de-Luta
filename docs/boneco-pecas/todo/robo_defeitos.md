@@ -36,8 +36,8 @@
 | 191 | 6 (2 especiais) | PASS |
 | 192 | 6 (2 especiais) | PASS |
 | 195 | 22 (1 especiais) | PASS |
-| 200 | 8 (0 especiais) | PASS |
-| 201 | 14 (0 especiais) | PASS |
+| 200 | 7 (2 especiais) | PASS |
+| 201 | 14 (2 especiais) | PASS |
 | 210 | 10 (6 especiais) | PASS |
 | 215 | 9 (6 especiais) | PASS |
 | 216 | 10 (6 especiais) | PASS |
@@ -45,9 +45,9 @@
 | 231 | 7 (6 especiais) | PASS |
 | 240 | 17 (1 especiais) | PASS |
 | 245 | 7 (6 especiais) | PASS |
-| 246 | 18 (2 especiais) | PASS |
+| 246 | 18 (1 especiais) | PASS |
 | 260 | 13 (5 especiais) | PASS |
-| 301 | 10 (0 especiais) | PASS |
+| 301 | 10 (2 especiais) | PASS |
 | 302 | 10 (6 especiais) | PASS |
 | 303 | 9 (1 especiais) | PASS |
 | 311 | 10 (6 especiais) | PASS |
@@ -59,7 +59,7 @@
 | 331 | 16 (1 especiais) | PASS |
 | 332 | 13 (5 especiais) | PASS |
 | 333 | 7 (7 especiais) | PASS |
-| 340 | 10 (0 especiais) | PASS |
+| 340 | 10 (2 especiais) | PASS |
 | 341 | 16 (1 especiais) | PASS |
 | 342 | 5 (5 especiais) | PASS |
 | 343 | 10 (6 especiais) | PASS |
@@ -97,7 +97,7 @@
 | 1700 | 12 (6 especiais) | PASS |
 | 1701 | 13 (1 especiais) | PASS |
 | 3000 | 5 (5 especiais) | PASS |
-| 3100 | 28 (5 especiais) | PASS |
+| 3100 | 24 (5 especiais) | PASS |
 | 3200 | 16 (7 especiais) | PASS |
 | 3400 | 4 (4 especiais) | PASS |
 | 3401 | 20 (1 especiais) | PASS |
@@ -114,7 +114,7 @@
 | 3430 | 9 (1 especiais) | PASS |
 | 3431 | 12 (6 especiais) | PASS |
 | 3432 | 19 (1 especiais) | PASS |
-| 3433 | 12 (0 especiais) | PASS |
+| 3433 | 10 (2 especiais) | PASS |
 | 3434 | 7 (6 especiais) | PASS |
 | 3435 | 7 (7 especiais) | PASS |
 | 5000 | 3 (3 especiais) | PASS |
