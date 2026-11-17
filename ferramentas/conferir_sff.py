@@ -59,7 +59,8 @@ def ler(caminho):
         if ln == 0:
             assert link < k, f"{caminho}: sprite {g},{i} linka para frente ({link} >= {k})"
             src = nos[link]
-            nos.append(dict(g=g, i=i, w=src["w"], h=src["h"], x=x, y=y, link=link, px=src["px"], hw=(w, h), pi=pi))
+            nos.append(dict(g=g, i=i, w=src["w"], h=src["h"], x=x, y=y, link=link, px=src["px"], hw=(w, h), pi=pi,
+                            **({"png": True} if src.get("png") else {})))
             continue
         base = ofs_l if fl == 0 else ofs_t
         raw = b[base + off:base + off + ln]

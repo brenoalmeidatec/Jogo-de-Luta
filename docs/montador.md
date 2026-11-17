@@ -4,6 +4,11 @@ Pedido do Breno em 2026-11-17. Página no navegador para montar as poses-chave d
 em vez de digitar ângulos no código. É o passo 4 da [missão do boneco de peças](missao-alisson-boneco-de-pecas.md) com
 interface.
 
+O montador é o passo 5 da [`regra-de-criacao-de-personagem.md`](regra-de-criacao-de-personagem.md).
+
+Para posar cada golpe (qual membro bate, camadas perto e longe, base, juntas e as poses de cada golpe), siga o
+[`estudo-anatomia-golpes.md`](estudo-anatomia-golpes.md).
+
 ```bash
 python ferramentas/montador.py                  # Pengaró
 python ferramentas/montador.py --lutador gbzin  # Gbzin
@@ -24,6 +29,11 @@ Abre `http://127.0.0.1:8765` no navegador. Precisa só de `pillow numpy opencv-p
   espaço toca.
 - **Desenho** troca a variante da peça (punho, braço esticado, perna em câmara ou esticada, cabeça de esforço).
 - **Casca de cebola:** a pose anterior em azul e a próxima em laranja, por baixo.
+- **Esconder e camada (por pose):** no painel do osso, "esconder nesta pose" tira a peça (a canela leva o pé junto) e
+  "camada" manda a peça para trás do corpo ou para a frente de tudo. Ex.: no chute, a mão da frente vai para trás.
+- **Pintar, apagar e pegar cor** (`B`, `E`, `I`; `[` `]` mudam o pincel): pintam **na peça do osso escolhido**, antes
+  de girar, então a pintura gira e anda junto com a peça e vai para os quadros do meio daquela pose. Fica guardada na
+  pose (`"ret"`), só para aquele desenho da peça; "Limpar pintura" desfaz. O pincel 3 é 1 pixel do jogo.
 - **Régua:** acusa a junta que escorregou mais de 5% do osso. As peças são sempre o mesmo desenho, então o osso em si
   não estica.
 - **Caixa de golpe:** o `Clsn1` do golpe no 3x, relativo aos pés, aparece em vermelho na pose marcada como "bate".
@@ -40,3 +50,13 @@ editável fica em `sprites/<lutador>/montador/<golpe>.json`. Ligar no gerador co
 
 O montador lê `OSSOS`, `CAMADAS` e a função de desenho de cada lutador na classe `Lutador` de
 `ferramentas/montador.py`. Lutador novo com kit de peças ganha ali um `elif` com o leitor de kit e o `desenhar` dele.
+
+## Primeiro uso: chute alto do Pengaró (2026-11-17)
+
+`sprites/pengaro/montador/chute_alto.json`, gravado em `quadros_montador_hd/chute_alto/`. Correção pedida pelo Breno
+("duas pernas direitas" e mão solta), feita pela Parte 2 do [`estudo-anatomia-golpes.md`](estudo-anatomia-golpes.md):
+nas poses de perna levantada, a perna da frente (calça branca, lado longe) foi para **atrás do corpo**, então ela nasce
+atrás da faixa e do tronco e não parece sair do quadril da perna de apoio; o braço da frente também foi para trás do
+corpo e não tapa mais o chute. Nenhum pixel foi repintado (uma primeira tentativa tirava a listra da perna de apoio, mas
+a listra é dela e o erro era de camada). Antes e depois (original, piloto, consertado):
+`docs/boneco-pecas/montador_chute_antes_depois.png`.

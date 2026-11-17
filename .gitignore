@@ -15,6 +15,8 @@ sprites/raiclaven_cliente/quadros_arcade_hd/
 sprites/pengaro_e/quadros_arcade_hd/
 # CK despertado no boneco de peças: gere com python ferramentas/importar_ck_e.py
 sprites/ck_e/quadros_arcade_hd/
+# Garanhão dos golpes da #47 (kit_garanhao_47): atalho para os quadros do garanhao (importar_garanhao.py)
+sprites/garanhao_47/quadros_arcade_hd
 # sprites do Gutto tirados do .sff (python ferramentas/extrair_hd_sff.py gutto): reconstruíveis
 sprites/gutto/quadros_sff_hd/
 sprites/garanhao/quadros_arcade_hd/

@@ -128,9 +128,50 @@ gp.colar_endiabrado = lambda normal, endiabrado, fator=1.0, dx=None: endiabrado
 E_FOLHA = {}  # estágio 1: o Grão-Pastor ainda não tem folhas e_; cada desenho é o mesmo da base
 
 
+# Grão-Pastor no boneco de peças (thread do Grão-Pastor, ferramentas/gbzin_e_pecas.py): rascunho de pose do ChatGPT
+# com a cabeça do kit, a paleta própria de 15 cores e a escala pela cabeça, em quadros_e_firmes(_hd). Folha da base ->
+# (folha do Grão-Pastor, ordem dos desenhos ou None). Cada golpe da base que ainda não tem folha própria continua com o
+# desenho da base (estágio 1). Os botões batem com FOLHAS_GP de folhas_gbzin.py: x = chifrada (soco), y = arco_osso
+# (martelo), a = casco (chute_baixo: o coice do casco vem no 3º desenho, a sola da base no 4º e 5º).
+QUADROS_E = RAIZ / "sprites/gbzin/quadros_e_firmes"
+QUADROS_E_HD = RAIZ / "sprites/gbzin/quadros_e_firmes_hd"
+GRAO_PASTOR = {"referencia_ginga": ("e_referencia_ginga", None), "anda": ("e_anda", None),
+               "soco": ("e_chifrada", None), "martelo": ("e_arco_osso", None),
+               "chute_baixo": ("e_casco", (0, 1, 1, 2, 2, 3, 3, 7)), "agachado": ("e_agachado", None),
+               "cabecada": ("e_cabecada", (0, 0, 1, 3, 4, 6, 7, 7)), "pulo": ("e_pulo", None),
+               "apanha": ("e_apanha", None), "queda": ("e_queda", None),
+               "levanta": ("e_levanta", None), "vitoria": ("e_vitoria", None), "derrota": ("e_derrota", None),
+               "provoca": ("e_provoca", None), "parry_alto": ("e_parry_alto", None),
+               "parry_baixo": ("e_parry_baixo", None), "rolamento": ("e_rolamento", None),
+               "baixo_soco": ("e_baixo", (0, 1, 2, 2, 3, 3, 3, 0)), "rasteirinha": ("e_baixo", (4, 4, 5, 5, 6, 6, 7, 7)),
+               "rasteira": ("e_varrida", (1, 2, 3, 4, 5, 6, 6, 7)), "bicicleta": ("e_ar_chifre", (0, 1, 2, 2, 3, 4, 4, 0)),
+               "ar_soco": ("e_ar_soco", (1, 2, 3, 4, 5, 6, 7, 7)), "defesa": ("e_defesa", None),
+               "chute_alto": ("e_estampido", (1, 3, 4, 4, 5, 6, 7, 0)), "afastar": ("e_giro_manto", None),
+               "caneta": ("e_dir_tras", None), "armada": ("e_juizo_cima", None), "cajado_chao": ("e_maos", None),
+               "bola": ("e_mao_pastor", None), "compasso": ("e_compasso", None)}
+GRAO_PASTOR = {k: v for k, v in GRAO_PASTOR.items() if (QUADROS_E / v[0] / "00.png").exists()}
+
+
 def arquivo_ratao(pasta, n):
-    folha, ordem = E_FOLHA.get(pasta, (pasta.removeprefix("e_"), None))
+    base = pasta.removeprefix("e_")
+    if base in GRAO_PASTOR:
+        folha, ordem = GRAO_PASTOR[base]
+        return QUADROS_E / folha / f"{ordem[n] if ordem else n:02d}.png"
+    folha, ordem = E_FOLHA.get(pasta, (base, None))
     return QUADROS / folha / f"{ordem[n] if ordem else n:02d}.png"
+
+
+_loop_endiabrado_do_kit = gp.arquivo_loop_endiabrado
+
+
+def arquivo_loop_endiabrado(pasta, i):
+    folha, ordem = gp.LOOPS_ENDIABRADOS[pasta]
+    if folha in GRAO_PASTOR:
+        return arquivo_ratao(folha, ordem[i])
+    return _loop_endiabrado_do_kit(pasta, i)
+
+
+gp.arquivo_loop_endiabrado = arquivo_loop_endiabrado
 
 
 gp.arquivo_endiabrado_da_chave = arquivo_ratao
@@ -1191,7 +1232,7 @@ def main():
     # da aura entrar no .cns: o hd.py só reconhece a ação 9600 como efeito (e não a amplia: ela já é 3x e o Explod
     # usa scale 1/3) pelo Explod dela; antes disso a aura contava como corpo e era ampliada 3x.
     if QUADROS_HD.exists():
-        air, cns = hd.aplicar(s, air, cns, [(QUADROS, QUADROS_HD)], gp.SPRITES_VITIMA)
+        air, cns = hd.aplicar(s, air, cns, [(QUADROS, QUADROS_HD), (QUADROS_E, QUADROS_E_HD)], gp.SPRITES_VITIMA)
     # agarrão em pé segura-e-bate (ferramentas/agarrao_mk.py): montado dos golpes que ele já tem, depois do HD
     como_o_ck(agarrao_mk)
     air, cns = agarrao_mk.aplicar("gbzin", air, cns)

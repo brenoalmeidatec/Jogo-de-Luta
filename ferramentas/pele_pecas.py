@@ -55,15 +55,26 @@ def _regioes(kit):
     return kit["_regioes"]
 
 
-def _pontos(kit, chave_peca, slot, vizinhos):
+# perna da frente em variante (levantada/esticada): a parte do quadril que no parado é o alto da coxa da frente (abaixo
+# da junta) fica de fora, senão sobra um pedaço de calça pendurado embaixo da perna erguida
+SEM_ALTO_DA_COXA = 2   # px: distância até a coxa da frente do parado que conta como "alto da coxa"
+ALTO_DA_COXA_Y = -12   # px em relação à junta da coxa da frente
+
+
+def _pontos(kit, chave_peca, slot, vizinhos, sem_coxa=False):
     """Pontinhos da peça (no lugar do parado), cor e pesos: [próprio osso, vizinhos...] (somam 1)."""
     cache = kit.setdefault("_pontos", {})
-    if (chave_peca, vizinhos) in cache:
-        return cache[(chave_peca, vizinhos)]
+    if (chave_peca, vizinhos, sem_coxa) in cache:
+        return cache[(chave_peca, vizinhos, sem_coxa)]
     p = kit["pecas"][chave_peca]
     img = p["img"]
     ox, oy = p["origem"]
     ys, xs = np.nonzero(img[..., 3] > 0)
+    if sem_coxa:
+        _, dist0 = _regioes(kit)
+        jy = b.OSSOS["coxa_frente"][0][1] + ALTO_DA_COXA_Y
+        fica = ~((dist0["coxa_frente"][ys + oy, xs + ox] < SEM_ALTO_DA_COXA) & (ys + oy > jy))
+        ys, xs = ys[fica], xs[fica]
     cor = img[ys, xs]
     X, Y = xs + ox, ys + oy
     _, dist = _regioes(kit)
@@ -81,7 +92,7 @@ def _pontos(kit, chave_peca, slot, vizinhos):
     PX = (X[:, None] + gx[None]).ravel().astype(np.float32)
     PY = (Y[:, None] + gy[None]).ravel().astype(np.float32)
     res = (PX, PY, np.repeat(cor, SUB * SUB, 0), np.repeat(pesos, SUB * SUB, 0))
-    cache[(chave_peca, vizinhos)] = res
+    cache[(chave_peca, vizinhos, sem_coxa)] = res
     return res
 
 
@@ -112,7 +123,8 @@ def desenhar(kit, pose):
                 vizinhos = ("quadril",)
             if slot == "quadril" and pose.get("coxa_frente", {}).get("var"):
                 vizinhos = tuple(v for v in vizinhos if v != "coxa_frente")
-            X, Y, cor, pesos = _pontos(kit, b.chave(slot, pose), slot, vizinhos)
+            sem_coxa = slot == "quadril" and pose.get("coxa_frente", {}).get("var") in ("camara", "esticada")
+            X, Y, cor, pesos = _pontos(kit, b.chave(slot, pose), slot, vizinhos, sem_coxa)
             ax = np.zeros_like(X)
             ay = np.zeros_like(Y)
             for k, osso in enumerate((slot,) + tuple(vizinhos)):
