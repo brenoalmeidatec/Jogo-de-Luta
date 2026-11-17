@@ -4,6 +4,10 @@ Pedido do Breno: o Claude do Alisson refaz o **Pengaró (forma base)** pelo mét
 [`estudo-animacao.md`](estudo-animacao.md). Leia o estudo inteiro antes de começar: ele explica por que os bonecos
 deformam e de onde vem cada passo. **Se o Breno gostar do resultado, o método vira regra para todos os lutadores.**
 
+> **Resultado:** o piloto foi aprovado na versão "corpo firme com vida" e o método virou regra (Breno, 2026-11-17,
+> issue #32). Para lutador novo ou refeito, siga a
+> [`regra-de-criacao-de-personagem.md`](regra-de-criacao-de-personagem.md); esta missão fica como histórico e detalhe.
+
 O Breno pediu com todas as letras: **"quero bem feito"**. Esta missão vale mais pela qualidade do que pela quantidade.
 Melhor três golpes impecáveis do que o lutador inteiro mais ou menos.
 

@@ -29,27 +29,27 @@
   },
   {
    "desenho": 2,
-   "ticks": 2,
+   "ticks": 4,
    "caixa": false,
    "de": "chute_alto/02"
   },
   {
    "desenho": 3,
-   "ticks": 2,
-   "caixa": false,
-   "de": "chute_alto/02"
-  },
-  {
-   "desenho": 4,
    "ticks": 6,
    "caixa": true,
    "de": "chute_alto/04"
   },
   {
-   "desenho": 5,
+   "desenho": 4,
    "ticks": 3,
    "caixa": false,
    "de": "chute_alto/05"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto/06"
   },
   {
    "desenho": 6,
@@ -85,7 +85,7 @@
    "desenho": 11,
    "ticks": 2,
    "caixa": false,
-   "de": "chute_alto/06"
+   "de": "chute_alto/07"
   },
   {
    "desenho": 12,
@@ -113,12 +113,6 @@
   },
   {
    "desenho": 16,
-   "ticks": 2,
-   "caixa": false,
-   "de": "chute_alto/07"
-  },
-  {
-   "desenho": 17,
    "ticks": 2,
    "caixa": false,
    "de": "chute_alto/07"
