@@ -4,6 +4,8 @@ Pedido do Breno em 2026-11-17: estudar de verdade como o corpo se comporta num s
 biomecânica, livros de artes marciais, lutas, ensino de desenho e animação de jogo de luta) e transformar isso em regra
 prática para posar cada golpe no [montador](montador.md) e no [método de peças](missao-alisson-boneco-de-pecas.md).
 
+É lei pelo passo 5 da [`regra-de-criacao-de-personagem.md`](regra-de-criacao-de-personagem.md).
+
 Este arquivo tem três partes: **as leis do corpo** (valem para todo golpe), **as camadas perto e longe** (a causa das
 "duas pernas direitas") e **a receita de cada golpe, pose por pose**. No fim, o que conferir em cada pose e as fontes.
 

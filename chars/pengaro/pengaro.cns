@@ -17581,7 +17581,7 @@ type = ModifyExplod
 trigger1 = NumExplod(9620)
 id = 9620
 postype = p1
-pos = map(au_pengaro_bx), -49.3 * (1 - 0.7 * map(au_pengaro_g))
+pos = map(au_pengaro_bx), -49.2 * (1 - 0.7 * map(au_pengaro_g))
 trans = addalpha
 alpha = floor(255 * min(1, max(0, map(au_pengaro_e))) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.0) + 0.04 * sin(GameTime * 0.1361 + 0.00))), 255 - floor(255 * min(1, max(0, map(au_pengaro_e))) * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.0) + 0.04 * sin(GameTime * 0.1361 + 0.00)))
 ignorehitpause = 1
@@ -20270,38 +20270,56 @@ palfx.time = 14
 palfx.add = 70,20,110
 palfx.sinadd = 30,30,30,4
 
-[State 4750, Luz do poder halo]
-type = Explod
-trigger1 = Time = 14
-anim = 9817
-id = 9634
-postype = p1
-pos = 60.0, -52.0
-velocity = 3.0, 0.0
-scale = 0.75, 0.75
-removetime = -1
-ownpal = 1
-removeongethit = 0
-ignorehitpause = 1
-sprpriority = 1
-trans = addalpha
-alpha = 255, 0
-
 [State 4750, Luz do poder orbe]
 type = Explod
 trigger1 = Time = 14
 anim = 9732
 id = 9633
 postype = p1
-pos = 60.0, -52.0
-bindtime = -1
+velocity = 3.0, 0.0
+accel = 0.0, 0.0
 removetime = -1
 ownpal = 1
 removeongethit = 0
 ignorehitpause = 1
-sprpriority = 6
+pos = 60.0, -52.5
+sprpriority = 2
 trans = add
 alpha = floor(255 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255
+
+[State 4750, Luz do poder halo]
+type = Explod
+trigger1 = Time = 14
+anim = 9733
+id = 9634
+postype = p1
+velocity = 3.0, 0.0
+accel = 0.0, 0.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+pos = 60.0, -52.5
+sprpriority = 1
+trans = addalpha
+alpha = floor(230 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255 - floor(230 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85)))
+
+[State 4750, Luz do poder poca]
+type = Explod
+trigger1 = Time = 14
+anim = 9721
+id = 9635
+postype = p1
+velocity = 3.0, 0.0
+accel = 0.0, 0.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+pos = 60.0, 0
+sprpriority = -8
+trans = addalpha
+alpha = floor(220 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255 - floor(220 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85)))
 
 [State 4750, Fim (despertados_47.py)]
 type = ChangeState

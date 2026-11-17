@@ -3098,3 +3098,13 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   marcas de roupa, golpe a golpe). Cabeçada fica para o Breno decidir (bate com a bengala, não com a testa).
 - `PELE_CAMADAS`: a pele do Gbzin usa a ordem de camadas dele (perna longe nasce atrás da faixa), não a do Pengaró.
   Robô de peças 0, robô do jogo 236/236.
+## 2026-11-17 — Regra definitiva de criação de personagem (Claude, thread do Breno)
+- Pedido do Breno: uma regra só, juntando tudo. Nova `docs/regra-de-criacao-de-personagem.md`: ficha, conceitos,
+  folha-modelo, kit de peças (corpo firme, paleta travada do kit, régua de ossos), posar pelas 12 leis e pela regra de
+  camadas perto/longe, tempo e caixas iguais, vida, zero erro de animação, 3x, ligar no jogo (`ligar_pecas` → aura →
+  retratos → `encolher_sff`) e revisão (robôs, vídeo lado a lado, foto, issue, checklist).
+- CLAUDE.md, AGENTS.md, como-trabalhar, receita, regras dos lutadores, bíblia, estudos, missão e montador apontam para
+  ela em vez de repetir. O passo a passo antigo (folha de 8 quadros + 6 do meio do Blender) ficou marcado como histórico.
+- Decidido depois (Breno deixou a escolha com o Claude): sem quadro do meio entre antecipação e contato, no máximo 1
+  borrão; a fluidez vem da antecipação, da volta, da guarda, do parado e das transições. Os kits já ligados ainda
+  põem meio nesse trecho: ajustar o `vida_pecas.py` e religar é trabalho à parte.
