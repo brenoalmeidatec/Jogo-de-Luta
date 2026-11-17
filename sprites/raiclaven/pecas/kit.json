@@ -271,6 +271,60 @@
     358
    ]
   },
+  "braco_frente_vassoura": {
+   "arquivo": "braco_frente_vassoura.png",
+   "origem": [
+    563,
+    260
+   ],
+   "junta": [
+    594,
+    410
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/rasteira/02.png",
+   "sobra": "braco_frente_vassoura_sobra.png",
+   "origem_sobra": [
+    554,
+    251
+   ]
+  },
+  "braco_frente_varre": {
+   "arquivo": "braco_frente_varre.png",
+   "origem": [
+    568,
+    403
+   ],
+   "junta": [
+    594,
+    410
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/rasteira/03.png",
+   "sobra": "braco_frente_varre_sobra.png",
+   "origem_sobra": [
+    559,
+    394
+   ]
+  },
+  "quadril_agachado": {
+   "arquivo": "quadril_agachado.png",
+   "origem": [
+    414,
+    483
+   ],
+   "junta": [
+    530,
+    510
+   ],
+   "mae": null,
+   "fonte": "quadros_arcade_hd/agachado/04.png",
+   "sobra": "quadril_agachado_sobra.png",
+   "origem_sobra": [
+    405,
+    474
+   ]
+  },
   "coxa_frente_baixa": {
    "arquivo": "coxa_frente_baixa.png",
    "origem": [
@@ -374,6 +428,60 @@
    "mae": "tronco",
    "fonte": "quadros_arcade_hd/ginga/00.png",
    "sobra": "ombreira_vazio_sobra.png",
+   "origem_sobra": [
+    -9,
+    -9
+   ]
+  },
+  "coxa_tras_vazio": {
+   "arquivo": "coxa_tras_vazio.png",
+   "origem": [
+    0,
+    0
+   ],
+   "junta": [
+    490,
+    520
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_arcade_hd/ginga/00.png",
+   "sobra": "coxa_tras_vazio_sobra.png",
+   "origem_sobra": [
+    -9,
+    -9
+   ]
+  },
+  "coxa_frente_vazio": {
+   "arquivo": "coxa_frente_vazio.png",
+   "origem": [
+    0,
+    0
+   ],
+   "junta": [
+    572,
+    524
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_arcade_hd/ginga/00.png",
+   "sobra": "coxa_frente_vazio_sobra.png",
+   "origem_sobra": [
+    -9,
+    -9
+   ]
+  },
+  "canela_tras_vazio": {
+   "arquivo": "canela_tras_vazio.png",
+   "origem": [
+    0,
+    0
+   ],
+   "junta": [
+    456,
+    598
+   ],
+   "mae": "coxa_tras",
+   "fonte": "quadros_arcade_hd/ginga/00.png",
+   "sobra": "canela_tras_vazio_sobra.png",
    "origem_sobra": [
     -9,
     -9

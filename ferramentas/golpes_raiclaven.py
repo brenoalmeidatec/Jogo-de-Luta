@@ -48,14 +48,32 @@ POSE = {
     "martelo/07": P(q=(1, 1), bt=-2, abt=2, bf=2),
     # cabeçada (golpe agachado que sobe): agachado com a tesoura baixa, levanta, arma o braço e sobe a tesoura aberta
     # acima da cabeça (antiaéreo), volta a agachar
-    "cabecada/00": P(q=(-2, 26), tronco=6, cabeca=2, bt=12, abt=-10, bf=6),
+    "cabecada/00": P(baixo="agachado", tronco=6, cabeca=2, bt=12, abt=-10, bf=6),
     "cabecada/01": P(q=(0, 22), tronco=4, cabeca=1, braco="frente", bt=40, bf=4),
     "cabecada/02": P(q=(2, 12), tronco=2, braco="frente", bt=10),
     "cabecada/03": P(q=(6, 4), tronco=-2, cabeca=-3, braco="armado", bf=-10, pe_frente=10),
     "cabecada/04": P(q=(8, 0), tronco=-4, cabeca=-5, braco="alto", bf=-14, pe_frente=12),
     "cabecada/05": P(q=(6, 2), tronco=-3, cabeca=-4, braco="alto", bt=6, bf=-12, pe_frente=12),
-    "cabecada/06": P(q=(0, 20), tronco=4, cabeca=1, bt=8, abt=-6),
-    "cabecada/07": P(q=(-1, 24), tronco=5, cabeca=2, bt=10, abt=-8),
+    "cabecada/06": P(q=(0, 18), tronco=4, cabeca=1, bt=8, abt=-6),
+    "cabecada/07": P(baixo="agachado", tronco=5, cabeca=2, bt=10, abt=-8),
+    # agachar: desce em três desenhos e fica agachado respirando (metade de baixo agachada = peça do agachado/04)
+    "agachado/00": P(),
+    "agachado/01": P(q=(0, 14), tronco=2, bt=2),
+    "agachado/02": P(q=(0, 24), tronco=4, cabeca=1, bt=6, abt=-4),
+    "agachado/03": P(baixo="agachado", tronco=3, cabeca=1, bt=6, abt=-4),
+    "agachado/04": P(baixo="agachado", tronco=2, bt=4, abt=-2),
+    "agachado/05": P(baixo="agachado", q=(0, 2), tronco=3, cabeca=1, bt=5, abt=-3),
+    "agachado/06": P(baixo="agachado", q=(0, 3), tronco=3, cabeca=1, bt=6, abt=-4),
+    "agachado/07": P(baixo="agachado", q=(0, 1), tronco=2, bt=4, abt=-2),
+    # rasteira: agachado, tira a vassoura e ergue ao lado da cabeça, varre rente ao chão para a frente e guarda
+    "rasteira/00": P(baixo="agachado", tronco=6, cabeca=1, bt=8, bf=30),
+    "rasteira/01": P(baixo="agachado", tronco=4, mao="vassoura", bf=-10, bt=6),
+    "rasteira/02": P(baixo="agachado", tronco=3, mao="vassoura", bt=6),
+    "rasteira/03": P(baixo="agachado", tronco=6, cabeca=2, mao="varre", bt=10, bf=-6),
+    "rasteira/04": P(baixo="agachado", q=(10, 0), tronco=10, cabeca=3, mao="varre", bf=-35, bt=12),
+    "rasteira/05": P(baixo="agachado", q=(8, 0), tronco=10, cabeca=3, mao="varre", bf=-25, bt=12),
+    "rasteira/06": P(baixo="agachado", tronco=4, mao="vassoura", bf=-6, bt=6),
+    "rasteira/07": P(baixo="agachado", tronco=6, cabeca=1, bt=8, bf=30),
 }
 
 
@@ -66,7 +84,14 @@ def acoes():
         num = int(num)
         if num >= 10000:  # despertado: o ligar_pecas cuida pelo remap
             continue
-        ds = [e["desenho"] if e["iou"] > 0.6 else None for e in els]
+        # casamento firme (>0.85) vale sempre; um fraco (>0.7) só vale se for da mesma pasta de um vizinho firme
+        # (o contato do martelo e da cabeçada é o mesmo desenho com a lâmina borrada; o 893 do 210 não é agachado)
+        firmes = [e["desenho"] if e["iou"] > 0.85 else None for e in els]
+        ds = []
+        for k, e in enumerate(els):
+            viz = {str(d).split("/")[0] for d in firmes[max(0, k - 3):k + 4] if d}
+            ok = e["iou"] > 0.85 or (e["iou"] > 0.7 and str(e["desenho"]).split("/")[0] in viz)
+            ds.append(e["desenho"] if ok else None)
         sem = [d for d in ds if d not in POSE]
         if not sem:
             out[num] = els

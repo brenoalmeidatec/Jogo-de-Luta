@@ -68,6 +68,22 @@ pr.VARIANTES.update({
                                  (703, 388), (692, 401), (640, 407), (600, 415), (578, 421), (540, 415), (500, 414),
                                  (480, 413)], "cabeca", pr.colorido),
     },
+    "braco_frente": {
+        # rasteira: tira a vassoura e ergue ao lado da cabeça (rasteira/02)
+        "vassoura": ("rasteira/02", [(566, 346), (630, 336), (634, 372), (614, 384), (618, 436), (636, 440),
+                                     (640, 472), (628, 490), (640, 556), (662, 636), (650, 642), (628, 560),
+                                     (614, 508), (590, 508), (578, 488), (582, 462), (598, 450), (596, 384),
+                                     (568, 378)], "cabeca", pr.escuro_longe),
+        # rasteira: braço para baixo varrendo, a vassoura no chão (rasteira/03)
+        "varre": ("rasteira/03", [(575, 485), (600, 480), (625, 510), (627, 535), (615, 560), (627, 610),
+                                  (640, 622), (655, 625), (667, 645), (665, 659), (595, 659), (592, 645),
+                                  (602, 627), (620, 615), (602, 572), (592, 572), (582, 550), (582, 525),
+                                  (575, 500)], "cabeca", pr.escuro_longe),
+    },
+    "quadril": {  # metade de baixo agachada inteira (avental, as duas pernas e os sapatos), do agachado/04
+        "agachado": ("agachado/04", [(420, 556), (500, 552), (640, 556), (652, 600), (660, 680), (410, 680),
+                                     (414, 600)], "agachado", pr.lamina_no_colo),
+    },
     "coxa_frente": {  # perna da frente inteira levantada (coxa, canela e sapato), sem avental, lâmina e mão
         "baixa": ("chute_alto/01", [(572, 445), (600, 436), (633, 449), (637, 490), (626, 520), (613, 530),
                                     (629, 565), (631, 588), (608, 590), (588, 576), (566, 561), (565, 530),
@@ -87,18 +103,29 @@ COM_OMBREIRA = {"armado", "alto"}
 
 
 def P(q=(0, 0), tronco=0, cabeca=0, bt=0, abt=0, bf=0, abf=0, pente=0, coxa=None, canela=None, pe_frente=0,
-      pe_tras=0, lev=False, braco=None, perna=None):
+      pe_tras=0, lev=False, braco=None, perna=None, baixo=None, mao=None):
     """Pose por junta. q = deslocamento do quadril (x, y); ângulos em graus, horário na tela (para quem olha à
     direita, tronco > 0 inclina para a frente). braco/perna escolhem uma variante (o membro inteiro vem de outro
     desenho); as pernas no chão saem por cinemática inversa com o pé onde estava no parado (+ pe_frente/pe_tras)."""
     pose = {"quadril": {"ang": 0, "dx": q[0], "dy": q[1]}, "tronco": {"ang": tronco}, "cabeca": {"ang": cabeca},
             "braco_tras": {"ang": bt}, "antebraco_tras": {"ang": abt}, "braco_frente": {"ang": bf + abf / 2},
             "_pe": {"frente": pe_frente, "tras": pe_tras}}
+    if mao:  # o braço do pente vem de outro desenho (com a vassoura)
+        pose["braco_frente"]["var"] = mao
     if braco:  # o braço mecânico inteiro vem do desenho da variante
         pose["braco_tras"]["var"] = braco
         pose["antebraco_tras"]["var"] = "vazio"
         if braco in COM_OMBREIRA:  # a variante traz a ombreira levantada junto: a do kit sai
             pose["ombreira"] = {"ang": 0, "var": "vazio"}
+    if baixo:  # metade de baixo agachada: um desenho só do cinto aos pés, o quadril desce junto
+        pose["quadril"]["var"] = baixo
+        pose["quadril"]["dx"] += pr.AGACHADO[0]
+        pose["quadril"]["dy"] += pr.AGACHADO[1]
+        for s_ in ("coxa_tras", "coxa_frente", "canela_tras", "canela_frente"):
+            pose[s_] = {"ang": 0, "var": "vazio"}
+        pose["_lev"] = {"frente": 1, "tras": 1}
+        pose["_agachado"] = {"sim": 1}
+        return pose
     if lev or perna:
         pose["coxa_frente"] = {"ang": coxa or 0}
         pose["canela_frente"] = {"ang": canela or 0}
@@ -212,6 +239,8 @@ def desenhar(kit, pose):
     tela = b.desenhar(kit, pose)
     w = b.mundo(pose)
     lev = pose.get("_lev", {})
+    if pose.get("_agachado"):  # o desenho agachado já traz sapatos e laço
+        return pf.sem_migalha(pf.fechar_frestas(tela, juntas=[w[sl][0] for sl in pr.OSSOS]))
     for slot in ("canela_tras", "canela_frente"):
         joelho, ang = w[slot]
         jr = pr.OSSOS[slot][0]
