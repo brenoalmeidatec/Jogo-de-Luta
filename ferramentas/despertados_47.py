@@ -98,6 +98,16 @@ PECAS47 = {
                               final=B(prep=(5,), bate=6, dano=62, alto=True, som="S53,0"),
                               solta=(7,), alcanca=(1, 2), bind=50, fim="derruba"),
     },
+    "gutto": {
+        "pecas": "garanhao_47", "agarrao": "levanta", "grupo_agarrao": 47100, "poder": "estouro",
+        "grupo_poder": 47150, "solta_chave": "estouro/03",
+        # 0 guarda, 1 dá o passo com a garra, 2 crava a garra no oponente, 3 ergue com a garra no alto, 4 aperta lá em
+        # cima (os raios caem), 5 segura, 6 arremessa para a frente com o corpo todo, 7 volta
+        "proprio": mk.Proprio("Levanta e Arremessa", segura=3,
+                              batidas=(B(prep=(3,), bate=4, dano=34, alto=True, som="S53,2"),),
+                              final=B(prep=(5,), bate=6, dano=62, alto=False, som="S53,2"),
+                              solta=(7,), alcanca=(1, 2), bind=50, fim="joga"),
+    },
 }
 EIXO_HD = (540, 660)  # pés na tela 3x do boneco de peças
 
@@ -281,10 +291,26 @@ def ligar_aura(a, air, cns):
         air = re.sub(rf"(?:^; Aura {a.nome},[^\n]*\n)?^\[Begin Action {g}\]\n.*?(?=^\[Begin Action|^; Aura |\Z)", "", air,
                      flags=re.M | re.S)
     air = air.rstrip() + "\n\n" + a.air()
-    m = re.search(r"^\[Statedef -4\]\n.*\Z", cns, re.M | re.S)
-    if m:
-        assert f"Aura animada '{a.nome}'" in m.group(0), "o lutador já tem um [Statedef -4] que não é desta aura"
-        cns = cns[:m.start()]
+    # troca cada controlador da aura no lugar em que ele está: depois desta ferramenta, aura_no_corpo, aura_silhueta e
+    # luz põem os blocos deles no meio do [Statedef -4] (e o "move" das camadas fica depois deles). Antes o -4 era
+    # cortado até o fim do .cns e levava junto o 4700/4710/4750, o helper 9610 e os estados do oponente do agarrão
+    # (822 a 835): o oponente não levantava mais
+    if re.search(r"^\[Statedef -4\]", cns, re.M):
+        assert f"Aura animada '{a.nome}'" in cns, "o lutador já tem um [Statedef -4] que não é desta aura"
+        bloco = re.compile(rf"^\[State -4, Aura {re.escape(a.nome)}[ :][^\]]*\]\n(?:[^\n]+\n)*", re.M)
+        novos = {m.group(0).split("\n", 1)[0]: m.group(0) for m in bloco.finditer(a.cns(cabecalho=True))}
+        vistos = set()
+
+        def trocar(m):
+            nome = m.group(0).split("\n", 1)[0]
+            vistos.add(nome)
+            return novos.get(nome, "")
+        cns = bloco.sub(trocar, cns)
+        faltam = "".join(v + "\n" for k, v in novos.items() if k not in vistos)
+        if faltam:
+            cab = re.search(rf"^; ---- Aura animada '{re.escape(a.nome)}'[^\n]*\n", cns, re.M)
+            cns = cns[:cab.end()] + faltam + cns[cab.end():]
+        return air, cns
     return air, cns.rstrip() + "\n\n" + a.cns(cabecalho=True)
 
 

@@ -3076,6 +3076,18 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   segue no desenho da base até as próximas folhas (estampido, giro do manto, mãos, juízo, especiais, agarrões).
 - Breno liberou auto-aprovação (17/11); robô 236/0 no estado juntado. Também tirei marcadores de conflito que tinham
   ficado commitados neste LOGBOOK.
+
+### 2026-11-17 — gutto.sff encolhido: 91,5 MB -> 74,1 MB (ferramentas/encolher_sff.py)
+- Ferramenta nova e comum a todos os lutadores: `python3 ferramentas/encolher_sff.py <lutador> [--indexar 49000-49099]`.
+  Rode por último, depois de ligar_pecas, aura_silhueta e luz. Faz três coisas:
+  1. tira os desenhos que nada desenha (203 no Gutto);
+  2. passa os PNG do corpo firme (alfa 0/255) para uma paleta própria de 255 cores, pelo método da thread do Raiclaven
+     despertado (a paleta fica em sprites/<l>/paleta_<grupo>.bin e é trocada a cada rodada);
+  3. recomprime os outros PNG sem perda (filtros do Pillow) e liga os repetidos (2577 links).
+- Confere no fim: todo desenho que ficou sai pixel a pixel igual (os indexados têm erro médio de cor < 3/255).
+- `efeitos.gravar` agora liga PNG repetido; `conferir_sff.ler` mantém o `png` no link.
+- Gutto: Garanhão (49000-49099) indexado; robô de luta 186/186 com o mesmo dano; filmado no despertado.
+- Ao religar o Garanhão (`ligar_pecas --de garanhao`), rode de novo o `encolher_sff.py gutto --indexar 49000-49099`.
 - Turno 4 (17/11, Chrome do PC principal): estampido, giro do manto, mãos, manto-asa, golpes de direção, juízo de
   cima, estouro, mão do pastor, berro e puxão. Ligados no despertado: chute alto (estampido), afastar (giro do manto),
   caneta (direção), armada (juízo de cima), cajado no chão (mãos), bola (mão do pastor), compasso (puxão). `TROCA_COR`
@@ -3095,8 +3107,18 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   (quadro de meio desenhado à parte); a ação 11 foi remapeada no tempo da mugen (20 ticks).
 - Religado com `raiclaven_no_jogo.py` (preserva o despertado com A Cliente), que agora termina com `podar()`: tira do
   .sff os desenhos órfãos (o .sff estava a caminho dos 100 MB do GitHub).
-- Decisão do Alisson (17/11, meio-termo com a Lei 10 do estudo de anatomia): `vida_pecas.animar` não põe mais quadro
-  do meio entre a preparação e o contato (o golpe chega seco); meio só na preparação, na volta e na guarda. Vale para
-  todo lutador que montar golpe com `animar(..., bate=...)` daqui em diante.
+- Regerado com a decisão do Alisson (meio-termo, `MEIO_NO_BOTE = False` do `vida_pecas` da mugen 448b9158): a
+  antecipação fica segurada e o golpe chega seco no contato.
 - Falta: soco no ar (600/601), levantar, as ações que usam desenho que ninguém reconhece (210, 302, 343, 344) e testar
   a `pele_pecas.py` do Pengaró no lugar do desenho por peças rígidas.
+
+## 2026-11-17 — Regra definitiva de criação de personagem (Claude, thread do Breno)
+- Pedido do Breno: uma regra só, juntando tudo. Nova `docs/regra-de-criacao-de-personagem.md`: ficha, conceitos,
+  folha-modelo, kit de peças (corpo firme, paleta travada do kit, régua de ossos), posar pelas 12 leis e pela regra de
+  camadas perto/longe, tempo e caixas iguais, vida, zero erro de animação, 3x, ligar no jogo (`ligar_pecas` → aura →
+  retratos → `encolher_sff`) e revisão (robôs, vídeo lado a lado, foto, issue, checklist).
+- CLAUDE.md, AGENTS.md, como-trabalhar, receita, regras dos lutadores, bíblia, estudos, missão e montador apontam para
+  ela em vez de repetir. O passo a passo antigo (folha de 8 quadros + 6 do meio do Blender) ficou marcado como histórico.
+- Decidido depois (Breno deixou a escolha com o Claude): sem quadro do meio entre antecipação e contato, no máximo 1
+  borrão; a fluidez vem da antecipação, da volta, da guarda, do parado e das transições. Os kits já ligados ainda
+  põem meio nesse trecho: ajustar o `vida_pecas.py` e religar é trabalho à parte.

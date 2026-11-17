@@ -18501,38 +18501,56 @@ palfx.time = 14
 palfx.add = 40,90,60
 palfx.sinadd = 30,30,30,4
 
-[State 4750, Luz do poder halo]
-type = Explod
-trigger1 = Time = 16
-anim = 9817
-id = 9631
-postype = p1
-pos = 50.0, -78.0
-velocity = 3.2, 0.0
-scale = 0.75, 0.75
-removetime = -1
-ownpal = 1
-removeongethit = 0
-ignorehitpause = 1
-sprpriority = 1
-trans = addalpha
-alpha = 255, 0
-
 [State 4750, Luz do poder orbe]
 type = Explod
 trigger1 = Time = 16
 anim = 9730
 id = 9630
 postype = p1
-pos = 50.0, -78.0
-bindtime = -1
+velocity = 3.2, 0.0
+accel = 0.0, 0.0
 removetime = -1
 ownpal = 1
 removeongethit = 0
 ignorehitpause = 1
-sprpriority = 6
+pos = 50.0, -78.8
+sprpriority = 2
 trans = add
 alpha = floor(255 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255
+
+[State 4750, Luz do poder halo]
+type = Explod
+trigger1 = Time = 16
+anim = 9731
+id = 9631
+postype = p1
+velocity = 3.2, 0.0
+accel = 0.0, 0.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+pos = 50.0, -78.8
+sprpriority = 1
+trans = addalpha
+alpha = floor(230 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255 - floor(230 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85)))
+
+[State 4750, Luz do poder poca]
+type = Explod
+trigger1 = Time = 16
+anim = 9721
+id = 9632
+postype = p1
+velocity = 3.2, 0.0
+accel = 0.0, 0.0
+removetime = -1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+pos = 50.0, 0
+sprpriority = -8
+trans = addalpha
+alpha = floor(220 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85))), 255 - floor(220 * (0.88 + 0.08 * sin(GameTime * 0.2304 + 0.5) + 0.04 * sin(GameTime * 0.1361 + 0.85)))
 
 [State 4750, Fim (despertados_47.py)]
 type = ChangeState
