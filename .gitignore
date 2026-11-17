@@ -11,6 +11,8 @@ sprites/efeitos_blender/*/d47_*_direto/
 
 # Pengaró despertado no boneco de peças: gere com python ferramentas/importar_pengaro_e.py
 sprites/pengaro_e/quadros_arcade_hd/
+# CK despertado no boneco de peças: gere com python ferramentas/importar_ck_e.py
+sprites/ck_e/quadros_arcade_hd/
 # sprites do Gutto tirados do .sff (python ferramentas/extrair_hd_sff.py gutto): reconstruíveis
 sprites/gutto/quadros_sff_hd/
 sprites/garanhao/quadros_arcade_hd/

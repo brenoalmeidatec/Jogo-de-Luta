@@ -87,6 +87,16 @@ PECAS47 = {
                               final=B(prep=(4,), bate=5, dano=62, alto=False, som="S53,2"),
                               solta=(6, 7), alcanca=(1, 2), bind=50, fim="derruba"),
     },
+    "ck": {
+        "pecas": "ck_e", "agarrao": "paredao", "grupo_agarrao": 47100, "poder": "talo", "grupo_poder": 47150,
+        "solta_chave": "talo/03",
+        # 0 guarda, 1 dá o passo com a mão aberta, 2 alcança a gola, 3 fecha o punho e puxa, 4 empurra a cara na
+        # caixa de som, 5 puxa de novo com o corpo todo, 6 afunda a cara na caixa, 7 volta
+        "proprio": mk.Proprio("Paredão na Cara", segura=3,
+                              batidas=(B(prep=(3,), bate=4, dano=34, alto=True, som="S53,0"),),
+                              final=B(prep=(5,), bate=6, dano=62, alto=True, som="S53,0"),
+                              solta=(7,), alcanca=(1, 2), bind=50, fim="derruba"),
+    },
 }
 EIXO_HD = (540, 660)  # pés na tela 3x do boneco de peças
 

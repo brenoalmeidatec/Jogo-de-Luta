@@ -781,6 +781,20 @@ def tapar_buracos(tela):
     if not m.any():
         return tela
     out = tela.copy()
+    if getattr(K, "BURACO_CHAPADO", False):
+        # vão fechado entre braço e corpo vira sombra chapada (o tom escuro da beira de cada vão), sem o borrão do
+        # inpaint, que no meio de pixel art lia como mancha
+        n, lab = cv2.connectedComponents(m.astype(np.uint8), connectivity=4)
+        for i in range(1, n):
+            v = lab == i
+            anel = (cv2.dilate(v.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0) & ~v & (tela[..., 3] > 0)
+            px = tela[anel][:, :3].astype(int)
+            if not len(px):
+                continue
+            lum = px.sum(1)
+            out[v, :3] = np.median(px[lum <= np.percentile(lum, 35)], 0).astype(np.uint8)
+            out[v, 3] = 255
+        return out
     rgb = cv2.inpaint(np.ascontiguousarray(tela[..., :3]), m.astype(np.uint8), 3, cv2.INPAINT_TELEA)
     out[m, :3] = rgb[m]
     out[m, 3] = 255
