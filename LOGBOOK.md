@@ -2964,3 +2964,12 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   186/186 antes e depois, dano idêntico.
 - Desvio da seção 7 (combinado com o Alisson): golpes com quadros do meio (tempo total e tick da caixa iguais).
 - Falta: os 9 golpes confusos (golaço, pente_combo, armada, agarrão, rasteira, ar_soco, martelo, cabeçada, levanta).
+
+## 17/11/2026 - Gbzin: peças novas do ChatGPT (bicicleta, cotovelada, Passinho de Pinguim)
+- Três folhas novas pedidas ao ChatGPT (pedidos em `docs/boneco-pecas/gbzin/pedidos_chatgpt.json`), entram em
+  `sprites/gbzin/quadros/folhas_arcade/` como `bicicleta_v2`, `soco_cotovelo` e `rolamento_v2` e só emprestam desenhos
+  (`TROCA_QUADRO` + `SO_DESENHO` no `gbzin_pecas.py`): bicicleta inteira (perna esticada de verdade, 3 chutes),
+  soco/04-05 (cotovelo armado e cotovelada com quadril girado) e rolamento/01-06 (braços duros de pinguim, gira de
+  costas e volta). Cabeça do kit em todos; soco/05 e rolamento/06 (espelhada) pela busca guiada.
+- Robô de defeitos: os 21 quadros novos passam; robô do jogo 236/236. Vídeo e folha:
+  `docs/boneco-pecas/gbzin/pecas_novas_antes_depois.{mp4,png}`.
