@@ -1,0 +1,29 @@
+{
+ "acao": 3400,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 8,
+   "caixa": false,
+   "de": "golaco/01|riso"
+  },
+  {
+   "desenho": 1,
+   "ticks": 9,
+   "caixa": false,
+   "de": "golaco/02|riso"
+  },
+  {
+   "desenho": 2,
+   "ticks": 8,
+   "caixa": false,
+   "de": "golaco/03|riso"
+  },
+  {
+   "desenho": 3,
+   "ticks": 39,
+   "caixa": false,
+   "de": "golaco/04|riso"
+  }
+ ]
+}

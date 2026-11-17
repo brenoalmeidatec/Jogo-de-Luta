@@ -1,0 +1,23 @@
+{
+ "acao": 6,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "agachado/04|None"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "agachado/05|None"
+  },
+  {
+   "desenho": 2,
+   "ticks": 1,
+   "caixa": false,
+   "de": "agachado/06|None"
+  }
+ ]
+}

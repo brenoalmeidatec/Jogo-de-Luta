@@ -1,0 +1,11 @@
+{
+ "acao": 122,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 1,
+   "caixa": false,
+   "de": "defesa/03|None"
+  }
+ ]
+}
