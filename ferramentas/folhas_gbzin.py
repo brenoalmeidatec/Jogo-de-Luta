@@ -220,8 +220,9 @@ def anexos(nome):
     if nome == "despertar_b":
         return "e_referencia_ginga.png + despertar_a.png"
     if nome.startswith("e_"):
+        # boneco de peças (17/11): o parado do Grão-Pastor sai do kit, então o anexo é o conceito aprovado
         normal = nome[2:]
-        return "e_referencia_ginga.png" + (f" + {normal}.png" if normal in ANEXA_BASE else "")
+        return "e_conceito.png" + (f" + {normal}.png" if normal in ANEXA_BASE else "")
     if nome.startswith("fx_"):
         return "nenhum"
     return "referencia_ginga.png"
@@ -230,7 +231,11 @@ def anexos(nome):
 # Receita, seção 3: boneco grande na folha (~545 px como o CK), para o 3x sair nítido direto da folha.
 TAMANHO = "\n\nSIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair, soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds."
 TAMANHO_REF = TAMANHO.replace("at exactly the same pixel size as the attached sheet: ", "")
-TAMANHO_GP = TAMANHO.replace("top of the hair", "top of the hair (the horns go above that)")
+TAMANHO_GP = TAMANHO.replace("at exactly the same pixel size as the attached sheet: standing, about 545 pixels",
+                             "standing, about 430 pixels").replace("top of the hair", "top of the hair (the horns go above "
+                             "that)") + " The attached image is a model sheet (front, 3/4, back, face): draw him in the " \
+    "3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so " \
+    "each frame fits inside its own 271-pixel cell."
 
 
 def pedido(nome):

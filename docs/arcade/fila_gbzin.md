@@ -50,51 +50,51 @@ Cada folha vai salva em `sprites/gbzin/quadros/folhas_arcade/<nome>.png`. **Rean
 | 42 | `e_aura` | e_conceito.png |
 | 43 | `despertar_b` | e_referencia_ginga.png + despertar_a.png |
 | 44 | `e_referencia_ginga` | e_conceito.png + referencia_ginga.png |
-| 45 | `e_anda` | e_referencia_ginga.png + anda.png |
-| 46 | `e_chifrada` | e_referencia_ginga.png |
-| 47 | `e_marrada` | e_referencia_ginga.png |
-| 48 | `e_arco_osso` | e_referencia_ginga.png |
-| 49 | `e_martelada` | e_referencia_ginga.png |
-| 50 | `e_tosquia` | e_referencia_ginga.png |
-| 51 | `e_casco` | e_referencia_ginga.png |
-| 52 | `e_estampido` | e_referencia_ginga.png |
-| 53 | `e_giro_manto` | e_referencia_ginga.png |
-| 54 | `e_maos` | e_referencia_ginga.png |
-| 55 | `e_agachado` | e_referencia_ginga.png + agachado.png |
-| 56 | `e_baixo` | e_referencia_ginga.png |
-| 57 | `e_cabecada` | e_referencia_ginga.png |
-| 58 | `e_varrida` | e_referencia_ginga.png |
-| 59 | `e_pulo` | e_referencia_ginga.png + pulo.png |
-| 60 | `e_ar_chifre` | e_referencia_ginga.png |
-| 61 | `e_ar_soco` | e_referencia_ginga.png |
-| 62 | `e_manto_asa` | e_referencia_ginga.png |
-| 63 | `e_dir_tras` | e_referencia_ginga.png |
-| 64 | `e_juizo_cima` | e_referencia_ginga.png |
-| 65 | `e_defesa` | e_referencia_ginga.png + defesa.png |
-| 66 | `e_apanha` | e_referencia_ginga.png + apanha.png |
-| 67 | `e_queda` | e_referencia_ginga.png + queda.png |
-| 68 | `e_levanta` | e_referencia_ginga.png + levanta.png |
-| 69 | `e_rolamento` | e_referencia_ginga.png |
-| 70 | `e_estouro` | e_referencia_ginga.png |
-| 71 | `e_mao_pastor` | e_referencia_ginga.png |
-| 72 | `e_berro` | e_referencia_ginga.png |
-| 73 | `e_compasso` | e_referencia_ginga.png |
-| 74 | `e_rebanho_fantasma` | e_referencia_ginga.png |
-| 75 | `e_chuva_notas` | e_referencia_ginga.png |
-| 76 | `e_sombra_bode` | e_referencia_ginga.png |
-| 77 | `e_queda_bode` | e_referencia_ginga.png |
-| 78 | `e_golaco` | e_referencia_ginga.png |
-| 79 | `e_juizo` | e_referencia_ginga.png |
-| 80 | `e_agarrao` | e_referencia_ginga.png |
-| 81 | `e_montada` | e_referencia_ginga.png |
-| 82 | `e_ordenha` | e_referencia_ginga.png |
-| 83 | `e_provoca` | e_referencia_ginga.png |
-| 84 | `e_vitoria` | e_referencia_ginga.png |
-| 85 | `e_derrota` | e_referencia_ginga.png |
-| 86 | `e_parry_alto` | e_referencia_ginga.png |
-| 87 | `e_parry_baixo` | e_referencia_ginga.png |
-| 88 | `e_vitima_agarrado` | e_referencia_ginga.png + vitima_agarrado.png |
-| 89 | `e_vitima_arremessado` | e_referencia_ginga.png + vitima_arremessado.png |
+| 45 | `e_anda` | e_conceito.png + anda.png |
+| 46 | `e_chifrada` | e_conceito.png |
+| 47 | `e_marrada` | e_conceito.png |
+| 48 | `e_arco_osso` | e_conceito.png |
+| 49 | `e_martelada` | e_conceito.png |
+| 50 | `e_tosquia` | e_conceito.png |
+| 51 | `e_casco` | e_conceito.png |
+| 52 | `e_estampido` | e_conceito.png |
+| 53 | `e_giro_manto` | e_conceito.png |
+| 54 | `e_maos` | e_conceito.png |
+| 55 | `e_agachado` | e_conceito.png + agachado.png |
+| 56 | `e_baixo` | e_conceito.png |
+| 57 | `e_cabecada` | e_conceito.png |
+| 58 | `e_varrida` | e_conceito.png |
+| 59 | `e_pulo` | e_conceito.png + pulo.png |
+| 60 | `e_ar_chifre` | e_conceito.png |
+| 61 | `e_ar_soco` | e_conceito.png |
+| 62 | `e_manto_asa` | e_conceito.png |
+| 63 | `e_dir_tras` | e_conceito.png |
+| 64 | `e_juizo_cima` | e_conceito.png |
+| 65 | `e_defesa` | e_conceito.png + defesa.png |
+| 66 | `e_apanha` | e_conceito.png + apanha.png |
+| 67 | `e_queda` | e_conceito.png + queda.png |
+| 68 | `e_levanta` | e_conceito.png + levanta.png |
+| 69 | `e_rolamento` | e_conceito.png |
+| 70 | `e_estouro` | e_conceito.png |
+| 71 | `e_mao_pastor` | e_conceito.png |
+| 72 | `e_berro` | e_conceito.png |
+| 73 | `e_compasso` | e_conceito.png |
+| 74 | `e_rebanho_fantasma` | e_conceito.png |
+| 75 | `e_chuva_notas` | e_conceito.png |
+| 76 | `e_sombra_bode` | e_conceito.png |
+| 77 | `e_queda_bode` | e_conceito.png |
+| 78 | `e_golaco` | e_conceito.png |
+| 79 | `e_juizo` | e_conceito.png |
+| 80 | `e_agarrao` | e_conceito.png |
+| 81 | `e_montada` | e_conceito.png |
+| 82 | `e_ordenha` | e_conceito.png |
+| 83 | `e_provoca` | e_conceito.png |
+| 84 | `e_vitoria` | e_conceito.png |
+| 85 | `e_derrota` | e_conceito.png |
+| 86 | `e_parry_alto` | e_conceito.png |
+| 87 | `e_parry_baixo` | e_conceito.png |
+| 88 | `e_vitima_agarrado` | e_conceito.png + vitima_agarrado.png |
+| 89 | `e_vitima_arremessado` | e_conceito.png + vitima_arremessado.png |
 | 90 | `fx_cabra` | nenhum |
 | 91 | `fx_cabra_salto` | nenhum |
 | 92 | `fx_feno` | nenhum |
@@ -1107,7 +1107,7 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: the transformation, part two, already transformed: 1 down on one knee, a bright green light still covering most of the body, 2 the light thins and reveals the Grand Shepherd kneeling, the spiral horns growing, 3 he starts to rise slowly, the bone crook still planted in the ground, 4 he stands, the fur cape billowing, 5 he lifts his head and the eye glows green, 6 he pulls the bone crook out of the ground, 7 he spreads his arms like a lord of the herd, 8 he settles into the stance of the attached sheet with a cold grin.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_referencia_ginga`
@@ -1131,12 +1131,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: idle loop, the reference for every Grand Shepherd sheet: a wide heavy boss stance, chest forward showing the goat skull, the front open hand forward ready to grab, the bone crook held low in the back hand, the cape moving slightly. Frames 1 to 4 he sinks with a heavy breath, 5 to 8 he rises; frame 8 flows back into frame 1. Standing tall, the figure fills the cell height as described below.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_anda`
 
-Anexar: e_referencia_ginga.png + anda.png
+Anexar: e_conceito.png + anda.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1155,12 +1155,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: slow heavy walk forward of a boss, an 8-frame loop: each hoof lands heavily, the front hand open forward, the bone crook in the back hand, the cape and the belt flames swinging; the legs complete a full two-step cycle and frame 8 flows back into frame 1.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_chifrada`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1179,12 +1179,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: x, short horn jabs (standing light attacks): 1 stance, 2 he pulls the head back, 3 a short fast head jab forward, the spiral horns hitting at face height, 4 back to stance, 5 he pulls the head back again, 6 a first horn swing to the front-left at face height, 7 a second horn swing back to the front-right at face height (a double horn hook), 8 stance.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_marrada`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1203,12 +1203,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: x chain, rising head butt then the Ram finisher: 1 he dips the head low, 2 he drives the horns up and forward at chin height (rising head butt), 3 he lands back low, 4 he lowers the horns at belly height and charges one step, 5 the horns dig in at belly height as if goring an invisible opponent, 6 he lifts the head and rises, lifting upward, 7 he throws the head back and over his shoulder (the throw, clearly backward over the head), 8 stance.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_arco_osso`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1227,12 +1227,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: y, the bone crook arcs: 1 stance, 2 the bone crook swings back behind him, 3 a wide horizontal arc of the bone crook forward at chest height, arm fully extended, 4 follow-through, 5 he raises the crook and starts to spin it, 6 and 7 the crook spins in a full circle in front of him at chest height, green flame on the hook tip, 8 stance.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_martelada`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1251,12 +1251,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: y chain hammer: 1 stance, 2 and 3 he lifts the bone crook high over his head with both hands, 4 and 5 he hammers it down hard in front of him at head height, body bending forward, 6 the hook touches the ground, 7 he straightens, 8 stance.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_tosquia`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1275,12 +1275,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: the Shearing finisher: 1 stance, 2 and 3 he opens both arms wide to the sides, 4 and 5 he claps both hands together hard in front of him at chest height, 6 he holds the clap, 7 he opens the hands, 8 stance. (The giant green hands that copy the clap are a separate effect.)
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_casco`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1299,12 +1299,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: a, hooves: 1 stance, 2 the front hoof lifts low, 3 a quick hoof kick forward at shin height, 4 back, 5 the front knee rises high, 6 a heavy hoof stomp forward and down at knee height, 7 the hoof lands heavily, 8 stance.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_estampido`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1323,12 +1323,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: a chain, hoof scrape then the Stamp finisher: 1 stance, 2 the front hoof scrapes back along the floor like an angry goat, 3 it scrapes again, 4 he raises the front hoof high, 5 first stomp straight down, 6 he raises it again, 7 second and third stomps, the body dropping with weight, 8 stance. (The cracks and the eruption under the opponent are a separate effect.)
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_giro_manto`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1347,12 +1347,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: b, Cape Spin: 1 stance, 2 he turns his back starting a spin, 3 back to the viewer, the black fur cape flaring out wide, 4 he completes the spin and the cape whips forward at chest height like a heavy blade, 5 the cape wraps forward fully extended, 6 the cape falls back, 7 recovering, 8 stance.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_maos`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1371,12 +1371,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: b chain, the giant hands (the giant green hands are a separate effect, here only his gestures): 1 stance, 2 he pushes the front open palm forward at chest height, 3 he holds it, 4 he closes the fist slowly squeezing, 5 he raises the closed fist up to head height, lifting, 6 holding it up, 7 he slams the fist down to waist height, 8 stance.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_agachado`
 
-Anexar: e_referencia_ginga.png + agachado.png
+Anexar: e_conceito.png + agachado.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1395,12 +1395,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: going down into a low crouch: he only bends the knees and lowers the hips, the body keeps exactly the same size. 1 to 4 he crouches low like a beast ready to charge, horns forward; 5 to 8 he stays crouched breathing, eye up.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_baixo`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1419,12 +1419,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: two low attacks from the crouch: 1 deep crouch, 2 he dips the head, 3 a short horn poke forward at shin height, 4 back to the crouch, 5 deep crouch, 6 the front hoof scrapes forward along the floor at ankle height, fully extended, 7 it pulls back, 8 crouch.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_cabecada`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1443,12 +1443,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: Horns Up anti-air from the crouch: 1 deep crouch, 2 and 3 he dips lower, 4 and 5 he springs up driving the spiral horns straight up above him, 6 to 8 he settles back into the crouch.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_varrida`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1467,12 +1467,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: low bone crook sweep that trips: 1 deep crouch, 2 and 3 he loads the bone crook far back along the floor, 4 and 5 the crook sweeps forward flat along the floor at ankle height, the hook leading, fully extended, 6 follow-through, 7 and 8 back to the crouch.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_pulo`
 
-Anexar: e_referencia_ginga.png + pulo.png
+Anexar: e_conceito.png + pulo.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1491,12 +1491,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: a heavy jump. 1 knees bent, 2 pushing off with the hooves, 3 rising tucked, the cape flying, 4 top, crook raised, 5 tucked, 6 falling with the legs opening, 7 reaching down with the hooves, 8 landing very heavily, knees bent.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_ar_chifre`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1515,12 +1515,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: two air attacks, all frames in the air: 1 tucked, 2 he pulls the head back, 3 a horn butt diagonally forward and down, 4 back to tucked, 5 tucked, 6 both hooves pull up, 7 both hooves stomp down together below him, 8 back to tucked.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_ar_soco`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1539,12 +1539,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: Bone Hammer in mid air, all frames in the air: 1 to 3 the bone crook winds up over the head, 4 and 5 it smashes down and forward diagonally, 6 to 8 back to the tucked pose.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_manto_asa`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1563,12 +1563,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: Cape Wings in the air, all frames in the air: 1 tucked, 2 he opens the black fur cape wide like wings, 3 and 4 he spins horizontally once with the cape spread, hitting both sides, 5 the spin ends, 6 the cape closes, 7 and 8 back to tucked.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_dir_tras`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1587,12 +1587,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: two direction attacks: 1 stance, 2 he raises the back open hand behind him, 3 he swats forward and upward with the open hand at head height (the giant green hand that copies it is a separate effect), 4 back to stance, 5 he turns slightly, 6 a back kick with the hoof straight behind him at belly height, 7 he turns back, 8 stance.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_juizo_cima`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1611,12 +1611,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: two direction attacks: 1 stance, 2 a small hop forward lifting the bone crook over the head, 3 he comes down smashing the crook from above at head height (overhead), 4 landing, 5 he raises the front knee very high, 6 a huge stomp forward and down that shakes the ground, knees bent, 7 he stays low after the stomp, 8 stance. (Cracks and fire are a separate effect.)
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_defesa`
 
-Anexar: e_referencia_ginga.png + defesa.png
+Anexar: e_conceito.png + defesa.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1635,12 +1635,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: blocking: 1 stance, 2 and 3 he crosses the bone bracers in front of the face, 4 and 5 holding, 6 and 7 pushed back a little, hooves sliding, 8 still blocking.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_apanha`
 
-Anexar: e_referencia_ginga.png + apanha.png
+Anexar: e_conceito.png + apanha.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1659,12 +1659,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: getting hit: 1 stance, 2 and 3 the head snaps back, horns tilting, 4 and 5 the torso bends back, crook still in the back hand, 6 to 8 he straightens, angry, back to the stance.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_queda`
 
-Anexar: e_referencia_ginga.png + queda.png
+Anexar: e_conceito.png + queda.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1683,12 +1683,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: being knocked down, 8 clearly SEPARATED figures: 1 hit, 2 hooves leaving the ground, 3 and 4 flying backward, 5 body horizontal, 6 landing on his back on the cape, 7 bouncing, 8 lying flat, head on the left. The crook stays in the hand.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_levanta`
 
-Anexar: e_referencia_ginga.png + levanta.png
+Anexar: e_conceito.png + levanta.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1707,12 +1707,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: getting up: 1 flat on his back, 2 and 3 he rolls to the side, 4 and 5 he pushes up with the crook planted, 6 and 7 standing and throwing the cape back, 8 stance.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_rolamento`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1731,12 +1731,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: a heavy dash that passes behind the opponent: 1 stance, 2 he lowers the horns, 3 and 4 he dashes forward low and fast, the cape flying, 5 and 6 he spins around on one hoof, 7 he faces left in stance, 8 he turns back to face right in stance.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_estouro`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1755,12 +1755,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: the Stampede horn charge, an 8-frame loop for a charge across the screen: he runs forward heavily with the head lowered and the spiral horns pointing forward like a ram, the bone crook held back, the cape flying behind, hooves pounding; frame 8 flows back into frame 1.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_mao_pastor`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1779,12 +1779,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: Shepherd's Hand projectile pose (the flying giant green hand is a separate effect): 1 stance, 2 and 3 he pulls the front open hand back to the shoulder, 4 and 5 he thrusts the open palm straight forward at chest height, arm fully extended, 6 holding, 7 recovering, 8 stance.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_berro`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1803,12 +1803,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: the Goat Scream anti-air (the scream rings are a separate effect): 1 stance, 2 he leans back and fills the chest, 3 and 4 he throws the head up and screams to the sky with the mouth wide open, horns up, arms spread down and back, 5 and 6 holding the scream, 7 he lowers the head, 8 stance.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_compasso`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1827,12 +1827,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: Shepherd's Pull (the giant hands that pull are a separate effect): 1 stance, 2 and 3 he reaches both open hands far forward, 4 and 5 he closes both fists as if catching something far away, 6 and 7 he pulls both fists back to his chest strongly, leaning back, 8 stance.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_rebanho_fantasma`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1851,12 +1851,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: Ghost Herd pose (the three burning ghost goats are a separate effect): 1 stance, 2 he raises the bone crook, 3 and 4 he whistles with two fingers in the mouth, 5 and 6 he sweeps the crook forward low along the floor like sending a herd, 7 he points forward with the crook, 8 stance. Nothing comes out of the crook.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_chuva_notas`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1875,12 +1875,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: Money Rain pose (the column of money and green fire is a separate effect): 1 stance, 2 and 3 he raises the bone crook high with both hands, 4 he slams the crook tip into the ground in front of him, 5 and 6 holding the crook planted, looking up with a cold grin, 7 he pulls the crook out, 8 stance.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_sombra_bode`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1899,12 +1899,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: Goat Shadow counter: 1 stance, 2 he raises the front arm in a guard, 3 and 4 his whole body turns into a flat dark green shadow silhouette of himself (same pose, no details, only the glowing eye), 5 he reappears in full color already lowered, 6 he lunges forward with a horn butt at chest height, 7 recovering, 8 stance.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_queda_bode`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1923,12 +1923,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: Goat Fall: 1 deep crouch, 2 he jumps very high and forward, 3 and 4 at the top of the jump, knees tucked, the cape spread, 5 he falls hooves first, 6 the hooves hit the ground hard, crouched low, 7 he rises, 8 stance. (The cracks are a separate effect.)
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_golaco`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1947,12 +1947,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: super move Hell Herd pose: 1 stance, 2 and 3 he raises the bone crook high over his head, his eye blazing, 4 and 5 he slams the crook down and points forward commanding a stampede, 6 and 7 he holds the pose with the cape blown back as if a huge herd runs past him, 8 stance. (The giant shadow goat and the herd are separate effects.)
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_juizo`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1971,12 +1971,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: super move Judgment of the Herd: 1 stance, 2 he leaps forward, 3 he lands behind an invisible opponent and locks a rear choke, 4 he squeezes, lifting the opponent, 5 he squeezes harder, horns lowered, 6 he drops sitting with the choke locked, 7 he hits the floor three times with the bone crook, 8 he stands in stance. No second person is shown.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_agarrao`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -1995,12 +1995,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: the awakened standing grab, always facing right, each blow with a wind-up and a clear contact, huge and brutal: 1 the front hand grabs an invisible opponent by the throat at head height (the grab), 2 he lifts him high off the ground with one arm, 3 wind-up: the crook rises behind, 4 contact: a crook blow at chest height, 5 wind-up again, 6 contact: a horn butt at face height, 7 he slams the invisible opponent down to the floor in front of him (the throw, straight down), 8 he stands over him, stance. No second person is shown.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_montada`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -2019,12 +2019,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: the awakened crouch grab, always facing right, each blow with a wind-up and a clear contact: 1 he dives low and pins an invisible opponent to the floor with one hoof (the grab), 2 he stands on him, 3 wind-up: he raises the bone crook high, 4 contact: the crook smashes down to floor level, 5 wind-up again, 6 contact: a second smash, 7 he stomps the hoof down hard, 8 stance. No second person is shown.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_ordenha`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -2043,12 +2043,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: the awakened command grab Embrace of the Hands, always facing right (the giant green hands are a separate effect, here only his gestures): 1 he reaches both open hands far forward, 2 he closes both fists as if catching someone far away, 3 he pulls both fists to his chest, 4 he squeezes both fists together in front of his chest, trembling, 5 wind-up: he lowers his head with the horns forward, 6 contact: a horn butt forward at chest height, 7 he throws both arms forward and open (the throw, a clear forward direction), 8 stance. No second person is shown.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_provoca`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -2067,12 +2067,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: a taunt: 1 stance, 2 and 3 he checks the big gold watch, 4 to 6 he waves the opponent in with two fingers, 7 and 8 he strokes one of his horns, smiling coldly.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_vitoria`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -2091,12 +2091,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: a victory: 1 stance, 2 and 3 he raises the bone crook over his head, 4 to 6 he plants it in the ground and opens the arms like a lord, 7 and 8 he crosses the arms on the skull chest plate, the cape flowing.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_derrota`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -2115,12 +2115,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: defeated: 1 and 2 he drops to one knee, 3 to 8 kneeling, leaning on the bone crook, head down, the horns heavy, panting.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_parry_alto`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -2139,12 +2139,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: PARRY HIGH, too powerful: 1 to 3 he waits with the front open hand raised at face height, not even looking; 4 the hand catches an invisible fist at face height and holds it still, 5 he slowly turns his glowing eye to the opponent, 6 and 7 he squeezes and twists the invisible fist down, 8 he lets go and strokes one horn.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_parry_baixo`
 
-Anexar: e_referencia_ginga.png
+Anexar: e_conceito.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -2163,12 +2163,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: PARRY LOW, too powerful: 1 to 3 he plants both hooves wide and lowers the horns toward the floor; 4 an invisible sweep hits his hooves and he does not move at all, 5 he traps the invisible leg between the two spiral horns, 6 and 7 he shakes the head and tosses it to the side, 8 he throws the cape back, stance.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_vitima_agarrado`
 
-Anexar: e_referencia_ginga.png + vitima_agarrado.png
+Anexar: e_conceito.png + vitima_agarrado.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -2187,12 +2187,12 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: being grabbed and thrown by an unseen opponent, no other character drawn: 1 standing hit, torso doubled forward, 2 lifted with the hooves off the ground, arms flailing, 3 tilted backward 45 degrees in the air, 4 upside down, horns toward the ground, 5 horizontal face up in the air, 6 horizontal face down in the air, 7 curled and spinning, knees to chest, 8 stretched out face down just above the ground; the cape and the belt flames follow the motion and the crook stays in the hand.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `e_vitima_arremessado`
 
-Anexar: e_referencia_ginga.png + vitima_arremessado.png
+Anexar: e_conceito.png + vitima_arremessado.png
 
 ```text
 Generate ONE image with your image generation tool. Do not write code and do not edit any file.
@@ -2211,7 +2211,7 @@ Fighting-game timing (attacks): a clear anticipation pose before the hit, at mos
 
 MOTION: thrown victim hitting the floor: 1 falling head first at 45 degrees, 2 shoulder hits the floor, 3 back slams flat on the cape, hooves up, 4 bounce with the whole body off the ground, 5 face down flat, 6 seated on the floor dazed, legs out, hands behind, 7 lying on the side, 8 lying flat face up. The crook stays in the hand.
 
-SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, at exactly the same pixel size as the attached sheet: standing, about 545 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds.
+SIZE: the image is 2172x724 pixels, 8 cells of 271 pixels each. Draw the figure BIG, standing, about 430 pixels from the soles to the top of the hair (the horns go above that), soles at about y=655. Head, torso and limbs keep the same proportions in every frame. Every frame sits in its own column with at least 20 pixels of empty magenta between neighbours; when a pose is wide (kicks, lying down, rolls) bend the knees or lean so it fits in its cell without shrinking the body. Do NOT draw motion lines, speed lines, impact flashes, dust or any other effect: only the character and what he holds. The attached image is a model sheet (front, 3/4, back, face): draw him in the 3/4 view facing RIGHT like its second figure, same design, same colors. Keep the fur cape close to his back so each frame fits inside its own 271-pixel cell.
 ```
 
 ## `fx_cabra`
