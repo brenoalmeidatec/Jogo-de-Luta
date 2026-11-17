@@ -496,6 +496,14 @@ def ligar_cmd(cmd, cobranca=False):
         entradas += ('[State -1, Cobrança do Diabo]\ntype = ChangeState\nvalue = ifelse(command = "df_b", 1661, 1660)\n'
                      'triggerall = command = "df_a" || command = "df_b"\ntriggerall = var(20) > 0\n'
                      'triggerall = statetype != A\ntrigger1 = ctrl || var(1)\n\n')
+    # na forma, o especial sai do contato depois que o var(1) do tique já foi refeito: logo depois do "pode cancelar"
+    # do demônio (diabo_demonio.rotas), e não no topo (lá ele lia o var(1) do tique anterior)
+    marca = re.search(r"^\[State -1, Demônio: pode cancelar\]\n(?:[^\n]+\n)*\n", cmd, re.M)
+    despertar, especiais = entradas.split("[State -1, Rajadona de Ki das Trevas]", 1)
+    especiais = "[State -1, Rajadona de Ki das Trevas]" + especiais
+    if marca:
+        cmd = cmd[:marca.end()] + especiais + cmd[marca.end():]
+        return cmd.replace(cab, comando + cab + despertar, 1)
     return cmd.replace(cab, comando + cab + entradas, 1)
 
 

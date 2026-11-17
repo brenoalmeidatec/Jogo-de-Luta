@@ -699,7 +699,7 @@ DIRECAO = {None: ['triggerall = command != "holddown"'], "baixo": ['triggerall =
 def rotas(n_ok, esp=()):
     """Rotas do .cmd do demônio (no fim do [Statedef -1]): cancelamento, super, especiais, correntes, direcionais,
     agachados, em pé e no ar, nessa ordem (o primeiro que vale ganha: o toque do especial antes do botão sozinho)."""
-    lista = " || ".join(f"stateno = {n}" for n in sorted(n_ok))
+    lista = " || ".join(f"stateno = {n}" for n in sorted(n_ok)) or "0"
     r = [f"[State -1, Demônio: pode cancelar]\ntype = VarSet\ntriggerall = var(20) > 0\n"
          f"trigger1 = ({lista}) && movecontact && movecontact <= 8\nvar(1) = 1\n\n"]
     chao = ["triggerall = statetype != A", "trigger1 = ctrl || var(1)"]
@@ -742,7 +742,7 @@ def rotas(n_ok, esp=()):
     return "".join(r)
 
 
-COMANDOS = [("dd_a", "~D, D, a"), ("dd_b", "~D, D, b"), ("dfdf_x", "~D, F, D, F, x"), ("dfdf_y", "~D, F, D, F, y")]
+COMANDOS = [("dd_a", "~D, >D, a"), ("dd_b", "~D, >D, b"), ("dfdf_x", "~D, F, D, F, x"), ("dfdf_y", "~D, F, D, F, y")]
 
 
 def comandos(cmd):
@@ -785,7 +785,7 @@ def cns_bola(n, forte, boca):
                   "freq = 180", "ampl = -2"))
     c.append(_ctl(n, "Solta: tremida", "EnvShake", f"trigger1 = Time = {b['sai']}", "time = 10", "freq = 100",
                   "ampl = -5"))
-    vel = ["velocity = 4.6, -4.4", "accel = 0, .2"] if forte else ["velocity = 6, 0"]
+    vel = ["velocity = 4.6, -4.4", "accel = 0, .2"] if forte else ["velocity = 5, 0"]
     c.append(_ctl(n, "Projétil", "Projectile", f"trigger1 = Time = {b['sai']}", f"projid = {4500 + forte}",
                   f"projanim = {b['projanim']}", "projhitanim = 7472", "projremanim = 7472", "projcancelanim = 7472",
                   "projremovetime = 160", "projpriority = 2", f"offset = {boca[0]}, {boca[1]}", *vel,
@@ -795,10 +795,6 @@ def cns_bola(n, forte, boca):
                   "ground.hittime = 18", "ground.velocity = -5", "air.velocity = -3, -4",
                   *(["fall = 1", "fall.recover = 0", "ground.velocity = -4, -5"] if forte else []),
                   "palfx.time = 14", "palfx.add = 150, 30, 0", "palfx.sinadd = 40, 20, 0, 4"))
-    c.append(_ctl(n, "Impacto: tremida", "EnvShake", f"trigger1 = ProjHitTime({4500 + forte}) = 0", "time = 14",
-                  "freq = 100", "ampl = -7"))
-    c.append(_ctl(n, "Impacto: fundo pisca", "BGPalFX", f"trigger1 = ProjHitTime({4500 + forte}) = 0", "time = 6",
-                  "add = 100, 20, 0"))
     c.append(_fim(n))
     return "".join(c)
 
@@ -873,6 +869,7 @@ def cns_juizo():
     c.append(_ctl(n, "Pausa", "SuperPause", "trigger1 = Time = 0", "time = 25", "anim = S9271", "pos = 10, -60",
                   "movetime = 0", "darken = 1"))
     c.append(_ctl(n, "Gasta", "PowerAdd", "trigger1 = Time = 0", "value = -1000"))
+    c.append(_ctl(n, "Chão ainda não explodiu", "MapSet", "trigger1 = Time = 0", 'map = "dj_chao"', "value = 0"))
     c.append(_ctl(n, "Invencível na saída", "NotHitBy", "trigger1 = Time < 14", "value = SCA", "time = 1"))
     c.append(_ctl(n, "Rastro", "AfterImage", "trigger1 = Time = 0", "time = 60", "length = 8", "timegap = 2",
                   "framegap = 2", "trans = add", "paladd = 120, 50, 0", "palmul = .55, .55, .55"))
@@ -906,25 +903,27 @@ def cns_juizo():
     c.append(_ctl(n, "Atira no chão: velocidade", "TargetVelSet", "trigger1 = Time = 5", "x = -2", "y = 12"))
     c.append(_ctl(n, "Atira no chão: dano", "TargetLifeAdd", "trigger1 = Time = 5", "value = -50", "kill = 0"))
     c.append(_ctl(n, "Cai", "VelAdd", "trigger1 = Time > 5", "y = .4"))
-    # o Explod por último: o NumExplod(4670) = 0 dos outros vale no mesmo tique só antes dele nascer
+    # uma vez só, travada no map dj_chao (zerado no 4650): a luz que o luz_efeitos copia do Explod, logo depois dele,
+    # copia o gatilho; com NumExplod(4670) = 0 ela nunca nascia (o Explod já conta no mesmo tique)
     explosao = [("O chão explode: dano", "TargetLifeAdd", "value = -120"),
                 ("O chão explode: tremida", "EnvShake", "time = 30", "ampl = -10", "freq = 100"),
                 ("O chão explode: clarão", "BGPalFX", "time = 20", "add = 130, 40, 0"),
                 ("O chão explode: som", "PlaySnd", "value = S53,0"),
                 ("O chão explode", "Explod", "anim = 7471", "id = 4670", "postype = p2", "pos = 0, 0",
                  "scale = 1.5, 1.5", "sprpriority = 6", "ownpal = 1", "removetime = -2")]
+    explosao.append(("O chão explode: uma vez só", "MapSet", 'map = "dj_chao"', "value = 1"))
     for titulo, tipo, *linhas in explosao:
-        c.append(_ctl(n, titulo, tipo, "trigger1 = Time > 5 && NumTarget > 0 && NumExplod(4670) = 0",
-                      "trigger1 = target, Pos Y >= -10", "persistent = 0", *linhas))
+        c.append(_ctl(n, titulo, tipo, "trigger1 = Time > 5 && NumTarget > 0 && map(dj_chao) = 0",
+                      "trigger1 = target, Pos Y >= -10", *linhas))
     c.append(_ctl(n, "Chão", "ChangeState", "trigger1 = Time > 5 && Vel Y > 0 && Pos Y >= 0", "value = 4653"))
     n = 4653
     c.append(_st(n, "S", "S", 4653, "velset = 0,0"))
     c.append(_ctl(n, "No chão", "PosSet", "trigger1 = Time = 0", "y = 0"))
     for titulo, tipo, *linhas in explosao:  # se ele chegou antes de quem foi atirado, explode na hora
-        c.append(_ctl(n, titulo, tipo, "trigger1 = Time = 0 && NumTarget > 0 && NumExplod(4670) = 0", *linhas))
+        c.append(_ctl(n, titulo, tipo, "trigger1 = Time = 0 && NumTarget > 0 && map(dj_chao) = 0", *linhas))
     c.append(_fim(n))
     n = 4654
-    c.append(_st(n, "S", "S", 4654))
+    c.append(_st(n, "S", "S", 4654, "velset = 0,0"))
     c.append(_fim(n))
     # quem apanha (estados do Hazak, p2getp1state)
     n = 4660
@@ -943,7 +942,20 @@ def cns_juizo():
     return "".join(c)
 
 
-MENOS_2 = """[State -2, Demônio: conta acerto da corrente]
+MENOS_2 = """[State -2, Demônio: Bola das Trevas acertou (tremida)]
+type = EnvShake
+trigger1 = ProjHitTime(4500) = 0 || ProjHitTime(4501) = 0
+time = 14
+freq = 100
+ampl = -7
+
+[State -2, Demônio: Bola das Trevas acertou (fundo pisca)]
+type = BGPalFX
+trigger1 = ProjHitTime(4500) = 0 || ProjHitTime(4501) = 0
+time = 6
+add = 100, 20, 0
+
+[State -2, Demônio: conta acerto da corrente]
 type = VarAdd
 trigger1 = MoveHit
 trigger1 = var(11) = 0
