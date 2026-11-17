@@ -6,7 +6,9 @@ Dela sai o parado de referência em 3x (1080x780, cascos em y=660, eixo x=540), 
 de peças (cabeça separada para trocar depois). Os rascunhos de pose do ChatGPT só dão a pose: rosto, corpo e cores
 vêm do kit.
 
-  python ferramentas/gbzin_e_pecas.py ref      parado de referência + paleta em sprites/gbzin/pecas_e/
+  python ferramentas/gbzin_e_pecas.py ref              parado de referência + paleta em sprites/gbzin/pecas_e/
+  python ferramentas/gbzin_e_pecas.py parado           parado que respira (quadros_e_pecas_hd/referencia_ginga)
+  python ferramentas/gbzin_e_pecas.py firme e_anda ... rascunho -> quadros_e_firmes_hd (escala, paleta, chão)
 """
 import json
 import math
@@ -18,6 +20,7 @@ import numpy as np
 from PIL import Image
 
 RAIZ = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(RAIZ / "ferramentas"))
 SPR = RAIZ / "sprites" / "gbzin"
 PECAS = SPR / "pecas_e"
 CONCEITO = SPR / "quadros/folhas_arcade/e_conceito.png"
@@ -121,5 +124,266 @@ def parado(n=8):
     return quadros
 
 
+# ------------------------------------------------------------------ rascunho do ChatGPT -> quadros firmes
+# O rascunho só dá a pose. Cada célula vira um quadro 3x do mesmo tamanho do parado de referência (a escala da folha
+# sai do quadro mais alto, que é o de pé), com as 15 cores da paleta travadas e os cascos no chão do jogo.
+FOLHAS = SPR / "quadros/folhas_arcade"
+FIRMES = SPR / "quadros_e_firmes_hd"
+ALTURA_REF = 406           # altura do Grão-Pastor de pé no 3x (ref.png, chifre ao casco)
+AJUSTE = {}                # folha: fator extra quando o quadro mais alto não é o de pé (pulo, chifre erguido)
+CELULA = 2172 / 8
+
+
+def paleta():
+    return np.array(json.loads((PECAS / "paleta.json").read_text())["cores"], np.uint8)
+
+
+def travar(cor, opaco, pal):
+    out = np.zeros(opaco.shape + (4,), np.uint8)
+    px = cor[opaco]
+    if len(px):
+        idx = np.argmin(((lab(px.clip(0, 255))[:, None] - lab(pal)[None]) ** 2).sum(-1), 1)
+        out[opaco, :3] = pal[idx]
+        out[opaco, 3] = 255
+    return out
+
+
+def celulas(nome):
+    """Separa as 8 poses. O manto encosta no vizinho, então o corte entre células é a coluna com menos desenho perto
+    da divisa de 271 px; pedaço que passa da coluna vai com o dono pelo centro."""
+    im = np.asarray(Image.open(FOLHAS / f"{nome}.png").convert("RGB")).astype(np.float32)
+    a = sem_magenta(im)
+    H, W = a.shape
+    # costura entre células: caminho de cima a baixo que passa pelo menor número de pixels de desenho (contorna mão e
+    # ponta de manto do vizinho em vez de cortar reto)
+    costuras = [np.zeros(H, int)]
+    for k in range(1, 8):
+        c = round(k * CELULA)
+        L, R = c - 70, c + 70
+        custo = a[:, L:R].astype(np.float32) * 100 + np.abs(np.arange(L, R) - c)[None] * 0.02
+        acc = custo.copy()
+        de = np.zeros(custo.shape, int)
+        for y in range(1, H):
+            prev = acc[y - 1]
+            opc = np.stack([np.r_[np.inf, prev[:-1]], prev, np.r_[prev[1:], np.inf]])
+            j = np.argmin(opc, 0)
+            de[y] = j - 1
+            acc[y] += opc[j, np.arange(len(prev))]
+        x = int(np.argmin(acc[-1]))
+        cam = np.zeros(H, int)
+        for y in range(H - 1, -1, -1):
+            cam[y] = x + L
+            x += de[y][x]
+            x = min(max(x, 0), R - L - 1)
+        costuras.append(cam)
+    costuras.append(np.full(H, W))
+    cortes = [int(np.median(c)) for c in costuras]
+    xx = np.arange(W)[None]
+    out = []
+    for c in range(8):
+        m = (a * ((xx >= costuras[c][:, None]) & (xx < costuras[c + 1][:, None]))).astype(np.uint8)
+        n, rot, st, _ = cv2.connectedComponentsWithStats(m, connectivity=8)
+        if n <= 1:
+            out.append(m)
+            continue
+        maior = st[1:, 4].max()
+        fica = []
+        for i in range(1, n):
+            x, y, w, h, area = st[i]
+            comp = rot == i
+            na_divisa = bool((comp & ((xx <= costuras[c][:, None] + 1) | (xx >= costuras[c + 1][:, None] - 2))).any())
+            # pedaço do vizinho cortado na divisa (mão, ponta do manto) não vai junto: nada voa solto no quadro
+            if area >= 30 and (area == maior or not na_divisa or area > 0.15 * maior):
+                fica.append(i)
+        out.append(np.isin(rot, fica).astype(np.uint8))
+    return im, out, cortes
+
+
+def firme(nomes):
+    pal = paleta()
+    for nome in nomes:
+        im, mascaras, cortes = celulas(nome)
+        caixas = []
+        for m in mascaras:
+            ys, xs = np.nonzero(m)
+            caixas.append((xs.min(), xs.max(), ys.min(), ys.max()) if len(ys) else None)
+        alt = max(c[3] - c[2] + 1 for c in caixas if c)
+        # deslocamento da folha: os cascos do 1º quadro (postura) vão para o eixo; os outros andam junto
+        m0 = mascaras[0]
+        ys0, xs0 = np.nonzero(m0)
+        pes0 = xs0[ys0 > ys0.max() - 40]
+        desvio = (pes0.min() + pes0.max()) / 2 - 0.5 * CELULA
+        chao = max(c[3] for c in caixas if c)
+        esc = ALTURA_REF / alt * AJUSTE.get(nome, 1.0)
+        saida = FIRMES / nome
+        saida.mkdir(parents=True, exist_ok=True)
+        for i, (m, cx) in enumerate(zip(mascaras, caixas)):
+            tela = np.zeros((TELA[1], TELA[0], 4), np.uint8)
+            if cx:
+                x0, x1, y0, y1 = cx
+                sub = im[y0:y1 + 1, x0:x1 + 1]
+                a = cv2.erode(m[y0:y1 + 1, x0:x1 + 1], np.ones((2, 2), np.uint8)).astype(np.float32)
+                h, w = a.shape
+                nw, nh = max(1, round(w * esc)), max(1, round(h * esc))
+                pm = cv2.resize(sub * a[..., None], (nw, nh), interpolation=cv2.INTER_AREA)
+                aa = cv2.resize(a, (nw, nh), interpolation=cv2.INTER_AREA)
+                fig = travar(pm / np.maximum(aa[..., None], 1e-3), aa >= 0.55, pal)
+                # meio da célula vai para o eixo; o chão da folha vai para o chão do jogo
+                meio = (i + 0.5) * CELULA + desvio
+                X = round(EIXO + (x0 - meio) * esc)
+                Y = round(CHAO - (chao - y0) * esc)
+                xa, ya = max(0, X), max(0, Y)
+                xb, yb = min(TELA[0], X + nw), min(TELA[1], Y + nh)
+                tela[ya:yb, xa:xb] = fig[ya - Y:yb - Y, xa - X:xb - X]
+            Image.fromarray(tela).save(saida / f"{i:02d}.png")
+        print(f"{nome}: escala {esc:.3f} (de pé {alt} px na folha)")
+
+
+# ------------------------------------------------------------------ cabeça do kit (rosto igual em todo quadro)
+# A cabeça (chifres, cabelo, rosto, tapa-olho) é uma peça só, recortada do parado de referência. Em cada quadro ela é
+# achada no rascunho (giro e tamanho) e posta por cima do lugar da cabeça desenhada pelo ChatGPT, que some. A escala
+# da folha inteira sai do tamanho da cabeça: o corpo fica do tamanho que a cabeça do kit pede.
+CABECA_POLI = [(538, 258), (600, 252), (668, 258), (668, 296), (652, 312), (640, 340), (628, 354), (606, 358),
+               (590, 352), (578, 336), (570, 320), (556, 312), (540, 300)]
+JUNTA_PESCOCO = (604, 352)
+REGUA_CABECA = 0.8
+MANTO = {(33, 26, 43), (64, 48, 71), (114, 80, 105)}
+
+
+def _cores(img, cores):
+    rgb = img[..., :3].reshape(-1, 3)
+    m = np.zeros(len(rgb), bool)
+    for c in cores:
+        m |= (rgb == c).all(1)
+    return m.reshape(img.shape[:2]) & (img[..., 3] > 0)
+
+
+def kit_cabeca():
+    from PIL import ImageDraw
+    ref_ = np.asarray(Image.open(PECAS / "ref.png"))
+    mk = Image.new("L", TELA, 0)
+    ImageDraw.Draw(mk).polygon(CABECA_POLI, fill=255)
+    m = (np.asarray(mk) > 0) & (ref_[..., 3] > 0)
+    # ponta do manto que entra no polígono embaixo da orelha não é cabeça
+    m &= ~(_cores(ref_, MANTO) & (np.arange(TELA[1])[:, None] > 300))
+    ys, xs = np.nonzero(m)
+    x0, y0 = xs.min(), ys.min()
+    peca = np.where(m[..., None], ref_, 0)[y0:ys.max() + 1, x0:xs.max() + 1].astype(np.uint8)
+    Image.fromarray(peca).save(PECAS / "cabeca.png")
+    kit = {"cabeca": {"arquivo": "cabeca.png", "origem": [int(x0), int(y0)], "junta": list(JUNTA_PESCOCO)}}
+    (PECAS / "kit.json").write_text(json.dumps(kit, indent=1), encoding="utf-8")
+    print("cabeça do kit:", peca.shape[1], "x", peca.shape[0], "em", (int(x0), int(y0)))
+
+
+def _cabeca(ang, esc):
+    from boneco_ajuste import rotsprite
+    kit = json.loads((PECAS / "kit.json").read_text())["cabeca"]
+    img = np.asarray(Image.open(PECAS / kit["arquivo"]))
+    piv = (kit["junta"][0] - kit["origem"][0], kit["junta"][1] - kit["origem"][1])
+    if esc != 1.0:
+        h, w = img.shape[:2]
+        img = np.asarray(Image.fromarray(img).resize((max(1, round(w * esc)), max(1, round(h * esc))), Image.NEAREST))
+        piv = (piv[0] * esc, piv[1] * esc)
+    return rotsprite(img, ang, piv)
+
+
+def _cinza(img):
+    a = img[..., 3:4] > 0
+    return np.where(a, img[..., :3], 0).astype(np.float32)
+
+
+def achar_cabeca(q, angulos=range(-35, 36, 5), escalas=(1.0,)):
+    al = q[..., 3] > 0
+    ys, xs = np.nonzero(al)
+    y1 = ys.min() + int((ys.max() - ys.min()) * 0.6)
+    X0, Y0, X1, Y1 = max(0, xs.min() - 30), max(0, ys.min() - 30), min(TELA[0], xs.max() + 30), y1 + 40
+    reg = _cinza(q[Y0:Y1, X0:X1])
+    melhor = None
+    for esc in escalas:
+        for ang in angulos:
+            r, p = _cabeca(ang, esc)
+            m = (r[..., 3] > 0).astype(np.float32)
+            if r.shape[0] >= reg.shape[0] or r.shape[1] >= reg.shape[1]:
+                continue
+            res = cv2.matchTemplate(reg, _cinza(r), cv2.TM_SQDIFF, mask=np.repeat(m[..., None], 3, -1))
+            res = np.nan_to_num(res, nan=1e18, posinf=1e18)
+            v, _, pm, _ = cv2.minMaxLoc(res)
+            nota = math.sqrt(v / (m.sum() * 3))
+            if melhor is None or nota < melhor[0]:
+                melhor = (nota, ang, esc, (pm[0] + X0 + p[0], pm[1] + Y0 + p[1]))
+    return melhor
+
+
+def trocar_cabeca(q, achado):
+    nota, ang, esc, junta = achado
+    r, p = _cabeca(ang, 1.0)  # achada no tamanho do rascunho, posta no tamanho do kit, presa na junta do pescoço
+    x0, y0 = int(round(junta[0] - p[0])), int(round(junta[1] - p[1]))
+    nova = np.zeros_like(q)
+    h, w = r.shape[:2]
+    xa, ya, xb, yb = max(0, x0), max(0, y0), min(TELA[0], x0 + w), min(TELA[1], y0 + h)
+    nova[ya:yb, xa:xb] = r[ya - y0:yb - y0, xa - x0:xb - x0]
+    mn = nova[..., 3] > 0
+    out = q.copy()
+    # some a cabeça velha: tudo que não é manto perto da cabeça nova; chifre e cabelo que sobram mais longe também
+    perto = cv2.dilate(mn.astype(np.uint8), np.ones((9, 9), np.uint8)) > 0
+    longe = cv2.dilate(mn.astype(np.uint8), np.ones((31, 31), np.uint8)) > 0
+    cab_cores = {(122, 48, 52), (72, 38, 40), (188, 66, 66), (242, 182, 125), (243, 212, 174)}
+    apaga = (perto & ~_cores(q, MANTO)) | (longe & ~perto & _cores(q, cab_cores) & (np.arange(TELA[1])[:, None] < junta[1] - 10))
+    out[apaga] = 0
+    out[mn] = nova[mn]
+    # fresta: onde a cabeça velha era maior que a nova sobra um buraco entre a cabeça e o manto/ombro. Fecha com a
+    # cor do vizinho que não é a cabeça (o manto ou o ombro continuam até encostar na cabeça nova)
+    al = out[..., 3] > 0
+    fechado = cv2.morphologyEx(al.astype(np.uint8), cv2.MORPH_CLOSE, np.ones((9, 9), np.uint8)) > 0
+    buraco = fechado & ~al & perto
+    fonte = al & ~mn
+    for _ in range(8):
+        if not buraco.any():
+            break
+        for dy, dx in ((0, -1), (0, 1), (-1, 0), (1, 0), (-1, -1), (1, 1), (-1, 1), (1, -1)):
+            viz = np.roll(fonte, (dy, dx), (0, 1))
+            pega = buraco & viz
+            if pega.any():
+                out[pega] = np.roll(out, (dy, dx), (0, 1))[pega]
+                fonte = fonte | pega
+                buraco = buraco & ~pega
+    # pedaço solto que sobrou da cabeça velha some
+    al = (out[..., 3] > 0).astype(np.uint8)
+    n, lab_, st, _ = cv2.connectedComponentsWithStats(al, connectivity=8)
+    if n > 2:
+        maior = 1 + int(np.argmax(st[1:, 4]))
+        for i in range(1, n):
+            if i != maior and st[i, 4] < 400:
+                out[lab_ == i] = 0
+    return out
+
+
+def cabecas(nomes):
+    for nome in nomes:
+        pasta = FIRMES / nome
+        qs = [np.asarray(Image.open(pasta / f"{i:02d}.png")) for i in range(8)]
+        # A cabeça é a régua da folha: o ChatGPT desenha o corpo em tamanhos diferentes a cada folha, mas a cabeça
+        # dele, com o corpo na altura do parado de referência, sai 0,8 da cabeça do kit (medido no e_anda). Se a
+        # folha veio maior ou menor, a escala inteira corrige até a cabeça dar 0,8. A cabeça do kit entra sempre no
+        # tamanho do kit (proporção do conceito aprovado), presa na junta do pescoço.
+        escalas = (0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0)
+        achados = [achar_cabeca(q, escalas=escalas) if q[..., 3].any() else None for q in qs]
+        escs = sorted(a[2] for a in achados if a)
+        mediana = escs[len(escs) // 2]
+        if abs(mediana - REGUA_CABECA) > 0.03:
+            AJUSTE[nome] = AJUSTE.get(nome, 1.0) * REGUA_CABECA / mediana
+            firme([nome])
+            qs = [np.asarray(Image.open(pasta / f"{i:02d}.png")) for i in range(8)]
+            achados = [achar_cabeca(q, escalas=(0.75, 0.8, 0.85)) if q[..., 3].any() else None for q in qs]
+        for i, (q, a) in enumerate(zip(qs, achados)):
+            if a:
+                Image.fromarray(trocar_cabeca(q, a)).save(pasta / f"{i:02d}.png")
+        print(nome, "cabeça:", [f"{a[1]}°x{a[2]} nota {a[0]:.0f}" if a else "-" for a in achados])
+
+
 if __name__ == "__main__":
-    {"ref": ref, "parado": parado}[sys.argv[1]]()
+    if sys.argv[1] == "firme":
+        firme(sys.argv[2:])
+        cabecas(sys.argv[2:])
+    else:
+        {"ref": ref, "parado": parado, "kit": kit_cabeca}[sys.argv[1]]()
