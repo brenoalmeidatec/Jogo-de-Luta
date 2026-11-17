@@ -107,6 +107,40 @@ SOCO = {
 }
 FEITAS = {**CABECADA, **SOCO}
 
+# Chute com o corpo inteiro (regra 7.4): a perna do chute continua a do encaixe, mas o corpo acompanha. O quadril
+# entra na direção do chute e sobe na ponta do pé de apoio, o tronco inclina para trás (contrapeso), a cabeça fica
+# olhando o alvo, o braço de trás abre para equilibrar e o da frente guarda o rosto. Valores SOMADOS à pose encaixada
+# (dx/dy em px HD, ang em graus); o pé de apoio volta a plantar por IK onde estava no desenho de hoje.
+def _corpo(qdx, qdy, tronco, cabeca, btras, bfrente=0):
+    return {"quadril": {"dx": qdx, "dy": qdy}, "tronco": {"ang": tronco}, "cabeca": {"ang": cabeca},
+            "braco_tras": {"ang": btras}, "braco_frente": {"ang": bfrente}}
+
+
+CORPO = {
+    # chute alto: carrega (peso atrás), sobe o joelho, estica com o quadril entrando e o tronco deitando para trás
+    "chute_alto/02": _corpo(-4, 2, -4, 2, -6, -6),
+    "chute_alto/03": _corpo(4, 0, -8, 4, -14, -8),
+    "chute_alto/04": _corpo(12, -3, -12, 6, -24, -10),
+    "chute_alto/05": _corpo(9, -2, -10, 5, -18, -8),
+    "chute_alto/06": _corpo(3, 2, -5, 2, -8, -4),
+    "chute_alto/07": _corpo(0, 0, -1, 0, -2),
+    # chute baixo (de frente): o quadril empurra a perna, o tronco recua um pouco
+    "chute_baixo/02": _corpo(8, -1, -7, 3, -14, -6),
+    "chute_baixo/03": _corpo(2, 1, -3, 1, -6),
+    "chute_baixo/04": _corpo(10, -2, -9, 4, -18, -8),
+    "chute_baixo/05": _corpo(7, -1, -7, 3, -12, -6),
+    "chute_baixo/06": _corpo(2, 1, -2, 0, -4),
+}
+
+
+def corpo_inteiro(p, q):
+    """Soma o movimento do corpo (CORPO) na pose e planta de novo o pé de apoio."""
+    for slot, d in CORPO[q].items():
+        o = p.setdefault(slot, {"ang": 0})
+        for k, v in d.items():
+            o[k] = o.get(k, 0) + v
+    return pf.pernas_no_chao(p, b.abrir(q), so_tras=True)
+
 
 def plantar_pes(pose, dx_tras=0, dx_frente=0):
     """Pernas por IK com cada pé no chão, deslocado dx do pé do parado."""
@@ -136,6 +170,8 @@ def ajustar(pose, q):
         p.setdefault(slot, {"ang": 0}).update(mud)
         if "var" in mud and mud["var"] is None:
             p[slot].pop("var")
+    if q in CORPO:
+        p = corpo_inteiro(p, q)
     return p
 
 
@@ -454,7 +490,7 @@ def cmd_animar(so=None):
                  or dobra_funda(poses[c.split("|")[0]])) and c.split("|")[0] not in AJUSTE and c.split("|")[0] not in FEITAS}
         for c in {c for c, _, _ in chaves} - fixos:
             q0 = c.split("|")[0]
-            if q0 not in AJUSTE and q0 not in FEITAS and q0 not in pf.PERNA and membro_perdido(kit, q0, pp[c]):
+            if q0 not in AJUSTE and q0 not in FEITAS and q0 not in pf.PERNA and membro_perdido(kit, q0, pp[c] if q0 not in CORPO else {k: v for k, v in poses[q0].items() if not k.startswith("_")}):
                 fixos.add(c)
                 continue
             if not plantar(kit, pp[c], c.split("|")[0]):
