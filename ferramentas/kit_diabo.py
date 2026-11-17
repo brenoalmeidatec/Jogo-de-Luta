@@ -12,8 +12,8 @@ ESCALA_FIXA = True  # as folhas da IA vieram todas na mesma escala; a régua da 
 CABECA = [(525, 308), (618, 308), (618, 386), (602, 401), (580, 406), (560, 406), (545, 401), (520, 399),
           (495, 399), (470, 391), (480, 377), (500, 368), (515, 358), (525, 345)]
 # borda direita colada no paletó (x 492): o paletó fica todo no tronco
-BRACO_TRAS = [(476, 397), (502, 399), (504, 412), (493, 432), (490, 460), (489, 500), (496, 530), (494, 548),
-              (470, 549), (444, 536), (434, 500), (436, 470), (446, 440), (460, 414)]
+BRACO_TRAS = [(470, 408), (490, 408), (492, 432), (490, 460), (489, 500), (496, 530), (494, 548),
+              (470, 549), (444, 536), (434, 500), (436, 470), (446, 440), (458, 418)]
 BRACO_FRENTE = [(590, 399), (613, 404), (626, 430), (631, 458), (646, 478), (662, 503), (665, 537), (645, 542),
                 (624, 532), (614, 506), (604, 482), (596, 461), (591, 441), (587, 420)]
 PERNA_TRAS = [(470, 492), (538, 492), (542, 520), (531, 560), (521, 600), (507, 630), (504, 662), (436, 662),
@@ -66,7 +66,7 @@ FIRMES = set()
 ESPECIAIS = set()
 # vão fechado maior que isto é de propósito (entre o braço, a coxa e o rabo): não tapa nem reprova
 BURACO_MAX = 60
-MANCHA_FOLGA = 150  # o demônio é escuro (garras e calça): a mancha varia mais quando a garra gira
+MANCHA_FOLGA = 180  # o demônio é escuro (garras e calça): a mancha varia mais quando a garra gira ou sobe na guarda
 FIRMES.update(f"parado/{i:02d}" for i in range(8))
 FIRMES.update(f"anda/{i:02d}" for i in range(8))
 # as garras sobem por cima da cabeça (garra cruzada) e varrem para a frente: faixa de giro maior que a do Hazak
@@ -138,3 +138,8 @@ POSES.update({
 # fim dos chutes: volta à guarda do kit com os pés do parado
 POSES.update({f"pe_pes/{i:02d}": dict(_GUARDA) for i in (2, 3, 6, 7)})
 TIRA_FAIXA = False  # o demônio não tem faixa: o marrom da pele nos rasgos da calça fica na perna
+PELE = ("braco_tras", "braco_frente", "coxa_frente")
+PELE_VIZINHOS = {"coxa_frente": ("quadril",)}  # ombro desenhado como pele (sem linha de corte entre braço e tronco)
+# o tronco é pintado por baixo da beira da cabeça (6 px): quando o tronco inclina e a cabeça contra-gira não abre vão
+TAPAR_FAIXA = 6
+TAPAR = ("tronco",)

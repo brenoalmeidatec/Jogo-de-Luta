@@ -784,6 +784,25 @@ def esticar(p, est, slot=None):
     return dict(p, img=out, origem=[int(jx + x0), int(jy + y0)])
 
 
+def _pele(kit, pose, w, slot):
+    """Peça desenhada como pele (pele_pecas.py): cada pixel segue o próprio osso e, perto do vizinho (o tronco), também
+    ele; devolve a camada pronta para colar (imagem, x0, y0)."""
+    import pele_pecas as pele
+    viz = tuple(v for v in getattr(K, "PELE_VIZINHOS", {}).get(slot, ("tronco",)))
+    X, Y, cor, pesos = pele._pontos(kit, b.chave(slot, pose), slot, viz)
+    ax, ay = np.zeros_like(X), np.zeros_like(Y)
+    for k, osso in enumerate((slot,) + viz):
+        tx, ty = pele._transformar(w, osso, X, Y)
+        ax += pesos[:, k] * tx
+        ay += pesos[:, k] * ty
+    xi, yi = np.rint(ax).astype(np.int32), np.rint(ay).astype(np.int32)
+    H, W = b.TELA[1], b.TELA[0]
+    ok = (xi >= 0) & (xi < W) & (yi >= 0) & (yi < H)
+    camada = np.zeros((H, W, 4), np.uint8)
+    camada[yi[ok], xi[ok]] = cor[ok]
+    return camada, 0, 0
+
+
 def desenhar(kit, pose):
     """Peças rígidas giradas nas juntas; pernas no chão deformadas por malha (calça larga dobra sem emenda);
     perna levantada com o desenho de câmara ou esticada preso no quadril."""
@@ -844,6 +863,11 @@ def desenhar(kit, pose):
         est = pose.get(slot, {}).get("estica", 1)
         if abs(est - 1) > 0.01:  # membro de borracha (a criatura do Raiclaven): estica na linha do osso
             p = esticar(p, est, slot)
+        if slot in getattr(K, "PELE", ()) and abs(est - 1) <= 0.01:
+            # pele no ombro (pele_pecas.py): perto do tronco o braço acompanha também o tronco, sem linha de corte
+            por(*_pele(kit, pose, w, slot))
+            usados.append((p, pos, ang))
+            continue
         r, x0, y0 = b.colocar(p, p["img"], p["origem"], pos, ang)
         por(r, x0, y0)
         if slot == "tronco":

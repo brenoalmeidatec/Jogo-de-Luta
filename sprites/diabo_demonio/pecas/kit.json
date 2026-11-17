@@ -23,7 +23,7 @@
    "arquivo": "braco_tras.png",
    "origem": [
     440,
-    397
+    408
    ],
    "junta": [
     490,
@@ -34,7 +34,7 @@
    "sobra": "braco_tras_sobra.png",
    "origem_sobra": [
     431,
-    388
+    399
    ]
   },
   "braco_frente": {
@@ -58,8 +58,8 @@
   "tronco": {
    "arquivo": "tronco.png",
    "origem": [
-    490,
-    400
+    465,
+    388
    ],
    "junta": [
     548,
@@ -69,8 +69,8 @@
    "fonte": "parado/00",
    "sobra": "tronco_sobra.png",
    "origem_sobra": [
-    481,
-    391
+    456,
+    379
    ]
   },
   "quadril": {
