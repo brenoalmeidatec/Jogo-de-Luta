@@ -1,0 +1,42 @@
+{
+ "acao": 4200,
+ "caixa": null,
+ "origem": [
+  "pe_maos/00",
+  "pe_maos/01",
+  "pe_maos/02",
+  "pe_maos/03"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "pe_maos/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": true,
+   "de": "pe_maos/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 4,
+   "caixa": false,
+   "de": "pe_maos/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "pe_maos/03"
+  },
+  {
+   "desenho": 4,
+   "ticks": 3,
+   "caixa": false,
+   "de": "pe_maos/03"
+  }
+ ]
+}

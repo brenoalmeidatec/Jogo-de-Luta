@@ -1,0 +1,52 @@
+{
+ "ar_soco/02": {
+  "_especial": {
+   "var": "ar_soco/02"
+  }
+ },
+ "ar_soco/03": {
+  "_especial": {
+   "var": "ar_soco/03"
+  }
+ },
+ "ar_soco/04": {
+  "_especial": {
+   "var": "ar_soco/04"
+  }
+ },
+ "ar_soco/06": {
+  "_especial": {
+   "var": "ar_soco/06"
+  }
+ },
+ "corrida/00": {
+  "_especial": {
+   "var": "corrida/00"
+  }
+ },
+ "corrida/01": {
+  "_especial": {
+   "var": "corrida/01"
+  }
+ },
+ "voadora/01": {
+  "_especial": {
+   "var": "voadora/01"
+  }
+ },
+ "voadora/02": {
+  "_especial": {
+   "var": "voadora/02"
+  }
+ },
+ "voadora/04": {
+  "_especial": {
+   "var": "voadora/04"
+  }
+ },
+ "voadora/05": {
+  "_especial": {
+   "var": "voadora/05"
+  }
+ }
+}

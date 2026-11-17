@@ -2642,6 +2642,20 @@ vídeo conferido antes de juntar.
   manchas magenta, munhequeira verde-água) → `harmonizar`; o estouro da Cobrança parecia preso → acompanha o P2 e
   ficou menor. Robô 249/0. Vídeos em docs/diabo-44/video/.
 
+## 2026-11-16 — Luz em todo efeito que brilha, nos 5 lutadores (issue #51, item 2) (Claude, thread do Alisson)
+
+**Pedido do Alisson:** gostou da luz do Hazak; pôr em todos os efeitos que têm luz.
+
+**Feito:** `ferramentas/luz_efeitos.py` (inventário, folha de revisão e geração) e `ferramentas/luz.py` genérica:
+luz tirada de cada efeito (cor, força e tamanho quadro a quadro), clarão no ponto de cada golpe acertado, poderes
+reconhecidos pela revisão (`ferramentas/luz_classes.json`), raio com a luz do próprio desenho. Ligada no Hazak, no
+Gutto, no Pengaró, no CK e no Raiclaven (este pelo fim do `gerar_raiclaven.py`). Quatro rodadas de filme conferidas
+quadro a quadro por revisores independentes.
+
+**Armadilhas:** a ação 47002 (raio) cai na faixa 40000+ da silhueta; a aura agora é reconhecida pelo grupo do desenho
+(9600 a 9999), não pelo número da ação. A faísca do HitDef vem em expressão (`S(ifelse(var(20) > 0, 9231, 9201))`).
+Grão de luz maior que 2 pixels e raio acima de 90 viram tabuleiro de quadrados. O PalFX no oponente pinta o corpo
+inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copiar velocity e accel.
 ## 2026-11-16 — Piloto boneco de peças do Pengaró base (Claude, sessão do LightWolfMan)
 
 **Pedido:** `docs/missao-alisson-boneco-de-pecas.md`, etapa 1 (parado, soco e chute alto pelo método do
@@ -2739,6 +2753,8 @@ O Alisson aprovou o corpo firme e pediu fluidez, vida e qualidade, sem nenhum er
 **Robô de defeitos** (`conferir` em `piloto_firme.py`): procura fresta, mancha escura a mais que o desenho de hoje,
 pedaço solto e pé fora do chão. Deu 0 de 41 desenhos (`docs/boneco-pecas/vida/robo_defeitos.md`).
 
+<<<<<<< HEAD
+=======
 ### 2026-11-16 — CK pelo boneco de peças (corpo firme + vida), 1ª leva
 
 Pedido do Alisson depois do OK no Pengaró: passar todos os lutadores para o método, com fluidez e sem erro de peça, e
@@ -2826,6 +2842,7 @@ Pedido do Alisson: "faça isso para todos", com fluidez, vida e nenhum erro de p
   sprites/pengaro/quadros_pecas/acoes/<ação>/ (+ tempos.json); o HD se refaz com `pengaro_todo.py animar`.
 - Fraco ainda: manchinhas cinza na calça perto da virilha (resto do contorno do parado), fresta pequena no ombro de
   trás quando o tronco inclina; agarrão, parry baixo e despertar ficaram fora (não são da lista base).
+>>>>>>> origin/mugen
 ### 2026-11-16 — Gutto no boneco de peças (corpo firme + vida) e golpes confusos refeitos
 
 O Alisson aprovou o corpo firme do Pengaró e pediu o mesmo para todos, com vida e sem erro de peça, e os golpes
@@ -2916,13 +2933,9 @@ abertos). Golaço e arm-lock voador seguem como estão. Nada ligado no gerador n
   Fica para peça nova: bicicleta sem chute, Passinho de Pinguim (rolamento) e parry_baixo virando estrela.
 ## 2026-11-16 — Luz em todo efeito que brilha, nos 5 lutadores (issue #51, item 2) (Claude, thread do Alisson)
 
-**Pedido do Alisson:** gostou da luz do Hazak; pôr em todos os efeitos que têm luz.
+### 2026-11-16 — Pengaró inteiro no boneco de peças (154 ações)
 
-**Feito:** `ferramentas/luz_efeitos.py` (inventário, folha de revisão e geração) e `ferramentas/luz.py` genérica:
-luz tirada de cada efeito (cor, força e tamanho quadro a quadro), clarão no ponto de cada golpe acertado, poderes
-reconhecidos pela revisão (`ferramentas/luz_classes.json`), raio com a luz do próprio desenho. Ligada no Hazak, no
-Gutto, no Pengaró, no CK e no Raiclaven (este pelo fim do `gerar_raiclaven.py`). Quatro rodadas de filme conferidas
-quadro a quadro por revisores independentes.
+Pedido do Alisson: "faça isso para todos", com fluidez, vida e nenhum erro de peça, e refazer os golpes confusos.
 
 **Armadilhas:** a ação 47002 (raio) cai na faixa 40000+ da silhueta; a aura agora é reconhecida pelo grupo do desenho
 (9600 a 9999), não pelo número da ação. A faísca do HitDef vem em expressão (`S(ifelse(var(20) > 0, 9231, 9201))`).
@@ -2938,6 +2951,38 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   remap do despertado para cada sprite novo e refaz as ações da aura (30000/40000 + ação).
 - Gutto: 16 golpes, 299 quadros. Robô de peças 0 defeito; robô de luta 186/186 antes e depois, dano idêntico.
 - Agachado passou a ter 48 ticks e a rasteira ganhou a volta (459, 1173, 460) para bater com o tempo do jogo.
+<<<<<<< HEAD
+- `ferramentas/acoes_pengaro.py` lista as 154 ações base do Pengaró (194 desenhos); `ferramentas/pengaro_todo.py`
+  faz poses (`poses i/n`), anima (`animar`), confere (robô), e gera `revisar`, `folha` e `video`.
+- Corpo firme em toda inclinação pequena (até 10°): girar o tronco abria fresta nas emendas.
+- Robô: pé desgrudado da canela (tornozelo estica/encolhe até 10 px), pé fora do chão (IK planta no pé de hoje,
+  inclusive nos intermediários), contorno escuro na beira cortada das peças, rosto trocado com fresta (aí o quadro
+  especial fica com a cabeça do desenho).
+- Quadro "especial" (desenho de hoje + rosto do kit + paleta travada do parado) quando o kit de frente não monta:
+  IoU < 0.65, agachado fundo/pernas encolhidas, ou braço/perna que o encaixe não alcança (> 800 px de fora).
+  59 dos 194 desenhos saem montados; o resto é especial.
+- Refeitos: andar (por código, ciclo apoio/balanço com IK; o desenho de hoje trocava a perna da joelheira),
+  cabeçada (à mão: antecipação, testa na frente, volta), defesa (punho sobe e cobre o queixo), soco no ar,
+  provocação.
+- Resultado: robô 0 defeitos nas 154 ações (1344 desenhos com intermediários). Saída 1x em
+  sprites/pengaro/quadros_pecas/acoes/<ação>/ (+ tempos.json); o HD se refaz com `pengaro_todo.py animar`.
+- Fraco ainda: manchinhas cinza na calça perto da virilha (resto do contorno do parado), fresta pequena no ombro de
+  trás quando o tronco inclina; agarrão, parry baixo e despertar ficaram fora (não são da lista base).
+
+## 2026-11-17 — Pengaró inteiro no jogo pelo boneco de peças, sem linha de corte (Claude, thread do Alisson)
+
+- Regra nova na `docs/regras-dos-lutadores.md` seção 7.4 (zero erro de animação: membro descolando, silhueta grossa,
+  pedaço voando, linha de corte, movimento fisicamente errado) + linha no checklist da seção 9.
+- `ferramentas/pele_pecas.py`: o boneco é desenhado como pele que dobra nas juntas (skinning linear com peso dos dois
+  lados da emenda, faixa de 28 px; braço 8 px). O kit continua separado (trocar cabeça e ajuste fino), mas na tela não
+  aparece corte entre quadril, coxa, canela e tronco. Liga com `piloto_firme.PELE = True`.
+- Limpeza do kit (bolinhas fantasmas, risco cinza na calça, contorno escuro na beira dos braços).
+- Soco refeito com o corpo inteiro: quadril gira e anda 22 px, passo à frente, braço de trás recua.
+- Andar na velocidade do jogo (passadas do tamanho do deslocamento real, sem patinar).
+- Ligado no jogo com `ligar_pecas.py`: 154 ações, 1157 sprites novos (grupos 48000+), remaps do despertado e da aura.
+  Robô do boneco 0 defeito; robô de luta 189/189 antes e depois, dano idêntico. Foto e vídeo em docs/boneco-pecas/todo/.
+- Próximo: chutes com o mesmo corpo inteiro do soco; agarrão, parry baixo e despertar continuam fora da lista base.
+=======
 
 ### 2026-11-17 — CK base no jogo pelo boneco de peças
 - Pedido do Alisson (o Breno liberou auto-aprovação): pôr no jogo o que passou no robô.
@@ -2973,3 +3018,19 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   costas e volta). Cabeça do kit em todos; soco/05 e rolamento/06 (espelhada) pela busca guiada.
 - Robô de defeitos: os 21 quadros novos passam; robô do jogo 236/236. Vídeo e folha:
   `docs/boneco-pecas/gbzin/pecas_novas_antes_depois.{mp4,png}`.
+
+## 2026-11-17 — Raiclaven: martelo e cabeçada no jogo pelo boneco de peças
+
+- `ferramentas/mapa_acoes.py raiclaven`: qual desenho de `quadros/<pasta>/NN` cada elemento de cada ação mostra hoje
+  (máscara do .sff contra os quadros de 1x) -> `docs/boneco-pecas/raiclaven/mapa_acoes.json`.
+- `ferramentas/golpes_raiclaven.py`: pose-chave por desenho (POSE); toda ação cujos desenhos têm pose é refeita com os
+  mesmos ticks e caixa (pastas `quadros_pecas_hd/a<ação>`). Martelo: 215, 216, 311, 1400, 1401, 3200, 3410, 3431.
+  Cabeçada: 303, 347, 410, 3412, 3430. Braço erguido = variante desenhada (martelo/01 "armado", martelo/02 "alto")
+  com a ombreira junto (a do kit vira "vazio"); girar a peça para trás descolava o cotovelo.
+- Consertado: o braço "estocada" trazia um pedaço do poste do bolso (poste duplicado no soco); filtro `colorido`.
+- Ligado com `ligar_pecas.py raiclaven` (todas as pastas, a partir do .sff/.air/.cns de antes de qualquer ligação).
+  Robô de peças 0; robô de luta 186/186, dano idêntico. Vídeo: `docs/boneco-pecas/raiclaven/golpes_lado_a_lado.mp4`
+  (`ferramentas/video_golpes_raiclaven.py`).
+- Para ligar de novo: `git checkout 95134c46 -- chars/raiclaven` e `ligar_pecas.py raiclaven` (rodar duas vezes em cima
+  do já ligado não foi testado).
+>>>>>>> origin/mugen
