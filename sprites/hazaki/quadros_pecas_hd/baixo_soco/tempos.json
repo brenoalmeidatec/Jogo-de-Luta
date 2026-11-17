@@ -1,0 +1,54 @@
+{
+ "acao": 400,
+ "caixa": [
+  42,
+  -162,
+  171,
+  -126
+ ],
+ "origem": [
+  "baixo_soco/02",
+  "baixo_soco/03",
+  "baixo_soco/04",
+  "baixo_soco/05",
+  "baixo_soco/06"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 1,
+   "caixa": false,
+   "de": "baixo_soco/02"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "baixo_soco/03"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": true,
+   "de": "baixo_soco/04"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "baixo_soco/05"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "baixo_soco/05"
+  },
+  {
+   "desenho": 5,
+   "ticks": 3,
+   "caixa": false,
+   "de": "baixo_soco/06"
+  }
+ ]
+}

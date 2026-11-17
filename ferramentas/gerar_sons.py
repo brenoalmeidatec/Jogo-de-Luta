@@ -844,6 +844,7 @@ ARMAS = {  # tipo do acerto com objeto: (acerto base por baixo, camada do objeto
     "ki": ("soco", ki_acerto, 1.0),
     "trevas": ("sombra", trevas_acerto, 1.0),
     "maleta": ("luva", maleta_acerto, 1.0),
+    "cajado": ("soco", lambda p, s: cajado_madeira(p, s), 1.0),
 }
 
 
@@ -853,6 +854,90 @@ def acerto_arma(peso, semente, tipo):
 
 
 # ---------------------------------------------------------------- menu e barra
+
+
+# ---------------------------------------------------------------- Gbzin, o Pastor do Jiu-Jitsu (#30)
+def berro_cabra(semente=620, f0=520, d=0.75, grave=False):
+    """Berro de cabra ("méééé"): pulso nasal com tremolo rápido de balido, subindo um pouco e caindo no fim."""
+    t = tempo(d)
+    f = f0 * (1 + 0.12 * np.sin(np.pi * np.clip(t / d, 0, 1))) * 2 ** (0.35 / 12 * np.sin(2 * np.pi * 6 * t))
+    ph = 2 * np.pi * np.cumsum(f) / SR
+    voz = np.where((ph / (2 * np.pi)) % 1 < 0.22, 0.6, -0.6)
+    balido = 0.55 + 0.45 * np.sign(np.sin(2 * np.pi * 13 * t))  # o "é-é-é" da cabra
+    s = filtro(voz, 350, 3800, ganho_pico=(1300, 3, 2)) * balido * env(d, 0.02, 0.22)
+    if grave:  # o bode do Grão-Pastor: uma oitava abaixo, rasgado e com cauda
+        s = sat(mix(s, filtro(ruido(d, semente, 1.2), 60, 600) * env(d, 0.03, 0.3) * 0.7), 3.0)
+        s = reverb(s, 0.6, 0.4, 2200)
+    return crush(s, 7, 2)
+
+
+def cajado_madeira(peso, semente):
+    """Cajado de madeira acertando: 'tóc' oco de pau, mais grave conforme o peso."""
+    d = 0.12
+    oco = sum(tom(d, f * (1 - 0.06 * peso)) * env(d, 0.0005, 0.03) * g for f, g in ((330, 1), (720, 0.5), (1190, 0.25)))
+    pau = filtro(ruido(d, semente), 600, 3200, ganho_pico=(1500, 3, 2)) * env(d, 0.0005, 0.012 + 0.003 * peso)
+    return mix(oco * 0.7, pau)
+
+
+def cajado_chao(semente=630):
+    """Cajado fincado no chão: pancada de madeira, terra rachando e cascalho subindo."""
+    d = 0.6
+    racha = filtro(ruido(d, semente, 1), 120, 1800) * env(d, 0.002, 0.12)
+    graos = filtro(ruido(d, semente + 1), 1500, 7000) * env(d, 0.01, 0.15) * \
+        (np.random.default_rng(semente).random(_n(d)) < 0.05)
+    return mix(cajado_madeira(3, semente + 2), corpo(d, 90, 40, 0.12, 2.0), racha * 0.7, graos * 0.5)
+
+
+def tres_batidas(semente=640):
+    """'Bateu três vezes': três pancadas de cajado no chão, cada uma mais forte, com cauda grave."""
+    s = np.zeros(1)
+    for i, t0 in enumerate((0, 0.38, 0.76)):
+        s = mix(s, (cajado_chao(semente + i) * (0.6 + 0.2 * i), t0))
+    return reverb(s, 0.5, 0.3, 2000)
+
+
+def galope_cabra(semente=650):
+    """Cabrinha correndo: cascos pequenos e rápidos, mais agudos que os do cavalo."""
+    s = np.zeros(1)
+    for i, t0 in enumerate((0, 0.05, 0.13, 0.18, 0.26, 0.31, 0.39, 0.44)):
+        c = filtro(ruido(0.04, semente + i), 1200, 6000, ganho_pico=(2400, 3, 3)) * env(0.04, 0.0005, 0.008)
+        s = mix(s, (c * (1 if i % 2 == 0 else 0.6), t0))
+    return s
+
+
+def feno(semente=660):
+    """Fardo de feno rolando: palha seca chiando em ondas, com o baque abafado de cada volta."""
+    d = 0.7
+    t = tempo(d)
+    palha = filtro(ruido(d, semente), 2500, 9000) * (0.5 + 0.5 * np.sin(2 * np.pi * 7 * t) ** 2) * env(d, 0.02, 0.3)
+    s = mix(palha * 0.6, (corpo(0.1, 120, 70, 0.03) * 0.5, 0.0), (corpo(0.1, 120, 70, 0.03) * 0.4, 0.33))
+    return s
+
+
+def notas_voando(semente=670):
+    """Notas de dinheiro voando: papel estalando em rajadas curtas e agudas."""
+    s = np.zeros(1)
+    rng = np.random.default_rng(semente)
+    for i in range(9):
+        c = filtro(ruido(0.05, semente + i), 3000, 11000) * env(0.05, 0.001, 0.012)
+        s = mix(s, (c * (0.4 + 0.5 * rng.random()), 0.04 * i + 0.02 * rng.random()))
+    return s
+
+
+def chama_verde(semente=680):
+    """Chama verde acendendo: 'fuuum' de fogo com estalinhos."""
+    d = 0.8
+    fogo = filtro(ruido(d, semente, 1.3), 80, 1600) * env(d, 0.08, 0.35)
+    estalos = filtro(ruido(d, semente + 1), 2000, 8000) * (np.random.default_rng(semente).random(_n(d)) < 0.01)
+    return mix(fogo, estalos * 0.4)
+
+
+def mao_gigante(semente=690):
+    """Mão gigante de energia: rajada de ar grave com um zumbido verde por cima."""
+    d = 0.6
+    ar = vento(d, semente, 200, 1400, 0.4, 1.6)
+    zum = tom(d, 160, 90, "pulso") * env(d, 0.05, 0.2) * 0.25
+    return mix(ar, crush(zum, 6, 2))
 
 def chip_nota(d, f, forma="pulso", queda=0.05):
     return tom(d, f, forma=forma) * env(d, 0.001, queda)
@@ -1053,6 +1138,11 @@ ASSINATURAS = {
                                                                         V_ENORME),
                   (9, "navalha de sombra", navalha, V_FORTE), (10, "toalha quente", toalha, V_MEDIO),
                   (11, "cabeça na pia", agua_pia, V_FORTE)],
+    "gbzin": [(0, "berro de cabra", berro_cabra, V_MEDIO), (1, "cajado no chão", cajado_chao, V_FORTE),
+              (2, "cabra galopando", galope_cabra, V_MEDIO), (3, "feno rolando", feno, V_MEDIO),
+              (4, "berro do bode", lambda: berro_cabra(621, 260, 1.1, True), V_ENORME),
+              (5, "bateu três vezes", tres_batidas, V_ENORME), (6, "notas voando", notas_voando, V_FRACO),
+              (7, "chama verde", chama_verde, V_MEDIO), (8, "mão gigante", mao_gigante, V_FORTE)],
 }
 
 # Timbre dos acertos por lutador: 51 soco (mão), 52 chute, 53 golpe endiabrado, 54 a arma da mão (quando tem).
@@ -1063,6 +1153,7 @@ PERFIL = {
     "gutto": {51: "soco", 52: "canela", 53: "casco", 54: "osso"},
     "hazaki": {51: "concreto", 52: "chute", 53: "trevas", 54: "pedra"},
     "raiclaven": {51: "pente", 52: "chute", 53: "serra", 54: "tesoura"},
+    "gbzin": {51: "soco", 52: "chute", 53: "casco", 54: "cajado"},
 }
 VENTO_ARMA = {"raiclaven": lambda forte: tesoura_abre(400 + forte, forte)}  # 55,0 e 55,1: o "vento" da arma
 
@@ -1202,6 +1293,18 @@ ESPECIAIS = {
         3400: (None, [("proj", "50,9")]), 3401: ("53", [("vento", "55,1")]),  # Navalha, Corte da Corrente
         3402: (None, [("T0", "50,3")]), 3403: (None, [("T0", "50,3")]),  # Cadeira Atravessada, Queda da Cadeira
         2000: (None, [("T30", "50,4"), ("T55", "F31,1")])},
+    "gbzin": {  # ficha do Gbzin: 50,k são as assinaturas (0 berro de cabra ... 8 mão gigante); 54 é o cajado
+        1600: ("54", []), 1601: ("54", []),  # Gancho do Pastor: madeira do cajado no acerto
+        1000: (None, [("T0", "50,0"), ("proj", "50,2")]), 1001: (None, [("T0", "50,0"), ("proj", "50,2")]),  # Cabra Solta
+        1200: (None, [("T0", "50,0")]), 1201: (None, [("T0", "50,0")]),  # Cabra Saltadora
+        1100: (None, [("T0", "50,3")]), 1101: (None, [("T0", "50,3")]),  # Rolo de Feno
+        1500: ("54", [("proj", "50,1")]), 1501: ("54", [("proj", "50,1")]),  # Cajado no Chão: a onda sai do chão
+        1400: ("51", []), 1401: ("51", []),  # Arm-lock Voador
+        3000: (None, [("T0", "50,2")]),  # Rebanho Desgovernado: o rebanho galopando
+        3100: ("53", [("T0", "50,7")]),  # Juízo do Rebanho: fogo verde
+        3400: (None, [("T0", "50,8")]), 3401: ("53", [("T0", "50,4")]),  # Puxão das Mãos, Estouro
+        3402: (None, [("proj", "50,8")]), 3403: (None, [("T0", "50,4")]),  # Mão do Pastor, Berro
+        2000: (None, [("T2", "50,5"), ("T42", "50,7"), ("T55", "F31,1")])},  # bateu três vezes e a chama verde
 }
 
 # botão da mão que segura a arma: normais (200 a 699) e kombos que saem dele usam o acerto 54 e o vento 55

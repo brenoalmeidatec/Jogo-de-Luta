@@ -8,3 +8,9 @@ sprites/raiclaven/quadros_hd/
 # comparação dos caminhos dos efeitos da #47 (despertados_47_blender.py --comparar)
 sprites/efeitos_blender/*/d47_*_pixelfx/
 sprites/efeitos_blender/*/d47_*_direto/
+
+# Pengaró despertado no boneco de peças: gere com python ferramentas/importar_pengaro_e.py
+sprites/pengaro_e/quadros_arcade_hd/
+# sprites do Gutto tirados do .sff (python ferramentas/extrair_hd_sff.py gutto): reconstruíveis
+sprites/gutto/quadros_sff_hd/
+sprites/garanhao/quadros_arcade_hd/

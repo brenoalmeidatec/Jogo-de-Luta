@@ -277,7 +277,6 @@ var(1) = ctrl || ((stateno = 200 || stateno = 210 || stateno = 230 || stateno = 
 
 [State -1, Rapidinho da Quebrada]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 3200
 triggerall = command = "bfd_y"
 triggerall = power >= 2000
@@ -287,7 +286,6 @@ trigger2 = (stateno = [1000,1701]) && movehit && movehit <= 8
 
 [State -1, Rapidinho da Quebrada]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 3200
 triggerall = command = "bfd_x"
 triggerall = power >= 2000
@@ -297,7 +295,6 @@ trigger2 = (stateno = [1000,1701]) && movehit && movehit <= 8
 
 [State -1, Faixa no Asfalto]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 3000
 triggerall = command = "bfd_b"
 triggerall = power >= 1000
@@ -307,7 +304,6 @@ trigger2 = (stateno = [1000,1701]) && movehit && movehit <= 8
 
 [State -1, Faixa no Asfalto]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 3000
 triggerall = command = "bfd_a"
 triggerall = power >= 1000
@@ -317,7 +313,6 @@ trigger2 = (stateno = [1000,1701]) && movehit && movehit <= 8
 
 [State -1, Ascensão de Faixa]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 1201
 triggerall = command = "fd_y"
 triggerall = statetype != A
@@ -325,7 +320,6 @@ trigger1 = var(1)
 
 [State -1, Ascensão de Faixa]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 1200
 triggerall = command = "fd_x"
 triggerall = statetype != A
@@ -333,7 +327,6 @@ trigger1 = var(1)
 
 [State -1, Pega Bolado]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 1501
 triggerall = command = "bd_b"
 triggerall = statetype != A
@@ -341,7 +334,6 @@ trigger1 = var(1)
 
 [State -1, Pega Bolado]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 1500
 triggerall = command = "bd_a"
 triggerall = statetype != A
@@ -349,7 +341,6 @@ trigger1 = var(1)
 
 [State -1, Rolada de Tatame]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 1701
 triggerall = command = "bf_b"
 triggerall = statetype != A
@@ -358,7 +349,6 @@ trigger1 = var(1)
 
 [State -1, Rolada de Tatame]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 1700
 triggerall = command = "bf_a"
 triggerall = statetype != A
@@ -367,7 +357,6 @@ trigger1 = var(1)
 
 [State -1, Pedra]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 1001
 triggerall = command = "df_y"
 triggerall = statetype != A
@@ -376,7 +365,6 @@ trigger1 = var(1)
 
 [State -1, Pedra]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 1000
 triggerall = command = "df_x"
 triggerall = statetype != A
@@ -385,7 +373,6 @@ trigger1 = var(1)
 
 [State -1, Bola de ki]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 1601
 triggerall = command = "fb_y"
 triggerall = statetype != A
@@ -394,7 +381,6 @@ trigger1 = var(1)
 
 [State -1, Bola de ki]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 1600
 triggerall = command = "fb_x"
 triggerall = statetype != A
@@ -403,7 +389,6 @@ trigger1 = var(1)
 
 [State -1, Giro de Garagem]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 1301
 triggerall = command = "df_b"
 triggerall = statetype != A
@@ -411,7 +396,6 @@ trigger1 = var(1)
 
 [State -1, Giro de Garagem]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 1300
 triggerall = command = "df_a"
 triggerall = statetype != A
@@ -419,7 +403,6 @@ trigger1 = var(1)
 
 [State -1, Guarda de Aço]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 1101
 triggerall = command = "db_y"
 triggerall = statetype != A
@@ -427,7 +410,6 @@ trigger1 = var(1)
 
 [State -1, Guarda de Aço]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 1100
 triggerall = command = "db_x"
 triggerall = statetype != A
@@ -435,7 +417,6 @@ trigger1 = var(1)
 
 [State -1, Corte de Base]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 1401
 triggerall = command = "db_b"
 triggerall = statetype != A
@@ -443,7 +424,6 @@ trigger1 = var(1)
 
 [State -1, Corte de Base]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 1400
 triggerall = command = "db_a"
 triggerall = statetype != A
@@ -495,7 +475,6 @@ trigger1 = stateno = 150 || stateno = 152
 
 [State -1, Gasta afastar de defesa]
 type = PowerAdd
-triggerall = var(20) <= 0
 triggerall = command = "afastar"
 triggerall = power >= 1000
 triggerall = time > 3
@@ -504,7 +483,6 @@ value = -1000
 
 [State -1, Afastar de defesa]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 720
 triggerall = command = "afastar"
 triggerall = power >= 1000
@@ -528,7 +506,6 @@ trigger1 = ctrl
 
 [State -1, Afastar no ar]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 650
 triggerall = command = "afastar"
 triggerall = statetype = A
@@ -536,7 +513,6 @@ trigger1 = ctrl
 
 [State -1, Afastar]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 260
 triggerall = command = "afastar"
 triggerall = statetype = S
@@ -581,7 +557,6 @@ trigger1 = 1
 
 [State -1, Kombo 340]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 340
 triggerall = command = "a"
 triggerall = command != "holddown"
@@ -590,7 +565,6 @@ trigger1 = stateno = 246 && movecontact
 
 [State -1, Kombo 341]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 341
 triggerall = command = "b"
 triggerall = command != "holddown"
@@ -599,7 +573,6 @@ trigger1 = stateno = 340 && movecontact
 
 [State -1, Kombo 342]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 342
 triggerall = command = "a"
 triggerall = command = "holddown"
@@ -608,7 +581,6 @@ trigger1 = stateno = 200 && movecontact
 
 [State -1, Kombo 343]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 343
 triggerall = command = "b"
 triggerall = command != "holddown"
@@ -617,7 +589,6 @@ trigger1 = stateno = 342 && movecontact
 
 [State -1, Kombo 344]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 344
 triggerall = command = "y"
 triggerall = command != "holddown"
@@ -627,7 +598,6 @@ trigger1 = stateno = 201 && movecontact
 
 [State -1, Kombo 345]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 345
 triggerall = command = "y"
 triggerall = command = "holdfwd"
@@ -636,7 +606,6 @@ trigger1 = stateno = 344 && movecontact
 
 [State -1, Kombo 346]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 346
 triggerall = command = "b"
 triggerall = command != "holddown"
@@ -645,7 +614,6 @@ trigger1 = stateno = 230 && movecontact
 
 [State -1, Kombo 347]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 347
 triggerall = command = "y"
 triggerall = command = "holddown"
@@ -654,7 +622,6 @@ trigger1 = stateno = 346 && movecontact
 
 [State -1, Corrente x: final]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 303
 triggerall = command = "x"
 triggerall = command != "holddown"
@@ -663,7 +630,6 @@ trigger1 = stateno = 302 && movehit && var(10) >= 4
 
 [State -1, Corrente x: 3o]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 302
 triggerall = command = "x"
 triggerall = command != "holddown"
@@ -672,7 +638,6 @@ trigger1 = stateno = 301 && movecontact && time > 10
 
 [State -1, Corrente x: 2o]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 301
 triggerall = command = "x"
 triggerall = command != "holddown"
@@ -681,7 +646,6 @@ trigger1 = stateno = 200 && movecontact
 
 [State -1, Corrente y: final]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 313
 triggerall = command = "y"
 triggerall = command != "holddown"
@@ -690,7 +654,6 @@ trigger1 = stateno = 312 && movehit && var(10) >= 3
 
 [State -1, Corrente y: 3o]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 312
 triggerall = command = "y"
 triggerall = command != "holddown"
@@ -699,7 +662,6 @@ trigger1 = stateno = 311 && movecontact
 
 [State -1, Corrente y: 2o]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 311
 triggerall = command = "y"
 triggerall = command != "holddown"
@@ -708,7 +670,6 @@ trigger1 = stateno = 210 && movecontact
 
 [State -1, Corrente a: final]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 323
 triggerall = command = "a"
 triggerall = command != "holddown"
@@ -717,7 +678,6 @@ trigger1 = stateno = 322 && movehit && var(10) >= 3
 
 [State -1, Corrente a: 3o]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 322
 triggerall = command = "a"
 triggerall = command != "holddown"
@@ -726,7 +686,6 @@ trigger1 = stateno = 321 && movecontact
 
 [State -1, Corrente a: 2o]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 321
 triggerall = command = "a"
 triggerall = command != "holddown"
@@ -735,7 +694,6 @@ trigger1 = stateno = 230 && movecontact
 
 [State -1, Corrente b: final]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 333
 triggerall = command = "b"
 triggerall = command != "holddown"
@@ -744,7 +702,6 @@ trigger1 = stateno = 332 && movehit && var(10) >= 3
 
 [State -1, Corrente b: 3o]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 332
 triggerall = command = "b"
 triggerall = command != "holddown"
@@ -753,7 +710,6 @@ trigger1 = stateno = 331 && movecontact
 
 [State -1, Corrente b: 2o]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 331
 triggerall = command = "b"
 triggerall = command != "holddown"
@@ -762,7 +718,6 @@ trigger1 = stateno = 240 && movecontact
 
 [State -1, Cotovelo de Faixa]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 216
 triggerall = command = "golpe_216"
 triggerall = statetype = S
@@ -771,7 +726,6 @@ trigger2 = (stateno = 200 || stateno = 230) && movehit && movehit <= 8
 
 [State -1, Machado de Dojo]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 246
 triggerall = command = "golpe_246"
 triggerall = statetype = S
@@ -779,7 +733,6 @@ trigger1 = ctrl
 
 [State -1, Cutucao Sacana]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 201
 triggerall = command = "golpe_201"
 triggerall = statetype = S
@@ -787,7 +740,6 @@ trigger1 = ctrl
 
 [State -1, Coice]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 231
 triggerall = command = "golpe_231"
 triggerall = statetype = S
@@ -816,7 +768,6 @@ trigger1 = ctrl
 
 [State -1, Jab baixo]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 400
 triggerall = command = "x"
 triggerall = command = "holddown"
@@ -826,7 +777,6 @@ trigger2 = (stateno = 200 || stateno = 400 || stateno = 430 || stateno = 230) &&
 
 [State -1, Chute na canela]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 430
 triggerall = command = "a"
 triggerall = command = "holddown"
@@ -836,7 +786,6 @@ trigger2 = stateno = 430 && movecontact && var(5) < 4
 
 [State -1, Joelhada subindo]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 410
 triggerall = command = "y"
 triggerall = command = "holddown"
@@ -845,7 +794,6 @@ trigger1 = ctrl
 
 [State -1, Rasteira]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 440
 triggerall = command = "b"
 triggerall = command = "holddown"
@@ -854,7 +802,6 @@ trigger1 = ctrl
 
 [State -1, Jab]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 200
 triggerall = command = "x"
 triggerall = command != "holddown"
@@ -864,7 +811,6 @@ trigger2 = (stateno = 200 || stateno = 400 || stateno = 430 || stateno = 230) &&
 
 [State -1, Chute baixo]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 230
 triggerall = command = "a"
 triggerall = command != "holddown"
@@ -873,7 +819,6 @@ trigger1 = ctrl
 
 [State -1, Soco reto]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 210
 triggerall = command = "y"
 triggerall = statetype = S
@@ -881,7 +826,6 @@ trigger1 = ctrl
 
 [State -1, Chute lateral]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 240
 triggerall = command = "b"
 triggerall = statetype = S
@@ -889,7 +833,6 @@ trigger1 = ctrl
 
 [State -1, Golpe no ar]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 600
 triggerall = command = "x"
 triggerall = statetype = A
@@ -897,7 +840,6 @@ trigger1 = ctrl
 
 [State -1, Golpe no ar]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 601
 triggerall = command = "y"
 triggerall = statetype = A
@@ -906,7 +848,6 @@ trigger2 = (stateno = 600 || stateno = 610) && movehit && movehit <= 8
 
 [State -1, Golpe no ar]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 610
 triggerall = command = "a"
 triggerall = statetype = A
@@ -914,90 +855,8 @@ trigger1 = ctrl
 
 [State -1, Golpe no ar]
 type = ChangeState
-triggerall = var(20) <= 0
 value = 611
 triggerall = command = "b"
 triggerall = statetype = A
 trigger1 = ctrl
 trigger2 = (stateno = 600 || stateno = 610) && movehit && movehit <= 8
-
-[State -1, Demônio: pode cancelar]
-type = VarSet
-triggerall = var(20) > 0
-trigger1 = (stateno = 4200 || stateno = 4201 || stateno = 4202 || stateno = 4203 || stateno = 4400 || stateno = 4401 || stateno = 4402 || stateno = 4403) && movecontact && movecontact <= 8
-var(1) = 1
-
-[State -1, Demônio: Arranhão Baixo]
-type = ChangeState
-value = 4400
-triggerall = var(20) > 0
-triggerall = command = "x"
-triggerall = command = "holddown"
-trigger1 = ctrl
-trigger1 = statetype != A
-trigger2 = (stateno = 4200 || stateno = 4202 || stateno = 4400 || stateno = 4402) && movecontact && var(5) < 4
-
-[State -1, Demônio: Garra Subindo]
-type = ChangeState
-value = 4401
-triggerall = var(20) > 0
-triggerall = command = "y"
-triggerall = command = "holddown"
-trigger1 = ctrl
-trigger1 = statetype != A
-
-[State -1, Demônio: Arranhão]
-type = ChangeState
-value = 4200
-triggerall = var(20) > 0
-triggerall = command = "x"
-triggerall = command != "holddown"
-trigger1 = ctrl
-trigger1 = statetype = S
-trigger2 = (stateno = 4200 || stateno = 4202 || stateno = 4400 || stateno = 4402) && movecontact && var(5) < 4
-
-[State -1, Demônio: Garra Cruzada]
-type = ChangeState
-value = 4201
-triggerall = var(20) > 0
-triggerall = command = "y"
-triggerall = command != "holddown"
-trigger1 = ctrl
-trigger1 = statetype = S
-
-[State -1, Demônio: Joelhada Selvagem]
-type = ChangeState
-value = 4202
-triggerall = var(20) > 0
-triggerall = command = "a"
-triggerall = command != "holddown"
-trigger1 = ctrl
-trigger1 = statetype = S
-
-[State -1, Demônio: Coice com Garra]
-type = ChangeState
-value = 4203
-triggerall = var(20) > 0
-triggerall = command = "b"
-triggerall = command != "holddown"
-trigger1 = ctrl
-trigger1 = statetype = S
-
-[State -1, Demônio: Rabo Rasteiro]
-type = ChangeState
-value = 4402
-triggerall = var(20) > 0
-triggerall = command = "a"
-triggerall = command = "holddown"
-trigger1 = ctrl
-trigger1 = statetype != A
-
-[State -1, Demônio: Varrida de Garras]
-type = ChangeState
-value = 4403
-triggerall = var(20) > 0
-triggerall = command = "b"
-triggerall = command = "holddown"
-trigger1 = ctrl
-trigger1 = statetype != A
-

@@ -2,6 +2,8 @@
 do
   local SAIDA = "@SAIDA@"
   local LUTADOR = "@LUTADOR@"  -- quem e o P1: o Hazak tem roteiro proprio (no fim); os outros usam o de sempre
+  -- o Gbzin, no estagio 1 (gerar_gbzin.py), roda sobre o kit do CK: os roteiros do CK valem para ele
+  local KIT = (LUTADOR == "gbzin") and "ck" or LUTADOR
   local LOG = io.open(SAIDA, "w")
   local function log(s) LOG:write(s, "\n"); LOG:flush() end
   local CMDS = {"x","y","a","b","c","holdfwd","holdback","holdup","holddown","agarrao_whisky","garrafa_x","garrafa_y",
@@ -198,7 +200,7 @@ do
   kombo("1 Abertura", {"golpe_216"}, {{de = 216, botoes = {"x"}, para = 340}, {de = 340, botoes = {"b"}, para = 341}})
   kombo("2 Alto e Baixo", {"x"}, {{de = 200, botoes = {"holddown", "a"}, para = 342}, {de = 342, botoes = {"y"}, para = 343}})
   kombo("3 Empurrao", {"golpe_201"}, {{de = 201, botoes = {"y"}, para = 344}, {de = 344, botoes = {"holdfwd", "b"}, para = 345}})
-  if LUTADOR ~= "ck" then
+  if KIT ~= "ck" then
   kombo("4 Lancador", {"a"}, {{de = 230, botoes = {"b"}, para = 346}, {de = 346, botoes = {"holddown", "y"}, para = 347}})
   else  -- CK: Sobe pro Teto (x, y, baixo + y)
   kombo("4 Sobe pro Teto", {"x"}, {{de = 200, botoes = {"y"}, para = 346}, {de = 346, botoes = {"holddown", "y"}, para = 347}})
@@ -307,7 +309,7 @@ do
     wait(3)
     press(1, {"despertar"}, 3)
     need(estadoEm(2000), 12, "entrou em 2000")
-    if LUTADOR == "ck" then
+    if KIT == "ck" then
       -- a caixa preta da cena (Explod 9250) apaga atras da nuvem (tiques 42 a 68) e sai quando o Ratao sai da fumaca
       -- (69); a aura nasce no mesmo trecho (aura_ck.FUMACA): nunca os dois paredoes inteiros, nunca buraco
       local caixa = function() return com(1, function() return numExplod(9250) end) end
@@ -352,7 +354,7 @@ do
       need(function() return auraN(1) == 4 end, 2, "a aura continua inteira", false)
     end)
   end
-  if LUTADOR == "ck" then
+  if KIT == "ck" then
     -- aura do Ratao (ferramentas/aura_ck.py: paredao 9600, chao 9601, fagulhas 9602): liga inteira e ja apagou
     -- quando o corpo volta a forma base (o fade de saida acaba junto com o var(20))
     desperto("aura do Ratao: liga as 3 camadas e nao apaga por tempo", function()
@@ -427,7 +429,7 @@ do
   end
   correnteDesp("y", "y", {3410, 3411, 3412, 3413})
   correnteDesp("b", "b", {3420, 3421, 3422, 3423})
-  if LUTADOR ~= "ck" then
+  if KIT ~= "ck" then
   desperto("kombo Possessao (b, a, x)", function()
     approach(28)
     acao(function() c.vida0 = lifeP2() end)
@@ -470,7 +472,7 @@ do
     approach(60)
     acao(function() com(1, function() setPower(2000); return 0 end); c.vida0 = lifeP2() end)
     wait(3)
-    press(1, {LUTADOR == "ck" and "baile" or "golaco"}, 3)  -- no CK o golaco do Ratao e a Rajada (3000)
+    press(1, {KIT == "ck" and "baile" or "golaco"}, 3)  -- no CK o golaco do Ratao e a Rajada (3000)
     need(estadoEm(3100), 14, "entrou em 3100")
     need(function() local s = snap(1); return s.st == 3100 and s.t > 20 and s.v37 == 1 end, 80, "var(37) = 1 (arte endiabrada) no meio do 3100")
     need(function() return st1() == 0 end, 300, "terminou", false)
@@ -517,7 +519,7 @@ do
     need(estadoEm(1600), 15, "cancelou 301 em 1600")
   end)
 
-  if LUTADOR == "ck" then  -- golpes que so o CK tem
+  if KIT == "ck" then  -- golpes que so o CK tem
     desperto("super: Baile da Esquina pelo comando proprio (tras, frente, baixo + x+y)", function()
       approach(60)
       acao(function() com(1, function() setPower(2000); return 0 end); c.vida0 = lifeP2() end)
@@ -585,24 +587,76 @@ do
       note(function() return "dano no P2 " .. (c.vida0 - lifeP2()) .. "; dano no P1 " .. (c.vida1 - snap(1).life) end)
       need(function() return c.vida0 - lifeP2() > 0 end, 1, "o cruzado acertou", false)
     end)
-    S("Pendulo (compasso_a): balanca e volta", function()
-      approach(60)
-      press(1, {"compasso_a"}, 2)
-      need(estadoEm(1100), 12, "entrou em 1100")
-      need(function() return st1() == 0 end, 200, "voltou ao 0", false)
-    end)
-    S("Pendulo: x no meio sai com o direto (1110)", function()
-      approach(28)
-      acao(function() c.vida0 = lifeP2() end)
-      press(1, {"compasso_a"}, 2)
-      need(estadoEm(1100), 12, "entrou em 1100")
-      wait(10)
-      press(1, {"x"}, 2)
-      need(estadoEm(1110), 20, "saiu com o direto (1110)", false)
-      wait(60)
-      note(function() return "dano " .. (c.vida0 - lifeP2()) end)
-      need(function() return c.vida0 - lifeP2() > 0 end, 1, "o direto acertou", false)
-    end)
+    if LUTADOR == "gbzin" then  -- ficha do Gbzin: no lugar do Pendulo e do Bone Voador do CK
+      S("Rolo de Feno (compasso_a): rola, derruba quem esta de pe e volta", function()
+        approach(60)
+        acao(function() c.vida0 = lifeP2() end)
+        press(1, {"compasso_a"}, 2)
+        need(estadoEm(1100), 12, "entrou em 1100")
+        need(function() local s = snap(2).st; return s >= 5070 and s <= 5110 end, 60, "o P2 caiu (rasteira)", false)
+        need(function() return st1() == 0 end, 200, "voltou ao 0", false)
+        note(function() return "dano " .. (c.vida0 - lifeP2()) end)
+      end)
+      S("Gancho do Pastor forte (garrafa_y): prende e puxa o P2 para perto", function()
+        approach(170)
+        acao(function() c.d0 = snap(1).d end)
+        press(1, {"garrafa_y"}, 2)
+        need(estadoEm(1601), 15, "entrou em 1601")
+        need(function() return snap(2).st >= 5000 and snap(2).st < 5200 end, 90, "o gancho pegou")
+        wait(26)
+        note(function() return "distancia antes " .. c.d0 .. ", depois " .. snap(1).d end)
+        need(function() return snap(1).d < c.d0 - 60 end, 1, "o P2 veio para perto (mais de 60 px)", false)
+      end)
+      S("Cajado no Chao forte (golpe_1501): a onda pega de longe", function()
+        approach(120)
+        acao(function() c.vida0 = lifeP2() end)
+        press(1, {"golpe_1501"}, 2)
+        need(estadoEm(1501), 15, "entrou em 1501")
+        need(function() return snap(1).proj > 0 end, 30, "a onda saiu")
+        wait(50)
+        note(function() return "dano " .. (c.vida0 - lifeP2()) end)
+        need(function() return c.vida0 - lifeP2() > 0 end, 1, "a onda acertou", false)
+      end)
+      desperto("Puxao das Maos (sombra_x): as maos puxam de longe", function()
+        approach(170)
+        acao(function() c.d0 = snap(1).d end)
+        press(1, {"sombra_x"}, 2)
+        need(estadoEm(3400), 15, "entrou em 3400")
+        need(function() return snap(2).st >= 5000 and snap(2).st < 5200 end, 90, "as maos pegaram")
+        wait(30)
+        note(function() return "distancia antes " .. c.d0 .. ", depois " .. snap(1).d end)
+        need(function() return snap(1).d < c.d0 - 60 end, 1, "o P2 veio para perto (mais de 60 px)", false)
+      end)
+      desperto("Mao do Pastor (sombra_a): a mao empurra para longe", function()
+        approach(80)
+        acao(function() c.d0 = snap(1).d; c.vida0 = lifeP2() end)
+        press(1, {"sombra_a"}, 2)
+        need(estadoEm(3402), 15, "entrou em 3402")
+        need(function() return snap(2).st >= 5000 and snap(2).st < 5200 end, 90, "a mao pegou")
+        wait(30)
+        note(function() return "distancia antes " .. c.d0 .. ", depois " .. snap(1).d .. "; dano " .. (c.vida0 - lifeP2()) end)
+        need(function() return snap(1).d > c.d0 + 40 end, 1, "o P2 foi para longe (mais de 40 px)", false)
+      end)
+    else
+      S("Pendulo (compasso_a): balanca e volta", function()
+        approach(60)
+        press(1, {"compasso_a"}, 2)
+        need(estadoEm(1100), 12, "entrou em 1100")
+        need(function() return st1() == 0 end, 200, "voltou ao 0", false)
+      end)
+      S("Pendulo: x no meio sai com o direto (1110)", function()
+        approach(28)
+        acao(function() c.vida0 = lifeP2() end)
+        press(1, {"compasso_a"}, 2)
+        need(estadoEm(1100), 12, "entrou em 1100")
+        wait(10)
+        press(1, {"x"}, 2)
+        need(estadoEm(1110), 20, "saiu com o direto (1110)", false)
+        wait(60)
+        note(function() return "dano " .. (c.vida0 - lifeP2()) end)
+        need(function() return c.vida0 - lifeP2() > 0 end, 1, "o direto acertou", false)
+      end)
+    end
   end
 
   -- ================================================================ PARRY (docs/parry.md): todos os lutadores

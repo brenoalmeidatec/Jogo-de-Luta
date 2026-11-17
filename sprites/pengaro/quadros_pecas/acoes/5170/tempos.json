@@ -1,0 +1,17 @@
+{
+ "acao": 5170,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 6,
+   "caixa": false,
+   "de": "queda/06|dor"
+  },
+  {
+   "desenho": 1,
+   "ticks": 10,
+   "caixa": false,
+   "de": "queda/07|dor"
+  }
+ ]
+}
