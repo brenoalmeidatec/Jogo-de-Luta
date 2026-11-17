@@ -3076,3 +3076,19 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   segue no desenho da base até as próximas folhas (estampido, giro do manto, mãos, juízo, especiais, agarrões).
 - Breno liberou auto-aprovação (17/11); robô 236/0 no estado juntado. Também tirei marcadores de conflito que tinham
   ficado commitados neste LOGBOOK.
+
+### 2026-11-17 — gutto.sff encolhido: 91,5 MB -> 74,1 MB (ferramentas/encolher_sff.py)
+- Ferramenta nova e comum a todos os lutadores: `python3 ferramentas/encolher_sff.py <lutador> [--indexar 49000-49099]`.
+  Rode por último, depois de ligar_pecas, aura_silhueta e luz. Faz três coisas:
+  1. tira os desenhos que nada desenha (203 no Gutto);
+  2. passa os PNG do corpo firme (alfa 0/255) para uma paleta própria de 255 cores, pelo método da thread do Raiclaven
+     despertado (a paleta fica em sprites/<l>/paleta_<grupo>.bin e é trocada a cada rodada);
+  3. recomprime os outros PNG sem perda (filtros do Pillow) e liga os repetidos (2577 links).
+- Confere no fim: todo desenho que ficou sai pixel a pixel igual (os indexados têm erro médio de cor < 3/255).
+- `efeitos.gravar` agora liga PNG repetido; `conferir_sff.ler` mantém o `png` no link.
+- Gutto: Garanhão (49000-49099) indexado; robô de luta 186/186 com o mesmo dano; filmado no despertado.
+- Ao religar o Garanhão (`ligar_pecas --de garanhao`), rode de novo o `encolher_sff.py gutto --indexar 49000-49099`.
+- Turno 4 (17/11, Chrome do PC principal): estampido, giro do manto, mãos, manto-asa, golpes de direção, juízo de
+  cima, estouro, mão do pastor, berro e puxão. Ligados no despertado: chute alto (estampido), afastar (giro do manto),
+  caneta (direção), armada (juízo de cima), cajado no chão (mãos), bola (mão do pastor), compasso (puxão). `TROCA_COR`
+  conserta cor errada de um quadro só (perna do chute oliva). Falta desenho próprio só no agarrão e no golaço.
