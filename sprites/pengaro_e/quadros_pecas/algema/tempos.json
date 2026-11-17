@@ -25,21 +25,21 @@
   },
   {
    "desenho": 1,
-   "ticks": 2,
+   "ticks": 4,
    "caixa": false,
    "de": "algema/01"
   },
   {
    "desenho": 2,
-   "ticks": 2,
-   "caixa": false,
-   "de": "algema/01"
-  },
-  {
-   "desenho": 3,
    "ticks": 3,
    "caixa": true,
    "de": "algema/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "algema/03"
   },
   {
    "desenho": 4,
@@ -55,78 +55,42 @@
   },
   {
    "desenho": 6,
-   "ticks": 2,
+   "ticks": 8,
    "caixa": false,
-   "de": "algema/03"
+   "de": "algema/04"
   },
   {
    "desenho": 7,
-   "ticks": 2,
-   "caixa": false,
-   "de": "algema/04"
+   "ticks": 6,
+   "caixa": true,
+   "de": "algema/05"
   },
   {
    "desenho": 8,
    "ticks": 2,
    "caixa": false,
-   "de": "algema/04"
+   "de": "algema/06"
   },
   {
    "desenho": 9,
    "ticks": 2,
    "caixa": false,
-   "de": "algema/04"
+   "de": "algema/06"
   },
   {
    "desenho": 10,
    "ticks": 2,
    "caixa": false,
-   "de": "algema/04"
+   "de": "algema/06"
   },
   {
    "desenho": 11,
    "ticks": 2,
    "caixa": false,
-   "de": "algema/05"
-  },
-  {
-   "desenho": 12,
-   "ticks": 2,
-   "caixa": false,
-   "de": "algema/05"
-  },
-  {
-   "desenho": 13,
-   "ticks": 2,
-   "caixa": false,
-   "de": "algema/05"
-  },
-  {
-   "desenho": 14,
-   "ticks": 2,
-   "caixa": false,
-   "de": "algema/06"
-  },
-  {
-   "desenho": 15,
-   "ticks": 2,
-   "caixa": false,
-   "de": "algema/06"
-  },
-  {
-   "desenho": 16,
-   "ticks": 2,
-   "caixa": false,
-   "de": "algema/06"
-  },
-  {
-   "desenho": 17,
-   "ticks": 2,
-   "caixa": false,
    "de": "algema/07"
   },
   {
-   "desenho": 18,
+   "desenho": 12,
    "ticks": 3,
    "caixa": false,
    "de": "algema/07"
