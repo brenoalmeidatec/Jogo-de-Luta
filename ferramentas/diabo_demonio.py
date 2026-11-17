@@ -433,6 +433,8 @@ GRUPO = 60000
 PESO = {"Light": (7, "S9200", "S51,0", 5, 15, -2.5), "Medium": (11, "S9207", "S51,1", 8, 18, -4),
         "Heavy": (13, "S9207", "S51,2", 10, 20, -6)}
 
+# Tempos pela seção 8.3 das regras (docs/regras-dos-lutadores.md): até encostar, fraco 3-5 ticks, forte 7-10,
+# finalizador 10-14; congela 7, 11 e 14 no contato.
 # Cada golpe: folha e quadros (de 0 a 7), ticks por quadro (-1 = segura até cair no chão), quadros com caixa de golpe,
 # de onde sai a ponta (frente, cima, baixo), dano, peso, guarda (MA, L, HA), tipo do chão (High, Low, Trip), avanço
 # [(tick, vel x)], cai (derruba), voa (vel x, y de quem cai longe), fogo (fica queimando) e sobe (antiaéreo).
@@ -440,36 +442,36 @@ PESO = {"Light": (7, "S9200", "S51,0", 5, 15, -2.5), "Medium": (11, "S9207", "S5
 GOLPES = {
     # 16 normais: em pé
     4200: dict(nome="Arranhão", folha="pe_maos", q=[0, 1, 2, 3], t=[3, 3, 4, 5], ativo=[1], dano=25, peso="Light"),
-    4201: dict(nome="Garra Cruzada", folha="pe_maos", q=[4, 5, 6, 7], t=[6, 4, 6, 10], ativo=[1], dano=62,
+    4201: dict(nome="Garra Cruzada", folha="pe_maos", q=[4, 5, 6, 7], t=[7, 4, 6, 10], ativo=[1], dano=62,
                peso="Medium", avanca=[(2, 1.5), (10, 0)]),
     4202: dict(nome="Joelhada Selvagem", folha="pe_pes", q=[0, 1, 2, 3], t=[4, 4, 5, 7], ativo=[1], dano=32,
                peso="Light"),
-    4203: dict(nome="Coice com Garra", folha="pe_pes", q=[4, 5, 6, 7], t=[6, 5, 6, 10], ativo=[1], dano=72,
+    4203: dict(nome="Coice com Garra", folha="pe_pes", q=[4, 5, 6, 7], t=[8, 5, 6, 10], ativo=[1], dano=72,
                peso="Heavy"),
     # agachado
     4400: dict(nome="Arranhão Baixo", folha="agachado_maos", q=[0, 1, 2, 3], t=[3, 3, 4, 5], ativo=[1], dano=22,
                peso="Light", tipo="C", chao="Low"),
-    4401: dict(nome="Garra Subindo", folha="agachado_maos", q=[4, 5, 6, 7], t=[4, 4, 7, 9], ativo=[1, 2], dano=60,
+    4401: dict(nome="Garra Subindo", folha="agachado_maos", q=[4, 5, 6, 7], t=[7, 4, 7, 9], ativo=[1, 2], dano=60,
                peso="Medium", tipo="C", ponta="cima", sobe=True),
     4402: dict(nome="Rabo Rasteiro", folha="agachado_pes", q=[0, 1, 2, 3], t=[4, 4, 5, 7], ativo=[1], dano=30,
                peso="Light", tipo="C", guarda="L", chao="Low"),
-    4403: dict(nome="Varrida de Garras", folha="agachado_pes", q=[4, 5, 6, 7], t=[6, 4, 8, 10], ativo=[1, 2], dano=65,
+    4403: dict(nome="Varrida de Garras", folha="agachado_pes", q=[4, 5, 6, 7], t=[8, 4, 8, 10], ativo=[1, 2], dano=65,
                peso="Heavy", tipo="C", guarda="L", chao="Trip", cai=True),
     # no ar (o último quadro segura até cair no chão; quem pousa é o motor, estado 52)
     4600: dict(nome="Garra no Ar", folha="ar_maos", q=[0, 1, 2, 3], t=[3, 4, 5, -1], ativo=[1], dano=28,
                peso="Light", tipo="A", guarda="HA"),
-    4601: dict(nome="Mergulho de Garras", folha="ar_maos", q=[4, 5, 6, 7], t=[5, 4, 6, -1], ativo=[1, 2], dano=55,
+    4601: dict(nome="Mergulho de Garras", folha="ar_maos", q=[4, 5, 6, 7], t=[7, 4, 6, -1], ativo=[1, 2], dano=55,
                peso="Medium", tipo="A", guarda="HA"),
     4602: dict(nome="Joelhada Aérea", folha="ar_pes", q=[0, 1, 2, 3], t=[3, 4, 5, -1], ativo=[1], dano=30,
                peso="Light", tipo="A", guarda="HA"),
-    4603: dict(nome="Pisão de Garras", folha="ar_pes", q=[4, 5, 6, 7], t=[5, 4, 6, -1], ativo=[1, 2], dano=58,
+    4603: dict(nome="Pisão de Garras", folha="ar_pes", q=[4, 5, 6, 7], t=[7, 4, 6, -1], ativo=[1, 2], dano=58,
                peso="Medium", tipo="A", guarda="HA", ponta="baixo"),
     # direcionais
-    4210: dict(nome="Martelo Infernal", folha="direcionais_a", q=[0, 1, 2, 3], t=[6, 5, 4, 10], ativo=[2], dano=55,
+    4210: dict(nome="Martelo Infernal", folha="direcionais_a", q=[0, 1, 2, 3], t=[5, 5, 4, 10], ativo=[2], dano=55,
                peso="Medium", guarda="HA", avanca=[(2, 1.2), (11, 0)]),
-    4211: dict(nome="Estocada de Garra", folha="direcionais_a", q=[4, 5, 6, 7], t=[5, 3, 5, 9], ativo=[1, 2], dano=50,
+    4211: dict(nome="Estocada de Garra", folha="direcionais_a", q=[4, 5, 6, 7], t=[7, 3, 5, 9], ativo=[1, 2], dano=50,
                peso="Medium", avanca=[(2, 5), (8, 0)]),
-    4212: dict(nome="Chicote de Rabo", folha="direcionais_b", q=[0, 1, 2, 3], t=[6, 4, 6, 10], ativo=[1, 2], dano=48,
+    4212: dict(nome="Chicote de Rabo", folha="direcionais_b", q=[0, 1, 2, 3], t=[7, 4, 6, 10], ativo=[1, 2], dano=48,
                peso="Medium"),
     4213: dict(nome="Mordida", folha="direcionais_b", q=[4, 5, 6, 7], t=[3, 3, 4, 6], ativo=[1], dano=30,
                peso="Light"),
@@ -478,26 +480,26 @@ GOLPES = {
                peso="Light", avanca=[(1, 2.5), (7, 0)]),
     4302: dict(nome="Fúria das Garras 3", folha="pe_maos", q=[0, 1, 2, 3], t=[3, 3, 4, 6], ativo=[1], dano=28,
                peso="Light", avanca=[(1, 2.5), (7, 0)]),
-    4303: dict(nome="Fúria das Garras: rasgo", folha="fins_maos", q=[0, 1, 2, 3], t=[5, 4, 6, 12], ativo=[1, 2],
+    4303: dict(nome="Fúria das Garras: rasgo", folha="fins_maos", q=[0, 1, 2, 3], t=[10, 4, 6, 12], ativo=[1, 2],
                dano=70, peso="Heavy", cai=True, voa=(-8, -7), avanca=[(1, 2.5), (7, 0)]),
-    4311: dict(nome="Dilacerar 2", folha="pe_maos", q=[4, 5, 6, 7], t=[5, 4, 5, 8], ativo=[1], dano=40,
+    4311: dict(nome="Dilacerar 2", folha="pe_maos", q=[4, 5, 6, 7], t=[7, 4, 5, 8], ativo=[1], dano=40,
                peso="Medium", avanca=[(1, 2.5), (7, 0)]),
     4312: dict(nome="Dilacerar 3", folha="pe_pes", q=[0, 1, 2, 3], t=[4, 4, 5, 7], ativo=[1], dano=34,
                peso="Light", avanca=[(1, 4), (8, 0)]),
-    4313: dict(nome="Dilacerar: rasgo de fogo", folha="fins_maos", q=[4, 5, 6, 7], t=[6, 4, 6, 12], ativo=[1, 2],
+    4313: dict(nome="Dilacerar: rasgo de fogo", folha="fins_maos", q=[4, 5, 6, 7], t=[11, 4, 6, 12], ativo=[1, 2],
                dano=75, peso="Heavy", cai=True, fogo=True, avanca=[(1, 2.5), (7, 0)]),
-    4321: dict(nome="Dança do Rabo 2", folha="direcionais_b", q=[0, 1, 2, 3], t=[5, 4, 5, 8], ativo=[1], dano=32,
+    4321: dict(nome="Dança do Rabo 2", folha="direcionais_b", q=[0, 1, 2, 3], t=[7, 4, 5, 8], ativo=[1], dano=32,
                peso="Medium", avanca=[(1, 4), (8, 0)]),
     4322: dict(nome="Dança do Rabo 3", folha="fins_pes", q=[0, 1, 2], t=[3, 4, 6], ativo=[1], dano=30,
                peso="Light", guarda="L", chao="Low", avanca=[(1, 2.5), (7, 0)]),
-    4323: dict(nome="Dança do Rabo: chicotada", folha="fins_pes", q=[0, 1, 2, 3], t=[5, 4, 6, 12], ativo=[1],
+    4323: dict(nome="Dança do Rabo: chicotada", folha="fins_pes", q=[0, 1, 2, 3], t=[10, 4, 6, 12], ativo=[1],
                dano=68, peso="Heavy", guarda="L", chao="Trip", cai=True, avanca=[(1, 2.5), (7, 0)]),
-    4331: dict(nome="Pisoteio 2", folha="pe_pes", q=[4, 5, 6, 7], t=[5, 4, 5, 8], ativo=[1], dano=40,
+    4331: dict(nome="Pisoteio 2", folha="pe_pes", q=[4, 5, 6, 7], t=[7, 4, 5, 8], ativo=[1], dano=40,
                peso="Medium", avanca=[(1, 2.5), (7, 0)]),
     4332: dict(nome="Pisoteio 3", folha="pe_pes", q=[0, 1, 2, 3], t=[4, 4, 5, 7], ativo=[1], dano=32,
                peso="Light", avanca=[(1, 4), (8, 0)]),
-    4333: dict(nome="Pisoteio: pisão voador", folha="fins_pes", q=[4, 5, 6, 7], t=[6, 6, 5, 12], ativo=[1, 2],
-               dano=70, peso="Heavy", guarda="HA", cai=True, avanca=[(3, 3.5), (17, 0)]),
+    4333: dict(nome="Pisoteio: pisão voador", folha="fins_pes", q=[4, 5, 6, 7], t=[10, 6, 5, 12], ativo=[1, 2],
+               dano=70, peso="Heavy", guarda="HA", cai=True, avanca=[(5, 3.5), (16, 0)]),
 }
 LEVES = (4200, 4202, 4400, 4402)
 # rota: estado -> (botão, direção, de quais estados sai no contato). Direção: None (sem baixo), "baixo", "frente",
@@ -641,6 +643,9 @@ def cns(n, g, faisca):
     tipo = g.get("tipo", "S")
     fis = {"S": "S", "C": "C", "A": "A"}[tipo]
     pausa, spark, som, desl, atord, emp = PESO[g["peso"]]
+    final = n in CORRENTES and CORRENTES[n][2]
+    if final:
+        pausa = 14  # regra 8.3: finalizador congela 14+ e é o único normal que treme a tela
     if (ROTAS.get(n) or CORRENTES.get(n) or ("",))[0] in ("a", "b"):
         som = som.replace("S51,", "S52,")  # chute: o som de acerto dos chutes do Hazak
     sai = sum(g["t"][:g["ativo"][0]])
@@ -674,6 +679,9 @@ def cns(n, g, faisca):
                   f"ground.hittime = {atord}", *queda,
                   *(["palfx.time = 70", "palfx.add = 150, 40, 0", "palfx.sinadd = 60, 20, 0, 6"] if g.get("fogo")
                     else [])))
+    if final:
+        c.append(_ctl(n, "Finalizador: tremida", "EnvShake", "trigger1 = MoveHit = 1", "time = 12", "freq = 120",
+                      "ampl = -5"))
     if g.get("fogo"):  # fica queimando: o fogo das trevas do agarrão (#45) preso no corpo de quem apanhou
         c.append(_ctl(n, "Fogo das trevas no oponente", "Explod", "trigger1 = MoveHit = 1", "anim = 7470",
                       "id = 4313", "postype = p2", "pos = 0, -55", "bindtime = 70", "removetime = 70",
