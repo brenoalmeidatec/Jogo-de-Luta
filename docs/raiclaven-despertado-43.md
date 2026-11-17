@@ -10,6 +10,30 @@ do assento. Ele usa o corpo todo para levar a parceira até o alvo, e ela ataca 
 a dupla é mandona, e o humor vem da dupla, nunca da deficiência dela. O cabelo continua verde. O Breno quer o despertado
 louco, caótico e rápido, com raio verde e aço estourando.
 
+## Fase 5 (17/11 tarde): agachado, golpes agachados, defesa e apanha
+
+- **Agachado (ação 11)**: a saia esconde as pernas do kit, e dobrar coxa e canela dava linha de corte e pedaço solto.
+  A metade de baixo agora vem inteira de um **doador** gerado no ChatGPT do PC de casa (duas figuras na mesma imagem:
+  à esquerda a cópia do ginga/00, que dá a escala e a cor por SIFT, e à direita o agachado). `ferramentas/doador_cliente.py`
+  leva o doador ao tamanho e à cor do kit; `kit_cliente.PERNAS_VAR/PERNAS_DE` usam ele e o tronco respira em cima.
+- **Golpes agachados** (corpo inteiro, sem borracha): Belisco no Tornozelo (20400, garra baixa), Mordida Antiaérea
+  (20410, a Cliente empina e morde para cima, garra no alto), Secador no Chão (20430, baixo) e Varrida de Garra (20440,
+  arco baixo com os três braços). Caixas de golpe medidas no desenho de contato.
+- **Defesa (120/130/140/150)** e **apanha (5000/5001/5002/5005)** pelo remap das ações da base
+  (`kit_cliente.REMAP`, `kit_raiclaven.remap_parado` agora geral). Na defesa ele se encolhe e a Cliente se debruça por
+  cima; erguer o braço mecânico deixava a barriga borrada (o desenho não tem o que fica atrás do braço), então o braço
+  quase não sobe. Doador com o braço erguido já gerado (`sprites/raiclaven_cliente/doadores/defesa_cap.png`) para a
+  próxima volta.
+- **Braço mecânico recortado de novo**: só o metal, a lâmina e a luz verde (`SO_DO_BRACO_TRAS`); o cinto e o avental
+  entre as lâminas ficam com o corpo.
+- **Sem quadro do meio antes do contato** (regra de criação do Breno + meio-termo do Alisson): `SECO = True` no kit, e o
+  `vida_pecas.animar(seco=True)` pula o meio no elemento que leva ao acerto; meio só na preparação, volta e guarda.
+- `raiclaven_no_jogo.py` roda o `encolher_sff.py` no fim: raiclaven.sff de 82 para 63,6 MB.
+- Robô de defeitos 0/126, robô de luta 216/0. Poses em `docs/boneco-pecas/raiclaven_cliente/lote2_poses.jpg`, vídeo
+  em `lote2_no_jogo.mp4`.
+- Falta: pulo, andar, queda/levanta, especiais (Pescoço de Borracha estica), super, agarrões, correntes e kombo com a
+  arte nova, defesa com o braço do doador e pele sem linha de corte nas juntas (pele_pecas.py).
+
 ## Fase 4 (17/11): corpo firme com vida, no jogo
 
 O Alisson aprovou o método do boneco de peças ("corpo firme com vida") e pediu tudo no jogo; o Breno liberou
