@@ -115,9 +115,9 @@ ANIMS = {
     "tapa_costas": (303, "tapa_costas 1/3 2/4 3/3 4/4A 5/5 6/6 7/5", (16, -96, 63, -80)),
     "calcada_levantada": (313, "calcada_levantada 1/4 2/4 3/3 4/4A 5/5 6/8 7/6", (12, -36, 41, 0)),
     "chute_alto_rajada": (322, "chute_alto_rajada 0/5 1/3A 6/5 7/5", (14, -104, 59, -74)),
-    "voadora": (1500, "corrida 0/3 1/3 voadora 1/3 2/3 4/12A 5/-1", (10, -44, 57, -10)),
+    "voadora": (1500, "corrida 0/3 1/3 voadora 1/3 2/3 4/12A 5/1", (10, -44, 57, -10)),
     "voadora_pouso": (1502, "voadora 6/6 7/8", None),
-    "ar_soco": (600, "ar_soco 2/1 3/2 4/8A 6/-1", (10, -42, 54, -12)),
+    "ar_soco": (600, "ar_soco 2/1 3/2 4/8A 6/1", (10, -42, 54, -12)),
 }
 # folhas em que o quadro que o kit não casa (IoU < 0.65) fica com o desenho de hoje; FIRMES/ESPECIAIS forçam
 AUTO_ESPECIAL = {"tesoura", "chute_giratorio", "giro_garagem", "tapa_costas", "calcada_levantada",
@@ -146,6 +146,7 @@ PERNAS_DE = {**{f"agachado/{i:02d}": "agachado" for i in range(2, 7)},
              **{f"{g}/{i:02d}": ("canela" if i in (2, 3, 4, 5) else "agachado")
                 for g in ("rasteira", "rasteira_arco") for i in range(0, 8)}}
 LACOS = {0, 11}  # animações em laço (parado, agachado)
+# (no fim de ação que segura para sempre, -1 no jogo, o último desenho vai com 1 tick: o ligar_pecas faz dele o -1)
 # lote 4
 BRACO_VAR.update({f"tapa_costas/{i:02d}": ["esticado"] for i in (3, 4, 5)})
 PERNA_NO_AR.update({"chute_alto_rajada/00": "camara", "chute_alto_rajada/01": "esticada",
