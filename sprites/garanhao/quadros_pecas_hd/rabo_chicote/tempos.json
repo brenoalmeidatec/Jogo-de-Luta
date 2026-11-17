@@ -1,0 +1,87 @@
+{
+ "acao": 10440,
+ "caixa": [
+  24,
+  -60,
+  186,
+  0
+ ],
+ "origem": [
+  "rabo_chicote/00",
+  "rabo_chicote/01",
+  "rabo_chicote/02",
+  "rabo_chicote/03",
+  "rabo_chicote/04",
+  "rabo_chicote/05",
+  "rabo_chicote/06",
+  "rabo_chicote/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "rabo_chicote/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": false,
+   "de": "rabo_chicote/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": false,
+   "de": "rabo_chicote/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 5,
+   "caixa": true,
+   "de": "rabo_chicote/03"
+  },
+  {
+   "desenho": 4,
+   "ticks": 3,
+   "caixa": false,
+   "de": "rabo_chicote/04"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rabo_chicote/05"
+  },
+  {
+   "desenho": 6,
+   "ticks": 3,
+   "caixa": false,
+   "de": "rabo_chicote/05"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rabo_chicote/06"
+  },
+  {
+   "desenho": 8,
+   "ticks": 3,
+   "caixa": false,
+   "de": "rabo_chicote/06"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rabo_chicote/07"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rabo_chicote/07"
+  }
+ ]
+}
