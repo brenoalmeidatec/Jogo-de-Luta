@@ -37,6 +37,8 @@ CMDS += ["bfd_a", "bfd_b", "bfd_x", "bfd_y", "df_x", "df_y", "fb_x", "fb_y", "fd
          "db_b", "bf_a", "bf_b", "bd_a", "bd_b", "db_x", "db_y", "bf_y"]
 CMDS += ["dd_a", "dd_b", "dfdf_x", "dfdf_y"]  # Diabo demônio (#47): Voo Infernal e Juízo Infernal
 CMDS += ["baile", "caneta_x", "compasso_a"]  # CK: super do Ratão, Contragolpe e Pêndulo
+CMDS += ["k_peruca_x", "k_peruca_y", "k_pescoco_x", "k_pescoco_y", "k_tanque_a", "k_tanque_b", "k_bigodes",
+         "k_cirurgia", "k_transplante"]  # Raiclaven despertado (kit_raiclaven.py)
 
 
 def demonio_lua():
