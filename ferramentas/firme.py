@@ -594,6 +594,17 @@ LIMIAR_ESPECIAL = 0.65
 _ESP = {}
 
 
+def tapar_furinhos(a):
+    """Furinho de 1 a 40 px é erro do desenho (ou do giro); vão maior (entre o braço e o corpo) é de propósito."""
+    fundo = (a[..., 3] == 0).astype(np.uint8)
+    n, lab, st, _ = cv2.connectedComponentsWithStats(fundo, connectivity=4)
+    m = np.isin(lab, [i for i in range(1, n) if st[i, 4] <= 40]) & buracos(a)
+    if m.any():
+        rgb = cv2.inpaint(np.ascontiguousarray(a[..., :3]), m.astype(np.uint8), 3, cv2.INPAINT_TELEA)
+        a[m, :3], a[m, 3] = rgb[m], 255
+    return a
+
+
 def especial(q):
     """Desenho de hoje (já na paleta travada) levado ao tamanho do parado, sem migalhas."""
     if q not in _ESP:
@@ -601,14 +612,7 @@ def especial(q):
         # tamanho do parado (conferido no lote 4)
         lado = b.SPR / "pecas_lado" / f"{q}.png"  # kit de lado/costas (hazak_lado.py) vence o desenho de hoje
         a = sem_migalha(np.array(Image.open(lado).convert("RGBA")) if lado.exists() else abrir(q))
-        # furinho de 1 a 40 px é erro do desenho; vão maior (entre o braço e o corpo) é desenhado de propósito
-        fundo = (a[..., 3] == 0).astype(np.uint8)
-        n, lab, st, _ = cv2.connectedComponentsWithStats(fundo, connectivity=4)
-        m = np.isin(lab, [i for i in range(1, n) if st[i, 4] <= 40]) & buracos(a)
-        if m.any():
-            rgb = cv2.inpaint(np.ascontiguousarray(a[..., :3]), m.astype(np.uint8), 3, cv2.INPAINT_TELEA)
-            a[m, :3], a[m, 3] = rgb[m], 255
-        _ESP[q] = a
+        _ESP[q] = tapar_furinhos(a)
     return _ESP[q].copy()
 
 
@@ -829,7 +833,7 @@ def desenhar(kit, pose):
             r, p0 = b.rotsprite(rec, e["ang"], piv)
             out = np.zeros_like(a)
             b.colar(out, r, int(round(x0 + piv[0] - p0[0])), int(round(y0 + piv[1] - p0[1])))
-            a = out
+            a = tapar_furinhos(out)
         if e.get("dx") or e.get("dy"):
             a = np.roll(a, (int(round(e.get("dy", 0))), int(round(e.get("dx", 0)))), axis=(0, 1))
         return a

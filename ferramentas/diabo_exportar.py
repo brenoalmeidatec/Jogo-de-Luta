@@ -28,6 +28,10 @@ def quadro(kit, q, guarda):
     pintado = firme.desenhar.pintado
     esp = pose.get("_especial", {}).get("var")
     if esp:
+        # o motor ancora pela base: descida (dy) do modelo abaixo do chão volta pro chão, sem mudar o recorte
+        desce = firme.ys_max(out) - (firme.EIXO[1] - 1)
+        if desce > 0:
+            out = np.roll(out, -desce, axis=0)
         # quadro inteiro (pose do modelo ou desenho de hoje): pedaço solto, buraco novo e pé onde ele mesmo pisa
         erros = firme.conferir(out, no_chao=firme.ys_max(out) >= firme.EIXO[1] - 8, juntas=[],
                                buraco_ok=int(firme.buracos(firme.especial(esp)).sum()))

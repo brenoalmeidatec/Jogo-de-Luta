@@ -17,13 +17,13 @@ from PIL import Image
 RAIZ = Path(__file__).resolve().parent.parent
 PECAS = RAIZ / "sprites/diabo_demonio/pecas"
 SAIDA = RAIZ / "sprites/diabo_demonio/quadros_arcade_hd/modelo"
-TELA, PE = (1080, 780), (540, 660)
+TELA, PE = (1080, 780), (540, 659)
 # ordem da folha de poses (2 linhas x 4 colunas)
 NOMES = ["agachado", "agachado_garra", "defesa", "defesa_baixa", "deitado", "apanha", "no_ar", "ajoelhado"]
 # segunda folha (mesma escala pedida): modelo/08 a 15
 NOMES2 = ["corrida", "cobranca", "vitoria", "sentado", "provoca", "agarra", "garra_sobe", "pulo_tras"]
 # folhas de poses seguintes (na mesma escala da primeira): entram depois da frente e das costas, de modelo/18 em diante
-MAIS = []  # [("folha_poses3.png", ["nome", ...]), ...]
+MAIS = [("folha_poses3.png", ["ar_garra", "ar_garras_alto", "mergulho", "ar_joelho", "ar_pisao", "martelo", "chicote_rabo", "mordida"])]  # 18-25
 REF_ESCALA = 2  # a defesa em pé tem a mesma curvatura do parado
 
 

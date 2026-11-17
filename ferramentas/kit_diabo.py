@@ -188,13 +188,28 @@ TROCA = {
     **{f"{g}/{i:02d}": v for g in ("agarrao_abraco", "agarrao_cutucao", "agarrao_perna")
        for i, v in enumerate([None, M(13), M(13, 4), "pe_maos/01", "pe_maos/04", "pe_maos/05", "pe_maos/06", None]) if v},
 }
+# folhas novas (ar_maos, ar_pes, direcionais_a/b, fins_maos/pes): poses da 3ª folha de poses (modelo/18-25) e garras
+# do kit; "pe_pes/02" = guarda do kit. modelo: 18 garra no ar, 19 garras erguidas no ar, 20 mergulho, 21 joelhada no ar,
+# 22 pisão duplo no ar, 23 martelo (garras juntas no alto), 24 chicote de rabo (de costas), 25 mordida
+_NOVAS = {
+    "ar_maos": [M(6), M(18, 6), M(18, 10, 2), M(6, 0, 2), M(19), M(20, 0, 0, -8), M(20, 6, 8), M(6)],
+    "ar_pes": [M(6), M(21, 6), M(21, 4, 2), M(6, 0, 2), M(6, 0, -6), M(22), M(22, 4, 8), M(6)],
+    "direcionais_a": [M(23, 0, -12), M(23, 0, -22), M(1, 12), "pe_pes/02", "pe_maos/00", ("pe_maos/01", 14), ("pe_maos/01", 18), "pe_pes/02"],
+    "direcionais_b": [M(17), M(24), M(24, 6), "pe_pes/02", M(25, -8, 0, -8), M(25, 10), M(25, 8), "pe_pes/02"],
+    "fins_maos": [M(1), M(14), M(14, 0, -8), "pe_pes/02", "pe_maos/04", "pe_maos/05", "pe_maos/06", "pe_pes/02"],
+    "fins_pes": [M(17), M(24), M(24, 6), "pe_pes/02", M(6), M(22, 6), M(22, 10, 6), M(0)],
+}
+for _f, _qs in _NOVAS.items():
+    for _i, _v in enumerate(_qs):
+        TROCA[f"{_f}/{_i:02d}"] = _v
+
 # o resto das folhas em pé é a guarda do kit (nada de desenho de hoje)
 for _f in ("agachado", "defesa", "parry_alto", "recuo", "vira", "provoca", "vitoria", "intro", "derrota_sirene",
            "cobranca_garras", "agarrao_abraco", "agarrao_cutucao", "agarrao_perna", "levanta", "apanha"):
     for _i in range(8):
         FIRMES.add(f"{_f}/{_i:02d}")
         POSES.setdefault(f"{_f}/{_i:02d}", dict(_GUARDA))
-POSES["agachado/01"] = {**_GUARDA, "quadril": {"abs": 1, "dx": 0, "dy": 26, "pes": (0, 0)}, "tronco": {"ang": 6}}
+POSES["agachado/01"] = {**_GUARDA, "quadril": {"abs": 1, "dx": 0, "dy": 20, "pes": (0, 0)}, "tronco": {"ang": 6}}
 POSES["levanta/06"] = dict(POSES["agachado/01"])
 POSES["recuo/01"] = {**_GUARDA, "quadril": {"abs": 1, "dx": -8, "dy": 8, "pes": (0, 0)}, "tronco": {"ang": -5}}
 # aparar no alto: a garra da frente sobe e corta na frente da cabeça
