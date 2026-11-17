@@ -27,51 +27,51 @@
   },
   {
    "desenho": 4,
-   "ticks": 6,
+   "ticks": 2,
    "caixa": false,
    "de": "soco/05|esforco"
   },
   {
    "desenho": 5,
-   "ticks": 6,
+   "ticks": 2,
    "caixa": false,
-   "de": "chute_alto/04|esforco"
+   "de": "soco/05|esforco"
   },
   {
    "desenho": 6,
-   "ticks": 6,
+   "ticks": 2,
    "caixa": false,
-   "de": "compasso/04|esforco"
+   "de": "soco/05|esforco"
   },
   {
    "desenho": 7,
    "ticks": 6,
    "caixa": false,
-   "de": "rasteira/04|esforco"
+   "de": "chute_alto/04|esforco"
   },
   {
    "desenho": 8,
    "ticks": 6,
    "caixa": false,
-   "de": "armada/04|esforco"
+   "de": "compasso/04|esforco"
   },
   {
    "desenho": 9,
-   "ticks": 2,
+   "ticks": 6,
    "caixa": false,
-   "de": "armada/04|foco"
+   "de": "rasteira/04|esforco"
   },
   {
    "desenho": 10,
-   "ticks": 2,
+   "ticks": 6,
    "caixa": false,
-   "de": "chute_alto/05|foco"
+   "de": "armada/04|esforco"
   },
   {
    "desenho": 11,
    "ticks": 2,
    "caixa": false,
-   "de": "chute_alto/05|foco"
+   "de": "armada/04|foco"
   },
   {
    "desenho": 12,
@@ -141,6 +141,18 @@
   },
   {
    "desenho": 23,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto/05|foco"
+  },
+  {
+   "desenho": 24,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_alto/05|foco"
+  },
+  {
+   "desenho": 25,
    "ticks": 2,
    "caixa": false,
    "de": "chute_alto/05|foco"

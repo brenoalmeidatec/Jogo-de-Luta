@@ -327,9 +327,10 @@ def desenhar(kit, pose):
             img_pe = esticar_tornozelo(img_pe, ponta)
             fundo_pe += ponta
         # pé perto do chão encosta no chão (o chão do parado), sem afundar nem flutuar alguns pixels
+        # o tornozelo estica (ou encolhe) em vez de o pé andar: o pé continua preso na canela, sem fresta
         fundo = fundo_pe + y0
-        if abs(fundo - CHAO) <= 10:
-            y0 += CHAO - fundo
+        if 0 < abs(fundo - CHAO) <= 10:
+            img_pe = esticar_tornozelo(img_pe, CHAO - fundo)
         b.colar(tela, img_pe, x0, y0, so_vazio=(slot == "canela_tras"))
     p = kit["pecas"]["quadril"]
     bo = pose.get("_bolinhas", {})
