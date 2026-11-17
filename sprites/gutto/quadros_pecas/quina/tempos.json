@@ -1,0 +1,122 @@
+{
+ "acao": 1500,
+ "caixa": [
+  24,
+  -111,
+  192,
+  -6
+ ],
+ "origem": [
+  "415_0",
+  "935_0",
+  "936_0",
+  "417_0",
+  "418_0",
+  "419_0",
+  "420_0"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "415_0"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "415_0"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "415_0"
+  },
+  {
+   "desenho": 3,
+   "ticks": 1,
+   "caixa": false,
+   "de": "935_0@quina1"
+  },
+  {
+   "desenho": 4,
+   "ticks": 1,
+   "caixa": false,
+   "de": "936_0@quina2"
+  },
+  {
+   "desenho": 5,
+   "ticks": 6,
+   "caixa": true,
+   "de": "417_0@quina3"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "417_0@quina4"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "418_0@quina5"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "418_0@quina5"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "418_0@quina5"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "418_0@quina5"
+  },
+  {
+   "desenho": 11,
+   "ticks": 2,
+   "caixa": false,
+   "de": "419_0"
+  },
+  {
+   "desenho": 12,
+   "ticks": 2,
+   "caixa": false,
+   "de": "419_0"
+  },
+  {
+   "desenho": 13,
+   "ticks": 3,
+   "caixa": false,
+   "de": "419_0"
+  },
+  {
+   "desenho": 14,
+   "ticks": 2,
+   "caixa": false,
+   "de": "420_0"
+  },
+  {
+   "desenho": 15,
+   "ticks": 2,
+   "caixa": false,
+   "de": "420_0"
+  },
+  {
+   "desenho": 16,
+   "ticks": 3,
+   "caixa": false,
+   "de": "420_0"
+  }
+ ]
+}
