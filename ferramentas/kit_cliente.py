@@ -224,5 +224,3 @@ REMAP = {
 # corte e pedaço solto). Doadores: ferramentas/doador_cliente.py
 PERNAS_VAR = {"agachado": "doador/agachado"}
 PERNAS_DE = {f"{f}/{i:02d}": "agachado" for f in ("agachado_d", "x_agd", "y_agd", "a_agd", "b_agd") for i in range(8)}
-# sem quadro do meio entre a antecipação e o contato (regra de criação, 17/11): meio só na preparação, volta e guarda
-SECO = True

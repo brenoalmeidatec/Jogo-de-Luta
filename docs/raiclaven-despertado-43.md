@@ -26,8 +26,8 @@ louco, caótico e rápido, com raio verde e aço estourando.
   próxima volta.
 - **Braço mecânico recortado de novo**: só o metal, a lâmina e a luz verde (`SO_DO_BRACO_TRAS`); o cinto e o avental
   entre as lâminas ficam com o corpo.
-- **Sem quadro do meio antes do contato** (regra de criação do Breno + meio-termo do Alisson): `SECO = True` no kit, e o
-  `vida_pecas.animar(seco=True)` pula o meio no elemento que leva ao acerto; meio só na preparação, volta e guarda.
+- **Sem quadro do meio antes do contato** (regra de criação do Breno + meio-termo do Alisson): o `vida_pecas.py` da
+  mugen já segura a antecipação (`MEIO_NO_BOTE = False`); meio só na preparação, volta e guarda.
 - `raiclaven_no_jogo.py` roda o `encolher_sff.py` no fim: raiclaven.sff de 82 para 63,6 MB.
 - Robô de defeitos 0/126, robô de luta 216/0. Poses em `docs/boneco-pecas/raiclaven_cliente/lote2_poses.jpg`, vídeo
   em `lote2_no_jogo.mp4`.

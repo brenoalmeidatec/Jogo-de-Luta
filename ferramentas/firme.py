@@ -1011,7 +1011,6 @@ def gerar(nomes, so_pose=False):
         bate = next((i for i, e in enumerate(elems) if e[2]), None)
         laco = acao in getattr(K, "LACOS", {0})
         quadros = vida.animar(poses, [(q, t) for q, t, _ in elems], bate=bate, laco=laco,
-                              seco=getattr(K, "SECO", False),
                               guarda=None if laco else poses.get(K.REF) or pose_de(kit, K.REF))
         if laco:
             quadros = vida.respirar(quadros)

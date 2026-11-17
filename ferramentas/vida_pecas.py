@@ -12,6 +12,10 @@ As poses-chave saem do piloto_firme.py (uma por desenho de hoje). Aqui elas vira
   atraso          a cabeça chega um pouco depois do corpo e as bolinhas da faixa balançam atrás do quadril (o que
                   é solto acompanha o movimento com atraso: sobreposição de movimento).
 
+  sem meio no bote  o elemento logo antes do que bate (a antecipação) não ganha quadro do meio: fica segurado e o golpe
+                  sai seco até o contato (Lei 10 do estudo-anatomia-golpes.md; meio-termo do Alisson, 17/11: no
+                  máximo 1 borrão nesse trecho, e o borrão, se houver, é desenho próprio da folha, não mistura).
+
 Peça trocada de desenho (punho -> mão aberta, perna levantada, expressão) não é misturada: o desenho troca na pose.
 """
 import math
@@ -22,6 +26,7 @@ ATRASO_CABECA = 0.35
 ATRASO_BOLINHA = 0.8
 LIMITE_CABECA = 3
 LIMITE_BOLINHA = 7
+MEIO_NO_BOTE = False  # True volta ao jeito antigo (quadros do meio também entre a antecipação e o contato)
 
 
 def suave(t):
@@ -53,13 +58,14 @@ def misturar(a, b_, t):
     return out
 
 
-def animar(poses, elems, bate=None, laco=False, guarda=None, fixos=frozenset(), seco=False):
+def animar(poses, elems, bate=None, laco=False, guarda=None, fixos=frozenset(), meio_no_bote=None):
     """Lista de (pose, ticks, caixa, desenho_de_hoje) a partir das poses-chave.
     elems: [(desenho_de_hoje, ticks)]; bate: índice do elemento com caixa; laco: a última volta para a primeira;
     guarda: pose para onde o golpe volta no fim (a guarda); fixos: desenhos que não se misturam (quadro especial,
-    desenhado inteiro): não ganham intermediário nem servem de destino de um. seco: o elemento logo antes do acerto
-    (antecipação -> contato) não ganha meio: a troca é seca e o golpe chega com impacto (Lei 10 do estudo de anatomia;
-    regra de criação, Breno e Alisson 17/11). O meio continua na preparação, na volta e na guarda."""
+    desenhado inteiro): não ganham intermediário nem servem de destino de um. meio_no_bote: None segue MEIO_NO_BOTE;
+    False segura a antecipação (o elemento logo antes de um que bate) sem quadro do meio."""
+    if meio_no_bote is None:
+        meio_no_bote = MEIO_NO_BOTE
     saida = []
     n = len(elems)
     batem = set(bate) if isinstance(bate, (set, list, tuple)) else ({bate} if bate is not None else set())
@@ -73,9 +79,9 @@ def animar(poses, elems, bate=None, laco=False, guarda=None, fixos=frozenset(), 
             b_ = guarda if guarda is not None else a
         caixa = k in batem
         prox = elems[k + 1][0] if k + 1 < n else (elems[0][0] if laco else None)
-        seco_aqui = seco and (k + 1) in batem
-        if caixa or seco_aqui or ticks < 4 or q in fixos or prox in fixos or "_especial" in a or "_especial" in b_:
-            # impacto segurado; elemento curto não tem espaço para meio; desenho de hoje (especial) não se mistura
+        bote = not meio_no_bote and (k + 1) in batem
+        if caixa or bote or ticks < 4 or q in fixos or prox in fixos or "_especial" in a or "_especial" in b_:
+            # impacto segurado; antecipação segurada (sai seco até o contato); elemento curto não tem espaço para meio; desenho de hoje (especial) não se mistura
             saida.append((dict(a), ticks, caixa, q))
             continue
         if batem and k < min(batem):
