@@ -27,7 +27,10 @@ QUADRIL_FUNDO = [(530, 532), (570, 532), (572, 556), (552, 572), (532, 566)]
 COXA_ESCONDIDA = [(472, 552), (532, 548), (534, 578), (520, 604), (500, 616), (476, 612), (470, 584)]
 
 
-def repintar(pecas, kit, nome, poli, so_ref=False, perto=0, claro=False, sob_braco=False):
+CALCAO = (524, 558, 26, 26)  # pedaço só de calção preto no parado (rasga_couro/00)
+
+
+def repintar(pecas, kit, nome, poli, so_ref=False, perto=0, claro=False, sob_braco=False, textura=None):
     b = firme.b
     p = kit["pecas"][nome]
     im = np.array(Image.open(pecas / p["arquivo"]).convert("RGBA"))
@@ -57,6 +60,11 @@ def repintar(pecas, kit, nome, poli, so_ref=False, perto=0, claro=False, sob_bra
         esc = rgb[m].astype(float)
         fator = np.clip(alvo.sum() / np.maximum(esc.sum(-1, keepdims=True), 1), 1, 2.5)
         rgb[m] = np.clip(esc * fator, 0, 255).astype(np.uint8)
+    if textura:  # pano do calção copiado em ladrilho de um pedaço só de calção do parado (sem o branco da faixa)
+        tx, ty, tw, th = textura
+        ref = firme.abrir(firme.K.REF)
+        yy, xx = np.nonzero(m)
+        rgb[yy, xx] = ref[ty + (yy - ty) % th, tx + (xx - tx) % tw, :3]
     tela[m, :3] = rgb[m]
     tela[m, 3] = 255
     ys, xs = np.nonzero(tela[..., 3] > 0)
@@ -98,18 +106,80 @@ def montar_kit_garanhao(original):
         original()
         pecas = firme.b.PECAS
         kit = json.loads((pecas / "kit.json").read_text(encoding="utf-8"))
-        repintar(pecas, kit, "quadril", QUADRIL_ESCONDIDO)
-        repintar(pecas, kit, "quadril", QUADRIL_FUNDO)
+        repintar(pecas, kit, "quadril", QUADRIL_ESCONDIDO, textura=CALCAO)
+        repintar(pecas, kit, "quadril", QUADRIL_FUNDO, textura=CALCAO)
         print("perna de trás = perna da frente girada", perna_de_tras_da_da_frente(pecas, kit), "graus")  # a perna no chão é desenhada por malha (peça inteira)
         # crina atrás do rosto: a cabeça que gira não abre vão entre o rosto e a crina
         repintar(pecas, kit, "tronco", firme.K.CABECA, so_ref=True, perto=14)
+        lado_do_peito(pecas, kit)
         (pecas / "kit.json").write_text(json.dumps(kit, indent=1, ensure_ascii=False), encoding="utf-8")
     return montar
+
+
+PEITO_AO_LADO = 28  # o lado do tronco sob o braço de trás vem do tronco logo à frente (mesma pele e tatuagem)
+
+
+def lado_do_peito(pecas, kit):
+    """O pedaço do tronco que o braço de trás tapa no parado ganha a pele do tronco ao lado (cópia do desenho, com
+    tatuagem e sombra), em vez de inpaint borrado; aí deixa de ser 'pintado' para o robô."""
+    p = kit["pecas"]["tronco"]
+    ox, oy = p["origem"]
+    img = np.array(Image.open(pecas / p["arquivo"]).convert("RGBA"))
+    pm = np.array(Image.open(pecas / "tronco_pintado.png").convert("RGBA"))
+    ref = firme.abrir(firme.K.REF)
+    ys, xs = np.nonzero(pm[..., 3] > 0)
+    X, Y = xs + ox + PEITO_AO_LADO, ys + oy
+    ok = ref[Y, X, 3] > 0
+    img[ys[ok], xs[ok], :3] = ref[Y[ok], X[ok], :3]
+    pm[ys[ok], xs[ok]] = 0
+    Image.fromarray(img).save(pecas / p["arquivo"])
+    Image.fromarray(pm).save(pecas / "tronco_pintado.png")
+    print(f"lado do peito: {int(ok.sum())} de {len(ys)} px copiados do tronco ao lado")
+
+
+def na_cor_do_parado(a):
+    """Desenho de hoje (especial) nas cores do parado: casa a distribuição de cor (LAB, por percentil) com a do REF e
+    usa só cores que existem no REF. Sem isso o coice saía mais rosado que o resto (cor mudando de quadro para quadro)."""
+    ref = firme.abrir(firme.K.REF)
+    m1, m2 = a[..., 3] > 0, ref[..., 3] > 0
+    lab = lambda x: cv2.cvtColor(np.ascontiguousarray(x[..., :3]), cv2.COLOR_RGB2LAB).astype(float)
+    L1, L2 = lab(a), lab(ref)
+    out = L1.copy()
+    qs = np.linspace(0, 100, 101)
+    for c in range(3):
+        out[..., c][m1] = np.interp(L1[..., c][m1], np.percentile(L1[..., c][m1], qs), np.percentile(L2[..., c][m2], qs))
+    rgb = cv2.cvtColor(np.clip(out, 0, 255).astype(np.uint8), cv2.COLOR_LAB2RGB)
+    pal = np.unique(ref[..., :3][m2].reshape(-1, 3), axis=0).astype(int)
+    cores, inv = np.unique(rgb[m1].reshape(-1, 3), axis=0, return_inverse=True)
+    idx = np.concatenate([((cores[k:k + 256, None, :].astype(int) - pal[None]) ** 2).sum(-1).argmin(1)
+                          for k in range(0, len(cores), 256)])
+    a = a.copy()
+    a[..., :3][m1] = pal[idx][inv.ravel()]
+    # só o boneco (sem lasca solta) e pé no chão do jogo (linha 659, não 660)
+    al = (a[..., 3] > 0).astype(np.uint8)
+    n, lab_, st, _ = cv2.connectedComponentsWithStats(al, connectivity=8)
+    if n > 2:
+        maior = 1 + int(np.argmax(st[1:, 4]))
+        a[(lab_ != maior) & (lab_ > 0)] = 0
+    ys = np.nonzero((a[..., 3] > 0).any(1))[0]
+    sobe = max(0, int(ys.max()) - (firme.EIXO[1] - 1))
+    if sobe:
+        a = np.roll(a, -sobe, axis=0)
+    return a
+
+
+def especial_garanhao(original):
+    def esp(q):
+        if q not in firme._ESP:
+            firme._ESP[q] = na_cor_do_parado(original(q))
+        return firme._ESP[q].copy()
+    return esp
 
 
 def main():
     sys.argv = [sys.argv[0], "garanhao"] + sys.argv[1:]
     firme.montar_kit = montar_kit_garanhao(firme.montar_kit)
+    firme.especial = especial_garanhao(firme.especial)
     firme.main()
 
 
