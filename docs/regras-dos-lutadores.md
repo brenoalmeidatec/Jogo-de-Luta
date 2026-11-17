@@ -520,6 +520,20 @@ um assert que confere soma de ticks, caixa por tick e os `AnimElem` do .cns.
 5. **Contato segurado:** o quadro de contato é o mais forte da animação (o de maior alcance), fica parado o ativo
    inteiro e mais 1–2 ticks, e é nele que entram a caixa de acerto, o efeito e o congelamento.
 
+### 7.2.1 Zero erro de animação (regra do Alisson, 2026-11-17)
+
+Nenhum boneco entra com erro de animação. Conta como erro, e reprova o golpe:
+
+1. **Membro descolando:** braço, perna, cabeça ou rabo que se solta do corpo ou abre fresta na junta.
+2. **Silhueta grossa demais:** contorno inchado ou mancha escura grossa que não é desenho.
+3. **Pedaço de sprite voando junto:** lasca, resto de outro quadro ou pedaço solto que anda com o boneco.
+4. **Movimento fisicamente errado ou estranho:** o golpe é feito pelo corpo inteiro. Soco não é só o braço
+   esticando: o quadril gira, o pé dá um passo à frente, o ombro vai junto e o corpo volta. Chute tira o peso da
+   perna de apoio; cabeçada leva o tronco; pisão sobe o joelho e o corpo cai com o peso.
+
+O robô de defeitos (`firme.py`/`piloto_firme.py`) pega os três primeiros; o quarto se confere no vídeo lado a lado,
+quadro a quadro, antes de mandar. Expressões do rosto casadas com as falas vêm depois, quando as falas forem gravadas.
+
 ### 7.3 Como produzir isso sem desenhar um por um
 
 Mesmo o mínimo é muito desenho para fazer na mão. Todo lutador é feito com **esqueleto / recorte (cutout)**: corpo separado em partes

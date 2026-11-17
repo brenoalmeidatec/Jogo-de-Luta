@@ -65,6 +65,34 @@ def repintar(pecas, kit, nome, poli, so_ref=False, perto=0, claro=False, sob_bra
     p["origem"] = [int(X0), int(Y0)]
 
 
+def perna_de_tras_da_da_frente(pecas, kit):
+    """A perna de trás quase toda some atrás do braço de perto no parado (só a canela e o casco aparecem). Ela passa a
+    ser o desenho inteiro da perna da frente, girado no quadril até o tornozelo cair no tornozelo de trás e um pouco
+    mais escuro (fica do lado de lá do corpo). Coxa e canela saem dela no joelho de trás."""
+    b, K = firme.b, firme.K
+    pf_ = kit["pecas"]["perna_frente"]
+    im = np.array(Image.open(pecas / pf_["arquivo"]).convert("RGBA"))
+    qf, qt = K.OSSOS["coxa_frente"][0], K.OSSOS["coxa_tras"][0]
+    tf, tt = K.TORNOZELO["canela_frente"], K.TORNOZELO["canela_tras"]
+    ang = np.degrees(np.arctan2(tt[1] - qt[1], tt[0] - qt[0]) - np.arctan2(tf[1] - qf[1], tf[0] - qf[0]))
+    piv = (qf[0] - pf_["origem"][0], qf[1] - pf_["origem"][1])
+    r, pv = b.rotsprite(im, ang, piv)
+    r[..., :3] = (r[..., :3].astype(float) * 0.85).astype(np.uint8)
+    tela = np.zeros((b.TELA[1], b.TELA[0], 4), np.uint8)
+    x0, y0 = int(round(qt[0] - pv[0])), int(round(qt[1] - pv[1]))
+    fundo = y0 + int(np.nonzero((r[..., 3] > 0).any(1))[0].max())
+    b.colar(tela, r, x0, y0 - (fundo - (firme.EIXO[1] - 1)))  # casco no chão (linha 659), como o da frente
+    yy = np.mgrid[:b.TELA[1], :b.TELA[0]][0]
+    jt = K.JOELHO_TRAS[1]
+    for nome, m in (("perna_tras", np.ones(yy.shape, bool)), ("coxa_tras", yy < jt), ("canela_tras", yy >= jt - 12)):
+        img = np.where((m & (tela[..., 3] > 0))[..., None], tela, 0).astype(np.uint8)
+        ys, xs = np.nonzero(img[..., 3] > 0)
+        X0, Y0, X1, Y1 = xs.min(), ys.min(), xs.max() + 1, ys.max() + 1
+        Image.fromarray(img[Y0:Y1, X0:X1]).save(pecas / kit["pecas"][nome]["arquivo"])
+        kit["pecas"][nome]["origem"] = [int(X0), int(Y0)]
+    return round(float(ang), 1)
+
+
 def montar_kit_garanhao(original):
     def montar():
         original()
@@ -72,8 +100,7 @@ def montar_kit_garanhao(original):
         kit = json.loads((pecas / "kit.json").read_text(encoding="utf-8"))
         repintar(pecas, kit, "quadril", QUADRIL_ESCONDIDO)
         repintar(pecas, kit, "quadril", QUADRIL_FUNDO)
-        repintar(pecas, kit, "coxa_tras", COXA_ESCONDIDA, claro=True, sob_braco=True)
-        repintar(pecas, kit, "perna_tras", COXA_ESCONDIDA, claro=True, sob_braco=True)  # a perna no chão é desenhada por malha (peça inteira)
+        print("perna de trás = perna da frente girada", perna_de_tras_da_da_frente(pecas, kit), "graus")  # a perna no chão é desenhada por malha (peça inteira)
         # crina atrás do rosto: a cabeça que gira não abre vão entre o rosto e a crina
         repintar(pecas, kit, "tronco", firme.K.CABECA, so_ref=True, perto=14)
         (pecas / "kit.json").write_text(json.dumps(kit, indent=1, ensure_ascii=False), encoding="utf-8")

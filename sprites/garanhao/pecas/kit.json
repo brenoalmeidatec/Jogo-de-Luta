@@ -94,8 +94,8 @@
   "coxa_tras": {
    "arquivo": "coxa_tras.png",
    "origem": [
-    472,
-    542
+    461,
+    514
    ],
    "junta": [
     508,
@@ -105,26 +105,26 @@
    "fonte": "rasga_couro/00",
    "sobra": "coxa_tras_sobra.png",
    "origem_sobra": [
-    494,
+    454,
     533
    ]
   },
   "canela_tras": {
    "arquivo": "canela_tras.png",
    "origem": [
-    445,
-    594
+    446,
+    596
    ],
    "junta": [
-    488,
-    606
+    493,
+    608
    ],
    "mae": "coxa_tras",
    "fonte": "rasga_couro/00",
    "sobra": "canela_tras_sobra.png",
    "origem_sobra": [
     436,
-    585
+    587
    ]
   },
   "coxa_frente": {
@@ -166,8 +166,8 @@
   "perna_tras": {
    "arquivo": "perna_tras.png",
    "origem": [
-    445,
-    542
+    446,
+    514
    ],
    "junta": [
     508,

@@ -22,7 +22,7 @@ PERNA_FRENTE = [(538, 542), (578, 538), (602, 558), (612, 588), (618, 612), (628
                 (584, 640), (574, 616), (558, 600), (544, 580)]
 TRONCO_ESCONDIDO = [(488, 496), (514, 496), (516, 524), (494, 524)]
 
-JOELHO_TRAS, JOELHO_FRENTE = (488, 606), (596, 602)
+JOELHO_TRAS, JOELHO_FRENTE = (493, 608), (596, 602)  # o de trás = joelho da frente girado (garanhao_pecas.py)
 TORNOZELO = {"canela_tras": (470, 642), "canela_frente": (604, 642)}
 OSSOS = {  # junta no parado, mãe, ponta
     "quadril": ((530, 540), None, (530, 562)),
