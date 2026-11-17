@@ -106,15 +106,14 @@
 | chifrada_sobe/11 | chifrada_sobe/07 | PASS |
 | chifrada_sobe/12 | chifrada_sobe/07 | PASS |
 | coice/00 | coice/00 | PASS |
-| coice/01 | coice/01 | PASS |
+| coice/01 | coice/01 (desenho de hoje) | PASS |
 | coice/02 | coice/02 (desenho de hoje) | PASS |
 | coice/03 | coice/03 (desenho de hoje) | PASS |
 | coice/04 | coice/04 (desenho de hoje) | PASS |
 | coice/05 | coice/05 (desenho de hoje) | PASS |
-| coice/06 | coice/06 | PASS |
-| coice/07 | coice/06 | PASS |
+| coice/06 | coice/06 (desenho de hoje) | PASS |
+| coice/07 | coice/07 | PASS |
 | coice/08 | coice/07 | PASS |
-| coice/09 | coice/07 | PASS |
 | corrente_x/00 | corrente_x/00 | PASS |
 | corrente_x/01 | corrente_x/01 | PASS |
 | corrente_x/02 | corrente_x/02 | PASS |
@@ -251,4 +250,4 @@
 | rasga_couro/16 | rasga_couro/07 | PASS |
 | rasga_couro/17 | rasga_couro/07 | PASS |
 
-0 de 250 desenho(s) com defeito.
+0 de 249 desenho(s) com defeito.
