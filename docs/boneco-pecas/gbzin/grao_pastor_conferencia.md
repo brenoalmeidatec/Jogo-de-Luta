@@ -15,10 +15,13 @@ Robô de `python ferramentas/gbzin_e_pecas.py conferir`: cor fora da paleta, ped
 | e_levanta | 0 | ok |
 | e_marrada | 0 | ok |
 | e_martelada | 0 | ok |
+| e_parry_alto | 0 | ok |
+| e_parry_baixo | 0 | ok |
 | e_provoca | 0 | ok |
 | e_pulo | 0 | ok |
 | e_queda | 0 | ok |
 | e_referencia_ginga | 0 | ok |
+| e_rolamento | 0 | ok |
 | e_tosquia | 0 | ok |
 | e_vitoria | 0 | ok |
 

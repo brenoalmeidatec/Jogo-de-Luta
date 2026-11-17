@@ -379,9 +379,6 @@ def um_x(nomes):
 
 def cabecas(nomes):
     for nome in nomes:
-        if nome in SEM_CABECA:
-            print(nome, "cabeça: a do rascunho (mão na frente da cabeça)")
-            continue
         pasta = FIRMES / nome
         qs = [np.asarray(Image.open(pasta / f"{i:02d}.png")) for i in range(8)]
         # A cabeça é a régua da folha: o ChatGPT desenha o corpo em tamanhos diferentes a cada folha, mas a cabeça
@@ -400,7 +397,8 @@ def cabecas(nomes):
             qs = [np.asarray(Image.open(pasta / f"{i:02d}.png")) for i in range(8)]
             achados = [achar_cabeca(q, angs, (0.75, 0.8, 0.85)) if q[..., 3].any() else None for q in qs]
         for i, (q, a) in enumerate(zip(qs, achados)):
-            if a and a[0] <= NOTA_MAX and i not in SEM_CABECA_QUADRO.get(nome, ()):
+            # a escala sai da cabeça em toda folha; a troca não acontece onde a cabeça do kit taparia mão ou nuca
+            if a and a[0] <= NOTA_MAX and nome not in SEM_CABECA and i not in SEM_CABECA_QUADRO.get(nome, ()):
                 Image.fromarray(trocar_cabeca(q, a)).save(pasta / f"{i:02d}.png")
         print(nome, "cabeça:", [f"{a[1]}°x{a[2]} nota {a[0]:.0f}" if a else "-" for a in achados])
 
