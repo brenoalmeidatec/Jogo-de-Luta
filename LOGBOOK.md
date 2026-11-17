@@ -3092,3 +3092,9 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   cima, estouro, mão do pastor, berro e puxão. Ligados no despertado: chute alto (estampido), afastar (giro do manto),
   caneta (direção), armada (juízo de cima), cajado no chão (mãos), bola (mão do pastor), compasso (puxão). `TROCA_COR`
   conserta cor errada de um quadro só (perna do chute oliva). Falta desenho próprio só no agarrão e no golaço.
+
+## 17/11/2026 - Gbzin: estudo de anatomia do Breno aplicado
+- Conferência dos 36 golpes contra a Parte 4 do estudo: `docs/boneco-pecas/gbzin/anatomia.md` (ficha perto/longe,
+  marcas de roupa, golpe a golpe). Cabeçada fica para o Breno decidir (bate com a bengala, não com a testa).
+- `PELE_CAMADAS`: a pele do Gbzin usa a ordem de camadas dele (perna longe nasce atrás da faixa), não a do Pengaró.
+  Robô de peças 0, robô do jogo 236/236.
