@@ -3174,6 +3174,12 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   (`vitima_agarrado`, `vitima_arremessado`, para a thread da base ligar). `verde_solto()` no `gbzin_e_pecas.py`: verde
   escuro longe das chamas (calça pintada de oliva num quadro) volta ao roxo da calça. Robô 236/0.
 
+## 17/11/2026 - Gbzin: folhas de vítima da base ligadas só no Gbzin
+- `vitima_agarrado` e `vitima_arremessado` (desenhadas pela thread do Grão-Pastor) convertidas (HD=3) e passadas pelo
+  corpo firme com a cabeça do kit (busca guiada em 7 quadros; robô de defeitos 0/16).
+- Ligadas como reação própria de quem é agarrado (`agarrao_mk.V_PRESO..V_CAI`, ações 5940-5944 no .air do Gbzin,
+  usadas por SelfAnimExist em qualquer lutador que agarre). As folhas entram no fim de `gp.FOLHAS`: o conjunto comum
+  `gp.SPRITES_VITIMA` e os outros lutadores não mudam (o assert do gerador confere). Robô de luta 236/236.
 ## 17/11/2026 - Gbzin: kit de peças do Grão-Pastor (despertado) e três golpes posados com ele
 - Kit próprio do despertado, recortado do `e_referencia_ginga/00` em `sprites/gbzin/pecas_e/corpo/` (cabeça, tronco
   com manto, quadril com faixa, braços com cajado, coxas, canelas e cascos, pontas da faixa; sobra na junta, furos,
@@ -3203,3 +3209,5 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
 - Religado por cima da mugen atual (despertados novos) com `--grupo 49000`, `aura_no_corpo.py pengaro` (encadeia a
   silhueta) e `encolher_sff.py pengaro` (poda os desenhos velhos 48xxx): .sff 78,9 -> 40,7 MB. Robô de luta 189/189,
   idêntico ao da mugen.
+- Cabeçada do Gbzin: a pasta `cabecada` é o antiaéreo da bengala (410, 313, 347, 1200), não uma testada. Confere
+  com a receita do uppercut versão de jogo; fica como está (anatomia.md).

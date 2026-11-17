@@ -288,3 +288,19 @@
 | vitoria/05 | desenho + cabeça do kit | 62.0 |
 | vitoria/06 | desenho + cabeça do kit | 52.5 |
 | vitoria/07 | desenho + cabeça do kit | 54.8 |
+| vitima_agarrado/00 | desenho + cabeça do kit (guiada: giro 25°, tamanho 0.85) | 57.2 |
+| vitima_agarrado/01 | desenho + cabeça do kit (guiada: giro -15°, tamanho 0.85) | 61.1 |
+| vitima_agarrado/02 | desenho + cabeça do kit (guiada: giro -55°, tamanho 0.85) | 61.7 |
+| vitima_agarrado/03 | desenho + cabeça do kit (guiada: giro 180°, tamanho 0.85) | 65.1 |
+| vitima_agarrado/04 | desenho + cabeça do kit (guiada: giro -60°, tamanho 0.80) | 58.6 |
+| vitima_agarrado/05 | desenho + cabeça do kit (guiada: giro 40°, tamanho 0.80) | 61.7 |
+| vitima_agarrado/06 | REVISAR: cabeça não achada (fica a do desenho, na cor certa) | 66.7 |
+| vitima_agarrado/07 | REVISAR: cabeça não achada (fica a do desenho, na cor certa) | 64.3 |
+| vitima_arremessado/00 | desenho + cabeça do kit (guiada: giro 75°, tamanho 0.90) | 66.1 |
+| vitima_arremessado/01 | REVISAR: cabeça não achada (fica a do desenho, na cor certa) | 70.7 |
+| vitima_arremessado/02 | REVISAR: cabeça não achada (fica a do desenho, na cor certa) | 68.1 |
+| vitima_arremessado/03 | REVISAR: cabeça não achada (fica a do desenho, na cor certa) | 63.5 |
+| vitima_arremessado/04 | REVISAR: cabeça não achada (fica a do desenho, na cor certa) | 68.7 |
+| vitima_arremessado/05 | REVISAR: cabeça não achada (fica a do desenho, na cor certa) | 69.4 |
+| vitima_arremessado/06 | REVISAR: cabeça não achada (fica a do desenho, na cor certa) | 71.9 |
+| vitima_arremessado/07 | REVISAR: cabeça não achada (fica a do desenho, na cor certa) | 74.1 |
