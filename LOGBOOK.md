@@ -3034,3 +3034,6 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
 - Para ligar de novo: `git checkout 95134c46 -- chars/raiclaven` e `ligar_pecas.py raiclaven` (rodar duas vezes em cima
   do já ligado não foi testado).
 >>>>>>> origin/mugen
+- 17/11 (tarde): o CK passou a ser desenhado com a pele do `pele_pecas.py` (`PELE = True` em `pecas_ck.py`): as
+  juntas dobram sem linha de corte (regra do Alisson); pés continuam apoiados no chão (`colar_pe`) e o braço esticado
+  continua saindo de baixo do queixo. Religado a partir do `chars/ck` sem peças (4b54d61f), robô de peças 0/206.

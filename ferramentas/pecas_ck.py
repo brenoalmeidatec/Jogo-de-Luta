@@ -690,7 +690,40 @@ def separar_pes(kit):
     return kit
 
 
+PELE = True  # pele que dobra nas juntas (ferramentas/pele_pecas.py): sem linha de corte entre as peças
+
+
+def colar_pe(tela, kit, slot, pos, ang):
+    """Pé no chão fica reto e apoiado (sem afundar); pé no ar gira junto com a canela."""
+    pe = kit["pes"][slot]
+    jr = OSSOS[slot][0]
+    t = b.girar(pe["tornozelo"], jr, ang)
+    tx, ty = t[0] + pos[0] - jr[0], t[1] + pos[1] - jr[1]
+    x0 = int(round(pe["origem"][0] + tx - pe["tornozelo"][0]))
+    y0 = int(round(pe["origem"][1] + ty - pe["tornozelo"][1]))
+    fundo = pe["fundo"] + y0
+    r, x1, y1 = b.colocar({"junta": pe["tornozelo"]}, pe["img"], pe["origem"], (tx, ty), ang)
+    fundo_girado = y1 + int(np.nonzero(r[..., 3].any(1))[0].max())
+    if abs(fundo - CHAO) <= 3 or fundo_girado > CHAO or fundo > CHAO:
+        b.colar(tela, pe["img"], x0, y0 + CHAO - fundo)
+    else:
+        b.colar(tela, r, x1, y1)
+
+
 def desenhar(kit, pose):
+    if PELE:
+        import pele_pecas as pele
+        w = b.mundo(pose)
+        tela = pele.desenhar(kit, pose)
+        if "pes" in kit:
+            for slot in ("canela_tras", "canela_frente"):
+                if not (slot == "canela_frente" and pose.get("coxa_frente", {}).get("var")):
+                    colar_pe(tela, kit, slot, *w[slot])
+        if pose.get("braco_frente", {}).get("var") in SOB_CABECA:  # raiz do braço esticado fica debaixo do queixo
+            cab = kit["pecas"][b.chave("cabeca", pose)]
+            r, x0, y0 = b.colocar(cab, cab["img"], cab["origem"], *w["cabeca"])
+            b.colar(tela, r, x0, y0)
+        return tela
     w = b.mundo(pose)
     tela = np.zeros((TELA[1], TELA[0], 4), np.uint8)
     ordem = list(CAMADAS)
