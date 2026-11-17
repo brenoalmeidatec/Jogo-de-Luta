@@ -10,13 +10,13 @@
   },
   {
    "desenho": 1,
-   "ticks": 2,
+   "ticks": 3,
    "caixa": false,
    "de": "chute_alto/02"
   },
   {
    "desenho": 2,
-   "ticks": 2,
+   "ticks": 1,
    "caixa": false,
    "de": "chute_alto/02"
   },

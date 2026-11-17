@@ -10,37 +10,37 @@
   },
   {
    "desenho": 1,
-   "ticks": 2,
+   "ticks": 1,
    "caixa": false,
    "de": "chute_baixo/02"
   },
   {
    "desenho": 2,
-   "ticks": 2,
-   "caixa": true,
-   "de": "chute_baixo/04"
+   "ticks": 1,
+   "caixa": false,
+   "de": "chute_baixo/02"
   },
   {
    "desenho": 3,
-   "ticks": 3,
+   "ticks": 2,
    "caixa": true,
    "de": "chute_baixo/04"
   },
   {
    "desenho": 4,
+   "ticks": 3,
+   "caixa": true,
+   "de": "chute_baixo/04"
+  },
+  {
+   "desenho": 5,
    "ticks": 1,
    "caixa": false,
    "de": "chute_baixo/04"
   },
   {
-   "desenho": 5,
-   "ticks": 3,
-   "caixa": false,
-   "de": "chute_baixo/05"
-  },
-  {
    "desenho": 6,
-   "ticks": 2,
+   "ticks": 3,
    "caixa": false,
    "de": "chute_baixo/05"
   },
@@ -54,10 +54,16 @@
    "desenho": 8,
    "ticks": 2,
    "caixa": false,
-   "de": "chute_baixo/07"
+   "de": "chute_baixo/05"
   },
   {
    "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_baixo/07"
+  },
+  {
+   "desenho": 10,
    "ticks": 2,
    "caixa": false,
    "de": "chute_baixo/07"

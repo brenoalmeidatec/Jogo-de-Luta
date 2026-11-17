@@ -10,13 +10,13 @@
   },
   {
    "desenho": 1,
-   "ticks": 2,
+   "ticks": 4,
    "caixa": false,
    "de": "soco/04"
   },
   {
    "desenho": 2,
-   "ticks": 3,
+   "ticks": 1,
    "caixa": false,
    "de": "soco/04"
   },
