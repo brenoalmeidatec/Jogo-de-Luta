@@ -260,25 +260,54 @@ def sprites_pecas(sff):
 
 
 def remap_parado(cns, air):
-    """O parado do despertado (ação 0 com o remap) passa a mostrar o parado do corpo firme: cada sprite da ação 0
-    aponta para o desenho que o corpo firme mostra naquele tick (a ação 0 tem 8 sprites de 7 ticks)."""
-    pec = anims_pecas().get("parado")
-    if not pec:
-        return cns
-    _a, grupo, tempos = pec
-    els = mk.elementos(mk.acoes(air)[0])
-    linha = []
-    for e in tempos["elementos"]:
-        linha += [e["desenho"]] * e["ticks"]
-    total_base = sum(max(t, 1) for _e, t, *_ in els)
-    t = 0
-    for el, d, *_ in els:
-        g, i = (int(v) for v in el.split(",")[:2])
-        meio = t + max(d, 1) / 2
-        desenho = linha[min(len(linha) - 1, int(meio / total_base * len(linha)))]
-        cns, k = re.subn(rf"^{g},{i} = \d+,\d+$", f"{g},{i} = {grupo},{desenho}", cns, count=1, flags=re.M)
-        assert k == 1, f"remap do despertado sem a linha {g},{i}"
-        t += max(d, 1)
+    """As ações da base que o despertado mostra com o corpo firme (kit_cliente.REMAP: parado, agachado, defesa,
+    apanha...): cada sprite delas, no remap do despertado, aponta para o desenho do corpo firme daquele momento.
+    Laço (nome da animação): o desenho do mesmo tick proporcional. Lista de poses-chave: uma por elemento da ação
+    (ou espalhadas pelo tempo, se a ação da base tiver outro número de elementos)."""
+    import kit_cliente as kc
+    anims = anims_pecas()
+    acoes = mk.acoes(air)
+    feito = {}
+    for acao, alvo in getattr(kc, "REMAP", {0: "parado"}).items():
+        if acao not in acoes:
+            continue
+        els = mk.elementos(acoes[acao])
+        if isinstance(alvo, str):
+            if alvo not in anims:
+                continue
+            _a, grupo, tempos = anims[alvo]
+            linha = []
+            for e in tempos["elementos"]:
+                linha += [(grupo, e["desenho"])] * e["ticks"]
+        else:
+            nome = alvo[0].split("/")[0]
+            if nome not in anims:
+                continue
+            _a, grupo, tempos = anims[nome]
+            primeiro = {}
+            for e in tempos["elementos"]:
+                primeiro.setdefault(e["de"], e["desenho"])
+            chaves = [(grupo, primeiro[k]) for k in alvo]
+            if len(chaves) == len(els):
+                linha = None
+            else:
+                linha = chaves
+        total = sum(max(t, 1) for _e, t, *_ in els)
+        t = 0
+        for n, (el, d, *_r) in enumerate(els):
+            g, i_ = (int(v) for v in el.split(",")[:2])
+            meio = t + max(d, 1) / 2
+            t += max(d, 1)
+            if linha is None:
+                destino = chaves[n]
+            else:
+                destino = linha[min(len(linha) - 1, int(meio / total * len(linha)))]
+            if (g, i_) in feito:
+                continue  # sprite repetido (em outra ação ou no mesmo laço): fica o primeiro
+            feito[(g, i_)] = destino
+            cns, k = re.subn(rf"^{g},{i_} = \d+,\d+$", f"{g},{i_} = {destino[0]},{destino[1]}", cns, count=1,
+                             flags=re.M)
+            assert k == 1, f"remap do despertado sem a linha {g},{i_} (ação {acao})"
     return cns
 
 
