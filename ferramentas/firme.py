@@ -141,8 +141,20 @@ def montar_kit():
     no = (b.mascara(K.NO_DA_FAIXA) & faixa_marrom(ref)) if hasattr(K, "NO_DA_FAIXA") else np.zeros_like(alfa)
     no = cv2.dilate(no.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool) & b.mascara(K.NO_DA_FAIXA)
     # rabo (demônio): peça própria presa no quadril, por cima das pernas
-    m_cauda = (b.mascara(K.CAUDA) & alfa & ~bracos & (yy >= K.CINTURA - 20)) if hasattr(K, "CAUDA") \
-        else np.zeros_like(alfa)
+    m_cauda = np.zeros_like(alfa)
+    cauda_falta = np.zeros_like(alfa)
+    if hasattr(K, "CAUDA_LINHA"):
+        faixa = np.zeros(alfa.shape, np.uint8)
+        cv2.polylines(faixa, [np.int32(K.CAUDA_LINHA)], False, 1, K.CAUDA_LARG)
+        faixa = (faixa > 0) | b.mascara(K.CAUDA_PONTA)
+        R, G, B_ = (ref[..., i].astype(int) for i in range(3))
+        cor = (R > B_ + 6) & (G < R * 0.66)
+        m_cauda = faixa & alfa & cor & ~bracos
+        m_cauda = limpar_ilhas(m_cauda, 40)
+        # trecho da linha sem rabo à vista (escondido): completa com um traço da cor do rabo
+        miolo = np.zeros(alfa.shape, np.uint8)
+        cv2.polylines(miolo, [np.int32(K.CAUDA_LINHA)], False, 1, max(5, K.CAUDA_LARG // 2))
+        cauda_falta = (miolo > 0) & ~m_cauda
     no |= m_cauda
     pt = b.mascara(K.PERNA_TRAS) & alfa & ~bracos & baixo & ~no
     pf = b.mascara(K.PERNA_FRENTE) & alfa & ~bracos & baixo & ~pt & ~no
@@ -157,7 +169,7 @@ def montar_kit():
         "braco_tras": m_bt & ~m_ant,
         "braco_frente": m_bf,
         **({"antebraco_tras": m_ant} if m_ant.any() else {}),
-        "tronco": ~baixo & alfa & ~m_cab & ~bracos,
+        "tronco": (yy < K.CINTURA + getattr(K, "TRONCO_SOBRA", 0)) & alfa & ~m_cab & ~bracos & ~m_cauda,
         "quadril": baixo & alfa & ~pt & ~pf & ~bracos & ~m_cauda,
         **({"cauda": m_cauda} if m_cauda.any() else {}),
         "coxa_tras": pt & (yy < jt),
@@ -168,11 +180,25 @@ def montar_kit():
         "perna_frente": pf,
     }
     imgs = {k: np.where(m[..., None], ref, 0).astype(np.uint8) for k, m in partes.items()}
+    if "cauda" in imgs and cauda_falta.any():
+        c = imgs["cauda"]
+        cores = ref[m_cauda][:, :3].astype(int)
+        escuro = np.percentile(cores, 25, axis=0).astype(np.uint8)
+        c[cauda_falta, :3] = escuro
+        c[cauda_falta, 3] = 255
+        borda = cv2.dilate(cauda_falta.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool) & ~cauda_falta \
+            & (c[..., 3] == 0)
+        c[borda, :3] = (np.percentile(cores, 5, axis=0)).astype(np.uint8)
+        c[borda, 3] = 255
     # peito e lado do tronco que o braço de trás esconde
     esc = b.mascara(K.TRONCO_ESCONDIDO) & m_bt & ~baixo
     imgs["tronco"] = b.tapar(np.where((partes["tronco"] | esc)[..., None], ref, 0).astype(np.uint8), esc,
                              partes["tronco"])
     pintado = esc & ~partes["tronco"]
+    if hasattr(K, "QUADRIL_ESCONDIDO"):  # barra do paletó e quadril que a mão de trás esconde
+        escq = b.mascara(K.QUADRIL_ESCONDIDO) & m_bt & baixo
+        imgs["quadril"] = b.tapar(np.where((partes["quadril"] | escq)[..., None], ref, 0).astype(np.uint8), escq,
+                                  partes["quadril"])
     # cada peça fica só com o pedaço ligado a ela (sem lasca de outra peça que caiu dentro do polígono)
     imgs = {k: so_o_grosso(v) for k, v in imgs.items()}
     kit = {"ref": f"quadros_arcade_hd/{K.REF}.png", "pecas": {}}
@@ -930,9 +956,9 @@ def gerar(nomes, so_pose=False):
                                                      # metade de baixo inteira de um desenho: as juntas das pernas não valem
                                                      *(() if pose.get("_pernas") else ("coxa_tras", "coxa_frente", "canela_tras", "canela_frente")))])
             m_novo, m_hoje = mancha(out, guarda)
-            if pintado > 30:
+            if pintado > getattr(K, "PINTADO_MAX", 30):
                 erros.append(f"peito pintado à vista {pintado} px")
-            if m_novo > m_hoje + 60:
+            if m_novo > m_hoje + getattr(K, "MANCHA_FOLGA", 60):
                 erros.append(f"mancha {m_novo} px (hoje {m_hoje})")
             linhas[f"{nome}/{i:02d}"] = f"| {nome}/{i:02d} | {q} | {'PASS' if not erros else 'FAIL ' + '; '.join(erros)} |"
             Image.fromarray(out).save(b.SPR / "quadros_pecas_hd" / nome / f"{i:02d}.png")

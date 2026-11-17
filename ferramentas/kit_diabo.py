@@ -11,7 +11,8 @@ ESCALA_FIXA = True  # as folhas da IA vieram todas na mesma escala; a régua da 
 
 CABECA = [(525, 308), (618, 308), (618, 386), (602, 401), (580, 406), (560, 406), (545, 401), (520, 399),
           (495, 399), (470, 391), (480, 377), (500, 368), (515, 358), (525, 345)]
-BRACO_TRAS = [(476, 397), (505, 399), (508, 418), (497, 440), (488, 470), (492, 500), (500, 530), (494, 548),
+# borda direita colada no paletó (x 492): o paletó fica todo no tronco
+BRACO_TRAS = [(476, 397), (502, 399), (504, 412), (493, 432), (490, 460), (489, 500), (496, 530), (494, 548),
               (470, 549), (444, 536), (434, 500), (436, 470), (446, 440), (460, 414)]
 BRACO_FRENTE = [(590, 399), (613, 404), (626, 430), (631, 458), (646, 478), (662, 503), (665, 537), (645, 542),
                 (624, 532), (614, 506), (604, 482), (596, 461), (591, 441), (587, 420)]
@@ -19,11 +20,15 @@ PERNA_TRAS = [(470, 492), (538, 492), (542, 520), (531, 560), (521, 600), (507, 
               (448, 630), (460, 600), (466, 560)]
 PERNA_FRENTE = [(540, 492), (602, 492), (616, 520), (626, 560), (626, 600), (642, 630), (650, 662), (572, 662),
                 (584, 630), (588, 600), (574, 560), (548, 530)]
-# rabo: sai de trás do quadril, desce pela esquerda e passa por baixo das pernas até a ponta de flecha na direita
-CAUDA = [(506, 530), (512, 542), (486, 552), (466, 562), (460, 580), (470, 593), (500, 598), (540, 596),
-         (580, 588), (612, 580), (632, 568), (658, 574), (664, 614), (640, 616), (618, 602), (580, 604),
-         (540, 609), (500, 610), (458, 606), (444, 592), (443, 562), (458, 542), (482, 532)]
-TRONCO_ESCONDIDO = [(0, 0), (1, 0), (1, 1)]  # os braços ficam do lado do corpo: nada escondido
+# rabo: linha do meio (de onde sai, atrás da mão de trás, até a ponta de flecha) e a ponta; a peça é o que é da cor do
+# rabo numa faixa em volta da linha, e o trecho escondido atrás da perna é completado com a cor dele
+CAUDA_LINHA = [(492, 533), (474, 541), (460, 552), (455, 570), (462, 584), (478, 591), (503, 595), (537, 590),
+               (570, 581), (600, 573), (621, 569), (634, 575)]
+CAUDA_LARG = 15
+CAUDA_PONTA = [(628, 566), (650, 572), (664, 590), (662, 614), (646, 612), (632, 596)]
+# o braço de trás fica atrás do corpo: nada fica escondido por ele
+TRONCO_ESCONDIDO = [(0, 0), (1, 0), (1, 1)]
+TRONCO_SOBRA = 6  # o tronco desce 6 px por cima do cinto: a respiração não abre linha no cinto
 NO_DA_FAIXA = [(0, 0), (1, 0), (1, 1)]
 
 JOELHO_TRAS, JOELHO_FRENTE = (505, 560), (606, 556)
@@ -61,3 +66,6 @@ FIRMES = set()
 ESPECIAIS = set()
 # vão fechado maior que isto é de propósito (entre o braço, a coxa e o rabo): não tapa nem reprova
 BURACO_MAX = 60
+MANCHA_FOLGA = 150  # o demônio é escuro (garras e calça): a mancha varia mais quando a garra gira
+FIRMES.update(f"parado/{i:02d}" for i in range(8))
+FIRMES.update(f"anda/{i:02d}" for i in range(8))
