@@ -44,4 +44,12 @@ Vídeo e tiras: `docs/boneco-pecas/gutto/pernas_antes_depois.mp4` e `.png`.
 
 Pengaró, CK, Hazak, Raiclaven e Gbzin (base e despertado), na régua de 24/11: golpe agachado 410 levanta em quase
 todos; 400/440 no CK e Gbzin; kits com grossura fora (Hazak, Pengaró, Raiclaven, Cliente). Depois: sobras do Pengaró
-(manchas na calça, ombro de trás, pé girado) e a regra no `docs/como-trabalhar.md`.
+(manchas na calça, ombro de trás, pé girado).
+
+**Regra (Breno, 24/11):** a régua virou regra e foi levada para o corpo todo em `ferramentas/regua_corpo.py` (braço,
+cabeça e tronco na mesma conta, mais esta régua inteira). Está no passo 8 da `regra-de-criacao-de-personagem.md`, no
+`como-trabalhar.md` e no checklist da seção 9 das regras. Na primeira rodada (24/11) o braço reprovou em 3 peças:
+CK `braco_tras_direto` (73%) e `braco_tras_overhand` (74%), e CK despertado `braco_tras_garrafa` (71%), todos mais
+finos que o braço do parado e sem a manga; entram na fila do CK junto com as pernas.
+Tira dos braços reprovados (e do braço do Hazak aceito no olho): `docs/boneco-pecas/regua_corpo_bracos.png`.
+Relatório completo da primeira rodada: `docs/boneco-pecas/regua_corpo_2026-11-24.md` (o agachado reprovado é o mesmo da fila acima).

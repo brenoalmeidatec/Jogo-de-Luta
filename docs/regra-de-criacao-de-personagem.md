@@ -19,7 +19,8 @@ muda esta regra.
 5. Cada golpe é posado pela anatomia: corpo inteiro, peso, base, camadas perto e longe, mão livre fora do golpe.
 6. Tempo e caixas de golpe do jogo não mudam: mesma soma de ticks, mesmo tick de acerto, `Clsn1` no membro que bate.
 7. Vida: quadros do meio feitos com as peças (menos entre antecipação e contato), respiração e atraso; nunca fluxo óptico.
-8. Robô de defeitos com 0 defeito, sem linha de corte; tudo em 3x mostrado em 1/3.
+8. Robô de defeitos com 0 defeito, sem linha de corte, e **régua do corpo todo** em 0 (`regua_corpo.py`: nenhum
+   membro fino, curto ou inchado, golpe agachado não levanta); tudo em 3x mostrado em 1/3.
 9. Liga no jogo com `ligar_pecas.py`, depois aura, luz e `encolher_sff.py`; robô de luta sem falha e dano igual.
 10. Vídeo lado a lado e foto no jogo na issue, checklist marcado, sobe na `mugen`.
 
@@ -89,7 +90,8 @@ O jeito de fazer qualquer quadro do jogo a partir de um desenho só.
 - **Variantes:** peça que muda de desenho e não só de ângulo (punho de frente no contato, braço esticado, perna em
   câmara ou esticada, mão aberta, pé girado de calcanhar, pé que chuta espelhado, cabeça gritando). Vem do desenho
   aprovado ou é pedida ao ChatGPT como peça solta em cima da folha-modelo, e é medida contra a peça original antes de
-  entrar.
+  entrar, pela **régua do corpo todo** do passo 8 (`python ferramentas/regua_corpo.py <lutador>`): a variante tem a
+  grossura e a área da peça do parado do mesmo osso.
 - **Paleta travada:** as cores do kit são as únicas que existem no boneco. Quadro que trouxer cor de fora (outro
   boneco, pele laranja, cabelo castanho) é trocado cor a cor para as do kit. A redução para 15 cores da v1 foi
   reprovada no piloto porque tirou a nitidez; a paleta indexada do `.sff` sai no fim, pelo `encolher_sff.py`.
@@ -194,6 +196,34 @@ Quem confere: o robô de defeitos (`conferir()` do `piloto_firme.py`/`firme.py`)
 desenhos, inclusive os do meio. A régua reprova osso que mudou mais de 5% (até 15% só no membro que bate, no quadro de
 contato marcado). O erro 5 se confere no vídeo lado a lado, tick a tick.
 
+### Régua do corpo todo (Alisson, 2026-11-24; regra do Breno no mesmo dia)
+
+O Breno viu no jogo pernas finas e compridas e agachado que estica a perna (issue #32, 22/11). O Alisson fez a régua
+das pernas e o Breno mandou valer para o corpo inteiro. Ela entra junto com o robô de defeitos e também tem que dar
+**0 reprovações**:
+
+```
+python ferramentas/regua_corpo.py            # todos: pernas (regua_pernas.py) + braço, cabeça e tronco
+python ferramentas/regua_corpo.py gutto      # um lutador
+```
+
+1. **Agachado não levanta** (`regua_pernas.py`): golpe, defesa e apanhar do tipo agachado não podem subir o centro do
+   corpo mais de 45% do caminho do agachado ao em pé, na base e no despertado. Especial que sobe de propósito (gancho
+   que sai do chão) só vira aviso e se confere no vídeo. Se a perna não alcança a pose dobrada, use a variante de
+   perna dobrada no kit; nunca estique a peça.
+2. **Cada peça variante na proporção do parado**, comparada com a peça do parado do mesmo osso:
+   - **Perna** (`regua_pernas.py`): esticada com grossura de 80% a 160% e área acima de 70%; dobrada com área de 60% a
+     140%.
+   - **Braço** (`regua_corpo.py`): grossura acima de 75% (braço fino, manga que some) e área acima de 60% (braço curto
+     ou sumido). Sem teto, porque o braço da guarda é visto encurtado.
+   - **Cabeça:** as expressões (dor, esforço, riso) com área e comprimento dentro de 15% da cabeça do parado. A cabeça
+     não muda de tamanho.
+   - **Tronco e quadril:** área dentro de 30% e grossura acima de 80%; a peça agachada é comparada com quadril e pernas.
+3. Variante que reprova é **redesenhada na grossura do parado** (como a perna esticada nova do Gutto, que saiu do
+   calção), não aceita. Só entra em `ACEITAS` no `regua_corpo.py` a peça conferida no olho em que a conta erra, com o
+   motivo escrito (ex.: braço do Hazak de lado contra o bíceps contraído do parado).
+4. Prova: antes e depois do lutador (tira e vídeo) na issue, régua em 0, robô de peças em 0 e robô de luta igual.
+
 **Quadro especial:** onde o kit de frente não monta (deitado, de costas sem peça de costas, agachado muito fundo), o
 quadro pode ser o desenho de hoje com o rosto do kit e a paleta travada. Ele também passa no robô. Quadro especial é
 dívida: quando a peça que falta entrar no kit, ele vira quadro montado.
@@ -274,4 +304,6 @@ O guia de quem muda o quê em cada lutador é o [`aplicar-estudo-anatomia.md`](a
 | Leis do corpo, camadas perto e longe, limites de junta, receitas | [`estudo-anatomia-golpes.md`](estudo-anatomia-golpes.md), Breno, 2026-11-17 |
 | Sem quadro do meio entre antecipação e contato (no máximo 1 borrão) | Breno, 2026-11-17, nesta regra |
 | Montador, pintar e apagar na peça, camada por pose | [`montador.md`](montador.md), Breno, 2026-11-17 |
+| Régua das pernas (agachado não levanta, perna do kit na grossura do parado) | Alisson, 2026-11-24, issue #32 ([`pernas-e-agachado.md`](pernas-e-agachado.md)) |
+| Régua do corpo todo (braço, cabeça e tronco na mesma conta) | Breno, 2026-11-24, nesta regra |
 | Conceito, despertado, aura, luz, agarrões | [`receita-de-lutador.md`](receita-de-lutador.md), Breno, 2026-11-15 |
