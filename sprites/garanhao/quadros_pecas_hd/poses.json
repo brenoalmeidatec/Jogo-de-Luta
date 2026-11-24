@@ -2603,10 +2603,10 @@
   "quadril": {
    "ang": 0,
    "dx": 0,
-   "dy": 10
+   "dy": 30
   },
   "tronco": {
-   "ang": 4
+   "ang": 12
   },
   "braco_tras": {
    "ang": -20
@@ -2618,26 +2618,26 @@
    "ang": -16
   },
   "coxa_tras": {
-   "ang": -11.6
+   "ang": -6.0
   },
   "canela_tras": {
-   "ang": 34.9
+   "ang": 58.1
   },
   "coxa_frente": {
-   "ang": -16.8
+   "ang": -39.8
   },
   "canela_frente": {
-   "ang": 26.9
+   "ang": 52.6
   }
  },
  "chifrada_sobe/04": {
   "quadril": {
    "ang": 0,
    "dx": 0,
-   "dy": 4
+   "dy": 28
   },
   "tronco": {
-   "ang": -14
+   "ang": 2
   },
   "braco_tras": {
    "ang": -50
@@ -2646,29 +2646,29 @@
    "ang": -70
   },
   "cabeca": {
-   "ang": -32
+   "ang": -34
   },
   "coxa_tras": {
-   "ang": -6.4
+   "ang": -5.8
   },
   "canela_tras": {
-   "ang": 18.1
+   "ang": 55.1
   },
   "coxa_frente": {
-   "ang": -6.3
+   "ang": -37.7
   },
   "canela_frente": {
-   "ang": 3.8
+   "ang": 49.5
   }
  },
  "chifrada_sobe/05": {
   "quadril": {
    "ang": 0,
    "dx": 0,
-   "dy": 4
+   "dy": 28
   },
   "tronco": {
-   "ang": -10
+   "ang": 6
   },
   "braco_tras": {
    "ang": -30
@@ -2677,19 +2677,19 @@
    "ang": -50
   },
   "cabeca": {
-   "ang": -24
+   "ang": -26
   },
   "coxa_tras": {
-   "ang": -6.4
+   "ang": -5.8
   },
   "canela_tras": {
-   "ang": 18.1
+   "ang": 55.1
   },
   "coxa_frente": {
-   "ang": -6.3
+   "ang": -37.7
   },
   "canela_frente": {
-   "ang": 3.8
+   "ang": 49.5
   }
  },
  "chifrada_sobe/06": {

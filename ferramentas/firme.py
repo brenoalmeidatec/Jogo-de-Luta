@@ -1010,8 +1010,11 @@ def gerar(nomes, so_pose=False):
             poses[q] = pose_de(kit, q)
         bate = {i for i, e in enumerate(elems) if e[2]} or None  # todo contato (agarrão tem várias pancadas)
         laco = acao in getattr(K, "LACOS", {0})
+        # golpe agachado volta para o agachado (o primeiro quadro), não para o parado em pé: senão o fim do golpe
+        # levanta o corpo e a régua das pernas (regua_pernas.py) acusa
+        volta = poses[elems[0][0]] if nome in getattr(K, "AGACHADOS", ()) else poses.get(K.REF) or pose_de(kit, K.REF)
         quadros = vida.animar(poses, [(q, t) for q, t, _ in elems], bate=bate, laco=laco,
-                              guarda=None if laco else poses.get(K.REF) or pose_de(kit, K.REF))
+                              guarda=None if laco else volta)
         if laco:
             quadros = vida.respirar(quadros)
         quadros = vida.atrasar(quadros, laco=laco)
@@ -1057,7 +1060,10 @@ def gerar(nomes, so_pose=False):
         f"\n\n{falhas} de {len(corpo_rel)} desenho(s) com defeito.\n"
     rel.write_text(texto, encoding="utf-8")
     print(texto[-200:])
-    (b.SPR / "quadros_pecas_hd" / "poses.json").write_text(json.dumps(poses, indent=1), encoding="utf-8")
+    arq = b.SPR / "quadros_pecas_hd" / "poses.json"
+    todas = json.loads(arq.read_text(encoding="utf-8")) if arq.exists() else {}  # só algumas animações: não apaga as outras
+    todas.update(poses)
+    arq.write_text(json.dumps(todas, indent=1), encoding="utf-8")
     return falhas
 
 

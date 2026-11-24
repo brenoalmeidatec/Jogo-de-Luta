@@ -146,10 +146,21 @@ VARIANTES = {
     "coxa_frente": {
         "camara": ("965_0", [(538, 420), (560, 414), (600, 424), (617, 440), (616, 470), (590, 493), (556, 502),
                              (550, 522), (506, 527), (503, 505), (518, 490), (536, 470)], (544, 440)),
-        "esticada": ("957_0", [(542, 422), (560, 404), (600, 394), (650, 374), (690, 348), (708, 352), (708, 382),
-                               (680, 396), (650, 410), (620, 421), (586, 436), (562, 456), (546, 462)], (552, 436)),
+        # perna esticada do chute baixo agachado de hoje (449): a mesma escala e grossura da perna do parado. A do 957
+        # (desenho de lado, menor) saía fina e comprida, 61% da grossura do parado (régua das pernas, Breno 22/11)
+        # leva junto a boca do calção (o desenho tem a coxa dentro dele): a perna sai do calção, sem fresta
+        "esticada": ("449_0", [(532, 574), (562, 566), (600, 582), (640, 596), (700, 606), (748, 610), (756, 640),
+                               (704, 662), (640, 652), (600, 642), (566, 640), (548, 636), (534, 612)], None),
+        # perna dobrada do agachado (359): joelho para a frente, canela para baixo. É a câmara dos chutes agachados
+        # (girar a câmara em pé do 965 virava uma bolota no agachado)
+        "agachada": ("359_0", [(546, 536), (580, 528), (612, 540), (626, 560), (620, 600), (608, 626), (630, 644),
+                               (632, 664), (552, 664), (556, 630), (566, 600), (556, 580), (546, 560)], None),
     },
 }
+# ângulo natural de cada variante (graus, do quadril até a ponta) contra a do 957 que as poses usavam: as poses abaixo
+# somam este desvio para a perna nova ficar onde a velha ficava
+GIRO_ESTICADA = -35
+COM_CALCAO = {("coxa_frente", "esticada")}  # variantes que levam a boca do calção junto (não passam pelo so_pele)
 
 TR_CAMARA, TR_ALTO = -4, -8     # tronco para trás na câmara e no chute alto (graus)
 BF_CAMARA, BF_ALTO = 10, 25     # braço da frente descendo para trás da perna
@@ -190,9 +201,9 @@ ANIM = {
     # altura da barriga (perna esticada deitada), segura e recolhe
     "coice": (1100, [("526_0", 6, 0), ("1043_0", 1, 0, {"coxa_frente": {"ang": 20, "var": "camara"}}),
                      ("1044_0", 3, 0, {"coxa_frente": {"ang": 4, "var": "camara"}, "braco_frente": {"ang": -10}}),
-                     ("1013_0", 6, 1, {"coxa_frente": {"ang": 34, "var": "esticada"}, "braco_frente": {"ang": -14}}),
-                     ("1019_0", 6, 1, {"coxa_frente": {"ang": 30, "var": "esticada"}, "braco_frente": {"ang": -14}}),
-                     ("529_0", 6, 1, {"coxa_frente": {"ang": 32, "var": "esticada"}, "braco_frente": {"ang": -12}}),
+                     ("1013_0", 6, 1, {"coxa_frente": {"ang": 34 + GIRO_ESTICADA, "var": "esticada"}, "braco_frente": {"ang": -14}}),
+                     ("1019_0", 6, 1, {"coxa_frente": {"ang": 30 + GIRO_ESTICADA, "var": "esticada"}, "braco_frente": {"ang": -14}}),
+                     ("529_0", 6, 1, {"coxa_frente": {"ang": 32 + GIRO_ESTICADA, "var": "esticada"}, "braco_frente": {"ang": -12}}),
                      ("1034_0", 6, 0, {"coxa_frente": {"ang": 6, "var": "camara"}}),
                      ("1034_0", 2, 0, {"coxa_frente": {"ang": 14, "var": "camara"}}),
                      ("531_0", 10, 0), ("532_0", 9, 0)],
@@ -218,9 +229,9 @@ ANIM = {
                  (0, -390, 169, -90)),
     # chute de quina: era o chute fraco com outro nome. Agora: chute baixo na canela, perna esticada para baixo
     "quina": (1500, [("415_0", 6, 0), ("935_0", 1, 0, {"coxa_frente": {"ang": 40, "var": "camara"}}),
-                     ("936_0", 1, 0, {"coxa_frente": {"ang": 46, "var": "esticada"}}),
-                     ("417_0", 6, 1, {"coxa_frente": {"ang": 58, "var": "esticada"}, "braco_frente": {"ang": 8}}),
-                     ("417_0", 2, 0, {"coxa_frente": {"ang": 56, "var": "esticada"}}),
+                     ("936_0", 1, 0, {"coxa_frente": {"ang": 46 + GIRO_ESTICADA, "var": "esticada"}}),
+                     ("417_0", 6, 1, {"coxa_frente": {"ang": 58 + GIRO_ESTICADA, "var": "esticada"}, "braco_frente": {"ang": 8}}),
+                     ("417_0", 2, 0, {"coxa_frente": {"ang": 56 + GIRO_ESTICADA, "var": "esticada"}}),
                      ("418_0", 8, 0, {"coxa_frente": {"ang": 36, "var": "camara"}}), ("419_0", 7, 0),
                      ("420_0", 7, 0)],
               (24, -111, 192, -6)),
@@ -228,8 +239,8 @@ ANIM = {
     "chute_forte": (260, [("550_0", 6, 0), ("551_0", 4, 0, {"coxa_frente": {"ang": 26, "var": "camara"}}),
                           ("1001_0", 1, 0, {"coxa_frente": {"ang": 6, "var": "camara"}}),
                           ("1002_0", 1, 0, {"coxa_frente": {"ang": 0, "var": "camara"}}),
-                          ("992_0", 6, 1, {"coxa_frente": {"ang": 14, "var": "esticada"}}),
-                          ("992_0", 2, 0, {"coxa_frente": {"ang": 16, "var": "esticada"}}),
+                          ("992_0", 6, 1, {"coxa_frente": {"ang": 14 + GIRO_ESTICADA, "var": "esticada"}}),
+                          ("992_0", 2, 0, {"coxa_frente": {"ang": 16 + GIRO_ESTICADA, "var": "esticada"}}),
                           ("991_0", 5, 0, {"coxa_frente": {"ang": 4, "var": "camara"}}),
                           ("554_0", 5, 0, {"coxa_frente": {"ang": 18, "var": "camara"}}), ("555_0", 9, 0),
                           ("556_0", 9, 0)],
@@ -248,13 +259,13 @@ ANIM = {
     "super_chutes": (3100, [("202_0", 7, 0, {"_base": "965_0"}),
                             ("199_0", 6, 1, {"_base": "94_0", "braco_frente": {"ang": 4, "var": "esticado"}}),
                             ("203_0", 6, 1, {"_base": "965_0", "coxa_frente": {"ang": -14, "var": "camara"}}),
-                            ("210_0", 6, 1, {"_base": "417_0", "coxa_frente": {"ang": 58, "var": "esticada"}}),
+                            ("210_0", 6, 1, {"_base": "417_0", "coxa_frente": {"ang": 58 + GIRO_ESTICADA, "var": "esticada"}}),
                             ("200_0", 6, 1, {"_base": "94_0", "braco_frente": {"ang": 2, "var": "esticado"}}),
                             ("204_0", 6, 1, {"_base": "957_0"}),
                             ("222_0", 6, 1, {"_base": "965_0", "coxa_frente": {"ang": -14, "var": "camara"}}),
-                            ("211_0", 6, 1, {"_base": "417_0", "coxa_frente": {"ang": 56, "var": "esticada"}}),
+                            ("211_0", 6, 1, {"_base": "417_0", "coxa_frente": {"ang": 56 + GIRO_ESTICADA, "var": "esticada"}}),
                             ("225_0", 6, 1, {"_base": "957_0"}),
-                            ("225_0", 2, 0, {"_base": "957_0", "coxa_frente": {"ang": 4, "var": "esticada"}}),
+                            ("225_0", 2, 0, {"_base": "957_0", "coxa_frente": {"ang": 4 + GIRO_ESTICADA, "var": "esticada"}}),
                             ("205_0", 28, 0, {"_base": "426_0"})],
                      (0, -330, 220, -30)),
     # agachado: o corpo do parado desce (o mesmo tronco e rosto), joelhos dobram, respira
@@ -272,45 +283,45 @@ ANIM = {
     # chute baixo agachado: perna da frente esticada rente ao chão, a de trás dobrada
     "chute_baixo_agachado": (430, [("447_0", 3, 0, {"_base": "359_0"}),
                                    ("447_0", 1, 0, {"_base": "359_0", "_sem_apoio": 1,
-                                                    "coxa_frente": {"ang": 50, "var": "camara"}}),
+                                                    "coxa_frente": {"ang": -10, "var": "agachada"}}),
                                    ("1146_0", 1, 0, {"_base": "359_0", "_sem_apoio": 1,
-                                                     "coxa_frente": {"ang": 52, "var": "esticada"}}),
+                                                     "coxa_frente": {"ang": 52 + GIRO_ESTICADA, "var": "esticada"}}),
                                    ("449_0", 5, 1, {"_base": "359_0", "_sem_apoio": 1,
-                                                    "coxa_frente": {"ang": 46, "var": "esticada"}}),
+                                                    "coxa_frente": {"ang": 46 + GIRO_ESTICADA, "var": "esticada"}}),
                                    ("449_0", 1, 0, {"_base": "359_0", "_sem_apoio": 1,
-                                                    "coxa_frente": {"ang": 48, "var": "esticada"}}),
+                                                    "coxa_frente": {"ang": 48 + GIRO_ESTICADA, "var": "esticada"}}),
                                    ("450_0", 5, 0, {"_base": "359_0", "_sem_apoio": 1,
-                                                    "coxa_frente": {"ang": 50, "var": "camara"}}),
+                                                    "coxa_frente": {"ang": -10, "var": "agachada"}}),
                                    ("450_0", 4, 0, {"_base": "359_0"}), ("452_0", 4, 0, {"_base": "359_0"})],
                              (36, -54, 186, -12)),
     # chute alto agachado: ficava em pé no meio. Agora chuta para cima sem levantar, apoiado na perna de trás
     "chute_alto_agachado": (410, [("438_0", 3, 0, {"_base": "359_0"}),
                                   ("439_0", 2, 0, {"_base": "359_0", "_sem_apoio": 1,
-                                                   "coxa_frente": {"ang": -10, "var": "camara"}}),
+                                                   "coxa_frente": {"ang": -20, "var": "agachada"}}),
                                   ("1128_0", 2, 0, {"_base": "359_0", "_sem_apoio": 1,
-                                                    "coxa_frente": {"ang": -30, "var": "camara"}}),
+                                                    "coxa_frente": {"ang": -40, "var": "agachada"}}),
                                   ("1118_0", 8, 1, {"_base": "359_0", "_sem_apoio": 1,
-                                                    "coxa_frente": {"ang": -20, "var": "esticada"}}),
+                                                    "coxa_frente": {"ang": -20 + GIRO_ESTICADA, "var": "esticada"}}),
                                   ("1118_0", 2, 0, {"_base": "359_0", "_sem_apoio": 1,
-                                                    "coxa_frente": {"ang": -16, "var": "esticada"}}),
+                                                    "coxa_frente": {"ang": -16 + GIRO_ESTICADA, "var": "esticada"}}),
                                   ("442_0", 7, 0, {"_base": "359_0", "_sem_apoio": 1,
-                                                   "coxa_frente": {"ang": -14, "var": "camara"}}),
+                                                   "coxa_frente": {"ang": -24, "var": "agachada"}}),
                                   ("443_0", 9, 0, {"_base": "359_0"}), ("444_0", 9, 0, {"_base": "359_0"})],
                             (15, -366, 126, -180)),
     # rasteira (chute forte agachado): mais baixo e mais longo que o chute baixo
     "rasteira": (440, [("454_0", 5, 0, {"_base": "359_0"}),
                        ("455_0", 3, 0, {"_base": "359_0", "_sem_apoio": 1,
-                                        "coxa_frente": {"ang": 56, "var": "camara"}}),
+                                        "coxa_frente": {"ang": -6, "var": "agachada"}}),
                        ("1163_0", 1, 0, {"_base": "359_0", "_sem_apoio": 1,
-                                         "coxa_frente": {"ang": 62, "var": "esticada"}}),
+                                         "coxa_frente": {"ang": 53 + GIRO_ESTICADA, "var": "esticada"}}),
                        ("1164_0", 1, 0, {"_base": "359_0", "_sem_apoio": 1,
-                                         "coxa_frente": {"ang": 58, "var": "esticada"}}),
+                                         "coxa_frente": {"ang": 53 + GIRO_ESTICADA, "var": "esticada"}}),
                        ("457_0", 6, 1, {"_base": "359_0", "_sem_apoio": 1,
-                                        "coxa_frente": {"ang": 56, "var": "esticada"}}),
+                                        "coxa_frente": {"ang": 54 + GIRO_ESTICADA, "var": "esticada"}}),
                        ("457_0", 2, 0, {"_base": "359_0", "_sem_apoio": 1,
-                                        "coxa_frente": {"ang": 58, "var": "esticada"}}),
+                                        "coxa_frente": {"ang": 53 + GIRO_ESTICADA, "var": "esticada"}}),
                        ("1153_0", 5, 0, {"_base": "359_0", "_sem_apoio": 1,
-                                         "coxa_frente": {"ang": 54, "var": "camara"}}),
+                                         "coxa_frente": {"ang": -4, "var": "agachada"}}),
                        ("458_0", 5, 0, {"_base": "359_0"}),
                        # volta da rasteira (o jogo tem 48 ticks: sem isso o golpe acabava 20 ticks antes)
                        ("459_0", 5, 0, {"_base": "359_0"}), ("1173_0", 5, 0, {"_base": "359_0"}),
@@ -378,7 +389,7 @@ def montar_com_variantes(pf):
         for var, (fonte, poli, jf) in vs.items():
             garantir_hd([fonte])
             if jf is None:
-                dx, dy = pf.corpo(kit, b.abrir(fonte))
+                dx, dy = corpo(kit, b.abrir(fonte), folga_y=(-50, 150))
                 j = OSSOS[slot][0]
                 jf = (j[0] + dx, j[1] + dy)
                 print(f"{slot}_{var}: tronco em {fonte} a {dx:+d},{dy:+d}")
@@ -388,7 +399,9 @@ def montar_com_variantes(pf):
     # a perna levantada é só a perna (pele e contorno): o calção e o pé de apoio do desenho de origem ficam de fora
     for slot in ("coxa_frente", "coxa_tras"):
         for var in VARIANTES[slot]:
-            so_pele(b.PECAS / kit["pecas"][f"{slot}_{var}"]["arquivo"])
+            if (slot, var) not in COM_CALCAO:
+                so_pele(b.PECAS / kit["pecas"][f"{slot}_{var}"]["arquivo"])
+            aparar(kit, f"{slot}_{var}")
         calcao_no_quadril(kit, slot)
     limpar_contorno_dos_bracos(kit)
     tronco_inteiro(kit)
@@ -425,6 +438,19 @@ def calcao_no_quadril(kit, slot="coxa_frente"):
     qd["origem"] = [int(x0), int(y0)]
     a[calcao] = 0
     Image.fromarray(a).save(b.PECAS / cf["arquivo"])
+    (b.PECAS / "kit.json").write_text(json.dumps(kit, indent=1, ensure_ascii=False), encoding="utf-8")
+
+
+def aparar(kit, nome):
+    """Recorta a peça no que sobrou depois do so_pele (a origem acompanha), para a régua e o kit verem só a perna."""
+    p = kit["pecas"][nome]
+    arq = b.PECAS / p["arquivo"]
+    im = np.asarray(Image.open(arq).convert("RGBA"))
+    ys, xs = np.nonzero(im[..., 3] > 0)
+    if not len(ys):
+        return
+    Image.fromarray(im[ys.min():ys.max() + 1, xs.min():xs.max() + 1]).save(arq)
+    p["origem"] = [int(p["origem"][0] + xs.min()), int(p["origem"][1] + ys.min())]
     (b.PECAS / "kit.json").write_text(json.dumps(kit, indent=1, ensure_ascii=False), encoding="utf-8")
 
 
@@ -758,7 +784,10 @@ def pose_de(pf, kit, q, nome):
         b.BUSCA["braco_frente"] = (range(0, 1), 1, [None])
     pose = b.encaixar(kit, alvo, pose, ordem=["braco_tras", "braco_frente"])
     if q in PERNA and nome in CHUTES_ALTOS:
-        giro = range(-6, 7, 2)  # a perna levantada fica no ângulo em que foi desenhada (joelho para cima)
+        # a perna levantada fica no ângulo em que foi desenhada (joelho para cima); a esticada nova (449) nasce
+        # deitada, então gira GIRO_ESTICADA para ficar no ângulo do desenho de hoje
+        g0 = GIRO_ESTICADA if PERNA[q] == "esticada" else 0
+        giro = range(g0 - 6, g0 + 7, 2)
         b.BUSCA["coxa_frente"] = (giro, 2, [PERNA[q]])
         b.ANGULOS_VARIANTE = giro
         pose = b.encaixar(kit, alvo, pose, ordem=["coxa_frente"])
@@ -828,7 +857,10 @@ def animar():
                     forca.pop("_sem_apoio", None)
                     if forca.get("coxa_frente", {}).get("var"):
                         # no agachado o quadril da frente fica dentro da perna do calção (o 359 é mais baixo)
-                        forca["coxa_frente"] = {"dx": -3, "dy": -22, **forca["coxa_frente"]}
+                        # (as pernas tiradas de desenho agachado, esticada do 449 e agachada do 359, já têm o quadril
+                        # do agachado: não sobem)
+                        if forca["coxa_frente"]["var"] not in ("esticada", "agachada"):
+                            forca["coxa_frente"] = {"dx": -3, "dy": -22, **forca["coxa_frente"]}
                 for slot, v in forca.items():
                     if slot in ("_pes", "_ar", "_base", "_sem_apoio"):  # (_atras vai para a pose)
                         continue

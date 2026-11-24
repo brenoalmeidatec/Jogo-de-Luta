@@ -203,7 +203,7 @@
    "arquivo": "coxa_tras_apoio.png",
    "origem": [
     466,
-    500
+    505
    ],
    "junta": [
     514,
@@ -220,8 +220,8 @@
   "coxa_frente_camara": {
    "arquivo": "coxa_frente_camara.png",
    "origem": [
-    533,
-    486
+    540,
+    491
    ],
    "junta": [
     574,
@@ -239,18 +239,36 @@
    "arquivo": "coxa_frente_esticada.png",
    "origem": [
     564,
-    428
+    471
    ],
    "junta": [
     574,
     510
    ],
    "mae": "quadril",
-   "fonte": "quadros_arcade_hd/957_0.png",
+   "fonte": "quadros_arcade_hd/449_0.png",
    "sobra": "coxa_frente_esticada_sobra.png",
    "origem_sobra": [
     555,
-    419
+    462
+   ]
+  },
+  "coxa_frente_agachada": {
+   "arquivo": "coxa_frente_agachada.png",
+   "origem": [
+    558,
+    474
+   ],
+   "junta": [
+    574,
+    510
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_arcade_hd/359_0.png",
+   "sobra": "coxa_frente_agachada_sobra.png",
+   "origem_sobra": [
+    538,
+    461
    ]
   }
  }

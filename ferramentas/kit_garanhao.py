@@ -159,9 +159,10 @@ POSES.update({
     **{f"chifrada_sobe/{i:02d}": _p(**C) for i in (0, 6, 7)},
     "chifrada_sobe/01": _m(C, tronco=26, cabeca=-8),
     "chifrada_sobe/02": _m(C, tronco=28, cabeca=-2, bf=-24, bt=-28),
-    "chifrada_sobe/03": _p(dy=10, tronco=4, cabeca=-16, bf=-30, bt=-20, pes=(0, 6)),
-    "chifrada_sobe/04": _p(dy=-20, tronco=-14, cabeca=-32, bf=-70, bt=-50, pes=(0, 8)),
-    "chifrada_sobe/05": _p(dy=-14, tronco=-10, cabeca=-24, bf=-50, bt=-30, pes=(0, 8)),
+    # golpe agachado: as pernas ficam dobradas de quatro (regua_pernas.py); quem sobe é o tronco, a cabeça e as patas
+    "chifrada_sobe/03": _m(C, dy=30, tronco=12, cabeca=-16, bf=-30, bt=-20),
+    "chifrada_sobe/04": _m(C, dy=28, tronco=2, cabeca=-34, bf=-70, bt=-50),
+    "chifrada_sobe/05": _m(C, dy=28, tronco=6, cabeca=-26, bf=-50, bt=-30),
     # casco raspa: de quatro, raspa o casco para trás como touro bravo e chuta rente ao chão
     **{f"casco_raspa/{i:02d}": _p(**C) for i in (0, 6, 7)},
     # raspa o casco: o casco da frente arrasta para trás no chão (touro antes de investir), sem sair do chão
@@ -233,6 +234,7 @@ ANIMS = {
     "coice": (10240, "coice 0/3 1/4 2/4 3/6A 4/3 5/5 6/5 7/5", (-60, -70, 40, -30)),
 }
 AUTO_ESPECIAL = set()
+AGACHADOS = {"garra_rasteira", "chifrada_sobe", "casco_raspa", "rabo_chicote"}  # voltam para o agachado (firme.py)
 FIRMES = set()
 ESPECIAIS = {f"coice/{i:02d}" for i in range(1, 7)}  # vira de costas e coice: desenho da folha nova (17/11, mesmo corpo)
 EXPRESSOES = {}

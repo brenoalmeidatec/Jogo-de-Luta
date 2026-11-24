@@ -21,75 +21,75 @@
  "elementos": [
   {
    "desenho": 0,
-   "ticks": 2,
+   "ticks": 7,
    "caixa": false,
    "de": "202_0@super_chutes0"
   },
   {
    "desenho": 1,
-   "ticks": 2,
-   "caixa": false,
-   "de": "202_0@super_chutes0"
-  },
-  {
-   "desenho": 2,
-   "ticks": 3,
-   "caixa": false,
-   "de": "202_0@super_chutes0"
-  },
-  {
-   "desenho": 3,
    "ticks": 6,
    "caixa": true,
    "de": "199_0@super_chutes1"
   },
   {
-   "desenho": 4,
+   "desenho": 2,
    "ticks": 6,
    "caixa": true,
    "de": "203_0@super_chutes2"
   },
   {
-   "desenho": 5,
+   "desenho": 3,
    "ticks": 6,
    "caixa": true,
    "de": "210_0@super_chutes3"
   },
   {
-   "desenho": 6,
+   "desenho": 4,
    "ticks": 6,
    "caixa": true,
    "de": "200_0@super_chutes4"
   },
   {
-   "desenho": 7,
+   "desenho": 5,
    "ticks": 6,
    "caixa": true,
    "de": "204_0@super_chutes5"
   },
   {
-   "desenho": 8,
+   "desenho": 6,
    "ticks": 6,
    "caixa": true,
    "de": "222_0@super_chutes6"
   },
   {
-   "desenho": 9,
+   "desenho": 7,
    "ticks": 6,
    "caixa": true,
    "de": "211_0@super_chutes7"
   },
   {
-   "desenho": 10,
+   "desenho": 8,
    "ticks": 6,
    "caixa": true,
    "de": "225_0@super_chutes8"
   },
   {
-   "desenho": 11,
+   "desenho": 9,
    "ticks": 2,
    "caixa": false,
    "de": "225_0@super_chutes9"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "205_0@super_chutes10"
+  },
+  {
+   "desenho": 11,
+   "ticks": 2,
+   "caixa": false,
+   "de": "205_0@super_chutes10"
   },
   {
    "desenho": 12,
@@ -159,18 +159,6 @@
   },
   {
    "desenho": 23,
-   "ticks": 2,
-   "caixa": false,
-   "de": "205_0@super_chutes10"
-  },
-  {
-   "desenho": 24,
-   "ticks": 2,
-   "caixa": false,
-   "de": "205_0@super_chutes10"
-  },
-  {
-   "desenho": 25,
    "ticks": 2,
    "caixa": false,
    "de": "205_0@super_chutes10"
