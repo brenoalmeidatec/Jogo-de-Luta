@@ -43,6 +43,8 @@ def arquivos_do_lutador(pasta):
     """(.snd, [.cns...]) pelo .def do lutador."""
     nome = pasta.name
     defs = [d for d in pasta.glob("*.def") if d.stem == nome] or list(pasta.glob("*.def"))
+    if not defs:
+        return None, []
     txt = defs[0].read_text(encoding="utf-8", errors="replace")
     snd, cns = None, []
     for linha in txt.splitlines():
@@ -105,7 +107,7 @@ def conferir(pasta, comum):
 
 def main():
     nomes = sys.argv[1:] or sorted(p.name for p in (RAIZ / "chars").iterdir()
-                                   if p.is_dir() and not p.name.startswith("teste"))
+                                   if p.is_dir() and not p.name.startswith("teste") and any(p.glob("*.def")))
     comum = ler_snd(COMUM)
     ruim = 0
     for nome in nomes:

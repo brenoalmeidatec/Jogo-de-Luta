@@ -702,19 +702,17 @@ wintext.text = Parabéns!
 wintext.localcoord = 320, 240
 
 [Warning Info]
+title.font = Open_Sans.def, 0, 0, 255, 255, 255, 255, -1
+title.scale = 0.36, 0.36
+text.font = Open_Sans.def, 0, 1, 255, 255, 255, 255, -1
+text.scale = 0.36, 0.36
 title.text = AVISO
-text.reload.text = Algumas opcoes so valem depois de reiniciar o jogo.
-Aperte qualquer tecla para sair.
-text.noreload.text = Algumas opcoes so valem depois de reiniciar o jogo.
-Aperte qualquer tecla para continuar.
-text.keys.text = Duas acoes estao na mesma tecla.
-Cada tecla deve ter uma acao so.
-
-Aperte qualquer tecla para continuar.
-Aperte ESC para voltar ao padrao.
-text.pad.text = Controle nao encontrado.
-Confira se o controle esta ligado.
+text.reload.text = Algumas opções só valem depois de reiniciar o jogo.\nAperte qualquer tecla para sair.
+text.noreload.text = Algumas opções só valem depois de reiniciar o jogo.\nAperte qualquer tecla para continuar.
+text.keys.text = Duas ações estão na mesma tecla.\nCada tecla deve ter uma ação só.\n\nAperte qualquer tecla para continuar.\nAperte ESC para voltar ao padrão.
+text.pad.text = Controle não encontrado.\nConfira se o controle está ligado.
 text.shaders.text = Nenhum shader encontrado na pasta external/shaders.
+text.config.text = A configuração da partida em rede não bate:\n%s
 text.disconnect.text = O jogador %d saiu.
 text.desync.text = Erro de sincronia na partida em rede.
 title.localcoord = 320, 240
