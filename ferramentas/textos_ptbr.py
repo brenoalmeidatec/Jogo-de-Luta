@@ -298,6 +298,36 @@ def vitoria():
     return "winquote.text = Venceu!\nwinquote.localcoord = 320, 240"
 
 
+def parabens():
+    """Tela de quem fecha o Arcade ([Win Screen]): o motor escreve "Congratulations!" na f-6x9 (sem acento)."""
+    return "\n".join([f"wintext.font = {_fonte(0, BRANCO)}", f"wintext.scale = {ESCALA}",
+                      "wintext.text = Parabéns!", "wintext.localcoord = 320, 240"])
+
+
+# [Warning Info]: avisos do motor (opções que pedem reiniciar, tecla repetida, controle não achado). Na Open Sans do
+# motor, que tem acento (a f-6x9 do padrão só tem ASCII). A quebra de linha vai como "\\n" escrito: uma quebra de
+# verdade cortava a chave no system.def (achado do revisor, 2026-11-24).
+AVISOS = [
+    ("title", "AVISO"),
+    ("text.reload", "Algumas opções só valem depois de reiniciar o jogo.\nAperte qualquer tecla para sair."),
+    ("text.noreload", "Algumas opções só valem depois de reiniciar o jogo.\nAperte qualquer tecla para continuar."),
+    ("text.keys", "Duas ações estão na mesma tecla.\nCada tecla deve ter uma ação só.\n\n"
+                  "Aperte qualquer tecla para continuar.\nAperte ESC para voltar ao padrão."),
+    ("text.pad", "Controle não encontrado.\nConfira se o controle está ligado."),
+    ("text.shaders", "Nenhum shader encontrado na pasta external/shaders."),
+    ("text.config", "A configuração da partida em rede não bate:\n%s"),
+    ("text.disconnect", "O jogador %d saiu."),
+    ("text.desync", "Erro de sincronia na partida em rede."),
+]
+
+
+def avisos():
+    linhas = [f"{chave}.text = " + texto.replace("\n", "\\n") for chave, texto in AVISOS]
+    return "\n".join([f"title.font = {_fonte(0, BRANCO)}", f"title.scale = {ESCALA}",
+                      f"text.font = {_fonte(1, BRANCO)}", f"text.scale = {ESCALA}"] + linhas
+                     + ["title.localcoord = 320, 240", "text.localcoord = 320, 240"])
+
+
 def secoes():
     """As seções traduzidas, prontas para o system.def (o .bat ainda injeta done.key nelas)."""
     return f"""[Victory Screen]
@@ -319,4 +349,12 @@ bgclearcolor = 20,12,16
 
 [Continue Screen]
 {continuar()}
+credits.text = CREDITOS: %02d
+credits.localcoord = 320, 240
+
+[Win Screen]
+{parabens()}
+
+[Warning Info]
+{avisos()}
 """

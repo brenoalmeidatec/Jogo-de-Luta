@@ -14,9 +14,12 @@ espera a cena acabar, e o robô nocauteia o P2. No round 2 o registro segue tiqu
 O RemapSprite não aparece no Lua do motor, então a cópia de teste ganha uma marca (var 57, só na cópia): vai a 1 a cada
 "Vira endiabrado" e a 0 a cada "Volta ao normal" que dispara. Com a forma ligada ela tem de terminar o tique em 1.
 
---video PASTA grava um .mp4 por lutador (tempo real, 30 quadros por segundo) e a última foto da luta.
+--video PASTA grava um .mp4 por lutador (tempo real, 30 quadros por segundo) e um .json com o segundo do vídeo em
+que o round 2 começa (round2, luta2, golpes2), para cortar o antes e o depois no mesmo ponto. Com vídeo, o lutador fica
+parado 150 tiques no round 2 antes dos golpes, para dar para ver o corpo.
 --antes REF usa os chars/ do commit REF do git (para o vídeo "antes" sair do jogo antigo, não do atual).
 """
+import json
 import os
 import re
 import shutil
@@ -89,7 +92,7 @@ do
       if v(37) == 1 and v(57) == 1 then visto.corpo = true end
       if aura() > 0 then visto.aura = true end
       if com(1, function() return ctrl() end) then visto.ctrl = true end
-      if fase == "r2" and t - tf >= 30 and com(1, function() return ctrl() and stateNo() == 0 end) then
+      if fase == "r2" and t - tf >= @ESPERA@ and com(1, function() return ctrl() and stateNo() == 0 end) then
         x0 = com(1, function() return posX() end); marca("anda")
       end
       if fase == "r2" and t - tf >= 400 then marca("soco") end
@@ -180,7 +183,8 @@ def rodar(lutador, video=None, antes=None):
         saida = tmp / "rounds.txt"
         debug = copia / "external/script/debug.lua"
         debug.write_text((motor / "external/script/debug.lua").read_text(encoding="utf-8") + "\n" +
-                         LUA.replace("@SAIDA@", saida.as_posix()).replace("@ACCEL@", "1" if video else "4"),
+                         LUA.replace("@SAIDA@", saida.as_posix()).replace("@ACCEL@", "1" if video else "4")
+                         .replace("@ESPERA@", "150" if video else "30"),
                          encoding="utf-8")
         if video:
             tp.INI_LINUX["VSync"] = "1"
@@ -193,21 +197,27 @@ def rodar(lutador, video=None, antes=None):
         proc = subprocess.Popen(["./Ikemen_GO_Linux", "-p1", lutador, "-p2", "hazaki", "-s", "stages/stage0-720.def",
                                  "-rounds", "2"], cwd=copia, env=amb, stdout=open(tmp / "motor_log.txt", "w"),
                                 stderr=subprocess.STDOUT, start_new_session=True)
-        grav = None
+        grav, marcas, t_ini = None, {}, time.time()
         if video:
             video.mkdir(parents=True, exist_ok=True)
             mp4 = video / f"{lutador}_{'antes' if antes else 'depois'}.mp4"
             grav = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "x11grab", "-framerate", "30",
                                      "-video_size", "1280x720", "-i", disp, "-t", "150", "-c:v", "libx264",
                                      "-pix_fmt", "yuv420p", "-crf", "23", str(mp4)], env=amb, stdin=subprocess.PIPE)
+            t_ini = time.time()
         limite = time.time() + 900
         while time.time() < limite and proc.poll() is None:
-            if saida.exists() and re.search(r"^FIM|ERRO NO ROBO", saida.read_text(encoding="utf-8"), re.M):
+            lido = saida.read_text(encoding="utf-8") if saida.exists() else ""
+            for marca, padrao in (("round2", "ROUND 2"), ("luta2", "FASE r2"), ("golpes2", "FASE anda")):
+                if marca not in marcas and padrao in lido:
+                    marcas[marca] = round(time.time() - t_ini, 2)  # segundos do vídeo (relógio de parede)
+            if re.search(r"^FIM|ERRO NO ROBO", lido, re.M):
                 break
-            time.sleep(1)
+            time.sleep(0.1)
         if grav:
             time.sleep(1)
             grav.communicate(b"q", timeout=30)
+            mp4.with_suffix(".json").write_text(json.dumps(marcas), encoding="utf-8")  # onde o round 2 começa
         try:
             os.killpg(proc.pid, 9)
         except ProcessLookupError:

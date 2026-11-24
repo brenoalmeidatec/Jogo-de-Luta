@@ -58,6 +58,8 @@ loading.font = 3,0,-1
 loading.offset = 1248,700
 loading.text = CARREGANDO...
 loading.localcoord = 1280,720
+loading.wait.text = CARREGANDO...
+loading.wait.localcoord = 320, 240
 footer.title.font = -1
 footer.title.localcoord = 1280,720
 footer.info.font = -1          ; o "F1: INFO" saiu: em escala 0,5 a letra ficava fina, fora da grade de 4x
@@ -364,6 +366,9 @@ p1.name.font = 1,0,0
 p1.name.offset = 292,518
 p2.name.font = 1,0,0
 p2.name.offset = 988,518
+; aviso do motor quando o carregamento demora (meta 1.0: nenhum texto em ingles; fonte do motor, so ASCII)
+loading.wait.text = CARREGANDO...
+loading.wait.localcoord = 320, 240
 
 [VersusBGdef]
 bgclearcolor = 20,12,16
@@ -687,3 +692,28 @@ no.active.offset = 90,64
 no.active.scale = 1,1
 no.active.text = NÃO
 no.active.localcoord = 1280,720
+credits.text = CREDITOS: %02d
+credits.localcoord = 320, 240
+
+[Win Screen]
+wintext.font = Open_Sans.def, 0, 0, 255, 255, 255, 255, -1
+wintext.scale = 0.36, 0.36
+wintext.text = Parabéns!
+wintext.localcoord = 320, 240
+
+[Warning Info]
+title.font = Open_Sans.def, 0, 0, 255, 255, 255, 255, -1
+title.scale = 0.36, 0.36
+text.font = Open_Sans.def, 0, 1, 255, 255, 255, 255, -1
+text.scale = 0.36, 0.36
+title.text = AVISO
+text.reload.text = Algumas opções só valem depois de reiniciar o jogo.\nAperte qualquer tecla para sair.
+text.noreload.text = Algumas opções só valem depois de reiniciar o jogo.\nAperte qualquer tecla para continuar.
+text.keys.text = Duas ações estão na mesma tecla.\nCada tecla deve ter uma ação só.\n\nAperte qualquer tecla para continuar.\nAperte ESC para voltar ao padrão.
+text.pad.text = Controle não encontrado.\nConfira se o controle está ligado.
+text.shaders.text = Nenhum shader encontrado na pasta external/shaders.
+text.config.text = A configuração da partida em rede não bate:\n%s
+text.disconnect.text = O jogador %d saiu.
+text.desync.text = Erro de sincronia na partida em rede.
+title.localcoord = 320, 240
+text.localcoord = 320, 240

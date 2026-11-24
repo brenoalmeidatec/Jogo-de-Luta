@@ -187,7 +187,9 @@ ANIMS = {
     "parado": (0, "ginga 0/10 2/8 4/10 6/8", None),
     "agachado": (11, "agachado_d 0/10 1/8 2/10 3/8", None),
     "belisco": (20400, "x_agd 0/2 1/3 2/2 3/4A 4/4 0/3", (32, -72, 58, -48)),
-    "mordida": (20410, "y_agd 0/2 1/3 2/2 3/5A 4/6 5/4 0/3", (-6, -142, 28, -108)),
+    # caixa desce até o alto da cabeça de quem está em pé (~-104) e vai até a garra: antes (-6, -142, 28, -108) ficava
+    # 4 unidades acima da cabeça e o golpe nunca acertava em pé (dano 0 no robô); antiaérea continua pegando no ar
+    "mordida": (20410, "y_agd 0/2 1/3 2/2 3/5A 4/6 5/4 0/3", (-6, -150, 40, -84)),
     "secador_chao": (20430, "a_agd 0/2 1/4 2/2 3/4A 4/5 0/3", (40, -82, 64, -56)),
     "varrida": (20440, "b_agd 0/2 1/4 2/4 3/2 4/5A 5/6 6/5 0/3", (26, -84, 66, -54)),
     "defesa": (150, "defesa 0/3 1/3 2/4 3/4 4/3 5/3", None),
