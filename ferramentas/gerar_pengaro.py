@@ -2062,7 +2062,7 @@ def acoes_folhas(Q):
     # (no arcade o punho do soco agachado fica 10 px mais alto: y de -66 a -55; o alcance é o mesmo)
     sequencia(400, "baixo_soco", 4, 3, 7, (15, -66, 54, -52) if arcade else (15, -56, 54, -42), quadro_ativo=4,
               area=BAIXO)
-    sequencia(410, "cabecada", 6, 5, 18, (5, -122, 42, -60), area=BAIXO)
+    sequencia(410, "cabecada", 6, 5, 18, (7, -73, 40, -37), area=BAIXO)  # cabeçada agachada (#32): caixa na testa abaixada
     if arcade:
         # rasteirinha arcade: o desenho 3 segura o contato (o 4 troca a pose do braço, veja DESENHO_PROIBIDO); o pé
         # passa 8 px mais alto (y de -24 a -14). Mesmos 7 elementos e tempos de sequencia(430, ..., 5, 3, 10).
@@ -2418,7 +2418,7 @@ def montar_air(s, faiscas, hazaki=False, arte_despertada=None):
     chute(245, 5, 3, 16, (10, -76, 50, -50))
     Q(260, [("chute0", 12), ("chute1", 1, (15, -96, 75, -60)), ("chute2", 3, (15, -96, 75, -60)), ("chute3", 20)])
     Q(400, [("agacha1", 4), ("baixo_soco", 3, (15, -56, 54, -42)), ("agacha1", 7)], BAIXO)
-    Q(410, [("baixo_cima0", 6), ("baixo_cima1", 5, (5, -122, 42, -60)), ("agacha0", 18)], BAIXO)
+    Q(410, [("baixo_cima0", 6), ("baixo_cima1", 5, (7, -73, 40, -37)), ("agacha0", 18)], BAIXO)
     Q(430, [("rasteira0", 5), ("rasteira1", 3, (12, -18, 62, -4)), ("rasteira3", 10)], BAIXO)
     Q(440, [("rasteira0", 10), ("rasteira1", 1, (12, -18, 78, -2)), ("rasteira2", 3, (12, -18, 78, -2)), ("rasteira3", 22)], BAIXO)
     Q(600, [("pulo_topo", 5), ("ar_soco", 8, (8, -86, 50, -62)), ("pulo_topo", -1)], NO_AR)

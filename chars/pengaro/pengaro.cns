@@ -2458,24 +2458,10 @@
 49095,5 = 987,0
 49095,6 = 988,0
 49096,0 = 805,0
-49097,0 = 872,0
-49097,1 = 873,0
-49097,2 = 873,0
-49097,3 = 875,0
-49097,4 = 876,0
 49098,0 = 806,0
 49098,1 = 807,0
 49098,2 = 808,0
 49098,3 = 809,0
-49099,0 = 878,0
-49099,1 = 879,0
-49099,2 = 881,0
-49099,3 = 881,0
-49099,4 = 882,0
-49099,5 = 882,0
-49099,6 = 882,0
-49099,7 = 883,0
-49099,8 = 884,0
 49100,0 = 806,0
 49100,1 = 807,0
 49100,2 = 808,0
@@ -2673,6 +2659,23 @@
 49153,7 = 845,0
 49153,8 = 845,0
 49153,9 = 845,0
+49099,0 = 878,0
+49099,1 = 879,0
+49099,2 = 881,0
+49099,3 = 881,0
+49099,4 = 882,0
+49099,5 = 882,0
+49099,6 = 883,0
+49099,7 = 883,0
+49099,8 = 883,0
+49099,9 = 884,0
+49099,10 = 884,0
+49099,11 = 884,0
+49097,0 = 872,0
+49097,1 = 873,0
+49097,2 = 873,0
+49097,3 = 875,0
+49097,4 = 876,0
 
 [Quotes]
 victory1 = "F-f-foi de letra, filho da puta."
@@ -14886,7 +14889,7 @@ map = "au_pengaro_c"
 value = 1
 ignorehitpause = 1
 
-; >>> aura_no_corpo.py: a aura segue o corpo (issue #51). Tabelas medidas nos desenhos do .air: 202 + 81 valores, 1722 trechos. Pivô nas costas em 17, -76. Não edite: rode python3 ferramentas/aura_no_corpo.py
+; >>> aura_no_corpo.py: a aura segue o corpo (issue #51). Tabelas medidas nos desenhos do .air: 204 + 81 valores, 1714 trechos. Pivô nas costas em 17, -76. Não edite: rode python3 ferramentas/aura_no_corpo.py
 [State -4, Aura pengaro no corpo: costas de quem está em pé]
 type = MapSet
 trigger1 = 1
@@ -14904,7 +14907,6 @@ ignorehitpause = 1
 [State -4, Aura pengaro no corpo: costas -16 -24]
 type = MapSet
 trigger1 = Anim = 410 && AnimElemNo(0) = [4, 6]
-trigger2 = Anim = 10410 && AnimElemNo(0) = [3, 5]
 map = "au_pengaro_p"
 value = 6712
 ignorehitpause = 1
@@ -14948,10 +14950,9 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = Anim = 303 && AnimElemNo(0) = [6, 8]
 trigger2 = Anim = 347 && AnimElemNo(0) = [6, 8]
-trigger3 = Anim = 410 && AnimElemNo(0) = [7, 9]
+trigger3 = Anim = 410 && AnimElemNo(0) = [7, 10]
 trigger4 = Anim = 3412 && AnimElemNo(0) = [5, 7]
 trigger5 = Anim = 3430 && AnimElemNo(0) = [6, 8]
-trigger6 = Anim = 10410 && AnimElemNo(0) = 6
 map = "au_pengaro_p"
 value = 7223
 ignorehitpause = 1
@@ -15006,7 +15007,6 @@ trigger2 = Anim = 347 && AnimElemNo(0) = [1, 4]
 trigger3 = Anim = 410 && AnimElemNo(0) = [2, 3]
 trigger4 = Anim = 3412 && AnimElemNo(0) = [1, 3]
 trigger5 = Anim = 3430 && AnimElemNo(0) = [1, 4]
-trigger6 = Anim = 10410 && AnimElemNo(0) = 2
 map = "au_pengaro_p"
 value = 7354
 ignorehitpause = 1
@@ -15810,11 +15810,9 @@ trigger1 = Anim = 40
 trigger2 = Anim = 303 && AnimElemNo(0) = 9
 trigger3 = Anim = 347 && AnimElemNo(0) = 9
 trigger4 = Anim = 410 && AnimElemNo(0) = 1
-trigger5 = Anim = 410 && AnimElemNo(0) = 10
+trigger5 = Anim = 410 && AnimElemNo(0) = [11, 13]
 trigger6 = Anim = 3412 && AnimElemNo(0) = 8
 trigger7 = Anim = 3430 && AnimElemNo(0) = 9
-trigger8 = Anim = 10410 && AnimElemNo(0) = 1
-trigger9 = Anim = 10410 && AnimElemNo(0) = 7
 map = "au_pengaro_p"
 value = 8378
 ignorehitpause = 1
@@ -16145,10 +16143,9 @@ ignorehitpause = 1
 type = MapSet
 trigger1 = Anim = 303 && AnimElemNo(0) = 10
 trigger2 = Anim = 347 && AnimElemNo(0) = 10
-trigger3 = Anim = 410 && AnimElemNo(0) = 11
+trigger3 = Anim = 410 && AnimElemNo(0) = [14, 16]
 trigger4 = Anim = 3412 && AnimElemNo(0) = 9
 trigger5 = Anim = 3430 && AnimElemNo(0) = 10
-trigger6 = Anim = 10410 && AnimElemNo(0) = 8
 map = "au_pengaro_p"
 value = 9400
 ignorehitpause = 1
@@ -16224,6 +16221,13 @@ map = "au_pengaro_p"
 value = 9529
 ignorehitpause = 1
 
+[State -4, Aura pengaro no corpo: costas -16 +22]
+type = MapSet
+trigger1 = Anim = 10410 && AnimElemNo(0) = [1, 2]
+map = "au_pengaro_p"
+value = 9656
+ignorehitpause = 1
+
 [State -4, Aura pengaro no corpo: costas -14 +22]
 type = MapSet
 trigger1 = Anim = 6
@@ -16236,6 +16240,13 @@ trigger7 = Anim = 841 && AnimElemNo(0) = 5
 trigger8 = Anim = 2000 && AnimElemNo(0) = 5
 map = "au_pengaro_p"
 value = 9657
+ignorehitpause = 1
+
+[State -4, Aura pengaro no corpo: costas -12 +22]
+type = MapSet
+trigger1 = Anim = 10410 && AnimElemNo(0) = [3, 13]
+map = "au_pengaro_p"
+value = 9658
 ignorehitpause = 1
 
 [State -4, Aura pengaro no corpo: costas -22 +24]
@@ -17597,7 +17608,7 @@ trigger53 = Anim = 347 && AnimElemNo(0) = 10
 trigger54 = Anim = 348 && AnimElemNo(0) = 1
 trigger55 = Anim = 348 && AnimElemNo(0) = 6
 trigger56 = Anim = 349 && AnimElemNo(0) = 8
-trigger57 = Anim = 410 && AnimElemNo(0) = 11
+trigger57 = Anim = 410 && AnimElemNo(0) = [14, 16]
 trigger58 = Anim = 440 && AnimElemNo(0) = [6, 7]
 trigger59 = Anim = 600
 trigger60 = Anim = 700 && AnimElemNo(0) = 4
@@ -17676,28 +17687,29 @@ trigger132 = Anim = 10216 && AnimElemNo(0) = [2, 3]
 trigger133 = Anim = 10240 && AnimElemNo(0) = 7
 trigger134 = Anim = 10246 && AnimElemNo(0) = 8
 trigger135 = Anim = 10260 && AnimElemNo(0) = 6
-trigger136 = Anim = 10410 && AnimElemNo(0) = 8
-trigger137 = Anim = 10440 && AnimElemNo(0) = [6, 7]
-trigger138 = Anim = 10600
-trigger139 = Anim = 10830 && AnimElemNo(0) = 5
-trigger140 = Anim = 10831 && AnimElemNo(0) = 3
-trigger141 = Anim = 10831 && AnimElemNo(0) = 7
-trigger142 = Anim = 11000 && AnimElemNo(0) = [3, 4]
-trigger143 = Anim = 11001 && AnimElemNo(0) = [3, 4]
-trigger144 = Anim = 11100 && AnimElemNo(0) = 1
-trigger145 = Anim = 11100 && AnimElemNo(0) = [5, 6]
-trigger146 = Anim = 11101 && AnimElemNo(0) = 1
-trigger147 = Anim = 11101 && AnimElemNo(0) = [5, 6]
-trigger148 = Anim = 11200 && AnimElemNo(0) = 1
-trigger149 = Anim = 11200 && AnimElemNo(0) = 5
-trigger150 = Anim = 11201 && AnimElemNo(0) = 1
-trigger151 = Anim = 11201 && AnimElemNo(0) = 5
-trigger152 = Anim = 11300 && AnimElemNo(0) = 7
-trigger153 = Anim = 11301 && AnimElemNo(0) = 7
-trigger154 = Anim = 11400 && AnimElemNo(0) = [2, 3]
-trigger155 = Anim = 11401 && AnimElemNo(0) = [2, 3]
-trigger156 = Anim = 13100 && AnimElemNo(0) = 1
-trigger157 = Anim = 13200 && AnimElemNo(0) = [2, 3]
+trigger136 = Anim = 10410 && AnimElemNo(0) = [1, 2]
+trigger137 = Anim = 10410 && AnimElemNo(0) = [3, 13]
+trigger138 = Anim = 10440 && AnimElemNo(0) = [6, 7]
+trigger139 = Anim = 10600
+trigger140 = Anim = 10830 && AnimElemNo(0) = 5
+trigger141 = Anim = 10831 && AnimElemNo(0) = 3
+trigger142 = Anim = 10831 && AnimElemNo(0) = 7
+trigger143 = Anim = 11000 && AnimElemNo(0) = [3, 4]
+trigger144 = Anim = 11001 && AnimElemNo(0) = [3, 4]
+trigger145 = Anim = 11100 && AnimElemNo(0) = 1
+trigger146 = Anim = 11100 && AnimElemNo(0) = [5, 6]
+trigger147 = Anim = 11101 && AnimElemNo(0) = 1
+trigger148 = Anim = 11101 && AnimElemNo(0) = [5, 6]
+trigger149 = Anim = 11200 && AnimElemNo(0) = 1
+trigger150 = Anim = 11200 && AnimElemNo(0) = 5
+trigger151 = Anim = 11201 && AnimElemNo(0) = 1
+trigger152 = Anim = 11201 && AnimElemNo(0) = 5
+trigger153 = Anim = 11300 && AnimElemNo(0) = 7
+trigger154 = Anim = 11301 && AnimElemNo(0) = 7
+trigger155 = Anim = 11400 && AnimElemNo(0) = [2, 3]
+trigger156 = Anim = 11401 && AnimElemNo(0) = [2, 3]
+trigger157 = Anim = 13100 && AnimElemNo(0) = 1
+trigger158 = Anim = 13200 && AnimElemNo(0) = [2, 3]
 map = "au_pengaro_q"
 value = 7912
 ignorehitpause = 1
@@ -17749,7 +17761,7 @@ trigger32 = Anim = 344 && AnimElemNo(0) = [4, 6]
 trigger33 = Anim = 347 && AnimElemNo(0) = 9
 trigger34 = Anim = 348 && AnimElemNo(0) = [7, 8]
 trigger35 = Anim = 410 && AnimElemNo(0) = 1
-trigger36 = Anim = 410 && AnimElemNo(0) = 10
+trigger36 = Anim = 410 && AnimElemNo(0) = [11, 13]
 trigger37 = Anim = 700 && AnimElemNo(0) = [2, 3]
 trigger38 = Anim = 700 && AnimElemNo(0) = 6
 trigger39 = Anim = 705 && AnimElemNo(0) = 3
@@ -17802,17 +17814,15 @@ trigger85 = Anim = 10216 && AnimElemNo(0) = [4, 5]
 trigger86 = Anim = 10230 && AnimElemNo(0) = [6, 8]
 trigger87 = Anim = 10231 && AnimElemNo(0) = 1
 trigger88 = Anim = 10245 && AnimElemNo(0) = 1
-trigger89 = Anim = 10410 && AnimElemNo(0) = 1
-trigger90 = Anim = 10410 && AnimElemNo(0) = 7
-trigger91 = Anim = 10830 && AnimElemNo(0) = [1, 2]
-trigger92 = Anim = 10831 && AnimElemNo(0) = 1
-trigger93 = Anim = 10831 && AnimElemNo(0) = [8, 9]
-trigger94 = Anim = 10831 && AnimElemNo(0) = [12, 14]
-trigger95 = Anim = 11100 && AnimElemNo(0) = [7, 8]
-trigger96 = Anim = 11101 && AnimElemNo(0) = [7, 8]
-trigger97 = Anim = 11400 && AnimElemNo(0) = [4, 6]
-trigger98 = Anim = 11401 && AnimElemNo(0) = [4, 6]
-trigger99 = Anim = 13200 && AnimElemNo(0) = [4, 6]
+trigger89 = Anim = 10830 && AnimElemNo(0) = [1, 2]
+trigger90 = Anim = 10831 && AnimElemNo(0) = 1
+trigger91 = Anim = 10831 && AnimElemNo(0) = [8, 9]
+trigger92 = Anim = 10831 && AnimElemNo(0) = [12, 14]
+trigger93 = Anim = 11100 && AnimElemNo(0) = [7, 8]
+trigger94 = Anim = 11101 && AnimElemNo(0) = [7, 8]
+trigger95 = Anim = 11400 && AnimElemNo(0) = [4, 6]
+trigger96 = Anim = 11401 && AnimElemNo(0) = [4, 6]
+trigger97 = Anim = 13200 && AnimElemNo(0) = [4, 6]
 map = "au_pengaro_q"
 value = 7920
 ignorehitpause = 1
@@ -17883,10 +17893,9 @@ trigger1 = Anim = 20 && AnimElemNo(0) = [4, 6]
 trigger2 = Anim = 21 && AnimElemNo(0) = [15, 17]
 trigger3 = Anim = 303 && AnimElemNo(0) = [6, 8]
 trigger4 = Anim = 347 && AnimElemNo(0) = [6, 8]
-trigger5 = Anim = 410 && AnimElemNo(0) = [7, 9]
+trigger5 = Anim = 410 && AnimElemNo(0) = [7, 10]
 trigger6 = Anim = 3412 && AnimElemNo(0) = [5, 7]
 trigger7 = Anim = 3430 && AnimElemNo(0) = [6, 8]
-trigger8 = Anim = 10410 && AnimElemNo(0) = 6
 map = "au_pengaro_q"
 value = 8416
 ignorehitpause = 1
@@ -17907,9 +17916,8 @@ trigger11 = Anim = 3430 && AnimElemNo(0) = [1, 4]
 trigger12 = Anim = 3435 && AnimElemNo(0) = 1
 trigger13 = Anim = 3435 && AnimElemNo(0) = 8
 trigger14 = Anim = 5120 && AnimElemNo(0) = 2
-trigger15 = Anim = 10410 && AnimElemNo(0) = 2
-trigger16 = Anim = 10440 && AnimElemNo(0) = 1
-trigger17 = Anim = 10440 && AnimElemNo(0) = 8
+trigger15 = Anim = 10440 && AnimElemNo(0) = 1
+trigger16 = Anim = 10440 && AnimElemNo(0) = 8
 map = "au_pengaro_q"
 value = 8424
 ignorehitpause = 1
@@ -17966,7 +17974,6 @@ ignorehitpause = 1
 [State -4, Aura pengaro no corpo: recolhe 0 de 7, centro -20, tronco +8 graus]
 type = MapSet
 trigger1 = Anim = 410 && AnimElemNo(0) = [4, 6]
-trigger2 = Anim = 10410 && AnimElemNo(0) = [3, 5]
 map = "au_pengaro_q"
 value = 8920
 ignorehitpause = 1

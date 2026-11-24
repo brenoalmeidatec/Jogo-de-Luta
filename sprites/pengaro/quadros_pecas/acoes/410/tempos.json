@@ -27,13 +27,13 @@
   },
   {
    "desenho": 4,
-   "ticks": 2,
+   "ticks": 3,
    "caixa": false,
    "de": "cabecada/05|foco"
   },
   {
    "desenho": 5,
-   "ticks": 2,
+   "ticks": 4,
    "caixa": false,
    "de": "cabecada/05|foco"
   },
@@ -41,17 +41,35 @@
    "desenho": 6,
    "ticks": 3,
    "caixa": false,
-   "de": "cabecada/05|foco"
+   "de": "cabecada/06|foco"
   },
   {
    "desenho": 7,
-   "ticks": 9,
+   "ticks": 3,
    "caixa": false,
    "de": "cabecada/06|foco"
   },
   {
    "desenho": 8,
-   "ticks": 9,
+   "ticks": 3,
+   "caixa": false,
+   "de": "cabecada/06|foco"
+  },
+  {
+   "desenho": 9,
+   "ticks": 3,
+   "caixa": false,
+   "de": "cabecada/07|foco"
+  },
+  {
+   "desenho": 10,
+   "ticks": 3,
+   "caixa": false,
+   "de": "cabecada/07|foco"
+  },
+  {
+   "desenho": 11,
+   "ticks": 3,
    "caixa": false,
    "de": "cabecada/07|foco"
   }

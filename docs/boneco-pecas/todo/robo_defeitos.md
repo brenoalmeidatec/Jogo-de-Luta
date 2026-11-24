@@ -70,7 +70,7 @@
 | 348 | 7 (7 especiais) | PASS |
 | 349 | 7 (7 especiais) | PASS |
 | 400 | 5 (5 especiais) | PASS |
-| 410 | 9 (2 especiais) | PASS |
+| 410 | 12 (7 especiais) | PASS |
 | 430 | 5 (5 especiais) | PASS |
 | 440 | 7 (7 especiais) | PASS |
 | 600 | 4 (2 especiais) | PASS |

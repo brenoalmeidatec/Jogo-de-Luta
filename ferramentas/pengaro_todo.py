@@ -72,21 +72,96 @@ AJUSTE = {
 
 # Golpes refeitos inteiros à mão, com o corpo firme (os desenhos de hoje não servem de molde): pose por osso; as pernas
 # plantam no chão por IK nos pés do parado.
-CABECADA = {
-    # antecipação: puxa o tronco para trás, abaixa um pouco
-    "cabecada/02": {"quadril": {"dx": -6, "dy": 6}, "tronco": {"ang": -8}, "cabeca": {"ang": -6, "var": "foco"},
-                    "braco_frente": {"ang": -15, "var": "punho"}, "braco_tras": {"ang": -10}},
-    "cabecada/03": {"quadril": {"dx": -10, "dy": 10}, "tronco": {"ang": -12}, "cabeca": {"ang": -10, "var": "foco"},
-                    "braco_frente": {"ang": -5, "var": "punho"}, "braco_tras": {"ang": -15}},
-    # bate: o corpo vai para a frente e a testa é o que chega primeiro; os braços ficam para trás
-    "cabecada/04": {"quadril": {"dx": 16, "dy": 4}, "tronco": {"ang": 10}, "cabeca": {"ang": 12, "dx": 4, "var": "esforco"},
-                    "braco_frente": {"ang": 30, "var": "punho"}, "braco_tras": {"ang": 12}},
-    "cabecada/05": {"quadril": {"dx": 16, "dy": 4}, "tronco": {"ang": 10}, "cabeca": {"ang": 12, "dx": 4, "var": "esforco"},
-                    "braco_frente": {"ang": 30, "var": "punho"}, "braco_tras": {"ang": 12}},
-    # volta
-    "cabecada/06": {"quadril": {"dx": 6, "dy": 2}, "tronco": {"ang": 5}, "cabeca": {"ang": 4, "var": "foco"},
-                    "braco_frente": {"ang": 10, "var": "punho"}, "braco_tras": {"ang": 0}},
+# Golpe agachado não levanta (pedido do Breno, #32, 22/11; ferramentas/regua_pernas.py). O agachado do Pengaró é
+# quadro especial (o desenho de hoje com o rosto do kit): o kit não dobra tão fundo. A cabeçada agachada sai desse
+# mesmo desenho com o tronco dobrado em volta da cintura (dobrar(): a rotação cresce suave numa faixa, sem linha de
+# corte); as pernas não mexem. Valor: (desenho de base, graus para a frente, px HD para a frente, expressão).
+AGACHADO = "agachado/04"
+DOBRA = {
+    "cabecada/01": (AGACHADO, 0, 0, "foco"),
+    # antecipação: o tronco vai para trás e o queixo desce olhando o alvo
+    "cabecada/02": (AGACHADO, -10, -6, "foco"),
+    # bate: o tronco dobra para a frente e a testa chega primeiro
+    "cabecada/04": (AGACHADO, 20, 16, "esforco"),
+    "cabecada/05": (AGACHADO, 17, 13, "esforco"),
+    # volta para o agachado
+    "cabecada/06": (AGACHADO, 8, 6, "foco"),
+    "cabecada/07": (AGACHADO, 0, 0, "foco"),
+    # soco agachado: o último quadro de hoje levantava meio corpo; volta para o agachado
+    "baixo_soco/07": (AGACHADO, 0, 0, "foco"),
 }
+# soco agachado: o desenho de hoje agacha mais raso que o agachado (o corpo subia 48% do caminho para o em pé); as
+# coxas encurtam (dobram mais) entre a cintura e o tornozelo, o pé fica onde está
+# e o desenho dele é uns 4% maior que o do agachado (régua da cabeça, reguas.escala_cabeca): volta ao tamanho dele
+MAIS_FUNDO = {q: (0.88, 0.96) for q in ("baixo_soco/03", "baixo_soco/04", "baixo_soco/06")}
+# golpes agachados: o fim do golpe volta para o agachado, não para o parado em pé
+AGACHADAS = {400, 410, 430, 440}
+_POSES = {}
+
+
+def agachado():
+    if not _POSES:
+        _POSES.update(todas_poses())
+    return {k: dict(v) for k, v in _POSES[AGACHADO].items() if not k.startswith("_")}
+
+
+def volta_dobrada(quadros, passo=3):
+    """Depois do contato, cada quadro dobrado segurado 6 tiques ou mais vira quadros do meio de `passo` tiques, com o
+    tronco indo do ângulo do quadro anterior ao dele (quadros do meio na volta, regra do Alisson 17/11).
+    Devolve (quadros, {índice: (graus, dx)})."""
+    ultimo = max((i for i, e in enumerate(quadros) if e[2]), default=None)
+    if ultimo is None:
+        return quadros, {}
+    novos, giro, ant = [], {}, None
+    for i, (pose, t, cx, ch) in enumerate(quadros):
+        q = ch.split("|")[0]
+        d = DOBRA.get(q)
+        if d and ant and i > ultimo and t >= 2 * passo and (d[1], d[2]) != ant:
+            partes = t // passo
+            for k in range(partes):
+                f = (k + 1) / partes
+                giro[len(novos)] = (ant[0] + (d[1] - ant[0]) * f, ant[1] + (d[2] - ant[1]) * f)
+                novos.append((pose, passo if k < partes - 1 else t - passo * (partes - 1), cx, ch))
+        else:
+            novos.append((pose, t, cx, ch))
+        if d:
+            ant = (d[1], d[2])
+    return novos, giro
+
+
+def mais_fundo(a, fator):
+    """Agacha mais fundo: a faixa entre a cintura (55% da altura, de cima) e o tornozelo (88%) encolhe na altura por
+    `fator`; o que está acima desce junto e o pé não mexe. Vizinho mais próximo (pixel art)."""
+    al = a[..., 3] > 0
+    ys = np.nonzero(al.any(1))[0]
+    y0, y1 = ys.min(), ys.max()
+    c = y0 + 0.55 * (y1 - y0)
+    t = y0 + 0.88 * (y1 - y0)
+    c2 = t - fator * (t - c)
+    y = np.arange(a.shape[0], dtype=np.float32)
+    src = np.where(y < c2, y + (c - c2), np.where(y <= t, t - (t - y) / fator, y))
+    return a[np.clip(np.round(src).astype(int), 0, a.shape[0] - 1)]
+
+
+def dobrar(a, ang, dx=0, faixa=40):
+    """O tronco do desenho dobra em volta da cintura (55% da altura, de cima): acima dela gira `ang` graus (+ = para a
+    frente) e anda `dx`, crescendo suave na `faixa` (px) logo acima da cintura; abaixo nada muda. Vizinho mais próximo."""
+    al = a[..., 3] > 0
+    ys = np.nonzero(al.any(1))[0]
+    cintura = int(ys.min() + 0.55 * (ys.max() - ys.min()))
+    linha = np.nonzero(al[cintura])[0]
+    cx = (linha.min() + linha.max()) / 2
+    h, w = al.shape
+    Y, X = np.mgrid[0:h, 0:w].astype(np.float32)
+    peso = np.clip((cintura - Y) / faixa, 0, 1)
+    th = np.radians(-ang) * peso
+    xs = X - dx * peso
+    c, s_ = np.cos(th), np.sin(th)
+    mx = (cx + (xs - cx) * c - (Y - cintura) * s_).astype(np.float32)
+    my = (cintura + (xs - cx) * s_ + (Y - cintura) * c).astype(np.float32)
+    return cv2.remap(np.ascontiguousarray(a), mx, my, cv2.INTER_NEAREST, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+
+
 # Soco natural (regra do Alisson, 17/11) com a receita do estudo de anatomia (docs/estudo-anatomia-golpes.md, jab e
 # direto): o quadril vai para a frente e o tronco inclina para o soco, o pé da frente dá um passo, o OMBRO anda para a
 # frente (o alcance vem dele, nunca de esticar a peça), o braço da frente (lado longe) sai de trás do peito no contato
@@ -114,7 +189,7 @@ SOCO = {
     "soco/07": {"quadril": {"dx": 5, "dy": 2}, "tronco": {"ang": 1}, "cabeca": {"ang": 0, "var": "foco"},
                 "braco_frente": {"ang": -8, "var": "punho"}, "braco_tras": {"ang": -2}, "_pes": (2, 12)},
 }
-FEITAS = {**CABECADA, **SOCO}
+FEITAS = {**SOCO}
 
 # Chute com o corpo inteiro (regra 7.4): a perna do chute continua a do encaixe, mas o corpo acompanha. O quadril
 # entra na direção do chute e sobe na ponta do pé de apoio, o tronco inclina para trás (contrapeso), a cabeça fica
@@ -519,15 +594,18 @@ def cmd_animar(so=None):
                 continue
             if not plantar(kit, pp[c], c.split("|")[0]):
                 fixos.add(c)  # pose-chave que o kit não monta sem defeito vira quadro especial
+        fixos |= {c for c, _, _ in chaves if c.split("|")[0] in DOBRA}
         bate = next((k for k, (_, _, bt) in enumerate(chaves) if bt), None)
         laco = n in LACOS
-        quadros = vida.animar(pp, elems, bate=bate, laco=laco, guarda=None if laco else {}, fixos=fixos)
+        volta = agachado() if n in AGACHADAS else {}
+        quadros = vida.animar(pp, elems, bate=bate, laco=laco, guarda=None if laco else volta, fixos=fixos)
         if n in ANDAR:
             fixos = set()
             quadros = andar(ANDAR[n], ANDAR_JOGO[n][1], ANDAR_JOGO[n][0], ANDAR_JOGO[n][2])
         if n in (0, 5):
             quadros = vida.respirar(quadros)
         quadros = vida.atrasar(quadros, laco=laco)
+        quadros, giro = volta_dobrada(quadros)
         for pasta in (SAIDA / str(n), SAIDA_1X / str(n)):
             shutil.rmtree(pasta, ignore_errors=True)
             pasta.mkdir(parents=True)
@@ -537,8 +615,16 @@ def cmd_animar(so=None):
             q, ex = ch.split("|")
             if q == "anda":
                 q = "ginga/00"  # andar feito por código: o robô compara com o parado (pés no chão)
-            if ch in fixos:
+            if q in DOBRA:
+                base, ang, dx, ex_ = DOBRA[q]
+                ang, dx = giro.get(i, (ang, dx))
+                out = dobrar(especial(base, ex_), ang, dx)
+                originais.setdefault(q, b.abrir(base))
+            elif ch in fixos:
                 out = especial(q, None if ex == "None" else ex)
+                if q in MAIS_FUNDO:
+                    from firme import na_tela
+                    out = na_tela(mais_fundo(out, MAIS_FUNDO[q][0]), MAIS_FUNDO[q][1])
             else:
                 out = pf.desenhar(kit, pose)
             originais.setdefault(q, b.abrir(q))

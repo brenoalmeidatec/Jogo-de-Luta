@@ -31,17 +31,24 @@ Precisa de `scikit-image` (`pip install scikit-image`). Sai com código 1 se rep
 |---|---|---|---|---|---|
 | Gutto base | perna da frente esticada e agachada novas (saem do calção, grossura 107% e 86% do parado); 9 chutes refeitos: chute alto, quina, coice, chute forte, super chutes, super beijinhos, chute alto e baixo agachados, rasteira | 0 | 0 de 193 | 186/186 | 24/11 |
 | Gutto despertado (Garanhão) | chifrada que sobe (10410) fica de quatro, só tronco, cabeça e patas sobem; golpes agachados do kit voltam para o agachado, não para o em pé (`AGACHADOS` no kit, `firme.py`) | 0 | 0 de 242 | 186/186 | 24/11 |
+| Pengaró base | cabeçada agachada (410) saía em pé com a perna esticada: agora é o agachado com o tronco dobrando na cintura (`dobrar()` no `pengaro_todo.py`), caixa de ataque baixada para a testa (20,-220,120,-110); soco agachado (400) mais fundo e no tamanho do agachado, e o último quadro volta agachado | 0 | 0 de 164 ações | 189/189 | 24/11 |
+| Pengaró despertado | cabeçada agachada (10410) feita do agachado dele com o tronco dobrando (`ferramentas/dobra_agachado.py`), quadros do meio na volta | 0 | — | 189/189 | 24/11 |
 
-Vídeo e tiras: `docs/boneco-pecas/gutto/pernas_antes_depois.mp4` e `.png`.
+Vídeos: `docs/boneco-pecas/gutto/pernas_antes_depois.mp4` (e `.png`) e `docs/boneco-pecas/todo/pernas_antes_depois.mp4`.
 
 ## Ferramentas que mudaram
 
 - `firme.py`: kit com `AGACHADOS = {...}` faz o golpe voltar para o primeiro quadro (agachado) em vez do parado; rodar
   só algumas animações não apaga mais as outras do `poses.json`.
+- `pengaro_todo.py`: `DOBRA` (quadro feito do agachado com o tronco dobrado), `MAIS_FUNDO` (agacha mais fundo e volta
+  ao tamanho do agachado), `AGACHADAS` (fim do golpe volta para o agachado), `volta_dobrada()` (quadros do meio).
+- `dobra_agachado.py`: o mesmo dobrar para arte própria sem kit (despertados); receitas em `RECEITAS`.
+- `gerar_pengaro.py`: caixa da 410 na testa abaixada.
 - `boneco_gutto.py`: variantes `esticada` (do 449, com o calção) e `agachada` (do 359) da coxa da frente; `GIRO_ESTICADA`.
 
 ## Falta
 
-Pengaró, CK, Hazak, Raiclaven e Gbzin (base e despertado), na régua de 24/11: golpe agachado 410 levanta em quase
-todos; 400/440 no CK e Gbzin; kits com grossura fora (Hazak, Pengaró, Raiclaven, Cliente). Depois: sobras do Pengaró
-(manchas na calça, ombro de trás, pé girado) e a regra no `docs/como-trabalhar.md`.
+CK, Hazak, Raiclaven e Gbzin (base e despertado), na régua de 24/11: golpe agachado 410 levanta em quase todos;
+400/440 no CK e Gbzin; kits com grossura fora (Hazak, Pengaró, Raiclaven, Cliente). Depois: sobras do Pengaró
+(manchas na calça, ombro de trás, pé girado; e o chute baixo 430 e a rasteira 440 dele são desenhados uns 25% maiores
+que o agachado, cabeça maior: pedem arte nova no mesmo agachado) e a regra no `docs/como-trabalhar.md`.
