@@ -60,6 +60,75 @@ def render(pose, sem=()):
         firme.K.CAMADAS = camadas
 
 
+# ---- mãos (revisão de 24/11: a mão que segura a gola estava fechada em soco e não lia como pegada). O kit só tem o
+# punho fechado; as mãos abertas vêm dos desenhos arcade antigos do Hazak: aberta para alcançar (agarrao_abraco/00)
+# e em garra para segurar a gola (agarrao_cutucao/00). Só a mão (o que passa da munhequeira) é trocada.
+MAOS_RECUO = {"aberta": 2, "garra": 4}  # a garra entra um pouco na munhequeira (sem vão no pulso)
+MAOS = {"aberta": ("agarrao_abraco/00", (620, 360, 760, 460)), "garra": ("agarrao_cutucao/00", (560, 390, 700, 480))}
+
+
+def _branco(img):
+    rgb = img[..., :3].astype(int)
+    return (img[..., 3] > 0) & (rgb.min(-1) > 175) & (rgb.max(-1) - rgb.min(-1) < 45)
+
+
+def _maior(m):
+    from scipy import ndimage as nd
+    lab, n = nd.label(m)
+    if not n:
+        return m
+    return lab == (np.argmax(nd.sum(m, lab, range(1, n + 1))) + 1)
+
+
+def _mao_velha(tipo):
+    arq, (x0, y0, x1, y1) = MAOS[tipo]
+    v = np.array(Image.open(SPR / f"quadros_arcade_hd/{arq}.png").convert("RGBA"))
+    b = np.zeros(v.shape[:2], bool)
+    b[y0:y1, x0:x1] = _branco(v)[y0:y1, x0:x1]
+    b = _maior(b)
+    ys, xs = np.nonzero(b)
+    bx, yc = int(xs.max()), (ys.min() + ys.max()) / 2
+    m = v[..., 3] > 0
+    m[:, :bx + 1] = False
+    m[:int(yc) - 50] = False
+    m[int(yc) + 50:] = False
+    rgb = v[..., :3].astype(int)  # sem resto de munhequeira (verde-água/cinza-azulado): só pele e contorno
+    m &= (rgb[..., 0] >= rgb[..., 1] - 5) & (rgb[..., 0] >= rgb[..., 2] - 15)
+    m = _maior(m)
+    ys, xs = np.nonzero(m)
+    x0 = int(xs.min())
+    pulso = ys[xs < x0 + 12]  # a mão encaixa no pulso: borda de trás dela na ponta da munhequeira nova
+    return v, m, x0 + MAOS_RECUO[tipo], (pulso.min() + pulso.max()) / 2
+
+
+def com_mao(img, pose, tipo):
+    """Troca o punho fechado do braço da frente (o que segura) pela mão `tipo` ('aberta' ou 'garra')."""
+    v, mv, bxv, ycv = _mao_velha(tipo)
+    sem = render(pose, sem=("braco_frente",))
+    mb = (img[..., 3] > 0) & ((sem[..., 3] == 0) | (np.abs(img.astype(int) - sem.astype(int)).sum(-1) > 0))
+    b = _maior(_branco(img) & mb)
+    ys, xs = np.nonzero(b)
+    bx, yc = int(xs.max()), (ys.min() + ys.max()) / 2
+    out = img.copy()
+    punho = mb.copy()
+    punho[:, :bx + 1] = False
+    out[punho] = sem[punho]
+    ys, xs = np.nonzero(mv)
+    cor = v[ys, xs].copy()
+    # mesmo tom de pele do antebraço (a garra vem de um desenho com o braço na sombra)
+    ante = mb.copy()
+    ante[:, bx - 40:] = False
+    ante[:, :bx - 90] = False
+    pele = img[ante][:, :3].astype(float)
+    pele = pele[pele[:, 0] > 120]
+    clara = cor[:, 0] > 120
+    if len(pele) and clara.any():
+        k = np.clip(pele.mean() / cor[clara, :3].astype(float).mean(), 1.0, 1.15)
+        cor[:, :3] = np.clip(cor[:, :3] * k, 0, 255).astype(np.uint8)
+    out[ys + int(round(yc - ycv)), xs + bx - bxv] = cor
+    return out
+
+
 def mascara_braco(pose):
     """Pixels do braço de perto na pose (a diferença entre o desenho com e sem ele)."""
     a, b = render(pose), render(pose, sem=("braco_tras", "antebraco_tras"))
@@ -101,11 +170,17 @@ def rajada(ang, rastros, alto=True, vento_x=0):
     base = dict(SOCO["alto" if alto else "baixo"])
     pose = dict(base, braco_tras={"var": "cruzado", "ang": ang})
     m0, out = mascara_braco(pose)
-    out = out.copy()
+    out = com_mao(out, pose, "garra")
     for a2 in rastros:
         m, img = mascara_braco(dict(base, braco_tras={"var": "cruzado", "ang": a2}))
         m = m & ~m0
         m[:, :PEITO_X] = False
+        # rastro em linhas (scanline, como o rastro dos anos 90) e esfumado perto do peito: sem placa cinza nem borda
+        # reta (revisão de 24/11)
+        yy, xx = np.mgrid[:m.shape[0], :m.shape[1]]
+        m &= (yy % 3 != 2)
+        perto = xx - PEITO_X
+        m &= (perto > 16) | ((perto > 4) & ((xx + yy) % 2 == 0))
         out[m, :3] = fantasma(img[m, :3])
         out[m, 3] = 255
     x, y = ponta(m0)
@@ -120,7 +195,8 @@ def rajada(ang, rastros, alto=True, vento_x=0):
 
 def quadros():
     """[(imagem, ticks, nome)] da ação 810 (139 ticks) e da 800 (12 ticks)."""
-    seg = render(SEGURA)
+    seg = com_mao(render(SEGURA), SEGURA, "garra")
+    alc = com_mao(render(ALCANCA), ALCANCA, "aberta")
     # ângulos do braço de perto: alto (rosto) de 0 a 6, baixo (estômago) de 10 a 16
     A = {"alto": (2, (8, 14)), "baixo": (13, (3, 8)), "alto2": (5, (12, 0)), "baixo2": (10, (16, 4))}
     def r(k, vento=0):
@@ -131,7 +207,7 @@ def quadros():
         return [(seg, 2, "segura"), (r(f1), 2, f"rajada {f1}"), (r(f2), 2, f"rajada {f2}"),
                 (r(dano, 16), 3, f"contato {dano}"), (r(dano), 2, f"contato {dano}"), (seg, 1, "segura"),
                 (r(f1), 2, f"rajada {f1}"), (r(f2), 3, f"rajada {f2}")]
-    seq = [(render(ALCANCA), 4, "alcança"), (seg, 12, "segura")]
+    seq = [(alc, 4, "alcança"), (seg, 12, "segura")]
     for dano, f1, f2 in (("alto", "baixo2", "alto2"), ("baixo", "alto2", "baixo2"), ("alto2", "baixo", "alto"),
                          ("baixo2", "alto", "baixo"), ("alto", "baixo2", "alto2")):
         seq += ciclo(dano, f1, f2)
@@ -147,7 +223,7 @@ def quadros():
             (bz.vento(sr[3], xr + 34, yr, alt=80, larg=56), 6, "soco reto"),
             (sr[3], 6, "segura o soco"), (sr[6], 6, "volta"), (sr[8], 6, "volta")]
     assert sum(t for _, t, _ in seq) == 139, sum(t for _, t, _ in seq)
-    pega = [(render(ALCANCA), 3, "alcança"), (seg, 9, "segura")]
+    pega = [(alc, 3, "alcança"), (seg, 9, "segura")]
     return seq, pega
 
 

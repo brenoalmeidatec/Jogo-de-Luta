@@ -82,7 +82,51 @@ def borrao(estendido, guarda, ombro_x, faixa_y, punho=42, fantasmas=None, tirar_
     return out
 
 
-def vento(img, x, y, alt=46, larg=30):
+def borrao_braco(estendido, guarda, ombro_x, faixa_y, L=44):
+    """Borrão de movimento NO PRÓPRIO BRAÇO (refeito em 24/11 depois da revisão: o cone chapado parecia um foguete
+    solto). Corpo da guarda sem o braço da frente; o braço estendido entra inteiro, colado no ombro, com o contorno do
+    desenho; só o miolo do braço, do bíceps até a munhequeira, é arrastado na horizontal (mais borrado perto do punho);
+    munhequeira e punho ficam nítidos; dois riscos finos na cor da pele, só no vazio."""
+    from scipy import ndimage as nd
+    out = guarda.copy()
+    out[braco(guarda, ombro_x + 8, (faixa_y[0] - 30, faixa_y[1]))] = 0
+    m = braco(estendido, ombro_x, faixa_y)
+    ys, xs = np.nonzero(m)
+    if not len(xs):
+        return out
+    rgb = estendido[..., :3].astype(int)
+    branco = m & (rgb.min(-1) > 175) & (rgb.max(-1) - rgb.min(-1) < 45)
+    bx = np.nonzero(branco)[1]
+    xw = int(bx.min()) if len(bx) else int(xs.max()) - 42
+    borda = m & ~nd.binary_erosion(m, iterations=3)
+    A = estendido.astype(float)
+    res = estendido.copy()
+    x_ini = ombro_x + int((xw - ombro_x) * 0.25)
+    for y in range(ys.min(), ys.max() + 1):
+        row = m[y]
+        if not row.any():
+            continue
+        c0 = np.nonzero(row)[0].min()
+        for x in range(max(x_ini, c0), xw):
+            if not row[x] or borda[y, x]:
+                continue
+            k = int(L * (x - x_ini) / max(1, xw - x_ini)) + 3
+            seg = np.arange(max(c0, x - k), x + 1)
+            seg = seg[row[seg] & ~borda[y, seg]]
+            if len(seg):
+                res[y, x, :3] = A[y, seg, :3].mean(0).astype(np.uint8)
+    out[m] = res[m]
+    top, bot = ys.min(), ys.max()
+    pele = np.array([250, 214, 170, 255], np.uint8)
+    for yy, a, c in ((top - 6, 0.35, 0.92), (bot + 6, 0.50, 0.88)):
+        x0, x1 = ombro_x + int((xw - ombro_x) * a), ombro_x + int((xw - ombro_x) * c)
+        for dy, enc in ((0, 0), (1, 10)):
+            f = out[yy + dy, x0 + enc:x1]
+            f[f[..., 3] == 0] = pele
+    return out
+
+
+def vento(img, x, y, alt=46, larg=30, riscos=True):
     """Arco de vento na frente do punho (meia-lua aberta para trás, linhas de 2 px), em x,y = centro do contato."""
     out = img.copy()
     for k, (r, cor) in enumerate(((alt / 2, BRANCO), (alt / 2 - 7, CLARO), (alt / 2 + 8, MEIO))):
@@ -91,7 +135,7 @@ def vento(img, x, y, alt=46, larg=30):
             yy = int(round(y + r * np.sin(t)))
             if 0 <= yy < out.shape[0] - 1 and 0 <= xx < out.shape[1] - 1:
                 out[yy:yy + 2, xx:xx + 2] = cor
-    for d, comp in ((-alt // 3, 60), (0, 90), (alt // 3, 60)):  # linhas de velocidade atrás do arco
+    for d, comp in ((-alt // 3, 60), (0, 90), (alt // 3, 60)) if riscos else ():  # linhas de velocidade atrás do arco
         yy = int(y + d)
         faixa = out[yy:yy + 2, int(x - comp - 20):int(x - 20)]
         faixa[faixa[..., 3] == 0] = CLARO  # só no vazio: o risco passa por trás do punho
@@ -111,9 +155,9 @@ def versoes():
     ombro, faixa = 600, (420, 466)
     xs = np.nonzero(braco(est, ombro, faixa))[1]
     ponta = int(xs.max())
-    b_ida = borrao(est, prep, ombro, faixa)
-    b_volta = borrao(est, _q("soco", 3), ombro, faixa, fantasmas=(0.5,))
-    com_borrao = [(g, 1), (b_ida, 2), (vento(est, ponta + 14, 444, alt=36), 3), (b_volta, 2), (_q("soco", 4), 2),
+    b_ida = borrao_braco(est, prep, ombro, faixa)
+    b_volta = borrao_braco(est, _q("soco", 3), ombro, faixa)
+    com_borrao = [(g, 1), (b_ida, 2), (vento(est, ponta + 14, 444, alt=36, riscos=False), 3), (b_volta, 2), (_q("soco", 4), 2),
                   (_q("soco", 5), 3)]
     # só vento: o braço não aparece esticado; no contato o ombro está à frente e o vento estoura onde o punho chegaria
     so_vento = [(g, 1), (prep, 2), (vento(b_volta, ponta + 14, 444), 3), (vento(_q("soco", 3), ponta + 30, 444, alt=30), 2),
