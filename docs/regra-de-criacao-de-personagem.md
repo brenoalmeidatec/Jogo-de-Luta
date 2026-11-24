@@ -129,7 +129,12 @@ Então, em todo golpe que já tem desenho (folha do ChatGPT ou quadro arcade apr
    (escorço, perna dobrada funda, cintura girada), use o desenho daquele membro como está, ou faça uma variante nova
    a partir dele. Nunca gire o tronco ou a cintura além do desenho, nunca estique, entorte ou engrosse uma peça por
    código para passar na régua.
-4. **Porta extra:** a tira antes e depois tem que mostrar a mesma pose do original, quadro a quadro. Se o depois
+4. **Rosto do kit com expressão** (Breno, 2026-11-24, vendo o chute baixo e a rasteira do Pengaró): o rosto que vem
+   do desenho muda de um quadro para outro, então a cabeça é sempre trocada pela **cabeça do kit**, no tamanho do
+   parado. Para o jogo não ficar estático, a expressão acompanha o golpe: guarda ou foco no preparo, esforço ou grito
+   no golpe e no contato, dor ao apanhar, riso na provocação e na vitória. Lutador que só tem uma cabeça no kit ganha
+   as expressões (desenhadas a partir da cabeça do parado, mesmo tamanho e mesma cara).
+5. **Porta extra:** a tira antes e depois tem que mostrar a mesma pose do original, quadro a quadro. Se o depois
    mudou a pose (cintura, ângulo da perna, altura do agachado), volta. A régua do corpo todo e o robô continuam
    valendo por cima.
 
