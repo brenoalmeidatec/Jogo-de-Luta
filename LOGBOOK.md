@@ -3228,6 +3228,7 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   com Despertar (Pengaró, CK, Gutto, Raiclaven, Hazak, Gbzin; o Gbzin entrou em `LUTADORES`).
 - Robô novo `ferramentas/testar_rounds_despertado.py` (nuvem, 2 rounds): antes 6 de 6 com o corpo errado; depois 6 de 6
   `RESULTADO OK` (forma, corpo, aura, ctrl, chute e soco no round 2). `--antes REF` roda os chars de um commit antigo.
-- Provas: `docs/rounds-despertado/round2_antes_depois.jpg` e `rounds_despertado_antes_depois.mp4`.
+- Provas: `docs/rounds-despertado/comparativo_round2.jpg` e `round2_sincronizado_antes_depois.mp4` (cortados no início
+  do round 2 pelas marcas do `--video`; no "antes", os golpes da forma mostram o corpo despertado só durante o golpe).
 - Não reproduzido: um "trava" de verdade (sem ctrl). No robô o lutador ganha ctrl e solta golpe no round 2; o que
   parecia travado era o corpo normal fazendo golpes e aura da forma.
