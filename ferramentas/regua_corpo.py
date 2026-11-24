@@ -47,6 +47,15 @@ OBJETO_PECA = {"raiclaven/pecas": ("braco_tras", "antebraco_tras")}  # a tesoura
 ACEITAS = {
     "hazaki/pecas:braco_tras_cruzado": "conferido em 24/11: braço inteiro visto de lado, na grossura certa; o do "
                                        "parado é o bíceps contraído em escorço, que puxa a régua para cima",
+    # conferidos em 24/11 (tira em docs/boneco-pecas/regua_corpo_bracos.png): recortes do próprio desenho original do
+    # golpe, braço nu e musculoso; o braço do parado leva a manga larga da camisa e o ombro, que puxam a régua para
+    # cima. Engrossar por código foi tentado e é proibido pela regra do desenho original (Breno, 24/11).
+    "ck/pecas:braco_tras_direto": "conferido em 24/11: recorte do desenho original do direto, braço nu; o do parado "
+                                  "tem a manga larga da camisa",
+    "ck/pecas:braco_tras_overhand": "conferido em 24/11: recorte do desenho original do overhand, braço nu; o do "
+                                    "parado tem a manga larga da camisa",
+    "ck_e/pecas:braco_tras_garrafa": "conferido em 24/11: recorte do desenho original (bola/03), antebraço nu com a "
+                                     "garrafa; o do parado tem a manga da camisa aberta",
 }
 SOBRA = ("_vazio", "_furo", "_sobra")
 

@@ -313,16 +313,11 @@ def montar_kit():
             if slot == "braco_frente" and var in SOB_CABECA:  # raiz do braço: tira a barba e a sombra do pescoço que vieram junto (mancha escura)
                 escuro = (img[..., :3].astype(int).sum(-1) < 230) & disco(junta, 18) & (img[..., 3] > 0)
                 img[escuro] = 0
-            if (slot, var) in ENGROSSAR:
-                img = b.engrossar(img, junta, ENGROSSAR[(slot, var)])
             guardar(kit, f"{slot}_{var}", img, junta, mae, fonte, cv2.warpAffine(f, M, TELA, flags=cv2.INTER_NEAREST))
     (b.PECAS / "kit.json").write_text(json.dumps(kit, indent=1, ensure_ascii=False), encoding="utf-8")
     return kit
 
 
-# braço esticado que saiu mais fino que o braço do parado (régua do corpo, 24/11: direto 73%, overhand 74% da
-# grossura): engorda na largura, perpendicular ao comprimento do braço; o comprimento e a junta ficam
-ENGROSSAR = {("braco_tras", "direto"): 1.14, ("braco_tras", "overhand"): 1.12}
 
 
 def guardar(kit, nome, img, junta, mae, fonte, fonte_img):
@@ -602,7 +597,7 @@ GOLPES_NOVOS.update({
     "caneta/02": baixo(qa=10, pp=(-64, 80, -68, 80, 4), bt={"ang": -12}, cab=2),
     "caneta/03": baixo(qa=16, pp=(-30, 50, -64, 74, -10), bt={"ang": -4}, cab=3),
     "caneta/04": {**baixo(qa=22, pp=(25, 8, -66, 76, -26), bf={"ang": -10}, cab=5),
-                  "braco_tras": {"ang": -14, "var": "direto", "dx": 42, "dy": 8}},  # braço engrossado: encosta no corpo
+                  "braco_tras": {"ang": -14, "var": "direto", "dx": 44, "dy": 10}},
     "caneta/05": baixo(qa=14, pp=(-12, 32, -62, 72, -14), bt={"ang": -2}, cab=2),
     "caneta/06": baixo(qa=8, pp=(-40, 52, -50, 56, 0), cab=1),
     "caneta/07": baixo(qa=4, pp=(-25, 32, -28, 32, 0)),
@@ -1190,6 +1185,11 @@ def segurado(poses, elems, bate):
     return saida
 
 
+# Golpes que saem do desenho original da folha e não das peças (regra do Breno, 24/11, docs/regra-de-criacao-de-personagem.md
+# passo 5): o Bote e o uppercut agachado montados só com as peças saíram com cintura torcida e perna entortada.
+DO_ORIGINAL = {"bote", "bote_forte", "uppercut"}
+
+
 def gerar(nomes=None):
     import vida_pecas as vida
     configurar()
@@ -1198,6 +1198,9 @@ def gerar(nomes=None):
     poses, relatorio = {}, ["| desenho | guia de hoje | robô de defeitos |", "|---|---|---|"]
     falhas = 0
     for nome in nomes:
+        if nome in DO_ORIGINAL:  # regra do Breno (24/11): o desenho original é a base
+            print(f"{nome}: sai do desenho original (ferramentas/ck_do_original.py), não das peças")
+            continue
         folha, des, ticks, ativos, acao = ACOES[nome]
         antes = OUT_HD / nome / "tempos.json"
         if antes.exists():  # já ligado no jogo: os tempos e os desenhos de antes ficam guardados em "hoje"

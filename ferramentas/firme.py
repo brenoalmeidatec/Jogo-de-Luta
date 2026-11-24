@@ -307,8 +307,6 @@ def montar_kit():
             fi, pv = escalar(f, 1 / e, junta_fonte)
             fonte_img = np.zeros_like(f)
             b.colar(fonte_img, fi, int(round(junta[0] - pv[0])), int(round(junta[1] - pv[1])))
-            if (slot, var) in getattr(K, "ENGROSSAR", {}):  # membro mais fino que o do parado (regua_corpo.py)
-                img = b.engrossar(img, junta, K.ENGROSSAR[(slot, var)])
             guardar(f"{slot}_{var}", img, junta, mae, fonte_img, fonte)
             print(f"{slot}_{var}: de {fonte} (escala {e:.3f})")
     (b.PECAS / "kit.json").write_text(json.dumps(kit, indent=1, ensure_ascii=False), encoding="utf-8")

@@ -33,8 +33,8 @@ Precisa de `scikit-image` (`pip install scikit-image`). Sai com código 1 se rep
 | Gutto despertado (Garanhão) | chifrada que sobe (10410) fica de quatro, só tronco, cabeça e patas sobem; golpes agachados do kit voltam para o agachado, não para o em pé (`AGACHADOS` no kit, `firme.py`) | 0 | 0 de 242 | 186/186 | 24/11 |
 | Pengaró base | cabeçada agachada (410) saía em pé com a perna esticada: agora é o agachado com o tronco dobrando na cintura (`dobrar()` no `pengaro_todo.py`), caixa de ataque baixada para a testa (20,-220,120,-110); soco agachado (400) mais fundo e no tamanho do agachado, e o último quadro volta agachado | 0 | 0 de 164 ações | 189/189 | 24/11 |
 | Pengaró despertado | cabeçada agachada (10410) feita do agachado dele com o tronco dobrando (`ferramentas/dobra_agachado.py`), quadros do meio na volta | 0 | — | 189/189 | 24/11 |
-| CK base | uppercut agachado (410) saía em pé: agora fica agachado (poses `uppercut_baixo` no `pecas_ck.py`), caixa de ataque baixa (`CX_UPPER_BAIXO`); braço de trás do direto e do overhand engrossado (73%/74% → 83%/80% do parado, `ENGROSSAR`), refeitos cruzado, cruzado rápido, overhand, bote e bote forte | 0 | 0 | 226/226 | 24/11 |
-| CK despertado (Ratão) | golpe agachado forte (10410) subia inteiro com a garrafa no alto: agora sai do agachado dele com o tronco dobrando (`dobra_agachado.py`); braço da garrafa engrossado (71% → 81%) no Paredão no Talo | 0 | 0 de 52 | 226/226 | 24/11 |
+| CK base | uppercut agachado (410) saía em pé. 1ª tentativa (a8877243) foi montada só com as peças e engrossando o braço por código: o Breno viu cintura torcida, perna entortada e buraco nas costas (no Bote também) e fez a regra do desenho original (be3c43a2). Refeito com `ck_do_original.py`: o tronco do uppercut original (cabecada/04 e 05) assentado na cintura do agachado original (cabecada/07), pela barra da camisa; Bote e Bote forte voltaram aos quadros originais da folha `caneta`; braços sem engrossar (recorte do original, aceitos na régua do corpo: o do parado tem a manga). Vídeo: antes = a versão reprovada | 0 | — | 226/226 | 24/11 |
+| CK despertado (Ratão) | golpe agachado forte (10410) subia inteiro com a garrafa no alto: agora sai do agachado dele com o tronco dobrando (`dobra_agachado.py`); a garrafa do Paredão no Talo voltou ao recorte original (sem engrossar) | 0 | 0 de 52 | 226/226 | 24/11 |
 | Hazak base | joelhada subindo (410) levantava inteira com o joelho no alto: agora é o agachado com o tronco entrando de ombro e testa (`dobra_agachado.py`, receita `hazak_agachado_forte`), caixa baixa (22,-186,122,-86), Clsn2 do agachado | 0 | — | 327/327 | 24/11 |
 | Hazak despertado (Diabo) | a 410 no despertado mostrava o Diabo loiro em pé com a maleta: agora é o agachado do demônio dobrando (quadros próprios 41411 pelo remap); Garra Subindo (4401) do agachado dele, tronco afunda e desenrola para cima (receita `diabo_garra_subindo`) | 0 | — | 327/327 | 24/11 |
 | Gbzin base | bengalada agachada (410) levantava com a bengala acima da cabeça: agora entra de tronco do agachado com a bengala (`dobra_agachado.py`, modo `REFAZER`: troca só os quadros que levantam, mesmos tiques), caixa baixa; a rasteira (440) volta para o agachado e não mais em pé | 0 | — | 236/236 | 24/11 |
@@ -57,8 +57,8 @@ de manhã) mostravam o lutador novo dos dois lados, porque o `video_golpe.py` l�
   lutador. **Quem regerar um lutador com o `gerar_<lutador>.py` roda `dobra_agachado.py --lutador X` de novo** (o
   `gerar_gbzin.py` já chama).
 - `gerar_pengaro.py`: caixa da 410 na testa abaixada.
-- `firme.py` / `pecas_ck.py`: `ENGROSSAR = {(slot, variante): fator}` no kit engorda o membro em volta do eixo dele
-  (`boneco_ajuste.engrossar`), para o braço que a `regua_corpo.py` acusou de fino.
+- `ck_do_original.py`: Bote, Bote forte e uppercut agachado do CK a partir do desenho original (regra de 24/11);
+  `pecas_ck.py` pula esses (`DO_ORIGINAL`). O `ENGROSSAR` (engordar peça por código) foi tirado: é proibido.
 - `regua_pernas.py`: o quadro só conta como "levantou" se o centro de massa E a altura do corpo sobem além do limite
   (o agachado raso do CK dava falso positivo só pelo centro).
 - `ferramentas/antes_depois/`: vídeo e foto antes/depois certos (ver o LEIAME de lá).
@@ -74,6 +74,7 @@ rasteira 440 dele são desenhados uns 25% maiores que o agachado, cabeça maior:
 cabeça e tronco na mesma conta, mais esta régua inteira). Está no passo 8 da `regra-de-criacao-de-personagem.md`, no
 `como-trabalhar.md` e no checklist da seção 9 das regras. Na primeira rodada (24/11) o braço reprovou em 3 peças:
 CK `braco_tras_direto` (73%) e `braco_tras_overhand` (74%), e CK despertado `braco_tras_garrafa` (71%), todos mais
-finos que o braço do parado e sem a manga; engrossados em 24/11 (régua do corpo do CK em 0).
+finos que o braço do parado e sem a manga. Engrossar por código foi tentado e desfeito (regra do desenho original);
+ficaram em `ACEITAS` no `regua_corpo.py`: são recortes do próprio desenho original, e o braço do parado tem a manga.
 Tira dos braços reprovados (e do braço do Hazak aceito no olho): `docs/boneco-pecas/regua_corpo_bracos.png`.
 Relatório completo da primeira rodada: `docs/boneco-pecas/regua_corpo_2026-11-24.md` (o agachado reprovado é o mesmo da fila acima).
