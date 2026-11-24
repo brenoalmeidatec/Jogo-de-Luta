@@ -1,0 +1,317 @@
+{
+ "acao": 810,
+ "caixa": null,
+ "origem": [
+  "alcança",
+  "contato alto",
+  "contato alto2",
+  "contato baixo",
+  "contato baixo2",
+  "preparo do final",
+  "rajada alto",
+  "rajada alto2",
+  "rajada baixo",
+  "rajada baixo2",
+  "segura",
+  "segura o soco",
+  "soco reto",
+  "solta a gola",
+  "volta"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 4,
+   "caixa": false,
+   "de": "alcança"
+  },
+  {
+   "desenho": 1,
+   "ticks": 12,
+   "caixa": false,
+   "de": "segura"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "segura"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rajada baixo2"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rajada alto2"
+  },
+  {
+   "desenho": 5,
+   "ticks": 3,
+   "caixa": false,
+   "de": "contato alto"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "contato alto"
+  },
+  {
+   "desenho": 7,
+   "ticks": 1,
+   "caixa": false,
+   "de": "segura"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rajada baixo2"
+  },
+  {
+   "desenho": 9,
+   "ticks": 3,
+   "caixa": false,
+   "de": "rajada alto2"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "segura"
+  },
+  {
+   "desenho": 11,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rajada alto2"
+  },
+  {
+   "desenho": 12,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rajada baixo2"
+  },
+  {
+   "desenho": 13,
+   "ticks": 3,
+   "caixa": false,
+   "de": "contato baixo"
+  },
+  {
+   "desenho": 14,
+   "ticks": 2,
+   "caixa": false,
+   "de": "contato baixo"
+  },
+  {
+   "desenho": 15,
+   "ticks": 1,
+   "caixa": false,
+   "de": "segura"
+  },
+  {
+   "desenho": 16,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rajada alto2"
+  },
+  {
+   "desenho": 17,
+   "ticks": 3,
+   "caixa": false,
+   "de": "rajada baixo2"
+  },
+  {
+   "desenho": 18,
+   "ticks": 2,
+   "caixa": false,
+   "de": "segura"
+  },
+  {
+   "desenho": 19,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rajada baixo"
+  },
+  {
+   "desenho": 20,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rajada alto"
+  },
+  {
+   "desenho": 21,
+   "ticks": 3,
+   "caixa": false,
+   "de": "contato alto2"
+  },
+  {
+   "desenho": 22,
+   "ticks": 2,
+   "caixa": false,
+   "de": "contato alto2"
+  },
+  {
+   "desenho": 23,
+   "ticks": 1,
+   "caixa": false,
+   "de": "segura"
+  },
+  {
+   "desenho": 24,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rajada baixo"
+  },
+  {
+   "desenho": 25,
+   "ticks": 3,
+   "caixa": false,
+   "de": "rajada alto"
+  },
+  {
+   "desenho": 26,
+   "ticks": 2,
+   "caixa": false,
+   "de": "segura"
+  },
+  {
+   "desenho": 27,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rajada alto"
+  },
+  {
+   "desenho": 28,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rajada baixo"
+  },
+  {
+   "desenho": 29,
+   "ticks": 3,
+   "caixa": false,
+   "de": "contato baixo2"
+  },
+  {
+   "desenho": 30,
+   "ticks": 2,
+   "caixa": false,
+   "de": "contato baixo2"
+  },
+  {
+   "desenho": 31,
+   "ticks": 1,
+   "caixa": false,
+   "de": "segura"
+  },
+  {
+   "desenho": 32,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rajada alto"
+  },
+  {
+   "desenho": 33,
+   "ticks": 3,
+   "caixa": false,
+   "de": "rajada baixo"
+  },
+  {
+   "desenho": 34,
+   "ticks": 2,
+   "caixa": false,
+   "de": "segura"
+  },
+  {
+   "desenho": 35,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rajada baixo2"
+  },
+  {
+   "desenho": 36,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rajada alto2"
+  },
+  {
+   "desenho": 37,
+   "ticks": 3,
+   "caixa": false,
+   "de": "contato alto"
+  },
+  {
+   "desenho": 38,
+   "ticks": 2,
+   "caixa": false,
+   "de": "contato alto"
+  },
+  {
+   "desenho": 39,
+   "ticks": 1,
+   "caixa": false,
+   "de": "segura"
+  },
+  {
+   "desenho": 40,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rajada baixo2"
+  },
+  {
+   "desenho": 41,
+   "ticks": 3,
+   "caixa": false,
+   "de": "rajada alto2"
+  },
+  {
+   "desenho": 42,
+   "ticks": 3,
+   "caixa": false,
+   "de": "solta a gola"
+  },
+  {
+   "desenho": 43,
+   "ticks": 7,
+   "caixa": false,
+   "de": "preparo do final"
+  },
+  {
+   "desenho": 44,
+   "ticks": 4,
+   "caixa": false,
+   "de": "soco reto"
+  },
+  {
+   "desenho": 45,
+   "ticks": 6,
+   "caixa": false,
+   "de": "soco reto"
+  },
+  {
+   "desenho": 46,
+   "ticks": 6,
+   "caixa": false,
+   "de": "segura o soco"
+  },
+  {
+   "desenho": 47,
+   "ticks": 6,
+   "caixa": false,
+   "de": "volta"
+  },
+  {
+   "desenho": 48,
+   "ticks": 6,
+   "caixa": false,
+   "de": "volta"
+  }
+ ]
+}
