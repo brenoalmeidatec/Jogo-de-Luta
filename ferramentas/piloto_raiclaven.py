@@ -382,12 +382,17 @@ def mancha_maxima(kit):
     vazio = {k: dict(v, img=np.zeros((1, 1, 4), np.uint8), sob=np.zeros((1, 1, 4), np.uint8))
              for k, v in kit["pecas"].items() if k.startswith(("braco", "antebraco", "ombreira"))}
     k2 = dict(kit, pecas={**kit["pecas"], **vazio})
-    sem = desenhar(k2, plantar(P()))
-    al = (sem[..., 3] > 0).astype(np.uint8)
-    s = sem[..., :3].astype(int).sum(-1)
-    grosso = cv2.erode(((s < 110) & (al > 0)).astype(np.uint8), np.ones((4, 4), np.uint8))
-    ys = np.nonzero(al.any(1))[0]
-    return max(pf.mancha_ref(), int(grosso[ys.min() + 80:].sum()))
+    maior = pf.mancha_ref()
+    # em pé e agachado: agachado, a calça e o avental dobram e o preto fica mais junto (golpe agachado com o braço
+    # erguido descobre isso tudo, #32)
+    for pose in (P(), P(baixo="agachado")):
+        sem = desenhar(k2, plantar(pose))
+        al = (sem[..., 3] > 0).astype(np.uint8)
+        s = sem[..., :3].astype(int).sum(-1)
+        grosso = cv2.erode(((s < 110) & (al > 0)).astype(np.uint8), np.ones((4, 4), np.uint8))
+        ys = np.nonzero(al.any(1))[0]
+        maior = max(maior, int(grosso[ys.min() + 80:].sum()))
+    return maior
 
 
 def main():

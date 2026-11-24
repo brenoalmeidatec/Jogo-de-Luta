@@ -119,6 +119,20 @@ POSE = {
     "pente_combo/07": P(q=(2, 3), tronco=0, mao="cabelo", bt=2, abt=-2),
 }
 
+# Pose própria por ação, por cima da POSE (o mesmo desenho de hoje serve a golpes diferentes). #32 (Breno, 22/11):
+# golpe agachado fica agachado. A cabeçada 410 ("y" agachado) subia inteira; agora as pernas ficam as do agachado, o
+# tronco recua e a tesoura sobe aberta acima da cabeça (antiaéreo) sem o corpo levantar. Os golpes em pé que usam os
+# mesmos desenhos (303, 347, 3412) continuam com a POSE de sempre.
+CABECADA_AGACHADA = {
+    "cabecada/01": P(baixo="agachado", q=(0, 2), tronco=6, cabeca=2, braco="frente", bt=30, bf=4),
+    "cabecada/02": P(baixo="agachado", q=(0, 2), tronco=2, braco="armado", bf=-6),
+    "cabecada/03": P(baixo="agachado", q=(2, 0), tronco=-4, cabeca=-3, braco="armado", bf=-10),
+    "cabecada/04": P(baixo="agachado", q=(4, 0), tronco=-6, cabeca=-5, braco="alto", bf=-14),
+    "cabecada/05": P(baixo="agachado", q=(3, 0), tronco=-5, cabeca=-4, braco="alto", bt=6, bf=-12),
+    "cabecada/06": P(baixo="agachado", q=(0, 2), tronco=4, cabeca=1, bt=8, abt=-6),
+}
+POSE_ACAO = {410: CABECADA_AGACHADA}
+
 
 # sprite do jogo que o mapa casou errado, conferido de olho: o desenho certo
 SPRITE_E = {
@@ -174,6 +188,11 @@ def main():
     pf.MANCHA_REF = R.mancha_maxima(kit)
     ref = b.abrir(b.REF)
     relatorio = ["| ação | desenhos | robô de defeitos |", "|---|---|---|"]
+    antigas = {}  # rodada parcial: as linhas das outras ações ficam no relatório
+    if so and (R.DOCS / "robo_golpes.md").exists():
+        for l in (R.DOCS / "robo_golpes.md").read_text(encoding="utf-8").splitlines():
+            if l.startswith("| ") and l.split("|")[1].strip().isdigit() and int(l.split("|")[1]) not in so:
+                antigas[int(l.split("|")[1])] = l
     for num, els in sorted(todas.items()):
         if so and num not in so:
             continue
@@ -184,7 +203,8 @@ def main():
             elems.append((f"{e['desenho']}#{k}", e["ticks"] if e["ticks"] > 0 else 1))
             if e["caixa"]:
                 bate.add(k)
-        poses = {q: POSE[q.split("#")[0]] for q, _ in elems}
+        proprias = POSE_ACAO.get(num, {})
+        poses = {q: proprias.get(q.split("#")[0], POSE[q.split("#")[0]]) for q, _ in elems}
         quadros = vida.animar(poses, elems, bate=bate or None, laco=False, guarda=P())
         quadros = vida.atrasar(quadros, laco=False)
         nome = f"a{num}"
@@ -207,6 +227,7 @@ def main():
                                                              encoding="utf-8")
         relatorio.append(f"| {num} | {len(quadros)} | {'PASS' if not defeitos else '<br>'.join(defeitos)} |")
         print(num, len(quadros), "desenhos", "PASS" if not defeitos else f"{len(defeitos)} com defeito", flush=True)
+    relatorio = relatorio[:2] + sorted(relatorio[2:] + list(antigas.values()), key=lambda l: int(l.split("|")[1]))
     falhas = sum("PASS" not in l for l in relatorio[2:])
     (R.DOCS / "robo_golpes.md").write_text("\n".join(relatorio) + f"\n\n{falhas} ação(ões) com defeito.\n",
                                            encoding="utf-8")

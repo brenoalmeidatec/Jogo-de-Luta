@@ -39,9 +39,10 @@ Precisa de `scikit-image` (`pip install scikit-image`). Sai com código 1 se rep
 | Hazak despertado (Diabo) | a 410 no despertado mostrava o Diabo loiro em pé com a maleta: agora é o agachado do demônio dobrando (quadros próprios 41411 pelo remap); Garra Subindo (4401) do agachado dele, tronco afunda e desenrola para cima (receita `diabo_garra_subindo`) | 0 | — | 327/327 | 24/11 |
 | Gbzin base | bengalada agachada (410) levantava com a bengala acima da cabeça: agora entra de tronco do agachado com a bengala (`dobra_agachado.py`, modo `REFAZER`: troca só os quadros que levantam, mesmos tiques), caixa baixa; a rasteira (440) volta para o agachado e não mais em pé | 0 | — | 236/236 | 24/11 |
 | Gbzin despertado | os quatro golpes agachados (10400/10410/10430/10440) foram desenhados ~23% maiores que o agachado dele: encolhidos em volta do pé para o tamanho do agachado (caixas junto); a bengalada é a mesma troca da base | 0 | — | 236/236 | 24/11 |
+| Raiclaven base | cabeçada agachada (410) levantava inteira: agora as pernas ficam as do desenho do agachado e só o tronco recua e a tesoura sobe aberta (`POSE_ACAO` no `golpes_raiclaven.py`; os golpes em pé que usam os mesmos desenhos ficam como estavam); a régua de mancha do robô de peças conta também o agachado sem braço (`piloto_raiclaven.mancha_maxima`) | 0 | 0 | 216/216 | 24/11 |
 
 Vídeos e fotos (`.mp4` e `.png`, a foto no instante em que antes e depois mais diferem): `docs/boneco-pecas/gutto/`,
-`docs/boneco-pecas/todo/` (Pengaró), `docs/boneco-pecas/ck/`, `docs/boneco-pecas/hazaki/` e `docs/boneco-pecas/gbzin/`, todos `pernas_antes_depois`. Os primeiros vídeos (24/11
+`docs/boneco-pecas/todo/` (Pengaró), `docs/boneco-pecas/ck/`, `docs/boneco-pecas/hazaki/`, `docs/boneco-pecas/gbzin/` e `docs/boneco-pecas/raiclaven/`, todos `pernas_antes_depois`. Os primeiros vídeos (24/11
 de manhã) mostravam o lutador novo dos dois lados, porque o `video_golpe.py` lê sempre `chars/<lutador>`; refeitos com
 `ferramentas/antes_depois/` (o antes sai de um commit do git, tela maior sem cortar cabeça e pé). O Alisson pegou.
 
@@ -66,7 +67,8 @@ de manhã) mostravam o lutador novo dos dois lados, porque o `video_golpe.py` l�
 
 ## Falta
 
-Raiclaven 410 (em andamento). A aura do Gutto foi religada
+Nenhum golpe agachado básico levanta mais (régua das pernas em 0 nos seis lutadores, base e despertado). Ficam só os
+avisos de especiais (parry 764, 3430/3435), para olhar no vídeo. A aura do Gutto foi religada
 (`aura_no_corpo.py gutto`) depois dos desenhos novos. Depois: sobras do Pengaró (manchas na calça, ombro de trás, pé girado; e o chute baixo 430 e a
 rasteira 440 dele são desenhados uns 25% maiores que o agachado, cabeça maior: pedem arte nova no mesmo agachado).
 

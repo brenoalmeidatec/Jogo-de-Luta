@@ -1582,7 +1582,10 @@
 48032,7 = 1525,0
 48032,8 = 1525,0
 48032,9 = 1526,0
-48032,10 = 1527,0
+48032,10 = 1526,0
+48032,11 = 1526,0
+48032,12 = 1526,0
+48032,13 = 1527,0
 48033,0 = 1537,0
 48033,1 = 1537,0
 48033,2 = 1538,0
@@ -12785,85 +12788,86 @@ trigger24 = Anim = 331 && AnimElemNo(0) = [1, 4]
 trigger25 = Anim = 333 && AnimElemNo(0) = [1, 4]
 trigger26 = Anim = 341 && AnimElemNo(0) = [1, 4]
 trigger27 = Anim = 343 && AnimElemNo(0) = [1, 3]
-trigger28 = Anim = 344 && AnimElemNo(0) = [1, 3]
-trigger29 = Anim = 344 && AnimElemNo(0) = [8, 14]
-trigger30 = Anim = 346 && AnimElemNo(0) = [1, 3]
-trigger31 = Anim = 348 && AnimElemNo(0) = [1, 4]
-trigger32 = Anim = 810 && AnimElemNo(0) = [8, 9]
-trigger33 = Anim = 810 && AnimElemNo(0) = [14, 15]
-trigger34 = Anim = 810 && AnimElemNo(0) = [21, 24]
-trigger35 = Anim = 1200 && AnimElemNo(0) = [1, 1]
-trigger36 = Anim = 1201 && AnimElemNo(0) = [1, 1]
-trigger37 = Anim = 1300 && AnimElemNo(0) = 6
-trigger38 = Anim = 1301 && AnimElemNo(0) = 6
-trigger39 = Anim = 1400 && AnimElemNo(0) = [1, 3]
-trigger40 = Anim = 1400 && AnimElemNo(0) = [8, 17]
-trigger41 = Anim = 1401 && AnimElemNo(0) = [1, 4]
-trigger42 = Anim = 1401 && AnimElemNo(0) = [9, 23]
-trigger43 = Anim = 1500 && AnimElemNo(0) = 1
-trigger44 = Anim = 1501 && AnimElemNo(0) = 1
-trigger45 = Anim = 2000 && AnimElemNo(0) = [50, 52]
-trigger46 = Anim = 2000 && AnimElemNo(0) = [102, 106]
-trigger47 = Anim = 3100 && AnimElemNo(0) = 2
-trigger48 = Anim = 3100 && AnimElemNo(0) = 5
-trigger49 = Anim = 3200 && AnimElemNo(0) = [1, 4]
-trigger50 = Anim = 3200 && AnimElemNo(0) = [9, 28]
-trigger51 = Anim = 3401 && AnimElemNo(0) = [1, 4]
-trigger52 = Anim = 3410 && AnimElemNo(0) = [1, 3]
-trigger53 = Anim = 3410 && AnimElemNo(0) = [9, 15]
-trigger54 = Anim = 3413 && AnimElemNo(0) = [1, 4]
-trigger55 = Anim = 3420 && AnimElemNo(0) = [1, 3]
-trigger56 = Anim = 3422 && AnimElemNo(0) = [1, 4]
-trigger57 = Anim = 3423 && AnimElemNo(0) = [1, 4]
-trigger58 = Anim = 3431 && AnimElemNo(0) = [1, 3]
-trigger59 = Anim = 3431 && AnimElemNo(0) = [9, 18]
-trigger60 = Anim = 3432 && AnimElemNo(0) = [1, 4]
-trigger61 = Anim = 5020 && AnimElemNo(0) = 1
-trigger62 = Anim = 5020 && AnimElemNo(0) = 3
-trigger63 = Anim = 5021 && AnimElemNo(0) = 1
-trigger64 = Anim = 5021 && AnimElemNo(0) = [3, 4]
-trigger65 = Anim = 5022 && AnimElemNo(0) = 1
-trigger66 = Anim = 5022 && AnimElemNo(0) = [3, 4]
-trigger67 = Anim = 5030
-trigger68 = Anim = 5035
-trigger69 = Anim = 5300
-trigger70 = Anim = 10200 && AnimElemNo(0) = [1, 3]
-trigger71 = Anim = 10210 && AnimElemNo(0) = [1, 2]
-trigger72 = Anim = 10210 && AnimElemNo(0) = [7, 9]
-trigger73 = Anim = 10215 && AnimElemNo(0) = [1, 2]
-trigger74 = Anim = 10215 && AnimElemNo(0) = [7, 9]
-trigger75 = Anim = 10216 && AnimElemNo(0) = 1
-trigger76 = Anim = 10216 && AnimElemNo(0) = [6, 7]
-trigger77 = Anim = 10230 && AnimElemNo(0) = [1, 2]
-trigger78 = Anim = 10240 && AnimElemNo(0) = [1, 4]
-trigger79 = Anim = 11200 && AnimElemNo(0) = 1
-trigger80 = Anim = 11201 && AnimElemNo(0) = 1
-trigger81 = Anim = 11300 && AnimElemNo(0) = 6
-trigger82 = Anim = 11301 && AnimElemNo(0) = 6
-trigger83 = Anim = 11400 && AnimElemNo(0) = 1
-trigger84 = Anim = 11400 && AnimElemNo(0) = [6, 8]
-trigger85 = Anim = 11401 && AnimElemNo(0) = 1
-trigger86 = Anim = 11401 && AnimElemNo(0) = [6, 8]
-trigger87 = Anim = 11500 && AnimElemNo(0) = 1
-trigger88 = Anim = 11501 && AnimElemNo(0) = 1
-trigger89 = Anim = 13100 && AnimElemNo(0) = 2
-trigger90 = Anim = 13100 && AnimElemNo(0) = 5
-trigger91 = Anim = 13200 && AnimElemNo(0) = 1
-trigger92 = Anim = 20250 && AnimElemNo(0) = [1, 2]
-trigger93 = Anim = 20250 && AnimElemNo(0) = [7, 9]
-trigger94 = Anim = 20302 && AnimElemNo(0) = 1
-trigger95 = Anim = 20302 && AnimElemNo(0) = [6, 7]
-trigger96 = Anim = 20311 && AnimElemNo(0) = 1
-trigger97 = Anim = 20311 && AnimElemNo(0) = [6, 7]
-trigger98 = Anim = 20313 && AnimElemNo(0) = 1
-trigger99 = Anim = 20323 && AnimElemNo(0) = 6
-trigger100 = Anim = 20333 && AnimElemNo(0) = 1
-trigger101 = Anim = 20333 && AnimElemNo(0) = [6, 8]
-trigger102 = Anim = 20341 && AnimElemNo(0) = [1, 2]
-trigger103 = Anim = 20341 && AnimElemNo(0) = [7, 9]
-trigger104 = Anim = 21200 && AnimElemNo(0) = 1
-trigger105 = Anim = 24210 && AnimElemNo(0) = 23
-trigger106 = Anim = 24210 && AnimElemNo(0) = [28, 30]
+trigger28 = Anim = 343 && AnimElemNo(0) = [6, 15]
+trigger29 = Anim = 344 && AnimElemNo(0) = [1, 3]
+trigger30 = Anim = 344 && AnimElemNo(0) = [8, 14]
+trigger31 = Anim = 346 && AnimElemNo(0) = [1, 3]
+trigger32 = Anim = 348 && AnimElemNo(0) = [1, 4]
+trigger33 = Anim = 810 && AnimElemNo(0) = [8, 9]
+trigger34 = Anim = 810 && AnimElemNo(0) = [14, 15]
+trigger35 = Anim = 810 && AnimElemNo(0) = [21, 24]
+trigger36 = Anim = 1200 && AnimElemNo(0) = [1, 1]
+trigger37 = Anim = 1201 && AnimElemNo(0) = [1, 1]
+trigger38 = Anim = 1300 && AnimElemNo(0) = 6
+trigger39 = Anim = 1301 && AnimElemNo(0) = 6
+trigger40 = Anim = 1400 && AnimElemNo(0) = [1, 3]
+trigger41 = Anim = 1400 && AnimElemNo(0) = [8, 17]
+trigger42 = Anim = 1401 && AnimElemNo(0) = [1, 4]
+trigger43 = Anim = 1401 && AnimElemNo(0) = [9, 23]
+trigger44 = Anim = 1500 && AnimElemNo(0) = 1
+trigger45 = Anim = 1501 && AnimElemNo(0) = 1
+trigger46 = Anim = 2000 && AnimElemNo(0) = [50, 52]
+trigger47 = Anim = 2000 && AnimElemNo(0) = [102, 106]
+trigger48 = Anim = 3100 && AnimElemNo(0) = 2
+trigger49 = Anim = 3100 && AnimElemNo(0) = 5
+trigger50 = Anim = 3200 && AnimElemNo(0) = [1, 4]
+trigger51 = Anim = 3200 && AnimElemNo(0) = [9, 28]
+trigger52 = Anim = 3401 && AnimElemNo(0) = [1, 4]
+trigger53 = Anim = 3410 && AnimElemNo(0) = [1, 3]
+trigger54 = Anim = 3410 && AnimElemNo(0) = [9, 15]
+trigger55 = Anim = 3413 && AnimElemNo(0) = [1, 4]
+trigger56 = Anim = 3420 && AnimElemNo(0) = [1, 3]
+trigger57 = Anim = 3422 && AnimElemNo(0) = [1, 4]
+trigger58 = Anim = 3423 && AnimElemNo(0) = [1, 4]
+trigger59 = Anim = 3431 && AnimElemNo(0) = [1, 3]
+trigger60 = Anim = 3431 && AnimElemNo(0) = [9, 18]
+trigger61 = Anim = 3432 && AnimElemNo(0) = [1, 4]
+trigger62 = Anim = 5020 && AnimElemNo(0) = 1
+trigger63 = Anim = 5020 && AnimElemNo(0) = 3
+trigger64 = Anim = 5021 && AnimElemNo(0) = 1
+trigger65 = Anim = 5021 && AnimElemNo(0) = [3, 4]
+trigger66 = Anim = 5022 && AnimElemNo(0) = 1
+trigger67 = Anim = 5022 && AnimElemNo(0) = [3, 4]
+trigger68 = Anim = 5030
+trigger69 = Anim = 5035
+trigger70 = Anim = 5300
+trigger71 = Anim = 10200 && AnimElemNo(0) = [1, 3]
+trigger72 = Anim = 10210 && AnimElemNo(0) = [1, 2]
+trigger73 = Anim = 10210 && AnimElemNo(0) = [7, 9]
+trigger74 = Anim = 10215 && AnimElemNo(0) = [1, 2]
+trigger75 = Anim = 10215 && AnimElemNo(0) = [7, 9]
+trigger76 = Anim = 10216 && AnimElemNo(0) = 1
+trigger77 = Anim = 10216 && AnimElemNo(0) = [6, 7]
+trigger78 = Anim = 10230 && AnimElemNo(0) = [1, 2]
+trigger79 = Anim = 10240 && AnimElemNo(0) = [1, 4]
+trigger80 = Anim = 11200 && AnimElemNo(0) = 1
+trigger81 = Anim = 11201 && AnimElemNo(0) = 1
+trigger82 = Anim = 11300 && AnimElemNo(0) = 6
+trigger83 = Anim = 11301 && AnimElemNo(0) = 6
+trigger84 = Anim = 11400 && AnimElemNo(0) = 1
+trigger85 = Anim = 11400 && AnimElemNo(0) = [6, 8]
+trigger86 = Anim = 11401 && AnimElemNo(0) = 1
+trigger87 = Anim = 11401 && AnimElemNo(0) = [6, 8]
+trigger88 = Anim = 11500 && AnimElemNo(0) = 1
+trigger89 = Anim = 11501 && AnimElemNo(0) = 1
+trigger90 = Anim = 13100 && AnimElemNo(0) = 2
+trigger91 = Anim = 13100 && AnimElemNo(0) = 5
+trigger92 = Anim = 13200 && AnimElemNo(0) = 1
+trigger93 = Anim = 20250 && AnimElemNo(0) = [1, 2]
+trigger94 = Anim = 20250 && AnimElemNo(0) = [7, 9]
+trigger95 = Anim = 20302 && AnimElemNo(0) = 1
+trigger96 = Anim = 20302 && AnimElemNo(0) = [6, 7]
+trigger97 = Anim = 20311 && AnimElemNo(0) = 1
+trigger98 = Anim = 20311 && AnimElemNo(0) = [6, 7]
+trigger99 = Anim = 20313 && AnimElemNo(0) = 1
+trigger100 = Anim = 20323 && AnimElemNo(0) = 6
+trigger101 = Anim = 20333 && AnimElemNo(0) = 1
+trigger102 = Anim = 20333 && AnimElemNo(0) = [6, 8]
+trigger103 = Anim = 20341 && AnimElemNo(0) = [1, 2]
+trigger104 = Anim = 20341 && AnimElemNo(0) = [7, 9]
+trigger105 = Anim = 21200 && AnimElemNo(0) = 1
+trigger106 = Anim = 24210 && AnimElemNo(0) = 23
+trigger107 = Anim = 24210 && AnimElemNo(0) = [28, 30]
 map = "au_raiclaven_q"
 value = 7936
 ignorehitpause = 1
@@ -12954,139 +12958,138 @@ trigger31 = Anim = 332 && AnimElemNo(0) = [9, 10]
 trigger32 = Anim = 340 && AnimElemNo(0) = [7, 8]
 trigger33 = Anim = 342 && AnimElemNo(0) = [1, 2]
 trigger34 = Anim = 342 && AnimElemNo(0) = [3, 8]
-trigger35 = Anim = 343 && AnimElemNo(0) = [6, 15]
-trigger36 = Anim = 345 && AnimElemNo(0) = [9, 10]
-trigger37 = Anim = 347 && AnimElemNo(0) = [1, 4]
-trigger38 = Anim = 347 && AnimElemNo(0) = [5, 11]
-trigger39 = Anim = 349 && AnimElemNo(0) = [9, 10]
-trigger40 = Anim = 410 && AnimElemNo(0) = [2, 3]
-trigger41 = Anim = 410 && AnimElemNo(0) = [4, 9]
-trigger42 = Anim = 430 && AnimElemNo(0) = [1, 2]
-trigger43 = Anim = 430 && AnimElemNo(0) = [3, 8]
-trigger44 = Anim = 440 && AnimElemNo(0) = [3, 5]
-trigger45 = Anim = 440 && AnimElemNo(0) = [6, 13]
-trigger46 = Anim = 600 && AnimElemNo(0) = [1, 2]
-trigger47 = Anim = 600 && AnimElemNo(0) = [3, 4]
-trigger48 = Anim = 600 && AnimElemNo(0) = [5, 5]
-trigger49 = Anim = 601 && AnimElemNo(0) = [2, 3]
-trigger50 = Anim = 601 && AnimElemNo(0) = [4, 4]
-trigger51 = Anim = 610 && AnimElemNo(0) = [2, 3]
-trigger52 = Anim = 610 && AnimElemNo(0) = 4
-trigger53 = Anim = 611 && AnimElemNo(0) = [2, 3]
-trigger54 = Anim = 611 && AnimElemNo(0) = 4
-trigger55 = Anim = 650 && AnimElemNo(0) = 1
-trigger56 = Anim = 650 && AnimElemNo(0) = [2, 4]
-trigger57 = Anim = 650 && AnimElemNo(0) = 5
-trigger58 = Anim = 700 && AnimElemNo(0) = [1, 6]
-trigger59 = Anim = 700 && AnimElemNo(0) = [13, 18]
-trigger60 = Anim = 700 && AnimElemNo(0) = [19, 31]
-trigger61 = Anim = 705 && AnimElemNo(0) = [10, 22]
-trigger62 = Anim = 705 && AnimElemNo(0) = [23, 28]
-trigger63 = Anim = 705 && AnimElemNo(0) = [35, 42]
-trigger64 = Anim = 841 && AnimElemNo(0) = [1, 1]
-trigger65 = Anim = 841 && AnimElemNo(0) = [4, 6]
-trigger66 = Anim = 841 && AnimElemNo(0) = [7, 16]
-trigger67 = Anim = 1300 && AnimElemNo(0) = [4, 5]
-trigger68 = Anim = 1300 && AnimElemNo(0) = [7, 8]
-trigger69 = Anim = 1301 && AnimElemNo(0) = [4, 5]
-trigger70 = Anim = 1301 && AnimElemNo(0) = [7, 8]
-trigger71 = Anim = 1700 && AnimElemNo(0) = 2
-trigger72 = Anim = 1700 && AnimElemNo(0) = [3, 5]
-trigger73 = Anim = 1701 && AnimElemNo(0) = [1, 5]
-trigger74 = Anim = 1701 && AnimElemNo(0) = [14, 17]
-trigger75 = Anim = 3100 && AnimElemNo(0) = 8
-trigger76 = Anim = 3402 && AnimElemNo(0) = [2, 3]
-trigger77 = Anim = 3402 && AnimElemNo(0) = [4, 7]
-trigger78 = Anim = 3403 && AnimElemNo(0) = [1, 2]
-trigger79 = Anim = 3403 && AnimElemNo(0) = 3
-trigger80 = Anim = 3403 && AnimElemNo(0) = 7
-trigger81 = Anim = 3412 && AnimElemNo(0) = [1, 3]
-trigger82 = Anim = 3412 && AnimElemNo(0) = [4, 8]
-trigger83 = Anim = 3421 && AnimElemNo(0) = [8, 9]
-trigger84 = Anim = 3430 && AnimElemNo(0) = [1, 4]
-trigger85 = Anim = 3430 && AnimElemNo(0) = [5, 9]
-trigger86 = Anim = 3433 && AnimElemNo(0) = [7, 8]
-trigger87 = Anim = 3435 && AnimElemNo(0) = [4, 6]
-trigger88 = Anim = 3435 && AnimElemNo(0) = [7, 12]
-trigger89 = Anim = 5000 && AnimElemNo(0) = 3
-trigger90 = Anim = 5001 && AnimElemNo(0) = 4
-trigger91 = Anim = 5002 && AnimElemNo(0) = 4
-trigger92 = Anim = 5005 && AnimElemNo(0) = 2
-trigger93 = Anim = 5006 && AnimElemNo(0) = 2
-trigger94 = Anim = 5007 && AnimElemNo(0) = 2
-trigger95 = Anim = 5010 && AnimElemNo(0) = 3
-trigger96 = Anim = 5011 && AnimElemNo(0) = 4
-trigger97 = Anim = 5012 && AnimElemNo(0) = 4
-trigger98 = Anim = 5015 && AnimElemNo(0) = 2
-trigger99 = Anim = 5016 && AnimElemNo(0) = 2
-trigger100 = Anim = 5017 && AnimElemNo(0) = 2
-trigger101 = Anim = 5020 && AnimElemNo(0) = 2
-trigger102 = Anim = 5021 && AnimElemNo(0) = 2
-trigger103 = Anim = 5022 && AnimElemNo(0) = 2
-trigger104 = Anim = 5025
-trigger105 = Anim = 5026
-trigger106 = Anim = 5027
-trigger107 = Anim = 5200 && AnimElemNo(0) = [1, 3]
-trigger108 = Anim = 5200 && AnimElemNo(0) = [7, 9]
-trigger109 = Anim = 5200 && AnimElemNo(0) = [10, 16]
-trigger110 = Anim = 5210 && AnimElemNo(0) = [1, 3]
-trigger111 = Anim = 5210 && AnimElemNo(0) = [7, 9]
-trigger112 = Anim = 5210 && AnimElemNo(0) = [10, 16]
-trigger113 = Anim = 10200 && AnimElemNo(0) = [8, 9]
-trigger114 = Anim = 10201 && AnimElemNo(0) = [6, 7]
-trigger115 = Anim = 10260 && AnimElemNo(0) = [10, 11]
-trigger116 = Anim = 10410 && AnimElemNo(0) = [2, 3]
-trigger117 = Anim = 10410 && AnimElemNo(0) = [4, 7]
-trigger118 = Anim = 10430 && AnimElemNo(0) = [1, 2]
-trigger119 = Anim = 10430 && AnimElemNo(0) = [3, 8]
-trigger120 = Anim = 10440 && AnimElemNo(0) = [2, 4]
-trigger121 = Anim = 10440 && AnimElemNo(0) = [5, 8]
-trigger122 = Anim = 10600 && AnimElemNo(0) = [1, 2]
-trigger123 = Anim = 10600 && AnimElemNo(0) = [3, 4]
-trigger124 = Anim = 10600 && AnimElemNo(0) = 5
-trigger125 = Anim = 10601 && AnimElemNo(0) = [2, 3]
-trigger126 = Anim = 10601 && AnimElemNo(0) = 4
-trigger127 = Anim = 10610 && AnimElemNo(0) = [2, 3]
-trigger128 = Anim = 10610 && AnimElemNo(0) = 4
-trigger129 = Anim = 10611 && AnimElemNo(0) = [2, 3]
-trigger130 = Anim = 10611 && AnimElemNo(0) = 4
-trigger131 = Anim = 10650 && AnimElemNo(0) = 1
-trigger132 = Anim = 10650 && AnimElemNo(0) = [2, 4]
-trigger133 = Anim = 10650 && AnimElemNo(0) = 5
-trigger134 = Anim = 10760 && AnimElemNo(0) = 3
-trigger135 = Anim = 10761
-trigger136 = Anim = 10764 && AnimElemNo(0) = 3
-trigger137 = Anim = 10765
-trigger138 = Anim = 11300 && AnimElemNo(0) = [4, 5]
-trigger139 = Anim = 11300 && AnimElemNo(0) = [7, 8]
-trigger140 = Anim = 11301 && AnimElemNo(0) = [4, 5]
-trigger141 = Anim = 11301 && AnimElemNo(0) = [7, 8]
-trigger142 = Anim = 13100 && AnimElemNo(0) = 8
-trigger143 = Anim = 20270 && AnimElemNo(0) = [6, 7]
-trigger144 = Anim = 20301 && AnimElemNo(0) = [6, 7]
-trigger145 = Anim = 20322 && AnimElemNo(0) = [1, 2]
-trigger146 = Anim = 20322 && AnimElemNo(0) = [3, 8]
-trigger147 = Anim = 20323 && AnimElemNo(0) = [4, 5]
-trigger148 = Anim = 20323 && AnimElemNo(0) = [7, 8]
-trigger149 = Anim = 20342 && AnimElemNo(0) = [2, 4]
-trigger150 = Anim = 20342 && AnimElemNo(0) = [5, 8]
-trigger151 = Anim = 20400 && AnimElemNo(0) = 2
-trigger152 = Anim = 20410 && AnimElemNo(0) = [3, 8]
-trigger153 = Anim = 20430 && AnimElemNo(0) = [2, 3]
-trigger154 = Anim = 20440 && AnimElemNo(0) = 5
-trigger155 = Anim = 20600 && AnimElemNo(0) = [1, 2]
-trigger156 = Anim = 20600 && AnimElemNo(0) = [3, 4]
-trigger157 = Anim = 20600 && AnimElemNo(0) = 5
-trigger158 = Anim = 20610 && AnimElemNo(0) = [2, 3]
-trigger159 = Anim = 20610 && AnimElemNo(0) = 4
-trigger160 = Anim = 20630 && AnimElemNo(0) = [2, 3]
-trigger161 = Anim = 20630 && AnimElemNo(0) = 4
-trigger162 = Anim = 20640 && AnimElemNo(0) = [2, 3]
-trigger163 = Anim = 20640 && AnimElemNo(0) = 4
-trigger164 = Anim = 24110 && AnimElemNo(0) = 3
-trigger165 = Anim = 24110 && AnimElemNo(0) = [9, 10]
-trigger166 = Anim = 24110 && AnimElemNo(0) = [16, 18]
-trigger167 = Anim = 24110 && AnimElemNo(0) = [19, 22]
+trigger35 = Anim = 345 && AnimElemNo(0) = [9, 10]
+trigger36 = Anim = 347 && AnimElemNo(0) = [1, 4]
+trigger37 = Anim = 347 && AnimElemNo(0) = [5, 11]
+trigger38 = Anim = 349 && AnimElemNo(0) = [9, 10]
+trigger39 = Anim = 410 && AnimElemNo(0) = [2, 3]
+trigger40 = Anim = 410 && AnimElemNo(0) = [4, 9]
+trigger41 = Anim = 430 && AnimElemNo(0) = [1, 2]
+trigger42 = Anim = 430 && AnimElemNo(0) = [3, 8]
+trigger43 = Anim = 440 && AnimElemNo(0) = [3, 5]
+trigger44 = Anim = 440 && AnimElemNo(0) = [6, 13]
+trigger45 = Anim = 600 && AnimElemNo(0) = [1, 2]
+trigger46 = Anim = 600 && AnimElemNo(0) = [3, 4]
+trigger47 = Anim = 600 && AnimElemNo(0) = [5, 5]
+trigger48 = Anim = 601 && AnimElemNo(0) = [2, 3]
+trigger49 = Anim = 601 && AnimElemNo(0) = [4, 4]
+trigger50 = Anim = 610 && AnimElemNo(0) = [2, 3]
+trigger51 = Anim = 610 && AnimElemNo(0) = 4
+trigger52 = Anim = 611 && AnimElemNo(0) = [2, 3]
+trigger53 = Anim = 611 && AnimElemNo(0) = 4
+trigger54 = Anim = 650 && AnimElemNo(0) = 1
+trigger55 = Anim = 650 && AnimElemNo(0) = [2, 4]
+trigger56 = Anim = 650 && AnimElemNo(0) = 5
+trigger57 = Anim = 700 && AnimElemNo(0) = [1, 6]
+trigger58 = Anim = 700 && AnimElemNo(0) = [13, 18]
+trigger59 = Anim = 700 && AnimElemNo(0) = [19, 31]
+trigger60 = Anim = 705 && AnimElemNo(0) = [10, 22]
+trigger61 = Anim = 705 && AnimElemNo(0) = [23, 28]
+trigger62 = Anim = 705 && AnimElemNo(0) = [35, 42]
+trigger63 = Anim = 841 && AnimElemNo(0) = [1, 1]
+trigger64 = Anim = 841 && AnimElemNo(0) = [4, 6]
+trigger65 = Anim = 841 && AnimElemNo(0) = [7, 16]
+trigger66 = Anim = 1300 && AnimElemNo(0) = [4, 5]
+trigger67 = Anim = 1300 && AnimElemNo(0) = [7, 8]
+trigger68 = Anim = 1301 && AnimElemNo(0) = [4, 5]
+trigger69 = Anim = 1301 && AnimElemNo(0) = [7, 8]
+trigger70 = Anim = 1700 && AnimElemNo(0) = 2
+trigger71 = Anim = 1700 && AnimElemNo(0) = [3, 5]
+trigger72 = Anim = 1701 && AnimElemNo(0) = [1, 5]
+trigger73 = Anim = 1701 && AnimElemNo(0) = [14, 17]
+trigger74 = Anim = 3100 && AnimElemNo(0) = 8
+trigger75 = Anim = 3402 && AnimElemNo(0) = [2, 3]
+trigger76 = Anim = 3402 && AnimElemNo(0) = [4, 7]
+trigger77 = Anim = 3403 && AnimElemNo(0) = [1, 2]
+trigger78 = Anim = 3403 && AnimElemNo(0) = 3
+trigger79 = Anim = 3403 && AnimElemNo(0) = 7
+trigger80 = Anim = 3412 && AnimElemNo(0) = [1, 3]
+trigger81 = Anim = 3412 && AnimElemNo(0) = [4, 8]
+trigger82 = Anim = 3421 && AnimElemNo(0) = [8, 9]
+trigger83 = Anim = 3430 && AnimElemNo(0) = [1, 4]
+trigger84 = Anim = 3430 && AnimElemNo(0) = [5, 9]
+trigger85 = Anim = 3433 && AnimElemNo(0) = [7, 8]
+trigger86 = Anim = 3435 && AnimElemNo(0) = [4, 6]
+trigger87 = Anim = 3435 && AnimElemNo(0) = [7, 12]
+trigger88 = Anim = 5000 && AnimElemNo(0) = 3
+trigger89 = Anim = 5001 && AnimElemNo(0) = 4
+trigger90 = Anim = 5002 && AnimElemNo(0) = 4
+trigger91 = Anim = 5005 && AnimElemNo(0) = 2
+trigger92 = Anim = 5006 && AnimElemNo(0) = 2
+trigger93 = Anim = 5007 && AnimElemNo(0) = 2
+trigger94 = Anim = 5010 && AnimElemNo(0) = 3
+trigger95 = Anim = 5011 && AnimElemNo(0) = 4
+trigger96 = Anim = 5012 && AnimElemNo(0) = 4
+trigger97 = Anim = 5015 && AnimElemNo(0) = 2
+trigger98 = Anim = 5016 && AnimElemNo(0) = 2
+trigger99 = Anim = 5017 && AnimElemNo(0) = 2
+trigger100 = Anim = 5020 && AnimElemNo(0) = 2
+trigger101 = Anim = 5021 && AnimElemNo(0) = 2
+trigger102 = Anim = 5022 && AnimElemNo(0) = 2
+trigger103 = Anim = 5025
+trigger104 = Anim = 5026
+trigger105 = Anim = 5027
+trigger106 = Anim = 5200 && AnimElemNo(0) = [1, 3]
+trigger107 = Anim = 5200 && AnimElemNo(0) = [7, 9]
+trigger108 = Anim = 5200 && AnimElemNo(0) = [10, 16]
+trigger109 = Anim = 5210 && AnimElemNo(0) = [1, 3]
+trigger110 = Anim = 5210 && AnimElemNo(0) = [7, 9]
+trigger111 = Anim = 5210 && AnimElemNo(0) = [10, 16]
+trigger112 = Anim = 10200 && AnimElemNo(0) = [8, 9]
+trigger113 = Anim = 10201 && AnimElemNo(0) = [6, 7]
+trigger114 = Anim = 10260 && AnimElemNo(0) = [10, 11]
+trigger115 = Anim = 10410 && AnimElemNo(0) = [2, 3]
+trigger116 = Anim = 10410 && AnimElemNo(0) = [4, 7]
+trigger117 = Anim = 10430 && AnimElemNo(0) = [1, 2]
+trigger118 = Anim = 10430 && AnimElemNo(0) = [3, 8]
+trigger119 = Anim = 10440 && AnimElemNo(0) = [2, 4]
+trigger120 = Anim = 10440 && AnimElemNo(0) = [5, 8]
+trigger121 = Anim = 10600 && AnimElemNo(0) = [1, 2]
+trigger122 = Anim = 10600 && AnimElemNo(0) = [3, 4]
+trigger123 = Anim = 10600 && AnimElemNo(0) = 5
+trigger124 = Anim = 10601 && AnimElemNo(0) = [2, 3]
+trigger125 = Anim = 10601 && AnimElemNo(0) = 4
+trigger126 = Anim = 10610 && AnimElemNo(0) = [2, 3]
+trigger127 = Anim = 10610 && AnimElemNo(0) = 4
+trigger128 = Anim = 10611 && AnimElemNo(0) = [2, 3]
+trigger129 = Anim = 10611 && AnimElemNo(0) = 4
+trigger130 = Anim = 10650 && AnimElemNo(0) = 1
+trigger131 = Anim = 10650 && AnimElemNo(0) = [2, 4]
+trigger132 = Anim = 10650 && AnimElemNo(0) = 5
+trigger133 = Anim = 10760 && AnimElemNo(0) = 3
+trigger134 = Anim = 10761
+trigger135 = Anim = 10764 && AnimElemNo(0) = 3
+trigger136 = Anim = 10765
+trigger137 = Anim = 11300 && AnimElemNo(0) = [4, 5]
+trigger138 = Anim = 11300 && AnimElemNo(0) = [7, 8]
+trigger139 = Anim = 11301 && AnimElemNo(0) = [4, 5]
+trigger140 = Anim = 11301 && AnimElemNo(0) = [7, 8]
+trigger141 = Anim = 13100 && AnimElemNo(0) = 8
+trigger142 = Anim = 20270 && AnimElemNo(0) = [6, 7]
+trigger143 = Anim = 20301 && AnimElemNo(0) = [6, 7]
+trigger144 = Anim = 20322 && AnimElemNo(0) = [1, 2]
+trigger145 = Anim = 20322 && AnimElemNo(0) = [3, 8]
+trigger146 = Anim = 20323 && AnimElemNo(0) = [4, 5]
+trigger147 = Anim = 20323 && AnimElemNo(0) = [7, 8]
+trigger148 = Anim = 20342 && AnimElemNo(0) = [2, 4]
+trigger149 = Anim = 20342 && AnimElemNo(0) = [5, 8]
+trigger150 = Anim = 20400 && AnimElemNo(0) = 2
+trigger151 = Anim = 20410 && AnimElemNo(0) = [3, 8]
+trigger152 = Anim = 20430 && AnimElemNo(0) = [2, 3]
+trigger153 = Anim = 20440 && AnimElemNo(0) = 5
+trigger154 = Anim = 20600 && AnimElemNo(0) = [1, 2]
+trigger155 = Anim = 20600 && AnimElemNo(0) = [3, 4]
+trigger156 = Anim = 20600 && AnimElemNo(0) = 5
+trigger157 = Anim = 20610 && AnimElemNo(0) = [2, 3]
+trigger158 = Anim = 20610 && AnimElemNo(0) = 4
+trigger159 = Anim = 20630 && AnimElemNo(0) = [2, 3]
+trigger160 = Anim = 20630 && AnimElemNo(0) = 4
+trigger161 = Anim = 20640 && AnimElemNo(0) = [2, 3]
+trigger162 = Anim = 20640 && AnimElemNo(0) = 4
+trigger163 = Anim = 24110 && AnimElemNo(0) = 3
+trigger164 = Anim = 24110 && AnimElemNo(0) = [9, 10]
+trigger165 = Anim = 24110 && AnimElemNo(0) = [16, 18]
+trigger166 = Anim = 24110 && AnimElemNo(0) = [19, 22]
 map = "au_raiclaven_q"
 value = 8440
 ignorehitpause = 1
@@ -14461,6 +14464,7 @@ type = RemoveExplod
 trigger1 = map(au_raiclaven_f) <= 0 && NumExplod(9601)
 id = 9601
 ignorehitpause = 1
+
 
 
 
