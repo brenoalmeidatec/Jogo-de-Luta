@@ -298,6 +298,32 @@ def vitoria():
     return "winquote.text = Venceu!\nwinquote.localcoord = 320, 240"
 
 
+def parabens():
+    """Tela de quem fecha o Arcade ([Win Screen]): o motor escreve "Congratulations!" na f-6x9 (sem acento)."""
+    return "\n".join([f"wintext.font = {_fonte(0, BRANCO)}", f"wintext.scale = {ESCALA}",
+                      "wintext.text = Parabéns!", "wintext.localcoord = 320, 240"])
+
+
+# [Warning Info]: avisos do motor (opções que pedem reiniciar, tecla repetida, controle não achado). Fonte f-6x9 do
+# motor, que só tem ASCII: por isso sem acento.
+AVISOS = [
+    ("title", "AVISO"),
+    ("text.reload", "Algumas opcoes so valem depois de reiniciar o jogo.\nAperte qualquer tecla para sair."),
+    ("text.noreload", "Algumas opcoes so valem depois de reiniciar o jogo.\nAperte qualquer tecla para continuar."),
+    ("text.keys", "Duas acoes estao na mesma tecla.\nCada tecla deve ter uma acao so.\n\n"
+                  "Aperte qualquer tecla para continuar.\nAperte ESC para voltar ao padrao."),
+    ("text.pad", "Controle nao encontrado.\nConfira se o controle esta ligado."),
+    ("text.shaders", "Nenhum shader encontrado na pasta external/shaders."),
+    ("text.disconnect", "O jogador %d saiu."),
+    ("text.desync", "Erro de sincronia na partida em rede."),
+]
+
+
+def avisos():
+    linhas = [f"{chave}.text = {sem_acento(texto)}" for chave, texto in AVISOS]
+    return "\n".join(linhas + ["title.localcoord = 320, 240", "text.localcoord = 320, 240"])
+
+
 def secoes():
     """As seções traduzidas, prontas para o system.def (o .bat ainda injeta done.key nelas)."""
     return f"""[Victory Screen]
@@ -319,4 +345,12 @@ bgclearcolor = 20,12,16
 
 [Continue Screen]
 {continuar()}
+credits.text = CREDITOS: %02d
+credits.localcoord = 320, 240
+
+[Win Screen]
+{parabens()}
+
+[Warning Info]
+{avisos()}
 """

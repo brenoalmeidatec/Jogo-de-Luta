@@ -1238,6 +1238,8 @@ loading.font = 3,0,-1
 loading.offset = 1248,700
 loading.text = CARREGANDO...
 loading.localcoord = {lc}
+loading.wait.text = CARREGANDO...
+loading.wait.localcoord = 320, 240
 footer.title.font = -1
 footer.title.localcoord = {lc}
 footer.info.font = -1          ; o "F1: INFO" saiu: em escala 0,5 a letra ficava fina, fora da grade de 4x
@@ -1509,6 +1511,9 @@ p1.name.font = 1,0,0
 p1.name.offset = 292,518
 p2.name.font = 1,0,0
 p2.name.offset = 988,518
+; aviso do motor quando o carregamento demora (meta 1.0: nenhum texto em ingles; fonte do motor, so ASCII)
+loading.wait.text = CARREGANDO...
+loading.wait.localcoord = 320, 240
 
 [VersusBGdef]
 bgclearcolor = 20,12,16
