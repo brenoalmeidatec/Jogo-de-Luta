@@ -81,3 +81,23 @@ finos que o braço do parado e sem a manga. Engrossar por código foi tentado e 
 ficaram em `ACEITAS` no `regua_corpo.py`: são recortes do próprio desenho original, e o braço do parado tem a manga.
 Tira dos braços reprovados (e do braço do Hazak aceito no olho): `docs/boneco-pecas/regua_corpo_bracos.png`.
 Relatório completo da primeira rodada: `docs/boneco-pecas/regua_corpo_2026-11-24.md` (o agachado reprovado é o mesmo da fila acima).
+
+## Rosto do kit nos quadros do desenho (Breno, 24/11 tarde)
+
+O Breno viu o chute baixo (430) e a rasteira (440) do Pengaró e pediu: "o Pengaró muda muito a cara dele, use o pacote
+de peças", com as expressões do kit acompanhando o golpe (item 4 do passo 5 da regra de criação).
+
+- **Achado:** no `pengaro_todo.especial()` a troca de rosto lia `info["cabeca"]`, que o `corrigir_cabeca.trocar()`
+  não devolvia; a exceção caía no `except` e o quadro ficava com o rosto do desenho. Nenhum quadro especial do Pengaró
+  tinha o rosto do kit desde o 01158293. Agora o `trocar()` devolve a máscara da cabeça nova.
+- **Cabeça na escala do desenho** (`acompanhar=True`): a cabeça do kit entra no tamanho da cabeça achada no quadro, então
+  o queixo e o cabelo velhos ficam cobertos. O 430/440 (corpo ~1,3x) procura a cabeça numa faixa larga
+  (`ESCALAS_LARGAS`, `ROSTO_NA_ESCALA` no pengaro_todo).
+- **Emendas:** o trapézio e o ombro de trás que a máscara da cabeça velha pegava voltam como estavam; pedaço pequeno do
+  queixo velho na frente do rosto novo sai; o riso (`provoca/06`) ganhou o queixo inteiro (`QUEIXO_EXTRA`).
+- **Expressão:** o mesmo desenho do contato segurado depois da batida mantém o esforço (o rosto não pisca para o foco).
+- **Pego no caminho:** a cabeçada em pé (303, 347, 3412, 3430) usa os mesmos desenhos da agachada; o `DOBRA` e o
+  `MAIS_FUNDO` agora valem só para os golpes agachados, e a cabeçada em pé feita à mão (`CABECADA`) voltou.
+- 113 ações do Pengaró base refeitas e religadas (`ligar_pecas --grupo 49000`, mesmos grupos). Robô de peças 0, régua das
+  pernas 0, robô de luta 189/189. Vídeo e foto: `docs/boneco-pecas/todo/rosto_kit_antes_depois.{mp4,png}`.
+- Falta: conferir o rosto do kit nos golpes do desenho dos outros lutadores (CK, Hazak/Diabo, Gbzin).
