@@ -84,7 +84,10 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--ouvir", type=Path)
     a = ap.parse_args()
-    loops = json.loads((RAIZ / "musicas" / "loops.json").read_text(encoding="utf-8"))
+    arq_loops = RAIZ / "musicas" / "loops.json"
+    if not arq_loops.exists():
+        sys.exit("Não achei musicas/loops.json (rode ferramentas/converter_musicas.py).")
+    loops = json.loads(arq_loops.read_text(encoding="utf-8"))
     ruins = 0
     print(f"{'faixa':<26}{'salto':>7}{'volume':>9}{'espectro':>10}  (espectro: 1,0 = passagem mais brusca da faixa)")
     for nome, info in loops.items():
@@ -93,6 +96,8 @@ def main():
             print(f"{nome:<26} FALTA o arquivo {info['arquivo']}")
             ruins += 1
             continue
+        if int(info.get("amostras_por_segundo", TAXA)) != TAXA:
+            print(f"{nome:<26} AVISO: loops.json em {info['amostras_por_segundo']} Hz, o robô decodifica em {TAXA}")
         x = decodificar(arq)
         ini = int(info["loopstart"])
         s, db, esp = emenda(x, ini)
