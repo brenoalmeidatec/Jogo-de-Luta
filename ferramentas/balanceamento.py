@@ -20,7 +20,9 @@ TABELA = {
     "ck": {"attack": "125", "defence": "105", "walk.fwd": "3.4", "run.fwd": "7.0, 0"},
     "gutto": {"attack": "90"},
     "hazaki": {"attack": "125", "defence": "100"},
-    "raiclaven": {"attack": "90"},
+    "raiclaven": {"attack": "100"},
+    # 24/11 (meta 1.0, torneio com os 6): Gbzin 68% com attack 125 / defence 105 herdados do CK, Raiclaven 35%
+    "gbzin": {"attack": "105", "defence": "100"},
 }
 
 
