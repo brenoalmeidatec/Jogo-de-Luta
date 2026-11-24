@@ -5,6 +5,10 @@ desenho gira e anda para a frente, com a rotação crescendo suave numa faixa (s
 arte própria (despertado) que não tem kit de peças; no Pengaró base o mesmo dobrar() roda no pengaro_todo.py.
 
     python3 ferramentas/dobra_agachado.py pengaro_desp_cabecada
+    python3 ferramentas/dobra_agachado.py --lutador gbzin      (todas as receitas do lutador)
+
+Quem refaz o lutador inteiro (gerar_<lutador>.py) tem de rodar isto de novo antes da aura e do encolher_sff: o gerador
+escreve as ações velhas por cima (o gerar_gbzin.py já chama).
 
 Cada receita (RECEITAS) diz: lutador, ação do .air, desenho do agachado (grupo, índice, já com a arte que o jogo mostra)
 e a lista de quadros (graus para a frente, px para a frente na tela 3x, tiques, caixa de ataque ou None). Os desenhos
@@ -158,6 +162,138 @@ def fazer(r):
     print(f"{lut}: ação {r['acao']} com {len(r['quadros'])} elementos e {len(unicos)} desenhos no grupo {r['grupo']}")
 
 
+# ------------------------------------------------------------------ refazer uma ação elemento a elemento
+# Para ação de desenho próprio (sem kit) em que só alguns quadros levantam, ou em que o golpe foi desenhado maior que
+# o agachado (Gbzin despertado: os golpes agachados têm 332 px e o agachado 267): cada elemento da ação continua com o
+# mesmo tique e as mesmas caixas; o desenho dele pode ser trocado (`de`), encolhido em volta do pé (`esc`, as caixas
+# encolhem junto) e ter o tronco dobrado (`ang`, `dx`). `caixa` troca a Clsn1 do elemento. Num despertado
+# (`despertado=True`) o desenho de origem passa pelo [RemapPreset despertado], como o jogo mostra.
+def remap_despertado(cns):
+    t = cns.read_text(encoding="utf-8")
+    bloco = re.search(r"^\[RemapPreset despertado\]\n(.*?)(?=^\[)", t, re.M | re.S)
+    return {(int(g), int(i)): (int(g2), int(i2))
+            for g, i, g2, i2 in re.findall(r"^(\d+),\s*(\d+)\s*=\s*(\d+),\s*(\d+)", bloco.group(1), re.M)}
+
+
+def encolher(img, ax, ay, esc):
+    if esc == 1:
+        return img, ax, ay
+    h, w = img.shape[:2]
+    nw, nh = max(1, round(w * esc)), max(1, round(h * esc))
+    return np.asarray(Image.fromarray(img).resize((nw, nh), Image.NEAREST)), round(ax * esc), round(ay * esc)
+
+
+def refazer(r):
+    lut = r["lutador"]
+    pasta = RAIZ / "chars" / lut
+    sff, air, cns = pasta / f"{lut}.sff", pasta / f"{lut}.air", pasta / f"{lut}.cns"
+    pal, nos, _ = cs.ler(sff)
+    extras = list(cs.EXTRAS.get(str(sff.resolve()), []))
+    por_chave = {(n["g"], n["i"]): n for n in nos}
+    remap = remap_despertado(cns) if r.get("despertado") else {}
+    prgb = lp.paleta_rgb(pal)
+    texto = air.read_text(encoding="utf-8")
+    m = re.search(r"\[Begin Action %d\].*?(?=\n\[Begin Action|\Z)" % r["acao"], texto, re.I | re.S)
+    assert m, f"ação {r['acao']} não achada"
+    linhas = m.group(0).split("\n")
+    esc0 = r.get("esc", 1.0)
+    desenhos, novos, saida, k, pend_caixa = {}, [], [], 0, None
+    for ln in linhas:
+        el = re.match(r"^\s*(\d+)\s*,\s*(\d+)\s*,(.*)$", ln)
+        cx = re.match(r"^(\s*Clsn([12])(?:Default)?(?:\[\d+\])?\s*=\s*)(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)(.*)$", ln)
+        if ln.startswith("[Begin Action"):
+            saida += [ln, f"; refeita por dobra_agachado.py ({r['nome']}): golpe agachado fica agachado (#32)"]
+        elif cx:
+            saida.append(ln)  # ajustada quando o elemento chega (a escala é a dele)
+        elif el:
+            g, i = int(el.group(1)), int(el.group(2))
+            mud = dict(r.get("mudar", {}).get(k, {}))
+            esc = mud.get("esc", esc0)
+            de = mud.get("de", (g, i))
+            de = remap.get(de, de)
+            ang, dx = mud.get("ang", 0), mud.get("dx", 0)
+            chave = (de, esc, ang, dx)
+            if chave not in desenhos:
+                n = por_chave[de]
+                assert not n.get("png") and n.get("pi", 0) == 0, f"{de}: só desenho na paleta do lutador"
+                img, ax, ay = encolher(rgba(n, pal), n["x"], n["y"], esc)
+                if ang or dx:
+                    folga = 120
+                    tela = np.zeros((img.shape[0] + 2 * folga, img.shape[1] + 2 * folga, 4), np.uint8)
+                    tela[folga:folga + img.shape[0], folga:folga + img.shape[1]] = img
+                    out = dobrar(tela, ang, dx)
+                    ys, xs = np.nonzero(out[..., 3] > 0)
+                    y0, x0 = ys.min(), xs.min()
+                    img, ax, ay = out[y0:ys.max() + 1, x0:xs.max() + 1], ax + folga - x0, ay + folga - y0
+                rec = Image.fromarray(np.ascontiguousarray(img))
+                desenhos[chave] = len(desenhos)
+                novos.append((r["grupo"], desenhos[chave], rec.width, rec.height, int(ax), int(ay),
+                              lp.indexar(rec, prgb).tobytes(), 0))
+            # caixas deste elemento (as linhas Clsn logo acima dele): encolhe ou troca a Clsn1
+            j = len(saida)
+            while j > 0 and re.match(r"^\s*Clsn", saida[j - 1]):
+                j -= 1
+            bloco = saida[j:]
+            del saida[j:]
+            if "caixa" in mud:
+                bloco = [b for b in bloco if not re.match(r"^\s*Clsn1", b)]
+                if mud["caixa"]:
+                    c = mud["caixa"]
+                    bloco += ["Clsn1: 1", f" Clsn1[0] = {c[0]}, {c[1]}, {c[2]}, {c[3]}"]
+            padrao = False  # linhas depois de "Clsn2Default:" valem para a ação toda: encolhem pela escala geral
+            for b in bloco:
+                if re.match(r"^\s*Clsn[12](Default)?\s*:", b):
+                    padrao = "Default" in b
+                cb = re.match(r"^(\s*Clsn[12](?:\[\d+\])?\s*=\s*)(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)(.*)$", b)
+                e = esc0 if padrao else esc
+                if cb and e != 1 and not (not padrao and mud.get("caixa") and "Clsn1" in b):
+                    v = [round(int(cb.group(q)) * e) for q in range(2, 6)]
+                    b = f"{cb.group(1)}{v[0]}, {v[1]}, {v[2]}, {v[3]}{cb.group(6)}"
+                saida.append(b)
+            saida.append(f"{r['grupo']},{desenhos[chave]},{el.group(3)}")
+            k += 1
+        else:
+            saida.append(ln)
+    rle, png = [], []
+    for n in nos:
+        if n["g"] == r["grupo"]:
+            continue
+        if n.get("png"):
+            png.append((n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], n["px"]))
+        else:
+            rle.append((n["g"], n["i"], n["w"], n["h"], n["x"], n["y"], n["px"], n.get("pi", 0)))
+    efeitos.gravar(sff, pal, rle + novos, png, extras)
+    texto = texto[:m.start()] + "\n".join(saida) + texto[m.end():]
+    air.write_text(texto, encoding="utf-8")
+    print(f"{lut}: ação {r['acao']} refeita com {k} elementos e {len(desenhos)} desenhos no grupo {r['grupo']}")
+
+
+CAIXA_GBZIN = (10, -228, 124, -110)
+REFAZER = {
+    # Gbzin: a bengalada agachada (410) levantava e erguia a bengala acima da cabeça; agora fica agachado e entra de
+    # tronco com a bengala na mão (do 443, o agachado de bengala na cintura). Contato nos mesmos tiques.
+    "gbzin_410": dict(lutador="gbzin", acao=410, grupo=41410, mudar={
+        2: dict(de=(443, 0), ang=22, dx=18, caixa=CAIXA_GBZIN), 3: dict(de=(443, 0), ang=22, dx=18, caixa=CAIXA_GBZIN),
+        4: dict(de=(443, 0), ang=22, dx=18), 5: dict(de=(443, 0), ang=11, dx=9)}),
+    # rasteira (440): o último quadro saía em pé; agora volta para o agachado
+    "gbzin_440": dict(lutador="gbzin", acao=440, grupo=41440, mudar={7: dict(de=(362, 0))}),
+    # despertado: os golpes agachados foram desenhados ~23% maiores que o agachado dele (332 px contra 267): encolhem em
+    # volta do pé para o tamanho do agachado; a bengalada é a mesma troca da base
+    "gbzin_desp_10400": dict(lutador="gbzin", acao=10400, grupo=41400, despertado=True, esc=0.82),
+    "gbzin_desp_10430": dict(lutador="gbzin", acao=10430, grupo=41430, despertado=True, esc=0.82),
+    "gbzin_desp_10440": dict(lutador="gbzin", acao=10440, grupo=41444, despertado=True, esc=0.82,
+                             mudar={7: dict(de=(362, 0), esc=1.0)}),
+    "gbzin_desp_10410": dict(lutador="gbzin", acao=10410, grupo=41411, despertado=True, mudar={
+        1: dict(esc=0.9),
+        2: dict(de=(443, 0), ang=22, dx=18, caixa=CAIXA_GBZIN), 3: dict(de=(443, 0), ang=22, dx=18, caixa=CAIXA_GBZIN),
+        4: dict(de=(443, 0), ang=22, dx=18), 5: dict(de=(443, 0), ang=11, dx=9)}),
+}
+for _n, _r in REFAZER.items():
+    _r["nome"] = _n
+
 if __name__ == "__main__":
-    for nome in sys.argv[1:] or list(RECEITAS):
-        fazer(RECEITAS[nome])
+    args = sys.argv[1:]
+    if args[:1] == ["--lutador"]:  # todas as receitas de um lutador (gerador que refaz o lutador inteiro chama isto)
+        args = [n for n, r in {**RECEITAS, **REFAZER}.items() if r["lutador"] == args[1]]
+    for nome in args or list(RECEITAS) + list(REFAZER):
+        refazer(REFAZER[nome]) if nome in REFAZER else fazer(RECEITAS[nome])

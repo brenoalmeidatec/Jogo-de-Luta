@@ -37,9 +37,11 @@ Precisa de `scikit-image` (`pip install scikit-image`). Sai com código 1 se rep
 | CK despertado (Ratão) | golpe agachado forte (10410) subia inteiro com a garrafa no alto: agora sai do agachado dele com o tronco dobrando (`dobra_agachado.py`); braço da garrafa engrossado (71% → 81%) no Paredão no Talo | 0 | 0 de 52 | 226/226 | 24/11 |
 | Hazak base | joelhada subindo (410) levantava inteira com o joelho no alto: agora é o agachado com o tronco entrando de ombro e testa (`dobra_agachado.py`, receita `hazak_agachado_forte`), caixa baixa (22,-186,122,-86), Clsn2 do agachado | 0 | — | 327/327 | 24/11 |
 | Hazak despertado (Diabo) | a 410 no despertado mostrava o Diabo loiro em pé com a maleta: agora é o agachado do demônio dobrando (quadros próprios 41411 pelo remap); Garra Subindo (4401) do agachado dele, tronco afunda e desenrola para cima (receita `diabo_garra_subindo`) | 0 | — | 327/327 | 24/11 |
+| Gbzin base | bengalada agachada (410) levantava com a bengala acima da cabeça: agora entra de tronco do agachado com a bengala (`dobra_agachado.py`, modo `REFAZER`: troca só os quadros que levantam, mesmos tiques), caixa baixa; a rasteira (440) volta para o agachado e não mais em pé | 0 | — | 236/236 | 24/11 |
+| Gbzin despertado | os quatro golpes agachados (10400/10410/10430/10440) foram desenhados ~23% maiores que o agachado dele: encolhidos em volta do pé para o tamanho do agachado (caixas junto); a bengalada é a mesma troca da base | 0 | — | 236/236 | 24/11 |
 
 Vídeos e fotos (`.mp4` e `.png`, a foto no instante em que antes e depois mais diferem): `docs/boneco-pecas/gutto/`,
-`docs/boneco-pecas/todo/` (Pengaró), `docs/boneco-pecas/ck/` e `docs/boneco-pecas/hazaki/`, todos `pernas_antes_depois`. Os primeiros vídeos (24/11
+`docs/boneco-pecas/todo/` (Pengaró), `docs/boneco-pecas/ck/`, `docs/boneco-pecas/hazaki/` e `docs/boneco-pecas/gbzin/`, todos `pernas_antes_depois`. Os primeiros vídeos (24/11
 de manhã) mostravam o lutador novo dos dois lados, porque o `video_golpe.py` lê sempre `chars/<lutador>`; refeitos com
 `ferramentas/antes_depois/` (o antes sai de um commit do git, tela maior sem cortar cabeça e pé). O Alisson pegou.
 
@@ -51,6 +53,9 @@ de manhã) mostravam o lutador novo dos dois lados, porque o `video_golpe.py` l�
   ao tamanho do agachado), `AGACHADAS` (fim do golpe volta para o agachado), `volta_dobrada()` (quadros do meio).
 - `dobra_agachado.py`: o mesmo dobrar para arte própria sem kit (despertados); receitas em `RECEITAS`. Aceita desenho
   em PNG (arte do despertado) e `desp=` para a ação da base que o despertado vê pelo remap (escreve o `[RemapPreset]`).
+  Modo `REFAZER` (elemento a elemento: troca, encolhe e dobra só o que precisa) e `--lutador X` para rodar tudo de um
+  lutador. **Quem regerar um lutador com o `gerar_<lutador>.py` roda `dobra_agachado.py --lutador X` de novo** (o
+  `gerar_gbzin.py` já chama).
 - `gerar_pengaro.py`: caixa da 410 na testa abaixada.
 - `firme.py` / `pecas_ck.py`: `ENGROSSAR = {(slot, variante): fator}` no kit engorda o membro em volta do eixo dele
   (`boneco_ajuste.engrossar`), para o braço que a `regua_corpo.py` acusou de fino.
@@ -61,7 +66,7 @@ de manhã) mostravam o lutador novo dos dois lados, porque o `video_golpe.py` l�
 
 ## Falta
 
-Raiclaven e Gbzin (base e despertado), na régua de 24/11: golpe agachado 410 levanta (Raiclaven 410, Gbzin 410/440 e os agachados do despertado). A aura do Gutto foi religada
+Raiclaven 410 (em andamento). A aura do Gutto foi religada
 (`aura_no_corpo.py gutto`) depois dos desenhos novos. Depois: sobras do Pengaró (manchas na calça, ombro de trás, pé girado; e o chute baixo 430 e a
 rasteira 440 dele são desenhados uns 25% maiores que o agachado, cabeça maior: pedem arte nova no mesmo agachado).
 

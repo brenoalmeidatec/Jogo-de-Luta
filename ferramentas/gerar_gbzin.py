@@ -1297,6 +1297,7 @@ def main():
     # encolher_sff indexa os grupos 49000+ numa paleta própria.
     for passo in (["ligar_pecas.py", "gbzin"],
                   ["ligar_pecas.py", "gbzin", "--de", "gbzin", "--pasta", "quadros_e_pecas_hd", "--grupo", "49000"],
+                  ["dobra_agachado.py", "--lutador", "gbzin"],  # #32: golpes agachados que não levantam
                   ["aura_silhueta.py", "gbzin"], ["encolher_sff.py", "gbzin", "--indexar", "49000-49099"]):
         subprocess.run([sys.executable, str(RAIZ / "ferramentas" / passo[0])] + passo[1:], check=True)
 
