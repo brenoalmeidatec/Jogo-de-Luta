@@ -106,6 +106,21 @@ def indexar(img, pal):
     return px
 
 
+# Escala dos quadros de outra pasta (--de) para casar com o resto do lutador no jogo. O kit do Garanhão foi desenhado
+# ~19% menor que a arte antiga dele (andar, pulo, apanha, agachado...): no jogo o parado e os golpes do kit encolhiam e
+# o resto crescia de novo (régua da cabeça: kit 0,81 da arte antiga; meta 1.0, proporção, 2026-11-24). 1,23 = 1 / 0,81.
+ESCALA_DE = {"garanhao": 1.23}
+
+
+def escalar(img, ex, ey, s):
+    """Cresce o desenho recortado em volta do eixo (ex, ey) por s, vizinho mais próximo: no HD (3x, mostrado em 1/3)
+    a repetição de linha fica abaixo do pixel da tela, e a paleta e o alfa seco (0/255) não mudam."""
+    if abs(s - 1) < 1e-6:
+        return img, ex, ey
+    w, h = max(1, round(img.width * s)), max(1, round(img.height * s))
+    return img.resize((w, h), Image.NEAREST), round(ex * s), round(ey * s)
+
+
 def recortar(img):
     a = np.asarray(img)
     ys, xs = np.nonzero(a[..., 3] > 127)
@@ -329,6 +344,7 @@ def ligar(lutador, golpes, grupo_base=48000, de=None, ajustar=False, pasta="quad
         (png if no.get("png") else rle).append((no["g"], no["i"], no["w"], no["h"], no["x"], no["y"], no["px"]))
     for (g, i), arq in sorted(novos_spr.items()):
         img, ex, ey = recortar(Image.open(arq).convert("RGBA"))
+        img, ex, ey = escalar(img, ex, ey, ESCALA_DE.get(de, 1.0))
         if de:  # outra pasta (o despertado) tem cores que a paleta da forma base não tem: vai em PNG RGBA, como os
             # efeitos do .sff (na paleta de 255 cores o brilho vermelho das rachaduras apagava)
             png.append((g, i, img.width, img.height, int(ex), int(ey), efeitos.blob_png(img)))
