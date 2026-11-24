@@ -36,6 +36,9 @@ continuam em [`regras-dos-lutadores.md`](regras-dos-lutadores.md). Estilo e core
   [`regra-de-criacao-de-personagem.md`](regra-de-criacao-de-personagem.md), do conceito até o jogo e a revisão. O
   boneco é desenhado uma vez, vira kit de peças, e todo quadro sai dessas peças (corpo firme com vida). Ela vale acima
   das outras regras de arte e animação deste arquivo.
+- **Régua do corpo todo** (Breno, 2026-11-24, a partir da régua das pernas do Alisson): nenhum lutador sobe com
+  membro fino, curto ou inchado nem golpe agachado levantando. `python ferramentas/regua_corpo.py` tem que dar 0, junto
+  com o robô de defeitos. Detalhe no passo 8 da [`regra-de-criacao-de-personagem.md`](regra-de-criacao-de-personagem.md#régua-do-corpo-todo-alisson-2026-11-24-regra-do-breno-no-mesmo-dia).
 - **Receita de lutador** (Breno, 2026-11-15): tudo o que foi aprendido criando os lutadores é regra para os próximos,
   em [`receita-de-lutador.md`](receita-de-lutador.md).
 - **Blender só deforma os sprites desenhados** para criar os quadros do meio. Nunca modela o personagem.

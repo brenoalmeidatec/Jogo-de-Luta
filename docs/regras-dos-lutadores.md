@@ -589,6 +589,10 @@ No boneco de peças quem confere é o robô (`conferir()` em `ferramentas/piloto
 `ferramentas/pengaro_todo.py animar`): o relatório tem que dar **0 defeitos**. Expressões junto com as falas vêm
 depois, quando o Alisson gravar as vozes.
 
+Membro fino, curto ou inchado e golpe agachado que levanta também são erro: a **régua do corpo todo**
+(`ferramentas/regua_corpo.py`, que roda a `regua_pernas.py` do Alisson e mede braço, cabeça e tronco) tem que dar 0.
+Limites no passo 8 da [`regra-de-criacao-de-personagem.md`](regra-de-criacao-de-personagem.md).
+
 ---
 
 ## 8. Regra dos efeitos: o estilo pixelfx
@@ -688,6 +692,8 @@ Produção
 [ ] todo golpe tem antecipação, smear, contato segurado e recuperação legível (seção 7.2)
 [ ] zero erro de animação (seção 7.4): nada descolando, silhueta grossa, pedaço voando ou movimento estranho; soco
     com quadril e passo, sem linha de corte entre as peças, robô do boneco de peças com 0 defeitos
+[ ] régua do corpo todo em 0 (`python ferramentas/regua_corpo.py <lutador>`): golpe agachado não levanta, nenhuma
+    peça variante de perna, braço, cabeça ou tronco fina, curta ou inchada perto da do parado
 [ ] todo impacto usa efeito do pixelfx (seção 8.1), com pausetime/EnvShake pelo piso da 8.3
 [ ] caixas conferidas no editor; combos conferidos no ikemen-combo-finder
 [ ] gerador roda limpo e o verificador passa; nada editado à mão em chars/<nome>/
