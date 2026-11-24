@@ -135,7 +135,7 @@ def medir(acao, elems, desenhos, mascara=None):
             return m2
         return m1
     quadros, tot_lum, tot_op, soma_cor = [], 0, 0, np.zeros(3)
-    caixa = None
+    caixa, larg, alt = None, 0, 0
     for g, i, x, y, t, flip, _ in elems:
         d = desenhos.rgba(g, i) if g >= 0 else None
         if d is None:
@@ -157,6 +157,7 @@ def medir(acao, elems, desenhos, mascara=None):
             x0, x1, y0, y1 = xs.min() - ax, xs.max() - ax, ys.min() - ay, ys.max() - ay
             r = max(x1 - x0, y1 - y0) / 2
             caixa = r if caixa is None else max(caixa, r)
+            larg, alt = max(larg, x1 - x0), max(alt, y1 - y0)
             quadros.append((n, cx + x, cy + y, t, r))
         else:
             quadros.append((0.0, 0, 0, t, 0.0))
@@ -164,7 +165,7 @@ def medir(acao, elems, desenhos, mascara=None):
         return None
     pico = max((q[0] for q in quadros), default=0)
     cor = tuple(int(v) for v in soma_cor / tot_lum) if tot_lum else (255, 220, 160)
-    return dict(acao=acao, lum=round(tot_lum / tot_op, 3), px=int(pico), cor=cor, raio=float(caixa or 0),
+    return dict(acao=acao, lum=round(tot_lum / tot_op, 3), px=int(pico), cor=cor, raio=float(caixa or 0), larg=int(larg), alt=int(alt),
                 quadros=[(round(n / pico, 3) if pico else 0.0, round(float(cx)), round(float(cy)), t,
                           round(float(r) / caixa, 3) if caixa else 1.0)
                          for n, cx, cy, t, r in quadros])
@@ -349,17 +350,29 @@ def _queda(t):
     return np.interp(t, GRAD_OFF, GRAD_VAL)
 
 
-def luz_redonda(r, cor, pico, grao):
-    """RGBA da luz (alfa por pixel, cor cheia) com a curva do KIKIU em degraus e pontilhado; eixo no centro."""
+CORTE = 0.07   # abaixo disto a luz é zero: o pontilhado fraco virava pontinhos soltos no cenário escurecido (CK)
+
+
+def luz_redonda(r, cor, pico, grao, miolo=0.0):
+    """RGBA da luz (alfa por pixel, cor cheia) com a curva do KIKIU em degraus e pontilhado; eixo no centro.
+
+    `miolo`: fração do raio em que a cor vai para o branco (o clarão do golpe: aparece em qualquer fundo e a cor da
+    faísca não vira oliva nem some no verde-claro)."""
     n = max(3, int(math.ceil(r / grao)))
     w = 2 * n + 1
     ys, xs = np.mgrid[0:w, 0:w].astype(float)
     t = np.hypot(xs - n, ys - n) / n
-    v = np.clip(_queda(np.minimum(t, 1.0)), 0, 1)
+    v0 = np.clip(_queda(np.minimum(t, 1.0)), 0, 1)
     lim = np.tile(BAYER, (w // 4 + 1, w // 4 + 1))[:w, :w]
-    v = np.floor(v * 10 + lim) / 10 * pico
+    v = np.floor(v0 * 10 + lim) / 10 * pico
+    v[v0 * pico < CORTE] = 0
     img = np.zeros((w, w, 4), np.uint8)
-    img[..., :3] = np.array(cor, np.uint8)
+    rgb = np.broadcast_to(np.array(cor, float), (w, w, 3)).copy()
+    if miolo > 0:
+        k = np.clip((miolo - t) / miolo, 0, 1)[..., None]
+        k = np.floor(k * 4 + lim[..., None]) / 4          # o branco também em degraus de pixel
+        rgb = rgb * (1 - k) + 255 * k
+    img[..., :3] = np.clip(rgb, 0, 255).astype(np.uint8)
     img[..., 3] = np.clip(v * 255, 0, 255).astype(np.uint8)
     im = Image.fromarray(img, "RGBA").resize((w * grao, w * grao), Image.NEAREST)
     return im, w * grao // 2, w * grao // 2
@@ -397,6 +410,57 @@ def acao_de_luz(numero, grupo, base_i, elems, quadros):
         idx = base_i + _tamanho(rr) * NIVEIS + k
         linhas.append(f"-1,-1, 0,0, {t}" if k < 0 else f"{grupo},{idx}, {cx},{cy}, {t}")
     return "\n".join(linhas) + "\n"
+
+
+GRUPO_FX = 9727          # grupo antigo da luz do contorno em Explod (só para tirar de .sff velhos)
+R_FEIXE = 40             # quanto a luz do raio passa do contorno dele (pixels do jogo); usada em luz.assar_feixes
+
+
+def luz_do_contorno(a, ax, ay, cor, pico, r=R_FEIXE, grao=2):
+    """RGBA da luz que abraça o desenho: distância até o pixel que brilha, na curva do KIKIU, em grão e pontilhado.
+
+    A luz nasce do contorno do brilho, então acompanha a ponta do raio enquanto ele cresce e não vai na frente."""
+    m, _ = brilho(a)
+    if m.sum() < 8:
+        m, _ = claro(a)
+    h, w = m.shape
+    n = int(math.ceil(r / grao))
+    # máscara em grão, com folga de n em volta
+    hh, ww = -(-h // grao), -(-w // grao)
+    mg = np.zeros((hh * grao, ww * grao), bool)
+    mg[:h, :w] = m
+    mg = mg.reshape(hh, grao, ww, grao).any(axis=(1, 3))
+    big = np.zeros((hh + 2 * n, ww + 2 * n), bool)
+    big[n:n + hh, n:n + ww] = mg
+    dist = np.where(big, 0.0, np.inf)
+    cur = big.copy()
+    for d in range(1, n + 1):   # dilatação passo a passo: distância de xadrez, arredondada pelo passo diagonal
+        viz = cur.copy()
+        viz[1:, :] |= cur[:-1, :]
+        viz[:-1, :] |= cur[1:, :]
+        viz[:, 1:] |= cur[:, :-1]
+        viz[:, :-1] |= cur[:, 1:]
+        if d % 3:   # 2 de cada 3 passos também na diagonal: o contorno sai redondo e não quadrado
+            viz[1:, 1:] |= cur[:-1, :-1]
+            viz[1:, :-1] |= cur[:-1, 1:]
+            viz[:-1, 1:] |= cur[1:, :-1]
+            viz[:-1, :-1] |= cur[1:, 1:]
+        novo = viz & ~cur
+        dist[novo] = d
+        cur = viz
+    t = np.clip(dist / n, 0, 1)
+    v = np.clip(_queda(np.minimum(t, 1.0)), 0, 1)
+    v[big] = 1.0
+    H, W = big.shape
+    lim = np.tile(BAYER, (H // 4 + 1, W // 4 + 1))[:H, :W]
+    v0 = v
+    v = np.floor(v * 10 + lim) / 10 * pico
+    v[v0 * pico < CORTE] = 0
+    img = np.zeros((H, W, 4), np.uint8)
+    img[..., :3] = np.array(cor, np.uint8)
+    img[..., 3] = np.clip(v * 255, 0, 255).astype(np.uint8)
+    im = Image.fromarray(img, "RGBA").resize((W * grao, H * grao), Image.NEAREST)
+    return im, ax + n * grao, ay + n * grao
 
 
 def _troca_anim(expr, mapa):
@@ -528,7 +592,7 @@ def gerar(lutador, cns, air_texto, pasta, extras=()):
     for f, cor in enumerate(cores_fa):
         texto_f = [f"[Begin Action {ACAO_FA + f}]"]
         for k, (forca, t) in enumerate(FAISCA_PASSOS):
-            sp[(GRUPO_FA, f * NIVEIS + k)] = luz_redonda(40, cor, forca, 2)
+            sp[(GRUPO_FA, f * NIVEIS + k)] = luz_redonda(40, cor, forca, 2, miolo=0.3)
             texto_f.append(f"{GRUPO_FA},{f * NIVEIS + k}, 0,0, {t}")
         texto.append("\n".join(texto_f) + "\n")
     bloco = [MARCA_FA + ": clarão das faíscas de golpe (issue #51). Não edite: rode python3 ferramentas/luz.py"]

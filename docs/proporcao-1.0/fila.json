@@ -1,0 +1,86 @@
+[
+ {
+  "lutador": "pengaro",
+  "forma": "Pengaró",
+  "despertado": false,
+  "altura": 108.7,
+  "pct": 45.3
+ },
+ {
+  "lutador": "pengaro",
+  "forma": "Endiabrado",
+  "despertado": true,
+  "altura": 124.0,
+  "pct": 51.7
+ },
+ {
+  "lutador": "hazaki",
+  "forma": "Hazak",
+  "despertado": false,
+  "altura": 108.0,
+  "pct": 45.0
+ },
+ {
+  "lutador": "hazaki",
+  "forma": "Diabo Loiro",
+  "despertado": true,
+  "altura": 116.7,
+  "pct": 48.6
+ },
+ {
+  "lutador": "ck",
+  "forma": "CK",
+  "despertado": false,
+  "altura": 113.3,
+  "pct": 47.2
+ },
+ {
+  "lutador": "ck",
+  "forma": "Ratão",
+  "despertado": true,
+  "altura": 109.3,
+  "pct": 45.6
+ },
+ {
+  "lutador": "gutto",
+  "forma": "Gutto",
+  "despertado": false,
+  "altura": 112.7,
+  "pct": 46.9
+ },
+ {
+  "lutador": "gutto",
+  "forma": "Garanhão",
+  "despertado": true,
+  "altura": 107.0,
+  "pct": 44.6
+ },
+ {
+  "lutador": "raiclaven",
+  "forma": "Raiclaven",
+  "despertado": false,
+  "altura": 119.0,
+  "pct": 49.6
+ },
+ {
+  "lutador": "raiclaven",
+  "forma": "Cientista",
+  "despertado": true,
+  "altura": 173.7,
+  "pct": 72.4
+ },
+ {
+  "lutador": "gbzin",
+  "forma": "Gbzin",
+  "despertado": false,
+  "altura": 111.7,
+  "pct": 46.5
+ },
+ {
+  "lutador": "gbzin",
+  "forma": "Grão-Pastor",
+  "despertado": true,
+  "altura": 120.7,
+  "pct": 50.3
+ }
+]
