@@ -35,9 +35,11 @@ Precisa de `scikit-image` (`pip install scikit-image`). Sai com código 1 se rep
 | Pengaró despertado | cabeçada agachada (10410) feita do agachado dele com o tronco dobrando (`ferramentas/dobra_agachado.py`), quadros do meio na volta | 0 | — | 189/189 | 24/11 |
 | CK base | uppercut agachado (410) saía em pé: agora fica agachado (poses `uppercut_baixo` no `pecas_ck.py`), caixa de ataque baixa (`CX_UPPER_BAIXO`); braço de trás do direto e do overhand engrossado (73%/74% → 83%/80% do parado, `ENGROSSAR`), refeitos cruzado, cruzado rápido, overhand, bote e bote forte | 0 | 0 | 226/226 | 24/11 |
 | CK despertado (Ratão) | golpe agachado forte (10410) subia inteiro com a garrafa no alto: agora sai do agachado dele com o tronco dobrando (`dobra_agachado.py`); braço da garrafa engrossado (71% → 81%) no Paredão no Talo | 0 | 0 de 52 | 226/226 | 24/11 |
+| Hazak base | joelhada subindo (410) levantava inteira com o joelho no alto: agora é o agachado com o tronco entrando de ombro e testa (`dobra_agachado.py`, receita `hazak_agachado_forte`), caixa baixa (22,-186,122,-86), Clsn2 do agachado | 0 | — | 327/327 | 24/11 |
+| Hazak despertado (Diabo) | a 410 no despertado mostrava o Diabo loiro em pé com a maleta: agora é o agachado do demônio dobrando (quadros próprios 41411 pelo remap); Garra Subindo (4401) do agachado dele, tronco afunda e desenrola para cima (receita `diabo_garra_subindo`) | 0 | — | 327/327 | 24/11 |
 
 Vídeos e fotos (`.mp4` e `.png`, a foto no instante em que antes e depois mais diferem): `docs/boneco-pecas/gutto/`,
-`docs/boneco-pecas/todo/` (Pengaró) e `docs/boneco-pecas/ck/`, todos `pernas_antes_depois`. Os primeiros vídeos (24/11
+`docs/boneco-pecas/todo/` (Pengaró), `docs/boneco-pecas/ck/` e `docs/boneco-pecas/hazaki/`, todos `pernas_antes_depois`. Os primeiros vídeos (24/11
 de manhã) mostravam o lutador novo dos dois lados, porque o `video_golpe.py` lê sempre `chars/<lutador>`; refeitos com
 `ferramentas/antes_depois/` (o antes sai de um commit do git, tela maior sem cortar cabeça e pé). O Alisson pegou.
 
@@ -47,7 +49,8 @@ de manhã) mostravam o lutador novo dos dois lados, porque o `video_golpe.py` l�
   só algumas animações não apaga mais as outras do `poses.json`.
 - `pengaro_todo.py`: `DOBRA` (quadro feito do agachado com o tronco dobrado), `MAIS_FUNDO` (agacha mais fundo e volta
   ao tamanho do agachado), `AGACHADAS` (fim do golpe volta para o agachado), `volta_dobrada()` (quadros do meio).
-- `dobra_agachado.py`: o mesmo dobrar para arte própria sem kit (despertados); receitas em `RECEITAS`.
+- `dobra_agachado.py`: o mesmo dobrar para arte própria sem kit (despertados); receitas em `RECEITAS`. Aceita desenho
+  em PNG (arte do despertado) e `desp=` para a ação da base que o despertado vê pelo remap (escreve o `[RemapPreset]`).
 - `gerar_pengaro.py`: caixa da 410 na testa abaixada.
 - `firme.py` / `pecas_ck.py`: `ENGROSSAR = {(slot, variante): fator}` no kit engorda o membro em volta do eixo dele
   (`boneco_ajuste.engrossar`), para o braço que a `regua_corpo.py` acusou de fino.
@@ -58,8 +61,7 @@ de manhã) mostravam o lutador novo dos dois lados, porque o `video_golpe.py` l�
 
 ## Falta
 
-Hazak, Raiclaven e Gbzin (base e despertado), na régua de 24/11: golpe agachado 410 levanta em quase todos (Hazak 410 e
-4401 do despertado, Raiclaven 410, Gbzin 410/440 e os agachados do despertado). A aura do Gutto foi religada
+Raiclaven e Gbzin (base e despertado), na régua de 24/11: golpe agachado 410 levanta (Raiclaven 410, Gbzin 410/440 e os agachados do despertado). A aura do Gutto foi religada
 (`aura_no_corpo.py gutto`) depois dos desenhos novos. Depois: sobras do Pengaró (manchas na calça, ombro de trás, pé girado; e o chute baixo 430 e a
 rasteira 440 dele são desenhados uns 25% maiores que o agachado, cabeça maior: pedem arte nova no mesmo agachado).
 

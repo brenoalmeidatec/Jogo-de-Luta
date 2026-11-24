@@ -11,5 +11,6 @@ ferramentas/antes_depois/juntar.sh /tmp/v Gutto /tmp/v/gutto.mp4 "410|chute alto
 python3 ferramentas/antes_depois/quadro_max.py /tmp/v /tmp/v/gutto.png 410 430 10410   # foto no instante que mais muda
 ```
 
-Ações de 10000 para cima (e 47000+) saem com `--despertado`. Confira a foto: se antes e depois estão iguais, o
+Ações de 10000 para cima saem com `--despertado`; ação da base vista no despertado (remap) vai como `410d|título`
+(e `410d` no quadro_max). Confira a foto: se antes e depois estão iguais, o
 vídeo está errado.
