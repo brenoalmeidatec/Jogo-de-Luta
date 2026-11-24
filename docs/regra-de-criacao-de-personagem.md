@@ -13,8 +13,9 @@ muda esta regra.
 
 1. Ficha e conceitos (forma base e despertada) aprovados pelo Breno na issue do lutador antes de qualquer folha.
 2. Folha-modelo grande (~500 px de boneco): perfil, frente e costas na mesma escala, com marca de lado na roupa.
-3. **O boneco é desenhado uma vez só** e vira um kit de peças. Todo quadro sai dessas mesmas peças: é o método do
-   **boneco de peças com corpo firme e vida**, regra para todos os lutadores desde 2026-11-17.
+3. **O boneco é desenhado uma vez só** e vira um kit de peças: é o método do **boneco de peças com corpo firme e
+   vida**, regra para todos os lutadores desde 2026-11-17. **Desde 2026-11-24 o desenho original do golpe é a base**:
+   as peças são encaixadas em cima dele e só tapam lacunas e corrigem textura e rosto, sem mudar a pose (passo 5).
 4. Ossos não mudam de tamanho, as cores são só as do kit (paleta travada), o rosto é sempre o do kit.
 5. Cada golpe é posado pela anatomia: corpo inteiro, peso, base, camadas perto e longe, mão livre fora do golpe.
 6. Tempo e caixas de golpe do jogo não mudam: mesma soma de ticks, mesmo tick de acerto, `Clsn1` no membro que bate.
@@ -108,10 +109,36 @@ Porta: o kit remonta o parado sem diferença visível, e a régua passa.
 
 ## 5. Posar cada golpe
 
+### O desenho original é a base (Breno, 2026-11-24; vale acima do resto deste passo)
+
+O Breno viu no jogo os golpes refeitos só com as peças (CK: Bote 1400 e uppercut agachado 410) com **cintura
+retorcida, perna entortada para baixo e buraco nas costas**. Nas palavras dele: *"a sprite do chat era certa na maioria
+das posições, tente usar as mesmas posições, só que com o esquema das partes você vai completando as lacunas que ficam
+abertas e corrigindo as texturas e desenhos"* e *"tomar a base das sprites para montar certinho com as peças, que aí vai
+ter mais exatidão na animação"*.
+
+Então, em todo golpe que já tem desenho (folha do ChatGPT ou quadro arcade aprovado):
+
+1. **A pose é a do desenho.** Silhueta, ângulo de cada membro, cintura, joelhos e pés saem do quadro original. As peças
+   são **encaixadas em cima dele** (decalque): cada peça vai para o lugar e o ângulo em que o membro está desenhado,
+   conferido por sobreposição (casca de cebola do original por baixo no montador). A peça não decide a pose.
+2. **A peça só entra onde o desenho falha:** lacuna (buraco nas costas, junta aberta, pedaço cortado), textura errada
+   (cor de fora, roupa trocando de estampa, borrão da IA) e rosto (sempre o do kit). Onde o desenho está certo, fica
+   o desenho.
+3. **Nada de torcer o corpo para caber na peça.** Se o membro desenhado não bate com nenhuma peça nem variante do kit
+   (escorço, perna dobrada funda, cintura girada), use o desenho daquele membro como está, ou faça uma variante nova
+   a partir dele. Nunca gire o tronco ou a cintura além do desenho, nunca estique, entorte ou engrosse uma peça por
+   código para passar na régua.
+4. **Porta extra:** a tira antes e depois tem que mostrar a mesma pose do original, quadro a quadro. Se o depois
+   mudou a pose (cintura, ângulo da perna, altura do agachado), volta. A régua do corpo todo e o robô continuam
+   valendo por cima.
+
+Golpe que não tem desenho nenhum é posado com as peças, como abaixo.
+
 Poucas poses-chave, bem escolhidas, montadas com as peças. Ferramenta: o [montador](montador.md)
 (`python ferramentas/montador.py --lutador <id>`), com casca de cebola, régua, caixa de golpe e **camada por pose**; ou as
-poses à mão no `kit_<lutador>.py`. Um rascunho da IA ou a folha antiga pode servir de guia de pose, mas **o quadro final
-usa só as peças do kit**.
+poses à mão no `kit_<lutador>.py`. Golpe com desenho segue a regra acima (o desenho é a base); golpe sem desenho usa
+só as peças do kit.
 
 A receita de cada golpe, pose por pose e com ticks, está no
 [`estudo-anatomia-golpes.md`](estudo-anatomia-golpes.md) (guarda, jab, direto, gancho, uppercut, chutes frontal,
@@ -219,8 +246,8 @@ python ferramentas/regua_corpo.py gutto      # um lutador
    - **Cabeça:** as expressões (dor, esforço, riso) com área e comprimento dentro de 15% da cabeça do parado. A cabeça
      não muda de tamanho.
    - **Tronco e quadril:** área dentro de 30% e grossura acima de 80%; a peça agachada é comparada com quadril e pernas.
-3. Variante que reprova é **redesenhada na grossura do parado** (como a perna esticada nova do Gutto, que saiu do
-   calção), não aceita. Só entra em `ACEITAS` no `regua_corpo.py` a peça conferida no olho em que a conta erra, com o
+3. Variante que reprova é **redesenhada na grossura do parado** a partir do desenho original do golpe (como a perna
+   esticada nova do Gutto, que saiu do calção), não aceita. Engrossar ou esticar a peça por código não conserta. Só entra em `ACEITAS` no `regua_corpo.py` a peça conferida no olho em que a conta erra, com o
    motivo escrito (ex.: braço do Hazak de lado contra o bíceps contraído do parado).
 4. Prova: antes e depois do lutador (tira e vídeo) na issue, régua em 0, robô de peças em 0 e robô de luta igual.
 
@@ -306,4 +333,5 @@ O guia de quem muda o quê em cada lutador é o [`aplicar-estudo-anatomia.md`](a
 | Montador, pintar e apagar na peça, camada por pose | [`montador.md`](montador.md), Breno, 2026-11-17 |
 | Régua das pernas (agachado não levanta, perna do kit na grossura do parado) | Alisson, 2026-11-24, issue #32 ([`pernas-e-agachado.md`](pernas-e-agachado.md)) |
 | Régua do corpo todo (braço, cabeça e tronco na mesma conta) | Breno, 2026-11-24, nesta regra |
+| O desenho original é a base; peças só tapam lacuna e corrigem textura | Breno, 2026-11-24, depois de ver o CK (1400 e 410) |
 | Conceito, despertado, aura, luz, agarrões | [`receita-de-lutador.md`](receita-de-lutador.md), Breno, 2026-11-15 |
