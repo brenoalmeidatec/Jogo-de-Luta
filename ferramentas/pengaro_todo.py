@@ -96,6 +96,10 @@ DOBRA = {
 MAIS_FUNDO = {q: (0.88, 0.96) for q in ("baixo_soco/03", "baixo_soco/04", "baixo_soco/06")}
 # golpes agachados: o fim do golpe volta para o agachado, não para o parado em pé
 AGACHADAS = {400, 410, 430, 440}
+# chute baixo (430) e rasteira (440): os desenhos de hoje são maiores que o agachado (cabeça 1,26x e 1,32x a do kit,
+# o agachado 0,95x; reguas.escala_cabeca). O quadro inteiro encolhe em volta do pé até o tamanho do agachado, sem
+# mudar a pose (regra do desenho original, 24/11); a Clsn1 encolhe junto no .air (alcance = onde o pé chega).
+ENCOLHE_ACAO = {430: 0.75, 440: 0.72}
 _POSES = {}
 
 
@@ -649,6 +653,9 @@ def cmd_animar(so=None):
                          and not (e.startswith("solta") and any(a.startswith("solta") for a in antes))]
             if erros:
                 defeitos.append(f"{i:02d} ({q}): {'; '.join(erros)}")
+            if n in ENCOLHE_ACAO:
+                from firme import na_tela
+                out = na_tela(out, ENCOLHE_ACAO[n])
             Image.fromarray(out).save(SAIDA / str(n) / f"{i:02d}.png")
             Image.fromarray(np.ascontiguousarray(out[1::3, 1::3])).save(SAIDA_1X / str(n) / f"{i:02d}.png")
         tempos = {"acao": n, "elementos": [{"desenho": i, "ticks": t, "caixa": c, "de": ch}

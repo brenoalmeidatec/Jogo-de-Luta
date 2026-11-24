@@ -33,6 +33,7 @@ Precisa de `scikit-image` (`pip install scikit-image`). Sai com código 1 se rep
 | Gutto despertado (Garanhão) | chifrada que sobe (10410) fica de quatro, só tronco, cabeça e patas sobem; golpes agachados do kit voltam para o agachado, não para o em pé (`AGACHADOS` no kit, `firme.py`) | 0 | 0 de 242 | 186/186 | 24/11 |
 | Pengaró base | cabeçada agachada (410) saía em pé com a perna esticada: agora é o agachado com o tronco dobrando na cintura (`dobrar()` no `pengaro_todo.py`), caixa de ataque baixada para a testa (20,-220,120,-110); soco agachado (400) mais fundo e no tamanho do agachado, e o último quadro volta agachado | 0 | 0 de 164 ações | 189/189 | 24/11 |
 | Pengaró despertado | cabeçada agachada (10410) feita do agachado dele com o tronco dobrando (`ferramentas/dobra_agachado.py`), quadros do meio na volta | 0 | — | 189/189 | 24/11 |
+| Pengaró base (2ª leva) | chute baixo (430) e rasteira (440) eram desenhados uns 33% maiores que o agachado (cabeça 1,26x e 1,32x contra 0,95x): o quadro inteiro encolhe em volta do pé até o tamanho do agachado, sem mudar a pose (`ENCOLHE_ACAO` no `pengaro_todo.py`), e a Clsn1 encolheu junto no .air (alcance = onde o pé chega). Se o `gerar_pengaro.py` regerar o .air, encolher a Clsn1 do 430 e do 440 de novo (x0,75 e x0,72) | 0 | 0 | 189/189 | 24/11 |
 | CK base | uppercut agachado (410) saía em pé. 1ª tentativa (a8877243) foi montada só com as peças e engrossando o braço por código: o Breno viu cintura torcida, perna entortada e buraco nas costas (no Bote também) e fez a regra do desenho original (be3c43a2). Refeito com `ck_do_original.py`: o tronco do uppercut original (cabecada/04 e 05) assentado na cintura do agachado original (cabecada/07), pela barra da camisa; Bote e Bote forte voltaram aos quadros originais da folha `caneta`; braços sem engrossar (recorte do original, aceitos na régua do corpo: o do parado tem a manga). Vídeo: antes = a versão reprovada | 0 | — | 226/226 | 24/11 |
 | CK despertado (Ratão) | golpe agachado forte (10410) subia inteiro com a garrafa no alto: agora sai do agachado dele com o tronco dobrando (`dobra_agachado.py`); a garrafa do Paredão no Talo voltou ao recorte original (sem engrossar) | 0 | 0 de 52 | 226/226 | 24/11 |
 | Hazak base | joelhada subindo (410) levantava inteira com o joelho no alto: agora é o agachado com o tronco entrando de ombro e testa (`dobra_agachado.py`, receita `hazak_agachado_forte`), caixa baixa (22,-186,122,-86), Clsn2 do agachado | 0 | — | 327/327 | 24/11 |
@@ -69,8 +70,7 @@ de manhã) mostravam o lutador novo dos dois lados, porque o `video_golpe.py` l�
 
 Nenhum golpe agachado básico levanta mais (régua das pernas em 0 nos seis lutadores, base e despertado). Ficam só os
 avisos de especiais (parry 764, 3430/3435), para olhar no vídeo. A aura do Gutto foi religada
-(`aura_no_corpo.py gutto`) depois dos desenhos novos. Depois: sobras do Pengaró (manchas na calça, ombro de trás, pé girado; e o chute baixo 430 e a
-rasteira 440 dele são desenhados uns 25% maiores que o agachado, cabeça maior: pedem arte nova no mesmo agachado).
+(`aura_no_corpo.py gutto`) depois dos desenhos novos. Depois: sobras do Pengaró (manchas na calça, ombro de trás, pé girado).
 
 **Regra (Breno, 24/11):** a régua virou regra e foi levada para o corpo todo em `ferramentas/regua_corpo.py` (braço,
 cabeça e tronco na mesma conta, mais esta régua inteira). Está no passo 8 da `regra-de-criacao-de-personagem.md`, no
