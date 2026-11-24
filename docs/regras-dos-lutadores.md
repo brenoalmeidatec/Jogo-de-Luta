@@ -222,6 +222,9 @@ Ver a próxima seção.
 - A ativação tem animação de transformação, com invencibilidade, e empurra o oponente para longe.
 - **O Despertar dura até o fim da luta** (Breno, 2026-11-14): quem desperta não volta à forma base por tempo nem no
   fim do round, e a música da forma toca até a luta acabar. Feito pelo `ferramentas/forma_permanente.py`.
+  Quem vence (ou perde) um round despertado **começa o round seguinte despertado**: corpo, golpes e aura da forma, sem
+  travar (Breno, #32, 2026-11-24). `python3 ferramentas/testar_rounds_despertado.py` confere com dois rounds e tem de
+  dar `TUDO OK`.
 
 ### Todo lutador tem a forma transformada, com arte própria
 
