@@ -313,9 +313,16 @@ def montar_kit():
             if slot == "braco_frente" and var in SOB_CABECA:  # raiz do braço: tira a barba e a sombra do pescoço que vieram junto (mancha escura)
                 escuro = (img[..., :3].astype(int).sum(-1) < 230) & disco(junta, 18) & (img[..., 3] > 0)
                 img[escuro] = 0
+            if (slot, var) in ENGROSSAR:
+                img = b.engrossar(img, junta, ENGROSSAR[(slot, var)])
             guardar(kit, f"{slot}_{var}", img, junta, mae, fonte, cv2.warpAffine(f, M, TELA, flags=cv2.INTER_NEAREST))
     (b.PECAS / "kit.json").write_text(json.dumps(kit, indent=1, ensure_ascii=False), encoding="utf-8")
     return kit
+
+
+# braço esticado que saiu mais fino que o braço do parado (régua do corpo, 24/11: direto 73%, overhand 74% da
+# grossura): engorda na largura, perpendicular ao comprimento do braço; o comprimento e a junta ficam
+ENGROSSAR = {("braco_tras", "direto"): 1.14, ("braco_tras", "overhand"): 1.12}
 
 
 def guardar(kit, nome, img, junta, mae, fonte, fonte_img):
@@ -595,7 +602,7 @@ GOLPES_NOVOS.update({
     "caneta/02": baixo(qa=10, pp=(-64, 80, -68, 80, 4), bt={"ang": -12}, cab=2),
     "caneta/03": baixo(qa=16, pp=(-30, 50, -64, 74, -10), bt={"ang": -4}, cab=3),
     "caneta/04": {**baixo(qa=22, pp=(25, 8, -66, 76, -26), bf={"ang": -10}, cab=5),
-                  "braco_tras": {"ang": -14, "var": "direto", "dx": 44, "dy": 10}},
+                  "braco_tras": {"ang": -14, "var": "direto", "dx": 42, "dy": 8}},  # braço engrossado: encosta no corpo
     "caneta/05": baixo(qa=14, pp=(-12, 32, -62, 72, -14), bt={"ang": -2}, cab=2),
     "caneta/06": baixo(qa=8, pp=(-40, 52, -50, 56, 0), cab=1),
     "caneta/07": baixo(qa=4, pp=(-25, 32, -28, 32, 0)),
@@ -680,6 +687,31 @@ GOLPES_NOVOS.update({
     "compasso/05": soco((10, 4), 12, 5, cab=2),
 })
 POSES.update(GOLPES_NOVOS)
+
+# uppercut agachado (pedido do Breno na #32, 22/11: golpe agachado não levanta). Hoje o 410 usava os desenhos do
+# uppercut em pé (cabecada/, os mesmos do 1200/1201, que são golpes em pé e ficam como estão). Aqui as pernas ficam no
+# agachado e só sobem um pouco no golpe; quem sobe é o ombro, o braço e o queixo. A folha "uppercut_baixo" é um apelido
+# da "cabecada" (o desenho-guia é o mesmo; ALIAS_FOLHA).
+ALIAS_FOLHA = {"uppercut_baixo": "cabecada"}
+POSES.update({
+    "uppercut_baixo/00": baixo(),
+    "uppercut_baixo/01": baixo(qa=6, bf={"ang": 6}, cab=2),
+    "uppercut_baixo/02": baixo(qa=12, pp=(-88, 106, -90, 106, 4), bf={"ang": 14}, bt={"ang": -6}, cab=3),  # afunda
+    "uppercut_baixo/03": baixo(qa=10, pp=(-70, 84, -74, 86, 10), bf={"ang": 34, "var": "alto"}, bt={"ang": -6}, cab=-2),
+    "uppercut_baixo/04": baixo(qa=8, pp=(-66, 80, -70, 82, 12), bf={"ang": 14, "var": "alto"}, bt={"ang": -6}, cab=-6),
+    "uppercut_baixo/05": baixo(qa=8, pp=(-68, 82, -72, 84, 10), bf={"ang": 30, "var": "alto"}, bt={"ang": -6}, cab=-4),
+    "uppercut_baixo/06": baixo(qa=6, bf={"ang": 0}, bt={"ang": -2}),
+    "uppercut_baixo/07": baixo(),
+})
+_abrir_folha = b.abrir
+
+
+def _abrir_com_apelido(nome):
+    folha, _, resto = nome.partition("/")
+    return _abrir_folha(f"{ALIAS_FOLHA[folha]}/{resto}" if folha in ALIAS_FOLHA else nome)
+
+
+b.abrir = _abrir_com_apelido
 
 def limitar_agachada(pose, alvo, quais=("tras", "frente")):
     """Sobe o quadril se o desenho-guia agacha mais do que as pernas do kit deixam sem dobrar o joelho demais."""
@@ -1033,7 +1065,7 @@ ACOES = {
     "chute_baixo": ("chute_baixo", (1, 2, 3, 4, 5, 6, 7), (3, 2, 1, 2, 3, 3, 3), (2, 3), 230),
     "soco_agachado": ("baixo_soco", (1, 2, 3, 4, 4, 5, 6), (2, 1, 1, 1, 2, 4, 3), (3, 4), 400),
     "rasteira": ("rasteira", (1, 2, 3, 4, 5, 6, 7), (5, 5, 1, 3, 8, 7, 7), (2, 3), 440),
-    "uppercut": ("cabecada", (), (), None, 410),
+    "uppercut": ("uppercut_baixo", (), (), None, 410),  # agachado (#32); os desenhos de hoje são da cabecada
     "levanta_comedia": ("cabecada", (), (), None, 1200),
     "levanta_comedia_forte": ("cabecada", (), (), None, 1201),
     "overhand": ("martelo", (), (), None, 216),
@@ -1230,7 +1262,18 @@ def gerar(nomes=None):
         Image.fromarray(np.ascontiguousarray(out[1::3, 1::3])).save(OUT_1X / "chaves" / folha / f"{i}.png")
     guarda = limpar(desenhar(kit, {}), {})
     Image.fromarray(guarda).save(OUT_HD / "guarda.png")
-    (b.PECAS / "poses.json").write_text(json.dumps(poses, indent=1, default=float), encoding="utf-8")
+    arq = b.PECAS / "poses.json"
+    todas = json.loads(arq.read_text(encoding="utf-8")) if arq.exists() else {}  # rodada parcial não apaga as outras
+    todas.update(poses)
+    arq.write_text(json.dumps(todas, indent=1, default=float), encoding="utf-8")
+    if nomes != list(ACOES) and (DOCS / "robo_defeitos.md").exists():
+        # rodada parcial: as linhas das outras ações e folhas ficam como estavam na última rodada
+        feitas = {l.split("|")[1].strip() for l in relatorio[2:]}
+        velhas = [l for l in (DOCS / "robo_defeitos.md").read_text(encoding="utf-8").splitlines()[2:]
+                  if l.startswith("| ") and l.split("|")[1].strip() not in feitas
+                  and l.split("|")[1].strip().split("/")[0] not in nomes]
+        relatorio = relatorio[:2] + velhas + relatorio[2:]
+        falhas = sum("FAIL" in l for l in relatorio[2:])
     texto = "\n".join(relatorio) + f"\n\n{falhas} desenho(s) com defeito.\n"
     DOCS.mkdir(parents=True, exist_ok=True)
     (DOCS / "robo_defeitos.md").write_text(texto, encoding="utf-8")

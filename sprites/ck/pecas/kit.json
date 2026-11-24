@@ -221,7 +221,7 @@
    "arquivo": "braco_tras_direto.png",
    "origem": [
     498,
-    382
+    379
    ],
    "junta": [
     506,
@@ -232,14 +232,14 @@
    "sobra": "braco_tras_direto_sobra.png",
    "origem_sobra": [
     489,
-    373
+    370
    ]
   },
   "braco_tras_overhand": {
    "arquivo": "braco_tras_overhand.png",
    "origem": [
-    471,
-    308
+    467,
+    307
    ],
    "junta": [
     506,
@@ -249,8 +249,8 @@
    "fonte": "quadros_arcade_hd/martelo/02.png",
    "sobra": "braco_tras_overhand_sobra.png",
    "origem_sobra": [
-    462,
-    299
+    458,
+    298
    ]
   }
  }

@@ -110,6 +110,8 @@ VARIANTES = {
                                 (468, 396), (460, 380)], (508, 432), 1),
     },
 }
+# garrafa erguida: o braço saiu 71% da grossura do braço do parado (régua do corpo, 24/11); engorda na largura
+ENGROSSAR = {("braco_tras", "garrafa"): 1.16}
 ANIMS = {
     "parado": (0, "referencia_ginga 0/7 1/7 2/7 3/7 4/7 5/7 6/7 7/7", None),
     # agarrão em pé: o pega (4700) usa os desenhos 0 a 2; o 4710 segura com 3 a 7

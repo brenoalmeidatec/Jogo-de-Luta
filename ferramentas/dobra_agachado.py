@@ -34,6 +34,12 @@ RECEITAS = {
         (0, 0, 3, None), (-10, -6, 4, None), (20, 16, 2, CAIXA_CABECADA), (20, 16, 6, CAIXA_CABECADA),
         (18, 14, 2, None), (14, 11, 3, None), (11, 9, 3, None), (8, 6, 3, None), (6, 4, 3, None), (4, 3, 3, None),
         (2, 1, 3, None), (0, 0, 3, None), (0, 0, 4, None)]),
+    # CK despertado (Ratão): o golpe agachado forte 10410 subia inteiro com a garrafa no alto; agora sai do agachado
+    # dele (789,0): recua o tronco e joga o peito e a mão da garrafa para a frente e para cima, pernas paradas
+    "ck_desp_agachado_forte": dict(lutador="ck", acao=10410, base=(789, 0), grupo=41410, quadros=[
+        (0, 0, 3, None), (-10, -6, 4, None), (18, 16, 2, (10, -250, 96, -120)), (18, 16, 6, (10, -250, 96, -120)),
+        (16, 14, 2, None), (13, 11, 3, None), (10, 8, 3, None), (8, 6, 3, None), (6, 4, 3, None), (4, 3, 3, None),
+        (2, 1, 3, None), (0, 0, 3, None), (0, 0, 4, None)]),
 }
 
 

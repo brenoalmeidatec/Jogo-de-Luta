@@ -33,8 +33,13 @@ Precisa de `scikit-image` (`pip install scikit-image`). Sai com código 1 se rep
 | Gutto despertado (Garanhão) | chifrada que sobe (10410) fica de quatro, só tronco, cabeça e patas sobem; golpes agachados do kit voltam para o agachado, não para o em pé (`AGACHADOS` no kit, `firme.py`) | 0 | 0 de 242 | 186/186 | 24/11 |
 | Pengaró base | cabeçada agachada (410) saía em pé com a perna esticada: agora é o agachado com o tronco dobrando na cintura (`dobrar()` no `pengaro_todo.py`), caixa de ataque baixada para a testa (20,-220,120,-110); soco agachado (400) mais fundo e no tamanho do agachado, e o último quadro volta agachado | 0 | 0 de 164 ações | 189/189 | 24/11 |
 | Pengaró despertado | cabeçada agachada (10410) feita do agachado dele com o tronco dobrando (`ferramentas/dobra_agachado.py`), quadros do meio na volta | 0 | — | 189/189 | 24/11 |
+| CK base | uppercut agachado (410) saía em pé: agora fica agachado (poses `uppercut_baixo` no `pecas_ck.py`), caixa de ataque baixa (`CX_UPPER_BAIXO`); braço de trás do direto e do overhand engrossado (73%/74% → 83%/80% do parado, `ENGROSSAR`), refeitos cruzado, cruzado rápido, overhand, bote e bote forte | 0 | 0 | 226/226 | 24/11 |
+| CK despertado (Ratão) | golpe agachado forte (10410) subia inteiro com a garrafa no alto: agora sai do agachado dele com o tronco dobrando (`dobra_agachado.py`); braço da garrafa engrossado (71% → 81%) no Paredão no Talo | 0 | 0 de 52 | 226/226 | 24/11 |
 
-Vídeos: `docs/boneco-pecas/gutto/pernas_antes_depois.mp4` (e `.png`) e `docs/boneco-pecas/todo/pernas_antes_depois.mp4`.
+Vídeos e fotos (`.mp4` e `.png`, a foto no instante em que antes e depois mais diferem): `docs/boneco-pecas/gutto/`,
+`docs/boneco-pecas/todo/` (Pengaró) e `docs/boneco-pecas/ck/`, todos `pernas_antes_depois`. Os primeiros vídeos (24/11
+de manhã) mostravam o lutador novo dos dois lados, porque o `video_golpe.py` lê sempre `chars/<lutador>`; refeitos com
+`ferramentas/antes_depois/` (o antes sai de um commit do git, tela maior sem cortar cabeça e pé). O Alisson pegou.
 
 ## Ferramentas que mudaram
 
@@ -44,18 +49,24 @@ Vídeos: `docs/boneco-pecas/gutto/pernas_antes_depois.mp4` (e `.png`) e `docs/bo
   ao tamanho do agachado), `AGACHADAS` (fim do golpe volta para o agachado), `volta_dobrada()` (quadros do meio).
 - `dobra_agachado.py`: o mesmo dobrar para arte própria sem kit (despertados); receitas em `RECEITAS`.
 - `gerar_pengaro.py`: caixa da 410 na testa abaixada.
+- `firme.py` / `pecas_ck.py`: `ENGROSSAR = {(slot, variante): fator}` no kit engorda o membro em volta do eixo dele
+  (`boneco_ajuste.engrossar`), para o braço que a `regua_corpo.py` acusou de fino.
+- `regua_pernas.py`: o quadro só conta como "levantou" se o centro de massa E a altura do corpo sobem além do limite
+  (o agachado raso do CK dava falso positivo só pelo centro).
+- `ferramentas/antes_depois/`: vídeo e foto antes/depois certos (ver o LEIAME de lá).
 - `boneco_gutto.py`: variantes `esticada` (do 449, com o calção) e `agachada` (do 359) da coxa da frente; `GIRO_ESTICADA`.
 
 ## Falta
 
-CK, Hazak, Raiclaven e Gbzin (base e despertado), na régua de 24/11: golpe agachado 410 levanta em quase todos;
-400/440 no CK e Gbzin. Depois: sobras do Pengaró (manchas na calça, ombro de trás, pé girado; e o chute baixo 430 e a
+Hazak, Raiclaven e Gbzin (base e despertado), na régua de 24/11: golpe agachado 410 levanta em quase todos (Hazak 410 e
+4401 do despertado, Raiclaven 410, Gbzin 410/440 e os agachados do despertado). A aura do Gutto foi religada
+(`aura_no_corpo.py gutto`) depois dos desenhos novos. Depois: sobras do Pengaró (manchas na calça, ombro de trás, pé girado; e o chute baixo 430 e a
 rasteira 440 dele são desenhados uns 25% maiores que o agachado, cabeça maior: pedem arte nova no mesmo agachado).
 
 **Regra (Breno, 24/11):** a régua virou regra e foi levada para o corpo todo em `ferramentas/regua_corpo.py` (braço,
 cabeça e tronco na mesma conta, mais esta régua inteira). Está no passo 8 da `regra-de-criacao-de-personagem.md`, no
 `como-trabalhar.md` e no checklist da seção 9 das regras. Na primeira rodada (24/11) o braço reprovou em 3 peças:
 CK `braco_tras_direto` (73%) e `braco_tras_overhand` (74%), e CK despertado `braco_tras_garrafa` (71%), todos mais
-finos que o braço do parado e sem a manga; entram na fila do CK junto com as pernas.
+finos que o braço do parado e sem a manga; engrossados em 24/11 (régua do corpo do CK em 0).
 Tira dos braços reprovados (e do braço do Hazak aceito no olho): `docs/boneco-pecas/regua_corpo_bracos.png`.
 Relatório completo da primeira rodada: `docs/boneco-pecas/regua_corpo_2026-11-24.md` (o agachado reprovado é o mesmo da fila acima).

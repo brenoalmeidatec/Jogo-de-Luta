@@ -238,7 +238,7 @@
   "braco_tras_garrafa": {
    "arquivo": "braco_tras_garrafa.png",
    "origem": [
-    455,
+    452,
     328
    ],
    "junta": [
@@ -249,7 +249,7 @@
    "fonte": "bola/03",
    "sobra": "braco_tras_garrafa_sobra.png",
    "origem_sobra": [
-    446,
+    443,
     319
    ]
   }

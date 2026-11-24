@@ -252,6 +252,7 @@ def ratao(m, alvo=ALVO_SEGUE):
 SOCO_J, SOCO_C = _c("soco", 2), _c("soco", 5)          # jab e cruzado
 CX_GANCHO = (8, -102, 34, -70)                         # gancho: a luva gira junto do corpo
 CX_UPPER = (2, -132, 38, -60)                          # uppercut: a luva sobe acima da cabeça, junto do corpo
+CX_UPPER_BAIXO = (2, -107, 27, -63)  # uppercut agachado (410, #32): a luva sobe na frente do queixo, o corpo agachado
 gp.extra.CORRENTES = tuple(com_passo(m) for m in (
     # x: jab, jab duplo, cruzado, Uno-Dos de Rua
     N(301, "Jab Duplo", "soco 1/2 2/2A 3/2 2/2A 3/4 7/4", SOCO_J, (18, 20)),
@@ -568,7 +569,7 @@ def acoes_ck(Q):
     normal(245, "chute_alto", (1, 2, 3, 4, 5, 6, 7), (3, 2, 1, 2, 6, 5, 5), _c("chute_alto", 4))
     normal(260, "afastar", (1, 2, 3, 4, 4, 5, 6, 7), (4, 4, 4, 1, 3, 8, 6, 6), _c("afastar", 4), ativos=(3, 4))
     normal(400, "baixo_soco", (1, 2, 3, 4, 4, 5, 6), (2, 1, 1, 1, 2, 4, 3), _c("baixo_soco", 4), BAIXO, (3, 4))
-    normal(410, "cabecada", (1, 2, 3, 4, 5, 6, 7), (3, 3, 1, 4, 6, 6, 6), CX_UPPER, BAIXO)
+    normal(410, "cabecada", (1, 2, 3, 4, 5, 6, 7), (3, 3, 1, 4, 6, 6, 6), CX_UPPER_BAIXO, BAIXO)
     normal(430, "rasteirinha", (1, 2, 3, 4, 5, 6, 7), (3, 2, 1, 2, 4, 3, 3), _c("rasteirinha", 4), BAIXO)
     normal(440, "rasteira", (1, 2, 3, 4, 5, 6, 7), (5, 5, 1, 3, 8, 7, 7), _c("rasteira", 4), BAIXO)
     Q(600, [(f("ar_soco", 2), 2), (f("ar_soco", 3), 3), (f("ar_soco", 4), 8, CX_AR), (f("ar_soco", 6), -1)], NO_AR)

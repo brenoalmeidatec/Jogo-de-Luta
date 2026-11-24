@@ -10,7 +10,10 @@ Duas réguas, as duas olham o que o jogador vê ou o que monta o que ele vê:
 1. AGACHADO (chars/<l>/<l>.sff + .air + .cns): todo estado do tipo agachado (`type = C` no .cns) tem que ficar
    agachado em todos os desenhos. Para cada desenho mede a altura do centro de massa da figura acima do chão e põe
    na escala do lutador: 0 = agachado parado (ação 11), 1 = em pé parado (ação 0). Braço que sobe mexe pouco no centro
-   de massa; o corpo que levanta (pernas esticando) leva ele para perto de 1. Passou de LIMITE_SOBE = reprovado.
+   de massa; o corpo que levanta (pernas esticando) leva ele para perto de 1. A altura da figura entra na mesma escala
+   (0 = altura do agachado, 1 = altura do em pé): só levanta o desenho em que as DUAS passam de LIMITE_SOBE. Sozinho,
+   o centro de massa engana no lutador de agachado raso (CK: o agachado tem 83% da altura do em pé), onde o braço
+   esticado na altura do peito já sobe o centro sem o corpo subir nada.
    Com --despertado (sempre feito) os desenhos passam pelo [RemapPreset despertado], como no jogo.
 
 2. KIT (sprites/<kit>/pecas/kit.json): toda variante de perna (coxa_*, canela_*, perna_*) é comparada com a peça do
@@ -135,6 +138,7 @@ def regua_agachado(lut, despertado):
     diam = max(5, int(alt * DIAMETRO))
     em_pe = np.median([c for el in acoes[0][0] if (c := centro(desenhos, el, diam)) is not None])
     agach = np.median([c for el in acoes[11][0] if (c := centro(desenhos, el, diam)) is not None])
+    alt_ag = np.median([h for el in acoes[11][0] if (h := altura(desenhos, el))])
     falhas, avisos, linhas = [], [], []
     forma = "despertado" if despertado else "base"
     for acao, estado in sorted(estados_agachados(lut, despertado).items()):
@@ -149,12 +153,13 @@ def regua_agachado(lut, despertado):
             if c is None:
                 continue
             f = (c - agach) / max(1.0, em_pe - agach)
-            if f > limite:
-                piores.append((f, k, el[0], el[1]))
+            fh = (altura(desenhos, el) - alt_ag) / max(1.0, alt - alt_ag)
+            if f > limite and fh > limite:
+                piores.append((min(f, fh), k, el[0], el[1]))
         if piores:
             pior = max(piores)
             msg = (f"{lut} {forma}: ação {acao} (estado {estado}, agachado) levanta em {len(piores)} de "
-                   f"{len(acoes[acao][0])} elementos; o pior sobe {pior[0]:.0%} do agachado ao em pé "
+                   f"{len(acoes[acao][0])} elementos; o pior sobe {pior[0]:.0%} do agachado ao em pé (centro e altura) "
                    f"(elemento {pior[1]}, sprite {pior[2]},{pior[3]})")
             (falhas if basico(estado) else avisos).append(msg)
         linhas.append((acao, estado, len(piores)))

@@ -402,3 +402,23 @@ def encaixar(kit, alvo, pose=None, ordem=ORDEM):
         return encaixar(kit, alvo, nova, ["tronco", "cabeca", "braco_tras", "braco_frente", "coxa_tras",
                                           "canela_tras"])
     return pose
+
+
+def engrossar(img, junta, fator):
+    """A peça fica `fator` vezes mais grossa: cada ponto se afasta da linha do braço (que passa pela junta, na direção
+    do comprimento da peça) `fator` vezes. Vizinho mais próximo (pixel art, sem cor nova)."""
+    al = img[..., 3] > 0
+    ys, xs = np.nonzero(al)
+    pts = np.stack([xs, ys], 1).astype(np.float32)
+    c = pts.mean(0)
+    _, vecs = np.linalg.eigh(np.cov((pts - c).T))
+    d = vecs[:, -1]  # direção do comprimento
+    n = np.array([-d[1], d[0]])
+    h, w = al.shape
+    Y, X = np.mgrid[0:h, 0:w].astype(np.float32)
+    jx, jy = float(junta[0]), float(junta[1])
+    # mapa inverso: a distância à linha encolhe por fator
+    dist = (X - jx) * n[0] + (Y - jy) * n[1]
+    mx = (X - dist * n[0] * (1 - 1 / fator)).astype(np.float32)
+    my = (Y - dist * n[1] * (1 - 1 / fator)).astype(np.float32)
+    return cv2.remap(np.ascontiguousarray(img), mx, my, cv2.INTER_NEAREST, borderMode=cv2.BORDER_CONSTANT, borderValue=0)

@@ -16,34 +16,6 @@
 | parado/13 | referencia_ginga/06 | PASS |
 | parado/14 | referencia_ginga/07 | PASS |
 | parado/15 | referencia_ginga/07 | PASS |
-| jab/00 | soco/01 | PASS |
-| jab/01 | soco/01 | PASS |
-| jab/02 | soco/01 | PASS |
-| jab/03 | soco/02 | PASS |
-| jab/04 | soco/02 | PASS |
-| jab/05 | soco/02 | PASS |
-| jab/06 | soco/03 | PASS |
-| jab/07 | soco/07 | PASS |
-| jab/08 | soco/07 | PASS |
-| jab/09 | soco/07 | PASS |
-| cruzado/00 | soco/03 | PASS |
-| cruzado/01 | soco/03 | PASS |
-| cruzado/02 | soco/04 | PASS |
-| cruzado/03 | soco/05 | PASS |
-| cruzado/04 | soco/05 | PASS |
-| cruzado/05 | soco/05 | PASS |
-| cruzado/06 | soco/05 | PASS |
-| cruzado/07 | soco/06 | PASS |
-| cruzado/08 | soco/06 | PASS |
-| cruzado/09 | soco/06 | PASS |
-| cruzado/10 | soco/06 | PASS |
-| cruzado/11 | soco/06 | PASS |
-| cruzado/12 | soco/06 | PASS |
-| cruzado/13 | soco/06 | PASS |
-| cruzado/14 | soco/07 | PASS |
-| cruzado/15 | soco/07 | PASS |
-| cruzado/16 | soco/07 | PASS |
-| cruzado/17 | soco/07 | PASS |
 | chute_alto/00 | chute_alto/01 | PASS |
 | chute_alto/01 | chute_alto/01 | PASS |
 | chute_alto/02 | chute_alto/02 | PASS |
@@ -111,20 +83,6 @@
 | agachado/22 | agachado/05 | PASS |
 | agachado/23 | agachado/05 | PASS |
 | levantando/00 | agachado/02 | PASS |
-| cruzado_rapido/00 | soco/03 | PASS |
-| cruzado_rapido/01 | soco/04 | PASS |
-| cruzado_rapido/02 | soco/05 | PASS |
-| cruzado_rapido/03 | soco/05 | PASS |
-| cruzado_rapido/04 | soco/05 | PASS |
-| cruzado_rapido/05 | soco/06 | PASS |
-| cruzado_rapido/06 | soco/06 | PASS |
-| cruzado_rapido/07 | soco/06 | PASS |
-| cruzado_rapido/08 | soco/06 | PASS |
-| cruzado_rapido/09 | soco/06 | PASS |
-| cruzado_rapido/10 | soco/06 | PASS |
-| cruzado_rapido/11 | soco/07 | PASS |
-| cruzado_rapido/12 | soco/07 | PASS |
-| cruzado_rapido/13 | soco/07 | PASS |
 | chute_alto_rapido/00 | chute_alto/01 | PASS |
 | chute_alto_rapido/01 | chute_alto/02 | PASS |
 | chute_alto_rapido/02 | chute_alto/04 | PASS |
@@ -183,24 +141,6 @@
 | rasteira/19 | rasteira/07 | PASS |
 | rasteira/20 | rasteira/07 | PASS |
 | rasteira/21 | rasteira/07 | PASS |
-| uppercut/00 | cabecada/01 | PASS |
-| uppercut/01 | cabecada/02 | PASS |
-| uppercut/02 | cabecada/04 | PASS |
-| uppercut/03 | cabecada/04 | PASS |
-| uppercut/04 | cabecada/04 | PASS |
-| uppercut/05 | cabecada/04 | PASS |
-| uppercut/06 | cabecada/04 | PASS |
-| uppercut/07 | cabecada/05 | PASS |
-| uppercut/08 | cabecada/05 | PASS |
-| uppercut/09 | cabecada/05 | PASS |
-| uppercut/10 | cabecada/06 | PASS |
-| uppercut/11 | cabecada/06 | PASS |
-| uppercut/12 | cabecada/06 | PASS |
-| uppercut/13 | cabecada/06 | PASS |
-| uppercut/14 | cabecada/07 | PASS |
-| uppercut/15 | cabecada/07 | PASS |
-| uppercut/16 | cabecada/07 | PASS |
-| uppercut/17 | cabecada/07 | PASS |
 | levanta_comedia/00 | cabecada/02 | PASS |
 | levanta_comedia/01 | cabecada/03 | PASS |
 | levanta_comedia/02 | cabecada/04 | PASS |
@@ -227,60 +167,6 @@
 | levanta_comedia_forte/10 | cabecada/06 | PASS |
 | levanta_comedia_forte/11 | cabecada/06 | PASS |
 | levanta_comedia_forte/12 | cabecada/06 | PASS |
-| overhand/00 | martelo/02 | PASS |
-| overhand/01 | martelo/02 | PASS |
-| overhand/02 | martelo/02 | PASS |
-| overhand/03 | martelo/03 | PASS |
-| overhand/04 | martelo/04 | PASS |
-| overhand/05 | martelo/04 | PASS |
-| overhand/06 | martelo/06 | PASS |
-| overhand/07 | martelo/06 | PASS |
-| overhand/08 | martelo/06 | PASS |
-| overhand/09 | martelo/06 | PASS |
-| overhand/10 | martelo/06 | PASS |
-| overhand/11 | martelo/07 | PASS |
-| overhand/12 | martelo/07 | PASS |
-| overhand/13 | martelo/07 | PASS |
-| overhand/14 | martelo/07 | PASS |
-| bote/00 | caneta/02 | PASS |
-| bote/01 | caneta/02 | PASS |
-| bote/02 | caneta/02 | PASS |
-| bote/03 | caneta/03 | PASS |
-| bote/04 | caneta/04 | PASS |
-| bote/05 | caneta/04 | PASS |
-| bote/06 | caneta/05 | PASS |
-| bote/07 | caneta/05 | PASS |
-| bote/08 | caneta/05 | PASS |
-| bote/09 | caneta/05 | PASS |
-| bote/10 | caneta/06 | PASS |
-| bote/11 | caneta/06 | PASS |
-| bote/12 | caneta/06 | PASS |
-| bote/13 | caneta/07 | PASS |
-| bote/14 | caneta/07 | PASS |
-| bote/15 | caneta/07 | PASS |
-| bote_forte/00 | caneta/02 | PASS |
-| bote_forte/01 | caneta/02 | PASS |
-| bote_forte/02 | caneta/02 | PASS |
-| bote_forte/03 | caneta/02 | PASS |
-| bote_forte/04 | caneta/02 | PASS |
-| bote_forte/05 | caneta/03 | PASS |
-| bote_forte/06 | caneta/04 | PASS |
-| bote_forte/07 | caneta/04 | PASS |
-| bote_forte/08 | caneta/05 | PASS |
-| bote_forte/09 | caneta/05 | PASS |
-| bote_forte/10 | caneta/05 | PASS |
-| bote_forte/11 | caneta/05 | PASS |
-| bote_forte/12 | caneta/05 | PASS |
-| bote_forte/13 | caneta/06 | PASS |
-| bote_forte/14 | caneta/06 | PASS |
-| bote_forte/15 | caneta/06 | PASS |
-| bote_forte/16 | caneta/06 | PASS |
-| bote_forte/17 | caneta/06 | PASS |
-| bote_forte/18 | caneta/07 | PASS |
-| bote_forte/19 | caneta/07 | PASS |
-| bote_forte/20 | caneta/07 | PASS |
-| bote_forte/21 | caneta/07 | PASS |
-| bote_forte/22 | caneta/07 | PASS |
 | agarrao/00 | agarrao/00 | PASS |
 | soco_no_ar/00 | ar_soco/03 | PASS |
 | soco_no_ar/01 | ar_soco/03 | PASS |
@@ -758,8 +644,6 @@
 | bicicleta/05 (folha) | bicicleta/05 | PASS |
 | bicicleta/07 (folha) | bicicleta/07 | PASS |
 | cabecada/00 (folha) | cabecada/00 | PASS |
-| caneta/00 (folha) | caneta/00 | PASS |
-| caneta/01 (folha) | caneta/01 | PASS |
 | chute_alto/00 (folha) | chute_alto/00 | PASS |
 | chute_alto/03 (folha) | chute_alto/03 | PASS |
 | chute_baixo/00 (folha) | chute_baixo/00 | PASS |
@@ -771,12 +655,130 @@
 | compasso/05 (folha) | compasso/05 | PASS |
 | defesa/00 (folha) | defesa/00 | PASS |
 | levanta/00 (folha) | levanta/00 | PASS |
-| martelo/00 (folha) | martelo/00 | PASS |
-| martelo/01 (folha) | martelo/01 | PASS |
-| martelo/05 (folha) | martelo/05 | PASS |
 | queda/00 (folha) | queda/00 | PASS |
 | rasteira/00 (folha) | rasteira/00 | PASS |
 | rasteira/03 (folha) | rasteira/03 | PASS |
+| jab/00 | soco/01 | PASS |
+| jab/01 | soco/01 | PASS |
+| jab/02 | soco/01 | PASS |
+| jab/03 | soco/02 | PASS |
+| jab/04 | soco/02 | PASS |
+| jab/05 | soco/02 | PASS |
+| jab/06 | soco/03 | PASS |
+| jab/07 | soco/07 | PASS |
+| jab/08 | soco/07 | PASS |
+| jab/09 | soco/07 | PASS |
+| cruzado/00 | soco/03 | PASS |
+| cruzado/01 | soco/03 | PASS |
+| cruzado/02 | soco/04 | PASS |
+| cruzado/03 | soco/05 | PASS |
+| cruzado/04 | soco/05 | PASS |
+| cruzado/05 | soco/05 | PASS |
+| cruzado/06 | soco/05 | PASS |
+| cruzado/07 | soco/06 | PASS |
+| cruzado/08 | soco/06 | PASS |
+| cruzado/09 | soco/06 | PASS |
+| cruzado/10 | soco/06 | PASS |
+| cruzado/11 | soco/06 | PASS |
+| cruzado/12 | soco/06 | PASS |
+| cruzado/13 | soco/06 | PASS |
+| cruzado/14 | soco/07 | PASS |
+| cruzado/15 | soco/07 | PASS |
+| cruzado/16 | soco/07 | PASS |
+| cruzado/17 | soco/07 | PASS |
+| cruzado_rapido/00 | soco/03 | PASS |
+| cruzado_rapido/01 | soco/04 | PASS |
+| cruzado_rapido/02 | soco/05 | PASS |
+| cruzado_rapido/03 | soco/05 | PASS |
+| cruzado_rapido/04 | soco/05 | PASS |
+| cruzado_rapido/05 | soco/06 | PASS |
+| cruzado_rapido/06 | soco/06 | PASS |
+| cruzado_rapido/07 | soco/06 | PASS |
+| cruzado_rapido/08 | soco/06 | PASS |
+| cruzado_rapido/09 | soco/06 | PASS |
+| cruzado_rapido/10 | soco/06 | PASS |
+| cruzado_rapido/11 | soco/07 | PASS |
+| cruzado_rapido/12 | soco/07 | PASS |
+| cruzado_rapido/13 | soco/07 | PASS |
+| overhand/00 | martelo/02 | PASS |
+| overhand/01 | martelo/02 | PASS |
+| overhand/02 | martelo/02 | PASS |
+| overhand/03 | martelo/03 | PASS |
+| overhand/04 | martelo/04 | PASS |
+| overhand/05 | martelo/04 | PASS |
+| overhand/06 | martelo/06 | PASS |
+| overhand/07 | martelo/06 | PASS |
+| overhand/08 | martelo/06 | PASS |
+| overhand/09 | martelo/06 | PASS |
+| overhand/10 | martelo/06 | PASS |
+| overhand/11 | martelo/07 | PASS |
+| overhand/12 | martelo/07 | PASS |
+| overhand/13 | martelo/07 | PASS |
+| overhand/14 | martelo/07 | PASS |
+| bote/00 | caneta/02 | PASS |
+| bote/01 | caneta/02 | PASS |
+| bote/02 | caneta/02 | PASS |
+| bote/03 | caneta/03 | PASS |
+| bote/04 | caneta/04 | PASS |
+| bote/05 | caneta/04 | PASS |
+| bote/06 | caneta/05 | PASS |
+| bote/07 | caneta/05 | PASS |
+| bote/08 | caneta/05 | PASS |
+| bote/09 | caneta/05 | PASS |
+| bote/10 | caneta/06 | PASS |
+| bote/11 | caneta/06 | PASS |
+| bote/12 | caneta/06 | PASS |
+| bote/13 | caneta/07 | PASS |
+| bote/14 | caneta/07 | PASS |
+| bote/15 | caneta/07 | PASS |
+| bote_forte/00 | caneta/02 | PASS |
+| bote_forte/01 | caneta/02 | PASS |
+| bote_forte/02 | caneta/02 | PASS |
+| bote_forte/03 | caneta/02 | PASS |
+| bote_forte/04 | caneta/02 | PASS |
+| bote_forte/05 | caneta/03 | PASS |
+| bote_forte/06 | caneta/04 | PASS |
+| bote_forte/07 | caneta/04 | PASS |
+| bote_forte/08 | caneta/05 | PASS |
+| bote_forte/09 | caneta/05 | PASS |
+| bote_forte/10 | caneta/05 | PASS |
+| bote_forte/11 | caneta/05 | PASS |
+| bote_forte/12 | caneta/05 | PASS |
+| bote_forte/13 | caneta/06 | PASS |
+| bote_forte/14 | caneta/06 | PASS |
+| bote_forte/15 | caneta/06 | PASS |
+| bote_forte/16 | caneta/06 | PASS |
+| bote_forte/17 | caneta/06 | PASS |
+| bote_forte/18 | caneta/07 | PASS |
+| bote_forte/19 | caneta/07 | PASS |
+| bote_forte/20 | caneta/07 | PASS |
+| bote_forte/21 | caneta/07 | PASS |
+| bote_forte/22 | caneta/07 | PASS |
+| uppercut/00 | uppercut_baixo/01 | PASS |
+| uppercut/01 | uppercut_baixo/02 | PASS |
+| uppercut/02 | uppercut_baixo/04 | PASS |
+| uppercut/03 | uppercut_baixo/04 | PASS |
+| uppercut/04 | uppercut_baixo/04 | PASS |
+| uppercut/05 | uppercut_baixo/04 | PASS |
+| uppercut/06 | uppercut_baixo/04 | PASS |
+| uppercut/07 | uppercut_baixo/05 | PASS |
+| uppercut/08 | uppercut_baixo/05 | PASS |
+| uppercut/09 | uppercut_baixo/05 | PASS |
+| uppercut/10 | uppercut_baixo/06 | PASS |
+| uppercut/11 | uppercut_baixo/06 | PASS |
+| uppercut/12 | uppercut_baixo/06 | PASS |
+| uppercut/13 | uppercut_baixo/06 | PASS |
+| uppercut/14 | uppercut_baixo/07 | PASS |
+| uppercut/15 | uppercut_baixo/07 | PASS |
+| uppercut/16 | uppercut_baixo/07 | PASS |
+| uppercut/17 | uppercut_baixo/07 | PASS |
+| caneta/00 (folha) | caneta/00 | PASS |
+| caneta/01 (folha) | caneta/01 | PASS |
+| martelo/00 (folha) | martelo/00 | PASS |
+| martelo/01 (folha) | martelo/01 | PASS |
+| martelo/05 (folha) | martelo/05 | PASS |
 | soco/00 (folha) | soco/00 | PASS |
+| uppercut_baixo/00 (folha) | uppercut_baixo/00 | PASS |
+| uppercut_baixo/03 (folha) | uppercut_baixo/03 | PASS |
 
 0 desenho(s) com defeito.
