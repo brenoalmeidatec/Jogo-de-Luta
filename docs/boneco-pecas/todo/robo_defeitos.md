@@ -17,7 +17,7 @@
 | 46 | 3 (3 especiais) | PASS |
 | 47 | 2 (2 especiais) | PASS |
 | 100 | 8 (7 especiais) | PASS |
-| 105 | 2 (0 especiais) | PASS |
+| 105 | 2 (1 especiais) | PASS |
 | 120 | 3 (0 especiais) | PASS |
 | 121 | 1 (1 especiais) | PASS |
 | 122 | 1 (0 especiais) | PASS |

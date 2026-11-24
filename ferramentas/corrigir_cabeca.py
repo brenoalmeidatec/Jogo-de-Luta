@@ -246,6 +246,34 @@ def trocar(a, tmpl, caixa, cabeca_ref=None, escalas=None, acompanhar=False):
         for i in range(1, n):
             if st[i, cv2.CC_STAT_AREA] < 250 and (cola & (lab == i)).any():
                 out[lab == i] = 0
+    if sob.any():
+        # garganta: o que sumiu logo abaixo do queixo novo (o queixo velho descia mais) vira pele do pescoço,
+        # puxada de baixo para cima na mesma coluna, com o contorno escuro na borda de fora
+        ys, xs = np.nonzero(sob)
+        fundo_col = np.full(a.shape[1], -1)
+        for x in range(xs.min(), xs.max() + 1):
+            c = np.nonzero(sob[:, x])[0]
+            if len(c):
+                fundo_col[x] = c.max()
+        perdido = (a[..., 3] > 0) & (out[..., 3] == 0)
+        preench = np.zeros_like(sob)
+        for x in range(max(int(cx), xs.min()), xs.max() + 1):
+            y0 = fundo_col[x]
+            if y0 < 0:
+                continue
+            col = [y for y in range(y0 + 1, min(a.shape[0], y0 + 30)) if perdido[y, x]]
+            if not col:
+                continue
+            fonte = next((y for y in range(max(col) + 1, min(a.shape[0], max(col) + 12)) if out[y, x, 3] > 0), None)
+            if fonte is None:
+                continue
+            for y in col:
+                out[y, x] = out[fonte, x]
+                preench[y, x] = True
+        if preench.any():
+            vazio = cv2.dilate((out[..., 3] == 0).astype(np.uint8), np.ones((3, 3), np.uint8)) > 0
+            borda = preench & vazio
+            out[borda, :3] = (out[borda, :3] * 0.35).astype(np.uint8)
     # buraco que sobrou entre a cabeça nova e o pescoço do quadro: volta o pixel original
     cheio = cv2.morphologyEx((out[..., 3] > 0).astype(np.uint8), cv2.MORPH_CLOSE, np.ones((9, 9), np.uint8)) > 0
     buraco = cheio & (out[..., 3] == 0) & (a[..., 3] > 0)
