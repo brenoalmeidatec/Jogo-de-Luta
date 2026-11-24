@@ -10,6 +10,7 @@ agarrão karatê:
   vento(img, x0, x1, y, alt)                    arco de vento (linhas brancas e azul-claras, de pixel) na frente do punho
 
   python3 ferramentas/borrao.py teste SAIDA     vídeo do teste do jab (antes | borrão | só vento) em SAIDA
+  python3 ferramentas/borrao.py jab             põe o jab com borrão no lugar (depois: ligar_pecas.py hazaki soco)
 """
 import subprocess
 import sys
@@ -32,20 +33,20 @@ def braco(img, ombro_x, faixa_y):
     return m
 
 
-def borrao(estendido, guarda, ombro_x, faixa_y, punho=42, fantasmas=None):
+def borrao(estendido, guarda, ombro_x, faixa_y, punho=42, fantasmas=None, tirar_guarda=True, mascara=None):
     """Corpo da guarda; o braço do estendido vira um borrão de pixel: cunha cheia na cor de cada linha do braço
     (claro em cima, sombra embaixo, contorno escuro), que afina para trás e se desfaz em riscos de velocidade de
     comprimentos diferentes; punho nítido na ponta. (fantasmas: não usado, fica pela compatibilidade)"""
     out = guarda.copy()
-    m = braco(estendido, ombro_x, faixa_y)
+    m = braco(estendido, ombro_x, faixa_y) if mascara is None else mascara
     ys, xs = np.nonzero(m)
     if not len(xs):
         return out
     x_ponta = xs.max()
     x_punho = x_ponta - punho
-    # o braço da guarda (punho levantado na frente do peito) some: o braço está "no caminho"
-    mg = braco(guarda, ombro_x + 8, (faixa_y[0] - 30, faixa_y[1]))
-    out[mg] = 0
+    if tirar_guarda:  # o braço da guarda (punho levantado na frente do peito) some: o braço está "no caminho"
+        mg = braco(guarda, ombro_x + 8, (faixa_y[0] - 30, faixa_y[1]))
+        out[mg] = 0
     y0, y1 = ys.min(), ys.max()
     yc = (y0 + y1) / 2
     meia = (y1 - y0) / 2
@@ -164,6 +165,23 @@ def teste(saida):
     print(saida / "jab_borrao_teste.mp4")
 
 
+def jab_no_jogo():
+    """Grava o jab com borrão em quadros_pecas_hd/soco (mesmos 6 elementos e ticks; contato no mesmo tick).
+    Rode DEPOIS do firme.py hazak soco (ele refaz o jab sem borrão) e antes do ligar_pecas.py hazaki soco."""
+    _, els = versoes()[1]
+    arq = RAIZ / "sprites/hazaki/quadros_pecas_hd/soco/tempos.json"
+    import json
+    t = json.loads(arq.read_text(encoding="utf-8"))
+    assert [e["ticks"] for e in t["elementos"]] == [tk for _, tk in els], "o jab mudou de tempo: refaça o teste"
+    for e, (img, _) in zip(t["elementos"], els):
+        Image.fromarray(img).save(RAIZ / f"sprites/hazaki/quadros_pecas_hd/soco/{e['desenho']:02d}.png")
+        Image.fromarray(np.ascontiguousarray(img[1::3, 1::3])).save(
+            RAIZ / f"sprites/hazaki/quadros_pecas/soco/{e['desenho']:02d}.png")
+    print("jab com borrão em quadros_pecas_hd/soco")
+
+
 if __name__ == "__main__":
     if sys.argv[1] == "teste":
         teste(sys.argv[2])
+    elif sys.argv[1] == "jab":
+        jab_no_jogo()
