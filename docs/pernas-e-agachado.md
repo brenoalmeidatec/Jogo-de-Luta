@@ -101,3 +101,17 @@ de peças", com as expressões do kit acompanhando o golpe (item 4 do passo 5 da
 - 113 ações do Pengaró base refeitas e religadas (`ligar_pecas --grupo 49000`, mesmos grupos). Robô de peças 0, régua das
   pernas 0, robô de luta 189/189. Vídeo e foto: `docs/boneco-pecas/todo/rosto_kit_antes_depois.{mp4,png}`.
 - Falta: conferir o rosto do kit nos golpes do desenho dos outros lutadores (CK, Hazak/Diabo, Gbzin).
+
+## Sobras do Pengaró sem arte nova (24/11 noite)
+
+- **Calça limpa no kit:** `acertar_repouso()` no `pengaro_todo.preparar()` acha o dono de cada pixel da cintura na pose de
+  repouso, tira o escuro escondido no quadril e nas coxas (vizinho claro mais perto), copia a cor do `ginga/00` para a
+  peça dona e pinta embaixo das bolinhas da faixa com a calça clara. Some a mancha cinza no parado, no andar e no soco
+  (resolveu também a mancha 121>118 que o robô de peças pegava na ação 21).
+- **Pescoço da rasteira:** a garganta embaixo do queixo novo é preenchida com a pele de baixo, na mesma coluna, com a
+  borda escura do desenho.
+- **Pele do 430/440:** o chute baixo e a rasteira saem de um desenho com a pele mais clara; `pele_do_parado()` leva a
+  pele desses quadros para o tom do parado (`PELE_PARADO`), então a cor não pula quando o golpe começa.
+- Comparativos com zoom e mapa vermelho: `/mnt/project-files/pernas-agachado/pengaro_rosto_zoom.png` e
+  `pengaro_calca_zoom.png`.
+- Ainda falta (pode precisar de arte nova): fresta no ombro de trás em alguns golpes e o pé girado.

@@ -551,7 +551,7 @@ ROSTO_NA_ESCALA = ("rasteirinha/", "rasteira/")
 
 # desenhos que saem sempre do próprio desenho (com o rosto do kit), mesmo quando o kit monta a pose
 PELO_DESENHO = ()  # com o kit acertado no repouso (acertar_repouso) a ginga montada ficou limpa: segue no kit
-PELE_PARADO = (172, 66, 48)  # média da pele do peito no ginga/00 (= a da cabeça do kit)
+PELE_PARADO = (179, 72, 50)   # medido no parado já na paleta travada (o quadro sai ~3 acima do alvo)
 
 
 def pele_do_parado(a):

@@ -133,7 +133,10 @@ def mascara_cabeca(a, x, y, e, caixa, sem_nuca=False, queixo_extra=0):
     topo = max(0, y - 6)
     m[topo:queixo, xa:xb] = a[topo:queixo, xa:xb, 3] > 0
     if queixo_extra:  # boca aberta (riso): o queixo desce abaixo da linha; só do lado do rosto
-        m[queixo:queixo + queixo_extra, cx:xb] = a[queixo:queixo + queixo_extra, cx:xb, 3] > 0
+        # desce coluna a coluna só enquanto não há fundo: o ombro que reaparece depois do vão sob o queixo fica de fora
+        # (senão vinha uma espora do ombro do desenho de origem junto com a cabeça)
+        ext = a[queixo:queixo + queixo_extra, cx:xb, 3] > 0
+        m[queixo:queixo + queixo_extra, cx:xb] = np.cumprod(ext, axis=0).astype(bool)
     n, lab = cv2.connectedComponents(m.astype(np.uint8), connectivity=4)
     cab = lab[y:y + int((y1r - y0r) * e), x:x + int((x1r - x0r) * e)]
     manter = [v for v in np.unique(cab) if v and (cab == v).sum() > 30]
@@ -294,6 +297,50 @@ def trocar(a, tmpl, caixa, cabeca_ref=None, escalas=None, acompanhar=False):
     emenda &= esq & dir_
     if emenda.any():
         out[..., :3] = cv2.inpaint(np.ascontiguousarray(out[..., :3]), emenda.astype(np.uint8), 3, cv2.INPAINT_TELEA)
+    if sob.any():
+        # nuca: o contorno escuro da base da cabeça do kit (no kit a gola tapa) virava um entalhe preto embaixo da
+        # orelha quando o corpo do desenho continua logo abaixo; esse escuro da beira de baixo, atrás do rosto,
+        # vira pele (inpaint)
+        ys, _ = np.nonzero(sob)
+        orelha = int(ys.min() + 0.45 * (ys.max() - ys.min()))
+        baixo = np.zeros_like(sob)
+        for k in range(1, 5):
+            baixo[:-k] |= ~sob[k:] & corpo[k:]
+        rgb = out[..., :3].astype(int)
+        nuca = sob & baixo & (rgb.sum(-1) < 200)
+        nuca[:orelha] = False
+        nuca[:, int(cx):] = False
+        nuca = cv2.dilate(nuca.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0
+        nuca &= sob & (rgb.sum(-1) < 260)
+        nuca[:orelha] = False
+        if nuca.any():
+            out[..., :3] = cv2.inpaint(np.ascontiguousarray(out[..., :3]), nuca.astype(np.uint8), 4, cv2.INPAINT_TELEA)
+        # fiapo: tira fina (até 2 px) do pescoço velho que sobra solta no fundo perto da cabeça nova
+        corpo = out[..., 3] > 0
+        grosso = cv2.morphologyEx(corpo.astype(np.uint8), cv2.MORPH_OPEN, np.ones((3, 3), np.uint8)) > 0
+        perto = cv2.dilate(sob.astype(np.uint8), np.ones((31, 31), np.uint8)) > 0
+        fiapo = corpo & ~grosso & ~sob & perto
+        fiapo[:orelha] = False
+        out[fiapo] = 0
+        # espora: ponta do pescoço velho que sai na frente, logo abaixo do queixo novo (até 6 px de grossura);
+        # sai inteira e a beira que fica ganha o contorno escuro
+        corpo = out[..., 3] > 0
+        grosso = cv2.morphologyEx(corpo.astype(np.uint8), cv2.MORPH_OPEN, np.ones((7, 7), np.uint8)) > 0
+        y_q = int(ys.max())
+        zona = np.zeros_like(sob)
+        zona[max(0, y_q - 30):min(a.shape[0], y_q + 30), int(cx):] = True
+        esp = corpo & ~grosso & ~sob & zona & perto
+        n, lab, st, _ = cv2.connectedComponentsWithStats(esp.astype(np.uint8), connectivity=8)
+        fundo = cv2.dilate((~corpo).astype(np.uint8), np.ones((3, 3), np.uint8)) > 0
+        tirou = np.zeros_like(sob)
+        for i in range(1, n):
+            if st[i, cv2.CC_STAT_AREA] <= 150 and (fundo & (lab == i)).any() and st[i, cv2.CC_STAT_WIDTH] >= 3:
+                tirou |= lab == i
+        if tirou.any():
+            out[tirou] = 0
+            beira = (cv2.dilate(tirou.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0) & (out[..., 3] > 0) & ~sob
+            claro = out[..., :3].astype(int).sum(-1) > 200
+            out[beira & claro, :3] = (out[beira & claro, :3] * 0.35).astype(np.uint8)
     return out, {"escala_antes": e, "angulo": ang, "nota": nota, "cabeca": sob}
 
 
