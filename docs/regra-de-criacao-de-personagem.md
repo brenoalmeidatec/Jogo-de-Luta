@@ -211,6 +211,17 @@ Antes de gravar cada pose, passe a lista de 12 conferências da Parte 4 do estud
   cada lutador for religado.
 - **Anatomia vem antes da fluidez:** quadro do meio que inventa membro, troca a roupa de perna ou derrete a cabeça sai.
 - O andar acompanha a velocidade do jogo: passada do tamanho do deslocamento real, pé sem patinar.
+- **Soco rápido escondido pela velocidade** (ideia do Breno, 2026-11-24, testada no jab do Hazak): em golpe **fraco e
+  rápido** e em **rajada** (vários socos seguidos), a ida e a volta do braço viram **um quadro de borrão** (o braço
+  vira uma cunha na cor dele, afinando para trás em riscos de velocidade, com o punho nítido na ponta) e o contato
+  ganha um **vento** pequeno na frente do punho. Na rajada, os socos de antes ficam como **rastro** (braço em
+  azul-claro, por baixo do braço nítido). O punho nítido aparece sempre no tick do contato, para o jogador ver onde
+  bateu. **Golpe forte não usa:** ele precisa do desenho inteiro para mostrar peso e alcance. "Só vento", sem o braço
+  no contato, não vale: esconde o alcance. Ferramenta: `ferramentas/borrao.py` (vídeo do teste em
+  `docs/hazak-32-24-11/`).
+- **Despertado com corpo vivo** (Breno, 2026-11-24, Diabo Loiro): golpe feito de poucos desenhos ganha, sem mudar o
+  tempo, recuo e afundada no preparo, o corpo avançando no bote (mais no forte), rastro do membro que bateu no 1º tick
+  do contato e a volta em dois tempos (`ferramentas/diabo_vida.py`).
 
 ## 8. Zero erro de animação (porta: robô de defeitos com 0)
 
@@ -339,4 +350,5 @@ O guia de quem muda o quê em cada lutador é o [`aplicar-estudo-anatomia.md`](a
 | Régua das pernas (agachado não levanta, perna do kit na grossura do parado) | Alisson, 2026-11-24, issue #32 ([`pernas-e-agachado.md`](pernas-e-agachado.md)) |
 | Régua do corpo todo (braço, cabeça e tronco na mesma conta) | Breno, 2026-11-24, nesta regra |
 | O desenho original é a base; peças só tapam lacuna e corrigem textura | Breno, 2026-11-24, depois de ver o CK (1400 e 410) |
+| Soco rápido com borrão (fraco e rajada; forte não) | Breno, 2026-11-24, teste no jab do Hazak, issue #32 |
 | Conceito, despertado, aura, luz, agarrões | [`receita-de-lutador.md`](receita-de-lutador.md), Breno, 2026-11-15 |

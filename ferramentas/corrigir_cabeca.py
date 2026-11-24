@@ -99,7 +99,13 @@ def corrigir(a, tmpl, caixa, escala=None):
     return out, info
 
 
-def achar(a, tmpl):
+ESCALAS = np.arange(0.85, 1.15 + 1e-6, 0.01)
+# desenho maior que o parado inteiro (chute baixo e rasteira do Pengaró: o corpo todo ~1,3x): a cabeça é procurada
+# numa faixa mais larga, e a do kit entra na escala do próprio quadro (mesmo rosto, proporção do corpo do desenho)
+ESCALAS_LARGAS = np.arange(0.85, 1.45 + 1e-6, 0.01)
+
+
+def achar(a, tmpl, escalas=None):
     """(escala, ângulo do casamento em graus cv2, centro da faixa do cabelo achada, canto) — o mesmo que
     reguas.escala_cabeca, devolvendo também o ângulo."""
     m = a[..., 3] > 0
@@ -108,14 +114,14 @@ def achar(a, tmpl):
     x0, x1 = max(0, xs.min() - pad), min(a.shape[1], xs.max() + pad)
     y0 = max(0, ys.min() - pad)
     reg = a[y0:min(a.shape[0], ys.min() + int(tmpl.shape[0] * 2.6)), x0:x1]
-    v, e, ang, p = reguas._busca(reg, tmpl, np.arange(0.85, 1.15 + 1e-6, 0.01), range(-20, 21, 5))
+    v, e, ang, p = reguas._busca(reg, tmpl, ESCALAS if escalas is None else escalas, range(-20, 21, 5))
     tg = reguas._gira(tmpl, ang)
     cx = p[0] + x0 + tg.shape[1] * e / 2
     cy = p[1] + y0 + tg.shape[0] * e / 2
     return e, ang, (cx, cy), (p[0] + x0, p[1] + y0), v
 
 
-def mascara_cabeca(a, x, y, e, caixa, sem_nuca=False):
+def mascara_cabeca(a, x, y, e, caixa, sem_nuca=False, queixo_extra=0):
     """Pixels da cabeça acima do queixo, ligados à faixa do cabelo achada em (x, y) com escala e. `sem_nuca` tira a
     faixa de trás logo acima do queixo (trapézio e ombro), que no quadro de destino fica a do próprio quadro."""
     x0r, y0r, x1r, y1r = caixa
@@ -126,6 +132,8 @@ def mascara_cabeca(a, x, y, e, caixa, sem_nuca=False):
     m = np.zeros(a.shape[:2], bool)
     topo = max(0, y - 6)
     m[topo:queixo, xa:xb] = a[topo:queixo, xa:xb, 3] > 0
+    if queixo_extra:  # boca aberta (riso): o queixo desce abaixo da linha; só do lado do rosto
+        m[queixo:queixo + queixo_extra, cx:xb] = a[queixo:queixo + queixo_extra, cx:xb, 3] > 0
     n, lab = cv2.connectedComponents(m.astype(np.uint8), connectivity=4)
     cab = lab[y:y + int((y1r - y0r) * e), x:x + int((x1r - x0r) * e)]
     manter = [v for v in np.unique(cab) if v and (cab == v).sum() > 30]
@@ -158,6 +166,7 @@ EXPRESSOES = {
     "dor": "apanha/00",          # careta de quem apanhou
     "riso": "provoca/06",        # deboche (provocação e vitória)
 }
+QUEIXO_EXTRA = {"riso": 16}      # a boca aberta desce abaixo da linha do queixo do parado
 
 
 def cabeca_do_kit(nome, tmpl, caixa):
@@ -166,7 +175,7 @@ def cabeca_do_kit(nome, tmpl, caixa):
         return cabeca_da_referencia()
     a = abrir(RAIZ / "sprites/pengaro/quadros_arcade_hd" / f"{EXPRESSOES[nome]}.png")
     e, ang, (cx, cy), (x, y), _ = achar(a, tmpl)
-    m, _, _ = mascara_cabeca(a, int(x), int(y), e, caixa, sem_nuca=True)
+    m, _, _ = mascara_cabeca(a, int(x), int(y), e, caixa, sem_nuca=True, queixo_extra=QUEIXO_EXTRA.get(nome, 0))
     so = np.zeros_like(a)
     so[m] = a[m]
     if abs(e - 1) > 0.005:
@@ -176,12 +185,26 @@ def cabeca_do_kit(nome, tmpl, caixa):
     return so[y0:y1, x0:x1].copy(), (cx - x0, cy - y0)
 
 
-def trocar(a, tmpl, caixa, cabeca_ref=None):
+def na_escala(rec, centro, f):
+    """A cabeça recortada `rec` f vezes maior (Scale2x x3 e amostragem, sem borrar), em volta do centro da faixa."""
+    pad = int(max(rec.shape[:2]) * max(0.0, f - 1) / 2) + 4
+    big = np.pad(rec, ((pad, pad), (pad, pad), (0, 0)))
+    piv = (centro[0] + pad, centro[1] + pad)
+    big = encolher(big, f, piv)
+    ys, xs = np.nonzero(big[..., 3] > 0)
+    y0, y1, x0, x1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
+    return big[y0:y1, x0:x1].copy(), (piv[0] - x0, piv[1] - y0)
+
+
+def trocar(a, tmpl, caixa, cabeca_ref=None, escalas=None, acompanhar=False):
     """Põe a cabeça do parado (sempre o mesmo rosto) no lugar da cabeça do quadro, no mesmo ponto e no mesmo
-    ângulo, com RotSprite. Nuca, ombro e trapézio do quadro ficam."""
+    ângulo, com RotSprite. Nuca, ombro e trapézio do quadro ficam. `acompanhar`: a cabeça nova entra na escala da
+    cabeça achada (desenho maior que o parado inteiro), senão no tamanho do parado."""
     from boneco_ajuste import rotsprite
     rec, centro = cabeca_ref or cabeca_da_referencia()
-    e, ang, (cx, cy), (x, y), nota = achar(a, tmpl)
+    e, ang, (cx, cy), (x, y), nota = achar(a, tmpl, escalas)
+    if acompanhar and abs(e - 1) > 0.02:
+        rec, centro = na_escala(rec, centro, e)
     m, queixo, cxq = mascara_cabeca(a, int(x), int(y), e, caixa)
     nova_rec, piv = rotsprite(rec, -ang, centro)
     nova = np.zeros_like(a)
@@ -197,6 +220,32 @@ def trocar(a, tmpl, caixa, cabeca_ref=None):
     tras[:, :cxq] = True
     out[m & ~(faixa & tras) & ~sob] = 0
     out[sob] = nova[sob]
+    if sob.any():
+        # a máscara da cabeça velha pega o trapézio e o ombro de trás (ligados à nuca): o que sumiu atrás da
+        # cabeça nova, da altura da orelha para baixo, volta como estava
+        ys, _ = np.nonzero(sob)
+        orelha = int(ys.min() + 0.35 * (ys.max() - ys.min()))
+        perto = cv2.dilate(sob.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0
+        volta = (a[..., 3] > 0) & (out[..., 3] == 0) & ~perto
+        volta[:orelha] = False
+        volta[:, int(cx):] = False
+        out[volta] = a[volta]
+    if sob.any():
+        # queixo ou boca velha que sobrou na frente do rosto novo (cabeça do desenho mais inclinada): pedaço pequeno,
+        # colado na cabeça nova, à frente da borda dela na mesma linha, na metade de baixo do rosto
+        ys, _ = np.nonzero(sob)
+        y_a, y_b = int(ys.min() + 0.55 * (ys.max() - ys.min())), int(ys.max())
+        frente = np.zeros_like(sob)
+        for yy in range(y_a, y_b + 1):
+            xs_ = np.nonzero(sob[yy])[0]
+            if len(xs_):
+                frente[yy, xs_.max() + 1:] = True
+        cand = (out[..., 3] > 0) & frente & ~sob
+        n, lab, st, _ = cv2.connectedComponentsWithStats(cand.astype(np.uint8), connectivity=8)
+        cola = cv2.dilate(sob.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0
+        for i in range(1, n):
+            if st[i, cv2.CC_STAT_AREA] < 250 and (cola & (lab == i)).any():
+                out[lab == i] = 0
     # buraco que sobrou entre a cabeça nova e o pescoço do quadro: volta o pixel original
     cheio = cv2.morphologyEx((out[..., 3] > 0).astype(np.uint8), cv2.MORPH_CLOSE, np.ones((9, 9), np.uint8)) > 0
     buraco = cheio & (out[..., 3] == 0) & (a[..., 3] > 0)
@@ -217,7 +266,7 @@ def trocar(a, tmpl, caixa, cabeca_ref=None):
     emenda &= esq & dir_
     if emenda.any():
         out[..., :3] = cv2.inpaint(np.ascontiguousarray(out[..., :3]), emenda.astype(np.uint8), 3, cv2.INPAINT_TELEA)
-    return out, {"escala_antes": e, "angulo": ang, "nota": nota}
+    return out, {"escala_antes": e, "angulo": ang, "nota": nota, "cabeca": sob}
 
 
 def main():

@@ -189,7 +189,25 @@ SOCO = {
     "soco/07": {"quadril": {"dx": 5, "dy": 2}, "tronco": {"ang": 1}, "cabeca": {"ang": 0, "var": "foco"},
                 "braco_frente": {"ang": -8, "var": "punho"}, "braco_tras": {"ang": -2}, "_pes": (2, 12)},
 }
-FEITAS = {**SOCO}
+# cabeçada em pé (303, 347, 3412, 3430): feita à mão, com o corpo firme; a agachada (410) sai do DOBRA
+CABECADA = {
+    # antecipação: puxa o tronco para trás, abaixa um pouco
+    "cabecada/02": {"quadril": {"dx": -6, "dy": 6}, "tronco": {"ang": -8}, "cabeca": {"ang": -6, "var": "foco"},
+                    "braco_frente": {"ang": -15, "var": "punho"}, "braco_tras": {"ang": -10}},
+    "cabecada/03": {"quadril": {"dx": -10, "dy": 10}, "tronco": {"ang": -12}, "cabeca": {"ang": -10, "var": "foco"},
+                    "braco_frente": {"ang": -5, "var": "punho"}, "braco_tras": {"ang": -15}},
+    # bate: o corpo vai para a frente e a testa é o que chega primeiro; os braços ficam para trás
+    "cabecada/04": {"quadril": {"dx": 16, "dy": 4}, "tronco": {"ang": 10}, "cabeca": {"ang": 12, "dx": 4, "var": "esforco"},
+                    "braco_frente": {"ang": 30, "var": "punho"}, "braco_tras": {"ang": 12}},
+    "cabecada/05": {"quadril": {"dx": 16, "dy": 4}, "tronco": {"ang": 10}, "cabeca": {"ang": 12, "dx": 4, "var": "esforco"},
+                    "braco_frente": {"ang": 30, "var": "punho"}, "braco_tras": {"ang": 12}},
+    # volta
+    "cabecada/06": {"quadril": {"dx": 6, "dy": 2}, "tronco": {"ang": 5}, "cabeca": {"ang": 4, "var": "foco"},
+                    "braco_frente": {"ang": 10, "var": "punho"}, "braco_tras": {"ang": 0}},
+}
+
+
+FEITAS = {**CABECADA, **SOCO}
 
 # Chute com o corpo inteiro (regra 7.4): a perna do chute continua a do encaixe, mas o corpo acompanha. O quadril
 # entra na direção do chute e sobe na ponta do pé de apoio, o tronco inclina para trás (contrapeso), a cabeça fica
@@ -407,6 +425,10 @@ def preparar():
 
 
 ESPECIAL = {}
+# desenhos do chute baixo (430) e da rasteira (440): o corpo inteiro é ~1,3x o parado (o Alisson escolheu manter o
+# tamanho, 24/11). A cabeça é achada numa faixa de escala mais larga e a do kit entra na escala do desenho, para o
+# rosto ser sempre o do kit (Breno, 24/11: "o Pengaró muda muito a cara dele")
+ROSTO_NA_ESCALA = ("rasteirinha/", "rasteira/")
 
 
 def especial(q, expr):
@@ -421,7 +443,9 @@ def especial(q, expr):
         ESPECIAL["pal"] = pc.paleta_do_parado(ref, [ref])
     a = b.abrir(q)
     try:
-        out, info = cc.trocar(a, ESPECIAL["tmpl"], ESPECIAL["caixa"], ESPECIAL["cab"][expr or "guarda"])
+        larga = q.startswith(ROSTO_NA_ESCALA)
+        out, info = cc.trocar(a, ESPECIAL["tmpl"], ESPECIAL["caixa"], ESPECIAL["cab"][expr or "guarda"],
+                              escalas=cc.ESCALAS_LARGAS if larga else None, acompanhar=True)
         # a máscara da cabeça velha pega o que encosta nela (braço levantado, garrafa): o que sumiu longe da
         # cabeça nova volta como estava; migalha que ficou solta do cabelo velho sai
         perdido = ((a[..., 3] > 0) & (out[..., 3] == 0)).astype(np.uint8)
@@ -578,9 +602,16 @@ def cmd_animar(so=None):
         els = juntar(els)
         chaves = []
         pp = {}
+        q_bate = None
         for e in els:
             q = e["desenho"].removesuffix(".png")
             ex = expressao(q.split('/')[0], e["bate"])
+            if e["bate"]:
+                q_bate = q
+            elif q == q_bate and ex == "foco":
+                ex = "esforco"  # o mesmo desenho do contato segurado mantém o esforço (rosto não pisca para o foco)
+            else:
+                q_bate = None
             ch = f"{q}|{ex}"
             pp[ch] = ajustar(dict(poses[q], **({"cabeca": {"ang": 0, "var": ex}} if ex else {})), q)
             chaves.append((ch, max(e["ticks"], 1) if e["ticks"] >= 0 else 1, e["bate"]))
@@ -594,7 +625,11 @@ def cmd_animar(so=None):
                 continue
             if not plantar(kit, pp[c], c.split("|")[0]):
                 fixos.add(c)  # pose-chave que o kit não monta sem defeito vira quadro especial
-        fixos |= {c for c, _, _ in chaves if c.split("|")[0] in DOBRA}
+        # o tronco dobrado e o agachar mais fundo são só dos golpes agachados: os golpes em pé que usam os mesmos
+        # desenhos (cabeçada 303, 347, 3412, 3430) ficam como o desenho
+        dobra = DOBRA if n in AGACHADAS else {}
+        fundo = MAIS_FUNDO if n in AGACHADAS else {}
+        fixos |= {c for c, _, _ in chaves if c.split("|")[0] in dobra}
         bate = next((k for k, (_, _, bt) in enumerate(chaves) if bt), None)
         laco = n in LACOS
         volta = agachado() if n in AGACHADAS else {}
@@ -605,7 +640,7 @@ def cmd_animar(so=None):
         if n in (0, 5):
             quadros = vida.respirar(quadros)
         quadros = vida.atrasar(quadros, laco=laco)
-        quadros, giro = volta_dobrada(quadros)
+        quadros, giro = volta_dobrada(quadros) if dobra else (quadros, {})
         for pasta in (SAIDA / str(n), SAIDA_1X / str(n)):
             shutil.rmtree(pasta, ignore_errors=True)
             pasta.mkdir(parents=True)
@@ -615,14 +650,14 @@ def cmd_animar(so=None):
             q, ex = ch.split("|")
             if q == "anda":
                 q = "ginga/00"  # andar feito por código: o robô compara com o parado (pés no chão)
-            if q in DOBRA:
-                base, ang, dx, ex_ = DOBRA[q]
+            if q in dobra:
+                base, ang, dx, ex_ = dobra[q]
                 ang, dx = giro.get(i, (ang, dx))
                 out = dobrar(especial(base, ex_), ang, dx)
                 originais.setdefault(q, b.abrir(base))
             elif ch in fixos:
                 out = especial(q, None if ex == "None" else ex)
-                if q in MAIS_FUNDO:
+                if q in fundo:
                     from firme import na_tela
                     out = na_tela(mais_fundo(out, MAIS_FUNDO[q][0]), MAIS_FUNDO[q][1])
             else:

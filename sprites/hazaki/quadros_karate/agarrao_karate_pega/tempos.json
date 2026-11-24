@@ -1,0 +1,22 @@
+{
+ "acao": 800,
+ "caixa": null,
+ "origem": [
+  "alcança",
+  "segura"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "alcança"
+  },
+  {
+   "desenho": 1,
+   "ticks": 9,
+   "caixa": false,
+   "de": "segura"
+  }
+ ]
+}
