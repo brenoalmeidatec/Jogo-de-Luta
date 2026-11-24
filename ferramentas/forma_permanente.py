@@ -16,13 +16,18 @@ Quem desperta fica na forma até a luta acabar: não volta por tempo nem no fim 
 - O super da forma (estado 3100) não encerra mais a forma (o "Fim Despertar" sai). Em troca custa 2 estoques na forma,
   como fora dela (antes custava 1 e acabava com a forma, ou no CK valia só nos 10 s).
 - O cenário destruído (seção 4.2) é da thread dos cenários (ferramentas/destruicao.py), que lê o mesmo var(20) > 0.
+- Corpo endiabrado no round seguinte (Breno, #32, 2026-11-24): o "Volta ao normal" desfazia o RemapSprite em toda a
+  apresentação (trigger2 = roundstate < 2), e o "Vira endiabrado" só liga com var(37) = 0, que já tinha ficado em 1.
+  Resultado: quem vencia despertado começava o round 2 com o corpo normal, a aura e os golpes da forma. Agora a
+  apresentação só desfaz a troca de corpo quando a forma está desligada, e o "Vira" religa a troca durante a
+  apresentação sempre que a forma está ligada. ferramentas/testar_rounds_despertado.py confere com dois rounds.
 """
 import re
 import sys
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
-LUTADORES = ("pengaro", "ck", "gutto", "raiclaven", "hazaki")
+LUTADORES = ("pengaro", "ck", "gutto", "raiclaven", "hazaki", "gbzin")
 MARCA = "; Forma até o fim da luta (forma_permanente.py)\n"
 
 BLOCOS = MARCA + """[State -2, Forma fica: marca que despertou]
@@ -79,6 +84,11 @@ def aplicar(lutador, pasta=None):
     c1 = re.sub(r"(?m)^(value = 3100\r?\ntriggerall = command = \"\w+\"\r?\ntriggerall = power >= )1000", r"\g<1>2000", c0)
     if c1 != c0:
         cmd.write_bytes(c1.encode("utf-8"))
+    # corpo endiabrado no round seguinte: a apresentação não desfaz a troca de corpo com a forma ligada, e a religa
+    novo = re.sub(r"(?m)^(type = RemapSprite\n(?:trigger\w+ = [^\n]*\n)*?trigger2 = roundstate < 2)$",
+                  r"\1 && var(20) <= 0", novo)
+    novo = re.sub(r"(?m)^(type = RemapSprite\ntrigger1 = [^\n]*var\(37\) = 0\n)(preset = \"despertado\")",
+                  r"\1trigger2 = roundstate < 2 && var(20) > 0\n\2", novo)
     # os blocos entram antes da música: depois do "zera na intro" de cada um e antes de a música olhar o var(20)
     ancora = "[State -2, Musica do cenario comeca a baixar]\n"
     if novo.count(ancora) != 1:

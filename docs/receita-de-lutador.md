@@ -59,7 +59,9 @@ Regra do Breno (2026-11-15): **todo agarrão tem animação própria, e quem é 
 
 ## 5. O despertado
 
-- **Dura até o fim da luta**, com a música da forma (`ferramentas/forma_permanente.py`, seção 4 das regras).
+- **Dura até o fim da luta**, com a música da forma (`ferramentas/forma_permanente.py`, seção 4 das regras). O
+  lutador novo entra em `LUTADORES` do `forma_permanente.py` e do `testar_rounds_despertado.py`, e o robô de dois
+  rounds tem de dar `TUDO OK` (round 2 começa despertado, com corpo, aura e golpes da forma).
 - **Cena da transformação:** tudo preto, zoom no lutador, clarão e luz voltando, na cor da forma
   ([`cena-transformacao.md`](cena-transformacao.md), #49).
 - **Agarrão da forma e poder de longe** no padrão do Diabo Loiro do Hazak: grande, sombrio e pesado. Carga com o mundo

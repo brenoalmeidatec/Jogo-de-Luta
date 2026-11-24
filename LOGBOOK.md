@@ -3217,3 +3217,17 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   idêntico ao da mugen.
 - Cabeçada do Gbzin: a pasta `cabecada` é o antiaéreo da bengala (410, 313, 347, 1200), não uma testada. Confere
   com a receita do uppercut versão de jogo; fica como está (anatomia.md).
+
+## 2026-11-24 — Despertado continua no round seguinte (Claude, thread do Alisson, pedido do Breno na #32)
+
+- Bug: quem vencia um round despertado começava o round 2 com o corpo normal, mas com a aura e os golpes da forma
+  (var20 continuava 600). Causa: o "Volta ao normal" desfazia o RemapSprite em toda a apresentação
+  (`trigger2 = roundstate < 2`), e o "Vira endiabrado" só religa com var(37) = 0, que já estava em 1.
+- Conserto no pós-passo `ferramentas/forma_permanente.py` (vale nos `gerar_<lutador>.py`): a apresentação só desfaz a
+  troca de corpo com a forma desligada, e o "Vira" religa a troca na apresentação com a forma ligada. Aplicado nos 6
+  com Despertar (Pengaró, CK, Gutto, Raiclaven, Hazak, Gbzin; o Gbzin entrou em `LUTADORES`).
+- Robô novo `ferramentas/testar_rounds_despertado.py` (nuvem, 2 rounds): antes 6 de 6 com o corpo errado; depois 6 de 6
+  `RESULTADO OK` (forma, corpo, aura, ctrl, chute e soco no round 2). `--antes REF` roda os chars de um commit antigo.
+- Provas: `docs/rounds-despertado/round2_antes_depois.jpg` e `rounds_despertado_antes_depois.mp4`.
+- Não reproduzido: um "trava" de verdade (sem ctrl). No robô o lutador ganha ctrl e solta golpe no round 2; o que
+  parecia travado era o corpo normal fazendo golpes e aura da forma.
