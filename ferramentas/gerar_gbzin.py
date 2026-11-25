@@ -1287,6 +1287,10 @@ def main():
     import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
     como_o_ck(destruicao)
     destruicao.aplicar("gbzin", SAIDA)
+    import mecanica  # auditoria do Breno (#32, 24/11): barra do afastar, jab, parry, desconto de combo, trava da defesa
+    mecanica.aplicar("gbzin", SAIDA)
+    import faisca_proporcional  # #32 (25/11): estouro só no golpe que derruba e nos especiais
+    faisca_proporcional.aplicar("gbzin", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
     # Regra de criação, seção 11 (17/11/2026): os golpes do boneco de peças (parado, soco, chute alto, com os quadros
     # do meio) entram por cima do que o gerador fez, e depois a aura e o encolher. Sempre por último.

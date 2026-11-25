@@ -4111,6 +4111,10 @@ def main():
     aura_no_corpo.aplicar("pengaro", SAIDA)
     import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
     destruicao.aplicar("pengaro", SAIDA)
+    import mecanica  # auditoria do Breno (#32, 24/11): barra do afastar, jab, parry, desconto de combo, trava da defesa
+    mecanica.aplicar("pengaro", SAIDA)
+    import faisca_proporcional  # #32 (25/11): estouro só no golpe que derruba e nos especiais
+    faisca_proporcional.aplicar("pengaro", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
     if SEM_FOLHA_BOSS:
         print("Endiabrado sem folha própria (pose emprestada do boss):", " ".join(sorted(SEM_FOLHA_BOSS)))

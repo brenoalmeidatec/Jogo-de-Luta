@@ -536,6 +536,10 @@ def main():
     aura_silhueta.aplicar("raiclaven", SAIDA)
     import luz  # issue #51: luz em todo efeito que brilha (sem aura em camadas, a luz.py não vem pelo aura_silhueta)
     luz.aplicar("raiclaven", SAIDA)
+    import mecanica  # auditoria do Breno (#32, 24/11): barra do afastar, jab, parry, desconto de combo, trava da defesa
+    mecanica.aplicar("raiclaven", SAIDA)
+    import faisca_proporcional  # #32 (25/11): estouro só no golpe que derruba e nos especiais
+    faisca_proporcional.aplicar("raiclaven", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

@@ -217,14 +217,14 @@ time = 24
 [Command]
 name = "parry_baixo"
 command = /$D, c
-time = 1
-buffer.time = 1
+time = 4
+buffer.time = 3
 
 [Command]
 name = "parry"
 command = /F, c
-time = 1
-buffer.time = 1
+time = 4
+buffer.time = 3
 
 [Command]
 name = "FF"
@@ -923,18 +923,11 @@ triggerall = var(8) = 1
 triggerall = command = "rolar"
 trigger1 = stateno = 150 || stateno = 152
 
-[State -1, Gasta afastar de defesa]
-type = PowerAdd
-triggerall = command = "afastar"
-triggerall = power >= 1000
-triggerall = time > 3
-trigger1 = stateno = 150 || stateno = 152
-value = -1000
-
 [State -1, Afastar de defesa]
 type = ChangeState
 value = 720
 triggerall = command = "afastar"
+triggerall = power >= 1000
 triggerall = time > 3
 trigger1 = stateno = 150 || stateno = 152
 

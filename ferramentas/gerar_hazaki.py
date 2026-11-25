@@ -1353,6 +1353,8 @@ def main():
     forma_permanente.aplicar("hazaki", SAIDA)
     import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
     destruicao.aplicar("hazaki", SAIDA)
+    import mecanica  # auditoria do Breno (#32, 24/11): barra do afastar, jab, parry, desconto de combo, trava da defesa
+    mecanica.aplicar("hazaki", SAIDA)
     # #36: desenho nítido novo, caixas de antes (sprites/hazaki/caixas_base.air): o jogo não muda
     import manter_caixas
     n, dif = manter_caixas.aplicar("hazaki", SAIDA)

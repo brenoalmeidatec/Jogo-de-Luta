@@ -879,6 +879,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2.5
 air.velocity = -1.4,-3
 
@@ -930,6 +931,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 6
 ground.hittime = 20
+guard.hittime = 15 ; mecanica 25/11
 ground.velocity = -4
 air.velocity = -2,-4
 
@@ -981,6 +983,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2.5
 air.velocity = -1.4,-3
 
@@ -1030,6 +1033,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 6
 ground.hittime = 20
+guard.hittime = 15 ; mecanica 25/11
 ground.velocity = -5
 air.velocity = -2,-4
 
@@ -1081,6 +1085,7 @@ guardsound = F6,0
 ground.type = Low
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2.5
 air.velocity = -1.4,-3
 
@@ -1127,6 +1132,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 6
 ground.hittime = 20
+guard.hittime = 15 ; mecanica 25/11
 ground.velocity = -3
 air.velocity = -2,-7
 
@@ -1207,6 +1213,7 @@ guardsound = F6,0
 ground.type = Low
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2.5
 air.velocity = -1.4,-3
 
@@ -1497,6 +1504,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 6
 ground.hittime = 20
+guard.hittime = 15 ; mecanica 25/11
 ground.velocity = -4
 air.velocity = -2,-4
 
@@ -1548,6 +1556,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 6
 ground.hittime = 20
+guard.hittime = 15 ; mecanica 25/11
 ground.velocity = -4
 air.velocity = -2,-4
 
@@ -1594,6 +1603,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2.5
 air.velocity = -1.4,-3
 
@@ -1691,6 +1701,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2.5
 air.velocity = -1.4,-3
 
@@ -1715,6 +1726,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2.5
 air.velocity = -1.4,-3
 
@@ -1771,6 +1783,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2.5
 air.velocity = -1.4,-3
 
@@ -1883,6 +1896,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 6
 ground.hittime = 20
+guard.hittime = 15 ; mecanica 25/11
 ground.velocity = -4
 air.velocity = -2,-4
 
@@ -1934,6 +1948,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 6
 ground.hittime = 20
+guard.hittime = 15 ; mecanica 25/11
 ground.velocity = -4
 air.velocity = -2,-4
 
@@ -1985,6 +2000,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 8
 ground.hittime = 22
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2,-8
 air.velocity = -2,-8
 envshake.time = 12
@@ -2055,6 +2071,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2.5
 air.velocity = -1.4,-3
 
@@ -2106,6 +2123,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2.5
 air.velocity = -1.4,-3
 
@@ -2220,6 +2238,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 6
 ground.hittime = 20
+guard.hittime = 15 ; mecanica 25/11
 ground.velocity = -4
 air.velocity = -2,-4
 
@@ -2274,6 +2293,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 6
 ground.hittime = 20
+guard.hittime = 15 ; mecanica 25/11
 ground.velocity = -4
 air.velocity = -2,-4
 
@@ -2397,6 +2417,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2.5
 air.velocity = -1.4,-3
 
@@ -2504,6 +2525,7 @@ guardsound = F6,0
 ground.type = Low
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2.5
 air.velocity = -1.4,-3
 
@@ -2611,6 +2633,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 6
 ground.hittime = 20
+guard.hittime = 15 ; mecanica 25/11
 ground.velocity = -4
 air.velocity = -2,-4
 
@@ -2665,6 +2688,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 6
 ground.hittime = 24
+guard.hittime = 19 ; mecanica 25/11
 ground.velocity = -9
 air.velocity = -2,-4
 
@@ -2716,6 +2740,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 6
 ground.hittime = 20
+guard.hittime = 15 ; mecanica 25/11
 ground.velocity = -3
 air.velocity = -2,-4
 
@@ -2821,6 +2846,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 12
+guard.hittime = 11 ; mecanica 25/11
 ground.velocity = -7,-5
 air.velocity = -5,-5
 fall = 1
@@ -2968,6 +2994,11 @@ anim = 260
 juggle = 0
 velset = 0,0
 
+[State 720, Gasta a barra (mecanica 25/11)]
+type = PowerAdd
+trigger1 = Time = 0
+value = -1000
+
 [State 720, som vento]
 type = PlaySnd
 trigger1 = Time = 0
@@ -3048,7 +3079,7 @@ velset = 0,0
 
 [State 760, Desvia]
 type = ReversalDef
-trigger1 = Time < 4
+trigger1 = Time < 8
 reversal.attr = SA, NA, SA, HA
 pausetime = 0,0
 sparkno = S(ifelse(var(20) > 0, 7691, 7690))
@@ -3102,7 +3133,7 @@ velset = 0,0
 
 [State 764, Desvia]
 type = ReversalDef
-trigger1 = Time < 4
+trigger1 = Time < 8
 reversal.attr = C, NA, SA, HA
 pausetime = 0,0
 sparkno = S(ifelse(var(20) > 0, 7691, 7690))
@@ -6729,6 +6760,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 20
+guard.hittime = 15 ; mecanica 25/11
 ground.velocity = -5
 air.velocity = -4,-4
 
@@ -6793,6 +6825,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 20
+guard.hittime = 12 ; mecanica 25/11
 ground.velocity = -5,-4
 air.velocity = -4,-4
 fall = 1
@@ -6846,6 +6879,7 @@ guardsound = F6,0
 ground.type = Low
 ground.slidetime = 5
 ground.hittime = 20
+guard.hittime = 15 ; mecanica 25/11
 ground.velocity = -3
 air.velocity = -3,-2
 
@@ -6910,6 +6944,7 @@ guardsound = F6,0
 ground.type = Trip
 ground.slidetime = 5
 ground.hittime = 20
+guard.hittime = 19 ; mecanica 25/11
 ground.velocity = -3,-2
 air.velocity = -3,-2
 fall = 1
@@ -7050,6 +7085,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 20
+guard.hittime = 15 ; mecanica 25/11
 ground.velocity = -5
 air.velocity = -1.4,-3
 
@@ -7143,6 +7179,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 20
+guard.hittime = 31 ; mecanica 25/11
 ground.velocity = -5
 air.velocity = -5,-4
 
@@ -7246,6 +7283,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 20
+guard.hittime = 35 ; mecanica 25/11
 ground.velocity = -6,-5
 air.velocity = -5,-4
 fall = 1
@@ -7610,6 +7648,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 4
 ground.hittime = 22
+guard.hittime = 13 ; mecanica 25/11
 ground.velocity = -1
 air.velocity = -1,-3
 
@@ -7634,6 +7673,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 4
 ground.hittime = 22
+guard.hittime = 13 ; mecanica 25/11
 ground.velocity = -1
 air.velocity = -1,-3
 
@@ -7661,6 +7701,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 4
 ground.hittime = 22
+guard.hittime = 13 ; mecanica 25/11
 ground.velocity = -1
 air.velocity = -1,-3
 
@@ -7812,6 +7853,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 12
+guard.hittime = 9 ; mecanica 25/11
 ground.velocity = -3,-4
 air.velocity = -2,7
 envshake.time = 20
@@ -7964,6 +8006,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 0
 ground.hittime = 30
+guard.hittime = 15 ; mecanica 25/11
 ground.velocity = 0
 air.velocity = 0,-2
 
@@ -8063,6 +8106,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 12
+guard.hittime = 9 ; mecanica 25/11
 ground.velocity = -7,-6
 air.velocity = -7,-6
 envshake.time = 20
@@ -8715,6 +8759,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 10
 ground.hittime = 20
+guard.hittime = 15 ; mecanica 25/11
 envshake.time = 10
 envshake.freq = 120
 envshake.ampl = -5
@@ -8908,6 +8953,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 10
 ground.hittime = 20
+guard.hittime = 24 ; mecanica 25/11
 envshake.time = 10
 envshake.freq = 120
 envshake.ampl = -5
@@ -9019,6 +9065,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2.5
 air.velocity = -1.4, -3
 
@@ -9075,6 +9122,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 8
 ground.hittime = 18
+guard.hittime = 13 ; mecanica 25/11
 ground.velocity = -2
 air.velocity = -1.4, -3
 
@@ -9123,6 +9171,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2
 air.velocity = -1.4, -3
 
@@ -9169,6 +9218,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 10
 ground.hittime = 20
+guard.hittime = 15 ; mecanica 25/11
 ground.velocity = -2
 air.velocity = -1.4, -3
 
@@ -9217,6 +9267,7 @@ guardsound = F6,0
 ground.type = Low
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2.5
 air.velocity = -1.4, -3
 
@@ -9275,6 +9326,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 8
 ground.hittime = 18
+guard.hittime = 13 ; mecanica 25/11
 ground.velocity = -4
 air.velocity = -2, -4
 
@@ -9323,6 +9375,7 @@ guardsound = F6,0
 ground.type = Low
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2
 air.velocity = -1.4, -3
 
@@ -9369,6 +9422,7 @@ guardsound = F6,0
 ground.type = Trip
 ground.slidetime = 10
 ground.hittime = 20
+guard.hittime = 13 ; mecanica 25/11
 fall = 1
 fall.recover = 0
 ground.velocity = -4, -4
@@ -9424,6 +9478,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 9 ; mecanica 25/11
 ground.velocity = -2
 air.velocity = -1.4, -3
 
@@ -9477,6 +9532,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2
 air.velocity = -1.4, -3
 
@@ -9530,6 +9586,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 8
 ground.hittime = 18
+guard.hittime = 13 ; mecanica 25/11
 ground.velocity = -2
 air.velocity = -1.4, -3
 
@@ -9583,6 +9640,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2
 air.velocity = -1.4, -3
 
@@ -9636,6 +9694,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 8
 ground.hittime = 18
+guard.hittime = 13 ; mecanica 25/11
 ground.velocity = -2
 air.velocity = -1.4, -3
 
@@ -9689,6 +9748,7 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 15
+guard.hittime = 10 ; mecanica 25/11
 ground.velocity = -2
 air.velocity = -1.4, -3
 
@@ -10271,6 +10331,7 @@ hitsound = S53,0
 guardsound = F6,0
 ground.slidetime = 8
 ground.hittime = 18
+guard.hittime = 15 ; mecanica 25/11
 ground.type = High
 ground.velocity = -1.5, -6
 air.velocity = -1.5, -6
@@ -10297,6 +10358,7 @@ hitsound = S53,0
 guardsound = F6,0
 ground.slidetime = 10
 ground.hittime = 20
+guard.hittime = 15 ; mecanica 25/11
 ground.type = High
 fall = 1
 fall.recover = 0
@@ -10380,6 +10442,7 @@ hitsound = S53,0
 guardsound = F6,0
 ground.slidetime = 8
 ground.hittime = 18
+guard.hittime = 15 ; mecanica 25/11
 ground.type = High
 ground.velocity = -1.5, -6
 air.velocity = -1.5, -6
@@ -10406,6 +10469,7 @@ hitsound = S53,0
 guardsound = F6,0
 ground.slidetime = 10
 ground.hittime = 20
+guard.hittime = 15 ; mecanica 25/11
 ground.type = High
 fall = 1
 fall.recover = 0
@@ -10526,6 +10590,7 @@ hitsound = S53,0
 guardsound = F6,0
 ground.slidetime = 10
 ground.hittime = 20
+guard.hittime = 14 ; mecanica 25/11
 ground.type = High
 pausetime = 14, 14
 p2stateno = 4660
@@ -11097,8 +11162,7 @@ var(37) = 0
 [State -2, Peso do Diabo]
 type = AttackMulSet
 trigger1 = 1
-value = ifelse(var(20) > 0, 1.25, 1)
-
+value = (ifelse(var(20) > 0, 1.25, 1)) * ifelse(stateno = [3000, 3399], 1, ifelse((enemynear, movetype = H), ifelse((enemynear, gethitvar(hitcount)) >= 5, .5, ifelse((enemynear, gethitvar(hitcount)) >= 2, 1 - .1 * (enemynear, gethitvar(hitcount)), 1)), 1)) ; desconto de combo (mecanica 25/11)
 [State -2, Demônio: Bola das Trevas acertou (tremida)]
 type = EnvShake
 trigger1 = ProjHitTime(4500) = 0 || ProjHitTime(4501) = 0

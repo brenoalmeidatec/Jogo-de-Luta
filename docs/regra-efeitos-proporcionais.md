@@ -52,6 +52,13 @@ Golpe normal usa os desenhos do pixelfx pintados na cor do lutador e da forma; e
 efeitos do Blender, também na cor dele. Nada do ChatGPT. Ferramentas: `ferramentas/efeitos.py` (liga tudo) e
 `ferramentas/efeitos_blender.py` (renderiza). Detalhes, cores e temas em [efeitos-38/LEIA-ME.md](efeitos-38/LEIA-ME.md).
 
+**Ajuste de 25/11 (recado do Breno na #32: "gutto todo ataque dele tem uma explosão vermelha"):** o estouro 9201 saía
+em quase todo golpe médio. Agora `ferramentas/faisca_proporcional.py` (chamado no fim dos `gerar_<lutador>.py`) deixa,
+nos normais e correntes da forma base que **não derrubam**: fraco com o ventinho 9200 e médio/forte com o **estalo
+9206** (o risco de luz do 9200 em 0,95, sem o clarão rosado nem as lascas). O estouro 9201 fica só para golpe que
+derruba, especial e super. O despertado não muda. `--conferir` sai com erro se algum normal sem queda voltar a
+estourar.
+
 ## Para conferir antes de subir
 
 - **Filmar:** um soco fraco, um forte e um super de cada lutador. O fraco quase não tem efeito, o forte se sente, e o

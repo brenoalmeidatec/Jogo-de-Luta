@@ -50,6 +50,36 @@ continuam em [`regras-dos-lutadores.md`](regras-dos-lutadores.md). Estilo e core
 - **Conteúdo:** resenha pesada pode. Não pode piada de escravidão nem o estereótipo da mulher loira. Lata e garrafa sem
   marca. Gostar de chimpanzés faz parte da história do Pengaró.
 
+## Regras do Alisson (24 e 25/11/2026)
+
+- **Aviso ao Breno sempre com prévia visual.** Todo comentário em issue (que chega por email) leva a imagem ou o GIF
+  antes/depois embutido no próprio comentário (`![...](https://github.com/brenoalmeidatec/Jogo-de-Luta/blob/<commit>/docs/....png?raw=true)`),
+  para ele ver direto no email, sem abrir nada.
+- **Comparativo com zoom e marcação vermelha.** Mudança pequena não aparece em tamanho normal: amplie o pedaço que
+  mudou e marque com retângulo vermelho.
+- **Testes só na nuvem.** Robô, filmagem e vídeo rodam no Linux da nuvem (`testar_pengaro.py --linux`, Xvfb). Nada
+  roda no PC do Alisson.
+- **Validar antes de dar como pronto.** Subagentes (mais Haiku, poucos Sonnet; nunca Fable) olham as imagens e o diff
+  procurando defeito antes de subir.
+- **Juntar na `mugen` assim que terminar**, um item por vez, atualizando com a `mugen` antes, sem esperar o OK do
+  Breno (ele acompanha e fala se não gostar).
+- **Decisão que seria do Breno:** escolher a opção de melhor resultado e seguir.
+
+## Mecânica (auditoria do Breno, #32, 24/11; feito em 25/11)
+
+- `python3 ferramentas/vantagem.py [lutador ...] --json SAIDA.json` mede no motor, golpe a golpe, a vantagem no
+  acerto e na defesa. `ferramentas/vantagem_grafico.py` faz o gráfico antes/depois.
+- `python3 ferramentas/mecanica.py` aplica nos 6 (e os `gerar_<lutador>.py` chamam no fim): afastar na defesa só
+  com barra, jab repetido sem código morto, parry com janela de 8 tiques, desconto de dano em combo (100, 100, 80, 70,
+  60, piso 50%; a super fica de fora) e a trava da defesa (`guard.hittime`) da tabela
+  `ferramentas/mecanica_guarda.json`. `--conferir` diz o que falta.
+- Golpe novo ou com o tempo mudado: meça com `vantagem.py`, rode `calibrar_guarda.py` (alvo: golpe que não derruba
+  fica com a vantagem do acerto menos 6, no máximo +2; normal que derruba -12; especial -8; super -14; antiaéreo
+  fica bem punível) e aplique o `mecanica.py` de novo.
+- `python3 ferramentas/faisca_proporcional.py` (também no fim dos geradores): nos normais, fraco = ventinho (9200),
+  médio e forte que não derruba = estalo (9206); o estouro (9201/9205) fica para o golpe que derruba e os especiais.
+  A forma despertada não muda.
+
 ## Personagem do Pengaró
 
 - Forma normal: garrafa de whisky na mão de trás, desenhada em todo quadro.
