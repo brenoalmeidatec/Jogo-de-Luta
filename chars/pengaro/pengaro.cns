@@ -2677,16 +2677,6 @@
 49153,8 = 845,0
 49153,9 = 845,0
 
-[Quotes]
-victory1 = "F-f-foi de letra, filho da puta."
-victory2 = "T-t-tá achando que é bo-boteco de domingo, é, ca-caralho?"
-victory3 = "V-v-vai lá contar pra tua mãe que tu a-a-apanhou do gago."
-victory4 = "Eu be-bebo... be-be-BATO melhor que tu, porra!"
-victory5 = "T-tu ficou pa-parado igual cone. Ma-mas cone pelo menos fica de pé."
-victory6 = "D-d-demorei pra falar, mas tu de-de-demorou mais pra levantar."
-victory7 = "Es-essa vai na tua conta, pa-pa-parceiro. A do bar também."
-victory8 = "Olha só, falei inteiro! Agora chama tua irmã que eu vou ensinar ela a gingar, hein!"
-
 [Data]
 life = 1000
 power = 3000

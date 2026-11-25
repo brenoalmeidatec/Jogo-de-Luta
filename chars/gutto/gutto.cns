@@ -1447,16 +1447,6 @@
 48015,22 = 1624,0
 48015,23 = 1624,0
 
-[Quotes]
-victory1 = "Foi na ginga do Muay Thai, parceiro!"
-victory2 = "Quer outra? É só pedir."
-victory3 = "Chute baixo não perdoa, né?"
-victory4 = "Beijinho de despedida!"
-victory5 = "Tu caiu igual a cavalo de carrossel."
-victory6 = "Treino de verdade é na canela."
-victory7 = "Essa vai na conta do Gutto."
-victory8 = "Levanta que eu dou mais uma."
-
 [Data]
 life = 1000
 power = 3000

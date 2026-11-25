@@ -453,6 +453,8 @@ def main():
     faisca_proporcional.aplicar("gutto", SAIDA)
     import ia_cpu  # checkup 25/11: IA da CPU (sempre por último: lê o .air e o .cns já prontos)
     ia_cpu.aplicar("gutto", SAIDA)
+    import falas_vitoria  # fala da tela de vitória: tira o [Quotes] (as falas ficam no nazafights.lua)
+    falas_vitoria.aplicar("gutto", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

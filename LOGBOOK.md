@@ -3245,3 +3245,15 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
 - Também: retrato provisório do Gbzin (do conceito), orbe forte do Diabo demônio com `ground.velocity` único,
   `--sem-ia`/`--chefe` no `filmar_luta_linux.py`, Gbzin no `testar_mapas.py`.
 - Detalhes, números e sugestões: `docs/checkup-25-11.md`.
+
+## 2026-11-25 — Tela de vitória com fala de cada lutador (Claude, thread do Alisson)
+
+- A tela de vitória do motor estava desligada (`enabled = 0`): depois do K.O. o jogo ia direto para o menu. Agora:
+  luta escurecida atrás, busto do vencedor, aba VITÓRIA, rosto apagado de quem perdeu com a tarja DERROTADO e a fala
+  escrita letra por letra (`textos_ptbr.vitoria()` + sprites 500,x no `gerar_layout.py`).
+- Falas em `ferramentas/falas_vitoria.py`: 8 normais + 8 do Despertar por lutador (Hazak ganhou as dele).
+- Armadilha: o IKEMEN GO v1.0.0 ignora o `VictoryQuote` (a fala saía sorteada do `[Quotes]`). As falas saíram dos
+  `.cns` e o `nazafights.lua` escolhe no gancho `game.victory_init` (forma pelo `var(20)`, `modifyMotif` no
+  `victory_screen.winquote.text`, que o motor só usa quando o lutador não tem `[Quotes]`).
+- Teste: `ferramentas/testar_vitoria.py` (Assistir na nuvem). Os 6 conferidos normais e despertados; robô 6/6 sem
+  defeito. Detalhes em `docs/checkup-25-11.md`.

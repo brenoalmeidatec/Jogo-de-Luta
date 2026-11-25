@@ -294,8 +294,111 @@ def continuar():
     return "\n".join(linhas)
 
 
+# ------------------------------------------------------------------ [Victory Screen]
+# Tela de vitoria (Alisson, 25/11/2026): estava desligada (enabled = 0 do padrao do motor). O motor desenha por cima
+# da luta, escurecida pelo overlay: busto grande de quem venceu a esquerda (9000,1 a 0.5, o pe no painel), rosto
+# apagado de quem perdeu a direita (9000,0 a 0.5) na moldura com a tarja DERROTADO, a aba VITORIA no alto e, no
+# painel de baixo, o nome de quem venceu e a fala dele escrita letra por letra na Open Sans (com acento).
+# A fala sai do [Quotes] do lutador (ferramentas/falas_vitoria.py: 8 da forma normal, 8 do Despertar).
+# Posicoes na tela 1280x720; os sprites 500,x sao desenhados pelo gerar_layout.py com estas mesmas medidas.
+VITORIA = {
+    "painel": (32, 540, 608, 82),       # x, y na tela; largura e altura na grade 2x
+    "placa": (56, 556, 180, 24),        # placa do nome do vencedor, dentro do painel
+    "busto": (56, 108),                 # canto do busto (9000,1) a 0.5: 896x432, o pe encosta no painel (y 540)
+    "moldura": (1008, 292, 108),        # moldura do rosto de quem perdeu (9000,0 a 0.5 = 200x200)
+    "aba": (420, 0, 220, 26),
+}
+FALA_ESCALA = "1.35, 1.35"              # Open Sans de 27 px * 1,35 ~ 36 px na tela de 1280
+
+
 def vitoria():
-    return "winquote.text = Venceu!\nwinquote.localcoord = 320, 240"
+    px, py, pw, ph = VITORIA["painel"]
+    lx, ly, lw, lh = VITORIA["placa"]
+    bx, by = VITORIA["busto"]
+    mx, my, mn = VITORIA["moldura"]
+    ax, ay, _aw, _ah = VITORIA["aba"]
+    lc = "1280, 720"
+    texto_x = lx + 16
+    linhas = [
+        "enabled = 1",
+        "sounds.enabled = 1           ; a fala do lutador e o som do fim da luta continuam",
+        "fadein.time = 12",
+        "fadeout.time = 15",
+        "time = 300",
+        "overlay.col = 13, 14, 26",
+        "overlay.alpha = 0, 96        ; a luta fica atras, escurecida (sobra 3/8 da luz)",
+        "overlay.window = 0, 0, 1280, 720   ; sem janela o motor nao pinta o escurecido",
+        f"overlay.localcoord = {lc}",
+        # quem venceu (o motor poe o vencedor no p1 e quem perdeu no p2, de qualquer lado que estivessem)
+        "p1.spr = 9000, 1",
+        f"p1.offset = {bx}, {by}",
+        "p1.facing = 1",
+        "p1.scale = 0.5, 0.5         ; busto 448x216 do lutador x2: pixel inteiro, nitido",
+        f"p1.localcoord = {lc}",
+        "p1.name.font = 1, 0, 0",
+        f"p1.name.offset = {lx + lw}, {ly + 46}",
+        f"p1.name.localcoord = {lc}",
+        "p2.spr = 9000, 0",
+        f"p2.offset = {mx + mn * 2 - 8}, {my + 8}",
+        "p2.facing = -1",
+        "p2.scale = 0.5, 0.5",
+        f"p2.localcoord = {lc}",
+        "p2.name.font = 1, 0, 0",
+        f"p2.name.offset = {mx + mn}, {my - 19}",
+        "p2.name.scale = 0.6, 0.6",
+        f"p2.name.localcoord = {lc}",
+        f"winquote.font = {_fonte(1, BRANCO)}",
+        f"winquote.offset = {texto_x}, {ly + lh * 2 + 40}",
+        f"winquote.scale = {FALA_ESCALA}",
+        "winquote.text = Venceu!",
+        f"winquote.window = {texto_x}, {ly + lh * 2 + 6}, {px + pw * 2 - 32}, {py + ph * 2 - 6}",
+        "winquote.textwrap = w",
+        "winquote.textdelay = 2",
+        "winquote.textspacing = 0, 4",
+        f"winquote.localcoord = {lc}",
+        "",
+        "[VictoryBgDef]",
+        "bgclearcolor = -1, 0, 0",
+        "",
+        "[VictoryBG Painel]",
+        "type = normal",
+        "spriteno = 500, 0",
+        "layerno = 0",
+        f"start = {px - 640}, {py}",
+        "",
+        "[VictoryBG Placa]",
+        "type = normal",
+        "spriteno = 500, 1",
+        "layerno = 0",
+        f"start = {lx - 640}, {ly}",
+        "",
+        "[VictoryBG Moldura]",
+        "type = normal",
+        "spriteno = 500, 2",
+        "layerno = 0",
+        f"start = {mx - 640}, {my}",
+        "",
+        "[VictoryBG PlacaPerdedor]",
+        "type = normal",
+        "spriteno = 500, 5",
+        "layerno = 0",
+        f"start = {mx - 640}, {my - 44}",
+        "",
+        "[VictoryBG Sombra]          ; por cima do rosto de quem perdeu (o lose.brightness nao apaga PNG)",
+        "type = normal",
+        "spriteno = 500, 4",
+        "layerno = 2",
+        "trans = addalpha",
+        "alpha = 110, 146",
+        f"start = {mx + 8 - 640}, {my + 8}",
+        "",
+        "[VictoryBG Aba]",
+        "type = normal",
+        "spriteno = 500, 3",
+        "layerno = 0",
+        f"start = {ax - 640}, {ay}",
+    ]
+    return "\n".join(linhas)
 
 
 def parabens():

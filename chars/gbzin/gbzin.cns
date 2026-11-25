@@ -437,16 +437,6 @@
 48001,14 = 49002,14
 48001,15 = 49002,15
 
-[Quotes]
-victory1 = "Volta pro curral, cabrito."
-victory2 = "Bateu três vezes, acabou."
-victory3 = "Raspagem limpa, nem suei."
-victory4 = "O cajado avisou, você não ouviu."
-victory5 = "Pastor não corre, o rebanho que vem."
-victory6 = "Faixa marrom, mão pesada."
-victory7 = "Fica deitado aí, que dá menos trabalho."
-victory8 = "Tchau, cabrito!"
-
 [Data]
 life = 1000
 power = 3000

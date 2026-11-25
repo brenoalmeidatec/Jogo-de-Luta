@@ -404,8 +404,82 @@ select.bgm.loopstart = 3325817
 ; Textos do motor em portugues (ferramentas/textos_ptbr.py; revisao geral 2026-11-14). O .bat (Ajustar-Menus)
 ; ainda injeta done.key nessas secoes.
 [Victory Screen]
+enabled = 1
+sounds.enabled = 1           ; a fala do lutador e o som do fim da luta continuam
+fadein.time = 12
+fadeout.time = 15
+time = 300
+overlay.col = 13, 14, 26
+overlay.alpha = 0, 96        ; a luta fica atras, escurecida (sobra 3/8 da luz)
+overlay.window = 0, 0, 1280, 720   ; sem janela o motor nao pinta o escurecido
+overlay.localcoord = 1280, 720
+p1.spr = 9000, 1
+p1.offset = 56, 108
+p1.facing = 1
+p1.scale = 0.5, 0.5         ; busto 448x216 do lutador x2: pixel inteiro, nitido
+p1.localcoord = 1280, 720
+p1.name.font = 1, 0, 0
+p1.name.offset = 236, 602
+p1.name.localcoord = 1280, 720
+p2.spr = 9000, 0
+p2.offset = 1216, 300
+p2.facing = -1
+p2.scale = 0.5, 0.5
+p2.localcoord = 1280, 720
+p2.name.font = 1, 0, 0
+p2.name.offset = 1116, 273
+p2.name.scale = 0.6, 0.6
+p2.name.localcoord = 1280, 720
+winquote.font = Open_Sans.def, 0, 1, 255, 255, 255, 255, -1
+winquote.offset = 72, 644
+winquote.scale = 1.35, 1.35
 winquote.text = Venceu!
-winquote.localcoord = 320, 240
+winquote.window = 72, 610, 1216, 698
+winquote.textwrap = w
+winquote.textdelay = 2
+winquote.textspacing = 0, 4
+winquote.localcoord = 1280, 720
+
+[VictoryBgDef]
+bgclearcolor = -1, 0, 0
+
+[VictoryBG Painel]
+type = normal
+spriteno = 500, 0
+layerno = 0
+start = -608, 540
+
+[VictoryBG Placa]
+type = normal
+spriteno = 500, 1
+layerno = 0
+start = -584, 556
+
+[VictoryBG Moldura]
+type = normal
+spriteno = 500, 2
+layerno = 0
+start = 368, 292
+
+[VictoryBG PlacaPerdedor]
+type = normal
+spriteno = 500, 5
+layerno = 0
+start = 368, 248
+
+[VictoryBG Sombra]          ; por cima do rosto de quem perdeu (o lose.brightness nao apaga PNG)
+type = normal
+spriteno = 500, 4
+layerno = 2
+trans = addalpha
+alpha = 110, 146
+start = 376, 300
+
+[VictoryBG Aba]
+type = normal
+spriteno = 500, 3
+layerno = 0
+start = -220, 0
 
 [Option Info]
 title.text = OPCOES

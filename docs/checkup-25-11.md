@@ -93,15 +93,48 @@ Despertar olhava 3.000 fixo em vez da barra cheia de cada lutador.
 - `ferramentas/filmar_luta_linux.py` ganhou `--sem-ia` (filma a CPU antiga, para comparar) e `--chefe` (P2 como chefe
   final).
 
+## Tela de vitória com fala de cada lutador (pedido do Alisson, 25/11 à noite)
+
+A tela de vitória do motor estava **desligada** (`enabled = 0` do padrão do IKEMEN): depois do K.O. o jogo ia direto
+para o menu (ou para a próxima luta do Arcade). As falas de vitória já existiam em 5 dos 6 `.cns`, mas ninguém via.
+
+- **A tela** (`ferramentas/textos_ptbr.py`, dentro do `gerar_layout.py`; sprites `500,x` desenhados por código, sem
+  imagem nova): a luta fica atrás, escurecida; o busto de quem venceu (o mesmo retrato da tela de VS, 2x, pixel
+  inteiro) à esquerda; a aba **VITÓRIA** no alto; o rosto de quem perdeu apagado, na moldura com a tarja vermelha
+  **DERROTADO**; e embaixo o painel com o nome do vencedor e a fala escrita letra por letra (Open Sans, com acento).
+  Vale no Arcade (inclusive quando a CPU vence), Versus, Assistir e Modo Super. Enter pula.
+- **As falas** (`ferramentas/falas_vitoria.py`, fonte única): 8 da forma normal e **8 do Despertar** para cada um.
+  O Hazak não tinha nenhuma (agora tem: "EU SOU GOSTOSO!", "Australopiteco mentiroso!..." e as do Diabo Loiro).
+  As falas do Despertar seguem a personalidade de cada forma: sombras do Pengaró, Modo Ratão do CK, cavalo do Gutto,
+  Cientista Louco e A Cliente do Raiclaven, Diabo Loiro do Hazak e Grão-Pastor do Gbzin.
+- **Armadilha do motor:** o IKEMEN GO v1.0.0 ignora o `VictoryQuote` (testado na nuvem com `value = 13` fixo: a fala
+  saía sorteada entre todas do `[Quotes]`). Por isso as falas saíram do `[Quotes]` dos `.cns` e foram para o
+  `motif/nazafight/nazafights.lua`: o gancho `game.victory_init` vê quem venceu e se terminou despertado
+  (`var(20) > 0`) e troca o texto da tela pela fala certa (`modifyMotif`). Os `gerar_*.py` chamam o
+  `falas_vitoria.py` no fim.
+- **Teste na nuvem:** `ferramentas/testar_vitoria.py` entra no Assistir, escolhe os dois, deixa o P2 com 1 de vida
+  para a luta acabar rápido (com `--despertado` o P1 desperta antes) e filma a tela de vitória. Visto nos 6 (forma
+  normal e despertada): cada um falou uma fala da lista certa. Robô de luta depois da mudança: 6 de 6 sem defeito
+  (Pengaró 189, Hazak 327, Gutto 186, Raiclaven 216, CK 226, Gbzin 236 PASS; 0 FAIL).
+- Revisão por subagente: o nome de quem perdeu sumia no céu (ganhou placa escura) e 6 falas novas foram acertadas
+  (tu/você do Hazak, tapa-olho do Gbzin é roupa e não falta de olho, Maré das Correntes do Pengaró).
+- Prévias: [`vitoria_antes_depois.png`](checkup-25-11/vitoria_antes_depois.png),
+  [`vitoria_despertados.png`](checkup-25-11/vitoria_despertados.png) (os 6 vencendo despertados) e
+  [`vitoria_hazak_despertado.gif`](checkup-25-11/vitoria_hazak_despertado.gif) (a fala sendo escrita).
+
 ## Fila de imagens (quando o ChatGPT voltar)
 
 - **Retrato pintado do Gbzin** (bruto em `sprites/retratos/brutos/gbzin.png`, busto em fundo magenta como os outros;
   depois `preparar_retratos.py gbzin` e `trocar_retratos.py gbzin`). O provisório está em
   `sprites/retratos/provisorios/gbzin_conceito.png` (o rosto do conceito, espelhado).
+- **Busto do Despertar de cada um** (`9000,2`?) para a tela de vitória: hoje quem vence despertado aparece com o busto
+  da forma normal (é o único retrato que existe).
 
 ## Sugestões para depois
 
-- **Versão 1.1 (premium, já combinada):** tela de vitória com fala de cada lutador, final de cada um no Arcade,
+- **Menu de time em inglês no Assistir:** ao entrar no Assistir (e ao voltar dele) aparece o menu Single/Simul/Turns
+  do motor, em inglês, cortado no canto. O jogo é só 1 contra 1: dá para traduzir ou pular esse menu.
+- **Versão 1.1 (premium, já combinada):** tela de vitória feita (25/11); faltam o final de cada um no Arcade,
   continue animado, créditos. A IA nova deixa tudo pronto para isso.
 - **Cor alternativa no espelho:** P1 e P2 com o mesmo lutador ficam da mesma cor. Os corpos misturam paleta (RLE8) e
   PNG de cor cheia, então só a troca de paleta não resolve; dá para fazer com `PalFX` leve no P2 do espelho, mas ele

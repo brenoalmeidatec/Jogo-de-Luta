@@ -1313,6 +1313,8 @@ def main():
     assert trocar_retratos.trocar("gbzin"), "faltam os retratos do Gbzin em sprites/retratos"
     import ia_cpu  # checkup 25/11: IA da CPU (sempre por último: lê o .air e o .cns já prontos)
     ia_cpu.aplicar("gbzin", SAIDA)
+    import falas_vitoria  # fala da tela de vitória: tira o [Quotes] (as falas ficam no nazafights.lua)
+    falas_vitoria.aplicar("gbzin", SAIDA)
 
 
 if __name__ == "__main__":

@@ -890,6 +890,97 @@ def emblema_vs2():
     return com_sombra(big, "noite", 3, 3)
 
 
+# ---------------------------------- tela de vitoria (Alisson, 25/11/2026) ----------------------------------
+# O motor desenha a tela de vitoria POR CIMA da luta (escurecida pelo overlay): retrato grande de quem venceu a
+# esquerda, rosto apagado de quem perdeu a direita e a fala do vencedor no painel de baixo. Posicoes em VITORIA
+# (tela 1280x720) ficam em textos_ptbr.VITORIA, que escreve o system.def com as mesmas posicoes.
+VITORIA = textos_ptbr.VITORIA
+
+
+def texto_acento(texto, escala, corpo, sombra="noite"):
+    """As LETRAS 5x7 com o acento em cima (2 linhas) e a cedilha embaixo: 10 linhas por letra."""
+    glifos = []
+    for ch in texto:
+        if ch == " ":
+            glifos.append(None)
+            continue
+        g = de_desenho(glifo_letra(ch, True), {"#": corpo})
+        glifos.append(g.resize((g.width * escala, g.height * escala), Image.NEAREST))
+    w = sum((g.width if g else 3 * escala) for g in glifos) + escala * (len(glifos) - 1)
+    img = nova(w, 10 * escala)
+    x = 0
+    for g in glifos:
+        if g:
+            img.alpha_composite(g, (x, 0))
+        x += (g.width if g else 3 * escala) + escala
+    return com_sombra(img, sombra, 1, 1) if sombra else img
+
+
+def painel_fala():
+    """Painel da fala (500,0): noite com riscos finos, borda aco, linha de luz em cima e a faixa de ouro na ponta."""
+    _x, _y, w, h = VITORIA["painel"]
+    m = folga(quinas(w - 2, h - 2, 8))
+    img = pintar_painel(m, "noite2", "aco3", "noite", luz="nevoa")
+    img.alpha_composite(recortar(listras(w, h, "noite", 9, 2, 1), erodir(erodir(m, diag=True), diag=True)))
+    a = arr(img)
+    dentro = erodir(m, diag=True)
+    faixa = np.zeros_like(m)
+    faixa[:, :6] = True
+    a[faixa & erodir(dentro, diag=True)] = cor("ouro")
+    return de_arr(a)
+
+
+def placa_vencedor():
+    """Placa do nome de quem venceu (500,1): a placa do VS com o bloco de ouro (vale para os dois lados)."""
+    _x, _y, w, h = VITORIA["placa"]
+    m = folga(paralelo(w - 2, h - 2, 2, 1))
+    img = pintar_painel(m, "noite", "ouro", "noite")
+    a = arr(img)
+    xs = np.nonzero(m.any(axis=0))[0]
+    bloco = np.zeros_like(m)
+    bloco[:, :xs.min() + 10] = True
+    a[bloco & erodir(m, diag=True)] = cor("ouro")
+    return de_arr(a)
+
+
+def moldura_perdedor():
+    """Moldura do rosto de quem perdeu (500,2) e a tarja vermelha DERROTADO embaixo."""
+    n = VITORIA["moldura"][2]
+    m = folga(quinas(n - 2, n - 2, 6))
+    img = pintar_painel(m, "noite", "aco2", "noite", luz="aco3")
+    t = texto_acento("DERROTADO", 1, "giz")
+    tarja = pintar_painel(folga(paralelo(t.width + 14, 14, 2, 1)), "sangue", "sangue", "noite")
+    tarja.alpha_composite(t, ((tarja.width - t.width) // 2 + 1, (tarja.height - t.height) // 2))
+    out = nova(img.width, img.height + tarja.height // 2 + 2)
+    out.alpha_composite(img)
+    out.alpha_composite(tarja, ((img.width - tarja.width) // 2, img.height - tarja.height // 2))
+    return out
+
+
+def sombra_perdedor():
+    """Quadrado noite (500,4) que a tela pinta por cima do rosto de quem perdeu, meio transparente (addalpha): o
+    p2.lose.brightness do motor nao apagava o rosto (retrato em PNG de cor cheia)."""
+    n = VITORIA["moldura"][2] // 2 * 2 - 8
+    img = nova(n, n - 1)
+    ImageDraw.Draw(img).rectangle([0, 0, n - 1, n - 2], fill=cor("noite"))
+    return img
+
+
+def placa_perdedor():
+    """Placa escura do nome de quem perdeu (500,5), em cima da moldura: sem ela o nome sumia no ceu do cenario."""
+    n = VITORIA["moldura"][2]
+    return pintar_painel(folga(paralelo(n - 2, 14, 2, -1)), "noite", "aco3", "noite")
+
+
+def aba_vitoria():
+    """Aba do alto (500,3): a aba da selecao com VITÓRIA (com o acento)."""
+    _x, _y, w, h = VITORIA["aba"]
+    img = aba_titulo(w, h, destaque="ouro")
+    t = texto_acento("VITÓRIA", 2, "ouro")
+    img.alpha_composite(t, ((img.width - t.width) // 2, (img.height - t.height) // 2 - 1))
+    return img
+
+
 def mapa_arena():
     """Escolha de mapa (210,0), por cima da selecao: aba, moldura da previa com quinas de ouro, setas, placa do
     nome e a dica dos botoes."""
@@ -996,6 +1087,9 @@ def sprites_system():
     s.append((400, 0, fundo_vs2(), 0, 0))
     em = emblema_vs2()
     s.append((400, 1, em, em.width // 4 * 2, em.height // 4 * 2))
+    s += [(500, 0, painel_fala(), 0, 0), (500, 1, placa_vencedor(), 0, 0), (500, 2, moldura_perdedor(), 0, 0),
+          (500, 3, aba_vitoria(), 0, 0), (500, 4, sombra_perdedor(), 0, 0),
+          (500, 5, placa_perdedor(), 0, 0)]
     return s
 
 

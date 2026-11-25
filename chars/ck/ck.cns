@@ -1265,16 +1265,6 @@
 48086,3 = 901,0
 48086,7 = 903,0
 
-[Quotes]
-victory1 = "Tá achando que é quem, parça?"
-victory2 = "Errou o soco, tomou o troco."
-victory3 = "Ajeita o boné que a aula acabou."
-victory4 = "Vem de novo, eu deixo."
-victory5 = "Nem suei a camisa."
-victory6 = "Na esquina é assim: piscou, dormiu."
-victory7 = "Avisa lá que o CK passou."
-victory8 = "Essa luva aqui não é enfeite."
-
 [Data]
 life = 1000
 power = 3000

@@ -1366,6 +1366,8 @@ def main():
     assert trocar_retratos.trocar("hazaki"), "faltam os retratos do Hazak em sprites/retratos"
     import ia_cpu  # checkup 25/11: IA da CPU (sempre por último: lê o .air e o .cns já prontos)
     ia_cpu.aplicar("hazaki", SAIDA)
+    import falas_vitoria  # fala da tela de vitória: tira o [Quotes] (as falas ficam no nazafights.lua)
+    falas_vitoria.aplicar("hazaki", SAIDA)
     print(f"{gravados} sprites no .sff (de {len(s.lista)} carregados), {len(a.acoes)} ações em {SAIDA}")
     if "--contato" in sys.argv:
         contato(Path(sys.argv[sys.argv.index("--contato") + 1]), s)

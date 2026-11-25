@@ -1736,16 +1736,6 @@
 48045,5 = 1383,0
 48045,6 = 1383,0
 
-[Quotes]
-victory1 = "Próximo!"
-victory2 = "Vai querer na régua?"
-victory3 = "Deixa que eu capricho."
-victory4 = "Ficou um degradê lindo, hein?"
-victory5 = "A casa agradece a preferência."
-victory6 = "Não mexe a cabeça que eu corto a orelha."
-victory7 = "Cabelo e barba: pago na saída."
-victory8 = "Volta daqui a quinze dias pra manutenção."
-
 [Data]
 life = 1000
 power = 3000
