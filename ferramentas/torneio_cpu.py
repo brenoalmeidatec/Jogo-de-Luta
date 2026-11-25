@@ -62,6 +62,8 @@ def main():
     ap.add_argument("--ia", type=int, default=8)
     ap.add_argument("--lutadores", default=",".join(LUTADORES))
     ap.add_argument("--saida", type=Path, default=RAIZ / "saida_torneio")
+    ap.add_argument("--continuar", action="store_true",
+                    help="reaproveita os pares que já terminaram (FIM) na --saida; o resto luta de novo")
     a = ap.parse_args()
     a.saida.mkdir(parents=True, exist_ok=True)
     nomes = a.lutadores.split(",")
@@ -70,8 +72,12 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         for x, y in itertools.permutations(nomes, 2):  # os dois lados: P1 e P2 não são iguais
             t0 = time.time()
-            txt = luta(motor, x, y, a.rounds, a.ia, Path(td))
-            (a.saida / f"{x}_x_{y}.txt").write_text(txt, encoding="utf-8")
+            feito = a.saida / f"{x}_x_{y}.txt"
+            if a.continuar and feito.exists() and re.search(r"^FIM", feito.read_text(encoding="utf-8"), re.M):
+                txt = feito.read_text(encoding="utf-8")
+            else:
+                txt = luta(motor, x, y, a.rounds, a.ia, Path(td))
+                feito.write_text(txt, encoding="utf-8")
             vx = vy = 0
             for m in RE.finditer(txt):
                 v1, m1, v2, m2 = int(m[2]), int(m[3]), int(m[4]), int(m[5])

@@ -1145,7 +1145,9 @@ do
     wait(20)
     acao(function() setAccel(@ACCEL@) end)
     note(function() return "dano " .. (c.vida0 - lifeP2()) .. "; barra " .. snap(1).pow end)
-    need(function() return c.vida0 - lifeP2() >= 250 end, 1, "o raio acertou quase todos os 12 (dano >= 250)", false)
+    -- o 1º contato varia uns 15 tiques de rodada para rodada (robô 25/11: 105 a 118) e o raio some no mesmo tique, então
+    -- saem de 9 a 12 acertos (225 a 300 de dano, 25 cada). 200 = 8 acertos: pega raio que parou de acertar sem falso alarme.
+    need(function() return c.vida0 - lifeP2() >= 200 end, 1, "o raio acertou a maioria dos 12 (dano >= 200)", false)
     need(function() return snap(1).pow < 1000 end, 1, "gastou o estoque", false)
     need(livre, 60, "P1 voltou ao controle", false)
   end)

@@ -37,9 +37,15 @@ PARRY_TIME, PARRY_BUFFER = 4, 3
 # hc = acertos que o oponente já levou neste combo; o golpe sai com 1 - 0,1 x hc a partir do 3º acerto, piso de 50%
 _HC = "(enemynear, gethitvar(hitcount))"
 COMBO = f"ifelse((enemynear, movetype = H), ifelse({_HC} >= 5, .5, ifelse({_HC} >= 2, 1 - .1 * {_HC}, 1)), 1)"
-# a super (3000 a 3399) não sofre desconto: os acertos dela mesma não podem comer o dano dela
+# a super não sofre desconto: os acertos dela mesma não podem comer o dano dela. Super = 3000 a 3399 e todo estado
+# com SuperPause (a Rajadona 1650 do Diabo Loiro gasta 1000 de barra; com desconto os 12 raios caíam de 250 para 225)
 SUPER = "stateno = [3000, 3399]"
-COMBO = f"ifelse({SUPER}, 1, {COMBO})"
+
+
+def _supers(cns):
+    extra = [n for ini, fim, n in _blocos(cns)
+             if not 3000 <= n <= 3399 and re.search(r"(?mi)^type\s*=\s*SuperPause\s*$", cns[ini:fim])]
+    return " || ".join([SUPER] + [f"stateno = {n}" for n in extra])
 
 
 def _blocos(txt):
@@ -88,13 +94,14 @@ def parry(cmd, cns):
 
 
 def combo(cns):
+    cond = f"ifelse({_supers(cns)}, 1, {COMBO})"
+
     def troca(m):
         valor = m.group(2)
         if MARCA in m.group(0):
-            if SUPER in m.group(0):
-                return m.group(0)
-            valor = valor.split(") * ", 1)[0].lstrip("(")  # versão de antes, sem a super de fora: refaz
-        return f"{m.group(1)}value = ({valor}) * {COMBO} ; desconto de combo ({MARCA})\n"
+            # versão de antes: tira o desconto antigo e refaz (a lista de supers pode ter mudado)
+            valor = valor.split(") * ifelse(", 1)[0][1:]
+        return f"{m.group(1)}value = ({valor}) * {cond} ; desconto de combo ({MARCA})\n"
     return re.sub(r"(?m)^(\[State -2, [^\]]*\]\ntype = AttackMulSet\ntrigger1 = 1\n)value = ([^;\n]*?)\s*(;[^\n]*)?\n",
                   troca, cns)
 

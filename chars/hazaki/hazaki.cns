@@ -8532,7 +8532,7 @@ projhitanim = 7421
 projremanim = 7421
 projcancelanim = 7421
 projhits = 12
-projmisstime = 5
+projmisstime = 3
 projremovetime = 66
 projpriority = 9
 offset = 52, -80
@@ -11161,7 +11161,7 @@ var(37) = 0
 [State -2, Peso do Diabo]
 type = AttackMulSet
 trigger1 = 1
-value = (ifelse(var(20) > 0, 1.25, 1)) * ifelse(stateno = [3000, 3399], 1, ifelse((enemynear, movetype = H), ifelse((enemynear, gethitvar(hitcount)) >= 5, .5, ifelse((enemynear, gethitvar(hitcount)) >= 2, 1 - .1 * (enemynear, gethitvar(hitcount)), 1)), 1)) ; desconto de combo (mecanica 25/11)
+value = (ifelse(var(20) > 0, 1.25, 1)) * ifelse(stateno = [3000, 3399] || stateno = 1650 || stateno = 4650, 1, ifelse((enemynear, movetype = H), ifelse((enemynear, gethitvar(hitcount)) >= 5, .5, ifelse((enemynear, gethitvar(hitcount)) >= 2, 1 - .1 * (enemynear, gethitvar(hitcount)), 1)), 1)) ; desconto de combo (mecanica 25/11)
 [State -2, Demônio: Bola das Trevas acertou (tremida)]
 type = EnvShake
 trigger1 = ProjHitTime(4500) = 0 || ProjHitTime(4501) = 0
