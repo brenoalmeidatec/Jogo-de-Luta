@@ -10350,7 +10350,7 @@ supermovetime = -1
 [State -2, Bônus de dano]
 type = AttackMulSet
 trigger1 = 1
-value = (ifelse(var(20) > 0 && stateno != 3100, 1.45, 1)) * ifelse(stateno = [3000, 3399], 1, ifelse((enemynear, movetype = H), ifelse((enemynear, gethitvar(hitcount)) >= 5, .5, ifelse((enemynear, gethitvar(hitcount)) >= 2, 1 - .1 * (enemynear, gethitvar(hitcount)), 1)), 1)) ; desconto de combo (mecanica 25/11)
+value = (ifelse(var(20) > 0 && stateno != 3100, 1.45, 1)) * ifelse(stateno = [3000, 3399] || stateno = 4750, 1, ifelse((enemynear, movetype = H), ifelse((enemynear, gethitvar(hitcount)) >= 5, .5, ifelse((enemynear, gethitvar(hitcount)) >= 2, 1 - .1 * (enemynear, gethitvar(hitcount)), 1)), 1)) ; desconto de combo (mecanica 25/11)
 [State -2, Vira endiabrado]
 type = RemapSprite
 trigger1 = (var(20) > 0 || stateno = 3100) && var(37) = 0

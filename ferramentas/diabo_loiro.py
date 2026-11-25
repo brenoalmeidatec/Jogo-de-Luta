@@ -74,6 +74,12 @@ DIABO = 20000       # grupo do desenho do Diabo = grupo do Hazak + DIABO
 LIGA = 122          # tick da cena (estado 2000) em que ele vira o Diabo: início do último desenho (gerar_hazaki)
 TEMPO = 600         # ticks de Diabo Loiro (10 s), como os outros despertados
 RAJADA = {"sai": 28, "dura": 66, "acertos": 12, "dano": 16, "x": 52, "y": -80, "comp": 286}
+
+
+def _intervalo(r):
+    """Tiques entre um acerto e outro do raio. Cada acerto custa esse tempo + 2 de pausa do projétil; com 5 cabiam só
+    ~9 dos 12 acertos em 66 tiques, e o dano variava com o tique do 1º contato (robô 58 do Hazak falhava às vezes)."""
+    return max(1, r["dura"] // r["acertos"] - 2)
 # Cobrança do Diabo: ticks por desenho; desenhos com caixa de golpe; a (curta) e b (longa)
 COBRANCA = {"pasta": "d_cobranca", "grupo": 21660, "ticks": [4, 6, 3, 3, 3, 6, 8, 10], "ativos": (3, 4, 5),
             "sai": 10, 1660: {"vel": 6.5, "dura": 12, "dano": 60, "cai": False},
@@ -239,7 +245,7 @@ def cns_rajada():
                      "ownpal = 1"))
     c.append(ctl(1650, "Projétil", "Projectile", f"trigger1 = Time = {r['sai']}", "projid = 1650",
                  "projanim = 7420", "projhitanim = 7421", "projremanim = 7421", "projcancelanim = 7421",
-                 f"projhits = {r['acertos']}", "projmisstime = 5", f"projremovetime = {r['dura']}",
+                 f"projhits = {r['acertos']}", f"projmisstime = {_intervalo(r)}", f"projremovetime = {r['dura']}",
                  "projpriority = 9", f"offset = {r['x']}, {r['y']}", "velocity = 0, 0", "attr = S, HP",
                  f"damage = {r['dano']}, 4", "animtype = Med", "guardflag = MA", "hitflag = MAF",
                  "pausetime = 2, 6", "sparkno = -1", "guard.sparkno = S9216", "hitsound = F5,2",
