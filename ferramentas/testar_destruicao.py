@@ -14,7 +14,6 @@ troca de round) ficam de fora.
 PASS quando a sequência é nível 0, nível 1, nível 2, com uma troca de round no meio do nível 2 e o nível 2 de novo depois.
 """
 import argparse
-import io
 import os
 import re
 import shutil
@@ -131,12 +130,16 @@ def rodar(cenario, a, pasta):
             except ProcessLookupError:
                 pass
             xvfb.kill()
-    bruto = subprocess.run(["ffmpeg", "-loglevel", "error", "-i", str(video), "-f", "image2pipe", "-vcodec", "png",
-                            "-"], capture_output=True, check=True).stdout
-    k = int(a.tela.split("x")[0]) / 1280
+    # quadros crus (rgb24) do tamanho da tela: cortar um fluxo de PNG pela assinatura quebrava quando os bytes
+    # "\x89PNG" apareciam dentro do dado comprimido (quadro truncado no cristo/maria_fumaca, 2026-11-24)
+    largura, altura = (int(v) for v in a.tela.split("x"))
+    bruto = subprocess.run(["ffmpeg", "-loglevel", "error", "-i", str(video), "-vf", f"scale={largura}:{altura}",
+                            "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], capture_output=True, check=True).stdout
+    k = largura / 1280
     estados = []
-    for parte in bruto.split(b"\x89PNG")[1:]:
-        estados.append(estado(Image.open(io.BytesIO(b"\x89PNG" + parte)), k, usados))
+    tam = largura * altura * 3
+    for ini in range(0, len(bruto) - tam + 1, tam):
+        estados.append(estado(Image.frombytes("RGB", (largura, altura), bruto[ini:ini + tam]), k, usados))
     return estados
 
 

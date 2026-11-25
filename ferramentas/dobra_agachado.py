@@ -291,9 +291,34 @@ REFAZER = {
 for _n, _r in REFAZER.items():
     _r["nome"] = _n
 
+# golpe da base refeito em grupo novo cuja forma despertada usa a mesma ação (quando a arte própria do despertado não
+# entra, o [RemapPreset despertado] tem que trocar os grupos novos também): grupo da base -> grupo do despertado
+REMAP_NOVO = {"gbzin": {41410: 41411, 41440: 41444}}
+
+
+def ligar_remap(lut):
+    cns = RAIZ / "chars" / lut / f"{lut}.cns"
+    t = cns.read_text(encoding="utf-8")
+    bloco = re.search(r"^\[RemapPreset despertado\]\n(.*?)(?=^\[)", t, re.M | re.S)
+    air = (RAIZ / "chars" / lut / f"{lut}.air").read_text(encoding="utf-8")
+    novas = []
+    for g, g2 in REMAP_NOVO.get(lut, {}).items():
+        for i in sorted({int(x) for x in re.findall(rf"^{g},\s*(\d+)", air, re.M)}):
+            if not re.search(rf"^{g},\s*{i}\s*=", bloco.group(1), re.M):
+                novas.append(f"{g},{i} = {g2},{i}\n")
+    if novas:
+        fim = bloco.end(1)
+        t = t[:fim] + "".join(novas) + t[fim:]
+        cns.write_text(t, encoding="utf-8")
+    print(f"{lut}: {len(novas)} remaps novos do despertado")
+
+
 if __name__ == "__main__":
     args = sys.argv[1:]
     if args[:1] == ["--lutador"]:  # todas as receitas de um lutador (gerador que refaz o lutador inteiro chama isto)
         args = [n for n, r in {**RECEITAS, **REFAZER}.items() if r["lutador"] == args[1]]
     for nome in args or list(RECEITAS) + list(REFAZER):
         refazer(REFAZER[nome]) if nome in REFAZER else fazer(RECEITAS[nome])
+    for lut in sorted({(REFAZER.get(n) or RECEITAS.get(n))["lutador"] for n in (args or list(RECEITAS) + list(REFAZER))}):
+        if lut in REMAP_NOVO:
+            ligar_remap(lut)

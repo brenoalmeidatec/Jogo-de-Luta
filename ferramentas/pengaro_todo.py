@@ -189,7 +189,25 @@ SOCO = {
     "soco/07": {"quadril": {"dx": 5, "dy": 2}, "tronco": {"ang": 1}, "cabeca": {"ang": 0, "var": "foco"},
                 "braco_frente": {"ang": -8, "var": "punho"}, "braco_tras": {"ang": -2}, "_pes": (2, 12)},
 }
-FEITAS = {**SOCO}
+# cabeçada em pé (303, 347, 3412, 3430): feita à mão, com o corpo firme; a agachada (410) sai do DOBRA
+CABECADA = {
+    # antecipação: puxa o tronco para trás, abaixa um pouco
+    "cabecada/02": {"quadril": {"dx": -6, "dy": 6}, "tronco": {"ang": -8}, "cabeca": {"ang": -6, "var": "foco"},
+                    "braco_frente": {"ang": -15, "var": "punho"}, "braco_tras": {"ang": -10}},
+    "cabecada/03": {"quadril": {"dx": -10, "dy": 10}, "tronco": {"ang": -12}, "cabeca": {"ang": -10, "var": "foco"},
+                    "braco_frente": {"ang": -5, "var": "punho"}, "braco_tras": {"ang": -15}},
+    # bate: o corpo vai para a frente e a testa é o que chega primeiro; os braços ficam para trás
+    "cabecada/04": {"quadril": {"dx": 16, "dy": 4}, "tronco": {"ang": 10}, "cabeca": {"ang": 12, "dx": 4, "var": "esforco"},
+                    "braco_frente": {"ang": 30, "var": "punho"}, "braco_tras": {"ang": 12}},
+    "cabecada/05": {"quadril": {"dx": 16, "dy": 4}, "tronco": {"ang": 10}, "cabeca": {"ang": 12, "dx": 4, "var": "esforco"},
+                    "braco_frente": {"ang": 30, "var": "punho"}, "braco_tras": {"ang": 12}},
+    # volta
+    "cabecada/06": {"quadril": {"dx": 6, "dy": 2}, "tronco": {"ang": 5}, "cabeca": {"ang": 4, "var": "foco"},
+                    "braco_frente": {"ang": 10, "var": "punho"}, "braco_tras": {"ang": 0}},
+}
+
+
+FEITAS = {**CABECADA, **SOCO}
 
 # Chute com o corpo inteiro (regra 7.4): a perna do chute continua a do encaixe, mas o corpo acompanha. O quadril
 # entra na direção do chute e sobe na ponta do pé de apoio, o tronco inclina para trás (contrapeso), a cabeça fica
@@ -393,9 +411,127 @@ def pose_de(kit, q, expr):
     return pose
 
 
+def acertar_repouso(kit):
+    """Calça e faixa entre a cintura e o joelho: o kit montado parado (todos os ossos no lugar) tem que ser o desenho
+    ginga/00 de onde ele foi recortado. A separação das bolinhas e o tapa-buraco da coxa (separar_pes) deixavam na
+    virilha um retângulo escuro, riscos e borrão verde (sobra do Pengaró, 24/11). Cada pixel dessa faixa que sai
+    diferente vai para a peça que fica por cima nele, com a cor do desenho; o que falta entra no quadril."""
+    import pele_pecas as pele
+    orig = b.abrir("ginga/00")
+    ys, xs = np.nonzero(orig[..., 3] > 0)
+    y0 = ys.min()
+    faixa = np.zeros(orig.shape[:2], bool)
+    faixa[y0 + 120:y0 + 270] = True
+    pose = {"quadril": {"ang": 0}}
+    camadas = pele.CAMADAS
+    dono = np.full(orig.shape[:2], "", dtype=object)
+    sozinha = {}
+    try:
+        for cam in camadas:
+            for slot, viz in cam[1]:
+                pele.CAMADAS = [(cam[0], [(slot, viz)])]
+                r = pele.desenhar(kit, pose)
+                sozinha[slot] = r
+                dono[r[..., 3] > 0] = slot
+    finally:
+        pele.CAMADAS = camadas
+        kit.pop("_pontos", None)
+    # contorno escuro de quem está por cima (mão, garrafa, outra perna) ficou pintado na calça de baixo: quando a peça
+    # de cima sai do lugar ele aparece como risco preto. Na calça (quadril e coxas), escuro escondido vira a calça
+    # clara mais perto da mesma peça
+    for slot in ("quadril", "coxa_tras", "coxa_frente"):
+        r = sozinha.get(slot)
+        if r is None:
+            continue
+        rgb_r = r[..., :3].astype(int)
+        al = r[..., 3] > 0
+        clara = al & (rgb_r.min(-1) > 140) & (np.ptp(rgb_r, -1) < 100)
+        escondido = al & (dono != slot) & faixa & (rgb_r.sum(-1) < 330)
+        escondido &= cv2.erode(al.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0  # a beira da peça fica
+        if not escondido.any() or not clara.any():
+            continue
+        _, lab = cv2.distanceTransformWithLabels((~clara).astype(np.uint8), cv2.DIST_L2, 5,
+                                                 labelType=cv2.DIST_LABEL_PIXEL)
+        fy, fx = np.nonzero(clara)
+        idx = np.zeros(lab.max() + 1, int)
+        idx[lab[fy, fx]] = np.arange(len(fy))
+        p = kit["pecas"][slot]
+        img = p["img"].copy()
+        ox, oy = p["origem"]
+        yy, xx = np.nonzero(escondido)
+        k = idx[lab[yy, xx]]
+        ly, lx = yy - oy, xx - ox
+        ok = (ly >= 0) & (lx >= 0) & (ly < img.shape[0]) & (lx < img.shape[1])
+        img[ly[ok], lx[ok], :3] = r[fy[k[ok]], fx[k[ok]], :3]
+        p["img"] = img
+    kit.pop("_pontos", None)
+    q = kit["pecas"]["quadril"]
+    bol = np.zeros(orig.shape[:2], bool)
+    by, bx = np.nonzero(kit["bolinhas"][..., 3] > 0)
+    bol[by + q["origem"][1], bx + q["origem"][0]] = True
+    tem = orig[..., 3] > 0
+    for slot in {d for d in dono[faixa & ~bol].ravel() if d}:
+        p = kit["pecas"][slot]
+        img = p["img"].copy()
+        ox, oy = p["origem"]
+        m = faixa & ~bol & (dono == slot)
+        yy, xx = np.nonzero(m)
+        ly, lx = yy - oy, xx - ox
+        ok = (ly >= 0) & (lx >= 0) & (ly < img.shape[0]) & (lx < img.shape[1])
+        yy, xx, ly, lx = yy[ok], xx[ok], ly[ok], lx[ok]
+        dentro = tem[yy, xx]
+        img[ly[dentro], lx[dentro]] = orig[yy[dentro], xx[dentro]]
+        img[ly[~dentro], lx[~dentro], 3] = 0
+        p["img"] = img
+    # embaixo das bolinhas (quando elas balançam aparece): calça lisa, puxada só da calça clara em volta (o contorno
+    # escuro não entra na pintura, senão vira o borrão cinza)
+    kit.pop("_pontos", None)
+    tela = pele.desenhar(kit, pose)
+    kit.pop("_pontos", None)
+    rgb = tela[..., :3].astype(int)
+    escuro = rgb.sum(-1) < 330
+    perto = cv2.dilate(bol.astype(np.uint8), np.ones((13, 13), np.uint8)) > 0
+    sob = (cv2.dilate(bol.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0) | (perto & escuro)
+    sob &= (tela[..., 3] > 0) & (dono != "")
+    if sob.any():
+        # cor do pixel de calça clara mais perto (nada de verde da faixa nem contorno), depois um borrão leve só ali
+        hsv = cv2.cvtColor(np.ascontiguousarray(tela[..., :3]), cv2.COLOR_RGB2HSV).astype(int)
+        verde = (hsv[..., 0] >= 40) & (hsv[..., 0] <= 95) & (hsv[..., 1] > 80) & (hsv[..., 2] > 70)
+        clara = ((rgb.min(-1) > 140) & (np.ptp(rgb, -1) < 100) | verde) & (tela[..., 3] > 0) & ~sob
+        _, lab = cv2.distanceTransformWithLabels((~clara).astype(np.uint8), cv2.DIST_L2, 5,
+                                                 labelType=cv2.DIST_LABEL_PIXEL)
+        fy, fx = np.nonzero(clara)
+        idx = np.zeros(lab.max() + 1, int)
+        idx[lab[fy, fx]] = np.arange(len(fy))
+        pint = tela[..., :3].copy()
+        yy, xx = np.nonzero(sob)
+        k = idx[lab[yy, xx]]
+        pint[yy, xx] = tela[fy[k], fx[k], :3]
+        liso = cv2.GaussianBlur(pint, (5, 5), 0)
+        pint[yy, xx] = liso[yy, xx]
+        for slot in {d for d in dono[sob].ravel()}:
+            p = kit["pecas"][slot]
+            img = p["img"].copy()
+            ox, oy = p["origem"]
+            yy, xx = np.nonzero(sob & (dono == slot))
+            ly, lx = yy - oy, xx - ox
+            ok = (ly >= 0) & (lx >= 0) & (ly < img.shape[0]) & (lx < img.shape[1])
+            img[ly[ok], lx[ok], :3] = pint[yy[ok], xx[ok]]
+            p["img"] = img
+    falta = faixa & ~bol & tem & (dono == "")
+    if falta.any():
+        img = q["img"].copy()
+        yy, xx = np.nonzero(falta)
+        ly, lx = yy - q["origem"][1], xx - q["origem"][0]
+        ok = (ly >= 0) & (lx >= 0) & (ly < img.shape[0]) & (lx < img.shape[1])
+        img[ly[ok], lx[ok]] = orig[yy[ok], xx[ok]]
+        q["img"] = img
+    return kit
+
+
 def preparar():
     pf.PELE = True  # sem linha de corte entre as peças (regra 7.4)
-    kit = pf.separar_pes(b.ler_kit())
+    kit = acertar_repouso(pf.separar_pes(b.ler_kit()))
     b.FOLGA_VARIANTE = {"coxa_frente": 3}
     pf.MANCHA_REF = pf.mancha_ref()
     if pf.PELE:  # base do robô: o que o próprio desenho em pele dá no parado (contorno das juntas conta como sombra)
@@ -407,6 +543,29 @@ def preparar():
 
 
 ESPECIAL = {}
+# desenhos do chute baixo (430) e da rasteira (440): o corpo inteiro é ~1,3x o parado (o Alisson escolheu manter o
+# tamanho, 24/11). A cabeça é achada numa faixa de escala mais larga e a do kit entra na escala do desenho, para o
+# rosto ser sempre o do kit (Breno, 24/11: "o Pengaró muda muito a cara dele")
+ROSTO_NA_ESCALA = ("rasteirinha/", "rasteira/")
+
+
+# desenhos que saem sempre do próprio desenho (com o rosto do kit), mesmo quando o kit monta a pose
+PELO_DESENHO = ()  # com o kit acertado no repouso (acertar_repouso) a ginga montada ficou limpa: segue no kit
+PELE_PARADO = (179, 72, 50)   # medido no parado já na paleta travada (o quadro sai ~3 acima do alvo)
+
+
+def pele_do_parado(a):
+    """O chute baixo e a rasteira foram desenhados com a pele mais clara e alaranjada que o parado (peito ~181,84,61):
+    a pele do quadro inteiro é levada para o tom do parado, para a cabeça do kit não destoar do corpo."""
+    rgb = a[..., :3].astype(float)
+    soma = rgb.sum(-1)
+    pele = (a[..., 3] > 0) & (rgb[..., 0] > rgb[..., 2] + 30) & (soma > 150) & (soma < 600) & (rgb[..., 1] < rgb[..., 0] * 0.7)
+    if pele.sum() < 500:
+        return a
+    f = np.array(PELE_PARADO) / rgb[pele].mean(0)
+    out = a.copy()
+    out[pele, :3] = np.clip(rgb[pele] * f, 0, 255).astype(np.uint8)
+    return out
 
 
 def especial(q, expr):
@@ -421,7 +580,11 @@ def especial(q, expr):
         ESPECIAL["pal"] = pc.paleta_do_parado(ref, [ref])
     a = b.abrir(q)
     try:
-        out, info = cc.trocar(a, ESPECIAL["tmpl"], ESPECIAL["caixa"], ESPECIAL["cab"][expr or "guarda"])
+        larga = q.startswith(ROSTO_NA_ESCALA)
+        if larga:
+            a = pele_do_parado(a)
+        out, info = cc.trocar(a, ESPECIAL["tmpl"], ESPECIAL["caixa"], ESPECIAL["cab"][expr or "guarda"],
+                              escalas=cc.ESCALAS_LARGAS if larga else None, acompanhar=True)
         # a máscara da cabeça velha pega o que encosta nela (braço levantado, garrafa): o que sumiu longe da
         # cabeça nova volta como estava; migalha que ficou solta do cabelo velho sai
         perdido = ((a[..., 3] > 0) & (out[..., 3] == 0)).astype(np.uint8)
@@ -578,14 +741,22 @@ def cmd_animar(so=None):
         els = juntar(els)
         chaves = []
         pp = {}
+        q_bate = None
         for e in els:
             q = e["desenho"].removesuffix(".png")
             ex = expressao(q.split('/')[0], e["bate"])
+            if e["bate"]:
+                q_bate = q
+            elif q == q_bate and ex == "foco":
+                ex = "esforco"  # o mesmo desenho do contato segurado mantém o esforço (rosto não pisca para o foco)
+            else:
+                q_bate = None
             ch = f"{q}|{ex}"
             pp[ch] = ajustar(dict(poses[q], **({"cabeca": {"ang": 0, "var": ex}} if ex else {})), q)
             chaves.append((ch, max(e["ticks"], 1) if e["ticks"] >= 0 else 1, e["bate"]))
         elems = [(c, t) for c, t, _ in chaves]
-        fixos = {c for c, _, _ in chaves if (poses[c.split("|")[0]].get("_iou", 1) < IOU_MINIMO
+        fixos = {c for c, _, _ in chaves if PELO_DESENHO and c.split("|")[0].startswith(PELO_DESENHO)}
+        fixos |= {c for c, _, _ in chaves if (poses[c.split("|")[0]].get("_iou", 1) < IOU_MINIMO
                  or dobra_funda(poses[c.split("|")[0]])) and c.split("|")[0] not in AJUSTE and c.split("|")[0] not in FEITAS}
         for c in {c for c, _, _ in chaves} - fixos:
             q0 = c.split("|")[0]
@@ -594,7 +765,11 @@ def cmd_animar(so=None):
                 continue
             if not plantar(kit, pp[c], c.split("|")[0]):
                 fixos.add(c)  # pose-chave que o kit não monta sem defeito vira quadro especial
-        fixos |= {c for c, _, _ in chaves if c.split("|")[0] in DOBRA}
+        # o tronco dobrado e o agachar mais fundo são só dos golpes agachados: os golpes em pé que usam os mesmos
+        # desenhos (cabeçada 303, 347, 3412, 3430) ficam como o desenho
+        dobra = DOBRA if n in AGACHADAS else {}
+        fundo = MAIS_FUNDO if n in AGACHADAS else {}
+        fixos |= {c for c, _, _ in chaves if c.split("|")[0] in dobra}
         bate = next((k for k, (_, _, bt) in enumerate(chaves) if bt), None)
         laco = n in LACOS
         volta = agachado() if n in AGACHADAS else {}
@@ -605,7 +780,7 @@ def cmd_animar(so=None):
         if n in (0, 5):
             quadros = vida.respirar(quadros)
         quadros = vida.atrasar(quadros, laco=laco)
-        quadros, giro = volta_dobrada(quadros)
+        quadros, giro = volta_dobrada(quadros) if dobra else (quadros, {})
         for pasta in (SAIDA / str(n), SAIDA_1X / str(n)):
             shutil.rmtree(pasta, ignore_errors=True)
             pasta.mkdir(parents=True)
@@ -615,14 +790,14 @@ def cmd_animar(so=None):
             q, ex = ch.split("|")
             if q == "anda":
                 q = "ginga/00"  # andar feito por código: o robô compara com o parado (pés no chão)
-            if q in DOBRA:
-                base, ang, dx, ex_ = DOBRA[q]
+            if q in dobra:
+                base, ang, dx, ex_ = dobra[q]
                 ang, dx = giro.get(i, (ang, dx))
                 out = dobrar(especial(base, ex_), ang, dx)
                 originais.setdefault(q, b.abrir(base))
             elif ch in fixos:
                 out = especial(q, None if ex == "None" else ex)
-                if q in MAIS_FUNDO:
+                if q in fundo:
                     from firme import na_tela
                     out = na_tela(mais_fundo(out, MAIS_FUNDO[q][0]), MAIS_FUNDO[q][1])
             else:
