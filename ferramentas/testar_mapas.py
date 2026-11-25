@@ -24,7 +24,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from testar_pengaro import RAIZ, INI_LINUX, ambiente_linux, motor_linux  # noqa: E402
 
-LUTADORES = ["pengaro", "hazaki", "gutto", "raiclaven", "ck"]
+LUTADORES = ["pengaro", "hazaki", "gutto", "raiclaven", "ck", "gbzin"]
 EXEMPLOS = r"stages/(?:stage0|stage1|stage3d|stage3d_outline|stageZ|interactivestage|kfm)\.def"
 ITENS_MENU = {"arcade": 0, "versus": 1, "treino": 3, "assistir": 4}
 

@@ -1196,6 +1196,8 @@ def main():
     regua_sff.consertar("ck", SAIDA)
     import faisca_proporcional  # #32 (25/11): estouro só no golpe que derruba e nos especiais
     faisca_proporcional.aplicar("ck", SAIDA)
+    import ia_cpu  # checkup 25/11: IA da CPU (sempre por último: lê o .air e o .cns já prontos)
+    ia_cpu.aplicar("ck", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

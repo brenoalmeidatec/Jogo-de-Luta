@@ -55,6 +55,8 @@ def main():
     ap.add_argument("--fotos", type=Path)
     ap.add_argument("--despertar", action="store_true", help="com --barra: entra no Despertar sempre que pode")
     ap.add_argument("--cenario", default="stages/stage0-720.def")
+    ap.add_argument("--sem-ia", action="store_true", help="tira a IA (ia_cpu.py) dos dois: a CPU antiga do motor")
+    ap.add_argument("--chefe", action="store_true", help="P2 como chefe final do Arcade (map chefe_final)")
     a = ap.parse_args()
     motor = motor_linux()
     with tempfile.TemporaryDirectory() as td:
@@ -68,6 +70,16 @@ def main():
         INI_LINUX["Motif"] = "data/nazafight/system.def"
         INI_LINUX["VSync"] = "1"
         ajustar_ini(copia)
+        if a.sem_ia:  # a CPU antiga do motor (só aperta botão ao acaso), para o antes/depois da IA
+            import ia_cpu
+            for nome in {a.p1, a.p2}:
+                arq = copia / "chars" / nome / f"{nome}.cns"
+                arq.write_text(ia_cpu.tirar(arq.read_text(encoding="utf-8")), encoding="utf-8")
+        if a.chefe:  # P2 como o chefe final do Arcade (o map que o nazafights.lua põe na última luta)
+            arq = copia / "chars" / a.p2 / f"{a.p2}.cns"
+            arq.write_text(arq.read_text(encoding="utf-8").replace(
+                "[Statedef -2]\n", '[Statedef -2]\n\n[State -2, Chefe final (filmar_luta_linux.py)]\ntype = MapSet\n'
+                'trigger1 = 1\nmap = "chefe_final"\nvalue = 1\n\n', 1), encoding="utf-8")
         if a.barra:
             for nome in {a.p1, a.p2}:
                 barra_cheia(copia / "chars" / nome / f"{nome}.cns", a.despertar)

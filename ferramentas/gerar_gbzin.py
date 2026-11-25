@@ -1308,6 +1308,11 @@ def main():
                   ["dobra_agachado.py", "--lutador", "gbzin"],  # #32: golpes agachados que não levantam
                   ["aura_silhueta.py", "gbzin"], ["encolher_sff.py", "gbzin", "--indexar", "49000-49099"]):
         subprocess.run([sys.executable, str(RAIZ / "ferramentas" / passo[0])] + passo[1:], check=True)
+    # retratos (seleção, VS e HUD): os passos acima regravam o .sff; sem isso a grade mostrava um bonequinho minúsculo
+    import trocar_retratos  # checkup 25/11
+    assert trocar_retratos.trocar("gbzin"), "faltam os retratos do Gbzin em sprites/retratos"
+    import ia_cpu  # checkup 25/11: IA da CPU (sempre por último: lê o .air e o .cns já prontos)
+    ia_cpu.aplicar("gbzin", SAIDA)
 
 
 if __name__ == "__main__":

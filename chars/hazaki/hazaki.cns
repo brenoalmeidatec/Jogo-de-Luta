@@ -10008,7 +10008,6 @@ guardsound = F6,0
 ground.type = High
 ground.slidetime = 10
 ground.hittime = 18
-ground.velocity = -5
 air.velocity = -3, -4
 fall = 1
 fall.recover = 0
@@ -11271,6 +11270,1219 @@ value = 0
 movecamera = 0,0
 
 ; ---- agarrão segura-e-bate (ferramentas/agarrao_mk.py) ----
+
+; >>> ia_cpu.py (IA da CPU, checkup 25/11): gerado, nao edite a mao
+[State -2, IA: sem botao aleatorio]
+type = AssertSpecial
+trigger1 = AILevel > 0
+flag = noaibuttonjam
+flag2 = noaicheat
+ignorehitpause = 1
+
+[State -2, IA: zera a acao do tique]
+type = VarSet
+trigger1 = AILevel > 0
+var(49) = 0
+ignorehitpause = 1
+
+[State -2, IA: decide se defende]
+type = VarSet
+trigger1 = AILevel > 0 && var(48) = 0 && inguarddist
+var(48) = 1 + (random < 140 + 80 * ifelse(map(chefe_final) > 0, 8, AILevel) - 120 * (p2statetype = C))
+ignorehitpause = 1
+
+[State -2, IA: esquece a defesa]
+type = VarSet
+trigger1 = AILevel > 0 && var(48) != 0 && !inguarddist && p2movetype != A
+var(48) = 0
+ignorehitpause = 1
+
+[State -2, IA: defende]
+type = AssertSpecial
+trigger1 = AILevel > 0 && var(48) = 2 && roundstate = 2
+flag = autoguard
+ignorehitpause = 1
+
+[State -2, IA: esquece o combo]
+type = VarSet
+trigger1 = AILevel > 0 && (movetype != A || time = 0)
+var(47) = 0
+ignorehitpause = 1
+
+[State -2, IA: decide o combo]
+type = VarSet
+trigger1 = AILevel > 0 && var(47) = 0 && movetype = A && movehit
+var(47) = 1 + (random < 200 + 95 * ifelse(map(chefe_final) > 0, 8, AILevel))
+ignorehitpause = 1
+
+[State -2, IA: dado do tique]
+type = VarSet
+trigger1 = AILevel > 0
+var(46) = random
+ignorehitpause = 1
+
+[State -2, IA: conta o plano]
+type = VarAdd
+trigger1 = AILevel > 0 && var(44) > 0
+var(44) = -1
+ignorehitpause = 1
+
+[State -2, IA: sorteia o plano]
+type = VarSet
+trigger1 = AILevel > 0 && var(44) <= 0 && roundstate = 2 && stateno != 40
+var(45) = random
+ignorehitpause = 1
+
+[State -2, IA: escolhe o plano]
+type = VarSet
+trigger1 = AILevel > 0 && var(44) <= 0 && roundstate = 2 && stateno != 40
+var(45) = ifelse(p2statetype = L, ifelse(var(45) < 650, 1, 3), ifelse(p2bodydist x > 111, ifelse(var(45) < 560, 1, ifelse(var(45) < 700, 4, ifelse(var(45) < 900, 3, 2))), ifelse(p2bodydist x > 36, ifelse(var(45) < 380, 1, ifelse(var(45) < 600, 3, ifelse(var(45) < 790, 2, ifelse(var(45) < 880, 4, 5)))), ifelse(var(45) < 250, 3, ifelse(var(45) < 430, 2, ifelse(var(45) < 570, 5, ifelse(var(45) < 920, 1, 6)))))))
+ignorehitpause = 1
+
+[State -2, IA: tempo do plano]
+type = VarSet
+trigger1 = AILevel > 0 && var(44) <= 0 && roundstate = 2 && stateno != 40
+var(44) = 14 + random % 34
+ignorehitpause = 1
+
+[State -2, IA: encurralado nao recua]
+type = VarSet
+trigger1 = AILevel > 0 && (var(45) = 2 || var(45) = 6) && backedgebodydist < 20
+var(45) = 1
+ignorehitpause = 1
+
+[State -2, IA: escapa: escapar do agarrao]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (movetype = H && (stateno = 820 || stateno = 832) && time >= 1 && time <= 6) && random < 60 + 45 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 1
+
+[State -2, IA: combo super: Rapidinho da Quebrada]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+triggerall = power >= 2000
+trigger1 = (var(47) = 2 && movehit && movehit <= 8 && (var(20) > 0 || life < 300 || p2life < 250)) && var(46) >= 0 && var(46) < 71
+var(49) = 2
+
+[State -2, IA: combo super: Rapidinho da Quebrada]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+triggerall = power >= 2000
+trigger1 = (var(47) = 2 && movehit && movehit <= 8 && (var(20) > 0 || life < 300 || p2life < 250)) && var(46) >= 71 && var(46) < 142
+var(49) = 3
+
+[State -2, IA: combo super: Faixa no Asfalto]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+triggerall = power >= 1000
+trigger1 = (var(47) = 2 && movehit && movehit <= 8 && (var(20) > 0 || life < 300 || p2life < 250)) && var(46) >= 142 && var(46) < 214
+var(49) = 4
+
+[State -2, IA: combo super: Faixa no Asfalto]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+triggerall = power >= 1000
+trigger1 = (var(47) = 2 && movehit && movehit <= 8 && (var(20) > 0 || life < 300 || p2life < 250)) && var(46) >= 214 && var(46) < 285
+var(49) = 5
+
+[State -2, IA: combo especial: Ascensão de Faixa]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (var(47) = 2 && movehit && movehit <= 8 && stateno = [200, 499]) && var(46) >= 285 && var(46) < 357
+var(49) = 6
+
+[State -2, IA: combo especial: Ascensão de Faixa]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (var(47) = 2 && movehit && movehit <= 8 && stateno = [200, 499]) && var(46) >= 357 && var(46) < 428
+var(49) = 7
+
+[State -2, IA: combo especial: Pega Bolado]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (var(47) = 2 && movehit && movehit <= 8 && stateno = [200, 499]) && var(46) >= 428 && var(46) < 500
+var(49) = 8
+
+[State -2, IA: combo especial: Pega Bolado]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (var(47) = 2 && movehit && movehit <= 8 && stateno = [200, 499]) && var(46) >= 500 && var(46) < 571
+var(49) = 9
+
+[State -2, IA: combo especial: Giro de Garagem]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (var(47) = 2 && movehit && movehit <= 8 && stateno = [200, 499]) && var(46) >= 571 && var(46) < 642
+var(49) = 10
+
+[State -2, IA: combo especial: Corte de Base]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (var(47) = 2 && movehit && movehit <= 8 && stateno = [200, 499]) && var(46) >= 642 && var(46) < 714
+var(49) = 11
+
+[State -2, IA: combo corrente: x]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (var(47) = 2 && movehit && movehit <= 8 && stateno = [200, 499]) && var(46) >= 714 && var(46) < 785
+var(49) = 12
+
+[State -2, IA: combo corrente: y]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (var(47) = 2 && movehit && movehit <= 8 && stateno = [200, 499]) && var(46) >= 785 && var(46) < 857
+var(49) = 13
+
+[State -2, IA: combo corrente: a]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (var(47) = 2 && movehit && movehit <= 8 && stateno = [200, 499]) && var(46) >= 857 && var(46) < 928
+var(49) = 14
+
+[State -2, IA: combo corrente: b]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (var(47) = 2 && movehit && movehit <= 8 && stateno = [200, 499]) && var(46) >= 928 && var(46) < 1000
+var(49) = 15
+
+[State -2, IA: chefe final enche a barra]
+type = PowerSet
+trigger1 = AILevel > 0 && map(chefe_final) > 0 && var(20) = 0 && roundstate = 2
+value = powermax
+ignorehitpause = 1
+
+[State -2, IA: desperta: Diabo Loiro (Despertar)]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype = S && power >= powermax && var(20) = 0 && (p2bodydist x > 90 || p2statetype = L || p2movetype = H || map(chefe_final) > 0)) && random < 20 + 12 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 16
+
+[State -2, IA: antiaereo: Demônio: Joelhada Selvagem]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = var(20) > 0
+trigger1 = (ctrl && statetype != A && p2statetype = A && p2dist y < -20 && p2dist y > -150 && p2bodydist x < 32 && enemynear, vel y > -3) && random < 40 + 32 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 17
+
+[State -2, IA: antiaereo: Ascensão de Faixa]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype = A && p2dist y < -20 && p2dist y > -150 && p2bodydist x < 24 && enemynear, vel y > -3) && random < 40 + 32 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 18
+
+[State -2, IA: antiaereo: Ascensão de Faixa]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype = A && p2dist y < -20 && p2dist y > -150 && p2bodydist x < 24 && enemynear, vel y > -3) && random < 40 + 32 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 19
+
+[State -2, IA: pune com super: Rapidinho da Quebrada]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+triggerall = power >= 2000
+trigger1 = (ctrl && p2movetype = A && enemynear, movecontact = 0 && enemynear, animtime >= -18 && p2bodydist x < 29) && (var(20) > 0 || life < 300 || random < 150) && random < 40 + 30 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger2 = (ctrl && prevstateno = [150, 155] && time <= 3 && p2bodydist x < 29) && (var(20) > 0 || life < 300 || random < 150) && random < 40 + 30 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 20
+
+[State -2, IA: pune com super: Rapidinho da Quebrada]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+triggerall = power >= 2000
+trigger1 = (ctrl && p2movetype = A && enemynear, movecontact = 0 && enemynear, animtime >= -18 && p2bodydist x < 29) && (var(20) > 0 || life < 300 || random < 150) && random < 40 + 30 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger2 = (ctrl && prevstateno = [150, 155] && time <= 3 && p2bodydist x < 29) && (var(20) > 0 || life < 300 || random < 150) && random < 40 + 30 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 21
+
+[State -2, IA: pune com super: Faixa no Asfalto]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+triggerall = power >= 1000
+trigger1 = (ctrl && p2movetype = A && enemynear, movecontact = 0 && enemynear, animtime >= -18 && p2bodydist x < 45) && (var(20) > 0 || life < 300 || random < 150) && random < 40 + 30 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger2 = (ctrl && prevstateno = [150, 155] && time <= 3 && p2bodydist x < 45) && (var(20) > 0 || life < 300 || random < 150) && random < 40 + 30 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 22
+
+[State -2, IA: pune com super: Faixa no Asfalto]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+triggerall = power >= 1000
+trigger1 = (ctrl && p2movetype = A && enemynear, movecontact = 0 && enemynear, animtime >= -18 && p2bodydist x < 45) && (var(20) > 0 || life < 300 || random < 150) && random < 40 + 30 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger2 = (ctrl && prevstateno = [150, 155] && time <= 3 && p2bodydist x < 45) && (var(20) > 0 || life < 300 || random < 150) && random < 40 + 30 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 23
+
+[State -2, IA: pune: Demônio: Joelhada Selvagem]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = var(20) > 0
+trigger1 = (ctrl && p2movetype = A && enemynear, movecontact = 0 && enemynear, animtime >= -18 && p2bodydist x < 22) && random < 60 + 50 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger2 = (ctrl && prevstateno = [150, 155] && time <= 3 && p2bodydist x < 22) && random < 60 + 50 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 24
+
+[State -2, IA: pune: Demônio: Rabo Rasteiro]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = var(20) > 0
+trigger1 = (ctrl && p2movetype = A && enemynear, movecontact = 0 && enemynear, animtime >= -18 && p2bodydist x < 23) && random < 60 + 50 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger2 = (ctrl && prevstateno = [150, 155] && time <= 3 && p2bodydist x < 23) && random < 60 + 50 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 25
+
+[State -2, IA: pune: Demônio: Arranhão]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = var(20) > 0
+trigger1 = (ctrl && p2movetype = A && enemynear, movecontact = 0 && enemynear, animtime >= -18 && p2bodydist x < 42) && random < 60 + 50 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger2 = (ctrl && prevstateno = [150, 155] && time <= 3 && p2bodydist x < 42) && random < 60 + 50 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 26
+
+[State -2, IA: pune: Jab]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && p2movetype = A && enemynear, movecontact = 0 && enemynear, animtime >= -18 && p2bodydist x < 43) && random < 60 + 50 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger2 = (ctrl && prevstateno = [150, 155] && time <= 3 && p2bodydist x < 43) && random < 60 + 50 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 27
+
+[State -2, IA: pune: Demônio: Arranhão Baixo]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = var(20) > 0
+trigger1 = (ctrl && p2movetype = A && enemynear, movecontact = 0 && enemynear, animtime >= -18 && p2bodydist x < 39) && random < 60 + 50 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger2 = (ctrl && prevstateno = [150, 155] && time <= 3 && p2bodydist x < 39) && random < 60 + 50 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 28
+
+[State -2, IA: pune: Jab baixo]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && p2movetype = A && enemynear, movecontact = 0 && enemynear, animtime >= -18 && p2bodydist x < 41) && random < 60 + 50 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger2 = (ctrl && prevstateno = [150, 155] && time <= 3 && p2bodydist x < 41) && random < 60 + 50 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 29
+
+[State -2, IA: no ar: Golpe no ar]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (statetype = A && ctrl && p2dist y > 12 && p2bodydist x < 44) && random < 60 + 30 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 30
+
+[State -2, IA: no ar: Golpe no ar]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (statetype = A && ctrl && p2dist y > 12 && p2bodydist x < 26) && random < 60 + 30 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 31
+
+[State -2, IA: no ar: Golpe no ar]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (statetype = A && ctrl && p2dist y > 12 && p2bodydist x < 23) && random < 60 + 30 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 32
+
+[State -2, IA: no ar: Golpe no ar]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (statetype = A && ctrl && p2dist y > 12 && p2bodydist x < 49) && random < 60 + 30 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 33
+
+[State -2, IA: agarra: Cutucao Sacana (agarrao)]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype = S && p2bodydist x < 7 && p2statetype != A && p2movetype = I) && random < 25 + 22 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger2 = (ctrl && statetype = S && p2bodydist x < 7 && p2stateno = [120, 155]) && random < 25 + 22 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 34
+
+[State -2, IA: agarra: Puxa a Perna]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype = S && p2bodydist x < 7 && p2statetype != A && p2movetype = I) && random < 25 + 22 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger2 = (ctrl && statetype = S && p2bodydist x < 7 && p2stateno = [120, 155]) && random < 25 + 22 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 35
+
+[State -2, IA: agarra: Abraco de Quebrada]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype = S && p2bodydist x < 7 && p2statetype != A && p2movetype = I) && random < 25 + 22 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger2 = (ctrl && statetype = S && p2bodydist x < 7 && p2stateno = [120, 155]) && random < 25 + 22 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 36
+
+[State -2, IA: solta de longe: Pedra]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype = S && p2bodydist x > 110 && p2bodydist x < 330 && p2statetype != A) && random < 4 + 4 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 37
+
+[State -2, IA: solta de longe: Pedra]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype = S && p2bodydist x > 110 && p2bodydist x < 330 && p2statetype != A) && random < 4 + 4 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 38
+
+[State -2, IA: solta de longe: Bola de ki]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype = S && p2bodydist x > 110 && p2bodydist x < 330 && p2statetype != A) && random < 4 + 4 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 39
+
+[State -2, IA: solta de longe: Bola de ki]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype = S && p2bodydist x > 110 && p2bodydist x < 330 && p2statetype != A) && random < 4 + 4 * ifelse(map(chefe_final) > 0, 8, AILevel)
+var(49) = 40
+
+[State -2, IA: cutuca: Jab baixo]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 9 && p2bodydist x <= 42) && random < 380
+var(49) = 41
+
+[State -2, IA: cutuca: Chute na canela]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 10 && p2bodydist x <= 43) && random < 380
+var(49) = 42
+
+[State -2, IA: cutuca: Rasteira]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 21 && p2bodydist x <= 54) && random < 380
+var(49) = 43
+
+[State -2, IA: cutuca: Jab]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 11 && p2bodydist x <= 44) && random < 380
+var(49) = 44
+
+[State -2, IA: cutuca: Chute baixo]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 15 && p2bodydist x <= 48) && random < 380
+var(49) = 45
+
+[State -2, IA: cutuca: Soco reto]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 4 && p2bodydist x <= 37) && random < 380
+var(49) = 46
+
+[State -2, IA: cutuca: Chute lateral]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 8 && p2bodydist x <= 41) && random < 380
+var(49) = 47
+
+[State -2, IA: cutuca: Demônio: Arranhão Baixo]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = var(20) > 0
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 7 && p2bodydist x <= 40) && random < 380
+var(49) = 48
+
+[State -2, IA: cutuca: Demônio: Garra Subindo]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = var(20) > 0
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= -10 && p2bodydist x <= 22) && random < 380
+var(49) = 49
+
+[State -2, IA: cutuca: Demônio: Rabo Rasteiro]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = var(20) > 0
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= -9 && p2bodydist x <= 24) && random < 380
+var(49) = 50
+
+[State -2, IA: cutuca: Demônio: Varrida de Garras]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = var(20) > 0
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 12 && p2bodydist x <= 45) && random < 380
+var(49) = 51
+
+[State -2, IA: cutuca: Demônio: Arranhão]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = var(20) > 0
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 10 && p2bodydist x <= 43) && random < 380
+var(49) = 52
+
+[State -2, IA: cutuca: Demônio: Garra Cruzada]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = var(20) > 0
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= -2 && p2bodydist x <= 31) && random < 380
+var(49) = 53
+
+[State -2, IA: cutuca: Demônio: Joelhada Selvagem]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = var(20) > 0
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= -10 && p2bodydist x <= 23) && random < 380
+var(49) = 54
+
+[State -2, IA: cutuca: Demônio: Coice com Garra]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = var(20) > 0
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 14 && p2bodydist x <= 47) && random < 380
+var(49) = 55
+
+[State -2, IA: cutuca: Ascensão de Faixa]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= -10 && p2bodydist x <= 15) && random < 200
+var(49) = 56
+
+[State -2, IA: cutuca: Ascensão de Faixa]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= -10 && p2bodydist x <= 15) && random < 200
+var(49) = 57
+
+[State -2, IA: cutuca: Pega Bolado]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 8 && p2bodydist x <= 41) && random < 200
+var(49) = 58
+
+[State -2, IA: cutuca: Pega Bolado]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 8 && p2bodydist x <= 41) && random < 200
+var(49) = 59
+
+[State -2, IA: cutuca: Rolada de Tatame]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 13 && p2bodydist x <= 46) && random < 200
+var(49) = 60
+
+[State -2, IA: cutuca: Giro de Garagem]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 18 && p2bodydist x <= 51) && random < 200
+var(49) = 61
+
+[State -2, IA: cutuca: Giro de Garagem]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 18 && p2bodydist x <= 51) && random < 200
+var(49) = 62
+
+[State -2, IA: cutuca: Corte de Base]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 30 && p2bodydist x <= 63) && random < 200
+var(49) = 63
+
+[State -2, IA: cutuca: Corte de Base]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 30 && p2bodydist x <= 63) && random < 200
+var(49) = 64
+
+[State -2, IA: cutuca: Cotovelo de Faixa]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= -6 && p2bodydist x <= 27) && random < 200
+var(49) = 65
+
+[State -2, IA: cutuca: Machado de Dojo]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 1 && p2bodydist x <= 34) && random < 200
+var(49) = 66
+
+[State -2, IA: cutuca: Cutucao Sacana]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype != A && p2statetype != A && p2statetype != L && var(46) < 8 + 7 * ifelse(map(chefe_final) > 0, 8, AILevel) && p2bodydist x >= 8 && p2bodydist x <= 41) && random < 200
+var(49) = 67
+
+[State -2, IA: provoca: Provocacao]
+type = VarSet
+triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
+triggerall = 1
+trigger1 = (ctrl && statetype = S && p2statetype = L && p2bodydist x > 120) && random < 4
+var(49) = 68
+
+[State -2, IA: aperta y (escapar do agarrao)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 1
+name = "y"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta bfd_y (Rapidinho da Quebrada)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 2
+name = "bfd_y"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta bfd_x (Rapidinho da Quebrada)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 3
+name = "bfd_x"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta bfd_b (Faixa no Asfalto)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 4
+name = "bfd_b"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta bfd_a (Faixa no Asfalto)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 5
+name = "bfd_a"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta fd_y (Ascensão de Faixa)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 6
+name = "fd_y"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta fd_x (Ascensão de Faixa)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 7
+name = "fd_x"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta bd_b (Pega Bolado)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 8
+name = "bd_b"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta bd_a (Pega Bolado)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 9
+name = "bd_a"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta df_b (Giro de Garagem)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 10
+name = "df_b"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta db_b (Corte de Base)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 11
+name = "db_b"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta x (x)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 12
+name = "x"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta y (y)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 13
+name = "y"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta a (a)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 14
+name = "a"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta b (b)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 15
+name = "b"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta despertar (Diabo Loiro (Despertar))]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 16
+name = "despertar"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta a (Demônio: Joelhada Selvagem)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 17
+name = "a"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta fd_y (Ascensão de Faixa)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 18
+name = "fd_y"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta fd_x (Ascensão de Faixa)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 19
+name = "fd_x"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta bfd_y (Rapidinho da Quebrada)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 20
+name = "bfd_y"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta bfd_x (Rapidinho da Quebrada)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 21
+name = "bfd_x"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta bfd_b (Faixa no Asfalto)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 22
+name = "bfd_b"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta bfd_a (Faixa no Asfalto)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 23
+name = "bfd_a"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta a (Demônio: Joelhada Selvagem)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 24
+name = "a"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta a (Demônio: Rabo Rasteiro)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 25
+name = "a"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta holddown (Demônio: Rabo Rasteiro)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 25
+name = "holddown"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta x (Demônio: Arranhão)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 26
+name = "x"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta x (Jab)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 27
+name = "x"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta holddown (Demônio: Arranhão Baixo)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 28
+name = "holddown"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta x (Demônio: Arranhão Baixo)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 28
+name = "x"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta holddown (Jab baixo)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 29
+name = "holddown"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta x (Jab baixo)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 29
+name = "x"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta x (Golpe no ar)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 30
+name = "x"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta y (Golpe no ar)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 31
+name = "y"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta a (Golpe no ar)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 32
+name = "a"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta b (Golpe no ar)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 33
+name = "b"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta bf_y (Cutucao Sacana (agarrao))]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 34
+name = "bf_y"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta holddown (Puxa a Perna)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 35
+name = "holddown"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta y (Puxa a Perna)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 35
+name = "y"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta holdfwd (Abraco de Quebrada)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 36
+name = "holdfwd"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta y (Abraco de Quebrada)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 36
+name = "y"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta df_y (Pedra)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 37
+name = "df_y"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta df_x (Pedra)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 38
+name = "df_x"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta fb_y (Bola de ki)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 39
+name = "fb_y"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta fb_x (Bola de ki)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 40
+name = "fb_x"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta holddown (Jab baixo)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 41
+name = "holddown"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta x (Jab baixo)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 41
+name = "x"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta a (Chute na canela)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 42
+name = "a"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta holddown (Chute na canela)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 42
+name = "holddown"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta b (Rasteira)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 43
+name = "b"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta holddown (Rasteira)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 43
+name = "holddown"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta x (Jab)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 44
+name = "x"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta a (Chute baixo)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 45
+name = "a"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta y (Soco reto)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 46
+name = "y"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta b (Chute lateral)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 47
+name = "b"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta holddown (Demônio: Arranhão Baixo)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 48
+name = "holddown"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta x (Demônio: Arranhão Baixo)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 48
+name = "x"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta holddown (Demônio: Garra Subindo)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 49
+name = "holddown"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta y (Demônio: Garra Subindo)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 49
+name = "y"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta a (Demônio: Rabo Rasteiro)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 50
+name = "a"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta holddown (Demônio: Rabo Rasteiro)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 50
+name = "holddown"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta b (Demônio: Varrida de Garras)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 51
+name = "b"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta holddown (Demônio: Varrida de Garras)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 51
+name = "holddown"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta x (Demônio: Arranhão)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 52
+name = "x"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta y (Demônio: Garra Cruzada)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 53
+name = "y"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta a (Demônio: Joelhada Selvagem)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 54
+name = "a"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta b (Demônio: Coice com Garra)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 55
+name = "b"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta fd_y (Ascensão de Faixa)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 56
+name = "fd_y"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta fd_x (Ascensão de Faixa)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 57
+name = "fd_x"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta bd_b (Pega Bolado)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 58
+name = "bd_b"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta bd_a (Pega Bolado)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 59
+name = "bd_a"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta bf_b (Rolada de Tatame)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 60
+name = "bf_b"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta df_b (Giro de Garagem)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 61
+name = "df_b"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta df_a (Giro de Garagem)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 62
+name = "df_a"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta db_b (Corte de Base)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 63
+name = "db_b"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta db_a (Corte de Base)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 64
+name = "db_a"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta golpe_216 (Cotovelo de Faixa)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 65
+name = "golpe_216"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta golpe_246 (Machado de Dojo)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 66
+name = "golpe_246"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta golpe_201 (Cutucao Sacana)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 67
+name = "golpe_201"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: aperta c (Provocacao)]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 68
+name = "c"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: segura frente]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 0 && roundstate = 2 && var(45) = 1 && ctrl && statetype = S
+trigger2 = AILevel > 0 && var(49) = 0 && roundstate = 2 && var(45) = 4 && (ctrl && statetype = S || stateno = 40)
+name = "holdfwd"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: segura tras]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 0 && roundstate = 2 && var(45) = 2 && ctrl && statetype = S
+trigger2 = AILevel > 0 && var(49) = 0 && roundstate = 2 && var(45) = 6 && (ctrl && statetype = S || stateno = 40)
+name = "holdback"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: segura cima]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 0 && roundstate = 2 && (var(45) = 4 || var(45) = 6) && (ctrl && statetype = S || stateno = 40)
+name = "holdup"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: segura baixo]
+type = AssertCommand
+trigger1 = AILevel > 0 && var(49) = 0 && roundstate = 2 && var(45) = 5 && ctrl && statetype != A
+name = "holddown"
+buffer.time = 1
+ignorehitpause = 1
+
+[State -2, IA: anda sem frear]
+type = AssertSpecial
+trigger1 = AILevel > 0 && (stateno = 0 || stateno = 20) && ctrl && (var(45) = 1 || var(45) = 2)
+flag = nobrake
+ignorehitpause = 1
+
+[State -2, IA: fica agachado]
+type = AssertSpecial
+trigger1 = AILevel > 0 && var(45) = 5 && statetype != A
+flag = nostand
+ignorehitpause = 1
+
+[State -2, IA: pulou: fica]
+type = VarSet
+trigger1 = AILevel > 0 && stateno = 50 && (var(45) = 4 || var(45) = 6)
+var(45) = 3
+ignorehitpause = 1
+
+[State -2, IA: comeca a andar]
+type = ChangeState
+trigger1 = AILevel > 0 && var(49) = 0 && roundstate = 2 && (var(45) = 1 || var(45) = 2) && ctrl && stateno = 0
+value = 20
+
+[State -2, IA: para de andar]
+type = ChangeState
+trigger1 = AILevel > 0 && stateno = 20 && ctrl && var(45) != 1 && var(45) != 2
+value = 0
+
+[State -2, IA: agacha]
+type = ChangeState
+trigger1 = AILevel > 0 && var(49) = 0 && roundstate = 2 && var(45) = 5 && ctrl && statetype = S && stateno != 10
+value = 10
+
+[State -2, IA: pula]
+type = ChangeState
+trigger1 = AILevel > 0 && var(49) = 0 && roundstate = 2 && (var(45) = 4 || var(45) = 6) && ctrl && statetype = S
+value = 40
+
+; <<< ia_cpu.py
 
 [Statedef 822]
 type = S

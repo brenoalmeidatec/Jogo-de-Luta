@@ -800,8 +800,9 @@ def cns_bola(n, forte, boca):
                   "attr = S, SP", f"damage = {80 if forte else 70}, 8", "animtype = Heavy", "guardflag = MA",
                   "hitflag = MAF", "pausetime = 0, 14", "sparkno = -1", "guard.sparkno = S9216",
                   "hitsound = S53,0", "guardsound = F6,0", "ground.type = High", "ground.slidetime = 10",
-                  "ground.hittime = 18", "ground.velocity = -5", "air.velocity = -3, -4",
-                  *(["fall = 1", "fall.recover = 0", "ground.velocity = -4, -5"] if forte else []),
+                  "ground.hittime = 18", "air.velocity = -3, -4",
+                  # forte joga para cima; um 2º ground.velocity era ignorado pelo motor (checkup 25/11)
+                  *(["fall = 1", "fall.recover = 0", "ground.velocity = -4, -5"] if forte else ["ground.velocity = -5"]),
                   "palfx.time = 14", "palfx.add = 150, 30, 0", "palfx.sinadd = 40, 20, 0, 4"))
     c.append(_fim(n))
     return "".join(c)

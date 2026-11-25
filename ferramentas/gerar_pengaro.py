@@ -4119,6 +4119,8 @@ def main():
     regua_sff.consertar("pengaro", SAIDA)
     import faisca_proporcional  # #32 (25/11): estouro só no golpe que derruba e nos especiais
     faisca_proporcional.aplicar("pengaro", SAIDA)
+    import ia_cpu  # checkup 25/11: IA da CPU (sempre por último: lê o .air e o .cns já prontos)
+    ia_cpu.aplicar("pengaro", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
     if SEM_FOLHA_BOSS:
         print("Endiabrado sem folha própria (pose emprestada do boss):", " ".join(sorted(SEM_FOLHA_BOSS)))

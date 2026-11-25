@@ -72,3 +72,21 @@ hook.add("main.t_itemname", "nazaEscolhaMapa", function(t, item)
 	main.stageMenu = true
 	semAleatorio()
 end)
+
+
+-- CHEFE FINAL DO ARCADE (checkup geral, 2026-11-25; conceito do Breno de 2026-11-11: o endiabrado e o boss final).
+-- Na ultima luta do Arcade, a CPU recebe o map chefe_final. A IA da CPU (ferramentas/ia_cpu.py, no [Statedef -2] de
+-- cada lutador) le esse map: enche a barra e desperta logo no comeco, com a cena da transformacao. Como a forma fica ate
+-- o fim da luta (forma_permanente.py), o chefe luta despertado o resto da partida.
+hook.add("loop#arcade", "nazaChefeFinal", function()
+	if not (start and start.t_roster) or #start.t_roster == 0 or matchNo() < #start.t_roster then
+		return
+	end
+	local antes = id()
+	for p = 1, 8 do
+		if player(p) and aiLevel() > 0 then
+			mapSet("chefe_final", 1)
+		end
+	end
+	playerId(antes)
+end)
