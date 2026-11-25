@@ -159,12 +159,16 @@ def bloco(an, gav):
     # 1 anda para frente, 2 para trás, 3 fica, 4 pula para frente, 5 agacha, 6 pula para trás
     far = f"{D} > {R + 70:.0f}"
     meio = f"{D} > {R - 5:.0f}"
+    # lutador de alcance curto (o CK, boxeador: R < 33) joga colado: anda para dentro bem mais e recua pouco
+    m = (560, 700, 800, 900) if R < 33 else (380, 600, 790, 880)
+    c = (180, 280, 400, 950) if R < 33 else (250, 430, 570, 920)
     plano = (
         f"ifelse(p2statetype = L, ifelse(var(45) < 650, 1, 3), "
         f"ifelse({far}, ifelse(var(45) < 560, 1, ifelse(var(45) < 700, 4, ifelse(var(45) < 900, 3, 2))), "
-        f"ifelse({meio}, ifelse(var(45) < 380, 1, ifelse(var(45) < 600, 3, ifelse(var(45) < 790, 2, "
-        f"ifelse(var(45) < 880, 4, 5)))), "
-        f"ifelse(var(45) < 250, 3, ifelse(var(45) < 430, 2, ifelse(var(45) < 570, 5, ifelse(var(45) < 920, 1, 6)))))))")
+        f"ifelse({meio}, ifelse(var(45) < {m[0]}, 1, ifelse(var(45) < {m[1]}, 3, ifelse(var(45) < {m[2]}, 2, "
+        f"ifelse(var(45) < {m[3]}, 4, 5)))), "
+        f"ifelse(var(45) < {c[0]}, 3, ifelse(var(45) < {c[1]}, 2, ifelse(var(45) < {c[2]}, 5, "
+        f"ifelse(var(45) < {c[3]}, 1, 6)))))))")
     ctl("escolhe o plano", "VarSet", [f"trigger1 = {novo}", f"var(45) = {plano}"])
     ctl("tempo do plano", "VarSet", [f"trigger1 = {novo}", "var(44) = 14 + random % 34"])
     ctl("encurralado nao recua", "VarSet", ["trigger1 = AILevel > 0 && (var(45) = 2 || var(45) = 6) && "
@@ -219,7 +223,8 @@ def bloco(an, gav):
     for a in gav["agarrao"]:
         escolhe("agarra", a, [f"ctrl && statetype = S && {D} < 7 && "
                               f"p2statetype != A && p2movetype = I",
-                              f"ctrl && statetype = S && {D} < 7 && p2stateno = [120, 155]"], L(25, 22))
+                              f"ctrl && statetype = S && {D} < 7 && p2stateno = [120, 155]"],
+                L(40, 32) if R < 33 else L(25, 22))
 
     for a in gav["projetil"]:
         escolhe("solta de longe", a, f"ctrl && statetype = S && {D} > 110 && {D} < 330 && p2statetype != A",

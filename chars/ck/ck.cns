@@ -10460,7 +10460,7 @@ ignorehitpause = 1
 [State -2, IA: escolhe o plano]
 type = VarSet
 trigger1 = AILevel > 0 && var(44) <= 0 && roundstate = 2 && stateno != 40
-var(45) = ifelse(p2statetype = L, ifelse(var(45) < 650, 1, 3), ifelse(p2bodydist x > 101, ifelse(var(45) < 560, 1, ifelse(var(45) < 700, 4, ifelse(var(45) < 900, 3, 2))), ifelse(p2bodydist x > 26, ifelse(var(45) < 380, 1, ifelse(var(45) < 600, 3, ifelse(var(45) < 790, 2, ifelse(var(45) < 880, 4, 5)))), ifelse(var(45) < 250, 3, ifelse(var(45) < 430, 2, ifelse(var(45) < 570, 5, ifelse(var(45) < 920, 1, 6)))))))
+var(45) = ifelse(p2statetype = L, ifelse(var(45) < 650, 1, 3), ifelse(p2bodydist x > 101, ifelse(var(45) < 560, 1, ifelse(var(45) < 700, 4, ifelse(var(45) < 900, 3, 2))), ifelse(p2bodydist x > 26, ifelse(var(45) < 560, 1, ifelse(var(45) < 700, 3, ifelse(var(45) < 800, 2, ifelse(var(45) < 900, 4, 5)))), ifelse(var(45) < 180, 3, ifelse(var(45) < 280, 2, ifelse(var(45) < 400, 5, ifelse(var(45) < 950, 1, 6)))))))
 ignorehitpause = 1
 
 [State -2, IA: tempo do plano]
@@ -10759,48 +10759,48 @@ var(49) = 37
 type = VarSet
 triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
 triggerall = 1
-trigger1 = (ctrl && statetype = S && p2bodydist x < 7 && p2statetype != A && p2movetype = I) && random < 25 + 22 * ifelse(map(chefe_final) > 0, 8, AILevel)
-trigger2 = (ctrl && statetype = S && p2bodydist x < 7 && p2stateno = [120, 155]) && random < 25 + 22 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger1 = (ctrl && statetype = S && p2bodydist x < 7 && p2statetype != A && p2movetype = I) && random < 40 + 32 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger2 = (ctrl && statetype = S && p2bodydist x < 7 && p2stateno = [120, 155]) && random < 40 + 32 * ifelse(map(chefe_final) > 0, 8, AILevel)
 var(49) = 38
 
 [State -2, IA: agarra: Agarrao agachado]
 type = VarSet
 triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
 triggerall = 1
-trigger1 = (ctrl && statetype = S && p2bodydist x < 7 && p2statetype != A && p2movetype = I) && random < 25 + 22 * ifelse(map(chefe_final) > 0, 8, AILevel)
-trigger2 = (ctrl && statetype = S && p2bodydist x < 7 && p2stateno = [120, 155]) && random < 25 + 22 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger1 = (ctrl && statetype = S && p2bodydist x < 7 && p2statetype != A && p2movetype = I) && random < 40 + 32 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger2 = (ctrl && statetype = S && p2bodydist x < 7 && p2stateno = [120, 155]) && random < 40 + 32 * ifelse(map(chefe_final) > 0, 8, AILevel)
 var(49) = 39
 
 [State -2, IA: agarra: Agarrao do despertado (despertados_47.py)]
 type = VarSet
 triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
 triggerall = var(20) > 0
-trigger1 = (ctrl && statetype = S && p2bodydist x < 7 && p2statetype != A && p2movetype = I) && random < 25 + 22 * ifelse(map(chefe_final) > 0, 8, AILevel)
-trigger2 = (ctrl && statetype = S && p2bodydist x < 7 && p2stateno = [120, 155]) && random < 25 + 22 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger1 = (ctrl && statetype = S && p2bodydist x < 7 && p2statetype != A && p2movetype = I) && random < 40 + 32 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger2 = (ctrl && statetype = S && p2bodydist x < 7 && p2stateno = [120, 155]) && random < 40 + 32 * ifelse(map(chefe_final) > 0, 8, AILevel)
 var(49) = 40
 
 [State -2, IA: agarra: Agarrao]
 type = VarSet
 triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
 triggerall = 1
-trigger1 = (ctrl && statetype = S && p2bodydist x < 7 && p2statetype != A && p2movetype = I) && random < 25 + 22 * ifelse(map(chefe_final) > 0, 8, AILevel)
-trigger2 = (ctrl && statetype = S && p2bodydist x < 7 && p2stateno = [120, 155]) && random < 25 + 22 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger1 = (ctrl && statetype = S && p2bodydist x < 7 && p2statetype != A && p2movetype = I) && random < 40 + 32 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger2 = (ctrl && statetype = S && p2bodydist x < 7 && p2stateno = [120, 155]) && random < 40 + 32 * ifelse(map(chefe_final) > 0, 8, AILevel)
 var(49) = 41
 
 [State -2, IA: agarra: Agarrao do despertado (despertados_47.py)]
 type = VarSet
 triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
 triggerall = var(20) > 0
-trigger1 = (ctrl && statetype = S && p2bodydist x < 7 && p2statetype != A && p2movetype = I) && random < 25 + 22 * ifelse(map(chefe_final) > 0, 8, AILevel)
-trigger2 = (ctrl && statetype = S && p2bodydist x < 7 && p2stateno = [120, 155]) && random < 25 + 22 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger1 = (ctrl && statetype = S && p2bodydist x < 7 && p2statetype != A && p2movetype = I) && random < 40 + 32 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger2 = (ctrl && statetype = S && p2bodydist x < 7 && p2stateno = [120, 155]) && random < 40 + 32 * ifelse(map(chefe_final) > 0, 8, AILevel)
 var(49) = 42
 
 [State -2, IA: agarra: Agarrao]
 type = VarSet
 triggerall = AILevel > 0 && var(49) = 0 && roundstate = 2
 triggerall = 1
-trigger1 = (ctrl && statetype = S && p2bodydist x < 7 && p2statetype != A && p2movetype = I) && random < 25 + 22 * ifelse(map(chefe_final) > 0, 8, AILevel)
-trigger2 = (ctrl && statetype = S && p2bodydist x < 7 && p2stateno = [120, 155]) && random < 25 + 22 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger1 = (ctrl && statetype = S && p2bodydist x < 7 && p2statetype != A && p2movetype = I) && random < 40 + 32 * ifelse(map(chefe_final) > 0, 8, AILevel)
+trigger2 = (ctrl && statetype = S && p2bodydist x < 7 && p2stateno = [120, 155]) && random < 40 + 32 * ifelse(map(chefe_final) > 0, 8, AILevel)
 var(49) = 43
 
 [State -2, IA: solta de longe: Poder de longe do despertado (despertados_47.py)]

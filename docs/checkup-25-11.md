@@ -40,7 +40,7 @@ a 1.0, a CPU é o adversário de toda luta: era o maior buraco do jogo.
 ### Medido na nuvem
 
 - **IA nova x CPU antiga** (`ferramentas/ia_duelo.py`, espelho: o mesmo lutador dos dois lados, nível 8, os dois
-  lados da tela): **38 de 38 rounds para a IA nova**, sobrando de 57% a 89% de vida, acertando 3 a 4 vezes mais.
+  lados da tela; medido antes da revisão de código, que só tirou vícios do andar e do combo): **38 de 38 rounds para a IA nova**, sobrando de 57% a 89% de vida, acertando 3 a 4 vezes mais.
 
 | Lutador | Rounds | Vida que sobra | Golpes acertados (nova x antiga) |
 |---|---|---|---|
@@ -53,7 +53,31 @@ a 1.0, a CPU é o adversário de toda luta: era o maior buraco do jogo.
 
 - Vídeo antes/depois: [`checkup-25-11/ia_antes_depois.gif`](checkup-25-11/ia_antes_depois.gif) (em cima a CPU
   antiga, embaixo a IA nova; Gutto x Raiclaven no Cristo).
-- Torneio entre os 6 com a IA nova: ver abaixo.
+- Torneio entre os 6 com a IA nova (CPU x CPU, nível 8, 6 rounds de cada lado em cada par, 60 rounds por lutador):
+
+| Lutador | % de vitória | Vida que sobra | Acertos por round |
+|---|---|---|---|
+| Gutto | 62 | 39% | 14,3 |
+| Pengaró | 53 | 35% | 13,4 |
+| Hazak | 53 | 37% | 13,7 |
+| Raiclaven | 52 | 28% | 14,4 |
+| Gbzin | 50 | 29% | 15,2 |
+| CK | 30 → **40** | 23% | 15,5 |
+
+  O CK ficou abaixo da faixa da meta (40 a 60%). Ele tem o menor alcance do elenco (luva curta, ~31 px de alcance
+  típico) e a IA jogava com ele de longe como joga com os outros. Agora, para lutador de alcance curto, o plano de
+  andar entra bem mais para dentro, recua menos e agarra mais de perto (`ia_cpu.py`, só a IA; dano e quadros não
+  mudaram, que são da thread de pendências). Mini torneio do CK contra os 5 depois do ajuste: **24 de 60 = 40%**.
+  O Gutto em 62% fica dentro do ruído conhecido do torneio (±15 entre rodadas, ver `nazafight-balanceamento`).
+- **Despertar no torneio = 0:** não é defeito. O torneio reinicia o round com `resetRound()`, que zera a barra, e um
+  round só enche ~1.000 a 1.400 de 3.000. Numa luta de verdade a barra passa de um round para o outro e a CPU
+  desperta quando enche (visto no teste do chefe final).
+
+### Revisão da IA (subagente)
+
+Uma revisão de código achou e já ficou consertado: o andar e o agachar brigavam tique a tique (andava e parava em
+seguida), o pulo saía para o lado errado em alguns planos, o combo sempre escolhia o primeiro golpe da lista e o
+Despertar olhava 3.000 fixo em vez da barra cheia de cada lutador.
 
 ## Outros consertos do checkup
 
@@ -82,4 +106,6 @@ a 1.0, a CPU é o adversário de toda luta: era o maior buraco do jogo.
 - **Cor alternativa no espelho:** P1 e P2 com o mesmo lutador ficam da mesma cor. Os corpos misturam paleta (RLE8) e
   PNG de cor cheia, então só a troca de paleta não resolve; dá para fazer com `PalFX` leve no P2 do espelho, mas ele
   briga com os brilhos de golpe e de aura. Precisa decidir o jeito.
+- **IA:** contar no torneio também a barra que passa entre rounds (hoje `resetRound()` zera), para medir o
+  Despertar da CPU no balanceamento.
 - **IA:** ensinar o parry (hoje ela não usa) e o rolamento contra projétil nos níveis altos.

@@ -3232,3 +3232,16 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   do round 2 pelas marcas do `--video`; no "antes", os golpes da forma mostram o corpo despertado só durante o golpe).
 - Não reproduzido: um "trava" de verdade (sem ctrl). No robô o lutador ganha ctrl e solta golpe no round 2; o que
   parecia travado era o corpo normal fazendo golpes e aura da forma.
+
+## 2026-11-25 — Checkup geral: a CPU ganhou IA de verdade (Claude, thread do Alisson)
+
+- Achado principal: nenhum lutador tinha IA; a CPU do IKEMEN só amassava botão e sorteava especial. Agora
+  `ferramentas/ia_analise.py` lê `.cmd/.cns/.air` e `ferramentas/ia_cpu.py` põe um bloco no `[Statedef -2]` dos 6
+  (só `AILevel > 0`): escapa de agarrão, emenda combo, desperta, antiaéreo, pune, agarra, cutuca no alcance, anda com
+  plano e defende pela dificuldade (1 a 8 vale de verdade). Os `gerar_*.py` chamam no fim.
+- Chefe final do Arcade: `motif/nazafight/nazafights.lua` marca a CPU da última luta; ela desperta logo e luta no 8.
+- Medido na nuvem: IA nova x CPU antiga 38 de 38 rounds; torneio entre os 6 de 50 a 62% (CK 30 -> 40% depois do
+  plano para alcance curto). Despertar no torneio = 0 porque `resetRound()` zera a barra.
+- Também: retrato provisório do Gbzin (do conceito), orbe forte do Diabo demônio com `ground.velocity` único,
+  `--sem-ia`/`--chefe` no `filmar_luta_linux.py`, Gbzin no `testar_mapas.py`.
+- Detalhes, números e sugestões: `docs/checkup-25-11.md`.
