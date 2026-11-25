@@ -445,6 +445,8 @@ def main():
     destruicao.aplicar("gutto", SAIDA)
     import mecanica  # auditoria do Breno (#32, 24/11): barra do afastar, jab, parry, desconto de combo, trava da defesa
     mecanica.aplicar("gutto", SAIDA)
+    import regua_sff  # noqa: E402  (tapa buraco transparente no meio da roupa, 25/11)
+    regua_sff.consertar("gutto", SAIDA)
     import faisca_proporcional  # #32 (25/11): estouro só no golpe que derruba e nos especiais
     faisca_proporcional.aplicar("gutto", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")

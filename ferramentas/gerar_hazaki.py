@@ -1355,6 +1355,8 @@ def main():
     destruicao.aplicar("hazaki", SAIDA)
     import mecanica  # auditoria do Breno (#32, 24/11): barra do afastar, jab, parry, desconto de combo, trava da defesa
     mecanica.aplicar("hazaki", SAIDA)
+    import regua_sff  # noqa: E402  (tapa buraco transparente no meio da roupa, 25/11)
+    regua_sff.consertar("hazaki", SAIDA)
     # #36: desenho nítido novo, caixas de antes (sprites/hazaki/caixas_base.air): o jogo não muda
     import manter_caixas
     n, dif = manter_caixas.aplicar("hazaki", SAIDA)

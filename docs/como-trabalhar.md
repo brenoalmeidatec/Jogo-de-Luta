@@ -79,6 +79,9 @@ continuam em [`regras-dos-lutadores.md`](regras-dos-lutadores.md). Estilo e core
 - `python3 ferramentas/faisca_proporcional.py` (também no fim dos geradores): nos normais, fraco = ventinho (9200),
   médio e forte que não derruba = estalo (9206); o estouro (9201/9205) fica para o golpe que derruba e os especiais.
   A forma despertada não muda.
+- `python3 ferramentas/regua_sff.py` (régua do quadro final, item 6): congelado, buraco transparente no corpo, pedaço
+  solto e salto de tamanho, ação por ação no `.sff`. `--consertar` tapa o buraco no meio da roupa (também no fim dos
+  geradores). Sprite novo: rode a régua antes de subir.
 
 ## Personagem do Pengaró
 
