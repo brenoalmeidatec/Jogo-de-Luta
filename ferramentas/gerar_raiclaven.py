@@ -536,6 +536,8 @@ def main():
     aura_silhueta.aplicar("raiclaven", SAIDA)
     import luz  # issue #51: luz em todo efeito que brilha (sem aura em camadas, a luz.py não vem pelo aura_silhueta)
     luz.aplicar("raiclaven", SAIDA)
+    import normais_proprios  # noqa: E402  (#32 item 9: cara própria nos normais, 25/11)
+    normais_proprios.aplicar("raiclaven", SAIDA)
     import mecanica  # auditoria do Breno (#32, 24/11): barra do afastar, jab, parry, desconto de combo, trava da defesa
     mecanica.aplicar("raiclaven", SAIDA)
     import regua_sff  # noqa: E402  (tapa buraco transparente no meio da roupa, 25/11)

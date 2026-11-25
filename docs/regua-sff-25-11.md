@@ -13,7 +13,8 @@ saíram transparentes e precisam ser **pintadas** de violeta (fila de imagens). 
 **O que a tabela abaixo ainda mostra (para decidir, não é tudo defeito):**
 - **congelado:** o quadro do contato segura igual por 10 a 17 tiques. Nos 4 lutadores do kit (CK, Gutto, Raiclaven,
   Gbzin) é quase todo golpe, a mesma estrutura de tempo (ver item A9, normais com cara própria). O Pengaró não tem,
-  porque o "corpo firme com vida" mexe um pouco a cada quadro. Conserto: quadro do meio na volta, sem imagem nova.
+  porque o "corpo firme com vida" mexe um pouco a cada quadro. O `normais_proprios.py` tirou o parado que vinha
+  depois da caixa de ataque; o resto é o tempo do golpe pegando e precisa de um desenho de acompanhamento.
 - **pedaço solto:** conferido no olho numa amostra de 10: é efeito desenhado junto do boneco, de propósito (coração e
   risquinhos de "!" nas poses 760 a 765, garrafa e pente jogados, brilho). Não é defeito.
 - **salto de tamanho:** Gbzin 2000 (despertar) alterna pose curvada com o pau e pose de pé quadro sim, quadro não;

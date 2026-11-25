@@ -1188,6 +1188,8 @@ def main():
     aura_no_corpo.aplicar("ck", SAIDA)
     import destruicao  # issue #35: o cenário quebra em dois níveis conforme quem despertou (sempre por último)
     destruicao.aplicar("ck", SAIDA)
+    import normais_proprios  # noqa: E402  (#32 item 9: cara própria nos normais, 25/11)
+    normais_proprios.aplicar("ck", SAIDA)
     import mecanica  # auditoria do Breno (#32, 24/11): barra do afastar, jab, parry, desconto de combo, trava da defesa
     mecanica.aplicar("ck", SAIDA)
     import regua_sff  # noqa: E402  (tapa buraco transparente no meio da roupa, 25/11)

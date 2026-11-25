@@ -24,7 +24,7 @@ e marcação vermelha, e todo aviso ao Breno na issue com prévia visual embutid
 | A2 | Soco forte (y) do Pengaró mostrando um chute alto | talvez (usar desenho que já existe) | precisa de desenho novo (fila de imagens) |
 | A3 | Chute forte de longe do Pengaró (240): calça manchada e perna congelada; pé virado no 245 | talvez | feito (calça: melhorou, não zerou) |
 | A6 | Régua que mede o quadro final do `.sff`, não só as peças | não | feito (buracos tapados; congelados listados) |
-| A9 | Cinco lutadores com a mesma tabela de normais | não (números) | a fazer |
+| A9 | Cinco lutadores com a mesma tabela de normais | não (números) | feito (dano e volta próprios) |
 | B3 | Gutto: explosão vermelha em todo ataque → só no impacto/especial | não | feito |
 | B2 | Raiclaven: rework para ler melhor + imperfeições | parte sim | a fazer (parte sem imagem) |
 | B1 | Gabriel (Gbzin): o que falta e sprite novo | **sim** | espera o upgrade |
@@ -52,6 +52,11 @@ sozinhas no fim dos `gerar_<lutador>.py`, então uma regeração não desfaz nad
   azuis e rachaduras da calça tapadas nos quadros 1 a 9; 245 com o joelho armado à frente no preparo (era o pé virado
   para trás).
 - **C1:** regras do Alisson e a seção de mecânica em `como-trabalhar.md`.
+- **A9 (`ferramentas/normais_proprios.py`):** cara própria pelos números, nos normais em pé, agachado e corrente:
+  Gutto +15% de dano e 2 tiques a mais na volta (pesado), Raiclaven e CK -8% e 1 a menos (ligeiros), Gbzin +8% e 1 a
+  mais, Pengaró é a base. Trava da defesa recalibrada no motor depois. Do quadro parado no contato (achado da régua),
+  saiu só o pedaço parado depois da caixa de ataque; o resto é o tempo em que o golpe pega (encurtar fez o 311 do CK
+  parar de encostar na corrente, no robô) e só melhora com um desenho de acompanhamento (fila de imagens).
 - **A6 (`ferramentas/regua_sff.py`):** mede o quadro final de cada golpe (congelado, buraco no corpo, pedaço solto,
   salto de tamanho). Os buracos transparentes no meio da roupa foram tapados nos 6 (Raiclaven era o pior: 172
   sprites com a armadura furada). Relatório e o que ficou para decidir em `docs/regua-sff-25-11.md`.
@@ -62,8 +67,11 @@ sozinhas no fim dos `gerar_<lutador>.py`, então uma regeração não desfaz nad
   nem de cotovelada no kit; precisa de desenho novo. Vai para a fila de imagens.
 - **Calça do 240:** sobrou uma dobra escura perto da cintura, que vem do desenho em si. Para zerar, refazer a calça a
   partir do desenho original (regra "desenho original é a base"), quando as imagens voltarem.
-- **Quadro congelado no contato** (régua): CK, Gutto, Raiclaven e Gbzin seguram o quadro do golpe igual por 10 a 17
-  tiques em quase todo normal. Dá para pôr um quadro do meio na volta (sem imagem nova), junto com o A9.
+- **Gbzin com alcance de bengala** (ideia do Breno no item 9): precisa de desenho com a bengala no golpe; a caixa não
+  estica além do desenho.
+- **Raiclaven (B2):** o pedido é ler melhor preparo, acerto e volta e tirar imperfeições. Sem arte nova entrou o que
+  dava (quadro parado no contato, buracos da armadura, tempo próprio). Visto no olho e vai para a fila: no 349 os quadros
+  991 e 992 têm o lado esquerdo cortado reto (tesoura cortada pela borda do desenho).
 - **Despertar do Pengaró:** as rachaduras violeta do peito saíram transparentes; pintar de violeta (fila de imagens).
 - **A9:** os 5 lutadores do kit do Pengaró têm a mesma tabela de normais (dano, tempo). Dar cara própria a cada um é
   decisão de jogo; dá para fazer só com números.
