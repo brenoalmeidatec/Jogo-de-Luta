@@ -61,6 +61,14 @@ sozinhas no fim dos `gerar_<lutador>.py`, então uma regeração não desfaz nad
   salto de tamanho). Os buracos transparentes no meio da roupa foram tapados nos 6 (Raiclaven era o pior: 172
   sprites com a armadura furada). Relatório e o que ficou para decidir em `docs/regua-sff-25-11.md`.
 
+- **Torneio CPU antes/depois do A9** (`docs/mecanica-25-11/torneio_antes_depois.png`, tabelas `torneio_antes.txt` e
+  `torneio_depois.txt`): todos ficaram entre 40% e 59% de vitórias, dentro do ruído de ±15 da CPU do motor. Nada
+  a ajustar. A thread do checkup está fazendo uma IA de verdade (`ferramentas/ia_cpu.py`); o balanceamento final
+  vale com ela. `torneio_cpu.py --continuar` retoma um torneio interrompido (o contêiner reiniciou no meio).
+- **Rajadona do Diabo Loiro (1650):** o raio prometia 12 acertos mas só cabiam ~9 em 66 tiques (projmisstime 5 + 2
+  de pausa); agora 3, sai de 225 a 300 de dano. O roteiro 58 do robô aceita 200 (8 acertos), porque o 1º contato
+  varia uns 15 tiques. Supers (estados com SuperPause) ficaram fora do desconto de combo.
+
 ## Sugestões para depois
 
 - **A2, soco forte do Pengaró:** ele usa de propósito o desenho do "martelo" (chute). Não existe desenho de soco forte
