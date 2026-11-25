@@ -46,7 +46,8 @@ def main():
             ax.text(m, y + dy + 0.16, f"{m:+.0f}", ha="center", va="bottom", fontsize=9, color=TEXTO)
     ax.set_yticks(range(len(lut)))
     ax.set_yticklabels([NOMES[l] for l in reversed(lut)], fontsize=12, color=TEXTO)
-    ax.set_xlabel("vantagem de quem bateu quando o golpe é DEFENDIDO (tiques; negativo = quem defendeu age primeiro)",
+    ax.set_xlabel("quanto quem bateu fica preso depois que o golpe é DEFENDIDO (1 tique = 1/60 s)\n"
+                  "à esquerda do 0: quem defendeu age primeiro e pode revidar; quanto mais à esquerda, mais fácil revidar",
                   fontsize=10, color=TEXTO2)
     ax.set_xlim(-60, 15)
     ax.grid(axis="x", color=GRADE, lw=0.8, zorder=0)
@@ -54,13 +55,14 @@ def main():
         ax.spines[s].set_visible(False)
     ax.spines["bottom"].set_color("#bdbdbd")
     ax.tick_params(colors=TEXTO2, length=0)
-    ax.scatter([], [], s=40, color=CINZA, label="antes (sem guard.hittime: tudo muito punível)")
-    ax.scatter([], [], s=40, color=AZUL, label="depois (trava da defesa calibrada no motor)")
-    ax.legend(loc="upper center", bbox_to_anchor=(0.45, -0.13), ncol=2, frameon=False, fontsize=10, labelcolor=TEXTO)
+    ax.scatter([], [], s=40, color=CINZA, label="antes: quem defendia revidava qualquer golpe")
+    ax.scatter([], [], s=40, color=AZUL, label="depois: tempo da defesa acertado golpe a golpe")
+    ax.plot([], [], color=TEXTO2, lw=4, label="traço grosso: o golpe do meio (metade fica de cada lado)")
+    ax.legend(loc="upper center", bbox_to_anchor=(0.45, -0.17), ncol=2, frameon=False, fontsize=10, labelcolor=TEXTO)
     ax.text(-2, -0.75, "faixa dos jogos grandes\n(golpe que não derruba)", ha="center", va="bottom", fontsize=9,
             color=TEXTO2)
     ax.set_ylim(-0.8, len(lut) - 0.45)
-    ax.set_title("Defender: quanto cada golpe fica punível, golpe a golpe (medido no motor)", fontsize=14,
+    ax.set_title("Defender: cada ponto é um golpe, medido dentro do jogo", fontsize=14,
                  color=TEXTO, loc="left", pad=12)
     fig.tight_layout()
     fig.savefig(sys.argv[3], facecolor="white")
