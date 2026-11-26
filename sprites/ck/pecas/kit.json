@@ -414,5 +414,35 @@
     ]
    }
   }
+ },
+ "ataques_em_pe": {
+  "jab": {
+   "arquivo": "socos_pe/jab.png",
+   "origem": [
+    100,
+    18
+   ]
+  },
+  "direto": {
+   "arquivo": "socos_pe/direto.png",
+   "origem": [
+    111,
+    20
+   ]
+  },
+  "reves": {
+   "arquivo": "socos_pe/reves.png",
+   "origem": [
+    94,
+    18
+   ]
+  },
+  "martelo": {
+   "arquivo": "socos_pe/martelo.png",
+   "origem": [
+    112,
+    36
+   ]
+  }
  }
 }

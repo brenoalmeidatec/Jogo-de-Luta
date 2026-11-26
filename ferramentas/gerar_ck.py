@@ -1208,6 +1208,8 @@ def main():
     ck_combate_baixo.aplicar(SAIDA)
     import ck_passada
     ck_passada.aplicar(SAIDA)
+    import ck_ataques_pe
+    ck_ataques_pe.aplicar(SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 
