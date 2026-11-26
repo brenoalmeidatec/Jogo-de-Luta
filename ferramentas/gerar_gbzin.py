@@ -1306,6 +1306,7 @@ def main():
     for passo in (["ligar_pecas.py", "gbzin"],
                   ["ligar_pecas.py", "gbzin", "--de", "gbzin", "--pasta", "quadros_e_pecas_hd", "--grupo", "49000"],
                   ["dobra_agachado.py", "--lutador", "gbzin"],  # #32: golpes agachados que não levantam
+                  ["gbzin_agachamento.py"],
                   ["aura_silhueta.py", "gbzin"], ["encolher_sff.py", "gbzin", "--indexar", "49000-49099"]):
         subprocess.run([sys.executable, str(RAIZ / "ferramentas" / passo[0])] + passo[1:], check=True)
     # retratos (seleção, VS e HUD): os passos acima regravam o .sff; sem isso a grade mostrava um bonequinho minúsculo

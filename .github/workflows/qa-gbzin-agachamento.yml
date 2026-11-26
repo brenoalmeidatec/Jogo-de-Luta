@@ -1,0 +1,39 @@
+name: Gbzin agachamento no jogo
+on:
+  push:
+    branches: [codex/gbzin-agachamento-no-jogo]
+permissions:
+  contents: read
+jobs:
+  jogo:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            chars/gbzin
+            chars/hazaki
+            ferramentas/robo
+            motif/nazafight
+      - run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb xauth xdotool libgl1-mesa-dri libopenal1 libglfw3 libasound2 libdecor-0-0
+          python3 -m pip install 'numpy<2' pillow opencv-python-headless==4.10.0.84
+      - name: Captura sincronizada com as mesmas teclas
+        run: |
+          base=9610972b2031da513b19d0da71871fce07ab3d55
+          git fetch --depth=1 origin "$base"
+          mkdir -p /tmp/antes
+          git archive "$base" chars/gbzin chars/hazaki | tar -x -C /tmp/antes
+          xvfb-run -a -s '-screen 0 1280x720x24' python3 ferramentas/filmar_agachamento_gbzin.py /tmp/antes/chars chars antes-depois.gif
+      - uses: actions/upload-artifact@v4
+        with:
+          name: captura-gbzin
+          path: antes-depois.gif
+      - name: Régua e combate
+        run: |
+          python3 ferramentas/regua_pernas.py gbzin --so-agachado
+          set -o pipefail
+          python3 ferramentas/testar_pengaro.py --linux --lutador gbzin | tee resultado.txt
+          grep -E 'RESUMO: 236 verificações passaram, 0 falharam' resultado.txt
