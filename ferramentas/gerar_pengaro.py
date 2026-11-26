@@ -4123,6 +4123,8 @@ def main():
     ia_cpu.aplicar("pengaro", SAIDA)
     import falas_vitoria  # fala da tela de vitória: tira o [Quotes] (as falas ficam no nazafights.lua)
     falas_vitoria.aplicar("pengaro", SAIDA)
+    import agachamento_elenco
+    agachamento_elenco.aplicar("pengaro", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
     if SEM_FOLHA_BOSS:
         print("Endiabrado sem folha própria (pose emprestada do boss):", " ".join(sorted(SEM_FOLHA_BOSS)))

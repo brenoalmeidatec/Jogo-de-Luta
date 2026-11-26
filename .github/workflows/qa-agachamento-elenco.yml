@@ -1,0 +1,56 @@
+name: Agachamento do elenco no IKEMEN
+on:
+  push:
+    branches: [codex/agachamento-elenco]
+permissions:
+  contents: read
+jobs:
+  jogo:
+    strategy:
+      fail-fast: false
+      matrix:
+        lutador: [ck, gutto, hazaki, raiclaven, pengaro]
+    runs-on: ubuntu-22.04
+    timeout-minutes: 25
+    env:
+      LUTADOR: ${{ matrix.lutador }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            chars/${{ matrix.lutador }}
+            chars/hazaki
+            chars/gbzin
+            ferramentas/robo
+            motif/nazafight
+      - uses: actions/checkout@v4
+        with:
+          ref: 245698004cb9e6f138ef2f58771b25a059da6ba1
+          path: antes
+          sparse-checkout: |
+            chars/${{ matrix.lutador }}
+            chars/hazaki
+            chars/gbzin
+      - run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb xauth xdotool libgl1-mesa-dri libopenal1 libglfw3 libasound2 libdecor-0-0
+          python3 -m pip install 'numpy<2' pillow opencv-python-headless==4.10.0.84
+      - name: Régua das duas formas e robô de combate
+        run: |
+          set -o pipefail
+          python3 ferramentas/regua_pernas.py "$LUTADOR" --so-agachado
+          python3 ferramentas/testar_pengaro.py --linux --lutador "$LUTADOR" | tee robo.txt
+          grep -E 'RESUMO: [1-9][0-9]+ verificações passaram, 0 falharam' robo.txt
+      - name: Filmar a forma base e a despertada
+        run: |
+          mkdir -p gifs
+          for forma in base despertado; do
+            opcao=()
+            if [[ $forma == despertado ]]; then opcao+=(--despertado); fi
+            xvfb-run -a -s '-screen 0 1280x720x24' python3 ferramentas/filmar_agachamento_gbzin.py antes/chars chars "gifs/$LUTADOR-$forma.gif" --lutador "$LUTADOR" "${opcao[@]}"
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: agachamento-${{ matrix.lutador }}
+          path: gifs/*.gif

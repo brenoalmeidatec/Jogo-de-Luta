@@ -1368,6 +1368,8 @@ def main():
     ia_cpu.aplicar("hazaki", SAIDA)
     import falas_vitoria  # fala da tela de vitória: tira o [Quotes] (as falas ficam no nazafights.lua)
     falas_vitoria.aplicar("hazaki", SAIDA)
+    import agachamento_elenco
+    agachamento_elenco.aplicar("hazaki", SAIDA)
     print(f"{gravados} sprites no .sff (de {len(s.lista)} carregados), {len(a.acoes)} ações em {SAIDA}")
     if "--contato" in sys.argv:
         contato(Path(sys.argv[sys.argv.index("--contato") + 1]), s)

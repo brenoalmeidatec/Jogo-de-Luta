@@ -1200,6 +1200,8 @@ def main():
     ia_cpu.aplicar("ck", SAIDA)
     import falas_vitoria  # fala da tela de vitória: tira o [Quotes] (as falas ficam no nazafights.lua)
     falas_vitoria.aplicar("ck", SAIDA)
+    import agachamento_elenco
+    agachamento_elenco.aplicar("ck", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 
