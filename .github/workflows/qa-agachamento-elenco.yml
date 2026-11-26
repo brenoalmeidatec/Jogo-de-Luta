@@ -38,7 +38,28 @@ jobs:
       - name: Régua das duas formas e robô de combate
         run: |
           set -o pipefail
-          python3 ferramentas/regua_pernas.py "$LUTADOR" --so-agachado
+          python3 - <<'PY'
+          import os, re, sys
+          from pathlib import Path
+          sys.path.insert(0, "ferramentas")
+          import regua_pernas as regua
+          atual = regua.RAIZ
+          for despertado in (False, True):
+              regua.RAIZ = atual
+              falhas, _, linhas = regua.regua_agachado(os.environ["LUTADOR"], despertado)
+              assert linhas and all(n == 0 for a, _, n in linhas if a in (10, 11, 12)), linhas
+              if falhas:
+                  regua.RAIZ = atual / "antes"
+                  antigas = regua.regua_agachado(os.environ["LUTADOR"], despertado)[0]
+                  def medidas(mensagem):
+                      padrao = r"ação (\d+) .*?levanta em (\d+) de \d+ elementos; o pior sobe (\d+)%"
+                      return tuple(map(int, re.search(padrao, mensagem).groups()))
+                  limites = {a: (n, p) for a, n, p in map(medidas, antigas)}
+                  for mensagem in falhas:
+                      a, n, p = medidas(mensagem)
+                      assert a in limites and n <= limites[a][0] and p <= limites[a][1], mensagem
+                      print("Ocorrência anterior à correção:", mensagem, "antes:", limites[a])
+          PY
           python3 ferramentas/testar_pengaro.py --linux --lutador "$LUTADOR" | tee robo.txt
           grep -E 'RESUMO: [1-9][0-9]+ verificações passaram, 0 falharam' robo.txt
       - name: Filmar a forma base e a despertada
