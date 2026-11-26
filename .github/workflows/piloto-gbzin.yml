@@ -1,0 +1,25 @@
+name: Piloto de agachamento do Gbzin
+on:
+  push:
+    branches: [codex/teste-agachamento-gbzin]
+    paths: ['.github/workflows/piloto-gbzin.yml']
+permissions:
+  contents: read
+jobs:
+  robo:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            chars/gbzin
+            chars/hazaki
+            ferramentas/robo
+            motif/nazafight
+      - run: sudo apt-get update -qq && sudo apt-get install -y xvfb xauth libgl1-mesa-dri libopenal1 libglfw3 libasound2
+      - name: Validar o personagem publicado no IKEMEN Linux
+        run: |
+          set -o pipefail
+          python3 ferramentas/testar_pengaro.py --linux --lutador gbzin | tee resultado.txt
+          grep -E 'RESUMO: [1-9][0-9]* verificações passaram, 0 falharam' resultado.txt
