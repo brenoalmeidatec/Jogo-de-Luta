@@ -46,19 +46,20 @@ def poses():
 
 
 def chute(perna, angulo):
-    # Rotação progressiva da canela a partir do joelho, com o quadril fixo.
+    if angulo == 0:
+        return perna
+    # O recorte começa dentro do joelho, deixando bermuda e coxa no quadril.
     a = np.array(perna)
-    cx, cy = 232, 250
-    y, x = np.indices(a.shape[:2], dtype=np.float32)
-    raio = np.hypot(x-cx, y-cy)
-    peso = np.clip(raio/32, 0, 1) * np.clip((x-159)/42, 0, 1)
-    theta = np.radians(angulo * peso)
-    mx = cx + np.cos(theta)*(x-cx) - np.sin(theta)*(y-cy)
-    my = cy + np.sin(theta)*(x-cx) + np.cos(theta)*(y-cy)
-    alterada = cv2.remap(a, mx, my, cv2.INTER_NEAREST)
-    # Conserva a coxa acima da articulação.
-    alterada[:cy-5] = a[:cy-5]
-    return Image.fromarray(alterada)
+    y, x = np.indices(a.shape[:2])
+    borda = np.interp(y, (251, 265, 274, 286, 289), (231, 215, 204, 194, 0))
+    articula = (x > borda) & (y >= 251)
+    joelho = ((x-234)/17)**2 + ((y-251)/18)**2 < 1
+    canela = np.where((articula | joelho)[..., None], a, 0)
+    fixa = np.where((~articula | joelho)[..., None], a, 0)
+    giro = cv2.getRotationMatrix2D((234,251), angulo, 1)
+    movel = Image.fromarray(cv2.warpAffine(canela,giro,perna.size,flags=cv2.INTER_NEAREST))
+    movel.alpha_composite(Image.fromarray(fixa))
+    return movel
 
 
 def aplicar(pasta):

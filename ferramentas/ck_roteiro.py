@@ -39,6 +39,7 @@ def validar(estados):
     assert any(e[0]==11 for e in estados[:bloqueio]) and bloqueio < soco
     assert min(e[4] for e in estados)==estados[0][4] and any(e[5]==400 for e in estados[:soco])
     assert any(e[0]==11 for e in estados[soco+1:]) and estados[-1][0]==0
+    assert estados[-1][-1] < estados[0][-1], "O contra-ataque não atingiu o Hazak"
     print("Vida Hazak:", estados[0][-1], estados[-1][-1], flush=True)
 
 
@@ -63,7 +64,7 @@ def medir(quadros,estados):
         ult=x-3
         trilha=[]
         for i,im in enumerate(quadros[inicio:],inicio):
-            m=14
+            m=42
             a=max(0,ult-m)
             roi=branco(im)[y-8:y+18,a:ult+modelo.shape[1]+m]
             _,q,_,(dx,dy)=cv2.minMaxLoc(cv2.matchTemplate(roi,modelo,cv2.TM_CCORR_NORMED))
@@ -77,7 +78,10 @@ def medir(quadros,estados):
     for lado,trilha in zip(("trás","frente"),trilhas):
         tela=np.array([e[2] for e in estados[inicio:]])
         # Uma câmera imóvel e um CK parado devem deixar a sola no mesmo lugar.
-        parados=np.abs(np.diff(tela))<.001
+        mudou=np.abs(np.diff(tela))>.001
+        # O hook registra o estado antes da apresentação do quadro no X11.
+        # Exclui a vizinhança de uma mudança de eixo ao medir o repouso.
+        parados=np.convolve(mudou.astype(int), np.ones(5,dtype=int), mode="same")==0
         deriva=np.abs(np.diff(trilha,axis=0))[parados].max(axis=0)
         print(lado,"máxima variação com eixo imóvel:",deriva.tolist(),"px; percurso X na tela:",int(np.ptp(trilha[:,0])),flush=True)
         assert deriva.max()<=1 and np.ptp(trilha[:,1])<=2

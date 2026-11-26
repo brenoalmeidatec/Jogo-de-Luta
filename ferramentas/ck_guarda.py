@@ -64,7 +64,7 @@ def recortar():
             camada.crop(caixa).save(KIT / arq)
             partes.append(dict(nome=chave, arquivo=arq, origem=list(caixa[:2])))
         poses[nome] = partes
-    dados["guarda_base"] = dict(eixo=EIXO, tamanho=TAMANHO, poses=poses)
+    dados.setdefault("guarda_base", {}).update(eixo=EIXO, tamanho=TAMANHO, poses=poses)
     (KIT / "kit.json").write_text(json.dumps(dados, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
 
 

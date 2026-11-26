@@ -1204,6 +1204,8 @@ def main():
     agachamento_elenco.aplicar("ck", SAIDA)
     import ck_guarda
     ck_guarda.aplicar(SAIDA)
+    import ck_combate_baixo
+    ck_combate_baixo.aplicar(SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 
