@@ -3269,3 +3269,9 @@ As ações 10 e 12 passam por dois desenhos em dois tiques. A ação 11 usa a ca
 CK, Gutto, Hazak, Pengaró e Raiclaven usam o próprio desenho de apoio nas formas base e despertada. Os pés e as pernas ficam fixos enquanto o tronco respira. As ações 10, 11 e 12 conservam a duração e as caixas de colisão de cada tique. O SFF de cada lutador recebeu dez desenhos e conservou o conteúdo e os eixos dos sprites anteriores.
 
 O robô de combate passou nas 1.144 verificações dos cinco lutadores. A captura no IKEMEN comparou 82 tiques por forma com a versão `2456980`. O golpe 10410 do Gutto despertado ainda ultrapassa a régua em dois quadros, como já ocorria antes. Os detalhes e os dez GIFs estão na [galeria de agachamento](docs/boneco-pecas/agachamento-elenco/README.md).
+
+## 2026-11-26 — Redesenho da guarda base do CK
+
+O parado, a descida, a guarda baixa e a subida usam o redesenho aprovado. As três poses compartilham as peças dos dois tênis em `sprites/ck/pecas/guarda/`. O gerador recompõe o corpo a partir de `guarda_base` no kit. Cada ação mantém os tiques, as caixas e o mapeamento dos quadros despertados.
+
+No [teste no IKEMEN](https://github.com/brenoalmeidatec/Jogo-de-Luta/actions/runs/45863065597), as duas solas tiveram deslocamento máximo de 0 px tanto em X como em Y nos 82 tiques filmados. O robô de combate passou nas 226 verificações. [GIF antes e depois](docs/boneco-pecas/ck/redesenho/ck-guarda.gif).
