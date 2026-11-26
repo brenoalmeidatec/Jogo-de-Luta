@@ -31,7 +31,7 @@ end)
 """
 
 
-def filmar(chars, lutador, despertado):
+def filmar(chars, lutador, despertado, combate=False):
     motor = motor_linux()
     with tempfile.TemporaryDirectory() as pasta:
         copia = Path(pasta) / "motor"
@@ -44,23 +44,28 @@ def filmar(chars, lutador, despertado):
             from filmar_golpes_linux import preparar_cmd
             cmd = Path("chars") / lutador / f"{lutador}.cmd"
             preparar_cmd(chars.parent / cmd, copia / cmd, [], True)
+        gancho = GANCHO
+        total = 82
+        if combate:
+            from ck_roteiro import configurar
+            total, gancho = configurar(copia, gancho)
         with (copia / "external/script/debug.lua").open("a") as f:
-            f.write(GANCHO.replace("@DESPERTADO@", "true" if despertado else "false"))
+            f.write(gancho.replace("@DESPERTADO@", "true" if despertado else "false"))
         jogo = subprocess.Popen(["./Ikemen_GO_Linux", "-p1", lutador, "-p2", rival,
                                  "-s", "stages/stage0-720.def", "-rounds", "1"],
                                 cwd=copia, env=ambiente_linux(copia))
         quadros, estados = [], []
         try:
-            for tick in range(1, 83):
+            for tick in range(1, total + 1):
                 marca = copia / "quadro"
                 prazo = time.monotonic() + 120
                 while not marca.exists():
                     if jogo.poll() is not None or time.monotonic() > prazo:
                         raise RuntimeError(f"Motor parou antes do tique {tick}")
                     time.sleep(.005)
-                numero, estado, animacao = map(int, marca.read_text().split())
+                numero, estado, animacao, *dados = map(float, marca.read_text().split())
                 assert numero == tick
-                estados.append((estado, animacao))
+                estados.append((int(estado), int(animacao), *dados))
                 if tick == 1:
                     janela = subprocess.check_output(["xdotool", "search", "--onlyvisible", "--pid",
                                                       str(jogo.pid)], text=True).splitlines()[-1]
@@ -70,17 +75,28 @@ def filmar(chars, lutador, despertado):
                     subprocess.run(["xdotool", "windowfocus", janela], check=True)
                 captura = ImageGrab.grab(bbox=(x, y, x + w, y + h), xdisplay=os.environ["DISPLAY"])
                 recorte = captura.crop((int(w*.10), int(h*.27), int(w*.53), int(h*.96)))
-                quadros.append(recorte.resize((320, 290), Image.Resampling.NEAREST))
-                if tick in (10, 66):
+                if combate:
+                    recorte = captura.crop((int(w*.08), int(h*.24), int(w*.90), int(h*.99)))
+                    quadros.append(recorte.resize((480, 290), Image.Resampling.NEAREST))
+                else:
+                    quadros.append(recorte.resize((320, 290), Image.Resampling.NEAREST))
+                if combate:
+                    from ck_roteiro import teclas
+                    teclas(tick)
+                elif tick in (10, 66):
                     subprocess.run(["xdotool", "keydown" if tick == 10 else "keyup", "Down"], check=True)
                 marca.unlink()
                 (copia / "avancar").touch()
         finally:
             jogo.kill()
             jogo.wait()
-            subprocess.run(["xdotool", "keyup", "Down"])
-        print("Estados capturados", sorted(set(estados)), flush=True)
-        assert {0, 10, 11, 12} <= {a for _, a in estados}, estados
+            subprocess.run(["xdotool", "keyup", "Down", "Left"])
+        print("Estados capturados", sorted({e[:2] for e in estados}), flush=True)
+        if combate:
+            from ck_roteiro import validar
+            validar(estados)
+        else:
+            assert {0, 10, 11, 12} <= {e[1] for e in estados}, estados
         return quadros, estados
 
 
@@ -92,21 +108,27 @@ if __name__ == "__main__":
     parser.add_argument("--lutador", default="gbzin")
     parser.add_argument("--despertado", action="store_true")
     parser.add_argument("--medir-tenis-ck", action="store_true")
+    parser.add_argument("--combate-ck", action="store_true")
     args = parser.parse_args()
-    antes, ea = filmar(args.antes, args.lutador, args.despertado)
-    depois, ed = filmar(args.depois, args.lutador, args.despertado)
+    antes, ea = filmar(args.antes, args.lutador, args.despertado, args.combate_ck)
+    depois, ed = filmar(args.depois, args.lutador, args.despertado, args.combate_ck)
     assert ea == ed, "As transições não coincidem nos dois filmes"
     if args.medir_tenis_ck:
         from medir_tenis_ck import medir
         medir(depois, ed)
     quadros = []
+    largura = antes[0].width
     for a, b in zip(antes, depois):
-        tela = Image.new("RGB", (644, 316), "#20232c")
+        tela = Image.new("RGB", (largura*2+4, 316), "#20232c")
         tela.paste(a, (0, 26))
-        tela.paste(b, (324, 26))
+        tela.paste(b, (largura+4, 26))
         d = ImageDraw.Draw(tela)
         d.text((12, 6), "ANTES", fill="white")
-        d.text((336, 6), "DEPOIS  /  KIT DE PECAS", fill="white")
+        d.text((largura+16, 6), "DEPOIS  /  KIT DE PECAS", fill="white")
         quadros.append(tela)
     assert any(a.tobytes() != b.tobytes() for a, b in zip(antes[16:50], depois[16:50]))
     quadros[0].save(args.gif, save_all=True, append_images=quadros[1:], duration=50, loop=0)
+
+    if args.combate_ck:
+        from ck_roteiro import medir
+        medir(depois, ed)

@@ -390,6 +390,29 @@
      ]
     }
    ]
+  },
+  "troncos_combate": {
+   "bloqueio": {
+    "arquivo": "guarda/agachado-bloqueio.png",
+    "cintura": [
+     96,
+     230
+    ]
+   },
+   "jab": {
+    "arquivo": "guarda/agachado-jab.png",
+    "cintura": [
+     96,
+     230
+    ]
+   },
+   "upper": {
+    "arquivo": "guarda/agachado-upper.png",
+    "cintura": [
+     97,
+     230
+    ]
+   }
   }
  }
 }

@@ -1,0 +1,44 @@
+name: CK bloqueia e contra-ataca agachado
+on:
+  push:
+    branches: [codex/ck-combate-baixo]
+    paths: ['chars/ck/**', 'ferramentas/**', 'sprites/ck/pecas/**', '.github/workflows/ck-combate-baixo.yml']
+permissions:
+  contents: read
+jobs:
+  ikemen:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            chars/ck
+            chars/hazaki
+            ferramentas/robo
+            motif/nazafight
+      - uses: actions/checkout@v4
+        with:
+          ref: 233658a300fd3b4f769332572e6d4478ab019b6a
+          path: antes
+          sparse-checkout: |
+            chars/ck
+            chars/hazaki
+      - run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb xauth xdotool libgl1-mesa-dri libopenal1 libglfw3 libasound2 libdecor-0-0
+          python3 -m pip install 'numpy<2' pillow opencv-python-headless==4.10.0.84
+      - name: Filmar e medir os pés no IKEMEN
+        run: |
+          xvfb-run -a -s '-screen 0 1280x720x24' python3 ferramentas/filmar_agachamento_gbzin.py antes/chars chars ck-combate-baixo.gif --lutador ck --combate-ck
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ck-combate-baixo
+          path: ck-combate-baixo.gif
+      - name: Testar combate
+        run: |
+          set -o pipefail
+          python3 ferramentas/testar_pengaro.py --linux --lutador ck | tee robo.txt
+          grep -E 'RESUMO: [1-9][0-9]+ verificações passaram, 0 falharam' robo.txt
+
