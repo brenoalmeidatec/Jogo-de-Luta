@@ -18,6 +18,12 @@ jobs:
             ferramentas/robo
             motif/nazafight
       - run: sudo apt-get update -qq && sudo apt-get install -y xvfb xauth libgl1-mesa-dri libopenal1 libglfw3 libasound2 libdecor-0-0
+      - name: Medir as poses baixas do SFF nas duas formas
+        run: |
+          python3 -m pip install 'numpy<2' pillow opencv-python-headless==4.10.0.84
+          python3 ferramentas/regua_pernas.py gbzin --so-agachado --relatorio regua.md
+          grep -E '\| gbzin \| base \| [1-9]' regua.md
+          grep -E '\| gbzin \| despertado \| [1-9]' regua.md
       - name: Validar o personagem publicado no IKEMEN Linux
         run: |
           set -o pipefail
