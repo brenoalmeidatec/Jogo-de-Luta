@@ -224,126 +224,126 @@ Clsn2Default: 1
 [Begin Action 40]
 Clsn2Default: 1
  Clsn2[0] = -72, 0, 72, -312
-365,0, 0,0, 1
-727,0, 0,0, 1
-729,0, 0,0, 1
-731,0, 0,0, 1
+57560,2560, 0,0, 1 ; desenho anterior 365,0
+57560,2561, 0,0, 1 ; desenho anterior 727,0
+57560,2562, 0,0, 1 ; desenho anterior 729,0
+57560,2563, 0,0, 1 ; desenho anterior 731,0
 
 [Begin Action 41]
 Clsn2Default: 1
  Clsn2[0] = -72, -72, 72, -300
-366,0, 0,0, 1
-734,0, 0,0, 1
-736,0, 0,0, 1
-367,0, 0,0, 1
-739,0, 0,0, 1
-740,0, 0,0, 1
-742,0, 0,0, 1
-743,0, 0,0, 1
-368,0, 0,0, 1
-745,0, 0,0, 1
-746,0, 0,0, 1
-747,0, 0,0, 1
-748,0, 0,0, 1
-749,0, 0,0, 1
-369,0, 0,0, -1
+57560,2624, 0,0, 1 ; desenho anterior 366,0
+57560,2625, 0,0, 1 ; desenho anterior 734,0
+57560,2626, 0,0, 1 ; desenho anterior 736,0
+57560,2627, 0,0, 1 ; desenho anterior 367,0
+57560,2628, 0,0, 1 ; desenho anterior 739,0
+57560,2629, 0,0, 1 ; desenho anterior 740,0
+57560,2630, 0,0, 1 ; desenho anterior 742,0
+57560,2631, 0,0, 1 ; desenho anterior 743,0
+57560,2632, 0,0, 1 ; desenho anterior 368,0
+57560,2633, 0,0, 1 ; desenho anterior 745,0
+57560,2634, 0,0, 1 ; desenho anterior 746,0
+57560,2635, 0,0, 1 ; desenho anterior 747,0
+57560,2636, 0,0, 1 ; desenho anterior 748,0
+57560,2637, 0,0, 1 ; desenho anterior 749,0
+57560,2638, 0,0, -1 ; desenho anterior 369,0
 
 [Begin Action 42]
 Clsn2Default: 1
  Clsn2[0] = -72, -72, 72, -300
-366,0, 0,0, 1
-734,0, 0,0, 1
-736,0, 0,0, 1
-367,0, 0,0, 1
-739,0, 0,0, 1
-740,0, 0,0, 1
-742,0, 0,0, 1
-743,0, 0,0, 1
-368,0, 0,0, 1
-745,0, 0,0, 1
-746,0, 0,0, 1
-747,0, 0,0, 1
-748,0, 0,0, 1
-749,0, 0,0, 1
-369,0, 0,0, -1
+57560,2688, 0,0, 1 ; desenho anterior 366,0
+57560,2689, 0,0, 1 ; desenho anterior 734,0
+57560,2690, 0,0, 1 ; desenho anterior 736,0
+57560,2691, 0,0, 1 ; desenho anterior 367,0
+57560,2692, 0,0, 1 ; desenho anterior 739,0
+57560,2693, 0,0, 1 ; desenho anterior 740,0
+57560,2694, 0,0, 1 ; desenho anterior 742,0
+57560,2695, 0,0, 1 ; desenho anterior 743,0
+57560,2696, 0,0, 1 ; desenho anterior 368,0
+57560,2697, 0,0, 1 ; desenho anterior 745,0
+57560,2698, 0,0, 1 ; desenho anterior 746,0
+57560,2699, 0,0, 1 ; desenho anterior 747,0
+57560,2700, 0,0, 1 ; desenho anterior 748,0
+57560,2701, 0,0, 1 ; desenho anterior 749,0
+57560,2702, 0,0, -1 ; desenho anterior 369,0
 
 [Begin Action 43]
 Clsn2Default: 1
  Clsn2[0] = -72, -72, 72, -300
-366,0, 0,0, 1
-734,0, 0,0, 1
-736,0, 0,0, 1
-367,0, 0,0, 1
-739,0, 0,0, 1
-740,0, 0,0, 1
-742,0, 0,0, 1
-743,0, 0,0, 1
-368,0, 0,0, 1
-745,0, 0,0, 1
-746,0, 0,0, 1
-747,0, 0,0, 1
-748,0, 0,0, 1
-749,0, 0,0, 1
-369,0, 0,0, -1
+57560,2752, 0,0, 1 ; desenho anterior 366,0
+57560,2753, 0,0, 1 ; desenho anterior 734,0
+57560,2754, 0,0, 1 ; desenho anterior 736,0
+57560,2755, 0,0, 1 ; desenho anterior 367,0
+57560,2756, 0,0, 1 ; desenho anterior 739,0
+57560,2757, 0,0, 1 ; desenho anterior 740,0
+57560,2758, 0,0, 1 ; desenho anterior 742,0
+57560,2759, 0,0, 1 ; desenho anterior 743,0
+57560,2760, 0,0, 1 ; desenho anterior 368,0
+57560,2761, 0,0, 1 ; desenho anterior 745,0
+57560,2762, 0,0, 1 ; desenho anterior 746,0
+57560,2763, 0,0, 1 ; desenho anterior 747,0
+57560,2764, 0,0, 1 ; desenho anterior 748,0
+57560,2765, 0,0, 1 ; desenho anterior 749,0
+57560,2766, 0,0, -1 ; desenho anterior 369,0
 
 [Begin Action 44]
 Clsn2Default: 1
  Clsn2[0] = -72, -72, 72, -300
-369,0, 0,0, 1
-751,0, 0,0, 1
-752,0, 0,0, 1
-753,0, 0,0, 1
-754,0, 0,0, 1
-755,0, 0,0, 1
-370,0, 0,0, 1
-757,0, 0,0, 1
-758,0, 0,0, 1
-759,0, 0,0, 1
-760,0, 0,0, 1
-761,0, 0,0, 1
-371,0, 0,0, -1
+57560,2816, 0,0, 1 ; desenho anterior 369,0
+57560,2817, 0,0, 1 ; desenho anterior 751,0
+57560,2818, 0,0, 1 ; desenho anterior 752,0
+57560,2819, 0,0, 1 ; desenho anterior 753,0
+57560,2820, 0,0, 1 ; desenho anterior 754,0
+57560,2821, 0,0, 1 ; desenho anterior 755,0
+57560,2822, 0,0, 1 ; desenho anterior 370,0
+57560,2823, 0,0, 1 ; desenho anterior 757,0
+57560,2824, 0,0, 1 ; desenho anterior 758,0
+57560,2825, 0,0, 1 ; desenho anterior 759,0
+57560,2826, 0,0, 1 ; desenho anterior 760,0
+57560,2827, 0,0, 1 ; desenho anterior 761,0
+57560,2828, 0,0, -1 ; desenho anterior 371,0
 
 [Begin Action 45]
 Clsn2Default: 1
  Clsn2[0] = -72, -72, 72, -300
-369,0, 0,0, 1
-751,0, 0,0, 1
-752,0, 0,0, 1
-753,0, 0,0, 1
-754,0, 0,0, 1
-755,0, 0,0, 1
-370,0, 0,0, 1
-757,0, 0,0, 1
-758,0, 0,0, 1
-759,0, 0,0, 1
-760,0, 0,0, 1
-761,0, 0,0, 1
-371,0, 0,0, -1
+57560,2880, 0,0, 1 ; desenho anterior 369,0
+57560,2881, 0,0, 1 ; desenho anterior 751,0
+57560,2882, 0,0, 1 ; desenho anterior 752,0
+57560,2883, 0,0, 1 ; desenho anterior 753,0
+57560,2884, 0,0, 1 ; desenho anterior 754,0
+57560,2885, 0,0, 1 ; desenho anterior 755,0
+57560,2886, 0,0, 1 ; desenho anterior 370,0
+57560,2887, 0,0, 1 ; desenho anterior 757,0
+57560,2888, 0,0, 1 ; desenho anterior 758,0
+57560,2889, 0,0, 1 ; desenho anterior 759,0
+57560,2890, 0,0, 1 ; desenho anterior 760,0
+57560,2891, 0,0, 1 ; desenho anterior 761,0
+57560,2892, 0,0, -1 ; desenho anterior 371,0
 
 [Begin Action 46]
 Clsn2Default: 1
  Clsn2[0] = -72, -72, 72, -300
-369,0, 0,0, 1
-751,0, 0,0, 1
-752,0, 0,0, 1
-753,0, 0,0, 1
-754,0, 0,0, 1
-755,0, 0,0, 1
-370,0, 0,0, 1
-757,0, 0,0, 1
-758,0, 0,0, 1
-759,0, 0,0, 1
-760,0, 0,0, 1
-761,0, 0,0, 1
-371,0, 0,0, -1
+57560,2944, 0,0, 1 ; desenho anterior 369,0
+57560,2945, 0,0, 1 ; desenho anterior 751,0
+57560,2946, 0,0, 1 ; desenho anterior 752,0
+57560,2947, 0,0, 1 ; desenho anterior 753,0
+57560,2948, 0,0, 1 ; desenho anterior 754,0
+57560,2949, 0,0, 1 ; desenho anterior 755,0
+57560,2950, 0,0, 1 ; desenho anterior 370,0
+57560,2951, 0,0, 1 ; desenho anterior 757,0
+57560,2952, 0,0, 1 ; desenho anterior 758,0
+57560,2953, 0,0, 1 ; desenho anterior 759,0
+57560,2954, 0,0, 1 ; desenho anterior 760,0
+57560,2955, 0,0, 1 ; desenho anterior 761,0
+57560,2956, 0,0, -1 ; desenho anterior 371,0
 
 [Begin Action 47]
 Clsn2Default: 1
  Clsn2[0] = -72, 0, 72, -312
-371,0, 0,0, 1
-765,0, 0,0, 1
-372,0, 0,0, 2
-768,0, 0,0, 1
+57560,3008, 0,0, 1 ; desenho anterior 371,0
+57560,3009, 0,0, 1 ; desenho anterior 765,0
+57560,3010, 0,0, 2 ; desenho anterior 372,0
+57560,3011, 0,0, 1 ; desenho anterior 768,0
 
 [Begin Action 120]
 Clsn2Default: 1
@@ -1504,52 +1504,52 @@ Clsn1: 1
 [Begin Action 600]
 Clsn2Default: 1
  Clsn2[0] = -72, -72, 72, -300
-464,0, 0,0, 2
-464,0, 0,0, 2
-1194,0, 0,0, 3
+57560,38400, 0,0, 2 ; desenho anterior 464,0
+57560,38401, 0,0, 2 ; desenho anterior 464,0
+57560,38402, 0,0, 3 ; desenho anterior 1194,0
 Clsn1: 1
  Clsn1[0] = 24, -258, 123, -186
-465,0, 0,0, 12
-465,0, 0,0, 1
-467,0, 0,0, -1
+57560,38403, 0,0, 12 ; desenho anterior 465,0
+57560,38404, 0,0, 1 ; desenho anterior 465,0
+57560,38405, 0,0, -1 ; desenho anterior 467,0
 
 [Begin Action 10600]
 Clsn2Default: 1
  Clsn2[0] = -72, -72, 72, -300
-464,0, 0,0, 2
-464,0, 0,0, 2
-1194,0, 0,0, 3
+57562,38400, 0,0, 2 ; desenho anterior 464,0
+57562,38401, 0,0, 2 ; desenho anterior 464,0
+57562,38402, 0,0, 3 ; desenho anterior 1194,0
 Clsn1: 1
  Clsn1[0] = 48, -258, 123, -186
-465,0, 0,0, 12
-465,0, 0,0, 1
-467,0, 0,0, -1
+57562,38403, 0,0, 12 ; desenho anterior 465,0
+57562,38404, 0,0, 1 ; desenho anterior 465,0
+57562,38405, 0,0, -1 ; desenho anterior 467,0
 
 [Begin Action 650]
 Clsn2Default: 1
  Clsn2[0] = -72, -72, 72, -300
-471,0, 0,0, 3
-472,0, 0,0, 2
-1211,0, 0,0, 1
-1212,0, 0,0, 4
+57560,41600, 0,0, 3 ; desenho anterior 471,0
+57560,41601, 0,0, 2 ; desenho anterior 472,0
+57560,41602, 0,0, 1 ; desenho anterior 1211,0
+57560,41603, 0,0, 4 ; desenho anterior 1212,0
 Clsn1: 1
  Clsn1[0] = 18, -210, 210, -60
-473,0, 0,0, 9
-473,0, 0,0, 2
-475,0, 0,0, -1
+57560,41604, 0,0, 9 ; desenho anterior 473,0
+57560,41605, 0,0, 2 ; desenho anterior 473,0
+57560,41606, 0,0, -1 ; desenho anterior 475,0
 
 [Begin Action 10650]
 Clsn2Default: 1
  Clsn2[0] = -72, -72, 72, -300
-471,0, 0,0, 3
-472,0, 0,0, 2
-1211,0, 0,0, 1
-1212,0, 0,0, 4
+57562,41600, 0,0, 3 ; desenho anterior 471,0
+57562,41601, 0,0, 2 ; desenho anterior 472,0
+57562,41602, 0,0, 1 ; desenho anterior 1211,0
+57562,41603, 0,0, 4 ; desenho anterior 1212,0
 Clsn1: 1
  Clsn1[0] = 42, -210, 186, -60
-473,0, 0,0, 9
-473,0, 0,0, 2
-475,0, 0,0, -1
+57562,41604, 0,0, 9 ; desenho anterior 473,0
+57562,41605, 0,0, 2 ; desenho anterior 473,0
+57562,41606, 0,0, -1 ; desenho anterior 475,0
 
 [Begin Action 810]
 ; Clinch de Muay Thai (ferramentas/agarrao_mk.py)
@@ -1703,50 +1703,50 @@ Clsn1: 1
 [Begin Action 601]
 Clsn2Default: 1
  Clsn2[0] = -72, -72, 72, -300
-462,0, 0,0, 5
-1193,0, 0,0, 1
-1194,0, 0,0, 1
+57560,38464, 0,0, 5 ; desenho anterior 462,0
+57560,38465, 0,0, 1 ; desenho anterior 1193,0
+57560,38466, 0,0, 1 ; desenho anterior 1194,0
 Clsn1: 1
  Clsn1[0] = 36, -228, 132, -120
-465,0, 0,0, 8
-465,0, 0,0, 2
-467,0, 0,0, -1
+57560,38467, 0,0, 8 ; desenho anterior 465,0
+57560,38468, 0,0, 2 ; desenho anterior 465,0
+57560,38469, 0,0, -1 ; desenho anterior 467,0
 
 [Begin Action 10601]
 Clsn2Default: 1
  Clsn2[0] = -72, -72, 72, -300
-462,0, 0,0, 5
-1193,0, 0,0, 1
-1194,0, 0,0, 1
+57562,38464, 0,0, 5 ; desenho anterior 462,0
+57562,38465, 0,0, 1 ; desenho anterior 1193,0
+57562,38466, 0,0, 1 ; desenho anterior 1194,0
 Clsn1: 1
  Clsn1[0] = 60, -228, 132, -120
-465,0, 0,0, 8
-465,0, 0,0, 2
-467,0, 0,0, -1
+57562,38467, 0,0, 8 ; desenho anterior 465,0
+57562,38468, 0,0, 2 ; desenho anterior 465,0
+57562,38469, 0,0, -1 ; desenho anterior 467,0
 
 [Begin Action 611]
 Clsn2Default: 1
  Clsn2[0] = -72, -72, 72, -300
-470,0, 0,0, 7
-1211,0, 0,0, 1
-1212,0, 0,0, 1
+57560,39104, 0,0, 7 ; desenho anterior 470,0
+57560,39105, 0,0, 1 ; desenho anterior 1211,0
+57560,39106, 0,0, 1 ; desenho anterior 1212,0
 Clsn1: 1
  Clsn1[0] = 30, -237, 204, -81
-473,0, 0,0, 9
-473,0, 0,0, 2
-475,0, 0,0, -1
+57560,39107, 0,0, 9 ; desenho anterior 473,0
+57560,39108, 0,0, 2 ; desenho anterior 473,0
+57560,39109, 0,0, -1 ; desenho anterior 475,0
 
 [Begin Action 10611]
 Clsn2Default: 1
  Clsn2[0] = -72, -72, 72, -300
-470,0, 0,0, 7
-1211,0, 0,0, 1
-1212,0, 0,0, 1
+57562,39104, 0,0, 7 ; desenho anterior 470,0
+57562,39105, 0,0, 1 ; desenho anterior 1211,0
+57562,39106, 0,0, 1 ; desenho anterior 1212,0
 Clsn1: 1
  Clsn1[0] = 54, -237, 180, -81
-473,0, 0,0, 9
-473,0, 0,0, 2
-475,0, 0,0, -1
+57562,39107, 0,0, 9 ; desenho anterior 473,0
+57562,39108, 0,0, 2 ; desenho anterior 473,0
+57562,39109, 0,0, -1 ; desenho anterior 475,0
 
 [Begin Action 1400]
 Clsn2Default: 1
@@ -1940,26 +1940,26 @@ Clsn1: 1
 [Begin Action 610]
 Clsn2Default: 1
  Clsn2[0] = -72, -72, 72, -300
-470,0, 0,0, 4
-1211,0, 0,0, 1
-1212,0, 0,0, 2
+57560,39040, 0,0, 4 ; desenho anterior 470,0
+57560,39041, 0,0, 1 ; desenho anterior 1211,0
+57560,39042, 0,0, 2 ; desenho anterior 1212,0
 Clsn1: 1
  Clsn1[0] = 18, -180, 186, -90
-473,0, 0,0, 15
-473,0, 0,0, 2
-475,0, 0,0, -1
+57560,39043, 0,0, 15 ; desenho anterior 473,0
+57560,39044, 0,0, 2 ; desenho anterior 473,0
+57560,39045, 0,0, -1 ; desenho anterior 475,0
 
 [Begin Action 10610]
 Clsn2Default: 1
  Clsn2[0] = -72, -72, 72, -300
-470,0, 0,0, 4
-1211,0, 0,0, 1
-1212,0, 0,0, 2
+57562,39040, 0,0, 4 ; desenho anterior 470,0
+57562,39041, 0,0, 1 ; desenho anterior 1211,0
+57562,39042, 0,0, 2 ; desenho anterior 1212,0
 Clsn1: 1
  Clsn1[0] = 42, -180, 162, -90
-473,0, 0,0, 15
-473,0, 0,0, 2
-475,0, 0,0, -1
+57562,39043, 0,0, 15 ; desenho anterior 473,0
+57562,39044, 0,0, 2 ; desenho anterior 473,0
+57562,39045, 0,0, -1 ; desenho anterior 475,0
 
 [Begin Action 301]
 ; normais proprios base 3,1,1,4,3,1,5,6

@@ -457,6 +457,10 @@ def main():
     falas_vitoria.aplicar("gutto", SAIDA)
     import agachamento_elenco
     agachamento_elenco.aplicar("gutto", SAIDA)
+    import elenco_aereo
+    import audio_leitura
+    elenco_aereo.aplicar("gutto", SAIDA)
+    audio_leitura.atualizar("gutto", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

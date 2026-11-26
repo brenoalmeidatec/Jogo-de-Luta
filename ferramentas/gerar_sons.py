@@ -33,7 +33,7 @@ RAIZ = Path(__file__).resolve().parent.parent
 SR = 44100
 MOTIF = RAIZ / "motif" / "nazafight"
 NARRADOR = RAIZ / "sons" / "narrador"
-LUTADORES = ("pengaro", "ck", "gutto", "hazaki", "raiclaven")
+LUTADORES = ("pengaro", "ck", "gutto", "hazaki", "raiclaven", "gbzin")
 ALVO_MUSICA = -14.0  # LUFS integrado das músicas (medido com ffmpeg ebur128)
 
 
@@ -1173,6 +1173,8 @@ def sons_lutador(nome, semente):
     if nome == "ck":
         from ck_audio_aereo import amostras
         s.update(amostras())
+    from audio_leitura import amostras as amostras_leitura
+    s.update(amostras_leitura(nome))
     for n, _, f, v in ASSINATURAS[nome]:
         s[(50, n)] = nivelar(f(), v)
     return s
@@ -1446,6 +1448,8 @@ def ligar(nome, pasta=None):
     if nome == "ck":
         from ck_audio_aereo import ligar as ligar_aereo
         resultado = ligar_aereo(resultado)
+    from audio_leitura import ligar as ligar_leitura
+    resultado = ligar_leitura(nome, resultado)
     c.write_text(resultado, encoding="utf-8", newline="\n")
 
 

@@ -2681,6 +2681,58 @@
 57520,2 = 57521,2
 57520,3 = 57521,3
 57520,4 = 57521,4
+57560,2560 = 57561,2560
+57560,2624 = 57561,2624
+57560,2625 = 57561,2625
+57560,2626 = 57561,2626
+57560,2627 = 57561,2627
+57560,2688 = 57561,2688
+57560,2689 = 57561,2689
+57560,2690 = 57561,2690
+57560,2691 = 57561,2691
+57560,2752 = 57561,2752
+57560,2753 = 57561,2753
+57560,2754 = 57561,2754
+57560,2755 = 57561,2755
+57560,2816 = 57561,2816
+57560,2817 = 57561,2817
+57560,2818 = 57561,2818
+57560,2880 = 57561,2880
+57560,2881 = 57561,2881
+57560,2882 = 57561,2882
+57560,2944 = 57561,2944
+57560,2945 = 57561,2945
+57560,2946 = 57561,2946
+57560,3008 = 57561,3008
+57560,3009 = 57561,3009
+57560,38400 = 57561,38400
+57560,38401 = 57561,38401
+57560,38402 = 57561,38402
+57560,38403 = 57561,38403
+57560,38404 = 57561,38404
+57560,38464 = 57561,38464
+57560,38465 = 57561,38465
+57560,38466 = 57561,38466
+57560,38467 = 57561,38467
+57560,38468 = 57561,38468
+57560,38469 = 57561,38469
+57560,39040 = 57561,39040
+57560,39041 = 57561,39041
+57560,39042 = 57561,39042
+57560,39043 = 57561,39043
+57560,39044 = 57561,39044
+57560,39045 = 57561,39045
+57560,39104 = 57561,39104
+57560,39105 = 57561,39105
+57560,39106 = 57561,39106
+57560,39107 = 57561,39107
+57560,39108 = 57561,39108
+57560,39109 = 57561,39109
+57560,41600 = 57561,41600
+57560,41601 = 57561,41601
+57560,41602 = 57561,41602
+57560,41603 = 57561,41603
+57560,41604 = 57561,41604
 
 [Data]
 life = 1000
@@ -2853,7 +2905,7 @@ velset = 0,0
 [State 200, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 57,0 + 32 * (var(20) > 0) ; leitura: F40,0
 ; som: fim
 
 [State 200, Arte despertada]
@@ -2883,8 +2935,8 @@ sparkno = S(ifelse(var(20) > 0, 9230, 9200))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,0 ; som:F5,0
-guardsound = F6,0
+hitsound = S58,0 + 32 * (var(20) > 0) ; leitura: S51,0 ; som:F5,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 21
@@ -2911,7 +2963,7 @@ velset = 0,0
 [State 210, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 ; som: fim
 
 [State 210, Arte despertada]
@@ -2939,8 +2991,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,2 + 32 * (var(20) > 0) ; leitura: S51,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -2967,7 +3019,7 @@ velset = 0,0
 [State 215, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 ; som: fim
 
 [State 215, Arte despertada]
@@ -2995,8 +3047,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,2 + 32 * (var(20) > 0) ; leitura: S51,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -3023,7 +3075,7 @@ velset = 0,0
 [State 230, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,2
+value = 57,2 + 32 * (var(20) > 0) ; leitura: F40,2
 ; som: fim
 
 [State 230, Arte despertada]
@@ -3053,8 +3105,8 @@ sparkno = S(ifelse(var(20) > 0, 9230, 9200))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S52,0 ; som:F5,0
-guardsound = F6,0
+hitsound = S58,5 + 32 * (var(20) > 0) ; leitura: S52,0 ; som:F5,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 21
@@ -3081,7 +3133,7 @@ velset = 0,0
 [State 240, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,3
+value = 57,3 + 32 * (var(20) > 0) ; leitura: F40,3
 ; som: fim
 
 [State 240, Arte despertada]
@@ -3109,8 +3161,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S52,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,7 + 32 * (var(20) > 0) ; leitura: S52,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 8
 ground.hittime = 32
@@ -3137,7 +3189,7 @@ velset = 0,0
 [State 245, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,3
+value = 57,3 + 32 * (var(20) > 0) ; leitura: F40,3
 ; som: fim
 
 [State 245, Arte despertada]
@@ -3165,8 +3217,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S52,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,7 + 32 * (var(20) > 0) ; leitura: S52,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -3193,7 +3245,7 @@ velset = 0,0
 [State 260, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 ; som: fim
 
 [State 260, Arte despertada]
@@ -3221,8 +3273,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,2 + 32 * (var(20) > 0) ; leitura: S51,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 18
@@ -3251,7 +3303,7 @@ velset = 0,0
 [State 400, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 57,0 + 32 * (var(20) > 0) ; leitura: F40,0
 ; som: fim
 
 [State 400, Arte despertada]
@@ -3281,8 +3333,8 @@ sparkno = S(ifelse(var(20) > 0, 9230, 9200))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,0 ; som:F5,0
-guardsound = F6,0
+hitsound = S58,0 + 32 * (var(20) > 0) ; leitura: S51,0 ; som:F5,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = Low
 ground.slidetime = 5
 ground.hittime = 20
@@ -3309,7 +3361,7 @@ velset = 0,0
 [State 410, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 ; som: fim
 
 [State 410, Arte despertada]
@@ -3337,8 +3389,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,2 + 32 * (var(20) > 0) ; leitura: S51,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 30
@@ -3364,7 +3416,7 @@ velset = 0,0
 [State 430, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,2
+value = 57,2 + 32 * (var(20) > 0) ; leitura: F40,2
 ; som: fim
 
 [State 430, Arte despertada]
@@ -3394,8 +3446,8 @@ sparkno = S(ifelse(var(20) > 0, 9230, 9200))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S52,0 ; som:F5,0
-guardsound = F6,0
+hitsound = S58,5 + 32 * (var(20) > 0) ; leitura: S52,0 ; som:F5,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = Low
 ground.slidetime = 5
 ground.hittime = 21
@@ -3422,7 +3474,7 @@ velset = 0,0
 [State 440, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,3
+value = 57,3 + 32 * (var(20) > 0) ; leitura: F40,3
 ; som: fim
 
 [State 440, Arte despertada]
@@ -3450,8 +3502,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S52,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,7 + 32 * (var(20) > 0) ; leitura: S52,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = Trip
 ground.slidetime = 5
 ground.hittime = 18
@@ -3479,7 +3531,7 @@ juggle = 5
 [State 600, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 57,0 + 32 * (var(20) > 0) ; leitura: F40,0
 ; som: fim
 
 [State 600, Arte despertada]
@@ -3507,8 +3559,8 @@ sparkno = S(ifelse(var(20) > 0, 9230, 9200))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,0 ; som:F5,0
-guardsound = F6,0
+hitsound = S58,0 + 32 * (var(20) > 0) ; leitura: S51,0 ; som:F5,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 24
@@ -3527,7 +3579,7 @@ juggle = 5
 [State 610, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,3
+value = 57,3 + 32 * (var(20) > 0) ; leitura: F40,3
 ; som: fim
 
 [State 610, Arte despertada]
@@ -3555,8 +3607,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S52,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,7 + 32 * (var(20) > 0) ; leitura: S52,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 27
@@ -3575,7 +3627,7 @@ juggle = 5
 [State 650, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 ; som: fim
 
 [State 650, Arte despertada]
@@ -3603,8 +3655,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,2 + 32 * (var(20) > 0) ; leitura: S51,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 18
@@ -3713,7 +3765,7 @@ value = -1000
 [State 720, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 ; som: fim
 
 [State 720, Arte despertada]
@@ -3747,8 +3799,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,2 + 32 * (var(20) > 0) ; leitura: S51,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 18
@@ -4680,7 +4732,7 @@ velset = 0,0
 [State 301, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 57,0 + 32 * (var(20) > 0) ; leitura: F40,0
 ; som: fim
 
 [State 301, Avanço]
@@ -4709,8 +4761,8 @@ sparkno = S(ifelse(var(20) > 0, 9230, 9200))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,0 ; som:F5,0
-guardsound = F6,0
+hitsound = S58,0 + 32 * (var(20) > 0) ; leitura: S51,0 ; som:F5,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 21
@@ -4737,7 +4789,7 @@ velset = 0,0
 [State 302, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 57,0 + 32 * (var(20) > 0) ; leitura: F40,0
 ; som: fim
 
 [State 302, Avanço]
@@ -4766,8 +4818,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9200))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S51,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,1 + 32 * (var(20) > 0) ; leitura: S51,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -4794,7 +4846,7 @@ velset = 0,0
 [State 303, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 ; som: fim
 
 [State 303, Avanço]
@@ -4825,8 +4877,8 @@ sparkno = S(ifelse(var(20) > 0, 9235, 9205))
 guard.sparkno = S9202
 sparkscale = 1.3, 1.3
 guard.sparkscale = .9, .9
-hitsound = S51,3 ; som:F5,3
-guardsound = F6,0
+hitsound = S58,3 + 32 * (var(20) > 0) ; leitura: S51,3 ; som:F5,3
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 8
 ground.hittime = 32
@@ -4862,7 +4914,7 @@ velset = 0,0
 [State 311, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 57,0 + 32 * (var(20) > 0) ; leitura: F40,0
 ; som: fim
 
 [State 311, Avanço]
@@ -4894,8 +4946,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S51,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,1 + 32 * (var(20) > 0) ; leitura: S51,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -4922,7 +4974,7 @@ velset = 0,0
 [State 312, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 57,0 + 32 * (var(20) > 0) ; leitura: F40,0
 ; som: fim
 
 [State 312, Avanço]
@@ -4954,8 +5006,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S51,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,1 + 32 * (var(20) > 0) ; leitura: S51,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -4982,7 +5034,7 @@ velset = 0,0
 [State 313, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 ; som: fim
 
 [State 313, Avanço]
@@ -5013,8 +5065,8 @@ sparkno = S(ifelse(var(20) > 0, 9235, 9205))
 guard.sparkno = S9202
 sparkscale = 1.3, 1.3
 guard.sparkscale = .9, .9
-hitsound = S51,3 ; som:F5,3
-guardsound = F6,0
+hitsound = S58,3 + 32 * (var(20) > 0) ; leitura: S51,3 ; som:F5,3
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 8
 ground.hittime = 32
@@ -5050,7 +5102,7 @@ velset = 0,0
 [State 321, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,2
+value = 57,2 + 32 * (var(20) > 0) ; leitura: F40,2
 ; som: fim
 
 [State 321, Avanço]
@@ -5079,8 +5131,8 @@ sparkno = S(ifelse(var(20) > 0, 9230, 9200))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S52,0 ; som:F5,0
-guardsound = F6,0
+hitsound = S58,5 + 32 * (var(20) > 0) ; leitura: S52,0 ; som:F5,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 21
@@ -5107,7 +5159,7 @@ velset = 0,0
 [State 322, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,2
+value = 57,2 + 32 * (var(20) > 0) ; leitura: F40,2
 ; som: fim
 
 [State 322, Avanço]
@@ -5136,8 +5188,8 @@ sparkno = S(ifelse(var(20) > 0, 9230, 9200))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S52,0 ; som:F5,0
-guardsound = F6,0
+hitsound = S58,5 + 32 * (var(20) > 0) ; leitura: S52,0 ; som:F5,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = Low
 ground.slidetime = 5
 ground.hittime = 21
@@ -5164,7 +5216,7 @@ velset = 0,0
 [State 323, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,3
+value = 57,3 + 32 * (var(20) > 0) ; leitura: F40,3
 ; som: fim
 
 [State 323, Golpe]
@@ -5185,8 +5237,8 @@ sparkno = S(ifelse(var(20) > 0, 9235, 9205))
 guard.sparkno = S9202
 sparkscale = 1.3, 1.3
 guard.sparkscale = .9, .9
-hitsound = S52,3 ; som:F5,3
-guardsound = F6,0
+hitsound = S58,8 + 32 * (var(20) > 0) ; leitura: S52,3 ; som:F5,3
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 8
 ground.hittime = 32
@@ -5222,7 +5274,7 @@ velset = 0,0
 [State 331, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,2
+value = 57,2 + 32 * (var(20) > 0) ; leitura: F40,2
 ; som: fim
 
 [State 331, Avanço]
@@ -5254,8 +5306,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S52,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,6 + 32 * (var(20) > 0) ; leitura: S52,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -5282,7 +5334,7 @@ velset = 0,0
 [State 332, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,2
+value = 57,2 + 32 * (var(20) > 0) ; leitura: F40,2
 ; som: fim
 
 [State 332, Avanço]
@@ -5314,8 +5366,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S52,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,6 + 32 * (var(20) > 0) ; leitura: S52,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -5342,7 +5394,7 @@ velset = 0,0
 [State 333, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,3
+value = 57,3 + 32 * (var(20) > 0) ; leitura: F40,3
 ; som: fim
 
 [State 333, Avanço]
@@ -5373,8 +5425,8 @@ sparkno = S(ifelse(var(20) > 0, 9235, 9205))
 guard.sparkno = S9202
 sparkscale = 1.3, 1.3
 guard.sparkscale = .9, .9
-hitsound = S52,3 ; som:F5,3
-guardsound = F6,0
+hitsound = S58,8 + 32 * (var(20) > 0) ; leitura: S52,3 ; som:F5,3
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 8
 ground.hittime = 32
@@ -5410,7 +5462,7 @@ velset = 0,0
 [State 340, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 57,0 + 32 * (var(20) > 0) ; leitura: F40,0
 ; som: fim
 
 [State 340, Golpe]
@@ -5429,8 +5481,8 @@ sparkno = S(ifelse(var(20) > 0, 9230, 9200))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,0 ; som:F5,0
-guardsound = F6,0
+hitsound = S58,0 + 32 * (var(20) > 0) ; leitura: S51,0 ; som:F5,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 21
@@ -5457,7 +5509,7 @@ velset = 0,0
 [State 341, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,2
+value = 57,2 + 32 * (var(20) > 0) ; leitura: F40,2
 ; som: fim
 
 [State 341, Golpe]
@@ -5479,8 +5531,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S52,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,6 + 32 * (var(20) > 0) ; leitura: S52,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -5507,7 +5559,7 @@ velset = 0,0
 [State 342, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,2
+value = 57,2 + 32 * (var(20) > 0) ; leitura: F40,2
 ; som: fim
 
 [State 342, Golpe]
@@ -5526,8 +5578,8 @@ sparkno = S(ifelse(var(20) > 0, 9230, 9200))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S52,0 ; som:F5,0
-guardsound = F6,0
+hitsound = S58,5 + 32 * (var(20) > 0) ; leitura: S52,0 ; som:F5,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = Low
 ground.slidetime = 5
 ground.hittime = 21
@@ -5554,7 +5606,7 @@ velset = 0,0
 [State 343, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 57,0 + 32 * (var(20) > 0) ; leitura: F40,0
 ; som: fim
 
 [State 343, Golpe]
@@ -5576,8 +5628,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S51,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,1 + 32 * (var(20) > 0) ; leitura: S51,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -5606,7 +5658,7 @@ velset = 0,0
 [State 344, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 57,0 + 32 * (var(20) > 0) ; leitura: F40,0
 ; som: fim
 
 [State 344, Avanço]
@@ -5635,8 +5687,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9200))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S51,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,1 + 32 * (var(20) > 0) ; leitura: S51,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -5663,7 +5715,7 @@ velset = 0,0
 [State 345, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,2
+value = 57,2 + 32 * (var(20) > 0) ; leitura: F40,2
 ; som: fim
 
 [State 345, Golpe]
@@ -5685,8 +5737,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S52,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,6 + 32 * (var(20) > 0) ; leitura: S52,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -5713,7 +5765,7 @@ velset = 0,0
 [State 346, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,2
+value = 57,2 + 32 * (var(20) > 0) ; leitura: F40,2
 ; som: fim
 
 [State 346, Golpe]
@@ -5732,8 +5784,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9200))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S52,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,6 + 32 * (var(20) > 0) ; leitura: S52,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -5760,7 +5812,7 @@ velset = 0,0
 [State 347, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 ; som: fim
 
 [State 347, Golpe]
@@ -5781,8 +5833,8 @@ sparkno = S(ifelse(var(20) > 0, 9235, 9205))
 guard.sparkno = S9202
 sparkscale = 1.3, 1.3
 guard.sparkscale = .9, .9
-hitsound = S51,3 ; som:F5,3
-guardsound = F6,0
+hitsound = S58,3 + 32 * (var(20) > 0) ; leitura: S51,3 ; som:F5,3
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 8
 ground.hittime = 32
@@ -5818,7 +5870,7 @@ velset = 0,0
 [State 348, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,2
+value = 57,2 + 32 * (var(20) > 0) ; leitura: F40,2
 ; som: fim
 
 [State 348, Golpe]
@@ -5840,8 +5892,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S52,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,6 + 32 * (var(20) > 0) ; leitura: S52,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -5868,7 +5920,7 @@ velset = 0,0
 [State 349, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 57,0 + 32 * (var(20) > 0) ; leitura: F40,0
 ; som: fim
 
 [State 349, Golpe]
@@ -5890,8 +5942,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S51,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,1 + 32 * (var(20) > 0) ; leitura: S51,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = Low
 ground.slidetime = 7
 ground.hittime = 30
@@ -5920,7 +5972,7 @@ velset = 0,0
 [State 3410, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 3410, Avanço]
@@ -5952,8 +6004,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S53,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,11 + 32 * (var(20) > 0) ; leitura: S53,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -5980,7 +6032,7 @@ velset = 0,0
 [State 3411, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 3411, Avanço]
@@ -6012,8 +6064,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S53,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,11 + 32 * (var(20) > 0) ; leitura: S53,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -6040,7 +6092,7 @@ velset = 0,0
 [State 3412, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 3412, Avanço]
@@ -6072,8 +6124,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S53,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,11 + 32 * (var(20) > 0) ; leitura: S53,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -6100,7 +6152,7 @@ velset = 0,0
 [State 3413, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 3413, Avanço]
@@ -6131,8 +6183,8 @@ sparkno = S(ifelse(var(20) > 0, 9235, 9205))
 guard.sparkno = S9202
 sparkscale = 1.3, 1.3
 guard.sparkscale = .9, .9
-hitsound = S53,3 ; som:F5,3
-guardsound = F6,0
+hitsound = S58,13 + 32 * (var(20) > 0) ; leitura: S53,3 ; som:F5,3
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 8
 ground.hittime = 32
@@ -6168,7 +6220,7 @@ velset = 0,0
 [State 3420, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 3420, Avanço]
@@ -6200,8 +6252,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S53,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,11 + 32 * (var(20) > 0) ; leitura: S53,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -6228,7 +6280,7 @@ velset = 0,0
 [State 3421, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 3421, Avanço]
@@ -6260,8 +6312,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S53,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,11 + 32 * (var(20) > 0) ; leitura: S53,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -6288,7 +6340,7 @@ velset = 0,0
 [State 3422, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 3422, Avanço]
@@ -6320,8 +6372,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S53,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,11 + 32 * (var(20) > 0) ; leitura: S53,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -6348,7 +6400,7 @@ velset = 0,0
 [State 3423, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 3423, Avanço]
@@ -6379,8 +6431,8 @@ sparkno = S(ifelse(var(20) > 0, 9235, 9205))
 guard.sparkno = S9202
 sparkscale = 1.3, 1.3
 guard.sparkscale = .9, .9
-hitsound = S53,3 ; som:F5,3
-guardsound = F6,0
+hitsound = S58,13 + 32 * (var(20) > 0) ; leitura: S53,3 ; som:F5,3
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 8
 ground.hittime = 32
@@ -6416,7 +6468,7 @@ velset = 0,0
 [State 3430, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 3430, Golpe]
@@ -6438,8 +6490,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S53,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,12 + 32 * (var(20) > 0) ; leitura: S53,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 8
 ground.hittime = 32
@@ -6467,7 +6519,7 @@ velset = 0,0
 [State 3431, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 3431, Avanço]
@@ -6496,8 +6548,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S53,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,11 + 32 * (var(20) > 0) ; leitura: S53,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -6524,8 +6576,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S53,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,11 + 32 * (var(20) > 0) ; leitura: S53,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -6552,7 +6604,7 @@ velset = 0,0
 [State 3432, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 3432, Avanço]
@@ -6584,8 +6636,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S53,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,12 + 32 * (var(20) > 0) ; leitura: S53,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 8
 ground.hittime = 32
@@ -6612,7 +6664,7 @@ velset = 0,0
 [State 3433, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 3433, Avanço]
@@ -6644,8 +6696,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S53,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,11 + 32 * (var(20) > 0) ; leitura: S53,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -6672,7 +6724,7 @@ velset = 0,0
 [State 3434, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 3434, Avanço]
@@ -6704,8 +6756,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 0.9, 0.9
 guard.sparkscale = .9, .9
-hitsound = S53,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,11 + 32 * (var(20) > 0) ; leitura: S53,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -6734,7 +6786,7 @@ velset = 0,0
 [State 3435, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 3435, Golpe]
@@ -6756,8 +6808,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S53,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,12 + 32 * (var(20) > 0) ; leitura: S53,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = Trip
 ground.slidetime = 8
 ground.hittime = 32
@@ -6786,7 +6838,7 @@ velset = 0,0
 [State 3401, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 3401, som assinatura]
@@ -6877,8 +6929,8 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S53,3 ; som:F5,3
-guardsound = F6,0
+hitsound = S58,13 + 32 * (var(20) > 0) ; leitura: S53,3 ; som:F5,3
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 8
 ground.hittime = 32
@@ -6911,7 +6963,7 @@ velset = 0,0
 [State 1600, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 1600, som assinatura]
@@ -6991,7 +7043,7 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S50,0 ; som:F5,1
-guardsound = F6,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 12
 ground.hittime = 27
@@ -7017,7 +7069,7 @@ velset = 0,0
 [State 1601, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 1601, som assinatura]
@@ -7097,7 +7149,7 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S50,0 ; som:F5,1
-guardsound = F6,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 12
 ground.hittime = 27
@@ -7170,7 +7222,7 @@ velset = 0,0
 [State 1701, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 1701, Carga (efeitos.py)]
@@ -7276,8 +7328,8 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S52,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,7 + 32 * (var(20) > 0) ; leitura: S52,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 30
@@ -7303,7 +7355,7 @@ velset = 0,0
 [State 3402, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 3402, som assinatura]
@@ -7415,8 +7467,8 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S53,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,12 + 32 * (var(20) > 0) ; leitura: S53,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 7
 ground.hittime = 33
@@ -7443,7 +7495,7 @@ velset = 0,0
 [State 3400, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 3400, som assinatura]
@@ -7522,8 +7574,8 @@ sparkxy = 0, 0
 sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
-hitsound = S53,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,12 + 32 * (var(20) > 0) ; leitura: S53,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 14
 ground.hittime = 30
@@ -7618,7 +7670,7 @@ velset = 0,0
 [State 3403, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 3403, som assinatura]
@@ -7718,8 +7770,8 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S53,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,12 + 32 * (var(20) > 0) ; leitura: S53,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 8
 ground.hittime = 33
@@ -8162,7 +8214,7 @@ velset = 0,0
 [State 1000, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 1000, som assinatura]
@@ -8247,7 +8299,7 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S50,5 ; som:F5,1
-guardsound = F6,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 12
 ground.hittime = 27
@@ -8279,7 +8331,7 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S50,5 ; som:F5,1
-guardsound = F6,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 12
 ground.hittime = 27
@@ -8305,7 +8357,7 @@ velset = 0,0
 [State 1001, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 1001, som assinatura]
@@ -8390,7 +8442,7 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S50,5 ; som:F5,1
-guardsound = F6,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 12
 ground.hittime = 27
@@ -8422,7 +8474,7 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S50,5 ; som:F5,1
-guardsound = F6,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 12
 ground.hittime = 27
@@ -8448,7 +8500,7 @@ velset = 0,0
 [State 1100, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 1100, Carga (efeitos.py)]
@@ -8539,8 +8591,8 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S52,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,7 + 32 * (var(20) > 0) ; leitura: S52,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 18
@@ -8569,7 +8621,7 @@ velset = 0,0
 [State 1200, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 1200, Carga (efeitos.py)]
@@ -8668,8 +8720,8 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,2 + 32 * (var(20) > 0) ; leitura: S51,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 18
@@ -8697,7 +8749,7 @@ velset = 0,0
 [State 1300, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 1300, Carga (efeitos.py)]
@@ -8804,8 +8856,8 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,2 + 32 * (var(20) > 0) ; leitura: S51,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = Trip
 ground.slidetime = 5
 ground.hittime = 18
@@ -9171,7 +9223,7 @@ sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S50,5 ; som:F5,2
-guardsound = F6,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 10
 ground.hittime = 24
@@ -9205,8 +9257,8 @@ pausetime = 4, 10
 sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
 sparkscale = 1, 1
-hitsound = S54,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,17 + 32 * (var(20) > 0) ; leitura: S54,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 10
 ground.hittime = 24
@@ -9241,7 +9293,7 @@ sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S50,5 ; som:F5,2
-guardsound = F6,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 10
 ground.hittime = 24
@@ -9275,8 +9327,8 @@ pausetime = 4, 10
 sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
 sparkscale = 1, 1
-hitsound = S54,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,17 + 32 * (var(20) > 0) ; leitura: S54,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 10
 ground.hittime = 24
@@ -9311,7 +9363,7 @@ sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S50,5 ; som:F5,2
-guardsound = F6,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 10
 ground.hittime = 24
@@ -9346,7 +9398,7 @@ sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
 sparkscale = 1, 1
 hitsound = S50,1 ; som:F5,3
-guardsound = F6,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 10
 ground.hittime = 24
@@ -9499,8 +9551,8 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S53,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,11 + 32 * (var(20) > 0) ; leitura: S53,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 4
 ground.hittime = 24
@@ -9530,7 +9582,7 @@ guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
 hitsound = S50,1 ; som:F5,4
-guardsound = F6,0
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 18
@@ -9574,7 +9626,7 @@ velset = 0,0
 [State 1101, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 1101, Carga (efeitos.py)]
@@ -9665,8 +9717,8 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S52,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,7 + 32 * (var(20) > 0) ; leitura: S52,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 18
@@ -9695,7 +9747,7 @@ velset = 0,0
 [State 1201, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 1201, Carga (efeitos.py)]
@@ -9794,8 +9846,8 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,2 + 32 * (var(20) > 0) ; leitura: S51,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 18
@@ -9823,7 +9875,7 @@ velset = 0,0
 [State 1301, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 1301, Carga (efeitos.py)]
@@ -9930,8 +9982,8 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,2 + 32 * (var(20) > 0) ; leitura: S51,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = Trip
 ground.slidetime = 5
 ground.hittime = 18
@@ -9960,7 +10012,7 @@ velset = 0,0
 [State 216, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 ; som: fim
 
 [State 216, Arte despertada]
@@ -9998,8 +10050,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,2 + 32 * (var(20) > 0) ; leitura: S51,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 28
@@ -10026,7 +10078,7 @@ velset = 0,0
 [State 246, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 ; som: fim
 
 [State 246, Arte despertada]
@@ -10054,8 +10106,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,2 + 32 * (var(20) > 0) ; leitura: S51,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 28
@@ -10082,7 +10134,7 @@ velset = 0,0
 [State 201, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 ; som: fim
 
 [State 201, Arte despertada]
@@ -10117,8 +10169,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9200))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,2 + 32 * (var(20) > 0) ; leitura: S51,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 28
@@ -10145,7 +10197,7 @@ velset = 0,0
 [State 231, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 ; som: fim
 
 [State 231, Arte despertada]
@@ -10180,8 +10232,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9200))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,2 + 32 * (var(20) > 0) ; leitura: S51,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 28
@@ -10207,7 +10259,7 @@ juggle = 5
 [State 601, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 ; som: fim
 
 [State 601, Arte despertada]
@@ -10235,8 +10287,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,2 + 32 * (var(20) > 0) ; leitura: S51,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 28
@@ -10255,7 +10307,7 @@ juggle = 5
 [State 611, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,3
+value = 57,3 + 32 * (var(20) > 0) ; leitura: F40,3
 ; som: fim
 
 [State 611, Arte despertada]
@@ -10283,8 +10335,8 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S52,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,7 + 32 * (var(20) > 0) ; leitura: S52,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 28
@@ -10304,7 +10356,7 @@ velset = 0,0
 [State 1400, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 1400, som assinatura]
@@ -10401,8 +10453,8 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,2 + 32 * (var(20) > 0) ; leitura: S51,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 28
@@ -10429,7 +10481,7 @@ velset = 0,0
 [State 1401, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 1401, som assinatura]
@@ -10526,8 +10578,8 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,2 + 32 * (var(20) > 0) ; leitura: S51,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 28
@@ -10554,7 +10606,7 @@ velset = 0,0
 [State 1500, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 1500, Carga (efeitos.py)]
@@ -10645,8 +10697,8 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S52,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,7 + 32 * (var(20) > 0) ; leitura: S52,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = Low
 ground.slidetime = 5
 ground.hittime = 28
@@ -10698,7 +10750,7 @@ velset = 0,0
 [State 1501, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,4
+value = 57,4 + 32 * (var(20) > 0) ; leitura: F40,4
 ; som: fim
 
 [State 1501, Carga (efeitos.py)]
@@ -10789,8 +10841,8 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S52,2 ; som:F5,2
-guardsound = F6,0
+hitsound = S58,7 + 32 * (var(20) > 0) ; leitura: S52,2 ; som:F5,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = Low
 ground.slidetime = 5
 ground.hittime = 28
@@ -10985,8 +11037,8 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,1 + 32 * (var(20) > 0) ; leitura: S51,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 32
@@ -11015,8 +11067,8 @@ sparkno = S(ifelse(var(20) > 0, 9270, 9240))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,1 ; som:F5,1
-guardsound = F6,0
+hitsound = S58,1 + 32 * (var(20) > 0) ; leitura: S51,1 ; som:F5,1
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 32
@@ -11045,8 +11097,8 @@ sparkno = S(ifelse(var(20) > 0, 9271, 9241))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,4 ; som:F5,4
-guardsound = F6,0
+hitsound = S58,4 + 32 * (var(20) > 0) ; leitura: S51,4 ; som:F5,4
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 5
 ground.hittime = 28
@@ -11278,6 +11330,18 @@ value = 5100
 [Statedef -2]
 
 ; --- destruição do cenário (ferramentas/destruicao.py) ---
+[State -2, som apoio 0]
+type = PlaySnd
+trigger1 = StateNo = 40 && Time = 0
+value = 60,0 + 32 * (var(20) > 0)
+; som: fim
+
+[State -2, som apoio 1]
+type = PlaySnd
+trigger1 = StateNo = 52 && Time = 0
+value = 60,1 + 32 * (var(20) > 0)
+; som: fim
+
 [State -2, Destruição do cenário 909]
 type = ModifyBGCtrl
 trigger1 = !IsHelper
@@ -22716,8 +22780,8 @@ guard.sparkno = S9202
 envshake.time = 24
 envshake.freq = 90
 envshake.ampl = -9
-hitsound = S53,2
-guardsound = F6,0
+hitsound = S58,12 + 32 * (var(20) > 0) ; leitura: S53,2
+guardsound = S59,0 + 32 * (var(20) > 0) ; leitura: F6,0
 ground.type = High
 ground.slidetime = 14
 ground.hittime = 18

@@ -1370,6 +1370,10 @@ def main():
     falas_vitoria.aplicar("hazaki", SAIDA)
     import agachamento_elenco
     agachamento_elenco.aplicar("hazaki", SAIDA)
+    import elenco_aereo
+    import audio_leitura
+    elenco_aereo.aplicar("hazaki", SAIDA)
+    audio_leitura.atualizar("hazaki", SAIDA)
     print(f"{gravados} sprites no .sff (de {len(s.lista)} carregados), {len(a.acoes)} ações em {SAIDA}")
     if "--contato" in sys.argv:
         contato(Path(sys.argv[sys.argv.index("--contato") + 1]), s)

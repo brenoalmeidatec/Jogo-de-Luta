@@ -4125,6 +4125,10 @@ def main():
     falas_vitoria.aplicar("pengaro", SAIDA)
     import agachamento_elenco
     agachamento_elenco.aplicar("pengaro", SAIDA)
+    import elenco_aereo
+    import audio_leitura
+    elenco_aereo.aplicar("pengaro", SAIDA)
+    audio_leitura.atualizar("pengaro", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
     if SEM_FOLHA_BOSS:
         print("Endiabrado sem folha própria (pose emprestada do boss):", " ".join(sorted(SEM_FOLHA_BOSS)))

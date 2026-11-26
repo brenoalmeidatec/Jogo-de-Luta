@@ -1214,6 +1214,10 @@ def main():
     ck_aereo.aplicar(SAIDA)
     import ck_audio_aereo
     ck_audio_aereo.atualizar(SAIDA)
+    import elenco_aereo
+    import audio_leitura
+    elenco_aereo.aplicar("ck", SAIDA)
+    audio_leitura.atualizar("ck", SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 
