@@ -63,8 +63,9 @@ def main():
         assert ea==eb
         (destino/f'{nome}.json').write_text(json.dumps(eb))
         frames=[]
-        fim=next(i for i,e in enumerate(eb) if i>20 and e[0]==0)
-        for i in range(6,fim+6):
+        pouso=next(i for i,e in enumerate(eb) if e[0]==52)
+        fim=next(i for i in range(pouso,len(eb)) if eb[i][0]==0 and eb[i][6])
+        for i in range(6,min(len(eb),fim+15)):
             tela=Image.new('RGB',(964,320),'#20232c')
             d=ImageDraw.Draw(tela)
             for x,img,l in [(0,a[i],'ANTES'),(484,b[i],'DEPOIS')]:

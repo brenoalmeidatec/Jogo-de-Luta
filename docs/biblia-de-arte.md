@@ -16,6 +16,12 @@ jogo ficam em [`regras-dos-lutadores.md`](regras-dos-lutadores.md); o jeito de p
   no eixo, então o tronco no eixo faz golpe e desenho baterem.
 - Marca e texto proibidos em garrafa, lata ou roupa.
 
+## Revisão de anatomia
+
+Inspecione visualmente cada imagem gerada antes de incorporá-la ao kit. Em cada pose, siga as duas cadeias do ombro até a luva e do quadril até o tênis. Quando um membro ficar encoberto pelo tronco ou pela outra perna, confira onde ele entra e reaparece. Refaça qualquer pose com articulação invertida, membro duplicado ou silhueta que sugira outro golpe.
+
+Depois de montar a animação, confira a preparação, o contato e a recuperação no tamanho do jogo. Veja se a luva ou o tênis alcança o adversário no quadro ativo e se a sola permanece no chão durante o apoio. Revise também a cintura e o contorno sobre fundos claros e escuros para detectar emendas e pixels soltos.
+
 ## Pengaró
 
 | | Normal | Endiabrado (Despertar) |

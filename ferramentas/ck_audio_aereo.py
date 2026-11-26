@@ -48,7 +48,8 @@ def ligar(texto):
 
 def atualizar(pasta):
     snd=pasta/'ck.snd'
-    banco=som.ler_snd(snd)
+    banco=(som.ler_snd(snd) if snd.is_file() else
+           som.sons_lutador('ck',1000+100*som.LUTADORES.index('ck')))
     banco.update(amostras())
     som.gravar_snd(snd,banco)
     c=pasta/'ck.cns'

@@ -40,6 +40,16 @@ def filmar(chars, lutador, despertado, combate=False, isolar_tenis=False, roteir
         for nome in (lutador, rival):
             shutil.copytree(chars / nome, copia / "chars" / nome, dirs_exist_ok=True)
         ajustar_ini(copia)
+        if roteiro:
+            # Usa o mesmo HUD do jogo instalado, inclusive a escala dos retratos HD.
+            motif = Path(__file__).resolve().parents[1] / "motif/nazafight"
+            if (motif / "system.def").is_file():
+                import re
+                shutil.copytree(motif, copia / "data/nazafight", dirs_exist_ok=True)
+                ini = copia / "save/config.ini"
+                config = re.sub(r"(?im)^(Motif\s*=\s*)[^\r\n]*", r"\g<1>data/nazafight/system.def",
+                                ini.read_text(encoding="utf8"))
+                ini.write_text(config, encoding="utf8")
         if despertado:
             from filmar_golpes_linux import preparar_cmd
             cmd = Path("chars") / lutador / f"{lutador}.cmd"
