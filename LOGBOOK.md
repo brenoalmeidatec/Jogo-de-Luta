@@ -3275,3 +3275,11 @@ O robô de combate passou nas 1.144 verificações dos cinco lutadores. A captur
 O parado, a descida, a guarda baixa e a subida usam o redesenho aprovado. As três poses compartilham as peças dos dois tênis em `sprites/ck/pecas/guarda/`. O gerador recompõe o corpo a partir de `guarda_base` no kit. Cada ação mantém os tiques, as caixas e o mapeamento dos quadros despertados.
 
 No [teste no IKEMEN](https://github.com/brenoalmeidatec/Jogo-de-Luta/actions/runs/45863065597), as duas solas tiveram deslocamento máximo de 0 px tanto em X como em Y nos 82 tiques filmados. O robô de combate passou nas 226 verificações. [GIF antes e depois](docs/boneco-pecas/ck/redesenho/ck-guarda.gif).
+
+## 2026-11-26 — Defesa e normais baixos do CK base
+
+A defesa baixa e os quatro ataques agachados (soco fraco, uppercut, rasteirinha e rasteira) usam as peças da guarda redesenhada. As caixas, a duração dos elementos e os quadros despertados foram conferidos com a versão 233658a.
+
+No IKEMEN, o CK agachou, bloqueou o ataque do Hazak com 1.000 de vida, acertou o soco baixo (900 → 860 no Hazak) e recuperou a guarda. A repetição instrumental ocultou o Hazak e confirmou a mesma telemetria da luta para medir a sola que o quimono encobre. A distância entre as solas variou 0 px nos dois eixos. Os dois apoios acompanharam juntos o recuo e o passo originais, com amplitude horizontal de 22 px na captura. Em repouso, a maior variação foi de 1 px horizontal e 0 vertical. O robô passou nas 226 verificações.
+
+[GIF antes e depois](docs/boneco-pecas/ck/redesenho/ck-combate-baixo.gif) · [Execução e medição](https://github.com/brenoalmeidatec/Jogo-de-Luta/actions/runs/45868550386)
