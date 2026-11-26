@@ -1,0 +1,45 @@
+name: CK avança, recua e bloqueia em pé
+on:
+  push:
+    branches: [codex/ck-passada]
+    paths: ['chars/ck/**', 'ferramentas/**', 'sprites/ck/pecas/**', '.github/workflows/ck-passada.yml']
+permissions:
+  contents: read
+jobs:
+  ikemen:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            chars/ck
+            chars/hazaki
+            ferramentas/robo
+            motif/nazafight
+      - uses: actions/checkout@v4
+        with:
+          ref: 86f0d304d2d97f38765eec7b298ca2dedff18991
+          path: antes
+          sparse-checkout: |
+            chars/ck
+            chars/hazaki
+      - run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb xauth xdotool libgl1-mesa-dri libopenal1 libglfw3 libasound2 libdecor-0-0
+          python3 -m pip install 'numpy<2' pillow opencv-python-headless==4.10.0.84
+      - name: Filmar e medir os pés no IKEMEN
+        run: |
+          xvfb-run -a -s '-screen 0 1280x720x24' python3 ferramentas/filmar_passada_ck.py antes/chars chars ck-passada.gif
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ck-passada
+          path: ck-passada.gif
+      - name: Testar combate
+        run: |
+          set -o pipefail
+          python3 ferramentas/testar_pengaro.py --linux --lutador ck | tee robo.txt
+          grep -E 'RESUMO: [1-9][0-9]+ verificações passaram, 0 falharam' robo.txt
+
+

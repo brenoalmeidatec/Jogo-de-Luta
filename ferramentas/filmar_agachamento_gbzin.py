@@ -31,7 +31,7 @@ end)
 """
 
 
-def filmar(chars, lutador, despertado, combate=False, isolar_tenis=False):
+def filmar(chars, lutador, despertado, combate=False, isolar_tenis=False, roteiro=None):
     motor = motor_linux()
     with tempfile.TemporaryDirectory() as pasta:
         copia = Path(pasta) / "motor"
@@ -47,8 +47,9 @@ def filmar(chars, lutador, despertado, combate=False, isolar_tenis=False):
         gancho = GANCHO
         total = 82
         if combate:
-            from ck_roteiro import configurar
-            total, gancho = configurar(copia, gancho, isolar_tenis)
+            import ck_roteiro as roteiro
+        if roteiro:
+            total, gancho = roteiro.configurar(copia, gancho, isolar_tenis)
         with (copia / "external/script/debug.lua").open("a") as f:
             f.write(gancho.replace("@DESPERTADO@", "true" if despertado else "false"))
         jogo = subprocess.Popen(["./Ikemen_GO_Linux", "-p1", lutador, "-p2", rival,
@@ -75,14 +76,13 @@ def filmar(chars, lutador, despertado, combate=False, isolar_tenis=False):
                     subprocess.run(["xdotool", "windowfocus", janela], check=True)
                 captura = ImageGrab.grab(bbox=(x, y, x + w, y + h), xdisplay=os.environ["DISPLAY"])
                 recorte = captura.crop((int(w*.10), int(h*.27), int(w*.53), int(h*.96)))
-                if combate:
+                if roteiro:
                     recorte = captura.crop((int(w*.08), int(h*.24), int(w*.90), int(h*.99)))
                     quadros.append(recorte.resize((480, 290), Image.Resampling.NEAREST))
                 else:
                     quadros.append(recorte.resize((320, 290), Image.Resampling.NEAREST))
-                if combate:
-                    from ck_roteiro import teclas
-                    teclas(tick)
+                if roteiro:
+                    roteiro.teclas(tick)
                 elif tick in (10, 66):
                     subprocess.run(["xdotool", "keydown" if tick == 10 else "keyup", "Down"], check=True)
                 marca.unlink()
@@ -90,11 +90,10 @@ def filmar(chars, lutador, despertado, combate=False, isolar_tenis=False):
         finally:
             jogo.kill()
             jogo.wait()
-            subprocess.run(["xdotool", "keyup", "Down", "Left"])
+            subprocess.run(["xdotool", "keyup", "Down", "Left", "Right"])
         print("Estados capturados", sorted({e[:2] for e in estados}), flush=True)
-        if combate:
-            from ck_roteiro import validar
-            validar(estados)
+        if roteiro:
+            roteiro.validar(estados)
         else:
             assert {0, 10, 11, 12} <= {e[1] for e in estados}, estados
         return quadros, estados
