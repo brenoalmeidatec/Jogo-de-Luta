@@ -1202,6 +1202,8 @@ def main():
     falas_vitoria.aplicar("ck", SAIDA)
     import agachamento_elenco
     agachamento_elenco.aplicar("ck", SAIDA)
+    import ck_guarda
+    ck_guarda.aplicar(SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

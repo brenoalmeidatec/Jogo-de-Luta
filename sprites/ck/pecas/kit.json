@@ -253,5 +253,143 @@
     299
    ]
   }
+ },
+ "guarda_base": {
+  "eixo": [
+   150,
+   352
+  ],
+  "tamanho": [
+   300,
+   360
+  ],
+  "poses": {
+   "parado": [
+    {
+     "nome": "tronco_guarda",
+     "arquivo": "guarda/parado-tronco_guarda.png",
+     "origem": [
+      108,
+      14
+     ]
+    },
+    {
+     "nome": "quadril_perna_tras",
+     "arquivo": "guarda/parado-quadril_perna_tras.png",
+     "origem": [
+      78,
+      180
+     ]
+    },
+    {
+     "nome": "quadril_perna_frente",
+     "arquivo": "guarda/parado-quadril_perna_frente.png",
+     "origem": [
+      150,
+      180
+     ]
+    },
+    {
+     "nome": "tenis_tras",
+     "arquivo": "guarda/parado-tenis_tras.png",
+     "origem": [
+      68,
+      319
+     ]
+    },
+    {
+     "nome": "tenis_frente",
+     "arquivo": "guarda/parado-tenis_frente.png",
+     "origem": [
+      191,
+      319
+     ]
+    }
+   ],
+   "agachado": [
+    {
+     "nome": "tronco_guarda",
+     "arquivo": "guarda/agachado-tronco_guarda.png",
+     "origem": [
+      96,
+      97
+     ]
+    },
+    {
+     "nome": "quadril_perna_tras",
+     "arquivo": "guarda/agachado-quadril_perna_tras.png",
+     "origem": [
+      75,
+      229
+     ]
+    },
+    {
+     "nome": "quadril_perna_frente",
+     "arquivo": "guarda/agachado-quadril_perna_frente.png",
+     "origem": [
+      150,
+      229
+     ]
+    },
+    {
+     "nome": "tenis_tras",
+     "arquivo": "guarda/parado-tenis_tras.png",
+     "origem": [
+      68,
+      319
+     ]
+    },
+    {
+     "nome": "tenis_frente",
+     "arquivo": "guarda/parado-tenis_frente.png",
+     "origem": [
+      191,
+      319
+     ]
+    }
+   ],
+   "transicao": [
+    {
+     "nome": "tronco_guarda",
+     "arquivo": "guarda/transicao-tronco_guarda.png",
+     "origem": [
+      96,
+      54
+     ]
+    },
+    {
+     "nome": "quadril_perna_tras",
+     "arquivo": "guarda/transicao-quadril_perna_tras.png",
+     "origem": [
+      75,
+      186
+     ]
+    },
+    {
+     "nome": "quadril_perna_frente",
+     "arquivo": "guarda/transicao-quadril_perna_frente.png",
+     "origem": [
+      150,
+      186
+     ]
+    },
+    {
+     "nome": "tenis_tras",
+     "arquivo": "guarda/parado-tenis_tras.png",
+     "origem": [
+      68,
+      319
+     ]
+    },
+    {
+     "nome": "tenis_frente",
+     "arquivo": "guarda/parado-tenis_frente.png",
+     "origem": [
+      191,
+      319
+     ]
+    }
+   ]
+  }
  }
 }

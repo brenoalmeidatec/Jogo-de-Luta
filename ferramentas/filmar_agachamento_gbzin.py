@@ -91,10 +91,14 @@ if __name__ == "__main__":
     parser.add_argument("gif", type=Path)
     parser.add_argument("--lutador", default="gbzin")
     parser.add_argument("--despertado", action="store_true")
+    parser.add_argument("--medir-tenis-ck", action="store_true")
     args = parser.parse_args()
     antes, ea = filmar(args.antes, args.lutador, args.despertado)
     depois, ed = filmar(args.depois, args.lutador, args.despertado)
     assert ea == ed, "As transições não coincidem nos dois filmes"
+    if args.medir_tenis_ck:
+        from medir_tenis_ck import medir
+        medir(depois, ed)
     quadros = []
     for a, b in zip(antes, depois):
         tela = Image.new("RGB", (644, 316), "#20232c")
