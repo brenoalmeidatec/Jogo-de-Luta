@@ -1051,7 +1051,7 @@ def gravar_snd(caminho, sons):
     corpo_ = bytearray()
     pos = 512
     for i, ((g, n), x) in enumerate(itens):
-        w = wav_bytes(x)
+        w = x if isinstance(x,bytes) else wav_bytes(x)
         prox = pos + 16 + len(w) if i < len(itens) - 1 else 0
         corpo_ += struct.pack("<IIII", prox, len(w), g, n) + w
         pos += 16 + len(w)
@@ -1170,6 +1170,9 @@ def sons_lutador(nome, semente):
     if nome in VENTO_ARMA:
         s[(55, 0)] = nivelar(VENTO_ARMA[nome](0), V_VENTO + 2)
         s[(55, 1)] = nivelar(VENTO_ARMA[nome](1), V_VENTO + 4)
+    if nome == "ck":
+        from ck_audio_aereo import amostras
+        s.update(amostras())
     for n, _, f, v in ASSINATURAS[nome]:
         s[(50, n)] = nivelar(f(), v)
     return s
@@ -1439,7 +1442,11 @@ def ligar(nome, pasta=None):
             i = len(p) if i < 0 else i + 1
             p = p[:i] + "".join(novos) + p[i:]
         out.append(p)
-    c.write_text("".join(out), encoding="utf-8", newline="\n")
+    resultado = "".join(out)
+    if nome == "ck":
+        from ck_audio_aereo import ligar as ligar_aereo
+        resultado = ligar_aereo(resultado)
+    c.write_text(resultado, encoding="utf-8", newline="\n")
 
 
 # ---------------------------------------------------------------- medir

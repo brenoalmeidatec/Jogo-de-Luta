@@ -1485,18 +1485,6 @@
 57533,20007 = 1000,0
 57533,20008 = 1000,0
 57533,20009 = 1000,0
-57533,20100 = 955,0
-57533,20101 = 956,0
-57533,20102 = 957,0
-57533,20103 = 957,0
-57533,20104 = 959,0
-57533,20105 = 959,0
-57533,20106 = 959,0
-57533,20107 = 959,0
-57533,20108 = 960,0
-57533,20109 = 960,0
-57533,20110 = 960,0
-57533,20111 = 960,0
 57533,21000 = 996,0
 57533,21001 = 996,0
 57533,21002 = 997,0
@@ -1627,6 +1615,93 @@
 57533,26020 = 984,0
 57533,26021 = 984,0
 57533,26022 = 984,0
+57533,20100 = 955,0
+57533,20101 = 956,0
+57533,20102 = 957,0
+57533,20103 = 957,0
+57533,20104 = 959,0
+57533,20105 = 959,0
+57533,20106 = 959,0
+57533,20107 = 959,0
+57533,20108 = 960,0
+57533,20109 = 960,0
+57533,20110 = 960,0
+57533,20111 = 960,0
+57534,4000 = 793,0
+57534,4001 = 793,0
+57534,4100 = 794,0
+57534,4101 = 795,0
+57534,4102 = 795,0
+57534,4103 = 796,0
+57534,4104 = 796,0
+57534,4105 = 796,0
+57534,4106 = 797,0
+57534,4200 = 794,0
+57534,4201 = 795,0
+57534,4202 = 795,0
+57534,4203 = 796,0
+57534,4204 = 796,0
+57534,4205 = 796,0
+57534,4206 = 797,0
+57534,4300 = 794,0
+57534,4301 = 795,0
+57534,4302 = 795,0
+57534,4303 = 796,0
+57534,4304 = 796,0
+57534,4305 = 796,0
+57534,4306 = 797,0
+57534,4400 = 797,0
+57534,4401 = 797,0
+57534,4402 = 797,0
+57534,4403 = 798,0
+57534,4404 = 798,0
+57534,4405 = 798,0
+57534,4406 = 799,0
+57534,4500 = 797,0
+57534,4501 = 797,0
+57534,4502 = 797,0
+57534,4503 = 798,0
+57534,4504 = 798,0
+57534,4505 = 798,0
+57534,4506 = 799,0
+57534,4600 = 797,0
+57534,4601 = 797,0
+57534,4602 = 797,0
+57534,4603 = 798,0
+57534,4604 = 798,0
+57534,4605 = 798,0
+57534,4606 = 799,0
+57534,4700 = 799,0
+57534,4701 = 800,0
+57534,60000 = 892,0
+57534,60001 = 892,0
+57534,60002 = 893,0
+57534,60003 = 893,0
+57534,60004 = 895,0
+57534,60100 = 890,0
+57534,60101 = 891,0
+57534,60102 = 892,0
+57534,60103 = 893,0
+57534,60104 = 893,0
+57534,60105 = 895,0
+57534,61000 = 898,0
+57534,61001 = 898,0
+57534,61002 = 899,0
+57534,61003 = 900,0
+57534,61004 = 901,0
+57534,61005 = 901,0
+57534,61006 = 903,0
+57534,61100 = 898,0
+57534,61101 = 899,0
+57534,61102 = 900,0
+57534,61103 = 901,0
+57534,61104 = 901,0
+57534,61105 = 903,0
+57534,65000 = 899,0
+57534,65001 = 900,0
+57534,65002 = 901,0
+57534,65003 = 901,0
+57534,65004 = 903,0
 
 [Data]
 life = 1000
@@ -2489,7 +2564,7 @@ juggle = 5
 [State 600, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 56,2
 ; som: fim
 
 [State 600, Arte despertada]
@@ -2517,7 +2592,7 @@ sparkno = S(ifelse(var(20) > 0, 9230, 9200))
 guard.sparkno = S9202
 sparkscale = 1, 1
 guard.sparkscale = .9, .9
-hitsound = S51,0 ; som:F5,0
+hitsound = S56,7 ; som:F5,0
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
@@ -2537,7 +2612,7 @@ juggle = 5
 [State 610, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,3
+value = 56,4
 ; som: fim
 
 [State 610, Arte despertada]
@@ -2565,7 +2640,7 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S52,2 ; som:F5,2
+hitsound = S56,9 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
@@ -2585,7 +2660,7 @@ juggle = 5
 [State 650, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 56,6
 ; som: fim
 
 [State 650, Arte despertada]
@@ -2613,7 +2688,7 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9201))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
+hitsound = S56,11 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
@@ -9287,7 +9362,7 @@ juggle = 5
 [State 601, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 56,3
 ; som: fim
 
 [State 601, Arte despertada]
@@ -9315,7 +9390,7 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S51,2 ; som:F5,2
+hitsound = S56,8 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
@@ -9335,7 +9410,7 @@ juggle = 5
 [State 611, som vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,3
+value = 56,5
 ; som: fim
 
 [State 611, Arte despertada]
@@ -9363,7 +9438,7 @@ sparkno = S(ifelse(var(20) > 0, 9231, 9206))
 guard.sparkno = S9202
 sparkscale = 1.15, 1.15
 guard.sparkscale = .9, .9
-hitsound = S52,2 ; som:F5,2
+hitsound = S56,10 ; som:F5,2
 guardsound = F6,0
 ground.type = High
 ground.slidetime = 5
@@ -10469,6 +10544,18 @@ value = 5100
 [Statedef -2]
 
 ; --- destruição do cenário (ferramentas/destruicao.py) ---
+[State -2, som sola salto]
+type = PlaySnd
+trigger1 = StateNo = 40 && Time = 0
+value = 56,0
+; som: fim
+
+[State -2, som sola pouso]
+type = PlaySnd
+trigger1 = StateNo = 52 && Time = 0
+value = 56,1
+; som: fim
+
 [State -2, Destruição do cenário 909]
 type = ModifyBGCtrl
 trigger1 = !IsHelper

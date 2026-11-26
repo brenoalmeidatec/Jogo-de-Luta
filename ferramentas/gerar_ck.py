@@ -1210,6 +1210,10 @@ def main():
     ck_passada.aplicar(SAIDA)
     import ck_ataques_pe
     ck_ataques_pe.aplicar(SAIDA)
+    import ck_aereo
+    ck_aereo.aplicar(SAIDA)
+    import ck_audio_aereo
+    ck_audio_aereo.atualizar(SAIDA)
     print(f"{len(s.lista)} sprites, {len(a.acoes)} ações em {SAIDA}")
 
 

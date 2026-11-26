@@ -78,6 +78,8 @@ def filmar(chars, lutador, despertado, combate=False, isolar_tenis=False, roteir
                 recorte = captura.crop((int(w*.10), int(h*.27), int(w*.53), int(h*.96)))
                 if roteiro:
                     recorte = captura.crop((int(w*.08), int(h*.24), int(w*.90), int(h*.99)))
+                    if getattr(roteiro, "tela_inteira", False):
+                        recorte = captura.crop((int(w*.07), 0, int(w*.94), int(h*.98)))
                     quadros.append(recorte.resize((480, 290), Image.Resampling.NEAREST))
                 else:
                     quadros.append(recorte.resize((320, 290), Image.Resampling.NEAREST))
