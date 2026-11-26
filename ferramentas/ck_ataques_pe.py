@@ -101,6 +101,14 @@ def montar(numero,i,ativos,n,camadas,variantes):
         elif numero in SOCOS:
             tronco=Image.fromarray(dobrar(np.array(tronco),-7*fase))
     out.alpha_composite(tronco)
+    if numero in CHUTES and fase>0:
+        # Na rotação, pixels da borda recortada podem se separar do contorno da perna.
+        pixels=np.array(out)
+        _,rotulos,stats,_=cv2.connectedComponentsWithStats((pixels[...,3]>0).astype(np.uint8))
+        corpo=1+int(np.argmax(stats[1:,cv2.CC_STAT_AREA]))
+        assert all(area<=16 for j,area in enumerate(stats[1:,cv2.CC_STAT_AREA],1) if j!=corpo)
+        pixels[rotulos!=corpo]=0
+        out=Image.fromarray(pixels)
     return out
 
 
