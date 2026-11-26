@@ -1,7 +1,7 @@
 name: CK avança, recua e bloqueia em pé
 on:
   push:
-    branches: [codex/ck-passada]
+    branches: [codex/ck-passada, codex/elenco-arte-audio]
     paths: ['chars/ck/**', 'ferramentas/**', 'sprites/ck/pecas/**', '.github/workflows/ck-passada.yml']
 permissions:
   contents: read
@@ -19,7 +19,7 @@ jobs:
             motif/nazafight
       - uses: actions/checkout@v4
         with:
-          ref: 86f0d304d2d97f38765eec7b298ca2dedff18991
+          ref: a04373fefa8d4e070e96436e631ac3af23f5a4a2
           path: antes
           sparse-checkout: |
             chars/ck

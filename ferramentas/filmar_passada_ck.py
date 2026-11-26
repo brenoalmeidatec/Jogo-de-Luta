@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 
 import numpy as np
+import cv2
 from PIL import Image, ImageDraw
 
 import conferir_sff
@@ -69,11 +70,28 @@ def medir(es, pasta):
     escala = float(re.search(r'(?m)^xscale = ([.\d]+)',(pasta/'ck.cns').read_text(encoding='utf-8'))[1])
     _,nos,_ = conferir_sff.ler(pasta/'ck.sff')
     sprites = {(n['g'],n['i']):n for n in nos}
+    def tela(chave):
+        n=sprites[chave]
+        im=Image.open(io.BytesIO(n['px'][4:])).convert('RGBA')
+        base=Image.new('RGBA',(340,370))
+        base.alpha_composite(im,(150-n['x'],352-n['y']))
+        return np.array(base)
+    parada=re.search(r'(?ms)^\[Begin Action 0\].*?^(\d+),\s*(\d+),',air)
+    guarda=tela(tuple(map(int,parada.groups())))
+    pernas=[guarda[259:319,x0:x1].copy() for x0,x1 in ((73,140),(189,233))]
     for anim in (20,21):
         bloco = re.search(rf'(?ims)^\[Begin Action {anim}\][^\n]*\n(.*?)(?=^\[|\Z)',air)[1]
         elementos = [tuple(map(int,chave)) for chave in re.findall(r'(?m)^(\d+),\s*(\d+),',bloco)]
         contatos = []
         for el in elementos:
+            atual=tela(el)
+            for perna in pernas:
+                # Inclui bordas transparentes de cada lado da pele: detecta tanto
+                # afinamento como alargamento, mesmo com o pé no lugar certo.
+                erros=cv2.matchTemplate(atual,perna,cv2.TM_SQDIFF)
+                _,_,(px,py),_=cv2.minMaxLoc(erros)
+                h,w=perna.shape[:2]
+                assert np.array_equal(atual[py:py+h,px:px+w],perna),(anim,el,'espessura da perna')
             n = sprites[el]
             rgba = np.asarray(Image.open(io.BytesIO(n['px'][4:])).convert('RGBA'))
             # Lê na fileira que efetivamente toca o piso; a sombra não está no sprite.
