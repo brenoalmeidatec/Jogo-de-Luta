@@ -3257,3 +3257,9 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
   `victory_screen.winquote.text`, que o motor só usa quando o lutador não tem `[Quotes]`).
 - Teste: `ferramentas/testar_vitoria.py` (Assistir na nuvem). Os 6 conferidos normais e despertados; robô 6/6 sem
   defeito. Detalhes em `docs/checkup-25-11.md`.
+
+## 2026-11-26 — Gbzin, agachamento da forma base
+
+As ações 10 e 12 passam por dois desenhos em dois tiques. A ação 11 usa a cabeça do kit, o quadril e as pernas da pose baixa e uma respiração acima da cintura. O gerador reaplica os seis desenhos. A captura usou a mesma tecla nos dois jogos, com a sequência de estados conferida em cada tique. Robô do IKEMEN Linux 236/0. Régua das duas formas com zero reprovações e avisos nos especiais já registrados.
+
+[GIF antes e depois no motor](docs/boneco-pecas/gbzin/piloto-agachamento/antes-depois.gif) · [Execução dos testes](https://github.com/brenoalmeidatec/Jogo-de-Luta/actions/runs/45853343860)
