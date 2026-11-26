@@ -3263,3 +3263,9 @@ inteiro: precisa ser fraco e meio branco. Explod não acompanha projétil; copia
 As ações 10 e 12 passam por dois desenhos em dois tiques. A ação 11 usa a cabeça do kit, o quadril e as pernas da pose baixa e uma respiração acima da cintura. O gerador reaplica os seis desenhos. A captura usou a mesma tecla nos dois jogos, com a sequência de estados conferida em cada tique. Robô do IKEMEN Linux 236/0. Régua das duas formas com zero reprovações e avisos nos especiais já registrados.
 
 [GIF antes e depois no motor](docs/boneco-pecas/gbzin/piloto-agachamento/antes-depois.gif) · [Execução dos testes](https://github.com/brenoalmeidatec/Jogo-de-Luta/actions/runs/45853343860)
+
+## 2026-11-26 — Guarda baixa do restante do elenco
+
+CK, Gutto, Hazak, Pengaró e Raiclaven usam o próprio desenho de apoio nas formas base e despertada. Os pés e as pernas ficam fixos enquanto o tronco respira. As ações 10, 11 e 12 conservam a duração e as caixas de colisão de cada tique. O SFF de cada lutador recebeu dez desenhos e conservou o conteúdo e os eixos dos sprites anteriores.
+
+O robô de combate passou nas 1.144 verificações dos cinco lutadores. A captura no IKEMEN comparou 82 tiques por forma com a versão `2456980`. O golpe 10410 do Gutto despertado ainda ultrapassa a régua em dois quadros, como já ocorria antes. Os detalhes e os dez GIFs estão na [galeria de agachamento](docs/boneco-pecas/agachamento-elenco/README.md).
