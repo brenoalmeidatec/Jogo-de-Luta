@@ -86,9 +86,9 @@ def medir(quadros,estados):
         tela=np.array([e[2] for e in estados[inicio:]])
         # Uma câmera imóvel e um CK parado devem deixar a sola no mesmo lugar.
         mudou=np.abs(np.diff(tela))>.001
-        # O hook registra o estado antes da apresentação do quadro no X11.
-        # Exclui a vizinhança de uma mudança de eixo ao medir o repouso.
-        parados=np.convolve(mudou.astype(int), np.ones(5,dtype=int), mode="same")==0
+        # O hook do motor pode avançar vários tiques entre duas apresentações no X11.
+        # Mede o repouso após seis tiques consecutivos na mesma posição.
+        parados=np.convolve(mudou.astype(int), np.ones(6,dtype=int), mode="full")[:len(mudou)]==0
         deriva=np.abs(np.diff(trilha,axis=0))[parados].max(axis=0)
         print(lado,"máxima variação com eixo imóvel:",deriva.tolist(),"px; percurso X na tela:",int(np.ptp(trilha[:,0])),flush=True)
         assert deriva.max()<=1 and np.ptp(trilha[:,1])<=2
