@@ -3283,3 +3283,11 @@ A defesa baixa e os quatro ataques agachados (soco fraco, uppercut, rasteirinha 
 No IKEMEN, o CK agachou, bloqueou o ataque do Hazak com 1.000 de vida, acertou o soco baixo (900 → 860 no Hazak) e recuperou a guarda. A repetição instrumental ocultou o Hazak e confirmou a mesma telemetria da luta para medir a sola que o quimono encobre. A distância entre as solas variou 0 px nos dois eixos. Os dois apoios acompanharam juntos o recuo e o passo originais, com amplitude horizontal de 22 px na captura. Em repouso, a maior variação foi de 1 px horizontal e 0 vertical. O robô passou nas 226 verificações.
 
 [GIF antes e depois](docs/boneco-pecas/ck/redesenho/ck-combate-baixo.gif) · [Execução e medição](https://github.com/brenoalmeidatec/Jogo-de-Luta/actions/runs/45868550386)
+
+## 2026-11-26 — CK base andando, recuando e defendendo em pé
+
+As ações 20 e 21 usam a guarda redesenhada, com 40 quadros de um tique por ciclo. A posição do tênis apoiado compensa a velocidade real de cada direção, inclusive o primeiro tique. Os quadros despertados e as janelas da aura mantêm sua duração original. As ações 120, 130, 140 e 150 usam as luvas fechadas diante do rosto.
+
+O CK avançou, recuou, bloqueou o jab em pé do Hazak sem perder vida e recuperou a guarda. Em dez intervalos de apoio, a excursão horizontal máxima da sola relativa ao piso foi de 0,267 unidade de jogo. A medição usa a posição do personagem no IKEMEN e a borda da sola do sprite ativo a cada tique. As 226 verificações de combate passaram.
+
+[GIF antes e depois](docs/boneco-pecas/ck/redesenho/ck-passada.gif) · [Luta e medições](https://github.com/brenoalmeidatec/Jogo-de-Luta/actions/runs/45872027186)
