@@ -75,7 +75,7 @@ def ligar(nome,texto):
         p=re.sub(r'(?m)^guardsound = (F6,\s*(\d+)[^\n]*)$',guarda,p)
         def vento(m):
             return m[1]+selecionar(57,int(m[3]))+' ; leitura: '+m[2]
-        p=re.sub(r'(\[State [^\]]+, som vento\]\ntype = PlaySnd\ntrigger1 = Time = 0\nvalue = )(F40,([0-4]))(?=\n)',vento,p)
+        p=re.sub(r'(\[State [^\]]+, (?:som vento|Vento)\]\ntype = PlaySnd\ntrigger1 = Time = 0\nvalue = )(F40,([0-4]))(?=\n)',vento,p)
         if nome=='ck':
             p=re.sub(r'(?m)^(value = )(56,(\d+))$',lambda m:m[1]+selecionar(56,int(m[3]))+' ; leitura: '+m[2],p)
         if n==-2 and nome!='ck' and '[State -2, som apoio' not in p:

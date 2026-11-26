@@ -2966,17 +2966,17 @@ Clsn2Default: 1
 [Begin Action 121]
 Clsn2Default: 1
  Clsn2[0] = -78, 0, 78, -252
-47,0, 0,0, -1
+57563,0, 0,0, -1
 
 [Begin Action 131]
 Clsn2Default: 1
  Clsn2[0] = -78, 0, 78, -252
-47,0, 0,0, -1
+57563,0, 0,0, -1
 
 [Begin Action 141]
 Clsn2Default: 1
  Clsn2[0] = -78, 0, 78, -252
-47,0, 0,0, -1
+57563,0, 0,0, -1
 
 [Begin Action 122]
 Clsn2Default: 1
@@ -2996,7 +2996,7 @@ Clsn2Default: 1
 [Begin Action 151]
 Clsn2Default: 1
  Clsn2[0] = -78, 0, 78, -252
-47,0, 0,0, -1
+57563,0, 0,0, -1
 
 [Begin Action 152]
 Clsn2Default: 1

@@ -1319,6 +1319,8 @@ def main():
     import elenco_aereo
     import audio_leitura
     elenco_aereo.aplicar("gbzin", SAIDA)
+    import gbzin_defesa_baixa
+    gbzin_defesa_baixa.aplicar(SAIDA)
     audio_leitura.atualizar("gbzin", SAIDA)
 
 

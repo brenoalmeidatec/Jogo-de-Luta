@@ -4389,72 +4389,72 @@ Clsn2: 1
 ; Arranhão de Cima (kit_raiclaven.py)
 Clsn2: 1
  Clsn2[0] = -72, -72, 72, -300
-463,0, 0,0, 2
+57561,42304, 0,0, 2 ; desenho anterior 463,0
 Clsn2: 1
  Clsn2[0] = -72, -72, 72, -300
-463,0, 0,0, 5
+57561,42305, 0,0, 5 ; desenho anterior 463,0
 Clsn2: 1
  Clsn2[0] = -72, -72, 72, -300
 Clsn1: 1
  Clsn1[0] = 90, -243, 150, -165
-465,0, 0,0, 12
+57561,42306, 0,0, 12 ; desenho anterior 465,0
 Clsn2: 1
  Clsn2[0] = -72, -72, 72, -300
-465,0, 0,0, 1
+57561,42307, 0,0, 1 ; desenho anterior 465,0
 Clsn2: 1
  Clsn2[0] = -72, -72, 72, -300
-467,0, 0,0, -1
+57561,42308, 0,0, -1 ; desenho anterior 467,0
 
 [Begin Action 20610]
 ; Navalha em Arco (kit_raiclaven.py)
 Clsn2: 1
  Clsn2[0] = -72, -72, 72, -300
-470,0, 0,0, 7
+57561,42368, 0,0, 7 ; desenho anterior 470,0
 Clsn2: 1
  Clsn2[0] = -72, -72, 72, -300
 Clsn1: 1
  Clsn1[0] = 70, -158, 130, -71
-473,0, 0,0, 15
+57561,42369, 0,0, 15 ; desenho anterior 473,0
 Clsn2: 1
  Clsn2[0] = -72, -72, 72, -300
-473,0, 0,0, 2
+57561,42370, 0,0, 2 ; desenho anterior 473,0
 Clsn2: 1
  Clsn2[0] = -72, -72, 72, -300
-475,0, 0,0, -1
+57561,42371, 0,0, -1 ; desenho anterior 475,0
 
 [Begin Action 20630]
 ; Joelhada e Mordida (kit_raiclaven.py)
 Clsn2: 1
  Clsn2[0] = -72, -72, 72, -300
-462,0, 0,0, 7
+57561,42432, 0,0, 7 ; desenho anterior 462,0
 Clsn2: 1
  Clsn2[0] = -72, -72, 72, -300
 Clsn1: 1
  Clsn1[0] = 90, -243, 150, -165
-465,0, 0,0, 8
+57561,42433, 0,0, 8 ; desenho anterior 465,0
 Clsn2: 1
  Clsn2[0] = -72, -72, 72, -300
-465,0, 0,0, 2
+57561,42434, 0,0, 2 ; desenho anterior 465,0
 Clsn2: 1
  Clsn2[0] = -72, -72, 72, -300
-467,0, 0,0, -1
+57561,42435, 0,0, -1 ; desenho anterior 467,0
 
 [Begin Action 20640]
 ; Por Baixo Mordendo (kit_raiclaven.py)
 Clsn2: 1
  Clsn2[0] = -72, -72, 72, -300
-470,0, 0,0, 9
+57561,42496, 0,0, 9 ; desenho anterior 470,0
 Clsn2: 1
  Clsn2[0] = -72, -72, 72, -300
 Clsn1: 1
  Clsn1[0] = 70, -158, 130, -71
-473,0, 0,0, 9
+57561,42497, 0,0, 9 ; desenho anterior 473,0
 Clsn2: 1
  Clsn2[0] = -72, -72, 72, -300
-473,0, 0,0, 2
+57561,42498, 0,0, 2 ; desenho anterior 473,0
 Clsn2: 1
  Clsn2[0] = -72, -72, 72, -300
-475,0, 0,0, -1
+57561,42499, 0,0, -1 ; desenho anterior 475,0
 
 [Begin Action 20250]
 ; Mordida por Cima (kit_raiclaven.py)

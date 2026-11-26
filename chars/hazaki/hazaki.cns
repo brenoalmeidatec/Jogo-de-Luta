@@ -9090,7 +9090,7 @@ velset = 0,0
 [State 4200, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 57,0 + 32 * (var(20) > 0) ; leitura: F40,0
 
 [State 4200, Fracos em sequência]
 type = VarAdd
@@ -9139,7 +9139,7 @@ velset = 0,0
 [State 4201, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 
 [State 4201, Avanço 1]
 type = VelSet
@@ -9196,7 +9196,7 @@ velset = 0,0
 [State 4202, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 57,0 + 32 * (var(20) > 0) ; leitura: F40,0
 
 [State 4202, Fracos em sequência]
 type = VarAdd
@@ -9245,7 +9245,7 @@ velset = 0,0
 [State 4203, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,2
+value = 57,2 + 32 * (var(20) > 0) ; leitura: F40,2
 
 [State 4203, Coice com Garra]
 type = HitDef
@@ -9292,7 +9292,7 @@ velset = 0,0
 [State 4400, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 57,0 + 32 * (var(20) > 0) ; leitura: F40,0
 
 [State 4400, Fracos em sequência]
 type = VarAdd
@@ -9341,7 +9341,7 @@ velset = 0,0
 [State 4401, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 
 [State 4401, Antiaéreo: ganha de quem vem do ar]
 type = NotHitBy
@@ -9400,7 +9400,7 @@ velset = 0,0
 [State 4402, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 57,0 + 32 * (var(20) > 0) ; leitura: F40,0
 
 [State 4402, Fracos em sequência]
 type = VarAdd
@@ -9449,7 +9449,7 @@ velset = 0,0
 [State 4403, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,2
+value = 57,2 + 32 * (var(20) > 0) ; leitura: F40,2
 
 [State 4403, Varrida de Garras]
 type = HitDef
@@ -9498,7 +9498,7 @@ velset = 0,0
 [State 4301, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 57,0 + 32 * (var(20) > 0) ; leitura: F40,0
 
 [State 4301, Avanço 1]
 type = VelSet
@@ -9552,7 +9552,7 @@ velset = 0,0
 [State 4302, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 57,0 + 32 * (var(20) > 0) ; leitura: F40,0
 
 [State 4302, Avanço 1]
 type = VelSet
@@ -9606,7 +9606,7 @@ velset = 0,0
 [State 4311, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 
 [State 4311, Avanço 1]
 type = VelSet
@@ -9660,7 +9660,7 @@ velset = 0,0
 [State 4312, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 57,0 + 32 * (var(20) > 0) ; leitura: F40,0
 
 [State 4312, Avanço 1]
 type = VelSet
@@ -9714,7 +9714,7 @@ velset = 0,0
 [State 4331, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 
 [State 4331, Avanço 1]
 type = VelSet
@@ -9768,7 +9768,7 @@ velset = 0,0
 [State 4332, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,0
+value = 57,0 + 32 * (var(20) > 0) ; leitura: F40,0
 
 [State 4332, Avanço 1]
 type = VelSet
@@ -9834,7 +9834,7 @@ value = 50,7
 [State 4500, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 
 [State 4500, Carga na garra]
 type = Explod
@@ -9990,7 +9990,7 @@ value = 50,7
 [State 4501, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,1
+value = 57,1 + 32 * (var(20) > 0) ; leitura: F40,1
 
 [State 4501, Carga na garra]
 type = Explod
@@ -10137,7 +10137,7 @@ juggle = 4
 [State 4510, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,2
+value = 57,2 + 32 * (var(20) > 0) ; leitura: F40,2
 
 [State 4510, Sobe]
 type = VelSet
@@ -10174,7 +10174,7 @@ juggle = 4
 [State 4511, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,2
+value = 57,2 + 32 * (var(20) > 0) ; leitura: F40,2
 
 [State 4511, Sobe]
 type = VelSet
@@ -10237,7 +10237,7 @@ juggle = 4
 [State 4513, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,2
+value = 57,2 + 32 * (var(20) > 0) ; leitura: F40,2
 
 [State 4513, Rastro]
 type = AfterImage
@@ -10328,7 +10328,7 @@ value = 50,2
 [State 4520, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,2
+value = 57,2 + 32 * (var(20) > 0) ; leitura: F40,2
 
 [State 4520, Invencível no começo]
 type = NotHitBy
@@ -10439,7 +10439,7 @@ value = 50,2
 [State 4521, Vento]
 type = PlaySnd
 trigger1 = Time = 0
-value = F40,2
+value = 57,2 + 32 * (var(20) > 0) ; leitura: F40,2
 
 [State 4521, Invencível no começo]
 type = NotHitBy
