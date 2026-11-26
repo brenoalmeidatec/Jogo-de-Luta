@@ -10,8 +10,6 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 import conferir_sff
-from agachamento_elenco import acao
-from ck_combate_baixo import LINHA
 from filmar_agachamento_gbzin import filmar
 from testar_pengaro import injetar
 
@@ -72,7 +70,8 @@ def medir(es, pasta):
     _,nos,_ = conferir_sff.ler(pasta/'ck.sff')
     sprites = {(n['g'],n['i']):n for n in nos}
     for anim in (20,21):
-        elementos = [tuple(map(int,l.group(1,2))) for l in LINHA.finditer(acao(air,anim).group())]
+        bloco = re.search(rf'(?ims)^\[Begin Action {anim}\][^\n]*\n(.*?)(?=^\[|\Z)',air)[1]
+        elementos = [tuple(map(int,chave)) for chave in re.findall(r'(?m)^(\d+),\s*(\d+),',bloco)]
         contatos = []
         for el in elementos:
             n = sprites[el]
