@@ -36,6 +36,11 @@ jobs:
         with:
           name: ck-combate-baixo
           path: ck-combate-baixo.gif
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: medicao
+          path: diagnostico/
       - name: Testar combate
         run: |
           set -o pipefail

@@ -6,9 +6,16 @@ import numpy as np
 from testar_pengaro import injetar
 
 
-def configurar(copia, gancho):
+def configurar(copia, gancho, isolar_tenis):
     for nome in ("ck", "hazaki"):
         injetar(copia / "chars" / nome / f"{nome}.cmd", nome=="hazaki")
+    if isolar_tenis:
+        # Só na repetição instrumental: o quimono do Hazak encobre a sola da frente durante o bloqueio.
+        cmd = copia / "chars/hazaki/hazaki.cmd"
+        texto = cmd.read_text(encoding="utf-8")
+        cab = "[Statedef -1]\n"
+        cmd.write_text(texto.replace(cab, cab + "\n[State -1, Isolar apoio CK]\ntype = AssertSpecial\n"
+                                     "trigger1 = 1\nflag = invisible\nignorehitpause = 1\n", 1), encoding="utf-8")
     codigo = """
   player(2)
   local d = p2BodyDistX()

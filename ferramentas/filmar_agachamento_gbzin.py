@@ -31,7 +31,7 @@ end)
 """
 
 
-def filmar(chars, lutador, despertado, combate=False):
+def filmar(chars, lutador, despertado, combate=False, isolar_tenis=False):
     motor = motor_linux()
     with tempfile.TemporaryDirectory() as pasta:
         copia = Path(pasta) / "motor"
@@ -48,7 +48,7 @@ def filmar(chars, lutador, despertado, combate=False):
         total = 82
         if combate:
             from ck_roteiro import configurar
-            total, gancho = configurar(copia, gancho)
+            total, gancho = configurar(copia, gancho, isolar_tenis)
         with (copia / "external/script/debug.lua").open("a") as f:
             f.write(gancho.replace("@DESPERTADO@", "true" if despertado else "false"))
         jogo = subprocess.Popen(["./Ikemen_GO_Linux", "-p1", lutador, "-p2", rival,
@@ -131,4 +131,15 @@ if __name__ == "__main__":
 
     if args.combate_ck:
         from ck_roteiro import medir
-        medir(depois, ed)
+        isolados, telemetria = filmar(args.depois, args.lutador, False, True, True)
+        assert ed == telemetria, "A repetição para medir mudou a luta"
+        try:
+            medir(isolados, telemetria)
+        except AssertionError:
+            import json
+            pasta = Path("diagnostico")
+            pasta.mkdir(exist_ok=True)
+            for i, im in enumerate(isolados):
+                im.save(pasta / f"{i:03d}.png")
+            (pasta / "estados.json").write_text(json.dumps(telemetria))
+            raise
