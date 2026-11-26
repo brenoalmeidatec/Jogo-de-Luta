@@ -34,8 +34,10 @@ def passada(t, velocidade):
     dx = abs(velocidade) * ((t if primeiro else duracao-t)-2)
     altura = -round(15 * math.sin(math.pi * fase))
     move_frente = primeiro == (velocidade > 0)
-    return ((-round(dx), 0 if move_frente else altura),
-            (round(dx), altura if move_frente else 0))
+    # Ao entrar no estado 20, o motor já percorreu um tique da caminhada.
+    # Compensa também esse primeiro deslocamento, desde a guarda parada.
+    return ((round(-dx-velocidade), 0 if move_frente else altura),
+            (round(dx-velocidade), altura if move_frente else 0))
 
 
 def montar_camadas():
