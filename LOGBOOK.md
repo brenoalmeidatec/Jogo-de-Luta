@@ -3299,3 +3299,13 @@ Os onze normais em pé usam o corpo redesenhado. O kit ganhou quatro peças de t
 Em onze pares de lutas contra o Hazak, o CK caminhou, acertou o golpe pelo CMD e voltou à guarda. A telemetria de estado, posição, vida, elemento de animação e acerto coincidiu antes e depois. O dano variou de 46 a 109. Em cada quadro do ataque lido no motor, os pixels da sola traseira coincidiram com os da guarda no eixo do personagem. Nos cinco socos, a dianteira também coincidiu; nos seis chutes, saiu do chão. Os passos próprios de cada golpe continuam fazendo o lutador se deslocar no cenário. O robô de combate passou nas 226 verificações.
 
 [GIF comparativo com os onze golpes](docs/boneco-pecas/ck/redesenho/ck-socos-chutes-em-pe.gif) · [Lutas, dano e testes no IKEMEN](https://github.com/brenoalmeidatec/Jogo-de-Luta/actions/runs/45877988131)
+
+## 2026-11-26 — Revés, saltos e áudio do CK
+
+Refizemos o tronco do revés (estado 201) para que o braço que ataca fique legível desde a manga até a luva. No teste em pé, CK avançou, acertou Hazak por 54 de dano e recuperou a guarda. A bíblia de arte passou a exigir inspeção visual de cada imagem gerada e da sequência montada no tamanho do jogo.
+
+Os três saltos partem da flexão do kit. CK recolhe os joelhos no ar e estende as pernas antes de voltar a apoiar os tênis. Conferimos 87 quadros exportados, incluindo o revés. Nos estados de preparação, pouso e revés, os seis pixels inferiores de altura das solas coincidiram com os da guarda. Todos os quadros revisados tinham um único contorno conectado. Os tempos, caixas e destinos de remapeamento da forma despertada coincidiram com os do commit b7d1b83.
+
+No IKEMEN GO, os saltos vertical, para a frente e para trás alcançaram a altura de 84,4 unidades. Os golpes 600, 601, 610, 611 e 650 acertaram Hazak por 75, 99, 94, 110 e 100 de dano, respectivamente. CK pousou e recuperou o controle nas oito sequências. O WAV reúne os doze efeitos sintetizados do banco do personagem, com saída do chão, passagem de ar, impacto e aterrissagem. O maior pico verdadeiro medido foi de −1,67 dBTP com sobreamostragem de 4×.
+
+[Revés antes e depois](docs/boneco-pecas/ck/redesenho/ck-reves.gif) · [Saltos e golpes no motor](docs/boneco-pecas/ck/redesenho/ck-aereo.gif) · [Amostra dos sons](docs/boneco-pecas/ck/redesenho/ck-aereo-sons.wav) · [Execução no IKEMEN](https://github.com/brenoalmeidatec/Jogo-de-Luta/actions/runs/45881691742)
