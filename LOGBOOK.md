@@ -3291,3 +3291,11 @@ As ações 20 e 21 usam a guarda redesenhada, com 40 quadros de um tique por cic
 O CK avançou, recuou, bloqueou o jab em pé do Hazak sem perder vida e recuperou a guarda. Em dez intervalos de apoio, a excursão horizontal máxima da sola relativa ao piso foi de 0,267 unidade de jogo. A medição usa a posição do personagem no IKEMEN e a borda da sola do sprite ativo a cada tique. As 226 verificações de combate passaram.
 
 [GIF antes e depois](docs/boneco-pecas/ck/redesenho/ck-passada.gif) · [Luta e medições](https://github.com/brenoalmeidatec/Jogo-de-Luta/actions/runs/45872027186)
+
+## 2026-11-26 — Socos e chutes em pé do CK base
+
+Os onze normais em pé usam o corpo redesenhado. O kit ganhou quatro peças de tronco para os socos. Nos chutes, o quadril vai para o lado do pé de apoio e a coxa e a canela giram com comprimentos fixos. As caixas, os tempos e o mapeamento da forma despertada foram comparados com a versão 816cb8b.
+
+Em onze pares de lutas contra o Hazak, o CK caminhou, acertou o golpe pelo CMD e voltou à guarda. A telemetria de estado, posição, vida, elemento de animação e acerto coincidiu antes e depois. O dano variou de 46 a 109. Em cada quadro do ataque lido no motor, os pixels da sola traseira coincidiram com os da guarda no eixo do personagem. Nos cinco socos, a dianteira também coincidiu; nos seis chutes, saiu do chão. Os passos próprios de cada golpe continuam fazendo o lutador se deslocar no cenário. O robô de combate passou nas 226 verificações.
+
+[GIF comparativo com os onze golpes](docs/boneco-pecas/ck/redesenho/ck-socos-chutes-em-pe.gif) · [Lutas, dano e testes no IKEMEN](https://github.com/brenoalmeidatec/Jogo-de-Luta/actions/runs/45877988131)
