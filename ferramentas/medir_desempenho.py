@@ -48,7 +48,10 @@ def medir(motor, perfil, destino):
     fim = motor / "fps.csv"
     fim.unlink(missing_ok=True)
     env = {**ambiente_linux(motor), "LP_NUM_THREADS": "2", "ALSOFT_DRIVERS": "null"}
-    args = ["./Ikemen_GO_Linux", "-config", f"save/{perfil}.ini", "-p1", "ck", "-p2", "hazaki",
+    telemetria = destino.with_name(destino.stem + "-telemetria.csv").resolve()
+    telemetria.write_text("")
+    env["NAZA_TELEMETRIA_CSV"] = str(telemetria)
+    args = ["./Ikemen_GO_Linux", "-loadmotif", "-config", f"save/{perfil}.ini", "-p1", "ck", "-p2", "hazaki",
             "-s", "stages/maria_fumaca.def"]
     with destino.with_suffix(".log").open("w") as log:
         jogo = subprocess.Popen(args, cwd=motor, env=env, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
@@ -63,6 +66,11 @@ def medir(motor, perfil, destino):
             if jogo.poll() is None:
                 os.killpg(jogo.pid, signal.SIGTERM)
             jogo.wait(timeout=10)
+    with telemetria.open() as arquivo:
+        eventos = list(csv.reader(arquivo))
+    assert any(r[1] == "motif" for r in eventos), eventos[:5]
+    for fase in ("introducao", "combate"):
+        assert any(r[1:3] == ["amostra", fase] and int(r[3]) > 0 for r in eventos), fase
     with destino.open() as arq:
         linhas = list(csv.DictReader(arq))
     assert len(linhas) >= 550 and linhas[-1]['tick'] == '550'

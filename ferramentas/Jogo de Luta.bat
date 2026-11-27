@@ -11,6 +11,7 @@ $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
+$inicioAtalho = Get-Date -Format 'HH:mm:ss.fff'
 $repo   = 'brenoalmeidatec/Jogo-de-Luta'
 $branch = 'mugen'   # branch com o jogo. Troque quando o PR for aceito.
 $ikemen = 'https://github.com/ikemen-engine/Ikemen-GO/releases/download/v1.0.0/Ikemen_GO-v1.0.0-windows.zip'
@@ -348,6 +349,30 @@ try {
     Write-Host "Usando o perfil normal: $($_.Exception.Message)" -ForegroundColor Yellow
 }
 
+# A coleta local e opcional. O CSV ja existe se o motor parar antes do motif.
+$env:NAZA_TELEMETRIA_CSV = $null
+if ($env:NAZA_TELEMETRIA -ne '0') {
+    try {
+        $pasta = Join-Path $base 'telemetria'
+        [IO.Directory]::CreateDirectory($pasta) | Out-Null
+        $arquivo = Join-Path $pasta ('sessao-{0}-{1}.csv' -f (Get-Date -Format 'yyyyMMdd-HHmmss-fff'), $PID)
+        $modo = if ($opcoes.ArgumentList) { 'leve' } else { 'normal' }
+        $configAtiva = if ($modo -eq 'leve') { $perfil } else { $cfg }
+        $iniAtivo = [IO.File]::ReadAllText($configAtiva)
+        $video = foreach ($chave in @('GameWidth','GameHeight','VSync','Framerate')) {
+            [regex]::Match($iniAtivo, "(?im)^$chave\s*=\s*(\d+)").Groups[1].Value
+        }
+        $dados = @($modo, $cpu, ($videos -join ' / '), $manif['@commit']) + $video
+        $campos = ($dados | ForEach-Object { '"' + ([string]$_).Replace('"','""') + '"' }) -join ','
+        $hora = Get-Date -Format 'HH:mm:ss.fff'
+        [IO.File]::WriteAllLines($arquivo, @('hora,evento,campos', "$inicioAtalho,atalho", "$hora,motor,$campos"))
+        $env:NAZA_TELEMETRIA_CSV = $arquivo
+        Write-Host "Relatorio de desempenho: $arquivo"
+        Get-ChildItem -LiteralPath $pasta -Filter 'sessao-*.csv' -File |
+            Where-Object { $_.Name -match '^sessao-\d{8}-\d{6}-\d{3}-\d+\.csv$' } |
+            Sort-Object Name -Descending | Select-Object -Skip 10 | Remove-Item -ErrorAction SilentlyContinue
+    } catch { Write-Host "Telemetria indisponivel: $($_.Exception.Message)" -ForegroundColor Yellow }
+}
 # 6. Abre o jogo
 Write-Host 'Abrindo o jogo!' -ForegroundColor Green
 Start-Process $exe @opcoes -WorkingDirectory $motor -WindowStyle Normal

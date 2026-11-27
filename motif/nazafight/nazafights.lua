@@ -1,3 +1,4 @@
+pcall(require, "data.nazafight.telemetria")
 -- Nazafights: modulo do motif, carregado pelo motor por [Files] module = nazafights.lua no system.def.
 -- Duas coisas: o MODO SUPER (abaixo) e a ESCOLHA DE MAPA em todo modo (no fim do arquivo).
 
