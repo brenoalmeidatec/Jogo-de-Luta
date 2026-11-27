@@ -1,6 +1,7 @@
 -- Roteiro em velocidade normal. Uma amostra do contador do motor por tick observado.
 do
   local t, terminou = 0, false
+  local abertura = {}
   local linhas = {"tick,fase,fps,ck,hazak,vida"}
   local function salvar()
     local f = assert(io.open("fps.csv", "w"))
@@ -8,7 +9,19 @@ do
     f:close()
   end
   hook.add("loop", "benchmark", function()
-    if terminou or roundState() ~= 2 then return end
+    if terminou then return end
+    if roundState() ~= 2 then
+      if t == 0 and roundState() == 1 then
+        abertura[#abertura+1] = getGameFPS()
+        if #abertura > 30 then table.remove(abertura, 1) end
+      end
+      return
+    end
+    if t == 0 then
+      for i, fps in ipairs(abertura) do
+        linhas[#linhas+1] = string.format("%d,luta,%.2f,-1,-1,-1", i-#abertura, fps)
+      end
+    end
     local original = id()
     t = t + 1
     local perto = t == 75 or t == 145

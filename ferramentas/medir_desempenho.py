@@ -65,7 +65,7 @@ def medir(motor, perfil, destino):
             jogo.wait(timeout=10)
     with destino.open() as arq:
         linhas = list(csv.DictReader(arq))
-    assert len(linhas) == 550
+    assert len(linhas) >= 550 and linhas[-1]['tick'] == '550'
     for fase in dict.fromkeys(l["fase"] for l in linhas):
         grupo = [l for l in linhas if l["fase"] == fase]
         print(destino.stem, fase, round(statistics.mean(float(l["fps"]) for l in grupo), 1),
