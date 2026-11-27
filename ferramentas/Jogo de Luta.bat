@@ -297,6 +297,57 @@ function Ajustar-Menus {
 }
 try { Ajustar-Menus } catch { Write-Host "Nao consegui ajustar os menus: $($_.Exception.Message)" -ForegroundColor Yellow }
 
+function Usar-PerfilLeve($cpu, $videos, $preferencia) {
+    if ($preferencia -eq 'leve') { return $true }
+    if ($preferencia -eq 'normal') { return $false }
+    $antigo = $cpu -match '\bi[357][ -]+(?:[MQ] *\d{3}|[2-4]\d{3}|\d{3})[A-Z]*(?:\s|$)'
+    $integrada = @($videos -match 'Intel.*HD Graphics').Count -gt 0
+    $dedicada = @($videos -match 'NVIDIA|GeForce|Quadro|AMD|Radeon|Intel.*Arc').Count -gt 0
+    return $antigo -and $integrada -and !$dedicada
+}
+
+function Configurar-VideoLeve($texto) {
+    $valores = @{}
+    foreach ($nome in @('GameWidth','GameHeight','WindowWidth','WindowHeight')) {
+        $m = [regex]::Match($texto, "(?im)^$nome\s*=\s*(\d+)")
+        if (!$m.Success) { throw "Configuracao ausente: $nome" }
+        $valores[$nome] = [int]$m.Groups[1].Value
+    }
+    $w = $valores.GameWidth
+    $h = $valores.GameHeight
+    if ($w -le 0 -or $h -le 0) { throw 'Resolucao invalida' }
+    if (!$valores.WindowWidth) { $valores.WindowWidth = $w }
+    if (!$valores.WindowHeight) { $valores.WindowHeight = $h }
+    $escala = [Math]::Min(1.0, 640.0 / $w)
+    $valores.GameWidth = [Math]::Max(1, [int][Math]::Round($w * $escala))
+    $valores.GameHeight = [Math]::Max(1, [int][Math]::Round($h * $escala))
+    $valores.WindowScaleMode = 0
+    $valores.MSAA = 0
+    foreach ($nome in $valores.Keys) {
+        $texto = [regex]::Replace($texto, "(?im)^($nome\s*=\s*)\d+", ('${1}' + $valores[$nome]))
+    }
+    return $texto
+}
+
+$opcoes = @{}
+try {
+    $cpu = ''; $videos = @()
+    if ($env:NAZA_PERFIL -notin @('leve','normal')) {
+        $cpu = (Get-CimInstance Win32_Processor | Select-Object -First 1).Name
+        $videos = @(Get-CimInstance Win32_VideoController | ForEach-Object { $_.Name })
+    }
+    if ((Test-Path $cfg) -and (Usar-PerfilLeve $cpu $videos $env:NAZA_PERFIL)) {
+        $perfil = Join-Path $motor 'save\nazafights-leve.ini'
+        $origem = if (Test-Path $perfil) { $perfil } else { $cfg }
+        $texto = Configurar-VideoLeve ([IO.File]::ReadAllText($origem))
+        [IO.File]::WriteAllText($perfil, $texto)
+        $opcoes.ArgumentList = '-config save/nazafights-leve.ini'
+        Write-Host 'Modo desempenho: renderizacao leve com escala de pixel art.' -ForegroundColor Cyan
+    }
+} catch {
+    Write-Host "Usando o perfil normal: $($_.Exception.Message)" -ForegroundColor Yellow
+}
+
 # 6. Abre o jogo
 Write-Host 'Abrindo o jogo!' -ForegroundColor Green
-Start-Process $exe -WorkingDirectory $motor -WindowStyle Normal
+Start-Process $exe @opcoes -WorkingDirectory $motor -WindowStyle Normal
