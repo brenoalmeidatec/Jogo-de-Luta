@@ -1,0 +1,236 @@
+{
+ "ref": "quadros_e_firmes_hd/e_referencia_ginga/00.png",
+ "pecas": {
+  "cabeca": {
+   "arquivo": "cabeca.png",
+   "origem": [
+    504,
+    298
+   ],
+   "junta": [
+    572,
+    396
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_e_firmes_hd/e_referencia_ginga/00.png",
+   "sobra": "cabeca_sobra.png",
+   "origem_sobra": [
+    495,
+    289
+   ],
+   "furo": "cabeca_furo.png"
+  },
+  "braco_tras": {
+   "arquivo": "braco_tras.png",
+   "origem": [
+    429,
+    362
+   ],
+   "junta": [
+    505,
+    410
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_e_firmes_hd/e_referencia_ginga/00.png",
+   "sobra": "braco_tras_sobra.png",
+   "origem_sobra": [
+    420,
+    353
+   ],
+   "furo": "braco_tras_furo.png"
+  },
+  "braco_frente": {
+   "arquivo": "braco_frente.png",
+   "origem": [
+    599,
+    386
+   ],
+   "junta": [
+    610,
+    420
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_e_firmes_hd/e_referencia_ginga/00.png",
+   "sobra": "braco_frente_sobra.png",
+   "origem_sobra": [
+    590,
+    377
+   ],
+   "furo": "braco_frente_furo.png"
+  },
+  "tronco": {
+   "arquivo": "tronco.png",
+   "origem": [
+    433,
+    362
+   ],
+   "junta": [
+    550,
+    488
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_e_firmes_hd/e_referencia_ginga/00.png",
+   "sobra": "tronco_sobra.png",
+   "origem_sobra": [
+    424,
+    353
+   ],
+   "furo": "tronco_furo.png"
+  },
+  "quadril": {
+   "arquivo": "quadril.png",
+   "origem": [
+    500,
+    471
+   ],
+   "junta": [
+    550,
+    505
+   ],
+   "mae": null,
+   "fonte": "quadros_e_firmes_hd/e_referencia_ginga/00.png",
+   "sobra": "quadril_sobra.png",
+   "origem_sobra": [
+    491,
+    462
+   ],
+   "furo": "quadril_furo.png"
+  },
+  "coxa_tras": {
+   "arquivo": "coxa_tras.png",
+   "origem": [
+    433,
+    517
+   ],
+   "junta": [
+    505,
+    528
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_e_firmes_hd/e_referencia_ginga/00.png",
+   "sobra": "coxa_tras_sobra.png",
+   "origem_sobra": [
+    424,
+    508
+   ],
+   "furo": "coxa_tras_furo.png"
+  },
+  "canela_tras": {
+   "arquivo": "canela_tras.png",
+   "origem": [
+    433,
+    571
+   ],
+   "junta": [
+    495,
+    583
+   ],
+   "mae": "coxa_tras",
+   "fonte": "quadros_e_firmes_hd/e_referencia_ginga/00.png",
+   "sobra": "canela_tras_sobra.png",
+   "origem_sobra": [
+    424,
+    562
+   ],
+   "furo": "canela_tras_furo.png"
+  },
+  "coxa_frente": {
+   "arquivo": "coxa_frente.png",
+   "origem": [
+    547,
+    517
+   ],
+   "junta": [
+    588,
+    528
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_e_firmes_hd/e_referencia_ginga/00.png",
+   "sobra": "coxa_frente_sobra.png",
+   "origem_sobra": [
+    538,
+    508
+   ],
+   "furo": "coxa_frente_furo.png"
+  },
+  "canela_frente": {
+   "arquivo": "canela_frente.png",
+   "origem": [
+    545,
+    571
+   ],
+   "junta": [
+    604,
+    583
+   ],
+   "mae": "coxa_frente",
+   "fonte": "quadros_e_firmes_hd/e_referencia_ginga/00.png",
+   "sobra": "canela_frente_sobra.png",
+   "origem_sobra": [
+    536,
+    562
+   ],
+   "furo": "canela_frente_furo.png"
+  },
+  "perna_tras": {
+   "arquivo": "perna_tras.png",
+   "origem": [
+    433,
+    517
+   ],
+   "junta": [
+    505,
+    528
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_e_firmes_hd/e_referencia_ginga/00.png",
+   "sobra": "perna_tras_sobra.png",
+   "origem_sobra": [
+    424,
+    508
+   ]
+  },
+  "perna_frente": {
+   "arquivo": "perna_frente.png",
+   "origem": [
+    545,
+    517
+   ],
+   "junta": [
+    588,
+    528
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_e_firmes_hd/e_referencia_ginga/00.png",
+   "sobra": "perna_frente_sobra.png",
+   "origem_sobra": [
+    536,
+    508
+   ]
+  }
+ },
+ "regua": {
+  "quadril": 30.0,
+  "tronco": 88.6,
+  "cabeca": 66.1,
+  "braco_tras": 92.7,
+  "braco_frente": 43.0,
+  "coxa_tras": 55.9,
+  "canela_tras": 42.5,
+  "coxa_frente": 57.3,
+  "canela_frente": 39.5,
+  "entre_coxas": 83.0,
+  "ombros": 105.5
+ },
+ "pontas_faixa": {
+  "arquivo": "pontas_faixa.png",
+  "origem": [
+   547,
+   498
+  ],
+  "no": [
+   575.6742783283067,
+   498.0
+  ]
+ }
+}

@@ -1,0 +1,108 @@
+{
+ "acao": 181,
+ "folha": "vitoria",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 6,
+   "caixa": false,
+   "de": "vitoria/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 6,
+   "caixa": false,
+   "de": "vitoria/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 6,
+   "caixa": false,
+   "de": "vitoria/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "vitoria/03"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "vitoria/03"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "vitoria/03"
+  },
+  {
+   "desenho": 6,
+   "ticks": 6,
+   "caixa": false,
+   "de": "vitoria/04"
+  },
+  {
+   "desenho": 7,
+   "ticks": 6,
+   "caixa": false,
+   "de": "vitoria/05"
+  },
+  {
+   "desenho": 8,
+   "ticks": 6,
+   "caixa": false,
+   "de": "vitoria/06"
+  },
+  {
+   "desenho": 9,
+   "ticks": 8,
+   "caixa": false,
+   "de": "vitoria/07"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "vitoria/00",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "vitoria/01",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "vitoria/02",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "vitoria/03",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "vitoria/04",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "vitoria/05",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "vitoria/06",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "vitoria/07",
+   "ticks": 8,
+   "caixa": false
+  }
+ ]
+}

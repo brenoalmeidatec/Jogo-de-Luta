@@ -1,0 +1,750 @@
+{
+ "id": "katiara",
+ "nome": "Katiara",
+ "musica": "musicas/katiara.ogg",
+ "musica_nome": "Cenário Katiara",
+ "tela": [
+  1280,
+  720
+ ],
+ "largura_mundo": 1458,
+ "subida": 160,
+ "chao_y": 660,
+ "camera": {
+  "tensao": 200,
+  "segue_vertical": 0.6,
+  "tensao_chao": 120
+ },
+ "jogadores": {
+  "p1x": -280,
+  "p2x": 280,
+  "margem_tela": 60
+ },
+ "reflexo": 0,
+ "camadas": [
+  {
+   "nome": "ceu",
+   "imagem": "ceu.png",
+   "delta": [
+    0,
+    0
+   ],
+   "x": 0,
+   "y": -200
+  },
+  {
+   "nome": "nuvens",
+   "imagem": "nuvens.png",
+   "delta": [
+    0.1,
+    0.1
+   ],
+   "y": -200,
+   "velocidade": [
+    -0.15,
+    0
+   ],
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    0,
+    0
+   ]
+  },
+  {
+   "nome": "d_ceu_1",
+   "imagem": "d_ceu_1.png",
+   "delta": [
+    0,
+    0
+   ],
+   "x": 0,
+   "y": -220,
+   "mistura": "subtrai",
+   "nivel": "1"
+  },
+  {
+   "nome": "d_ceu_2",
+   "imagem": "d_ceu_2.png",
+   "delta": [
+    0,
+    0
+   ],
+   "x": 0,
+   "y": -220,
+   "mistura": "subtrai",
+   "nivel": "2"
+  },
+  {
+   "nome": "rua",
+   "imagem": "rua.png",
+   "delta": [
+    1,
+    1
+   ],
+   "y": -148,
+   "nivel": "<2"
+  },
+  {
+   "nome": "pipa",
+   "folha": {
+    "imagem": "pipa.png",
+    "n": 8
+   },
+   "ticks": 7,
+   "delta": [
+    0.9,
+    0.9
+   ],
+   "x": 900,
+   "y": 20,
+   "seno_x": [
+    40,
+    420,
+    0
+   ],
+   "seno_y": [
+    18,
+    260,
+    0
+   ],
+   "nivel": "0"
+  },
+  {
+   "nome": "varal",
+   "folha": {
+    "imagem": "varal.png",
+    "n": 8
+   },
+   "ticks": 9,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 286,
+   "y": -48,
+   "nivel": "<2"
+  },
+  {
+   "nome": "guardas",
+   "folha": {
+    "imagem": "guardas.png",
+    "n": 8
+   },
+   "ticks": [
+    14,
+    14,
+    12,
+    10,
+    16,
+    16,
+    12,
+    14
+   ],
+   "delta": [
+    1,
+    1
+   ],
+   "x": 404,
+   "y": 248,
+   "nivel": "0"
+  },
+  {
+   "nome": "moto",
+   "imagem": "moto.png",
+   "delta": [
+    1,
+    1
+   ],
+   "x": -2600,
+   "y": 352,
+   "velocidade": [
+    7,
+    0
+   ],
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    9000,
+    0
+   ],
+   "seno_y": [
+    1,
+    6,
+    0
+   ],
+   "nivel": "0"
+  },
+  {
+   "nome": "d01_rachaduras",
+   "imagem": "d_rachaduras_2.png",
+   "delta": [
+    1,
+    1
+   ],
+   "x": -89,
+   "y": 0,
+   "nivel": "1"
+  },
+  {
+   "nome": "d02_rachaduras",
+   "imagem": "d_rachaduras_3.png",
+   "delta": [
+    1,
+    1
+   ],
+   "x": -89,
+   "y": 0,
+   "nivel": "1"
+  },
+  {
+   "nome": "d03_fumaca",
+   "folha": {
+    "imagem": "d_fumaca_98x234_1.png",
+    "n": 8
+   },
+   "ticks": 7,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 375,
+   "y": -85,
+   "nivel": "1"
+  },
+  {
+   "nome": "d04_fogo",
+   "folha": {
+    "imagem": "d_fogo_90_0.png",
+    "n": 8
+   },
+   "ticks": 5,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 380,
+   "y": 104,
+   "nivel": "1"
+  },
+  {
+   "nome": "d05_fumaca",
+   "folha": {
+    "imagem": "d_fumaca_109x260_2.png",
+    "n": 8
+   },
+   "ticks": 7,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 816,
+   "y": -135,
+   "nivel": "1"
+  },
+  {
+   "nome": "d06_fogo",
+   "folha": {
+    "imagem": "d_fogo_100_3.png",
+    "n": 8
+   },
+   "ticks": 5,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 822,
+   "y": 75,
+   "nivel": "1"
+  },
+  {
+   "nome": "d07_fumaca",
+   "folha": {
+    "imagem": "d_fumaca_98x234_3.png",
+    "n": 8
+   },
+   "ticks": 7,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 1106,
+   "y": -47,
+   "nivel": "1"
+  },
+  {
+   "nome": "d08_fogo",
+   "folha": {
+    "imagem": "d_fogo_90_5.png",
+    "n": 8
+   },
+   "ticks": 5,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 1111,
+   "y": 142,
+   "nivel": "1"
+  },
+  {
+   "nome": "d09_entulho_m",
+   "imagem": "d_entulho_m_100.png",
+   "delta": [
+    1,
+    1
+   ],
+   "x": 44,
+   "y": 436,
+   "nivel": "1"
+  },
+  {
+   "nome": "d10_entulho_p",
+   "imagem": "d_entulho_p_64.png",
+   "delta": [
+    1,
+    1
+   ],
+   "x": 965,
+   "y": 468,
+   "nivel": "1"
+  },
+  {
+   "nome": "d11_correndo",
+   "folha": {
+    "imagem": "d_correndo_0_250_d.png",
+    "n": 4
+   },
+   "ticks": 5,
+   "delta": [
+    1,
+    1
+   ],
+   "x": -900,
+   "y": 316,
+   "velocidade": [
+    6.5,
+    0
+   ],
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    2300,
+    0
+   ],
+   "nivel": "1"
+  },
+  {
+   "nome": "d12_correndo",
+   "folha": {
+    "imagem": "d_correndo_1_250_e.png",
+    "n": 4
+   },
+   "ticks": 5,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 2400,
+   "y": 322,
+   "velocidade": [
+    -5.5,
+    0
+   ],
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    3100,
+    0
+   ],
+   "nivel": "1"
+  },
+  {
+   "nome": "d13_fagulhas",
+   "folha": {
+    "imagem": "d_fagulhas_5.png",
+    "n": 8
+   },
+   "ticks": 6,
+   "delta": [
+    1,
+    1
+   ],
+   "x": -128,
+   "y": 80,
+   "mistura": "soma",
+   "nivel": "1"
+  },
+  {
+   "nome": "d14_clarao",
+   "folha": {
+    "imagem": "d_clarao_1.png",
+    "n": 6
+   },
+   "ticks": [
+    5,
+    4,
+    6,
+    3,
+    5,
+    4
+   ],
+   "delta": [
+    0,
+    0
+   ],
+   "x": 0,
+   "y": 0,
+   "mistura": "soma",
+   "nivel": "1"
+  },
+  {
+   "nome": "rua_ruina",
+   "imagem": "rua_ruina.png",
+   "delta": [
+    1,
+    1
+   ],
+   "y": -148,
+   "nivel": "2"
+  },
+  {
+   "nome": "d15_fumaca",
+   "folha": {
+    "imagem": "d_fumaca_131x312_11.png",
+    "n": 8
+   },
+   "ticks": 7,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 130,
+   "y": -206,
+   "nivel": "2"
+  },
+  {
+   "nome": "d16_fogo",
+   "folha": {
+    "imagem": "d_fogo_120_0.png",
+    "n": 8
+   },
+   "ticks": 5,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 138,
+   "y": 46,
+   "nivel": "2"
+  },
+  {
+   "nome": "d17_fumaca",
+   "folha": {
+    "imagem": "d_fumaca_120x286_12.png",
+    "n": 8
+   },
+   "ticks": 7,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 516,
+   "y": -43,
+   "nivel": "2"
+  },
+  {
+   "nome": "d18_fogo",
+   "folha": {
+    "imagem": "d_fogo_110_4.png",
+    "n": 8
+   },
+   "ticks": 5,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 522,
+   "y": 188,
+   "nivel": "2"
+  },
+  {
+   "nome": "d19_fumaca",
+   "folha": {
+    "imagem": "d_fumaca_142x338_13.png",
+    "n": 8
+   },
+   "ticks": 7,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 695,
+   "y": -266,
+   "nivel": "2"
+  },
+  {
+   "nome": "d20_fogo",
+   "folha": {
+    "imagem": "d_fogo_130_2.png",
+    "n": 8
+   },
+   "ticks": 5,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 702,
+   "y": 7,
+   "nivel": "2"
+  },
+  {
+   "nome": "d21_fumaca",
+   "folha": {
+    "imagem": "d_fumaca_98x234_14.png",
+    "n": 8
+   },
+   "ticks": 7,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 888,
+   "y": -9,
+   "nivel": "2"
+  },
+  {
+   "nome": "d22_fogo",
+   "folha": {
+    "imagem": "d_fogo_90_6.png",
+    "n": 8
+   },
+   "ticks": 5,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 893,
+   "y": 180,
+   "nivel": "2"
+  },
+  {
+   "nome": "d23_fumaca",
+   "folha": {
+    "imagem": "d_fumaca_131x312_15.png",
+    "n": 8
+   },
+   "ticks": 7,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 1072,
+   "y": -74,
+   "nivel": "2"
+  },
+  {
+   "nome": "d24_fogo",
+   "folha": {
+    "imagem": "d_fogo_120_1.png",
+    "n": 8
+   },
+   "ticks": 5,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 1078,
+   "y": 178,
+   "nivel": "2"
+  },
+  {
+   "nome": "d25_carro",
+   "imagem": "d_carro_170.png",
+   "delta": [
+    1,
+    1
+   ],
+   "x": 1003,
+   "y": 518,
+   "nivel": "2"
+  },
+  {
+   "nome": "d26_fogo",
+   "folha": {
+    "imagem": "d_fogo_110_3.png",
+    "n": 8
+   },
+   "ticks": 5,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 1054,
+   "y": 512,
+   "nivel": "2"
+  },
+  {
+   "nome": "d27_caido_velho",
+   "imagem": "d_caido_velho_64.png",
+   "delta": [
+    1,
+    1
+   ],
+   "x": 443,
+   "y": 592,
+   "nivel": "2"
+  },
+  {
+   "nome": "d28_caida_amarela",
+   "imagem": "d_caida_amarela_60_e.png",
+   "delta": [
+    1,
+    1
+   ],
+   "x": 747,
+   "y": 590,
+   "nivel": "2"
+  },
+  {
+   "nome": "d29_correndo",
+   "folha": {
+    "imagem": "d_correndo_0_250_d.png",
+    "n": 4
+   },
+   "ticks": 5,
+   "delta": [
+    1,
+    1
+   ],
+   "x": -700,
+   "y": 324,
+   "velocidade": [
+    7.5,
+    0
+   ],
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    1700,
+    0
+   ],
+   "nivel": "2"
+  },
+  {
+   "nome": "d30_correndo",
+   "folha": {
+    "imagem": "d_correndo_1_250_e.png",
+    "n": 4
+   },
+   "ticks": 5,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 2200,
+   "y": 330,
+   "velocidade": [
+    -6,
+    0
+   ],
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    2300,
+    0
+   ],
+   "nivel": "2"
+  },
+  {
+   "nome": "d31_correndo",
+   "folha": {
+    "imagem": "d_correndo_0_250_e.png",
+    "n": 4
+   },
+   "ticks": 5,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 3600,
+   "y": 320,
+   "velocidade": [
+    -8,
+    0
+   ],
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    2900,
+    0
+   ],
+   "nivel": "2"
+  },
+  {
+   "nome": "d32_fagulhas",
+   "folha": {
+    "imagem": "d_fagulhas_6.png",
+    "n": 8
+   },
+   "ticks": 6,
+   "delta": [
+    1,
+    1
+   ],
+   "x": -128,
+   "y": 40,
+   "mistura": "soma",
+   "nivel": "2"
+  },
+  {
+   "nome": "d33_clarao",
+   "folha": {
+    "imagem": "d_clarao_2.png",
+    "n": 6
+   },
+   "ticks": [
+    5,
+    4,
+    6,
+    3,
+    5,
+    4
+   ],
+   "delta": [
+    0,
+    0
+   ],
+   "x": 0,
+   "y": 0,
+   "mistura": "soma",
+   "nivel": "2"
+  },
+  {
+   "nome": "d34_caida_sacola",
+   "imagem": "d_caida_sacola_80.png",
+   "delta": [
+    1,
+    1
+   ],
+   "x": 40,
+   "y": 638,
+   "nivel": "2",
+   "frente": true
+  }
+ ]
+}

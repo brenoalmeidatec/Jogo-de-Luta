@@ -1,0 +1,71 @@
+{
+ "acao": 1501,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 10,
+   "caixa": false,
+   "de": "chute_baixo/02|foco"
+  },
+  {
+   "desenho": 1,
+   "ticks": 1,
+   "caixa": false,
+   "de": "chute_baixo/03|foco"
+  },
+  {
+   "desenho": 2,
+   "ticks": 9,
+   "caixa": true,
+   "de": "chute_baixo/04|esforco"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_baixo/04|esforco"
+  },
+  {
+   "desenho": 4,
+   "ticks": 11,
+   "caixa": false,
+   "de": "chute_baixo/05|foco"
+  },
+  {
+   "desenho": 5,
+   "ticks": 11,
+   "caixa": false,
+   "de": "chute_baixo/06|foco"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_baixo/07|foco"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_baixo/07|foco"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_baixo/07|foco"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_baixo/07|foco"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "chute_baixo/07|foco"
+  }
+ ]
+}

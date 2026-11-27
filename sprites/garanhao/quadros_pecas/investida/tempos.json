@@ -1,0 +1,117 @@
+{
+ "acao": 10215,
+ "caixa": [
+  48,
+  -276,
+  174,
+  -168
+ ],
+ "origem": [
+  "cabecada_touro/00",
+  "cabecada_touro/01",
+  "cabecada_touro/02",
+  "cabecada_touro/03",
+  "cabecada_touro/04",
+  "cabecada_touro/05",
+  "cabecada_touro/06",
+  "cabecada_touro/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "cabecada_touro/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "cabecada_touro/00"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "cabecada_touro/01"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "cabecada_touro/01"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "cabecada_touro/02"
+  },
+  {
+   "desenho": 5,
+   "ticks": 3,
+   "caixa": false,
+   "de": "cabecada_touro/02"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "cabecada_touro/03"
+  },
+  {
+   "desenho": 7,
+   "ticks": 6,
+   "caixa": true,
+   "de": "cabecada_touro/04"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "cabecada_touro/05"
+  },
+  {
+   "desenho": 9,
+   "ticks": 3,
+   "caixa": false,
+   "de": "cabecada_touro/05"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "cabecada_touro/06"
+  },
+  {
+   "desenho": 11,
+   "ticks": 2,
+   "caixa": false,
+   "de": "cabecada_touro/06"
+  },
+  {
+   "desenho": 12,
+   "ticks": 2,
+   "caixa": false,
+   "de": "cabecada_touro/06"
+  },
+  {
+   "desenho": 13,
+   "ticks": 2,
+   "caixa": false,
+   "de": "cabecada_touro/07"
+  },
+  {
+   "desenho": 14,
+   "ticks": 2,
+   "caixa": false,
+   "de": "cabecada_touro/07"
+  },
+  {
+   "desenho": 15,
+   "ticks": 2,
+   "caixa": false,
+   "de": "cabecada_touro/07"
+  }
+ ]
+}

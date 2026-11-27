@@ -1,14 +1,17 @@
 @echo off
-title Jogo de Luta
-powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((Get-Content -LiteralPath '%~f0' -Raw) -split '#PS#START\r?\n',2)[1]"
+title Nazafights
+set "NAZA_BAT=%~f0"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((Get-Content -LiteralPath '%~f0' -Raw) -split '#PS#START\r?\n',2)[1]" & exit /b
 exit /b
 #PS#START
-# Jogo de Luta: baixa a versao mais nova do GitHub e abre o jogo no IKEMEN GO.
-# Tudo fica em %USERPROFILE%\JogoDeLuta. O IKEMEN GO so e baixado na primeira vez.
+# Nazafights: baixa a versao mais nova do GitHub e abre o jogo no IKEMEN GO.
+# Tudo fica em %USERPROFILE%\JogoDeLuta (pasta com o nome antigo, para nao baixar o IKEMEN de novo).
+# O IKEMEN GO so e baixado na primeira vez.
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
+$inicioAtalho = Get-Date -Format 'HH:mm:ss.fff'
 $repo   = 'brenoalmeidatec/Jogo-de-Luta'
 $branch = 'mugen'   # branch com o jogo. Troque quando o PR for aceito.
 $ikemen = 'https://github.com/ikemen-engine/Ikemen-GO/releases/download/v1.0.0/Ikemen_GO-v1.0.0-windows.zip'
@@ -23,27 +26,108 @@ function Fechar($msg) {
     exit 1
 }
 
-# 1. Atualiza o jogo
+# 1. Atualiza o jogo. O repositorio tem centenas de MB de sprites que o jogo nao usa; so as pastas chars (lutadores)
+# e motif (layout Nazafights: titulo, selecao, VS e HUD) valem.
+# Pergunta primeiro so o sha do commit (40 bytes): se e o mesmo da ultima atualizacao completa e os arquivos estao
+# no lugar (pengaro.def, o system.def do motif e todo arquivo do manifesto), nao baixa nada.
+# Se mudou, pega so a lista dessas duas pastas e baixa os arquivos delas que mudaram (compara o hash de cada arquivo).
+# Cada arquivo baixa para .part e so troca o antigo quando terminou: queda de rede nao deixa .sff pela metade.
+$manifesto = Join-Path $base 'manifesto.json'
+$manif = @{}
+if (Test-Path $manifesto) {
+    try {
+        (Get-Content $manifesto -Raw | ConvertFrom-Json).PSObject.Properties | ForEach-Object { $manif[$_.Name] = $_.Value }
+    } catch {
+        Write-Host 'O registro do que ja foi baixado estava estragado; vou conferir todos os arquivos.' -ForegroundColor Yellow
+        $manif = @{}
+    }
+}
+$mudou = $false
 try {
-    Write-Host 'Baixando a versao mais nova do jogo no GitHub...'
-    $zip = Join-Path $base 'jogo.zip'
-    $tmp = Join-Path $base 'tmp'
-    Invoke-WebRequest "https://github.com/$repo/archive/refs/heads/$branch.zip" -OutFile $zip -UseBasicParsing
-    if (Test-Path $tmp) { Remove-Item $tmp -Recurse -Force }
-    Expand-Archive $zip $tmp -Force
-    $src = (Get-ChildItem $tmp -Directory | Select-Object -First 1).FullName
-    robocopy $src $game /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
-    Remove-Item $tmp -Recurse -Force
-    Remove-Item $zip -Force
-    Write-Host 'Jogo atualizado!' -ForegroundColor Green
+    Write-Host 'Procurando a versao mais nova do jogo no GitHub...'
+    $ua = @{ 'User-Agent' = 'JogoDeLuta' }
+    $api = New-Object Net.WebClient
+    $api.Headers.Add('User-Agent', 'JogoDeLuta')
+    $api.Headers.Add('Accept', 'application/vnd.github.sha')
+    $commit = $api.DownloadString("https://api.github.com/repos/$repo/commits/$branch").Trim()
+    if ($commit -notmatch '^[0-9a-f]{40}$') { throw "resposta estranha do GitHub: $commit" }
+    # O proprio launcher tambem se atualiza: compara com o ferramentas/Jogo de Luta.bat do mesmo commit e, se mudou,
+    # troca este arquivo e abre o novo. O "& exit /b" da linha do powershell (la em cima) faz o cmd sair sem reler
+    # este arquivo depois da troca. NAZA_ATUALIZOU evita trocar duas vezes seguidas.
+    if ($env:NAZA_BAT -and -not $env:NAZA_ATUALIZOU) {
+        $web = New-Object Net.WebClient
+        $web.Headers.Add('User-Agent', 'JogoDeLuta')
+        $novo = $web.DownloadData("https://raw.githubusercontent.com/$repo/$commit/ferramentas/Jogo%20de%20Luta.bat")
+        $txtNovo = [Text.Encoding]::UTF8.GetString($novo) -replace "`r`n", "`n"
+        $txtAtual = [IO.File]::ReadAllText($env:NAZA_BAT) -replace "`r`n", "`n"
+        if ($txtNovo -match '#PS#START' -and $txtNovo -ne $txtAtual) {
+            Write-Host 'Atualizando o proprio launcher...' -ForegroundColor Yellow
+            [IO.File]::WriteAllBytes("$env:NAZA_BAT.novo", $novo)
+            Move-Item -LiteralPath "$env:NAZA_BAT.novo" -Destination $env:NAZA_BAT -Force
+            $env:NAZA_ATUALIZOU = '1'
+            Start-Process cmd -ArgumentList '/c', "`"$env:NAZA_BAT`""
+            exit 0
+        }
+    }
+    # Atalho so vale se, alem do commit igual, existem os dois marcadores e todo arquivo do manifesto.
+    $marcadores = @('chars/pengaro/pengaro.def', 'motif/nazafight/system.def') + @($manif.Keys | Where-Object { $_ -ne '@commit' })
+    $faltando = @($marcadores | Where-Object { -not (Test-Path -LiteralPath (Join-Path $game ($_ -replace '/', '\'))) })
+    if ($manif['@commit'] -eq $commit -and $faltando.Count -eq 0) {
+        Write-Host 'O jogo ja esta na versao mais nova.' -ForegroundColor Green
+    } else {
+        $raiz = Invoke-RestMethod "https://api.github.com/repos/$repo/git/trees/$commit" -Headers $ua
+        # Cada pasta tem a sua subarvore (sha proprio); o caminho de cada arquivo leva o nome da pasta na frente.
+        $arquivos = @()
+        foreach ($nome in @('chars', 'motif', 'stages')) {
+            $pasta = @($raiz.tree | Where-Object { $_.path -eq $nome -and $_.type -eq 'tree' })
+            if ($pasta.Count -ne 1) { throw "a pasta $nome nao apareceu no GitHub" }
+            $arvore = Invoke-RestMethod "https://api.github.com/repos/$repo/git/trees/$($pasta[0].sha)?recursive=1" -Headers $ua
+            if ($arvore.truncated) { throw "a lista de arquivos de $nome veio cortada" }
+            $arquivos += @($arvore.tree | Where-Object { $_.type -eq 'blob' } | ForEach-Object {
+                [pscustomobject]@{ caminho = "$nome/$($_.path)"; sha = $_.sha }
+            })
+        }
+        # Os .def por ultimo e o system.def do motif no fim de tudo: se a rede cair no meio, o marcador que liga o
+        # layout (e o .def de cada lutador) so existe quando os arquivos que ele cita ja chegaram.
+        $arquivos = @($arquivos | Sort-Object { $_.caminho -eq 'motif/nazafight/system.def' }, { $_.caminho -like '*.def' }, caminho)
+        $wc = New-Object Net.WebClient
+        $wc.Headers.Add('User-Agent', 'JogoDeLuta')
+        $i = 0
+        foreach ($a in $arquivos) {
+            $i++
+            $caminho = $a.caminho
+            $dest = Join-Path $game ($caminho -replace '/', '\')
+            if ((Test-Path $dest) -and $manif[$caminho] -eq $a.sha) { continue }
+            New-Item -ItemType Directory -Force (Split-Path $dest) | Out-Null
+            Write-Host "Baixando $caminho ($i de $($arquivos.Count))..."
+            $url = "https://raw.githubusercontent.com/$repo/$commit/" + (($caminho -split '/' | ForEach-Object { [Uri]::EscapeDataString($_) }) -join '/')
+            $parte = "$dest.part"
+            $wc.DownloadFile($url, $parte)
+            Move-Item -LiteralPath $parte -Destination $dest -Force
+            $manif[$caminho] = $a.sha
+            $mudou = $true
+        }
+        # Esquece arquivos que sairam do repositorio; senao o atalho acima nunca mais vale se um deles sumir do disco.
+        $noRepo = @{}; foreach ($a in $arquivos) { $noRepo[$a.caminho] = $true }
+        foreach ($k in @($manif.Keys)) { if ($k -ne '@commit' -and -not $noRepo.ContainsKey($k)) { $manif.Remove($k) } }
+        $manif['@commit'] = $commit
+        $mudou = $true
+        Write-Host 'Jogo atualizado!' -ForegroundColor Green
+    }
 } catch {
     Write-Host "Nao consegui atualizar: $($_.Exception.Message)" -ForegroundColor Yellow
     if (-not (Test-Path (Join-Path $game 'chars\pengaro\pengaro.def'))) {
         Fechar 'Ainda nao tem nenhuma versao do jogo baixada. Confira a internet e tente de novo.'
     }
     Write-Host 'Abrindo a ultima versao que ja estava baixada.'
+} finally {
+    if ($mudou -and $manif.Count -gt 0) {
+        $manif | ConvertTo-Json | Set-Content "$manifesto.tmp" -Encoding ASCII
+        Move-Item -LiteralPath "$manifesto.tmp" -Destination $manifesto -Force
+    }
 }
 
+$inicioInstalacao = Get-Date -Format 'HH:mm:ss.fff'
 # 2. Baixa o IKEMEN GO na primeira vez
 $exe = Join-Path $motor 'Ikemen_GO.exe'
 if (-not (Test-Path $exe)) {
@@ -58,15 +142,248 @@ if (-not (Test-Path $exe)) {
     }
 }
 
-# 3. Coloca o Pengaro no motor e na tela de selecao
-robocopy (Join-Path $game 'chars\pengaro') (Join-Path $motor 'chars\pengaro') /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
+# 3. Instala os lutadores disponiveis e os registra na selecao.
 $select = Join-Path $motor 'data\select.def'
 $texto = [IO.File]::ReadAllText($select)
-if ($texto -notmatch '(?m)^pengaro,') {
-    $texto = $texto -replace '(?m)^randomselect', "pengaro, stages/stage0.def`r`nrandomselect"
-    [IO.File]::WriteAllText($select, $texto)
+# Cenarios Nazafights (stages\ do jogo) vao para o stages\ do motor sem /MIR, que apagaria os cenarios do proprio motor.
+# Com a Maria Fumaca instalada, ela vira o cenario das lutas e entra na lista de cenarios.
+$cenario = 'stages/stage0-720.def'
+if (Test-Path (Join-Path $game 'stages\maria_fumaca.def')) {
+    robocopy (Join-Path $game 'stages') (Join-Path $motor 'stages') /E /NFL /NDL /NJH /NJS /NP | Out-Null
+    if ($LASTEXITCODE -ge 8) { Fechar 'Nao consegui instalar os cenarios.' }
+    $cenario = 'stages/maria_fumaca.def'
+    $texto = [regex]::Replace($texto, '(?m)^(\s*(?:pengaro|hazaki|gutto|raiclaven|ck|gbzin)\s*,\s*)stages/stage0[-\w]*\.def', "`$1$cenario")
+    # Todo cenario Nazafights (menos o de teste da branch cenarios) entra na tela de escolha de mapa (issue #35).
+    foreach ($def in @(Get-ChildItem (Join-Path $game 'stages') -Filter '*.def' | Where-Object { $_.BaseName -ne 'teste' } | Sort-Object Name -Descending)) {
+        $linha = "stages/$($def.Name)"
+        if ($texto -notmatch ('(?m)^\s*' + [regex]::Escape($linha))) {
+            # cada um entra logo abaixo do [ExtraStages]: por isso a volta e de tras para frente (fica em ordem alfabetica)
+            $texto = [regex]::Replace($texto, '(?im)^\[ExtraStages\][^\r\n]*\r?\n', "`$0$linha`r`n")
+        }
+    }
+}
+foreach ($lutador in @('pengaro', 'hazaki', 'gutto', 'raiclaven', 'ck', 'gbzin')) {
+    $origem = Join-Path $game "chars\$lutador"
+    if (-not (Test-Path (Join-Path $origem "$lutador.def"))) { continue }
+    robocopy $origem (Join-Path $motor "chars\$lutador") /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
+    if ($LASTEXITCODE -ge 8) { Fechar "Nao consegui instalar $lutador." }
+    if ($texto -notmatch "(?m)^\s*$lutador\s*(?:,|$)") {
+        $texto = $texto -replace '(?m)^randomselect', "$lutador, $cenario`r`nrandomselect"
+    }
+}
+# Tira da selecao os lutadores de exemplo que vem com o IKEMEN (Kung Fu Man e variacoes): so comenta a linha,
+# os arquivos ficam (o motor ainda pode precisar deles).
+$texto = [regex]::Replace($texto, '(?m)^([ \t]*kfm\w*[ \t]*,)', ';$1')
+# Tira da escolha os cenarios de exemplo do IKEMEN (Breno, issue #34): fica so o Training Room HD azul
+# (stage0-720, cenario de teste) e os de Nazare. So comenta a linha no [ExtraStages], os arquivos ficam.
+$texto = [regex]::Replace($texto, '(?m)^([ \t]*stages/(?:stage0|stage1|stage3d|stage3d_outline|stageZ|interactivestage|kfm)\.def[ \t]*(?:,|\r?$))', ';$1')
+[IO.File]::WriteAllText($select, $texto)
+
+# Layout Nazafights: espelha so a pasta dele em data\nazafight. O /MIR desfaz o que o Ajustar-Menus (passo 5)
+# injetou da ultima vez, por isso ele roda depois deste passo e injeta de novo.
+$motifOrigem = Join-Path $game 'motif\nazafight'
+$motifDef = Join-Path $motor 'data\nazafight\system.def'
+if (Test-Path (Join-Path $motifOrigem 'system.def')) {
+    robocopy $motifOrigem (Join-Path $motor 'data\nazafight') /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
+    if ($LASTEXITCODE -ge 8) { Fechar 'Nao consegui instalar o layout Nazafights.' }
 }
 
-# 4. Abre o jogo
+$inicioConfig = Get-Date -Format 'HH:mm:ss.fff'
+# 4. Teclas do jogador 1: anda com W A S D, socos nas setas esquerda (fraco) e cima (forte),
+# chutes nas setas baixo (fraco) e direita (forte). z e w saem de d e w para nao colidir. O IKEMEN so cria o save\config.ini depois da
+# primeira abertura; se ainda nao existe, abre e fecha o jogo uma vez para ele nascer.
+$cfg = Join-Path $motor 'save\config.ini'
+function Ajustar-Teclas($arquivo) {
+    $t = [IO.File]::ReadAllText($arquivo)
+    $novo = @{ up='w'; down='s'; left='a'; right='d'; x='LEFT'; y='UP'; a='DOWN'; b='RIGHT'; z='v'; w='r' }
+    $m = [regex]::Match($t, '(?ims)^\[Keys_P1\][^\r\n]*\r?\n.*?(?=^\[|\z)')
+    if (-not $m.Success) { return }
+    $bloco = $m.Value
+    foreach ($k in $novo.Keys) {
+        $bloco = [regex]::Replace($bloco, "(?im)^$k\s*=.*$", "$k = $($novo[$k])")
+    }
+    $t = $t.Substring(0, $m.Index) + $bloco + $t.Substring($m.Index + $m.Length)
+    [IO.File]::WriteAllText($arquivo, $t)
+}
+if (-not (Test-Path $cfg)) {
+    Write-Host 'Primeira abertura: preparando as teclas...'
+    $p = Start-Process $exe -WorkingDirectory $motor -PassThru
+    for ($i = 0; $i -lt 30 -and -not (Test-Path $cfg); $i++) { Start-Sleep 1 }
+    Start-Sleep 2
+    if (-not $p.HasExited) { Stop-Process $p -Force }
+    Start-Sleep 1
+}
+if (Test-Path $cfg) {
+    Ajustar-Teclas $cfg
+    # Nome do jogo na barra da janela e layout Nazafights (se ele foi instalado; senao fica o motif que ja estava).
+    # Carrega a luta durante a tela de VS (esconde parte da espera) e estica a janela sem borrar o pixel art.
+    # VSync, tela cheia, modo de video, Framerate e volumes ficam como o jogador deixou.
+    $t = [IO.File]::ReadAllText($cfg)
+    $t = [regex]::Replace($t, '(?im)^WindowTitle\s*=[^\r\n]*', 'WindowTitle       = Nazafights')
+    if (Test-Path $motifDef) {
+        $linha = 'Motif             = data/nazafight/system.def'
+        if ($t -match '(?im)^Motif\s*=') {
+            $t = [regex]::Replace($t, '(?im)^Motif\s*=[^\r\n]*', $linha)
+        } else {
+            # Sem a linha o IKEMEN usa o motif padrao: poe logo abaixo do [Config], com a quebra de linha do arquivo.
+            $nl = if ($t -match "`r`n") { "`r`n" } else { "`n" }
+            $t = ([regex]'(?im)^\[Config\][^\r\n]*').Replace($t, ('$0' + $nl + $linha), 1)
+        }
+    }
+    # Demo da abertura sem o link do motor no pe da tela: o States usa o demo.zss do layout (motif/nazafight).
+    if (Test-Path (Join-Path $motor 'data\nazafight\demo.zss')) {
+        $t = $t.Replace('data/demo.zss', 'data/nazafight/demo.zss')
+    }
+    $t = [regex]::Replace($t, '(?im)^(VsScreenLoading\s*=)[^\r\n]*', '${1} 1')
+    $t = [regex]::Replace($t, '(?im)^(WindowScaleMode\s*=)[^\r\n]*', '${1} 0')
+    [IO.File]::WriteAllText($cfg, $t)
+}
+
+# 5. Menus: navega com W A S D e confirma so com Enter. Os botoes de ataque (as setas) nao confirmam
+# nada nos menus. O IKEMEN le as teclas de confirmacao do motif (system.def); a selecao de personagem
+# usa os botoes para escolher o personagem, entao tambem ajustamos essa funcao no main.lua.
+function Set-Chave($t, $secao, $chave, $valor) {
+    $m = [regex]::Match($t, '(?ims)^\[' + [regex]::Escape($secao) + '\][^\r\n]*\r?\n(.*?)(?=^\[|\z)')
+    if (-not $m.Success) { return $t }
+    $corpo = $m.Groups[1].Value
+    $ek = [regex]::Escape($chave)
+    if ($corpo -match "(?im)^\s*$ek\s*=") {
+        $corpo = [regex]::Replace($corpo, "(?im)^(\s*)$ek\s*=.*$", ('${1}' + "$chave = $valor"))
+    } else {
+        $corpo = "$chave = $valor`r`n" + $corpo
+    }
+    return $t.Substring(0, $m.Groups[1].Index) + $corpo + $t.Substring($m.Groups[1].Index + $m.Groups[1].Length)
+}
+function Ajustar-Menus {
+    $motif = 'data\ikemen1\system.def'
+    if (Test-Path $cfg) {
+        $mm = [regex]::Match([IO.File]::ReadAllText($cfg), '(?im)^Motif\s*=\s*(\S+)')
+        if ($mm.Success) { $motif = $mm.Groups[1].Value -replace '/', '\' }
+    }
+    $def = Join-Path $motor $motif
+    if (Test-Path $def) {
+        $t = [IO.File]::ReadAllText($def)
+        foreach ($sec in @('Title Info', 'Option Info', 'Pause Menu', 'Replay Info')) {
+            $t = Set-Chave $t $sec 'menu.done.key' 's'
+        }
+        foreach ($ch in @('done.key', 'p1.teammenu.done.key', 'p2.teammenu.done.key', 'p1.palmenu.done.key', 'p2.palmenu.done.key')) {
+            $t = Set-Chave $t 'Select Info' $ch 's'
+        }
+        $t = Set-Chave $t 'VS Screen' 'done.key' 's'
+        $t = Set-Chave $t 'Continue Screen' 'done.key' 's'
+        [IO.File]::WriteAllText($def, $t)
+    }
+    $lua = Join-Path $motor 'external\script\main.lua'
+    if (Test-Path $lua) {
+        $l = [IO.File]::ReadAllText($lua)
+        if ($l -notmatch 'jogo-de-luta: Endiabrado v2') {
+            # Enter escolhe o lutador normal; o soco forte (y) escolhe a paleta 2 (Pengaro Endiabrado; nos outros vira 1).
+            # Os dois contam no APERTO ('s', 'y'), nao enquanto estao segurados ('/s'): segurado, o Enter que escolheu
+            # o 1o lutador confirmava sozinho o 2o (no modo assistir sempre saia o primeiro da lista). O motor nao tem
+            # o comando '/y' (segurar y) na tela de selecao, so 'y'.
+            $novo = "function main.f_btnPalNo(p)`n`t-- jogo-de-luta: Endiabrado v2 = Enter escolhe normal, soco forte escolhe o endiabrado; conta no aperto`n`tif commandGetState(p, 's') then return 1 end`n`tif commandGetState(p, 'y') then return 2 end`n`treturn 0`nend"
+            $l2 = [regex]::Replace($l, '(?s)function main\.f_btnPalNo\(p\).*?\r?\nend', { param($x) $novo }, 1)
+            if ($l2 -ne $l) { [IO.File]::WriteAllText($lua, $l2) }
+        }
+    }
+    # A paleta 2 so existe no Pengaro: em qualquer outro lutador volta para a 1.
+    $st = Join-Path $motor 'external\script\start.lua'
+    if (Test-Path $st) {
+        $s = [IO.File]::ReadAllText($st)
+        if ($s -notmatch 'jogo-de-luta: paleta 2') {
+            $alvo = 'start.p[side].t_selTemp[member].pal = main.f_btnPalNo(cmd)'
+            $extra = $alvo + "`n`t`t`t`t`t-- jogo-de-luta: paleta 2 so no Pengaro`n`t`t`t`t`tif start.p[side].t_selTemp[member].pal == 2 and not tostring(start.f_getCharData(start.c[player].selRef).def):lower():find('pengaro', 1, true) then start.p[side].t_selTemp[member].pal = 1 end"
+            $s2 = $s.Replace($alvo, $extra)
+            if ($s2 -ne $s) { [IO.File]::WriteAllText($st, $s2) }
+        }
+    }
+}
+try { Ajustar-Menus } catch { Write-Host "Nao consegui ajustar os menus: $($_.Exception.Message)" -ForegroundColor Yellow }
+
+function Usar-PerfilLeve($cpu, $videos, $preferencia) {
+    if ($preferencia -eq 'leve') { return $true }
+    if ($preferencia -eq 'normal') { return $false }
+    $antigo = $cpu -match '\bi[357][ -]+(?:[MQ] *\d{3}|[2-4]\d{3}|\d{3})[A-Z]*(?:\s|$)'
+    $integrada = @($videos -match 'Intel.*HD Graphics').Count -gt 0
+    $dedicada = @($videos -match 'NVIDIA|GeForce|Quadro|AMD|Radeon|Intel.*Arc').Count -gt 0
+    return $antigo -and $integrada -and !$dedicada
+}
+
+function Configurar-VideoLeve($texto) {
+    $valores = @{}
+    foreach ($nome in @('GameWidth','GameHeight','WindowWidth','WindowHeight')) {
+        $m = [regex]::Match($texto, "(?im)^$nome\s*=\s*(\d+)")
+        if (!$m.Success) { throw "Configuracao ausente: $nome" }
+        $valores[$nome] = [int]$m.Groups[1].Value
+    }
+    $w = $valores.GameWidth
+    $h = $valores.GameHeight
+    if ($w -le 0 -or $h -le 0) { throw 'Resolucao invalida' }
+    if (!$valores.WindowWidth) { $valores.WindowWidth = $w }
+    if (!$valores.WindowHeight) { $valores.WindowHeight = $h }
+    $escala = [Math]::Min(1.0, 640.0 / $w)
+    $valores.GameWidth = [Math]::Max(1, [int][Math]::Round($w * $escala))
+    $valores.GameHeight = [Math]::Max(1, [int][Math]::Round($h * $escala))
+    $valores.WindowScaleMode = 0
+    $valores.MSAA = 0
+    foreach ($nome in $valores.Keys) {
+        $texto = [regex]::Replace($texto, "(?im)^($nome\s*=\s*)\d+", ('${1}' + $valores[$nome]))
+    }
+    return $texto
+}
+
+$opcoes = @{}
+try {
+    $cpu = ''; $videos = @()
+    if ($env:NAZA_PERFIL -notin @('leve','normal') -or $env:NAZA_TELEMETRIA -ne '0') {
+        try {
+            $cpu = (Get-CimInstance Win32_Processor | Select-Object -First 1).Name
+            $videos = @(Get-CimInstance Win32_VideoController | ForEach-Object { $_.Name })
+        } catch { Write-Host 'Hardware indisponivel para deteccao automatica.' }
+    }
+    if ((Test-Path $cfg) -and (Usar-PerfilLeve $cpu $videos $env:NAZA_PERFIL)) {
+        $perfil = Join-Path $motor 'save\nazafights-leve.ini'
+        $origem = if (Test-Path $perfil) { $perfil } else { $cfg }
+        $texto = Configurar-VideoLeve ([IO.File]::ReadAllText($origem))
+        [IO.File]::WriteAllText($perfil, $texto)
+        $opcoes.ArgumentList = '-config save/nazafights-leve.ini'
+        Write-Host 'Modo desempenho: renderizacao leve com escala de pixel art.' -ForegroundColor Cyan
+    }
+} catch {
+    Write-Host "Usando o perfil normal: $($_.Exception.Message)" -ForegroundColor Yellow
+}
+
+# A coleta local e opcional. O CSV ja existe se o motor parar antes do motif.
+$env:NAZA_TELEMETRIA_CSV = $null
+if ($env:NAZA_TELEMETRIA -ne '0') {
+    try {
+        $pasta = Join-Path $base 'telemetria'
+        [IO.Directory]::CreateDirectory($pasta) | Out-Null
+        $arquivo = Join-Path $pasta ('sessao-{0}-{1}.csv' -f (Get-Date -Format 'yyyyMMdd-HHmmss-fff'), $PID)
+        $modo = if ($opcoes.ArgumentList) { 'leve' } else { 'normal' }
+        $configAtiva = if ($modo -eq 'leve') { $perfil } else { $cfg }
+        $iniAtivo = [IO.File]::ReadAllText($configAtiva)
+        $video = foreach ($chave in @('GameWidth','GameHeight','VSync','Framerate')) {
+            [regex]::Match($iniAtivo, "(?im)^$chave\s*=\s*(\d+)").Groups[1].Value
+        }
+        $hora = Get-Date -Format 'HH:mm:ss.fff'
+        $linhas = @('hora,evento,fase,intervalos,janela_ms,pior_ms,acima_33ms,acima_50ms,estado_no_pico,fps,valor',
+            "$inicioAtalho,atalho,,,,,,,,,", "$inicioInstalacao,instalacao,,,,,,,,,", "$inicioConfig,configuracao,,,,,,,,,")
+        $dados = [ordered]@{perfil=$modo; cpu=$cpu; gpu=($videos -join ' / '); versao=$manif['@commit'];
+            largura=$video[0]; altura=$video[1]; vsync=$video[2]; fps_alvo=$video[3]}
+        foreach ($chave in $dados.Keys) {
+            $valor = ([string]$dados[$chave]).Replace('"','""')
+            $linhas += ('{0},{1},,,,,,,,,"{2}"' -f $hora,$chave,$valor)
+        }
+        $linhas += "$hora,motor,,,,,,,,,"
+        [IO.File]::WriteAllLines($arquivo, [string[]]$linhas)
+        $env:NAZA_TELEMETRIA_CSV = $arquivo
+        Write-Host "Relatorio de desempenho: $arquivo"
+        Get-ChildItem -LiteralPath $pasta -Filter 'sessao-*.csv' -File |
+            Where-Object { $_.Name -match '^sessao-\d{8}-\d{6}-\d{3}-\d+\.csv$' } |
+            Sort-Object Name -Descending | Select-Object -Skip 10 | Remove-Item -ErrorAction SilentlyContinue
+    } catch { Write-Host "Telemetria indisponivel: $($_.Exception.Message)" -ForegroundColor Yellow }
+}
+# 6. Abre o jogo
 Write-Host 'Abrindo o jogo!' -ForegroundColor Green
-Start-Process $exe -WorkingDirectory $motor
+Start-Process $exe @opcoes -WorkingDirectory $motor -WindowStyle Normal

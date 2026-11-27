@@ -1,0 +1,9161 @@
+{
+ "pengaro": {
+  "200": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "40",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "201": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "47",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "210": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "85",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "215": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "216": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "76",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "230": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "45",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "231": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "57",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "240": {
+   "hittime": "32",
+   "guard_hittime": "27",
+   "dano": "95",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "9",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "9",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "245": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "85",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-4",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "246": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "90",
+   "anim": "Heavy",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "17",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "17",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "260": {
+   "hittime": "18",
+   "guard_hittime": "23",
+   "dano": "90",
+   "anim": "Back",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "12",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "12",
+    "vantagem": "99",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "301": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "302": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "45",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "303": {
+   "hittime": "32",
+   "guard_hittime": "19",
+   "dano": "90",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "103",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "311": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "9",
+    "vantagem": "-3",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "9",
+    "vantagem": "3",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "312": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "313": {
+   "hittime": "32",
+   "guard_hittime": "29",
+   "dano": "110",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "88",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "321": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "322": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "40",
+   "anim": "Light",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "-13",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "-7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "323": {
+   "hittime": "32",
+   "guard_hittime": "21",
+   "dano": "85",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "96",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "331": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "332": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "333": {
+   "hittime": "32",
+   "guard_hittime": "22",
+   "dano": "110",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "95",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "340": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "40",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "341": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Medium",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "342": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "-13",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "-7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "343": {
+   "hittime": "30",
+   "guard_hittime": "15",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "102",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "344": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "55",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "345": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "65",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "346": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "55",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "347": {
+   "hittime": "32",
+   "guard_hittime": "19",
+   "dano": "70",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "98",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "348": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "65",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-9",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-3",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "349": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Hard",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "88",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "400": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "410": {
+   "hittime": "30",
+   "guard_hittime": null,
+   "dano": "90",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-29",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "nota": "errou"
+   }
+  },
+  "430": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "440": {
+   "hittime": "18",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Back",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "54",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "720": {
+   "hittime": "18",
+   "guard_hittime": null,
+   "dano": "0",
+   "anim": "Back",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "12",
+    "vantagem": "-30",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "12",
+    "vantagem": "99",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1100": {
+   "hittime": "18",
+   "guard_hittime": "36",
+   "dano": "110",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "85",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1101": {
+   "hittime": "18",
+   "guard_hittime": "45",
+   "dano": "132",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "76",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1200": {
+   "hittime": "18",
+   "guard_hittime": null,
+   "dano": "120",
+   "anim": "Up",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-32",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "105",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1201": {
+   "hittime": "18",
+   "guard_hittime": null,
+   "dano": "144",
+   "anim": "Up",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-32",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "105",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1300": {
+   "hittime": "18",
+   "guard_hittime": "33",
+   "dano": "70",
+   "anim": "Back",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "50",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1301": {
+   "hittime": "18",
+   "guard_hittime": "42",
+   "dano": "92",
+   "anim": "Back",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "41",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1400": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "73",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1401": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "95",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-19",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "-13",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1500": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "88",
+   "anim": "Heavy",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1501": {
+   "hittime": "28",
+   "guard_hittime": "34",
+   "dano": "110",
+   "anim": "Heavy",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "85",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1701": {
+   "hittime": "30",
+   "guard_hittime": null,
+   "dano": "70",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "nota": "errou"
+   },
+   "hit": {
+    "nota": "errou"
+   }
+  },
+  "3100": {
+   "hittime": "24",
+   "guard_hittime": "31",
+   "dano": "47",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "38",
+    "vantagem": "-14",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "38",
+    "vantagem": "94",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3200": {
+   "hittime": "32",
+   "guard_hittime": "45",
+   "dano": "115",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "41",
+    "vantagem": "-14",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "41",
+    "vantagem": "78",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3401": {
+   "hittime": "32",
+   "guard_hittime": "30",
+   "dano": "115",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "87",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3402": {
+   "hittime": "33",
+   "guard_hittime": "28",
+   "dano": "75",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3403": {
+   "hittime": "33",
+   "guard_hittime": null,
+   "dano": "105",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "nota": "errou"
+   },
+   "hit": {
+    "nota": "errou"
+   }
+  },
+  "3410": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "55",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3411": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3412": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3413": {
+   "hittime": "32",
+   "guard_hittime": "22",
+   "dano": "120",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "95",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3420": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3421": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3422": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "75",
+   "anim": "Hard",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-4",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3423": {
+   "hittime": "32",
+   "guard_hittime": "29",
+   "dano": "125",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "88",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3430": {
+   "hittime": "32",
+   "guard_hittime": null,
+   "dano": "95",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-19",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "nota": "errou"
+   }
+  },
+  "3431": {
+   "hittime": "30",
+   "guard_hittime": "32",
+   "dano": "50",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "9",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "9",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3432": {
+   "hittime": "32",
+   "guard_hittime": "27",
+   "dano": "100",
+   "anim": "Heavy",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3433": {
+   "hittime": "30",
+   "guard_hittime": "20",
+   "dano": "58",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "13",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3434": {
+   "hittime": "30",
+   "guard_hittime": "19",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "94",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3435": {
+   "hittime": "32",
+   "guard_hittime": "30",
+   "dano": "100",
+   "anim": "Heavy",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "49",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  }
+ },
+ "hazaki": {
+  "200": {
+   "hittime": "15",
+   "guard_hittime": "10",
+   "dano": "22",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "3",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "3",
+    "vantagem": "7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "201": {
+   "hittime": "15",
+   "guard_hittime": "10",
+   "dano": "30",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "-3",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "3",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "210": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "55",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "216": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "60",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "230": {
+   "hittime": "15",
+   "guard_hittime": "10",
+   "dano": "25",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "231": {
+   "hittime": "20",
+   "guard_hittime": null,
+   "dano": "50",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "nota": "errou"
+   },
+   "hit": {
+    "nota": "errou"
+   }
+  },
+  "240": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "60",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "246": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "55",
+   "anim": "Light",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "12",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "12",
+    "vantagem": "5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "260": {
+   "hittime": "12",
+   "guard_hittime": "11",
+   "dano": "80",
+   "anim": "Back",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "12",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "12",
+    "vantagem": "111",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "301": {
+   "hittime": "15",
+   "guard_hittime": "10",
+   "dano": "12",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "3",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "3",
+    "vantagem": "7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "302": {
+   "hittime": "15",
+   "guard_hittime": "10",
+   "dano": "30",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "303": {
+   "hittime": "22",
+   "guard_hittime": null,
+   "dano": "70",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "96",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "311": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "50",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "312": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "55",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "313": {
+   "hittime": "22",
+   "guard_hittime": "10",
+   "dano": "80",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "128",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "321": {
+   "hittime": "15",
+   "guard_hittime": "10",
+   "dano": "30",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "-3",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "3",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "322": {
+   "hittime": "15",
+   "guard_hittime": "10",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "323": {
+   "hittime": "22",
+   "guard_hittime": null,
+   "dano": "80",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "12",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "12",
+    "vantagem": "118",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "331": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "60",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-4",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "332": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "60",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-3",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "3",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "333": {
+   "hittime": "22",
+   "guard_hittime": null,
+   "dano": "85",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "13",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "13",
+    "vantagem": "118",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "340": {
+   "hittime": "15",
+   "guard_hittime": "10",
+   "dano": "30",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "341": {
+   "hittime": "20",
+   "guard_hittime": null,
+   "dano": "65",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "112",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "342": {
+   "hittime": "15",
+   "guard_hittime": "10",
+   "dano": "28",
+   "anim": "Light",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "343": {
+   "hittime": "20",
+   "guard_hittime": null,
+   "dano": "65",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "112",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "344": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "50",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "345": {
+   "hittime": "24",
+   "guard_hittime": "19",
+   "dano": "70",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "346": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "50",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "347": {
+   "hittime": "20",
+   "guard_hittime": null,
+   "dano": "70",
+   "anim": "Up",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-15",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "126",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "400": {
+   "hittime": "15",
+   "guard_hittime": "10",
+   "dano": "20",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "3",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "3",
+    "vantagem": "7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "410": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "58",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "430": {
+   "hittime": "15",
+   "guard_hittime": "10",
+   "dano": "22",
+   "anim": "Light",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "440": {
+   "hittime": "20",
+   "guard_hittime": null,
+   "dano": "55",
+   "anim": "Back",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "73",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "720": {
+   "hittime": "12",
+   "guard_hittime": null,
+   "dano": "0",
+   "anim": "Back",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "12",
+    "vantagem": "-18",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "12",
+    "vantagem": "111",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1102": {
+   "hittime": "20",
+   "guard_hittime": null,
+   "dano": "60",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "116",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1103": {
+   "hittime": "20",
+   "guard_hittime": null,
+   "dano": "70",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "116",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1200": {
+   "hittime": "20",
+   "guard_hittime": null,
+   "dano": "80",
+   "anim": "Up",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-16",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "121",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1201": {
+   "hittime": "20",
+   "guard_hittime": null,
+   "dano": "110",
+   "anim": "Up",
+   "guardflag": "MA",
+   "def": {
+    "nota": "errou"
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "107",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1300": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "65",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1301": {
+   "hittime": "20",
+   "guard_hittime": "12",
+   "dano": "85",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "12",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "12",
+    "vantagem": "109",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1400": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "55",
+   "anim": "Light",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "9",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "9",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1401": {
+   "hittime": "20",
+   "guard_hittime": "19",
+   "dano": "75",
+   "anim": "Back",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "64",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1500": {
+   "hittime": "20",
+   "guard_hittime": "31",
+   "dano": "70",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "12",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "12",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1501": {
+   "hittime": "20",
+   "guard_hittime": "35",
+   "dano": "100",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "20",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "20",
+    "vantagem": "107",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1660": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "60",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-17",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1661": {
+   "hittime": "20",
+   "guard_hittime": "24",
+   "dano": "80",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "95",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1701": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "50",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "17",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "17",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3001": {
+   "hittime": "22",
+   "guard_hittime": "13",
+   "dano": "25",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-14",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "100",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3003": {
+   "hittime": "12",
+   "guard_hittime": "9",
+   "dano": "90",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "1",
+    "vantagem": "-14",
+    "caiu": "nao",
+    "antes": "nil",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "1",
+    "vantagem": "119",
+    "caiu": "sim",
+    "antes": "nil",
+    "nota": ""
+   }
+  },
+  "3201": {
+   "hittime": "30",
+   "guard_hittime": "15",
+   "dano": "45",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "-14",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "116",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3202": {
+   "hittime": "12",
+   "guard_hittime": "9",
+   "dano": "160",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-14",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "116",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "4200": {
+   "hittime": "15",
+   "guard_hittime": "10",
+   "dano": "25",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "3",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "3",
+    "vantagem": "5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "4201": {
+   "hittime": "18",
+   "guard_hittime": "13",
+   "dano": "62",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "4202": {
+   "hittime": "15",
+   "guard_hittime": "10",
+   "dano": "32",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "4203": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "72",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "4301": {
+   "hittime": "15",
+   "guard_hittime": "9",
+   "dano": "26",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "3",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "3",
+    "vantagem": "9",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "4302": {
+   "hittime": "15",
+   "guard_hittime": "10",
+   "dano": "28",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "3",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "3",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "4311": {
+   "hittime": "18",
+   "guard_hittime": "13",
+   "dano": "40",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-3",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "3",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "4312": {
+   "hittime": "15",
+   "guard_hittime": "10",
+   "dano": "34",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "4331": {
+   "hittime": "18",
+   "guard_hittime": "13",
+   "dano": "40",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-3",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "3",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "4332": {
+   "hittime": "15",
+   "guard_hittime": "10",
+   "dano": "32",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "4400": {
+   "hittime": "15",
+   "guard_hittime": "10",
+   "dano": "22",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "3",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "3",
+    "vantagem": "5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "4401": {
+   "hittime": "18",
+   "guard_hittime": "13",
+   "dano": "60",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "4402": {
+   "hittime": "15",
+   "guard_hittime": "10",
+   "dano": "30",
+   "anim": "Light",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "4403": {
+   "hittime": "20",
+   "guard_hittime": "13",
+   "dano": "65",
+   "anim": "Heavy",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "80",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "4520": {
+   "hittime": "18",
+   "guard_hittime": "15",
+   "dano": "45",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "3",
+    "vantagem": "-39",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "3",
+    "vantagem": "-33",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "4521": {
+   "hittime": "18",
+   "guard_hittime": "15",
+   "dano": "55",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "3",
+    "vantagem": "-47",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "3",
+    "vantagem": "-41",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "4650": {
+   "hittime": "20",
+   "guard_hittime": "14",
+   "dano": "30",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "35",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "35",
+    "vantagem": "36",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  }
+ },
+ "ck": {
+  "200": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "40",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "201": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "47",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "210": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "85",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "215": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "216": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "76",
+   "anim": "Heavy",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "230": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "45",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "231": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "57",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "240": {
+   "hittime": "32",
+   "guard_hittime": "27",
+   "dano": "95",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "9",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "9",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "245": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "85",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-4",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "246": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "90",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "17",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "17",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "260": {
+   "hittime": "18",
+   "guard_hittime": "23",
+   "dano": "90",
+   "anim": "Back",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "12",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "12",
+    "vantagem": "99",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "301": {
+   "hittime": "21",
+   "guard_hittime": "22",
+   "dano": "18",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "3",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "3",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "302": {
+   "hittime": "30",
+   "guard_hittime": "24",
+   "dano": "45",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "9",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "303": {
+   "hittime": "21",
+   "guard_hittime": "29",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "3",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "3",
+    "vantagem": "113",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "311": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "312": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "313": {
+   "hittime": "32",
+   "guard_hittime": "19",
+   "dano": "110",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "119",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "321": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "322": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "40",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "-7",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "323": {
+   "hittime": "32",
+   "guard_hittime": "21",
+   "dano": "85",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "96",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "331": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "332": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "333": {
+   "hittime": "32",
+   "guard_hittime": "22",
+   "dano": "110",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "95",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "340": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "40",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "3",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "3",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "341": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "342": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "-13",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "-7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "343": {
+   "hittime": "30",
+   "guard_hittime": "24",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "93",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "344": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "55",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "345": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "65",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "346": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "55",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "347": {
+   "hittime": "32",
+   "guard_hittime": "19",
+   "dano": "70",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "98",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "349": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "92",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "400": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "410": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "90",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-9",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "-3",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "430": {
+   "hittime": "21",
+   "guard_hittime": null,
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "-13",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "nota": "errou"
+   }
+  },
+  "440": {
+   "hittime": "18",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Back",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "54",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "720": {
+   "hittime": "18",
+   "guard_hittime": null,
+   "dano": "0",
+   "anim": "Back",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "12",
+    "vantagem": "-30",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "12",
+    "vantagem": "99",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1110": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1200": {
+   "hittime": "18",
+   "guard_hittime": null,
+   "dano": "120",
+   "anim": "Up",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-32",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "105",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1201": {
+   "hittime": "18",
+   "guard_hittime": null,
+   "dano": "144",
+   "anim": "Up",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-32",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "105",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1310": {
+   "hittime": "32",
+   "guard_hittime": "24",
+   "dano": "110",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "102",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1400": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "73",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1401": {
+   "hittime": "28",
+   "guard_hittime": "34",
+   "dano": "95",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "85",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1500": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "70",
+   "anim": "Heavy",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1501": {
+   "hittime": "28",
+   "guard_hittime": "34",
+   "dano": "92",
+   "anim": "Heavy",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "85",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1701": {
+   "hittime": "30",
+   "guard_hittime": null,
+   "dano": "70",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "nota": "errou"
+   },
+   "hit": {
+    "nota": "errou"
+   }
+  },
+  "3000": {
+   "hittime": "24",
+   "guard_hittime": "14",
+   "dano": "22",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "37",
+    "vantagem": "-14",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "37",
+    "vantagem": "111",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3100": {
+   "hittime": "24",
+   "guard_hittime": "31",
+   "dano": "47",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "38",
+    "vantagem": "-14",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "38",
+    "vantagem": "94",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3200": {
+   "hittime": "32",
+   "guard_hittime": "45",
+   "dano": "115",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "41",
+    "vantagem": "-14",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "41",
+    "vantagem": "78",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3401": {
+   "hittime": "30",
+   "guard_hittime": "39",
+   "dano": "45",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "9",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "9",
+    "vantagem": "102",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3403": {
+   "hittime": "27",
+   "guard_hittime": "22",
+   "dano": "30",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-13",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "-7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3410": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "55",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3411": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3412": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3413": {
+   "hittime": "32",
+   "guard_hittime": "19",
+   "dano": "120",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "119",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3420": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3421": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3422": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "75",
+   "anim": "Hard",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-9",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "-3",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3423": {
+   "hittime": "32",
+   "guard_hittime": "35",
+   "dano": "125",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "82",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3430": {
+   "hittime": "32",
+   "guard_hittime": "15",
+   "dano": "95",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "102",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3431": {
+   "hittime": "32",
+   "guard_hittime": "27",
+   "dano": "85",
+   "anim": "Heavy",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-7",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3432": {
+   "hittime": "32",
+   "guard_hittime": null,
+   "dano": "100",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "nota": "errou"
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3433": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "20",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "12",
+    "vantagem": "-9",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "12",
+    "vantagem": "-3",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3434": {
+   "hittime": "30",
+   "guard_hittime": "19",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "94",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3435": {
+   "hittime": "32",
+   "guard_hittime": "30",
+   "dano": "100",
+   "anim": "Heavy",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "49",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  }
+ },
+ "gutto": {
+  "200": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "40",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "201": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "47",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "210": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "85",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "215": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "216": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "76",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "230": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "45",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "231": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "57",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "240": {
+   "hittime": "32",
+   "guard_hittime": "27",
+   "dano": "95",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "9",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "9",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "245": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "85",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-4",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "246": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "90",
+   "anim": "Heavy",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "17",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "17",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "260": {
+   "hittime": "18",
+   "guard_hittime": "23",
+   "dano": "90",
+   "anim": "Back",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "12",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "12",
+    "vantagem": "99",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "301": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "302": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "45",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "303": {
+   "hittime": "32",
+   "guard_hittime": "19",
+   "dano": "90",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "103",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "311": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "9",
+    "vantagem": "-3",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "9",
+    "vantagem": "3",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "312": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "313": {
+   "hittime": "32",
+   "guard_hittime": "29",
+   "dano": "110",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "88",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "321": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "322": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "40",
+   "anim": "Light",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "-13",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "-7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "323": {
+   "hittime": "32",
+   "guard_hittime": "21",
+   "dano": "85",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "96",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "331": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "332": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "333": {
+   "hittime": "32",
+   "guard_hittime": "22",
+   "dano": "110",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "95",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "340": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "40",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "341": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Medium",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "342": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "-13",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "-7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "343": {
+   "hittime": "30",
+   "guard_hittime": "15",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "102",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "344": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "55",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "345": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "65",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "346": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "55",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "347": {
+   "hittime": "32",
+   "guard_hittime": "19",
+   "dano": "70",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "98",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "348": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "65",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-9",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-3",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "349": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Hard",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "88",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "400": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "410": {
+   "hittime": "30",
+   "guard_hittime": null,
+   "dano": "90",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-29",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "nota": "errou"
+   }
+  },
+  "430": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "440": {
+   "hittime": "18",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Back",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "54",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "720": {
+   "hittime": "18",
+   "guard_hittime": null,
+   "dano": "0",
+   "anim": "Back",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "12",
+    "vantagem": "-30",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "12",
+    "vantagem": "99",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1100": {
+   "hittime": "18",
+   "guard_hittime": "36",
+   "dano": "110",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "85",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1101": {
+   "hittime": "18",
+   "guard_hittime": "45",
+   "dano": "132",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "76",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1200": {
+   "hittime": "18",
+   "guard_hittime": null,
+   "dano": "120",
+   "anim": "Up",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-32",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "105",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1201": {
+   "hittime": "18",
+   "guard_hittime": null,
+   "dano": "144",
+   "anim": "Up",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-32",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "105",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1300": {
+   "hittime": "18",
+   "guard_hittime": "33",
+   "dano": "70",
+   "anim": "Back",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "50",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1301": {
+   "hittime": "18",
+   "guard_hittime": "42",
+   "dano": "92",
+   "anim": "Back",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "41",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1400": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "73",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1401": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "95",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-19",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "-13",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1500": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "88",
+   "anim": "Heavy",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1501": {
+   "hittime": "28",
+   "guard_hittime": "34",
+   "dano": "110",
+   "anim": "Heavy",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "85",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1701": {
+   "hittime": "30",
+   "guard_hittime": null,
+   "dano": "70",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "nota": "errou"
+   },
+   "hit": {
+    "nota": "errou"
+   }
+  },
+  "3100": {
+   "hittime": "24",
+   "guard_hittime": "31",
+   "dano": "47",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "38",
+    "vantagem": "-14",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "38",
+    "vantagem": "94",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3200": {
+   "hittime": "32",
+   "guard_hittime": "45",
+   "dano": "115",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "41",
+    "vantagem": "-14",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "41",
+    "vantagem": "78",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3401": {
+   "hittime": "32",
+   "guard_hittime": "30",
+   "dano": "115",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "87",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3402": {
+   "hittime": "33",
+   "guard_hittime": "28",
+   "dano": "75",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3403": {
+   "hittime": "33",
+   "guard_hittime": null,
+   "dano": "105",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "nota": "errou"
+   },
+   "hit": {
+    "nota": "errou"
+   }
+  },
+  "3410": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "55",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3411": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3412": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3413": {
+   "hittime": "32",
+   "guard_hittime": "22",
+   "dano": "120",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "95",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3420": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3421": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3422": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "75",
+   "anim": "Hard",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-4",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3423": {
+   "hittime": "32",
+   "guard_hittime": "29",
+   "dano": "125",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "88",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3430": {
+   "hittime": "32",
+   "guard_hittime": null,
+   "dano": "95",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-19",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "nota": "errou"
+   }
+  },
+  "3431": {
+   "hittime": "30",
+   "guard_hittime": "32",
+   "dano": "50",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "9",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "9",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3432": {
+   "hittime": "32",
+   "guard_hittime": "27",
+   "dano": "100",
+   "anim": "Heavy",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3433": {
+   "hittime": "30",
+   "guard_hittime": "20",
+   "dano": "58",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "13",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3434": {
+   "hittime": "30",
+   "guard_hittime": "19",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "94",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3435": {
+   "hittime": "32",
+   "guard_hittime": "30",
+   "dano": "100",
+   "anim": "Heavy",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "49",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  }
+ },
+ "raiclaven": {
+  "200": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "40",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "201": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "47",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "210": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "85",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "215": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "216": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "76",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "230": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "45",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "231": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "57",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "240": {
+   "hittime": "32",
+   "guard_hittime": "27",
+   "dano": "95",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "9",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "9",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "245": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "85",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-4",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "246": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "90",
+   "anim": "Heavy",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "17",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "17",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "260": {
+   "hittime": "18",
+   "guard_hittime": "23",
+   "dano": "90",
+   "anim": "Back",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "12",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "12",
+    "vantagem": "99",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "301": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "302": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "45",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "303": {
+   "hittime": "32",
+   "guard_hittime": "19",
+   "dano": "90",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "103",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "311": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "9",
+    "vantagem": "-3",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "9",
+    "vantagem": "3",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "312": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "313": {
+   "hittime": "32",
+   "guard_hittime": "29",
+   "dano": "110",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "88",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "321": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "322": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "40",
+   "anim": "Light",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "-13",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "-7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "323": {
+   "hittime": "32",
+   "guard_hittime": "21",
+   "dano": "85",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "96",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "331": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "332": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "333": {
+   "hittime": "32",
+   "guard_hittime": "22",
+   "dano": "110",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "95",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "340": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "40",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "341": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Medium",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "342": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "-13",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "-7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "343": {
+   "hittime": "30",
+   "guard_hittime": "15",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "102",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "344": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "55",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "345": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "65",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "346": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "55",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "347": {
+   "hittime": "32",
+   "guard_hittime": "19",
+   "dano": "70",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "98",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "348": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "65",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-9",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-3",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "349": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Hard",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "88",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "400": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "410": {
+   "hittime": "30",
+   "guard_hittime": null,
+   "dano": "90",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-29",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "nota": "errou"
+   }
+  },
+  "430": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "440": {
+   "hittime": "18",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Back",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "54",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "720": {
+   "hittime": "18",
+   "guard_hittime": null,
+   "dano": "0",
+   "anim": "Back",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "12",
+    "vantagem": "-30",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "12",
+    "vantagem": "99",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1100": {
+   "hittime": "18",
+   "guard_hittime": "36",
+   "dano": "110",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "85",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1101": {
+   "hittime": "18",
+   "guard_hittime": "45",
+   "dano": "132",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "76",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1200": {
+   "hittime": "18",
+   "guard_hittime": null,
+   "dano": "120",
+   "anim": "Up",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-32",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "105",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1201": {
+   "hittime": "18",
+   "guard_hittime": null,
+   "dano": "144",
+   "anim": "Up",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-32",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "105",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1300": {
+   "hittime": "18",
+   "guard_hittime": "33",
+   "dano": "70",
+   "anim": "Back",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "50",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1301": {
+   "hittime": "18",
+   "guard_hittime": "42",
+   "dano": "92",
+   "anim": "Back",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "41",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1400": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "73",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1401": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "95",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-19",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "-13",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1500": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "88",
+   "anim": "Heavy",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1501": {
+   "hittime": "28",
+   "guard_hittime": "34",
+   "dano": "110",
+   "anim": "Heavy",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "85",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1701": {
+   "hittime": "30",
+   "guard_hittime": null,
+   "dano": "70",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "nota": "errou"
+   },
+   "hit": {
+    "nota": "errou"
+   }
+  },
+  "3100": {
+   "hittime": "24",
+   "guard_hittime": "31",
+   "dano": "47",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "38",
+    "vantagem": "-14",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "38",
+    "vantagem": "94",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3200": {
+   "hittime": "32",
+   "guard_hittime": "45",
+   "dano": "115",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "41",
+    "vantagem": "-14",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "41",
+    "vantagem": "78",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3401": {
+   "hittime": "32",
+   "guard_hittime": "30",
+   "dano": "115",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "87",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3402": {
+   "hittime": "33",
+   "guard_hittime": "28",
+   "dano": "75",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3403": {
+   "hittime": "33",
+   "guard_hittime": null,
+   "dano": "105",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "nota": "errou"
+   },
+   "hit": {
+    "nota": "errou"
+   }
+  },
+  "3410": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "55",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3411": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3412": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3413": {
+   "hittime": "32",
+   "guard_hittime": "22",
+   "dano": "120",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "95",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3420": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3421": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3422": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "75",
+   "anim": "Hard",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-4",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3423": {
+   "hittime": "32",
+   "guard_hittime": "29",
+   "dano": "125",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "88",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3430": {
+   "hittime": "32",
+   "guard_hittime": null,
+   "dano": "95",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-19",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "nota": "errou"
+   }
+  },
+  "3431": {
+   "hittime": "30",
+   "guard_hittime": "32",
+   "dano": "50",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "9",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "9",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3432": {
+   "hittime": "32",
+   "guard_hittime": "27",
+   "dano": "100",
+   "anim": "Heavy",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3433": {
+   "hittime": "30",
+   "guard_hittime": "20",
+   "dano": "58",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "13",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3434": {
+   "hittime": "30",
+   "guard_hittime": "19",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "94",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3435": {
+   "hittime": "32",
+   "guard_hittime": "30",
+   "dano": "100",
+   "anim": "Heavy",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "49",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  }
+ },
+ "gbzin": {
+  "200": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "40",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "201": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "47",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "210": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "85",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "215": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "216": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "76",
+   "anim": "Heavy",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "230": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "45",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "231": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "57",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "240": {
+   "hittime": "32",
+   "guard_hittime": "27",
+   "dano": "95",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "9",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "9",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "245": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "85",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-4",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "246": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "90",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "17",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "17",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "260": {
+   "hittime": "18",
+   "guard_hittime": "23",
+   "dano": "90",
+   "anim": "Back",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "12",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "12",
+    "vantagem": "99",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "301": {
+   "hittime": "21",
+   "guard_hittime": "22",
+   "dano": "18",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "3",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "3",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "302": {
+   "hittime": "30",
+   "guard_hittime": "24",
+   "dano": "45",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "9",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "303": {
+   "hittime": "21",
+   "guard_hittime": "29",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "3",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "3",
+    "vantagem": "113",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "311": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "312": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "313": {
+   "hittime": "32",
+   "guard_hittime": "19",
+   "dano": "110",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "119",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "321": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "5",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "322": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "40",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "-7",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "323": {
+   "hittime": "32",
+   "guard_hittime": "21",
+   "dano": "85",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "96",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "331": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "332": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "333": {
+   "hittime": "32",
+   "guard_hittime": "22",
+   "dano": "110",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "95",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "340": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "40",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "3",
+    "vantagem": "-2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "3",
+    "vantagem": "4",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "341": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "342": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "-13",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "-7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "343": {
+   "hittime": "30",
+   "guard_hittime": "24",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "93",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "344": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "55",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "345": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "65",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-11",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "-5",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "346": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "55",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "6",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "6",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "347": {
+   "hittime": "32",
+   "guard_hittime": "19",
+   "dano": "70",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "98",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "349": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "92",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "400": {
+   "hittime": "20",
+   "guard_hittime": "15",
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "4",
+    "vantagem": "1",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "4",
+    "vantagem": "7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "410": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "90",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "-9",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "-3",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "430": {
+   "hittime": "21",
+   "guard_hittime": null,
+   "dano": "35",
+   "anim": "Light",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "5",
+    "vantagem": "-13",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "nota": "errou"
+   }
+  },
+  "440": {
+   "hittime": "18",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Back",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "54",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "720": {
+   "hittime": "18",
+   "guard_hittime": null,
+   "dano": "0",
+   "anim": "Back",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "12",
+    "vantagem": "-30",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "12",
+    "vantagem": "99",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1100": {
+   "hittime": "12",
+   "guard_hittime": "24",
+   "dano": "55",
+   "anim": "Hard",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "51",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1101": {
+   "hittime": "12",
+   "guard_hittime": "36",
+   "dano": "75",
+   "anim": "Hard",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "39",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1110": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "80",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "7",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "7",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1200": {
+   "hittime": "18",
+   "guard_hittime": null,
+   "dano": "120",
+   "anim": "Up",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-32",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "105",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1201": {
+   "hittime": "18",
+   "guard_hittime": null,
+   "dano": "144",
+   "anim": "Up",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-32",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "105",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1310": {
+   "hittime": "32",
+   "guard_hittime": "24",
+   "dano": "110",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "102",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1400": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "73",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1401": {
+   "hittime": "28",
+   "guard_hittime": "34",
+   "dano": "95",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "85",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1500": {
+   "hittime": "28",
+   "guard_hittime": "23",
+   "dano": "70",
+   "anim": "Heavy",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "8",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "8",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1501": {
+   "hittime": "28",
+   "guard_hittime": "34",
+   "dano": "92",
+   "anim": "Heavy",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-8",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "85",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "1701": {
+   "hittime": "30",
+   "guard_hittime": null,
+   "dano": "70",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "nota": "errou"
+   },
+   "hit": {
+    "nota": "errou"
+   }
+  },
+  "3000": {
+   "hittime": "24",
+   "guard_hittime": "14",
+   "dano": "22",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "37",
+    "vantagem": "-14",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "37",
+    "vantagem": "111",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3100": {
+   "hittime": "24",
+   "guard_hittime": "31",
+   "dano": "47",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "38",
+    "vantagem": "-14",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "38",
+    "vantagem": "94",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3200": {
+   "hittime": "32",
+   "guard_hittime": "45",
+   "dano": "115",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "41",
+    "vantagem": "-14",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "41",
+    "vantagem": "78",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3401": {
+   "hittime": "30",
+   "guard_hittime": "39",
+   "dano": "45",
+   "anim": "Medium",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "9",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "9",
+    "vantagem": "103",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3403": {
+   "hittime": "27",
+   "guard_hittime": "22",
+   "dano": "30",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-13",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "-7",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3410": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "55",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3411": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "2",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "8",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3412": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3413": {
+   "hittime": "32",
+   "guard_hittime": "19",
+   "dano": "120",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "119",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3420": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "60",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3421": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "0",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3422": {
+   "hittime": "30",
+   "guard_hittime": "25",
+   "dano": "75",
+   "anim": "Hard",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-9",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "-3",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3423": {
+   "hittime": "32",
+   "guard_hittime": "35",
+   "dano": "125",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "82",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3430": {
+   "hittime": "32",
+   "guard_hittime": null,
+   "dano": "95",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "nota": "errou"
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "102",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3431": {
+   "hittime": "32",
+   "guard_hittime": "27",
+   "dano": "85",
+   "anim": "Heavy",
+   "guardflag": "HA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-7",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "-1",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3432": {
+   "hittime": "32",
+   "guard_hittime": "27",
+   "dano": "100",
+   "anim": "Heavy",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "-6",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3433": {
+   "hittime": "21",
+   "guard_hittime": "16",
+   "dano": "20",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "12",
+    "vantagem": "-9",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "12",
+    "vantagem": "-3",
+    "caiu": "nao",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3434": {
+   "hittime": "30",
+   "guard_hittime": "19",
+   "dano": "70",
+   "anim": "Hard",
+   "guardflag": "MA",
+   "def": {
+    "res": "def",
+    "contato": "10",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "10",
+    "vantagem": "94",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  },
+  "3435": {
+   "hittime": "32",
+   "guard_hittime": "30",
+   "dano": "100",
+   "anim": "Heavy",
+   "guardflag": "L",
+   "def": {
+    "res": "def",
+    "contato": "11",
+    "vantagem": "-12",
+    "caiu": "nao",
+    "antes": "140S",
+    "nota": ""
+   },
+   "hit": {
+    "res": "hit",
+    "contato": "11",
+    "vantagem": "49",
+    "caiu": "sim",
+    "antes": "0S",
+    "nota": ""
+   }
+  }
+ }
+}

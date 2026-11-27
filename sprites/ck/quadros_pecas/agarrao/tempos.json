@@ -1,0 +1,19 @@
+{
+ "acao": 800,
+ "folha": "agarrao",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 4,
+   "caixa": true,
+   "de": "agarrao/00"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "agarrao/00",
+   "ticks": 4,
+   "caixa": true
+  }
+ ]
+}

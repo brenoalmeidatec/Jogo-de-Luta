@@ -1,0 +1,37 @@
+{
+ "acao": 152,
+ "folha": "defesa",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "defesa/05"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "defesa/05"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "defesa/05"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "defesa/05"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "defesa/05",
+   "ticks": 8,
+   "caixa": false
+  }
+ ]
+}

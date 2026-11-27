@@ -1,0 +1,50 @@
+name: Socos e chutes do CK em pé
+on:
+  push:
+    branches: [codex/ck-ataques-em-pe]
+    paths: ['chars/ck/**', 'ferramentas/**', 'sprites/ck/pecas/**', '.github/workflows/ck-ataques-pe.yml']
+permissions:
+  contents: read
+jobs:
+  contato:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        lote:
+          - {nome: socos, estados: '200 201 210 215 216'}
+          - {nome: chutes, estados: '230 231 240'}
+          - {nome: pesados, estados: '245 246 260'}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            chars/ck
+            chars/hazaki
+            ferramentas/robo
+            motif/nazafight
+      - uses: actions/checkout@v4
+        with:
+          ref: 816cb8bcaac03d3e6c964eed766e1fffee0c0b7b
+          path: antes
+          sparse-checkout: |
+            chars/ck
+            chars/hazaki
+      - run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb xauth xdotool libgl1-mesa-dri libopenal1 libglfw3 libasound2 libdecor-0-0
+          python3 -m pip install 'numpy<2' pillow opencv-python-headless==4.10.0.84
+      - name: Andar, conectar e recuperar
+        run: xvfb-run -a -s '-screen 0 1280x720x24' python3 ferramentas/filmar_ataques_pe_ck.py antes/chars chars gifs ${{ matrix.lote.estados }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ck-${{ matrix.lote.nome }}
+          path: gifs/
+      - name: Robô de combate
+        if: matrix.lote.nome == 'chutes'
+        run: |
+          set -o pipefail
+          python3 ferramentas/testar_pengaro.py --linux --lutador ck | tee robo.txt
+          grep -E 'RESUMO: [1-9][0-9]+ verificações passaram, 0 falharam' robo.txt

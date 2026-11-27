@@ -1,0 +1,53 @@
+{
+ "acao": 3422,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 4,
+   "caixa": false,
+   "de": "armada/01|foco"
+  },
+  {
+   "desenho": 1,
+   "ticks": 6,
+   "caixa": false,
+   "de": "armada/02|foco"
+  },
+  {
+   "desenho": 2,
+   "ticks": 4,
+   "caixa": true,
+   "de": "armada/03|esforco"
+  },
+  {
+   "desenho": 3,
+   "ticks": 4,
+   "caixa": false,
+   "de": "armada/04|esforco"
+  },
+  {
+   "desenho": 4,
+   "ticks": 4,
+   "caixa": false,
+   "de": "armada/05|esforco"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "armada/05|esforco"
+  },
+  {
+   "desenho": 6,
+   "ticks": 7,
+   "caixa": false,
+   "de": "armada/06|foco"
+  },
+  {
+   "desenho": 7,
+   "ticks": 9,
+   "caixa": false,
+   "de": "armada/07|foco"
+  }
+ ]
+}

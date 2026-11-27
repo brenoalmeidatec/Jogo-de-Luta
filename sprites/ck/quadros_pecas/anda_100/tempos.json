@@ -1,0 +1,63 @@
+{
+ "acao": 100,
+ "folha": "anda",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "anda/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": false,
+   "de": "anda/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": false,
+   "de": "anda/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 3,
+   "caixa": false,
+   "de": "anda/04"
+  },
+  {
+   "desenho": 4,
+   "ticks": 3,
+   "caixa": false,
+   "de": "anda/05"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "anda/00",
+   "ticks": 3,
+   "caixa": false
+  },
+  {
+   "de": "anda/01",
+   "ticks": 3,
+   "caixa": false
+  },
+  {
+   "de": "anda/02",
+   "ticks": 3,
+   "caixa": false
+  },
+  {
+   "de": "anda/04",
+   "ticks": 3,
+   "caixa": false
+  },
+  {
+   "de": "anda/05",
+   "ticks": 3,
+   "caixa": false
+  }
+ ]
+}

@@ -1,0 +1,448 @@
+{
+ "ref": "quadros_arcade_hd/referencia_ginga/00.png",
+ "pecas": {
+  "cabeca": {
+   "arquivo": "cabeca.png",
+   "origem": [
+    529,
+    320
+   ],
+   "junta": [
+    552,
+    392
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/referencia_ginga/00.png",
+   "sobra": "cabeca_sobra.png",
+   "origem_sobra": [
+    520,
+    311
+   ]
+  },
+  "braco_tras": {
+   "arquivo": "braco_tras.png",
+   "origem": [
+    488,
+    380
+   ],
+   "junta": [
+    506,
+    398
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/referencia_ginga/00.png",
+   "sobra": "braco_tras_sobra.png",
+   "origem_sobra": [
+    479,
+    371
+   ]
+  },
+  "braco_frente": {
+   "arquivo": "braco_frente.png",
+   "origem": [
+    563,
+    385
+   ],
+   "junta": [
+    556,
+    414
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/referencia_ginga/00.png",
+   "sobra": "braco_frente_sobra.png",
+   "origem_sobra": [
+    554,
+    376
+   ]
+  },
+  "tronco": {
+   "arquivo": "tronco.png",
+   "origem": [
+    488,
+    370
+   ],
+   "junta": [
+    540,
+    462
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_arcade_hd/referencia_ginga/00.png",
+   "sobra": "tronco_sobra.png",
+   "origem_sobra": [
+    479,
+    361
+   ]
+  },
+  "quadril": {
+   "arquivo": "quadril.png",
+   "origem": [
+    493,
+    462
+   ],
+   "junta": [
+    540,
+    480
+   ],
+   "mae": null,
+   "fonte": "quadros_arcade_hd/referencia_ginga/00.png",
+   "sobra": "quadril_sobra.png",
+   "origem_sobra": [
+    484,
+    453
+   ]
+  },
+  "coxa_tras": {
+   "arquivo": "coxa_tras.png",
+   "origem": [
+    487,
+    486
+   ],
+   "junta": [
+    512,
+    498
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_arcade_hd/referencia_ginga/00.png",
+   "sobra": "coxa_tras_sobra.png",
+   "origem_sobra": [
+    478,
+    477
+   ]
+  },
+  "canela_tras": {
+   "arquivo": "canela_tras.png",
+   "origem": [
+    471,
+    560
+   ],
+   "junta": [
+    500,
+    574
+   ],
+   "mae": "coxa_tras",
+   "fonte": "quadros_arcade_hd/referencia_ginga/00.png",
+   "sobra": "canela_tras_sobra.png",
+   "origem_sobra": [
+    462,
+    551
+   ]
+  },
+  "coxa_frente": {
+   "arquivo": "coxa_frente.png",
+   "origem": [
+    539,
+    486
+   ],
+   "junta": [
+    566,
+    498
+   ],
+   "mae": "quadril",
+   "fonte": "quadros_arcade_hd/referencia_ginga/00.png",
+   "sobra": "coxa_frente_sobra.png",
+   "origem_sobra": [
+    530,
+    477
+   ]
+  },
+  "canela_frente": {
+   "arquivo": "canela_frente.png",
+   "origem": [
+    555,
+    560
+   ],
+   "junta": [
+    577,
+    574
+   ],
+   "mae": "coxa_frente",
+   "fonte": "quadros_arcade_hd/referencia_ginga/00.png",
+   "sobra": "canela_frente_sobra.png",
+   "origem_sobra": [
+    546,
+    551
+   ]
+  },
+  "braco_frente_jab": {
+   "arquivo": "braco_frente_jab.png",
+   "origem": [
+    545,
+    394
+   ],
+   "junta": [
+    556,
+    414
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/soco/02.png",
+   "sobra": "braco_frente_jab_sobra.png",
+   "origem_sobra": [
+    536,
+    385
+   ]
+  },
+  "braco_frente_direto": {
+   "arquivo": "braco_frente_direto.png",
+   "origem": [
+    548,
+    398
+   ],
+   "junta": [
+    556,
+    414
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/soco/05.png",
+   "sobra": "braco_frente_direto_sobra.png",
+   "origem_sobra": [
+    539,
+    389
+   ]
+  },
+  "braco_frente_alto": {
+   "arquivo": "braco_frente_alto.png",
+   "origem": [
+    544,
+    296
+   ],
+   "junta": [
+    556,
+    414
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/cabecada/04.png",
+   "sobra": "braco_frente_alto_sobra.png",
+   "origem_sobra": [
+    535,
+    287
+   ]
+  },
+  "braco_tras_direto": {
+   "arquivo": "braco_tras_direto.png",
+   "origem": [
+    498,
+    382
+   ],
+   "junta": [
+    506,
+    398
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/soco/05.png",
+   "sobra": "braco_tras_direto_sobra.png",
+   "origem_sobra": [
+    489,
+    373
+   ]
+  },
+  "braco_tras_overhand": {
+   "arquivo": "braco_tras_overhand.png",
+   "origem": [
+    471,
+    308
+   ],
+   "junta": [
+    506,
+    398
+   ],
+   "mae": "tronco",
+   "fonte": "quadros_arcade_hd/martelo/02.png",
+   "sobra": "braco_tras_overhand_sobra.png",
+   "origem_sobra": [
+    462,
+    299
+   ]
+  }
+ },
+ "guarda_base": {
+  "eixo": [
+   150,
+   352
+  ],
+  "tamanho": [
+   300,
+   360
+  ],
+  "poses": {
+   "parado": [
+    {
+     "nome": "tronco_guarda",
+     "arquivo": "guarda/parado-tronco_guarda.png",
+     "origem": [
+      108,
+      14
+     ]
+    },
+    {
+     "nome": "quadril_perna_tras",
+     "arquivo": "guarda/parado-quadril_perna_tras.png",
+     "origem": [
+      78,
+      180
+     ]
+    },
+    {
+     "nome": "quadril_perna_frente",
+     "arquivo": "guarda/parado-quadril_perna_frente.png",
+     "origem": [
+      150,
+      180
+     ]
+    },
+    {
+     "nome": "tenis_tras",
+     "arquivo": "guarda/parado-tenis_tras.png",
+     "origem": [
+      68,
+      319
+     ]
+    },
+    {
+     "nome": "tenis_frente",
+     "arquivo": "guarda/parado-tenis_frente.png",
+     "origem": [
+      191,
+      319
+     ]
+    }
+   ],
+   "agachado": [
+    {
+     "nome": "tronco_guarda",
+     "arquivo": "guarda/agachado-tronco_guarda.png",
+     "origem": [
+      96,
+      97
+     ]
+    },
+    {
+     "nome": "quadril_perna_tras",
+     "arquivo": "guarda/agachado-quadril_perna_tras.png",
+     "origem": [
+      75,
+      229
+     ]
+    },
+    {
+     "nome": "quadril_perna_frente",
+     "arquivo": "guarda/agachado-quadril_perna_frente.png",
+     "origem": [
+      150,
+      229
+     ]
+    },
+    {
+     "nome": "tenis_tras",
+     "arquivo": "guarda/parado-tenis_tras.png",
+     "origem": [
+      68,
+      319
+     ]
+    },
+    {
+     "nome": "tenis_frente",
+     "arquivo": "guarda/parado-tenis_frente.png",
+     "origem": [
+      191,
+      319
+     ]
+    }
+   ],
+   "transicao": [
+    {
+     "nome": "tronco_guarda",
+     "arquivo": "guarda/transicao-tronco_guarda.png",
+     "origem": [
+      96,
+      54
+     ]
+    },
+    {
+     "nome": "quadril_perna_tras",
+     "arquivo": "guarda/transicao-quadril_perna_tras.png",
+     "origem": [
+      75,
+      186
+     ]
+    },
+    {
+     "nome": "quadril_perna_frente",
+     "arquivo": "guarda/transicao-quadril_perna_frente.png",
+     "origem": [
+      150,
+      186
+     ]
+    },
+    {
+     "nome": "tenis_tras",
+     "arquivo": "guarda/parado-tenis_tras.png",
+     "origem": [
+      68,
+      319
+     ]
+    },
+    {
+     "nome": "tenis_frente",
+     "arquivo": "guarda/parado-tenis_frente.png",
+     "origem": [
+      191,
+      319
+     ]
+    }
+   ]
+  },
+  "troncos_combate": {
+   "bloqueio": {
+    "arquivo": "guarda/agachado-bloqueio.png",
+    "cintura": [
+     96,
+     230
+    ]
+   },
+   "jab": {
+    "arquivo": "guarda/agachado-jab.png",
+    "cintura": [
+     96,
+     230
+    ]
+   },
+   "upper": {
+    "arquivo": "guarda/agachado-upper.png",
+    "cintura": [
+     97,
+     230
+    ]
+   }
+  }
+ },
+ "ataques_em_pe": {
+  "jab": {
+   "arquivo": "socos_pe/jab.png",
+   "origem": [
+    100,
+    18
+   ]
+  },
+  "direto": {
+   "arquivo": "socos_pe/direto.png",
+   "origem": [
+    111,
+    20
+   ]
+  },
+  "reves": {
+   "arquivo": "socos_pe/reves.png",
+   "origem": [
+    110,
+    18
+   ]
+  },
+  "martelo": {
+   "arquivo": "socos_pe/martelo.png",
+   "origem": [
+    112,
+    36
+   ]
+  }
+ }
+}

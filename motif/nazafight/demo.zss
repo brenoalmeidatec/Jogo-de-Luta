@@ -1,0 +1,16 @@
+#===============================================================================
+# Nazafights: troca o data/demo.zss do IKEMEN GO (o .bat aponta o States do save/config.ini para este arquivo).
+# Igual ao do motor, menos o texto "https://ikemen-engine.github.io" que ele escrevia no pe da tela durante a demo
+# de abertura (revisao geral, missao 2026-11-14 item 6).
+#===============================================================================
+[Statedef +1]
+
+ignoreHitPause if gameMode = "demo" && !isHelper {
+	assertSpecial{
+		flag: globalNoKO;			# ninguem cai na demo
+		flag2: roundNotSkip;		# a introducao dos lutadores toca inteira
+		flag3: skipFightDisplay;	# sem o "LUTE"
+		flag4: skipRoundDisplay;	# sem o "ROUND"
+		flag5: noLifeBarAction;		# sem animacao das barras
+	}
+}

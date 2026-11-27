@@ -1,0 +1,339 @@
+ck/afastar/01: cabeça -5%
+ck/afastar/02: cabeça -3%
+ck/afastar/03: cabeça -7%
+ck/afastar/04: cabeça -5%
+ck/afastar/05: cabeça -5%
+ck/afastar/07: cabeça -5%
+ck/agachado/02: cabeça +5%
+ck/agachado/03: cabeça +4%
+ck/agachado/04: cabeça +4%
+ck/agachado/06: cabeça -5%
+ck/agarrao/01: cabeça -4%
+ck/agarrao/03: cabeça -5%
+ck/agarrao/04: cabeça -4%
+ck/agarrao/05: cabeça -7%
+ck/agarrao/06: cabeça não medida
+ck/anda/00: cabeça -3%
+ck/anda/01: cabeça -5%
+ck/anda/03: cabeça -5%
+ck/anda/04: cabeça -5%
+ck/anda/05: cabeça -5%
+ck/anda/06: cabeça -5%
+ck/anda/07: cabeça -5%
+ck/apanha/01: cabeça -4%
+ck/apanha/02: cabeça não medida
+ck/apanha/03: cabeça não medida
+ck/apanha/04: cabeça -5%
+ck/apanha/05: cabeça -5%
+ck/apanha/07: cabeça -5%
+ck/ar_soco/00: cabeça -3%
+ck/ar_soco/02: cabeça -5%
+ck/ar_soco/04: cabeça -4%
+ck/ar_soco/05: cabeça -4%
+ck/ar_soco/06: cabeça -5%
+ck/ar_soco/07: cabeça -5%
+ck/armada/02: cabeça -9%
+ck/armada/03: cabeça -7%
+ck/armada/04: cabeça -7%
+ck/armada/05: cabeça -7%
+ck/armada/06: cabeça -7%
+ck/baixo_soco/00: cabeça +4%
+ck/baixo_soco/01: cabeça +3%
+ck/baixo_soco/03: cabeça +4%
+ck/bola/00: cabeça -5%
+ck/bola/01: cabeça -5%
+ck/bola/02: cabeça -5%
+ck/bola/03: cabeça não medida
+ck/bola/04: cabeça -5%
+ck/bola/05: cabeça -4%
+ck/bola/06: cabeça -5%
+ck/bone_voador/01: cabeça não medida
+ck/bone_voador/02: cabeça não medida
+ck/bone_voador/03: cabeça não medida
+ck/bone_voador/04: cabeça não medida
+ck/bone_voador/05: cabeça não medida
+ck/bone_voador/06: cabeça não medida
+ck/bone_voador/07: cabeça não medida
+ck/cabecada/00: cabeça -3%
+ck/cabecada/03: cabeça -4%
+ck/cabecada/04: cabeça -6%
+ck/cabecada/05: cabeça -4%
+ck/cabecada/06: cabeça -5%
+ck/caneta/01: cabeça -4%
+ck/caneta/02: cabeça -4%
+ck/caneta/03: cabeça -4%
+ck/caneta/04: cabeça -5%
+ck/chute_alto/00: cabeça -3%
+ck/chute_alto/01: cabeça -5%
+ck/chute_alto/02: cabeça -5%
+ck/chute_alto/03: cabeça -5%
+ck/chute_alto/05: cabeça -5%
+ck/chute_alto/06: cabeça -5%
+ck/chute_alto/07: cabeça -3%
+ck/compasso/01: cabeça -8%
+ck/compasso/02: cabeça não medida
+ck/compasso/03: cabeça não medida
+ck/compasso/04: cabeça -14%
+ck/compasso/05: cabeça -5%
+ck/compasso/06: cabeça -5%
+ck/defesa/02: cabeça -5%
+ck/defesa/03: cabeça -4%
+ck/defesa/04: cabeça -5%
+ck/defesa/05: cabeça -5%
+ck/defesa/06: cabeça -4%
+ck/defesa/07: cabeça -4%
+ck/derrota/01: cabeça -3%
+ck/derrota/02: cabeça não medida; corpo -16%
+ck/derrota/03: cabeça não medida; corpo -12%
+ck/derrota/04: cabeça não medida; corpo -15%
+ck/derrota/05: cabeça não medida; corpo -14%
+ck/derrota/06: cabeça não medida; corpo -16%
+ck/derrota/07: cabeça não medida; corpo -17%; membro sobrando? 12 manchas de pele (parado 10)
+ck/despertar_a/01: cabeça não medida
+ck/despertar_a/02: cabeça -5%
+ck/despertar_a/03: cabeça -4%
+ck/despertar_a/05: cabeça -13%
+ck/despertar_a/06: cabeça -5%
+ck/despertar_a/07: cabeça não medida; corpo +34%
+ck/despertar_b/00: cabeça não medida; corpo +27%
+ck/despertar_b/01: cabeça não medida; corpo +16%
+ck/despertar_b/02: cabeça não medida
+ck/despertar_b/03: cabeça não medida
+ck/despertar_b/04: cabeça não medida; membro sobrando? 16 manchas de pele (parado 10)
+ck/despertar_b/05: cabeça não medida; membro sobrando? 13 manchas de pele (parado 10)
+ck/despertar_b/06: cabeça não medida
+ck/despertar_b/07: cabeça não medida
+ck/e_agachado/01: cabeça -3%
+ck/e_agachado/02: cabeça -3%
+ck/e_agachado/04: cabeça -5%
+ck/e_agachado/07: cabeça -3%
+ck/e_agarrao/02: cabeça -3%
+ck/e_agarrao/03: cabeça -4%
+ck/e_agarrao/04: cabeça não medida
+ck/e_agarrao/05: cabeça -7%
+ck/e_anda/01: cabeça -3%
+ck/e_anda/02: cabeça -5%
+ck/e_anda/03: cabeça -6%
+ck/e_anda/04: cabeça -6%
+ck/e_anda/05: cabeça -6%
+ck/e_anda/06: cabeça -6%
+ck/e_anda/07: cabeça -4%
+ck/e_apanha/02: membro sobrando? 9 manchas de pele (parado 7)
+ck/e_apanha/03: cabeça não medida; membro sobrando? 9 manchas de pele (parado 7)
+ck/e_apanha/04: cabeça -8%; membro sobrando? 9 manchas de pele (parado 7)
+ck/e_apanha/05: membro sobrando? 9 manchas de pele (parado 7)
+ck/e_ar_soco/00: cabeça -7%
+ck/e_ar_soco/01: cabeça -6%
+ck/e_ar_soco/02: cabeça não medida; corpo -15%
+ck/e_ar_soco/03: cabeça -4%
+ck/e_ar_soco/04: cabeça -4%
+ck/e_ar_soco/05: cabeça -5%
+ck/e_ar_soco/06: cabeça -3%
+ck/e_ar_soco/07: cabeça -5%
+ck/e_beck/01: cabeça -5%
+ck/e_beck/02: cabeça não medida
+ck/e_beck/03: cabeça não medida
+ck/e_beck/04: cabeça +4%
+ck/e_beck/05: cabeça +5%
+ck/e_beck/07: cabeça +3%
+ck/e_bola/01: cabeça -3%
+ck/e_bola/02: cabeça -5%
+ck/e_bola/03: cabeça -8%
+ck/e_bola/04: cabeça -8%
+ck/e_bola/05: cabeça -5%
+ck/e_bola/06: cabeça -4%
+ck/e_cabecada/00: cabeça -4%
+ck/e_cabecada/01: cabeça -5%
+ck/e_cabecada/02: cabeça -8%
+ck/e_cabecada/03: cabeça -6%
+ck/e_cabecada/04: cabeça -5%
+ck/e_cabecada/05: cabeça -4%
+ck/e_cabecada/06: cabeça -4%
+ck/e_cabecada/07: cabeça -4%
+ck/e_caneta/00: cabeça +3%
+ck/e_caneta/02: cabeça +3%
+ck/e_caneta/03: membro sobrando? 9 manchas de pele (parado 7)
+ck/e_caneta/04: cabeça +3%; membro sobrando? 10 manchas de pele (parado 7)
+ck/e_caneta/05: cabeça +4%
+ck/e_caneta/06: cabeça +5%
+ck/e_caneta/07: cabeça +3%
+ck/e_chute_alto/00: cabeça -3%
+ck/e_chute_alto/01: cabeça -3%
+ck/e_chute_alto/02: cabeça -3%
+ck/e_chute_alto/03: cabeça -3%
+ck/e_chute_alto/04: cabeça -5%
+ck/e_chute_alto/05: cabeça -3%
+ck/e_chute_alto/06: cabeça +3%
+ck/e_chute_baixo/00: cabeça +4%
+ck/e_chute_baixo/01: cabeça +4%
+ck/e_chute_baixo/02: cabeça +4%
+ck/e_chute_baixo/04: cabeça +3%
+ck/e_chute_baixo/07: cabeça +4%
+ck/e_defesa/00: cabeça +3%
+ck/e_defesa/01: cabeça -5%
+ck/e_defesa/03: cabeça -3%
+ck/e_defesa/04: cabeça -3%
+ck/e_defesa/05: cabeça -4%
+ck/e_defesa/06: cabeça -3%
+ck/e_defesa/07: cabeça -3%
+ck/e_derrota/00: cabeça -7%
+ck/e_derrota/01: cabeça -11%
+ck/e_derrota/02: cabeça -11%; membro sobrando? 9 manchas de pele (parado 7)
+ck/e_derrota/03: cabeça não medida; corpo -23%; membro sobrando? 9 manchas de pele (parado 7)
+ck/e_derrota/04: cabeça -11%
+ck/e_derrota/05: cabeça -18%
+ck/e_derrota/06: cabeça não medida; corpo -30%; membro sobrando? 12 manchas de pele (parado 7)
+ck/e_derrota/07: cabeça não medida; corpo -30%; membro sobrando? 12 manchas de pele (parado 7)
+ck/e_golaco/01: cabeça +3%
+ck/e_golaco/03: cabeça +9%
+ck/e_golaco/05: cabeça +3%
+ck/e_golaco/07: cabeça +8%
+ck/e_juliet_voadora/01: cabeça -4%
+ck/e_juliet_voadora/02: cabeça -3%; membro sobrando? 10 manchas de pele (parado 7)
+ck/e_juliet_voadora/03: cabeça -3%
+ck/e_juliet_voadora/04: cabeça -3%
+ck/e_juliet_voadora/05: cabeça -5%
+ck/e_juliet_voadora/06: cabeça -5%
+ck/e_juliet_voadora/07: cabeça -3%
+ck/e_levanta/00: cabeça não medida; corpo -13%
+ck/e_levanta/02: cabeça -11%
+ck/e_levanta/03: cabeça -6%
+ck/e_levanta/04: cabeça -4%
+ck/e_levanta/05: cabeça -9%
+ck/e_levanta/06: cabeça -5%
+ck/e_martelo/00: cabeça +3%
+ck/e_martelo/02: cabeça não medida
+ck/e_martelo/03: cabeça não medida
+ck/e_martelo/04: cabeça +5%
+ck/e_martelo/05: cabeça +5%
+ck/e_martelo/06: cabeça +5%
+ck/e_martelo/07: cabeça +4%
+ck/e_provoca/00: cabeça -3%
+ck/e_provoca/01: cabeça -4%
+ck/e_provoca/05: cabeça -3%
+ck/e_provoca/06: cabeça -3%
+ck/e_provoca/07: cabeça -3%
+ck/e_pulo/00: cabeça -4%
+ck/e_pulo/01: cabeça -4%
+ck/e_pulo/02: cabeça -4%
+ck/e_pulo/03: cabeça -3%
+ck/e_pulo/04: cabeça -6%
+ck/e_pulo/05: cabeça -5%
+ck/e_pulo/07: cabeça -4%
+ck/e_queda/00: cabeça -3%
+ck/e_queda/01: cabeça não medida
+ck/e_queda/02: cabeça não medida
+ck/e_queda/03: cabeça não medida
+ck/e_queda/04: cabeça não medida; membro sobrando? 11 manchas de pele (parado 7)
+ck/e_queda/05: cabeça não medida; corpo -14%
+ck/e_queda/06: cabeça não medida; corpo -15%
+ck/e_queda/07: cabeça não medida; corpo -19%
+ck/e_rasteira/00: cabeça -7%
+ck/e_rasteira/01: cabeça -7%
+ck/e_rasteira/02: cabeça -5%
+ck/e_rasteira/03: cabeça -5%
+ck/e_rasteira/04: cabeça -9%
+ck/e_rasteira/05: cabeça -7%
+ck/e_rasteira/06: cabeça -8%
+ck/e_rasteira/07: cabeça -7%
+ck/e_referencia_ginga/01: cabeça -3%
+ck/e_referencia_ginga/02: cabeça +3%
+ck/e_referencia_ginga/07: cabeça +3%
+ck/e_rolamento/01: cabeça -4%
+ck/e_rolamento/02: cabeça não medida; corpo -18%
+ck/e_rolamento/03: cabeça não medida; corpo -18%
+ck/e_rolamento/05: cabeça -4%
+ck/e_rolamento/06: cabeça não medida
+ck/e_soco/00: cabeça +4%
+ck/e_soco/01: cabeça +5%
+ck/e_soco/02: cabeça +4%
+ck/e_soco/03: cabeça +4%
+ck/e_soco/04: cabeça +4%
+ck/e_soco/05: cabeça +4%
+ck/e_soco/06: cabeça +6%
+ck/e_soco/07: cabeça +4%
+ck/e_vitoria/00: cabeça -3%
+ck/e_vitoria/01: cabeça -3%
+ck/e_vitoria/02: cabeça -3%
+ck/e_vitoria/03: cabeça -5%
+ck/e_vitoria/04: cabeça não medida
+ck/e_vitoria/05: cabeça não medida
+ck/e_vitoria/06: cabeça -7%
+ck/e_vitoria/07: cabeça -6%
+ck/golaco/01: cabeça -5%
+ck/golaco/02: cabeça -5%
+ck/golaco/03: cabeça -7%
+ck/golaco/04: cabeça -9%
+ck/golaco/05: cabeça -6%
+ck/golaco/06: cabeça -8%
+ck/golaco/07: cabeça -5%
+ck/lata/01: cabeça -5%
+ck/lata/02: cabeça -5%
+ck/lata/03: cabeça -5%
+ck/lata/04: cabeça -5%
+ck/lata/05: cabeça não medida
+ck/lata/06: cabeça não medida
+ck/lata/07: cabeça -5%
+ck/levanta/00: cabeça não medida; corpo -16%
+ck/levanta/01: cabeça +9%; membro sobrando? 15 manchas de pele (parado 10)
+ck/levanta/02: cabeça não medida; corpo -18%
+ck/levanta/03: cabeça não medida; corpo -14%
+ck/levanta/04: cabeça não medida
+ck/levanta/05: cabeça -13%
+ck/levanta/06: cabeça não medida
+ck/martelo/03: cabeça -4%
+ck/martelo/04: cabeça -3%
+ck/provoca/03: cabeça -4%
+ck/provoca/04: cabeça -5%
+ck/provoca/05: cabeça -5%
+ck/provoca/06: cabeça não medida
+ck/provoca/07: cabeça não medida
+ck/pulo/00: cabeça -4%
+ck/pulo/02: cabeça -4%
+ck/pulo/03: cabeça -5%
+ck/pulo/04: cabeça -4%
+ck/pulo/05: cabeça -4%
+ck/pulo/06: cabeça -4%
+ck/pulo/07: cabeça -4%
+ck/queda/00: cabeça -6%
+ck/queda/01: cabeça -10%
+ck/queda/02: cabeça -6%
+ck/queda/03: cabeça -10%
+ck/queda/04: cabeça -10%
+ck/queda/05: cabeça -10%
+ck/queda/06: cabeça -12%
+ck/queda/07: cabeça -10%
+ck/rasteira/00: cabeça -5%
+ck/rasteira/01: cabeça -5%
+ck/rasteira/02: cabeça -5%
+ck/rasteira/03: cabeça não medida; corpo -22%
+ck/rasteira/04: cabeça não medida; corpo -21%
+ck/rasteira/05: cabeça não medida; corpo -17%
+ck/rasteira/06: cabeça -5%
+ck/rasteira/07: cabeça -4%
+ck/rasteirinha/02: cabeça +3%
+ck/rasteirinha/04: cabeça +4%
+ck/referencia_ginga/03: cabeça +3%
+ck/rolamento/01: cabeça -4%
+ck/rolamento/02: cabeça não medida; corpo -15%
+ck/rolamento/03: cabeça não medida; corpo -12%
+ck/rolamento/04: cabeça não medida
+ck/rolamento/05: cabeça não medida; corpo -13%
+ck/rolamento/06: cabeça não medida
+ck/rolamento/07: cabeça -7%
+ck/soco/00: cabeça -5%
+ck/soco/01: cabeça -7%
+ck/soco/02: cabeça -7%
+ck/soco/03: cabeça -7%
+ck/soco/05: cabeça -8%
+ck/soco/06: cabeça -5%
+ck/soco/07: cabeça -5%
+ck/vitoria/00: cabeça -5%
+ck/vitoria/01: cabeça -5%
+ck/vitoria/02: cabeça -5%
+ck/vitoria/03: cabeça -5%
+ck/vitoria/04: cabeça -8%
+ck/vitoria/05: cabeça -5%
+ck/vitoria/06: cabeça -12%
+ck/vitoria/07: cabeça -13%
+ck: 464 quadros, 338 com aviso

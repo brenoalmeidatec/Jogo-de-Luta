@@ -1,0 +1,140 @@
+diabo/d_agachado/00: cabeça -3%
+diabo/d_agachado/03: membro sobrando? 9 manchas de pele (parado 7)
+diabo/d_agachado/04: membro sobrando? 10 manchas de pele (parado 7)
+diabo/d_agachado/05: membro sobrando? 9 manchas de pele (parado 7)
+diabo/d_agachado/06: membro sobrando? 9 manchas de pele (parado 7)
+diabo/d_agarrao_abraco/01: cabeça -4%
+diabo/d_agarrao_abraco/02: cabeça não medida
+diabo/d_agarrao_abraco/03: cabeça não medida
+diabo/d_agarrao_abraco/04: cabeça -8%
+diabo/d_agarrao_abraco/05: cabeça não medida
+diabo/d_agarrao_cutucao/06: cabeça -3%
+diabo/d_anda/07: cabeça +5%
+diabo/d_apanha/00: cabeça -9%
+diabo/d_apanha/01: cabeça não medida
+diabo/d_apanha/02: cabeça não medida
+diabo/d_apanha/03: cabeça não medida
+diabo/d_apanha/04: cabeça não medida; corpo -14%
+diabo/d_apanha/05: cabeça não medida; corpo -18%
+diabo/d_apanha/06: cabeça não medida; corpo -30%; membro sobrando? 9 manchas de pele (parado 7)
+diabo/d_apanha/07: cabeça não medida; corpo -32%
+diabo/d_ar_cotovelo/00: cabeça +9%; membro sobrando? 10 manchas de pele (parado 7)
+diabo/d_ar_cotovelo/02: cabeça não medida; corpo -12%
+diabo/d_ar_cotovelo/04: cabeça +8%
+diabo/d_ar_cotovelo/07: cabeça -3%
+diabo/d_ar_joelho/04: cabeça -6%
+diabo/d_ar_soco/00: membro sobrando? 9 manchas de pele (parado 7)
+diabo/d_ar_soco/01: cabeça -4%
+diabo/d_ar_soco/04: membro sobrando? 11 manchas de pele (parado 7)
+diabo/d_baixo_soco/05: membro sobrando? 13 manchas de pele (parado 7)
+diabo/d_bico_sapato/07: membro sobrando? 9 manchas de pele (parado 7)
+diabo/d_chapelada/00: membro sobrando? 9 manchas de pele (parado 7)
+diabo/d_chapelada/02: cabeça -8%
+diabo/d_chapelada/03: cabeça -18%
+diabo/d_chapelada/04: cabeça -16%
+diabo/d_chapelada/05: cabeça -16%
+diabo/d_chapelada/06: cabeça não medida
+diabo/d_chapeu_arremesso/01: cabeça -12%
+diabo/d_chapeu_arremesso/02: cabeça -11%
+diabo/d_chapeu_arremesso/03: cabeça -15%
+diabo/d_chapeu_arremesso/04: cabeça -15%
+diabo/d_chapeu_arremesso/05: cabeça -15%
+diabo/d_chapeu_arremesso/06: cabeça não medida
+diabo/d_chute_lateral/03: cabeça -4%
+diabo/d_chuva_abre/00: cabeça +5%
+diabo/d_chuva_abre/01: cabeça +7%
+diabo/d_chuva_abre/02: cabeça +6%
+diabo/d_chuva_abre/03: cabeça não medida
+diabo/d_chuva_abre/04: cabeça não medida; corpo +16%
+diabo/d_chuva_abre/05: cabeça não medida; corpo +14%
+diabo/d_chuva_abre/06: cabeça +7%
+diabo/d_chuva_abre/07: cabeça +9%
+diabo/d_coice/02: cabeça -7%
+diabo/d_coice/03: cabeça -3%
+diabo/d_coice/04: cabeça -7%; membro sobrando? 9 manchas de pele (parado 7)
+diabo/d_coice/05: cabeça -7%; membro sobrando? 9 manchas de pele (parado 7)
+diabo/d_coice/06: cabeça -3%
+diabo/d_coice_costas/01: cabeça -5%
+diabo/d_coice_costas/02: cabeça -7%
+diabo/d_coice_costas/03: cabeça -5%
+diabo/d_coice_costas/04: cabeça -7%
+diabo/d_coice_costas/05: cabeça -7%
+diabo/d_corrida/04: cabeça -5%
+diabo/d_corrida/05: cabeça -3%
+diabo/d_corrida/06: cabeça -3%
+diabo/d_defesa/03: cabeça -5%
+diabo/d_defesa/04: cabeça -9%
+diabo/d_defesa_baixa/00: cabeça +7%
+diabo/d_defesa_baixa/06: cabeça +7%
+diabo/d_fumaca/04: cabeça não medida; corpo -40%
+diabo/d_levanta/00: cabeça não medida; corpo -33%
+diabo/d_levanta/01: cabeça não medida; corpo -23%
+diabo/d_levanta/02: cabeça não medida; corpo -22%
+diabo/d_levanta/03: cabeça -18%
+diabo/d_levanta/04: cabeça -8%
+diabo/d_levanta/05: cabeça -3%
+diabo/d_levanta/06: cabeça -8%
+diabo/d_levanta/07: cabeça -4%
+diabo/d_maleta_giro/02: cabeça -7%
+diabo/d_maleta_giro/04: cabeça +13%
+diabo/d_maleta_giro/06: cabeça +7%
+diabo/d_maleta_sobe/01: cabeça +7%
+diabo/d_maleta_sobe/02: cabeça -9%
+diabo/d_maleta_sobe/03: cabeça não medida
+diabo/d_maleta_sobe/04: cabeça não medida
+diabo/d_maleta_sobe/05: cabeça não medida
+diabo/d_maletada_cima/02: cabeça -11%
+diabo/d_maletada_cima/03: cabeça não medida
+diabo/d_maletada_cima/04: cabeça -3%
+diabo/d_maletada_cima/05: cabeça -3%
+diabo/d_maletada_lado/01: cabeça -7%
+diabo/d_maletada_lado/04: cabeça -3%
+diabo/d_maletada_lado/05: cabeça -7%
+diabo/d_maletada_lado/06: cabeça -5%
+diabo/d_maletada_lado/07: cabeça -4%
+diabo/d_maletada_volta/00: membro sobrando? 9 manchas de pele (parado 7)
+diabo/d_maletada_volta/02: cabeça -6%
+diabo/d_maletada_volta/03: cabeça -4%
+diabo/d_maletada_volta/04: cabeça -6%
+diabo/d_maletada_volta/05: cabeça -6%
+diabo/d_maletada_volta/06: cabeça -4%
+diabo/d_maletada_volta/07: cabeça -4%
+diabo/d_negocio_fechado/07: cabeça -3%
+diabo/d_pisao_ar/00: membro sobrando? 9 manchas de pele (parado 7)
+diabo/d_pisao_ar/01: membro sobrando? 9 manchas de pele (parado 7)
+diabo/d_pisao_chefe/04: cabeça -4%
+diabo/d_pulo/00: membro sobrando? 15 manchas de pele (parado 7)
+diabo/d_pulo/02: membro sobrando? 12 manchas de pele (parado 7)
+diabo/d_pulo/05: membro sobrando? 11 manchas de pele (parado 7)
+diabo/d_pulo/07: membro sobrando? 12 manchas de pele (parado 7)
+diabo/d_punho_anel/03: cabeça -4%
+diabo/d_punho_anel/06: cabeça -7%
+diabo/d_queda/00: cabeça não medida; corpo -34%
+diabo/d_queda/01: cabeça não medida; corpo -33%
+diabo/d_queda/02: cabeça não medida; corpo -32%
+diabo/d_queda/03: cabeça não medida; corpo -34%; membro sobrando? 12 manchas de pele (parado 7)
+diabo/d_queda/04: cabeça não medida; corpo -34%
+diabo/d_queda/05: cabeça não medida; corpo -34%; membro sobrando? 10 manchas de pele (parado 7)
+diabo/d_queda/06: cabeça não medida; corpo -34%; membro sobrando? 10 manchas de pele (parado 7)
+diabo/d_queda/07: cabeça não medida; corpo -34%
+diabo/d_rasteira_arco/01: cabeça -3%
+diabo/d_rasteira_arco/03: membro sobrando? 10 manchas de pele (parado 7)
+diabo/d_rasteira_arco/04: cabeça -4%; membro sobrando? 10 manchas de pele (parado 7)
+diabo/d_rasteira_arco/06: membro sobrando? 11 manchas de pele (parado 7)
+diabo/d_sapato_barriga/04: cabeça -3%
+diabo/d_sapato_barriga/05: cabeça -3%
+diabo/d_sapato_barriga/07: cabeça +3%
+diabo/d_vira/00: cabeça +5%
+diabo/d_vira/01: cabeça +7%
+diabo/d_vira/02: cabeça não medida
+diabo/d_vira/03: cabeça não medida
+diabo/d_vira/04: cabeça +9%
+diabo/d_vira/05: cabeça +9%
+diabo/d_vira/06: cabeça não medida
+diabo/d_vira/07: cabeça não medida; corpo -13%
+diabo/d_voadora_sapato/00: cabeça -14%; membro sobrando? 11 manchas de pele (parado 7)
+diabo/d_voadora_sapato/01: cabeça -7%
+diabo/d_voadora_sapato/04: cabeça +5%
+diabo/d_voadora_sapato/05: cabeça +5%
+diabo/d_voadora_sapato/06: cabeça não medida; corpo -13%; membro sobrando? 12 manchas de pele (parado 7)
+diabo: 352 quadros, 139 com aviso

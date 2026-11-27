@@ -1,0 +1,168 @@
+{
+ "acao": 700,
+ "folha": "rolamento",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rolamento/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rolamento/00"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rolamento/00"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rolamento/01"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rolamento/01"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rolamento/01"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rolamento/02"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rolamento/02"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rolamento/02"
+  },
+  {
+   "desenho": 9,
+   "ticks": 6,
+   "caixa": false,
+   "de": "rolamento/03"
+  },
+  {
+   "desenho": 10,
+   "ticks": 6,
+   "caixa": false,
+   "de": "rolamento/04"
+  },
+  {
+   "desenho": 11,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rolamento/05"
+  },
+  {
+   "desenho": 12,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rolamento/05"
+  },
+  {
+   "desenho": 13,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rolamento/05"
+  },
+  {
+   "desenho": 14,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rolamento/06"
+  },
+  {
+   "desenho": 15,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rolamento/06"
+  },
+  {
+   "desenho": 16,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rolamento/06"
+  },
+  {
+   "desenho": 17,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rolamento/07"
+  },
+  {
+   "desenho": 18,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rolamento/07"
+  },
+  {
+   "desenho": 19,
+   "ticks": 2,
+   "caixa": false,
+   "de": "rolamento/07"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "rolamento/00",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "rolamento/01",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "rolamento/02",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "rolamento/03",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "rolamento/04",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "rolamento/05",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "rolamento/06",
+   "ticks": 6,
+   "caixa": false
+  },
+  {
+   "de": "rolamento/07",
+   "ticks": 6,
+   "caixa": false
+  }
+ ]
+}

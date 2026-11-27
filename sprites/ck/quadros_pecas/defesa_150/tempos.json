@@ -1,0 +1,59 @@
+{
+ "acao": 150,
+ "folha": "defesa",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "defesa/05"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": false,
+   "de": "defesa/06"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "defesa/07"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "defesa/07"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "defesa/07"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "defesa/07"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "defesa/05",
+   "ticks": 3,
+   "caixa": false
+  },
+  {
+   "de": "defesa/06",
+   "ticks": 3,
+   "caixa": false
+  },
+  {
+   "de": "defesa/07",
+   "ticks": 8,
+   "caixa": false
+  }
+ ]
+}

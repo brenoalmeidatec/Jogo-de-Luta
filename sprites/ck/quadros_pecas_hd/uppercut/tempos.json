@@ -1,0 +1,156 @@
+{
+ "acao": 410,
+ "folha": "uppercut_baixo",
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "uppercut_baixo/01"
+  },
+  {
+   "desenho": 1,
+   "ticks": 4,
+   "caixa": false,
+   "de": "uppercut_baixo/02"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": true,
+   "de": "uppercut_baixo/04"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": true,
+   "de": "uppercut_baixo/04"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": true,
+   "de": "uppercut_baixo/04"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": true,
+   "de": "uppercut_baixo/04"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "uppercut_baixo/04"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "uppercut_baixo/05"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "uppercut_baixo/05"
+  },
+  {
+   "desenho": 9,
+   "ticks": 3,
+   "caixa": false,
+   "de": "uppercut_baixo/05"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "uppercut_baixo/06"
+  },
+  {
+   "desenho": 11,
+   "ticks": 2,
+   "caixa": false,
+   "de": "uppercut_baixo/06"
+  },
+  {
+   "desenho": 12,
+   "ticks": 2,
+   "caixa": false,
+   "de": "uppercut_baixo/06"
+  },
+  {
+   "desenho": 13,
+   "ticks": 3,
+   "caixa": false,
+   "de": "uppercut_baixo/06"
+  },
+  {
+   "desenho": 14,
+   "ticks": 2,
+   "caixa": false,
+   "de": "uppercut_baixo/07"
+  },
+  {
+   "desenho": 15,
+   "ticks": 2,
+   "caixa": false,
+   "de": "uppercut_baixo/07"
+  },
+  {
+   "desenho": 16,
+   "ticks": 2,
+   "caixa": false,
+   "de": "uppercut_baixo/07"
+  },
+  {
+   "desenho": 17,
+   "ticks": 3,
+   "caixa": false,
+   "de": "uppercut_baixo/07"
+  }
+ ],
+ "hoje": [
+  {
+   "de": "uppercut_baixo/01",
+   "ticks": 3,
+   "caixa": false
+  },
+  {
+   "de": "uppercut_baixo/02",
+   "ticks": 4,
+   "caixa": false
+  },
+  {
+   "de": "uppercut_baixo/04",
+   "ticks": 2,
+   "caixa": true
+  },
+  {
+   "de": "uppercut_baixo/04",
+   "ticks": 6,
+   "caixa": true
+  },
+  {
+   "de": "uppercut_baixo/04",
+   "ticks": 2,
+   "caixa": false
+  },
+  {
+   "de": "uppercut_baixo/05",
+   "ticks": 7,
+   "caixa": false
+  },
+  {
+   "de": "uppercut_baixo/06",
+   "ticks": 9,
+   "caixa": false
+  },
+  {
+   "de": "uppercut_baixo/07",
+   "ticks": 9,
+   "caixa": false
+  }
+ ]
+}

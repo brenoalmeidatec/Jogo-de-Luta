@@ -1,0 +1,29 @@
+{
+ "acao": 600,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 7,
+   "caixa": false,
+   "de": "ar_soco/03|foco"
+  },
+  {
+   "desenho": 1,
+   "ticks": 12,
+   "caixa": true,
+   "de": "ar_soco/05|esforco"
+  },
+  {
+   "desenho": 2,
+   "ticks": 1,
+   "caixa": false,
+   "de": "ar_soco/05|esforco"
+  },
+  {
+   "desenho": 3,
+   "ticks": 1,
+   "caixa": false,
+   "de": "ar_soco/06|foco"
+  }
+ ]
+}

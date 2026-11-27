@@ -1,0 +1,167 @@
+{
+ "acao": 3100,
+ "caixa": [
+  0,
+  -330,
+  220,
+  -30
+ ],
+ "origem": [
+  "202_0",
+  "199_0",
+  "203_0",
+  "210_0",
+  "200_0",
+  "204_0",
+  "222_0",
+  "211_0",
+  "225_0",
+  "205_0"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 7,
+   "caixa": false,
+   "de": "202_0@super_chutes0"
+  },
+  {
+   "desenho": 1,
+   "ticks": 6,
+   "caixa": true,
+   "de": "199_0@super_chutes1"
+  },
+  {
+   "desenho": 2,
+   "ticks": 6,
+   "caixa": true,
+   "de": "203_0@super_chutes2"
+  },
+  {
+   "desenho": 3,
+   "ticks": 6,
+   "caixa": true,
+   "de": "210_0@super_chutes3"
+  },
+  {
+   "desenho": 4,
+   "ticks": 6,
+   "caixa": true,
+   "de": "200_0@super_chutes4"
+  },
+  {
+   "desenho": 5,
+   "ticks": 6,
+   "caixa": true,
+   "de": "204_0@super_chutes5"
+  },
+  {
+   "desenho": 6,
+   "ticks": 6,
+   "caixa": true,
+   "de": "222_0@super_chutes6"
+  },
+  {
+   "desenho": 7,
+   "ticks": 6,
+   "caixa": true,
+   "de": "211_0@super_chutes7"
+  },
+  {
+   "desenho": 8,
+   "ticks": 6,
+   "caixa": true,
+   "de": "225_0@super_chutes8"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "225_0@super_chutes9"
+  },
+  {
+   "desenho": 10,
+   "ticks": 2,
+   "caixa": false,
+   "de": "205_0@super_chutes10"
+  },
+  {
+   "desenho": 11,
+   "ticks": 2,
+   "caixa": false,
+   "de": "205_0@super_chutes10"
+  },
+  {
+   "desenho": 12,
+   "ticks": 2,
+   "caixa": false,
+   "de": "205_0@super_chutes10"
+  },
+  {
+   "desenho": 13,
+   "ticks": 2,
+   "caixa": false,
+   "de": "205_0@super_chutes10"
+  },
+  {
+   "desenho": 14,
+   "ticks": 2,
+   "caixa": false,
+   "de": "205_0@super_chutes10"
+  },
+  {
+   "desenho": 15,
+   "ticks": 2,
+   "caixa": false,
+   "de": "205_0@super_chutes10"
+  },
+  {
+   "desenho": 16,
+   "ticks": 2,
+   "caixa": false,
+   "de": "205_0@super_chutes10"
+  },
+  {
+   "desenho": 17,
+   "ticks": 2,
+   "caixa": false,
+   "de": "205_0@super_chutes10"
+  },
+  {
+   "desenho": 18,
+   "ticks": 2,
+   "caixa": false,
+   "de": "205_0@super_chutes10"
+  },
+  {
+   "desenho": 19,
+   "ticks": 2,
+   "caixa": false,
+   "de": "205_0@super_chutes10"
+  },
+  {
+   "desenho": 20,
+   "ticks": 2,
+   "caixa": false,
+   "de": "205_0@super_chutes10"
+  },
+  {
+   "desenho": 21,
+   "ticks": 2,
+   "caixa": false,
+   "de": "205_0@super_chutes10"
+  },
+  {
+   "desenho": 22,
+   "ticks": 2,
+   "caixa": false,
+   "de": "205_0@super_chutes10"
+  },
+  {
+   "desenho": 23,
+   "ticks": 2,
+   "caixa": false,
+   "de": "205_0@super_chutes10"
+  }
+ ]
+}

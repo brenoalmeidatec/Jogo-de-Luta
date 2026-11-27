@@ -1,0 +1,35 @@
+{
+ "acao": 322,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 6,
+   "caixa": false,
+   "de": "rasteirinha/02|foco"
+  },
+  {
+   "desenho": 1,
+   "ticks": 8,
+   "caixa": true,
+   "de": "rasteirinha/03|esforco"
+  },
+  {
+   "desenho": 2,
+   "ticks": 1,
+   "caixa": false,
+   "de": "rasteirinha/03|esforco"
+  },
+  {
+   "desenho": 3,
+   "ticks": 13,
+   "caixa": false,
+   "de": "rasteirinha/05|foco"
+  },
+  {
+   "desenho": 4,
+   "ticks": 8,
+   "caixa": false,
+   "de": "rasteirinha/07|foco"
+  }
+ ]
+}

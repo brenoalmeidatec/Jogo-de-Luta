@@ -1,0 +1,81 @@
+{
+ "acao": 10400,
+ "caixa": [
+  36,
+  -72,
+  168,
+  -6
+ ],
+ "origem": [
+  "garra_rasteira/00",
+  "garra_rasteira/01",
+  "garra_rasteira/02",
+  "garra_rasteira/03",
+  "garra_rasteira/04",
+  "garra_rasteira/05",
+  "garra_rasteira/06",
+  "garra_rasteira/07"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 3,
+   "caixa": false,
+   "de": "garra_rasteira/00"
+  },
+  {
+   "desenho": 1,
+   "ticks": 3,
+   "caixa": false,
+   "de": "garra_rasteira/01"
+  },
+  {
+   "desenho": 2,
+   "ticks": 3,
+   "caixa": false,
+   "de": "garra_rasteira/02"
+  },
+  {
+   "desenho": 3,
+   "ticks": 4,
+   "caixa": true,
+   "de": "garra_rasteira/03"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "garra_rasteira/04"
+  },
+  {
+   "desenho": 5,
+   "ticks": 2,
+   "caixa": false,
+   "de": "garra_rasteira/05"
+  },
+  {
+   "desenho": 6,
+   "ticks": 2,
+   "caixa": false,
+   "de": "garra_rasteira/05"
+  },
+  {
+   "desenho": 7,
+   "ticks": 2,
+   "caixa": false,
+   "de": "garra_rasteira/06"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "garra_rasteira/06"
+  },
+  {
+   "desenho": 9,
+   "ticks": 3,
+   "caixa": false,
+   "de": "garra_rasteira/07"
+  }
+ ]
+}

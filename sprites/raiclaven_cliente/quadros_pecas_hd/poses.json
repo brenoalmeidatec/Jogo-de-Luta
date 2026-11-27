@@ -1,0 +1,242 @@
+{
+ "y_agd/00": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 56
+  },
+  "tronco": {
+   "ang": 2,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0
+  },
+  "braco_frente": {
+   "ang": 0
+  },
+  "_pernas": {
+   "var": "agachado"
+  },
+  "cabeca": {
+   "ang": 0
+  },
+  "criatura": {
+   "ang": 3,
+   "dx": 0,
+   "dy": 2
+  },
+  "navalha": {
+   "ang": -6,
+   "estica": 1
+  },
+  "secador": {
+   "ang": 6,
+   "estica": 1
+  },
+  "garra": {
+   "ang": 10,
+   "estica": 1
+  }
+ },
+ "y_agd/01": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 56
+  },
+  "tronco": {
+   "ang": 6,
+   "dy": 3
+  },
+  "braco_tras": {
+   "ang": 0
+  },
+  "braco_frente": {
+   "ang": 0
+  },
+  "_pernas": {
+   "var": "agachado"
+  },
+  "cabeca": {
+   "ang": -2
+  },
+  "criatura": {
+   "ang": 8,
+   "dx": 4,
+   "dy": 4
+  },
+  "navalha": {
+   "ang": 6,
+   "estica": 1
+  },
+  "secador": {
+   "ang": 10,
+   "estica": 1
+  },
+  "garra": {
+   "ang": 16,
+   "estica": 1
+  }
+ },
+ "y_agd/02": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 56
+  },
+  "tronco": {
+   "ang": -4,
+   "dy": -2
+  },
+  "braco_tras": {
+   "ang": 0
+  },
+  "braco_frente": {
+   "ang": 0
+  },
+  "_pernas": {
+   "var": "agachado"
+  },
+  "cabeca": {
+   "ang": -5
+  },
+  "criatura": {
+   "ang": 3,
+   "dx": 6,
+   "dy": -5
+  },
+  "navalha": {
+   "ang": -34,
+   "estica": 1
+  },
+  "secador": {
+   "ang": -12,
+   "estica": 1
+  },
+  "garra": {
+   "ang": -54,
+   "estica": 1
+  }
+ },
+ "y_agd/03": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 56
+  },
+  "tronco": {
+   "ang": -6,
+   "dy": -3
+  },
+  "braco_tras": {
+   "ang": 0
+  },
+  "braco_frente": {
+   "ang": 0
+  },
+  "_pernas": {
+   "var": "agachado"
+  },
+  "cabeca": {
+   "ang": -7
+  },
+  "criatura": {
+   "ang": 6,
+   "dx": 8,
+   "dy": -6
+  },
+  "navalha": {
+   "ang": -46,
+   "estica": 1
+  },
+  "secador": {
+   "ang": -16,
+   "estica": 1
+  },
+  "garra": {
+   "ang": -74,
+   "estica": 1
+  }
+ },
+ "y_agd/04": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 56
+  },
+  "tronco": {
+   "ang": -4,
+   "dy": -2
+  },
+  "braco_tras": {
+   "ang": 0
+  },
+  "braco_frente": {
+   "ang": 0
+  },
+  "_pernas": {
+   "var": "agachado"
+  },
+  "cabeca": {
+   "ang": -5
+  },
+  "criatura": {
+   "ang": 4,
+   "dx": 6,
+   "dy": -4
+  },
+  "navalha": {
+   "ang": -34,
+   "estica": 1
+  },
+  "secador": {
+   "ang": -12,
+   "estica": 1
+  },
+  "garra": {
+   "ang": -56,
+   "estica": 1
+  }
+ },
+ "y_agd/05": {
+  "quadril": {
+   "ang": 0,
+   "dx": 0,
+   "dy": 56
+  },
+  "tronco": {
+   "ang": -1,
+   "dy": 0
+  },
+  "braco_tras": {
+   "ang": 0
+  },
+  "braco_frente": {
+   "ang": 0
+  },
+  "_pernas": {
+   "var": "agachado"
+  },
+  "cabeca": {
+   "ang": -2
+  },
+  "criatura": {
+   "ang": 3,
+   "dx": 2,
+   "dy": -2
+  },
+  "navalha": {
+   "ang": -16,
+   "estica": 1
+  },
+  "secador": {
+   "ang": -4,
+   "estica": 1
+  },
+  "garra": {
+   "ang": -20,
+   "estica": 1
+  }
+ }
+}

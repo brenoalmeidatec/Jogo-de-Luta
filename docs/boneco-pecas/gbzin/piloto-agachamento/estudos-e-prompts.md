@@ -1,0 +1,28 @@
+# Estudos de arte do Gbzin
+
+Gerados com o ImageGen integrado. As fotos serviram de referência para a folha-modelo e ficaram fora desta pasta.
+
+## Folha-modelo
+
+Arquivo `folha-modelo-estudo-v01.png` (1536 × 1024). Estudo de aparência. O cajado e o relógio trocam de lado anatômico na vista frontal em relação à vista de costas. Alinhar os lados antes de usar a folha para recortar o kit.
+
+### Prompt
+
+Asset: folha-modelo de produção da forma base de Gbzin, personagem original do jogo 2D Nazafights. Refaça a primeira imagem como folha-modelo de turnaround. A imagem 1 é o conceito v3 aprovado e é a autoridade para figurino, cores, cajado e estilo. A imagem 2 reúne as seis fotos da mesma pessoa adulta e as imagens 3–5 repetem três delas em resolução maior, todas autorizadas como referência desta arte; use-as para a semelhança do rosto e do volume corporal, nunca reproduza a roupa nem os fundos das fotos. Busque rosto redondo de bochecha cheia, sobrancelhas espessas, bigode fino e cavanhaque concentrado no queixo, pele clara bronzeada, cabelo curto castanho-escuro ondulado com franja caída para a testa e degradê baixo nas laterais; ondas baixas e naturais, sem cachos altos. Corpo forte, sólido e encorpado, com cintura e pernas proporcionais às fotos, sem físico de fisiculturista.
+
+Composição: PNG horizontal 3:2, exatamente TRÊS vistas ortográficas de corpo inteiro em colunas igualmente espaçadas. Da esquerda para a direita: PERFIL para a direita, na guarda alta e em pé do lutador agarrador com os joelhos só levemente flexionados e a mão livre à frente; FRENTE em pé; COSTAS em pé. A guarda lateral deve ter a mesma altura anatômica da frente e das costas: não agachar profundamente. As três vistas representam o mesmo adulto, do mesmo tamanho, lentes ortográficas sem perspectiva, com altura do topo do cabelo à sola idêntica em pixels, ombros e cintura na mesma escala, pés plantados na mesma linha horizontal invisível. Cada figura ocupa em torno de 80–85% da altura total, da cabeça à sola, deixando margens generosas e separação entre silhuetas e objetos. A posição anatômica dos itens deve ser consistente de frente a costas: o cajado curto de madeira com gancho fica na mão direita (a mão de trás na guarda de perfil); relógio dourado no pulso esquerdo. O cajado é totalmente visível em todas as vistas e com a mesma escala, sem tocar a silhueta vizinha. Preserve a regata preta com reflexos azul-acinzentados, o short branco de academia com friso preto e sombra lilás, faixa de jiu-jitsu marrom amarrada à frente, tênis preto. Ambas as mãos e os dois pés legíveis, sem duplicação de membros ou acessórios.
+
+Estilo: pixel art desenhada à mão de fliperama dos anos 90, volumes em blocos limpos, contorno escuro colorido, grupos de pixels de tamanho coerente, paleta curta e áreas de cor opaca. Nada de pintura suavizada, aerógrafo, render 3D, desfoque, marcas ou logos. Fundo perfeitamente chapado na cor RGB #FF00FF, sem chão desenhado, sem sombra, sem grade, sem separadores, sem texto e sem quarto retrato. Resultado é uma folha de referência para construir o kit de peças em 3×, não um pôster.
+
+## Quadril e pernas do agachamento
+
+Arquivo `quadril-pernas-agachado-estudo-v01.png` (1254 × 1254). Estudo de uma peça já dobrada para pose baixa, com margem acima da faixa para encaixar sob o torso. Em resolução de fonte as solas diferem cerca de 16 px na vertical. O fundo também varia em torno do magenta. A versão de jogo precisa de recorte, alinhamento à linha de chão e conferência ao encaixar na cintura e ao voltar à guarda.
+
+### Prompt
+
+Edite a imagem 1, a folha de agachamento do personagem original Gbzin do jogo Nazafights, para um asset de produção do kit de peças do agachamento. A imagem 2 é o conceito v3 aprovado e fixa as cores, o material e o figurino. Entregue UMA ÚNICA peça conectada do quadril até o chão, somente metade de baixo: a faixa marrom de jiu-jitsu, quadril e shorts brancos com friso preto, exatamente duas pernas humanas robustas e dois tênis escuros. Use como base anatômica o quinto quadro (da esquerda) da imagem 1, mantendo o desenho e as proporções dessa pose baixa. Corte o tronco em uma linha limpa imediatamente acima da faixa marrom, deixando só uma pequena sobra de regata escura sobre a faixa para sobrepor na montagem. Remova da peça braços, mãos, cajado e relógio; eles serão camadas separadas. Complete apenas o tecido e a silhueta que estavam escondidos pela mão e pelo cajado.
+
+Ângulo lateral em três quartos virado para a direita, igual ao sprite da imagem 1. Esta é uma pose de agachamento humana baixa porém com base firme: quadril recuado, cada coxa liga o quadril a um único joelho, os dois joelhos apontam para a direita na mesma direção dos dedos, e cada canela liga seu próprio joelho ao tornozelo. Os dois pés plantados no mesmo chão com perspectiva lateral, separados em x e sem contato entre os tênis. Mostre o joelho da perna de perto separado do joelho da perna de longe, com oclusão natural nas raízes das coxas, sem curva em W, joelho invertido, dobra extra, cruzar canelas ou duplicar o contorno. O volume das pernas e dos pés deve ser o da referência. Mantenha a perna de perto em primeiro plano e a perna de longe um tom mais escura. Não desenhe uma pessoa completa, painel didático, linha de corte, setas, texto, grades, sombras no chão ou marcas.
+
+Um único elemento centralizado, visto por inteiro em imagem quadrada, com espaço em volta para recorte. Fundo uniforme magenta puro #FF00FF. Pixel art de fliperama de 1990 desenhada à mão, contorno escuro, paleta curta, sombra em blocos, arestas de pixel deliberadas. Use só as cores da imagem 2 e respeite as dobras dos shorts da pose baixa da imagem 1.
+

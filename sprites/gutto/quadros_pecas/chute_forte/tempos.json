@@ -1,0 +1,148 @@
+{
+ "acao": 260,
+ "caixa": [
+  45,
+  -300,
+  189,
+  -180
+ ],
+ "origem": [
+  "550_0",
+  "551_0",
+  "1001_0",
+  "1002_0",
+  "992_0",
+  "991_0",
+  "554_0",
+  "555_0",
+  "556_0"
+ ],
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 2,
+   "caixa": false,
+   "de": "550_0"
+  },
+  {
+   "desenho": 1,
+   "ticks": 2,
+   "caixa": false,
+   "de": "550_0"
+  },
+  {
+   "desenho": 2,
+   "ticks": 2,
+   "caixa": false,
+   "de": "550_0"
+  },
+  {
+   "desenho": 3,
+   "ticks": 2,
+   "caixa": false,
+   "de": "551_0@chute_forte1"
+  },
+  {
+   "desenho": 4,
+   "ticks": 2,
+   "caixa": false,
+   "de": "551_0@chute_forte1"
+  },
+  {
+   "desenho": 5,
+   "ticks": 1,
+   "caixa": false,
+   "de": "1001_0@chute_forte2"
+  },
+  {
+   "desenho": 6,
+   "ticks": 1,
+   "caixa": false,
+   "de": "1002_0@chute_forte3"
+  },
+  {
+   "desenho": 7,
+   "ticks": 6,
+   "caixa": true,
+   "de": "992_0@chute_forte4"
+  },
+  {
+   "desenho": 8,
+   "ticks": 2,
+   "caixa": false,
+   "de": "992_0@chute_forte5"
+  },
+  {
+   "desenho": 9,
+   "ticks": 2,
+   "caixa": false,
+   "de": "991_0@chute_forte6"
+  },
+  {
+   "desenho": 10,
+   "ticks": 3,
+   "caixa": false,
+   "de": "991_0@chute_forte6"
+  },
+  {
+   "desenho": 11,
+   "ticks": 2,
+   "caixa": false,
+   "de": "554_0@chute_forte7"
+  },
+  {
+   "desenho": 12,
+   "ticks": 3,
+   "caixa": false,
+   "de": "554_0@chute_forte7"
+  },
+  {
+   "desenho": 13,
+   "ticks": 2,
+   "caixa": false,
+   "de": "555_0"
+  },
+  {
+   "desenho": 14,
+   "ticks": 2,
+   "caixa": false,
+   "de": "555_0"
+  },
+  {
+   "desenho": 15,
+   "ticks": 2,
+   "caixa": false,
+   "de": "555_0"
+  },
+  {
+   "desenho": 16,
+   "ticks": 3,
+   "caixa": false,
+   "de": "555_0"
+  },
+  {
+   "desenho": 17,
+   "ticks": 2,
+   "caixa": false,
+   "de": "556_0"
+  },
+  {
+   "desenho": 18,
+   "ticks": 2,
+   "caixa": false,
+   "de": "556_0"
+  },
+  {
+   "desenho": 19,
+   "ticks": 2,
+   "caixa": false,
+   "de": "556_0"
+  },
+  {
+   "desenho": 20,
+   "ticks": 3,
+   "caixa": false,
+   "de": "556_0"
+  }
+ ]
+}

@@ -1,0 +1,188 @@
+{
+ "pose00": {
+  "quadril": {
+   "dx": -17.0,
+   "dy": 7.0
+  },
+  "cabeca": {
+   "var": "foco"
+  },
+  "braco_tras": {
+   "ang": -9.0,
+   "dx": -3.0,
+   "dy": 3.0
+  },
+  "braco_frente": {
+   "ang": 8.0,
+   "dx": -3.0,
+   "dy": -3.0,
+   "camada": "atras"
+  },
+  "coxa_frente": {
+   "ang": 6.0,
+   "dx": 3.0,
+   "dy": 3.0,
+   "var": "camara",
+   "camada": "atras"
+  },
+  "coxa_tras": {
+   "ang": 9.6
+  },
+  "canela_tras": {
+   "ang": -46.5
+  }
+ },
+ "pose01": {
+  "quadril": {
+   "dx": -10.0,
+   "dy": -6.0
+  },
+  "cabeca": {
+   "var": "foco"
+  },
+  "braco_tras": {
+   "ang": -12.0,
+   "dy": 3.0
+  },
+  "braco_frente": {
+   "ang": 20.0,
+   "dx": -3.0,
+   "dy": -3.0,
+   "camada": "atras"
+  },
+  "coxa_frente": {
+   "var": "camara",
+   "camada": "atras"
+  },
+  "coxa_tras": {
+   "ang": -18.3
+  },
+  "canela_tras": {
+   "ang": -6.0
+  }
+ },
+ "pose02": {
+  "quadril": {
+   "dx": -17.0,
+   "dy": -5.0
+  },
+  "cabeca": {
+   "var": "esforco"
+  },
+  "braco_tras": {
+   "ang": -6.0,
+   "dy": 3.0
+  },
+  "braco_frente": {
+   "ang": -14.0,
+   "dx": 3.0,
+   "dy": -3.0,
+   "camada": "atras"
+  },
+  "coxa_frente": {
+   "dx": -3.0,
+   "dy": -1.0,
+   "var": "esticada",
+   "camada": "atras"
+  },
+  "coxa_tras": {
+   "ang": -15.9
+  },
+  "canela_tras": {
+   "ang": -6.2
+  }
+ },
+ "pose03": {
+  "quadril": {
+   "dx": -12.0,
+   "dy": -11.0
+  },
+  "cabeca": {
+   "var": "esforco"
+  },
+  "braco_tras": {
+   "ang": -9.0,
+   "dx": 2.0,
+   "dy": 3.0
+  },
+  "braco_frente": {
+   "ang": -18.0,
+   "dx": -3.0,
+   "dy": -3.0,
+   "camada": "atras"
+  },
+  "coxa_frente": {
+   "ang": -6.0,
+   "dx": 3.0,
+   "dy": -2.0,
+   "var": "esticada",
+   "camada": "atras"
+  },
+  "coxa_tras": {
+   "ang": -17.4
+  },
+  "canela_tras": {
+   "ang": -5.5
+  }
+ },
+ "pose04": {
+  "quadril": {
+   "dx": -23.0,
+   "dy": 8.0
+  },
+  "cabeca": {
+   "var": "foco"
+  },
+  "braco_tras": {
+   "ang": -3.0,
+   "dx": 3.0,
+   "dy": 3.0
+  },
+  "braco_frente": {
+   "ang": 14.0,
+   "dx": -2.0,
+   "dy": -3.0,
+   "camada": "atras"
+  },
+  "coxa_frente": {
+   "ang": 12.0,
+   "dx": -3.0,
+   "dy": -1.0,
+   "var": "camara",
+   "camada": "atras"
+  },
+  "coxa_tras": {
+   "ang": 6.4
+  },
+  "canela_tras": {
+   "ang": -50.4
+  }
+ },
+ "pose05": {
+  "quadril": {
+   "dx": 2.0,
+   "dy": 1.0
+  },
+  "braco_tras": {
+   "dx": -3.0,
+   "dy": 2.0
+  },
+  "braco_frente": {
+   "ang": -2.0,
+   "dx": 3.0,
+   "dy": -3.0
+  },
+  "coxa_tras": {
+   "ang": 5.1
+  },
+  "canela_tras": {
+   "ang": -13.0
+  },
+  "coxa_frente": {
+   "ang": -10.0
+  },
+  "canela_frente": {
+   "ang": -9.6
+  }
+ }
+}

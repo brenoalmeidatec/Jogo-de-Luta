@@ -1,0 +1,19 @@
+{
+ "pivo": [
+  292,
+  183
+ ],
+ "ticks": 2,
+ "quadros": 24,
+ "laco": 0,
+ "efeito": "poder",
+ "lutador": "gutto",
+ "escala": 1.0,
+ "corpo": 150,
+ "clsn": [
+  -30,
+  -150,
+  150,
+  -25
+ ]
+}

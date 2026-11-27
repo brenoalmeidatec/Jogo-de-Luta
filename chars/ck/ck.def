@@ -1,0 +1,22 @@
+; Gerado por ferramentas/gerar_ck.py. Edite lá, não aqui.
+[Info]
+name = "CK"
+displayname = "CK"
+versiondate = 11,11,2026
+mugenversion = 1.1
+author = "Breno"
+pal.defaults = 1
+localcoord = 320,240
+
+[Files]
+cmd = ck.cmd
+cns = ck.cns
+st = ck.cns
+stcommon = common1.cns
+sprite = ck.sff
+anim = ck.air
+sound = ck.snd
+movelist = movelist.dat
+
+[Palette Keymap]
+x = 1

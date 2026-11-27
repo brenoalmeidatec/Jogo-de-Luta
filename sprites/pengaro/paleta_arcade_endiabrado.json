@@ -1,0 +1,255 @@
+{
+ "lutador": "pengaro",
+ "forma": "endiabrado",
+ "fonte": "quadros/folhas_arcade/e_ginga.png",
+ "nota": "15 cores + transparente. rgb é o que vale; medido é a mediana do papel na folha, antes do ajuste de matiz. Retoque à mão se precisar e rode conferir_arte.py. casaco_contorno retocado à mão para um preto frio (a mediana medida puxava para o vinho da pele).",
+ "contorno_grupo": {
+  "pele": "pele_contorno",
+  "casaco": "casaco_contorno",
+  "violeta": "casaco_contorno",
+  "ferro": "casaco_contorno",
+  "ouro": "casaco_contorno"
+ },
+ "cores": [
+  {
+   "id": "casaco_contorno",
+   "grupo": "casaco",
+   "rgb": [
+    26,
+    20,
+    32
+   ],
+   "medido": [
+    18,
+    4,
+    16
+   ],
+   "pixels": 4062,
+   "matiz_alvo": null
+  },
+  {
+   "id": "pele_contorno",
+   "grupo": "pele",
+   "rgb": [
+    61,
+    20,
+    35
+   ],
+   "medido": [
+    61,
+    15,
+    35
+   ],
+   "pixels": 2164,
+   "matiz_alvo": null
+  },
+  {
+   "id": "pele_sombra",
+   "grupo": "pele",
+   "rgb": [
+    111,
+    33,
+    54
+   ],
+   "medido": [
+    111,
+    33,
+    54
+   ],
+   "pixels": 2327,
+   "matiz_alvo": null
+  },
+  {
+   "id": "pele_medio",
+   "grupo": "pele",
+   "rgb": [
+    159,
+    55,
+    78
+   ],
+   "medido": [
+    159,
+    55,
+    78
+   ],
+   "pixels": 2342,
+   "matiz_alvo": null
+  },
+  {
+   "id": "pele_luz",
+   "grupo": "pele",
+   "rgb": [
+    207,
+    89,
+    106
+   ],
+   "medido": [
+    207,
+    89,
+    106
+   ],
+   "pixels": 3676,
+   "matiz_alvo": null
+  },
+  {
+   "id": "violeta_fundo",
+   "grupo": "violeta",
+   "rgb": [
+    41,
+    20,
+    51
+   ],
+   "medido": [
+    41,
+    10,
+    51
+   ],
+   "pixels": 2303,
+   "matiz_alvo": null
+  },
+  {
+   "id": "violeta_sombra",
+   "grupo": "violeta",
+   "rgb": [
+    72,
+    20,
+    97
+   ],
+   "medido": [
+    72,
+    13,
+    97
+   ],
+   "pixels": 1889,
+   "matiz_alvo": null
+  },
+  {
+   "id": "violeta_medio",
+   "grupo": "violeta",
+   "rgb": [
+    110,
+    20,
+    156
+   ],
+   "medido": [
+    110,
+    20,
+    156
+   ],
+   "pixels": 1416,
+   "matiz_alvo": null
+  },
+  {
+   "id": "violeta_claro",
+   "grupo": "violeta",
+   "rgb": [
+    195,
+    78,
+    214
+   ],
+   "medido": [
+    196,
+    78,
+    214
+   ],
+   "pixels": 584,
+   "matiz_alvo": null
+  },
+  {
+   "id": "violeta_brilho",
+   "grupo": "violeta",
+   "rgb": [
+    235,
+    212,
+    224
+   ],
+   "medido": [
+    235,
+    212,
+    224
+   ],
+   "pixels": 346,
+   "matiz_alvo": null
+  },
+  {
+   "id": "ferro_escuro",
+   "grupo": "ferro",
+   "rgb": [
+    80,
+    46,
+    77
+   ],
+   "medido": [
+    80,
+    46,
+    77
+   ],
+   "pixels": 4500,
+   "matiz_alvo": null
+  },
+  {
+   "id": "ferro_claro",
+   "grupo": "ferro",
+   "rgb": [
+    132,
+    100,
+    144
+   ],
+   "medido": [
+    132,
+    100,
+    144
+   ],
+   "pixels": 504,
+   "matiz_alvo": null
+  },
+  {
+   "id": "ouro_escuro",
+   "grupo": "ouro",
+   "rgb": [
+    152,
+    69,
+    25
+   ],
+   "medido": [
+    152,
+    69,
+    25
+   ],
+   "pixels": 430,
+   "matiz_alvo": null
+  },
+  {
+   "id": "ouro_medio",
+   "grupo": "ouro",
+   "rgb": [
+    240,
+    157,
+    35
+   ],
+   "medido": [
+    240,
+    157,
+    35
+   ],
+   "pixels": 697,
+   "matiz_alvo": null
+  },
+  {
+   "id": "ouro_claro",
+   "grupo": "ouro",
+   "rgb": [
+    250,
+    225,
+    104
+   ],
+   "medido": [
+    250,
+    225,
+    104
+   ],
+   "pixels": 231,
+   "matiz_alvo": null
+  }
+ ]
+}

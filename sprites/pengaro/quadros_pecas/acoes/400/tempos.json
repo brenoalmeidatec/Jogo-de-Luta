@@ -1,0 +1,35 @@
+{
+ "acao": 400,
+ "elementos": [
+  {
+   "desenho": 0,
+   "ticks": 4,
+   "caixa": false,
+   "de": "baixo_soco/03|foco"
+  },
+  {
+   "desenho": 1,
+   "ticks": 5,
+   "caixa": true,
+   "de": "baixo_soco/04|esforco"
+  },
+  {
+   "desenho": 2,
+   "ticks": 1,
+   "caixa": false,
+   "de": "baixo_soco/04|esforco"
+  },
+  {
+   "desenho": 3,
+   "ticks": 5,
+   "caixa": false,
+   "de": "baixo_soco/06|foco"
+  },
+  {
+   "desenho": 4,
+   "ticks": 4,
+   "caixa": false,
+   "de": "baixo_soco/07|foco"
+  }
+ ]
+}

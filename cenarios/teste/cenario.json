@@ -1,0 +1,221 @@
+{
+ "id": "teste",
+ "nome": "Teste de cenario",
+ "largura_mundo": 768,
+ "subida": 40,
+ "chao_y": 165,
+ "reflexo": 48,
+ "camadas": [
+  {
+   "nome": "ceu",
+   "imagem": "ceu.png",
+   "delta": [
+    0,
+    0
+   ],
+   "x": 0,
+   "y": 0
+  },
+  {
+   "nome": "sol",
+   "imagem": "sol.png",
+   "delta": [
+    0.03,
+    0.03
+   ],
+   "x": 40,
+   "y": 30,
+   "mistura": "soma"
+  },
+  {
+   "nome": "nuvens_longe",
+   "imagem": "nuvens_longe.png",
+   "delta": [
+    0.08,
+    0.05
+   ],
+   "x": 0,
+   "y": 8,
+   "repete": [
+    1,
+    0
+   ],
+   "velocidade": [
+    -0.08,
+    0
+   ],
+   "suave": true
+  },
+  {
+   "nome": "nuvens_perto",
+   "imagem": "nuvens_perto.png",
+   "delta": [
+    0.18,
+    0.1
+   ],
+   "x": 40,
+   "y": 34,
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    30,
+    0
+   ],
+   "velocidade": [
+    -0.3,
+    0
+   ],
+   "suave": false
+  },
+  {
+   "nome": "balao",
+   "imagem": "balao.png",
+   "delta": [
+    0.25,
+    0.2
+   ],
+   "x": 210,
+   "y": 40,
+   "seno_y": [
+    7,
+    200,
+    0
+   ],
+   "seno_x": [
+    3,
+    330,
+    0
+   ]
+  },
+  {
+   "nome": "morro",
+   "imagem": "morro.png",
+   "delta": [
+    0.35,
+    0.35
+   ],
+   "y": 92
+  },
+  {
+   "nome": "rio",
+   "folha": {
+    "imagem": "rio.png",
+    "n": 4
+   },
+   "ticks": 8,
+   "delta": [
+    0.7,
+    0.7
+   ],
+   "x": 0,
+   "y": 126,
+   "repete": [
+    1,
+    0
+   ]
+  },
+  {
+   "nome": "barco",
+   "imagem": "barco.png",
+   "delta": [
+    0.7,
+    0.7
+   ],
+   "x": 100,
+   "y": 118,
+   "seno_y": [
+    1.5,
+    90,
+    0
+   ],
+   "ciclo": 480,
+   "controles": [
+    {
+     "tipo": "VelSet",
+     "tempo": [
+      0
+     ],
+     "x": 0.4
+    },
+    {
+     "tipo": "VelSet",
+     "tempo": [
+      240
+     ],
+     "x": -0.4
+    }
+   ]
+  },
+  {
+   "nome": "chao",
+   "imagem": "chao.png",
+   "delta": [
+    1,
+    1
+   ],
+   "y": 140
+  },
+  {
+   "nome": "bandeira",
+   "folha": {
+    "imagem": "bandeira.png",
+    "n": 8
+   },
+   "ticks": 5,
+   "delta": [
+    1,
+    1
+   ],
+   "x": 240,
+   "y": 74
+  },
+  {
+   "nome": "mato",
+   "imagem": "mato.png",
+   "delta": [
+    1.25,
+    1.25
+   ],
+   "x": 0,
+   "y": 172,
+   "repete": [
+    1,
+    0
+   ],
+   "vao": [
+    9,
+    0
+   ],
+   "frente": true
+  },
+  {
+   "nome": "poste",
+   "imagem": "poste.png",
+   "delta": [
+    1.25,
+    1.25
+   ],
+   "x": -150,
+   "y": -8,
+   "frente": true
+  },
+  {
+   "nome": "halo",
+   "folha": {
+    "imagem": "halo.png",
+    "n": 4
+   },
+   "ticks": 7,
+   "delta": [
+    1.25,
+    1.25
+   ],
+   "x": -158,
+   "y": -17,
+   "frente": true,
+   "mistura": "soma"
+  }
+ ]
+}
