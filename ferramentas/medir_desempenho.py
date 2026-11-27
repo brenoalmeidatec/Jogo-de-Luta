@@ -49,7 +49,7 @@ def medir(motor, perfil, destino):
     fim.unlink(missing_ok=True)
     env = {**ambiente_linux(motor), "LP_NUM_THREADS": "2", "ALSOFT_DRIVERS": "null"}
     telemetria = destino.with_name(destino.stem + "-telemetria.csv").resolve()
-    telemetria.write_text("")
+    telemetria.write_text("hora,evento,fase,intervalos,janela_ms,pior_ms,acima_33ms,acima_50ms,estado_no_pico,fps,valor\n")
     env["NAZA_TELEMETRIA_CSV"] = str(telemetria)
     args = ["./Ikemen_GO_Linux", "-loadmotif", "-config", f"save/{perfil}.ini", "-p1", "ck", "-p2", "hazaki",
             "-s", "stages/maria_fumaca.def"]
@@ -69,6 +69,9 @@ def medir(motor, perfil, destino):
     with telemetria.open() as arquivo:
         eventos = list(csv.reader(arquivo))
     assert any(r[1] == "motif" for r in eventos), eventos[:5]
+    assert all(len(r) == 11 for r in eventos)
+    for chave in ("p1", "p2", "cenario"):
+        assert any(r[1] == chave and r[10] for r in eventos), chave
     for fase in ("introducao", "combate"):
         assert any(r[1:3] == ["amostra", fase] and int(r[3]) > 0 for r in eventos), fase
     with destino.open() as arq:

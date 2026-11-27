@@ -127,6 +127,7 @@ try {
     }
 }
 
+$inicioInstalacao = Get-Date -Format 'HH:mm:ss.fff'
 # 2. Baixa o IKEMEN GO na primeira vez
 $exe = Join-Path $motor 'Ikemen_GO.exe'
 if (-not (Test-Path $exe)) {
@@ -187,6 +188,7 @@ if (Test-Path (Join-Path $motifOrigem 'system.def')) {
     if ($LASTEXITCODE -ge 8) { Fechar 'Nao consegui instalar o layout Nazafights.' }
 }
 
+$inicioConfig = Get-Date -Format 'HH:mm:ss.fff'
 # 4. Teclas do jogador 1: anda com W A S D, socos nas setas esquerda (fraco) e cima (forte),
 # chutes nas setas baixo (fraco) e direita (forte). z e w saem de d e w para nao colidir. O IKEMEN so cria o save\config.ini depois da
 # primeira abertura; se ainda nao existe, abre e fecha o jogo uma vez para ele nascer.
@@ -333,9 +335,11 @@ function Configurar-VideoLeve($texto) {
 $opcoes = @{}
 try {
     $cpu = ''; $videos = @()
-    if ($env:NAZA_PERFIL -notin @('leve','normal')) {
-        $cpu = (Get-CimInstance Win32_Processor | Select-Object -First 1).Name
-        $videos = @(Get-CimInstance Win32_VideoController | ForEach-Object { $_.Name })
+    if ($env:NAZA_PERFIL -notin @('leve','normal') -or $env:NAZA_TELEMETRIA -ne '0') {
+        try {
+            $cpu = (Get-CimInstance Win32_Processor | Select-Object -First 1).Name
+            $videos = @(Get-CimInstance Win32_VideoController | ForEach-Object { $_.Name })
+        } catch { Write-Host 'Hardware indisponivel para deteccao automatica.' }
     }
     if ((Test-Path $cfg) -and (Usar-PerfilLeve $cpu $videos $env:NAZA_PERFIL)) {
         $perfil = Join-Path $motor 'save\nazafights-leve.ini'
@@ -362,10 +366,17 @@ if ($env:NAZA_TELEMETRIA -ne '0') {
         $video = foreach ($chave in @('GameWidth','GameHeight','VSync','Framerate')) {
             [regex]::Match($iniAtivo, "(?im)^$chave\s*=\s*(\d+)").Groups[1].Value
         }
-        $dados = @($modo, $cpu, ($videos -join ' / '), $manif['@commit']) + $video
-        $campos = ($dados | ForEach-Object { '"' + ([string]$_).Replace('"','""') + '"' }) -join ','
         $hora = Get-Date -Format 'HH:mm:ss.fff'
-        [IO.File]::WriteAllLines($arquivo, @('hora,evento,campos', "$inicioAtalho,atalho", "$hora,motor,$campos"))
+        $linhas = @('hora,evento,fase,intervalos,janela_ms,pior_ms,acima_33ms,acima_50ms,estado_no_pico,fps,valor',
+            "$inicioAtalho,atalho,,,,,,,,,", "$inicioInstalacao,instalacao,,,,,,,,,", "$inicioConfig,configuracao,,,,,,,,,")
+        $dados = [ordered]@{perfil=$modo; cpu=$cpu; gpu=($videos -join ' / '); versao=$manif['@commit'];
+            largura=$video[0]; altura=$video[1]; vsync=$video[2]; fps_alvo=$video[3]}
+        foreach ($chave in $dados.Keys) {
+            $valor = ([string]$dados[$chave]).Replace('"','""')
+            $linhas += ('{0},{1},,,,,,,,,"{2}"' -f $hora,$chave,$valor)
+        }
+        $linhas += "$hora,motor,,,,,,,,,"
+        [IO.File]::WriteAllLines($arquivo, [string[]]$linhas)
         $env:NAZA_TELEMETRIA_CSV = $arquivo
         Write-Host "Relatorio de desempenho: $arquivo"
         Get-ChildItem -LiteralPath $pasta -Filter 'sessao-*.csv' -File |

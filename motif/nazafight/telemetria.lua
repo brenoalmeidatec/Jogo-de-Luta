@@ -12,6 +12,7 @@ local function write(event, fields)
     for _, v in ipairs(fields or {}) do
         row[#row+1] = '"' .. tostring(v):gsub('"', '""'):gsub('[\r\n]', ' ') .. '"'
     end
+    while #row < 11 do row[#row+1] = "" end
     local ok = file:write(table.concat(row, ","), "\n")
     if ok then ok = file:flush() end
     count = count + 1
@@ -56,7 +57,12 @@ hook.add("loop", "nazaTelemetria", function()
         end
         local a, b = fighter(1), fighter(2)
         playerId(before)
-        write("lutadores", {a,b})
+        local function detail(event, value)
+            write(event, {"","","","","","","","",value})
+        end
+        detail("p1", a)
+        detail("p2", b)
+        detail("cenario", stageVar("info.name"))
     end
     if last then
         local delta = math.floor(now-last+0.5)
